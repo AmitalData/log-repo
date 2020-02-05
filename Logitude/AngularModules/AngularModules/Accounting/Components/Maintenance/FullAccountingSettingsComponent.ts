@@ -57,7 +57,7 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
 
         this.CurrentSession.StartBusyIndicatorLoading();
-        
+
         this._entityResourceService.getEntityResourceByTableName("GLAccount").subscribe((responseGLAccount: any) => {
         this._entityResourceService.getEntityResourceByTableName("ChartOfAccount").subscribe((response1: any) => {
         this._entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe(response => {
@@ -433,6 +433,21 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
             this.ValidateMulticurrencyAccounts();
         }
     }
+
+
+    get NumberOfAgingMonths () { return this.EntityPM.NumberOfAgingMonths ; }
+    set NumberOfAgingMonths (value: number) {
+        if (this.EntityPM.NumberOfAgingMonths  != value) {
+            this.EntityPM.NumberOfAgingMonths  = value;
+
+            if (value < 1 || value > 9) {
+                this.UIProperties.SetValidity("NumberOfAgingMonths", this.ObjectTableName, false, TextCodeTranslator.Translate("FullAccountingSetting.O.NoOfAgingMonthsBW1n9"));
+            }else{
+                this.UIProperties.SetValidity("NumberOfAgingMonths", this.ObjectTableName, true, "");
+            }
+        }
+    }
+
     //#endregion
 
     //Commands
@@ -565,7 +580,7 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
             myMessageWindow.Show("כרטיס מרכז מוגדר");
             return;
         }
-        
+
         let confirmWindow = new ConfirmWindow();
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
@@ -594,7 +609,7 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
         //    }
         //});
         logWindow.Show('./Accounting/Components/Maintenance/FullAccountingAddControlComponent');
-        
+
     }
 
 

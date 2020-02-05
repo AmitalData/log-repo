@@ -50,7 +50,7 @@ namespace WebFreight.Web.Helpers
 
                 string Stringdetails = Encoding.UTF8.GetString(myAnalyzeQueue.MessageBody);
 
-                Dictionary<string,string> queryParameters = new Dictionary<string, string>();
+                Dictionary<string, string> queryParameters = new Dictionary<string, string>();
                 string[] querySegments = Stringdetails.Split('&');
                 foreach (string segment in querySegments)
                 {
@@ -64,19 +64,24 @@ namespace WebFreight.Web.Helpers
                     }
                 }
 
-                if (queryParameters.Count>0)
+                if (queryParameters.Count > 0)
                 {
                     BluesnapExecutionService bluesnapExecutionService = new BluesnapExecutionService(0);
                     TenantManagementRepository tenantManagementRepository = new TenantManagementRepository();
-                    TenantManagement tenantManagement = tenantManagementRepository.GetSingleTenantManagementByBluesnapAccountId(queryParameters["accountId"]);                 
-                        bluesnapExecutionService.Tenant = tenantManagement!=null? tenantManagement.Id:0;
+                    if (queryParameters.ContainsKey("accountId"))
+                    {
+                        TenantManagement tenantManagement = tenantManagementRepository.GetSingleTenantManagementByBluesnapAccountId(queryParameters["accountId"]);
+                        bluesnapExecutionService.Tenant = tenantManagement != null ? tenantManagement.Id : 0;
                         string subject = myAnalyzeQueue.Subject == "Bluesnap Payment - Amital" ? "Amital" : "Logitude";
-                        DateTime? transactionDate= DateTime.Parse(queryParameters["transactionDate"]);
-                        bluesnapExecutionService.SaveBluesnapTransaction(Stringdetails, subject, transactionDate);
-                   
-                }        
 
-                    this.AnalyzeData(myAnalyzeQueue.From);                
+                        if (queryParameters.ContainsKey("transactionDate"))
+                        {
+                            DateTime? transactionDate = DateTime.Parse(queryParameters["transactionDate"]);
+                            bluesnapExecutionService.SaveBluesnapTransaction(Stringdetails, subject, transactionDate);
+                        }
+                    }
+                }
+                this.AnalyzeData(myAnalyzeQueue.From);
             }
 
             catch (Exception ex)

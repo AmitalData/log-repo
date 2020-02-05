@@ -82699,73 +82699,6 @@
     </ScreenFields>
   </Screen>
   <Screen
-    Name="&quot;Shipping Declaration Additional Fields&quot;"
-    ObjectTableName="&quot;Shipment&quot;"
-    IsReadOnly="false"
-    IsHeaderScreen="false"
-    Code="&quot;ShippingDeclarationAdditionalScreen&quot;"
-    NumberOfColumns="1"
-    NumberOfRows="4">
-    <ScreenFields>
-      <ScreenField
-        Column="0"
-        Row="0"
-        ObjectFieldName="&quot;INTTRADocumentTypeCode&quot;"
-        ScreenName="Shipping Declaration Additional Fields" />
-      <ScreenField
-        Column="0"
-        Row="1"
-        ObjectFieldName="&quot;INTTRADocumentQTY&quot;"
-        ScreenName="Shipping Declaration Additional Fields" />
-      <ScreenField
-        Column="0"
-        Row="2"
-        ObjectFieldName="&quot;SIHasAttachList&quot;"
-        ScreenName="Shipping Declaration Additional Fields" />
-      <ScreenField
-        Column="0"
-        Row="3"
-        ObjectFieldName="&quot;INTTRAInstructions&quot;"
-        ScreenName="Shipping Declaration Additional Fields" />
-    </ScreenFields>
-  </Screen>
-  <Screen
-    Name="&quot;New Shipment&quot;"
-    ObjectTableName="&quot;Shipment&quot;"
-    IsReadOnly="false"
-    IsHeaderScreen="false"
-    Code="&quot;NewShipment&quot;"
-    NumberOfColumns="2"
-    NumberOfRows="4">
-    <ScreenFields>
-      <ScreenField
-        Column="0"
-        Row="0"
-        ObjectFieldName="&quot;AgentId&quot;"
-        ScreenName="New Shipment" />
-      <ScreenField
-        Column="0"
-        Row="1"
-        ObjectFieldName="&quot;AgentReference1&quot;"
-        ScreenName="New Shipment" />
-      <ScreenField
-        Column="0"
-        Row="2"
-        ObjectFieldName="&quot;AgentReference2&quot;"
-        ScreenName="New Shipment" />
-      <ScreenField
-        Column="0"
-        Row="3"
-        ObjectFieldName="&quot;MainHarmonize&quot;"
-        ScreenName="New Shipment" />
-      <ScreenField
-        Column="1"
-        Row="0"
-        ObjectFieldName="&quot;Notes&quot;"
-        ScreenName="New Shipment" />
-    </ScreenFields>
-  </Screen>
-  <Screen
     Name="&quot;General Tab Screen&quot;"
     ObjectTableName="&quot;Shipment&quot;"
     IsReadOnly="false"
@@ -82862,42 +82795,6 @@
     </ScreenFields>
   </Screen>
   <Screen
-    Name="&quot;Customer Add Edit Screen&quot;"
-    ObjectTableName="&quot;Shipment&quot;"
-    IsReadOnly="false"
-    IsHeaderScreen="false"
-    Code="&quot;Shipment.CustomerAddEditScreen&quot;"
-    NumberOfColumns="2"
-    NumberOfRows="3">
-    <ScreenFields>
-      <ScreenField
-        Column="0"
-        Row="0"
-        ObjectFieldName="&quot;ShipperId&quot;"
-        ScreenName="Customer Add Edit Screen" />
-      <ScreenField
-        Column="0"
-        Row="1"
-        ObjectFieldName="&quot;ShipperReference1&quot;"
-        ScreenName="Customer Add Edit Screen" />
-      <ScreenField
-        Column="0"
-        Row="2"
-        ObjectFieldName="&quot;ShipperAddressId&quot;"
-        ScreenName="Customer Add Edit Screen" />
-      <ScreenField
-        Column="1"
-        Row="0"
-        ObjectFieldName="&quot;ShipperReference2&quot;"
-        ScreenName="Customer Add Edit Screen" />
-      <ScreenField
-        Column="1"
-        Row="1"
-        ObjectFieldName="&quot;ShipperContactId&quot;"
-        ScreenName="Customer Add Edit Screen" />
-    </ScreenFields>
-  </Screen>
-  <Screen
     Name="&quot;General Tab Screen&quot;"
     ObjectTableName="&quot;Shipment&quot;"
     IsReadOnly="false"
@@ -82959,6 +82856,73 @@
     </ScreenFields>
   </Screen>
   <Screen
+    Name="&quot;New Shipment&quot;"
+    ObjectTableName="&quot;Shipment&quot;"
+    IsReadOnly="false"
+    IsHeaderScreen="false"
+    Code="&quot;NewShipment&quot;"
+    NumberOfColumns="2"
+    NumberOfRows="4">
+    <ScreenFields>
+      <ScreenField
+        Column="0"
+        Row="0"
+        ObjectFieldName="&quot;AgentId&quot;"
+        ScreenName="New Shipment" />
+      <ScreenField
+        Column="0"
+        Row="1"
+        ObjectFieldName="&quot;AgentReference1&quot;"
+        ScreenName="New Shipment" />
+      <ScreenField
+        Column="0"
+        Row="2"
+        ObjectFieldName="&quot;AgentReference2&quot;"
+        ScreenName="New Shipment" />
+      <ScreenField
+        Column="0"
+        Row="3"
+        ObjectFieldName="&quot;MainHarmonize&quot;"
+        ScreenName="New Shipment" />
+      <ScreenField
+        Column="1"
+        Row="0"
+        ObjectFieldName="&quot;Notes&quot;"
+        ScreenName="New Shipment" />
+    </ScreenFields>
+  </Screen>
+  <Screen
+    Name="&quot;Shipping Declaration Additional Fields&quot;"
+    ObjectTableName="&quot;Shipment&quot;"
+    IsReadOnly="false"
+    IsHeaderScreen="false"
+    Code="&quot;ShippingDeclarationAdditionalScreen&quot;"
+    NumberOfColumns="1"
+    NumberOfRows="4">
+    <ScreenFields>
+      <ScreenField
+        Column="0"
+        Row="0"
+        ObjectFieldName="&quot;INTTRADocumentTypeCode&quot;"
+        ScreenName="Shipping Declaration Additional Fields" />
+      <ScreenField
+        Column="0"
+        Row="1"
+        ObjectFieldName="&quot;INTTRADocumentQTY&quot;"
+        ScreenName="Shipping Declaration Additional Fields" />
+      <ScreenField
+        Column="0"
+        Row="2"
+        ObjectFieldName="&quot;SIHasAttachList&quot;"
+        ScreenName="Shipping Declaration Additional Fields" />
+      <ScreenField
+        Column="0"
+        Row="3"
+        ObjectFieldName="&quot;INTTRAInstructions&quot;"
+        ScreenName="Shipping Declaration Additional Fields" />
+    </ScreenFields>
+  </Screen>
+  <Screen
     Name="&quot;Customs Additional Fields&quot;"
     ObjectTableName="&quot;Shipment&quot;"
     IsReadOnly="false"
@@ -82977,6 +82941,52 @@
     NumberOfColumns="2"
     NumberOfRows="1">
     <ScreenFields />
+  </Screen>
+  <Screen
+    Name="&quot;Pre Alert&quot;"
+    ObjectTableName="&quot;Shipment&quot;"
+    IsReadOnly="false"
+    IsHeaderScreen="false"
+    Code="&quot;Shipment.PreAlert&quot;"
+    NumberOfColumns="2"
+    NumberOfRows="1">
+    <ScreenFields />
+  </Screen>
+  <Screen
+    Name="&quot;Customer Add Edit Screen&quot;"
+    ObjectTableName="&quot;Shipment&quot;"
+    IsReadOnly="false"
+    IsHeaderScreen="false"
+    Code="&quot;Shipment.CustomerAddEditScreen&quot;"
+    NumberOfColumns="2"
+    NumberOfRows="3">
+    <ScreenFields>
+      <ScreenField
+        Column="0"
+        Row="0"
+        ObjectFieldName="&quot;ShipperId&quot;"
+        ScreenName="Customer Add Edit Screen" />
+      <ScreenField
+        Column="0"
+        Row="1"
+        ObjectFieldName="&quot;ShipperReference1&quot;"
+        ScreenName="Customer Add Edit Screen" />
+      <ScreenField
+        Column="0"
+        Row="2"
+        ObjectFieldName="&quot;ShipperAddressId&quot;"
+        ScreenName="Customer Add Edit Screen" />
+      <ScreenField
+        Column="1"
+        Row="0"
+        ObjectFieldName="&quot;ShipperReference2&quot;"
+        ScreenName="Customer Add Edit Screen" />
+      <ScreenField
+        Column="1"
+        Row="1"
+        ObjectFieldName="&quot;ShipperContactId&quot;"
+        ScreenName="Customer Add Edit Screen" />
+    </ScreenFields>
   </Screen>
   <Tab
     TabName="&quot;Overview&quot;"

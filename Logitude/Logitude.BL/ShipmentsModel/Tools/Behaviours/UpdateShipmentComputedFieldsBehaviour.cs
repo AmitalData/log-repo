@@ -105,9 +105,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
         {
             entity.FirstPickupLocation = shipmentPM.FirstPickupLocation;
             entity.Commodity = shipmentPM.AWBCommodityItemNumber;
-            entity.ContainsDangerousGoods = shipmentPM.IsDangerous;
-            entity.ImportDeclarationDate = shipmentPM.DeclarationDate;
-            entity.ImportDeclarationNumber = shipmentPM.DeclarationNumber;
+            //entity.ContainsDangerousGoods = shipmentPM.IsDangerous;
+            //entity.ImportDeclarationDate = shipmentPM.DeclarationDate;
+            //entity.ImportDeclarationNumber = shipmentPM.DeclarationNumber;
             entity.NumberOfDeliveries = shipmentPM.ShipmentDeliveries.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).Count();
             entity.LastDocumentDateTime = null;// new DateTime(1900, 1, 1);
         }
@@ -208,7 +208,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
             if (finalDelivery == null)
             {
                 entity.DeliveryTo = null;
-                entity.DeliveryToCity = null;
+                //entity.DeliveryToCity = null;
                 entity.DeliveryToPortId = null;
                 entity.DeliveryFrom = null;
                 entity.FinalDeliveryATA = null;
@@ -227,19 +227,19 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
                 if (finalDelivery.PickUpDeliveryToTypeCode == "PART")
                 {
                     entity.DeliveryTo = GetPrtnerAddressCity(finalDelivery.ToAddressId);
-                    entity.DeliveryToCity = entity.DeliveryTo;
+                    //entity.DeliveryToCity = entity.DeliveryTo;
                 }
 
                 else if (finalDelivery.PickUpDeliveryToTypeCode == "CASL")
                 {
                     entity.DeliveryTo = finalDelivery.ToAddressCity;
-                    entity.DeliveryToCity = finalDelivery.ToAddressCity;
+                    //entity.DeliveryToCity = finalDelivery.ToAddressCity;
                 }
 
                 else
                 {
                     entity.DeliveryTo = GetPortName(finalDelivery.ToPortId);
-                    entity.DeliveryToCity = entity.DeliveryTo;
+                    //entity.DeliveryToCity = entity.DeliveryTo;
                     entity.DeliveryToPortId = finalDelivery.ToPortId;
                 }
 
