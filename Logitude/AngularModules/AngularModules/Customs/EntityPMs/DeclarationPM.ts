@@ -940,7 +940,16 @@ export class DeclarationPM {
 
 
 
-	 
+
+    private isMissMandatoryDiamond: boolean;
+    public get IsMissMandatoryDiamond() { return this.isMissMandatoryDiamond; }
+    public set IsMissMandatoryDiamond(newValue: boolean) { if (this.isMissMandatoryDiamond != newValue) { this.isMissMandatoryDiamond = newValue; this.MarkAsDirty("IsMissMandatoryDiamond"); } }
+
+
+    private isValidTicketsDiamond: boolean;
+    public get IsValidTicketsDiamond() { return this.isValidTicketsDiamond; }
+    public set IsValidTicketsDiamond(newValue: boolean) { if (this.isValidTicketsDiamond != newValue) { this.isValidTicketsDiamond = newValue; this.MarkAsDirty("IsValidTicketsDiamond"); } }
+
 
     public OldEntityPM: DeclarationPM;
 		

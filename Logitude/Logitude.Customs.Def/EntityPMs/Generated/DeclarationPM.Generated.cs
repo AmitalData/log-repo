@@ -3744,6 +3744,54 @@ namespace Logitude.Customs.Def.EntityPMs
 
             }
         }
+
+
+        private bool isMissMandatoryDiamond;
+
+
+        [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+        [DataMember]
+        public bool IsMissMandatoryDiamond
+        {
+
+            get
+            {
+                return isMissMandatoryDiamond;
+            }
+            set
+            {
+                if (isMissMandatoryDiamond != value)
+                {
+                    NotifyPropertyChangeValues values = new NotifyPropertyChangeValues() { PropertyName = "IsMissMandatoryDiamond", OldValue = isMissMandatoryDiamond, NewValue = value, PropertyType = "bool" };
+                    NotifyPropertyChanged(values);
+                    isMissMandatoryDiamond = value;
+                }
+
+            }
+        }
+        private bool isValidTicketsDiamond;
+
+
+        [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+        [DataMember]
+        public bool IsValidTicketsDiamond
+        {
+
+            get
+            {
+                return isValidTicketsDiamond;
+            }
+            set
+            {
+                if (isValidTicketsDiamond != value)
+                {
+                    NotifyPropertyChangeValues values = new NotifyPropertyChangeValues() { PropertyName = "IsValidTicketsDiamond", OldValue = isValidTicketsDiamond, NewValue = value, PropertyType = "bool" };
+                    NotifyPropertyChanged(values);
+                    isValidTicketsDiamond = value;
+                }
+
+            }
+        }
     }
    }
    

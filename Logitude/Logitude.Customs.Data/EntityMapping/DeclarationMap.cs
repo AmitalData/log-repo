@@ -227,6 +227,9 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.DepositionStatusCode).HasColumnName("DepositionStatusCode").HasMaxLength(1).IsUnicode(false);
             this.Property(t => t.IsDiamondDeclaration).HasColumnName("IsDiamondDeclaration");
+            this.Property(t => t.IsMissMandatoryDiamond).HasColumnName("IsMissMandatoryDiamond");
+
+            this.Property(t => t.IsValidTicketsDiamond).HasColumnName("IsValidTicketsDiamond");
 
         }
     }

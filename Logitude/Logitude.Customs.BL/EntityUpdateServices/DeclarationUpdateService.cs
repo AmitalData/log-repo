@@ -263,6 +263,19 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     UpdateUnifreight(entityPM);
                 }
 
+
+                if(entityPM.IsDiamondDeclaration)
+                {
+                    DeclarationQueryService declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
+
+                    entityPM.IsValidTicketsDiamond= declarationQueryService.IsValidTickets(entityPM);
+
+                    entityPM.IsMissMandatoryDiamond = declarationQueryService.IsMissingMandatoryFields(entityPM);
+
+                }
+
+
+
                 ConsignmentPM consignment = (from a in entityPM.Consignments select a).FirstOrDefault();
                 if (consignment != null) //itzik - due below crash 
                 {
