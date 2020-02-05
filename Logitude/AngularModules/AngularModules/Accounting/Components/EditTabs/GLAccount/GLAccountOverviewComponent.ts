@@ -561,8 +561,8 @@ export class GLAccountOverviewComponent extends BaseComponent {
             percentage =
                 (this.GLAccountMoreData.BalanceInLocalCurrency ? this.GLAccountMoreData.BalanceInLocalCurrency : 0)
             +   (this.GLAccountMoreData.TotalOpenChequesInLocalCur ? this.GLAccountMoreData.TotalOpenChequesInLocalCur : 0)
-            +   (this.GLAccountMoreData.TotFutureOpenChequesInLocalCur ? this.GLAccountMoreData.TotFutureOpenChequesInLocalCur : 0);
-            //+ (this.accountCardlist.Total?this.accountCardlist.Total:0 Open shipments)
+            +   (this.GLAccountMoreData.TotFutureOpenChequesInLocalCur ? this.GLAccountMoreData.TotFutureOpenChequesInLocalCur : 0)
+            + (this.accountCardlist.OpenShipments?this.accountCardlist.OpenShipments:0 );
 
             this.accountTotal = percentage;
 
@@ -595,8 +595,8 @@ export class GLAccountOverviewComponent extends BaseComponent {
         var total =
         (this.GLAccountMoreData.BalanceInLocalCurrency ? this.GLAccountMoreData.BalanceInLocalCurrency : 0)
     +   (this.GLAccountMoreData.TotalOpenChequesInLocalCur ? this.GLAccountMoreData.TotalOpenChequesInLocalCur : 0)
-    +   (this.GLAccountMoreData.TotFutureOpenChequesInLocalCur ? this.GLAccountMoreData.TotFutureOpenChequesInLocalCur : 0);
-    //+ (this.accountCardlist.Total?this.accountCardlist.Total:0 Open shipments)
+    +   (this.GLAccountMoreData.TotFutureOpenChequesInLocalCur ? this.GLAccountMoreData.TotFutureOpenChequesInLocalCur : 0)
+        + (this.accountCardlist.OpenShipments ? this.accountCardlist.OpenShipments : 0);
 
 
         return (total > this.accountCardlist.CreditLimitAmount);
