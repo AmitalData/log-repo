@@ -1826,6 +1826,10 @@
     <Compile Include="Migrations\201912221024278_Mutaz_UpdatePrimaryKeysInInterestReportTables.Designer.cs">
       <DependentUpon>201912221024278_Mutaz_UpdatePrimaryKeysInInterestReportTables.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201912221834100_ChargesTypeSearchFieldsMigration.cs" />
+    <Compile Include="Migrations\201912221834100_ChargesTypeSearchFieldsMigration.Designer.cs">
+      <DependentUpon>201912221834100_ChargesTypeSearchFieldsMigration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201912301120494_Mutaz_InterestReportLineByDate_UpdateFieldsFormat.cs" />
     <Compile Include="Migrations\201912301120494_Mutaz_InterestReportLineByDate_UpdateFieldsFormat.Designer.cs">
       <DependentUpon>201912301120494_Mutaz_InterestReportLineByDate_UpdateFieldsFormat.cs</DependentUpon>
@@ -3396,6 +3400,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912221318138_Mutaz_Update_MinimumInterestInvoiceBilling_DataType_Integer.resx">
       <DependentUpon>201912221318138_Mutaz_Update_MinimumInterestInvoiceBilling_DataType_Integer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912221834100_ChargesTypeSearchFieldsMigration.resx">
+      <DependentUpon>201912221834100_ChargesTypeSearchFieldsMigration.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912240707376_WesamAddTextCodesFieldToObjectTablesTable.resx">
       <DependentUpon>201912240707376_WesamAddTextCodesFieldToObjectTablesTable.cs</DependentUpon>
