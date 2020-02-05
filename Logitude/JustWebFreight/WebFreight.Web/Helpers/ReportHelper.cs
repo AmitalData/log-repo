@@ -1450,12 +1450,12 @@ namespace WebFreight.Web.Helpers
 
             report.AutoLocalizeReportOnRun = true;
 
-            //if (LogitudeSettings.LogitudeURL != "http://localhost:9996")
-            //{
-            //    report.ReportCacheMode = StiReportCacheMode.On;
-            //    report.RenderedPages.CacheMode = true;
-            //    report.RenderedPages.CanUseCacheMode = true;
-            //}
+            if (LogitudeSettings.LogitudeURL != "http://localhost:9996")
+            {
+                report.ReportCacheMode = StiReportCacheMode.On;
+                report.RenderedPages.CacheMode = true;
+                report.RenderedPages.CanUseCacheMode = true;
+            }
             //report.Culture = "he-IL"; // we can use report globalization to translate lables, google "Glabalization manager stimulsoft" for more
             report.Render(false);
 
