@@ -8746,7 +8746,7 @@
     ObjectTableName="&quot;ARPayment&quot;"
     Code="&quot;ARDO&quot;"
     ControlPath="&quot;Simplog.InvoiceLib.Views.Tabs.ARPaymentsTabs.ARPaymentDocsOutTabControl&quot;"
-    TextCode="&quot;ARPayment.TH.Docs&quot;"
+    TextCode="&quot;ARPayment.TH.DocsOut&quot;"
     IsPackagable="true"
     IndexOrder="2"
     HtmlComponentURL="&quot;./InvoiceModules/ARPayment/Components/EditTabs/ARPaymentDocsOutTabComponent&quot;"

@@ -1,8 +1,6 @@
 import {Component, OnInit, AfterViewInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {TicketPM} from '../../../../../CRM/EntityPMs/TicketPM';
 import {EntityArgs} from '../../../../../Infrastructure/DataContracts/EntityArgs';
-import {TextCodeTranslationPipe} from '../../../../../Controls/Pipes/TextCodeTranslationPipe';
-import {UIProperty, UIProperties}  from '../../../../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {BaseComponent} from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {ServiceResponse} from '../../../../../Infrastructure/DataContracts/ServiceResponse';
 import {AppTool} from '../../../../../Infrastructure/Tools';
@@ -14,7 +12,6 @@ import {ShipmentList} from '../../../../../Shipment/EntityLists/ShipmentList';
 import {ContactInputTemplateArgs} from '../../../../../CommonModules/CommonPartners/Components/Templates/ContactInputTemplate';
 import {UserList} from '../../../../../Common/EntityLists/UserList';
 import {UserListService} from '../../../../../Common/Services/StandardLists/UserListService';
-import {CardList} from '../../../../../Common/EntityLists/CardList';
 import {CardListService} from '../../../../../Common/Services/StandardLists/CardListService';
 import {TicketClassificationList} from '../../../../../CRM/EntityLists/TicketClassificationList';
 import {TicketClassificationListService} from '../../../../../CRM/Services/StandardLists/TicketClassificationListService';
@@ -26,7 +23,9 @@ import {ContactListService} from '../../../../../Common/Services/StandardLists/C
 import {TextCodeTranslator} from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {ContactItemClass} from '../../../../../CommonModules/CommonPartners/Components/EditTabs/ContactsTabComponent';
 import {ContactPMService} from '../../../../../Common/Services/StandardPMs/ContactPMService';
-import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService';
+import { EntityResourceService } from '../../../../../Infrastructure/Services/EntityResourceService';
+import { NewQuoteComponentArgs } from '../../../../../Quote/Args';
+
 declare var window: any;
 
 @Component({
@@ -688,6 +687,10 @@ export class TicketDetailsTabComponent extends BaseComponent implements AfterVie
             logWindow.Width = 960;
             logWindow.Height = 570;
             logWindow.Title = windowTitle;
+            var args = new NewQuoteComponentArgs();
+            args.IsCreatedFromTicket = true;
+            args.TicketCreateDate = this.EntityPM.CreateDate;
+            logWindow.WindowArgs = args;
             logWindow.Show(path);
             logWindow.ComponentLoaded.subscribe(s => {
                 logWindow.WindowClosed.subscribe(d => {

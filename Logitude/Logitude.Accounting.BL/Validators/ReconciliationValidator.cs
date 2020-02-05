@@ -103,8 +103,9 @@ namespace Logitude.Accounting.BL.Validators
             List<LedgerTransactionPM> transactionsPMList = //transQuery.GetLedgerTransactionPMsByIdList(transactionsId, myReconciliationPM.Tenant);
                 myDataProvider.GetLedgerTransactionPMsByIdList(transactionsId, myReconciliationPM.Tenant);
             paymentsCount = transactionsPMList.Count(d => (d.SourceTypeCode == "3" || d.SourceTypeCode == "5") && d.OriginalJournalId == null); // 3- ARPayment , or 5- APPayment , and not storno
-            if (paymentsCount > 1)
-            {
+            if (paymentsCount > 1 && transactionsPMList.GroupBy(d => d.SourceId).Count() > 1)
+            {                
+
                 //Can’t include more than one payment in the same reconciliation” ?? ???? ????? ???? ????? ??? ????? ?????
                 AddError(errorsList, TranslateMyTextCode(/*"Accounting.O.CantIncludeTwoOrMorePayment"*/M_CantIncludeTwoOrMorePayment, 0, useLocal));
             }

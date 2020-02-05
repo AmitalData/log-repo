@@ -147,3 +147,137 @@
 -------------
 --delete from Screens where code='Customs.AccountingPartner.HeaderScreen'
 --update ScreenModifications set NumberOfRows=3 where NumberOfRows>3 and ScreenCode like '%headerscreen%'
+
+--update translations set textcodecode = 'APInvoiceLine.O.Vendor' where textcodecode = 'APInvoiceLine.CH.Vendor'
+--update translations set textcodecode = 'APInvoiceLine.O.Vendor' where textcodecode = 'APInvoiceLine.F.Vendor'
+--update translations set textcodecode = 'APInvoiceLine.O.Name' where textcodecode = 'APInvoiceLine.CH.Name'
+--update translations set textcodecode = 'APInvoiceLine.O.OtherInvoices' where textcodecode = 'APInvoiceLine.CH.OtherInvoices'
+--update translations set textcodecode = 'APInvoiceLine.O.OtherInvoices' where textcodecode = 'APInvoiceLine.F.OtherInvoices'
+--update translations set textcodecode = 'APInvoiceLine.O.OpenAmount' where textcodecode = 'APInvoiceLine.CH.OpenAmount'
+--update translations set textcodecode = 'APInvoiceLine.O.OpenAmount' where textcodecode = 'APInvoiceLine.F.OpenAmount'
+--update translations set textcodecode = 'APInvoiceLine.O.ExpectedAmount' where textcodecode = 'APInvoiceLine.CH.ExpectedAmount'
+--update translations set textcodecode = 'APInvoiceLine.O.ExpectedAmount' where textcodecode = 'APInvoiceLine.F.ExpectedAmount'
+--update translations set textcodecode = 'APInvoiceLine.O.Currency' where textcodecode = 'APInvoiceLine.CH.Currency'
+--update translations set textcodecode = 'APInvoiceLine.O.Currency' where textcodecode = 'APInvoiceLine.F.Currency'
+--update translations set textcodecode = 'APInvoiceLine.CH.DescriptionListLable' where textcodecode = 'APInvoiceLine.CH.DescriptionListField'
+--update translations set textcodecode = 'ARInvoice.CH.ReadyForTransferListLable' where textcodecode = 'APInvoice.CH.ReadyForTransfer'
+--update translations set textcodecode = 'APInvoice.CH.TransferStatusNameListLable' where textcodecode = 'APInvoice.CH.TransferStatusName'
+--update translations set textcodecode = 'ARInvoiceLine.CH.PrepaidCollectIdListLable' where textcodecode = 'ARInvoiceLine.CH.PrepaidCollectId'
+--update translations set textcodecode = 'ARInvoiceLine.CH.DescriptionListLable' where textcodecode = 'ARInvoiceLine.CH.Description'
+--update translations set textcodecode = 'ARInvoiceLine.CH.ForiegnExchangeRateListLable' where textcodecode = 'ARInvoiceLine.CH.ForiegnExchangeRate'
+--update translations set textcodecode = 'ARInvoiceLine.CH.MeasurementIdListLable' where textcodecode = 'ARInvoiceLine.CH.MeasurementId'
+--update translations set textcodecode = 'ARInvoiceLine.CH.QuantityListLable' where textcodecode = 'ARInvoiceLine.CH.Quantity'
+--update translations set textcodecode = 'ARInvoiceLine.CH.UnitPriceListLable' where textcodecode = 'ARInvoiceLine.CH.UnitPrice'
+--update translations set textcodecode = 'ARInvoiceLine.CH.VatTypeIdListLable' where textcodecode = 'ARInvoiceLine.CH.VatTypeId'
+--update translations set textcodecode = 'ARInvoiceLine.CH.AmountListLable' where textcodecode = 'ARInvoiceLine.CH.Amount'
+--update translations set textcodecode = 'ARInvoiceLine.CH.ForiegnCurrencyAmountListLable' where textcodecode = 'ARInvoiceLine.CH.ForiegnCurrencyAmount'
+--update translations set textcodecode = 'ARInvoiceLine.CH.LocalCurrencyAmountListLable' where textcodecode = 'ARInvoiceLine.CH.LocalCurrencyAmount'
+--update translations set textcodecode = 'ARInvoice.O.VATListLable' where textcodecode = 'ARInvoice.CH.VATListLable'
+--update translations set textcodecode = 'ARInvoice.CH.TransferStatusNameListLable' where textcodecode = 'ARInvoice.CH.TransferStatusName'
+--update translations set textcodecode = 'ARInvoice.CH.ReadyForTransferListLable' where textcodecode = 'ARInvoice.CH.ReadyForTransfer'
+--update translations set textcodecode = 'ARInvoice.O.OtherPayments' where textcodecode = 'ARInvoice.CH.OtherPayments'
+--update translations set textcodecode = 'ARInvoice.CH.MasterNumberListLable' where textcodecode = 'ARInvoice.CH.MasterNumberLable'
+--update translations set textcodecode = 'ARInvoice.CH.InvoiceCurrencyExchangeRateListLable' where textcodecode = 'ARInvoice.CH.InvoiceExchangeRateListLable'
+--update translations set textcodecode = 'ARInvoice.CH.HouseNumberListLable' where textcodecode = 'ARInvoice.CH.HouseNumberLable'
+--update translations set textcodecode = 'ARInvoice.CH.CustomerRefListLable' where textcodecode = 'ARInvoice.CH.CustomerRefLable'
+--update translations set textcodecode = 'ARInvoice.CH.AmountPaidListLable' where textcodecode = 'ARInvoice.CH.AmountToPay'
+--update translations set textcodecode = 'Shipment.CH.MainCarriageATDListLable' where textcodecode = 'Shipment.CH.MainCarriageATDLable'
+--update translations set textcodecode = 'ShipmentPayable.CH.CurrencyIdListLable' where textcodecode = 'ShipmentPayable.CH.CurrencyIdListFieldLable'
+--update translations set textcodecode = 'ShipmentPayable.F.TotalAmount.Short' where textcodecode = 'ShipmentPayable.F.Amount.Short'
+--update translations set textcodecode = 'ShipmentPayable.F.TotalAmountLocal.Short' where textcodecode = 'ShipmentPayable.F.LocalAmount.Short'
+--update translations set textcodecode = 'ShipmentReceivable.CH.CurrencyIdListLable' where textcodecode = 'ShipmentReceivable.CH.CurrencyIdListFieldLable'
+--update translations set textcodecode = 'ShipmentReceivable.F.TotalAmount.Short' where textcodecode = 'ShipmentReceivable.F.Amount.Short'
+--update translations set textcodecode = 'ShipmentReceivable.F.TotalAmountLocal.Short' where textcodecode = 'ShipmentReceivable.F.LocalAmount.Short'
+--update translations set textcodecode = 'ShipmentReceivable.F.Notes' where textcodecode = 'ShipmentReceivable.F.Note'
+--update translations set textcodecode = 'VatTypeDescription' where textcodecode = 'VatType.O.TableDescription'
+--update translations set textcodecode = 'TarrifHeader.F.CardId' where textcodecode = 'TarrifHeader.F.Card'
+--update translations set textcodecode = 'Quote.CH.AutomaticallyCloseDateListLable' where textcodecode = 'Quote.CH.AutomaticallyCloseDateLable'
+--update translations set textcodecode = 'Quote.CH.AutomaticallyCloseDaysListLable' where textcodecode = 'Quote.CH.AutomaticallyCloseDaysLable'
+--update translations set textcodecode = 'Quote.CH.BranchNameListLable' where textcodecode = 'Quote.CH.BranchListLable'
+--update translations set textcodecode = 'Quote.CH.DepartmentNameListLable' where textcodecode = 'Quote.CH.DepartmentListLable'
+--update translations set textcodecode = 'Quote.CH.DepartureFrequencyListLable' where textcodecode = 'Quote.CH.DepartureFrequencyLable'
+--update translations set textcodecode = 'Quote.CH.ExpirationDateListLable' where textcodecode = 'Quote.CH.ExpirationDateLable'
+--update translations set textcodecode = 'Quote.CH.FollowUpTypeListLable' where textcodecode = 'Quote.CH.FollowUpTypeIdListLable'
+--update translations set textcodecode = 'Quote.CH.FromPortListLable' where textcodecode = 'Quote.CH.FromPortCodeListLable'
+--update translations set textcodecode = 'Quote.CH.IncotermCodeListLable' where textcodecode = 'Quote.CH.IncotermCodeLable'
+--update translations set textcodecode = 'Quote.CH.IsAutomaticallyClosedListLable' where textcodecode = 'Quote.CH.IsAutomaticallyClosedLable'
+--update translations set textcodecode = 'Quote.CH.IsDangerousListLable' where textcodecode = 'Quote.CH.IsDangerousLable'
+--update translations set textcodecode = 'Quote.CH.LastActivityDateListLable' where textcodecode = 'Quote.CH.LastActivityDateLable'
+--update translations set textcodecode = 'Quote.CH.LastActivityTypeCodeListLable' where textcodecode = 'Quote.CH.LastActivityTypeCodeLable'
+--update translations set textcodecode = 'Quote.CH.MainCarriageCarrierIdListLable' where textcodecode = 'Quote.CH.MainCarriageCarrierIdLable'
+--update translations set textcodecode = 'Quote.CH.MoveTypeNameListLable' where textcodecode = 'Quote.CH.MoveTypeName'
+--update translations set textcodecode = 'Quote.CH.NextActivityDateListLable' where textcodecode = 'Quote.CH.NextActivityDateLable'
+--update translations set textcodecode = 'Quote.CH.NextActivityTypeCodeListLable' where textcodecode = 'Quote.CH.NextActivityTypeCodeLable'
+--update translations set textcodecode = 'Quote.CH.NumberOfFollowUpsListLable' where textcodecode = 'Quote.CH.NumberOfFollowUpsLable'
+--update translations set textcodecode = 'Quote.CH.QuoteNumberListLable' where textcodecode = 'Quote.CH.QuoteListLable'
+--update translations set textcodecode = 'Quote.CH.RatingNameListLable' where textcodecode = 'Quote.CH.RatingName'
+--update translations set textcodecode = 'Quote.CH.SalesmanNameListLable' where textcodecode = 'Quote.CH.SalesmanNameLable'
+--update translations set textcodecode = 'Quote.CH.ShipmentTypeListLable' where textcodecode = 'Quote.CH.ShipmentTypeListFieldLable'
+--update translations set textcodecode = 'Quote.CH.StageDueDateListLable' where textcodecode = 'Quote.CH.StageDueDateLable'
+--update translations set textcodecode = 'Quote.CH.StageNameListLable' where textcodecode = 'Quote.CH.StageNameLable'
+--update translations set textcodecode = 'Quote.CH.SubjectListLable' where textcodecode = 'Quote.CH.SubjectLable'
+--update translations set textcodecode = 'Quote.CH.ToPortListLable' where textcodecode = 'Quote.CH.ToPortCodeListLable'
+--update translations set textcodecode = 'Quote.CH.TransitTimeListLable' where textcodecode = 'Quote.CH.TransitTimeLable'
+--update translations set textcodecode = 'Quote.F.MainCarriageCarrierId.Short' where textcodecode = 'Quote.F.CarrierId.Short'
+--update translations set textcodecode = 'Quote.F.CostTotalAmountInLocalCurrency.Short' where textcodecode = 'Quote.F.CostTotalAmount.Short'
+--update translations set textcodecode = 'Quote.F.FromPort' where textcodecode = 'Quote.F.FromPortCode'
+--update translations set textcodecode = 'Quote.F.FromPort.Short' where textcodecode = 'Quote.F.FromPortCode.Short'
+--update translations set textcodecode = 'Quote.F.FollowUpDate' where textcodecode = 'Quote.F.FUDate'
+--update translations set textcodecode = 'Quote.F.FollowUpNotes' where textcodecode = 'Quote.F.FUNotes'
+--update translations set textcodecode = 'Quote.F.FollowUpType' where textcodecode = 'Quote.F.FUType'
+--update translations set textcodecode = 'Quote.F.ShipperContactId' where textcodecode = 'Quote.F.ShipperContact'
+--update translations set textcodecode = 'Quote.F.ToPort' where textcodecode = 'Quote.F.ToPortCode'
+--update translations set textcodecode = 'Quote.F.ToPort.Short' where textcodecode = 'Quote.F.ToPortCode.Short'
+--update translations set textcodecode = 'Quote.F.ChargeableWeight.Short' where textcodecode = 'Quote.F.WtMsr.Short'
+--update translations set textcodecode = 'Quote.F.GrossWeightUnitCode.Short' where textcodecode = 'Quote.F.WtMsrUnitCode.Short'
+--update translations set textcodecode = 'QuoteCharge.CH.ChargesTypeIdListLable' where textcodecode = 'QuoteCharge.CH.ChargesTypeId'
+--update translations set textcodecode = 'QuoteCharge.CH.CostMeasurementIdListLable' where textcodecode = 'QuoteCharge.CH.CostMeasurementId'
+--update translations set textcodecode = 'QuoteCharge.CH.IsAllInListLable' where textcodecode = 'QuoteCharge.CH.IsAllIn'
+--update translations set textcodecode = 'QuoteCharge.CH.SaleCurrencyIdListLable' where textcodecode = 'QuoteCharge.CH.SaleCurrencyId'
+--update translations set textcodecode = 'QuoteCharge.CH.VendorIdListLable' where textcodecode = 'QuoteCharge.CH.VendorId'
+--update translations set textcodecode = 'QuoteCharge.F.SaleCurrencyId' where textcodecode = 'QuoteCharge.F.SaleCurrency'
+
+----Quote.CH.ShipperReferenceListLable
+----ShipmentReceivable.MarkupHelpText
+----ARInvoice.CH.StatusNameRateListLable
+----ARInvoice.F.AccountingCardNumber
+----ARInvoice.F.RequestedPaymentMethodCode
+----ARInvoice.F.AccountingCardNumber
+----ARInvoice.CH.AccountingCardNumberListLable
+----ARInvoice.CH.AccountingCardNumberListLable
+----ARInvoice.CH.AccountingCardNumberListLable
+----ARInvoice.CH.ARInvoiceStatusNameRateListLable
+----ARInvoice.CH.ARInvoiceStatusNameRateListLable
+----ARInvoice.CH.IsAutoCreditRateListLable
+----ARInvoice.CH.IsAutoCreditRateListLable
+----ARInvoice.CH.IsCancelledRateListLable
+----ARInvoice.CH.IsCancelledRateListLable
+----Shipment.CH.ETAListLable
+----Shipment.O.Receivables.FixedForeignAmount
+----Shipment.O.Receivables.FixedLocalAmount
+----Shipment.O.Receivables.NotFixed
+----ARInvoiceLine.CH.Reference
+----ARInvoiceLine.CH.AmountInvoice
+----Quote.B.Payables.AddCharge
+----Quote.B.Payables.AddPayable
+----Quote.B.Payables.DeleteCharge
+----Quote.B.Payables.DeletePayable
+----Quote.B.Payables.Tarrifs
+----Quote.B.Receivables.AddReceivable
+----Quote.B.Receivables.DeleteReceivable
+----Quote.CH.ClosingReasonNameListLable
+----Quote.F.MinimumFreightCost
+----Quote.F.MinimumFreightCost.Short
+----Quote.F.MinimumFreightSale
+----Quote.F.MinimumFreightSale.Short
+----Quote.F.PackageTypeId.Short
+----Quote.F.PackageTypeQuantity.Short
+----Quote.F.ProfitInSaleCurrency.Short
+----Quote.F.SaleTotalAmount.Short
+----Quote.Features.General
+----Quote.Features.ReturnInProgress
+----Quote.Features.SetAsNoAnswer
+----Quote.Features.SetAsRejected
+----Quote.MenuButtons.EventButton
+----Quote.Features.Shipments
+----QuoteCharge.PriceBreakHelpText

@@ -549,14 +549,14 @@
                                     </log-column>
 
                                     <!-- OtherPaymentsAmount -->
-                                    <log-column [width]="'110'" [header]="'ARInvoice.CH.OtherPayments' | TextCodeTranslationPipe" [Alignment]="'center'" [SortFieldName]="'OtherPaymentsAmount'">
+                                    <log-column [width]="'110'" [header]="'ARInvoice.O.OtherPayments' | TextCodeTranslationPipe" [Alignment]="'center'" [SortFieldName]="'OtherPaymentsAmount'">
                                         <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1" [Alignment]="isRTL ? 'left' : 'right'" [CellColor]="item.CellBackground">
                                             {{item.OtherPaymentsAmount | NumbersPipe:'N2'}}
                                         </log-cell-template>
                                     </log-column>
 
                                     <!-- AmountPaid (invoice) -->
-                                    <log-column [width]="'100'" [header]="'ARInvoice.CH.AmountToPay' | TextCodeTranslationPipe" [Alignment]="'center'" [SortFieldName]="'AmountPaid'">
+                                    <log-column [width]="'100'" [header]="'ARInvoice.CH.AmountToPayListLable' | TextCodeTranslationPipe" [Alignment]="'center'" [SortFieldName]="'AmountPaid'">
                                         <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1" [CellColor]="item.CellBackground">
                                             <div style="width: 100%;">
                                                 <LogTextBox [InputType]="'sigdouble'" [DigitsAfterPoint]="2" [ObjectTableName]="item.ObjectTableName" [ObjectFieldName]="'AmountPaid'" [Text]="item.AmountPaid" [DataContext]="item.DataContext" [HideColumns]="true"></LogTextBox>
@@ -568,7 +568,7 @@
                                     <log-column *ngIf="IsMultiCurrency" [width]="'135'" [Alignment]="'center'">
                                         <log-header-template template="let item">
                                             <div class="GridHeaderCellTemplate">
-                                                <span>{{'ARInvoice.CH.AmountToPay' | TextCodeTranslationPipe}}</span>
+                                                <span>{{'ARInvoice.CH.AmountToPayListLable' | TextCodeTranslationPipe}}</span>
                                                 <span style="padding-left: 2px;padding-right:2px;">({{PaymentCurrencyCode}})</span>
                                             </div>
                                         </log-header-template>
@@ -579,7 +579,7 @@
                                     </log-column>
 
                                     <!-- Exchange Rate -->
-                                    <log-column *ngIf="IsMultiCurrency" [width]="'100'" [header]="'ARInvoice.CH.InvoiceExchangeRateListLable' | TextCodeTranslationPipe" [SortFieldName]="'ExchangeRate'" [Alignment]="isRTL ? 'left' : 'right'">
+                                    <log-column *ngIf="IsMultiCurrency" [width]="'100'" [header]="'ARInvoice.CH.InvoiceCurrencyExchangeRateListLable' | TextCodeTranslationPipe" [SortFieldName]="'ExchangeRate'" [Alignment]="isRTL ? 'left' : 'right'">
                                         <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1" [Alignment]="isRTL ? 'left' : 'right'" [CellColor]="item.CellBackground">
                                             <table *ngIf="item.IsAdvancedButtonVisible">
                                                 <tr>
@@ -607,7 +607,7 @@
                                     </log-column>
 
                                     <!-- Status -->
-                                    <log-column [width]="'140'" [header]="'ARInvoice.CH.StatusNameRateListLable' | TextCodeTranslationPipe" [SortFieldName]="'Status'">
+                                    <log-column [width]="'140'" [header]="'ARInvoice.O.StatusNameRateListLable' | TextCodeTranslationPipe" [SortFieldName]="'Status'">
                                         <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1" [CellColor]="item.CellBackground">
                                             <table>
                                                 <tr>
@@ -630,7 +630,7 @@
                                     </log-column>
 
                                     <!-- Shipment -->
-                                    <log-column [width]="'100'" [header]="'ARPayment.CH.ShipmentNo' | TextCodeTranslationPipe" [SortFieldName]="'ShipmentNumber'">
+                                    <log-column [width]="'100'" [header]="'ARPayment.CH.ShipmentNumberListLable' | TextCodeTranslationPipe" [SortFieldName]="'ShipmentNumber'">
                                         <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1" [CellColor]="item.CellBackground">
                                             <div style="width: 100%; color:#1B90CB; font-size: 11px;">
                                                 {{item.ShipmentNumber}}
