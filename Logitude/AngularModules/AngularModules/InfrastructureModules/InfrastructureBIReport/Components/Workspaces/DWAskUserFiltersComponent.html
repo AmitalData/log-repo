@@ -413,7 +413,7 @@
                                         <!--<ComboBox style="width:130px;margin-right:5px;" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" [Binding]="'Name'" (SelectedItemChanged)="item.OperationValueChanged($event)"></ComboBox>-->
                                         <div style="width:180px;">
                                             <!--<LogCheckBox (ValueChanged)="item.onTextChange($event)" [ObjectFieldName]="'TextValue'" [DataContext]="item"></LogCheckBox>-->
-                                            <ComboBox *ngIf="BooleanValues" (SelectedItemChanged)="item.onTextChange($event)" [ItemsSource]="BooleanValues" [SelectedItem]="item.TextValue ? item.TextValue : 'No Value'"></ComboBox>
+                                            <ComboBox *ngIf="BooleanValues" (SelectedItemChanged)="item.onTextChange($event)" [ItemsSource]="BooleanValues" [SelectedItem]="item.TextValue ? 'Yes' : item.TextValue == false ? 'No' : 'No Value'"></ComboBox>
                                         </div>
                                     </div>
 
