@@ -1826,6 +1826,10 @@
     <Compile Include="Migrations\201912221024278_Mutaz_UpdatePrimaryKeysInInterestReportTables.Designer.cs">
       <DependentUpon>201912221024278_Mutaz_UpdatePrimaryKeysInInterestReportTables.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201912221834100_ChargesTypeSearchFieldsMigration.cs" />
+    <Compile Include="Migrations\201912221834100_ChargesTypeSearchFieldsMigration.Designer.cs">
+      <DependentUpon>201912221834100_ChargesTypeSearchFieldsMigration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201912301120494_Mutaz_InterestReportLineByDate_UpdateFieldsFormat.cs" />
     <Compile Include="Migrations\201912301120494_Mutaz_InterestReportLineByDate_UpdateFieldsFormat.Designer.cs">
       <DependentUpon>201912301120494_Mutaz_InterestReportLineByDate_UpdateFieldsFormat.cs</DependentUpon>
@@ -2040,10 +2044,6 @@
     <Compile Include="Migrations\201912231019459_AddTransportModeCodeToCarrierArea_Samar.Designer.cs">
       <DependentUpon>201912231019459_AddTransportModeCodeToCarrierArea_Samar.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201912221834100_ChargesTypeSearchFieldsMigration.cs" />
-    <Compile Include="Migrations\201912221834100_ChargesTypeSearchFieldsMigration.Designer.cs">
-      <DependentUpon>201912221834100_ChargesTypeSearchFieldsMigration.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\201912221349345_WesamAddNameTextCodeCodeToQueriesTable.cs" />
     <Compile Include="Migrations\201912221349345_WesamAddNameTextCodeCodeToQueriesTable.Designer.cs">
       <DependentUpon>201912221349345_WesamAddNameTextCodeCodeToQueriesTable.cs</DependentUpon>
@@ -2115,6 +2115,10 @@
     <Compile Include="Migrations\201912221318138_Mutaz_Update_MinimumInterestInvoiceBilling_DataType_Integer.cs" />
     <Compile Include="Migrations\201912221318138_Mutaz_Update_MinimumInterestInvoiceBilling_DataType_Integer.Designer.cs">
       <DependentUpon>201912221318138_Mutaz_Update_MinimumInterestInvoiceBilling_DataType_Integer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001291424415_DeleteShipmentComputedFields.cs" />
+    <Compile Include="Migrations\202001291424415_DeleteShipmentComputedFields.Designer.cs">
+      <DependentUpon>202001291424415_DeleteShipmentComputedFields.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Migrations\201802141437145_ClassifiedREmarks.resx">
@@ -3434,6 +3438,9 @@
     <EmbeddedResource Include="Migrations\201912221318138_Mutaz_Update_MinimumInterestInvoiceBilling_DataType_Integer.resx">
       <DependentUpon>201912221318138_Mutaz_Update_MinimumInterestInvoiceBilling_DataType_Integer.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912221834100_ChargesTypeSearchFieldsMigration.resx">
+      <DependentUpon>201912221834100_ChargesTypeSearchFieldsMigration.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912240707376_WesamAddTextCodesFieldToObjectTablesTable.resx">
       <DependentUpon>201912240707376_WesamAddTextCodesFieldToObjectTablesTable.cs</DependentUpon>
     </EmbeddedResource>
@@ -3444,11 +3451,6 @@
     <Compile Include="Migrations\202001151252518_ARinvoiceBillToGLAccountIdMigration.Designer.cs">
       <DependentUpon>202001151252518_ARinvoiceBillToGLAccountIdMigration.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Migrations\201912221834100_ChargesTypeSearchFieldsMigration.resx">
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201912221834100_ChargesTypeSearchFieldsMigration.resx">
-      <DependentUpon>201912221834100_ChargesTypeSearchFieldsMigration.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912221349345_WesamAddNameTextCodeCodeToQueriesTable.resx">
       <DependentUpon>201912221349345_WesamAddNameTextCodeCodeToQueriesTable.cs</DependentUpon>
     </EmbeddedResource>
@@ -3639,6 +3641,8 @@
 
     <EmbeddedResource Include="Migrations\202002041504529_Mutaz_Fix_QueryOriginalCode.resx">
       <DependentUpon>202002041504529_Mutaz_Fix_QueryOriginalCode.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202001291424415_DeleteShipmentComputedFields.resx">
+      <DependentUpon>202001291424415_DeleteShipmentComputedFields.cs</DependentUpon>
     </EmbeddedResource>
 
   </ItemGroup>
