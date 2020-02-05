@@ -387,7 +387,6 @@ namespace WebFreight.Web.ReportsWebServices
                                     Address address = addressRepository.GetSingleAddress(myPickup.FromAddressId, tenant);
                                     if (address != null)
                                     {
-
                                         deliveryNotedataprovider.PickupAddress = DataProviders.General.GetAddress(address)
                                             + (!string.IsNullOrEmpty(address.ATTN) ? (Environment.NewLine + "Contact : " + address.ATTN) : "")
                                             + (!string.IsNullOrEmpty(address.PhoneNumber) ? (Environment.NewLine + "Phone : " + address.PhoneNumber) : "");
@@ -490,6 +489,7 @@ namespace WebFreight.Web.ReportsWebServices
                                     Address address = addressRepository.GetSingleAddress(myPickup.ToAddressId, tenant);
                                     if (address != null)
                                     {
+                                        deliveryNotedataprovider.ToPartnerAddressName = address.Name;
 
                                         deliveryNotedataprovider.DeliveryAddress = DataProviders.General.GetAddress(address)
                                             + (!string.IsNullOrEmpty(address.ATTN) ? (Environment.NewLine + "Contact : " + address.ATTN) : "")
@@ -1337,6 +1337,7 @@ namespace WebFreight.Web.ReportsWebServices
                                     Address address = addressRepository.GetSingleAddress(myDelivery.ToAddressId, tenant);
                                     if (address != null)
                                     {
+                                        deliveryNotedataprovider.ToPartnerAddressName = address.Name;
 
                                         deliveryNotedataprovider.DeliveryAddress = DataProviders.General.GetAddress(address)
                                             + (!string.IsNullOrEmpty(address.ATTN) ? (Environment.NewLine + "Contact : " + address.ATTN) : "")
