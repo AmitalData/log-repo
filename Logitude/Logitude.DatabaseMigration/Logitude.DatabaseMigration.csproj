@@ -1999,6 +1999,7 @@
     <Compile Include="Migrations\202001261847007_AddFieldAllowManualARPaymentNumber.Designer.cs">
       <DependentUpon>202001261847007_AddFieldAllowManualARPaymentNumber.cs</DependentUpon>
     </Compile>
+
     <Compile Include="Migrations\202001241017569_addShipmentComputedFieldColumn.cs" />
     <Compile Include="Migrations\202001241017569_addShipmentComputedFieldColumn.Designer.cs">
       <DependentUpon>202001241017569_addShipmentComputedFieldColumn.cs</DependentUpon>
@@ -2019,6 +2020,12 @@
     <Compile Include="Migrations\202002041504529_Mutaz_Fix_QueryOriginalCode.Designer.cs">
       <DependentUpon>202002041504529_Mutaz_Fix_QueryOriginalCode.cs</DependentUpon>
     </Compile>
+
+    <Compile Include="Migrations\202002020942527_NewField_NumberOfAgingMonths.cs" />
+    <Compile Include="Migrations\202002020942527_NewField_NumberOfAgingMonths.Designer.cs">
+      <DependentUpon>202002020942527_NewField_NumberOfAgingMonths.cs</DependentUpon>
+    </Compile>
+
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\202001080842531_AbedAddCustomFieldToQuote.cs" />
     <Compile Include="Migrations\202001080842531_AbedAddCustomFieldToQuote.Designer.cs">
@@ -3625,6 +3632,7 @@
     <EmbeddedResource Include="Migrations\202001261847007_AddFieldAllowManualARPaymentNumber.resx">
       <DependentUpon>202001261847007_AddFieldAllowManualARPaymentNumber.cs</DependentUpon>
     </EmbeddedResource>
+
     <EmbeddedResource Include="Migrations\202002030929521_Update_InterestReportHeaderScreen.resx">
       <DependentUpon>202002030929521_Update_InterestReportHeaderScreen.cs</DependentUpon>
     </EmbeddedResource>
@@ -3643,6 +3651,11 @@
     <EmbeddedResource Include="Migrations\202001291424415_DeleteShipmentComputedFields.resx">
       <DependentUpon>202001291424415_DeleteShipmentComputedFields.cs</DependentUpon>
     </EmbeddedResource>
+
+    <EmbeddedResource Include="Migrations\202002020942527_NewField_NumberOfAgingMonths.resx">
+      <DependentUpon>202002020942527_NewField_NumberOfAgingMonths.cs</DependentUpon>
+    </EmbeddedResource>
+
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Logitude.Accounting.Data\Logitude.Accounting.Data.csproj">
