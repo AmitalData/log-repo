@@ -195,7 +195,7 @@
                                                         </td>
                                                     </tr>
 
-                                                  
+
 
                                                     <!-- AccountingActivationDate -->
                                                     <tr class="FormFieldRow">
@@ -310,6 +310,19 @@
                                                                     [DataContext]="DataContext"
                                                                     [LookUpTableName]="'AutomaticReconcileMethod'">
                                                             </LogLov>
+                                                        </td>
+                                                    </tr>
+
+                                                    <!-- NumberOfAgingMonths  -->
+                                                    <tr class="FormFieldRow">
+                                                        <td>
+                                                            <LogLabel [ObjectFieldName]="'NumberOfAgingMonths'" [ObjectTableName]="ObjectTableName"
+                                                                [DataContext]="DataContext"></LogLabel>
+                                                        </td>
+
+                                                        <td colspan="2">
+                                                            <LogTextBox [ObjectFieldName]="'NumberOfAgingMonths'" [ObjectTableName]="ObjectTableName" [InputType]="'integer'"
+                                                                [DataContext]="DataContext"></LogTextBox>
                                                         </td>
                                                     </tr>
 

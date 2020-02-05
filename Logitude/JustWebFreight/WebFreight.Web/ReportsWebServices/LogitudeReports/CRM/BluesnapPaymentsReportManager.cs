@@ -27,11 +27,15 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
         private bool showAllRecurringTenants = false;
         private BluesnapPaymentsDataProvider iDataProvider;
         private IQueryable<TenantJoinBluesnapTransactionList> iQueryable_JoinTenantBluesnapTransaction;
-        private IQueryable<BluesnapTransaction> iQueryable_BluesnapTransactions; 
+        private IQueryable<BluesnapTransaction> iQueryable_BluesnapTransactions;
+        IBlobService storageservice;
+        DocumentRepository documentRepository;
 
         public BluesnapPaymentsReportManager(byte[] xmlFilters, int tenant)
         {
             this.tenant = tenant;
+            storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
+            documentRepository = new DocumentRepository(tenant);
             MemoryStream memoryStream = new MemoryStream(xmlFilters);
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(QueryOperations));
             QueryOperations iQueryOperations = (QueryOperations)xmlSerializer.Deserialize(memoryStream);
@@ -153,10 +157,16 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
                 foreach (var transaction in item.Transactions)
                 {
                     var queryParameters = DeserializeDocumentBody(transaction.DocumentId, transaction.Tenant);
-                    if (queryParameters.Count > 0)
+                    if (queryParameters != null && queryParameters.Count > 0)
                     {
-                        itemRecord.ContractCount = int.Parse(queryParameters["promoteContractsNum"]);
-                        totalPayments += Double.Parse(queryParameters["invoiceAmountUSD"]);
+                        if (queryParameters.ContainsKey("promoteContractsNum"))
+                        {
+                            itemRecord.ContractCount = int.Parse(queryParameters["promoteContractsNum"]);
+                        }
+                        if (queryParameters.ContainsKey("invoiceAmountUSD"))
+                        {
+                            totalPayments += Double.Parse(queryParameters["invoiceAmountUSD"]);
+                        }
                     }
                 }
                 itemRecord.TotalPayments = totalPayments;
@@ -180,16 +190,12 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
                     tenantTransactions.Add(itemRecord);
                 }
             }
-
             this.iDataProvider.BlusnapTransactionsList = tenantTransactions;
         }
 
         private Dictionary<string, string> DeserializeDocumentBody(string documentId, int tenant)
         {
             Dictionary<string, string> queryParameters = null;
-            IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
-            byte[] fileData = null;
-            DocumentRepository documentRepository = new DocumentRepository(tenant);
             Document document = documentRepository.GetSingleDocument(tenant, documentId);
             if (document != null)
             {
@@ -202,20 +208,22 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
                     FileSize = document.FileSize,
                 };
 
-                fileData = storageservice.Read(fileInfo);
+                byte[]  fileData = storageservice.Read(fileInfo);
 
-                string Stringdetails = Encoding.UTF8.GetString(fileData);
-
-                queryParameters = new Dictionary<string, string>();
-                string[] querySegments = Stringdetails.Split('&');
-                foreach (string segment in querySegments)
+                if (fileData != null)
                 {
-                    string[] parts = segment.Split('=');
-                    if (parts.Length > 0)
+                    string Stringdetails = Encoding.UTF8.GetString(fileData);
+                    queryParameters = new Dictionary<string, string>();
+                    string[] querySegments = Stringdetails.Split('&');
+                    foreach (string segment in querySegments)
                     {
-                        string key = parts[0].Trim(new char[] { '?', ' ' });
-                        string val = parts[1].Trim();
-                        queryParameters.Add(WebUtility.UrlDecode(key), WebUtility.UrlDecode(val));
+                        string[] parts = segment.Split('=');
+                        if (parts.Length > 0)
+                        {
+                            string key = parts[0].Trim(new char[] { '?', ' ' });
+                            string val = parts[1].Trim();
+                            queryParameters.Add(WebUtility.UrlDecode(key), WebUtility.UrlDecode(val));
+                        }
                     }
                 }
             }

@@ -540,7 +540,7 @@ export class MaintenanceComponent {
             item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "HybridPartner")[0].Id
             this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
         }
-       
+
         if (FeatureLocator.HasFeaturePermession("General", "SCHEDULERS")) {
             var item = new MenusTablePM();
             item.CategoryTypeCode = "MNG";
@@ -551,7 +551,7 @@ export class MaintenanceComponent {
             item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "TasksScheduler")[0].Id
             this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
 
-        } 
+        }
 
         if (FeatureLocator.HasFeaturePermession("General", "MAINCUSTOMERS")) {
             var item = new MenusTablePM();
@@ -591,7 +591,7 @@ export class MaintenanceComponent {
             item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "PriceStep")[0].Id
             this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
 
-        } 
+        }
 
         if (SessionLocator.Tenant == 0) {
             var item = new MenusTablePM();
@@ -894,7 +894,7 @@ export class MaintenanceComponent {
                     this._entityResourceService.getEntityResourceByTableName("FullAccountingSetting", 0).subscribe(response => {
                         var logitudeWindow = new LogitudeWindow();
                         logitudeWindow.Width = 900;
-                        logitudeWindow.Height = 500;
+                        logitudeWindow.Height = 550;
                         logitudeWindow.Title = TextCodeTranslator.Translate("Accounting.O.FullAccountingSettings"); // "Full Accounting Settings";
                         logitudeWindow.Show('./Accounting/Components/Maintenance/FullAccountingSettingsComponent');
                     });
@@ -1308,7 +1308,7 @@ export class MaintenanceComponent {
                         var logWindow = new LogitudeWindow();
                         logWindow.Title = windowTitle;
                         logWindow.Show('./CRMModules/CRMOthers/Components/SupportMailBox/SupportMailBoxComponent');
-                    });                    
+                    });
                     break;
                 }
 

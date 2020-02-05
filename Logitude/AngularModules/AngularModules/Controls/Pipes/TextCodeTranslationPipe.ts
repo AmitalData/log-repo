@@ -12,7 +12,7 @@ export class TextCodeTranslationPipe {
         if (translation != null) {
             translation = translation.trim();
         }
-        if (translation == "" && !isNullOrUndefined(translation)) {
+        if (translation == "" && !isNullOrUndefined(value)) {
             if (!SessionLocator.ProtractorEmails.find(userEmail => userEmail == SessionLocator.LoggedUserPM.Email.toLowerCase())) {
                 alert("This code:'" + value + "' Not Found!");
             }
