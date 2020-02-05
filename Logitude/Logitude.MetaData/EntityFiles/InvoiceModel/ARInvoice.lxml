@@ -2239,7 +2239,7 @@
     DefaultText="&quot;Shipment No.&quot;"
     FullLocalDefaultText="&quot;מספר אסמכתא&quot;"
     ListFieldLable="&quot;MainEntityReferenceListLable&quot;"
-    ListLableDefaultText="&quot;Shipment No.&quot;"
+    ListLableDefaultText="&quot;Reference No.&quot;"
     ListLocalDefaultText="&quot;מספר אסמכתא&quot;"
     IsNullable="false"
     IsForeignKey="false"
