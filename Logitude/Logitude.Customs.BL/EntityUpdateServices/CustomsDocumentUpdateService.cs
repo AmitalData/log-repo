@@ -53,7 +53,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         //לאחר ממשק UD2LT - קישור מסמך לטיקט, אם התיק הינו תיק בלדרות יש לבצע העלאה של המסמך למכס - מסר קלוט צרופה
         public void AddPerfectCustomsDocumentMetaDataValues(CustomsDocumentPM entityPM)
         {
-            if ( entityPM.CustomsDocumentMetaDataValues.Count == 0)
+            if (entityPM.CustomsDocumentMetaDataValues.Count == 0)
             {
                 var customContext = CustomContext.GetContext(entityPM.Tenant);
                 var customDocumentTypeMetaDataQuery = new CustomDocumentTypeMetaDataQueryService(customContext);
@@ -69,6 +69,35 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
                 AutoSetOriginalDocumentTrue(entityPM);
                 this._AddPerfectCustomsDocumentMetaDataValues_IsMetaDataReady = true;
+            }
+            else
+            {
+                Boolean isAdded = false;
+                var customContext = CustomContext.GetContext(entityPM.Tenant);
+                var customDocumentTypeMetaDataQuery = new CustomDocumentTypeMetaDataQueryService(customContext);
+                var CustomDocumentTypeMetaData = customDocumentTypeMetaDataQuery.GetCustomDocumentTypeMetaDataByType(entityPM.DocumentTypeCode);
+                foreach (var CustomDocumentTypeMetaDataitem in CustomDocumentTypeMetaData)
+                {
+                    if (entityPM.CustomsDocumentMetaDataValues.Where(r => r.MetaDataTypeCode == CustomDocumentTypeMetaDataitem.MetaDataTypeCode).FirstOrDefault() == null)
+                    {
+                        CustomsDocumentMetaDataValuePM customsDocumentMetaDataValuePM = new CustomsDocumentMetaDataValuePM()
+                        {
+                            ChangeSetOp = ChangeSetOperation.Insert,
+                            Tenant = entityPM.Tenant,
+                            CustomsDocumentId = entityPM.CustomsDocId,
+                            MetaDataTypeCode = CustomDocumentTypeMetaDataitem.MetaDataTypeCode,
+                            MetaDataValue = null,
+                        };
+                        entityPM.CustomsDocumentMetaDataValues.Add(customsDocumentMetaDataValuePM);
+                        isAdded = true;
+                    }
+                }
+                if (isAdded)
+                {
+                    AutoSetOriginalDocumentTrue(entityPM);
+                    this._AddPerfectCustomsDocumentMetaDataValues_IsMetaDataReady = true;
+                }
+
             }
         }
         protected override void UpdateComposition(CustomsDocumentPM entityPM)
@@ -105,6 +134,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     }
                 }
             }
+
         }
 
         public const string SetCustomsRequestSheetStatus = "SetCustomsRequestSheetStatus";
@@ -298,6 +328,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             {
                 ready = false;
             }
+
             foreach (CustomDocumentTypeMetaDataPM documentTypeMetaData in requireddocumentTypeMetaDatas)
             {
                 CustomsDocumentMetaDataValuePM value = entityPM.CustomsDocumentMetaDataValues.Where(d => d.MetaDataTypeCode == documentTypeMetaData.MetaDataTypeCode).FirstOrDefault();
