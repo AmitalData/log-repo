@@ -3634,17 +3634,15 @@
     <EmbeddedResource Include="Migrations\202001241017569_addShipmentComputedFieldColumn.resx">
       <DependentUpon>202001241017569_addShipmentComputedFieldColumn.cs</DependentUpon>
     </EmbeddedResource>
-
     <EmbeddedResource Include="Migrations\202002031310173_AddRequestDateToQuoteTable_Maheera.resx">
       <DependentUpon>202002031310173_AddRequestDateToQuoteTable_Maheera.cs</DependentUpon>
     </EmbeddedResource>
-
     <EmbeddedResource Include="Migrations\202002041504529_Mutaz_Fix_QueryOriginalCode.resx">
       <DependentUpon>202002041504529_Mutaz_Fix_QueryOriginalCode.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202001291424415_DeleteShipmentComputedFields.resx">
       <DependentUpon>202001291424415_DeleteShipmentComputedFields.cs</DependentUpon>
     </EmbeddedResource>
-
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Logitude.Accounting.Data\Logitude.Accounting.Data.csproj">
