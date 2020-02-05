@@ -53,8 +53,11 @@
     <Reference Include="System.Net.Http" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Declaration\UnitTest1.cs" />
+    <Compile Include="CustomsVariables.cs" />
+    <Compile Include="CustomsPreparationCalls.cs" />
+    <Compile Include="Initialize.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tests\ChartOfAccountIntegrationTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="..\Logitude.IntegrationTest.Core\Config\Local.appSettings.config">
@@ -69,6 +72,14 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Logitude.Accounting.Data\Logitude.Accounting.Data.csproj">
+      <Project>{A3799525-14A2-42FC-A2DE-69ED3FD1C5D1}</Project>
+      <Name>Logitude.Accounting.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.Accounting.Def\Logitude.Accounting.Def.csproj">
+      <Project>{91564685-7EE1-466D-AFCD-183A1BF62259}</Project>
+      <Name>Logitude.Accounting.Def</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Logitude.Customs.Def\Logitude.Customs.Def.csproj">
       <Project>{89132340-6f21-4ce1-8de4-1ca45e2cd9f3}</Project>
       <Name>Logitude.Customs.Def</Name>
@@ -76,6 +87,10 @@
     <ProjectReference Include="..\Logitude.IntegrationTest.Core\Logitude.IntegrationTest.Core.csproj">
       <Project>{83ee55e3-c13c-4df6-ac3c-c634e9cd8d66}</Project>
       <Name>Logitude.IntegrationTest.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Simplog.Server.Infrastructure\Simplog.Server.Infrastructure.csproj">
+      <Project>{ACC2EA9E-E150-4099-8AA1-66326AB14BE8}</Project>
+      <Name>Simplog.Server.Infrastructure</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />
