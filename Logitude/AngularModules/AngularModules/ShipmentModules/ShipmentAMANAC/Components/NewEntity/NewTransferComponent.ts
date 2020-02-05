@@ -166,6 +166,9 @@ export class NewTransferComponent extends BaseComponent {
 
         this.AppendDateFilter(filters, date);
         filters.addAdditionalFilter("ShipmentLevelCode", "D,H", null, null, "InList", false, true, false, "string");
+        filters.addAdditionalFilter("IsCancelled", false, null, null, "Equals", false, false, false, "Boolean");
+        filters.addAdditionalFilter("IsOperationalClosed", false, null, null, "Equals", false, false, false, "Boolean");
+        filters.addAdditionalFilter("IsAccountingClosed", false, null, null, "Equals", false, false, false, "Boolean");
 
         if (!AppTool.IsNullOrEmpty(this.SearchText)) {
             filters.addAdditionalFilter("SearchFields", this.SearchText, null, null, "Contains", false, true, false, "string");
