@@ -1,5 +1,9 @@
 ﻿using Logitude.Accounting.Data.EntityLists;
 using Logitude.Accounting.Def.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityLists;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.Customs.Data.EntityLists;
+using Logitude.Customs.Def.EntityPMs;
 using Logitude.IntegrationTest.Core;
 using Logitude.IntegrationTest.Core.Login;
 using System;
@@ -13,67 +17,91 @@ namespace Logitude.IntegrationTest.Customs
     {
         public static async Task PrepareVariables()
         {
-            await GetChartOfAccountVendor1PMCF();
+            await GetCardCusstomerGECU();
+            await GetCustomsTransportModeA();
+            await GetCustomsHouseTypesITEST();
 
         }
 
 
 
-        private static async Task GetChartOfAccountVendor1PMCF()
+        private static async Task GetCardCusstomerGECU()
         {
-            HttpResponseMessage response = await RestClientService.GetAsync("ChartOfAccountViews" + QueryFiltersPreparation.GetUrlParameters("1PMCF"));
-            ChartOfAccountList chartOfAccountList = RestClientService.ParseResponse<ChartOfAccountList>(response);
-            if (chartOfAccountList == null)
-                await CreateChartOfAccountVendor1PMCF();
+            HttpResponseMessage response = await RestClientService.GetAsync("CardViews" + QueryFiltersPreparation.GetUrlParameters("GE:Cusstomer"));
+            CardList cardList = RestClientService.ParseResponse<CardList>(response);
+            if (cardList == null)
+                await CreateCardCusstomerGECU();
             else
             {
-                CustomsVariables.ChartOfAccountVendor1PMCFId = chartOfAccountList.Id;
-                CustomsVariables.ChartOfAccountVendor1PMCFCode = chartOfAccountList.Code;
+                CustomsVariables.CardCusstomerGECUId = cardList.Id;
+                CustomsVariables.CardCusstomerGECUCode = cardList.Code;
             }
         }
-        private static async Task CreateChartOfAccountVendor1PMCF()
+        private static async Task CreateCardCusstomerGECU()
         {
-            ChartOfAccountPM ChartOfAccountVendorPM = GetNewChartOfAccountVendor1PMCF();
-            HttpResponseMessage response = await RestClientService.PostAsync(ChartOfAccountVendorPM, "ChartOfAccounts");
-            ChartOfAccountPM chartOfAccountPM = RestClientService.ParseResponse<ChartOfAccountPM>(response);
-            CustomsVariables.ChartOfAccountVendor1PMCFId = chartOfAccountPM.Id;
-            CustomsVariables.ChartOfAccountVendor1PMCFCode = chartOfAccountPM.Code;
+            CardPM cardCusstomerPM = GetNewCardCusstomerGECU();
+            HttpResponseMessage response = await RestClientService.PostAsync(cardCusstomerPM, "Cards");
+            CardPM cardPM = RestClientService.ParseResponse<CardPM>(response);
+            CustomsVariables.CardCusstomerGECUId = cardPM.Id;
+            CustomsVariables.CardCusstomerGECUCode = cardPM.Code;
         }
-        private static ChartOfAccountPM GetNewChartOfAccountVendor1PMCF()
+        private static CardPM GetNewCardCusstomerGECU()
         {
-            ChartOfAccountPM chartOfAccountPM = new ChartOfAccountPM();
-            chartOfAccountPM.Tenant = IntegrationTestLoginParameters.Tenant;
-            chartOfAccountPM.EnglishName = "GE:Vendor";
-            chartOfAccountPM.LocalName = "GE:Vendor";
-            chartOfAccountPM.SearchFields = "1PMCF,GE:Vendor";
-            chartOfAccountPM.Code = "1PMCF";
-            chartOfAccountPM.TypeCode = "4";
-            chartOfAccountPM.Inactive = true;
-            return chartOfAccountPM;
+            CardPM cardPM = new CardPM();
+            cardPM.Tenant = IntegrationTestLoginParameters.Tenant;
+            cardPM.EnglishName = "GE:Cusstomer";
+            cardPM.LocalName = "GE:Cusstomer";
+            cardPM.Code = "GECU";
+            cardPM.PartnerTypeId = "CS";
+            cardPM.CityName = "Guaynabo";
+            cardPM.CountryName = "Guaynabo";
+            cardPM.InActive = true;
+            cardPM.InternetAccess = true;
+            cardPM.SharedLogisticsInvitationStatusCode = 1;
+            cardPM.IsCustomer = true;
+            cardPM.EnableConsolidationInvoices = false;
+            cardPM.IsActiveForMobile = false;
+            cardPM.IsInternationalPartner = false;
+            cardPM.IsAutonomy = false;
+            cardPM.PartnerTypeName = "Cusstomer";
+            //cardPM.VatTypeId = "";
+            return cardPM;
         }
-        private static async Task CreateGlAccountVendor458GLPML()
+        private static async Task GetCustomsTransportModeA()
         {
-            GLAccountPM GlAccountVendorPM = GetNewGlAccountVendorPM458GLPML();
-            HttpResponseMessage response = await RestClientService.PostAsync(GlAccountVendorPM, "GLAccounts");
-            GLAccountPM gLAccountPM = RestClientService.ParseResponse<GLAccountPM>(response);
-            CustomsVariables.GLAccountVendor458GLPMId = gLAccountPM.Id;
+            HttpResponseMessage response = await RestClientService.GetAsync("CustomsTransportModeViews" + QueryFiltersPreparation.GetUrlParameters("A"));
+            CustomsTransportModeList customsTransportModeList = RestClientService.ParseResponse<CustomsTransportModeList>(response);
+            CustomsVariables.CustomsTransportModeACode = customsTransportModeList.Code;
         }
-        private static GLAccountPM GetNewGlAccountVendorPM458GLPML()
+        private static async Task GetCustomsHouseTypesITEST()
         {
-            GLAccountPM gLAccountPM = new GLAccountPM();
-            gLAccountPM.Tenant = IntegrationTestLoginParameters.Tenant;
-            gLAccountPM.EnglishName = "GE:Vendor";
-            gLAccountPM.LocalName = "GE:Vendor";
-            gLAccountPM.SearchFields = "458GLPML,GE:Vendor";
-            gLAccountPM.AccountTypeCode = "3";
-            gLAccountPM.DisplayNumber = "458GLPML";
-            gLAccountPM.IsMultiCurrency = true;
-            gLAccountPM.RevenueExpenseType = "3";
-            gLAccountPM.ChartOfAccountsId = CustomsVariables.ChartOfAccountVendor1PMCFId;
-            gLAccountPM.ChartOfAccountsTypeCode = "4";
-            gLAccountPM.ReconcileMethodCode = "0";
-            gLAccountPM.NewGLAccountCardId = CustomsVariables.VendorTestGlVendor1s5PMV2Id;
-            return gLAccountPM;
+            HttpResponseMessage response = await RestClientService.GetAsync("CustomsHouseTypeViews" + QueryFiltersPreparation.GetUrlParameters("ITEST"));
+            CustomsHouseTypeList customsHouseTypeList = RestClientService.ParseResponse<CustomsHouseTypeList>(response);
+            if (customsHouseTypeList == null)
+                await CreateCustomsHouseTypesITEST();
+            else
+            {
+                CustomsVariables.CustomsHouseTypesITESTCode = customsHouseTypeList.Code;
+            }
         }
+        private static async Task CreateCustomsHouseTypesITEST()
+        {
+            CustomsHouseTypePM customsHouseTypeTESTPM = GetNewCustomsHouseTypesITEST();
+            HttpResponseMessage response = await RestClientService.PostAsync(customsHouseTypeTESTPM, "CustomsHouseTypes");
+            CustomsHouseTypePM customsHouseTypePM = RestClientService.ParseResponse<CustomsHouseTypePM>(response);
+            CustomsVariables.CustomsHouseTypesITESTCode = customsHouseTypePM.Code;
+        }
+        private static CustomsHouseTypePM GetNewCustomsHouseTypesITEST()
+        {
+            CustomsHouseTypePM customsHouseTypePM = new CustomsHouseTypePM();
+            customsHouseTypePM.Tenant = IntegrationTestLoginParameters.Tenant;
+            customsHouseTypePM.EnglishName = "GE:ITEST";
+            customsHouseTypePM.LocalName = "GE:ITEST";
+            customsHouseTypePM.SearchFields = "ITEST,GE:ITEST";
+            customsHouseTypePM.Code = "ITEST";
+            customsHouseTypePM.Inactive = false;
+            return customsHouseTypePM;
+        }
+
     }
 }
