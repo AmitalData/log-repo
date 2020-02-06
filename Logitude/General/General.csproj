@@ -652,7 +652,6 @@
     <Content Include="Main Branch\2019\12 - 2019\Day 31 [Rabaia] Delete Constraint between Features and Queries.sql" />
     <Content Include="Main Branch\2019\12 - 2019\Day 30 [Wesam] Fill TextCodeCode on Translations.sql" />
     <Content Include="Main Branch\2019\12 - 2019\Day 30 [Wesam] Delete Constraint between Translations and TextCode.sql" />
-    <Content Include="Main Branch\2020\01 - 2020\Day 06 [Wesam] Fill objectfieldcode on Restrictions - Copy.sql" />
     <Content Include="Main Branch\2020\01 - 2020\Day 08 [Mutaz] Delete Constraint between ObjectTable and Screen.sql" />
     <Content Include="Main Branch\2020\01 - 2020\Day 08 [Mutaz] Delete Constraint between ScreenModifications and Screen.sql" />
     <Content Include="Main Branch\2020\01 - 2020\Day 08 [Mutaz] Delete Constraint between ScreenFields and Screen.sql" />
@@ -683,6 +682,7 @@
     <Content Include="Main Branch\2019\12 - 2019\Day 31 [Wesam] Delete Constraint between RuleConditionFields and objectFields.sql" />
     <Content Include="Main Branch\2019\12 - 2019\Day 31 [Wesam] Fill objectfieldcode on RuleConditionFields.sql" />
     <Content Include="Main Branch\2020\02 - 2020\Day 04 [Maheera] Fill RequestDate of Quote Table.sql" />
+    <Content Include="Main Branch\2020\02 - 2020\Day 06 [Wesam] Fix pltotaltax textcode.sql" />
     <Content Include="Main Branch\2020\1 - 2020\Day 12 [Mutaz] Delete Constraint between SharedUserQueries and Query.sql" />
     <Content Include="Main Branch\2020\1 - 2020\Day 22 [Abed] update Help Center.sql" />
     <Content Include="Main Branch\2020\1 - 2020\Day 31 [Mutaz] Add Constraint UniqCode In Query.sql" />
@@ -1946,6 +1946,9 @@
     <Content Include="Usefull Scripts\Islam\duplicated Global Contacts Fix.sql" />
     <Content Include="Usefull Scripts\Islam\duplicated user codes.sql" />
     <Content Include="Usefull Scripts\Islam\zombie Global contacts issue fix.sql" />
+    <Content Include="Usefull Scripts\MetaData\2MetaDataScripts -Delete.sql" />
+    <Content Include="Usefull Scripts\MetaData\3MetaDataScripts -AfterDelete.sql" />
+    <Content Include="Usefull Scripts\MetaData\1MetaDataScripts -BeforeDelete.sql" />
     <Content Include="Usefull Scripts\MetaData\MetaDataScripts.sql" />
     <Content Include="Usefull Scripts\Queries\01_Shipments.sql" />
     <Content Include="Usefull Scripts\Queries\02_Quotes.sql" />

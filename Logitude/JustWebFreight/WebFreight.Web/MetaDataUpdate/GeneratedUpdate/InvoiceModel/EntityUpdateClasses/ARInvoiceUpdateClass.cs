@@ -115,7 +115,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  10,
-			      				    DefaultText =  "Invoice",
+			      				    DefaultText =  "A/R Invoice",
 			      				    Code =  "INVC",
 			      				    Name =  "Invoices",
 			      				    GenerateDomainService =  false,
@@ -9476,7 +9476,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
  		   TextCode ARInvoiceTextCode_ARInvoiceFPartnerType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.F.PartnerType", DefaultText = "Partner Type",LocalDefaultText = @"סוג שותף", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "F", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode ARInvoiceTextCode_ARInvoiceOVATListLable = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.O.VATListLable", DefaultText = "VATListLable",LocalDefaultText = null, ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ARInvoiceTextCode_ARInvoiceOVATListLable = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.O.VATListLable", DefaultText = "VAT",LocalDefaultText = null, ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ARInvoiceTextCode_ARInvoiceOOtherPayments = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.O.OtherPayments", DefaultText = "Other Payments",LocalDefaultText = null, ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 

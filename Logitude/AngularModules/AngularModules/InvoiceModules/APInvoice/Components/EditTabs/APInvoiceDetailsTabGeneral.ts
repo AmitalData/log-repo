@@ -51,9 +51,13 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     public IsEditExchangeRateVisible: boolean = false;
     public isRTL: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
+    InvoiceLineHeader: string;
+    accountingActivated: boolean= false;
+  
     constructor(private entityArgs: EntityArgs) {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
+
         this.EntityPM = entityArgs.EntityPM;
         this.ItemsSource = new ObservableCollection([]);
         this.todayDate = DateTool.GetCurrentDateAsUtc();
@@ -62,7 +66,13 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         this.SetUIProperties();
         this.BuildScreenData();
         this.Listen();
-
+        if (SessionLocator.TenantPM.AccountingActivated) {
+            this.InvoiceLineHeader = TextCodeTranslator.Translate("APInvoiceLine.F.Description");
+            this.accountingActivated = true;
+        }
+        else {
+            this.InvoiceLineHeader = TextCodeTranslator.Translate("APInvoiceLine.O.Name");
+         }
         if (FeatureLocator.HasFeaturePermession("General", "General.Features.SystemCurrencies")) {
             this.IsEditExchangeRateVisible = true;
         }
@@ -1111,6 +1121,7 @@ export class APInvoiceLineItem extends BaseComponent {
     public CorrectionByUserName = "";
     public LocalCurrencyId: string;
     private CurrentSession = SessionLocator.SelectedSession;
+  
     constructor(line: APInvoiceLinePM, public fatherComponent: APInvoiceDetailsTabGeneral, public AddNewLineMode) {
         super();
         this.invoiceLinePM = line;
@@ -1121,6 +1132,7 @@ export class APInvoiceLineItem extends BaseComponent {
         this.GetUserName();
         this.setColors();
         this.ReadVatTypeData();
+       
     }
 
     private GetUserName() {

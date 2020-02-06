@@ -36,7 +36,7 @@
   HasDynamicHeader="false"
   ObjectTableTypeCode="&quot;BR&quot;"
   MaxNumberOfCustomFields="10"
-  DefaultText="&quot;Invoice&quot;"
+  DefaultText="&quot;A/R Invoice&quot;"
   Code="&quot;INVC&quot;"
   Name="&quot;Invoices&quot;"
   GenerateDomainService="false"
@@ -17001,7 +17001,7 @@
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;ARInvoice.O.VATListLable&quot;"
-      DefaultText="&quot;VATListLable&quot;"
+      DefaultText="&quot;VAT&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
