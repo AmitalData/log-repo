@@ -956,5 +956,10 @@ namespace Logitude.DBMigrations.Models
 
             return dropUniqueConstraintWithHistoryScript;
         }
+
+        protected override string GetDropIndexScript(IndexDefinition index)
+        {
+            return null;
+        }
     }
 }

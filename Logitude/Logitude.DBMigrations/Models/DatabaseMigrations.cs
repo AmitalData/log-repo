@@ -1003,6 +1003,8 @@ namespace Logitude.DBMigrations.Models
         
         protected abstract string GetCreateIndexScript(IndexDefinition index);
 
+        protected abstract string GetDropIndexScript(IndexDefinition index);
+
         protected abstract string GetCreateUniqueConstraintScript(UniqueConstraintDefinition uniqueConstraint);
 
         protected abstract string GetDropUniqueConstraintScript(UniqueConstraintDefinition uniqueConstraint);
