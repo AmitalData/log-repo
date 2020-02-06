@@ -113,8 +113,12 @@
                         <tr>
 
                             <!-- 1 -->
-                            <td style="width: 200px;padding: 0 7px;">
-                                <ul class="FiltersMenu" [class.aboodRTLFilterMenu]="isRTL" float-start>
+                            <td style="width: 200px;">
+
+                                <LogLabel [ObjectTableName]="'GLAccount'" [TextCode]="'GLAccount.O.Customer'"
+                                    [ObjectFieldName]="'Customer'" [NoObjectField]="true" [DataContext]="DataContext"></LogLabel>
+
+                                <!-- <ul class="FiltersMenu" [class.aboodRTLFilterMenu]="isRTL" float-start>
                                     <li float-start id="filter_customer" (click)="FilterItemClicked('filter_customer')" style="height: 22px;"
                                         [class.SelectedFilter]="filterSelectedValue === 'filter_customer'">
                                         {{'GLAccount.O.Customer' | TextCodeTranslationPipe}}
@@ -123,12 +127,13 @@
                                         [class.SelectedFilter]="filterSelectedValue === 'filter_chartOfAccount'">
                                         {{'GLAccount.F.ChartOfAccountsId' | TextCodeTranslationPipe}}
                                     </li>
-                                </ul>
+                                </ul> -->
+
                             </td>
 
                             <!-- 2 -->
                             <td style="width: 150px;">
-                                <LogLov *ngIf="filterSelectedValue === 'filter_customer'"
+                                <LogLov
                                         style="display: block;width: 130px;"
                                         [ObjectFieldName]="'Customer'"
                                         [ObjectTableName]="'GLAccount'"
@@ -140,7 +145,7 @@
                                         [HideColumns]="true">
                                 </LogLov>
 
-                                <LogLov *ngIf="filterSelectedValue === 'filter_chartOfAccount'"
+                                <!-- <LogLov *ngIf="filterSelectedValue === 'filter_chartOfAccount'"
                                         style="display: block;width: 130px;"
                                         [ObjectFieldName]="'ChartOfAccount'"
                                         [ObjectTableName]="'GLAccount'"
@@ -149,7 +154,7 @@
                                         [SelectedValue]="ChartOfAccount"
                                         [LookUpTableName]="'ChartOfAccount'"
                                         [HideColumns]="true">
-                                </LogLov>
+                                </LogLov> -->
                             </td>
 
                             <!-- 3 -->
