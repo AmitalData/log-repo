@@ -152,7 +152,7 @@ namespace WebFreight.Web.DataProviders
                 if (LocalAmountDebit != 0)
                     return LocalAmountDebit;
                 else
-                    return LocalAmountCredit;
+                    return LocalAmountCredit*-1;
             }
         }
         public decimal ForeignAmount
@@ -162,7 +162,7 @@ namespace WebFreight.Web.DataProviders
                 if (ForeignAmountDebit != 0)
                     return ForeignAmountDebit;
                 else
-                    return ForeignAmountCredit;
+                    return ForeignAmountCredit * -1;
             }
         }
     }
