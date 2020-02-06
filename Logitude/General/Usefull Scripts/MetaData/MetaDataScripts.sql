@@ -67,7 +67,7 @@
 --delete from screens where tenant = 0 and (Code not like 'customs.%' or Code is null)
 
 ----Queries
---delete from Queries where tenant = 0 and (Code not like 'customs.%' or Code is null) and userid is null
+--delete from Queries where tenant = 0 and (Code not like 'customs.%' or Code is null) and userid is null and systemlevel = 1
 
 ----TextCodes
 --delete from MenuButtons where tenant = 0 and (LabelTextCodeCode not like 'customs.%' or LabelTextCodeCode is null)
@@ -147,6 +147,8 @@
 -------------
 --delete from Screens where code='Customs.AccountingPartner.HeaderScreen'
 --update ScreenModifications set NumberOfRows=3 where NumberOfRows>3 and ScreenCode like '%headerscreen%'
+--select * from ScreenModifications where ScreenId in (select id from screens where ScreenCode='Master.HeaderScreen' and ObjectTableId=(select id from objecttables where name='master'))
+----delete from ScreenModifications where id='1-425' or id='1-370'
 
 --update translations set textcodecode = 'APInvoiceLine.O.Vendor' where textcodecode = 'APInvoiceLine.CH.Vendor'
 --update translations set textcodecode = 'APInvoiceLine.O.Vendor' where textcodecode = 'APInvoiceLine.F.Vendor'
