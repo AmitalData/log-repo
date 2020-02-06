@@ -1771,6 +1771,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode InterestReportTextCode_InterestReportOCustomerisnotdefined = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.Customerisnotdefined", DefaultText = "Customer is not defined to interest",LocalDefaultText = @"לקוח לא מוגדר לריבית", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
+ 		   TextCode InterestReportTextCode_AccountingGeneralONewInterestBases = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.NewInterestBases", DefaultText = "New Interest Bases",LocalDefaultText = @"חדש  בסיס ריבית", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
    
 	    
 }

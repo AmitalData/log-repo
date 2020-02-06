@@ -59,7 +59,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                ICRMContext MyContext = CRMContext.GetContext(authToken.Tenant);
+                SecurityUtility.CheckContactFeature("SupportMailbox", "READ", authToken.Tenant);
+	                ICRMContext MyContext = CRMContext.GetContext(authToken.Tenant);
                 SupportMailboxListQueryService supportMailboxQuery = new SupportMailboxListQueryService(MyContext);
                 SupportMailboxList supportMailboxList = supportMailboxQuery.GetSingle(id);
  				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
@@ -81,7 +82,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                ICRMContext MyContext = CRMContext.GetContext(authToken.Tenant);
+                SecurityUtility.CheckContactFeature("SupportMailbox", "READ", authToken.Tenant);
+	                ICRMContext MyContext = CRMContext.GetContext(authToken.Tenant);
                 SupportMailboxListQueryService supportMailboxQuery = new SupportMailboxListQueryService(MyContext);
                 List<SupportMailboxList> result = supportMailboxQuery.GetList(authToken.Tenant);
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
@@ -103,7 +105,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                
+                SecurityUtility.CheckContactFeature("SupportMailbox", "READ", authToken.Tenant);
+	                
 				int tenant = authToken.Tenant;
 
                 QueryOperations queryOperations = new QueryOperations()

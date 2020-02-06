@@ -5,6 +5,8 @@ export class NewQuoteComponentArgs {
     public IsCopyFromQuote: boolean = false; 
     public DefaultCustomerId: string = null;
     public OpportunityId: string = null;
+    public IsCreatedFromTicket: boolean = false;
+    public TicketCreateDate: Date;
 }
 
 export class QuoteEventNotesArgs {

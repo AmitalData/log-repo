@@ -1455,6 +1455,77 @@ namespace WebFreight.Web.Helpers
 
             #region Write Report To Storage
 
+            if (reportFliter.tenant == 1526 || reportFliter.tenant == 1)
+            {
+
+                SaveReportMdcFileOnStorgeUsingFileStream(reportFliter, report);
+            }
+            else
+            {
+                SaveReportMdcFileOnStorgeUsingMemoryStream(reportFliter, report);
+            }
+
+
+
+            #endregion
+            string url = "";
+            if (!reportFliter.ReportsRunUsingWR)
+            {
+                url = ExportStimulaImage(report, reportFliter);
+            }
+            return url;
+
+
+        }
+
+
+        private void SaveReportMdcFileOnStorgeUsingFileStream(ReportFliter reportFliter, StiReport report)
+        {
+            try
+            {
+                string tempFilePath = Path.Combine(Path.GetTempPath(), reportFliter.ReportKey + ".mdc");
+                var fileStream = new FileStream(tempFilePath, FileMode.Create, FileAccess.Write);
+                report.SaveDocument(fileStream);
+                fileStream.Close();
+                ReadReportMdcFromStreamFileAndSaveOnStorgeByChunks(tempFilePath, reportFliter);
+                File.Delete(tempFilePath);
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "SaveReportMdcFileOnStorgeUsingFileStream", null, null);
+                SaveReportMdcFileOnStorgeUsingMemoryStream(reportFliter, report);
+            }
+        }
+
+        
+
+        private void ReadReportMdcFromStreamFileAndSaveOnStorgeByChunks(string tempFilePath, ReportFliter reportFliter)
+        {
+            BlobFileInfo fileInfo = GetNewBlobFileInfo(reportFliter.ReportKey + "@" + reportFliter.ReportName, reportFliter.tenant);
+            IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
+            List<string> blockIdsList = new List<string>();
+            int bufferNumber = 0;
+            const int chunkSize = 100000;
+            long sendSize = 0;
+            using (FileStream fileStream = new FileStream(tempFilePath, FileMode.Open, FileAccess.Read))
+            {
+                int bytesRead;
+                fileInfo.FileSize = fileStream.Length;
+                var buffer = new byte[chunkSize];
+                while ((bytesRead = fileStream.Read(buffer, 0, buffer.Length)) > 0)
+                {
+                    sendSize += buffer.Length;
+                    var blockId = Convert.ToBase64String(Guid.NewGuid().ToByteArray());
+                    blockIdsList.Add(blockId);
+                    storageservice.WriteBlock(buffer, sendSize, blockIdsList.ToArray(), bufferNumber, fileInfo);
+                    bufferNumber += 1;
+                }
+                fileStream.Close();
+            }
+        }
+
+        private void SaveReportMdcFileOnStorgeUsingMemoryStream(ReportFliter reportFliter, StiReport report)
+        {
             MemoryStream stream = new MemoryStream();
             report.SaveDocument(stream);
             if (stream != null)
@@ -1474,18 +1545,7 @@ namespace WebFreight.Web.Helpers
                     storageservice.Write(reportData, fileInfo);
                 }
             }
-
-            #endregion
-            string url = "";
-            if (!reportFliter.ReportsRunUsingWR)
-            {
-                url = ExportStimulaImage(report, reportFliter);
-            }
-            return url;
-
-
         }
-
 
         private BlobFileInfo GetNewBlobFileInfo(string fileName, int tenant)
         {

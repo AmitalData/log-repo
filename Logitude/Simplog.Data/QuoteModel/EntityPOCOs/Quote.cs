@@ -357,5 +357,7 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
 
         [ForeignKey("CountryForStatisticsId")]
         public virtual Country CountryForStatistics { get; set; }
+
+        public DateTime? RequestDate { get; set; }
     }
 }

@@ -36,7 +36,7 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
 
         }
 
-       private CrossDockEntryDataProvider LoadCrossDockEntryDataProvider(string entityId, int tenant)
+       public CrossDockEntryDataProvider LoadCrossDockEntryDataProvider(string entityId, int tenant)
         {
             CrossDockEntryDataProvider dataProvider = new CrossDockEntryDataProvider();
             WarehouseEntryQueryService warehouseEntryQueryService = new WarehouseEntryQueryService(tenant);
@@ -44,6 +44,7 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
             ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
             if (warehouseEntryPM != null)
             {
+               
                 dataProvider.ExpectedEntryDate = warehouseEntryPM.ExpectedEntryDate;
                 dataProvider.ActualEntryDate = warehouseEntryPM.ActualEntryDate;
                 dataProvider.CustomerRef1 = warehouseEntryPM.CustomerRef1;
@@ -138,6 +139,8 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
                 if (warehouseEntryPM.WarehouseEntryPackages != null && warehouseEntryPM.WarehouseEntryPackages.Count > 0)
                 {
                     dataProvider.EntryPackages = FullPackage(warehouseEntryPM);
+                    dataProvider.NumberOfPackages = GetNumberOfWarehouseEntryPackages(warehouseEntryPM);
+
                 }
 
 
@@ -193,7 +196,17 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
             return dataProvider;
         }
 
-       private List<EntryPackage> FullPackage(WarehouseEntryPM warehouseEntryPM)
+        private int GetNumberOfWarehouseEntryPackages(WarehouseEntryPM warehouseEntryPM)
+        {
+            int result = 0;
+            foreach (WarehouseEntryPackagePM package in warehouseEntryPM.WarehouseEntryPackages)
+            {
+                result += package.Quantity;
+            }
+            return result;
+        }
+
+        private List<EntryPackage> FullPackage(WarehouseEntryPM warehouseEntryPM)
         {
             List<EntryPackage> result = new List<EntryPackage>();
             foreach (WarehouseEntryPackagePM package in warehouseEntryPM.WarehouseEntryPackages)
@@ -237,5 +250,6 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
            
             return result;
         }
+
     }
 }
