@@ -666,5 +666,7 @@ namespace Logitude.BL.QuoteModel.EntityPMs
 
         public bool IsCreatedFromTicket { get; set; }
         public DateTime? TicketCreateDate { get; set; }
+        public double? EstimatedProfitInLocal { get; set; }
+        public double? EstimatedProfitInProfit { get; set; }
     }
 }

@@ -274,6 +274,8 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                Field19 = f.Field19,
                                                Field20 = f.Field20,
                                                RequestDate = f.RequestDate,
+                                               EstimatedProfitInLocal = f.EstimatedProfitInLocal,
+                                               EstimatedProfitInProfit = f.EstimatedProfitInProfit,
                                            };
             return result;
         }
@@ -492,6 +494,8 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                         Field19 = f.Field19,
                         Field20 = f.Field20,
                         RequestDate = f.RequestDate,
+                        EstimatedProfitInLocal = f.EstimatedProfitInLocal,
+                        EstimatedProfitInProfit = f.EstimatedProfitInProfit,
                     };
 
                     ContactRepository rep = new ContactRepository(tenant);
@@ -1329,7 +1333,8 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                 Field18 = new CustomFieldClass("Field18", "Quote", entityPOCO.Field18),
                 Field19 = new CustomFieldClass("Field19", "Quote", entityPOCO.Field19),
                 Field20 = new CustomFieldClass("Field20", "Quote", entityPOCO.Field20),
-
+                EstimatedProfitInLocal = entityPOCO.EstimatedProfitInLocal,
+                EstimatedProfitInProfit = entityPOCO.EstimatedProfitInProfit,
                 RequestDate = entityPOCO.RequestDate,
             };
 

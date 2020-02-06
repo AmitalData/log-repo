@@ -359,5 +359,7 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
         public virtual Country CountryForStatistics { get; set; }
 
         public DateTime? RequestDate { get; set; }
+        public double? EstimatedProfitInLocal { get; set; }
+        public double? EstimatedProfitInProfit { get; set; }
     }
 }

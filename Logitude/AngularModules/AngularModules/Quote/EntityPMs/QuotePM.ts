@@ -1440,7 +1440,14 @@ export class QuotePM {
     public get IsCopyExchangeRates() { return this.isCopyExchangeRates; }
     public set IsCopyExchangeRates(newValue: boolean) { if (this.isCopyExchangeRates != newValue) { this.isCopyExchangeRates = newValue; this.MarkAsDirty("IsCopyExchangeRates"); } }
        
-	 
+    private estimatedProfitInLocal: number;
+    public get EstimatedProfitInLocal() { return this.estimatedProfitInLocal; }
+    public set EstimatedProfitInLocal(newValue: number) { if (this.estimatedProfitInLocal != newValue) { this.estimatedProfitInLocal = newValue; this.MarkAsDirty("EstimatedProfitInLocal"); } }
+
+    private estimatedProfitInProfit: number;
+    public get EstimatedProfitInProfit() { return this.estimatedProfitInProfit; }
+    public set EstimatedProfitInProfit(newValue: number) { if (this.estimatedProfitInProfit != newValue) { this.estimatedProfitInProfit = newValue; this.MarkAsDirty("EstimatedProfitInProfit"); } }
+
      
 	private quotePackages: QuotePackagePM[];
     get  QuotePackages() {

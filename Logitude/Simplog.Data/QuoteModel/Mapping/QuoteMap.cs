@@ -313,7 +313,8 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.Property(t => t.Field20).HasColumnName("Field20");
             this.Property(t => t.CountryForStatisticsId).HasColumnName("CountryForStatisticsId");
             this.Property(t => t.RequestDate).HasColumnName("RequestDate");
-
+            this.Property(t => t.EstimatedProfitInLocal).HasColumnName("EstimatedProfitInLocal");
+            this.Property(t => t.EstimatedProfitInProfit).HasColumnName("EstimatedProfitInProfit");
 
             // Relationships
             this.HasOptional(t => t.FromPartnerAddress).WithMany().HasForeignKey(d => d.FromPartnerAddressId);
