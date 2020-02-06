@@ -720,7 +720,6 @@ namespace Logitude.DBMigrations.Models
             string dropRelationsScript = "";
             string dropIndexsScript = "";
             string dropUniqueConstraintsScript = "";
-            string dropDefaultConstraintScript = "";
 
             RelationDefinition foreignKeyRelation = CurrentTable.Relations.Where(r => (!r.ForeignKeyColumn.Contains(",") && r.ForeignKeyColumn == columnMigration.CurrentColumn.Name) || (r.ForeignKeyColumn.Contains(",") && r.ForeignKeyColumn.Contains(columnMigration.CurrentColumn.Name))).FirstOrDefault();
             if (foreignKeyRelation != null)
@@ -750,15 +749,17 @@ namespace Logitude.DBMigrations.Models
             }
             alterTypeScript += ";\n\n";
 
-            string alterTypeWithHistoryScript = dropRelationsScript + alterTypeScript + GetInsertScriptForMigrationsHistory("Alter Column Type", TableMigrations.DxmlTableName, columnMigration.CurrentColumn.Name, alterTypeScript);
+            string alterTypeWithHistoryScript = dropRelationsScript + dropIndexsScript + dropUniqueConstraintsScript + alterTypeScript + GetInsertScriptForMigrationsHistory("Alter Column Type", TableMigrations.DxmlTableName, columnMigration.CurrentColumn.Name, alterTypeScript);
 
             return alterTypeWithHistoryScript;
         }
 
-        protected override string GetAlterSizeScript(ColumnMigration columnMigration)
+        protected override string GetAlterSizeScript(ColumnMigration columnMigration)////
         {
             string alterSizeScript = "";
             string dropRelationsScript = "";
+            string dropIndexsScript = "";
+            string dropUniqueConstraintsScript = "";
 
             List<RelationDefinition> relations = CurrentTable.Relations;
             RelationDefinition foreignKeyRelation = relations.Where(r => (!r.ForeignKeyColumn.Contains(",") && r.ForeignKeyColumn == columnMigration.CurrentColumn.Name) || (r.ForeignKeyColumn.Contains(",") && r.ForeignKeyColumn.Contains(columnMigration.CurrentColumn.Name))).FirstOrDefault();
@@ -766,6 +767,19 @@ namespace Logitude.DBMigrations.Models
             {
                 dropRelationsScript += GetDropRelationScript(foreignKeyRelation);
             }
+
+            List<IndexDefinition> indexes = CurrentTable.Indexes.Where(i => (!i.Columns.Contains(",") && i.Columns == columnMigration.CurrentColumn.Name) || (i.Columns.Contains(",") && i.Columns.Contains(columnMigration.CurrentColumn.Name))).ToList();
+            foreach (var index in indexes)
+            {
+                dropIndexsScript += GetDropIndexScript(index);
+            }
+
+            List<UniqueConstraintDefinition> uniqueConstraints = CurrentTable.UniqueConstraints.Where(u => (!u.Columns.Contains(",") && u.Columns == columnMigration.CurrentColumn.Name) || (u.Columns.Contains(",") && u.Columns.Contains(columnMigration.CurrentColumn.Name))).ToList();
+            foreach (var uniqueConstraint in uniqueConstraints)
+            {
+                dropUniqueConstraintsScript += GetDropUniqueConstraintScript(uniqueConstraint);
+            }
+
             bool IsAlterTypeInMigrationsList = TableMigrations.ColumnsMigrations.Where(m => m.MigrationType == MigrationTypes.ALTERTYPE).Any();
             alterSizeScript += "-- Change Size From " + columnMigration.CurrentColumn.Size + " To " + columnMigration.NewColumn.Size + " For Column " + columnMigration.CurrentColumn.Name + "\n";
             alterSizeScript += "ALTER TABLE " + "[" + TableMigrations.DxmlTableSchema + "].[" + TableMigrations.DxmlTableName + "]" + " ";
@@ -777,7 +791,7 @@ namespace Logitude.DBMigrations.Models
             }
             alterSizeScript += ";\n\n";
 
-            string alterSizeWithHistoryScript = dropRelationsScript + alterSizeScript + GetInsertScriptForMigrationsHistory("Alter Column Size", TableMigrations.DxmlTableName, columnMigration.CurrentColumn.Name, alterSizeScript);
+            string alterSizeWithHistoryScript = dropRelationsScript + dropIndexsScript + dropUniqueConstraintsScript + alterSizeScript + GetInsertScriptForMigrationsHistory("Alter Column Size", TableMigrations.DxmlTableName, columnMigration.CurrentColumn.Name, alterSizeScript);
 
             return alterSizeWithHistoryScript;
         }
@@ -790,7 +804,7 @@ namespace Logitude.DBMigrations.Models
                 string primaryKeyColumns = string.Join(",", CurrentTable.Columns.Where(c => c.Constraints.PrimaryKey && !droppedColumnsNames.Contains(c.Name.ToLower())).Select(c => "[" + c.Name + "]").ToArray());
                 string primaryKeyConstraintName = columnMigration.CurrentColumn.Constraints.PrimaryKeyConstraintName;
                 string addPrimaryKeyScript = "-- Add The Primary Key Constraint\n";
-                addPrimaryKeyScript += "EXEC('ALTER TABLE " + "[" + TableMigrations.DxmlTableSchema + "].[" + TableMigrations.DxmlTableName + "]" + " ADD CONSTRAINT " + primaryKeyConstraintName + " PRIMARY KEY (" + primaryKeyColumns + ")')";
+                addPrimaryKeyScript += "EXEC('ALTER TABLE " + "[" + TableMigrations.DxmlTableSchema + "].[" + TableMigrations.DxmlTableName + "]" + " ADD CONSTRAINT " + "[" + primaryKeyConstraintName + "]" + " PRIMARY KEY (" + primaryKeyColumns + ")')";
                 addPrimaryKeyScript += ";\n\n";
 
                 string addPrimaryKeyWithHistoryScript = addPrimaryKeyScript + GetInsertScriptForMigrationsHistory("Add Primary Key", TableMigrations.DxmlTableName, primaryKeyColumns.Replace("[", String.Empty).Replace("]", String.Empty), addPrimaryKeyScript);
@@ -815,7 +829,7 @@ namespace Logitude.DBMigrations.Models
             }
             dropPrimaryKeyScript += "-- Drop The Primary Key Constraint\n";
             string primaryKeyConstraintName = columnMigration.CurrentColumn.Constraints.PrimaryKeyConstraintName;
-            dropPrimaryKeyScript += "EXEC('IF (OBJECT_ID(''" + TableMigrations.DxmlTableSchema + "." + primaryKeyConstraintName + "'', ''PK'') IS NOT NULL) BEGIN ALTER TABLE " + "[" + TableMigrations.DxmlTableSchema + "].[" + TableMigrations.DxmlTableName + "]" + " DROP CONSTRAINT " + primaryKeyConstraintName + " END" + "')";
+            dropPrimaryKeyScript += "EXEC('IF (OBJECT_ID(''" + TableMigrations.DxmlTableSchema + "." + primaryKeyConstraintName + "'', ''PK'') IS NOT NULL) BEGIN ALTER TABLE " + "[" + TableMigrations.DxmlTableSchema + "].[" + TableMigrations.DxmlTableName + "]" + " DROP CONSTRAINT " + "[" + primaryKeyConstraintName + "]" + " END" + "')";
             dropPrimaryKeyScript += ";\n\n";
 
             string dropPrimaryKeyWithHistoryScript = dropRelationsScript + dropPrimaryKeyScript + GetInsertScriptForMigrationsHistory("Drop Primary Key", TableMigrations.DxmlTableName, null, dropPrimaryKeyScript);
@@ -840,8 +854,23 @@ namespace Logitude.DBMigrations.Models
             return setNullableWithHistoryScript;
         }
 
-        protected override string GetUnsetNullableScript(ColumnMigration columnMigration)
+        protected override string GetUnsetNullableScript(ColumnMigration columnMigration)////
         {
+            string dropIndexsScript = "";
+            string dropUniqueConstraintsScript = "";
+
+            List<IndexDefinition> indexes = CurrentTable.Indexes.Where(i => (!i.Columns.Contains(",") && i.Columns == columnMigration.CurrentColumn.Name) || (i.Columns.Contains(",") && i.Columns.Contains(columnMigration.CurrentColumn.Name))).ToList();
+            foreach (var index in indexes)
+            {
+                dropIndexsScript += GetDropIndexScript(index);
+            }
+
+            List<UniqueConstraintDefinition> uniqueConstraints = CurrentTable.UniqueConstraints.Where(u => (!u.Columns.Contains(",") && u.Columns == columnMigration.CurrentColumn.Name) || (u.Columns.Contains(",") && u.Columns.Contains(columnMigration.CurrentColumn.Name))).ToList();
+            foreach (var uniqueConstraint in uniqueConstraints)
+            {
+                dropUniqueConstraintsScript += GetDropUniqueConstraintScript(uniqueConstraint);
+            }
+
             bool isAlterTypeInMigrationsList = TableMigrations.ColumnsMigrations.Where(m => m.MigrationType == MigrationTypes.ALTERTYPE).Any();
             bool isAlterSizeInMigrationsList = TableMigrations.ColumnsMigrations.Where(m => m.MigrationType == MigrationTypes.ALTERSIZE).Any();
             bool isAlterPrecisionAndScaleInMigrationsList = TableMigrations.ColumnsMigrations.Where(m => m.MigrationType == MigrationTypes.ALTERPRECISIONANDSCALE).Any();
@@ -857,17 +886,32 @@ namespace Logitude.DBMigrations.Models
             return unsetNullableWithHistoryScript;
         }
 
-        protected override string GetAlterPrecisionAndScaleScript(ColumnMigration columnMigration)
+        protected override string GetAlterPrecisionAndScaleScript(ColumnMigration columnMigration)////
         {
             string alterPrecisionAndScaleScript = "";
             string dropRelationsScript = "";
-
+            string dropIndexsScript = "";
+            string dropUniqueConstraintsScript = "";
+            
             List<RelationDefinition> relations = CurrentTable.Relations;
             RelationDefinition foreignKeyRelation = relations.Where(r => (!r.ForeignKeyColumn.Contains(",") && r.ForeignKeyColumn == columnMigration.CurrentColumn.Name) || (r.ForeignKeyColumn.Contains(",") && r.ForeignKeyColumn.Contains(columnMigration.CurrentColumn.Name))).FirstOrDefault();
             if (foreignKeyRelation != null)
             {
                 dropRelationsScript += GetDropRelationScript(foreignKeyRelation);
             }
+
+            List<IndexDefinition> indexes = CurrentTable.Indexes.Where(i => (!i.Columns.Contains(",") && i.Columns == columnMigration.CurrentColumn.Name) || (i.Columns.Contains(",") && i.Columns.Contains(columnMigration.CurrentColumn.Name))).ToList();
+            foreach (var index in indexes)
+            {
+                dropIndexsScript += GetDropIndexScript(index);
+            }
+
+            List<UniqueConstraintDefinition> uniqueConstraints = CurrentTable.UniqueConstraints.Where(u => (!u.Columns.Contains(",") && u.Columns == columnMigration.CurrentColumn.Name) || (u.Columns.Contains(",") && u.Columns.Contains(columnMigration.CurrentColumn.Name))).ToList();
+            foreach (var uniqueConstraint in uniqueConstraints)
+            {
+                dropUniqueConstraintsScript += GetDropUniqueConstraintScript(uniqueConstraint);
+            }
+
             alterPrecisionAndScaleScript += "-- Change Precision And Scale From " + "(" + columnMigration.CurrentColumn.Precision + ", " + columnMigration.CurrentColumn.Scale + ")" + " To " + "(" + columnMigration.NewColumn.Precision + ", " + columnMigration.NewColumn.Scale + ")" + " For Column " + columnMigration.CurrentColumn.Name + "\n";
             alterPrecisionAndScaleScript += "ALTER TABLE " + "[" + TableMigrations.DxmlTableSchema + "].[" + TableMigrations.DxmlTableName + "]" + " ";
             alterPrecisionAndScaleScript += "ALTER COLUMN " + "[" + columnMigration.CurrentColumn.Name + "]" + " ";
@@ -878,7 +922,7 @@ namespace Logitude.DBMigrations.Models
             }
             alterPrecisionAndScaleScript += ";\n\n";
 
-            string alterPrecisionAndScaleWithHistoryScript = dropRelationsScript + alterPrecisionAndScaleScript + GetInsertScriptForMigrationsHistory("Alter Column Precision And Scale", TableMigrations.DxmlTableName, columnMigration.CurrentColumn.Name, alterPrecisionAndScaleScript);
+            string alterPrecisionAndScaleWithHistoryScript = dropRelationsScript + dropIndexsScript + dropUniqueConstraintsScript + alterPrecisionAndScaleScript + GetInsertScriptForMigrationsHistory("Alter Column Precision And Scale", TableMigrations.DxmlTableName, columnMigration.CurrentColumn.Name, alterPrecisionAndScaleScript);
 
             return alterPrecisionAndScaleWithHistoryScript;
         }
@@ -901,14 +945,14 @@ namespace Logitude.DBMigrations.Models
 
         protected override string GetDropPrimaryKeyConstraintScript(string primaryKeyConstraintName)
         {
-            string dropPrimaryKeyConstraintScript = "EXEC('IF (OBJECT_ID(''" + TableMigrations.DxmlTableSchema + "." + primaryKeyConstraintName + "'', ''PK'') IS NOT NULL) BEGIN ALTER TABLE " + "[" + TableMigrations.DxmlTableSchema + "].[" + TableMigrations.DxmlTableName + "]" + " DROP CONSTRAINT " + primaryKeyConstraintName + " END" + "');";
+            string dropPrimaryKeyConstraintScript = "EXEC('IF (OBJECT_ID(''" + TableMigrations.DxmlTableSchema + "." + primaryKeyConstraintName + "'', ''PK'') IS NOT NULL) BEGIN ALTER TABLE " + "[" + TableMigrations.DxmlTableSchema + "].[" + TableMigrations.DxmlTableName + "]" + " DROP CONSTRAINT " + "[" + primaryKeyConstraintName + "]" + " END" + "');";
             return dropPrimaryKeyConstraintScript + "\n\n" + GetInsertScriptForMigrationsHistory("Drop Primary Key Constraint", TableMigrations.DxmlTableName, null, dropPrimaryKeyConstraintScript).Replace(";\n\n", ";");
         }
         
         protected override string GetAddPrimaryKeyConstraintScript(string primaryKeyConstraintName)
         {
             string primaryKeyColumns = string.Join(",", DXMLTable.Columns.Where(c => c.Constraints.PrimaryKey).Select(c => "[" + c.Name + "]").ToArray());
-            string addPrimaryKeyConstraintScript = "EXEC('ALTER TABLE " + "[" + TableMigrations.DxmlTableSchema + "].[" + TableMigrations.DxmlTableName + "]" + " ADD CONSTRAINT " + primaryKeyConstraintName + " PRIMARY KEY (" + primaryKeyColumns + ")');";
+            string addPrimaryKeyConstraintScript = "EXEC('ALTER TABLE " + "[" + TableMigrations.DxmlTableSchema + "].[" + TableMigrations.DxmlTableName + "]" + " ADD CONSTRAINT " + "[" + primaryKeyConstraintName + "]" + " PRIMARY KEY (" + primaryKeyColumns + ")');";
             return addPrimaryKeyConstraintScript + "\n\n" + GetInsertScriptForMigrationsHistory("Add Primary Key Constraint", TableMigrations.DxmlTableName, primaryKeyColumns.Replace("[", String.Empty).Replace("]", String.Empty), addPrimaryKeyConstraintScript).Replace(";\n\n", ";");
         }
 
@@ -928,7 +972,7 @@ namespace Logitude.DBMigrations.Models
         protected override string GetDropRelationScript(RelationDefinition relation)
         {
             string dropRelationScript = "-- Drop Foreign Key Constraint For Column " + relation.ForeignKeyColumn + " In Table " + relation.ParentTable + " That Reference To Column " + relation.ReferencedColumn + " In Table " + relation.ReferencedTable + "\n";
-            dropRelationScript += "EXEC('IF (OBJECT_ID(''" + relation.ParentTableSchema + "." + relation.ForeignKeyConstraintName + "'', ''F'') IS NOT NULL) BEGIN ALTER TABLE " + "[" + relation.ParentTableSchema + "].[" + relation.ParentTable + "]" + " DROP CONSTRAINT " + relation.ForeignKeyConstraintName + " END" + "')";
+            dropRelationScript += "EXEC('IF (OBJECT_ID(''" + relation.ParentTableSchema + "." + relation.ForeignKeyConstraintName + "'', ''F'') IS NOT NULL) BEGIN ALTER TABLE " + "[" + relation.ParentTableSchema + "].[" + relation.ParentTable + "]" + " DROP CONSTRAINT " + "[" + relation.ForeignKeyConstraintName + "]" + " END" + "')";
             dropRelationScript += ";\n\n";
 
             string dropRelationWithHistoryScript = dropRelationScript + GetInsertScriptForMigrationsHistory("Drop Relation", relation.ParentTable, null, dropRelationScript);
@@ -986,7 +1030,7 @@ namespace Logitude.DBMigrations.Models
         protected override string GetDropDefaultScript(ColumnMigration columnMigration)
         {
             string dropDefaultScript = "-- Drop Default Value For Column " + columnMigration.CurrentColumn.Name + "\n";
-            dropDefaultScript += "EXEC('IF (OBJECT_ID(''" + TableMigrations.DxmlTableSchema + "." + columnMigration.CurrentColumn.Constraints.DefaultConstraintName + "'', ''D'') IS NOT NULL) BEGIN ALTER TABLE " + "[" + TableMigrations.DxmlTableSchema + "].[" + TableMigrations.DxmlTableName + "]" + " DROP CONSTRAINT " + columnMigration.CurrentColumn.Constraints.DefaultConstraintName + " END" + "')";
+            dropDefaultScript += "EXEC('IF (OBJECT_ID(''" + TableMigrations.DxmlTableSchema + "." + columnMigration.CurrentColumn.Constraints.DefaultConstraintName + "'', ''D'') IS NOT NULL) BEGIN ALTER TABLE " + "[" + TableMigrations.DxmlTableSchema + "].[" + TableMigrations.DxmlTableName + "]" + " DROP CONSTRAINT " + "[" + columnMigration.CurrentColumn.Constraints.DefaultConstraintName + "]" + " END" + "')";
             dropDefaultScript += ";\n\n";
 
             string dropDefaultWithHistoryScript = dropDefaultScript + GetInsertScriptForMigrationsHistory("Drop Default Value", TableMigrations.DxmlTableName, columnMigration.CurrentColumn.Name, dropDefaultScript);
@@ -1003,11 +1047,11 @@ namespace Logitude.DBMigrations.Models
             string indexName = "IX_" + (!indexColumns.Contains(",") ? indexColumns : string.Join("_", indexColumns.Split(',').ToArray())).Replace("[", String.Empty).Replace("]", String.Empty);
             if (includeColumns != null)
             {
-                createIndexScript += "EXEC('CREATE NONCLUSTERED INDEX " + indexName + " ON " + tableName + "(" + indexColumns + ") INCLUDE(" + includeColumns + ")')";
+                createIndexScript += "EXEC('CREATE NONCLUSTERED INDEX " + "[" + indexName + "]" + " ON " + tableName + "(" + indexColumns + ") INCLUDE(" + includeColumns + ")')";
             }
             else
             {
-                createIndexScript += "EXEC('CREATE NONCLUSTERED INDEX " + indexName + " ON " + tableName + "(" + indexColumns + ")')";
+                createIndexScript += "EXEC('CREATE NONCLUSTERED INDEX " + "[" + indexName + "]" + " ON " + tableName + "(" + indexColumns + ")')";
             }
             
             createIndexScript += ";\n\n";
@@ -1023,7 +1067,7 @@ namespace Logitude.DBMigrations.Models
             string tableName = "[" + DXMLTable.Schema + "].[" + DXMLTable.Name + "]";
             string createUniqueConstraintScript = "-- Create Unique Constraint On " + DXMLTable.Name + " Table\n";
             string uniqueConstraintName = "UQ_" + (!uniqueConstraintColumns.Contains(",") ? uniqueConstraintColumns : string.Join("_", uniqueConstraintColumns.Split(',').ToArray())).Replace("[", String.Empty).Replace("]", String.Empty);
-            createUniqueConstraintScript += "EXEC('ALTER TABLE " + tableName + " ADD CONSTRAINT " + uniqueConstraintName + " UNIQUE(" + uniqueConstraintColumns + ")')";
+            createUniqueConstraintScript += "EXEC('ALTER TABLE " + tableName + " ADD CONSTRAINT " + "[" + uniqueConstraintName + "]" + " UNIQUE(" + uniqueConstraintColumns + ")')";
 
             createUniqueConstraintScript += ";\n\n";
 
@@ -1036,7 +1080,7 @@ namespace Logitude.DBMigrations.Models
         {
             string tableName = "[" + DXMLTable.Schema + "].[" + DXMLTable.Name + "]";
             string dropUniqueConstraintScript = "-- Drop Unique Constraint " + uniqueConstraint.ConstraintName + " From Table " + DXMLTable.Name + "\n";
-            dropUniqueConstraintScript += "EXEC('IF (OBJECT_ID(''" + DXMLTable.Schema + "." + uniqueConstraint.ConstraintName + "'', ''UQ'') IS NOT NULL) BEGIN ALTER TABLE " + tableName + " DROP CONSTRAINT " + uniqueConstraint.ConstraintName + " END" + "')";
+            dropUniqueConstraintScript += "EXEC('IF (OBJECT_ID(''" + DXMLTable.Schema + "." + uniqueConstraint.ConstraintName + "'', ''UQ'') IS NOT NULL) BEGIN ALTER TABLE " + tableName + " DROP CONSTRAINT " + "[" + uniqueConstraint.ConstraintName + "]" + " END" + "')";
             dropUniqueConstraintScript += ";\n\n";
 
             string dropUniqueConstraintWithHistoryScript = dropUniqueConstraintScript + GetInsertScriptForMigrationsHistory("Drop Unique Constraint", DXMLTable.Name, null, dropUniqueConstraintScript);
@@ -1048,7 +1092,7 @@ namespace Logitude.DBMigrations.Models
         {
             string tableName = "[" + DXMLTable.Schema + "].[" + DXMLTable.Name + "]";
             string dropIndexScript = "-- Drop Index " + index.IndexName + " From Table " + DXMLTable.Name + "\n";
-            dropIndexScript += "EXEC('IF EXISTS (SELECT * FROM sys.indexes WHERE name=''" + index.IndexName + "'' AND object_id = OBJECT_ID(''" + tableName + "'', ''U'')) BEGIN DROP INDEX " + index.IndexName + " ON " + tableName + " End')";
+            dropIndexScript += "EXEC('IF EXISTS (SELECT * FROM sys.indexes WHERE name=''" + index.IndexName + "'' AND object_id = OBJECT_ID(''" + tableName + "'', ''U'')) BEGIN DROP INDEX " + "[" + index.IndexName + "]" + " ON " + tableName + " End')";
             dropIndexScript += ";\n\n";
 
             string dropIndexWithHistoryScript = dropIndexScript + GetInsertScriptForMigrationsHistory("Drop Index", DXMLTable.Name, null, dropIndexScript);

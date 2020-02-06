@@ -524,6 +524,12 @@ namespace Logitude.DBMigrations.Models
                     ColumnsMigrations.Add(dropPrimaryKeyMigration);
                 }
 
+                if(currentTableColumn.Constraints.DefaultConstraintName != null)
+                {
+                    ColumnMigration dropDefaultConstraintMigration = GetColumnMigration(MigrationTypes.DROPDEFAULT, currentTableColumn, dxmlTableColumn);
+                    ColumnsMigrations.Add(dropDefaultConstraintMigration);
+                }
+
                 ColumnMigration alterPrecisionAndScaleMigration = GetColumnMigration(MigrationTypes.ALTERPRECISIONANDSCALE, currentTableColumn, dxmlTableColumn);
                 ColumnsMigrations.Add(alterPrecisionAndScaleMigration);
 
@@ -531,6 +537,12 @@ namespace Logitude.DBMigrations.Models
                 {
                     ColumnMigration addPrimaryKeyMigration = GetColumnMigration(MigrationTypes.ADDPRIMARYKEY, currentTableColumn, dxmlTableColumn);
                     ColumnsMigrations.Add(addPrimaryKeyMigration);
+                }
+
+                if (currentTableColumn.Constraints.DefaultConstraintName != null)
+                {
+                    ColumnMigration addDefaultConstraintMigration = GetColumnMigration(MigrationTypes.ADDDEFAULT, currentTableColumn, dxmlTableColumn);
+                    ColumnsMigrations.Add(addDefaultConstraintMigration);
                 }
             }
         }
@@ -545,6 +557,12 @@ namespace Logitude.DBMigrations.Models
                     ColumnsMigrations.Add(dropPrimaryKeyMigration);
                 }
 
+                if (currentTableColumn.Constraints.DefaultConstraintName != null)
+                {
+                    ColumnMigration dropDefaultConstraintMigration = GetColumnMigration(MigrationTypes.DROPDEFAULT, currentTableColumn, dxmlTableColumn);
+                    ColumnsMigrations.Add(dropDefaultConstraintMigration);
+                }
+
                 ColumnMigration alterTypeMigration = GetColumnMigration(MigrationTypes.ALTERTYPE, currentTableColumn, dxmlTableColumn);
                 ColumnsMigrations.Add(alterTypeMigration);
 
@@ -552,6 +570,12 @@ namespace Logitude.DBMigrations.Models
                 {
                     ColumnMigration addPrimaryKeyMigration = GetColumnMigration(MigrationTypes.ADDPRIMARYKEY, currentTableColumn, dxmlTableColumn);
                     ColumnsMigrations.Add(addPrimaryKeyMigration);
+                }
+
+                if (currentTableColumn.Constraints.DefaultConstraintName != null)
+                {
+                    ColumnMigration addDefaultConstraintMigration = GetColumnMigration(MigrationTypes.ADDDEFAULT, currentTableColumn, dxmlTableColumn);
+                    ColumnsMigrations.Add(addDefaultConstraintMigration);
                 }
             }
         }
@@ -566,6 +590,12 @@ namespace Logitude.DBMigrations.Models
                     ColumnsMigrations.Add(dropPrimaryKeyMigration);
                 }
 
+                if (currentTableColumn.Constraints.DefaultConstraintName != null)
+                {
+                    ColumnMigration dropDefaultConstraintMigration = GetColumnMigration(MigrationTypes.DROPDEFAULT, currentTableColumn, dxmlTableColumn);
+                    ColumnsMigrations.Add(dropDefaultConstraintMigration);
+                }
+
                 ColumnMigration alterTypeMigration = GetColumnMigration(MigrationTypes.ALTERSIZE, currentTableColumn, dxmlTableColumn);
                 ColumnsMigrations.Add(alterTypeMigration);
 
@@ -573,6 +603,12 @@ namespace Logitude.DBMigrations.Models
                 {
                     ColumnMigration addPrimaryKeyMigration = GetColumnMigration(MigrationTypes.ADDPRIMARYKEY, currentTableColumn, dxmlTableColumn);
                     ColumnsMigrations.Add(addPrimaryKeyMigration);
+                }
+
+                if (currentTableColumn.Constraints.DefaultConstraintName != null)
+                {
+                    ColumnMigration addDefaultConstraintMigration = GetColumnMigration(MigrationTypes.ADDDEFAULT, currentTableColumn, dxmlTableColumn);
+                    ColumnsMigrations.Add(addDefaultConstraintMigration);
                 }
             }
         }
