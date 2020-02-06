@@ -81,9 +81,12 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Global
                 QueryService service = new QueryService(objectContext, entityPM.Tenant);
                 entityPM.Id = IdCounter.GetNumber("Query", entityPM.Tenant).ToString();
                 entityPM.Code = entityPM.Id;
-                entityPM.UniqueCode = entityPM.ObjectTableName + '.' + entityPM.Code;
-                service.Create(entityPM);
+                if(entityPM.UserId==null)
+                  entityPM.UniqueCode = entityPM.ObjectTableName + '.' + entityPM.Code;
+                else
+                  entityPM.UniqueCode = entityPM.ObjectTableName +'.'+ entityPM.UserId + '.' + entityPM.Code;
 
+                service.Create(entityPM);
                 return Request.CreateResponse(HttpStatusCode.OK, entityPM);
             }
 
