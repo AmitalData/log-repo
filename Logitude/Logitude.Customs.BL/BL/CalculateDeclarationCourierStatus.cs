@@ -347,7 +347,7 @@ namespace Logitude.Customs.BL.BL
                 foreach (CustomsDocumentsTicketPM customsDocumentsTicketPMItem in customsDocumentsTicketPMList)
                 {
                     CustomDocumentTypePM docType = docTypeQuery.GetSingle(customsDocumentsTicketPMItem.DocumentTypeCode, false, false);
-                    if (docType.IsCourierManadatory)
+                    if (docType != null && docType.IsCourierManadatory)
                     {
                         return true;
                     }                      
