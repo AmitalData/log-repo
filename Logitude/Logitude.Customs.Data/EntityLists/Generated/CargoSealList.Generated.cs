@@ -27,7 +27,7 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public string SealCompletenessStateCode  { get; set; }
        [DataMember]
-       public string SealCompletenessStatename  { get; set; }
+       public string SealCompletenessStateName  { get; set; }
        [DataMember]
        public string SealTypeCode  { get; set; }
        [DataMember]

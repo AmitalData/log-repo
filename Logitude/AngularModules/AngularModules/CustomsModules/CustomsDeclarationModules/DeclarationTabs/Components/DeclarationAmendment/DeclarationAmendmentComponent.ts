@@ -263,7 +263,7 @@ export class DeclarationAmendmentComponent extends BaseComponent implements OnIn
                                 this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
                             }, 10);
                             this.CurrentSession.StopBusyIndicator();
-                          
+                            debugger;
                             this.openNewDeclaration(entity.Id);
 
                              }

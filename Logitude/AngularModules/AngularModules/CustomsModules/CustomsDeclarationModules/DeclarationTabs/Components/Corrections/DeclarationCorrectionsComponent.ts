@@ -105,49 +105,38 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
                         this.UIProperties.SetEnabled("VersionId", this.ObjectTableName, false);
                         this.DisplayOnlyCheck();
 
-                        //this.DisplayOnlyCheck();
-                    });
+                     });
                 });
             });
         });
-
-        ////Disable fields
-        //if (this.IsDisplayOnly) {
-        //    this.SetScreenFieldsEditability();
-        //}
+ 
 
     }
     DisplayOnlyCheck() {
 
          var declarationDisplayOnlyChecks: DeclarationDisplayOnlyChecks = new DeclarationDisplayOnlyChecks();
-        //declarationDisplayOnlyChecks.DeclarationViewDisplayOnlyChecks(this.EntityPM).subscribe((response: any) => {
-        //    var displayOnlyCheckResult: DisplayOnlyCheckResult = response.Result;
-        //    this.IsDisplayOnly = displayOnlyCheckResult.IsDisplayOnly;
-            if (this.EntityPM.AmendmentMessage != null && this.EntityPM.AmendmentMessage != "") {
+             if (this.EntityPM.AmendmentMessage != null && this.EntityPM.AmendmentMessage != "") {
                 {
-                    debugger;
-                    this.DisplayOnlyMessage = this.EntityPM.AmendmentMessage;
+                     this.DisplayOnlyMessage = this.EntityPM.AmendmentMessage;
                     if (this.EntityPM.IsAmendmentDisplayOnly) this.IsDisplayOnly = this.EntityPM.IsAmendmentDisplayOnly;
                 }
             }
-           //else if (this.IsDisplayOnly) {
-           //     this.DisplayOnlyMessage = "לתצוגה בלבד - " + displayOnlyCheckResult.DisplayOnlyMessage;
-           // }
-            else {
+             else {
                 if (!this.EntityPM.AmendmentDeficitInitiated) this.UIProperties.SetEnabled("AmendDeficitInitiatedReasTo", this.ObjectTableName, false);
 
             }            this.SetScreenFieldsEditability();
 
             DeclarationEventManager.DisplayModeChanged.emit(this.IsDisplayOnly);
-       // });
-
+ 
     }
     SetScreenFieldsEditability() {
         this.UIProperties.SetEnabled("AmendmentRemarks", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("AmendDeficitInitiatedReasTo", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("AmendmentDeficitInitiated", this.ObjectTableName, !this.IsDisplayOnly);
+       
+        if ( !this.AmendmentDeficitInitiated)
+            this.UIProperties.SetEnabled("AmendDeficitInitiatedReasTo", this.ObjectTableName, false);
 
-        this.IsAmendmentDeficitInitiatedEnabled = !this.IsDisplayOnly;
 
     }
 

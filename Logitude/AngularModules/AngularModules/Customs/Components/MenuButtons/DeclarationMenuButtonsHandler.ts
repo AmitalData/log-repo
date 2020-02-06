@@ -96,8 +96,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
 
     }
     Listen() {
-
-        if (this.CurrentSession.CurrentEditComponent != null) {
+         if (this.CurrentSession.CurrentEditComponent != null) {
 
             //this._SubMenuButtonsStateChanged =
             this.CurrentSession.SubscriptionAdd(
@@ -1180,29 +1179,34 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
     public OpenPaymentOrderWindow() {
         if (this.EntityPM) {
 
-            var args: any = {
-                EntityPM: this.EntityPM,
-            };
-
-            var logWindow = new LogitudeWindow();
-            logWindow.Width = 1000;
-            logWindow.Height = 700;
-            logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.TH.Payments");
-            logWindow.WindowArgs = args;
-            logWindow.ShowCloseButton = true;
-            logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/DeclarationPayment/DeclarationPaymentComponent');
-
-            logWindow.WindowClosed.subscribe(($event: any) => {
-                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-            });
+            
             this.ActivateUnifreightInstruction();
         } else {
             console.log("No entityPM in menu buttons!!!");
         }
     }
 
+    private OpenDeclarationPaymentComponent() {
+        var args: any = {
+            EntityPM: this.EntityPM,
+        };
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 1000;
+        logWindow.Height = 700;
+        logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.TH.Payments");
+        logWindow.WindowArgs = args;
+        logWindow.ShowCloseButton = true;
+        logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/DeclarationPayment/DeclarationPaymentComponent');
+        logWindow.WindowClosed.subscribe(($event: any) => {
+            this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+        });
+    }
+
     ActivateUnifreightInstruction() {
-        //if (!AppTool.IsNullOrEmpty(this.EntityPM.CustomFileNo) && AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
+        if (!AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
+            this.OpenDeclarationPaymentComponent();
+            return;
+        }
         if (AmitalGatewayUtil.Instance.IsDeclarationInUse(this.EntityPM.CustomFileNo, this.EntityPM.IsConvertedDeclaration, this.EntityPM.IsConnectedToUnifreight)) {
             var myEnterViewUnifreightInstructionController = new UnifreightController(
                 this.EntityPM,
@@ -1210,15 +1214,19 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
 
             myEnterViewUnifreightInstructionController
                 .GetPromise().then((e) => {
+                    SessionLocator.SelectedSession.StopBusyIndicator();
                     if (e.UnifreightResponseStatus) {
+                        
+                        this.OpenDeclarationPaymentComponent();
                         return;
                     }
                     else {
-                        this.CurrentSession.CloseCurrentWindow();
+                        ///this.CurrentSession.CloseCurrentWindow();
                     }
 
 
                 });
+            SessionLocator.SelectedSession.StartBusyIndicatorLoading();
             myEnterViewUnifreightInstructionController.SendRequestInstructionToUnifreightAsync("PAYHAND_ENTER");
         }
     }

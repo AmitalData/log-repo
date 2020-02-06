@@ -212,7 +212,7 @@
 
                     <tr style="height: 28px;">
                         <td colspan="1">
-                            <table style="width: 50%;" *ngIf="this.EntityPM.IsAmendment">
+                            <table style="width:900px;" *ngIf="this.EntityPM.IsAmendment">
                                 <tr style="height: 25px;">
                                     <td style="width:75px">
                                         <LogLabel [ObjectFieldName]="'AmendmentRequestNumber'" [ObjectTableName]="ObjectTableName"
@@ -225,23 +225,19 @@
                                         <LogTextBox [ObjectFieldName]="'AmendmentRequestNumber'" [ObjectTableName]="ObjectTableName" [Text]="AmendmentRequestNumber"
                                                     [HideColumns]="true" [DataContext]="DataContext" [InputType]="'ntext'"></LogTextBox>
 
+                                     </td>
 
-                                        <!--<LogTextBox [ObjectFieldName]="'AmendmentRequestNumber'" [ObjectTableName]="ObjectTableName" [Text]="AmendmentRequestNumber"
-                        [HideColumns]="true" [DataContext]="DataContext"  ></LogTextBox>-->
-                                    </td>
-
-                                    <!--<td style="width:7px"></td>-->
+ 
                                     <td style="width:110px">
                                         <LogLabel [ObjectFieldName]="'AmendmentissueDate'" [ObjectTableName]="ObjectTableName"
                                                   [DataContext]="DataContext"></LogLabel>
                                     </td>
                                     <td style="width:75px">
-                                        <LogTextBox [ObjectFieldName]="'AmendmentissueDate'" [ObjectTableName]="ObjectTableName" [Text]="AmendmentissueDate"
-                                                    [HideColumns]="true" [DataContext]="DataContext" [InputType]="'ntext'"></LogTextBox>
-                                    </td>
+                                        <LogDatePicker [ObjectFieldName]="'AmendmentissueDate'" [ObjectTableName]="ObjectTableName"
+                                                       [DataContext]="DataContext" [HideColumns]="true" [SelectedDateValue]="AmendmentissueDate"></LogDatePicker>
+                                     </td>
 
-                                    <!--<td style="width:7px"></td>-->
-
+ 
                                     <td style="width:110px">
                                         <LogLabel [ObjectFieldName]="'VersionId'" [ObjectTableName]="ObjectTableName"
                                                   [DataContext]="DataContext"></LogLabel>

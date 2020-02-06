@@ -21,27 +21,23 @@ namespace Logitude.Customs.Data.EntityListQueryServices
     {
 	    private IQueryable<CargoSealList> GetIqueryableList(IQueryable<CargoSeal> iQueryable)
         {
-		IQueryable<CargoSealList> query = (from a in iQueryable
-                                            select new CargoSealList()
+		IQueryable<CargoSealList> query = (from a in iQueryable.Include("SealCompletenes").Include("SealType").Include("SealUpdateReasonType").Include("AmendmentType")
+										   select new CargoSealList()
 											{
                      
 					                          CargoSealIdentifierId = a.CargoSealIdentifierId,
-					
 					                          Tenant = a.Tenant,
-					
 					                          SealNumber = a.SealNumber,
-					
 					                          Remarks = a.Remarks,
-					
 					                          SealCompletenessStateCode = a.SealCompletenessStateCode,
-					
-					                          SealTypeCode = a.SealTypeCode,
-					
-					                          UpdateReasonCode = a.UpdateReasonCode,
-					
-					                          UpdateTypeCode = a.UpdateTypeCode,
-					
-		                    	            });
+											  SealCompletenessStateName = a.SealCompletenes != null ? a.SealCompletenes.LocalName : null,
+											  SealTypeCode = a.SealTypeCode,
+											   SealTypeName = a.SealType != null ? a.SealType.LocalName : null,
+											   UpdateReasonCode = a.UpdateReasonCode,
+											   UpdateReasonName = a.SealUpdateReasonType != null ? a.SealUpdateReasonType.LocalName : null,
+											   UpdateTypeCode = a.UpdateTypeCode,
+											   UpdateTypeName = a.AmendmentType != null ? a.AmendmentType.LocalName : null,
+										   });
             return query;
 		}
 

@@ -41,7 +41,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         SealNumber, 
 	         Remarks, 
 	         SealCompletenessStateCode, 
-	         SealCompletenessStatename, 
+	         SealCompletenessStateName, 
 	         SealTypeCode, 
 	         SealTypeName, 
 	         UpdateReasonCode, 

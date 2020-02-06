@@ -14,7 +14,7 @@ using UnifreightIIG.Common.TheGateway;
 namespace Logitude.CustomsMessaging.MessagingServices
 {
     public class SE_6001_SealUpdateMessagingService : MessagingServiceBase<
-        CargoSealsRequestParams, CustomItemLegalDemandsResponseData,
+        CargoSealsRequestParams, INF_MSG_GenericResponseData,
         SE_NG_6001_MSG01_SealUpdateMessage, INF_MSG_Generic,
         SE_6001_SealUpdateRequestService, SE_6001_SealUpdateResponseService,
         RequestHeader>

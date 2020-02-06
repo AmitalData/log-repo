@@ -52,9 +52,9 @@ export class CargoSealPM {
     public set SealCompletenessStateCode(newValue: string) { if (this.sealCompletenessStateCode != newValue) { this.sealCompletenessStateCode = newValue; this.MarkAsDirty("SealCompletenessStateCode"); } }
        
 	 
-    private sealCompletenessStatename: string;
-    public get SealCompletenessStatename() { return this.sealCompletenessStatename; }
-    public set SealCompletenessStatename(newValue: string) { if (this.sealCompletenessStatename != newValue) { this.sealCompletenessStatename = newValue; this.MarkAsDirty("SealCompletenessStatename"); } }
+    private sealCompletenessStateName: string;
+    public get SealCompletenessStateName() { return this.sealCompletenessStateName; }
+    public set SealCompletenessStateName(newValue: string) { if (this.sealCompletenessStateName != newValue) { this.sealCompletenessStateName = newValue; this.MarkAsDirty("SealCompletenessStateName"); } }
        
 	 
     private sealTypeCode: string;
