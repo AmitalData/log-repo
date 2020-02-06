@@ -10,6 +10,8 @@ using Logitude.Server.Tools;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Def.EntityPMs; 
 using Logitude.Customs.Data;
+using Simplog.Server.Infrastructure;
+using Logitude.Customs.BL.EntityQueryServices;
 
 namespace Logitude.Customs.BL.EntityDataMappings
 {
@@ -19,12 +21,31 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
         public void CustomPMToPOCO(CargoSealPM entityPM, CargoSeal entityPOCO)
         {
-            //throw new NotImplementedException();
+            this.CustomMappedPOCOProperties.Add(POCOPropertyNames.CargoSealIdentifierId);
+            this.CustomMappedPOCOProperties.Add(POCOPropertyNames.Tenant);
+            this.CustomMappedPOCOProperties.Add(POCOPropertyNames.SealNumber);
+
+            if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
+            {
+                entityPOCO.CargoSealIdentifierId = entityPM.CargoSealIdentifierId;
+                entityPOCO.Tenant = entityPM.Tenant;
+                entityPOCO.SealNumber = entityPM.SealNumber;
+            }
         }
 
         public void CustomPOCOToPM(CargoSealPM entityPM, CargoSeal entityPOCO)
         {
-            //throw new NotImplementedException();
+            CustomMappedPMProperties.Add(PMPropertyNames.SealCompletenessStateName);
+            //CustomMappedPMProperties.Add(PMPropertyNames.SealTypeName);
+            //CustomMappedPMProperties.Add(PMPropertyNames.TapagTypeName);
+            //CustomMappedPMProperties.Add(PMPropertyNames.ReferantName);
+
+            if (entityPOCO.SealCompletenessStateCode != null)
+            {
+                SealCompletenesQueryService sealCompletenesQueryService = new SealCompletenesQueryService(entityPOCO.Tenant);
+                SealCompletenesPM sealCompletenesPM = sealCompletenesQueryService.GetSingle(entityPOCO.SealCompletenessStateCode, false, true);
+                entityPM.SealCompletenessStateName = sealCompletenesPM.LocalName;
+            }
         }
    }
 

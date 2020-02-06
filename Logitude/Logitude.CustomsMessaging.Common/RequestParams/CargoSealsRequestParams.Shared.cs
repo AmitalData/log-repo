@@ -8,6 +8,7 @@ namespace Logitude.CustomsMessaging.Common.RequestParams
 {
     public class CargoSealsRequestParams : RequestParamsBase
     {
+        public string CargoSealIdentifierId { get; set; }
         public DateTime UpdateDate { get; set; }
         public string ContainerNumber { get; set; }
         public string CargoRowNumber { get; set; }

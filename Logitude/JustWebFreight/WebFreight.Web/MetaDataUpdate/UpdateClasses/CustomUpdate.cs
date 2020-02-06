@@ -12170,6 +12170,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             Feature DeclarationCargoSplitFeature = tenantFeatures.Where(d => d.Code == "DECLARATIONCASPLIT" && d.ObjectTableId == CustomsDeclarationTable.Id).FirstOrDefault();
             Feature DeclarationCollateralFeature = tenantFeatures.Where(d => d.Code == "COLLATERAL" && d.ObjectTableId == CustomsDeclarationTable.Id).FirstOrDefault();
             Feature DeclarationClassificationFeature = tenantFeatures.Where(d => d.Code == "DECLARATIONCLASSIFICATION" && d.ObjectTableId == CustomsDeclarationTable.Id).FirstOrDefault();
+            Feature DeclarationCargoSealFeature = tenantFeatures.Where(d => d.Code == "DECLARATIONCARGOSEAL" && d.ObjectTableId == CustomsDeclarationTable.Id).FirstOrDefault();
             //Feature CourierDeclarationFeature = tenantFeatures.Where(d => d.Code == "COURIERDECLARATION" && d.ObjectTableId == CustomsDeclarationTable.Id).FirstOrDefault();
 
             //tabs            
@@ -12214,7 +12215,10 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
          //   AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { HtmlComponentName = "DeclarationCargoSplitTabComponent", HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/CargoSplit/DeclarationCargoSplitTabComponent", FeatureId = DeclarationCargoSplitFeature.Id, ControlPath = " ", ObjectTableId = CustomsDeclarationTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Customs.Declaration.TH.CargoSplit" && d.Tenant == 0).FirstOrDefault().Id, Code = "DCCS", Tenant = 0, IndexOrder = 19 }, ObjectTableTabsRepository, TenantObjectTableTabs);
 
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { HtmlComponentName = "DeclarationClassificationComponent", HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/Classification/DeclarationClassificationComponent", FeatureId = DeclarationClassificationFeature.Id, ControlPath = " ", ObjectTableId = CustomsDeclarationTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Customs.Declaration.TH.Classification" && d.Tenant == 0).FirstOrDefault().Id, Code = "DCCF", Tenant = 0, IndexOrder = 20 }, ObjectTableTabsRepository, TenantObjectTableTabs);
-            
+
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { HtmlComponentName = "DeclarationCargoSealTabComponent", HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/CargoSeal/DeclarationCargoSealTabComponent", FeatureId = DeclarationCargoSealFeature.Id, ControlPath = " ", ObjectTableId = CustomsDeclarationTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Customs.Declaration.TH.CargoSeal" && d.Tenant == 0).FirstOrDefault().Id, Code = "DCSE", Tenant = 0, IndexOrder = 21 }, ObjectTableTabsRepository, TenantObjectTableTabs);
+
+
             #endregion
 
             #region Vendors
