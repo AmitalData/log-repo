@@ -108,7 +108,7 @@ using System.Diagnostics;
             {
                 entityPM.AgentId = setting.CustomsAgentId.Length <= 9 ? setting.CustomsAgentId : null;
                 //if (!setting.IsConnectedToUniFreight)
-                if(!entityPM.IsConnectedToUnifreight)
+                if(!entityPM.IsConnectedToUnifreight && entityPM.IsAmendment!=true)
                 {                
 
                     if (string.IsNullOrEmpty(entityPM.CustomFileNo))

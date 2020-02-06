@@ -96,8 +96,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
 
     }
     Listen() {
-
-        if (this.CurrentSession.CurrentEditComponent != null) {
+         if (this.CurrentSession.CurrentEditComponent != null) {
 
             //this._SubMenuButtonsStateChanged =
             this.CurrentSession.SubscriptionAdd(

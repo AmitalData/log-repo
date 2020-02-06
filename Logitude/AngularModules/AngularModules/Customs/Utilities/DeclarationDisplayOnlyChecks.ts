@@ -113,6 +113,23 @@ export class DeclarationDisplayOnlyChecks {
             });
         }
 
+
+        if (this.entityPM.AmendmentMessage != null && this.entityPM.AmendmentMessage != "") {
+            {
+                return Observable.defer(() => {
+
+                     var errorMessage: string = this.entityPM.AmendmentMessage;
+                    SessionLocator.SelectedSession.CurrentEditComponent.IsSaveBtnDisable = true;
+                    SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.MustRefresh = true;
+                    editComponentNeedsRefresh = SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.MustRefresh;
+                    SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.MustRefreshMessage = errorMessage;
+                    serviceResponse.Result = new DisplayOnlyCheckResult(true, errorMessage);
+                   // return serviceResponse;
+                    return Observable.of(serviceResponse);
+                });
+             }
+        } 
+
         // Request sheets in progress check
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
