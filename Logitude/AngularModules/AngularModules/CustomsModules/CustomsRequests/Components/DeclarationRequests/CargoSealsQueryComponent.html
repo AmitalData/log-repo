@@ -15,6 +15,17 @@
             -moz-box-shadow: 0px 0px 5px 3px #C8C8C8;
             box-shadow: 0px 0px 5px 3px #C8C8C8;
         }
+
+        .DisbleBox {
+            display: inline-block;
+            border: 1px solid #ffd800;
+            border-radius: 5px;
+            background: #faf5c0;
+            padding: 2px 10px;
+            font-size: 12px;
+            color: black;
+            font-family: sans-serif;
+        }
     </style>
 
 <div>
@@ -25,6 +36,16 @@
         <!-- Request -->
         <div class="class-request-content">
             <table *ngIf="_IsReady" style="width: 750px;height: 400px; padding-top: 10px;">
+
+                <tr class="FormFieldRow" *ngIf="IsDisplayOnly">
+                    <td colspan="6">
+                        <div style="width: 100%;text-align:center;  height:25px;">
+                            <div class="DisbleBox">
+                                {{'המסך לתצוגה בלבד - התקבל אישור סגר'}}
+                            </div>
+                        </div>
+                    </td>
+                </tr>
 
                 <!-- Request Fields -->
                 <tr class="FormFieldRow" style="vertical-align: top">

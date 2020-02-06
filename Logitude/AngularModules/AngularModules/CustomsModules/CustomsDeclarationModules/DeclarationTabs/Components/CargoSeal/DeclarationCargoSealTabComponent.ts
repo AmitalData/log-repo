@@ -13,10 +13,8 @@ import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/Ser
 import { EntityArgs } from '../../../../../Infrastructure/DataContracts/EntityArgs';
 import { DeclarationPM } from '../../../../../Customs/EntityPMs/DeclarationPM';
 import { ObservableCollection } from '../../../../../Infrastructure/Utilities/ObservableCollection';;
-import { TapagList } from '../../../../../Customs/EntityLists/TapagList';
 import { EntityResourceService } from '../../../../../Infrastructure/Services/EntityResourceService';
-import { DeclarationEditComponentController } from '../../../../../Customs/Controller/DeclarationEditComponentController';
-
+import { CustomsRequestMenuService } from '../../../../../Customs/Services/Others/CustomsRequestMenuService';
 
 @Component({
     moduleId: module.id,
@@ -115,17 +113,14 @@ export class DeclarationCargoSealTabComponent extends BaseComponent implements O
 
     EditButtonClicked(item: CargoSealItemComponent) {
 
-        var windowArgs: any = {};
-        //windowArgs.EntityPM = response.Result;
-        windowArgs.declarationPM = this.EntityPM;
-
-        var logWindow = new LogitudeWindow();
-        logWindow.Width = 750;
-        logWindow.Height = 700;
-        logWindow.ShowCloseButton = true;
-        logWindow.WindowArgs = windowArgs;
-        logWindow.Show('./CustomsModules/CustomsPaymentOrder/Components/EditTabs/Tapag/Deficit/PaymentOrderDeficitComponent');
-        this.CurrentSession.StopBusyIndicator();
+        let customsRequestMenuService = new CustomsRequestMenuService();
+        let my = {
+            "CustomFileNo": this.EntityPM.CustomFileNo,
+            "CargoSealIdentifierID": item.entityPM.Id,
+            "DeclarationId": this.EntityPM.Id,
+        };
+        customsRequestMenuService.WindowClosed.subscribe(($event: any) => this.LoadCargoSealsList());
+        customsRequestMenuService.ShowModalAsEditMenuAction("6001", my);
 
     }
 
@@ -142,6 +137,10 @@ export class CargoSealItemComponent extends BaseComponent {
             this.SealNumber = cargoSealPM.SealNumber;
             this.SealCompletenessStateCode = cargoSealPM.SealCompletenessStateCode;
             this.SealCompletenessStateName = cargoSealPM.SealCompletenessStateName;
+            this.SealTypeCode = cargoSealPM.SealTypeCode;
+            this.SealTypeName = cargoSealPM.SealTypeName;
+            this.UpdateReasonCode = cargoSealPM.UpdateReasonCode;
+            this.UpdateReasonName = cargoSealPM.UpdateReasonName;
         }
     }
 
@@ -163,17 +162,21 @@ export class CargoSealItemComponent extends BaseComponent {
     public get SealCompletenessStateName() { return this._SealCompletenessStateName; }
     public set SealCompletenessStateName(newValue: string) { this._SealCompletenessStateName = newValue; }
 
-    //public get SealTypeCode() { return this.entityPM.SealTypeCode; }
-    //public set SealTypeCode(newValue: string) { this.entityPM.SealTypeCode = newValue; }
+    private _SealTypeCode: string;
+    public get SealTypeCode() { return this._SealTypeCode; }
+    public set SealTypeCode(newValue: string) { this._SealTypeCode = newValue; }
 
-    //public get SealTypeName() { return this.entityPM.SealTypeName; }
-    //public set SealTypeName(newValue: string) { this.entityPM.SealTypeName = newValue; }
+    private _SealTypeName: string;
+    public get SealTypeName() { return this._SealTypeName; }
+    public set SealTypeName(newValue: string) { this._SealTypeName = newValue; }
 
-    //public get UpdateReasonCode() { return this.entityPM.UpdateReasonCode; }
-    //public set UpdateReasonCode(newValue: string) { this.entityPM.UpdateReasonCode = newValue; }
+    private _UpdateReasonCode: string;
+    public get UpdateReasonCode() { return this._UpdateReasonCode; }
+    public set UpdateReasonCode(newValue: string) { this._UpdateReasonCode = newValue; }
 
-    //public get UpdateReasonName() { return this.entityPM.UpdateReasonName; }
-    //public set UpdateReasonName(newValue: string) { this.entityPM.UpdateReasonName = newValue; }
+    private _UpdateReasonName: string;
+    public get UpdateReasonName() { return this._UpdateReasonName; }
+    public set UpdateReasonName(newValue: string) { this._UpdateReasonName = newValue; }
 
     public SetLocalName(entity, fieldName) {
         if (!AppTool.IsNullOrEmpty(entity)) {
