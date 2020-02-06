@@ -1029,6 +1029,47 @@ export class DeclarationWebService {
         );
     }
 
+    GetDeclarationCargoSealLists(declarationId: string, tenant: number) {
+        return Observable.defer(() => {
+
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
+
+            var serviceResponse: ServiceResponse = new ServiceResponse();
+
+            return this._http.get(this._apiUrl + "/GetDeclarationCargoSealLists/?declarationId=" + declarationId + "&tenant=" + tenant, {
+                headers: authHeader
+            }).map(response => {
+
+                var res = response.json();
+                serviceResponse.Result = res;
+                return serviceResponse;
+            }).catch(ServiceHelper.HandleServiceError);
+        }
+        );
+    }
+
+    GetAcceptDeclarationAmendment(declarationId: string) {
+        return Observable.defer(() => {
+
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
+
+            var serviceResponse: ServiceResponse = new ServiceResponse();
+
+            return this._http.get(this._apiUrl + "/GetAcceptDeclarationAmendment/?declarationId=" + declarationId , {
+                headers: authHeader
+            }).map(response => {
+
+                var res = response.json();
+                serviceResponse.Result = res;
+                return serviceResponse;
+            }).catch(ServiceHelper.HandleServiceError);
+        }
+        );
+    }
 
     GetDeclarationCargoSplitByDeclarationIdList(declarationId: string, tenant: number) {
         return Observable.defer(() => {
