@@ -53,9 +53,6 @@
                                         </log-cell-template>
                                     </log-column>
 
-
-
-
                                     <!-- SealNumber -->
                                     <log-column [header]="'Customs.CargoSeal.F.SealNumber' | TextCodeTranslationPipe"
                                                 [binding]="'SealNumber'" [width]="'100'" [Alignment]="'right'">
@@ -67,14 +64,24 @@
                                     </log-column>
 
                                     <!-- SealTypeCode -->
-                                    <!--<log-column [header]="'Customs.CargoSeal.F.SealTypeCode' | TextCodeTranslationPipe"
+                                    <log-column [header]="'Customs.CargoSeal.F.SealTypeCode' | TextCodeTranslationPipe"
                                                 [width]="'100'" [Alignment]="'right'" [binding]="'SealTypeCode'">
                                         <log-cell-template template="let item" #logcelltemplate>
                                             <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
                                                 <span>{{item.SealTypeName}}</span>
                                             </div>
                                         </log-cell-template>
-                                    </log-column>-->
+                                    </log-column>
+
+                                    <!-- UpdateReasonCode -->
+                                    <log-column [header]="'Customs.CargoSeal.F.UpdateReasonCode' | TextCodeTranslationPipe"
+                                                [width]="'100'" [Alignment]="'right'" [binding]="'UpdateReasonCode'">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                                <span>{{item.UpdateReasonName}}</span>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
 
                                     <!-- SealCompletenessStateCode -->
                                     <log-column [header]="'Customs.CargoSeal.F.SealCompletenessStateCode' | TextCodeTranslationPipe"
@@ -85,16 +92,6 @@
                                             </div>
                                         </log-cell-template>
                                     </log-column>
-
-                                    <!-- UpdateReasonCode -->
-                                    <!--<log-column [header]="'Customs.CargoSeal.F.UpdateReasonCode' | TextCodeTranslationPipe"
-                                                [width]="'100'" [Alignment]="'right'" [binding]="'UpdateReasonCode'">
-                                        <log-cell-template template="let item" #logcelltemplate>
-                                            <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
-                                                <span>{{item.UpdateReasonName}}</span>
-                                            </div>
-                                        </log-cell-template>
-                                    </log-column>-->
 
 
                                     <!-- Edit Button -->
