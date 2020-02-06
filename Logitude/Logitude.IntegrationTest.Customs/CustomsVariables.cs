@@ -8,8 +8,8 @@ namespace Logitude.IntegrationTest.Customs
 {
     public class CustomsVariables
     {
-        public static string CardCusstomerGECUId { get; set; }
-        public static string CardCusstomerGECUCode { get; set; }
+        public static string CusstomerGECUId { get; set; }
+        public static string CusstomerGECUCode { get; set; }
         public static string CustomsTransportModeACode { get; set; }
         public static string CustomsHouseTypesITESTCode { get; set; }
 
