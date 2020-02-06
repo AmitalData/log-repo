@@ -57,15 +57,11 @@
     <Compile Include="CustomsPreparationCalls.cs" />
     <Compile Include="Initialize.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Tests\ChartOfAccountIntegrationTests.cs" />
+    <Compile Include="Tests\DeclarationIntegrationTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\Logitude.IntegrationTest.Core\Config\Local.appSettings.config">
-      <Link>Local.appSettings.config</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Logitude.IntegrationTest.Core\Config\Test.appSettings.config">
-      <Link>Test.appSettings.config</Link>
+    <Content Include="..\Logitude.IntegrationTest.Core\Config\Connection.appSettings.config">
+      <Link>Connection.appSettings.config</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="App.config" />
