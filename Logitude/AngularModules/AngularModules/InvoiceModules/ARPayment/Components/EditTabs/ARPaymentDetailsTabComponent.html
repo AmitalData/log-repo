@@ -556,7 +556,7 @@
                                     </log-column>
 
                                     <!-- AmountPaid (invoice) -->
-                                    <log-column [width]="'100'" [header]="'ARInvoice.CH.AmountToPayListLable' | TextCodeTranslationPipe" [Alignment]="'center'" [SortFieldName]="'AmountPaid'">
+                                    <log-column [width]="'100'" [header]="'ARInvoice.CH.AmountPaidListLable' | TextCodeTranslationPipe" [Alignment]="'center'" [SortFieldName]="'AmountPaid'">
                                         <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1" [CellColor]="item.CellBackground">
                                             <div style="width: 100%;">
                                                 <LogTextBox [InputType]="'sigdouble'" [DigitsAfterPoint]="2" [ObjectTableName]="item.ObjectTableName" [ObjectFieldName]="'AmountPaid'" [Text]="item.AmountPaid" [DataContext]="item.DataContext" [HideColumns]="true"></LogTextBox>
@@ -568,7 +568,7 @@
                                     <log-column *ngIf="IsMultiCurrency" [width]="'135'" [Alignment]="'center'">
                                         <log-header-template template="let item">
                                             <div class="GridHeaderCellTemplate">
-                                                <span>{{'ARInvoice.CH.AmountToPayListLable' | TextCodeTranslationPipe}}</span>
+                                                <span>{{'ARInvoice.CH.AmountPaidListLable' | TextCodeTranslationPipe}}</span>
                                                 <span style="padding-left: 2px;padding-right:2px;">({{PaymentCurrencyCode}})</span>
                                             </div>
                                         </log-header-template>
