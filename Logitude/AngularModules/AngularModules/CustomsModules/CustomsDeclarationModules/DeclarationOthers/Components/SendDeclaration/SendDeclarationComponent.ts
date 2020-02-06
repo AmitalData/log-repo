@@ -23,7 +23,7 @@ import {CustomsExchangeRatePM} from '../../../../../Customs/EntityPMs/CustomsExc
 import {DeclarationValidator} from '../../../../../Customs/Validators/DeclarationValidator';
 import {DeclarationPMService} from '../../../../../Customs/Services/StandardPMs/DeclarationPMService';
 import {GenericRequestParams} from '../../../../../Customs/DataContract/RequestParams/GenericRequestParams';
-import {SendRequestVIA} from '../../../../../Customs/DataContract/RequestParams/RequestParamsBase';
+import {SendRequestVIA, CustomSendOptionsArgs, TestCase} from '../../../../../Customs/DataContract/RequestParams/RequestParamsBase';
 import {CustomMessageProgressComponent, ShowProgressBarParams} from '../../../../CustomsControls/Components/CustomMessageProgressComponent';
 import { ClientSearchResponseData } from '../../../../../Customs/DataContract/ResponseData/ClientSearchResponseData';
 import {SupplierInvoicePMService} from  '../../../../../Customs/Services/StandardPMs/SupplierInvoicePMService';
@@ -66,6 +66,7 @@ export class SendDeclarationComponent implements OnDestroy {
     _WorkWithService: boolean = true;
      //------------------------------------------------------//
     private CurrentSession = SessionLocator.SelectedSession;
+    
     constructor() {
 
     }
@@ -113,7 +114,38 @@ export class SendDeclarationComponent implements OnDestroy {
     }
     reloadEvent: any;
     ButtonText: string;
-    OnCustomSendOptionsButtonClick(event) {
+    OnCustomSendOptionsButtonClick(event: CustomSendOptionsArgs) {
+        this._SendDeclarationService._TestCase = null;
+        if (event.TestCase) {
+            
+            let windowArgs = { "SincroScreen": "SincroSendDeclaration"};
+            
+            var logWindow = new LogitudeWindow();
+            logWindow.Width = 600;
+            logWindow.Height = 400;
+            logWindow.Title = "תרחשי הצהרה";
+            logWindow.ShowCloseButton = false;
+            logWindow.WindowArgs = windowArgs;
+            
+            logWindow.ComponentLoaded.subscribe(comp => {
+                logWindow.WindowClosed.subscribe(res => {
+                    if (!AppTool.IsNullOrEmpty(res) && res=="Ok") {
+                        
+                        this._SendDeclarationService._TestCase = new TestCase();
+                        this._SendDeclarationService._TestCase.Code = comp._ScenarioCode;
+                        this._SendDeclarationService._TestCase.Param1 = comp.Param1;
+                        this._SendDeclarationService._TestCase.Param2 = comp.Param2;
+                        this._SendDeclarationService.OnCustomSendOptionsButtonClick(event)
+                    }
+                });
+            });
+
+            logWindow.Show('./CustomsModules/CustomControls/Components/TestCase/SendDeclarationTastCaseComponent');
+            ///this.StopMyBusyIndicator();///this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
+
+            return;
+        }
+
         if (this._WorkWithService) {
             this._SendDeclarationService.OnCustomSendOptionsButtonClick(event);
             return;
@@ -159,6 +191,7 @@ export class SendDeclarationService implements OnDestroy {
     LoadCompletedEvent: any;
     //------------------------------------------------------//
     private CurrentSession = SessionLocator.SelectedSession;
+    _TestCase: TestCase;
     constructor() {
 
     }
@@ -841,6 +874,7 @@ export class SendDeclarationService implements OnDestroy {
         searchParams.ResponseName = "Declaration Response";
         searchParams.RequestVIA = this.RequestVIA;
         searchParams.ForcePersonalSign = this.ForcePersonalSign;
+        searchParams.TestCase = this._TestCase;
 
         let myShowProgressBarParams: ShowProgressBarParams = null;
 

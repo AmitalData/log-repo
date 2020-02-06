@@ -207,6 +207,7 @@
     <Content Include="CustomsModules\CustomsClaim\Components\EditTabs\RelatedEntity\ClaimRelatedEntReasonExpComponent.html" />
     <Content Include="CustomsModules\CustomsClaim\Components\NewEntity\NewClaimComponent.html" />
     <Content Include="CustomsModules\CustomsClaim\Components\SendClaim\SendClaimComponent.html" />
+    <Content Include="CustomsModules\CustomsControls\Components\TestCase\SendDeclarationTastCaseComponent.html" />
     <Content Include="CustomsModules\CustomsCourier\Components\AutonomyKeyword\AutonomyKeywordComponent.html" />
     <Content Include="CustomsModules\CustomsCourier\Components\CourierPendingReason\AddCourierPendingToUnifreightStatusComponent.html" />
     <Content Include="CustomsModules\CustomsCourier\Components\CourierPendingReason\DeclarationPendingsGeneralComponent.html" />
@@ -798,6 +799,7 @@
     <TypeScriptCompile Include="CustomsModules\CustomsClient\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsCollateral\ModuleCustomsCollateral.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsCollateral\ModuleDeclarations.ts" />
+    <TypeScriptCompile Include="CustomsModules\CustomsControls\Components\TestCase\SendDeclarationTastCaseComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsControls\ModuleCustomsControls.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsControls\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsCourier\Components\AutonomyKeyword\AutonomyKeywordComponent.ts" />

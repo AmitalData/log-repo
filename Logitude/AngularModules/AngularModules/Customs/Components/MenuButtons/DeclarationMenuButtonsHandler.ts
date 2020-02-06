@@ -34,6 +34,10 @@ import { EntityResourceService } from '../../../Infrastructure/Services/EntityRe
 import { EntityArgs } from '../../../Infrastructure/DataContracts/EntityArgs';
 import { DeclarationEventManager } from '../../Utilities/DeclarationEventManager';
 import { DownloadManager } from '../../../Infrastructure/Utilities/DownloadManager';
+import { MenuButtonsComponent } from '../../../Infrastructure/Components/LogitudeComponents/MenuButtonsComponent/MenuButtonsComponent';
+import { GenericRequestParams } from '../../DataContract/RequestParams/GenericRequestParams';
+import { TestCase } from '../../DataContract/RequestParams/RequestParamsBase';
+import { CustomsSettingExtendedListService } from '../../Services/ExtendedLists/CustomsSettingExtendedListService';
 
 
 export class DeclarationMenuButtonsHandler implements OnDestroy {
@@ -92,8 +96,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
 
     }
     Listen() {
-
-        if (this.CurrentSession.CurrentEditComponent != null) {
+         if (this.CurrentSession.CurrentEditComponent != null) {
 
             //this._SubMenuButtonsStateChanged =
             this.CurrentSession.SubscriptionAdd(
@@ -144,6 +147,31 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
 
     public CheckButtonState(menuButtons: MenuButtonPM[]) {
         this.MenuButtons = menuButtons;
+        if (SessionLocator.TenantPM.IsTestTenant) {
+            
+            
+            let myMenuButtonDeclarationsStatusRequest = this.MenuButtons.filter(r => r.EventCode == "DeclarationsStatusRequest").slice(0)[0];
+            //let myMenuButtonPM: MenuButtonPM= (JSON.parse(JSON.stringify(myMenuButtonDeclarationsStatusRequest))) ;
+            let myMenuButtonPM = new MenuButtonPM(null);
+            for (var attribut in myMenuButtonDeclarationsStatusRequest) {
+                if (typeof this[attribut] === "object") {
+                    //cloneObj[attribut] = this.clone();
+                } else {
+                    myMenuButtonPM[attribut] = myMenuButtonDeclarationsStatusRequest[attribut];
+                }
+            }
+            //myMenuButtonPM.MenuButtonGroupId = myMenuButtonDeclarationsStatusRequest.
+            myMenuButtonPM.Id = "SincroSendDeclarationDCA";
+            myMenuButtonPM.LabelTextCodeCode = null;
+            myMenuButtonPM.LabelTextCodeId = null;
+            myMenuButtonPM.DisplayText = " DCA תרחיש";
+            myMenuButtonPM.EventCode = "SincroSendDeclarationDCA";
+            myMenuButtonPM.ShowMenuButton = true;
+            myMenuButtonPM.IsHidden = false;
+
+            myMenuButtonPM.Index=1000
+            menuButtons.push(myMenuButtonPM);
+        }
         this.DisplayOnlyCheck();
     }
 
@@ -388,6 +416,11 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
 
         if (true) {//this.isValid) { this is also for testing temp of course
             switch (this.MenuButtonCode) {
+                case "SincroSendDeclarationDCA":
+                    {
+                        this.SincroSendDeclarationDCA();
+                        break;
+                    }
                 case "SendDeclaration":
                     {
                         ////SendDeclaration();
@@ -522,6 +555,55 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                     }
             }
         }
+    }
+    SincroSendDeclarationDCA(): any {
+        
+        let windowArgs = { "SincroScreen": "SincroSendDeclarationDCA" };
+
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 600;
+        logWindow.Height = 400;
+        logWindow.Title = "תרחשי הצהרה";
+        logWindow.ShowCloseButton = false;
+        logWindow.WindowArgs = windowArgs;
+
+        logWindow.ComponentLoaded.subscribe(comp => {
+            logWindow.WindowClosed.subscribe(res => {
+                if (!AppTool.IsNullOrEmpty(res) && res == "Ok") {
+
+
+                    this.CurrentSession.StartBusyIndicatorCreating();
+                    var searchParams: GenericRequestParams = new GenericRequestParams();
+                    searchParams.Tenant = SessionLocator.Tenant;
+                    searchParams.AppicationId = this.EntityPM.Id;
+                    searchParams.LoggingEnabled = true;
+                    searchParams.LoggingEntityId = this.EntityPM.Id;
+                    searchParams.LoggingEntityReference = this.EntityPM.DeclarationNumber;
+                    ///searchParams.LoggingObjectTableId = this.ObjectTable.Id;
+                    searchParams.LoggingUserId = SessionLocator.LoggedUserId;
+                    //searchParams.RequestName = "Declaration Request";
+                    //searchParams.ResponseName = "Declaration Response";
+                    //searchParams.RequestVIA = this.RequestVIA;
+                    //searchParams.ForcePersonalSign = this.ForcePersonalSign;
+                    
+
+                    searchParams.TestCase =new TestCase();
+                    searchParams.TestCase.Code = comp._ScenarioCode;
+                    searchParams.TestCase.Param1 = comp.Param1;
+                    searchParams.TestCase.Param2 = comp.Param2;
+                    let srv = new CustomsSettingExtendedListService();
+                    srv.PostSincroOption(searchParams)
+                    .subscribe((response: ServiceResponse) => {
+                        //this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                        this.CurrentSession.StopBusyIndicator();
+                    });
+                    
+                } 
+            });
+        });
+
+        logWindow.Show('./CustomsModules/CustomControls/Components/TestCase/SendDeclarationTastCaseComponent');
+
     }
 
     DisplayDeclarationVehicleModificationsMethod() {

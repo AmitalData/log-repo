@@ -17,7 +17,7 @@ export class DeclarationEditComponentController implements IEditComponentControl
 
         }
 
-        if (currentEntity.IsAmendment) {
+        if (currentEntity.AmendmentDontDisplayInList) {
             var indexOfTab = allTabs.findIndex(t => t.Code == "DCDA");
             if (indexOfTab > -1) {
                 allTabs.splice(indexOfTab, 1);

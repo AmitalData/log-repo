@@ -18,6 +18,10 @@ using Unifreight.BL.EntityQueryServices;
 using Unifreight.Data.AmitalModel;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
+using Logitude.Customs.BL.CloseTables;
+using Logitude.CustomsMessaging.Common.RequestParams;
+using Logitude.CustomsMessaging.Common.ResponseData;
+using Logitude.CustomsMessaging.FakeMessagingServices;
 
 namespace WebFreight.Web.Controllers.CustomsModel.Extended
 {
@@ -213,6 +217,103 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 return ("");
             }
             return (myGDFDATAPM.DEFDATA);
+        }
+
+
+
+        public HttpResponseMessage GetSincroOption(String SincroScreen, int tenant)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    //using (TransactionScope scope = TransactionFactory.GetTransaction())
+                    {
+                        string token = HttpContext.Current.Request.Headers["Token"];
+                        AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                        //int tenant = authToken.Tenant;
+
+                        ICustomContext MyContext = CustomContext.GetContext(tenant);
+                        var queryService = new SincroTestCaseDetails();
+                        List<SincroTestCaseDetail> mySincroTestCaseDetailList = null;
+                        switch (SincroScreen)
+                        {
+                            case "SincroSendDeclarationPayment":
+                                {
+                                    mySincroTestCaseDetailList =
+                                    queryService.GetAllSincroTestCaseDetails()
+                                        .Where(r => r.Entity == "DeclarationPayment")
+                                        .Where(r => !r.IsDCA)
+                                        .ToList();
+                                }
+                                break;
+
+                            case "SincroSendDeclaration":
+                                {
+                                    mySincroTestCaseDetailList=
+                                    queryService.GetAllSincroTestCaseDetails()
+                                        .Where(r => r.Entity == "Declaration")
+                                        .Where(r => !r.IsDCA)
+                                        .ToList();
+                                }
+                                break;
+                            case "SincroSendDeclarationDCA":
+                                {
+                                    mySincroTestCaseDetailList
+                                        =
+                                        queryService.GetAllSincroTestCaseDetails()
+                                        .Where(r => r.Entity == "Declaration")
+                                        .Where(r => r.IsDCA==true)
+                                        .ToList();
+                                }
+                                break;
+                            default:
+                                throw new Exception($"SincroScreen is not valid (SincroScreen)");
+                                break;
+                        }
+                        
+                        var details = new CustomsPartnerFtpDetails();
+                        var entityPM = new
+                        {
+                            SincroTestCaseDetailList = mySincroTestCaseDetailList,
+                            MoreParams = "",
+                        };
+
+
+                        ///scope.Complete();
+                        return Request.CreateResponse(HttpStatusCode.OK, entityPM);
+                    }
+                }
+
+                catch (Exception ex)
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+                }
+            }
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
+            }
+        }
+
+
+
+        public HttpResponseMessage PostSincroOption(GenericRequestParams requestParamsData)
+        {
+            try
+            {
+                
+                var myDCASincroService = new DCASincroService();
+                string message =myDCASincroService.BuildDCAMessage(requestParamsData);
+
+                return Request.CreateResponse(HttpStatusCode.OK, new { Success = true , Message= message });
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+
         }
     }
 }

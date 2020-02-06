@@ -1671,6 +1671,8 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 submitRequestParams.LoggingObjectTableId = requestParamsCredit.LoggingObjectTableId;
                 submitRequestParams.LoggingObjectTableId2 = requestParamsCredit.LoggingObjectTableId2;
 
+                submitRequestParams.TestCase = requestParamsCredit.TestCase;
+
                 var messagingService = new
                     DF_NG_2755_MSG12001_SubmitDeclarationMessagingService();
                 INF_MSG_GenericResponseData submitResponseData = messagingService.Send(submitRequestParams);

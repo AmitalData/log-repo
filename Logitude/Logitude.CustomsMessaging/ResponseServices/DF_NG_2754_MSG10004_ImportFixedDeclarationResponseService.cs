@@ -256,6 +256,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 {
                     CustomsDocumentPointer.ChangeSetOp = ChangeSetOperation.Insert;
                     CustomsDocumentPointer.ParentEntityId = declarationId;
+                        CustomsDocumentPointer.CustomsDocumentsTicketId = null;
                 }
                 customsDocumentsTicketUpdateService.Update(customsDocumentsTicketPM, true);
             }
