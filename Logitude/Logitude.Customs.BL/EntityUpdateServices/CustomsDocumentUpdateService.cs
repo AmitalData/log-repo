@@ -90,6 +90,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             ICommonDataContext commonContext = CommonDataContext.GetContext(entityPM.Tenant);
             var myDocumentsFilingService = new DocumentsFilingService(commonContext, entityPM.Tenant);
 
+            DateTime stopLogAt = new DateTime(2020, 05, 05);
+            Debug.WriteLine("AutoSetMetaDataValue");
+            string logData = "";
+
             foreach (CustomsDocumentMetaDataValuePM val in entityPM.CustomsDocumentMetaDataValues)
             {
                 if (docType != null && docType.AutoSetOriginalDocumentTrue && val.MetaDataTypeCode == "87" && val.ChangeSetOp == ChangeSetOperation.Insert)
@@ -106,7 +110,14 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         if (val.ChangeSetOp != ChangeSetOperation.Insert) val.ChangeSetOp = ChangeSetOperation.Update;
                     }
                 }
+                logData += $"CustomsDocumentPM.DocumentsFilingId={entityPM.DocumentsFilingId},CustomsDocumentMetaDataValuePM.MetaDataTypeCode={val.MetaDataTypeCode},CustomsDocumentMetaDataValuePM.MetaDataValue={val.MetaDataValue},CustomsDocumentMetaDataValuePM.ChangeSetOp={val.ChangeSetOp}";
+                if (MyDocumentMetaDataValues != null)
+                {
+                    logData += $"DocumentsFilingMetaDataValuePM.MetaDataValue={MyDocumentMetaDataValues.MetaDataValue}";
+                }
+
             }
+            LogitudeSettings.HandleLogMe("AutoSetMetaDataValue" + logData, false, "AutoSetMetaDataValue", stopLogAt);
         }
 
         public const string SetCustomsRequestSheetStatus = "SetCustomsRequestSheetStatus";
