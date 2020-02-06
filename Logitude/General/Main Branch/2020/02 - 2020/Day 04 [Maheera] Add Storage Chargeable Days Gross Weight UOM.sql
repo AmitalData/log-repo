@@ -15,7 +15,7 @@ BEGIN
 		           
 			EXECUTE usp_GetNextTableIdValue @MeasurementId OUTPUT,'Measurement'
             insert into Measurements(Code, Name, ShortName, Id, Tenant, IsContainerMeasurement, IsContainer, InActive, SearchFields, LocalName)
-            values('SCGW', 'Storage Chargeable Days Gross Weight', 'Storage Days Gross Weight', @MeasurementId, @Tenant, 0, 0, 0, 'SCGW,Storage Chargeable Days Gross Weight,Storage Days Gross Weight', 'Storage Chargeable Days Gross Weight')                            
+            values('SCGW', 'Storage Days x Gross Weight', 'Storage Days x Gross Weight', @MeasurementId, @Tenant, 0, 0, 0, 'SCGW,Storage Days x Gross Weight,Storage Days x Gross Weight', 'Storage Days x Gross Weight')                            
         end 
 
         FETCH NEXT FROM TenantsCursor INTO @Tenant      

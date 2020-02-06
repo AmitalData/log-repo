@@ -461,6 +461,7 @@ export class ShipmentTool {
             shipmentPM.GrossWeight = oldShipment.GrossWeight;
             shipmentPM.GrossWeightInKG = oldShipment.GrossWeightInKG;
             shipmentPM.GrossWeightPerTon = oldShipment.GrossWeightPerTon;
+            shipmentPM.GrossWeightPerStorageDays = oldShipment.GrossWeightPerStorageDays;
             shipmentPM.Volume = oldShipment.Volume;
             shipmentPM.VolumeInCBM = oldShipment.VolumeInCBM;
             shipmentPM.ChargeableWeight = oldShipment.ChargeableWeight;
