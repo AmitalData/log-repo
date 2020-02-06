@@ -681,7 +681,7 @@
     <Content Include="Main Branch\2019\12 - 2019\Day 30 [Wesam] Delete Constraint between MenuButtons and TextCode.sql" />
     <Content Include="Main Branch\2019\12 - 2019\Day 31 [Wesam] Delete Constraint between RuleConditionFields and objectFields.sql" />
     <Content Include="Main Branch\2019\12 - 2019\Day 31 [Wesam] Fill objectfieldcode on RuleConditionFields.sql" />
-    <Content Include="Main Branch\2020\02 - 2020\Day 06 [Wesam] Delete worng pltotaltax textcode.sql" />
+    <Content Include="Main Branch\2020\02 - 2020\Day 06 [Wesam] Fix pltotaltax textcode.sql" />
     <Content Include="Main Branch\2020\1 - 2020\Day 12 [Mutaz] Delete Constraint between SharedUserQueries and Query.sql" />
     <Content Include="Main Branch\2020\1 - 2020\Day 22 [Abed] update Help Center.sql" />
     <Content Include="Main Branch\2020\1 - 2020\Day 8 [Mutaz] Delete Constraint between Query and Query.sql" />
