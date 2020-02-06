@@ -582,11 +582,26 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         }
         this.EntityPM.VolumeInCBM = volume_CBM;
     }
+
+
     get VolumetricWeight() { return this.EntityPM.VolumetricWeight == null ? 0 : this.EntityPM.VolumetricWeight; }
     set VolumetricWeight(newValue: number) {
         if (this.EntityPM.VolumetricWeight != newValue) {
             this.EntityPM.VolumetricWeight = AppTool.Round(newValue, 3);
         }
+    }
+
+    get GrossWeightPerStorageDays() { return this.EntityPM.GrossWeightPerStorageDays == null ? 0 : this.EntityPM.GrossWeightPerStorageDays; }
+    set GrossWeightPerStorageDays(newValue: number) {
+        if (this.EntityPM.GrossWeightPerStorageDays != newValue) {
+            this.EntityPM.GrossWeightPerStorageDays = AppTool.Round(newValue, 3);
+        }
+    }
+
+    private ComputeGrossWeight_PerStorageDays() {
+        var StorageDays = DateTool.GetDaysBetweenDates(this.EntityPM.WarehouseLegActualReleaseDate, this.EntityPM.WarehouseLegActualEntryDate);
+        var grossWeightPerStorageDays = this.EntityPM.GrossWeightPerTon * (StorageDays - this.EntityPM.WarehouseStorageFreeDays);
+        this.GrossWeightPerStorageDays = grossWeightPerStorageDays < 0 ? 0 : grossWeightPerStorageDays;
     }
 
     get NumberOfPackages() {
@@ -622,6 +637,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         if (this.EntityPM.GrossWeight != newValue) {
             this.EntityPM.GrossWeight = AppTool.Round(newValue, 3);
             this.ComputeGrossWeigh_Kg_Ton();
+            this.ComputeGrossWeight_PerStorageDays();
         }
     }
 

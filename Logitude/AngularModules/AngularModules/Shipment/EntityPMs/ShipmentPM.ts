@@ -319,7 +319,12 @@ export class ShipmentPM {
     public get GrossWeightInKG() { return this.grossWeightInKG; }
     public set GrossWeightInKG(newValue: number) { if (this.grossWeightInKG != newValue) { this.grossWeightInKG = newValue; this.MarkAsDirty("GrossWeightInKG"); } }
        
-	 
+
+    private grossWeightPerStorageDays: number;
+    public get GrossWeightPerStorageDays() { return this.grossWeightPerStorageDays; }
+    public set GrossWeightPerStorageDays(newValue: number) { if (this.grossWeightPerStorageDays != newValue) { this.grossWeightPerStorageDays = newValue; this.MarkAsDirty("GrossWeightPerStorageDays"); } }
+
+
     private chargeableWeight: number;
     public get ChargeableWeight() { return this.chargeableWeight; }
     public set ChargeableWeight(newValue: number) { if (this.chargeableWeight != newValue) { this.chargeableWeight = newValue; this.MarkAsDirty("ChargeableWeight"); } }
@@ -4127,6 +4132,15 @@ export class ShipmentPM {
         if (this.notify2Reference != newValue) {
             this.notify2Reference = newValue;
             this.MarkAsDirty("Notify2Reference");
+        }
+    }
+
+    private warehouseStorageFreeDays: number;
+    public get WarehouseStorageFreeDays() { return this.warehouseStorageFreeDays; }
+    public set WarehouseStorageFreeDays(newValue: number) {
+        if (this.warehouseStorageFreeDays != newValue) {
+            this.warehouseStorageFreeDays = newValue;
+            this.MarkAsDirty("WarehouseStorageFreeDays");
         }
     }
 

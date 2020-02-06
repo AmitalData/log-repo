@@ -3249,6 +3249,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, OnDes
                 this.EntityPM.ChargeableWeightEdited = this.SourceEntityPM.ChargeableWeightEdited;
                 this.EntityPM.OrderGrossWeightEdited = this.SourceEntityPM.OrderGrossWeightEdited;
                 this.EntityPM.OrderChargeableWeightEdited = this.SourceEntityPM.OrderChargeableWeightEdited;
+                this.EntityPM.GrossWeightPerStorageDays = this.SourceEntityPM.GrossWeightPerStorageDays;
             }
 
             else {
@@ -3277,6 +3278,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, OnDes
                 this.EntityPM.ChargeableWeightEdited = false;
                 this.EntityPM.OrderGrossWeightEdited = false;
                 this.EntityPM.OrderChargeableWeightEdited = false;
+                this.EntityPM.GrossWeightPerStorageDays = null;
             }
 
             this.SetUIProperties_OrderDetails();
