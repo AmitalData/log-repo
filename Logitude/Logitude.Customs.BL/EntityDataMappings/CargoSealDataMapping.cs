@@ -36,15 +36,48 @@ namespace Logitude.Customs.BL.EntityDataMappings
         public void CustomPOCOToPM(CargoSealPM entityPM, CargoSeal entityPOCO)
         {
             CustomMappedPMProperties.Add(PMPropertyNames.SealCompletenessStateName);
-            //CustomMappedPMProperties.Add(PMPropertyNames.SealTypeName);
-            //CustomMappedPMProperties.Add(PMPropertyNames.TapagTypeName);
-            //CustomMappedPMProperties.Add(PMPropertyNames.ReferantName);
+            CustomMappedPMProperties.Add(PMPropertyNames.SealTypeName);
+            CustomMappedPMProperties.Add(PMPropertyNames.UpdateReasonName);
+            CustomMappedPMProperties.Add(PMPropertyNames.UpdateTypeName);
 
             if (entityPOCO.SealCompletenessStateCode != null)
             {
                 SealCompletenesQueryService sealCompletenesQueryService = new SealCompletenesQueryService(entityPOCO.Tenant);
                 SealCompletenesPM sealCompletenesPM = sealCompletenesQueryService.GetSingle(entityPOCO.SealCompletenessStateCode, false, true);
-                entityPM.SealCompletenessStateName = sealCompletenesPM.LocalName;
+                if (sealCompletenesPM != null)
+                {
+                    entityPM.SealCompletenessStateName = sealCompletenesPM.LocalName;
+                }
+            }
+
+            if (entityPOCO.SealTypeCode != null)
+            {
+                SealTypeQueryService sealTypeQueryService = new SealTypeQueryService(entityPOCO.Tenant);
+                SealTypePM sealTypePM = sealTypeQueryService.GetSingle(entityPOCO.SealTypeCode, false, true);
+                if(sealTypePM != null)
+                {
+                    entityPM.SealTypeName = sealTypePM.LocalName;
+                }
+            }
+
+            if (entityPOCO.UpdateReasonCode != null)
+            {
+                SealUpdateReasonTypeQueryService sealUpdateReasonTypeQueryService = new SealUpdateReasonTypeQueryService(entityPOCO.Tenant);
+                SealUpdateReasonTypePM sealUpdateReasonTypePM = sealUpdateReasonTypeQueryService.GetSingle(entityPOCO.UpdateReasonCode, false, true);
+                if (sealUpdateReasonTypePM != null)
+                {
+                    entityPM.UpdateReasonName = sealUpdateReasonTypePM.LocalName;
+                }
+            }
+
+            if (entityPOCO.UpdateTypeCode != null)
+            {
+                AmendmentTypeQueryService amendmentTypeQueryService = new AmendmentTypeQueryService(entityPOCO.Tenant);
+                AmendmentTypePM amendmentTypePM = amendmentTypeQueryService.GetSingle(entityPOCO.UpdateTypeCode, false, true);
+                if (amendmentTypePM != null)
+                {
+                    entityPM.UpdateTypeName = amendmentTypePM.LocalName;
+                }
             }
         }
    }

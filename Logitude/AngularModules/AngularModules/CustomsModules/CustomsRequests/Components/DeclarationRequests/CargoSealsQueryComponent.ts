@@ -535,8 +535,8 @@ export class CargoSealComponent extends BaseComponent {
     public get SealCompletenessStateCode() { return this.entityPM.SealCompletenessStateCode; }
     public set SealCompletenessStateCode(newValue: string) { this.entityPM.SealCompletenessStateCode = newValue; }
 
-    public get SealCompletenessStatename() { return this.entityPM.SealCompletenessStatename; }
-    public set SealCompletenessStatename(newValue: string) { this.entityPM.SealCompletenessStatename = newValue; }
+    public get SealCompletenessStatename() { return this.entityPM.SealCompletenessStateName; }
+    public set SealCompletenessStatename(newValue: string) { this.entityPM.SealCompletenessStateName = newValue; }
 
     public get SealTypeCode() { return this.entityPM.SealTypeCode; }
     public set SealTypeCode(newValue: string) { this.entityPM.SealTypeCode = newValue; }
