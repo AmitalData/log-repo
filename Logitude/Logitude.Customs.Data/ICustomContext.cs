@@ -23,6 +23,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<AgentTalkBackType> AgentTalkBackTypes { get; }
 		 IDbSet<AmendmentFieldReasonType> AmendmentFieldReasonTypes { get; }
 		 IDbSet<AmendmentRequestStatus> AmendmentRequestStatuses { get; }
+		 IDbSet<AmendmentType> AmendmentTypes { get; }
 		 IDbSet<ApprovedProfession> ApprovedProfessions { get; }
 		 IDbSet<AssigneeNotificationType> AssigneeNotificationTypes { get; }
 		 IDbSet<AttachmentType> AttachmentTypes { get; }
@@ -32,6 +33,8 @@ namespace Logitude.Customs.Data
 		 IDbSet<Bank> Banks { get; }
 		 IDbSet<CargoIdentifireType> CargoIdentifireTypes { get; }
 		 IDbSet<CargoIdentityQualifier> CargoIdentityQualifiers { get; }
+		 IDbSet<CargoSeal> CargoSeals { get; }
+		 IDbSet<CargoSealIdentifier> CargoSealIdentifiers { get; }
 		 IDbSet<CargoSplitRequestStatus> CargoSplitRequestStatuses { get; }
 		 IDbSet<CargoStatus> CargoStatuses { get; }
 		 IDbSet<CertificateExemptionType> CertificateExemptionTypes { get; }
@@ -255,6 +258,9 @@ namespace Logitude.Customs.Data
 		 IDbSet<RequiredGuaranteeType> RequiredGuaranteeTypes { get; }
 		 IDbSet<ReturnCondition> ReturnConditions { get; }
 		 IDbSet<SalesTaxExemptionType> SalesTaxExemptionTypes { get; }
+		 IDbSet<SealCompletenes> SealCompleteness { get; }
+		 IDbSet<SealType> SealTypes { get; }
+		 IDbSet<SealUpdateReasonType> SealUpdateReasonTypes { get; }
 		 IDbSet<SeizureFactorType> SeizureFactorTypes { get; }
 		 IDbSet<SeizureMethodType> SeizureMethodTypes { get; }
 		 IDbSet<SignatureType> SignatureTypes { get; }

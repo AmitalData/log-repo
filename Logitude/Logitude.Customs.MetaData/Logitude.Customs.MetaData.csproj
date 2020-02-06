@@ -97,6 +97,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ContextGenerator.tt</DependentUpon>
     </Compile>
+    <None Include="EntityFiles\AmendmentType.lxml" />
+    <None Include="EntityFiles\CargoSeal.lxml" />
+    <None Include="EntityFiles\CargoSealIdentifier.lxml" />
     <None Include="EntityFiles\ClaimsRelatedEntitiesRefund.lxml" />
     <None Include="EntityFiles\ClaimsRelatedEntitiesSeizure.lxml" />
     <None Include="EntityFiles\ContinuousRequestType.lxml" />
@@ -132,6 +135,9 @@
     <None Include="EntityFiles\PendingByKeyword.lxml" />
     <None Include="EntityFiles\PendingErrorPlace.lxml" />
     <None Include="EntityFiles\RefundCustomerActivityType.lxml" />
+    <None Include="EntityFiles\SealCompletenes.lxml" />
+    <None Include="EntityFiles\SealType.lxml" />
+    <None Include="EntityFiles\SealUpdateReasonType.lxml" />
     <None Include="EntityFiles\SeizureFactorType.lxml" />
     <None Include="EntityFiles\SeizureMethodType.lxml" />
     <None Include="EntityFiles\TPGFileType.lxml" />

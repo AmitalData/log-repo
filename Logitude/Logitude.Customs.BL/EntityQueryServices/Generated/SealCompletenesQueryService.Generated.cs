@@ -1,0 +1,69 @@
+ 
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Def.EntityPMs;
+using Logitude.Customs.BL.EntityDataMappings;
+using Logitude.Customs.Data.Repsitories;
+using Logitude.Customs.Data.EntityKeys;
+using Logitude.Customs.Data;
+using Simplog.Server.Infrastructure;
+namespace Logitude.Customs.BL.EntityQueryServices
+{ 
+   public partial class SealCompletenesQueryService: EntityQueryService<SealCompletenes,SealCompletenesKeys,SealCompletenesPM,object,SealCompletenesKeys>
+   {
+   
+        SealCompletenesRepository repository;
+		ICustomContext  context;
+        public SealCompletenesQueryService(int tenant)
+        {
+		    context = CustomContext.GetContext(tenant);
+            MainContext = context;
+            repository = new SealCompletenesRepository(context);
+            Repository = repository;
+            mapping = new SealCompletenesDataMapping();
+        }
+
+        public SealCompletenesQueryService(SealCompletenesRepository repository)
+        {
+            this.repository = repository;
+            Repository = repository;
+            mapping = new SealCompletenesDataMapping();
+        }
+
+        public SealCompletenesQueryService(ICustomContext context)
+        {
+            this.repository = new SealCompletenesRepository(context);
+            this.context = context;
+
+            MainContext = context;
+            Repository = repository;
+            mapping = new SealCompletenesDataMapping();
+        }
+		 
+		public  SealCompletenesPM GetSingle(string code,bool getComposition, bool getFromCache)
+        {
+             EntityKeys = new SealCompletenesKeys(){ Code = code };
+
+			 return base.GetSingle(EntityKeys, getComposition, getFromCache);
+        }
+
+       
+	    protected override EntityKeyFields GetKeys(SealCompletenes entityPOCO)
+        {
+            SealCompletenesKeys entityKeys = new SealCompletenesKeys() { Code = entityPOCO.Code,  };
+            return entityKeys;
+        }
+     
+	 
+   }
+   
+}
+	 
