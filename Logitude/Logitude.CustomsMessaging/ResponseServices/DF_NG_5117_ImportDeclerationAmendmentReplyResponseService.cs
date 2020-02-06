@@ -24,6 +24,7 @@ using UnifreightIIG.Common.MessageLib.ID;
 using UnifreightIIG.Common.MessageLib.Collateral;
 using Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer;
 using System.Reflection;
+using System.Xml.Serialization;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -33,33 +34,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
         private DeclarationPrintResponseData _SendDeclarationPrintResponse;
 
 
-        public UnifreightIIG.Common.ImportDeclarationServiceReference.Declaration CastDeclaration (UnifreightIIG.Common.MessageLib.ID.Declaration castFrom , UnifreightIIG.Common.ImportDeclarationServiceReference.Declaration castTo)
-        {
-            Type objectType = castFrom.GetType();
-            Type target = castTo.GetType();
-            var x = Activator.CreateInstance(target, false);
-            var z = from source in objectType.GetMembers().ToList()
-                    where source.MemberType == MemberTypes.Property
-                    select source;
-            var d = from source in target.GetMembers().ToList()
-                    where source.MemberType == MemberTypes.Property
-                    select source;
-            List<MemberInfo> members = d.Where(memberInfo => d.Select(c => c.Name)
-               .ToList().Contains(memberInfo.Name)).ToList();
-            PropertyInfo propertyInfo;
-            object value;
-            foreach (var memberInfo in members)
-            {
-                propertyInfo = castTo.GetType().GetProperty(memberInfo.Name);
-                value = objectType.GetType().GetProperty(memberInfo.Name).GetValue(objectType, null);
-
-                propertyInfo.SetValue(x, value, null);
-            }
-            return (UnifreightIIG.Common.ImportDeclarationServiceReference.Declaration)x;
-
-
-
-        }
+       
         public override void Update(DF_NG_5117_MSG14003_ImportDeclarationAmendmentReplyMsg customResponse, GenericRequestParams requestParams)
         {
             var context = CustomContext.GetContext(requestParams.Tenant);
@@ -70,7 +45,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             string error = "";
             var dec = new UnifreightIIG.Common.ImportDeclarationServiceReference.Declaration();
 
-            if (customResponse.Response.Declaration != null && customResponse.Response.Declaration.ID != null && customResponse.Response.Declaration.ID.Value != null && customResponse.Response.Declaration.ID.Value.Substring(2, 2) == "99")
+            if (customResponse.Response.Declaration != null && customResponse.Response.Declaration.ID != null && customResponse.Response.Declaration.ID.Value != null)
             {
  
                 //var key = "ResponseService,declarationNumber:" + declarationNumber + ",tenant:" + requestParams.Tenant.ToString();
@@ -81,8 +56,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                 if (declaration != null)
                 {
+                    _MyDeclarationPM = declaration;
                     //agent 
-                //    DeclarationPM declarationPM = dF_NG_2754_MSG10004_ImportFixedDeclarationResponseService.MapResponseToDeclaration(CastDeclaration( customResponse.Response.Declaration , dec), requestParams.Tenant, true, requestParams.AppicationId, out error , true);
+                    //    DeclarationPM declarationPM = dF_NG_2754_MSG10004_ImportFixedDeclarationResponseService.MapResponseToDeclaration(CastDeclaration( customResponse.Response.Declaration , dec), requestParams.Tenant, true, requestParams.AppicationId, out error , true);
 
                 }
                 else
@@ -94,16 +70,16 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         // declarationNumber = customResponse.Response.Declaration.ID.Value;
                     }
 
-                    else { 
+                    else {
 
-                    _MyDeclarationPM = myDeclarationUpdateService.GetSertByConvertedDeclarationNumber(customResponse.Response.Declaration.ID.Value, requestParams.Tenant);
+                        //      _MyDeclarationPM = myDeclarationUpdateService.GetSertByConvertedDeclarationNumber(customResponse.Response.Declaration.ID.Value, requestParams.Tenant);
 
 
                         //שדה AmendmentCorrectedByUserId=MEHES
                         //  AmendmentissueDate =< issueDateTime
 
 
-                        DeclarationPM declarationPM = dF_NG_2754_MSG10004_ImportFixedDeclarationResponseService.MapResponseToDeclaration(CastDeclaration(customResponse.Response.Declaration, dec), requestParams.Tenant, true, requestParams.AppicationId, out error, true);
+                        _MyDeclarationPM = dF_NG_2754_MSG10004_ImportFixedDeclarationResponseService.MapResponseToDeclaration(CastDeclaration(customResponse.Response.Declaration), requestParams.Tenant, true, requestParams.AppicationId, out error, true);
                     }
 
 
@@ -382,7 +358,29 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 //declarationNumber = requestParams.AppicationId;
             }
         }
-        bool SendDeclarationPrintSync(GenericRequestParams requestParams)
+
+
+        public UnifreightIIG.Common.ImportDeclarationServiceReference.Declaration CastDeclaration(UnifreightIIG.Common.MessageLib.ID.Declaration declaration )
+        {
+
+
+            string DeclarationString;
+            using (var stringwriter = new System.IO.StringWriter())
+            {
+                var serializer = new XmlSerializer(declaration.GetType());
+                serializer.Serialize(stringwriter, declaration);
+                DeclarationString = stringwriter.ToString();
+            }
+
+
+
+            using (var stringReader = new System.IO.StringReader(DeclarationString))
+            {
+                var serializer = new XmlSerializer(typeof(UnifreightIIG.Common.ImportDeclarationServiceReference.Declaration));
+                return serializer.Deserialize(stringReader) as UnifreightIIG.Common.ImportDeclarationServiceReference.Declaration;
+            }
+        }
+            bool SendDeclarationPrintSync(GenericRequestParams requestParams)
         {
 
             bool SendDeclarationPrintDone = false;

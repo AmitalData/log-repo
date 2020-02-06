@@ -1,4 +1,5 @@
 ﻿using Logitude.CustomsMessaging.Common.RequestParams;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,8 +23,13 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
         public DF_NG_5117_MSG14003_ImportDeclarationAmendmentReplyMsg GetFakeCustomsResponse(GenericRequestParams requestParamsData)
         {
 
+            
+             dynamic data = JObject.Parse(requestParamsData.TestCase.Param1);
 
-             _header = new ResponseContentHeader();
+            string status = data.Status;
+            string requestNumber = data.RequestNumber;
+
+            _header = new ResponseContentHeader();
             DF_NG_5117_MSG14003_ImportDeclarationAmendmentReplyMsg response = new DF_NG_5117_MSG14003_ImportDeclarationAmendmentReplyMsg();
             UpdateDeclaration();
             AddResponseHeader();
@@ -31,7 +37,7 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
 
        
 
-            //   CastObject(fakeRespond.Response.Declaration, dec);
+              CastObject(fakeRespond.Response.Declaration, dec);
             response.Response = new Response
             {
                 Declaration = dec
@@ -40,19 +46,45 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
             AddResponseContentHeader();
             response.ResponseContentHeader = _header;
             ResponseAdditionalInformation[] AdditionalInformation = new ResponseAdditionalInformation[3];
-            AdditionalInformation[0].StatementTypeCode = new AdditionalInformationStatementTypeCodeType() { Value = "29" };
-            AdditionalInformation[0].Content = new AdditionalInformationContentTextType() { Value = "t29" };
-            AdditionalInformation[1].StatementTypeCode = new AdditionalInformationStatementTypeCodeType() { Value = "27" };
-            AdditionalInformation[1].Content = new AdditionalInformationContentTextType() { Value = "t27" };
-            AdditionalInformation[2].StatementTypeCode = new AdditionalInformationStatementTypeCodeType() { Value = "32" };
-            AdditionalInformation[2].Content = new AdditionalInformationContentTextType() { Value = "1" };
-            response.Response.AdditionalInformation = AdditionalInformation;
+            AdditionalInformation[0] = new ResponseAdditionalInformation
+            {
+                StatementTypeCode = new AdditionalInformationStatementTypeCodeType()
+                {
+                    Value = "29"
+                },
+                Content = new AdditionalInformationContentTextType() { Value = "t29" }
+            };
+
+            AdditionalInformation[1] = new ResponseAdditionalInformation
+            {
+                StatementTypeCode = new AdditionalInformationStatementTypeCodeType()
+                {
+                    Value = "27"
+                },
+                Content = new AdditionalInformationContentTextType() { Value = "t27" }
+            };
+
+
+            AdditionalInformation[2] = new ResponseAdditionalInformation
+            {
+                StatementTypeCode = new AdditionalInformationStatementTypeCodeType()
+                {
+                    Value = "32"
+                },
+                Content = new AdditionalInformationContentTextType() { Value = "t32" }
+            };
+             response.Response.AdditionalInformation = AdditionalInformation;
             response.Response.FunctionCode = new ResponseFunctionCodeType() { Value = "Amendment" };
             response.Response.IssueDateTime = DateTime.Now.ToString();
-            response.Response.Amendment = new ResponseAmendment[1]; // reason to change?
-            response.Response.Status = new ResponseStatus() { EffectiveDateTime = DateTime.Now.ToString() };
-            response.Response.Status.NameCode = new StatusNameCodeType() { Value = "5" };
+            //response.Response.Amendment = new ResponseAmendment[1]; // reason to change?
+            //response.Response.Amendment[0] = new ResponseAmendment
+            //{
 
+            //}
+            response.Response.FunctionalReferenceID = new ResponseFunctionalReferenceIDType() { Value = requestNumber };
+            response.Response.Status = new ResponseStatus() { EffectiveDateTime = DateTime.Now.ToString() };
+            response.Response.Status.NameCode = new StatusNameCodeType() { Value = status };
+            
 
 
 
@@ -131,36 +163,54 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
 
         public void CastObject(object originObject , object targetObject)
         {
-            Type objectType = originObject.GetType();
-            Type target = targetObject.GetType();
-            var x = Activator.CreateInstance(target, false);
-            var z = from source in objectType.GetMembers().ToList()
-                    where source.MemberType == MemberTypes.Property
-                    select source;
-            var d = from source in target.GetMembers().ToList()
-                    where source.MemberType == MemberTypes.Property
-                    select source;
-            List<MemberInfo> members = d.Where(memberInfo => d.Select(c => c.Name)
-               .ToList().Contains(memberInfo.Name)).ToList();
-            PropertyInfo propertyInfo;
-            object value;
-            foreach (var memberInfo in members)
+
+
+            string DeclarationString;
+            using (var stringwriter = new System.IO.StringWriter())
             {
-                propertyInfo = targetObject.GetType().GetProperty(memberInfo.Name);
-                if (propertyInfo.PropertyType.Name == "String")
-                {
-                    value = originObject.GetType().GetProperty(memberInfo.Name).GetValue(originObject, null);
-
-                    propertyInfo.SetValue(x, value, null);
-                }
-
-                else
-                {
-                    value = originObject.GetType().GetProperty(memberInfo.Name).GetValue(originObject, null);
-                    var test = Activator.CreateInstance(originObject.GetType().GetProperty(memberInfo.Name).GetType());
-                    CastObject(value,test);
-                }
+                var serializer = new XmlSerializer(fakeRespond.Response.Declaration.GetType());
+                serializer.Serialize(stringwriter, fakeRespond.Response.Declaration);
+                DeclarationString = stringwriter.ToString();
             }
+
+
+
+            using (var stringReader = new System.IO.StringReader(DeclarationString))
+            {
+                var serializer = new XmlSerializer(dec.GetType());
+                dec = serializer.Deserialize(stringReader) as UnifreightIIG.Common.MessageLib.ID.Declaration;
+            }
+
+            //Type objectType = originObject.GetType();
+            //Type target = targetObject.GetType();
+            //var x = Activator.CreateInstance(target, false);
+            //var z = from source in objectType.GetMembers().ToList()
+            //        where source.MemberType == MemberTypes.Property
+            //        select source;
+            //var d = from source in target.GetMembers().ToList()
+            //        where source.MemberType == MemberTypes.Property
+            //        select source;
+            //List<MemberInfo> members = d.Where(memberInfo => d.Select(c => c.Name)
+            //   .ToList().Contains(memberInfo.Name)).ToList();
+            //PropertyInfo propertyInfo;
+            //object value;
+            //foreach (var memberInfo in members)
+            //{
+            //    propertyInfo = targetObject.GetType().GetProperty(memberInfo.Name);
+            //    if (propertyInfo.PropertyType.Name == "String")
+            //    {
+            //        value = originObject.GetType().GetProperty(memberInfo.Name).GetValue(originObject, null);
+
+            //        propertyInfo.SetValue(x, value, null);
+            //    }
+
+            //    else
+            //    {
+            //        value = originObject.GetType().GetProperty(memberInfo.Name).GetValue(originObject, null);
+            //        var test = Activator.CreateInstance(originObject.GetType().GetProperty(memberInfo.Name).GetType());
+            //        CastObject(value,test);
+            //    }
+            //}
         }
 
 
