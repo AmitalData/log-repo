@@ -34,16 +34,19 @@ export class CargoSealsQueryComponent
     public ObjectTableName: string = "Customs.CargoSealIdentifier";
     public CurrentEntity: CargoSealIdentifierPM;
 
-    _IsReady: boolean = false;
-
     _DeclarationExtendedListService: DeclarationExtendedListService = new DeclarationExtendedListService();
     _DeclarationWebService: DeclarationWebService = new DeclarationWebService;
     _CargoSealIdentifierPMService: CargoSealIdentifierPMService = new CargoSealIdentifierPMService();
 
     _LastFetchDeclarationList: DeclarationList;
     _LastFetchConsignmentPMList: ConsignmentPM[];
+
+    private _IsReady: boolean = false;
+    private _IsDisplayOnly: boolean = false;
     private _IsResponseMessageVisibility: boolean = false;
     private _IsNew: boolean = true;
+    private _IsFromDeclaration: boolean = false;
+
     public CargoSealObslist: ObservableCollection;
 
     text: any;
@@ -80,26 +83,13 @@ export class CargoSealsQueryComponent
             this.RequestParams = new CargoSealsRequestParams();
 
             this.UpdateDate = DateTool.GetCurrentDateAsUtc();
-            this.UIProperties.SetRequired("CargoIdentifierTypeCode", this.ObjectTableName, true);
-            this.UIProperties.SetRequired("CargoIdentifierKey1", this.ObjectTableName, true);
-            this.UIProperties.SetRequired("CargoIdentifierKey2", this.ObjectTableName, true);
-            this.UIProperties.SetRequired("CargoIdentifierKey3", this.ObjectTableName, true);
-            this.UIProperties.SetRequired("CargoRowNumber", this.ObjectTableName, true);
-            this.UIProperties.SetRequired("ContainerNumber", this.ObjectTableName, true);
-            this.UIProperties.SetRequired("ImporterNumber", this.ObjectTableName, true);
-        }
-        else {
-            this._CargoSealIdentifierPMService.get(this.RequestParams.CargoSealIdentifierId).subscribe(response => {
-                var result = response.Result;
-                if (!AppTool.IsNullOrEmpty(result)) {
-                    this.CurrentEntity = result;
-                    this._IsNew = false;
-                    if (this.CurrentEntity.Status == "1") {
-
-                    }
-                }
-            });
-
+            //this.UIProperties.SetRequired("CargoIdentifierTypeCode", this.ObjectTableName, true);
+            //this.UIProperties.SetRequired("CargoIdentifierKey1", this.ObjectTableName, true);
+            //this.UIProperties.SetRequired("CargoIdentifierKey2", this.ObjectTableName, true);
+            //this.UIProperties.SetRequired("CargoIdentifierKey3", this.ObjectTableName, true);
+            //this.UIProperties.SetRequired("CargoRowNumber", this.ObjectTableName, true);
+            //this.UIProperties.SetRequired("ContainerNumber", this.ObjectTableName, true);
+            //this.UIProperties.SetRequired("ImporterNumber", this.ObjectTableName, true);
         }
 
         if (this.ResponseData) {
@@ -109,6 +99,49 @@ export class CargoSealsQueryComponent
                     this.CargoSealObslist.Insert(new CargoSealComponent(item));
                 });
             }
+        }
+    }
+
+    SetMenuArg(menuArg) {
+        this.OnMassageDisplayMethod();
+        this._IsFromDeclaration = true;
+        this.CustomFileNo = menuArg.CustomFileNo;
+        this.DeclarationId = menuArg.DeclarationId;
+
+        this.UIProperties.SetEnabled("CustomFileNo", null, false);
+
+        this._CargoSealIdentifierPMService.get(menuArg.CargoSealIdentifierID).subscribe(response => {
+            var result = response.Result;
+            if (!AppTool.IsNullOrEmpty(result)) {
+                this.CurrentEntity = result;
+                this._IsNew = false;
+                this.CargoRowNumber = this.CurrentEntity.CargoRowNumber;
+                this.DeclarationId = this.CurrentEntity.DeclarationId;
+                this.ContainerNumber = this.CurrentEntity.ContainerNumber;
+                this.UpdateDate = this.CurrentEntity.UpdateDate;
+                //this.ImporterId = this.CurrentEntity.ImporterNumber; //?
+                this.CargoIdentifierTypeCode = this.CurrentEntity.CargoIdentifierTypeCode;
+                this.CargoIdentifierKey1 = this.CurrentEntity.CargoIdentifierKey1;
+                this.CargoIdentifierKey2 = this.CurrentEntity.CargoIdentifierKey2;
+                this.CargoIdentifierKey3 = this.CurrentEntity.CargoIdentifierKey3;
+                if (this.CurrentEntity.CargoSeals != null) {
+                    this.CurrentEntity.CargoSeals.forEach((item: CargoSealPM) => {
+                        this.CargoSealObslist.Insert(item);
+                    });
+                }
+                if (this.CurrentEntity.Status == "1") {
+                    this.IsDisplayOnly = true;
+                    this.SetScreenEnabled();
+                }
+            }
+        });
+
+    }
+
+    get IsDisplayOnly() { return this._IsDisplayOnly; }
+    set IsDisplayOnly(value: boolean) {
+        if (this._IsDisplayOnly != value) {
+            this._IsDisplayOnly = value;
         }
     }
 
@@ -156,19 +189,6 @@ export class CargoSealsQueryComponent
         }
         else {
             this.UIProperties.SetRequired("CargoIdentifierTypeCode", this.ObjectTableName, true);
-        }
-    }
-
-    get FileNumber() { return this.RequestParams.FileNumber; }
-    set FileNumber(value: string) {
-        if (this.RequestParams.FileNumber != value) {
-            this.RequestParams.FileNumber = value;
-            if (AppTool.IsNullOrEmpty(this.RequestParams.FileNumber)) {
-                this.UIProperties.SetRequired("FileNumber", this.ObjectTableName, true);
-            } else {
-                this.UIProperties.SetRequired("FileNumber", this.ObjectTableName, false);
-            }
-
         }
     }
 
@@ -473,6 +493,19 @@ export class CargoSealsQueryComponent
         this.UIProperties.SetEnabled("CargoIdentifierKey2", this.ObjectTableName, isDisplay);
         this.UIProperties.SetEnabled("CargoIdentifierKey3", this.ObjectTableName, isDisplay);
         this.UIProperties.SetEnabled("ImporterNumber", this.ObjectTableName, isDisplay);
+    }
+
+    SetScreenEnabled() {
+
+        this.UIProperties.SetEnabled("CustomFileNo", null, false);
+        this.UIProperties.SetEnabled("CargoIdentifierTypeCode", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("CargoIdentifierKey1", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("CargoIdentifierKey2", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("CargoIdentifierKey3", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("ImporterNumber", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("CargoRowNumber", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("ContainerNumber", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("UpdateDate", this.ObjectTableName, false);
     }
 
     FetchConsignment(myResponse: ServiceResponse, sourceIsCostomFile: boolean) {
