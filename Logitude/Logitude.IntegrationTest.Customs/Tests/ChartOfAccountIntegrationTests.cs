@@ -17,7 +17,7 @@ namespace Logitude.IntegrationTest.Customs.Tests
     public class ChartOfAccountIntegrationTests
     {
         [TestMethod]
-        public async Task UpdateChartOfAccount_Put_Successful()
+        public async Task GetCusstomer_Get_Successful()
         {
                 ChartOfAccountPM entityPM = await GetSingle();
                 entityPM.LocalName = "GE:" + VariablesGenerater.GetRandomString(5);
@@ -28,7 +28,7 @@ namespace Logitude.IntegrationTest.Customs.Tests
         }
         private async Task<ChartOfAccountPM> GetSingle()
         {
-            HttpResponseMessage response = await RestClientService.GetAsync("ChartOfAccounts/GetSingle?id="+ CustomsVariables.ChartOfAccountVendor1PMCFId);
+            HttpResponseMessage response = await RestClientService.GetAsync("ChartOfAccounts/GetSingle?id="+ "بس");
             ChartOfAccountPM chartOfAccountPM= RestClientService.ParseResponse<ChartOfAccountPM>(response);
             return chartOfAccountPM;
         }

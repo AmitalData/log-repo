@@ -85,8 +85,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Global
                   entityPM.UniqueCode = entityPM.ObjectTableName + '.' + entityPM.Code;
                 else
                   entityPM.UniqueCode = entityPM.ObjectTableName +'.'+ entityPM.UserId + '.' + entityPM.Code;
-
                 service.Create(entityPM);
+
                 return Request.CreateResponse(HttpStatusCode.OK, entityPM);
             }
 
