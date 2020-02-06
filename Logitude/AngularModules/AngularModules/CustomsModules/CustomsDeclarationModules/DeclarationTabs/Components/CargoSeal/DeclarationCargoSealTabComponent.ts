@@ -38,15 +38,13 @@ export class DeclarationCargoSealTabComponent extends BaseComponent implements O
         super();
         this.CargoSealObslist = new ObservableCollection([]);
 
-        this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
-            this.EntityResourceService.getEntityResourceByTableName("Customs.TapagConnectionTable").subscribe((response: any) => {
-                this.EntityResourceService.getEntityResourceByTableName("Customs.Tapag").subscribe((response: any) => {
+            this.EntityResourceService.getEntityResourceByTableName("Customs.CargoSealIdentifier").subscribe((response: any) => {
+                this.EntityResourceService.getEntityResourceByTableName("Customs.CargoSeal").subscribe((response: any) => {
                     this.EntityPM = this.entityArgs.EntityPM;
                     this.ObjectTableName = this.entityArgs.ObjectTableName;
                     this.LoadCargoSealsList();
                     this.Listen();
                     this.IsLoaded = true;
-                });
             });
         });
     }
@@ -76,7 +74,7 @@ export class DeclarationCargoSealTabComponent extends BaseComponent implements O
                 this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                     if (isLoadSuccess) {
                         this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
-                        this.LoadTapagsList();
+                        this.LoadCargoSealsList();
                     }
                 })
             );
@@ -85,7 +83,7 @@ export class DeclarationCargoSealTabComponent extends BaseComponent implements O
                 this.CurrentSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
                     if (this.CurrentEditComponentId == this.CurrentSession.CurrentEditComponent.ComponentId) {
                         if (tabCode == "DCSE") {
-                            this.LoadTapagsList();
+                            this.LoadCargoSealsList();
                         }
                     }
                 })
