@@ -1,4 +1,4 @@
-﻿import {Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Http, Headers} from '@angular/http';
 import {Observable}     from 'rxjs/Rx';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
@@ -20,6 +20,8 @@ import { CustomFileCreditRequestParams } from '../../DataContract/RequestParams/
 import { ExportDeclarationDataRequestParams } from '../../DataContract/RequestParams/ExportDeclarationDataRequestParams';
 import { StorageEntranceUnloadingRequestParams } from '../../DataContract/RequestParams/StorageEntranceUnloadingRequestParams';
 import {CargoSplitRequestParams} from '../../DataContract/RequestParams/CargoSplitRequestParams';
+import { CargoSealsRequestParams } from '../../DataContract/RequestParams/CargoSealsRequestParams';
+
 
 @Injectable()
 
@@ -407,4 +409,6 @@ export class DeclarationMessagesService {
 
         );
     }
+
+
 }

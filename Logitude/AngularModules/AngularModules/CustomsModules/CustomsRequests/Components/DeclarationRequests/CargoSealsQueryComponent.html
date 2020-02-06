@@ -1,4 +1,21 @@
 <!-- CargoSealsQueryComponent view  -->
+    <style type="text/css">
+        .NotesTextArea {
+            padding: 2px;
+            padding-left: 4px;
+            text-indent: 0px;
+            font-size: 12px;
+            color: black;
+            text-align: right;
+            border: 1px solid gray;
+            border-radius: 3px;
+            -moz-border-radius: 2px;
+            -webkit-border-radius: 2px;
+            -webkit-box-shadow: 0px 0px 5px 3px #C8C8C8;
+            -moz-box-shadow: 0px 0px 5px 3px #C8C8C8;
+            box-shadow: 0px 0px 5px 3px #C8C8C8;
+        }
+    </style>
 
 <div>
 
@@ -63,7 +80,7 @@
                                     <LogLabel [ObjectFieldName]="'CargoIdentifierKey2'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                 </td>
                                 <td style="width: 120px;">
-                                    <LogTextBox [ObjectFieldName]="'SecondCargoID'"
+                                    <LogTextBox [ObjectFieldName]="'CargoIdentifierKey2'"
                                                 [DataContext]="DataContext"
                                                 [ObjectTableName]="ObjectTableName"
                                                 [HideColumns]="true"
@@ -174,7 +191,7 @@
                                                                         <span>{{item.SealNumber}}</span>
                                                                     </div>
                                                                     <div *ngIf="logcelltemplate.IsEditMode">
-                                                                        <LogTextBox [ObjectFieldName]="'SealNumber'" [DataContext]="item" 
+                                                                        <LogTextBox [ObjectFieldName]="'SealNumber'" [DataContext]="item"
                                                                                     [FocusOnMe]="true" [ObjectTableName]="ObjectTableName"
                                                                                     [Text]="item.SealNumber" [HideColumns]="true"></LogTextBox>
 
@@ -270,28 +287,16 @@
                                                             <log-column [header]="'Customs.CargoSeal.F.Remarks' | TextCodeTranslationPipe"
                                                                         [binding]="'Remarks'" [width]="'150'" [Alignment]="'right'">
                                                                 <log-cell-template template="let item" #logcelltemplate>
-                                                                    <!--<div class="TextTrimming" style="text-align:right">
+                                                                    <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
                                                                         <span>{{item.Remarks}}</span>
-                                                                    </div>-->
-                                                                    <div style="width:100%;height:100%; white-space: nowrap;">
-                                                                        <a title="Show Remarks Description" href="#" (click)="ShowMore(item.Remarks)">
-                                                                            {{item.Remarks }}
-                                                                        </a>
+                                                                    </div>
+                                                                    <div *ngIf="logcelltemplate.IsEditMode" style="height: 90%; width: 90%;">
+                                                                        <LogTextBox [ObjectFieldName]="'Remarks'" [InputType]="'ntext'" [DataContext]="item"
+                                                                                    [ObjectTableName]="'Customs.SealType'" [HideColumns]="true"
+                                                                                    [IsMultiline]="true"></LogTextBox>
                                                                     </div>
                                                                 </log-cell-template>
                                                             </log-column>
-
-                                                            <!--<log-column [width]="'150'" [visibility]="'visibile'" [Alignment]="'left'">
-                                                                <log-cell-template template="let item">
-                                   
-                                                                    <span class="CellSeparator"></span>
-                                                                    <button class="Button"
-                                                                            style="width:45px"
-                                                                            (click)="ViewLogMethod(item)">
-                                                                        {{'Customs.CargoSeal.F.Remarks' |   TextCodeTranslationPipe }}
-                                                                    </button>
-                                                                </log-cell-template>
-                                                            </log-column>-->
 
                                                             <!-- Delete Button-->
                                                             <log-column [width]="'70'" [Alignment]="'right'">
@@ -315,6 +320,35 @@
                                 </td>
                             </tr>
 
+                            <!-- ResponseMessage -->
+                            <tr class="FormFieldRow" *ngIf="IsResponseMessageVisibility">
+                                <td colspan="12" style="width: 500px; height:50px">
+                                    <table>
+                                        <tr class="FormFieldRow">
+                                            <td style="width: 500px;">
+                                                <div style="width: 100%; height:22px; text-align:right">
+                                                    <div>
+                                                        <span>{{'Customs.Claim.TH.CustomAnswer' | TextCodeTranslationPipe}}</span>
+                                                    </div>
+                                                </div>
+                                            </td>
+
+                                            <td><div></div></td>
+                                        </tr>
+
+                                        <tr class="FormFieldRow">
+                                            <td style="width: 500px;">
+                                                <div class="MediaFill">
+                                                    <textarea class="NotesTextArea"
+                                                              [(ngModel)]="ResponseMessage"
+                                                              [readonly]="false"
+                                                              style="background: #FFFADC !important;"></textarea>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
                         </table>
                     </td>
                 <tr> <td><div></div></td> </tr>

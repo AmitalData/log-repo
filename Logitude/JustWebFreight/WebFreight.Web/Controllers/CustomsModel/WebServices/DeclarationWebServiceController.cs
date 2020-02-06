@@ -1737,7 +1737,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
         {
             try
             {
-                CustomItemLegalDemandsResponseData responseData = null;
+                INF_MSG_GenericResponseData responseData = null;
 
                 // use messageing service
                 var service = new SE_6001_SealUpdateMessagingService();
