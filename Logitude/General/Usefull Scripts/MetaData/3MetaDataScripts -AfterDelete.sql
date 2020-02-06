@@ -1,0 +1,207 @@
+----MetaData All Scripts: Never Apply these scripts
+
+--update translations set textcodecode = 'APInvoiceLine.O.Vendor' where textcodecode = 'APInvoiceLine.CH.Vendor'
+--update translations set textcodecode = 'APInvoiceLine.O.Vendor' where textcodecode = 'APInvoiceLine.F.Vendor'
+--update translations set textcodecode = 'APInvoiceLine.O.Name' where textcodecode = 'APInvoiceLine.CH.Name'
+--update translations set textcodecode = 'APInvoiceLine.O.OtherInvoices' where textcodecode = 'APInvoiceLine.CH.OtherInvoices'
+--update translations set textcodecode = 'APInvoiceLine.O.OtherInvoices' where textcodecode = 'APInvoiceLine.F.OtherInvoices'
+--update translations set textcodecode = 'APInvoiceLine.O.OpenAmount' where textcodecode = 'APInvoiceLine.CH.OpenAmount'
+--update translations set textcodecode = 'APInvoiceLine.O.OpenAmount' where textcodecode = 'APInvoiceLine.F.OpenAmount'
+--update translations set textcodecode = 'APInvoiceLine.O.ExpectedAmount' where textcodecode = 'APInvoiceLine.CH.ExpectedAmount'
+--update translations set textcodecode = 'APInvoiceLine.O.ExpectedAmount' where textcodecode = 'APInvoiceLine.F.ExpectedAmount'
+--update translations set textcodecode = 'APInvoiceLine.O.Currency' where textcodecode = 'APInvoiceLine.CH.Currency'
+--update translations set textcodecode = 'APInvoiceLine.O.Currency' where textcodecode = 'APInvoiceLine.F.Currency'
+--update translations set textcodecode = 'APInvoiceLine.CH.DescriptionListLable' where textcodecode = 'APInvoiceLine.CH.DescriptionListField'
+--update translations set textcodecode = 'ARInvoice.CH.ReadyForTransferListLable' where textcodecode = 'APInvoice.CH.ReadyForTransfer'
+--update translations set textcodecode = 'APInvoice.CH.TransferStatusNameListLable' where textcodecode = 'APInvoice.CH.TransferStatusName'
+--update translations set textcodecode = 'ARInvoiceLine.CH.PrepaidCollectIdListLable' where textcodecode = 'ARInvoiceLine.CH.PrepaidCollectId'
+--update translations set textcodecode = 'ARInvoiceLine.CH.DescriptionListLable' where textcodecode = 'ARInvoiceLine.CH.Description'
+--update translations set textcodecode = 'ARInvoiceLine.CH.ForiegnExchangeRateListLable' where textcodecode = 'ARInvoiceLine.CH.ForiegnExchangeRate'
+--update translations set textcodecode = 'ARInvoiceLine.CH.MeasurementIdListLable' where textcodecode = 'ARInvoiceLine.CH.MeasurementId'
+--update translations set textcodecode = 'ARInvoiceLine.CH.QuantityListLable' where textcodecode = 'ARInvoiceLine.CH.Quantity'
+--update translations set textcodecode = 'ARInvoiceLine.CH.UnitPriceListLable' where textcodecode = 'ARInvoiceLine.CH.UnitPrice'
+--update translations set textcodecode = 'ARInvoiceLine.CH.VatTypeIdListLable' where textcodecode = 'ARInvoiceLine.CH.VatTypeId'
+--update translations set textcodecode = 'ARInvoiceLine.CH.AmountListLable' where textcodecode = 'ARInvoiceLine.CH.Amount'
+--update translations set textcodecode = 'ARInvoiceLine.CH.ForiegnCurrencyAmountListLable' where textcodecode = 'ARInvoiceLine.CH.ForiegnCurrencyAmount'
+--update translations set textcodecode = 'ARInvoiceLine.CH.LocalCurrencyAmountListLable' where textcodecode = 'ARInvoiceLine.CH.LocalCurrencyAmount'
+--update translations set textcodecode = 'ARInvoice.O.VATListLable' where textcodecode = 'ARInvoice.CH.VATListLable'
+--update translations set textcodecode = 'ARInvoice.CH.TransferStatusNameListLable' where textcodecode = 'ARInvoice.CH.TransferStatusName'
+--update translations set textcodecode = 'ARInvoice.CH.ReadyForTransferListLable' where textcodecode = 'ARInvoice.CH.ReadyForTransfer'
+--update translations set textcodecode = 'ARInvoice.O.OtherPayments' where textcodecode = 'ARInvoice.CH.OtherPayments'
+--update translations set textcodecode = 'ARInvoice.CH.MasterNumberListLable' where textcodecode = 'ARInvoice.CH.MasterNumberLable'
+--update translations set textcodecode = 'ARInvoice.CH.InvoiceCurrencyExchangeRateListLable' where textcodecode = 'ARInvoice.CH.InvoiceExchangeRateListLable'
+--update translations set textcodecode = 'ARInvoice.CH.HouseNumberListLable' where textcodecode = 'ARInvoice.CH.HouseNumberLable'
+--update translations set textcodecode = 'ARInvoice.CH.CustomerRefListLable' where textcodecode = 'ARInvoice.CH.CustomerRefLable'
+--update translations set textcodecode = 'ARInvoice.CH.AmountPaidListLable' where textcodecode = 'ARInvoice.CH.AmountToPay'
+--update translations set textcodecode = 'Shipment.CH.MainCarriageATDListLable' where textcodecode = 'Shipment.CH.MainCarriageATDLable'
+--update translations set textcodecode = 'ShipmentPayable.CH.CurrencyIdListLable' where textcodecode = 'ShipmentPayable.CH.CurrencyIdListFieldLable'
+--update translations set textcodecode = 'ShipmentPayable.F.TotalAmount.Short' where textcodecode = 'ShipmentPayable.F.Amount.Short'
+--update translations set textcodecode = 'ShipmentPayable.F.TotalAmountLocal.Short' where textcodecode = 'ShipmentPayable.F.LocalAmount.Short'
+--update translations set textcodecode = 'ShipmentReceivable.CH.CurrencyIdListLable' where textcodecode = 'ShipmentReceivable.CH.CurrencyIdListFieldLable'
+--update translations set textcodecode = 'ShipmentReceivable.F.TotalAmount.Short' where textcodecode = 'ShipmentReceivable.F.Amount.Short'
+--update translations set textcodecode = 'ShipmentReceivable.F.TotalAmountLocal.Short' where textcodecode = 'ShipmentReceivable.F.LocalAmount.Short'
+--update translations set textcodecode = 'ShipmentReceivable.F.Notes' where textcodecode = 'ShipmentReceivable.F.Note'
+--update translations set textcodecode = 'VatTypeDescription' where textcodecode = 'VatType.O.TableDescription'
+--update translations set textcodecode = 'TarrifHeader.F.CardId' where textcodecode = 'TarrifHeader.F.Card'
+--update translations set textcodecode = 'Quote.CH.AutomaticallyCloseDateListLable' where textcodecode = 'Quote.CH.AutomaticallyCloseDateLable'
+--update translations set textcodecode = 'Quote.CH.AutomaticallyCloseDaysListLable' where textcodecode = 'Quote.CH.AutomaticallyCloseDaysLable'
+--update translations set textcodecode = 'Quote.CH.BranchNameListLable' where textcodecode = 'Quote.CH.BranchListLable'
+--update translations set textcodecode = 'Quote.CH.DepartmentNameListLable' where textcodecode = 'Quote.CH.DepartmentListLable'
+--update translations set textcodecode = 'Quote.CH.DepartureFrequencyListLable' where textcodecode = 'Quote.CH.DepartureFrequencyLable'
+--update translations set textcodecode = 'Quote.CH.ExpirationDateListLable' where textcodecode = 'Quote.CH.ExpirationDateLable'
+--update translations set textcodecode = 'Quote.CH.FollowUpTypeListLable' where textcodecode = 'Quote.CH.FollowUpTypeIdListLable'
+--update translations set textcodecode = 'Quote.CH.FromPortListLable' where textcodecode = 'Quote.CH.FromPortCodeListLable'
+--update translations set textcodecode = 'Quote.CH.IncotermCodeListLable' where textcodecode = 'Quote.CH.IncotermCodeLable'
+--update translations set textcodecode = 'Quote.CH.IsAutomaticallyClosedListLable' where textcodecode = 'Quote.CH.IsAutomaticallyClosedLable'
+--update translations set textcodecode = 'Quote.CH.IsDangerousListLable' where textcodecode = 'Quote.CH.IsDangerousLable'
+--update translations set textcodecode = 'Quote.CH.LastActivityDateListLable' where textcodecode = 'Quote.CH.LastActivityDateLable'
+--update translations set textcodecode = 'Quote.CH.LastActivityTypeCodeListLable' where textcodecode = 'Quote.CH.LastActivityTypeCodeLable'
+--update translations set textcodecode = 'Quote.CH.MainCarriageCarrierIdListLable' where textcodecode = 'Quote.CH.MainCarriageCarrierIdLable'
+--update translations set textcodecode = 'Quote.CH.MoveTypeNameListLable' where textcodecode = 'Quote.CH.MoveTypeName'
+--update translations set textcodecode = 'Quote.CH.NextActivityDateListLable' where textcodecode = 'Quote.CH.NextActivityDateLable'
+--update translations set textcodecode = 'Quote.CH.NextActivityTypeCodeListLable' where textcodecode = 'Quote.CH.NextActivityTypeCodeLable'
+--update translations set textcodecode = 'Quote.CH.NumberOfFollowUpsListLable' where textcodecode = 'Quote.CH.NumberOfFollowUpsLable'
+--update translations set textcodecode = 'Quote.CH.QuoteNumberListLable' where textcodecode = 'Quote.CH.QuoteListLable'
+--update translations set textcodecode = 'Quote.CH.RatingNameListLable' where textcodecode = 'Quote.CH.RatingName'
+--update translations set textcodecode = 'Quote.CH.SalesmanNameListLable' where textcodecode = 'Quote.CH.SalesmanNameLable'
+--update translations set textcodecode = 'Quote.CH.ShipmentTypeListLable' where textcodecode = 'Quote.CH.ShipmentTypeListFieldLable'
+--update translations set textcodecode = 'Quote.CH.StageDueDateListLable' where textcodecode = 'Quote.CH.StageDueDateLable'
+--update translations set textcodecode = 'Quote.CH.StageNameListLable' where textcodecode = 'Quote.CH.StageNameLable'
+--update translations set textcodecode = 'Quote.CH.SubjectListLable' where textcodecode = 'Quote.CH.SubjectLable'
+--update translations set textcodecode = 'Quote.CH.ToPortListLable' where textcodecode = 'Quote.CH.ToPortCodeListLable'
+--update translations set textcodecode = 'Quote.CH.TransitTimeListLable' where textcodecode = 'Quote.CH.TransitTimeLable'
+--update translations set textcodecode = 'Quote.F.MainCarriageCarrierId.Short' where textcodecode = 'Quote.F.CarrierId.Short'
+--update translations set textcodecode = 'Quote.F.CostTotalAmountInLocalCurrency.Short' where textcodecode = 'Quote.F.CostTotalAmount.Short'
+--update translations set textcodecode = 'Quote.F.FromPort' where textcodecode = 'Quote.F.FromPortCode'
+--update translations set textcodecode = 'Quote.F.FromPort.Short' where textcodecode = 'Quote.F.FromPortCode.Short'
+--update translations set textcodecode = 'Quote.F.FollowUpDate' where textcodecode = 'Quote.F.FUDate'
+--update translations set textcodecode = 'Quote.F.FollowUpNotes' where textcodecode = 'Quote.F.FUNotes'
+--update translations set textcodecode = 'Quote.F.FollowUpType' where textcodecode = 'Quote.F.FUType'
+--update translations set textcodecode = 'Quote.F.ShipperContactId' where textcodecode = 'Quote.F.ShipperContact'
+--update translations set textcodecode = 'Quote.F.ToPort' where textcodecode = 'Quote.F.ToPortCode'
+--update translations set textcodecode = 'Quote.F.ToPort.Short' where textcodecode = 'Quote.F.ToPortCode.Short'
+--update translations set textcodecode = 'Quote.F.ChargeableWeight.Short' where textcodecode = 'Quote.F.WtMsr.Short'
+--update translations set textcodecode = 'Quote.F.GrossWeightUnitCode.Short' where textcodecode = 'Quote.F.WtMsrUnitCode.Short'
+--update translations set textcodecode = 'QuoteCharge.CH.ChargesTypeIdListLable' where textcodecode = 'QuoteCharge.CH.ChargesTypeId'
+--update translations set textcodecode = 'QuoteCharge.CH.CostMeasurementIdListLable' where textcodecode = 'QuoteCharge.CH.CostMeasurementId'
+--update translations set textcodecode = 'QuoteCharge.CH.IsAllInListLable' where textcodecode = 'QuoteCharge.CH.IsAllIn'
+--update translations set textcodecode = 'QuoteCharge.CH.SaleCurrencyIdListLable' where textcodecode = 'QuoteCharge.CH.SaleCurrencyId'
+--update translations set textcodecode = 'QuoteCharge.CH.VendorIdListLable' where textcodecode = 'QuoteCharge.CH.VendorId'
+--update translations set textcodecode = 'QuoteCharge.F.SaleCurrencyId' where textcodecode = 'QuoteCharge.F.SaleCurrency'
+
+
+----*--After Delete--*--
+----ObjectFields
+----delete from querycolumns where objectfieldcode not in(select fieldcode from ObjectFields)
+--update querycolumns set ObjectFieldId = (select Id from objectfields where FieldCode=querycolumns.ObjectFieldCode)
+----delete from ScreenFields where objectfieldcode not in(select fieldcode from ObjectFields)
+--update ScreenFields set ObjectFieldId = (select Id from objectfields where FieldCode=ScreenFields.ObjectFieldCode)
+----delete from AdvancedQueryFilters where objectfieldcode not in(select fieldcode from ObjectFields)
+--update AdvancedQueryFilters set ObjectFieldId = (select Id from objectfields where FieldCode=AdvancedQueryFilters.ObjectFieldCode)
+--update RuleConditionFields set ObjectFieldId = (select Id from objectfields where FieldCode=RuleConditionFields.ObjectFieldCode)
+--update ObjectTableRuleFields set ObjectFieldId = (select Id from objectfields where FieldCode=ObjectTableRuleFields.ObjectFieldCode)
+--update ObjectTableRules set TriggerFieldId = (select Id from objectfields where FieldCode=ObjectTableRules.TriggerFieldCode)
+--update AirlineMessagingRules set RuleFieldId = (select Id from objectfields where FieldCode=AirlineMessagingRules.RuleFieldCode)
+--update restrictions  set ObjectFieldId = (select Id from objectfields where FieldCode=restrictions.ObjectFieldCode)
+--update CustomerFieldsUpdateSettings  set ObjectFieldId = (select Id from objectfields where FieldCode=CustomerFieldsUpdateSettings.ObjectFieldCode)
+--update ObjectFieldValidations  set ObjectFieldId = (select Id from objectfields where FieldCode=ObjectFieldValidations.ObjectFieldCode)
+----delete from ObjectFieldModifications where objectfieldcode not in(select fieldcode from ObjectFields)
+--update ObjectFieldModifications  set ObjectFieldId = (select Id from objectfields where FieldCode=ObjectFieldModifications.ObjectFieldCode)
+
+----Screens
+----delete from ScreenModifications where ScreenCode not in(select code from Screens)
+--update ScreenModifications set ScreenId = (select Id from Screens where code=ScreenModifications.ScreenCode)
+----delete from ScreenFields where ScreenCode not in(select code from Screens)
+--update ScreenFields set ScreenId = (select Id from Screens where code=ScreenFields.ScreenCode)
+--update ObjectTables set HeaderScreenId = (select Id from Screens where code=ObjectTables.HeaderScreenCode)
+----select ScreenCode,tenant,count(*) from ScreenModifications group by ScreenCode,tenant having count(*)>1
+----select * from ScreenModifications where ScreenCode = 'Master.HeaderScreen'
+----delete from ScreenModifications where id='??'
+
+----Queries
+--update Queries set OriginalQueryId =  (select q1.Id from Queries q1 where q1.UniqueCode = Queries.OriginalQueryCode)
+--update AdvancedQueryFilters set QueryId = (select Id from Queries where UniqueCode = AdvancedQueryFilters.QueryCode)
+--update QueryColumns set QueryId = (select Id from Queries where UniqueCode = QueryColumns.QueryCode)
+--update SharedUserQueries set QueryId = (select Id from Queries where UniqueCode = SharedUserQueries.QueryCode)
+
+----TextCodes
+--update Queries set NameTextCodeId = (select Id from TextCodes where Code=Queries.NameTextCodeCode and tenant = Queries.Tenant)
+--update ObjectTables set DescriptionTextCodeId = (select Id from TextCodes where Code=ObjectTables.DescriptionTextCodeCode and tenant = ObjectTables.Tenant)
+--update ObjectTables set NewButtonTextCodeId = (select Id from TextCodes where Code=ObjectTables.NewButtonTextCodeCode)
+--update Features set NameTextCodeId = (select Id from TextCodes where Code=Features.NameTextCodeCode and tenant = Features.Tenant)
+--update Tips set ShortTextCode = (select Id from TextCodes where Code=Tips.ShortTextCodeCode)
+--update ObjectTableTabs set TabNameTextCodeId = (select Id from TextCodes where Code=ObjectTableTabs.TabNameTextCodeCode and tenant = ObjectTableTabs.Tenant)
+--update MenuButtons set LabelTextCodeId = (select Id from TextCodes where Code=MenuButtons.LabelTextCodeCode)
+--update ObjectFields set FullNameTextCodeId = (select Id from TextCodes where Code=ObjectFields.FullNameTextCodeCode and tenant = ObjectFields.Tenant) 
+--update ObjectFields set HelpTextCodeId = (select Id from TextCodes where Code=ObjectFields.HelpTextCodeCode and tenant = ObjectFields.Tenant)
+--update ObjectFields set ShortNameTextCodeId = (select Id from TextCodes where Code=ObjectFields.ShortNameTextCodeCode and tenant = ObjectFields.Tenant)
+--update ObjectFields set ListTextCodeId = (select Id from TextCodes where Code=ObjectFields.ListTextCodeCode and tenant = ObjectFields.Tenant)
+----delete from Translations where TextCodeCode not in (select code from TextCodes)
+--update Translations set TextCodeId = (select Id from TextCodes where Code=Translations.TextCodeCode and (tenant =  Translations.Tenant or tenant = 0)) where TextCodeCode in (select code from textcodes)
+
+----Features
+--update MenusTables set FeatureId = (select Id from features where FeatureUniqeCode=MenusTables.FeatureUniqeCode)
+--update Queries set FeatureId = (select Id from features where FeatureUniqeCode=Queries.FeatureUniqeCode)
+--update ObjectTableTabs set FeatureId = (select Id from features where FeatureUniqeCode=ObjectTableTabs.FeatureUniqeCode)
+--update ObjectTableHelperControls set FeatureId = (select Id from features where FeatureUniqeCode=ObjectTableHelperControls.FeatureUniqeCode)
+--update MenuButtons set FeatureId = (select Id from features where FeatureUniqeCode=MenuButtons.FeatureUniqeCode)
+----delete from Reports where FeatureUniqeCode not in (select FeatureUniqeCode from Features)
+--update Reports set FeatureId = (select Id from features where FeatureUniqeCode=Reports.FeatureUniqeCode)
+----delete from PackageFeatures where FeatureUniqeCode not in (select FeatureUniqeCode from Features)
+----delete from PackageFeatures where FeatureUniqeCode is null
+--update PackageFeatures set FeatureId = (select Id from features where FeatureUniqeCode=PackageFeatures.FeatureUniqeCode)
+----delete from RoleFeatures where FeatureUniqeCode not in (select FeatureUniqeCode from Features)
+----delete from RoleFeatures where FeatureUniqeCode is null
+--update RoleFeatures set FeatureId = (select Id from features where FeatureUniqeCode=RoleFeatures.FeatureUniqeCode)
+
+--update ScreenModifications set NumberOfRows=3 where NumberOfRows>3 and ScreenCode like '%headerscreen%'
+
+-------------
+--select * from ScreenModifications where ScreenId in (select id from screens where ScreenCode='Master.HeaderScreen' and ObjectTableId=(select id from objecttables where name='master'))
+----delete from ScreenModifications where id='1-425' or id='1-370'
+
+
+----Quote.CH.ShipperReferenceListLable
+----ShipmentReceivable.MarkupHelpText
+----ARInvoice.CH.StatusNameRateListLable
+----ARInvoice.F.AccountingCardNumber
+----ARInvoice.F.RequestedPaymentMethodCode
+----ARInvoice.F.AccountingCardNumber
+----ARInvoice.CH.AccountingCardNumberListLable
+----ARInvoice.CH.AccountingCardNumberListLable
+----ARInvoice.CH.AccountingCardNumberListLable
+----ARInvoice.CH.ARInvoiceStatusNameRateListLable
+----ARInvoice.CH.ARInvoiceStatusNameRateListLable
+----ARInvoice.CH.IsAutoCreditRateListLable
+----ARInvoice.CH.IsAutoCreditRateListLable
+----ARInvoice.CH.IsCancelledRateListLable
+----ARInvoice.CH.IsCancelledRateListLable
+----Shipment.CH.ETAListLable
+----Shipment.O.Receivables.FixedForeignAmount
+----Shipment.O.Receivables.FixedLocalAmount
+----Shipment.O.Receivables.NotFixed
+----ARInvoiceLine.CH.Reference
+----ARInvoiceLine.CH.AmountInvoice
+----Quote.B.Payables.AddCharge
+----Quote.B.Payables.AddPayable
+----Quote.B.Payables.DeleteCharge
+----Quote.B.Payables.DeletePayable
+----Quote.B.Payables.Tarrifs
+----Quote.B.Receivables.AddReceivable
+----Quote.B.Receivables.DeleteReceivable
+----Quote.CH.ClosingReasonNameListLable
+----Quote.F.MinimumFreightCost
+----Quote.F.MinimumFreightCost.Short
+----Quote.F.MinimumFreightSale
+----Quote.F.MinimumFreightSale.Short
+----Quote.F.PackageTypeId.Short
+----Quote.F.PackageTypeQuantity.Short
+----Quote.F.ProfitInSaleCurrency.Short
+----Quote.F.SaleTotalAmount.Short
+----Quote.Features.General
+----Quote.Features.ReturnInProgress
+----Quote.Features.SetAsNoAnswer
+----Quote.Features.SetAsRejected
+----Quote.MenuButtons.EventButton
+----Quote.Features.Shipments
+----QuoteCharge.PriceBreakHelpText
