@@ -22,5 +22,20 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
             entityPM.CargoSeals = cargoSealQueryService.GetMulti(cargoSealIdentifierKeys, true);
         }
+
+        public List<CargoSealIdentifierPM> GetDeclarationCargoSealIdentifierList(string declarationId, int tenant)
+        {
+            List<CargoSealIdentifier> cargoSealIdentifier = repository.GetDeclarationCargoSealIdentifierList(declarationId, tenant);
+            List<CargoSealIdentifierPM> cargoSealIdentifierPMList = new List<CargoSealIdentifierPM>();
+            if (cargoSealIdentifier != null)
+            {
+                foreach (var cargoSealIdentifierItem in cargoSealIdentifier)
+                {
+                    CargoSealIdentifierPM cargoSealIdentifierPM = this.GetSingle(cargoSealIdentifierItem.Id, true, false);
+                    cargoSealIdentifierPMList.Add(cargoSealIdentifierPM);
+                }
+            }
+            return cargoSealIdentifierPMList;
+        }
     }
 }

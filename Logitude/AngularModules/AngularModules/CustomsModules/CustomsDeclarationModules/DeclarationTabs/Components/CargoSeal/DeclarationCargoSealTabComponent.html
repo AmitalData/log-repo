@@ -23,7 +23,7 @@
                 <table>
                     <tr style="height:25px">
                         <td class="TabTitleRow" style="width:150px">
-                            {{'Customs.Declaration.TH.Tapags'| TextCodeTranslationPipe}}
+                            {{'Customs.Declaration.TH.CargoSeal'| TextCodeTranslationPipe}}
                         </td>
                     </tr>
 
@@ -33,80 +33,69 @@
                             <div class="CellContent" style="bottom: 5px;padding:5px">
                                 <logitude-edit-grid GridWidth="100%"
                                                     GridHeight="100%"
-                                                    [ItemSource]="tapagObslist">
-                                    <!-- TapagType -->
-                                    <log-column [header]="'Customs.Tapag.F.TapagTypeName' | TextCodeTranslationPipe" [binding]="'TapagTypeName'" [width]="'90'" [Alignment]="'right'">
+                                                    [ItemSource]="CargoSealObslist">
+                                    <!-- CargoRowNumber -->
+                                    <log-column [header]="'Customs.CargoSealIdentifier.F.CargoRowNumber' | TextCodeTranslationPipe" [binding]="'CargoRowNumber'" [width]="'90'" [Alignment]="'right'">
                                         <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
                                             <div style="text-align:right">
-                                                <span>{{item.TapagTypeName}}</span>
-                                            </div>
-
-                                        </log-cell-template>
-                                    </log-column>
-
-                                    <!-- TapagFile -->
-                                    <log-column [header]="'Customs.Tapag.F.CustomsTapagFile' | TextCodeTranslationPipe"
-                                                [binding]="'CustomsTapagFile'" [width]="'120'" [Alignment]="'right'">
-                                        <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
-                                            <div style="text-align:right">
-                                                <span>{{item.CustomsTapagFile}}</span>
+                                                <span>{{item.CargoRowNumber}}</span>
                                             </div>
                                         </log-cell-template>
                                     </log-column>
 
-                                    <!-- Numeral -->
-                                    <log-column [header]="'Customs.Tapag.F.CustomsNumeral' | TextCodeTranslationPipe" [binding]="'CustomsNumeral'" [width]="'80'" [Alignment]="'right'">
+                                    <!-- ContainerNumber -->
+                                    <log-column [header]="'Customs.CargoSealIdentifier.F.ContainerNumber' | TextCodeTranslationPipe"
+                                                [binding]="'ContainerNumber'" [width]="'120'" [Alignment]="'right'">
                                         <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
                                             <div style="text-align:right">
-                                                <span>{{item.CustomsNumeral}}</span>
+                                                <span>{{item.ContainerNumber}}</span>
                                             </div>
                                         </log-cell-template>
                                     </log-column>
 
-                                    <!-- LeadingFileNumber -->
-                                    <log-column [header]="'Customs.Tapag.F.LeadingFileNumber' | TextCodeTranslationPipe" [binding]="'LeadingFileNumber'" [width]="'140'" [Alignment]="'right'">
-                                        <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
-                                            <div style="text-align:right">
-                                                <span>{{item.LeadingFileNumber}}</span>
+
+
+
+                                    <!-- SealNumber -->
+                                    <log-column [header]="'Customs.CargoSeal.F.SealNumber' | TextCodeTranslationPipe"
+                                                [binding]="'SealNumber'" [width]="'100'" [Alignment]="'right'">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                                <span>{{item.SealNumber}}</span>
                                             </div>
                                         </log-cell-template>
                                     </log-column>
 
-                                    <!-- RequestFileNumber -->
-                                    <log-column [header]="'Customs.TapagConnectionTable.F.RequestFileNumber' | TextCodeTranslationPipe" [binding]="'RequestFileNumber'" [width]="'120'" [Alignment]="'right'">
-                                        <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
-                                            <div style="text-align:right">
-                                                <span>{{item.RequestFileNumber}}</span>
+                                    <!-- SealTypeCode -->
+                                    <!--<log-column [header]="'Customs.CargoSeal.F.SealTypeCode' | TextCodeTranslationPipe"
+                                                [width]="'100'" [Alignment]="'right'" [binding]="'SealTypeCode'">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                                <span>{{item.SealTypeName}}</span>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>-->
+
+                                    <!-- SealCompletenessStateCode -->
+                                    <log-column [header]="'Customs.CargoSeal.F.SealCompletenessStateCode' | TextCodeTranslationPipe"
+                                                [width]="'100'" [Alignment]="'right'" [binding]="'SealCompletenessStateCode'">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                                <span>{{item.SealCompletenessStateName}}</span>
                                             </div>
                                         </log-cell-template>
                                     </log-column>
 
-                                    <!-- CreateDate -->
-                                    <log-column [header]="'Customs.Tapag.F.CreateDate' | TextCodeTranslationPipe" [binding]="'CreateDate'" [width]="'120'" [Alignment]="'right'">
-                                        <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
-                                            <div style="text-align:right">
-                                                <span>{{item.CreateDate | DateTimePipe:'DT'}}</span>
+                                    <!-- UpdateReasonCode -->
+                                    <!--<log-column [header]="'Customs.CargoSeal.F.UpdateReasonCode' | TextCodeTranslationPipe"
+                                                [width]="'100'" [Alignment]="'right'" [binding]="'UpdateReasonCode'">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                                <span>{{item.UpdateReasonName}}</span>
                                             </div>
                                         </log-cell-template>
-                                    </log-column>
+                                    </log-column>-->
 
-                                    <!-- ValidityDate -->
-                                    <log-column [header]="'Customs.Tapag.F.ValidityDate' | TextCodeTranslationPipe" [binding]="'ValidityDate'" [width]="'120'" [Alignment]="'right'">
-                                        <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
-                                            <div style="text-align:right">
-                                                <span>{{item.ValidityDate | DateTimePipe:'DT'}}</span>
-                                            </div>
-                                        </log-cell-template>
-                                    </log-column>
-
-                                    <!-- IsClosed -->
-                                    <log-column [header]="'Customs.PaymentOrder.F.IsClosed' | TextCodeTranslationPipe" [binding]="'IsClosed'" [width]="'50'" [Alignment]="'right'">
-                                        <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
-                                            <div style="text-align:right">
-                                                <img *ngIf="item.IsClosed" title="IsClosed" src="./Images/CheckBoxIcon.png" />
-                                            </div>
-                                        </log-cell-template>
-                                    </log-column>
 
                                     <!-- Edit Button -->
                                     <log-column [width]="'55'" [Editable]="true" [Alignment]="'right'" [visibility]="'visibile'">

@@ -412,8 +412,8 @@ export class CargoSealsQueryComponent
             this.CurrentEntity.CargoIdentifierKey1 = this.CargoIdentifierKey1;
             this.CurrentEntity.CargoIdentifierKey2 = this.CargoIdentifierKey2;
             this.CurrentEntity.CargoIdentifierKey3 = this.CargoIdentifierKey3;
-            if (this.RequestParams.CargoSealList != null) {
-                this.RequestParams.CargoSealList.forEach((item: CargoSealComponent) => {
+            if (this.CargoSealObslist != null) {
+                this.CargoSealObslist.Collection.forEach((item: CargoSealComponent) => {
                     this.CurrentEntity.AddCargoSeal(item.entityPM);
                 });
             }

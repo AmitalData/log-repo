@@ -5,12 +5,10 @@ import { AppTool, ArrayTool } from '../../../../../Infrastructure/Tools';
 import { BaseComponent } from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { FeatureLocator } from '../../../../../Infrastructure/Utilities/FeatureLocator';
 import { SessionLocator } from '../../../../../Infrastructure/Utilities/SessionLocator';
-import { LogTab } from '../../../../../Infrastructure/Components/LogitudeComponents/LogTabsComponent';
-import { TextCodeTranslator } from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
-import { MessageWindow } from '../../../../../Controls/Windows/MessageWindow';
+import { CargoSealPM } from '../../../../../Customs/EntityPMs/CargoSealPM';
+import { CargoSealIdentifierPM } from '../../../../../Customs/EntityPMs/CargoSealIdentifierPM';
 import { LogitudeWindow } from '../../../../../Controls/Windows/LogitudeWindow';
-import { TapagMessagesService } from '../../../../../Customs/Services/WebServices/TapagMessagesService';
-import { TapagPMService } from '../../../../../Customs/Services/StandardPMs/TapagPMService';
+import { DeclarationWebService } from '../../../../../Customs/Services/WebServices/DeclarationWebService';
 import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/ServiceResponse';
 import { EntityArgs } from '../../../../../Infrastructure/DataContracts/EntityArgs';
 import { DeclarationPM } from '../../../../../Customs/EntityPMs/DeclarationPM';
@@ -30,24 +28,23 @@ export class DeclarationCargoSealTabComponent extends BaseComponent implements O
     public ObjectTableName = "Customs.Declaration";
     public DataContext: this;
     public CurrentEditComponentId: string;
-    public tapagObslist: ObservableCollection;
-    private tapagMessagesService: TapagMessagesService = new TapagMessagesService;
-    private tapagPMService: TapagPMService = new TapagPMService;
+    public CargoSealObslist: ObservableCollection;
+
+    private _DeclarationWebService: DeclarationWebService = new DeclarationWebService;
 
     IsLoaded: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityArgs: EntityArgs, private EntityResourceService: EntityResourceService) {
         super();
-        this.tapagObslist = new ObservableCollection([]);
+        this.CargoSealObslist = new ObservableCollection([]);
 
         this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
             this.EntityResourceService.getEntityResourceByTableName("Customs.TapagConnectionTable").subscribe((response: any) => {
                 this.EntityResourceService.getEntityResourceByTableName("Customs.Tapag").subscribe((response: any) => {
                     this.EntityPM = this.entityArgs.EntityPM;
                     this.ObjectTableName = this.entityArgs.ObjectTableName;
-                    this.LoadTapagsList();
+                    this.LoadCargoSealsList();
                     this.Listen();
-                    this.TapagIdEdit();
                     this.IsLoaded = true;
                 });
             });
@@ -96,21 +93,20 @@ export class DeclarationCargoSealTabComponent extends BaseComponent implements O
         }
     }
 
-    private LoadTapagsList() {
-        this.tapagObslist = new ObservableCollection([]);
+    private LoadCargoSealsList() {
+        this.CargoSealObslist = new ObservableCollection([]);
 
-        this.tapagMessagesService.GetDeclarationTapagsLists(this.EntityPM.Id, this.EntityPM.Tenant)
+        this._DeclarationWebService.GetDeclarationCargoSealLists(this.EntityPM.Id, this.EntityPM.Tenant)
             .subscribe((myResponse: ServiceResponse) => {
                 this.CurrentSession.StopBusyIndicator();
-                this.GetDeclarationTapagsListsOp_Completed(myResponse, false);
-                this.TapagIdEdit();
+                this.GetDeclarationCargoSealListsOp_Completed(myResponse, false);
             });
     }
 
-    private GetDeclarationTapagsListsOp_Completed(myResponse: ServiceResponse, sourceIsCostomFile: boolean) {
+    private GetDeclarationCargoSealListsOp_Completed(myResponse: ServiceResponse, sourceIsCostomFile: boolean) {
         if (myResponse.Result != null) {
-            myResponse.Result.forEach((item) => {
-                this.tapagObslist.Insert(item);
+            myResponse.Result.forEach((item: CargoSealIdentifierPM) => {
+                this.CargoSealObslist.Insert(new CargoSealItemComponent(item));
             });
         }
     }
@@ -119,22 +115,7 @@ export class DeclarationCargoSealTabComponent extends BaseComponent implements O
         this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
     }
 
-    TapagIdEdit() {
-        var myDeclarationEditComponentController = SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController as DeclarationEditComponentController;
-        if (!AppTool.IsNullOrEmpty(myDeclarationEditComponentController.TapagId)) {
-            if (this.tapagObslist != null && this.tapagObslist.Collection != null) {
-                var item = this.tapagObslist.Collection.find(r => r.Id == myDeclarationEditComponentController.TapagId);
-                if (item != null) {
-                    this.EditButtonClicked(item);
-                    console.log("TapagId " + myDeclarationEditComponentController.TapagId);
-                    myDeclarationEditComponentController.TapagId = null;
-                }
-            }
-        }
-
-    }
-
-    EditButtonClicked(item: TapagList) {
+    EditButtonClicked(item: CargoSealItemComponent) {
 
         var windowArgs: any = {};
         //windowArgs.EntityPM = response.Result;
@@ -150,4 +131,57 @@ export class DeclarationCargoSealTabComponent extends BaseComponent implements O
 
     }
 
+}
+
+export class CargoSealItemComponent extends BaseComponent {
+    public ObjectTableName = "Customs.CargoSealIdentifier";
+    public DataContext: CargoSealItemComponent = this;
+
+    constructor(public entityPM: CargoSealIdentifierPM) {
+        super();
+        if (entityPM != null && entityPM.CargoSeals != null) {
+            var cargoSealPM: CargoSealPM = entityPM.CargoSeals[0];
+            this.SealNumber = cargoSealPM.SealNumber;
+            this.SealCompletenessStateCode = cargoSealPM.SealCompletenessStateCode;
+            this.SealCompletenessStateName = cargoSealPM.SealCompletenessStateName;
+        }
+    }
+
+    public get CargoRowNumber() { return this.entityPM.CargoRowNumber; }
+    public set CargoRowNumber(newValue: string) { this.entityPM.CargoRowNumber = newValue; }
+
+    public get ContainerNumber() { return this.entityPM.ContainerNumber; }
+    public set ContainerNumber(newValue: string) { this.entityPM.ContainerNumber = newValue; }
+
+    private _SealNumber: string;
+    public get SealNumber() { return this._SealNumber; }
+    public set SealNumber(newValue: string) { this._SealNumber = newValue; }
+
+    private _SealCompletenessStateCode: string;
+    public get SealCompletenessStateCode() { return this._SealCompletenessStateCode; }
+    public set SealCompletenessStateCode(newValue: string) { this._SealCompletenessStateCode = newValue; }
+
+    private _SealCompletenessStateName: string;
+    public get SealCompletenessStateName() { return this._SealCompletenessStateName; }
+    public set SealCompletenessStateName(newValue: string) { this._SealCompletenessStateName = newValue; }
+
+    //public get SealTypeCode() { return this.entityPM.SealTypeCode; }
+    //public set SealTypeCode(newValue: string) { this.entityPM.SealTypeCode = newValue; }
+
+    //public get SealTypeName() { return this.entityPM.SealTypeName; }
+    //public set SealTypeName(newValue: string) { this.entityPM.SealTypeName = newValue; }
+
+    //public get UpdateReasonCode() { return this.entityPM.UpdateReasonCode; }
+    //public set UpdateReasonCode(newValue: string) { this.entityPM.UpdateReasonCode = newValue; }
+
+    //public get UpdateReasonName() { return this.entityPM.UpdateReasonName; }
+    //public set UpdateReasonName(newValue: string) { this.entityPM.UpdateReasonName = newValue; }
+
+    public SetLocalName(entity, fieldName) {
+        if (!AppTool.IsNullOrEmpty(entity)) {
+            this[fieldName] = entity.LocalName;
+        } else {
+            this[fieldName] = null;
+        }
+    }
 }
