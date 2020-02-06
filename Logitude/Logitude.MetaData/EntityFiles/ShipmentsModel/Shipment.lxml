@@ -80943,7 +80943,7 @@
     InActive="false"
     DisplayLongName="false"
     FullFieldLable="&quot;WarehouseStorageFreeDays&quot;"
-    DefaultText="&quot;Warehouse Storage Free Days&quot;"
+    DefaultText="&quot;Storage Free Days&quot;"
     ListFieldLable="&quot;WarehouseStorageFreeDaysListLable&quot;"
     ListLableDefaultText="&quot;Storage Free Days&quot;"
     IsNullable="true"

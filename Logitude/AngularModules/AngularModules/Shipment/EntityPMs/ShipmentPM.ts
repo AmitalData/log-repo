@@ -4554,6 +4554,14 @@ export class ShipmentPM {
             this.MarkAsDirty("TR3_ToPortId_Original");
         }
     }
+   
+    private warehouseStorageFreeDays: number;
+    public get WarehouseStorageFreeDays() { return this.warehouseStorageFreeDays; }
+    public set WarehouseStorageFreeDays(newValue: number) { if (this.warehouseStorageFreeDays != newValue) { this.warehouseStorageFreeDays = newValue; this.MarkAsDirty("WarehouseStorageFreeDays"); } }
+
+    private storageDays: number;
+    public get StorageDays() { return this.storageDays; }
+    public set StorageDays(newValue: number) { if (this.storageDays != newValue) { this.storageDays = newValue; this.MarkAsDirty("StorageDays"); } }
 
     public OldEntityPM: ShipmentPM;
 

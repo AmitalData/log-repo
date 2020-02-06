@@ -24,6 +24,7 @@ import {ShipmentPickUpPM} from '../../../../Shipment/EntityPMs/ShipmentPickUpPM'
 })
 
 export class AddEditWarehouseLegComponent extends BaseComponent {
+
     public EntityPM: ShipmentPM;
     public TenantPM: TenantPM;
     public ObjectTableName: string;
@@ -34,6 +35,7 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
     public TransportModeId: string = null;
     public ValidationErrorsList: string[] = [];
     public FatherComponent: RoutingsTabComponent;
+    public IsImportShipment: boolean = false;
     IsShowNewWarehouseEntryButton: Boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
@@ -47,6 +49,11 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
         this.myAddressListService = new AddressListService();
     }
 
+    GetShipmentDirection() {
+        if (this.EntityPM.DirectionId == "I") {
+            this.IsImportShipment = true;
+        }
+    }
     SetWindowArgs(args: any) {
         this.EntityPM = args['EntityPM'];
         this.LegType = args['LegType'];
@@ -61,6 +68,7 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
                     this.IsShowNewWarehouseEntryButton = true;
                 }
             }
+            this.GetShipmentDirection();
         }
 
         this.ObjectTableName = args['ObjectTableName'];
@@ -68,7 +76,7 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
         this.WarehouseAddressList = this.FatherComponent.WarehouseAddressList;
         this.SetUIProperties();
         this.Clone();
-
+         
         if (this.IsNewLeg) {
             if (this.LegType == "WarehouseLeg_Pickups") {
                 if (this.EntityPM.ShipmentPickUps.length > 0) {
@@ -235,6 +243,11 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
     set WarehouseLegLastFreeDate(newValue: Date) {
         if (this.EntityPM.WarehouseLegLastFreeDate != newValue) {
             this.EntityPM.WarehouseLegLastFreeDate = newValue;
+            if (newValue == null) {
+                this.WarehouseLegLastFreeDate = null;
+            } else {
+                this.SetStorageFreeDays();
+            }
         }
     }
 
@@ -257,6 +270,12 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
         if (this.EntityPM.WarehouseLegActualEntryDate != value) {
             this.EntityPM.WarehouseLegActualEntryDate = value;
             this.SetUIProperties_ValidateActualDates();
+            if (value == null) {
+                this.WarehouseLegActualEntryDate == null;
+            } else {
+                this.SetLastFreeDate();
+                this.SetStorageDays();
+            }
         }
     }
 
@@ -265,6 +284,11 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
         if (this.EntityPM.WarehouseLegActualReleaseDate != value) {
             this.EntityPM.WarehouseLegActualReleaseDate = value;
             this.SetUIProperties_ValidateActualDates();
+            if (value == null) {
+                this.WarehouseLegActualReleaseDate = null;
+            } else {
+                this.SetStorageDays();
+            }
         }
     }
 
@@ -289,6 +313,53 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
             this.EntityPM.WarehouseLegVGMCutOffDate = value;            
         }
     }
+
+    get WarehouseStorageFreeDays() { return this.EntityPM.WarehouseStorageFreeDays; }
+    set WarehouseStorageFreeDays(value: number) {
+        if (this.EntityPM.WarehouseStorageFreeDays != value) {
+            this.EntityPM.WarehouseStorageFreeDays = value;
+            if (value == null) {
+                this.WarehouseStorageFreeDays = null;
+            } else {
+                this.SetLastFreeDate();
+            }
+        }
+    }
+
+    private SetLastFreeDate() {
+        if (this.WarehouseLegActualEntryDate != null && this.WarehouseStorageFreeDays != null) {
+            var date = DateTool.AddDays(this.WarehouseLegActualEntryDate, this.WarehouseStorageFreeDays);
+            if (date == null) {
+                this.WarehouseStorageFreeDays = null;
+            } else {
+                this.WarehouseLegLastFreeDate = date;
+            }
+        }
+    }
+
+    private SetStorageFreeDays() {
+        if (this.WarehouseLegActualEntryDate != null && this.WarehouseLegLastFreeDate != null) {
+            var days = DateTool.GetDaysBetweenDates(this.WarehouseLegActualEntryDate, this.WarehouseLegLastFreeDate);
+            if (days == null || days == 0) {
+                this.WarehouseStorageFreeDays = null;
+            } else if (this.WarehouseStorageFreeDays != days) {
+                this.WarehouseStorageFreeDays = days;
+            }
+        }
+    }
+
+    public StorageDays: number;
+    private SetStorageDays() {
+        if (this.WarehouseLegActualEntryDate != null && this.WarehouseLegActualReleaseDate != null) {
+            if (this.WarehouseLegActualReleaseDate.valueOf() >= this.WarehouseLegActualEntryDate.valueOf()) {
+                var days = DateTool.GetDaysBetweenDates(this.WarehouseLegActualEntryDate, this.WarehouseLegActualReleaseDate);
+                this.StorageDays = days;
+            } else {
+                this.StorageDays = null;
+            }
+        }
+    }
+    
 
     NewWarehouseEntryButtonClicked() {
         var windowArgs: any = {};

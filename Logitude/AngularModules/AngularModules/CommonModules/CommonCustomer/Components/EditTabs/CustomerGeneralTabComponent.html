@@ -197,8 +197,8 @@
                                             </tr>
 
                                             <!--Storage Free Days-->
-                                            <tr class="FormFieldRow">
-                                                <td style="width:120px;">
+                                            <tr class="FormFieldRow" *ngIf="IsCustomer">
+                                                <td>
                                                     <LogLabel [ObjectFieldName]="'StorageFreeDays'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                 </td>
 

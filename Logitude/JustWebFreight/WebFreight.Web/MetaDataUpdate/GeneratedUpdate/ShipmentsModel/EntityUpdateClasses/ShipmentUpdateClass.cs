@@ -40146,7 +40146,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "WarehouseStorageFreeDays",
-					  						DefaultText =  "Warehouse Storage Free Days",
+					  						DefaultText =  "Storage Free Days",
 					  						ListFieldLable =  "WarehouseStorageFreeDaysListLable",
 					  						ListLableDefaultText =  "Storage Free Days",
 					  						IsMaxLength =  false,

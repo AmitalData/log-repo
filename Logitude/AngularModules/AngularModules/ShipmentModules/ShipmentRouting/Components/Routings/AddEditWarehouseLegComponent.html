@@ -1,4 +1,4 @@
-﻿<table>
+<table>
     <tr style="height:1px;" *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0">
         <td>
             <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="true"></ValidationSummary>
@@ -94,28 +94,6 @@
 
                             </tr>
 
-                            <!-- LastFreeDate -->
-                            <tr class="FormFieldRow" *ngIf="LegType == 'WarehouseLeg'">
-                                <td>
-                                    <LogLabel [ObjectFieldName]="'WarehouseLegLastFreeDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.O.Routings.WarehouseLegLastFreeDate'"></LogLabel>
-                                </td>
-
-                                <td>
-                                    <LogDatePicker [ObjectFieldName]="'WarehouseLegLastFreeDate'" [SelectedDateValue]="WarehouseLegLastFreeDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
-                                </td>
-                            </tr>
-
-                            <!-- TerminalAvailable -->
-                            <tr class="FormFieldRow" *ngIf="LegType == 'WarehouseLeg'">
-                                <td>
-                                    <LogLabel [ObjectFieldName]="'TerminalAvailable'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                </td>
-
-                                <td>
-                                    <LogDatePicker [ObjectFieldName]="'TerminalAvailable'" [SelectedDateValue]="TerminalAvailable" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
-                                </td>
-                            </tr>
-
                             <!-- CutOffDate -->
                             <tr class="FormFieldRow" *ngIf="LegType == 'WarehouseLeg_Pickups'">
                                 <td>
@@ -159,7 +137,7 @@
                         <div></div>
                     </td>
 
-                    <td style="width: 420px;">
+                    <td style="width: 520px;">
                         <table>
 
                             <!-- WarehouseLegExpectedEntryDate -->
@@ -301,6 +279,71 @@
                                 </td>
                             </tr>
 
+                            <!-- LastFreeDate -->
+                            <tr class="FormFieldRow" *ngIf="LegType == 'WarehouseLeg'">
+                                <td>
+                                    <div></div>
+                                </td>
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'WarehouseLegLastFreeDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.O.Routings.WarehouseLegLastFreeDate'"></LogLabel>
+                                </td>
+
+                                <td colspan="3">
+                                    <LogDatePicker [ObjectFieldName]="'WarehouseLegLastFreeDate'" [SelectedDateValue]="WarehouseLegLastFreeDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                </td>
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+
+                            <!-- TerminalAvailable -->
+                            <tr class="FormFieldRow" *ngIf="LegType == 'WarehouseLeg'">
+                                <td>
+                                    <div></div>
+                                </td>
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'TerminalAvailable'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td colspan="3">
+                                    <LogDatePicker [ObjectFieldName]="'TerminalAvailable'" [SelectedDateValue]="TerminalAvailable" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                </td>
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                            <tr class="FormFieldRow" *ngIf="IsImportShipment">
+                                <td>
+                                    <div></div>
+                                </td>
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'WarehouseStorageFreeDays'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td colspan="3">
+                                    <LogTextBox [ObjectFieldName]="'WarehouseStorageFreeDays'" [Text]="WarehouseStorageFreeDays" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                </td>
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                            <tr class="FormFieldRow" *ngIf="IsImportShipment">
+                                <td>
+                                    <div></div>
+                                </td>
+                                <td>
+                                    <LogLabel [NoObjectField]="true" [Text]="'Storage Days'"  [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td colspan="3">
+                                    <div class="Label">
+                                        {{StorageDays}}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
                             <tr>
                                 <td colspan="6">
                                     <div></div>

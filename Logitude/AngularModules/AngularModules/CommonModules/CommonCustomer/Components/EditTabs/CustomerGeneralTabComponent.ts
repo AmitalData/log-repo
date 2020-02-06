@@ -69,6 +69,7 @@ export class CustomerGeneralTabComponent extends BaseComponent   {
     LogoInput: string = Guid.NewRandomString();
     IsShowMessageComplate: boolean = false;
     IsShowProgressLoading: boolean = false;
+    IsCustomer: boolean = false;
     public ScreenCode: string = "Customer.AdditionalFields";
     @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
     private CurrentSession = SessionLocator.SelectedSession;
@@ -80,6 +81,7 @@ export class CustomerGeneralTabComponent extends BaseComponent   {
         this.IndustryId = this.EntityPM.IndustryId;
         this.EntityName = "Customer";
         this.EntityId = this.EntityPM.Id;
+        this.IsCustomer = this.EntityPM.IsCustomer;
         this.LeadSourceId = this.EntityPM.LeadSourceId;
 
         this.Listen();
