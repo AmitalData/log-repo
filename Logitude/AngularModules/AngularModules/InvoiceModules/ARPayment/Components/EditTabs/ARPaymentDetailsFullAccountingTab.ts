@@ -1860,7 +1860,7 @@ export class TextStore {
     static Closed: string = TextCodeTranslator.Translate('Accounting.O.ARP.Closed');
     static partiallyOpened: string = TextCodeTranslator.Translate('Accounting.O.ARP.partiallyOpened');
 
-    static ErrorsInSelectedLines: string = TextCodeTranslator.Translate('Reconciliations.O.ErrorsInSelectedLines');
+    static ErrorsInSelectedLines: string =SessionLocator.TenantPM.AccountingActivated? TextCodeTranslator.Translate('Reconciliations.O.ErrorsInSelectedLines'):"";
     static invoiceAmount2reconcileMSG: string = TextCodeTranslator.Translate('Accounting.O.ARP.invoiceAmount2reconcileMSG');
 
 

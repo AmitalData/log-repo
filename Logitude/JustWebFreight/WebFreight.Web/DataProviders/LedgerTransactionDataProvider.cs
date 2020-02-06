@@ -145,6 +145,26 @@ namespace WebFreight.Web.DataProviders
                 return result;
             }
         }
+        public decimal LocalAmount
+        {
+            get
+            {
+                if (LocalAmountDebit != 0)
+                    return LocalAmountDebit;
+                else
+                    return LocalAmountCredit*-1;
+            }
+        }
+        public decimal ForeignAmount
+        {
+            get
+            {
+                if (ForeignAmountDebit != 0)
+                    return ForeignAmountDebit;
+                else
+                    return ForeignAmountCredit * -1;
+            }
+        }
     }
     public class GLAccountBalanceList
     {

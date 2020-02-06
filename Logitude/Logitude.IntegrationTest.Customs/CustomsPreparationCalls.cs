@@ -17,7 +17,7 @@ namespace Logitude.IntegrationTest.Customs
     {
         public static async Task PrepareVariables()
         {
-            await GetCardCusstomerGECU();
+            await GetCusstomerGECU();
             await GetCustomsTransportModeA();
             await GetCustomsHouseTypesITEST();
 
@@ -25,47 +25,40 @@ namespace Logitude.IntegrationTest.Customs
 
 
 
-        private static async Task GetCardCusstomerGECU()
+        private static async Task GetCusstomerGECU()
         {
-            HttpResponseMessage response = await RestClientService.GetAsync("CardViews" + QueryFiltersPreparation.GetUrlParameters("GE:Cusstomer"));
-            CardList cardList = RestClientService.ParseResponse<CardList>(response);
+            HttpResponseMessage response = await RestClientService.GetAsync("Customerviews" + QueryFiltersPreparation.GetUrlParameters("GE:Cusstomer"));
+            CustomerList cardList = RestClientService.ParseResponse<CustomerList>(response);
             if (cardList == null)
-                await CreateCardCusstomerGECU();
+                await CreateCusstomerGECU();
             else
             {
-                CustomsVariables.CardCusstomerGECUId = cardList.Id;
-                CustomsVariables.CardCusstomerGECUCode = cardList.Code;
+                CustomsVariables.CusstomerGECUId = cardList.Id;
+                CustomsVariables.CusstomerGECUCode = cardList.Code;
             }
         }
-        private static async Task CreateCardCusstomerGECU()
+        private static async Task CreateCusstomerGECU()
         {
-            CardPM cardCusstomerPM = GetNewCardCusstomerGECU();
-            HttpResponseMessage response = await RestClientService.PostAsync(cardCusstomerPM, "Cards");
-            CardPM cardPM = RestClientService.ParseResponse<CardPM>(response);
-            CustomsVariables.CardCusstomerGECUId = cardPM.Id;
-            CustomsVariables.CardCusstomerGECUCode = cardPM.Code;
+            CustomerPM cusstomerGECUPM = GetNewCardCusstomerGECU();
+            HttpResponseMessage response = await RestClientService.PostAsync(cusstomerGECUPM, "Customers");
+            CustomerPM customerPM = RestClientService.ParseResponse<CustomerPM>(response);
+            CustomsVariables.CusstomerGECUId = customerPM.Id;
+            CustomsVariables.CusstomerGECUCode = customerPM.Code;
         }
-        private static CardPM GetNewCardCusstomerGECU()
+        private static CustomerPM GetNewCardCusstomerGECU()
         {
-            CardPM cardPM = new CardPM();
-            cardPM.Tenant = IntegrationTestLoginParameters.Tenant;
-            cardPM.EnglishName = "GE:Cusstomer";
-            cardPM.LocalName = "GE:Cusstomer";
-            cardPM.Code = "GECU";
-            cardPM.PartnerTypeId = "CS";
-            cardPM.CityName = "Guaynabo";
-            cardPM.CountryName = "Guaynabo";
-            cardPM.InActive = true;
-            cardPM.InternetAccess = true;
-            cardPM.SharedLogisticsInvitationStatusCode = 1;
-            cardPM.IsCustomer = true;
-            cardPM.EnableConsolidationInvoices = false;
-            cardPM.IsActiveForMobile = false;
-            cardPM.IsInternationalPartner = false;
-            cardPM.IsAutonomy = false;
-            cardPM.PartnerTypeName = "Cusstomer";
-            //cardPM.VatTypeId = "";
-            return cardPM;
+            CustomerPM customerPM = new CustomerPM();
+            customerPM.Tenant = IntegrationTestLoginParameters.Tenant;
+            customerPM.EnglishName = "GE:Cusstomer";
+            customerPM.LocalName = "GE:Cusstomer";
+            customerPM.CityName = "Guaynabo";
+            customerPM.CountryName = "Guaynabo";
+            customerPM.PartnerTypeId = "CS";
+            customerPM.InActive = true;
+            customerPM.IsCustomer = true;
+            customerPM.EnableConsolidationInvoices = false;
+            customerPM.IsActiveForMobile = false;
+            return customerPM;
         }
         private static async Task GetCustomsTransportModeA()
         {
@@ -75,33 +68,11 @@ namespace Logitude.IntegrationTest.Customs
         }
         private static async Task GetCustomsHouseTypesITEST()
         {
-            HttpResponseMessage response = await RestClientService.GetAsync("CustomsHouseTypeViews" + QueryFiltersPreparation.GetUrlParameters("ITEST"));
+            HttpResponseMessage response = await RestClientService.GetAsync("CustomsHouseTypes/GetSingle?code=14");
             CustomsHouseTypeList customsHouseTypeList = RestClientService.ParseResponse<CustomsHouseTypeList>(response);
-            if (customsHouseTypeList == null)
-                await CreateCustomsHouseTypesITEST();
-            else
-            {
-                CustomsVariables.CustomsHouseTypesITESTCode = customsHouseTypeList.Code;
-            }
+            CustomsVariables.CustomsHouseTypesITESTCode = customsHouseTypeList.Code;
         }
-        private static async Task CreateCustomsHouseTypesITEST()
-        {
-            CustomsHouseTypePM customsHouseTypeTESTPM = GetNewCustomsHouseTypesITEST();
-            HttpResponseMessage response = await RestClientService.PostAsync(customsHouseTypeTESTPM, "CustomsHouseTypes");
-            CustomsHouseTypePM customsHouseTypePM = RestClientService.ParseResponse<CustomsHouseTypePM>(response);
-            CustomsVariables.CustomsHouseTypesITESTCode = customsHouseTypePM.Code;
-        }
-        private static CustomsHouseTypePM GetNewCustomsHouseTypesITEST()
-        {
-            CustomsHouseTypePM customsHouseTypePM = new CustomsHouseTypePM();
-            customsHouseTypePM.Tenant = IntegrationTestLoginParameters.Tenant;
-            customsHouseTypePM.EnglishName = "GE:ITEST";
-            customsHouseTypePM.LocalName = "GE:ITEST";
-            customsHouseTypePM.SearchFields = "ITEST,GE:ITEST";
-            customsHouseTypePM.Code = "ITEST";
-            customsHouseTypePM.Inactive = false;
-            return customsHouseTypePM;
-        }
+
 
     }
 }
