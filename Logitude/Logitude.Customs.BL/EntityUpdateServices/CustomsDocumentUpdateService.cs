@@ -70,35 +70,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 AutoSetOriginalDocumentTrue(entityPM);
                 this._AddPerfectCustomsDocumentMetaDataValues_IsMetaDataReady = true;
             }
-            else
-            {
-                Boolean isAdded = false;
-                var customContext = CustomContext.GetContext(entityPM.Tenant);
-                var customDocumentTypeMetaDataQuery = new CustomDocumentTypeMetaDataQueryService(customContext);
-                var CustomDocumentTypeMetaData = customDocumentTypeMetaDataQuery.GetCustomDocumentTypeMetaDataByType(entityPM.DocumentTypeCode);
-                foreach (var CustomDocumentTypeMetaDataitem in CustomDocumentTypeMetaData)
-                {
-                    if (entityPM.CustomsDocumentMetaDataValues.Where(r => r.MetaDataTypeCode == CustomDocumentTypeMetaDataitem.MetaDataTypeCode).FirstOrDefault() == null)
-                    {
-                        CustomsDocumentMetaDataValuePM customsDocumentMetaDataValuePM = new CustomsDocumentMetaDataValuePM()
-                        {
-                            ChangeSetOp = ChangeSetOperation.Insert,
-                            Tenant = entityPM.Tenant,
-                            CustomsDocumentId = entityPM.CustomsDocId,
-                            MetaDataTypeCode = CustomDocumentTypeMetaDataitem.MetaDataTypeCode,
-                            MetaDataValue = null,
-                        };
-                        entityPM.CustomsDocumentMetaDataValues.Add(customsDocumentMetaDataValuePM);
-                        isAdded = true;
-                    }
-                }
-                if (isAdded)
-                {
-                    AutoSetOriginalDocumentTrue(entityPM);
-                    this._AddPerfectCustomsDocumentMetaDataValues_IsMetaDataReady = true;
-                }
-
-            }
+            
         }
         protected override void UpdateComposition(CustomsDocumentPM entityPM)
         {
@@ -131,10 +103,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     if(MyDocumentMetaDataValues != null && !string.IsNullOrWhiteSpace(MyDocumentMetaDataValues.MetaDataValue))
                     {
                         val.MetaDataValue = MyDocumentMetaDataValues.MetaDataValue;
+                        if (val.ChangeSetOp != ChangeSetOperation.Insert) val.ChangeSetOp = ChangeSetOperation.Update;
                     }
                 }
             }
-
         }
 
         public const string SetCustomsRequestSheetStatus = "SetCustomsRequestSheetStatus";
