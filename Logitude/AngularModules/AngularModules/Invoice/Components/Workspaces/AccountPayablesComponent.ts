@@ -156,7 +156,7 @@ export class AccountPayablesComponent {
 
     InitComponent() {
         this.LoadAllScreenData();
-        this.APInvoiceErrorInTransferVisibility = (FeatureLocator.HasFeaturePermession("APInvoice", "ErrorInTransfer")) ? true : false;
+        this.APInvoiceErrorInTransferVisibility = (FeatureLocator.HasFeaturePermession("APInvoice", "ErrorInTransferInvoices")) ? true : false;
         this.APPaymentErrorInTransferVisibility = (FeatureLocator.HasFeaturePermession("APPayment", "ErrorInTransfer")) ? true : false;
     }
 

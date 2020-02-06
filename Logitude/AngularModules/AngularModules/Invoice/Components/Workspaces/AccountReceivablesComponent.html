@@ -60,7 +60,7 @@
                                             <p class="QueryLink" (click)="ViewInvoiceQuery('ARInvoice:OpenConstituent')">{{'ARInvoice.Q.OpenConstituentInvoices'|TextCodeTranslationPipe}} ({{ARInvoicesOpenConstituentCount}})</p>
                                             <p class="QueryLink" (click)="ViewInvoiceQuery('ARInvoice:Unpaid Invoices')">{{'ARInvoice.Q.UnpaidInvoices'|TextCodeTranslationPipe}} ({{ARInvoicesUnpaidCount}})</p>
                                             <p class="QueryLink" (click)="ViewInvoiceQuery('ARInvoice:Invoices Failed to Open in SAT')" *ngIf="ARInvoicesSATFailedVisibility">{{'ARInvoice.Q.FailedSAT'|TextCodeTranslationPipe}} ({{ARInvoicesSATFailedCount}})</p>
-                                            <p class="QueryLink" (click)="ViewInvoiceQuery('ARInvoice:ErrorInTransfer')" *ngIf="ARInvoiceErrorInTransferVisibility">{{'ARInvoice.Q.ErrorInTransfer'|TextCodeTranslationPipe}} ({{ARInvoiceErrorInTransferCount}})</p>
+                                            <p class="QueryLink" (click)="ViewInvoiceQuery('ARInvoice:Error In Transfer Invoices')" *ngIf="ARInvoiceErrorInTransferVisibility">{{'ARInvoice.Q.ErrorInTransferInvoices'|TextCodeTranslationPipe}} ({{ARInvoiceErrorInTransferCount}})</p>
 
                                             <p class="QueryLink" (click)="ViewInvoiceQuery('ARInvoice:All Invoices')">{{'ARInvoice.Q.AllInvoices'|TextCodeTranslationPipe}}</p>
 
