@@ -2327,6 +2327,7 @@
     <Content Include="TimeManagement\Components\Workspaces\TimeSheet\TimeSheetWorkspaceComponent.html" />
     <Content Include="TimeManagement\Components\Workspaces\TimeSheet\VacationsComponent.html" />
     <Content Include="TimeManagement\Components\Workspaces\TimeSheet\WeeklyTimeSheetComponent.html" />
+    <Content Include="Warehouse\Components\ChoosePackagesFromWarehousePackageReleasesComponent.html" />
     <Content Include="Warehouse\Components\CopyFromReleasesPackagesComponent.html" />
     <Content Include="Warehouse\Components\EditTabs\ConnectionsTab\WarehouseConnectionsTabComponent.html" />
     <Content Include="Warehouse\Components\EditTabs\DocsIn\WarehouseDocsInTabComponent.html" />
@@ -6586,6 +6587,7 @@
     <TypeScriptCompile Include="Shipment\EntityLists\MessagingStockUsageHistoryList.ts" />
     <TypeScriptCompile Include="Shipment\EntityLists\OBLTypeList.ts" />
     <TypeScriptCompile Include="Shipment\EntityLists\PickUpDeliveryTransportModeList.ts" />
+    <TypeScriptCompile Include="Shipment\EntityLists\ShipmentComputedFieldsList.ts" />
     <TypeScriptCompile Include="Shipment\EntityLists\ShipmentCustomsMessageTypeList.ts" />
     <TypeScriptCompile Include="Shipment\EntityLists\ShipmentCustomsTransmissionList.ts" />
     <TypeScriptCompile Include="Shipment\EntityPMs\ContainerFollowUpPM.ts" />
@@ -6596,6 +6598,7 @@
     <TypeScriptCompile Include="Shipment\EntityPMs\MessagingStockUsageHistoryPM.ts" />
     <TypeScriptCompile Include="Shipment\EntityPMs\PickUpDeliveryPackageHarmonizePM.ts" />
     <TypeScriptCompile Include="Shipment\EntityPMs\ShipmentAssemblyPM.ts" />
+    <TypeScriptCompile Include="Shipment\EntityPMs\ShipmentComputedFieldsPM.ts" />
     <TypeScriptCompile Include="Shipment\EntityPMs\ShipmentCustomsTransmissionPM.ts" />
     <TypeScriptCompile Include="Shipment\EntityPMs\ShipmentPackageHarmonizePM.ts" />
     <TypeScriptCompile Include="Shipment\Services\ContainersFUDomainService.ts" />
@@ -6799,6 +6802,7 @@
     <TypeScriptCompile Include="Warehouse\Components\AddEditWarehouseEntryPackagesAndContainers.ts" />
     <TypeScriptCompile Include="SharedLogistics\Components\CutsomerTenantAccessManagementComponent.ts" />
     <TypeScriptCompile Include="SharedLogistics\DataContracts\CustomerTenantAccessRequestStatusCount.ts" />
+    <TypeScriptCompile Include="Warehouse\Components\ChoosePackagesFromWarehousePackageReleasesComponent.ts" />
     <TypeScriptCompile Include="Warehouse\Components\CopyFromReleasesPackagesComponent.ts" />
     <TypeScriptCompile Include="Warehouse\Components\EditTabs\ConnectionsTab\WarehouseConnectionsTabComponent.ts" />
     <TypeScriptCompile Include="Warehouse\Components\EditTabs\DocsIn\WarehouseDocsInTabComponent.ts" />

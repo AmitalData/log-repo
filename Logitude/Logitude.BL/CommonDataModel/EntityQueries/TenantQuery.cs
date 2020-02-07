@@ -545,7 +545,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 if (CacheManager.CacheWrapper.Get(entityName) == null)
                 {
                     ICommonDataContext context = CommonDataContext.GetContext(id);
-                    TenantPM tenant = (from a in context.Tenants.Include("Address")
+                    TenantPM tenant = (from a in context.Tenants.Include("Address").Include("LogBoxTenantSetting")
                                        where a.Id == id
                                        select new TenantPM()
                                        {

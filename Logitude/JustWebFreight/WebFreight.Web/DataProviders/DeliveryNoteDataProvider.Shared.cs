@@ -172,5 +172,6 @@ namespace WebFreight.Web.DataProviders
         public string ITNumber { get; set; }
         public string AMSBL { get; set; }
         public string SalesmanEmail { get; set; }
+        public string ToPartnerAddressName { get; set; }
     }
 }

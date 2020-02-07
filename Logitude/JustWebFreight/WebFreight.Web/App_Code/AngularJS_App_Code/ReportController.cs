@@ -104,7 +104,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 }
                 else
                 {
-                    string urlImage = GetReportAsImageFromStorage(reportFliter);
+                    string urlImage = reportHelper.GetSpecificPageFromStimulReportAsBase64(reportFliter);
                     if (string.IsNullOrEmpty(urlImage)) throw new Exception("Can't find file (" + reportFliter.ReportKey + "@" + reportFliter.ReportName + ")");
                     return Request.CreateResponse(HttpStatusCode.OK, GetBuildStimulReportResult(reportFliter, urlImage));
                 }
@@ -239,25 +239,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
         }
 
 
-        private string GetReportAsImageFromStorage(ReportFliter reportFliter)
-        {
-
-            IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
-            BlobFileInfo fileInfo = GetNewBlobFileInfo(reportFliter.ReportKey + "@" + reportFliter.ReportName, reportFliter.tenant);
-            byte[] result = storageservice.Read(fileInfo);
-           string url = "";
-           if (result != null)
-           {
-               StiReport stiReport = new StiReport();
-               stiReport.LoadDocument(result);
-
-                ReportHelper reportHelper = new ReportHelper();
-                url = reportHelper.ExportStimulaImage(stiReport, reportFliter);
-
-           }
-          
-          return url;
-        }
+      
 
 
        

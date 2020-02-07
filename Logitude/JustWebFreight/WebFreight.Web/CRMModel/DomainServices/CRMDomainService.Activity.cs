@@ -251,39 +251,42 @@ namespace WebFreight.Web.CRMModel.DomainServices
             }
 
             activityRepository = new ActivityRepository(crmContext);
-            Activity entity = activityRepository.GetSingle(activityId, tenant);
+            activityQuery = new ActivityQueryService(crmContext);
+           
+            ActivityPM entityPM = activityQuery.GetSingle(activityId, true, false);
 
-            if (entity != null)
+            string email = HttpContext.Current.User.Identity.Name;
+            ContactRepository contactRepository = new ContactRepository(tenant);
+            Contact loggedContact = contactRepository.GetSingleContactByEmail(email, tenant);
+
+            //ActivityUpdateService activityUpdateService = new ActivityUpdateService(crmContext);
+            
+            if (entityPM != null)
             {
-                DateTime todayDateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
+                CloseActivityAndSaveChanges(summary, entityPM, loggedContact);
 
-                entity.IsOpen = false;
-                entity.ActivityStatusCode = "C";
-                entity.MeetingSummary = summary;
-                entity.NeedSynchronization = true;
-                entity.CompleteDate = todayDateTime;
-                entity.UpdateDate = todayDateTime;
+                Activity entity = activityRepository.GetSingle(activityId, tenant);
+                //entity.IsOpen = false;
+                //entity.ActivityStatusCode = "C";
+                //entity.MeetingSummary = summary;
+                //entity.NeedSynchronization = true;
+                //entity.CompleteDate = todayDateTime;
+                //entity.UpdateDate = todayDateTime;
+                //this.InitializeSortingFields(entity);
+                //if (loggedContact != null)
+                //{
+                //    entity.UpdatedByUserId = loggedContact.Id;
+                //}
+                //activityRepository.Update(entity);
+                //activityRepository.SubmitChanges();
+                //this.CreateEntityEvent(entity.UpdatedByUserId, entity, "CM");
 
-                this.InitializeSortingFields(entity);
-
-                string email = HttpContext.Current.User.Identity.Name;
-                ContactRepository contactRepository = new ContactRepository(tenant);
-                Contact loggedContact = contactRepository.GetSingleContactByEmail(email, tenant);
-                if (loggedContact != null)
-                {
-                    entity.UpdatedByUserId = loggedContact.Id;
-                }
-
-                activityRepository.Update(entity);
-                activityRepository.SubmitChanges();
 
                 if (entity.ActivityTypeCode == "AP" && post)
                 {
                     string message = "Meeting completed:" + Environment.NewLine + entity.MeetingSummary;
                     AutomaticPosting.CreatePost(entity.Id, "Activity", loggedContact.Id, entity.Subject, message, true, entity.Tenant);
                 }
-
-                this.CreateEntityEvent(entity.UpdatedByUserId, entity, "CM");
 
                 if (!string.IsNullOrEmpty(entity.OpportunityId))
                 {
@@ -426,6 +429,27 @@ namespace WebFreight.Web.CRMModel.DomainServices
                     #endregion
                 }
             }
+        }
+
+        private void CloseActivityAndSaveChanges(string summary, ActivityPM entityPM, Contact loggedContact)
+        {
+            DateTime todayDateTime = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
+            entityPM.IsOpen = false;
+            entityPM.ActivityStatusCode = "C";
+            entityPM.MeetingSummary = summary;
+            entityPM.NeedSynchronization = true;
+            entityPM.CompleteDate = todayDateTime;
+            entityPM.UpdateDate = todayDateTime;
+            this.InitializeSortingFields(entityPM);
+            if (loggedContact != null)
+            {
+                entityPM.UpdatedByUserId = loggedContact.Id;
+            }
+
+            ActivityUpdateService service = new ActivityUpdateService(crmContext, new Dictionary<string, IContext>(), entityPM.Tenant);
+            service.InitializeEntityPM(entityPM);
+            entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+            service.Update(entityPM, true);
         }
 
         [Invoke]
@@ -639,6 +663,100 @@ namespace WebFreight.Web.CRMModel.DomainServices
             }
         }
 
+        private void InitializeSortingFields(ActivityPM entityPM)
+        {
+            switch (entityPM.ActivityTypeCode)
+            {
+                case "TS":
+                    {
+                        if (entityPM.CompleteDate != null)
+                        {
+                            entityPM.SortingDate = entityPM.CompleteDate;
+                            entityPM.SortingBy = "Complete Date";
+                        }
+
+                        else if (entityPM.DueDate != null)
+                        {
+                            entityPM.SortingDate = entityPM.DueDate;
+                            entityPM.SortingBy = "Due Date";
+                        }
+
+                        else if (entityPM.StartDateTime != null)
+                        {
+                            entityPM.SortingDate = entityPM.StartDateTime;
+                            entityPM.SortingBy = "Start Date";
+                        }
+
+                        else if (entityPM.CreateDate != null)
+                        {
+                            entityPM.SortingDate = entityPM.CreateDate;
+                            entityPM.SortingBy = "Create Date";
+                        }
+
+                        break;
+                    }
+
+                case "AP":
+                    {
+                        if (entityPM.CompleteDate != null)
+                        {
+                            entityPM.SortingDate = entityPM.CompleteDate;
+                            entityPM.SortingBy = "Complete Date";
+                        }
+
+                        else if (entityPM.StartDateTime != null)
+                        {
+                            entityPM.SortingDate = entityPM.StartDateTime;
+                            entityPM.SortingBy = "Start Date";
+                        }
+
+                        break;
+                    }
+
+                case "CL":
+                    {
+                        if (entityPM.CompleteDate != null)
+                        {
+                            entityPM.SortingDate = entityPM.CompleteDate;
+                            entityPM.SortingBy = "Complete Date";
+                        }
+
+                        else if (entityPM.DueDate != null)
+                        {
+                            entityPM.SortingDate = entityPM.DueDate;
+                            entityPM.SortingBy = "Due Date";
+                        }
+
+                        else if (entityPM.CreateDate != null)
+                        {
+                            entityPM.SortingDate = entityPM.CreateDate;
+                            entityPM.SortingBy = "Create Date";
+                        }
+
+                        break;
+                    }
+
+                case "EI":
+                    {
+                        if (entityPM.SendReceiveDate != null)
+                        {
+                            entityPM.SortingDate = entityPM.SendReceiveDate;
+                            entityPM.SortingBy = "Send/Receive Date";
+                        }
+                        break;
+                    }
+
+                case "EO":
+                    {
+                        if (entityPM.SendReceiveDate != null)
+                        {
+                            entityPM.SortingDate = entityPM.SendReceiveDate;
+                            entityPM.SortingBy = "Send/Receive Date";
+                        }
+                        break;
+                    }
+            }
+        }
         private void InitializeSortingFields(Activity entity)
         {
             switch (entity.ActivityTypeCode)

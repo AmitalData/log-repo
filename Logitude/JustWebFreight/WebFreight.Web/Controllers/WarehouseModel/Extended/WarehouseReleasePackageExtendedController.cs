@@ -40,7 +40,7 @@ namespace WebFreight.Web.Controllers.WarehouseModel.Extended
         }
 
 
-        public HttpResponseMessage GetWarehouseReleasePackageListsByShipmentId(string shipmentId, int tenant)
+        public HttpResponseMessage GetWarehouseReleasePackagePMThatNotUsedForAnyEntityLists()
         {
             try
             {
@@ -49,16 +49,8 @@ namespace WebFreight.Web.Controllers.WarehouseModel.Extended
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.CheckContactFeature("WarehouseRelease", "READ", authToken.Tenant);
                 IWarehouseContext MyContext = WarehouseContext.GetContext(authToken.Tenant);
-
-                List<WarehouseReleasePackageList> result = null;
-
-               WarehouseReleaseQueryService warehouseReleaseQueryService = new WarehouseReleaseQueryService(authToken.Tenant);
-                List<string> warehouseReleaseListsIds = warehouseReleaseQueryService.GetWarehouseReleaseListsIdsByshipmentId(shipmentId, tenant);
-                if (warehouseReleaseListsIds.Count > 0)
-                {
-                    WarehouseReleasePackageQueryService warehouseReleasePackageQuery = new WarehouseReleasePackageQueryService(MyContext);
-                    result = warehouseReleasePackageQuery.GetWarehouseReleasePackageListsByWarehouseReleaseIds(warehouseReleaseListsIds, tenant);
-                }
+                WarehouseReleasePackageQueryService warehouseReleasePackageQuery = new WarehouseReleasePackageQueryService(MyContext);
+                var result = warehouseReleasePackageQuery.GetWarehouseReleasePackagePMLists(authToken.Tenant);
 
                 return Request.CreateResponse(HttpStatusCode.OK, result);
             }

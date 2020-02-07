@@ -127,6 +127,8 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public int? GLAccounterCounterLength { get; set; }
         [Column("PaymentChequesLogoId")]
 	    public string PaymentChequesLogoId { get; set; }
+        [Column("NumberOfAgingMonths")]
+	    public int? NumberOfAgingMonths { get; set; }
     }
 }
 	 

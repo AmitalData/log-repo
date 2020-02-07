@@ -68,6 +68,10 @@
     <Compile Include="Tests\ShipmentsTests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="..\Logitude.IntegrationTest.Core\Config\Connection.appSettings.config">
+      <Link>Connection.appSettings.config</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>

@@ -71,6 +71,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     private firstDigit: string = ",";
     private secondDigit: string = ".";
 
+    private chooseShipmentPackageFromWarehouseReleasePackages: boolean = false;
     private Listen() {
         if (this.entityArgs.EditComponent) {
 
@@ -99,6 +100,12 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
                         this.saveAfterDeletePackages = false;
                         this.CreatePackagesFromExcel();
                     }
+
+                    if (this.chooseShipmentPackageFromWarehouseReleasePackages) {
+                        this.chooseShipmentPackageFromWarehouseReleasePackages = false;
+                        this.OpenChooseShipmentPackageFromWarehouseReleasePackagesWindow();
+                    }
+
                 }
             });
 
@@ -273,7 +280,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         }
 
         else {
-            this.ChargeableWeightUnitCodeLabel = TextCodeTranslator.Translate("Shipment.F.WtMsrUnitCode.Short");
+            this.ChargeableWeightUnitCodeLabel = TextCodeTranslator.Translate("Shipment.F.ChargeableWeightUnitCode.Short");
         }
 
         if (this.IsLCLEntity) {
@@ -296,7 +303,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         }
 
         else {
-            this.ChargeableWeightLabel = TextCodeTranslator.Translate("Shipment.F.WtMsr.Short").replace('%ChargWeightCode', this.ChargeableWeightUnitCode);
+            this.ChargeableWeightLabel = TextCodeTranslator.Translate("Shipment.F.ChargeableWeight.Short").replace('%ChargWeightCode', this.ChargeableWeightUnitCode);
         }
 
         this.VolumeColumnHeader = TextCodeTranslator.Translate("Shipment.O.Packages.Volume").replace("%UnitCode", this.EntityPM.VolumeUnitCode);
@@ -846,26 +853,39 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
             confirmWindow.YesButtonText = "Add";
             confirmWindow.WindowClosed.subscribe((event: any) => {
                 if (confirmWindow.Yes) {
-                    this.GetWarehouseReleasePackageLists(true);
+                    this.GeneratePackagesfromCrossDockReleases();
                 }
             });
 
-        } else this.GetWarehouseReleasePackageLists();
+        } else this.GeneratePackagesfromCrossDockReleases();
+
+    
+
     }
 
-    GetWarehouseReleasePackageLists(iscontainer: boolean = false) {
-        var warehouseReleasePackageListExtendedService: WarehouseReleasePackageListExtendedService = new WarehouseReleasePackageListExtendedService();
-        warehouseReleasePackageListExtendedService.getWarehouseReleasePackageListsByShipmentId(this.EntityPM.Id, this.EntityPM.Tenant).subscribe((myResponse: ServiceResponse) => {
-            if (!myResponse.HasError) {
-                var releasePackages: any = myResponse.Result;
-                if (releasePackages && releasePackages.length > 0) {
-                    if (iscontainer) releasePackages = releasePackages.filter(d => d.IsContainer);
-                    if (releasePackages.length>0) {
-                        this.GeneratePackagesFromWarehouseReleasesPackages(releasePackages);
-                    }
-                }
-            }
-        }); 
+    GeneratePackagesfromCrossDockReleases() {
+
+        if (this.EntityPM.IsDirty) {
+            this.chooseShipmentPackageFromWarehouseReleasePackages = true;
+            this.CurrentSession.CurrentEditComponent.SaveChanges();
+        }
+        else this.OpenChooseShipmentPackageFromWarehouseReleasePackagesWindow();
+    }
+
+    OpenChooseShipmentPackageFromWarehouseReleasePackagesWindow() {
+
+        var windowArgs: any = {};
+
+        windowArgs.ViewModelTrigger = this;
+        windowArgs.IsContainer = !this.IsLCLEntity;
+        var logWindow = new LogitudeWindow();
+ 
+        logWindow.Width = !windowArgs.IsContainer ? 1200:1130;
+        logWindow.Height = 550;
+        logWindow.Title = "Choose Packages";
+        logWindow.WindowArgs = windowArgs;
+        logWindow.Show("./Warehouse/Components/ChoosePackagesFromWarehousePackageReleasesComponent");
+
     }
     
     SetGenerateData() {
@@ -1011,6 +1031,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
                 newPackage.Volume = item.Volume;
                 newPackage.Weight = item.Weight;
                 newPackage.Width = item.Width;
+                newPackage.WarehouseReleaseId = item.WarehouseReleaseId;
                 this.EntityPM.AddPackage(newPackage);
             });
 
@@ -1390,6 +1411,27 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
 
                 this.EntityPM.RemovePackage(itemComponent.EntityPM);
                 this.ItemsSource.Remove(itemComponent);
+
+
+
+                if (!AppTool.IsNullOrEmpty(this.EntityPM.WarehouseReleasesIds) && !AppTool.IsNullOrEmpty(itemComponent.EntityPM.WarehouseReleaseId)) {
+                    var warehouseReleasesIds = "";
+                    this.EntityPM.WarehouseReleasesIds.split(',').forEach(item => {
+                        if (!AppTool.IsNullOrEmpty(item)) {
+                            var packageitem = this.EntityPM.ShipmentPackages.filter(d => d.WarehouseReleaseId == item)[0];
+                            if (packageitem) {
+                                warehouseReleasesIds +=  (item + ",");
+                            }
+
+                        }
+                    });
+                    if (!AppTool.IsNullOrEmpty(warehouseReleasesIds)) {
+                        warehouseReleasesIds += ")";
+                        warehouseReleasesIds = warehouseReleasesIds.replace(",)", "")
+                    }
+                    this.EntityPM.WarehouseReleasesIds = warehouseReleasesIds;
+                }
+
 
                 this.ComputeTotals();
                 this.SetUIProperties();

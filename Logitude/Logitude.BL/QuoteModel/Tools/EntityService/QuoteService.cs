@@ -492,6 +492,15 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                     entityPM.QuoteNumber = TableCounter.GetNumber(tenant, "QUOT", entityPM.DirectionId, entityPM.TransportModeId);
                 }
 
+                if (entityPM.IsCreatedFromTicket)
+                {
+                    entityPM.RequestDate = entityPM.TicketCreateDate;
+                }
+                else
+                {
+                    entityPM.RequestDate = entityPM.OpenDate;
+                }
+
                 this.InitializeStage();
                 this.InitializeSaleCurrency();
                 this.InitializeSalesman();

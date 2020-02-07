@@ -36,7 +36,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Tenant&quot;"
-  Code="&quot;a122&quot;"
+  Code="&quot;0df7&quot;"
   Name="&quot;Tenant&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Common&quot;"
@@ -10280,6 +10280,11 @@
       Code="&quot;Tenant.H.DefaultUnitsHelpText&quot;"
       DefaultText="&quot;The default unit of measurement for the weight, volume and dimension entries.&quot;"
       TextCodeTypeCode="&quot;H&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Tenant.O.LogoHelpText&quot;"
+      DefaultText="&quot;Your company logo will appear in all outgoing documents and messages. To upload it: Click the Upload button.&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />

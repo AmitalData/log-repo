@@ -2551,6 +2551,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool smallcashbook ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool Smallcashbook  
+	   {
+	    
+	     get
+		{
+		   return smallcashbook;
+		 }
+		 set
+		 {
+		   if(smallcashbook != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Smallcashbook",OldValue=smallcashbook,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   smallcashbook=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

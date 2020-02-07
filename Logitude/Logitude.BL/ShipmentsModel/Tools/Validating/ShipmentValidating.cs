@@ -54,13 +54,15 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
 
             ValidateFromPort(entityPM, loggedTenant);
             ValidateToPort(entityPM, loggedTenant);
-            ValidateCarrierPrefix(entityPM);
-            ValidateAirlineRestriction(entityPM);
-            ValidateMasterNumber(entityPM);
-            ValidateShipmentBookingFields(entityPM, isNewEntity);
-            ValidateCreditLimitSetting(entityPM, entityPoco, myCommonContext, loggedTenant, isNewEntity);
-            ValidateConvertShipmentType(entityPM);
-           
+            if (!loggedTenant.LogBoxTenantSetting.IsDocumentsArchive)
+            {
+                ValidateCarrierPrefix(entityPM); 
+                ValidateAirlineRestriction(entityPM);
+                ValidateMasterNumber(entityPM);
+                ValidateShipmentBookingFields(entityPM, isNewEntity);
+                ValidateCreditLimitSetting(entityPM, entityPoco, myCommonContext, loggedTenant, isNewEntity);
+                ValidateConvertShipmentType(entityPM);
+            }
             //ValidateMultiVatPercentages(entityPM, myCommonContext);
 
             if (!entityPM.IsHybrid)
@@ -864,8 +866,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
             var tenantQuery = new TenantQuery(entityPM.Tenant);
             var tenantPM = tenantQuery.GetSinglePM(entityPM.Tenant);
 
-           var LBtenantsettingQuery = new LogBoxTenantSettingQuery(entityPM.Tenant);
-           var  tenantsettingPM = LBtenantsettingQuery.GetSinglePM(entityPM.Tenant);
+            var LBtenantsettingQuery = new LogBoxTenantSettingQuery(entityPM.Tenant);
+            var tenantsettingPM = LBtenantsettingQuery.GetSinglePM(entityPM.Tenant);
 
             if (!entityPM.IsHybrid && !tenantsettingPM.IsDocumentsArchive)
             {
@@ -1441,7 +1443,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                             CountryIsNorthAmerica = iPort.CountryIsNorthAmerica,
                         });
                     }
-                }                                  
+                }
             }
         }
         private static void AddDomesticAddress(List<DomesticCountry> iDomesticCountries, string iAddressId, int iTenant)
@@ -1472,7 +1474,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
             {
                 if (entityPM.ShipmentPackages != null && entityPM.ShipmentPackages.Count() > 0)
                 {
-                    var IsDuplicate = entityPM.ShipmentPackages .Where(a => a.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete && a.ContainerNumber != null).GroupBy(g => g.ContainerNumber).Any(g => g.Count() > 1);
+                    var IsDuplicate = entityPM.ShipmentPackages.Where(a => a.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete && a.ContainerNumber != null).GroupBy(g => g.ContainerNumber).Any(g => g.Count() > 1);
                     if (IsDuplicate)
                     {
                         throw new ApplicationException("Cannot have 2 containers with the same number, you can use inside packages to add detailed packages");

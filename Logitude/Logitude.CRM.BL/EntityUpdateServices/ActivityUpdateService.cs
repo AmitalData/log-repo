@@ -243,6 +243,8 @@ namespace Logitude.CRM.BL.EntityUpdateServices
                 if (activityTypeCode != null)
                 {
                     helper.SendEmailAlert(entityPM, entityPOCO, "Activity", entityPM.Tenant, "GAN" + activityTypeCode, true);
+                    if (entityPM.ActivityStatusCode == "C")
+                        helper.SendEmailAlert(entityPM, entityPOCO, "Activity", entityPM.Tenant, "GA" + activityTypeCode + "C", false);
                 }
 
                 if (entityPM.IsCopy)

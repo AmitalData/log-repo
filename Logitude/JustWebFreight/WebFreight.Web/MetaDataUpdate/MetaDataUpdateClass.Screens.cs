@@ -2046,33 +2046,33 @@ namespace WebFreight.Web.MetaDataUpdate
 
         public void BuildMainAddressForClientScreens(Dictionary<string, Screen> tenantScreens, Dictionary<string, ScreenField> tenantScreenFields)
         {
-            ObjectTable ThisObject = ObjectContext.ObjectTables.Where(d => d.Name == "Address" && d.Tenant == 0).FirstOrDefault();
-            // General Screen
-            Screen MainAddressTabScreen = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Customers.Addresses.MainAddress", Name = "Main Address", ObjectTableId = ThisObject.Id, NumberOfColumns = 2, NumberOfRows = 7 }, ScreensRepository, tenantScreens);
+            //ObjectTable ThisObject = ObjectContext.ObjectTables.Where(d => d.Name == "Address" && d.Tenant == 0).FirstOrDefault();
+            //// General Screen
+            //Screen MainAddressTabScreen = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Customers.Addresses.MainAddress", Name = "Main Address", ObjectTableId = ThisObject.Id, NumberOfColumns = 2, NumberOfRows = 7 }, ScreensRepository, tenantScreens);
 
-            ObjectField Name = ObjectContext.ObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == ThisObject.Id && d.Tenant == 0).FirstOrDefault();
-            ObjectField Address1 = ObjectContext.ObjectFields.Where(d => d.FieldName == "Address1" && d.ObjectTableId == ThisObject.Id && d.Tenant == 0).FirstOrDefault();
-            ObjectField Address2 = ObjectContext.ObjectFields.Where(d => d.FieldName == "Address2" && d.ObjectTableId == ThisObject.Id && d.Tenant == 0).FirstOrDefault();
-            ObjectField City = ObjectContext.ObjectFields.Where(d => d.FieldName == "City" && d.ObjectTableId == ThisObject.Id && d.Tenant == 0).FirstOrDefault();
-            ObjectField Country = ObjectContext.ObjectFields.Where(d => d.FieldName == "CountryId" && d.ObjectTableId == ThisObject.Id && d.Tenant == 0).FirstOrDefault();
-            ObjectField State = ObjectContext.ObjectFields.Where(d => d.FieldName == "StateId" && d.ObjectTableId == ThisObject.Id && d.Tenant == 0).FirstOrDefault();
-            ObjectField ZipCode = ObjectContext.ObjectFields.Where(d => d.FieldName == "ZipCode" && d.ObjectTableId == ThisObject.Id && d.Tenant == 0).FirstOrDefault();
-            ObjectField PhoneNumber = ObjectContext.ObjectFields.Where(d => d.FieldName == "PhoneNumber" && d.ObjectTableId == ThisObject.Id && d.Tenant == 0).FirstOrDefault();
-            ObjectField FaxNumber = ObjectContext.ObjectFields.Where(d => d.FieldName == "FaxNumber" && d.ObjectTableId == ThisObject.Id && d.Tenant == 0).FirstOrDefault();
-            ObjectField ATTN = ObjectContext.ObjectFields.Where(d => d.FieldName == "ATTN" && d.ObjectTableId == ThisObject.Id && d.Tenant == 0).FirstOrDefault();
+            //ObjectField Name = ObjectContext.ObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == ThisObject.Id && d.Tenant == 0).FirstOrDefault();
+            //ObjectField Address1 = ObjectContext.ObjectFields.Where(d => d.FieldName == "Address1" && d.ObjectTableId == ThisObject.Id && d.Tenant == 0).FirstOrDefault();
+            //ObjectField Address2 = ObjectContext.ObjectFields.Where(d => d.FieldName == "Address2" && d.ObjectTableId == ThisObject.Id && d.Tenant == 0).FirstOrDefault();
+            //ObjectField City = ObjectContext.ObjectFields.Where(d => d.FieldName == "City" && d.ObjectTableId == ThisObject.Id && d.Tenant == 0).FirstOrDefault();
+            //ObjectField Country = ObjectContext.ObjectFields.Where(d => d.FieldName == "CountryId" && d.ObjectTableId == ThisObject.Id && d.Tenant == 0).FirstOrDefault();
+            //ObjectField State = ObjectContext.ObjectFields.Where(d => d.FieldName == "StateId" && d.ObjectTableId == ThisObject.Id && d.Tenant == 0).FirstOrDefault();
+            //ObjectField ZipCode = ObjectContext.ObjectFields.Where(d => d.FieldName == "ZipCode" && d.ObjectTableId == ThisObject.Id && d.Tenant == 0).FirstOrDefault();
+            //ObjectField PhoneNumber = ObjectContext.ObjectFields.Where(d => d.FieldName == "PhoneNumber" && d.ObjectTableId == ThisObject.Id && d.Tenant == 0).FirstOrDefault();
+            //ObjectField FaxNumber = ObjectContext.ObjectFields.Where(d => d.FieldName == "FaxNumber" && d.ObjectTableId == ThisObject.Id && d.Tenant == 0).FirstOrDefault();
+            //ObjectField ATTN = ObjectContext.ObjectFields.Where(d => d.FieldName == "ATTN" && d.ObjectTableId == ThisObject.Id && d.Tenant == 0).FirstOrDefault();
 
-            ScreenField NameScreenField = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, ObjectFieldId = Name.Id, Row = 0, ScreenId = MainAddressTabScreen.Id, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
-            ScreenField Address1ScreenField = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, ObjectFieldId = Address1.Id, Row = 1, ScreenId = MainAddressTabScreen.Id, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
-            ScreenField Address2NameScreenField = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, ObjectFieldId = Address2.Id, Row = 2, ScreenId = MainAddressTabScreen.Id, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
-            ScreenField CityScreenField = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, ObjectFieldId = City.Id, Row = 3, ScreenId = MainAddressTabScreen.Id, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
-            ScreenField CountryScreenField = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, ObjectFieldId = Country.Id, Row = 4, ScreenId = MainAddressTabScreen.Id, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
-            ScreenField StateScreenField = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, ObjectFieldId = State.Id, Row = 5, ScreenId = MainAddressTabScreen.Id, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
-            ScreenField ZipCodeScreenField = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, ObjectFieldId = ZipCode.Id, Row = 6, ScreenId = MainAddressTabScreen.Id, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
-            ScreenField PhoneNumberScreenField = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, ObjectFieldId = PhoneNumber.Id, Row = 4, ScreenId = MainAddressTabScreen.Id, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
-            ScreenField FaxNumberScreenField = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, ObjectFieldId = FaxNumber.Id, Row = 5, ScreenId = MainAddressTabScreen.Id, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
-            ScreenField ATTNScreenField = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, ObjectFieldId = ATTN.Id, Row = 6, ScreenId = MainAddressTabScreen.Id, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
+            //ScreenField NameScreenField = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, ObjectFieldId = Name.Id, Row = 0, ScreenId = MainAddressTabScreen.Id, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
+            //ScreenField Address1ScreenField = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, ObjectFieldId = Address1.Id, Row = 1, ScreenId = MainAddressTabScreen.Id, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
+            //ScreenField Address2NameScreenField = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, ObjectFieldId = Address2.Id, Row = 2, ScreenId = MainAddressTabScreen.Id, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
+            //ScreenField CityScreenField = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, ObjectFieldId = City.Id, Row = 3, ScreenId = MainAddressTabScreen.Id, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
+            //ScreenField CountryScreenField = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, ObjectFieldId = Country.Id, Row = 4, ScreenId = MainAddressTabScreen.Id, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
+            //ScreenField StateScreenField = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, ObjectFieldId = State.Id, Row = 5, ScreenId = MainAddressTabScreen.Id, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
+            //ScreenField ZipCodeScreenField = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, ObjectFieldId = ZipCode.Id, Row = 6, ScreenId = MainAddressTabScreen.Id, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
+            //ScreenField PhoneNumberScreenField = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, ObjectFieldId = PhoneNumber.Id, Row = 4, ScreenId = MainAddressTabScreen.Id, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
+            //ScreenField FaxNumberScreenField = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, ObjectFieldId = FaxNumber.Id, Row = 5, ScreenId = MainAddressTabScreen.Id, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
+            //ScreenField ATTNScreenField = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, ObjectFieldId = ATTN.Id, Row = 6, ScreenId = MainAddressTabScreen.Id, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
 
-            ObjectContext.SaveChanges();
+            //ObjectContext.SaveChanges();
         }
 
         private void BuildARInvoiceScreens(Dictionary<string, Screen> tenantScreens, Dictionary<string, ScreenField> tenantScreenFields)

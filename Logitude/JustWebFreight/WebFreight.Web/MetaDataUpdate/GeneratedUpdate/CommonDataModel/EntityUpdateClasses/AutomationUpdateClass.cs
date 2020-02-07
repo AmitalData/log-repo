@@ -116,7 +116,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Automation",
-			      				    Code =  "6d96",
+			      				    Code =  "23b1",
 			      				    Name =  "Automation",
 			      				    GenerateDomainService =  false,
 			      				    NoTS =  false,
@@ -126,6 +126,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  true,
+			      				    IsTabsHidden =  false,
 			      				    SearchFields =  "Automation,Automations,,Id,",
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
@@ -189,6 +190,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Name",
@@ -252,6 +254,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Description",
@@ -264,6 +267,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Code",
+					  						OldFieldName =  "Code",
 					  						ObjectTableName =  "Automation",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -283,6 +287,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "Code",
 					  						ListPropertyPath =  "Code",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -307,6 +312,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -320,7 +326,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
-	    {    
+	    {   
+
+		   ObjectTable AutomationObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Automation" && d.Tenant == 0).FirstOrDefault();
+		   List<ObjectField> AutomationObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Automation").ToList();
+		       
+	      
+
+	         Screen AutomationAutomationHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Automation.HeaderScreen", Name = "AutomationHeaderScreen", ObjectTableId = AutomationObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      	
+		    AutomationObjectTable.HeaderScreenId = AutomationAutomationHeaderScreenScreen0.Id;
+		    AutomationObjectTable.HeaderScreenCode = AutomationAutomationHeaderScreenScreen0.Code;
+
+	   		  
 
 	    }
 
@@ -425,18 +443,21 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {
-			//--------------> Additional TextCodes <--------------\\
+	    {  
 
-			ObjectTable AutomationObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Automation" && d.Tenant == 0).FirstOrDefault();
+		   		   //--------------> Additional TextCodes <--------------\\
 
-			TextCode AutomationTextCode_AutomationTHEvents = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Automation.TH.Events", DefaultText = "Events", LocalDefaultText = null, ObjectTableId = AutomationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   ObjectTable AutomationObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Automation" && d.Tenant == 0).FirstOrDefault(); 
 
-		}
+ 		   TextCode AutomationTextCode_AutomationTHEvents = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Automation.TH.Events", DefaultText = "Events",LocalDefaultText = null, ObjectTableId = AutomationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
+   
+	    
+}
 
+    
 
-	}
+   }
     
 }
 	 

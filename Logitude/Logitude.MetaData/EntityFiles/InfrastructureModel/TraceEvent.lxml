@@ -2081,7 +2081,7 @@
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;TraceEvent.O.SearchByHelpText&quot;"
-      DefaultText="&quot; Code  Name  User  Notes&quot;"
+      DefaultText="&quot;&#xA; Code&#xA; Name&#xA; User&#xA; Notes&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

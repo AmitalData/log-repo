@@ -50,7 +50,7 @@
                                         <div>
                                             <p class="QueryLink" (click)="ViewInvoiceQuery('APInvoice:Waiting for Approval')">{{'APInvoice.Q.WaitingApprovalAPInvoices'|TextCodeTranslationPipe}} ({{APInvoicesDraftsCount}})</p>
                                             <p class="QueryLink" (click)="ViewInvoiceQuery('APInvoice:Unpaid Invoices')">{{'APInvoice.Q.UnpaidAPInvoices'|TextCodeTranslationPipe}} ({{APInvoicesUnpaidCount}})</p>
-                                            <p class="QueryLink" (click)="ViewInvoiceQuery('APInvoice:ErrorInTransfer')" *ngIf="APInvoiceErrorInTransferVisibility">{{'APInvoice.Q.ErrorInTransfer'|TextCodeTranslationPipe}} ({{APInvoiceErrorInTransferCount}})</p>
+                                            <p class="QueryLink" (click)="ViewInvoiceQuery('APInvoice:Error In Transfer Invoices')" *ngIf="APInvoiceErrorInTransferVisibility">{{'APInvoice.Q.ErrorInTransferInvoices'|TextCodeTranslationPipe}} ({{APInvoiceErrorInTransferCount}})</p>
                                             <p class="QueryLink" (click)="ViewInvoiceQuery('APInvoice:All Invoices')">{{'APInvoice.Q.AllAPInvoices'|TextCodeTranslationPipe}}</p>
                                         </div>
                                     </div>

@@ -425,17 +425,19 @@ export class EditComponent implements OnDestroy {
         }
 
         else if (this.ObjectTableName == "ARInvoice") {
+            var myObjectTable = window.ObjectTables.filter(x => x.Name === "ARInvoice")[0];
+            var myObjectTableId = myObjectTable.Id;
 
             //get f. acc. Settings
             if (SessionLocator.TenantPM.AccountingActivated) {
-                var myObjectTable = window.ObjectTables.filter(x => x.Name === "ARInvoice")[0];
-                var myObjectTableId = myObjectTable.Id;
 
                 myHeaderScreen = window.Screens.filter(d => d.ObjectTableId === myObjectTableId && d.Code == "ARInvoice.FullAccHeaderScreen")[0];
                 myObjectFields = window.ObjectFields.filter(d => d.ObjectTableId === myObjectTableId);
                 this.GenerateHeaderScreen(myHeaderScreen, myObjectFields);
             }
             else {
+                myHeaderScreen = window.Screens.filter(d => d.ObjectTableId === myObjectTableId && d.Code == "ARInvoice.HeaderScreen")[0];
+
                 this.GenerateHeaderScreen(myHeaderScreen, myObjectFields);
             }
         }
@@ -488,6 +490,7 @@ export class EditComponent implements OnDestroy {
             }
 
             else {
+                myHeaderScreen = window.Screens.filter(d => d.ObjectTableId === this.ObjectTableId && d.Code == "Tariff.HeaderScreen")[0];
                 this.GenerateHeaderScreen(myHeaderScreen, myObjectFields);
             }
         }
@@ -581,9 +584,9 @@ export class EditComponent implements OnDestroy {
                     this.HeaderScreenRowHeight = 20;
                 }
 
-                var myScreenFields: any[] = window.ScreenFields.filter(d => d.ScreenId === HeaderScreen.Id && d.Tenant == SessionLocator.Tenant);
+                var myScreenFields: any[] = window.ScreenFields.filter(d => d.ScreenCode === HeaderScreen.Code && d.Tenant == SessionLocator.Tenant);
                 if (myScreenFields.length == 0) {
-                    myScreenFields = window.ScreenFields.filter(d => d.ScreenId === HeaderScreen.Id && d.Tenant == 0);
+                    myScreenFields = window.ScreenFields.filter(d => d.ScreenCode === HeaderScreen.Code && d.Tenant == 0);
                 }
 
                 var widthOfColumn: number = 0;

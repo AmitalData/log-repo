@@ -4555,6 +4555,12 @@ export class ShipmentPM {
         }
     }
 
+
+    private warehouseReleasesIds: string;
+    public get WarehouseReleasesIds() { return this.warehouseReleasesIds; }
+    public set WarehouseReleasesIds(newValue: string) { if (this.warehouseReleasesIds != newValue) { this.warehouseReleasesIds = newValue; this.MarkAsDirty("WarehouseReleasesIds"); } }
+
+
     public OldEntityPM: ShipmentPM;
 
     private aWBOCIPMs: AWBOCIPM[];

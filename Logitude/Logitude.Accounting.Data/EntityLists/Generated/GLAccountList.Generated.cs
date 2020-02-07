@@ -212,6 +212,8 @@ namespace Logitude.Accounting.Data.EntityLists
        public decimal? InterestCreditLimit  { get; set; }
        [DataMember]
        public string NameForPrintingCheques  { get; set; }
+       [DataMember]
+       public bool Smallcashbook  { get; set; }
    }
 
 }

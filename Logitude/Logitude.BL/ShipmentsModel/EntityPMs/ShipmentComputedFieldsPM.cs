@@ -37,18 +37,15 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         public string OperationallyClosedByUserId { get; set; }
         public int? NumberOfDeliveries { get; set; }
-        public DateTime? ImportDeclarationDate { get; set; }
-        public string ImportDeclarationNumber { get; set; }
         public DateTime? LastPickupETA { get; set; }
         public DateTime? LastPickupETD { get; set; }
         public DateTime? LastPickupATA { get; set; }
         public DateTime? LastPickupATD { get; set; }
-        public string DeliveryToCity { get; set; }
         public string DeliveryToPortId { get; set; }
-        public bool ContainsDangerousGoods { get; set; }
         public string DeliveryFrom { get; set; }
         public string DeliveryTo { get; set; }
         public string PickupFrom { get; set; }
         public string PickupTo { get; set; }
+        public string OperationallyClosedByUserName { get; set; }
     }
 }
