@@ -89,7 +89,8 @@ namespace Logitude.BL.Helpers
             }
 
             if (quotePM == null) quotePM = BuildingQuotePM();
-
+            List<QuoteSaleChargePM> emptySaleCharges = quoteQuery.AddEmptySaleCharge(quotePM.QuoteCharges, quotePM.TransportModeId, quotePM.ShipmentTypeId);
+            quotePM.QuotationSaleCharges.AddRange(emptySaleCharges);
 
             if (templateSections == null)
             {

@@ -2144,76 +2144,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
 
                 if (isSaleChargeAddable || isSaleChargeQuotationAddable)
                 {
-                    QuoteSaleChargePM saleChargePM = new QuoteSaleChargePM()
-                    {
-                        Id = item.Id,
-                        Tenant = item.Tenant,
-                        QuoteId = item.QuoteId,
-                        ChargesTypeId = item.ChargesTypeId,
-                        ChargesTypeCode = item.ChargesTypeCode,
-                        ChargesTypeName = item.ChargesTypeName,
-                        ChargesTypeDescription = item.ChargesTypeDescription,
-                        ChargesGroupCode = item.ChargesGroupCode,
-                        CurrencyId = item.SaleCurrencyId,
-                        CurrencyCode = item.SaleCurrencyCode,
-                        SaleExchangeRate = item.SaleExchangeRate,
-                        MarkUpTypeCode = item.MarkUpTypeCode,
-                        MarkUpValue = item.MarkUpValue,
-                        ChargesTypeLocalName = item.ChargesTypeLocalName,
-                        Notes = item.Notes,
-                        UpdatedByUserId = item.UpdatedByUserId,
-                        UpdateDate = item.UpdateDate,
-                        ValueDate = item.ValueDate,
-                        IsAllIN = item.IsAllIN ? "True" : "False",
-                        QuoteTypeCode = item.QuoteTypeCode,
-                        ContainerType1MarkUpTypeCode = item.ContainerType1MarkUpTypeCode,
-                        ContainerType2MarkUpTypeCode = item.ContainerType2MarkUpTypeCode,
-                        ContainerType3MarkUpTypeCode = item.ContainerType3MarkUpTypeCode,
-                        ContainerType4MarkUpTypeCode = item.ContainerType4MarkUpTypeCode,
-                        ContainerType5MarkUpTypeCode = item.ContainerType5MarkUpTypeCode,
-                        ContainerType1MarkUpValue = item.ContainerType1MarkUpValue,
-                        ContainerType2MarkUpValue = item.ContainerType2MarkUpValue,
-                        ContainerType3MarkUpValue = item.ContainerType3MarkUpValue,
-                        ContainerType4MarkUpValue = item.ContainerType4MarkUpValue,
-                        ContainerType5MarkUpValue = item.ContainerType5MarkUpValue,
-                        SaleMeasurementId = item.SaleMeasurementId,
-                        SaleMeasurementCode = item.SaleMeasurementCode,
-                        SaleMeasurementShortName = item.SaleMeasurementShortName,
-                        SaleMeasurementLocalName = item.SaleMeasurementLocalName,
-                        SaleQuantity = item.SaleQuantity,
-                        SaleUnitPrice = item.SaleUnitPrice,
-                        SaleTotalAmount = item.SaleTotalAmount,
-                        SaleTotalAmountLocal = item.SaleTotalAmountLocal,
-                        SaleContainerType1UnitPrice = item.SaleContainerType1UnitPrice,
-                        SaleContainerType2UnitPrice = item.SaleContainerType2UnitPrice,
-                        SaleContainerType3UnitPrice = item.SaleContainerType3UnitPrice,
-                        SaleContainerType4UnitPrice = item.SaleContainerType4UnitPrice,
-                        SaleContainerType5UnitPrice = item.SaleContainerType5UnitPrice,
-                        VatTypeId = item.VatTypeId,
-                        VatPercentage = item.VatPercentage,
-                        VatTypeName = item.VatTypeName,
-                        VatAmount = item.VatAmount,
-                        UOMPercentage = item.SaleMeasurementCode == "PRVL" || item.SaleMeasurementCode == "PRFR" ? "%" : "",
-                        SaleUnitPriceInSaleCurrency = item.SaleUnitPriceInSaleCurrency,
-                        SaleUnitPrice1InSaleCurrency = item.SaleUnitPrice1InSaleCurrency,
-                        SaleUnitPrice2InSaleCurrency = item.SaleUnitPrice2InSaleCurrency,
-                        SaleUnitPrice3InSaleCurrency = item.SaleUnitPrice3InSaleCurrency,
-                        SaleUnitPrice4InSaleCurrency = item.SaleUnitPrice4InSaleCurrency,
-                        SaleUnitPrice5InSaleCurrency = item.SaleUnitPrice5InSaleCurrency,
-                        SaleAmountInSaleCurrency = item.SaleAmountInSaleCurrency,
-                        CostMinAmount = item.CostMinAmount,
-                        CostMaxAmount = item.CostMaxAmount,
-                        SaleMinAmount = item.SaleMinAmount,
-                        SaleMaxAmount = item.SaleMaxAmount,
-
-                        MarkUpText = this.GetMarkUpText(item.MarkUpValue, item.MarkUpTypeCode),
-                        ContainerType1MarkUpText = this.GetMarkUpText(item.ContainerType1MarkUpValue, item.ContainerType1MarkUpTypeCode),
-                        ContainerType2MarkUpText = this.GetMarkUpText(item.ContainerType2MarkUpValue, item.ContainerType2MarkUpTypeCode),
-                        ContainerType3MarkUpText = this.GetMarkUpText(item.ContainerType3MarkUpValue, item.ContainerType3MarkUpTypeCode),
-                        ContainerType4MarkUpText = this.GetMarkUpText(item.ContainerType4MarkUpValue, item.ContainerType4MarkUpTypeCode),
-                        ContainerType5MarkUpText = this.GetMarkUpText(item.ContainerType5MarkUpValue, item.ContainerType5MarkUpTypeCode),
-                        IsChargeBySteps = item.IsChargeBySteps,
-                    };
+                    QuoteSaleChargePM saleChargePM = MapChargePMToSaleChargePM(item);
                     if (item.IsChargeBySteps)
                     {
                         if (item.QuoteChargePriceSteps.Count > 0)
@@ -2523,5 +2454,112 @@ namespace Logitude.BL.QuoteModel.EntityQueries
             return myResult;
         }
 
+        public List<QuoteSaleChargePM> AddEmptySaleCharge(List<QuoteChargePM> quoteCharges, string transportMode, string shipmentType)
+        {
+            List<QuoteSaleChargePM> emptySaleCharges = new List<QuoteSaleChargePM>() { };
+            quoteCharges.ForEach(quote => {
+                if (quote.IsAllIN && quote.SaleUnitPrice == null && !quote.IsChargeBySteps)
+                {
+                    if (IsPackageableShipment(transportMode, shipmentType))
+                    {
+                        if (quote.SaleContainerType1UnitPrice == null
+                            && quote.SaleContainerType2UnitPrice == null
+                            && quote.SaleContainerType3UnitPrice == null
+                            && quote.SaleContainerType4UnitPrice == null
+                            && quote.SaleContainerType5UnitPrice == null)
+                            emptySaleCharges.Add(MapChargePMToSaleChargePM(quote));
+                    }
+                    else
+                    {
+                        emptySaleCharges.Add(MapChargePMToSaleChargePM(quote));
+                    }
+
+                }
+            });
+            return emptySaleCharges;
+        }
+
+        private bool IsPackageableShipment(string transportMode, string shipmentType)
+        {
+            if (transportMode.ToUpper() == "A" ||
+               (shipmentType.ToUpper() == "O" && shipmentType.ToUpper() == "LCLD") ||
+               (shipmentType.ToUpper() == "I" && shipmentType.ToUpper() == "LTL"))
+                return false;
+            return true;
+        }
+        private QuoteSaleChargePM MapChargePMToSaleChargePM(QuoteChargePM item)
+        {
+            QuoteSaleChargePM saleChargePM = new QuoteSaleChargePM()
+            {
+                Id = item.Id,
+                Tenant = item.Tenant,
+                QuoteId = item.QuoteId,
+                ChargesTypeId = item.ChargesTypeId,
+                ChargesTypeCode = item.ChargesTypeCode,
+                ChargesTypeName = item.ChargesTypeName,
+                ChargesTypeDescription = item.ChargesTypeDescription,
+                ChargesGroupCode = item.ChargesGroupCode,
+                CurrencyId = item.SaleCurrencyId,
+                CurrencyCode = item.SaleCurrencyCode,
+                SaleExchangeRate = item.SaleExchangeRate,
+                MarkUpTypeCode = item.MarkUpTypeCode,
+                MarkUpValue = item.MarkUpValue,
+                ChargesTypeLocalName = item.ChargesTypeLocalName,
+                Notes = item.Notes,
+                UpdatedByUserId = item.UpdatedByUserId,
+                UpdateDate = item.UpdateDate,
+                ValueDate = item.ValueDate,
+                IsAllIN = item.IsAllIN ? "True" : "False",
+                QuoteTypeCode = item.QuoteTypeCode,
+                ContainerType1MarkUpTypeCode = item.ContainerType1MarkUpTypeCode,
+                ContainerType2MarkUpTypeCode = item.ContainerType2MarkUpTypeCode,
+                ContainerType3MarkUpTypeCode = item.ContainerType3MarkUpTypeCode,
+                ContainerType4MarkUpTypeCode = item.ContainerType4MarkUpTypeCode,
+                ContainerType5MarkUpTypeCode = item.ContainerType5MarkUpTypeCode,
+                ContainerType1MarkUpValue = item.ContainerType1MarkUpValue,
+                ContainerType2MarkUpValue = item.ContainerType2MarkUpValue,
+                ContainerType3MarkUpValue = item.ContainerType3MarkUpValue,
+                ContainerType4MarkUpValue = item.ContainerType4MarkUpValue,
+                ContainerType5MarkUpValue = item.ContainerType5MarkUpValue,
+                SaleMeasurementId = item.SaleMeasurementId,
+                SaleMeasurementCode = item.SaleMeasurementCode,
+                SaleMeasurementShortName = item.SaleMeasurementShortName,
+                SaleMeasurementLocalName = item.SaleMeasurementLocalName,
+                SaleQuantity = item.SaleQuantity,
+                SaleUnitPrice = item.SaleUnitPrice,
+                SaleTotalAmount = item.SaleTotalAmount,
+                SaleTotalAmountLocal = item.SaleTotalAmountLocal,
+                SaleContainerType1UnitPrice = item.SaleContainerType1UnitPrice,
+                SaleContainerType2UnitPrice = item.SaleContainerType2UnitPrice,
+                SaleContainerType3UnitPrice = item.SaleContainerType3UnitPrice,
+                SaleContainerType4UnitPrice = item.SaleContainerType4UnitPrice,
+                SaleContainerType5UnitPrice = item.SaleContainerType5UnitPrice,
+                VatTypeId = item.VatTypeId,
+                VatPercentage = item.VatPercentage,
+                VatTypeName = item.VatTypeName,
+                VatAmount = item.VatAmount,
+                UOMPercentage = item.SaleMeasurementCode == "PRVL" || item.SaleMeasurementCode == "PRFR" ? "%" : "",
+                SaleUnitPriceInSaleCurrency = item.SaleUnitPriceInSaleCurrency,
+                SaleUnitPrice1InSaleCurrency = item.SaleUnitPrice1InSaleCurrency,
+                SaleUnitPrice2InSaleCurrency = item.SaleUnitPrice2InSaleCurrency,
+                SaleUnitPrice3InSaleCurrency = item.SaleUnitPrice3InSaleCurrency,
+                SaleUnitPrice4InSaleCurrency = item.SaleUnitPrice4InSaleCurrency,
+                SaleUnitPrice5InSaleCurrency = item.SaleUnitPrice5InSaleCurrency,
+                SaleAmountInSaleCurrency = item.SaleAmountInSaleCurrency,
+                CostMinAmount = item.CostMinAmount,
+                CostMaxAmount = item.CostMaxAmount,
+                SaleMinAmount = item.SaleMinAmount,
+                SaleMaxAmount = item.SaleMaxAmount,
+
+                MarkUpText = this.GetMarkUpText(item.MarkUpValue, item.MarkUpTypeCode),
+                ContainerType1MarkUpText = this.GetMarkUpText(item.ContainerType1MarkUpValue, item.ContainerType1MarkUpTypeCode),
+                ContainerType2MarkUpText = this.GetMarkUpText(item.ContainerType2MarkUpValue, item.ContainerType2MarkUpTypeCode),
+                ContainerType3MarkUpText = this.GetMarkUpText(item.ContainerType3MarkUpValue, item.ContainerType3MarkUpTypeCode),
+                ContainerType4MarkUpText = this.GetMarkUpText(item.ContainerType4MarkUpValue, item.ContainerType4MarkUpTypeCode),
+                ContainerType5MarkUpText = this.GetMarkUpText(item.ContainerType5MarkUpValue, item.ContainerType5MarkUpTypeCode),
+                IsChargeBySteps = item.IsChargeBySteps,
+            };
+            return saleChargePM;
+        }
     }
 }
