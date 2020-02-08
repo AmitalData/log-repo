@@ -127,7 +127,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
                                                                  Tenant = tenantmanagements.Id,
                                                                  TenantName = tenantmanagements.Name,
                                                                  ShopperId = tenantmanagements.BluesnapAccount,
-                                                                 AmountToPay = tenantmanagements.TotalPrice,
+                                                                 AmountToPay = tenantmanagements.TotalPaymentamount,
                                                                  Transactions = (from a in iQueryable_BluesnapTransactions
                                                                                  where a.Tenant == tenantmanagements.Id
                                                                                  select new BluesnapTransactionItem()
