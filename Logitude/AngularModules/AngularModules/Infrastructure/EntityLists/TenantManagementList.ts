@@ -132,5 +132,9 @@ export class TenantManagementList {
 		IsTestTenant: boolean;
 		MainAdditionalPackageApplied: boolean;
 		TotalPrice: number;
+		TotalNumberOfUsers: number;
+		TotalFreeUsers: number;
+		AveragePrice: number;
+		TotalPaymentamount: number;
 	
 }

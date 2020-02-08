@@ -344,5 +344,14 @@ namespace Logitude.BL.GlobalModel.EntityPMs
         public double? TotalPrice { get; set; }
 
         public string SupportDomain { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public int? TotalNumberOfUsers { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public int? TotalFreeUsers { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public double? AveragePrice { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public double? TotalPaymentamount { get; set; }
     }
 }
