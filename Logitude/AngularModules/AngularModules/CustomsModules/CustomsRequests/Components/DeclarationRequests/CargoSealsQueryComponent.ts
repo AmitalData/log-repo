@@ -57,7 +57,7 @@ export class CargoSealsQueryComponent
         this.CargoSealObslist = new ObservableCollection([]);
         this.EntityResourceService.getEntityResourceByTableName("Customs.CargoSealIdentifier").subscribe(response => {
             this.EntityResourceService.getEntityResourceByTableName("Customs.CargoSeal").subscribe(response => {
-                this._IsReady = true;
+                this.IsReady = true;
             });
         });
     }
@@ -266,6 +266,13 @@ export class CargoSealsQueryComponent
     set IsResponseMessageVisibility(newValue: boolean) {
         if (this._IsResponseMessageVisibility != newValue) {
             this._IsResponseMessageVisibility = newValue;
+        }
+    }
+
+    get IsReady() { return this._IsReady; }
+    set IsReady(newValue: boolean) {
+        if (this._IsReady != newValue) {
+            this._IsReady = newValue;
         }
     }
 
