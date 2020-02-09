@@ -35,7 +35,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;2487&quot;"
+  Code="&quot;dc11&quot;"
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -6223,6 +6223,51 @@
       FeatureDefaultText="&quot;Accounting Transfer&quot;"
       IsPackagable="true"
       IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;JOURNALMENU&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      FeatureTextCodeCode="&quot;General.Features.JOURNALMENU&quot;"
+      FeatureDefaultText="&quot;Journal&quot;"
+      IsPackagable="true"
+      IsOld="true"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;VENDORGLACCOUNTSMENU&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      FeatureTextCodeCode="&quot;General.Features.VENDORGLACCOUNTSMENU&quot;"
+      FeatureDefaultText="&quot;Vendor Accounts&quot;"
+      IsPackagable="true"
+      IsOld="true"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;CLIENTGLACCOUNTSMENU&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      FeatureTextCodeCode="&quot;General.Features.CLIENTGLACCOUNTSMENU&quot;"
+      FeatureDefaultText="&quot;Client Accounts&quot;"
+      IsPackagable="true"
+      IsOld="true"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;GLACCOUNTSMENU&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      FeatureTextCodeCode="&quot;General.Features.GLACCOUNTSMENU&quot;"
+      FeatureDefaultText="&quot;General Ledger Accounts&quot;"
+      IsPackagable="true"
+      IsOld="true"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;JOURNALACTIONTYPESMENU&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      FeatureTextCodeCode="&quot;General.Features.JOURNALACTIONTYPESMENU&quot;"
+      FeatureDefaultText="&quot;Journal Action Types&quot;"
+      IsPackagable="true"
+      IsOld="true"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
   </AdditionalFeatures>
