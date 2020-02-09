@@ -2818,11 +2818,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 #region
                 if (!entityPoco.IsCancelled || !entityPM.IsCancelled)
                 {
-                    if (entityPM.IsHybrid && !string.IsNullOrEmpty(entityPM.QuoteId) && entityPM.QuoteId != entityPoco.QuoteId)
-                    {
-                        this.UpdateQuoteUsage();
-                    }
-
                     if (entityPM.ConvertShipmentToLCL || entityPM.ConvertShipmentToFCL)
                     {
                         foreach (ShipmentPackagePM pm in entityPM.ShipmentPackages)
@@ -6491,37 +6486,64 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         private void UpdateQuoteUsage()
         {
             bool isUpdatingUsage = false;
+            bool isDisconnectingQoute = false;
+            string quoteId = null;
 
             if (isNewEntity)
             {
                 if (!string.IsNullOrEmpty(entityPM.QuoteId))
                 {
                     isUpdatingUsage = true;
+                    quoteId = entityPM.QuoteId;
                 }
             }
+
             else if (!string.IsNullOrEmpty(entityPM.QuoteId) && string.IsNullOrEmpty(entityPoco.QuoteId))
             {
                 isUpdatingUsage = true;
+                quoteId = entityPM.QuoteId;
             }
 
-            if (isUpdatingUsage)
+            else if (string.IsNullOrEmpty(entityPM.QuoteId) && !string.IsNullOrEmpty(entityPoco.QuoteId))
+            {
+                isDisconnectingQoute = true;
+                quoteId = entityPoco.QuoteId;
+            }
+
+            if (isUpdatingUsage || isDisconnectingQoute)
             {
                 QuoteRepository quoteRepository = new QuoteRepository(tenant);
-                Quote quote = quoteRepository.GetSingleQuote(entityPM.QuoteId, tenant);
+                Quote quote = quoteRepository.GetSingleQuote(quoteId, tenant);
 
                 if (quote != null)
                 {
-                    if (quote.UsageCount == null)
+                    if (isUpdatingUsage)
                     {
-                        quote.UsageCount = 1;
+                        if (quote.UsageCount == null)
+                        {
+                            quote.UsageCount = 1;
+                        }
+
+                        else
+                        {
+                            quote.UsageCount += 1;
+                        }
+
+                        quote.LastUsageDate = TenantServerConfigration.GetCurrentDateTime(tenant);
                     }
 
-                    else
+                    if(isDisconnectingQoute)
                     {
-                        quote.UsageCount += 1;
-                    }
+                        if (quote.UsageCount == 1)
+                        {
+                            quote.UsageCount = null;
+                        }
 
-                    quote.LastUsageDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+                        else
+                        {
+                            quote.UsageCount -= 1;
+                        }
+                    }
 
                     quoteRepository.Update(quote);
                     quoteRepository.SubmitChanges();
