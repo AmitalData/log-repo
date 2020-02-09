@@ -240,18 +240,13 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
             interestTransactionsGroupedByDates = interestReportCalculationPreparations.GetInterestTransactionsGroupedByDate(interestTransactionPMs);
         }
 
-        private List<GLAccountInterestPeriodPM> GetGLAccountInterestPeriodsForInterestCalculationDateOrderedByDateDescending(DateTime interestCalculationDate)
-        {
-            GLAccountInterestPeriodQueryService gLAccountInterestPeriodQueryService = new GLAccountInterestPeriodQueryService(tenant);
-            List<GLAccountInterestPeriodPM> gLAccountInterestPeriodPMs = gLAccountInterestPeriodQueryService.GetLAccountInterestPeriodPMsByInterestDate(interestReportPM.GLAccountId, interestCalculationDate, tenant);
-            return gLAccountInterestPeriodPMs.OrderByDescending(d => d.PeriodStartDate).ToList();
-        }
+       
 
         private decimal GetStandardInterestPercentageForStartInterestDate(DateTime startInterestDate)
         {
 
             GLAccountInterestPeriodPM gLAccountInterestPeriodPM = interestReportCalculationPreparations.GetGLAccountInterestPeriodPMWithinStartInterestDate(interestReportPM, startInterestDate);
-
+           
             decimal InterestBaseTypeRate =interestReportCalculationPreparations.CalculateInterestBasesTypePercentage(gLAccountInterestPeriodPM.StandardInterestRateBaseId, startInterestDate,tenant);
             decimal standardAdditionalInterestPercentage = gLAccountInterestPeriodPM.StandardAddInterestPercent != null ? gLAccountInterestPeriodPM.StandardAddInterestPercent.Value : 0;
             decimal percentage = InterestBaseTypeRate + standardAdditionalInterestPercentage;

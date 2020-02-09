@@ -44,6 +44,10 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
         {
             List<GLAccountInterestPeriodPM> gLAccountInterestPeriodPMs = GetGLAccountInterestPeriodsForInterestCalculationDateOrderedByDateDescending(interestReportPM,startInterestDate);
             GLAccountInterestPeriodPM gLAccountInterestPeriodPM = gLAccountInterestPeriodPMs.FirstOrDefault();
+            if (gLAccountInterestPeriodPM == null)
+            {
+                throw new ApplicationException("the glaccount doesn't have any interest periods");
+            }
             return gLAccountInterestPeriodPM;
         }
 
@@ -51,6 +55,9 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
         {
             InterestBasesPeriodQueryService interestBasesPeriodQueryService = new InterestBasesPeriodQueryService(tenant);
             InterestBasesPeriodPM standardInterestBasesPeriodPM = interestBasesPeriodQueryService.GetInterestBasesPeriodPMByBaseTypeIdAndStartDate(InterestRateBaseId, startInterestDate, tenant);
+            if (standardInterestBasesPeriodPM == null) {
+                throw new ApplicationException("there is no interest bases periods");
+            }
             decimal percentage = standardInterestBasesPeriodPM.InterestRate;
             return percentage;
         }
