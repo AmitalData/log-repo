@@ -136,7 +136,9 @@ namespace Logitude.Accounting.BL.Validators
             {
                 if (reconciliationLine.ChangeSetOp != ChangeSetOperation.None)// in 
                 {
-                    CheckReconciliationLine(errorsList, ledgerTransactionPMs, myGLAccount, ref sum, reconciliationLine, myReconciliationPM.CreatedByReconciliationAfterConversion);
+                    CheckReconciliationLine(errorsList, ledgerTransactionPMs, myGLAccount, ref sum, reconciliationLine
+                        , myReconciliationPM.CreatedByReconciliationAfterConversion
+                        , myReconciliationPM.CreatedByReconciliationStageB);
                 }
             }
             if (sum != 0)
@@ -191,7 +193,7 @@ namespace Logitude.Accounting.BL.Validators
             }
         }
 
-        private static void CheckReconciliationLine(List<string> errorsList, List<LedgerTransactionPM> ledgerTransactionPMs, GLAccountPM myGLAccount, ref decimal sum, ReconciliationLinePM reconciliationLine,bool CreatedByReconciliationAfterConversion)
+        private static void CheckReconciliationLine(List<string> errorsList, List<LedgerTransactionPM> ledgerTransactionPMs, GLAccountPM myGLAccount, ref decimal sum, ReconciliationLinePM reconciliationLine,bool CreatedByReconciliationAfterConversion, bool createdByReconciliationStageB)
         {
             if (reconciliationLine.ChangeSetOp != ChangeSetOperation.Insert)
             {
@@ -247,7 +249,7 @@ namespace Logitude.Accounting.BL.Validators
                                 AddError(errorsList, /*"Insert ledger Transaction but Is not Reconciled "*/M_InsertledgerTransactionbutIsnotReconciled);
                             }
                         }
-                        if (!CreatedByReconciliationAfterConversion)
+                        if (!(CreatedByReconciliationAfterConversion  || createdByReconciliationStageB))
                         {
 
 
