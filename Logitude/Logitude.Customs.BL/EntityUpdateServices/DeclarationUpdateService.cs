@@ -180,7 +180,10 @@ using System.Diagnostics;
 
 
         }
-
+        protected override void UpdateCalculatedFields(DeclarationPM entityPM, EntityPM entityParentPM, Declaration entityPOCO)
+        {
+            DeclarationDataMapping.UpdateCourierDeclarationFields(entityPM, entityPOCO);
+        }
         protected override void UpdateComposition(DeclarationPM entityPM)
         {
             ConsignmentUpdateService consignmentUpdateService = new ConsignmentUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
