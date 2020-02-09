@@ -21,13 +21,11 @@ import { DeclarationCargoSplitTabComponent } from './Components/CargoSplit/Decla
 import { ImporterDetailsComponent } from './Components/General/ImporterDetails/ImporterDetailsComponent';
 import { GuaranteeDataComponent } from './Components/Tapag/GuaranteeDataComponent';
 import { ConsigmentPackagesDangerComponent } from './Components/General/ConsigmentTabContent/ConsigmentPackagesDanger/ConsigmentPackagesDangerComponent';
-import { DeclarationCargoSealTabComponent } from './Components/CargoSeal/DeclarationCargoSealTabComponent';
-
 import { DeclarationClassificationComponent } from './Components/Classification/DeclarationClassificationComponent';
 import { SInvoiceClassificationTabComponent } from './Components/Classification/SInvoiceClassificationTabComponent';
 import { CasualSupplierDetailsComponent } from './Components/Classification/CasualSupplierDetailsComponent';
 import { DeclarationAmendmentComponent } from './Components/DeclarationAmendment/DeclarationAmendmentComponent';
-
+import { DeclarationCargoSealTabComponent } from './Components/CargoSeal/DeclarationCargoSealTabComponent';
 
 export const Components =
     [
@@ -53,8 +51,8 @@ export const Components =
         ImporterDetailsComponent,
         GuaranteeDataComponent,
         ConsigmentPackagesDangerComponent,
-    DeclarationClassificationComponent,
-    SInvoiceClassificationTabComponent,
+        DeclarationClassificationComponent,
+        SInvoiceClassificationTabComponent,
         CasualSupplierDetailsComponent,
         DeclarationAmendmentComponent,
         DeclarationCargoSealTabComponent,
@@ -89,14 +87,12 @@ export class ModuleDeclarations {
             case "DeclarationCargoSplitTabComponent": { myResult = DeclarationCargoSplitTabComponent; break; }
             case "ImporterDetailsComponent": { myResult = ImporterDetailsComponent; break; }
             case "GuaranteeDataComponent": { myResult = GuaranteeDataComponent; break; }
-            case "DeclarationCargoSealTabComponent": { myResult = DeclarationCargoSealTabComponent; break; }
-
-          case "DeclarationClassificationComponent": { myResult = DeclarationClassificationComponent; break; }
+            case "DeclarationClassificationComponent": { myResult = DeclarationClassificationComponent; break; }
             case "SInvoiceClassificationTabComponent": { myResult = SInvoiceClassificationTabComponent; break; }
             case "CasualSupplierDetailsComponent": { myResult = CasualSupplierDetailsComponent; break; }
             case "ConsigmentPackagesDangerComponent": { myResult = ConsigmentPackagesDangerComponent; break; }
             case "DeclarationAmendmentComponent": { myResult = DeclarationAmendmentComponent; break; }
-
+            case "DeclarationCargoSealTabComponent": { myResult = DeclarationCargoSealTabComponent; break; }
         }
 
         return myResult;
