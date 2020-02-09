@@ -142,7 +142,7 @@ export class ShipmentPMService {
 
     getSingleBySecurityKeyTenantWithoutToken(SecurityKey: string,Tenant:number) {
 
-        var myCustomURL = "https://pre.amital.co.il/api/shipment";
+        var myCustomURL = "https://systemwr.amital.co.il/api/shipment";
         //var myAuthHeader = new Headers();
         //myAuthHeader.append('Content-Type', 'application/json');
         //myAuthHeader.append('Accept', 'application/json');

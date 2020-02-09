@@ -116,7 +116,7 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
         if (this.chartOfAccountId != value) {
             this.chartOfAccountId = value;
 
-        
+
         }
     }
     private chartOfAccount: string;
@@ -287,7 +287,7 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
 
             }
             else {
-                this.IsReconciled = null;
+                this.IsReconciled = true;
             }
 
             myFilterItems.push(new QueryFilterItem("IsReconciled", this.IsReconciled));
@@ -390,7 +390,7 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
         if (this._GLAccountId != value) {
             this._GLAccountId = value;
 
-        
+
         }
     }
 
