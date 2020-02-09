@@ -23,6 +23,7 @@ import { timer } from 'rxjs/observable/timer';
 //import { timer } from 'rxjs';
 import { timeInterval, pluck, take } from 'rxjs/operators';
 import { Dictionary } from '../../GenericTypes/Dictionary';
+import { isNullOrUndefined } from 'util';
 declare var keyBoardWhich, keyBoardKey, selectionStart, numberWithSeparators, numberWithCommas: any;
 
 interface BeforeOnDestroy {
@@ -1333,8 +1334,157 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
 
     }
 
+    FormatTextValue(txtValue: any) {
+        let valueFromField  = txtValue;
+        if (valueFromField) {
+            this.OriginalText.emit(valueFromField);
+            if (this.InputType) {
+                switch (this.InputType.toLowerCase()) {
+                    case 'double':
+                    case 'sigdouble':
+                    case 'decimal':
+                    case 'unsdecimal':
+                        {
+                            var isSignOk: boolean = true;
+                            if (this.InputType == 'unsdecimal' || this.InputType == 'double') {
+                                var text = valueFromField + "";
+                                if (text.indexOf('-') > -1) {
+                                    isSignOk = false;
+                                }
+                            }
+                            var val: number;
+                            if (this.IsAccumulative && (valueFromField + "").indexOf('+') > -1) {
+                                var accString: string[] = valueFromField.split('+');
+                                var accumulativeAmount: number = 0;
+                                accString.forEach((accitem) => {
+                                    var v = this.GetNumber(accitem);
+                                    accumulativeAmount = accumulativeAmount + v;
+                                });
+                                val = accumulativeAmount;
+                            }
+                            else if (this.AllowPercentage && (valueFromField + "").indexOf('%') > -1) {
+                                var txt = valueFromField.replace('%', '');
+                                val = this.GetNumber(txt) / 100;
+                                //val = val / 100;
+
+                            }
+                            else {
+                                // if ((this.TextValue + "").indexOf(this.thousandsSeparator) == -1) {
+                                //     var txtwithDot=this.ReplaceDecimalSeparatorWithADot(this.TextValue);
+                                val = this.GetNumber(valueFromField);
+                                // }
+                                if (this.AddCommasToNumbers) {
+                                    // if ((this.TextValue + "").indexOf(this.thousandsSeparator) > -1) {
+                                    //     //var txtval = this.TextValue.replace(/,/g, "");
+                                    //     var txtval = this.TextValue.split(this.thousandsSeparator).join('');//.replace(new RegExp(this.thousandsSeparator, 'g'), '');
+                                    val = this.GetNumber(valueFromField);
+                                    // }
+                                }
+
+                            }
+
+
+                            if (isNaN(val) || !isSignOk) {
+                                //this.SetValidity(false, TextCodeTranslator.Translate("General.O.InvalidInput"));//"Invalid Input");
+                            }
+                            else {
+                                if (!this.DisableZeroPadding) {                                    
+                                    if (AppTool.IsNullOrEmpty(this.DigitsAfterPoint)) {
+                                        this.DigitsAfterPoint = 3;
+                                    }
+
+                                    valueFromField = val.toFixed(this.DigitsAfterPoint);
+                                    if (valueFromField.indexOf('.') > -1 && this.decimalSeparator != '.') {
+                                        valueFromField = valueFromField.split('.').join(this.decimalSeparator);//.replace(new RegExp('.', 'g'), this.decimalSeparator);
+                                    }
+                                }
+                            }
+
+                            //this.FormatNumbers();
+                            if (this.AddCommasToNumbers) {
+                                var txtNum: number;
+
+                                // if ((this.TextValue + "").indexOf(this.thousandsSeparator) > -1) {
+                                //     //var txtval = this.TextValue.replace(/,/g, "");
+                                //     var txtval = this.TextValue.split(this.thousandsSeparator).join('');//replace(new RegExp(this.thousandsSeparator, 'g'), '');
+                                //     txtNum = this.GetNumber(txtval);
+                                // }
+                                // else {
+                                txtNum = this.GetNumber(valueFromField);
+                                // }
+
+                                 
+                                //if (this.thousandsSeparator == ",") {
+                                var textWithCommas: string = numberWithSeparators(valueFromField, this.thousandsSeparator);
+                                if (textWithCommas.indexOf(this.decimalSeparator) > -1) {
+                                    var textWithCommasArr: string[] = textWithCommas.split(this.decimalSeparator);
+                                    var beforeDot: string = textWithCommasArr[0];
+                                    var afterDot: string = textWithCommasArr[1];
+                                    if (afterDot.indexOf(this.thousandsSeparator) > -1) {
+                                        afterDot = afterDot.replace(this.thousandsSeparator, "");
+                                    }
+                                    textWithCommas = beforeDot + this.decimalSeparator + afterDot;
+                                }
+
+                                valueFromField = textWithCommas;
+                            }
+                            // }
+
+                            break;
+                        }
+                    case 'unsinteger':
+                    case 'integer':
+                        {
+                            var isSignOk: boolean = true;
+                            if (this.InputType == 'unsinteger') {
+                                var text = valueFromField + "";
+                                if (text.indexOf('-') > -1) {
+                                    isSignOk = false;
+                                }
+                            }
+
+                            var val: number;
+                            val = this.GetNumber(valueFromField);
+
+
+
+                            if (isNaN(val) || !isSignOk) {
+                                //this.SetValidity(false, TextCodeTranslator.Translate("General.O.InvalidInput"));//"Invalid Input");
+                            }
+                            else {
+                                valueFromField = val.toFixed(0);
+                            }
+
+                            break;
+                        }
+                    case "integertext": {
+                         
+                        break;
+                    }
+                    default:
+                        {
+                            break;
+                        }
+
+                }
+
+            }
+        }
+
+        return valueFromField;
+
+    }
+
     TextValueChanges(res: any) {
-        if (this.DataContext[this.ObjectFieldName] + "" != this.TextValue) {
+        let newValue = this.DataContext[this.ObjectFieldName];
+        if(!isNullOrUndefined(this.ObjectField) && this.ObjectField.IsCustom)
+        {
+            const customField:CustomFieldClass = this.DataContext[this.ObjectFieldName];
+            newValue = customField.GetFieldDataTypeValue(this.ObjectField, customField.Value);
+            newValue =  this.FormatTextValue(newValue);
+        }
+
+        if (newValue + "" != this.TextValue) {
 
             if (this.TextValue) {
                 switch (this.InputType) {
