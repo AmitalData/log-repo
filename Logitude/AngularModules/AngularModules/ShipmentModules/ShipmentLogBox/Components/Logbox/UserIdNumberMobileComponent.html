@@ -106,8 +106,8 @@
 }
    
 </style>
-<div class="MediaFillAbsolute" style="background:red;">
-    <table class="LogitudeWindow" *ngIf="ShowPaymentDetailsScreen == false">
+<div class="MediaFillAbsolute" style="background:transparent;">
+    <table class="LogitudeWindow" *ngIf="ShowFinalMessage == false">
         <tr *ngIf="ValidationWarningsList != null && ValidationWarningsList != ''" style="height:1px;">
             <td>
                 <div class="WarningSummary" style="margin-bottom: 3px;">{{ValidationWarningsList}}</div>
@@ -127,7 +127,7 @@
                                                     <table>
                                                         <tr>
                                                             <td>
-                                                                <span style="font-size:20px;color:#1B90CB;width:100%;float:left;font-family:sans-serif;padding-right:10px;">תשלום דיגיטלי למשלוח</span>
+                                                                <span style="font-size:20px;color:#1B90CB;width:100%;float:left;font-family:sans-serif;padding-right:10px;">הזנת פרטים למשלוח </span>
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -245,29 +245,7 @@
                                                     </label>
                                                 </td>
                                             </tr>
-                                            <tr>
-                                                <td style="height: 22px;width:40%;">
-                                                    <label class="MyLabel">
-                                                        סה"כ לתשלום בש"ח
-                                                    </label>
-                                                </td>
-                                                <td style="height: 22px;">
-                                                    <table>
-                                                        <tr>
-                                                            <td style="width:111px;">
-                                                                <label class="MyLabel" style="font-size:20px;">
-                                                                    {{TotalChargesInNIS}}
-                                                                </label>
-                                                            </td>
-                                                            <td>
-                                                                <label style="text-decoration: underline;color: lightskyblue;font-size:17px;" (click)="PaymentDetailsClick()">
-                                                                    פירוט עלויות
-                                                                </label>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                </td>
-                                            </tr>
+                                             
                  
                                         </table>
                          
@@ -294,7 +272,7 @@
                                                 <td style="height: 22px;width:40%;">
                                                     <div style="vertical-align:middle;text-align:center;">
                                                         <div style="width:260px;height:35px;display:inline-block;font-size:13px;padding-top:5px;">
-                                                            <input type="text">
+                                                            <input type="text" [(ngModel)]="UserIdNumber" />
                                                         </div>
                                                     </div>
                                                 </td>
@@ -302,7 +280,7 @@
                                             <tr>
                                                 <td style="height: 22px;width:40%;">
                                                     <div style="vertical-align:middle;text-align:center;">
-                                                        <div (click)="OnPayClick()" style="width:170px;height:35px;background-color:cornflowerblue;display:inline-block;font-size:13px;padding-top:5px;">
+                                                        <div (click)="SendButtonClicked()" style="width:170px;height:35px;background-color:cornflowerblue;display:inline-block;font-size:13px;padding-top:5px;">
                                                             <span style="text-align:center;font-size:13px;">
                                                                 <a style="color:white;font-size:14px;font-family: sans-serif;">עדכן נתונים</a>
                                                             </span>
@@ -356,94 +334,6 @@
    
 </table>
  
-<table class="LogitudeWindow" *ngIf="ShowPaymentDetailsScreen == true" style="direction:rtl;">
-    <tr>
-        <td>
-            <table style="direction:rtl;border: 1px solid #BCBEC0;">
-                <tr style="height:30px;">
-                    <td>
-                        <div>
-                            <span class="BlueTitle">פירוט חיובים</span>
-                            <button class="Button BackButton" (click)="ClosePaymentDetailsButtonClicked()">חזרה</button>
-                        </div>
-                    </td>
-                </tr>
-                <tr style="height:7px;">
-                    <td>
-                        <div style="width:100%;height:1px;border-bottom:1px solid #BCBEC0;"></div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <table>
-                            <tr style="height:60px;border-bottom:1px solid #BCBEC0;width:100%;font-family:sans-serif;">
-                                <td style="width: 125px; max-width: 125px;padding-right: 4px;color:#1B90CB;font-size: 13px;font-weight: bold;">סעיף חיוב</td>
-                                <td style="width: 110px; max-width: 110px;padding-right: 4px;color:#1B90CB;font-size: 13px;font-weight: bold;">סכום</td>
-                            </tr>
-                            <tr style="height:60px;border-bottom:1px solid #BCBEC0;width:100%;font-family:sans-serif;" *ngFor="let item of AdditionalData.RequestPaymentData.ServiceTypes; let i=index;">
-                                <td>
-                                    <table>
-                                        <tr>
-                                            <!--<td style="width: 125px; max-width: 125px;padding-right: 4px;color:#1B90CB;">סעיף חיוב</td>-->
-                                            <td class="CellStretched TextTrimming" style="width: 125px; max-width: 125px;padding-right: 4px;">
-                                                {{item.LocalName}}
-                                            </td>
-                                        </tr>
-                                        <tr>
-
-                                            <!--<td></td>-->
-                                            <td></td>
-
-                                        </tr>
-                                    </table>
-                                </td>
-                                <td>
-                                    <table>
-                                        <tr>
-                                            <!--<td style="width: 110px; max-width: 110px;padding-right: 4px;color:#1B90CB;">סכום</td>-->
-                                            <td class="CellStretched TextTrimming" style="width: 110px; max-width: 110px;padding-right: 4px;">
-                                                {{item.AmountInNIS}}
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-
-                                            <!--<td></td>-->
-                                            <td></td>
-
-                                        </tr>
-                                    </table>
-                                </td>
-                            </tr>
-                            <tr style="height:30px;border-bottom:1px solid #BCBEC0;width:100%;font-family:sans-serif;">
-                                <td colspan="2">
-                                    <div style="padding-right: 4px;color:#1B90CB;text-align:center;font-weight:bold;height:16px; text-align:left;float:right;">
-                                        <span style="">סה"כ בש"ח</span>
-                                        <span style="font-weight:bold;margin-right: 20px;">{{TotalAmount | CustomNumbersPipe:0}}</span>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="2">
-                                    <div></div>
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-            </table>
-        </td>
-    </tr>
-   
-</table>
-
-<form name='form' method='post' style="width:0px;height:0px;">
-    <input type='hidden' name='sum' [attr.value]="sum">
-    <input type='hidden' name='currency' [attr.value]="currency">
-    <input type='hidden' name='op' [attr.value]="op">
-    <input type='hidden' name='DCdisable' [attr.value]="DCdisable">
-    <input type='hidden' name='DclickTK' [attr.value]="DclickTK">
-    <input type='hidden' name='thtk' [attr.value]="thtk">
-</form>
+ 
 
 

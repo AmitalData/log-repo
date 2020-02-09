@@ -791,8 +791,12 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
                
                 ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
                 var RequestedShipment = shipmentQuery.GetSingleShipmentPMBySecurityKeyTenant(key,tenant);
-                var MyPaymentData = LogitudeXmlSerializer.DeserializeObject<UserIdNumberRequestPM>(RequestedShipment.UserIdNumberXMLData);
-                return Request.CreateResponse(HttpStatusCode.OK, MyPaymentData); 
+                var MyData = LogitudeXmlSerializer.DeserializeObject<UserIdNumberRequestPM>(RequestedShipment.UserIdNumberXMLData);
+                MyData.Id = RequestedShipment.Id;
+                MyData.IsUserIDNumberRequired = RequestedShipment.IsUserIDNumberRequired;
+                MyData.UserIdNumberUpdateDate = RequestedShipment.UserIdNumberUpdateDate;
+                MyData.UserIdNumber = RequestedShipment.UserIdNumber;
+                return Request.CreateResponse(HttpStatusCode.OK, MyData); 
             }
 
             catch (Exception ex)

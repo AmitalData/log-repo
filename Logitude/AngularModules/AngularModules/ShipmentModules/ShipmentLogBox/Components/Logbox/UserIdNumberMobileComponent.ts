@@ -46,9 +46,7 @@ export class UserIdNumberMobileComponent extends BaseComponent implements OnInit
     DataContext: UserIdNumberMobileComponent = this;
     private messageWindow: MessageWindow = new MessageWindow();
     EntityPm: ShipmentPM = new ShipmentPM();
-    AdditionalData: any = {
-        RequestPaymentData: {}, PaymentData: {}
-    };
+    AdditionalData: any = {};
     externalDocs: any[] = [];
 
     public _DocumentTypeMetaDataExtendedService: DocumentTypeMetaDataExtendedService;
@@ -110,134 +108,87 @@ export class UserIdNumberMobileComponent extends BaseComponent implements OnInit
                 }
             }
         }
-        this._ShipmentPMService.getUserIdDetailsByShipmentSecurityKeyWithoutToken(this.SecurityKey, this.Tenant).subscribe(MyResult => {
-            if (MyResult.Result) {
-                //this.EntityPm = MyResult.Result;
-                //this._ShipmentAdditionalCloudDataService.getSingleWithoutToken(this.EntityPm.Id,Tenant).subscribe(AdditionalResult => {
+        this._ShipmentAdditionalCloudDataService.getSingleWithoutToken(this.SecurityKey, this.Tenant).subscribe(myAdditionalResult => {
 
-                this.AdditionalData = MyResult.Result;//AdditionalResult.Result
-                if (this.AdditionalData.IsPaymentRequired) {
-                    if (this.EntityPm) {
-
-                        var ammount = 0;
-
-                        this.AdditionalData.RequestPaymentData.ServiceTypes.forEach((item, key) => {
-                            ammount += +(item.AmountInNIS);
-                        });
-
-                        this.TotalAmount = ammount;
-                    }
+            var entity = myAdditionalResult.Result;//AdditionalResult.Result
+            if (entity.IsUserIDNumberRequired == false) {
+                var myMessage = "תעודת זהות כבר הוזנה למשלוח זה";
+                if (entity.UserIdNumberUpdateDateTime != null) {
+                    myMessage = myMessage + " " + entity.UserIdNumberUpdateDateTime;
                 }
-                else {
-                    this.FinalMessage = "קובץ זה םינו נדרש לתשלום";
-                    this.ShowFinalMessage = true;
-                }
+                this.FinalMessage == myMessage;
+                this.ShowFinalMessage = true;
 
-
-                //});
-                var service = new CommonDomainService();
-                service.GetTenantLogoUri(this.Tenant).subscribe((myLogoResult: any) => {
-
-                    this.CompanyLogo = myLogoResult.Result;
-
-                });
-                //GetTenantEcommerceSupportEmail
-                service.GetTenantEcommerceSupportEmail(this.Tenant).subscribe((myTenant: any) => {
-                    if (myTenant.Result) {
-                        this.EcommerceSupportEmail = myTenant.Result;
-                    }
-                });
-                //if (this.RefreshTimer) {
-                //    clearTimeout(this.RefreshTimer);
-                //}
-
-                //this.RefreshTimer = setInterval(() => this.ReloadPage(), 1200000);//1200000
             }
             else {
-                this.FinalMessage = "התיק לם קיים בסביבה הזו";
-                this.ShowFinalMessage = true;
+                this._ShipmentPMService.getUserIdDetailsByShipmentSecurityKeyWithoutToken(this.SecurityKey, this.Tenant).subscribe(MyResult => {
+                    if (MyResult.Result) {
+                       
+                        this.AdditionalData = MyResult.Result;//AdditionalResult.Result
+ 
+                        var service = new CommonDomainService();
+                        service.GetTenantLogoUri(this.Tenant).subscribe((myLogoResult: any) => {
+
+                            this.CompanyLogo = myLogoResult.Result;
+
+                        });
+                 
+                    }
+                    else {
+                        this.FinalMessage = "התיק לם קיים בסביבה הזו";
+                        this.ShowFinalMessage = true;
+                    }
+                });
             }
         });
+        
 
     }
-   
+
     private companyLogo: string = "";
     public get CompanyLogo() { return this.companyLogo }
     public set CompanyLogo(newValue: string) { this.companyLogo = newValue; }
-    private totalAmount: number = 0;
-    public get TotalAmount() { return this.totalAmount }
-    public set TotalAmount(newValue: number) { this.totalAmount = newValue; }
+
     public ValidationWarningsList: string = null;
-    public FinalMessage: string = "גרסה זו םושרה";
-
-    private ecommerceSupportEmail: string = "";
-    public get EcommerceSupportEmail() { return this.ecommerceSupportEmail }
-    public set EcommerceSupportEmail(newValue: string) { this.ecommerceSupportEmail = newValue; }
-
-    public get CustomerName() { return this.AdditionalData.RequestPaymentData.CustomerName }
-    public set CustomerName(newValue: string) { this.AdditionalData.RequestPaymentData.CustomerName = newValue; }
-
-    public get CustomerAddress() { return this.AdditionalData.RequestPaymentData.CustomerAddress }
-    public set CustomerAddress(newValue: string) { this.AdditionalData.RequestPaymentData.CustomerAddress = newValue; }
-
-    public get Master() { return this.AdditionalData.RequestPaymentData.Master }
-    public set Master(newValue: string) { this.AdditionalData.RequestPaymentData.Master = newValue; }
-
-    public get Hawb() { return this.AdditionalData.RequestPaymentData.Hawb }
-    public set Hawb(newValue: string) { this.AdditionalData.RequestPaymentData.Hawb = newValue; }
-
-    public get DeclarationNumber() { return new CustomNumbersPipe().transform(this.AdditionalData.RequestPaymentData.DeclarationNumber, 0) }
-    public set DeclarationNumber(newValue: string) { this.AdditionalData.RequestPaymentData.DeclarationNumber = newValue; }
-
-    public get ShipmentValueInNIS() { return new CustomNumbersPipe().transform(this.AdditionalData.RequestPaymentData.ShipmentValueInNIS, 0) }
-    public set ShipmentValueInNIS(newValue: string) { this.AdditionalData.RequestPaymentData.ShipmentValueInNIS = newValue; }
-
-    public get SenderDetails() { return this.AdditionalData.RequestPaymentData.SenderDetails }
-    public set SenderDetails(newValue: string) { this.AdditionalData.RequestPaymentData.SenderDetails = newValue; }
-
-    public get GoodsDescritpion() { return this.AdditionalData.RequestPaymentData.GoodsDescritpion }
-    public set GoodsDescritpion(newValue: string) { this.AdditionalData.RequestPaymentData.GoodsDescritpion = newValue; }
-
-    public get IsImporterApprovalRequried() { return this.AdditionalData.RequestPaymentData.IsImporterApprovalRequried }
-    public set IsImporterApprovalRequried(newValue: boolean) { this.AdditionalData.RequestPaymentData.IsImporterApprovalRequried = newValue; }
-
-    public get Quantity() { return this.AdditionalData.RequestPaymentData.Quantity }
-    public set Quantity(newValue: string) { this.AdditionalData.RequestPaymentData.Quantity = newValue; }
-
-    public get Weight() { return this.AdditionalData.RequestPaymentData.Weight }
-    public set Weight(newValue: string) { this.AdditionalData.RequestPaymentData.Weight = newValue; }
-
-    public get TotalChargesInNIS() { return this.AdditionalData.RequestPaymentData.TotalChargesInNIS }
-    public set TotalChargesInNIS(newValue: string) { this.AdditionalData.RequestPaymentData.TotalChargesInNIS = newValue; }
-
-    public get sum() { return this.AdditionalData.PaymentData.sum }
-    public set sum(newValue: string) { this.AdditionalData.PaymentData.sum = newValue; }
-
-    public get currency() { return this.AdditionalData.PaymentData.currency }
-    public set currency(newValue: string) { this.AdditionalData.PaymentData.currency = newValue; }
-
-    public get op() { return this.AdditionalData.PaymentData.op }
-    public set op(newValue: string) { this.AdditionalData.PaymentData.op = newValue; }
-
-    public get DCdisable() { return this.AdditionalData.PaymentData.DCdisable }
-    public set DCdisable(newValue: string) { this.AdditionalData.PaymentData.DCdisable = newValue; }
-
-    public get DclickTK() { return this.AdditionalData.PaymentData.DclickTK }
-    public set DclickTK(newValue: string) { this.AdditionalData.PaymentData.DclickTK = newValue; }
-
-    public get thtk() { return this.AdditionalData.PaymentData.thtk }
-    public set thtk(newValue: string) { this.AdditionalData.PaymentData.thtk = newValue; }
-
-    public get TargetEnv() {
-        var Env = "https://direct.tranzila.com/" + this.AdditionalData.PaymentData.TargetEnv + "/";//amitaltest
-        return Env;
-    }
-    public set TargetEnv(newValue: string) { this.AdditionalData.PaymentData.TargetEnv = newValue; }
-
-    public get TermsOfUseDocumentId() { return this.AdditionalData.RequestPaymentData.TermsOfUseDocumentId }
-    public set TermsOfUseDocumentId(newValue: string) { this.AdditionalData.RequestPaymentData.TermsOfUseDocumentId = newValue; }
+    public FinalMessage: string = "תעודת זהות כבר הוזנה למשלוח זה";
 
 
+
+    public get CustomerName() { return this.AdditionalData.CustomerName }
+    public set CustomerName(newValue: string) { this.AdditionalData.CustomerName = newValue; }
+
+    public get CustomerAddress() { return this.AdditionalData.CustomerAddress }
+    public set CustomerAddress(newValue: string) { this.AdditionalData.CustomerAddress = newValue; }
+
+
+
+    public get Hawb() { return this.AdditionalData.Hawb }
+    public set Hawb(newValue: string) { this.AdditionalData.Hawb = newValue; }
+
+    public get ShipmentValueInNIS() { return new CustomNumbersPipe().transform(this.AdditionalData.ShipmentValueInNIS, 0) }
+    public set ShipmentValueInNIS(newValue: string) { this.AdditionalData.ShipmentValueInNIS = newValue; }
+
+    public get SenderDetails() { return this.AdditionalData.SenderDetails }
+    public set SenderDetails(newValue: string) { this.AdditionalData.SenderDetails = newValue; }
+
+    public get GoodsDescritpion() { return this.AdditionalData.GoodsDescritpion }
+    public set GoodsDescritpion(newValue: string) { this.AdditionalData.GoodsDescritpion = newValue; }
+
+    //public get IsImporterApprovalRequried() { return this.AdditionalData.RequestPaymentData.IsImporterApprovalRequried }
+    //public set IsImporterApprovalRequried(newValue: boolean) { this.AdditionalData.RequestPaymentData.IsImporterApprovalRequried = newValue; }
+
+    public get Quantity() { return this.AdditionalData.Quantity }
+    public set Quantity(newValue: string) { this.AdditionalData.Quantity = newValue; }
+
+    public get Weight() { return this.AdditionalData.Weight }
+    public set Weight(newValue: string) { this.AdditionalData.Weight = newValue; }
+
+    public get ShipmentId() { return this.AdditionalData.Id }
+    public set ShipmentId(newValue: string) { this.AdditionalData.Id = newValue; }
+
+    private userIdNumber;
+    public get UserIdNumber() { return this.userIdNumber }
+    public set UserIdNumber(newValue: string) { this.userIdNumber = newValue; }
 
     ShowPaymentDetailsScreen: boolean = false;
 
@@ -253,24 +204,42 @@ export class UserIdNumberMobileComponent extends BaseComponent implements OnInit
     ValidationErrorsList: any[];
     MyAdditionalData: any = null;
 
-    OnPayClick() {
-        //alert("Yes");
-        document.forms["form"].action = this.TargetEnv
-        document.forms["form"].submit();
-    }
-    IsAgreed: boolean = false;
-    IsAggreeChicked(isAgreed) {
-        this.IsAgreed = isAgreed;
-    }
+    
 
-    ViewAggreement() {
-        //this._documentsFilingExtendedPMService.getDocumentsFilingsByCode(this.TermsOfUseDocumentId).subscribe(myResult => {
+    SendButtonClicked() {
+        this.ValidationWarningsList = null;
+        this._ShipmentAdditionalCloudDataService.getSingleWithoutToken(this.SecurityKey, this.Tenant).subscribe(myAdditionalResult => {
 
-        //if (myResult.Result) { 
-        //var securityId = myResult.Result.SecurityId;
-        DownloadManager.DownloadExternalPage(null, this.Tenant, this.TermsOfUseDocumentId);
-        //  }
-        //});
+            var entity = myAdditionalResult.Result;//AdditionalResult.Result
+            if (entity.IsUserIDNumberRequired == false) {
+                var myMessage = "תעודת זהות כבר הוזנה למשלוח זה";
+                if (entity.UserIdNumberUpdateDateTime != null) {
+                    myMessage = myMessage + " " + entity.UserIdNumberUpdateDateTime;
+                }
+                this.FinalMessage == myMessage;
+                this.ShowFinalMessage = true;
+               
+            }
+            else {
+                if (!AppTool.IsNullOrEmpty(this.UserIdNumber)) {
+                    entity.UserIdNumberUpdateDateTime = new Date();
+                    entity.IsUserIDNumberRequired = false;
+                    entity.UserIdNumber = this.UserIdNumber;
+
+                    this._ShipmentAdditionalCloudDataService.updateUserID(entity).subscribe(AdditionalResult => {
+
+                        this.FinalMessage == "זיהוי משתמש נשלח בהצלחה ";
+                        this.ShowFinalMessage = true;
+
+                    });
+                }
+                else {
+                }
+            }
+
+
+        });
+      
 
     }
 
