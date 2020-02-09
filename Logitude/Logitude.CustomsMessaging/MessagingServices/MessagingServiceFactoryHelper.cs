@@ -461,6 +461,10 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 DCAInDE_NG_5108_DecisionMessageMessagingService>
                 ((new DCAInDE_NG_5108_DecisionMessageMessagingService()).MainInterfaceCode);
 
+            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
+                SE_6001_SealUpdateMessagingService>
+                ((new SE_6001_SealUpdateMessagingService()).MainInterfaceCode);
+
         }
         public static void InitContainer()
         {
