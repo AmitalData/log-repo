@@ -19,7 +19,7 @@
 ----TextCodes
 --delete from MenuButtons where tenant = 0 and (LabelTextCodeCode not like 'customs.%' or LabelTextCodeCode is null)
 --delete from ObjectTableTabs where tenant = 0 and (TabNameTextCodeCode not like 'customs.%' or TabNameTextCodeCode is null)
---delete from textcodes where tenant = 0 and (code not like 'customs.%' or code is null)
+--delete from textcodes where tenant = 0 and (code not like 'customs.%' or code is null) and code not in (select NameTextCodeCode from queries where tenant=0 and userid is not null and SystemLevel=0)
 
 ----Features
 --delete from Features where tenant = 0 and (NameTextCodeCode not like 'customs.%' or NameTextCodeCode is null)
