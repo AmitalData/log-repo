@@ -19,7 +19,6 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
             DeclarationPM _dec = declarationQueryService.GetSingle(requestParamsData.AppicationId, false, false);
                         ConsignmentPM _con = consignmentQueryService.GetSingle(_dec.Id,1, false, false);
 
-
             return new CH_NG_190_MSG1_NoticeToClient()
             {
                 RequestContentHeader = new RequestContentHeader()
@@ -30,18 +29,19 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
                 {
                     operationCode = 1,
                     statusMessage = 2,
-                    checkId = 20402020,
-                    entityType = 5,
+                    entityType = 1,
+                    checkId = int.Parse(DateTime.Now.ToString("MMddhhmm")),
                     customsAgent = 1111,
                     importerNumber = 111,
-                    storageSiteNumber = "ILMMN",
+                    storageSiteNumber = _con.StorageSiteCode,
                     checkSiteNumber = "10470",
                     openDate = DateTime.Now,
-                    CheckType = 1,
+                    limitDateSpecified=true,
+                    limitDate = DateTime.Now.AddDays(1),
+                    CheckType = 3,
+                    QueueTypeSpecified = true,
+                    QueueType =3,
                     declarationID = _dec.DeclarationNumber, 
-                   
-
-
                 },
                 CheckEntity = new CH_NG_190_MSG1_NoticeToClientCheckEntity()
                 {
@@ -51,7 +51,8 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
                         cargoIdentifierKey1 = _con.ManifestNumber,
                         cargoIdentifierKey2 = _con.SecondCargoID,
                         cargoIdentifierKey3 = _con.ThirdCargoID,
-                    }
+                    },
+                    containerNumber= "CAIU8087570",
 
                 },
                 SplitCargoIdentifier = new CH_NG_190_MSG1_NoticeToClientSplitCargoIdentifier[]{
@@ -67,5 +68,6 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
 
             };
         }
+
     }
 }

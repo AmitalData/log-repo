@@ -34,6 +34,5 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
             return _requestContentHeader;
 
         }
-        public 
-    }
+   }
 }

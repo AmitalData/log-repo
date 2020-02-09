@@ -504,10 +504,6 @@
     <Compile Include="Migrations\202002021214069_AddDeclarationReferantDataTable.Designer.cs">
       <DependentUpon>202002021214069_AddDeclarationReferantDataTable.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202002021230088_test.cs" />
-    <Compile Include="Migrations\202002021230088_test.Designer.cs">
-      <DependentUpon>202002021230088_test.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -876,9 +872,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202002021214069_AddDeclarationReferantDataTable.resx">
       <DependentUpon>202002021214069_AddDeclarationReferantDataTable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202002021230088_test.resx">
-      <DependentUpon>202002021230088_test.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\logitude.oracledatabasemigration.dll.licenses" />
   </ItemGroup>

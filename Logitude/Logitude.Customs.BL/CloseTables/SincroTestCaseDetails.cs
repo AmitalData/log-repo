@@ -65,7 +65,7 @@ namespace Logitude.Customs.BL.CloseTables
                     Name = "בדיקות פיזיות	",
                     IsDCA = true,
                     Entity="Declaration",
-                    Param1= @"{ ""availability"":""2020-02-04T09:15:03.1085624"" , ""rr"" : ""true"" }",
+                    Param1= @"{ """":""""}",
                     Param2= @"{ ""availability"":""2020-02-04T09:15:03.1085624"" }",
                     MainInterfaceCode="190",
                 },
@@ -75,7 +75,7 @@ namespace Logitude.Customs.BL.CloseTables
                     Name = "סיום בדיקה פיזית ",
                     IsDCA = true,
                     Entity="Declaration",
-                    Param1= @"{ }",
+                    Param1= @"{ ""checkId"":""""}",
                     Param2= @"{ }",
                     MainInterfaceCode="196",
                 }

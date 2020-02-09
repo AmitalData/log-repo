@@ -91,7 +91,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return "";
             
         }
-        public PhysicalCheckPM GetPhysicalCheck(string declarationId)
+        public PhysicalCheckPM GetPhysicalCheckByDeclarationId(string declarationId)
         {
             PhysicalCheckDataMapping pocoToPM = new PhysicalCheckDataMapping();
             PhysicalCheckPM _physicalCheckPM = new PhysicalCheckPM();
@@ -100,6 +100,17 @@ namespace Logitude.Customs.BL.EntityQueryServices
             {
                 
                  pocoToPM.POCOToPM(_physicalCheckPM, _physicalCheckPoco);
+            }
+            return _physicalCheckPM;
+        }
+        public PhysicalCheckPM GetPhysicalCheckByCheckId(string checkId)
+        {
+            PhysicalCheckDataMapping pocoToPM = new PhysicalCheckDataMapping();
+            PhysicalCheckPM _physicalCheckPM = new PhysicalCheckPM();
+            var _physicalCheckPoco = context.PhysicalChecks.FirstOrDefault(x => x.CheckId == checkId);
+            if (_physicalCheckPoco != null)
+            {
+                pocoToPM.POCOToPM(_physicalCheckPM, _physicalCheckPoco);
             }
             return _physicalCheckPM;
         }

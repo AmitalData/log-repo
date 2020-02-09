@@ -318,9 +318,12 @@ namespace Logitude.Customs.BL.EntityDataMappings
             }
             if (data.CheckEntity.cargoIdentifier.cargoIdentifierKey3 != null)
             {
-                entityPM.CargoIdentifierKey2 = data.CheckEntity.cargoIdentifier.cargoIdentifierKey3;
+                entityPM.CargoIdentifierKey3 = data.CheckEntity.cargoIdentifier.cargoIdentifierKey3;
             }
-
+            if (data.CheckEntity.containerNumber != null)
+            {
+                entityPM.ContainerNubmer = data.CheckEntity.containerNumber;
+            }
 
         }
 
