@@ -17,6 +17,8 @@ import {TenantPM} from '../../../../Common/EntityPMs/TenantPM';
 import {WarehouseHelper} from '../../../../Warehouse/Helpers/WarehouseHelper';
 import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
 import {ShipmentPickUpPM} from '../../../../Shipment/EntityPMs/ShipmentPickUpPM';
+import { CardPMService } from '../../../../Common/Services/StandardPMs/CardPMService';
+import { CardPM } from '../../../../Common/EntityPMs/CardPM';
 
 @Component({
     moduleId: './ShipmentModules/ShipmentRouting/Components/Routings/',
@@ -45,8 +47,10 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
     }
 
     private myAddressListService: AddressListService;
+    private cardService: CardPMService;
     InitServices() {
         this.myAddressListService = new AddressListService();
+        this.cardService = new CardPMService();
     }
 
     GetShipmentDirection() {
@@ -54,6 +58,24 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
             this.IsImportShipment = true;
         }
     }
+
+    InitFreeDaysStorage() {
+        this.GetConsignee();
+        if (this.cardPM.IsCustomer == true) {
+            this.WarehouseStorageFreeDays = this.cardPM.StorageFreeDays;
+        }
+    }
+
+    private cardPM: CardPM;
+    private GetConsignee() {
+        this.cardService.get(this.EntityPM.ConsigneeId).subscribe(myResult => {
+            var myResponse: ServiceResponse = myResult;
+            if (!myResponse.HasError) {
+                this.cardPM = myResponse.Result;
+            }
+        });
+    }
+
     SetWindowArgs(args: any) {
         this.EntityPM = args['EntityPM'];
         this.LegType = args['LegType'];
@@ -69,8 +91,9 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
                 }
             }
             this.GetShipmentDirection();
+            this.SetStorageDays();
         }
-
+         
         this.ObjectTableName = args['ObjectTableName'];
         this.FatherComponent = args['FatherComponent'];
         this.WarehouseAddressList = this.FatherComponent.WarehouseAddressList;
@@ -87,6 +110,8 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
                     }
                 }
             }
+            this.GetShipmentDirection();
+            this.InitFreeDaysStorage();
         }
     }
 
@@ -330,20 +355,24 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
         if (this.WarehouseLegActualEntryDate != null && this.WarehouseStorageFreeDays != null) {
             var date = DateTool.AddDays(this.WarehouseLegActualEntryDate, this.WarehouseStorageFreeDays);
             if (date == null) {
-                this.WarehouseStorageFreeDays = null;
+                this.WarehouseStorageFreeDays = 0;
             } else {
                 this.WarehouseLegLastFreeDate = date;
             }
         }
-    }
+    } 
 
     private SetStorageFreeDays() {
         if (this.WarehouseLegActualEntryDate != null && this.WarehouseLegLastFreeDate != null) {
-            var days = DateTool.GetDaysBetweenDates(this.WarehouseLegActualEntryDate, this.WarehouseLegLastFreeDate);
-            if (days == null || days == 0) {
-                this.WarehouseStorageFreeDays = null;
-            } else if (this.WarehouseStorageFreeDays != days) {
-                this.WarehouseStorageFreeDays = days;
+            if (this.WarehouseLegLastFreeDate.valueOf() >= this.WarehouseLegActualEntryDate.valueOf()) {
+                var days = DateTool.GetDaysBetweenDates(this.WarehouseLegActualEntryDate, this.WarehouseLegLastFreeDate);
+                if (days == null) {
+                    this.WarehouseStorageFreeDays = 0;
+                } else if (this.WarehouseStorageFreeDays != days) {
+                    this.WarehouseStorageFreeDays = days;
+                }
+            } else {
+                this.WarehouseStorageFreeDays = 0;
             }
         }
     }
