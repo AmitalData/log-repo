@@ -784,6 +784,24 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
             }
         }
 
-       
+        public HttpResponseMessage GetUserIdDetailsByShipmentSecurityKeyWithoutToken(int tenant,string key)
+        {
+            try
+            {
+               
+                ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
+                var RequestedShipment = shipmentQuery.GetSingleShipmentPMBySecurityKeyTenant(key,tenant);
+                var MyPaymentData = LogitudeXmlSerializer.DeserializeObject<UserIdNumberRequestPM>(RequestedShipment.UserIdNumberXMLData);
+                return Request.CreateResponse(HttpStatusCode.OK, MyPaymentData); 
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+
+
     }
 }

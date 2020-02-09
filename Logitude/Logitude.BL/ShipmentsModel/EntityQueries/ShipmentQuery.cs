@@ -12386,6 +12386,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         shipmentPM.SendUpdatesToAgentEnabled = CLoudData.SendUpdatesToAgentEnabled;
                         shipmentPM.DocsSentToAgent = CLoudData.DocsSentToAgent;
                         shipmentPM.ApprovedBy = CLoudData.ApprovedByUserName;
+                        shipmentPM.UserIdNumberXMLData = CLoudData.UserIdNumberXMLData;
                     }
                     return shipmentPM;
                 }
