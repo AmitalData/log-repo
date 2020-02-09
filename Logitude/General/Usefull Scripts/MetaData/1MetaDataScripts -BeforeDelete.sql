@@ -20,8 +20,6 @@
 --update ObjectTables set HeaderScreenCode = (select Code from Screens where Id=ObjectTables.HeaderScreenId) where tenant!=0
 
 ----Queries
-----update Queries set UniqueCode = ((select ObjectTables.Name from ObjectTables where Id= Queries.ObjectTableId)+'.'+Queries.Code) where tenant!=0
-----update Queries set UniqueCode = ((select ObjectTables.Name from ObjectTables where Id= Queries.ObjectTableId)+'.'+Queries.Code) where tenant =0
 --update Queries set OriginalQueryCode = (select q1.UniqueCode from Queries q1 where q1.Id = Queries.OriginalQueryId)
 --update AdvancedQueryFilters set QueryCode = (select Queries.UniqueCode from Queries where Id = AdvancedQueryFilters.QueryId)
 --update QueryColumns set QueryCode = (select Queries.UniqueCode from Queries where Id = QueryColumns.QueryId)

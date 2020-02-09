@@ -108,9 +108,6 @@
 --update ScreenModifications set ScreenId = (select Id from Screens where code=ScreenModifications.ScreenCode) where screencode in (select code from screens)
 --update ScreenFields set ScreenId = (select Id from Screens where code=ScreenFields.ScreenCode) where screencode in (select code from screens)
 --update ObjectTables set HeaderScreenId = (select Id from Screens where code=ObjectTables.HeaderScreenCode)
-----select ScreenCode,tenant,count(*) from ScreenModifications group by ScreenCode,tenant having count(*)>1
-----select * from ScreenModifications where ScreenCode = 'Master.HeaderScreen'
-----delete from ScreenModifications where id='??'
 
 ----Queries
 --update Queries set OriginalQueryId =  (select q1.Id from Queries q1 where q1.UniqueCode = Queries.OriginalQueryCode)
@@ -146,3 +143,4 @@
 
 -------------
 --select * from ScreenModifications where ScreenId in (select id from screens where ScreenCode='Master.HeaderScreen' and ObjectTableId=(select id from objecttables where name='master'))
+--select ScreenCode,tenant,count(*) from ScreenModifications group by ScreenCode,tenant having count(*)>1
