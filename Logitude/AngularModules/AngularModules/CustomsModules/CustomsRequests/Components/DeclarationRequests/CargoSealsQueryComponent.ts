@@ -60,12 +60,6 @@ export class CargoSealsQueryComponent
         this.CargoSealObslist = new ObservableCollection([]);
         this.EntityResourceService.getEntityResourceByTableName("Customs.CargoSealIdentifier").subscribe(response => {
             this.EntityResourceService.getEntityResourceByTableName("Customs.CargoSeal").subscribe(response => {
-            //    debugger;
-            //    this.amendmentTypeListService.getAll().subscribe(
-            //        data => {
-            //            this.AmendmentTypes = data.Result;
-            //        });
- 
                 this.IsReady = true;
             });
         });
@@ -181,7 +175,10 @@ export class CargoSealsQueryComponent
             this._IsDisplayOnly = value;
         }
     }
-    
+
+    public get IsReady() { return this._IsReady; }
+    public set IsReady(newValue: boolean) { this._IsReady = newValue; }
+
     get UpdateDate() { return this.RequestParams.UpdateDate; }
     set UpdateDate(value: Date) {
         if (this.RequestParams.UpdateDate != value) {
