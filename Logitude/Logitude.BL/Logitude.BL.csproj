@@ -532,6 +532,7 @@
     <Compile Include="InvoiceModel\Tools\Validating\ARInvoiceStockValidating.cs" />
     <Compile Include="Helpers\ShipmentComputedFieldsHelper.cs" />
     <Compile Include="QuoteModel\EntityQueries\Charts\DashboardQuery.cs" />
+    <Compile Include="QuoteModel\EntityQueries\Charts\QuoteConversionQuery.cs" />
     <Compile Include="QuoteModel\EntityQueries\Charts\QuotesByCountryQuery.cs" />
     <Compile Include="QuoteModel\EntityQueries\Charts\StageFunnelQuery.cs" />
     <Compile Include="QuoteModel\Tools\EntityService\QuoteSubjectService.cs" />

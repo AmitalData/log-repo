@@ -199,6 +199,38 @@ export class ShipmentPMService {
         */
     }
 
+    getUserIdDetailsByShipmentSecurityKeyWithoutToken(SecurityKey: string, Tenant: number) {
+         
+        var authHeader = new Headers();
+        //authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        //authHeader.append('CallTimKey', ServiceHelper.GetLoggedUserToken());
+
+        //var key = PerformanceLogger.AddLogTime();
+        var callTime = new Date();
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/getUserIdDetailsByShipmentSecurityKeyWithoutToken?tenant=' + Tenant + '&key=' + SecurityKey, {
+                headers: authHeader
+            }).map(response => {
+
+                //var servertime = response.headers.get('ServerExecutionTime');
+                //PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "Shipment", "getSingleBySecurityKey", SecurityKey);
+
+                var pm = response.json();
+                //var entity: ShipmentPM;
+                //if (pm) {
+                //    entity = this.MapJsonToEntityPM(pm);
+                //}
+                var pmresponse: ServiceResponse;
+                pmresponse = new ServiceResponse();
+                pmresponse.Result = pm;
+                return pmresponse;
+
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+
+    
+    }
+
     getSingleByShipmentNumber(number: string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());

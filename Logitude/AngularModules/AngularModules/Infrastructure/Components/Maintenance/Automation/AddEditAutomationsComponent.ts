@@ -139,6 +139,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
     Code: string;
     IsShowAutomationCodeField: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
+    entityResourceService:EntityResourceService = new   EntityResourceService();
     constructor(public _automationResultEmailRecipientExtendedService: AutomationResultEmailRecipientExtendedService,   public _documentTypeTemplatePMExtendedService: DocumentTypeTemplatePMExtendedService, public _automationExtendedPMService: AutomationExtendedPMService, public _automationHistoryExtendedPMService: AutomationHistoryExtendedPMService, private cd: ChangeDetectorRef, public entityArgs: EntityArgs) {
         super();
 
@@ -159,6 +160,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
 
     IsMasterShipment: boolean = false;
     SetWindowArgs(args: any) {
+        this.entityResourceService.getEntityResourceByTableName("Automation", 0).subscribe(response => {
         this.ObjectTableId = args.ObjectTableId;
         this.DataViewModel = args.DataViewModel;
         this.PageType = args.PageType;
@@ -229,7 +231,10 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
                 this.LoadAutomationDataBackup();
             }
         }
-    }
+    });
+        
+}
+    
 
     LoadAutomationDataBackup() {
         if (this.CurrentEntityPM && this.CurrentEntityPM.Id) {

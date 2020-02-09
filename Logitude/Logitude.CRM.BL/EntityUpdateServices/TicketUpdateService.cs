@@ -42,6 +42,7 @@ namespace Logitude.CRM.BL.EntityUpdateServices
                 {
                     entityPM.Id = IdCounter.GetNumber("Ticket", entityPM.Tenant);
                     entityPM.SupportMailboxId = this.GetDefaultSupportMailBox(entityPM.Tenant);
+                    entityPM.LastCorrespondence = entityPM.TicketDescription;
                 }
 
                 if (string.IsNullOrEmpty(entityPM.TicketNumber))
@@ -288,8 +289,19 @@ namespace Logitude.CRM.BL.EntityUpdateServices
                 }
 
                 this.UpdateDates(entityPM);
-
                 this.CheckQuoteRequestDateUpdate(entityPM, entityPOCO);
+                this.UpdateLastCorrespondence(entityPM);
+            }
+        }
+
+        private void UpdateLastCorrespondence(TicketPM entityPM)
+        {
+            ICRMContext context = CRMContext.GetContext(entityPM.Tenant);
+            CorrespondenceQueryService correspondenceService = new CorrespondenceQueryService(context);
+            CorrespondencePM lastCorrespondence = correspondenceService.GetLastCorrespondenceByEntityId(entityPM.Id, entityPM.Tenant);
+            if (lastCorrespondence != null)
+            {
+                entityPM.LastCorrespondence = lastCorrespondence.Description;
             }
         }
 

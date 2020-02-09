@@ -172,8 +172,8 @@ export class LoginComponent implements OnInit {
             if (SessionLocator.ExternalParams) {
                 if (SessionLocator.ExternalParams.Menu) {
                     var menuName = SessionLocator.ExternalParams.Menu.toLocaleLowerCase();
-                    if (menuName == "logbox" || menuName == "dapp" || menuName == "protractor" || menuName == "preq") {
-                        if (menuName == "preq") {
+                    if (menuName == "logbox" || menuName == "dapp" || menuName == "protractor" || menuName == "preq" || menuName == "uid") {
+                        if (menuName == "preq" || menuName == "uid") {
                             this.LoginCompleted.emit("IgnoreTerms");
                             return;
                         }
