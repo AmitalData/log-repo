@@ -260,6 +260,7 @@
     <Content Include="CustomsModules\CustomsGeneralRequests\Components\SpecialActivityRequestComponent.html" />
     <Content Include="CustomsModules\CustomsPaymentOrder\Components\EditTabs\Tapag\Deficit\DeficitDecisionComponent.html" />
     <Content Include="CustomsModules\CustomsPaymentOrder\Components\EditTabs\Tapag\Deposit\BankAccountToRefundComponent.html" />
+    <Content Include="CustomsModules\CustomsRequests\Components\DeclarationRequests\CargoSealsQueryComponent.html" />
     <Content Include="CustomsModules\CustomsVehicle\Components\EditTabs\VehicleEditComponent.html" />
     <Content Include="CustomsModules\CustomsVehicle\Components\EditTabs\VehicleEditComponent.js" />
     <Content Include="CustomsModules\CustomsVehicle\Components\EditTabs\VehicleGeneralComponent.html" />
@@ -861,6 +862,7 @@
     <TypeScriptCompile Include="CustomsModules\CustomsPhysicalCheck\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsProceduralFault\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsProceduralFault\ModuleProceduralFault.ts" />
+    <TypeScriptCompile Include="CustomsModules\CustomsRequests\Components\DeclarationRequests\CargoSealsQueryComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsRequests\ModuleCustomsRequests.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsRequests\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsVehicle\Components\Documents\VehicleCustomsDocumentsController.ts" />
