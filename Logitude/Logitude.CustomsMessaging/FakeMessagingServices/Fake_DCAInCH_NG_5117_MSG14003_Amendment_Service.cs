@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 using System.Xml.Serialization;
 using UnifreightIIG.Common.MessageLib.ID;
 using UnifreightIIG.Common.MessageLib.PhysicalCheck190;
@@ -26,8 +27,7 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
             
              dynamic data = JObject.Parse(requestParamsData.TestCase.Param1);
 
-            string status = data.Status;
-            string requestNumber = data.RequestNumber;
+             string requestNumber = data.RequestNumber;
 
             _header = new ResponseContentHeader();
             DF_NG_5117_MSG14003_ImportDeclarationAmendmentReplyMsg response = new DF_NG_5117_MSG14003_ImportDeclarationAmendmentReplyMsg();
@@ -45,46 +45,75 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
             response.ResponseContentHeader = new ResponseContentHeader();
             AddResponseContentHeader();
             response.ResponseContentHeader = _header;
-            ResponseAdditionalInformation[] AdditionalInformation = new ResponseAdditionalInformation[3];
-            AdditionalInformation[0] = new ResponseAdditionalInformation
-            {
-                StatementTypeCode = new AdditionalInformationStatementTypeCodeType()
-                {
-                    Value = "29"
-                },
-                Content = new AdditionalInformationContentTextType() { Value = "t29" }
-            };
+            List<ResponseAdditionalInformation> AdditionalInformation = new List< ResponseAdditionalInformation>();
 
-            AdditionalInformation[1] = new ResponseAdditionalInformation
+            if (!string.IsNullOrEmpty(data.Content29.ToString()))
             {
-                StatementTypeCode = new AdditionalInformationStatementTypeCodeType()
+                AdditionalInformation.Add(new ResponseAdditionalInformation
                 {
-                    Value = "27"
-                },
-                Content = new AdditionalInformationContentTextType() { Value = "t27" }
-            };
+                    StatementTypeCode = new AdditionalInformationStatementTypeCodeType()
+                    {
+                        Value = "29"
+                    },
+                    Content = new AdditionalInformationContentTextType() { Value = data.Content29 }
+                }
+            );
+}
 
-
-            AdditionalInformation[2] = new ResponseAdditionalInformation
+            if (!string.IsNullOrEmpty(data.Content27.ToString()))
             {
-                StatementTypeCode = new AdditionalInformationStatementTypeCodeType()
+                AdditionalInformation.Add(new ResponseAdditionalInformation
                 {
-                    Value = "32"
-                },
-                Content = new AdditionalInformationContentTextType() { Value = "t32" }
-            };
-             response.Response.AdditionalInformation = AdditionalInformation;
+                    StatementTypeCode = new AdditionalInformationStatementTypeCodeType()
+                    {
+                        Value = "27"
+                    },
+                    Content = new AdditionalInformationContentTextType() { Value = data.Content27 }
+                });
+            }
+
+            if (!string.IsNullOrEmpty(data.Content32.ToString()))
+            {
+                AdditionalInformation.Add(new ResponseAdditionalInformation
+                {
+                    StatementTypeCode = new AdditionalInformationStatementTypeCodeType()
+                    {
+                        Value = "32"
+                    },
+                    Content = new AdditionalInformationContentTextType() { Value = data.Content32 }
+                });
+            }
+
+             response.Response.AdditionalInformation = AdditionalInformation.ToArray();
             response.Response.FunctionCode = new ResponseFunctionCodeType() { Value = "Amendment" };
-            response.Response.IssueDateTime = DateTime.Now.ToString();
+            response.Response.IssueDateTime = XmlConvert.ToString(DateTime.Now);
             //response.Response.Amendment = new ResponseAmendment[1]; // reason to change?
             //response.Response.Amendment[0] = new ResponseAmendment
             //{
 
             //}
             response.Response.FunctionalReferenceID = new ResponseFunctionalReferenceIDType() { Value = requestNumber };
+
+ 
+            response.Response.Error = new ResponseError[1];
+            response.Response.Error[0] = new ResponseError
+            {
+                ValidationCode = new ErrorValidationCodeType { name = "test error", listVersionID = "4" },
+                Pointer = new ResponseErrorPointer[1]
+                { new ResponseErrorPointer {
+                    DocumentSectionCode = new PointerDocumentSectionCodeType { Value = "42A" },
+                SequenceNumeric = 0}
+
+                }
+
+
+
+
+            };
+
             response.Response.Status = new ResponseStatus() { EffectiveDateTime = DateTime.Now.ToString() };
-            response.Response.Status.NameCode = new StatusNameCodeType() { Value = status };
-            
+            response.Response.Status.NameCode = new StatusNameCodeType() { Value = "5" };
+
 
 
 
