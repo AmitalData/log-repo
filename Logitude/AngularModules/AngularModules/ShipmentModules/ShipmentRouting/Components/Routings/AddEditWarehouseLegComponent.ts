@@ -60,22 +60,19 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
     }
 
     InitFreeDaysStorage() {
-        this.GetConsignee();
-        if (this.cardPM.IsCustomer == true) {
-            this.WarehouseStorageFreeDays = this.cardPM.StorageFreeDays;
-        }
-    }
-
-    private cardPM: CardPM;
-    private GetConsignee() {
-        this.cardService.get(this.EntityPM.ConsigneeId).subscribe(myResult => {
-            var myResponse: ServiceResponse = myResult;
-            if (!myResponse.HasError) {
-                this.cardPM = myResponse.Result;
+        this.cardService.get(this.EntityPM.ConsigneeId).subscribe((myResponse: ServiceResponse) => {
+            if (myResponse != null) {
+                if (!myResponse.HasError) {
+                    var result = myResponse.Result;
+                    if (result) {
+                        if (result.IsCustomer)
+                            this.WarehouseStorageFreeDays = result.StorageFreeDays;
+                    }
+                }
             }
         });
     }
-
+     
     SetWindowArgs(args: any) {
         this.EntityPM = args['EntityPM'];
         this.LegType = args['LegType'];
@@ -297,6 +294,7 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
             this.SetUIProperties_ValidateActualDates();
             if (value == null) {
                 this.WarehouseLegActualEntryDate == null;
+                this.StorageDays = null;
             } else {
                 this.SetLastFreeDate();
                 this.SetStorageDays();
@@ -311,6 +309,7 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
             this.SetUIProperties_ValidateActualDates();
             if (value == null) {
                 this.WarehouseLegActualReleaseDate = null;
+                this.StorageDays = null;
             } else {
                 this.SetStorageDays();
             }
