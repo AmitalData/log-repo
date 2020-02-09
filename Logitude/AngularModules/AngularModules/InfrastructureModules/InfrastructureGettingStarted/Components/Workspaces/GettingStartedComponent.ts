@@ -438,13 +438,15 @@ export class GettingStartedComponent extends BaseComponent {
         logitudeWindow.Show('./InfrastructureModules/InfrastructureGettingStarted/Components/Counters/CountersComponent');
     }
     CompanyLogoClick() {
+        this._entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe(response => {
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Width = 740;
         logitudeWindow.Height = 585;
         logitudeWindow.DataContext = this;
         logitudeWindow.Title = "Logo Definition";
         logitudeWindow.Show('./InfrastructureModules/InfrastructureGettingStarted/Components/UploadImage/UploadLogoComponent');
-    }
+    });
+}
     SystemCurrenciesClick() {
         var windowTitle = "System Currencies";
         var logWindow = new LogitudeWindow();
