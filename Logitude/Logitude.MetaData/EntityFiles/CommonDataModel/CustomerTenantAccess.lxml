@@ -1930,7 +1930,7 @@
       DefaultText="&quot;Deny&quot;"
       MenuButtonType="&quot;button&quot;"
       IndexOrder="100"
-      IsPackagable="false"
+      IsPackagable="true"
       TextCodeCode="&quot;CustomerTenantAccess.B.Deny&quot;" />
   </MenuButtons>
   <DataContracts />
