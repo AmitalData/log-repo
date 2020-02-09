@@ -6,7 +6,7 @@
 --delete from querycolumns where tenant = 0 and (ObjectFieldCode not like 'customs.%' or ObjectFieldCode is null) and userid is null
 --delete from ScreenFields where tenant = 0 and (ObjectFieldCode not like 'customs.%' or ObjectFieldCode is null) 
 --delete from AdvancedQueryFilters where tenant = 0 and (ObjectFieldCode not like 'customs.%' or ObjectFieldCode is null) and userid is null
---delete from RuleConditionFields where tenant = 0  and (ObjectFieldCode not like 'customs.%' or ObjectFieldCode is null) and systemlevel = 1
+--delete from RuleConditionFields where tenant = 0  and (ObjectFieldCode not like 'customs.%' or ObjectFieldCode is null) and ObjectTableRuleId in (select Id from ObjectTableRules where tenant = 0 and (TriggerFieldCode not like 'customs.%' or TriggerFieldCode is null) and systemlevel = 1)
 --delete from ObjectTableRuleFields where tenant = 0 and (ObjectFieldCode not like 'customs.%' or ObjectFieldCode is null) and systemlevel = 1
 --delete from ObjectTableRules where tenant = 0 and (TriggerFieldCode not like 'customs.%' or TriggerFieldCode is null) and systemlevel = 1
 
