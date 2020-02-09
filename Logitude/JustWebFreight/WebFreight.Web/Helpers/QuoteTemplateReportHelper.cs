@@ -89,8 +89,6 @@ namespace Logitude.BL.Helpers
             }
 
             if (quotePM == null) quotePM = BuildingQuotePM();
-            List<QuoteSaleChargePM> emptySaleCharges = quoteQuery.AddEmptySaleCharge(quotePM.QuoteCharges, quotePM.TransportModeId, quotePM.ShipmentTypeId);
-            quotePM.QuotationSaleCharges.AddRange(emptySaleCharges);
 
             if (templateSections == null)
             {
@@ -609,8 +607,8 @@ namespace Logitude.BL.Helpers
 
         public byte[] GetQuoteTemplateHtmlReport(QuoteTemplateBuildArges quoteTemplateBuildArges, bool includeHeaderFooter, string requestArea )
         {
-       
 
+            
             QuotePM quotePM = quoteTemplateBuildArges.QuotePM;
             QuoteTemplatePM template = quoteTemplateBuildArges.QuoteTemplatePM;
             QuoteTemplateSettingPM setting = quoteTemplateBuildArges.QuoteTemplateSettingPM;
@@ -620,8 +618,15 @@ namespace Logitude.BL.Helpers
             List<QuoteTemplateSectionPM> templateSections = quoteTemplateBuildArges.QuoteTemplateSectionPMLists;
             string userId = quoteTemplateBuildArges.UserId;
             int tenant = quoteTemplateBuildArges.Tenant;
+            IQuotesContext context = QuotesContext.GetContext(tenant);
+            QuoteQuery quoteQuery = new QuoteQuery(new QuoteRepository(context));
 
             string htmlString = "";
+            if (setting.ShowIncludedChargesPackages)
+            {
+                List<QuoteSaleChargePM> emptySaleCharges = quoteQuery.AddEmptySaleCharge(quotePM.QuoteCharges, quotePM.TransportModeId, quotePM.ShipmentTypeId);
+                quotePM.QuoteSaleCharges.AddRange(emptySaleCharges);
+            }
 
             if (requestArea == "Quote")
             {
