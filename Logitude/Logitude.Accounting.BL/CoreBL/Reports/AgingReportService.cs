@@ -422,25 +422,46 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                 CurrencyQuery currencyQuery = new CurrencyQuery(_Param.Tenant);
                 IQueryable <CurrencyPM> currencies = currencyQuery.GetCurrenciesByTenantPM(_Param.Tenant);
 
+                PaymentTermQuery paymentTermQuery = new PaymentTermQuery(_Param.Tenant);
+                IQueryable<PaymentTermPM> paymentTerms = paymentTermQuery.GetPaymenTermPMsByTenant(_Param.Tenant);
+
+                CardQuery cardQuery = new CardQuery(_Param.Tenant);
+                IQueryable<CardList> cards = cardQuery.GetCardsByTenant(_Param.Tenant);
+
                 List<PeriodMExtended> namedPeriods = (from line in reportList
-                                    join account in accountsList on line.AccountId equals account.Id
-                                    join currency in currencies on line.CurrencyId equals currency.Id
-                                    select new PeriodMExtended()
-                                    {
-                                        OrderDate = line.OrderDate,
-                                        OrderDateB4 = line.OrderDateB4,
-                                        AccountId = line.AccountId,
-                                        CurrencyId = line.CurrencyId,
-                                        Total = line.Total,
-                                        AccountEnglishName = account.EnglishName,
-                                        AccountLocalName = account.LocalName,
-                                        OpenCredit = line.OpenCredit,
-                                        OpenDebit = line.OpenDebit,
-                                        CurrencyCode = currency.Code
-                                        
-                                        
-                                    }).ToList();
-                //
+                                                      join account in accountsList on line.AccountId equals account.Id
+                                                      join currency in currencies.DefaultIfEmpty() on line.CurrencyId equals currency.Id
+                                                      join card in cards.DefaultIfEmpty() on account.CardId equals card.Id
+                                                      join paymentTerm in paymentTerms.DefaultIfEmpty() on account.PaymentTermId equals paymentTerm.Id
+
+                                                      select new PeriodMExtended()
+                                                      {
+                                                          OrderDate = line.OrderDate,
+                                                          OrderDateB4 = line.OrderDateB4,
+                                                          AccountId = line.AccountId,
+                                                          CurrencyId = line.CurrencyId,
+                                                          Total = line.Total,
+
+                                                          // Account Data
+                                                          AccountEnglishName = account.EnglishName,
+                                                          AccountLocalName = account.LocalName,
+                                                          AccountDisplayNumber = account.DisplayNumber,
+                                                          AccountPaymentTermName = paymentTerm.EnglishName,
+                                                          AccountPhone = card.BusinessPhone,
+
+                                                          OpenCredit = line.OpenCredit,
+                                                          OpenDebit = line.OpenDebit,
+                                                          CurrencyCode = currency.Code,
+
+                                                          // credit data
+                                                          CreditLimit = (decimal)card.CreditLimitAmount,
+                                                          //CreditStatus = account.cred,
+                                                          TotalOpenShipments = card.OpenShipments,
+                                                          TotalFutureOpenCheques = (decimal)account.TotFutureOpenChequesInLocalCur,
+                                                          TotalOpenCheques = (decimal)account.TotalOpenChequesInLocalCur,
+
+                                                      }).ToList();
+
 
 
                 MyPeriodList = reportList;
@@ -1092,6 +1113,15 @@ Period	Acc	Currency	Total
         public string AccountEnglishName { get; set; }
         public string AccountLocalName { get; set; }
         public string CurrencyCode { get; set; }
+        public string AccountDisplayNumber { get; set; }
+        public string AccountPaymentTermName { get; set; }
+        public string AccountPhone { get; set; }
+        public decimal CreditLimit { get; set; }
+        public decimal CreditStatus { get; set; }
+        public decimal TotalOpenShipments { get; set; }
+        public decimal TotalFutureOpenCheques { get; set; }
+        public decimal TotalOpenCheques { get; set; }
+
     }
 
     public class AgingReportParam

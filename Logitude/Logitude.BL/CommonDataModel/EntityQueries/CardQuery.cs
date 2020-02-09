@@ -2073,6 +2073,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                          where a.Tenant == tenant && (a.GLAccountId == null || a.GLAccountId == "")
                                             && (a.PartnerTypeId != "CS" && a.PartnerTypeId != "PO" && a.PartnerTypeId != "AG")
                                             && (a.PartnerTypeId != "VD" && a.PartnerTypeId != "DR" && a.PartnerTypeId != "LL" && a.PartnerTypeId != "WA")
+                                         
                                          select new CardList()
                                          {
                                              Id = a.Id,
@@ -2088,7 +2089,28 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return cards.ToList();
         }
 
+        public IQueryable<CardList> GetCardsByTenant(int tenant)
+        {
+            IQueryable<CardList> cards = from a in repository.context.Cards
+                                         where a.Tenant == tenant
+                                         select new CardList()
+                                         {
+                                             Id = a.Id,
+                                             Code = a.Code,
+                                             EnglishName = a.EnglishName,
+                                             LocalName = a.LocalName,
+                                             PartnerTypeId = a.PartnerTypeId,
+                                             PayablesAccountingCard = a.PayablesAccountingCard,
+                                             ReceivablesAccountingCard = a.ReceivablesAccountingCard,
+                                             GLAccountId = a.GLAccountId,
+                                             PrimaryContactId = a.PrimaryContactId,
+                                             BusinessPhone = a.PrimaryContact.BusinessPhone,
+                                             //CreditStatus = a.cred,
 
+                                         };
+
+            return cards;
+        }
 
 
     }

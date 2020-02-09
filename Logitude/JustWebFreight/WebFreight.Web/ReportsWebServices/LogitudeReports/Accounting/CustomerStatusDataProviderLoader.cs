@@ -55,7 +55,19 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
                 CustomerStatus customerStatus = new CustomerStatus()
                 {
+                    // account details
                     CustomerName = customer.First().AccountEnglishName,
+                    CustomerDisplayNumber = customer.First().AccountDisplayNumber,
+                    CustomerPaymentTerm = customer.First().AccountPaymentTermName,
+                    CustomerPhone = customer.First().AccountPhone,
+
+                    // credit details
+                    CreditLimit = customer.First().CreditLimit,
+                    CreditStatus = customer.First().CreditStatus,
+                    TotalFutureOpenCheques = customer.First().TotalFutureOpenCheques,
+                    TotalOpenCheques = customer.First().TotalOpenCheques,
+                    TotalOpenShipments = customer.First().TotalOpenShipments,
+
                     AccountingBalance = customer.Sum(d => d.Total),
                     Periods = GetStatusPeriods(periodsByDate)
                 };
