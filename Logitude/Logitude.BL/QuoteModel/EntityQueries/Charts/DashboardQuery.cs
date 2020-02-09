@@ -106,7 +106,8 @@ namespace Logitude.BL.QuoteModel.EntityQueries.Charts
 
             else if (chartCode == "QCV")
             {
-
+                QuoteConversionQuery myQuery = new QuoteConversionQuery();
+                result = myQuery.FilterQuotesBySalesman(dataSourceQuery);
             }
 
             else if (chartCode == "TFS")

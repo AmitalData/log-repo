@@ -51,5 +51,16 @@ namespace Logitude.BL.DataContracts
         public string CountryId { get; set; }
         public string CountryName { get; set; }
         public double Total { get; set; }
+
+        public int Count_All { get; set; }
+        public int Count_Convert { get; set; }
+        public string SalesmanUserId { get; set; }
+        public string SalesmanUserName { get; set; }
+        public string TransportModeDirection { get; set; }
+        public string TransportModeId { get; set; }
+        public string DirectionId { get; set; }
+        public string TransportModeName { get; set; }
+        public string DirectionName { get; set; }
+        public string TransportModeDirection_Display { get; set; }
     }
 }
