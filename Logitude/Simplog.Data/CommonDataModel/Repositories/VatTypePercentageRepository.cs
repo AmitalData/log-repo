@@ -46,7 +46,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
             if (context.VatTypePercentages.Count() > 0)
             {
                 result =
-                    (from r in context.VatTypePercentages
+                    (from r in context.VatTypePercentages.Include("VatType")
                      where r.VatTypeId == vatTypeId
                      && r.Tenant == tenant
                      && System.Data.Entity.DbFunctions.TruncateTime(r.FromDate) <= date
@@ -88,6 +88,12 @@ namespace Simplog.Data.CommonDataModel.Repositories
             context.SaveChanges();
         }
 
+        public List<VatTypePercentage> GetVatTypePercentagesByVATId(string vatTypeId, int tenant)
+        {
+            return (from a in context.VatTypePercentages.Include("VatType")
+                   where a.Tenant == tenant && a.VatTypeId == vatTypeId
+                   select a).ToList();
+        }
 
         public List<VatTypePercentage> GetMulti(Simplog.Server.Infrastructure.EntityKeyFields entityKeys)
         {

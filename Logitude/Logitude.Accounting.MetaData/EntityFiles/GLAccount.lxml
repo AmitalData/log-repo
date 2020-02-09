@@ -10612,7 +10612,7 @@
         MenuButtonType="&quot;menuitem&quot;"
         IndexOrder="0"
         LocalDefaultText="&quot;הפעל מחדש&quot;"
-        IsPackagable="false" />
+        IsPackagable="true" />
     </MenuButton>
   </MenuButtons>
   <DataContracts>

@@ -92,12 +92,9 @@
 
 ----*--After Delete--*--
 ----ObjectFields
-----delete from querycolumns where objectfieldcode not in(select fieldcode from ObjectFields)
---update querycolumns set ObjectFieldId = (select Id from objectfields where FieldCode=querycolumns.ObjectFieldCode)
-----delete from ScreenFields where objectfieldcode not in(select fieldcode from ObjectFields)
---update ScreenFields set ObjectFieldId = (select Id from objectfields where FieldCode=ScreenFields.ObjectFieldCode)
-----delete from AdvancedQueryFilters where objectfieldcode not in(select fieldcode from ObjectFields)
---update AdvancedQueryFilters set ObjectFieldId = (select Id from objectfields where FieldCode=AdvancedQueryFilters.ObjectFieldCode)
+--update querycolumns set ObjectFieldId = (select Id from objectfields where FieldCode=querycolumns.ObjectFieldCode) where objectfieldcode in (select fieldcode from ObjectFields)
+--update ScreenFields set ObjectFieldId = (select Id from objectfields where FieldCode=ScreenFields.ObjectFieldCode) where objectfieldcode in (select fieldcode from ObjectFields)
+--update AdvancedQueryFilters set ObjectFieldId = (select Id from objectfields where FieldCode=AdvancedQueryFilters.ObjectFieldCode) where objectfieldcode in (select fieldcode from ObjectFields)
 --update RuleConditionFields set ObjectFieldId = (select Id from objectfields where FieldCode=RuleConditionFields.ObjectFieldCode)
 --update ObjectTableRuleFields set ObjectFieldId = (select Id from objectfields where FieldCode=ObjectTableRuleFields.ObjectFieldCode)
 --update ObjectTableRules set TriggerFieldId = (select Id from objectfields where FieldCode=ObjectTableRules.TriggerFieldCode)
@@ -105,18 +102,12 @@
 --update restrictions  set ObjectFieldId = (select Id from objectfields where FieldCode=restrictions.ObjectFieldCode)
 --update CustomerFieldsUpdateSettings  set ObjectFieldId = (select Id from objectfields where FieldCode=CustomerFieldsUpdateSettings.ObjectFieldCode)
 --update ObjectFieldValidations  set ObjectFieldId = (select Id from objectfields where FieldCode=ObjectFieldValidations.ObjectFieldCode)
-----delete from ObjectFieldModifications where objectfieldcode not in(select fieldcode from ObjectFields)
---update ObjectFieldModifications  set ObjectFieldId = (select Id from objectfields where FieldCode=ObjectFieldModifications.ObjectFieldCode)
+--update ObjectFieldModifications  set ObjectFieldId = (select Id from objectfields where FieldCode=ObjectFieldModifications.ObjectFieldCode) where objectfieldcode in (select fieldcode from ObjectFields)
 
 ----Screens
-----delete from ScreenModifications where ScreenCode not in(select code from Screens)
---update ScreenModifications set ScreenId = (select Id from Screens where code=ScreenModifications.ScreenCode)
-----delete from ScreenFields where ScreenCode not in(select code from Screens)
---update ScreenFields set ScreenId = (select Id from Screens where code=ScreenFields.ScreenCode)
+--update ScreenModifications set ScreenId = (select Id from Screens where code=ScreenModifications.ScreenCode) where screencode in (select code from screens)
+--update ScreenFields set ScreenId = (select Id from Screens where code=ScreenFields.ScreenCode) where screencode in (select code from screens)
 --update ObjectTables set HeaderScreenId = (select Id from Screens where code=ObjectTables.HeaderScreenCode)
-----select ScreenCode,tenant,count(*) from ScreenModifications group by ScreenCode,tenant having count(*)>1
-----select * from ScreenModifications where ScreenCode = 'Master.HeaderScreen'
-----delete from ScreenModifications where id='??'
 
 ----Queries
 --update Queries set OriginalQueryId =  (select q1.Id from Queries q1 where q1.UniqueCode = Queries.OriginalQueryCode)
@@ -136,7 +127,6 @@
 --update ObjectFields set HelpTextCodeId = (select Id from TextCodes where Code=ObjectFields.HelpTextCodeCode and tenant = ObjectFields.Tenant)
 --update ObjectFields set ShortNameTextCodeId = (select Id from TextCodes where Code=ObjectFields.ShortNameTextCodeCode and tenant = ObjectFields.Tenant)
 --update ObjectFields set ListTextCodeId = (select Id from TextCodes where Code=ObjectFields.ListTextCodeCode and tenant = ObjectFields.Tenant)
-----delete from Translations where TextCodeCode not in (select code from TextCodes)
 --update Translations set TextCodeId = (select Id from TextCodes where Code=Translations.TextCodeCode and (tenant =  Translations.Tenant or tenant = 0)) where TextCodeCode in (select code from textcodes)
 
 ----Features
@@ -145,63 +135,12 @@
 --update ObjectTableTabs set FeatureId = (select Id from features where FeatureUniqeCode=ObjectTableTabs.FeatureUniqeCode)
 --update ObjectTableHelperControls set FeatureId = (select Id from features where FeatureUniqeCode=ObjectTableHelperControls.FeatureUniqeCode)
 --update MenuButtons set FeatureId = (select Id from features where FeatureUniqeCode=MenuButtons.FeatureUniqeCode)
-----delete from Reports where FeatureUniqeCode not in (select FeatureUniqeCode from Features)
 --update Reports set FeatureId = (select Id from features where FeatureUniqeCode=Reports.FeatureUniqeCode)
-----delete from PackageFeatures where FeatureUniqeCode not in (select FeatureUniqeCode from Features)
-----delete from PackageFeatures where FeatureUniqeCode is null
---update PackageFeatures set FeatureId = (select Id from features where FeatureUniqeCode=PackageFeatures.FeatureUniqeCode)
-----delete from RoleFeatures where FeatureUniqeCode not in (select FeatureUniqeCode from Features)
-----delete from RoleFeatures where FeatureUniqeCode is null
---update RoleFeatures set FeatureId = (select Id from features where FeatureUniqeCode=RoleFeatures.FeatureUniqeCode)
+--update PackageFeatures set FeatureId = (select Id from features where FeatureUniqeCode=PackageFeatures.FeatureUniqeCode) where PackageFeatures.FeatureUniqeCode in (select FeatureUniqeCode from Features)
+--update RoleFeatures set FeatureId = (select Id from features where FeatureUniqeCode=RoleFeatures.FeatureUniqeCode) where PackageFeatures.FeatureUniqeCode in (select FeatureUniqeCode from Features)
 
 --update ScreenModifications set NumberOfRows=3 where NumberOfRows>3 and ScreenCode like '%headerscreen%'
 
 -------------
 --select * from ScreenModifications where ScreenId in (select id from screens where ScreenCode='Master.HeaderScreen' and ObjectTableId=(select id from objecttables where name='master'))
-----delete from ScreenModifications where id='1-425' or id='1-370'
-
-
-----Quote.CH.ShipperReferenceListLable
-----ShipmentReceivable.MarkupHelpText
-----ARInvoice.CH.StatusNameRateListLable
-----ARInvoice.F.AccountingCardNumber
-----ARInvoice.F.RequestedPaymentMethodCode
-----ARInvoice.F.AccountingCardNumber
-----ARInvoice.CH.AccountingCardNumberListLable
-----ARInvoice.CH.AccountingCardNumberListLable
-----ARInvoice.CH.AccountingCardNumberListLable
-----ARInvoice.CH.ARInvoiceStatusNameRateListLable
-----ARInvoice.CH.ARInvoiceStatusNameRateListLable
-----ARInvoice.CH.IsAutoCreditRateListLable
-----ARInvoice.CH.IsAutoCreditRateListLable
-----ARInvoice.CH.IsCancelledRateListLable
-----ARInvoice.CH.IsCancelledRateListLable
-----Shipment.CH.ETAListLable
-----Shipment.O.Receivables.FixedForeignAmount
-----Shipment.O.Receivables.FixedLocalAmount
-----Shipment.O.Receivables.NotFixed
-----ARInvoiceLine.CH.Reference
-----ARInvoiceLine.CH.AmountInvoice
-----Quote.B.Payables.AddCharge
-----Quote.B.Payables.AddPayable
-----Quote.B.Payables.DeleteCharge
-----Quote.B.Payables.DeletePayable
-----Quote.B.Payables.Tarrifs
-----Quote.B.Receivables.AddReceivable
-----Quote.B.Receivables.DeleteReceivable
-----Quote.CH.ClosingReasonNameListLable
-----Quote.F.MinimumFreightCost
-----Quote.F.MinimumFreightCost.Short
-----Quote.F.MinimumFreightSale
-----Quote.F.MinimumFreightSale.Short
-----Quote.F.PackageTypeId.Short
-----Quote.F.PackageTypeQuantity.Short
-----Quote.F.ProfitInSaleCurrency.Short
-----Quote.F.SaleTotalAmount.Short
-----Quote.Features.General
-----Quote.Features.ReturnInProgress
-----Quote.Features.SetAsNoAnswer
-----Quote.Features.SetAsRejected
-----Quote.MenuButtons.EventButton
-----Quote.Features.Shipments
-----QuoteCharge.PriceBreakHelpText
+--select ScreenCode,tenant,count(*) from ScreenModifications group by ScreenCode,tenant having count(*)>1

@@ -4688,6 +4688,7 @@
   <field
     Id="&quot;3763c7c4-f126-412a-8faa-30a470db7be3&quot;"
     FieldName="&quot;StateName&quot;"
+    OldFieldName="&quot;StateName&quot;"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -4711,6 +4712,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;StateName&quot;"
     ListPropertyPath="&quot;StateName&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -5126,7 +5128,7 @@
         MenuButtonType="&quot;menuitem&quot;"
         IndexOrder="0"
         LocalDefaultText="&quot;נתק כרטיס&quot;"
-        IsPackagable="false" />
+        IsPackagable="true" />
     </MenuButton>
   </MenuButtons>
   <DataContracts />
