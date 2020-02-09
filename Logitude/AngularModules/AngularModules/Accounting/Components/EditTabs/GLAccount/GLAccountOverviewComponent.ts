@@ -71,10 +71,10 @@ export class GLAccountOverviewComponent extends BaseComponent {
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         if (SessionLocator.LoggedUserPM) this.showLocal = !SessionLocator.LoggedUserPM.DontShowLocal;
 
-        //Resources
-        this._EntityResourceService.getEntityResourceByTableName("AccountingNote").subscribe((response: any) => { });
-        this._EntityResourceService.getEntityResourceByTableName("Reconciliation").subscribe((response: any) => { });
-        this._EntityResourceService.getEntityResourceByTableName("LedgerTransaction").subscribe((response: any) => { });
+        //Resources // Use Less
+        //this._EntityResourceService.getEntityResourceByTableName("AccountingNote").subscribe((response: any) => { });
+        //this._EntityResourceService.getEntityResourceByTableName("Reconciliation").subscribe((response: any) => { });
+        //this._EntityResourceService.getEntityResourceByTableName("LedgerTransaction").subscribe((response: any) => { });
 
         // Set Entity
         if(entityArgs && entityArgs.ObjectTableName == "GLAccount")
