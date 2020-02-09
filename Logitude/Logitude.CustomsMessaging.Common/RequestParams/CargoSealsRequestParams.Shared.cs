@@ -28,9 +28,14 @@ namespace Logitude.CustomsMessaging.Common.RequestParams
     {
         public string SealNumber { get; set; }
         public string SealTypeCode { get; set; }
+        public string SealTypeName { get; set; }
         public string SealCompletenessStateCode { get; set; }
+        public string SealCompletenessStateName { get; set; }
         public string UpdateReasonCode { get; set; }
+        public string UpdateReasonName { get; set; }
         public string UpdateTypeCode { get; set; }
+        public string UpdateTypeName { get; set; }
         public string Remarks { get; set; }
     }
 }
+
