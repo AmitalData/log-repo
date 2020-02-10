@@ -2043,7 +2043,7 @@
       <DependentUpon>202002041333119_InterestTransactionMigration.cs</DependentUpon>
     </Compile>
 
-    <Compile Include="Migrations\Configuration.cs" />
+   
     <Compile Include="Migrations\202001080842531_AbedAddCustomFieldToQuote.cs" />
     <Compile Include="Migrations\202001080842531_AbedAddCustomFieldToQuote.Designer.cs">
       <DependentUpon>202001080842531_AbedAddCustomFieldToQuote.cs</DependentUpon>
