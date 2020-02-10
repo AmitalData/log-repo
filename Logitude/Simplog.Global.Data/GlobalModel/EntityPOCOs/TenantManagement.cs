@@ -184,5 +184,10 @@ namespace Simplog.Global.Data.GlobalModel.EntityPOCOs
 
         public bool MainAdditionalPackageApplied { get; set; }
         public string SupportDomain { get; set; }
+
+        public int? TotalNumberOfUsers { get; set; }
+        public int? TotalFreeUsers { get; set; }
+        public double? AveragePrice { get; set; }
+        public double? TotalPaymentamount { get; set; }
     }
 }

@@ -685,6 +685,7 @@
     <Content Include="Main Branch\2020\02 - 2020\Day 04 [Maheera] Fill RequestDate of Quote Table.sql" />
     <Content Include="Main Branch\2020\02 - 2020\Day 06 [Wesam] Fix pltotaltax textcode.sql" />
     <Content Include="Main Branch\2020\02 - 2020\Day 10 [Bisan] Fill Profit Columns of Quote Table.sql" />
+    <Content Include="Main Branch\2020\02 - 2020\Day 08 [Maheera] Fill Totals of TenantManagement Table.sql" />
     <Content Include="Main Branch\2020\1 - 2020\Day 12 [Mutaz] Delete Constraint between SharedUserQueries and Query.sql" />
     <Content Include="Main Branch\2020\1 - 2020\Day 22 [Abed] update Help Center.sql" />
     <Content Include="Main Branch\2020\1 - 2020\Day 31 [Mutaz] Add Constraint UniqCode In Query.sql" />
