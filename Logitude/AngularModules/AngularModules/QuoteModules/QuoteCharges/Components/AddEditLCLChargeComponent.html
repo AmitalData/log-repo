@@ -243,7 +243,23 @@
                                             </td>
 
                                             <td style="width: 1px;" *ngIf="DataContext.IsChargeBySteps">
-                                                <button class="Button" (click)="SelectBreaksClicked()" [disabled]="!IsEditingEnabled">Select breaks</button>
+                                                <button class="Button" (click)="AddBreaksClicked()" [disabled]="!IsAddBreaksEnabled">Add breaks</button>
+                                            </td>
+
+                                            <td style="width: 2px;" *ngIf="DataContext.IsChargeBySteps">
+                                                <div></div>
+                                            </td>
+
+                                            <td style="width:200px;" *ngIf="DataContext.IsChargeBySteps">
+                                                <LogLov [ObjectFieldName]="'SelectedPriceStepId'"
+                                                        [SelectedValue]="SelectedPriceStepId"
+                                                        [ObjectTableName]="'PriceStep'"
+                                                        [DataContext]="DataContext2"
+                                                        [LookUpTableName]="'PriceStep'"
+                                                        [NoObjectField]="true"
+                                                        [HideColumns]="true"
+                                                        (SelectedItemChanged)="SelectedPriceStepList = $event">
+                                                </LogLov>
                                             </td>
 
                                             <td style="width: 5px;" *ngIf="DataContext.IsChargeBySteps">
