@@ -727,15 +727,18 @@ namespace WebFreight.Web.Helpers
                     }
 
                     strippedText = string.Join("\n", newText.ToArray());
-
                     strippedTextFinal = strippedText.TrimEnd();
-                    //File.WriteAllText(@"C:\Log\strippedFinal.txt", strippedTextFinal);
                 }
 
                 else
                 {
                     strippedTextFinal = TruncateLongString(body, 4000);
                 }
+            }
+
+            if (string.IsNullOrWhiteSpace(strippedTextFinal) || string.IsNullOrEmpty(strippedTextFinal))
+            {
+                strippedTextFinal = "Empty Body";
             }
 
             return strippedTextFinal;
