@@ -25,24 +25,37 @@ DECLARE TenantManagementsCursor CURSOR READ_ONLY
 		set @TotalPaymentamount_Packages = (select SUM(isnull(TotalPrice,0)) from TenantManagementLicenses where Tenant = @TenantId);
 		set @AveragePrice = 0;
 
-		if (@IsMultiPackage = 0)
-		 begin
-			set @TotalNumberOfUsers = isnull(@NumberOfUsers,0);
-			set @TotalFreeUsers = isnull(@FreeUsers,0);
-			set @TotalPaymentamount = isnull(@TotalPrice,0);
-		 end
-		 else 
-		 begin
-			set @TotalPaymentamount = isnull(@TotalPaymentamount_Packages,0);
-			set @TotalFreeUsers = isnull(@TotalFreeUsers_Packages,0);
-			set @TotalNumberOfUsers = isnull(@TotalNumberOfUsers_Packages,0);
+		if (@MainAdditionalPackageApplied = 1)
+		  begin
+			if (@IsMultiPackage = 1)
+			begin
+				set @TotalPaymentamount = isnull(@TotalPaymentamount_Packages,0) + isnull(@TotalPrice,0);
+				set @TotalFreeUsers = isnull(@TotalFreeUsers_Packages,0) + isnull(@NumberOfUsers,0);
+				set @TotalNumberOfUsers = isnull(@TotalNumberOfUsers_Packages,0) + isnull(@FreeUsers,0);
+			end
+
+			else
+			begin
+				set @TotalNumberOfUsers = isnull(@NumberOfUsers,0);
+				set @TotalFreeUsers = isnull(@FreeUsers,0);
+				set @TotalPaymentamount = isnull(@TotalPrice,0);
+			end			
 		 end
 
-		 if (@MainAdditionalPackageApplied = 1)
-		  begin
-			set @TotalPaymentamount = isnull(@TotalPaymentamount_Packages,0) + isnull(@TotalPrice,0);
-			set @TotalFreeUsers = isnull(@TotalFreeUsers_Packages,0) + isnull(@NumberOfUsers,0);
-			set @TotalNumberOfUsers = isnull(@TotalNumberOfUsers_Packages,0) + isnull(@FreeUsers,0);
+		 else
+		 begin
+		 	 if (@IsMultiPackage = 0)
+			 begin
+				set @TotalNumberOfUsers = isnull(@NumberOfUsers,0);
+				set @TotalFreeUsers = isnull(@FreeUsers,0);
+				set @TotalPaymentamount = isnull(@TotalPrice,0);
+			 end
+			 else 
+			 begin
+				set @TotalPaymentamount = isnull(@TotalPaymentamount_Packages,0);
+				set @TotalFreeUsers = isnull(@TotalFreeUsers_Packages,0);
+				set @TotalNumberOfUsers = isnull(@TotalNumberOfUsers_Packages,0);
+			 end
 		 end
 
 		 if (@TotalNumberOfUsers != 0)
