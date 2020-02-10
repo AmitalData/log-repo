@@ -294,6 +294,8 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
             myFilterItems.push(new QueryFilterItem("IncludeChildAccounts", this.IncludeChildAccounts ? this.IncludeChildAccounts : null));
             myFilterItems.push(new QueryFilterItem("SearchFields", this.SearchFields ? this.SearchFields : null));
             myFilterItems.push(new QueryFilterItem("DateTypeCode", this._dateTypeCode ? this._dateTypeCode : null));
+            myFilterItems.push(new QueryFilterItem("IncludeChildAccounts", this.IncludeChildAccounts));
+            myFilterItems.push(new QueryFilterItem("IncludeRelatedCurrenciesAccount", this.IncludeRelatedCurrenciesAccount));
 
 
             // myFilterItems.push(new QueryFilterItem("CategoryIndex", categoryIndex)); // 'Category1' , 'Category2' , ...
@@ -428,6 +430,14 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
     }
     public set IncludeChildAccounts(v: boolean) {
         this._IncludeChildAccounts = v;
+    }
+
+    private _IncludeRelatedCurrenciesAccount: boolean;
+    public get IncludeRelatedCurrenciesAccount(): boolean {
+        return this._IncludeRelatedCurrenciesAccount;
+    }
+    public set IncludeRelatedCurrenciesAccount(v: boolean) {
+        this._IncludeRelatedCurrenciesAccount = v;
     }
 
 
