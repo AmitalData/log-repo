@@ -140,15 +140,29 @@ namespace Logitude.CustomsMessaging.MessagingServices
             GenericRequestParams requestParams, 
             out string exceptionMessage)
         {
-            /* SOHAIB
-             * BuildRequestContentHeaderB4Sign(customRequest);
-             var fake_2754_MSG10004_ImportDeclarationResponse = new Fake_2754_MSG10004_ImportDeclarationResponse(requestParams);
-             _ResponseHeader = fake_2754_MSG10004_ImportDeclarationResponse
-                 .CallWS(out DF_NG_2754_MSG10004_ImportDeclarationResponse response);
-             exceptionMessage = null;
-             return response;*/
-            exceptionMessage = null;
             var response = new DF_NG_2754_MSG10004_ImportDeclarationResponse();
+            if (requestParams.TestCase != null)
+            {
+                BuildRequestContentHeaderB4Sign(customRequest);
+                switch (requestParams.TestCase.Code)
+                {
+                    case "2754Valid":
+                        var Fake2754ValidMsg = new Fake_2754_MSG10004_ImportDeclarationResponse(requestParams);
+                        _ResponseHeader = Fake2754ValidMsg.CallWS(out response);
+                        break;
+                    case "2754Constraint":
+                        var Fake2754WithConstraintMsg = new Fake_2754_MSG10004_ImportDeclarationResponseWithConstraint(requestParams);
+                        _ResponseHeader = Fake2754WithConstraintMsg.CallWS(out response);
+                        break;
+                    case "2754Payment":
+                        var Fake2754SumbitPayment = new Fake_2754_MSG10004_SumbitPayment(requestParams);
+                        _ResponseHeader = Fake2754SumbitPayment.CallWS(out response);
+                        break;
+                }
+                exceptionMessage = null;
+                return response;
+            }
+            exceptionMessage = null;
 
             // var mP = new UnifreightIIG.Common.TheGateway.MoreParams() { MyOption = UnifreightIIG.Common.TheGateway.MoreParams.Options.None };
             BuildRequestContentHeaderB4Sign(customRequest);
