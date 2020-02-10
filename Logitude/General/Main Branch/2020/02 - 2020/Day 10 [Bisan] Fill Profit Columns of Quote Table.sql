@@ -13,7 +13,7 @@
 	DECLARE QuotesCursor CURSOR READ_ONLY
 	FOR
 	SELECT Id, Tenant, OpenDate, EstimateProfit, ExchangeRate
-	FROM Quotes	
+	FROM Quotes
 	OPEN QuotesCursor FETCH NEXT FROM QuotesCursor INTO @QuoteId, @Tenant, @QuoteDate, @EstimateProfit, @ExchangeRate
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
@@ -29,6 +29,7 @@
 		EstimatedProfitInProfit = @AmountInProfit,
 		ProfitCurrencyId = @ProfitCurrencyId,
 		ProfitExchangeRate = @ProfitCurrencyRate
+		where Id = @QuoteId
 
 	FETCH NEXT FROM QuotesCursor INTO @QuoteId, @Tenant, @QuoteDate, @EstimateProfit, @ExchangeRate
 	END
