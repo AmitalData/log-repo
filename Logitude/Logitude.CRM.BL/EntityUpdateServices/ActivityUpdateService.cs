@@ -144,6 +144,10 @@ namespace Logitude.CRM.BL.EntityUpdateServices
 
                 correspondenceRepository.Add(line);
                 correspondenceRepository.SubmitChanges();
+
+                ticket.LastCorrespondence = line.Description;
+                ticketRep.Update(ticket);
+                ticketRep.SubmitChanges();
             }
         }
 

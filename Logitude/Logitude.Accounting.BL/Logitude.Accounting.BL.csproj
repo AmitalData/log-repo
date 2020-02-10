@@ -295,6 +295,7 @@
     <Compile Include="DataContract\OpenFormatReportData.cs" />
     <Compile Include="DataContract\OpenFormatReportDataProvider.cs" />
     <Compile Include="DataContract\TaxDeductionReportData.cs" />
+    <Compile Include="DataContract\TaxDeductionReportDataProvider.cs" />
     <Compile Include="DataContract\TaxReportLinesCounter.cs" />
     <Compile Include="EntityDataMappings\AccountingCompanyTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\AccountingEntityDataMapping.cs" />

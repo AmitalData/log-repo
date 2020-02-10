@@ -34,7 +34,7 @@ export class DeliveryPackagesAddEditComponent extends BaseComponent {
 
     public DimensionsLabel: string;
     SetLabels() {
-        this.DimensionsLabel = TextCodeTranslator.Translate('ShipmentPackage.F.Dimensions').replace('%UnitCode', this.DataContext.fatherComponent.ShipmentPM.DimensionsUnitCode);
+        this.DimensionsLabel = TextCodeTranslator.Translate('ShipmentPackage.O.Dimensions').replace('%UnitCode', this.DataContext.fatherComponent.ShipmentPM.DimensionsUnitCode);
     }
 
     CancelButtonClicked() {

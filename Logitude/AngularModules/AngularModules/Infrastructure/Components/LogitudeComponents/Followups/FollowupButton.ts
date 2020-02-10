@@ -33,7 +33,9 @@ export class FollowupButton implements OnInit, OnDestroy {
     public FollowupLegType: string = null;
     public HasFollowup: boolean = false;
     public IsFeatureExists: boolean = false;
+    public IsResourceReady: boolean = false;
     public IsComponentVisible: boolean = false;
+    public IsComponentInitited: boolean = false;
     public IsAutomatic: boolean = false;
     public ExpDate: Date = null;
     public ActDate: Date = null;
@@ -42,7 +44,10 @@ export class FollowupButton implements OnInit, OnDestroy {
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityResourceService: EntityResourceService) {
         this.entityResourceService.getEntityResourceByTableName("FollowUp").subscribe((res: any) => {
+            this.IsResourceReady = true;
+
             this.Listen();
+            this.InitComponent();
         });
     }
 
@@ -59,75 +64,83 @@ export class FollowupButton implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        if (!AppTool.IsNullOrEmpty(this.LegType)) {
-            this.FollowupLegType = this.LegType.replace(" ", "");
-            this.SetDateFieldsName();
-        }
+        this.IsComponentInitited = true;
+        this.InitComponent();
+    }
 
-        if (this.QuotePM) {
-            this.ObjectTableName = "Quote";
-            if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "Quote.Followups")) {
-                this.IsFeatureExists = true;
+    InitComponent() {
+        if (this.IsResourceReady && this.IsComponentInitited) {
+            if (!AppTool.IsNullOrEmpty(this.LegType)) {
+                this.FollowupLegType = this.LegType.replace(" ", "");
+                this.SetDateFieldsName();
             }
-        }
 
-        else if (this.ShipmentPM) {
-            this.ObjectTableName = "Shipment";
-            if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "Shipment.Followups")) {
-                this.IsFeatureExists = true;
+            if (this.QuotePM) {
+                this.ObjectTableName = "Quote";
+                if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "Quote.Followups")) {
+                    this.IsFeatureExists = true;
+                }
+            }
 
-                if (!this.PropertyChangedEvent) {
-                    if (this.PickUpPM) {
-                        this.PropertyChangedEvent = this.PickUpPM.PropertyChanged.subscribe(s => {
-                            if (s) {
-                                if (s.PropertyName == this.ActDateName) {
-                                    this.SetComponent();
-                                    this.ActDate = DateTool.GetDateParts(this.PickUpPM[this.ActDateName]).DateObject;
-                                    if (this.ActDate != null) {
-                                        this.DeleteCurrentFollowup();
+            else if (this.ShipmentPM) {
+                this.ObjectTableName = "Shipment";
+                if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "Shipment.Followups")) {
+                    this.IsFeatureExists = true;
+
+                    if (!this.PropertyChangedEvent) {
+                        if (this.PickUpPM) {
+                            this.PropertyChangedEvent = this.PickUpPM.PropertyChanged.subscribe(s => {
+                                if (s) {
+                                    if (s.PropertyName == this.ActDateName) {
+                                        this.SetComponent();
+                                        this.ActDate = DateTool.GetDateParts(this.PickUpPM[this.ActDateName]).DateObject;
+                                        if (this.ActDate != null) {
+                                            this.DeleteCurrentFollowup();
+                                        }
                                     }
                                 }
-                            }
-                        });
-                    }
+                            });
+                        }
 
-                    else if (this.DeliveryPM) {
-                        this.PropertyChangedEvent = this.DeliveryPM.PropertyChanged.subscribe(s => {
-                            if (s) {
-                                if (s.PropertyName == this.ActDateName) {
-                                    this.SetComponent();
-                                    this.ActDate = DateTool.GetDateParts(this.DeliveryPM[this.ActDateName]).DateObject;
-                                    if (this.ActDate != null) {
-                                        this.DeleteCurrentFollowup();
+                        else if (this.DeliveryPM) {
+                            this.PropertyChangedEvent = this.DeliveryPM.PropertyChanged.subscribe(s => {
+                                if (s) {
+                                    if (s.PropertyName == this.ActDateName) {
+                                        this.SetComponent();
+                                        this.ActDate = DateTool.GetDateParts(this.DeliveryPM[this.ActDateName]).DateObject;
+                                        if (this.ActDate != null) {
+                                            this.DeleteCurrentFollowup();
+                                        }
                                     }
                                 }
-                            }
-                        });
-                    }
+                            });
+                        }
 
-                    else {
-                        this.PropertyChangedEvent = this.ShipmentPM.PropertyChanged.subscribe(s => {
-                            if (s) {
-                                if (s.PropertyName == this.ActDateName) {
+                        else {
+                            this.PropertyChangedEvent = this.ShipmentPM.PropertyChanged.subscribe(s => {
+                                if (s) {
+                                    if (s.PropertyName == this.ActDateName) {
 
-                                    this.SetComponent();
+                                        this.SetComponent();
 
-                                    this.ActDate = DateTool.GetDateParts(this.ShipmentPM[this.ActDateName]).DateObject;
-                                    if (this.ActDate != null) {
-                                        this.DeleteCurrentFollowup();
+                                        this.ActDate = DateTool.GetDateParts(this.ShipmentPM[this.ActDateName]).DateObject;
+                                        if (this.ActDate != null) {
+                                            this.DeleteCurrentFollowup();
+                                        }
+                                        this.SetSource();
+                                        this.SetTooltip();
                                     }
-                                    this.SetSource();
-                                    this.SetTooltip();
                                 }
-                            }
-                        });
+                            });
+                        }
                     }
                 }
             }
-        }
 
-        this.SetComponent();
+            this.SetComponent();
+        }
     }
+
     ngOnDestroy() {
         AppTool.KillEventEmitter(this.FollowupsChangedEvent);
         AppTool.KillEventEmitter(this.PropertyChangedEvent);

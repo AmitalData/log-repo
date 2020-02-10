@@ -73,7 +73,7 @@ export class RootComponent implements OnInit {
 
             else {
                 this.LoadLoginPage();
-                var IsPREQ = SessionLocator.IsExternalParams && SessionLocator.ExternalParams && SessionLocator.ExternalParams.Menu && SessionLocator.ExternalParams.Menu.toLocaleLowerCase() == "preq";
+                var IsPREQ = SessionLocator.IsExternalParams && SessionLocator.ExternalParams && SessionLocator.ExternalParams.Menu && (SessionLocator.ExternalParams.Menu.toLocaleLowerCase() == "preq" || SessionLocator.ExternalParams.Menu.toLocaleLowerCase() == "uid");
                 if (url && IsPREQ == false && url.indexOf('localhost') == -1) {
                     window.onbeforeunload = function (e) {
                         var message = "";
@@ -255,10 +255,23 @@ export class RootComponent implements OnInit {
             });
     }
 
+    VieUserIdNumberMobileComponent() {
+        this.ClearLocation();
+        SessionLocator.DynamicLoader.Load("./ShipmentModules/ShipmentLogBox/Components/Logbox/UserIdNumberMobileComponent", this.location)
+            .then(cmpRef => {
+                cmpRef.instance.RunComponent(); 
+            });
+    }
+
     OnLoginCompleted(Param: any = null) {
         
         if (Param == "IgnoreTerms") {
-            this.ViewEComercePaymentRequestComponent();
+            if (SessionLocator.IsExternalParams && SessionLocator.ExternalParams && SessionLocator.ExternalParams.Menu && SessionLocator.ExternalParams.Menu.toLocaleLowerCase() == "uid") {
+                this.VieUserIdNumberMobileComponent();
+            }
+            else {
+                this.ViewEComercePaymentRequestComponent();
+            }
             return;
         }
         this._FinishLogin = true;
@@ -312,6 +325,9 @@ export class RootComponent implements OnInit {
                         }
                         else if (SessionLocator.IsExternalParams && SessionLocator.ExternalParams && SessionLocator.ExternalParams.Menu && SessionLocator.ExternalParams.Menu.toLocaleLowerCase() == "preq" && IsMobileDetected() == true) {
                             this.ViewEComercePaymentRequestComponent();
+                        }
+                        else if (SessionLocator.IsExternalParams && SessionLocator.ExternalParams && SessionLocator.ExternalParams.Menu && SessionLocator.ExternalParams.Menu.toLocaleLowerCase() == "uid" && IsMobileDetected() == true) {
+                            this.VieUserIdNumberMobileComponent();
                         }
                         else {
                             this.ViewHomeComponent();

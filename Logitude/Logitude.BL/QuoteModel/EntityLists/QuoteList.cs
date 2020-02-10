@@ -204,6 +204,8 @@ namespace Logitude.BL.QuoteModel.EntityLists
         public string Field20 { get; set; }
 
         public DateTime? RequestDate { get; set; }
+        public double? EstimatedProfitInLocal { get; set; }
+        public double? EstimatedProfitInProfit { get; set; }
 
     }
 }

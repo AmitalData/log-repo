@@ -256,10 +256,14 @@ namespace CommunicationWorkerRole
 				{
 					if (context != null)
 					{
+						SetRelatedEntityTransferStatusToTransferError(cl);
+
 						cl.CommunicationStatusTypeCode = "F";
 						cl.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(cl.Tenant);
 						communicationLogRep.Update(cl);
 						communicationLogRep.SubmitChanges();
+						queueservice.Complete();
+
 					}
 
 				}
@@ -291,6 +295,37 @@ namespace CommunicationWorkerRole
 				}
 				throw;
 
+			}
+		}
+
+		private static void SetRelatedEntityTransferStatusToTransferError(CommunicationLog waitingCommLog)
+		{
+			if (waitingCommLog.Subject == "Payment SAT Interface")
+			{
+				Simplog.Data.InvoiceModel.Repositories.ARPaymentRepository arpaymentRep = new Simplog.Data.InvoiceModel.Repositories.ARPaymentRepository(waitingCommLog.Tenant);
+				Simplog.Data.InvoiceModel.EntityPOCOs.ARPayment payment = arpaymentRep.GetSingleARPayment(waitingCommLog.EntityId);
+				if (payment != null)
+				{
+					if (payment.SATTransferStatusCode != "TE")
+					{
+						payment.SATTransferStatusCode = "TE";
+						//payment.TransmissionError = transError;
+						arpaymentRep.Update(payment);
+						arpaymentRep.SubmitChanges();
+					}
+				}
+			}
+			else
+			{
+				Simplog.Data.InvoiceModel.Repositories.ARInvoiceRepository arinvoiceRep = new Simplog.Data.InvoiceModel.Repositories.ARInvoiceRepository(waitingCommLog.Tenant);
+				Simplog.Data.InvoiceModel.EntityPOCOs.ARInvoice invoice = arinvoiceRep.GetSingleInvoice(waitingCommLog.EntityId);
+				if (invoice.SATTransferStatusCode != "TE")
+				{
+					invoice.SATTransferStatusCode = "TE";
+					//invoice.TransmissionError = transError;
+					arinvoiceRep.Update(invoice);
+					arinvoiceRep.SubmitChanges();
+				}
 			}
 		}
 
