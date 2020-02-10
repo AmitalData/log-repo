@@ -1,0 +1,1 @@
+update   cards set StorageFreeDays  = null where StorageFreeDays = 0

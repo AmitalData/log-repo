@@ -1,4 +1,4 @@
-﻿<style type="text/css">
+<style type="text/css">
     .SectionTitle {
         height: 20px;
         line-height: 20px;
@@ -25,7 +25,7 @@
                                <table>
                                    <!-- Code -->
                                    <tr class="FormFieldRow">
-                                       <td style="width: 100px;">
+                                       <td style="width: 120px;">
                                            <LogLabel [ObjectFieldName]="'Code'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                        </td>
 
@@ -41,7 +41,7 @@
                                        </td>
 
                                        <td>
-                                           <LogTextBox   [ObjectFieldName]="'EnglishName'" [Text]="EnglishName" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                           <LogTextBox [ObjectFieldName]="'EnglishName'" [Text]="EnglishName" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                        </td>
                                    </tr>
 
@@ -52,7 +52,7 @@
                                        </td>
 
                                        <td>
-                                           <LogTextBox   [ObjectFieldName]="'LocalName'" [Text]="LocalName" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                           <LogTextBox [ObjectFieldName]="'LocalName'" [Text]="LocalName" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                        </td>
                                    </tr>
 
@@ -63,7 +63,7 @@
                                        </td>
 
                                        <td>
-                                           <LogTextBox   [ObjectFieldName]="'IATACode'" [Text]="IATACode" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                           <LogTextBox [ObjectFieldName]="'IATACode'" [Text]="IATACode" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                        </td>
                                    </tr>
 
@@ -74,7 +74,7 @@
                                        </td>
 
                                        <td>
-                                           <LogTextBox   [ObjectFieldName]="'CASSCode'" [Text]="CASSCode" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                           <LogTextBox [ObjectFieldName]="'CASSCode'" [Text]="CASSCode" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                        </td>
                                    </tr>
 
@@ -85,7 +85,7 @@
                                        </td>
 
                                        <td>
-                                           <LogTextBox   [ObjectFieldName]="'RegulatedAgentCode'" [Text]="RegulatedAgentCode" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                           <LogTextBox [ObjectFieldName]="'RegulatedAgentCode'" [Text]="RegulatedAgentCode" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                        </td>
                                    </tr>
 
@@ -96,7 +96,7 @@
                                        </td>
 
                                        <td>
-                                           <LogTextBox   [ObjectFieldName]="'Website'" [Text]="Website" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                           <LogTextBox [ObjectFieldName]="'Website'" [Text]="Website" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                        </td>
                                    </tr>
 
@@ -107,7 +107,18 @@
                                        </td>
 
                                        <td>
-                                           <LogCheckBox   [ObjectFieldName]="'InActive'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                           <LogCheckBox [ObjectFieldName]="'InActive'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                       </td>
+                                   </tr>
+
+                                   <!--Storage Free Days-->
+                                   <tr class="FormFieldRow">
+                                       <td>
+                                           <LogLabel [ObjectFieldName]="'StorageFreeDays'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                       </td>
+
+                                       <td>
+                                           <LogTextBox [ObjectFieldName]="'StorageFreeDays'" [Text]="StorageFreeDays" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                        </td>
                                    </tr>
 
@@ -124,7 +135,7 @@
                                                <tr style="height: 95px;">
                                                    <td>
                                                        <div class="FillParent">
-                                                           <LogTextBox   [ObjectFieldName]="'Notes'" [Text]="Notes" [IsMultiline]="true" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                           <LogTextBox [ObjectFieldName]="'Notes'" [Text]="Notes" [IsMultiline]="true" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                                        </div>
                                                    </td>
                                                </tr>
@@ -136,7 +147,7 @@
                                    <tr>
                                        <td></td>
                                    </tr>
-    
+
                                </table>
 
                            </td>

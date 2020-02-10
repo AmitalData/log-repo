@@ -175,6 +175,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   ActivationRequestedByUserId = a.ActivationRequestedByUserId,
                                   GLAccountId = a.Card.GLAccountId,
                                   CreatedByPartner = a.Card.CreatedByPartner,
+                                  StorageFreeDays = a.Card.StorageFreeDays,
                                   Card = new CardPM()
                                   {
                                       Id = a.Id,
@@ -329,6 +330,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               ActivationRequestedByUserId = a.ActivationRequestedByUserId,
                               GLAccountId = a.Card.GLAccountId,
                               CreatedByPartner = a.Card.CreatedByPartner,
+                              StorageFreeDays = a.Card.StorageFreeDays,
                               Card = new CardPM
                               {
                                   Id = a.Id,

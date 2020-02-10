@@ -65,6 +65,11 @@ export class ConsoleShipmentPM {
     public get GrossWeightInKG() { return this.grossWeightInKG; }
     public set GrossWeightInKG(newValue: number) { this.grossWeightInKG = newValue; this.MarkAsDirty(); } 
 
+    private grossWeightPerStorageDays: number;
+    public get GrossWeightPerStorageDays() { return this.grossWeightPerStorageDays; }
+    public set GrossWeightPerStorageDays(newValue: number) { if (this.grossWeightPerStorageDays != newValue) { this.grossWeightPerStorageDays = newValue; this.MarkAsDirty(); } }
+
+
     private grossWeightPerTon: number;
     public get GrossWeightPerTon() { return this.grossWeightPerTon; }
     public set GrossWeightPerTon(newValue: number) { this.grossWeightPerTon = newValue; this.MarkAsDirty(); } 
@@ -156,7 +161,6 @@ export class ConsoleShipmentPM {
     private volumeInCBM: number;
     public get VolumeInCBM() { return this.volumeInCBM; }
     public set VolumeInCBM(newValue: number) { this.volumeInCBM = newValue; this.MarkAsDirty(); }
-
 
     private fCLDataList: HouseContainerPackage[];
     get FCLDataList() {

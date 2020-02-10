@@ -2036,6 +2036,18 @@
     <Compile Include="Migrations\202002100909155_AddProfitColumnsToQuote.Designer.cs">
       <DependentUpon>202002100909155_AddProfitColumnsToQuote.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202002030954195_AddWarehouseStorageFreeDaysColumns.cs" />
+    <Compile Include="Migrations\202002030954195_AddWarehouseStorageFreeDaysColumns.Designer.cs">
+      <DependentUpon>202002030954195_AddWarehouseStorageFreeDaysColumns.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202002031129352_UpdateStorageFreeDaysColumns.cs" />
+    <Compile Include="Migrations\202002031129352_UpdateStorageFreeDaysColumns.Designer.cs">
+      <DependentUpon>202002031129352_UpdateStorageFreeDaysColumns.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202002041151178_AddGrossWeightPerStorageDaysToShipment_Maheera.cs" />
+    <Compile Include="Migrations\202002041151178_AddGrossWeightPerStorageDaysToShipment_Maheera.Designer.cs">
+      <DependentUpon>202002041151178_AddGrossWeightPerStorageDaysToShipment_Maheera.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
 
     <Compile Include="Migrations\202002041333119_InterestTransactionMigration.cs" />
@@ -3680,11 +3692,18 @@
     <EmbeddedResource Include="Migrations\202002100909155_AddProfitColumnsToQuote.resx">
       <DependentUpon>202002100909155_AddProfitColumnsToQuote.cs</DependentUpon>
     </EmbeddedResource>
-
     <EmbeddedResource Include="Migrations\202002041333119_InterestTransactionMigration.resx">
       <DependentUpon>202002041333119_InterestTransactionMigration.cs</DependentUpon>
     </EmbeddedResource>
-
+    <EmbeddedResource Include="Migrations\202002030954195_AddWarehouseStorageFreeDaysColumns.resx">
+      <DependentUpon>202002030954195_AddWarehouseStorageFreeDaysColumns.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002031129352_UpdateStorageFreeDaysColumns.resx">
+      <DependentUpon>202002031129352_UpdateStorageFreeDaysColumns.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002041151178_AddGrossWeightPerStorageDaysToShipment_Maheera.resx">
+      <DependentUpon>202002041151178_AddGrossWeightPerStorageDaysToShipment_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Logitude.Accounting.Data\Logitude.Accounting.Data.csproj">

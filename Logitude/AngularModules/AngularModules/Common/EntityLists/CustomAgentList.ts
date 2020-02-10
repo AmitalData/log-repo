@@ -37,5 +37,6 @@ export class CustomAgentList {
 		PrimaryContactName: string;
 		PrimaryContactEmail: string;
 		PrimaryContactPhone: string;
+		StateName: string;
 	
 }
