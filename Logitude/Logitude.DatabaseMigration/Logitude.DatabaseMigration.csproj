@@ -2015,6 +2015,7 @@
     <Compile Include="Migrations\202002031310173_AddRequestDateToQuoteTable_Maheera.Designer.cs">
       <DependentUpon>202002031310173_AddRequestDateToQuoteTable_Maheera.cs</DependentUpon>
     </Compile>
+
     <Compile Include="Migrations\202002041504529_Mutaz_Fix_QueryOriginalCode.cs" />
     <Compile Include="Migrations\202002041504529_Mutaz_Fix_QueryOriginalCode.Designer.cs">
       <DependentUpon>202002041504529_Mutaz_Fix_QueryOriginalCode.cs</DependentUpon>
@@ -2035,6 +2036,13 @@
     <Compile Include="Migrations\202002100909155_AddProfitColumnsToQuote.Designer.cs">
       <DependentUpon>202002100909155_AddProfitColumnsToQuote.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+
+    <Compile Include="Migrations\202002041333119_InterestTransactionMigration.cs" />
+    <Compile Include="Migrations\202002041333119_InterestTransactionMigration.Designer.cs">
+      <DependentUpon>202002041333119_InterestTransactionMigration.cs</DependentUpon>
+    </Compile>
+
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\202001080842531_AbedAddCustomFieldToQuote.cs" />
     <Compile Include="Migrations\202001080842531_AbedAddCustomFieldToQuote.Designer.cs">
@@ -3653,6 +3661,7 @@
     <EmbeddedResource Include="Migrations\202002031310173_AddRequestDateToQuoteTable_Maheera.resx">
       <DependentUpon>202002031310173_AddRequestDateToQuoteTable_Maheera.cs</DependentUpon>
     </EmbeddedResource>
+
     <EmbeddedResource Include="Migrations\202002041504529_Mutaz_Fix_QueryOriginalCode.resx">
       <DependentUpon>202002041504529_Mutaz_Fix_QueryOriginalCode.cs</DependentUpon>
     </EmbeddedResource>
@@ -3671,6 +3680,11 @@
     <EmbeddedResource Include="Migrations\202002100909155_AddProfitColumnsToQuote.resx">
       <DependentUpon>202002100909155_AddProfitColumnsToQuote.cs</DependentUpon>
     </EmbeddedResource>
+
+    <EmbeddedResource Include="Migrations\202002041333119_InterestTransactionMigration.resx">
+      <DependentUpon>202002041333119_InterestTransactionMigration.cs</DependentUpon>
+    </EmbeddedResource>
+
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Logitude.Accounting.Data\Logitude.Accounting.Data.csproj">
