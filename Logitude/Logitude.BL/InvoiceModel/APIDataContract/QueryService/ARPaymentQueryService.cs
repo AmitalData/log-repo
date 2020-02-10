@@ -1,6 +1,10 @@
-﻿using Logitude.BL.CommonDataModel.EntityPMs;
+﻿using Logitude.Accounting.Def.EntityPMs;
+using Logitude.Accounting.Def.EntityQueryServicesExt;
+using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.InvoiceModel.EntityPMs;
+using Logitude.Server.Tools;
+using Microsoft.Practices.Unity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,7 +50,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
             {
                 throw new ApplicationException("Bill to field  is required");
             }
-
+          
             AccountingPaymentMethodQueryService AccountingPaymentMethodAccountingPaymentMethodService = new AccountingPaymentMethodQueryService(entity.Tenant);
             if (entity.AccountingPaymentMethodId != null)
             {
@@ -66,7 +70,10 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
             {
                 throw new ApplicationException("Payment currency field  is required");
             }
-
+            if(entity.BankAccountNumber != null)
+            {
+              entity.BankAccountId=  GetBankAccountIdByNumber(entity.BankAccountNumber, entity.Tenant);
+            }
 
                 return entity;
 
@@ -95,8 +102,6 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
         {
             try
             {
-
-
                 var temp = query.GetSinglePaymentByPaymentNumber_00(number, Tenant);
                 if (temp == null)
                     throw new ApplicationException("ARPayment with number " + number + " doesn't exist");
@@ -107,6 +112,20 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
             {
 
                 throw ex;
+            }
+        }
+        private string GetBankAccountIdByNumber(string number, int tenant)
+        {
+            IBankAccountQueryServiceExt bankAccountQuery = ContainerAccessor.Container.Resolve(typeof(IBankAccountQueryServiceExt), "BankAccountQueryServiceExt", new ParameterOverride("", 1)) as IBankAccountQueryServiceExt;
+            BankAccountPM bankAccount = bankAccountQuery.GetBankAccountByNumber(number, tenant);
+            if (bankAccount != null)
+            {
+                return bankAccount.Id;
+            }
+            else
+            {
+                throw new ApplicationException("Bank account with number " + number + " doesn't exist");
+
             }
         }
 

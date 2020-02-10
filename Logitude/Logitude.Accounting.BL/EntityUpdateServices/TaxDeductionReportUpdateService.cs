@@ -120,8 +120,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 this.Update(entityPM, true);
 
                 TaxDeductionReportService.Create856FileInBatch(entityPM.Id, entityPM.Tenant);
-
-                
+           
             }
 
         }

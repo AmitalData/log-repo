@@ -9835,8 +9835,7 @@ namespace WebFreight.Web.ReportsWebServices
 
 
             WarehouseEntryPackageQueryService warehouseEntryPackageQueryService = new WarehouseEntryPackageQueryService(tenant);
-            List<WarehouseEntryPackageItem> result = warehouseEntryPackageQueryService.GetWarehouseEntryPackageItemForInventoryReport(customerId, warehouseId, shipperConsigneeId, tenant);
-            dataProvider.WarehouseEntryPackageList = result;
+            List<WarehouseEntryPackageItem> result = warehouseEntryPackageQueryService.GetWarehouseEntryPackageItemForInventoryReport(new WarehouseEntryPackageArgs() { Tenant = tenant, CustomerId = customerId, WarehouseId = warehouseId , ShipperConsigneesId = shipperConsigneeId } );
             dataProvider.PartnerName = string.IsNullOrEmpty(customerId) ? "All" : "";
             dataProvider.Warehouse = string.IsNullOrEmpty(warehouseId) ? "All" : "";
             dataProvider.ShipperConsignee = string.IsNullOrEmpty(shipperConsigneeId) ? "All" : "";

@@ -112,7 +112,8 @@ namespace Logitude.BL.QuoteModel.EntityQueries.Charts
 
             else if (chartCode == "TFS")
             {
-
+                TopFiveSalesmanQuery topFiveSalesmanQuery = new TopFiveSalesmanQuery();
+                result = topFiveSalesmanQuery.FilterToFiveSalesmanByProfit(dataSourceQuery);
             }
 
             else if (chartCode == "KPI")

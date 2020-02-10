@@ -5315,7 +5315,6 @@
     </Compile>
     <Compile Include="ReportsWebServices\LogitudeReports\Accounting\AgingReportDataProviderLoader.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\Accounting\LedgerTransactionReportLoader.cs" />
-    <Compile Include="ReportsWebServices\LogitudeReports\Accounting\AgingReportDataProviderLoader.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\CRM\RacingQuoteManager.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\CRM\BluesnapPaymentsReportManager.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\Operational\ShipperReturnsManager.cs" />
