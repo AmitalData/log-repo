@@ -192,7 +192,7 @@
 
                             <!-- 1 -->
                             <td style="">
-                                <LogLabel [ObjectFieldName]="'SalesmanUserId'" [ObjectTableName]="'GLAccount'" [DataContext]="DataContext">
+                                <LogLabel [ObjectFieldName]="'SalesmanUserId'" [ObjectTableName]="'GLAccount'" [TextCode]="'Accounting.General.O.Salesman'"  [DataContext]="DataContext">
                                 </LogLabel>
                             </td>
 
@@ -239,7 +239,7 @@
 
                             <!-- 1 -->
                             <td style="">
-                                <LogLabel [ObjectFieldName]="'CollectorId'" [ObjectTableName]="'GLAccount'"
+                                <LogLabel [ObjectFieldName]="'CollectorId'" [ObjectTableName]="'GLAccount'" [TextCode]="'Accounting.General.O.Collector'"
                                         [DataContext]="DataContext"></LogLabel>
                             </td>
 
@@ -286,7 +286,7 @@
 
                             <!-- 1 -->
                             <td style="">
-                                <LogLabel [ObjectFieldName]="'Category'" [ObjectTableName]="'GLAccount'" [Text]="'Category'"
+                                <LogLabel [ObjectFieldName]="'Category'" [ObjectTableName]="'GLAccount'" [Text]="showLocals?'קטגוריה':'Category'"
                                     [DataContext]="DataContext"></LogLabel>
                             </td>
 

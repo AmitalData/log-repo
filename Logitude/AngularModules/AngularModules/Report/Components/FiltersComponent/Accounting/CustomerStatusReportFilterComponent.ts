@@ -1,3 +1,4 @@
+import { SessionLocator } from './../../../../Infrastructure/Utilities/SessionLocator';
 import {Component, OnInit, Output, EventEmitter}  from '@angular/core';
 import {AppTool} from '../../../../Infrastructure/Tools';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -23,6 +24,7 @@ export class CustomerStatusReportFilterComponent extends BaseComponent implement
 
     entityResourceService: EntityResourceService = new EntityResourceService();
     public isRTL: boolean = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
+    public showLocals: boolean = !SessionLocator.LoggedUserPM.DontShowLocal;
 
 
     constructor() {
