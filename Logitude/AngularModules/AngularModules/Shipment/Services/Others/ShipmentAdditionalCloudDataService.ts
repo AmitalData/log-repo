@@ -1,4 +1,4 @@
-﻿/// <reference path="../../../common/entitypms/agentsharedmanifestpm.ts" />
+/// <reference path="../../../common/entitypms/agentsharedmanifestpm.ts" />
 import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
@@ -112,6 +112,32 @@ export class ShipmentAdditionalCloudDataService {
         });
     }
 
+    updateUserID(entityPM: any) {
+        return Observable.defer(() => {
+
+            var authHeader = new Headers();
+            authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+            authHeader.append('Content-Type', 'application/json');
+            var response: ServiceResponse;
+            response = new ServiceResponse();
+            //errorsArray = [];
+
+
+            var shipString: string;
+
+            shipString = JSON.stringify(entityPM);
+            //console.log(shipString);
+            return this._http.put(this._apiUrl + '/PutUserId', shipString,
+                { headers: authHeader }).map((res) => {
+                    var pm = res.json();
+                    response.Result = pm;
+                    return response;
+
+                }).catch(ServiceHelper.HandleServiceError);
+
+        });
+    }
+
     getSingleWithoutToken(id: string, Tenant: number) {
 
 
@@ -119,7 +145,7 @@ export class ShipmentAdditionalCloudDataService {
         //authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetSingleWithoutToken?' + 'id=' + id + '&tenant=' + Tenant, {
+            return this._http.get(this._apiUrl + '/GetSingleWithoutToken?' + 'securityId=' + id + '&tenant=' + Tenant, {
                 headers: authHeader
             }).map(response => {
                 var pm = response.json();

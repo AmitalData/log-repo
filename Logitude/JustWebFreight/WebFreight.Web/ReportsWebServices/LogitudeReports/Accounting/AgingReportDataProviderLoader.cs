@@ -88,7 +88,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 totalData.AgingPeriods.Remove(item);
         }
 
-        private void AddTotalBalancePeriods( List<PeriodMExtended> result, AccountingAgingDataProvider totalData)
+        private void AddTotalBalancePeriods(List<PeriodMExtended> result, AccountingAgingDataProvider totalData)
         {
             Dictionary<PeriodMExtended, decimal> sums = new Dictionary<PeriodMExtended, decimal>();
             foreach (var period in result)
@@ -97,13 +97,13 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             }
             foreach (var period in result)
             {
-                sums[period] += period.Total;
+                sums[period] += period.Total == null ? 0 : period.Total;
             }
 
             foreach (var sumValue in sums)
             {
                 var pname = showLocals ? "סה''כ יתרה" : "Total Balance";
-                var _balancePeriod = totalData.AgingPeriods.FirstOrDefault(d => d.AccountEnglishName == sumValue.Key.AccountEnglishName && d.PeriodName == pname);
+                var _balancePeriod = totalData.AgingPeriods.FirstOrDefault(d => d.AccountLocalName == sumValue.Key.AccountLocalName && d.PeriodName == pname);
                 if (_balancePeriod == null)
                     totalData.AgingPeriods.Add(new AgingPeriod()
                     {
