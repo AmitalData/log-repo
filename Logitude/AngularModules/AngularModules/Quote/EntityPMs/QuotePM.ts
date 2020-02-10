@@ -1571,24 +1571,18 @@ export class QuotePM {
     private estimatedProfitInProfit: number;
     public get EstimatedProfitInProfit() { return this.estimatedProfitInProfit; }
     public set EstimatedProfitInProfit(newValue: number) { if (this.estimatedProfitInProfit != newValue) { this.estimatedProfitInProfit = newValue; this.MarkAsDirty("EstimatedProfitInProfit"); } }
-
+       
+	 
     private profitCurrencyId: string;
     public get ProfitCurrencyId() { return this.profitCurrencyId; }
-    public set ProfitCurrencyId(newValue: string) {
-        if (this.profitCurrencyId != newValue) {
-            this.profitCurrencyId = newValue;
-            this.MarkAsDirty("ProfitCurrenyId");
-        }
-    }
+    public set ProfitCurrencyId(newValue: string) { if (this.profitCurrencyId != newValue) { this.profitCurrencyId = newValue; this.MarkAsDirty("ProfitCurrencyId"); } }
+       
 	 
     private profitExchangeRate: number;
     public get ProfitExchangeRate() { return this.profitExchangeRate; }
-    public set ProfitExchangeRate(newValue: number) {
-        if (this.profitExchangeRate != newValue) {
-            this.profitExchangeRate = newValue;
-            this.MarkAsDirty("ProfitExchangeRate");
-        }
-    }
+    public set ProfitExchangeRate(newValue: number) { if (this.profitExchangeRate != newValue) { this.profitExchangeRate = newValue; this.MarkAsDirty("ProfitExchangeRate"); } }
+       
+	 
 
     public OldEntityPM: QuotePM;
 		
