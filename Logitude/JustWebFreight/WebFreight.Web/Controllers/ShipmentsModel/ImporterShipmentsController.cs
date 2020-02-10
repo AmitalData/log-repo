@@ -550,8 +550,8 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
         private APIException MapEntityAMToEntityPM(ShipmentAM entityAM, ShipmentPM entityPM)
         {
             APIException Responce = new APIException();
-            TenantQuery myTenantQuery = new TenantQuery();
-            TenantPM currentTenant = myTenantQuery.GetSinglePM(entityAM.ImporterTenant);
+            //TenantQuery myTenantQuery = new TenantQuery();
+            TenantPM currentTenant = TenantQuery.GetSingleTenantPM(entityAM.ImporterTenant,false);
             ICommonDataContext commoncontext = CommonDataContext.GetContext(entityAM.ImporterTenant);
             HybridPartnerRepository hybridPartnerRepository = new HybridPartnerRepository(commoncontext);
             HybridPartnerQuery HybridPartnerQuerey = new HybridPartnerQuery(hybridPartnerRepository);
