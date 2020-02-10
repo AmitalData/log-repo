@@ -346,8 +346,8 @@ namespace Logitude.Accounting.BL.DataContract
                 LTBFilter.Tenant = Tenant;
                 LTBFilter.GLAccountId = glaccountId;
                 DateTime today = DateTime.Today;
-                LTBFilter.From = today.AddMonths(-1);
-                LTBFilter.To = today;
+                LTBFilter.From = new DateTime(ReportYear.Value, 1, 1);
+                LTBFilter.To = new DateTime(ReportYear.Value,12,31);
                 LTBFilter.IncludeRelatedCurrenciesAccount = false;
                 LTBFilter.IncludeChildAccounts = false;
                 LTBFilter.DateTypeCode = "1";
@@ -376,7 +376,7 @@ namespace Logitude.Accounting.BL.DataContract
             groupedbyVendor.DeductionFileNumber = gLAccount.DeductionFileNumber;
             groupedbyVendor.DeductionType = gLAccount.DeductionTypeId;
             groupedbyVendor.EnglishName = gLAccount.EnglishName;
-           // groupedbyVendor.EndYearBalance = GetEndYearBalance(gLAccount.Id);
+            groupedbyVendor.EndYearBalance = GetEndYearBalance(gLAccount.Id);
 
             return groupedbyVendor;
         }
