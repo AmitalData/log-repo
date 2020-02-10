@@ -295,6 +295,7 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
             if (value == null) {
                 this.WarehouseLegActualEntryDate == null;
                 this.StorageDays = null;
+                this.Days = null;
             } else {
                 this.SetLastFreeDate();
                 this.SetStorageDays();
@@ -310,6 +311,7 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
             if (value == null) {
                 this.WarehouseLegActualReleaseDate = null;
                 this.StorageDays = null;
+                this.Days = null;
             } else {
                 this.SetStorageDays();
             }
@@ -377,13 +379,16 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
     }
 
     public StorageDays: number;
+    public Days: string;
     private SetStorageDays() {
         if (this.WarehouseLegActualEntryDate != null && this.WarehouseLegActualReleaseDate != null) {
             if (this.WarehouseLegActualReleaseDate.valueOf() >= this.WarehouseLegActualEntryDate.valueOf()) {
                 var days = DateTool.GetDaysBetweenDates(this.WarehouseLegActualEntryDate, this.WarehouseLegActualReleaseDate);
                 this.StorageDays = days;
+                this.Days = " Days";
             } else {
                 this.StorageDays = null;
+                this.Days = null;
             }
         }
     }
@@ -504,6 +509,7 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
         this.myCloner.AddField('TerminalAvailable');
         this.myCloner.AddField('WarehouseLegCutOffDate');
         this.myCloner.AddField('WarehouseLegVGMCutOffDate');
+        this.myCloner.AddField('WarehouseStorageFreeDays');
         this.myCloner.AddEntity(this.EntityPM);
         this.myCloner.AddEntity(this.WarehouseAddressList);
         this.myCloner.AddEntity(this.FatherComponent.WarehouseAddressList);
