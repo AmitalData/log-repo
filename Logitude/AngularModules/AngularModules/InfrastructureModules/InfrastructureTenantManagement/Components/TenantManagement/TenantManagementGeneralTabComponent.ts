@@ -798,47 +798,54 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
         this.PackagesTotalFreeUsers = ArrayTool.Sum(this.PackagesList, "FreeUsers");
         this.PackagesTotalPrice = ArrayTool.Sum(this.PackagesList, "Price");
         this.PackagesTotalTotalPrice = ArrayTool.Sum(this.PackagesList, "TotalPrice");
+        if (this.IsMainAdditionalPackage) {
+            if (this.IsMultiPackage) {
+                if (this.NumberOfUsers) {
+                    this.PackagesTotalNumberOfUsers += this.NumberOfUsers;
+                }
 
-        if (!this.IsMultiPackage) {
-            if (this.NumberOfUsers) {
-                this.TotalNumberOfUsers = this.NumberOfUsers;
+                if (this.FreeUsers) {
+                    this.PackagesTotalFreeUsers += this.FreeUsers;
+                }
+
+                if (this.TotalPrice) {
+                    this.PackagesTotalTotalPrice += this.TotalPrice;
+                }
+
+                this.TotalPaymentamount = this.PackagesTotalTotalPrice;
+                this.TotalNumberOfUsers = this.PackagesTotalNumberOfUsers;
+                this.TotalFreeUsers = this.PackagesTotalFreeUsers;
             }
-
-            if (this.FreeUsers) {
+            else {
+                this.TotalPaymentamount = this.NumberOfUsers;
+                this.TotalNumberOfUsers = this.TotalPrice;
                 this.TotalFreeUsers = this.FreeUsers;
             }
-
-            if (this.LicensePrice) {
-                this.PackagesTotalPrice = this.LicensePrice;
-            }
-            if (this.TotalPrice) {
-                this.TotalPaymentamount = this.TotalPrice;
-            }
+           
         }
         else {
-            this.TotalPaymentamount = this.PackagesTotalTotalPrice;
-            this.TotalNumberOfUsers = this.PackagesTotalNumberOfUsers;
-            this.TotalFreeUsers = this.PackagesTotalFreeUsers;
+            if (!this.IsMultiPackage) {
+                if (this.NumberOfUsers) {
+                    this.TotalNumberOfUsers = this.NumberOfUsers;
+                }
+
+                if (this.FreeUsers) {
+                    this.TotalFreeUsers = this.FreeUsers;
+                }
+
+                if (this.LicensePrice) {
+                    this.PackagesTotalPrice = this.LicensePrice;
+                }
+                if (this.TotalPrice) {
+                    this.TotalPaymentamount = this.TotalPrice;
+                }
+            }
+            else {
+                this.TotalPaymentamount = this.PackagesTotalTotalPrice;
+                this.TotalNumberOfUsers = this.PackagesTotalNumberOfUsers;
+                this.TotalFreeUsers = this.PackagesTotalFreeUsers;
+            }
         }
-
-        if (this.IsMainAdditionalPackage) {
-            if (this.NumberOfUsers) {
-                this.PackagesTotalNumberOfUsers += this.NumberOfUsers;
-            }
-
-            if (this.FreeUsers) {
-                this.PackagesTotalFreeUsers += this.FreeUsers;
-            }
-
-            if (this.TotalPrice) {
-                this.PackagesTotalTotalPrice += this.TotalPrice;
-            }
-
-            this.TotalPaymentamount = this.PackagesTotalTotalPrice;
-            this.TotalNumberOfUsers = this.PackagesTotalNumberOfUsers;
-            this.TotalFreeUsers = this.PackagesTotalFreeUsers;
-        }
-
         this.AveragePrice = AppTool.Round((this.TotalPaymentamount / this.TotalNumberOfUsers), 3);
     }
 
