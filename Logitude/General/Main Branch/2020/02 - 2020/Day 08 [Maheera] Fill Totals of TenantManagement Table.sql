@@ -3,12 +3,12 @@ declare @IsMultiPackage as bit
 declare @MainAdditionalPackageApplied as bit
 declare @TotalNumberOfUsers as int 
 declare @TotalFreeUsers as int 
-declare @AveragePrice as decimal 
-declare @TotalPaymentamount as decimal 
+declare @AveragePrice as float 
+declare @TotalPaymentamount as float 
 declare @NumberOfUsers as int 
 declare @FreeUsers as int 
-declare @TotalPrice as decimal 
-declare @TotalPaymentamount_Packages as decimal 
+declare @TotalPrice as float 
+declare @TotalPaymentamount_Packages as float 
 declare @TotalNumberOfUsers_Packages as int 
 declare @TotalFreeUsers_Packages as int 
 
@@ -60,7 +60,7 @@ DECLARE TenantManagementsCursor CURSOR READ_ONLY
 
 		 if (@TotalNumberOfUsers != 0)
 		  begin
-			 set @AveragePrice = ROUND(@TotalPaymentamount/@TotalNumberOfUsers, 3);
+			 set @AveragePrice = ROUND((@TotalPaymentamount/@TotalNumberOfUsers), 3);
 		  end
 
 		update TenantManagements set TotalNumberOfUsers=@TotalNumberOfUsers, TotalFreeUsers = @TotalFreeUsers, AveragePrice = @AveragePrice, TotalPaymentamount =@TotalPaymentamount where Id=@TenantId
@@ -70,5 +70,7 @@ DECLARE TenantManagementsCursor CURSOR READ_ONLY
 
 CLOSE TenantManagementsCursor	
 DEALLOCATE TenantManagementsCursor	
+
+select TotalPaymentamount,TotalNumberOfUsers,AveragePrice,* from TenantManagements
 
 
