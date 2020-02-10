@@ -305,7 +305,6 @@ export class CustomerStatusReportFilterComponent extends BaseComponent implement
         }
     }
 
-    showLocals = !SessionLocator.LoggedUserPM.DontShowLocal;
     IsBalanceTypeDisabled = false;
 
     SelectedBalanceTypeItem = { Code: "all", EnglishName: "All", LocalName: "הכל" };
