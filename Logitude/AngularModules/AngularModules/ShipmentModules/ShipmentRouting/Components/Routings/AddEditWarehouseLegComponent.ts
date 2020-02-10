@@ -365,7 +365,7 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
 
     private SetStorageFreeDays() {
         if (this.WarehouseLegActualEntryDate != null && this.WarehouseLegLastFreeDate != null) {
-            if (this.WarehouseLegLastFreeDate.valueOf() >= this.WarehouseLegActualEntryDate.valueOf()) {
+            if (DateTool.GetDateFromDate(this.WarehouseLegLastFreeDate) >= DateTool.GetDateFromDate(this.WarehouseLegActualEntryDate)) {
                 var days = DateTool.GetDaysBetweenDates(this.WarehouseLegActualEntryDate, this.WarehouseLegLastFreeDate);
                 if (days == null) {
                     this.WarehouseStorageFreeDays = 0;
@@ -382,7 +382,7 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
     public Days: string;
     private SetStorageDays() {
         if (this.WarehouseLegActualEntryDate != null && this.WarehouseLegActualReleaseDate != null) {
-            if (this.WarehouseLegActualReleaseDate.valueOf() >= this.WarehouseLegActualEntryDate.valueOf()) {
+            if (DateTool.GetDateFromDate(this.WarehouseLegActualReleaseDate) >= DateTool.GetDateFromDate( this.WarehouseLegActualEntryDate)) {
                 var days = DateTool.GetDaysBetweenDates(this.WarehouseLegActualEntryDate, this.WarehouseLegActualReleaseDate);
                 this.StorageDays = days;
                 this.Days = " Days";

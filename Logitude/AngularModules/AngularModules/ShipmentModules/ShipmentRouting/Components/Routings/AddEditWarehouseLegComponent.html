@@ -137,7 +137,7 @@
                         <div></div>
                     </td>
 
-                    <td style="width: 520px;">
+                    <td style="width: 420px;">
                         <table>
 
                             <!-- WarehouseLegExpectedEntryDate -->
@@ -334,10 +334,20 @@
                                 <td>
                                     <LogLabel [NoObjectField]="true" [Text]="'Storage Days'" [DataContext]="DataContext"></LogLabel>
                                 </td>
-                                <td colspan="2">
-                                    <div class="Label">
-                                        {{StorageDays}} {{Days}}
-                                    </div>
+
+                                <td colspan="3">
+                                    <table>
+                                        <tr>
+                                            <td style="width:6px;">
+                                                <div></div>
+                                            </td>
+                                            <td>
+                                                <div class="Label">
+                                                    {{StorageDays}} {{Days}}
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
                                 </td>
                                 <td>
                                     <div></div>
