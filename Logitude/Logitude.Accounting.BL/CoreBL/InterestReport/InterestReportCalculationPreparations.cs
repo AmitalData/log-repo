@@ -23,7 +23,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
                                                                                               GroupInterestValueDate = groupByDate.Key,
                                                                                               TotalLocalAmount = groupByDate.Sum(d => d.LocalAmount),
 
-                                                                                          }).ToList();
+                                                                                          }).OrderBy(d=>d.GroupInterestValueDate).ToList();
             return interestTransactionsGroupedByDates;
         }
 
