@@ -197,6 +197,10 @@ namespace Logitude.BL.QuoteModel.Tools.DataMapping
             entityPoco.Field20 = entityPM.Field20 != null ? entityPM.Field20.Value : null;
             entityPoco.CountryForStatisticsId = entityPM.CountryForStatisticsId;
             entityPoco.RequestDate = entityPM.RequestDate;
+            entityPoco.EstimatedProfitInLocal = entityPM.EstimatedProfitInLocal;
+            entityPoco.EstimatedProfitInProfit = entityPM.EstimatedProfitInProfit;
+            entityPoco.ProfitCurrencyId = entityPM.ProfitCurrencyId;
+            entityPoco.ProfitExchangeRate = entityPM.ProfitExchangeRate;
             BuildSearchField(entityPM, entityPoco);
 
             entityPM.ConvertToLCL = false;
