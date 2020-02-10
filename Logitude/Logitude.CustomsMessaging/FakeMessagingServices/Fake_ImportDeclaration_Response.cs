@@ -36,10 +36,10 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
             DeclarationDutyTaxFee[] taxFree = new DeclarationDutyTaxFee[2];
             Declaration declaration = request.Declaration;
 
-            _customsValueComponent.TotalDealValueAmountNIS = new TotalDealValueAmountNISType() { Value = 273 };
-            _customsValueComponent.CifValueNIS = new CifValueNISType() { Value = 273 };
-            _customsValueComponent.TaxAssessedAmount = new DutyTaxFeeAssessed() { Value = 80 };
-            _customsValueComponent.TotalMADDealValueAmountNIS = new TotalMADDealValueAmountNISType() { Value = 263 };
+            _customsValueComponent.TotalDealValueAmountNIS = new TotalDealValueAmountNISType() { Value = 99 };
+            _customsValueComponent.CifValueNIS = new CifValueNISType() { Value = 99 };
+            _customsValueComponent.TaxAssessedAmount = new DutyTaxFeeAssessed() { Value = 99 };
+            _customsValueComponent.TotalMADDealValueAmountNIS = new TotalMADDealValueAmountNISType() { Value = 99 };
             _dm.VersionID = new DeclarationDMExtensionsVersionID() { Value = "0.6" };
             _dm.CustomsValueComponent = _customsValueComponent;
             _dm.TaxationDateTime = DateTime.Now.ToString();
@@ -47,7 +47,7 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
             //DutyTaxFee
             taxFree[0] = new DeclarationDutyTaxFee
             {
-                AdValoremTaxBaseAmount = new DutyTaxFeeAdValoremTaxBaseAmountType() { Value = 273 },
+                AdValoremTaxBaseAmount = new DutyTaxFeeAdValoremTaxBaseAmountType() { Value = 99 },
                 TypeCode = new DutyTaxFeeTypeCodeType() { Value = "15" },
                 DMExtensions = new DeclarationDutyTaxFeeDMExtensions()
             };
@@ -58,13 +58,13 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
             };
             taxFree[1] = new DeclarationDutyTaxFee
             {
-                AdValoremTaxBaseAmount = new DutyTaxFeeAdValoremTaxBaseAmountType() { Value = 51 },
+                AdValoremTaxBaseAmount = new DutyTaxFeeAdValoremTaxBaseAmountType() { Value = 0 },
                 TypeCode = new DutyTaxFeeTypeCodeType() { Value = "16" },
                 DMExtensions = new DeclarationDutyTaxFeeDMExtensions()
             };
             taxFree[1].DMExtensions.CalculatedTax = new DeclarationDutyTaxFeeDMExtensionsCalculatedTax
             {
-                Amount = new AmountAmountType() { Value = 51 },
+                Amount = new AmountAmountType() { Value = 0 },
                 DeferedTaxAmount = new deferedTaxAmountType() { Value = 0 }
             };
 
