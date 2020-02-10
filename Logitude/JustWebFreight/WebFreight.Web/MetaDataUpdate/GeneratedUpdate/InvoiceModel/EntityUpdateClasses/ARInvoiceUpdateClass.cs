@@ -5957,8 +5957,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DefaultText =  "Amount To Pay",
 					  						FullLocalDefaultText =  "סכום לתשלום",
 					  						ListFieldLable =  "AmountPaidListLable",
-					  						ListLableDefaultText =  "AmountPaid",
-					  						ListLocalDefaultText =  "AmountPaid",
+					  						ListLableDefaultText =  "Amount To Pay",
+					  						ListLocalDefaultText =  "Amount To Pay",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -9480,7 +9480,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
  		   TextCode ARInvoiceTextCode_ARInvoiceOOtherPayments = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.O.OtherPayments", DefaultText = "Other Payments",LocalDefaultText = null, ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode ARInvoiceTextCode_ARInvoiceOStatusNameRateListLable = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.O.StatusNameRateListLable", DefaultText = "StatusNameRateListLable",LocalDefaultText = null, ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ARInvoiceTextCode_ARInvoiceOStatusNameRateListLable = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.O.StatusNameRateListLable", DefaultText = "Status",LocalDefaultText = null, ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
