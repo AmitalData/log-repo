@@ -1,4 +1,3 @@
-import { SessionLocator } from './../../../../Infrastructure/Utilities/SessionLocator';
 import {Component, OnInit, Output, EventEmitter}  from '@angular/core';
 import {AppTool} from '../../../../Infrastructure/Tools';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
