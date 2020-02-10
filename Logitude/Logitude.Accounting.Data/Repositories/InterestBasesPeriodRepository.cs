@@ -30,7 +30,17 @@ namespace Logitude.Accounting.Data.Repositories
             return Period;
         }
 
-     }
+        public InterestBasesPeriod GetInterestBasesPeriodByBaseTypeIdWithinInterestBaseStartDate(string InterestBaseTypeId,DateTime InterestBaseStartDate,  int Tenant)
+        {
+
+            InterestBasesPeriod Period = (from a in context.InterestBasesPeriods
+                                          where a.InterestBaseStartDate <= InterestBaseStartDate && a.InterestBaseTypeId == InterestBaseTypeId && a.Tenant == Tenant
+                                          select a).OrderByDescending(d=>d.InterestBaseStartDate).FirstOrDefault();
+
+            return Period;
+        }
+
+    }
 
 }
    

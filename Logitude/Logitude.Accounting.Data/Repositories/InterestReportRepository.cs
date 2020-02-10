@@ -21,6 +21,15 @@ namespace Logitude.Accounting.Data.Repositories
 			throw new NotImplementedException();
         }
 
+        public decimal GetClosedBalanceOfLastInvoicedOrClosedWithoutInvoiceInterestReport(int tenant)
+        {
+            decimal? closedBalance = (from a in context.InterestReports
+                                     where a.Tenant == tenant && a.InterestReportStatusCode != "1" && a.InterestReportStatusCode != "3"
+                                     orderby a.InterestCalculationDate descending
+                                     select a.CloseBalance).FirstOrDefault();
+            return closedBalance != null ? closedBalance.Value : 0;
+        }
+
    }
 
 }
