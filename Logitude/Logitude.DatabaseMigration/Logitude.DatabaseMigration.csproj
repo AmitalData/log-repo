@@ -2027,6 +2027,10 @@
     <Compile Include="Migrations\202002061648223_AddEstimatedProfitInQuotes.Designer.cs">
       <DependentUpon>202002061648223_AddEstimatedProfitInQuotes.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202002100909155_AddProfitColumnsToQuote.cs" />
+    <Compile Include="Migrations\202002100909155_AddProfitColumnsToQuote.Designer.cs">
+      <DependentUpon>202002100909155_AddProfitColumnsToQuote.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\202001080842531_AbedAddCustomFieldToQuote.cs" />
     <Compile Include="Migrations\202001080842531_AbedAddCustomFieldToQuote.Designer.cs">
@@ -3656,6 +3660,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202002061648223_AddEstimatedProfitInQuotes.resx">
       <DependentUpon>202002061648223_AddEstimatedProfitInQuotes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002100909155_AddProfitColumnsToQuote.resx">
+      <DependentUpon>202002100909155_AddProfitColumnsToQuote.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

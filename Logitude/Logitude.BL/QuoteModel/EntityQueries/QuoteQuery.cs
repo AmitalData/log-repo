@@ -1335,6 +1335,8 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                 Field20 = new CustomFieldClass("Field20", "Quote", entityPOCO.Field20),
                 EstimatedProfitInLocal = entityPOCO.EstimatedProfitInLocal,
                 EstimatedProfitInProfit = entityPOCO.EstimatedProfitInProfit,
+                ProfitCurrencyId = entityPOCO.ProfitCurrencyId,
+                ProfitExchangeRate = entityPOCO.ProfitExchangeRate,
                 RequestDate = entityPOCO.RequestDate,
             };
 

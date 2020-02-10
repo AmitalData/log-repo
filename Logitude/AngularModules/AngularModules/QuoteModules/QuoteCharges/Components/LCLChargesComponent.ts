@@ -90,7 +90,6 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
                     this.SetUIProperties();
                     this.BuildItemsSource();
                     this.BuildProfitData();
-                    this.EvaluateProfitInLocalAndProfitCurrencies();
                 }
             });
 
@@ -100,7 +99,6 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
                     this.SetUIProperties();
                     this.BuildItemsSource();
                     this.BuildProfitData();
-                    this.EvaluateProfitInLocalAndProfitCurrencies();
                 }
             });
 
@@ -751,37 +749,7 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
             }
         }
     }
-
-    EvaluateProfitInLocalAndProfitCurrencies() {
-
-        this.SummaryCostAmount = 0;
-        this.SummarySaleAmount = 0;
-        this.SummaryProfitAmount = 0;
-        this.SubTotal = 0;
-        this.TotalVAT = 0;
-        this.TotalSale = 0;
-
-        if (this.EntityPM) {
-            var myCostAmountLocal = AppTool.Round(ArrayTool.Sum(this.EntityPM.QuoteCharges, "CostTotalAmountLocal"), 2);
-            var mySaleAmountLocal = AppTool.Round(ArrayTool.Sum(this.EntityPM.QuoteCharges.filter(f => f.IsAllIN == false), "SaleTotalAmountLocal"), 2);
-            var mySaleProfitLocal = AppTool.Round(mySaleAmountLocal - myCostAmountLocal, 2);
-            
-            this.SummaryCostAmount = AppTool.Round(myCostAmountLocal, 2);
-            this.SummarySaleAmount = AppTool.Round(mySaleAmountLocal, 2);
-            this.SummaryProfitAmount = AppTool.Round(mySaleProfitLocal, 2);
-
-            this.EntityPM.EstimatedProfitInLocal = this.SummaryProfitAmount
-
-            if (!AppTool.IsNullOrZero(this.ExchangeRate)) {
-                this.SummaryCostAmount = AppTool.Round(myCostAmountLocal / this.ExchangeRate, 2);
-                this.SummarySaleAmount = AppTool.Round(mySaleAmountLocal / this.ExchangeRate, 2);
-                this.SummaryProfitAmount = AppTool.Round(mySaleProfitLocal / this.ExchangeRate, 2);
-                this.EntityPM.EstimatedProfitInProfit = this.SummaryProfitAmount
-            
-            }
-        }
-    }
-
+    
     // Update Quantities
     public UpdateQuantitiesMessage: string;
     public UpdateQuantitiesMessageWidth: number = 0;
@@ -946,18 +914,14 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
         this.EstimateProfitEdited = false;
         this.BuildTotalVATs();
         this.BuildProfitData();
-        this.EvaluateProfitInLocalAndProfitCurrencies();
 
         var myProfitInSaleCurrency = this.SummaryProfitAmount;
         if (this.IsLocalCurrency) {
             myProfitInSaleCurrency = this.ExchangeRate ? this.SummaryProfitAmount / this.ExchangeRate : null;
         }
-
-        this.EntityPM.EstimatedProfitInLocal = this.SummaryProfitAmount;
-
+        
         if (this.EntityPM.EstimateProfit != myProfitInSaleCurrency) {
             this.EntityPM.EstimateProfit = AppTool.Round(myProfitInSaleCurrency, 2);
-            this.EntityPM.EstimatedProfitInProfit = AppTool.Round(myProfitInSaleCurrency, 2);
         }
 
         this.SetUIProperties();
