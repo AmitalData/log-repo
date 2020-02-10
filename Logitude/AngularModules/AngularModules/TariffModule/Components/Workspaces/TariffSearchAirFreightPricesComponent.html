@@ -125,7 +125,7 @@
                                             <td>
                                                 <table>
                                                     <tr>
-                                                        <td *ngIf="TariffType == 'OLC'">
+                                                        <td *ngIf="TariffType != 'OFC'">
                                                             <div class="FillParent" style="padding-left:10px">
                                                                 <span style="font-family: Arial; font-size: 11px; color: Gray; font-style:italic;">Please insert totals or </span>
                                                                 <Hyperlink (click)="FillDimensionsClicked()">Fill Dimensions</Hyperlink>
