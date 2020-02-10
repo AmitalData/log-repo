@@ -817,8 +817,8 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
                 this.TotalFreeUsers = this.PackagesTotalFreeUsers;
             }
             else {
-                this.TotalPaymentamount = this.NumberOfUsers;
-                this.TotalNumberOfUsers = this.TotalPrice;
+                this.TotalPaymentamount = this.TotalPrice;
+                this.TotalNumberOfUsers = this.NumberOfUsers; 
                 this.TotalFreeUsers = this.FreeUsers;
             }
            

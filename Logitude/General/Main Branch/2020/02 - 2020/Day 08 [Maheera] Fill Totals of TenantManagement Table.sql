@@ -30,8 +30,8 @@ DECLARE TenantManagementsCursor CURSOR READ_ONLY
 			if (@IsMultiPackage = 1)
 			begin
 				set @TotalPaymentamount = isnull(@TotalPaymentamount_Packages,0) + isnull(@TotalPrice,0);
-				set @TotalFreeUsers = isnull(@TotalFreeUsers_Packages,0) + isnull(@NumberOfUsers,0);
-				set @TotalNumberOfUsers = isnull(@TotalNumberOfUsers_Packages,0) + isnull(@FreeUsers,0);
+				set @TotalFreeUsers = isnull(@TotalFreeUsers_Packages,0) + isnull(@FreeUsers,0);
+				set @TotalNumberOfUsers = isnull(@TotalNumberOfUsers_Packages,0) + isnull(@NumberOfUsers,0);
 			end
 
 			else
@@ -71,6 +71,6 @@ DECLARE TenantManagementsCursor CURSOR READ_ONLY
 CLOSE TenantManagementsCursor	
 DEALLOCATE TenantManagementsCursor	
 
-select TotalPaymentamount,TotalNumberOfUsers,AveragePrice,* from TenantManagements
+select TotalNumberOfUsers,TotalFreeUsers, AveragePrice,TotalPaymentamount,* from TenantManagements
 
 
