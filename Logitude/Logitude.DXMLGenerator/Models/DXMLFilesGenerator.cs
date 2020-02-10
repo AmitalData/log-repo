@@ -15,8 +15,9 @@ namespace Logitude.DXMLGenerator.Models
     {
         private readonly string Root = ConfigurationManager.AppSettings["Root"];
 
-        private string ConnectionString;
-        private string ErrorsFileName;
+        private readonly string ConnectionString;
+        private readonly string ErrorsFileName;
+
         private List<string> ExcludedTables;
         private List<string> ExcludedTablesNames;
         private int GeneratedDXMLFilesCounter = 0;

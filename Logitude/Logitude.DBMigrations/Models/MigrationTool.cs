@@ -14,13 +14,14 @@ namespace Logitude.DBMigrations.Models
 {
     public class MigrationTool
     {
-        private string DatabaseType = ConfigurationManager.AppSettings["DatabseType"];
+        private readonly string DatabaseType = ConfigurationManager.AppSettings["DatabseType"];
+        private readonly string[] Arguments;
+        private readonly string ScriptSemicolonCode = "|(;)|";
+
         private string PerformanceData = "Description,Time(ms)\n";
-        private string[] Arguments;
+        private string MissingIndexesWarnings = "";
         private List<TableDefinition> DXMLTables;
         private List<DXMLHash> DXMLHashes;
-        private string ScriptSemicolonCode = "|(;)|";
-        private string MissingIndexesWarnings = "";
 
         public MigrationTool(string[] args)
         {
@@ -38,6 +39,10 @@ namespace Logitude.DBMigrations.Models
                 if (!String.IsNullOrEmpty(root))
                 {
                     string[] dxmlFiles = GetDXMLFilesFromRoot(root);
+                    string[] sxmlFiles = GetSXMLFilesFromRoot(root);
+                    
+                    GeneratedScript generatedScript = null;
+                    GeneratedScript generalScripts = null;
 
                     if (dxmlFiles != null)
                     {
@@ -45,9 +50,7 @@ namespace Logitude.DBMigrations.Models
 
                         GetDXMLHashesFromDB();
 
-                        GeneratedScript generatedScript = GenerateScriptsFromDXMLFiles(dxmlFiles);
-
-                        SaveScript(generatedScript);
+                        generatedScript = GenerateScriptsFromDXMLFiles(dxmlFiles);
 
                         if (IsArgumentProvided("-exe"))
                         {
@@ -63,23 +66,54 @@ namespace Logitude.DBMigrations.Models
                         Console.WriteLine("There Is No DXML Files Found Under The Specified Root");
                     }
 
+
+                    if (sxmlFiles != null)
+                    {
+                        ValidateSXMLFilesNames(sxmlFiles);
+
+                        List<ExecutedSxmlFile> executedSxmlFiles = GetExecutedSXMLFilesFromDB();
+
+                        generalScripts = GetGeneralScripts(sxmlFiles, executedSxmlFiles);
+
+                        if (IsArgumentProvided("-exe"))
+                        {
+                            ExecuteGeneralScripts(sxmlFiles, executedSxmlFiles);
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("There Is No SXML Files Found Under The Specified Root");
+                    }
+
+                    GeneratedScript scriptsToSave = new GeneratedScript();
+
+                    if(generatedScript != null)
+                    {
+                        scriptsToSave.GlobalScript += generatedScript.GlobalScript;
+                        scriptsToSave.MainScript += generatedScript.MainScript;
+                        scriptsToSave.SystemLogsScript += generatedScript.SystemLogsScript;
+                    }
+
+                    if(generalScripts != null)
+                    {
+                        scriptsToSave.GlobalScript += generalScripts.GlobalScript;
+                        scriptsToSave.MainScript += generalScripts.MainScript;
+                        scriptsToSave.SystemLogsScript += generalScripts.SystemLogsScript;
+                    }
+
+                    SaveScript(scriptsToSave);
+
                     //ExportPerformanceData();
                     PrintMissingIndexesWarnings();
-
-
-                    if (IsArgumentProvided("-g"))
-                    {
-                        ExecuteGeneralScripts(root);
-                    }
                 }
                 else
                 {
-                    Console.WriteLine("There Is No Root Found For Looking About DXML Files");
+                    Console.WriteLine("There Is No Root Found For Looking About Files");
                 }
             }
             else
             {
-                Console.WriteLine("There Is No Root Found For Looking About DXML Files");
+                Console.WriteLine("There Is No Root Found For Looking About Files");
             }
         }
 
@@ -857,9 +891,9 @@ namespace Logitude.DBMigrations.Models
                     "IF (TableCount = 0) " +
                     "THEN " +
                     "EXECUTE IMMEDIATE 'CREATE TABLE \"DXMLMIGRATIONHASHES\"( " +
-                    "\"FILENAME\" VARCHAR2(200 CHAR) NOT NULL, " +
+                    "\"DXMLFILENAME\" VARCHAR2(500 CHAR) NOT NULL, " +
                     "\"HASHSTRING\" NCLOB NOT NULL, " +
-                    "PRIMARY KEY(\"FILENAME\"))'; " +
+                    "PRIMARY KEY(\"DXMLFILENAME\"))'; " +
                     "END IF; " +
                     "END;";
 
@@ -885,9 +919,9 @@ namespace Logitude.DBMigrations.Models
                 string queryString = "EXEC('IF (OBJECT_ID(''[dbo].[DXMLMigrationHashes]'', ''U'') IS NULL) " +
                                      "BEGIN " +
                                      "CREATE TABLE [dbo].[DXMLMigrationHashes]( " +
-                                     "[FileName] VARCHAR(200) NOT NULL, " +
+                                     "[DxmlFileName] VARCHAR(500) NOT NULL, " +
                                      "[HashString] NVARCHAR(MAX) NOT NULL, " +
-                                     "PRIMARY KEY([FileName]) " +
+                                     "PRIMARY KEY([DxmlFileName]) " +
                                      ") " +
                                      "END');";
 
@@ -935,7 +969,7 @@ namespace Logitude.DBMigrations.Models
                         {
                             DXMLHash dxmlHash = new DXMLHash
                             {
-                                FileName = reader["FILENAME"].ToString(),
+                                FileName = reader["DXMLFILENAME"].ToString(),
                                 HashString = reader["HASHSTRING"].ToString()
                             };
                             dxmlHashes.Add(dxmlHash);
@@ -976,7 +1010,7 @@ namespace Logitude.DBMigrations.Models
                         {
                             DXMLHash dxmlHash = new DXMLHash
                             {
-                                FileName = reader["FileName"].ToString(),
+                                FileName = reader["DxmlFileName"].ToString(),
                                 HashString = reader["HashString"].ToString()
                             };
                             dxmlHashes.Add(dxmlHash);
@@ -1034,12 +1068,12 @@ namespace Logitude.DBMigrations.Models
                     {
                         string queryString = "DECLARE FileCount NUMBER; " +
                                              "BEGIN " +
-                                             "SELECT COUNT(*) INTO FileCount FROM \"DXMLMIGRATIONHASHES\" WHERE FILENAME = '" + dxmlFileName + "'; " +
+                                             "SELECT COUNT(*) INTO FileCount FROM \"DXMLMIGRATIONHASHES\" WHERE DXMLFILENAME = '" + dxmlFileName + "'; " +
                                              "IF(FileCount = 0) " +
                                              "THEN " +
-                                             "EXECUTE IMMEDIATE 'INSERT INTO \"DXMLMIGRATIONHASHES\"(FILENAME, HASHSTRING) VALUES(''" + dxmlFileName + "'', ''" + dxmlHashStringFromFile + "'')'; " +
+                                             "EXECUTE IMMEDIATE 'INSERT INTO \"DXMLMIGRATIONHASHES\"(DXMLFILENAME, HASHSTRING) VALUES(''" + dxmlFileName + "'', ''" + dxmlHashStringFromFile + "'')'; " +
                                              "ELSE " +
-                                             "EXECUTE IMMEDIATE 'UPDATE \"DXMLMIGRATIONHASHES\" SET HASHSTRING = ''" + dxmlHashStringFromFile + "'' WHERE FILENAME = ''" + dxmlFileName + "'''; " +
+                                             "EXECUTE IMMEDIATE 'UPDATE \"DXMLMIGRATIONHASHES\" SET HASHSTRING = ''" + dxmlHashStringFromFile + "'' WHERE DXMLFILENAME = ''" + dxmlFileName + "'''; " +
                                              "END IF; " +
                                              "END;";
 
@@ -1062,13 +1096,13 @@ namespace Logitude.DBMigrations.Models
                     }
                     else
                     {
-                        string queryString = "EXEC('IF (SELECT COUNT(*) FROM [dbo].[DXMLMigrationHashes] WHERE FileName = ''" + dxmlFileName + "'') = 0 " +
+                        string queryString = "EXEC('IF (SELECT COUNT(*) FROM [dbo].[DXMLMigrationHashes] WHERE DxmlFileName = ''" + dxmlFileName + "'') = 0 " +
                                              "BEGIN " +
-                                             "INSERT INTO [dbo].[DXMLMigrationHashes](FileName, HashString) VALUES(''" + dxmlFileName + "'', ''" + dxmlHashStringFromFile + "'') " +
+                                             "INSERT INTO [dbo].[DXMLMigrationHashes](DxmlFileName, HashString) VALUES(''" + dxmlFileName + "'', ''" + dxmlHashStringFromFile + "'') " +
                                              "END " +
                                              "ELSE " +
                                              "BEGIN " +
-                                             "UPDATE [dbo].[DXMLMigrationHashes] SET HashString = ''" + dxmlHashStringFromFile + "'' WHERE FileName = ''" + dxmlFileName + "'' " +
+                                             "UPDATE [dbo].[DXMLMigrationHashes] SET HashString = ''" + dxmlHashStringFromFile + "'' WHERE DxmlFileName = ''" + dxmlFileName + "'' " +
                                              "END');";
 
                         SqlConnection sqlConnection = new SqlConnection(connectionString);
@@ -1268,10 +1302,8 @@ namespace Logitude.DBMigrations.Models
             }
         }
 
-        private void ExecuteGeneralScripts(string root)
+        private void ExecuteGeneralScripts(string[] sxmlFiles, List<ExecutedSxmlFile> executedSxmlFiles)
         {
-            string[] sxmlFiles = GetSXMLFilesFromRoot(root);
-            List<ExecutedSxmlFile> executedSxmlFiles = GetExecutedSXMLFilesFromDB();
             int executedSxmlFilesCount = 0;
 
             foreach (var sxmlFile in sxmlFiles)
@@ -1290,9 +1322,9 @@ namespace Logitude.DBMigrations.Models
                     scriptDefinition = null;
                 }
 
-                if(scriptDefinition != null)
+                if (scriptDefinition != null)
                 {
-                    if(!executedSxmlFiles.Where(e => e.SxmlFileName.ToLower() == sxmlFileName.ToLower() && e.DBType.ToLower() == scriptDefinition.DBType.ToLower()).Any())
+                    if (!executedSxmlFiles.Where(e => e.SxmlFileName.ToLower() == sxmlFileName.ToLower() && e.DBType.ToLower() == scriptDefinition.DBType.ToLower()).Any())
                     {
                         Console.WriteLine("Executing Script From " + sxmlFileName + " File ...");
 
@@ -1340,7 +1372,7 @@ namespace Logitude.DBMigrations.Models
                 }
             }
 
-            if(executedSxmlFilesCount > 0)
+            if (executedSxmlFilesCount > 0)
             {
                 Console.WriteLine("General Scripts Executed Successfully");
             }
@@ -1348,6 +1380,68 @@ namespace Logitude.DBMigrations.Models
             {
                 Console.WriteLine("All General Scripts Already Executed");
             }
+        }
+
+        private GeneratedScript GetGeneralScripts(string[] sxmlFiles, List<ExecutedSxmlFile> executedSxmlFiles)
+        {
+            GeneratedScript generalScripts = new GeneratedScript();
+
+            foreach (var sxmlFile in sxmlFiles)
+            {
+                string sxmlFileName = Path.GetFileName(sxmlFile);
+
+                ScriptDefinition scriptDefinition;
+                string sxmlString = File.ReadAllText(sxmlFile);
+
+                try
+                {
+                    scriptDefinition = sxmlString.ParseXML<ScriptDefinition>();
+                }
+                catch (Exception)
+                {
+                    scriptDefinition = null;
+                }
+
+                if (scriptDefinition != null)
+                {
+                    if (!executedSxmlFiles.Where(e => e.SxmlFileName.ToLower() == sxmlFileName.ToLower() && e.DBType.ToLower() == scriptDefinition.DBType.ToLower()).Any())
+                    {
+                        string scriptBody;
+
+                        if (DatabaseType.ToLower() == "oracle")
+                        {
+                            scriptBody = GetScriptFromCDataSection(scriptDefinition.Oracle);
+                            string blockedScriptBody;
+                            if (!String.IsNullOrEmpty(scriptBody))
+                            {
+                                blockedScriptBody = "BEGIN\nBEGIN\n" + scriptBody + "\nEND;\nBEGIN\n" + "DECLARE ScriptBody NCLOB; BEGIN ScriptBody := '" + scriptBody.Replace("'", "''").TrimEnd(new char[] { '\r', '\n' }) + "'; INSERT INTO \"DBSCRIPTSHISTORY\"(\"SXMLFILENAME\", \"EXECUTIONDATE\", \"SCRIPTBODY\")VALUES('" + sxmlFileName + "', SYSDATE, ScriptBody); END;\nEND;\nEND;";
+                            }
+                            else
+                            {
+                                blockedScriptBody = "BEGIN\nDECLARE ScriptBody NCLOB; BEGIN ScriptBody := '" + "NULL" + "'; INSERT INTO \"DBSCRIPTSHISTORY\"(\"SXMLFILENAME\", \"EXECUTIONDATE\", \"SCRIPTBODY\")VALUES('" + sxmlFileName + "', SYSDATE, ScriptBody); END;\nEND;";
+                            }
+                            scriptBody = blockedScriptBody;
+                        }
+                        else
+                        {
+                            scriptBody = GetScriptFromCDataSection(scriptDefinition.Sql);
+                            if (!String.IsNullOrEmpty(scriptBody))
+                            {
+                                scriptBody += "\n";
+                            }
+                            scriptBody += "INSERT INTO [dbo].[DBScriptsHistory]([SxmlFileName], [ExecutionDate], [ScriptBody])VALUES('" + sxmlFileName + "', GETDATE(), '" + (!String.IsNullOrEmpty(scriptBody) ? scriptBody.Replace("'", "''").TrimEnd(new char[] { '\r', '\n' }) : "NULL") + "');";
+                        }
+
+                        AppendToGeneratedScript(generalScripts, scriptDefinition.DBType, scriptBody);
+                    }
+                }
+                else
+                {
+                    ExitTool("Error: Cannot Create Script Definition For " + sxmlFileName);
+                }
+            }
+
+            return generalScripts;
         }
 
         private List<ExecutedSxmlFile> GetExecutedSXMLFilesFromDB()
@@ -1388,15 +1482,13 @@ namespace Logitude.DBMigrations.Models
                         reader.Close();
                         connection.Close();
                     }
-                    catch (Exception exception)
+                    catch (Exception)
                     {
                         if (reader != null)
                         {
                             reader.Close();
                         }
                         connection.Close();
-
-                        ExitTool("Error: " + exception.Message);
                     }
                 }
                 else
@@ -1425,20 +1517,40 @@ namespace Logitude.DBMigrations.Models
                         reader.Close();
                         connection.Close();
                     }
-                    catch (Exception exception)
+                    catch (Exception)
                     {
                         if (reader != null)
                         {
                             reader.Close();
                         }
                         connection.Close();
-
-                        ExitTool("Error: " + exception.Message);
                     }
                 }
             }
 
             return executedSxmlFiles;
+        }
+
+        private void ValidateSXMLFilesNames(string[] sxmlFiles)
+        {
+            string error = null;
+
+            List<string> duplicatedSxmlFiles = sxmlFiles.Select(s => Path.GetFileName(s)).ToList().GroupBy(s => s).SelectMany(g => g.Skip(1)).ToList();
+
+            if (duplicatedSxmlFiles.Any())
+            {
+                error = "Error: Duplicate SXML Files:\n";
+                foreach (var sxmlFile in sxmlFiles.Where(s => s.Contains(@"\" + duplicatedSxmlFiles.First())).ToList())
+                {
+                    error += sxmlFile + "\n";
+                }
+                error = error.TrimEnd('\n');
+            }
+
+            if(error != null)
+            {
+                ExitTool(error);
+            }
         }
 
         private void ExitTool(string message)
