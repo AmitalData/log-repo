@@ -5543,7 +5543,7 @@
     DisplayLongName="false"
     FullFieldLable="&quot;StorageFreeDays&quot;"
     DefaultText="&quot;Storage Free Days&quot;"
-    IsNullable="false"
+    IsNullable="true"
     IsForeignKey="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
