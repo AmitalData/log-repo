@@ -12,10 +12,12 @@ import {QuoteChargePM} from '../../../Quote/EntityPMs/QuoteChargePM';
 import {QuotePriceStepsPM} from '../../../Quote/EntityPMs/QuotePriceStepsPM';
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
+import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 import {QuotePM} from '../../../Quote/EntityPMs/QuotePM';
 import {VatTypesValidator} from '../../../Infrastructure/Validators/VatTypesValidator';
 import { QuoteValidator } from '../../../Quote/Validators/QuoteValidator';
 import { PriceStepList } from '../../../Infrastructure/EntityLists/PriceStepList';
+import { MeasurementList } from '../../../Common/EntityLists/MeasurementList';
 import { forEach } from '@angular/router/src/utils/collection';
 
 @Component({
@@ -289,32 +291,48 @@ export class AddEditLCLChargeComponent extends BaseComponent {
         this.ValidationErrorsList = errors;
 
         if (errors.length == 0) {
+            if (this.DataContext.CostMeasurementCode == "FIXD" && this.DataContext.SaleMeasurementCode == "FIXD" && this.DataContext.IsChargeBySteps) {
+                var confirmWindow = new ConfirmWindow();
+                confirmWindow.Show("Steps will be erased since the UOM is fixed");
+                confirmWindow.WindowClosed.subscribe((event: any) => {
+                    if (confirmWindow.Yes) {
+                        this.DataContext.IsChargeBySteps = false;
+                        this.FinishOkButton();
+                    }
+                });
+            }
 
-            this.StepsItemsSource.Collection.forEach(item => {
-                if (item != null) {
-                    if (item.IsNew) {
-                        if (this.DataContext.EntityPM.QuoteChargePriceSteps.indexOf(item.EntityPM) == -1) {
-                            item.IsNewEntity = false;
-                            this.DataContext.EntityPM.AddQuotePriceStepsPM(item.EntityPM);
-                        }
+            else {
+                this.FinishOkButton();
+            }
+        }
+    }
+
+    FinishOkButton() {
+        this.StepsItemsSource.Collection.forEach(item => {
+            if (item != null) {
+                if (item.IsNew) {
+                    if (this.DataContext.EntityPM.QuoteChargePriceSteps.indexOf(item.EntityPM) == -1) {
+                        item.IsNewEntity = false;
+                        this.DataContext.EntityPM.AddQuotePriceStepsPM(item.EntityPM);
                     }
                 }
-            });
-
-            if (this.DataContext.IsNew) {
-                this.DataContext.QuotePM.AddQuoteChargePM(this.EntityPM);
-                this.DataContext.fatherComponent.BuildItemsSource();
             }
+        });
 
-            if (!this.DataContext.IsChargeBySteps) {
-                if (this.EntityPM.QuoteChargePriceSteps.length > 0) {
-                    this.EntityPM.QuoteChargePriceSteps = [];
-                }
-            }
-
-            this.DataContext.fatherComponent.ComputeTotals();
-            this.CurrentSession.CloseCurrentWindowEmit("OK");
+        if (this.DataContext.IsNew) {
+            this.DataContext.QuotePM.AddQuoteChargePM(this.EntityPM);
+            this.DataContext.fatherComponent.BuildItemsSource();
         }
+
+        if (!this.DataContext.IsChargeBySteps) {
+            if (this.EntityPM.QuoteChargePriceSteps.length > 0) {
+                this.EntityPM.QuoteChargePriceSteps = [];
+            }
+        }
+
+        this.DataContext.fatherComponent.ComputeTotals();
+        this.CurrentSession.CloseCurrentWindowEmit("OK");
     }
 
     private myCloner: Cloner;
