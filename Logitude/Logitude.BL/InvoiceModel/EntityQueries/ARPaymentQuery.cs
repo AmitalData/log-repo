@@ -314,9 +314,28 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                 payment.AccountingPaymentMethodName = method != null ? method.Name : null;
                 payment.AccountingPaymentMethodCode = method != null ? method.Code : null;
                 payment.ARPaymentChequeReplicas = GetARPaymentChequeReplicasByPaymentId(payment.Id, tenant);
+                if (payment.BankAccountId != null)
+                {
+                    payment.BankAccountNumber = GetBankAccountNumberById(payment.BankAccountId, payment.Tenant);
+                }
             }
 
             return BranchPermitionsFilter.AddUserBranchRestrictionFilters(new QueryOperations(), payment, tenant); ;
+        }
+        private string GetBankAccountNumberById(string id, int tenant)
+        {
+            IBankAccountQueryServiceExt bankAccountQuery = ContainerAccessor.Container.Resolve(typeof(IBankAccountQueryServiceExt), "BankAccountQueryServiceExt", new ParameterOverride("", 1)) as IBankAccountQueryServiceExt;
+            BankAccountPM bankAccount = bankAccountQuery.GetByFirstOrDefault(id, tenant);
+            if(bankAccount!= null)
+            {
+                return bankAccount.AccountNumber;
+            }
+            else
+            {
+                return null;
+            }
+
+
         }
 
         public IQueryable<ARPaymentList> GetIQueryableEntityList(IQueryable<ARPayment> iQueryable)
