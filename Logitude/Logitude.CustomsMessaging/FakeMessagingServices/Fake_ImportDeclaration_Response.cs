@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 using UnifreightIIG.Common.ImportDeclarationServiceReference;
 using Exception = UnifreightIIG.Common.ImportDeclarationServiceReference.Exception;
 
@@ -42,7 +43,7 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
             _customsValueComponent.TotalMADDealValueAmountNIS = new TotalMADDealValueAmountNISType() { Value = 99 };
             _dm.VersionID = new DeclarationDMExtensionsVersionID() { Value = "0.6" };
             _dm.CustomsValueComponent = _customsValueComponent;
-            _dm.TaxationDateTime = DateTime.Now.ToString();
+            _dm.TaxationDateTime = XmlConvert.ToString(DateTime.Now);
 
             //DutyTaxFee
             taxFree[0] = new DeclarationDutyTaxFee
@@ -112,7 +113,7 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
             _ResponseHeader.Status = "Success";
             _ResponseHeader.ErrorDescription = "";
             _ResponseHeader.ErrorCode = "None";
-            
+           
         }
         public void AddConstraints()
         {

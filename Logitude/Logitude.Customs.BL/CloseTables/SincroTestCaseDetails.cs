@@ -46,19 +46,13 @@ namespace Logitude.Customs.BL.CloseTables
                     Name = "הצהרת תקן5117 ",
                     IsDCA= true,
                     Entity="Declaration",
-                    Param1= @"{ ""Fix"":""AAA"" }",
+                    Param1= @"{ ""RequestNumber"" :""1"" ,  ""Content32"" :""1"" , ""Content29"" :""test 29"" , ""Content27"" :""test 27""}",
+                                                   
+                                               
                     MainInterfaceCode="5117",
                 },
                                   
-                new SincroTestCaseDetail()
-                {
-                    Code = "5117SincroCancel",
-                    Name = "הצהרת בטל5117 ",
-                    IsDCA= true,
-                    Entity="Declaration",
-                    Param1= @"{ ""cancel"":""AAA"" }",
-                    MainInterfaceCode="5117",
-                },
+    
                 new SincroTestCaseDetail()
                 {
                     Code = "190Sincro",

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 using UnifreightIIG.Common.MessageLib.ID;
 using Exception = UnifreightIIG.Common.MessageLib.ID.Exception;
 
@@ -54,26 +55,42 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
         }
         public void CastDeclaration()
         {
-            Type objectType = fakeRespond.GetType();
-            Type target = dec.GetType();
-            var x = Activator.CreateInstance(target, false);
-            var z = from source in objectType.GetMembers().ToList()
-                    where source.MemberType == MemberTypes.Property
-                    select source;
-            var d = from source in target.GetMembers().ToList()
-                    where source.MemberType == MemberTypes.Property
-                    select source;
-            List<MemberInfo> members = d.Where(memberInfo => d.Select(c => c.Name)
-               .ToList().Contains(memberInfo.Name)).ToList();
-            PropertyInfo propertyInfo;
-            object value;
-            foreach (var memberInfo in members)
+            string DeclarationString;
+            using (var stringwriter = new System.IO.StringWriter())
             {
-                propertyInfo = dec.GetType().GetProperty(memberInfo.Name);
-                value = objectType.GetType().GetProperty(memberInfo.Name).GetValue(objectType, null);
-
-                propertyInfo.SetValue(x, value, null);
+                var serializer = new XmlSerializer(fakeRespond.Response.Declaration.GetType());
+                serializer.Serialize(stringwriter, fakeRespond.Response.Declaration);
+                DeclarationString = stringwriter.ToString();
             }
+
+
+
+            using (var stringReader = new System.IO.StringReader(DeclarationString))
+            {
+                var serializer = new XmlSerializer(dec.GetType());
+                dec = serializer.Deserialize(stringReader) as UnifreightIIG.Common.MessageLib.ID.Declaration;
+            }
+
+            //Type objectType = fakeRespond.GetType();
+            //Type target = dec.GetType();
+            //var x = Activator.CreateInstance(target, false);
+            //var z = from source in objectType.GetMembers().ToList()
+            //        where source.MemberType == MemberTypes.Property
+            //        select source;
+            //var d = from source in target.GetMembers().ToList()
+            //        where source.MemberType == MemberTypes.Property
+            //        select source;
+            //List<MemberInfo> members = d.Where(memberInfo => d.Select(c => c.Name)
+            //   .ToList().Contains(memberInfo.Name)).ToList();
+            //PropertyInfo propertyInfo;
+            //object value;
+            //foreach (var memberInfo in members)
+            //{
+            //    propertyInfo = dec.GetType().GetProperty(memberInfo.Name);
+            //    value = objectType.GetType().GetProperty(memberInfo.Name).GetValue(objectType, null);
+
+            //    propertyInfo.SetValue(x, value, null);
+            //}
         }
         public void AddResponseContentHeader()
         {
