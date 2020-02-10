@@ -798,8 +798,7 @@ export class DeclarationCustomsDocumentsController implements ICustomsDocumentsC
                                 customsDocumentsTicket.RemoveCustomsDocumentPointer(editedPointer);
                             }
                             else {
-                                debugger;
-                                if (newChooseIsAmendment) {
+                                 if (newChooseIsAmendment) {
                                     editedPointer.Child1EntityCode = "DeclarationAmendment";
                                     editedPointer.Child1EntityId = "3";
                                 }

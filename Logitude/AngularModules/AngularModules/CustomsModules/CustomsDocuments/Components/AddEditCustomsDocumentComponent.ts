@@ -804,8 +804,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
             if (index == 2) {
                 selectInvoicesOnly = false;
             }
-            debugger;
-            var isAmendment=false;
+             var isAmendment=false;
             if (index == 3) isAmendment = true;
 
             this.ShowSelectionComponent(selectInvoicesOnly, isAmendment);

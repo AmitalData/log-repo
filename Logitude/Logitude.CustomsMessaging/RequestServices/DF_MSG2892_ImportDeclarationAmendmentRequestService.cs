@@ -300,7 +300,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             req.Response.FunctionCode = new ResponseFunctionCodeType { Value = "1" };
             req.Attachments = GetAttachments();
             LogMessagingUtil.Instance.AppendLine("declaration build" + requestParams.AppicationId);
-             UpdateDeclaration(req.Response);
+             UpdateDeclaration(req.Response, requestParams.LoggingUserId);
             _context = null;
             return req;
         }
@@ -330,10 +330,11 @@ namespace Logitude.CustomsMessaging.RequestServices
 
         }
 
-        private void UpdateDeclaration(UnifreightIIG.Common.ImportDeclarationAmendmentServiceReference.Response response)
+        private void UpdateDeclaration(UnifreightIIG.Common.ImportDeclarationAmendmentServiceReference.Response response ,string LoggingUserId)
         {
             DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(_context, new Dictionary<string, IContext>(), _DeclarationPM.Tenant);
             _DeclarationPM.AmendmentissueDate = DateTime.Now;
+            _DeclarationPM.AmendmentCorrectedByUserId = LoggingUserId;
             _DeclarationPM.AmendmentRequestNumber = response.FunctionalReferenceID.Value;
             _DeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
             //var myUpdateEventContextTagModel = new EventContextTagModel()
