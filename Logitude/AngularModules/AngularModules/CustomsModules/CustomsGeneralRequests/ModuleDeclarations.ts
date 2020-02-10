@@ -20,6 +20,7 @@ import { RecallClientsForCutoms } from './Components/RecallClientsForCutoms';
 import { MorningMessageComponent } from './Components/MorningMessageComponent';
 import { CopyDeclarationComponent } from './Components/CopyDeclarationComponent';
 import { PhysicalCheckComponent } from './Components/PhysicalCheckComponent';
+import { EndPhysicalCheckComponent } from './Components/EndPhysicalCheckComponent';
  
 export const Components =
     [
@@ -45,6 +46,7 @@ export const Components =
         MorningMessageComponent,
         CopyDeclarationComponent,
         PhysicalCheckComponent,
+        EndPhysicalCheckComponent,
      ];
 
 export class ModuleDeclarations {
@@ -76,8 +78,7 @@ export class ModuleDeclarations {
             case "MorningMessageComponent": { myResult = MorningMessageComponent; break; }
             case "CopyDeclarationComponent": { myResult = CopyDeclarationComponent; break; }
             case "PhysicalCheckComponent": { myResult = PhysicalCheckComponent; break; }
-
-
+            case "EndPhysicalCheckComponent": { myResult = EndPhysicalCheckComponent; break; }
         }
 
         return myResult;

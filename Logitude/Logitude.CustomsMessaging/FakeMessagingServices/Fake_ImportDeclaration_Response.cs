@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 using UnifreightIIG.Common.ImportDeclarationServiceReference;
 using Exception = UnifreightIIG.Common.ImportDeclarationServiceReference.Exception;
 
@@ -18,6 +19,7 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
         private readonly DF_MSG10000_ImportDeclaration request;
         public DF_NG_2754_MSG10004_ImportDeclarationResponse fakeRespond;
         public ResponseHeader _ResponseHeader;
+        public ResponseError[] _Constraints;
         public Fake_ImportDeclaration_Response(GenericRequestParams requestParams)
         {
             _requestParams = requestParams;
@@ -35,18 +37,18 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
             DeclarationDutyTaxFee[] taxFree = new DeclarationDutyTaxFee[2];
             Declaration declaration = request.Declaration;
 
-            _customsValueComponent.TotalDealValueAmountNIS = new TotalDealValueAmountNISType() { Value = 273 };
-            _customsValueComponent.CifValueNIS = new CifValueNISType() { Value = 273 };
-            _customsValueComponent.TaxAssessedAmount = new DutyTaxFeeAssessed() { Value = 80 };
-            _customsValueComponent.TotalMADDealValueAmountNIS = new TotalMADDealValueAmountNISType() { Value = 263 };
+            _customsValueComponent.TotalDealValueAmountNIS = new TotalDealValueAmountNISType() { Value = 99 };
+            _customsValueComponent.CifValueNIS = new CifValueNISType() { Value = 99 };
+            _customsValueComponent.TaxAssessedAmount = new DutyTaxFeeAssessed() { Value = 99 };
+            _customsValueComponent.TotalMADDealValueAmountNIS = new TotalMADDealValueAmountNISType() { Value = 99 };
             _dm.VersionID = new DeclarationDMExtensionsVersionID() { Value = "0.6" };
             _dm.CustomsValueComponent = _customsValueComponent;
-            _dm.TaxationDateTime = DateTime.Now.ToString();
+            _dm.TaxationDateTime = XmlConvert.ToString(DateTime.Now);
 
             //DutyTaxFee
             taxFree[0] = new DeclarationDutyTaxFee
             {
-                AdValoremTaxBaseAmount = new DutyTaxFeeAdValoremTaxBaseAmountType() { Value = 273 },
+                AdValoremTaxBaseAmount = new DutyTaxFeeAdValoremTaxBaseAmountType() { Value = 99 },
                 TypeCode = new DutyTaxFeeTypeCodeType() { Value = "15" },
                 DMExtensions = new DeclarationDutyTaxFeeDMExtensions()
             };
@@ -57,13 +59,13 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
             };
             taxFree[1] = new DeclarationDutyTaxFee
             {
-                AdValoremTaxBaseAmount = new DutyTaxFeeAdValoremTaxBaseAmountType() { Value = 51 },
+                AdValoremTaxBaseAmount = new DutyTaxFeeAdValoremTaxBaseAmountType() { Value = 0 },
                 TypeCode = new DutyTaxFeeTypeCodeType() { Value = "16" },
                 DMExtensions = new DeclarationDutyTaxFeeDMExtensions()
             };
             taxFree[1].DMExtensions.CalculatedTax = new DeclarationDutyTaxFeeDMExtensionsCalculatedTax
             {
-                Amount = new AmountAmountType() { Value = 51 },
+                Amount = new AmountAmountType() { Value = 0 },
                 DeferedTaxAmount = new deferedTaxAmountType() { Value = 0 }
             };
 
@@ -96,6 +98,7 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
                 TransmitionDateTime = DateTime.Now,
                 Remark = "",
                 Exception = null,
+                ApplicationID=0,
             };
         }
         public void AddSign()
@@ -110,7 +113,47 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
             _ResponseHeader.Status = "Success";
             _ResponseHeader.ErrorDescription = "";
             _ResponseHeader.ErrorCode = "None";
-            
+           
+        }
+        public void AddConstraints()
+        {
+            _Constraints = new ResponseError[1];
+            _Constraints[0] = new ResponseError() { ValidationCode = new ErrorValidationCodeType() {  name = "2685-fake contraint" , listName="105"} };
+            //DocumentSection
+            _Constraints[0].Pointer = new ResponseErrorPointer[4];
+
+            _Constraints[0].Pointer[0] = new ResponseErrorPointer();
+            _Constraints[0].Pointer[1] = new ResponseErrorPointer();
+            _Constraints[0].Pointer[2] = new ResponseErrorPointer();
+            _Constraints[0].Pointer[3] = new ResponseErrorPointer();
+
+            _Constraints[0].Pointer[0].DocumentSectionCode = new PointerDocumentSectionCodeType() { Value = "42A" };
+            _Constraints[0].Pointer[1].DocumentSectionCode = new PointerDocumentSectionCodeType() { Value = "67A" };
+            _Constraints[0].Pointer[2].DocumentSectionCode = new PointerDocumentSectionCodeType() { Value = "28A" };
+            _Constraints[0].Pointer[3].DocumentSectionCode = new PointerDocumentSectionCodeType() { Value = "30B" };
+
+            //TagId
+            _Constraints[0].Pointer[0].TagID = new PointerTagIDType();
+            _Constraints[0].Pointer[1].TagID = new PointerTagIDType();
+            _Constraints[0].Pointer[2].TagID = new PointerTagIDType();
+            _Constraints[0].Pointer[3].TagID = new PointerTagIDType() { Value = "D024" };
+            // SequenceNumeric
+            _Constraints[0].Pointer[0].SequenceNumeric = 0;
+            _Constraints[0].Pointer[1].SequenceNumeric = 0;
+            _Constraints[0].Pointer[2].SequenceNumeric = 1;
+            //DMExtensions
+            _Constraints[0].Pointer[0].DMExtensions = new ResponseErrorPointerDMExtensions() { NaturalKey = new NaturalKeyType() };
+            _Constraints[0].Pointer[1].DMExtensions = new ResponseErrorPointerDMExtensions() { NaturalKey = new NaturalKeyType() };
+            _Constraints[0].Pointer[2].DMExtensions = new ResponseErrorPointerDMExtensions() { NaturalKey = new NaturalKeyType() };
+            _Constraints[0].Pointer[3].DMExtensions = new ResponseErrorPointerDMExtensions() { NaturalKey = new NaturalKeyType() };
+            _Constraints[0].DMExtensions = new ResponseErrorDMExtensions()
+            {
+                ConstraintID = 4348628,
+                ConstraintType = 1,
+                ConstraintStatus = 1,
+
+            };
+            fakeRespond.Response.Error = _Constraints;
         }
 
     }

@@ -43,6 +43,7 @@ namespace Logitude.Customs.Data.Repsitories
         }
 
 
+
         public Declaration GetDeclarationNotAmendmentDontDisplayInList(string id,string amendmentOriginalDeclartation,  int tenant)
         {
 
@@ -50,7 +51,7 @@ namespace Logitude.Customs.Data.Repsitories
             (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
 
             return (from a in context.Declarations
-                    where ((a.DeclarationNumber == id && a.AmendmentDontDisplayInList == false) || (a.DeclarationNumber == amendmentOriginalDeclartation && a.AmendmentDontDisplayInList == false))
+                    where ((a.Id == id && a.AmendmentDontDisplayInList == false) || (a.Id == amendmentOriginalDeclartation && a.AmendmentDontDisplayInList == false))
                     && a.Tenant == tenant
                     select a).FirstOrDefault();
         }
@@ -318,9 +319,13 @@ namespace Logitude.Customs.Data.Repsitories
 
         public Declaration GetDeclarationByFunctionalReferenceID(string declarationNumber,  string functionalReferenceID)
         {
+            Declaration declarationParent = (from a in context.Declarations
+                                       where declarationNumber == a.DeclarationNumber
+                                       select a).FirstOrDefault();
 
-           Declaration declaration = (from a in context.Declarations
-                                              where declarationNumber == a.Id && functionalReferenceID ==a.AmendmentRequestNumber
+
+            Declaration declaration = (from a in context.Declarations
+                                              where declarationParent.Id == a.AmendmentOriginalDeclartation && functionalReferenceID ==a.AmendmentRequestNumber
                                        select a).FirstOrDefault();
 
             return declaration;

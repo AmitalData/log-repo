@@ -46,31 +46,32 @@ namespace Logitude.Customs.BL.CloseTables
                     Name = "הצהרת תקן5117 ",
                     IsDCA= true,
                     Entity="Declaration",
-                    Param1= @"{ ""Fix"":""AAA"" }",
+                    Param1= @"{ ""RequestNumber"" :""1"" ,  ""Content32"" :""1"" , ""Content29"" :""test 29"" , ""Content27"" :""test 27""}",
+                                                   
+                                               
                     MainInterfaceCode="5117",
                 },
                                   
-                new SincroTestCaseDetail()
-                {
-                    Code = "5117SincroCancel",
-                    Name = "הצהרת בטל5117 ",
-                    IsDCA= true,
-                    Entity="Declaration",
-                    Param1= @"{ ""cancel"":""AAA"" }",
-                    MainInterfaceCode="5117",
-                },
+    
                 new SincroTestCaseDetail()
                 {
                     Code = "190Sincro",
                     Name = "בדיקות פיזיות	",
                     IsDCA = true,
                     Entity="Declaration",
-                    Param1= @"{ ""availability"":""2020-02-04T09:15:03.1085624"" , ""rr"" : ""true"" }",
+                    Param1= @"{ """":""""}",
                     Param2= @"{ ""availability"":""2020-02-04T09:15:03.1085624"" }",
-
                     MainInterfaceCode="190",
-
-
+                },
+                new SincroTestCaseDetail()
+                {
+                    Code = "196Sincro",
+                    Name = "סיום בדיקה פיזית ",
+                    IsDCA = true,
+                    Entity="Declaration",
+                    Param1= @"{ ""checkId"":""""}",
+                    Param2= @"{ }",
+                    MainInterfaceCode="196",
                 }
 
 

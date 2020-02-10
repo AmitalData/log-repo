@@ -224,6 +224,7 @@
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\Classification\CasualSupplierDetailsComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\DeclarationAmendment\DeclarationAmendmentComponent.html" />
     <Content Include="CustomsModules\CustomsGeneralRequests\Components\CopyDeclarationComponent.html" />
+    <Content Include="CustomsModules\CustomsGeneralRequests\Components\EndPhysicalCheckComponent.html" />
     <Content Include="CustomsModules\CustomsGeneralRequests\Components\PhysicalCheckComponent.html" />
     <Content Include="CustomsModules\CustomsListTemplates\Components\DeclarationAmendmentListTemplate.html" />
     <Content Include="CustomsModules\CustomsListTemplates\Components\CustomsCollateralListTemplate.html" />
@@ -836,6 +837,7 @@
     <TypeScriptCompile Include="CustomsModules\CustomsGeneralRequests\Components\CustomsRestoreMessagesComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsGeneralRequests\Components\DeclarationReshimonConversionComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsGeneralRequests\Components\DeficitFileFilterComponent.ts" />
+    <TypeScriptCompile Include="CustomsModules\CustomsGeneralRequests\Components\EndPhysicalCheckComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsGeneralRequests\Components\ExchangeRatesQueryComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsGeneralRequests\Components\GoldCreditLimitQueryComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsGeneralRequests\Components\ImporterDeclarationComponent.ts" />

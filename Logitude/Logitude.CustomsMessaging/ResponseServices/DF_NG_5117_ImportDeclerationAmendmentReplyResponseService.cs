@@ -24,42 +24,20 @@ using UnifreightIIG.Common.MessageLib.ID;
 using UnifreightIIG.Common.MessageLib.Collateral;
 using Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer;
 using System.Reflection;
+using System.Xml.Serialization;
+using Logitude.Customs.BL.TraceEvents;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
     public class DF_NG_5117_ImportDeclerationAmendmentReplyResponseService : ResponseServiceBase<INF_MSG_GenericResponseData, DF_NG_5117_MSG14003_ImportDeclarationAmendmentReplyMsg, GenericRequestParams>
     {
         DeclarationPM _MyDeclarationPM;
+        DeclarationPM _MyDeclarationPMOrg;
+
         private DeclarationPrintResponseData _SendDeclarationPrintResponse;
 
 
-        public UnifreightIIG.Common.ImportDeclarationServiceReference.Declaration CastDeclaration (UnifreightIIG.Common.MessageLib.ID.Declaration castFrom , UnifreightIIG.Common.ImportDeclarationServiceReference.Declaration castTo)
-        {
-            Type objectType = castFrom.GetType();
-            Type target = castTo.GetType();
-            var x = Activator.CreateInstance(target, false);
-            var z = from source in objectType.GetMembers().ToList()
-                    where source.MemberType == MemberTypes.Property
-                    select source;
-            var d = from source in target.GetMembers().ToList()
-                    where source.MemberType == MemberTypes.Property
-                    select source;
-            List<MemberInfo> members = d.Where(memberInfo => d.Select(c => c.Name)
-               .ToList().Contains(memberInfo.Name)).ToList();
-            PropertyInfo propertyInfo;
-            object value;
-            foreach (var memberInfo in members)
-            {
-                propertyInfo = castTo.GetType().GetProperty(memberInfo.Name);
-                value = objectType.GetType().GetProperty(memberInfo.Name).GetValue(objectType, null);
-
-                propertyInfo.SetValue(x, value, null);
-            }
-            return (UnifreightIIG.Common.ImportDeclarationServiceReference.Declaration)x;
-
-
-
-        }
+       
         public override void Update(DF_NG_5117_MSG14003_ImportDeclarationAmendmentReplyMsg customResponse, GenericRequestParams requestParams)
         {
             var context = CustomContext.GetContext(requestParams.Tenant);
@@ -70,7 +48,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             string error = "";
             var dec = new UnifreightIIG.Common.ImportDeclarationServiceReference.Declaration();
 
-            if (customResponse.Response.Declaration != null && customResponse.Response.Declaration.ID != null && customResponse.Response.Declaration.ID.Value != null && customResponse.Response.Declaration.ID.Value.Substring(2, 2) == "99")
+            if (customResponse.Response.Declaration != null && customResponse.Response.Declaration.ID != null && customResponse.Response.Declaration.ID.Value != null)
             {
  
                 //var key = "ResponseService,declarationNumber:" + declarationNumber + ",tenant:" + requestParams.Tenant.ToString();
@@ -79,10 +57,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                     DF_NG_2754_MSG10004_ImportFixedDeclarationResponseService dF_NG_2754_MSG10004_ImportFixedDeclarationResponseService = new DF_NG_2754_MSG10004_ImportFixedDeclarationResponseService();
 
+
                 if (declaration != null)
                 {
+                    _MyDeclarationPM = declaration;
                     //agent 
-                //    DeclarationPM declarationPM = dF_NG_2754_MSG10004_ImportFixedDeclarationResponseService.MapResponseToDeclaration(CastDeclaration( customResponse.Response.Declaration , dec), requestParams.Tenant, true, requestParams.AppicationId, out error , true);
+                    //    DeclarationPM declarationPM = dF_NG_2754_MSG10004_ImportFixedDeclarationResponseService.MapResponseToDeclaration(CastDeclaration( customResponse.Response.Declaration , dec), requestParams.Tenant, true, requestParams.AppicationId, out error , true);
 
                 }
                 else
@@ -94,16 +74,16 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         // declarationNumber = customResponse.Response.Declaration.ID.Value;
                     }
 
-                    else { 
+                    else {
 
-                    _MyDeclarationPM = myDeclarationUpdateService.GetSertByConvertedDeclarationNumber(customResponse.Response.Declaration.ID.Value, requestParams.Tenant);
+                        //      _MyDeclarationPM = myDeclarationUpdateService.GetSertByConvertedDeclarationNumber(customResponse.Response.Declaration.ID.Value, requestParams.Tenant);
 
 
                         //שדה AmendmentCorrectedByUserId=MEHES
                         //  AmendmentissueDate =< issueDateTime
 
 
-                        DeclarationPM declarationPM = dF_NG_2754_MSG10004_ImportFixedDeclarationResponseService.MapResponseToDeclaration(CastDeclaration(customResponse.Response.Declaration, dec), requestParams.Tenant, true, requestParams.AppicationId, out error, true);
+                        _MyDeclarationPM = dF_NG_2754_MSG10004_ImportFixedDeclarationResponseService.MapResponseToDeclaration(CastDeclaration(customResponse.Response.Declaration), requestParams.Tenant, true, requestParams.AppicationId, out error, true);
                     }
 
 
@@ -119,6 +99,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     this.MyResponseData.UserMessage = "Can not find declaration" + requestParams.AppicationId;
                     return;
                 }
+
+
+                var declarationQueryService = new DeclarationQueryService(_MyDeclarationPM.Tenant);
+                 _MyDeclarationPMOrg = declarationQueryService.GetSingle(_MyDeclarationPM.AmendmentOriginalDeclartation, true, false);
+
 
                 //var _currentDeclarationId = "";
 
@@ -164,44 +149,110 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                                         declarationParent.AmendmentDontDisplayInList = true;
 
-                                        EventTracer.CreateTraceEvent(new EventTracerArgs()
-                                        {
-                                            Tenant = _MyDeclarationPM.Tenant,
-                                            EventTypeCode = "DMA",
-                                            UserId = _MyDeclarationPM.CreatedByUserId,
-                                            EntityId = _MyDeclarationPM.AmendmentOriginalDeclartation,
-                                            ObjectTableName = "Customs.Declaration",
-                                            Notes = null
-                                        });
-                                            break;
+
+                                                 declarationParent.ChangeSetOp = ChangeSetOperation.Update;
+                                                myDeclarationUpdateService.Update( declarationParent, true);
+
+
+                                                //EventTracer.CreateTraceEvent(new EventTracerArgs()
+                                                //{
+                                                //    Tenant = _MyDeclarationPM.Tenant,
+                                                //    EventTypeCode = "DMA",
+                                                //    UserId = _MyDeclarationPM.CreatedByUserId,
+                                                //    EntityId = _MyDeclarationPM.AmendmentOriginalDeclartation,
+                                                //    ObjectTableName = "Customs.Declaration",
+                                                //    Notes = null
+                                                //});
+
+                                                var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
+                                                {
+                                                    Tenant = _MyDeclarationPM.Tenant,
+                                                    objectTableName = "Customs.Declaration",
+                                                    EventCode = "DMA",
+                                                    notes = null,
+                                                    CommunicationLoggingEntityReference = _MyDeclarationPMOrg.DeclarationNumber,
+                                                    EntityId = _MyDeclarationPM.AmendmentOriginalDeclartation,
+                                                    UserId = _MyDeclarationPM.CreatedByUserId,
+
+                                                    CommunicationSubject = "FU Status DMA from logitude ",
+                                                    MyFUStatus = new AmitalEventTracerModel.FUStatus()
+                                                    {
+                                                        entname = "CFIFILEM",
+                                                        primary_number = _MyDeclarationPMOrg.CustomFileNo,
+                                                        status = "new",
+                                                        xml_status = "new",
+                                                        status_id = "DMA",
+                                                        status_DateTime = DateTime.Now,
+                                                        comments = null,
+                                                    }
+                                                };
+                                                AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel);
+                                                break;
 
                                         case "4":
                                             _MyDeclarationPM.AmendmentStatus = "4";
 
-                                            EventTracer.CreateTraceEvent(new EventTracerArgs()
-                                            {
-                                                Tenant = _MyDeclarationPM.Tenant,
-                                                EventTypeCode = "DMD",
-                                                UserId = _MyDeclarationPM.CreatedByUserId,
-                                                EntityId = _MyDeclarationPM.AmendmentOriginalDeclartation,
-                                                ObjectTableName = "Customs.Declaration",
-                                                Notes = null
-                                            });
 
-                                            break;
+                                                var myAmitalEventTracerModel2 = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
+                                                {
+                                                    Tenant = _MyDeclarationPM.Tenant,
+                                                    objectTableName = "Customs.Declaration",
+                                                    EventCode = "DMD",
+                                                    notes = null,
+                                                    CommunicationLoggingEntityReference = _MyDeclarationPMOrg.DeclarationNumber,
+                                                    EntityId = _MyDeclarationPM.AmendmentOriginalDeclartation,
+                                                    UserId = _MyDeclarationPM.CreatedByUserId,
+
+                                                    CommunicationSubject = "FU Status DMD from logitude ",
+                                                    MyFUStatus = new AmitalEventTracerModel.FUStatus()
+                                                    {
+                                                        entname = "CFIFILEM",
+                                                        primary_number = _MyDeclarationPMOrg.CustomFileNo,
+                                                        status = "new",
+                                                        xml_status = "new",
+                                                        status_id = "DMD",
+                                                        status_DateTime = DateTime.Now,
+                                                        comments = null,
+                                                    }
+                                                };
+
+                                                AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel2);
+
+
+                                                break;
 
                                         case "5":
                                             _MyDeclarationPM.AmendmentStatus = "5";
 
-                                            EventTracer.CreateTraceEvent(new EventTracerArgs()
-                                            {
-                                                Tenant = _MyDeclarationPM.Tenant,
-                                                EventTypeCode = "DMC",
-                                                UserId = _MyDeclarationPM.CreatedByUserId,
-                                                EntityId = _MyDeclarationPM.AmendmentOriginalDeclartation,
-                                                ObjectTableName = "Customs.Declaration",
-                                                Notes = null
-                                            });
+
+                                                var myAmitalEventTracerModel3 = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
+                                                {
+                                                    Tenant = _MyDeclarationPM.Tenant,
+                                                    objectTableName = "Customs.Declaration",
+                                                    EventCode = "DMC",
+                                                    notes = null,
+                                                    CommunicationLoggingEntityReference = _MyDeclarationPMOrg.DeclarationNumber,
+                                                    EntityId = _MyDeclarationPM.AmendmentOriginalDeclartation,
+                                                    UserId = _MyDeclarationPM.CreatedByUserId,
+
+                                                    CommunicationSubject = "FU Status DMC from logitude ",
+                                                    MyFUStatus = new AmitalEventTracerModel.FUStatus()
+                                                    {
+                                                        entname = "CFIFILEM",
+                                                        primary_number = _MyDeclarationPMOrg.CustomFileNo,
+                                                        status = "new",
+                                                        xml_status = "new",
+                                                        status_id = "DMC",
+                                                        status_DateTime = DateTime.Now,
+                                                        comments = null,
+                                                    }
+                                                };
+
+                                                AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel3);
+
+
+
+                                     
 
                                             break;
 
@@ -212,18 +263,34 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                             _MyDeclarationPM.AmendmentDontDisplayInList = false;
                                               declarationParent = myDeclarationQueryService.GetDeclarationNotAmendmentDontDisplayInList(_MyDeclarationPM.Id, _MyDeclarationPM.AmendmentOriginalDeclartation, requestParams.Tenant);
                                             declarationParent.AmendmentDontDisplayInList = true;
+                                                declarationParent.ChangeSetOp = ChangeSetOperation.Update;
+                                                myDeclarationUpdateService.Update(declarationParent, true);
+                                                var myAmitalEventTracerModel4 = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
+                                                {
+                                                    Tenant = _MyDeclarationPM.Tenant,
+                                                    objectTableName = "Customs.Declaration",
+                                                    EventCode = "DMP",
+                                                    notes = null,
+                                                    CommunicationLoggingEntityReference = _MyDeclarationPMOrg.DeclarationNumber,
+                                                    EntityId = _MyDeclarationPM.AmendmentOriginalDeclartation,
+                                                    UserId = _MyDeclarationPM.CreatedByUserId,
 
+                                                    CommunicationSubject = "FU Status DMP from logitude ",
+                                                    MyFUStatus = new AmitalEventTracerModel.FUStatus()
+                                                    {
+                                                        entname = "CFIFILEM",
+                                                        primary_number = _MyDeclarationPMOrg.CustomFileNo,
+                                                        status = "new",
+                                                        xml_status = "new",
+                                                        status_id = "DMP",
+                                                        status_DateTime = DateTime.Now,
+                                                        comments = null,
+                                                    }
+                                                };
 
-                                            EventTracer.CreateTraceEvent(new EventTracerArgs()
-                                            {
-                                                Tenant = _MyDeclarationPM.Tenant,
-                                                EventTypeCode = "DMP",
-                                                UserId = _MyDeclarationPM.CreatedByUserId,
-                                                EntityId = _MyDeclarationPM.AmendmentOriginalDeclartation,
-                                                ObjectTableName = "Customs.Declaration",
-                                                Notes = null
-                                            });
+                                                AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel4);
 
+                                   
                                             break;
                                     };
 
@@ -302,6 +369,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                     this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
                     myDeclarationUpdateService.Update(this._MyDeclarationPM, true);
+
+ 
+
 
                     this.MyResponseData.ApplicationID = requestParams.AppicationId;
                     this.MyResponseData.Succeeded = true;
@@ -382,7 +452,29 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 //declarationNumber = requestParams.AppicationId;
             }
         }
-        bool SendDeclarationPrintSync(GenericRequestParams requestParams)
+
+
+        public UnifreightIIG.Common.ImportDeclarationServiceReference.Declaration CastDeclaration(UnifreightIIG.Common.MessageLib.ID.Declaration declaration )
+        {
+
+
+            string DeclarationString;
+            using (var stringwriter = new System.IO.StringWriter())
+            {
+                var serializer = new XmlSerializer(declaration.GetType());
+                serializer.Serialize(stringwriter, declaration);
+                DeclarationString = stringwriter.ToString();
+            }
+
+
+
+            using (var stringReader = new System.IO.StringReader(DeclarationString))
+            {
+                var serializer = new XmlSerializer(typeof(UnifreightIIG.Common.ImportDeclarationServiceReference.Declaration));
+                return serializer.Deserialize(stringReader) as UnifreightIIG.Common.ImportDeclarationServiceReference.Declaration;
+            }
+        }
+            bool SendDeclarationPrintSync(GenericRequestParams requestParams)
         {
 
             bool SendDeclarationPrintDone = false;

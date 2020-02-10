@@ -123,7 +123,7 @@ export class DeclarationDisplayOnlyChecks {
                     SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.MustRefresh = true;
                     editComponentNeedsRefresh = SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.MustRefresh;
                     SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.MustRefreshMessage = errorMessage;
-                    serviceResponse.Result = new DisplayOnlyCheckResult(true, errorMessage);
+                    serviceResponse.Result = new DisplayOnlyCheckResult(this.entityPM.IsAmendmentDisplayOnly, errorMessage);
                    // return serviceResponse;
                     return Observable.of(serviceResponse);
                 });

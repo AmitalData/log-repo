@@ -137,6 +137,11 @@ export class CustomsRequestMenuService {
            
         ));
 
+        this._CustomsRequestMenuItems.push(new CustomsMenuItem("סיום בדיקה פיזית"
+            , "EndPhysicalCheck",
+            './CustomsModules/CustomsGeneralRequests/Components/EndPhysicalCheckComponent',
+            1010, 450, "196", null, null, null, true
+        ));
         this._CustomsRequestMenuItems.push(new CustomsMenuItem("בדיקה פיזית"
             , "PhysicalCheck",
             './CustomsModules/CustomsGeneralRequests/Components/PhysicalCheckComponent',

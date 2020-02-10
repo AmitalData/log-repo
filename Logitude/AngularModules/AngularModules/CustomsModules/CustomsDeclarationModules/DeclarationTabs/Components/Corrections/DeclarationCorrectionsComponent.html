@@ -233,9 +233,12 @@
                                                   [DataContext]="DataContext"></LogLabel>
                                     </td>
                                     <td style="width:75px">
-                                        <LogDatePicker [ObjectFieldName]="'AmendmentissueDate'" [ObjectTableName]="ObjectTableName"
-                                                       [DataContext]="DataContext" [HideColumns]="true" [SelectedDateValue]="AmendmentissueDate"></LogDatePicker>
-                                     </td>
+                                        <LogTextBox [ObjectFieldName]="'AmendmentissueDate'" [ObjectTableName]="ObjectTableName" [Text]="AmendmentissueDate"
+                                                    [HideColumns]="true" [DataContext]="DataContext" [InputType]="'ntext'"></LogTextBox>
+
+                                        <!--<LogDatePicker [ObjectFieldName]="'AmendmentissueDate'" [ObjectTableName]="ObjectTableName"
+                   [DataContext]="DataContext" [HideColumns]="true" [SelectedDateValue]="AmendmentissueDate"></LogDatePicker>-->
+                                    </td>
 
  
                                     <td style="width:110px">
@@ -291,7 +294,7 @@
 
 
                                 </tr>
-                                <tr style="height: 25px;">
+                                <!--<tr style="height: 25px;">
                                     <td style="width:75px"></td>
                                     <td></td>
                                     <td style="width:110px"></td>
@@ -306,7 +309,7 @@
                                     <td></td>
                                     <td style="width:110px"></td>
 
-                                </tr>
+                                </tr>-->
                             </table>
                         </td>
                     </tr>

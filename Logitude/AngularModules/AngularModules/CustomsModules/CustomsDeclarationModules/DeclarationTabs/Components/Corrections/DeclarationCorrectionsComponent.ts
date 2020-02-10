@@ -67,8 +67,17 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
     public get AmendmentRequestNumber() { return this.EntityPM ? this.EntityPM.AmendmentRequestNumber : null; }
     public set AmendmentRequestNumber(newValue: string) { this.EntityPM.AmendmentRequestNumber = newValue; }
 
-    public get AmendmentissueDate() { return this.EntityPM ? this.EntityPM.AmendmentissueDate : null; }
-    public set AmendmentissueDate(newValue: Date) { this.EntityPM.AmendmentissueDate = newValue; }
+    public get AmendmentissueDate() {
+
+        if (this.EntityPM != null) {
+            var myFormats = DateTool.GetDateFormats(this.EntityPM.AmendmentissueDate);
+            return myFormats.DateString + " " + myFormats.ShortTimeString;
+        }
+        return null;
+
+
+    }
+    public set AmendmentissueDate(newValue: string) {  }
 
 
     public get AmendmentDeficitInitiated() { return this.EntityPM ? this.EntityPM.AmendmentDeficitInitiated : null; }
@@ -95,11 +104,14 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
                     this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrder").subscribe(response => {
                         this.EntityPM = this.entityArgs.EntityPM;
                         this.ObjectTableName = this.entityArgs.ObjectTableName;
+                
                         this.Listen();
 
                         console.log("Declaration", this.EntityPM);
 
                         this.ReloadDeclarationCorrection();
+
+   
                         this.UIProperties.SetEnabled("AmendmentRequestNumber", this.ObjectTableName, false);
                         this.UIProperties.SetEnabled("AmendmentissueDate", this.ObjectTableName, false);
                         this.UIProperties.SetEnabled("VersionId", this.ObjectTableName, false);

@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.Entity;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Logitude.Customs.BL.EntityDataMappings;
 
 namespace Logitude.Customs.BL.EntityQueryServices
 {
@@ -90,6 +91,30 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return "";
             
         }
+        public PhysicalCheckPM GetPhysicalCheckByDeclarationId(string declarationId)
+        {
+            PhysicalCheckDataMapping pocoToPM = new PhysicalCheckDataMapping();
+            PhysicalCheckPM _physicalCheckPM = new PhysicalCheckPM();
+            var _physicalCheckPoco = context.PhysicalChecks.FirstOrDefault(x => x.DeclarationId == declarationId);
+            if (_physicalCheckPoco != null)
+            {
+                
+                 pocoToPM.POCOToPM(_physicalCheckPM, _physicalCheckPoco);
+            }
+            return _physicalCheckPM;
+        }
+        public PhysicalCheckPM GetPhysicalCheckByCheckId(string checkId)
+        {
+            PhysicalCheckDataMapping pocoToPM = new PhysicalCheckDataMapping();
+            PhysicalCheckPM _physicalCheckPM = new PhysicalCheckPM();
+            var _physicalCheckPoco = context.PhysicalChecks.FirstOrDefault(x => x.CheckId == checkId);
+            if (_physicalCheckPoco != null)
+            {
+                pocoToPM.POCOToPM(_physicalCheckPM, _physicalCheckPoco);
+            }
+            return _physicalCheckPM;
+        }
+
 
 
     }
