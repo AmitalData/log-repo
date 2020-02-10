@@ -48,8 +48,8 @@
                                         <div class="SimpleGridViewHeader">
                                             <table>
                                                 <tr>
-                                                    <td style="width: 150px; min-width: 150px;">Entity</td>
-                                                    <td style="width: 200px; min-width: 200px;">Field</td>
+                                                    <td *ngIf="!NoEntity" style="width: 150px; min-width: 150px;">Entity</td>
+                                                    <td [ngStyle]="{'min-width':NoEntity? '230px' : '200px','width':NoEntity? '230px' : '200px'}">Field</td>
                                                     <td style="width: 165px; min-width: 165px;">Operator</td>
                                                     <td style="width: 215px; min-width:215px">Value</td>
                                                     <td style="width: 100%; min-width:100%"></td>
@@ -69,7 +69,7 @@
 
 
 
-                                                                            <td style="width: 150px; min-width: 150px; max-width: 150px;">
+                                                                            <td *ngIf="!NoEntity" style="width: 150px; min-width: 150px; max-width: 150px;">
 
                                                                                 <div style="text-align:left;width:145px">
                                                                                     <ComboBox style="width:115px;" (SelectedItemChanged)="item.AutomationEntityListValueChanged($event)" [ItemsSource]="item.AutomationEntityLists" [SelectedItem]="item.SelectedAutomationEntity" [Binding]="'Name'"></ComboBox>
@@ -78,9 +78,9 @@
                                                                             </td>
 
 
-                                                                            <td style="width: 200px; min-width: 200px; max-width: 200px;">
+                                                                            <td [ngStyle]="{'min-width':NoEntity ? '230px' : '200px','max-width':NoEntity ? '230px' : '200px','width':NoEntity ? '230px' : '200px'}">
 
-                                                                                <div style="width:195px;text-align:center">
+                                                                                <div [ngStyle]="{'width':NoEntity ? '225px' : '195px'}" style="text-align:center">
 
                                                                                     <LogLov *ngIf="item.IsRefreshAutomationCondationField" (SelectedItemChanged)="item.CustomFieldValueChanged($event)"
                                                                                             [ObjectFieldName]="'ObjectFieldId'"

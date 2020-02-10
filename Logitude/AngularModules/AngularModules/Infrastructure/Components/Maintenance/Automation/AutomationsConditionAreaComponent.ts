@@ -1,4 +1,4 @@
-﻿import {Component, OnInit, ChangeDetectorRef, QueryList, ViewChildren}  from '@angular/core';
+import {Component, OnInit, ChangeDetectorRef, QueryList, ViewChildren}  from '@angular/core';
 import {AutomationPM} from '../../../../Common/EntityPMs/AutomationPMExtended';
 import {AppTool, DateTool} from '../../../../Infrastructure/Tools';
 
@@ -13,7 +13,7 @@ import {FieldValueResolver} from '../../../../Infrastructure/Utilities/FieldValu
     moduleId: module.id,
     selector: 'AutomationsConditionAreaComponent',
     templateUrl: './AutomationsConditionAreaComponent.html',
-    inputs: ['AutomationCondationLists', 'Title', 'TiggerComponent', 'CondationListType', 'IsDisabled', 'ListHeight'],
+    inputs: ['AutomationCondationLists', 'Title', 'TiggerComponent', 'CondationListType', 'IsDisabled', 'ListHeight', 'NoEntity'],
 
 })
 export class AutomationsConditionAreaComponent extends BaseComponent implements OnInit {
@@ -25,6 +25,7 @@ export class AutomationsConditionAreaComponent extends BaseComponent implements 
     IsDisabled: boolean = false;
     ListHeight: string = "120px";
     TiggerComponent: any;
+    NoEntity: boolean = false;
     constructor() {
         super();
       
