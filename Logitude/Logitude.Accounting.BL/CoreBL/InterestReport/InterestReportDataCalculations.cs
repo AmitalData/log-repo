@@ -107,9 +107,9 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
                 interestReportLinesByDatePM.TotalAmount = currentInterestTransactionGroupedByDate.TotalLocalAmount;
                 interestReportLinesByDatePM.AccumulatedAmount = accumulatedAmount + currentInterestTransactionGroupedByDate.TotalLocalAmount;
                 accumulatedAmount = interestReportLinesByDatePM.AccumulatedAmount;
-                interestReportLinesByDatePM.StandardInterestPercentage = GetStandardInterestPercentageForStartInterestDate(interestReportLinesByDatePM.FromDate);
-                interestReportLinesByDatePM.ExceptionalInterestPercentage = GetExceptionalInterestPercentageForStartInterestDate(interestReportLinesByDatePM.FromDate);
-                interestReportLinesByDatePM.CreditInterestPercentage = GetCreditInterestPercentageForStartInterestDate(interestReportLinesByDatePM.FromDate);
+                interestReportLinesByDatePM.StandardInterestPercentage = GetStandardInterestPercentageForStartInterestDate(interestReportLinesByDatePM.ToDate);
+                interestReportLinesByDatePM.ExceptionalInterestPercentage = GetExceptionalInterestPercentageForStartInterestDate(interestReportLinesByDatePM.ToDate);
+                interestReportLinesByDatePM.CreditInterestPercentage = GetCreditInterestPercentageForStartInterestDate(interestReportLinesByDatePM.ToDate);
                 interestReportLinesByDatePM.StandardInterestAmount = GetStandardInterestAmount(interestReportLinesByDatePM);
                 interestReportLinesByDatePM.ExceptionalInterestAmount= GetExceptionalInterestAmount(interestReportLinesByDatePM);
                 interestReportLinesByDatePM.CreditInterestAmount= GetCreditInterestAmount(interestReportLinesByDatePM);

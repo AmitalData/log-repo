@@ -22,7 +22,7 @@ namespace Logitude.UnitTest.Accounting.UniTests.InterestReport
         }
 
         [TestMethod]
-        public void PrivateCreateInterestReportLinesByDate_InputInterestTransactionsByDate_ResultInInterestReportLinesByDate()
+        public void CreateInterestReportLinesByDate_InputInterestTransactionsByDate_ResultInInterestReportLinesByDate()
         {
             InterestReportPM interestReportPM = new InterestReportPM()
             {
