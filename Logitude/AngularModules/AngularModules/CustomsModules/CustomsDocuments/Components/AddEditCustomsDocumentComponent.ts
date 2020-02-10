@@ -316,7 +316,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
                 }
                 else { //removed redundunt code
                     //if (!isEditEnabled) {
-                    //    this.IsEditEnabled = false;
+                    //    this.IsEditEnabled = falseca;
                     //    this.IsMetaDataEditEnabled = false;
                     //    this.IsSendDocumentEnabled = false;
                     //    this.IsDocumentTypeEnabled = false;
@@ -576,6 +576,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
     }
 
     OkMethod(isSendToQueue: boolean) {
+        debugger;
          var errors = [];
         if (this.CustomsDocument) {
             Validator.TryValidateObject(this.CustomsDocument, "Customs.CustomsDocument", errors);
@@ -797,15 +798,32 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
     }
     currenctSelectConnectTo: number;
     ConnectedItemSelectionChanged(index: number) {
-        this.currenctSelectConnectTo = index;
-        if (index != 0 && index != 3) {
+      this.currenctSelectConnectTo = index;
+        if (index != 0  && index != 3) {
             var selectInvoicesOnly = true;
             if (index == 2) {
                 selectInvoicesOnly = false;
             }
-            this.ShowSelectionComponent(selectInvoicesOnly);
+            debugger;
+            var isAmendment=false;
+            if (index == 3) isAmendment = true;
+
+            this.ShowSelectionComponent(selectInvoicesOnly, isAmendment);
 
         }
+
+        if (this.currenctSelectConnectTo == 3 && this.CustomsDocumentsTicket.CustomsDocumentPointers.length>0) {
+            this.CustomsDocumentsTicket.CustomsDocumentPointers[0].Child1EntityCode = "DeclarationAmendment";
+            this.CustomsDocumentsTicket.CustomsDocumentPointers[0].Child1EntityId = "3";
+        }
+        else if (this.currenctSelectConnectTo == 0 && this.CustomsDocumentsTicket.CustomsDocumentPointers.length > 0)
+        {
+            this.CustomsDocumentsTicket.CustomsDocumentPointers[0].Child1EntityCode = null;
+            this.CustomsDocumentsTicket.CustomsDocumentPointers[0].Child1EntityId =null;
+
+        }
+
+         
     }
 
     //if(index != 0) {
@@ -838,18 +856,19 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
 
     //}
 
-    ShowSelectionComponent(selectInvoicesOnly: boolean = false) {
+    ShowSelectionComponent(selectInvoicesOnly: boolean = false , newChooseIsAmendment = false ) {
         if (!AppTool.IsNullOrEmpty(this.CustomsDocumentsTicket)) {
             this.iCustomsDocumentsController.SelectionCompleted.subscribe(s => {
                 this.SelectionCompleted(s);
             });
-            this.iCustomsDocumentsController.ShowSelectionComponent(this.CustomsDocumentsTicket, this.EntityPM, selectInvoicesOnly, this.IsEntityDisplayOnly);
+            if (this.currenctSelectConnectTo == 3) newChooseIsAmendment = true;
+            this.iCustomsDocumentsController.ShowSelectionComponent(this.CustomsDocumentsTicket, this.EntityPM, selectInvoicesOnly, this.IsEntityDisplayOnly, newChooseIsAmendment );
 
         }
 
     }
 
-
+    u
 
     RefereshConnectedInvoices() {
         if (this.CustomsDocumentsTicket != null) {

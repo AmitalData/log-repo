@@ -755,7 +755,7 @@ export class DeclarationCustomsDocumentsController implements ICustomsDocumentsC
         return true;
     }
 
-    ShowSelectionComponent(customsDocumentsTicket: CustomsDocumentsTicketPM, entityPM: any, customParam: boolean, isEntityDisplayOnly: boolean) {
+    ShowSelectionComponent(customsDocumentsTicket: CustomsDocumentsTicketPM, entityPM: any, customParam: boolean, isEntityDisplayOnly: boolean, customParam2: boolean) {
         var selectInvoicesOnly = customParam;
         var windowArgs: any = {};
         var certificates: any[] = [];
@@ -772,7 +772,7 @@ export class DeclarationCustomsDocumentsController implements ICustomsDocumentsC
         logWindow.ComponentLoaded.subscribe(comp => {
             logWindow.WindowClosed.subscribe(s => {
                 if (s) {
-                    this.SelectionInvoicesCompleted(comp, customsDocumentsTicket);
+                    this.SelectionInvoicesCompleted(comp, customsDocumentsTicket, customParam2);
                 }
             });
         });
@@ -780,7 +780,7 @@ export class DeclarationCustomsDocumentsController implements ICustomsDocumentsC
         logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/Documents/PointersFromInvoicesSelectionComponent');
     }
 
-    SelectionInvoicesCompleted(args, customsDocumentsTicket: CustomsDocumentsTicketPM) {
+    SelectionInvoicesCompleted(args, customsDocumentsTicket: CustomsDocumentsTicketPM, newChooseIsAmendment) {
         if (args.SelectedInvoices != null) {
             customsDocumentsTicket.ConnectedInvoicesSequences = args.ConnectedInvoices;
             customsDocumentsTicket.ConnectedInvoiceItemsSequences = args.ConnectedInvoiceItems;
@@ -798,8 +798,16 @@ export class DeclarationCustomsDocumentsController implements ICustomsDocumentsC
                                 customsDocumentsTicket.RemoveCustomsDocumentPointer(editedPointer);
                             }
                             else {
+                                debugger;
+                                if (newChooseIsAmendment) {
+                                    editedPointer.Child1EntityCode = "DeclarationAmendment";
+                                    editedPointer.Child1EntityId = "3";
+                                }
+                                else {
                                 editedPointer.Child1EntityCode = null;
                                 editedPointer.Child1EntityId = null;
+                                }
+                               
                             }
                         }
                     }
