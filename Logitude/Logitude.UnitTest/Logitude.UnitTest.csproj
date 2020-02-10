@@ -101,6 +101,7 @@
     <Compile Include="Accounting\UniTests\EntityMapping\ChartOfAccountDataMappingUnderTest.cs" />
     <Compile Include="Accounting\UniTests\ExternalReconcile\ExternalReconcileJournalServiceUnitTest.cs" />
     <Compile Include="Accounting\UniTests\ExternalReconcile\ExternalReconcileAdjustBankFeesServiceUnitTest.cs" />
+    <Compile Include="Accounting\UniTests\InterestReport\InterestReportCalculationsUnitTest.cs" />
     <Compile Include="Accounting\UniTests\JournalDataMappingUnitTest.cs" />
     <Compile Include="Accounting\UniTests\JournalStornoReconcileServiceUnitTest.cs" />
     <Compile Include="Accounting\UniTests\JournalStornoServiceUnitTest.cs" />

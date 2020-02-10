@@ -156,6 +156,10 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.MainAdditionalPackageApplied).HasColumnName("MainAdditionalPackageApplied");
             this.Property(t => t.TotalPrice).HasColumnName("TotalPrice");
             this.Property(t => t.SupportDomain).HasColumnName("SupportDomain");
+            this.Property(t => t.TotalNumberOfUsers).HasColumnName("TotalNumberOfUsers");
+            this.Property(t => t.TotalFreeUsers).HasColumnName("TotalFreeUsers");
+            this.Property(t => t.AveragePrice).HasColumnName("AveragePrice");
+            this.Property(t => t.TotalPaymentamount).HasColumnName("TotalPaymentamount");
 
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")

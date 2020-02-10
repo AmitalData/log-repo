@@ -2686,19 +2686,19 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                         }
 
                         case "Tariff.Ocean.LCL.Surcharges.Cost": {
-                            logWindow.Title = "New " + TextCodeTranslator.TranslateTable("Tariff.Q.Ocean.LCL.Surcharges.Cost") + " Surcharges Cost";
+                            logWindow.Title = "New " + TextCodeTranslator.TranslateTable("Tariff.Q.Ocean.LCL.Surcharges.Cost");
                             windowArgs.TypeCode = "OSC";
                             break;
                         }
                             
                         case "Tariff.Ocean FCL Freight Cost": {
-                            logWindow.Title = "New " + TextCodeTranslator.TranslateTable("Tariff.Q.OceanFCLFreightCost") + " Freight Cost";
+                            logWindow.Title = "New " + TextCodeTranslator.TranslateTable("Tariff.Q.OceanFCLFreightCost");
                             windowArgs.TypeCode = "OFC";
                             break;
                         }
 
                         case "Tariff.Ocean FCL Surcharges Cost": {
-                            logWindow.Title = "New " + TextCodeTranslator.TranslateTable("Tariff.Q.OceanFCLSurchargesCost") + " Surcharges Cost";
+                            logWindow.Title = "New " + TextCodeTranslator.TranslateTable("Tariff.Q.OceanFCLSurchargesCost");
                             windowArgs.TypeCode = "OFS";
                             break;
                         }

@@ -72,7 +72,7 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
                 if (isSaveSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
                     this.IsMainAdditionalPackageApplied = this.EntityPM.MainAdditionalPackageApplied;
-                    this.BuildPackagesList();
+                    //this.BuildPackagesList();
                     this.BuildAddOnsList();
                     this.SetUIProperties();
                     this.iGlobalDomainService.UpdateTenantManagementJS(this.EntityPM);
@@ -83,7 +83,7 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
                 if (isLoadSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
                     this.IsMainAdditionalPackageApplied = this.EntityPM.MainAdditionalPackageApplied;
-                    this.BuildPackagesList();
+                    //this.BuildPackagesList();
                     this.BuildAddOnsList();
                     this.SetUIProperties();
                     this.iGlobalDomainService.UpdateTenantManagementJS(this.EntityPM);
@@ -793,29 +793,60 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
     public PackagesTotalFreeUsers: number = 0;
     public PackagesTotalPrice: number = 0;
     public PackagesTotalTotalPrice: number = 0;
-    ComputePackagesTotals() {  
+    ComputePackagesTotals() {
         this.PackagesTotalNumberOfUsers = ArrayTool.Sum(this.PackagesList, "NumberOfUsers");
         this.PackagesTotalFreeUsers = ArrayTool.Sum(this.PackagesList, "FreeUsers");
         this.PackagesTotalPrice = ArrayTool.Sum(this.PackagesList, "Price");
         this.PackagesTotalTotalPrice = ArrayTool.Sum(this.PackagesList, "TotalPrice");
+        if (this.IsMainAdditionalPackage) {
+            if (this.IsMultiPackage) {
+                if (this.NumberOfUsers) {
+                    this.PackagesTotalNumberOfUsers += this.NumberOfUsers;
+                }
 
-        if (!this.IsMultiPackage) {
-            if (this.NumberOfUsers) {
-                this.PackagesTotalNumberOfUsers += this.NumberOfUsers;
+                if (this.FreeUsers) {
+                    this.PackagesTotalFreeUsers += this.FreeUsers;
+                }
+
+                if (this.TotalPrice) {
+                    this.PackagesTotalTotalPrice += this.TotalPrice;
+                }
+
+                this.TotalPaymentamount = this.PackagesTotalTotalPrice;
+                this.TotalNumberOfUsers = this.PackagesTotalNumberOfUsers;
+                this.TotalFreeUsers = this.PackagesTotalFreeUsers;
             }
-
-            if (this.FreeUsers) {
-                this.PackagesTotalFreeUsers += this.FreeUsers;
+            else {
+                this.TotalPaymentamount = this.TotalPrice;
+                this.TotalNumberOfUsers = this.NumberOfUsers; 
+                this.TotalFreeUsers = this.FreeUsers;
             }
+           
+        }
+        else {
+            if (!this.IsMultiPackage) {
+                if (this.NumberOfUsers) {
+                    this.TotalNumberOfUsers = this.NumberOfUsers;
+                }
 
-            if (this.LicensePrice) {
-                this.PackagesTotalPrice += this.LicensePrice;
+                if (this.FreeUsers) {
+                    this.TotalFreeUsers = this.FreeUsers;
+                }
+
+                if (this.LicensePrice) {
+                    this.PackagesTotalPrice = this.LicensePrice;
+                }
+                if (this.TotalPrice) {
+                    this.TotalPaymentamount = this.TotalPrice;
+                }
             }
-
-            if (this.TotalPrice) {
-                this.PackagesTotalTotalPrice += this.TotalPrice;
+            else {
+                this.TotalPaymentamount = this.PackagesTotalTotalPrice;
+                this.TotalNumberOfUsers = this.PackagesTotalNumberOfUsers;
+                this.TotalFreeUsers = this.PackagesTotalFreeUsers;
             }
         }
+        this.AveragePrice = AppTool.Round((this.TotalPaymentamount / this.TotalNumberOfUsers), 3);
     }
 
     public AddOnsList: AddOnItem[];
@@ -1216,6 +1247,34 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
         }
     }
 
+
+    get TotalNumberOfUsers() { return this.EntityPM.TotalNumberOfUsers; }
+    set TotalNumberOfUsers(newValue: number) {
+        if (this.EntityPM.TotalNumberOfUsers != newValue) {
+            this.EntityPM.TotalNumberOfUsers = newValue;
+        }
+    }
+
+    get TotalFreeUsers() { return this.EntityPM.TotalFreeUsers; }
+    set TotalFreeUsers(newValue: number) {
+        if (this.EntityPM.TotalFreeUsers != newValue) {
+            this.EntityPM.TotalFreeUsers = newValue;
+        }
+    }
+
+    get AveragePrice() { return this.EntityPM.AveragePrice; }
+    set AveragePrice(newValue: number) {
+        if (this.EntityPM.AveragePrice != newValue) {
+            this.EntityPM.AveragePrice = newValue;
+        }
+    }
+
+    get TotalPaymentamount() { return this.EntityPM.TotalPaymentamount; }
+    set TotalPaymentamount(newValue: number) {
+        if (this.EntityPM.TotalPaymentamount != newValue) {
+            this.EntityPM.TotalPaymentamount = newValue;
+        }
+    }
     get NumberOfUsers() { return this.EntityPM.NumberOfUsers; }
     set NumberOfUsers(newValue: number) {
         if (this.EntityPM.NumberOfUsers != newValue) {
