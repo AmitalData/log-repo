@@ -316,7 +316,7 @@ export class CargoSealsQueryComponent
             this.ValidationErrorsList.push(msg);
         }
 
-        if (AppTool.IsNullOrEmpty(this.CargoIdentifierKey3)) {
+        if (AppTool.IsNullOrEmpty(this.CargoIdentifierKey3) && this.CargoIdentifierTypeCode!="11")  {
             var msg = TextCodeTranslator.Translate("Customs.CargoSealsQuery.F.CargoIdentifierKey3Mandatory");
             this.ValidationErrorsList.push(msg);
         }
@@ -326,10 +326,10 @@ export class CargoSealsQueryComponent
             this.ValidationErrorsList.push(msg);
         }
 
-        if (AppTool.IsNullOrEmpty(this.ContainerNumber)) {
-            var msg = TextCodeTranslator.Translate("Customs.CargoSealsQuery.F.ContainerNumberMandatory");
-            this.ValidationErrorsList.push(msg);
-        }
+        //if (AppTool.IsNullOrEmpty(this.ContainerNumber)) {
+        //    var msg = TextCodeTranslator.Translate("Customs.CargoSealsQuery.F.ContainerNumberMandatory");
+        //    this.ValidationErrorsList.push(msg);
+        //}
 
         if (AppTool.IsNullOrEmpty(this.UpdateDate)) {
             var msg = TextCodeTranslator.Translate("Customs.CargoSealsQuery.F.UpdateDateMandatory");
