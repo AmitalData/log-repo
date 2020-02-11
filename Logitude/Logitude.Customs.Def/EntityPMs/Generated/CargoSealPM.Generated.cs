@@ -115,7 +115,9 @@ namespace Logitude.Customs.Def.EntityPMs
 		 }
 	   }
 	  private string sealCompletenessStateCode ;
-	  	  
+	  
+       [Key]
+	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -161,7 +163,9 @@ namespace Logitude.Customs.Def.EntityPMs
 		 }
 	   }
 	  private string sealTypeCode ;
-	  	  
+	  
+       [Key]
+	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -207,7 +211,9 @@ namespace Logitude.Customs.Def.EntityPMs
 		 }
 	   }
 	  private string updateReasonCode ;
-	  	  
+	  
+       [Key]
+	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -253,7 +259,9 @@ namespace Logitude.Customs.Def.EntityPMs
 		 }
 	   }
 	  private string updateTypeCode ;
-	  	  
+	  
+       [Key]
+	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
