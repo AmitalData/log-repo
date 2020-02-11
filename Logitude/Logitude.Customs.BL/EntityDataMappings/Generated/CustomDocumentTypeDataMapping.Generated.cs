@@ -28,7 +28,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         SearchFields, 
 	         Inactive, 
 	         PointerLevel, 
-	         AutoSetOriginalDocumentTrue,
+	         AutoSetOriginalDocumentTrue, 
+	         IsDiamondManadatory,
 	      }
 
 
@@ -42,7 +43,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         Inactive, 
 	         PointerLevel, 
 	         AutoSetOriginalDocumentTrue, 
-	         PointerLevelName,
+	         PointerLevelName, 
+	         IsDiamondManadatory,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -81,49 +83,59 @@ namespace Logitude.Customs.BL.EntityDataMappings
 				entityPOCO.AutoSetOriginalDocumentTrue = entityPM.AutoSetOriginalDocumentTrue;
 			}
 			
+
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsDiamondManadatory))
+            {
+				entityPOCO.IsDiamondManadatory = entityPM.IsDiamondManadatory;
+			}
+			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
 		  }
 
-		public void POCOToPM(CustomDocumentTypePM entityPM, CustomDocumentType entityPOCO)
+        public void POCOToPM(CustomDocumentTypePM entityPM, CustomDocumentType entityPOCO)
         {
-			 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Code))
+
+            if (!CustomMappedPMProperties.Contains(PMPropertyNames.Code))
             {
-					entityPM.Code = entityPOCO.Code;
+                entityPM.Code = entityPOCO.Code;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.EnglishName))
+            if (!CustomMappedPMProperties.Contains(PMPropertyNames.EnglishName))
             {
-					entityPM.EnglishName = entityPOCO.EnglishName;
+                entityPM.EnglishName = entityPOCO.EnglishName;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LocalName))
+            if (!CustomMappedPMProperties.Contains(PMPropertyNames.LocalName))
             {
-					entityPM.LocalName = entityPOCO.LocalName;
+                entityPM.LocalName = entityPOCO.LocalName;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.SearchFields))
+            if (!CustomMappedPMProperties.Contains(PMPropertyNames.SearchFields))
             {
-					entityPM.SearchFields = entityPOCO.SearchFields;
+                entityPM.SearchFields = entityPOCO.SearchFields;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Inactive))
+            if (!CustomMappedPMProperties.Contains(PMPropertyNames.Inactive))
             {
-					entityPM.Inactive = entityPOCO.Inactive;
+                entityPM.Inactive = entityPOCO.Inactive;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.PointerLevel))
+            if (!CustomMappedPMProperties.Contains(PMPropertyNames.PointerLevel))
             {
-					entityPM.PointerLevel = entityPOCO.PointerLevel;
+                entityPM.PointerLevel = entityPOCO.PointerLevel;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AutoSetOriginalDocumentTrue))
+            if (!CustomMappedPMProperties.Contains(PMPropertyNames.AutoSetOriginalDocumentTrue))
             {
-					entityPM.AutoSetOriginalDocumentTrue = entityPOCO.AutoSetOriginalDocumentTrue;
+                entityPM.AutoSetOriginalDocumentTrue = entityPOCO.AutoSetOriginalDocumentTrue;
             }
 
-		}
 
+            if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsDiamondManadatory))
+            {
+                entityPM.IsDiamondManadatory = entityPOCO.IsDiamondManadatory;
+            }
+        }
 		public void PMToOldPM(CustomDocumentTypePM entityPM, CustomDocumentTypePM oldEntityPM)
         {
 		     oldEntityPM.ChangedProperties.Clear();
@@ -156,6 +168,12 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AutoSetOriginalDocumentTrue))
             {
                 oldEntityPM.AutoSetOriginalDocumentTrue = entityPM.AutoSetOriginalDocumentTrue;
+            }
+			
+
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsDiamondManadatory))
+            {
+                oldEntityPM.IsDiamondManadatory = entityPM.IsDiamondManadatory;
             }
 			
 		}

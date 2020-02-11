@@ -87,8 +87,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             moreParams = moreParams.Replace("@UNIFREIGHT_USER_ID@", "AMITAL");
             string messageOut = "";
             unifreightGenericService.ProccessGenericRequest(xml, ref moreParams, out messageOut);
-
-
+            LogMessagingUtil.Instance.AppendLine(unifreightGenericService.GetLog());
             this.MyRequestSheetParam = this.MyRequestSheetParam ?? new RequestSheetParam();
             this.MyRequestSheetParam.RequestDescription = requestParams.RequestName;
             this.MyResponseData.UserMessage = mess.ToString();

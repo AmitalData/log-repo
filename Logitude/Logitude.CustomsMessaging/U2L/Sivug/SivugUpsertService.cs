@@ -817,7 +817,7 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                 {
                     if (decimal.TryParse(invoiceItem.QUANTITY, out decimal1))
                     {
-                        if (decimal1 > 0) SupplierInvoiceItemPM.InvoiceQuantity = decimal1;
+                        if(decimal1 > 0)SupplierInvoiceItemPM.InvoiceQuantity = decimal1;
                         //SupplierInvoiceItemPM.StatisticQuantity = decimal1; // moran 18.4.16 - AMI-56381 - commented
                     }
                     else
@@ -830,7 +830,7 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                 {
                     if (decimal.TryParse(invoiceItem.StatisticQuantity, out decimal1))
                     {
-                        if (decimal1 > 0) SupplierInvoiceItemPM.StatisticQuantity = decimal1;
+                        if(decimal1 > 0)SupplierInvoiceItemPM.StatisticQuantity = decimal1;
                     }
                     else
                     {
@@ -842,7 +842,7 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                 {
                     if (decimal.TryParse(invoiceItem.ITEMPRICE, out decimal1))
                     {
-                        if (decimal1 > 0) SupplierInvoiceItemPM.ItemPrice = decimal1;
+                        if(decimal1 > 0)SupplierInvoiceItemPM.ItemPrice = decimal1;
                     }
                     else
                     {

@@ -39,6 +39,7 @@ using Logitude.Customs.BL.Models;
 using Logitude.Customs.BL.Messaging.Maman;
 using Logitude.Customs.BL.Messaging;
 
+
 namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 {
     public class DeclarationWebServiceController : ApiController
@@ -1626,6 +1627,23 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             }
         }
 
+        public HttpResponseMessage GetDeclarationCargoSealLists(string declarationId, int tenant)
+        {
+            try
+            {
+                ICustomContext customContext = CustomContext.GetContext(tenant);
+                CargoSealIdentifierQueryService queryService = new CargoSealIdentifierQueryService(customContext);
+                List<CargoSealIdentifierPM> cargoSealIdentifierPMList = queryService.GetDeclarationCargoSealIdentifierList(declarationId, tenant);
+
+                return Request.CreateResponse(HttpStatusCode.OK, cargoSealIdentifierPMList);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
         public HttpResponseMessage GetDeclarationCargoSplitByDeclarationIdList(string declarationId, int tenant)
         {
             try
@@ -1730,6 +1748,26 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
+        }
+
+        public HttpResponseMessage PostSendCargoSealsRequest(CargoSealsRequestParams requestParamsData)
+        {
+            try
+            {
+                INF_MSG_GenericResponseData responseData = null;
+
+                // use messageing service
+                var service = new SE_6001_SealUpdateMessagingService();
+                responseData = service.Send(requestParamsData);
+                return Request.CreateResponse(HttpStatusCode.OK, responseData);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+
         }
     }
     

@@ -932,8 +932,24 @@ export class DeclarationPM {
     private courierMasterId: string;
     public get CourierMasterId() { return this.courierMasterId; }
     public set CourierMasterId(newValue: string) { if (this.courierMasterId != newValue) { this.courierMasterId = newValue; this.MarkAsDirty("CourierMasterId"); } }
-       
-	 
+
+
+    private isDiamondDeclaration: boolean;
+    public get IsDiamondDeclaration() { return this.isDiamondDeclaration; }
+    public set IsDiamondDeclaration(newValue: boolean) { if (this.isDiamondDeclaration != newValue) { this.isDiamondDeclaration = newValue; this.MarkAsDirty("IsDiamondDeclaration"); } }
+
+
+
+
+    private isMissMandatoryDiamond: boolean;
+    public get IsMissMandatoryDiamond() { return this.isMissMandatoryDiamond; }
+    public set IsMissMandatoryDiamond(newValue: boolean) { if (this.isMissMandatoryDiamond != newValue) { this.isMissMandatoryDiamond = newValue; this.MarkAsDirty("IsMissMandatoryDiamond"); } }
+
+
+    private isValidTicketsDiamond: boolean;
+    public get IsValidTicketsDiamond() { return this.isValidTicketsDiamond; }
+    public set IsValidTicketsDiamond(newValue: boolean) { if (this.isValidTicketsDiamond != newValue) { this.isValidTicketsDiamond = newValue; this.MarkAsDirty("IsValidTicketsDiamond"); } }
+
 
     public OldEntityPM: DeclarationPM;
 		

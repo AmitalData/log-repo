@@ -102,6 +102,7 @@
     <Compile Include="EntityPMs\Generated\AgentTalkBackTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\AmendmentFieldReasonTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\AmendmentRequestStatusPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\AmendmentTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ApprovedProfessionPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\AssigneeNotificationTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\AttachmentTypePM.Generated.cs" />
@@ -111,6 +112,8 @@
     <Compile Include="EntityPMs\Generated\BankPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CargoIdentifireTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CargoIdentityQualifierPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CargoSealIdentifierPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CargoSealPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CargoSplitRequestStatusPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CargoStatusPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CertificateExemptionTypePM.Generated.cs" />
@@ -183,6 +186,7 @@
     <Compile Include="EntityPMs\Generated\CustomMetaDataTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CustomsAddressTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CustomsAirlinePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CustomsAutonomyKeywordPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CustomsBookPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CustomsBookTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CustomsBranchPM.Generated.cs" />
@@ -333,6 +337,9 @@
     <Compile Include="EntityPMs\Generated\RequiredGuaranteeTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ReturnConditionPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\SalesTaxExemptionTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\SealCompletenesPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\SealTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\SealUpdateReasonTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\SeizureFactorTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\SeizureMethodTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\SignatureTypePM.Generated.cs" />

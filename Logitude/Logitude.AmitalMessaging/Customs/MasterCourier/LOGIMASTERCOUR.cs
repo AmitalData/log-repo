@@ -80,6 +80,8 @@ public partial class LogitudeMasterCourier
 
     private string integratorIndexField;
 
+    private string noOfCourierHawbField;
+
     /// <remarks/>
     public string AirlineId
     {
@@ -224,7 +226,8 @@ public partial class LogitudeMasterCourier
     }
 
     /// <remarks/>
-    public string WeightValueCode {
+    public string WeightValueCode
+    {
         get
         {
             return this.weightValueCodeField;
@@ -247,7 +250,7 @@ public partial class LogitudeMasterCourier
             this.storageSiteCodeField = value;
         }
     }
-    
+
     /// <remarks/>
     public string IntegratorIndex
     {
@@ -258,6 +261,19 @@ public partial class LogitudeMasterCourier
         set
         {
             this.integratorIndexField = value;
+        }
+    }
+
+    /// <remarks/>
+    public string NoOfCourierHawb
+    {
+        get
+        {
+            return this.noOfCourierHawbField;
+        }
+        set
+        {
+            this.noOfCourierHawbField = value;
         }
     }
 }

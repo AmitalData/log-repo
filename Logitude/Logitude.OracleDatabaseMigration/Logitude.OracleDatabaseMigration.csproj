@@ -360,6 +360,23 @@
     <Compile Include="Migrations\201907311245148_missingreleasenotes20190731.Designer.cs">
       <DependentUpon>201907311245148_missingreleasenotes20190731.cs</DependentUpon>
     </Compile>
+	
+    <Compile Include="Migrations\202001281231348_ChangeIsDiamonDeclarationField.cs" />
+    <Compile Include="Migrations\202001281231348_ChangeIsDiamonDeclarationField.Designer.cs">
+      <DependentUpon>202001281231348_ChangeIsDiamonDeclarationField.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001281456089_AddFieldsToDiamond.cs" />
+    <Compile Include="Migrations\202001281456089_AddFieldsToDiamond.Designer.cs">
+      <DependentUpon>202001281456089_AddFieldsToDiamond.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001281508426_ChangeNameIsDiamondManadatory.cs" />
+    <Compile Include="Migrations\202001281508426_ChangeNameIsDiamondManadatory.Designer.cs">
+      <DependentUpon>202001281508426_ChangeNameIsDiamondManadatory.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001300921420_ChangeFieldsDiamonds.cs" />
+    <Compile Include="Migrations\202001300921420_ChangeFieldsDiamonds.Designer.cs">
+      <DependentUpon>202001300921420_ChangeFieldsDiamonds.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -616,6 +633,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201907311245148_missingreleasenotes20190731.resx">
       <DependentUpon>201907311245148_missingreleasenotes20190731.cs</DependentUpon>
+    </EmbeddedResource>
+	   <EmbeddedResource Include="Migrations\202001281231348_ChangeIsDiamonDeclarationField.resx">
+      <DependentUpon>202001281231348_ChangeIsDiamonDeclarationField.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001281456089_AddFieldsToDiamond.resx">
+      <DependentUpon>202001281456089_AddFieldsToDiamond.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001281508426_ChangeNameIsDiamondManadatory.resx">
+      <DependentUpon>202001281508426_ChangeNameIsDiamondManadatory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001300921420_ChangeFieldsDiamonds.resx">
+      <DependentUpon>202001300921420_ChangeFieldsDiamonds.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\logitude.oracledatabasemigration.dll.licenses" />
   </ItemGroup>

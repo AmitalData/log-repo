@@ -1,4 +1,4 @@
-﻿import {Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Http, Headers} from '@angular/http';
 
 
@@ -39,6 +39,19 @@ export class DocumentTypeMetaDataExtendedService {
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         return this._http.get(this._apiUrl + '?tenant=' + tenant + '&DocumentId=' + documentId, { headers: authHeader }).map(response => {
+            var pmresponse: ServiceResponse;
+            pmresponse = new ServiceResponse();
+
+            pmresponse.Result = response.json();
+            return pmresponse;
+        }).catch(ServiceHelper.HandleServiceError);
+    }
+
+    GetDocumentsFilingMetaDataValueByFilingIdAndCode(documentsFilingId: string, code: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
+        return this._http.get(this._apiUrl + '?documentsFilingId=' + documentsFilingId + '&code=' + code, { headers: authHeader }).map(response => {
             var pmresponse: ServiceResponse;
             pmresponse = new ServiceResponse();
 

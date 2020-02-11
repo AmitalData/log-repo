@@ -717,6 +717,7 @@ export class MaintenanceComponent {
                     this.InterfaceManageentMethod(item);
                     break;
                 }
+                ///case "MCPA": { this.CustomsAutonomyKeywordMethod(item); break; }
                 case "CSMN": {
                     let test = true;
                     let strict = true;
@@ -1352,6 +1353,7 @@ export class MaintenanceComponent {
             }
         }
     }
+    
     DoJoker(text: string) {
         switch (text) {
             case "jokeraccfunctionaltest": {
@@ -1452,6 +1454,21 @@ export class MaintenanceComponent {
                 });
         });
     }
+    CustomsAutonomyKeywordMethod(item: MaintenanceMenuItem): any {
+        
+        this._entityResourceService.getEntityResourceByTableName(item.ObjectTableName, 0).subscribe(response => {
+            var logitudeWindow = new LogitudeWindow();
+            logitudeWindow.Title = item.TranslatedName
+            logitudeWindow.ShowCloseButton = true;
+            logitudeWindow.Height = 400;
+            logitudeWindow.Width = 500;
+            //logitudeWindow.Show('./Customs/Components/CustomsRequests/GeneralRequests/RecallSuppliersFromFileComponent');
+            logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/AutonomyKeywordComponent');
+
+        });
+
+    }
+
     InterfaceManageentMethod(item: MaintenanceMenuItem) {
         //ObjectTableName                     :        "Customs.CustomsClosedTable"
         this._entityResourceService.getEntityResourceByTableName(item.ObjectTableName, 0).subscribe(response => {

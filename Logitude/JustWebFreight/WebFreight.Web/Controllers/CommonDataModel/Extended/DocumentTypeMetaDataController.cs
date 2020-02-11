@@ -1,7 +1,9 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Logitude.BL.InfrastructureModel.EntityLists;
 using Logitude.BL.InfrastructureModel.EntityQueries;
+using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
@@ -78,6 +80,28 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
 
 
                 return Request.CreateResponse(HttpStatusCode.OK, myDocumentsMetaDataType);
+
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+
+
+        public HttpResponseMessage GetDocumentsFilingMetaDataValueByFilingIdAndCode(string documentsFilingId, string code)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                ICommonDataContext MyContext = CommonDataContext.GetContext(authToken.Tenant);
+                var myDocumentsFilingService = new DocumentsFilingService(MyContext,authToken.Tenant);
+                DocumentsFilingMetaDataValuePM MyDocumentMetaDataValues = myDocumentsFilingService.GetDocumentsFilingMetaDataValueByFilingIdAndCode(documentsFilingId,code);
+
+                return Request.CreateResponse(HttpStatusCode.OK, MyDocumentMetaDataValues);
 
             }
             catch (Exception ex)

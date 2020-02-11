@@ -1,5 +1,63 @@
 <style>
-    .DisbleBox {
+   .GrayBox {
+        height: 90px;
+        margin: 0 auto;
+        background: #f9f9f9;
+        border: 2px solid #e0e0e0;
+        vertical-align: middle;
+        margin-top: 15px;
+        padding: 10px;
+    }
+
+       .subTitle{
+        color: #1b90cb;
+        font-size: 18px;
+    }
+    .ToggleButton {
+        border:none !important;
+
+    }
+    .ActionButton{
+        display: block;
+    outline: none;
+    text-align: center;
+    font-size: 11px;
+    color: #45494A;
+    width: 100%;
+    height: 22px;
+    /*border: 1px solid #6A8299;*/
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    text-shadow: 1px 1px white;
+    position: relative;
+    cursor: pointer;
+     height: 22px;
+    padding: 0 5px;
+    }
+    .ActionButton:hover:not(:disabled) {
+    background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(221, 232, 245, 1) 100%);
+    background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(221, 232, 245, 1) 100%);
+    background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(221, 232, 245, 1) ));
+    background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(221, 232, 245, 1) 100%);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(221, 232, 245, 1) 100%);
+}
+    .ActionButton:focus:not(:disabled) {
+    border: 1px solid #3BB3E2;
+    -webkit-box-shadow: 0px 0px 6px 0px #3BB3E2;
+    -moz-box-shadow: 0px 0px 6px 0px #3BB3E2;
+    box-shadow: 0px 0px 6px 0px #3BB3E2;
+}
+
+    .ActionButton {
+    background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(186, 206, 227, 1) 100%);
+    background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+    background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(186, 206, 227, 1) ));
+    background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+}
+
+      .DisbleBox {
         display: inline-block;
         border: 1px solid #ffd800;
         border-radius: 5px;
@@ -9,6 +67,7 @@
         color: gray;
         font-family: sans-serif;
     }
+
 </style>
 
 <table>
@@ -29,19 +88,51 @@
         <td>
             <div class="TableHolder">
                 <table>
+                    <tr>
+                    
+                    </tr>
                     <tr style="height:25px">
-                        <td class="TabTitleRow" style="width:250px">
+                        <td style="height:26px; ">
+                            <div style="border:1px solid #6A8299;width:47px;border-radius: 3px;max-height: 26px;">
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <div class="ActionButton" style="width: 35px;height:23px; ">
+                                                <CheckBox style="pointer-events:none;" [IsChecked]="CourierMasterService.connectedSelectAll" (Checked)="IsSelected = $event "></CheckBox>
+
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="ToggleButton" tabindex="-1" style="width: 20px;height:23px;left:10px ">
+
+
+                                                <img src="./Images/ToggleIcon.png" style="float:left;" />
+                                                <div class="ToggleButtonMenu" style="width: 70px;top:26px;text-align:right">
+                                                    <button style="text-align:right" (click)="OnAllBtnClicked(false)">{{'Customs.CourierMaster.O.All' | TextCodeTranslationPipe}}</button>
+                                                    <button style="text-align:right" (click)="OnNoneBtnClicked()">{{'Customs.CourierMaster.O.None' | TextCodeTranslationPipe}}</button>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+
+
+
+                        </td>
+
+                        <td class="TabTitleRow"  style="width:1250px" >
                             {{'General.O.ConnectedDeclarations' | TextCodeTranslationPipe}}
                             <span *ngIf="TotalConnected != null"> {{' (' + TotalConnected + ')' }} </span>
                         </td>
-                        <td><div></div></td>
                         <td style="width:250px">
                             <SearchTextBox [PlaceHolder]="'תיק/הצהרה/שטר מטען בלדר/לקוח'"
                                            [ObjectTableName]="ObjectTableName" (SearchTextChangeEvent)="ConnectedSearchCompleted($event)"></SearchTextBox>
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="3" style="height: 40%; padding: 5px;">
+                        <td colspan="4" style="height: 40%; padding: 5px;">
                             <div class="GeneratedGridContainer" style="padding:5px" *ngIf="IsVisibile">
                                 <logitude-grid GridWidth="100%" GridHeight="100%"
                                                [ObjectTable]="ObjectTableName"
@@ -61,17 +152,48 @@
 
                     </tr>
 
-
+                    
                     <tr>
-                        <td class="TabTitleRow" style="width:250px">{{'General.O.NotConnectedDeclarations' | TextCodeTranslationPipe}} </td>
-                        <td><div></div></td>
-                        <td style="width:250px">
+                        <td style="height:26px;width:53px; ">
+                            <div style="border:1px solid #6A8299;width:47px;border-radius: 3px;max-height: 26px;">
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <div class="ActionButton" style="width: 35px;height:23px; ">
+                                                <CheckBox style="pointer-events:none;" [IsChecked]="CourierMasterService.disconnectedSelectAll" (Checked)="IsSelectedNot = $event "></CheckBox>
+
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="ToggleButton" tabindex="-1" style="width: 20px;height:23px;left:10px ">
+
+
+                                                <img src="./Images/ToggleIcon.png" style="float:left;" />
+                                                <div class="ToggleButtonMenu" style="width: 70px;top:26px;text-align:right">
+                                                    <button style="text-align:right" (click)="OnAllBtnClickedNot()">{{'Customs.CourierMaster.O.All' | TextCodeTranslationPipe}}</button>
+                                                    <button style="text-align:right" (click)="OnNoneBtnClickedNot()">{{'Customs.CourierMaster.O.None' | TextCodeTranslationPipe}}</button>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+
+
+
+                        </td>
+                        <td class="TabTitleRow" style="width:250px">
+                            {{'General.O.NotConnectedDeclarations' | TextCodeTranslationPipe}}
+                            <span *ngIf="TotalDisconnected != null"> {{' (' + TotalDisconnected + ')' }} </span>
+                        </td>
+                         <td style="width:250px">
                             <SearchTextBox [PlaceHolder]="'תיק/הצהרה/שטר מטען בלדר/לקוח'"
                                            [ObjectTableName]="ObjectTableName" (SearchTextChangeEvent)="NotConnectedSearchCompleted($event)"></SearchTextBox>
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="3" style="height: 60%; padding: 5px;">
+                        <td colspan="4" style="height: 60%; padding: 5px;">
 
                             <div class="GeneratedGridContainer" style="padding:5px" *ngIf="IsVisibile">
                                 <logitude-grid GridWidth="100%" GridHeight="100%"

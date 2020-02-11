@@ -156,6 +156,10 @@ public partial class LogitudeCustomsFile
 
     private string casualImporterContactField;
 
+    private string casualImporterCountryField;
+
+    private string isDiamondsDeclarationField;
+
     /// <remarks/>
     public string CustomFileNo
     {
@@ -829,6 +833,32 @@ public partial class LogitudeCustomsFile
         set
         {
             this.casualImporterContactField = value;
+        }
+    }
+
+    /// <remarks/>
+    public string CasualImporterCountry
+    {
+        get
+        {
+            return this.casualImporterCountryField;
+        }
+        set
+        {
+            this.casualImporterCountryField = value;
+        }
+    }
+
+    /// <remarks/>
+    public string IsDiamondsDeclaration
+    {
+        get
+        {
+            return this.isDiamondsDeclarationField;
+        }
+        set
+        {
+            this.isDiamondsDeclarationField = value;
         }
     }
 }

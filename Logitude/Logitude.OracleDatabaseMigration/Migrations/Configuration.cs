@@ -30,7 +30,7 @@
                 OracleConnectionInfo.CreateConnection(
                 //"User Id=AMINET_MAIN;  Password=AMINET_MAIN;Direct=True;Data Source=UNIDB2016;port=1521;sid=amital"
                 //"User Id=AMINET_MAIN;  Password=AMINET_MAIN;Direct=True;Data Source=Univ57;port=1521;sid=amital"
-                "User Id=AMINET_MAIN;  Password=AMINET_MAIN;Direct=True;Data Source=Univ58;port=1521;sid=amital"
+                "User Id=AMINETpre_MAIN;  Password=AMINETpre_MAIN;Direct=True;Data Source=Univ58;port=1521;sid=amital"
 
                 );
 
