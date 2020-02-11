@@ -7,109 +7,109 @@
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 
-import { CargoSealIdentifierPM } from './CargoSealIdentifierPM';
-import { UIProperties, UIProperty } from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
-import { ServiceHelper } from '../../Infrastructure/Utilities/ServiceHelper';
-import { ServiceLocator } from '../../Infrastructure/Locators/ServiceLocator';
-import { Output, EventEmitter } from '@angular/core';
-import { PropertyChangedArgs } from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
-import { CustomFieldClass } from '../../Infrastructure/DataContracts/CustomFieldClass';
+import {CargoSealIdentifierPM} from './CargoSealIdentifierPM';
+import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
+import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
+import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
+import {Output, EventEmitter}  from '@angular/core';
+import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
+import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
 
 export class CargoSealPM {
 
-    @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
-    public UIProperties: UIProperties;
-    constructor(_entityParentPM: any) {
-        this.EntityParentPM = _entityParentPM;
-        this.UIProperties = new UIProperties(this);
-        this.IsDirty = false;
-    }
+      @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
+      public UIProperties: UIProperties;
+	        constructor(_entityParentPM: any) {
+          this.EntityParentPM = _entityParentPM;
+          this.UIProperties = new UIProperties(this); 
+          this.IsDirty = false;
+      }
 
-
-
+	 
+    
     private cargoSealIdentifierId: string;
     public get CargoSealIdentifierId() { return this.cargoSealIdentifierId; }
     public set CargoSealIdentifierId(newValue: string) { if (this.cargoSealIdentifierId != newValue) { this.cargoSealIdentifierId = newValue; this.MarkAsDirty("CargoSealIdentifierId"); } }
-
-
+       
+	 
     private tenant: number;
     public get Tenant() { return this.tenant; }
     public set Tenant(newValue: number) { if (this.tenant != newValue) { this.tenant = newValue; this.MarkAsDirty("Tenant"); } }
-
-
+       
+	 
     private sealNumber: string;
     public get SealNumber() { return this.sealNumber; }
     public set SealNumber(newValue: string) { if (this.sealNumber != newValue) { this.sealNumber = newValue; this.MarkAsDirty("SealNumber"); } }
-
-
+       
+	 
     private remarks: string;
     public get Remarks() { return this.remarks; }
     public set Remarks(newValue: string) { if (this.remarks != newValue) { this.remarks = newValue; this.MarkAsDirty("Remarks"); } }
-
-
+       
+	 
     private sealCompletenessStateCode: string;
     public get SealCompletenessStateCode() { return this.sealCompletenessStateCode; }
     public set SealCompletenessStateCode(newValue: string) { if (this.sealCompletenessStateCode != newValue) { this.sealCompletenessStateCode = newValue; this.MarkAsDirty("SealCompletenessStateCode"); } }
-
-
+       
+	 
     private sealCompletenessStateName: string;
     public get SealCompletenessStateName() { return this.sealCompletenessStateName; }
     public set SealCompletenessStateName(newValue: string) { if (this.sealCompletenessStateName != newValue) { this.sealCompletenessStateName = newValue; this.MarkAsDirty("SealCompletenessStateName"); } }
-
-
+       
+	 
     private sealTypeCode: string;
     public get SealTypeCode() { return this.sealTypeCode; }
     public set SealTypeCode(newValue: string) { if (this.sealTypeCode != newValue) { this.sealTypeCode = newValue; this.MarkAsDirty("SealTypeCode"); } }
-
-
+       
+	 
     private sealTypeName: string;
     public get SealTypeName() { return this.sealTypeName; }
     public set SealTypeName(newValue: string) { if (this.sealTypeName != newValue) { this.sealTypeName = newValue; this.MarkAsDirty("SealTypeName"); } }
-
-
+       
+	 
     private updateReasonCode: string;
     public get UpdateReasonCode() { return this.updateReasonCode; }
     public set UpdateReasonCode(newValue: string) { if (this.updateReasonCode != newValue) { this.updateReasonCode = newValue; this.MarkAsDirty("UpdateReasonCode"); } }
-
-
+       
+	 
     private updateReasonName: string;
     public get UpdateReasonName() { return this.updateReasonName; }
     public set UpdateReasonName(newValue: string) { if (this.updateReasonName != newValue) { this.updateReasonName = newValue; this.MarkAsDirty("UpdateReasonName"); } }
-
-
+       
+	 
     private updateTypeCode: string;
     public get UpdateTypeCode() { return this.updateTypeCode; }
     public set UpdateTypeCode(newValue: string) { if (this.updateTypeCode != newValue) { this.updateTypeCode = newValue; this.MarkAsDirty("UpdateTypeCode"); } }
-
-
+       
+	 
     private updateTypeName: string;
     public get UpdateTypeName() { return this.updateTypeName; }
     public set UpdateTypeName(newValue: string) { if (this.updateTypeName != newValue) { this.updateTypeName = newValue; this.MarkAsDirty("UpdateTypeName"); } }
-
-
+       
+	 
 
     public OldEntityPM: CargoSealPM;
-
+	
     private entityParentPM: any;
     public get EntityParentPM() { return this.entityParentPM; }
     public set EntityParentPM(newValue: any) { this.entityParentPM = newValue; }
 
     private changeSetOp: string;
     public get ChangeSetOp() { return this.changeSetOp; }
-    public set ChangeSetOp(newValue: string) { this.changeSetOp = newValue; }//this.MarkAsDirty(); mohammad removed it because it sets the dirty bool to true when there is no changes.
+    public set ChangeSetOp(newValue: string) { this.changeSetOp = newValue;  }//this.MarkAsDirty(); mohammad removed it because it sets the dirty bool to true when there is no changes.
 
     public UniqueKey: string;
-
+	 	
     public IsDirty: boolean;
-    MarkAsDirty(propertyName: string = null) {
+    MarkAsDirty(propertyName:string = null) {
         this.IsDirty = true;
-        if (this.EntityParentPM) {
+		  if (this.EntityParentPM) {
             this.EntityParentPM.MarkAsDirty();
-        }
+        }	
         if (propertyName != null) {
-            this.PropertyChanged.emit(new PropertyChangedArgs(propertyName, this));
+            this.PropertyChanged.emit(new PropertyChangedArgs(propertyName,this));
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Customs.CargoSeal");
-
+           
         }
     }
 
@@ -123,4 +123,4 @@ export class CargoSealPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

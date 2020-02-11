@@ -30,7 +30,6 @@ namespace Logitude.Customs.Data.EntityLists
        public bool AutoSetOriginalDocumentTrue  { get; set; }
        [DataMember]
        public string PointerLevelName  { get; set; }
-
        [DataMember]
        public bool IsDiamondManadatory  { get; set; }
    }

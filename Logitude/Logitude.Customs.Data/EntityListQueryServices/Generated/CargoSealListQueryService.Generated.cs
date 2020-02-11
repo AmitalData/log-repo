@@ -130,10 +130,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
              return GetList(new QueryOperations() { QueryFilterItems=new List<QueryFilterItem>(),PageIndex = 0,GetAll = true},tenant);
          }
 
-        public CargoSealList GetSingle(string cargosealidentifierid, string sealnumber)
+        public CargoSealList GetSingle(string cargosealidentifierid, string sealnumber, string sealcompletenessstatecode, string sealtypecode, string updatereasoncode, string updatetypecode)
         {
             IQueryable<CargoSeal> CargoSealQuery = (from a in context.CargoSeals
-                                                       where a.CargoSealIdentifierId == cargosealidentifierid && a.SealNumber == sealnumber
+                                                       where a.CargoSealIdentifierId == cargosealidentifierid && a.SealNumber == sealnumber && a.SealCompletenessStateCode == sealcompletenessstatecode && a.SealTypeCode == sealtypecode && a.UpdateReasonCode == updatereasoncode && a.UpdateTypeCode == updatetypecode
                                                        select a);
 
              
