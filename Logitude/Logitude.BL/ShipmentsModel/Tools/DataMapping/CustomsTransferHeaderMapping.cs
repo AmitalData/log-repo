@@ -25,6 +25,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entity.FileName = entityPM.FileName;
             entity.CreatedByUserId = entityPM.CreatedByUserId;
             entity.Notes = entityPM.Notes;
+            entity.ShipmentNumber = entityPM.ShipmentNumber;
 
             string mySearchFields = "";
             
