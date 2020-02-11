@@ -32,8 +32,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 					                          EnglishName = a.EnglishName,
 					
 					                          SearchFields = a.SearchFields,
-					
-		                    	            });
+                                                Inactive = a.Inactive,
+
+                                            });
             return query;
 		}
 
