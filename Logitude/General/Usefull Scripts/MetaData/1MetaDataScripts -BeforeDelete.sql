@@ -55,7 +55,7 @@ if object_id('tempdb..#TempOldFeatures') is not null
 drop table #TempOldFeatures
 
 select * into #TempOldFeatures
-from (select Code,Tenant
+from (select Code,FeatureUniqeCode,Tenant
 		from features 
 		where IsOld = 1) as t
 
