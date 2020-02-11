@@ -151,7 +151,7 @@
                                                 <div></div>
                                             </td>
                                             <td *ngIf="ToggleIsExportShipments" style="width: 117px; vertical-align: middle; position:relative;"> 
-                                                <DirectionsFilter [SelectedValue]="SelectedDirectionFilter" [HideImportDomistic]="true" (SelectedValueChanged)="SelectedDirectionFilter = $event"></DirectionsFilter>
+                                                <DirectionsFilter [SelectedValue]="SelectedDirectionFilter" [HideImportDomistic]="true" [HideAMANACFilters]="true" (SelectedValueChanged)="SelectedDirectionFilter = $event"></DirectionsFilter>
                                             </td>
 
                                             <td style="width: 3px;">
