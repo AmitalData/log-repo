@@ -26,6 +26,7 @@ using Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer;
 using System.Reflection;
 using System.Xml.Serialization;
 using Logitude.Customs.BL.TraceEvents;
+using Simplog.Data.CommonDataModel.Repositories;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -164,7 +165,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                                 //    Notes = null
                                                 //});
 
-                                                var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
+                                                var  amitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
                                                 {
                                                     Tenant = _MyDeclarationPM.Tenant,
                                                     objectTableName = "Customs.Declaration",
@@ -186,7 +187,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                                         comments = null,
                                                     }
                                                 };
-                                                AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel);
+                                                AmitalEventTracer.CreateTraceEvent(amitalEventTracerModel);
                                                 break;
 
                                         case "4":
@@ -306,23 +307,57 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 
 
-  
+
                     //if (!(customResponse.Response.Declaration != null && customResponse.Response.Declaration.ID != null && customResponse.Response.Declaration.ID.Value != null && customResponse.Response.Declaration.ID.Value.Substring(2, 2) == "99"))
                     //{
                     //    this._MyDeclarationPM = myDeclarationQueryService.GetSingle(requestParams.AppicationId, true, false);
                     //}
-
-
-
-                    var myUpdateEventContextTagModel = new EventContextTagModel()
+                    string loggingUserId = "";
+                    UserRepository userRepository = new UserRepository(_MyDeclarationPM.Tenant);
+                    var user = userRepository.GetSingleUserByCode("MEHES", _MyDeclarationPM.Tenant, true);
+                    if (user != null)
                     {
-                        CallProccessID = EventContextTagModel.ProccessEnum.DF_NG_5117_ImportDeclerationAmendmentReplyResponseService,
-                        EventCode = "DCH",
-                        EventRemarks = "Declaration Changed By Customs",
-                        FUStatusRemarks = "בוצע תיקון הצהרה" + this._MyDeclarationPM.DeclarationNumber,
-                    };
+                        loggingUserId = user.Id;
+                    }
 
-                    this._MyDeclarationPM.CurrentContextTag = myUpdateEventContextTagModel;
+                    _MyDeclarationPM.AmendmentCorrectedByUserId = loggingUserId;
+                    _MyDeclarationPM.DeclarationStatusTypeCode = customResponse.Response.Status.NameCode.Value;
+                    //var myUpdateEventContextTagModel = new EventContextTagModel()
+                    //{
+                    //    CallProccessID = EventContextTagModel.ProccessEnum.DF_NG_5117_ImportDeclerationAmendmentReplyResponseService,
+                    //    EventCode = "DCH",
+                    //    EventRemarks = "Declaration Changed By Customs",
+                    //    FUStatusRemarks = "בוצע תיקון הצהרה" + this._MyDeclarationPM.DeclarationNumber,
+
+                    //};
+
+                    //this._MyDeclarationPM.CurrentContextTag = myUpdateEventContextTagModel;
+
+
+                    var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
+                    {
+                        Tenant = _MyDeclarationPM.Tenant,
+                        objectTableName = "Customs.Declaration",
+                        EventCode = "DCH",
+                        notes = null,
+                        CommunicationLoggingEntityReference = _MyDeclarationPM.DeclarationNumber,
+                        EntityId = _MyDeclarationPMOrg.Id,
+                        UserId = loggingUserId,
+
+                        CommunicationSubject = "FU Status DCH from logitude ",
+                        MyFUStatus = new AmitalEventTracerModel.FUStatus()
+                        {
+                            entname = "CFIFILEM",
+                            primary_number = _MyDeclarationPMOrg.CustomFileNo,
+                            status = "new",
+                            xml_status = "new",
+                            status_id = "DCH",
+                            status_DateTime = DateTime.Now,
+                            comments = null,
+                        }
+                    };
+                    AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel);
+
                     List<string> currentXmlVersionId = myDeclarationCorrectionsPointerService.GetVersionIdFromCorrectionXML(this._MyDeclarationPM.CorrectionsXml);
                     if (currentXmlVersionId == null || !currentXmlVersionId.Contains(customResponse.Response.Declaration.DMExtensions.VersionID.Value))
                     {

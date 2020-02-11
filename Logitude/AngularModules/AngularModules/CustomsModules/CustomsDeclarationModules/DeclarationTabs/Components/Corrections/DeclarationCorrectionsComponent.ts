@@ -70,8 +70,10 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
     public get AmendmentissueDate() {
 
         if (this.EntityPM != null) {
-            var myFormats = DateTool.GetDateFormats(this.EntityPM.AmendmentissueDate);
-            return myFormats.DateString + " " + myFormats.ShortTimeString;
+            if (this.EntityPM.AmendmentissueDate != null) {
+                var myFormats = DateTool.GetDateFormats(this.EntityPM.AmendmentissueDate);
+                return myFormats.DateString + " " + myFormats.ShortTimeString;
+            }
         }
         return null;
 
