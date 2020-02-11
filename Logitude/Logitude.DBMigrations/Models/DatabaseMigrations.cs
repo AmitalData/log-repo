@@ -957,7 +957,7 @@ namespace Logitude.DBMigrations.Models
 
         protected void ExitDatabaseMigrations(string message)
         {
-            Console.WriteLine(message);
+            Console.WriteLine("Error: " + message);
             Environment.Exit(0);
         }
 

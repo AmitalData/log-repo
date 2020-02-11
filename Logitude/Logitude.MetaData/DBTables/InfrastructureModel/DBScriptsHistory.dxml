@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="DBScriptsHistory" Schema="dbo">
+
+  <Column Name="SxmlFileName" Type="varchar" Size="500">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  
+  <Column Name="ExecutionDate" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
+  
+  <Column Name="ScriptBody" Type="nvarchar" Size="-1">
+    <Constraints Nullable="false" />
+  </Column>
+
+</Table>
