@@ -1432,7 +1432,9 @@ namespace Logitude.DBMigrations.Models
                             scriptBody += "INSERT INTO [dbo].[DBScriptsHistory]([SxmlFileName], [ExecutionDate], [ScriptBody])VALUES('" + sxmlFileName + "', GETDATE(), '" + (!String.IsNullOrEmpty(scriptBody) ? scriptBody.Replace("'", "''").TrimEnd(new char[] { '\r', '\n' }) : "NULL") + "');";
                         }
 
-                        AppendToGeneratedScript(generalScripts, scriptDefinition.DBType, scriptBody);
+                        string scriptToAppend = "-- General Script From " + sxmlFileName + " File\n" + scriptBody;
+
+                        AppendToGeneratedScript(generalScripts, scriptDefinition.DBType, scriptToAppend);
                     }
                 }
                 else
