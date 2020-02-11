@@ -82,6 +82,11 @@ export class CustomsTransferHeaderPM {
     public set Notes(newValue: string) { if (this.notes != newValue) { this.notes = newValue; this.MarkAsDirty("Notes"); } }
        
 	 
+    private shipmentNumber: string;
+    public get ShipmentNumber() { return this.shipmentNumber; }
+    public set ShipmentNumber(newValue: string) { if (this.shipmentNumber != newValue) { this.shipmentNumber = newValue; this.MarkAsDirty("ShipmentNumber"); } }
+       
+	 
      
 	private customsTransferLines: CustomsTransferLinePM[];
     get  CustomsTransferLines() {

@@ -34,9 +34,11 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.CreatedByUserId).HasColumnName("CreatedByUserId");
             this.Property(t => t.SearchFields).HasColumnName("SearchFields");
             this.Property(t => t.Notes).HasColumnName("Notes");
+            this.Property(t => t.ShipmentNumber).HasColumnName("ShipmentNumber");
 
             this.HasRequired(t => t.CustomsTransferType).WithMany().HasForeignKey(d => d.CustomsTransferTypeCode);
             this.HasRequired(t => t.CreatedByUser).WithMany().HasForeignKey(t => t.CreatedByUserId);
+
         }
     }
 }
