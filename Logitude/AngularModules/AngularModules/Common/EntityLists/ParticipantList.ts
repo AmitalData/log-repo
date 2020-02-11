@@ -45,5 +45,6 @@ export class ParticipantList {
 		PrimaryContactName: string;
 		PrimaryContactEmail: string;
 		PrimaryContactPhone: string;
+		StateName: string;
 	
 }

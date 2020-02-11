@@ -7428,7 +7428,7 @@
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;APPayment.O.AmountToPay&quot;"
-      DefaultText="&quot;APPayment.CH.AmountToPay&quot;"
+      DefaultText="&quot;Amount To Pay&quot;"
       LocalDefaultText="&quot;סכום שהותאם&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />

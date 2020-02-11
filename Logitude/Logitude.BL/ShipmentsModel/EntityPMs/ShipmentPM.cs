@@ -2172,6 +2172,9 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public double? GrossWeightPerTon { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public double? GrossWeightPerStorageDays { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public DateTime? FirstOperationalCloseDate { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
@@ -2443,7 +2446,6 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string UserIdNumberXMLData { get; set; }
         public string UserIdNumber { get; set; }
         public string WarehouseReleasesIds { get; set; }
-        
-
+        public int? WarehouseStorageFreeDays { get; set; }
     }
 }

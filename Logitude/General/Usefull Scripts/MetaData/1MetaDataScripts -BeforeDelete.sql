@@ -48,3 +48,26 @@
 --update ObjectTableTabs set FeatureUniqeCode = (select FeatureUniqeCode from features where Id=ObjectTableTabs.FeatureId) where tenant!=0
 --update ObjectTableHelperControls set FeatureUniqeCode = (select FeatureUniqeCode from features where Id=ObjectTableHelperControls.FeatureId) where tenant!=0
 --update MenuButtons set FeatureUniqeCode = (select FeatureUniqeCode from features where Id=MenuButtons.FeatureId) where tenant!=0
+
+
+
+if object_id('dbo.TempOldFeatures') is not null
+drop table TempOldFeatures
+
+select * into TempOldFeatures
+from (select Code,FeatureUniqeCode,IsOld,Tenant
+		from features 
+		where IsOld = 1) as t
+
+		--select * from TempOldFeatures
+
+
+		if object_id('dbo.TempIsSpellCheckedTextCodes') is not null
+drop table TempIsSpellCheckedTextCodes
+
+select * into TempIsSpellCheckedTextCodes
+from (select *
+		from TextCodes 
+		where IsSpellChecked = 1) as t
+
+		--select * from TempIsSpellCheckedTextCodes

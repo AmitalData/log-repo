@@ -194,6 +194,6 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         [DataMember]
         public bool IsDisconnectedFromGLAccount { get; set; }
         public string CreatedByPartner { get; set; }
-
+        public int? StorageFreeDays { get; set; }
     }
 }

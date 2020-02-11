@@ -167,6 +167,7 @@ export class ShipmentList {
 		MoveTypeName: string;
 		GrossWeightInKG: number;
 		VolumetricWeight: number;
+		GrossWeightPerStorageDays: number;
 		ChargeableWeight: number;
 		GrossWeight: number;
 		MasterShipmentNumber: string;

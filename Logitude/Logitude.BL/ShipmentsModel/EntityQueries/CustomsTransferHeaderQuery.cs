@@ -45,6 +45,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                      CustomsTransferTypeName = a.CustomsTransferType == null ? "" : a.CustomsTransferType.Name,
                      SearchFields = a.SearchFields,
                      Notes = a.Notes,
+                     ShipmentNumber = a.ShipmentNumber
                  }).FirstOrDefault();
 
             entityPM.CustomsTransferLines = linesQuery.GetCustomsTransferLinePMsForTransferHeader(id, tenant).ToList();
@@ -83,6 +84,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                              Notes = a.Notes,
                              CreatedByUserName = a.CreatedByUser == null ? "" : (a.CreatedByUser.Contact == null ? "" : a.CreatedByUser.Contact.EnglishName),
                              CustomsTransferTypeName = a.CustomsTransferType == null ? "" : a.CustomsTransferType.Name,
+                             ShipmentNumber = a.ShipmentNumber
                          };
 
             return result;
