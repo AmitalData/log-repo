@@ -99,6 +99,15 @@
                                            <LogTextBox [ObjectFieldName]="'Website'" [Text]="Website" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                        </td>
                                    </tr>
+                                   <tr class="FormFieldRow">
+                                       <td>
+                                           <LogLabel [ObjectFieldName]="'StorageFreeDays'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                       </td>
+
+                                       <td>
+                                           <LogTextBox [ObjectFieldName]="'StorageFreeDays'" [Text]="StorageFreeDays" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                       </td>
+                                   </tr>
 
                                    <!-- InActive -->
                                    <tr class="FormFieldRow">
@@ -112,16 +121,6 @@
                                    </tr>
 
                                    <!--Storage Free Days-->
-                                   <tr class="FormFieldRow">
-                                       <td>
-                                           <LogLabel [ObjectFieldName]="'StorageFreeDays'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                       </td>
-
-                                       <td>
-                                           <LogTextBox [ObjectFieldName]="'StorageFreeDays'" [Text]="StorageFreeDays" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                       </td>
-                                   </tr>
-
                                    <!-- Notes -->
                                    <tr class="FormFieldRow">
                                        <td colspan="2">
