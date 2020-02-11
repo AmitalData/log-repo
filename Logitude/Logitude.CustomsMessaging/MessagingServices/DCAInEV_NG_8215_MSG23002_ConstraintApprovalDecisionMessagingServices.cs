@@ -1,5 +1,6 @@
 ﻿using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.CustomsMessaging.Common.ResponseData;
+using Logitude.CustomsMessaging.FakeMessagingServices;
 using Logitude.CustomsMessaging.RequestServices;
 using Logitude.CustomsMessaging.ResponseServices;
 using Simplog.Data.InfrastructureModel.Repositories;
@@ -29,7 +30,13 @@ namespace Logitude.CustomsMessaging.MessagingServices
         {
             get { return "8215"; }
         }
+        protected override EV_NG_8215_MSG23002_ConstraintApprovalDecision GetFakeCustomsResponse(GenericRequestParams requestParamsData)
+        {
 
+            var MyFake_8215_MSG23002_ConstraintApprovalDecision = new Fake_8215_MSG23002_ConstraintApprovalDecision();
+            return MyFake_8215_MSG23002_ConstraintApprovalDecision.GetFakeCustomsResponse(requestParamsData);
+
+        }
         protected override GenericRequestParams CreateDefaultRequestParamsFromCustomsResponse(EV_NG_8215_MSG23002_ConstraintApprovalDecision customsResponse)
         {
             var tableName = "Customs.DeclarationConstraint";
