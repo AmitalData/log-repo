@@ -3096,7 +3096,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         private void IntializeWarehouseStorageFreeDays()
         {
             Card consigneeCard = CardRepository.GetSingleCard(entityPM.ConsigneeId, tenant, true);
-            entityPM.WarehouseStorageFreeDays = consigneeCard.StorageFreeDays;
+            entityPM.WarehouseStorageFreeDays = consigneeCard != null ? consigneeCard.StorageFreeDays: null;
         }
 
         private void GetCounterShipmentNumber()
