@@ -18,8 +18,8 @@ FOR /L %%A IN (1,1,1) DO (
   CALL :CheckError "Run Report"
 
 --DocOut--
-  cmd /c call  npm run e2e -- --params.Env="test_staging1" --params.ShipParams.ShipmentLevelCode="D" --params.ShipParams.Direction="Export" --params.ShipParams.TransportMode="A" --params.ShipParams.ShipmentType="" --params.ShipParams.ShipmentEditTabs="docs" --params.Team="islam" --suite=login,DocOut>D:\E2ETeamIslamReport\Report.log
-   CALL :CheckError "Print Document"
+  rem cmd /c call  npm run e2e -- --params.Env="test_staging1" --params.ShipParams.ShipmentLevelCode="D" --params.ShipParams.Direction="Export" --params.ShipParams.TransportMode="A" --params.ShipParams.ShipmentType="" --params.ShipParams.ShipmentEditTabs="docs" --params.Team="islam" --suite=login,DocOut>D:\E2ETeamIslamReport\Report.log
+  rem  CALL :CheckError "Print Document"
 
 --ShipmentView-- 
  cmd /c call  npm run e2e -- --params.Env="test_staging1" --params.Team="islam" --suite=login,ShipmentView>D:\E2ETeamIslamReport\Report.log
