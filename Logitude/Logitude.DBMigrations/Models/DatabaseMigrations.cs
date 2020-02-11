@@ -650,7 +650,7 @@ namespace Logitude.DBMigrations.Models
 
         protected string GenerateRandomString()
         {
-            return Regex.Replace(Convert.ToBase64String(Guid.NewGuid().ToByteArray()), "[/+=]", "").ToUpper();
+            return Regex.Replace(Convert.ToBase64String(Guid.NewGuid().ToByteArray()), "[/+=]", "");
         }
 
         protected string FormatNameLength(string name, string shortName)
@@ -714,6 +714,14 @@ namespace Logitude.DBMigrations.Models
                 foreach (var uniqueConstraint in table.UniqueConstraints)
                 {
                     uniqueConstraint.Columns = uniqueConstraint.Columns.ToLower();
+                }
+
+                if(table.AllIndexes != null)
+                {
+                    foreach (var index in table.AllIndexes)
+                    {
+                        index.Columns = index.Columns.ToLower();
+                    }
                 }
 
                 return table;
@@ -867,7 +875,7 @@ namespace Logitude.DBMigrations.Models
 
             if (AlterPrimaryKeyConstraint || PrimaryKeyColumnAdded)
             {
-                alterTableScript += GetPrimaryKeyConstraintScript() + "\n\n";
+                alterTableScript += GetPrimaryKeyConstraintScript();
             }
 
             return alterTableScript;
@@ -931,13 +939,12 @@ namespace Logitude.DBMigrations.Models
 
         protected string GetAlterPrimaryKeyScript()
         {
-            string alterPrimaryKeyScript = "-- Alter The Primary Key Constraint\n";
+            string alterPrimaryKeyScript = null;
             ColumnDefinition columnHasPrimaryKey = CurrentTable.Columns.Where(c => c.Constraints.PrimaryKey).First();
             string primaryKeyConstraintName = columnHasPrimaryKey.Constraints.PrimaryKeyConstraintName;
             alterPrimaryKeyScript += GetDropPrimaryKeyConstraintScript(primaryKeyConstraintName);
             if (IsTableHasPrimaryKeys(DXMLTable))
             {
-                alterPrimaryKeyScript += "\n\n";
                 alterPrimaryKeyScript += GetAddPrimaryKeyConstraintScript(primaryKeyConstraintName);
             }
             return alterPrimaryKeyScript;
