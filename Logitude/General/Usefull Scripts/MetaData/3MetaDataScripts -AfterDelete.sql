@@ -144,3 +144,21 @@
 -------------
 --select * from ScreenModifications where ScreenId in (select id from screens where ScreenCode='Master.HeaderScreen' and ObjectTableId=(select id from objecttables where name='master'))
 --select ScreenCode,tenant,count(*) from ScreenModifications group by ScreenCode,tenant having count(*)>1
+
+
+ 
+UPDATE f
+SET f.IsOld = temp.IsOld
+FROM Features f
+JOIN TempOldFeatures temp
+    ON f.FeatureUniqeCode = temp.FeatureUniqeCode
+
+update tc
+set tc.DefaultText = temp.DefaultText, tc.DefaultTextPlural = temp.DefaultTextPlural, tc.SpellCheckDate = temp.SpellCheckDate,
+tc.SpellCheckedByUserId = temp.SpellCheckedByUserId,tc.LocalDefaultText = temp.LocalDefaultText
+from TextCodes tc
+Join TempIsSpellCheckedTextCodes temp
+on tc.Code = temp.Code
+where tc.ObjectTableId = temp.ObjectTableId
+
+ 
