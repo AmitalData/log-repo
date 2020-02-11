@@ -50,5 +50,7 @@ export class AgentList {
 		PrimaryContactName: string;
 		PrimaryContactEmail: string;
 		PrimaryContactPhone: string;
+		StateName: string;
+		StorageFreeDays: number;
 	
 }

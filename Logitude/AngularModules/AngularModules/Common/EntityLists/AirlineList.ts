@@ -80,5 +80,6 @@ export class AirlineList {
 		PrimaryContactName: string;
 		PrimaryContactEmail: string;
 		PrimaryContactPhone: string;
+		StateName: string;
 	
 }

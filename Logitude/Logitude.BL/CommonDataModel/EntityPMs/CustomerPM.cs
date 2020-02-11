@@ -975,5 +975,8 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string GLAccountId { get; set; }
         public string CreatedByPartner { get; set; }
 
+        [DataMember]
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public int? StorageFreeDays { get; set; }
     }
 }

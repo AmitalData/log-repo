@@ -1563,6 +1563,26 @@ export class QuotePM {
     public set TicketCreateDate(newValue: Date) { if (this.ticketCreateDate != newValue) { this.ticketCreateDate = newValue; this.MarkAsDirty("TicketCreateDate"); } }
        
 	 
+    private estimatedProfitInLocal: number;
+    public get EstimatedProfitInLocal() { return this.estimatedProfitInLocal; }
+    public set EstimatedProfitInLocal(newValue: number) { if (this.estimatedProfitInLocal != newValue) { this.estimatedProfitInLocal = newValue; this.MarkAsDirty("EstimatedProfitInLocal"); } }
+       
+	 
+    private estimatedProfitInProfit: number;
+    public get EstimatedProfitInProfit() { return this.estimatedProfitInProfit; }
+    public set EstimatedProfitInProfit(newValue: number) { if (this.estimatedProfitInProfit != newValue) { this.estimatedProfitInProfit = newValue; this.MarkAsDirty("EstimatedProfitInProfit"); } }
+       
+	 
+    private profitCurrencyId: string;
+    public get ProfitCurrencyId() { return this.profitCurrencyId; }
+    public set ProfitCurrencyId(newValue: string) { if (this.profitCurrencyId != newValue) { this.profitCurrencyId = newValue; this.MarkAsDirty("ProfitCurrencyId"); } }
+       
+	 
+    private profitExchangeRate: number;
+    public get ProfitExchangeRate() { return this.profitExchangeRate; }
+    public set ProfitExchangeRate(newValue: number) { if (this.profitExchangeRate != newValue) { this.profitExchangeRate = newValue; this.MarkAsDirty("ProfitExchangeRate"); } }
+       
+	 
 
     public OldEntityPM: QuotePM;
 		

@@ -59,7 +59,7 @@ or FieldName = 'StatusDate' or FieldName = 'CustomsDeclarationNumber' or  FieldN
 or FieldName = 'ColoaderId' or FieldName = 'ColoaderReference1'or FieldName = 'ShipperNotExporterId' or FieldName = 'ShipperNotExporterReference' or FieldName = 'ReleasingAgentId' or FieldName = 'ReleasingAgentReference1' or FieldName ='Ratio' or FieldName ='VolumetricWeight' or FieldName ='WarehouseLegActualEntryDate'  or FieldName ='WarehouseLegExpectedEntryDate'  or FieldName ='WarehouseLegActualReleaseDate'  or FieldName ='WarehouseLegExpectedReleaseDate' or FieldName ='ChargeableWeightUnitCode'
 or FieldName = 'IncludesCustoms' or FieldName = 'DeclarationNumber' or FieldName = 'DeclarationDate' or FieldName = 'TerminalAvailable' or FieldName = 'WarehouseLegLastFreeDate'
 or FieldName = 'OrderGrossWeight' or FieldName = 'OrderChargeableWeight' or FieldName = 'BookingVolume' or FieldName = 'BookingNumberOfPackages' or FieldName = 'EstimateProfitInProfitCurrency'or FieldName = 'EstimateProfitInLocalCurrency'
-or FieldName = 'GrossWeightUnitCode'or FieldName = 'VolumeUnitCode' or FieldName = 'ConsigneeNotImporterId'or FieldName = 'IssuingCarrierAgentId' or FieldName = 'OnCarriageTransportModeId'or FieldName = 'FirstARInvoiceApprovalDate'
+or FieldName = 'GrossWeightUnitCode'or FieldName = 'VolumeUnitCode' or FieldName = 'ConsigneeNotImporterId'or FieldName = 'IssuingCarrierAgentId' or FieldName = 'OnCarriageTransportModeId'or FieldName = 'FirstARInvoiceApprovalDate' or FieldName = 'FreightForwarderId'
 )
 
 

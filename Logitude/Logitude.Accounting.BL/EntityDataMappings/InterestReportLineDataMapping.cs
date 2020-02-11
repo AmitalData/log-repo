@@ -19,7 +19,14 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 
         public void CustomPMToPOCO(InterestReportLinePM entityPM, InterestReportLine entityPOCO)
         {
-            //throw new NotImplementedException();
+            AddPOCOPropertyName(POCOPropertyNames.InterestTransactionId);
+            AddPOCOPropertyName(POCOPropertyNames.InterestReportId);
+            if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert)
+            {
+                entityPOCO.InterestReportId = entityPM.InterestReportId;
+                entityPOCO.InterestTransactionId = entityPM.InterestTransactionId;
+            }
+           
         }
 
         public void CustomPOCOToPM(InterestReportLinePM entityPM, InterestReportLine entityPOCO)

@@ -1,4 +1,4 @@
-﻿
+
 <style type="text/css">
     .SectionTitle {
         height: 20px;
@@ -194,6 +194,17 @@
                                                     <LogDatePicker [ObjectFieldName]="'KCExpirationDate'" [ObjectTableName]="ObjectTableName" [InputType]="'date'" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
                                                 </td>
 
+                                            </tr>
+
+                                            <!--Storage Free Days-->
+                                            <tr class="FormFieldRow" *ngIf="IsCustomer">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'StorageFreeDays'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogTextBox [ObjectFieldName]="'StorageFreeDays'" [Text]="StorageFreeDays" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                                </td>
                                             </tr>
 
                                             <tr style="height:10px;">

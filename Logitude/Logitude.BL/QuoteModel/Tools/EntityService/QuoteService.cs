@@ -163,6 +163,15 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
             ActivityLogger.AddAcitivityLog(entityPM.Id, objecttable.Id, entityPM.Tenant, "N", loggedContact.Id);
         }
 
+        private void ComputeProfit()
+        {
+            if(entityPM.EstimateProfit != null && entityPM.ExchangeRate != null)
+            {
+                entityPM.EstimatedProfitInLocal = MethodHelper.Round(entityPM.EstimateProfit * entityPM.ExchangeRate, 2);
+                entityPM.EstimatedProfitInProfit = MethodHelper.Round(entityPM.EstimatedProfitInLocal / entityPM.ProfitExchangeRate, 2);
+            }
+        }
+
         public void Update(QuotePM entityPM, bool mapComposition = false)
         {
             //if(entityPM.TotalPerContainer && entityPM.IsSaleCurrencySameAsCost)
@@ -504,6 +513,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                 this.InitializeStage();
                 this.InitializeSaleCurrency();
                 this.InitializeSalesman();
+                this.InitializeProfitCurrency();
 
                 if (!entityPM.IsHybrid)
                 {
@@ -599,6 +609,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
 
                 this.GenerateDefaultCharges();
             }
+            ComputeProfit();
 
         }
 
@@ -844,6 +855,41 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                 }
             }
         }
+
+        private void InitializeProfitCurrency()
+        {
+            if (isNewEntity)
+            {
+                if (string.IsNullOrEmpty(entityPM.ProfitCurrencyId))
+                {
+                    entityPM.ProfitCurrencyId = loggedTenant.ProfitCurrencyId;
+                }
+
+                if (!this.entityPM.IsCopyExchangeRates)
+                {
+                    if (string.IsNullOrEmpty(entityPM.ProfitCurrencyId))
+                    {
+                        entityPM.ProfitExchangeRate = null;
+                    }
+
+                    else if (entityPM.ProfitCurrencyId == loggedTenant.CurrencyId)
+                    {
+                        entityPM.ProfitExchangeRate = 1;
+                    }
+
+                    else
+                    {
+                        RatesTableQuery myQuery = new RatesTableQuery(tenant);
+                        LastRate lastRate = myQuery.GetLastRecordByValueDate(tenant, entityPM.ProfitCurrencyId, loggedTenant.CurrencyId, entityPM.OpenDate);
+                        if (lastRate != null)
+                        {
+                            entityPM.ProfitExchangeRate = MethodHelper.Round(lastRate.Rate, 5);
+                        }
+                    }
+                }
+            }
+        }
+
         private void InitializeInlandDomestic()
         {
             if (isInlandDomestic)

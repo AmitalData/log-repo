@@ -407,6 +407,11 @@ export class AgentPM {
     public set GLAccountId(newValue: string) { if (this.gLAccountId != newValue) { this.gLAccountId = newValue; this.MarkAsDirty("GLAccountId"); } }
        
 	 
+    private storageFreeDays: number;
+    public get StorageFreeDays() { return this.storageFreeDays; }
+    public set StorageFreeDays(newValue: number) { if (this.storageFreeDays != newValue) { this.storageFreeDays = newValue; this.MarkAsDirty("StorageFreeDays"); } }
+       
+	 
 
     public OldEntityPM: AgentPM;
 		
