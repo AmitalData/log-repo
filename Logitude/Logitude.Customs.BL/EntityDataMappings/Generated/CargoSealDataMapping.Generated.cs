@@ -65,26 +65,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
             {
 				entityPOCO.Remarks = entityPM.Remarks;
 			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SealCompletenessStateCode))
-            {
-				entityPOCO.SealCompletenessStateCode = entityPM.SealCompletenessStateCode;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SealTypeCode))
-            {
-				entityPOCO.SealTypeCode = entityPM.SealTypeCode;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UpdateReasonCode))
-            {
-				entityPOCO.UpdateReasonCode = entityPM.UpdateReasonCode;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UpdateTypeCode))
-            {
-				entityPOCO.UpdateTypeCode = entityPM.UpdateTypeCode;
-			}
 			}
 
 		public void POCOToPM(CargoSealPM entityPM, CargoSeal entityPOCO)
@@ -144,26 +124,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Remarks))
             {
                 oldEntityPM.Remarks = entityPM.Remarks;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SealCompletenessStateCode))
-            {
-                oldEntityPM.SealCompletenessStateCode = entityPM.SealCompletenessStateCode;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SealTypeCode))
-            {
-                oldEntityPM.SealTypeCode = entityPM.SealTypeCode;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UpdateReasonCode))
-            {
-                oldEntityPM.UpdateReasonCode = entityPM.UpdateReasonCode;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UpdateTypeCode))
-            {
-                oldEntityPM.UpdateTypeCode = entityPM.UpdateTypeCode;
             }
 			
 		}

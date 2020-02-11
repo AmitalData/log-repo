@@ -21,7 +21,7 @@ namespace Logitude.Customs.Data.EntityMapping
         { 
 			  this.ToTable("CargoSeals", "Customs");
 		
-		    this.HasKey(t => new { t.CargoSealIdentifierId, t.SealNumber });
+		    this.HasKey(t => new { t.CargoSealIdentifierId, t.SealNumber, t.SealCompletenessStateCode, t.SealTypeCode, t.UpdateReasonCode, t.UpdateTypeCode });
 	 
             this.Property(t => t.CargoSealIdentifierId).HasColumnName("CargoSealIdentifierId").IsRequired().HasMaxLength(15).IsUnicode(false);
 
@@ -31,13 +31,13 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.Remarks).HasColumnName("Remarks").HasMaxLength(512).IsUnicode(true);
 
-            this.Property(t => t.SealCompletenessStateCode).HasColumnName("SealCompletenessStateCode").HasMaxLength(2).IsUnicode(false);
+            this.Property(t => t.SealCompletenessStateCode).HasColumnName("SealCompletenessStateCode").IsRequired().HasMaxLength(2).IsUnicode(false);
 
-            this.Property(t => t.SealTypeCode).HasColumnName("SealTypeCode").HasMaxLength(3).IsUnicode(false);
+            this.Property(t => t.SealTypeCode).HasColumnName("SealTypeCode").IsRequired().HasMaxLength(3).IsUnicode(false);
 
-            this.Property(t => t.UpdateReasonCode).HasColumnName("UpdateReasonCode").HasMaxLength(3).IsUnicode(false);
+            this.Property(t => t.UpdateReasonCode).HasColumnName("UpdateReasonCode").IsRequired().HasMaxLength(3).IsUnicode(false);
 
-            this.Property(t => t.UpdateTypeCode).HasColumnName("UpdateTypeCode").HasMaxLength(2).IsUnicode(false);
+            this.Property(t => t.UpdateTypeCode).HasColumnName("UpdateTypeCode").IsRequired().HasMaxLength(2).IsUnicode(false);
         }
     }
 }

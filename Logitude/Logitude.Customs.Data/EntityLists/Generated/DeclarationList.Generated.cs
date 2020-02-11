@@ -266,11 +266,11 @@ namespace Logitude.Customs.Data.EntityLists
        public string CourierSuspentionName  { get; set; }
        [DataMember]
        public string DepositionStatusCode  { get; set; }
-        [DataMember]
-        public bool IsMissMandatoryDiamond { get; set; }
-        [DataMember]
-        public bool IsValidTicketsDiamond { get; set; }
-    }
+       [DataMember]
+       public bool IsMissMandatoryDiamond  { get; set; }
+       [DataMember]
+       public bool IsValidTicketsDiamond  { get; set; }
+   }
 
 }
 	 
