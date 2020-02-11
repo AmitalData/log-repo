@@ -160,32 +160,19 @@ export class WarehouseReleasePackagesDetailsComponent extends BaseComponent impl
 
                 var shipmentId = this.warehouseReleasePM.ShipmentId ? this.warehouseReleasePM.ShipmentId:"";
                 this.AllWarehouseEntryPackagesLists = [];
-                if (this.IsFilterByShipmentId) {
-                    this.warehouseEntryPackagePMExtendedService.GetWarehouseEntryPackagePMListsByShipmentIdAndWarehouseIdAndCustomerId(shipmentId, this.warehouseReleasePM.CustomerId, this.warehouseReleasePM.WarehouseId, this.warehouseReleasePM.Tenant).subscribe((res: any) => {
-                        var pmResponse: ServiceResponse = res;
-                        if (!pmResponse.HasError) {
-                            this.AllWarehouseEntryPackagesLists = pmResponse.Result;
-                            if (this.AllWarehouseEntryPackagesLists && this.WarehouseEntryId) {
-                                this.AllWarehouseEntryPackagesLists = this.AllWarehouseEntryPackagesLists.filter(d => d.WarehouseEntryId == this.WarehouseEntryId);
-                            }
-                            this.OpenChoosePackage(packageType);
+                
+                this.warehouseEntryPackagePMExtendedService.GetWarehouseEntryPackagePMListsByShipmentIdAndWarehouseIdAndCustomerId(this.IsFilterByShipmentId ? shipmentId : null, this.warehouseReleasePM.CustomerId, this.warehouseReleasePM.WarehouseId, this.warehouseReleasePM.Tenant).subscribe((res: any) => {
+                    var pmResponse: ServiceResponse = res;
+                    if (!pmResponse.HasError) {
+                        this.AllWarehouseEntryPackagesLists = pmResponse.Result;
+                        if (this.AllWarehouseEntryPackagesLists && this.WarehouseEntryId) {
+                            this.AllWarehouseEntryPackagesLists = this.AllWarehouseEntryPackagesLists.filter(d => d.WarehouseEntryId == this.WarehouseEntryId);
                         }
+                        this.OpenChoosePackage(packageType);
+                    }
 
-                    });
-                }
-                else {
-                    this.warehouseEntryPackagePMExtendedService.GetwarehouseEntryPackagePMListByCustomerIdAndWarehouseId(this.warehouseReleasePM.WarehouseId, this.warehouseReleasePM.CustomerId, this.warehouseReleasePM.Tenant).subscribe((res: any) => {
-                        var pmResponse: ServiceResponse = res;
-                        if (!pmResponse.HasError) {
-                            this.AllWarehouseEntryPackagesLists = pmResponse.Result;
-                            if (this.AllWarehouseEntryPackagesLists && this.WarehouseEntryId) {
-                                this.AllWarehouseEntryPackagesLists = this.AllWarehouseEntryPackagesLists.filter(d => d.WarehouseEntryId == this.WarehouseEntryId);
-                            }
-                            this.OpenChoosePackage(packageType);
-                        }
-
-                    });
-                }
+                });
+                
 
             } else {
                 this.OpenChoosePackage(packageType);
