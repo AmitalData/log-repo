@@ -2048,6 +2048,10 @@
     <Compile Include="Migrations\202002041151178_AddGrossWeightPerStorageDaysToShipment_Maheera.Designer.cs">
       <DependentUpon>202002041151178_AddGrossWeightPerStorageDaysToShipment_Maheera.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202001301242182_addShipmentNumberColumnInTransferHistory.cs" />
+    <Compile Include="Migrations\202001301242182_addShipmentNumberColumnInTransferHistory.Designer.cs">
+      <DependentUpon>202001301242182_addShipmentNumberColumnInTransferHistory.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
 
     <Compile Include="Migrations\202002041333119_InterestTransactionMigration.cs" />
@@ -3703,6 +3707,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202002041151178_AddGrossWeightPerStorageDaysToShipment_Maheera.resx">
       <DependentUpon>202002041151178_AddGrossWeightPerStorageDaysToShipment_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001301242182_addShipmentNumberColumnInTransferHistory.resx">
+      <DependentUpon>202001301242182_addShipmentNumberColumnInTransferHistory.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
