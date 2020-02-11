@@ -1220,17 +1220,25 @@ namespace Logitude.DBMigrations.Models
         private string[] SortDXMLFiles(string[] dxmlFiles)
         {
             List<string> dxmlFilesList = dxmlFiles.ToList();
-            string dbMigrationsHistoryDxmlFile = dxmlFilesList.Where(d => d.ToLower().Contains("DBMigrationsHistory.dxml".ToLower())).FirstOrDefault();
 
-            if(dbMigrationsHistoryDxmlFile != null)
+            string dbScriptsHistoryDxmlFile = dxmlFilesList.Where(d => d.ToLower().Contains(@"\DBScriptsHistory.dxml".ToLower())).FirstOrDefault();
+            string dbMigrationsHistoryDxmlFile = dxmlFilesList.Where(d => d.ToLower().Contains(@"\DBMigrationsHistory.dxml".ToLower())).FirstOrDefault();
+
+            if (dbScriptsHistoryDxmlFile != null)
             {
-                int indexOfDBMigrationsHistoryDxmlFile = dxmlFilesList.FindIndex(d => d.ToLower().Contains("DBMigrationsHistory.dxml".ToLower()));
-                dxmlFilesList.RemoveAt(indexOfDBMigrationsHistoryDxmlFile);
-                dxmlFilesList.Insert(0, dbMigrationsHistoryDxmlFile);
-                return dxmlFilesList.ToArray();
+                int indexOfDBScriptsHistoryDxmlFile = dxmlFilesList.FindIndex(d => d.ToLower().Contains(@"\DBScriptsHistory.dxml".ToLower()));
+                dxmlFilesList.RemoveAt(indexOfDBScriptsHistoryDxmlFile);
+                dxmlFilesList.Insert(0, dbScriptsHistoryDxmlFile);
             }
 
-            return dxmlFiles;
+            if (dbMigrationsHistoryDxmlFile != null)
+            {
+                int indexOfDBMigrationsHistoryDxmlFile = dxmlFilesList.FindIndex(d => d.ToLower().Contains(@"\DBMigrationsHistory.dxml".ToLower()));
+                dxmlFilesList.RemoveAt(indexOfDBMigrationsHistoryDxmlFile);
+                dxmlFilesList.Insert(0, dbMigrationsHistoryDxmlFile);
+            }
+
+            return dxmlFilesList.ToArray();
         }
 
         private string ExecuteGeneralScript(string script, string dbType)
