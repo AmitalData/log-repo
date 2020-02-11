@@ -93,6 +93,9 @@ import { TariffTypeListService } from '../../TariffModule/Services/StandardLists
 //Occasions
 import { OccasionStatusListService } from '../../CRM/Services/StandardLists/OccasionStatusListService';
 import { OccasionTypeListService } from '../../CRM/Services/StandardLists/OccasionTypeListService';
+import { SessionLocator } from './SessionLocator';
+import { ObjectsLocator } from '../Locators/ObjectsLocator';
+import { AppTool } from '../Tools';
 
 
 export class CachedDataManagerServices {
@@ -200,7 +203,12 @@ export class CachedDataManagerServices {
             case "TariffTypeListService": { myResult = new TariffTypeListService(); break; }
             case "OccasionTypeListService": { myResult = new OccasionTypeListService(); break; }
             default: {
-                alert(name + " is not declared in CachedDataManagerServices");
+
+                if (ObjectsLocator.GlobalSetting && ObjectsLocator.GlobalSetting.WorkEnvironment == "customs") {
+                    console.error(name + " is not declared in CachedDataManagerServices")
+                } else {
+                    alert(name + " is not declared in CachedDataManagerServices");
+                }
                 break;
             }
         }
