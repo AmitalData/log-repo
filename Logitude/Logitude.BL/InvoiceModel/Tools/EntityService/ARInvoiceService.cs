@@ -1667,9 +1667,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             VatType lineVatType = this.allVatTypes.Where(d => d.Id == g.VatTypeId).FirstOrDefault();
                             var lineVatTypeName = lineVatType != null ? lineVatType.EnglishName : "";
                             isReady = false;
-                            vatError = "External VAT Card " + lineVatTypeName + " is missing";
+                            vatError = lineVatTypeName  + " VAT External Id is missing";
                             myError = string.IsNullOrEmpty(myError) ? vatError : myError + "," + vatError;
-                            break;
+                            //break;
                         }
                     }
                 }
