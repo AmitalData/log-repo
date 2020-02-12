@@ -373,7 +373,8 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
 
         }
 
-        public HttpResponseMessage Put(ShipmentAdditionalCloudData entity)
+        [ActionName("PutMain")]
+        public HttpResponseMessage PutMain(ShipmentAdditionalCloudData entity)
         {
             try
             {
@@ -518,6 +519,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
 
         }
 
+        [ActionName("PutUserId")]
         public HttpResponseMessage PutUserId(ShipmentAdditionalCloudData entity)//Not Secure , need to ask Yaron about the Requirement -- Rabaia
         {
             try

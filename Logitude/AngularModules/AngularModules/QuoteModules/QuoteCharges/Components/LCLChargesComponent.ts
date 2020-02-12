@@ -49,6 +49,7 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
     public DisplayTariffs: boolean = false;
     public IsEditExchangeRateVisible: boolean = false;
     public CurrentSession = SessionLocator.SelectedSession;
+    IsRouteRate: boolean = false;
 
     constructor(private entityArgs: EntityArgs) {
         super();
@@ -75,7 +76,16 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
         this.CheckUpdateQuantities();
         this.BuildItemsSource();
         this.InitializeProfit();
+        this.GetQuoteType();
         this.Listen();       
+    }
+
+    GetQuoteType() {
+        if (this.EntityPM != null) {
+            if (this.EntityPM.QuoteTypeCode == "P") {
+                this.IsRouteRate = true;
+            }
+        }
     }
 
     private TabSelectedEvent: any = null;

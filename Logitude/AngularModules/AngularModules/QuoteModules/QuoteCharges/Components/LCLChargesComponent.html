@@ -879,7 +879,7 @@
                                     </td>
                                 </tr>
 
-                                <tr style="height:25px;">
+                                <tr style="height:25px;" *ngIf="!IsRouteRate">
                                     <td>
                                         <LogLabel [ObjectFieldName]="'IsFixedPrice'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                     </td>
