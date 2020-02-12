@@ -225,10 +225,21 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                     errors += msg + ";";
                     //throw new ApplicationException(msg);
                 }
+
+
+
                 decimal? percentage = null;
                 IGLAccountWithholdingTaxQueryServiceExt gLAccountWithholdingTaxQueryService = ContainerAccessor.Container.Resolve(typeof(IGLAccountWithholdingTaxQueryServiceExt), "GLAccountWithholdingTaxQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountWithholdingTaxQueryServiceExt;
                 CardRepository cardRep = new CardRepository(tenant);
                 Card card = cardRep.GetSingleCard(entityPM.VendorId, tenant);
+
+
+                if (entityPM.SetApproved && card.CountryId == null)
+                {
+                    string msg = TranslateTextsClass.Translate("APPayment.O.NoVendorCountry", tenant, useLocal);
+                    errors += msg + ";";
+                }
+
                 GLAccountWithholdingTaxPM withholdingTaxPM = gLAccountWithholdingTaxQueryService.GetAccountWithholdingTaxPMByglAccountAndDate(card.GLAccountId, entityPM.RegisterDate, tenant);
                 if (withholdingTaxPM == null)
                 {
