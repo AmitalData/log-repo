@@ -331,6 +331,7 @@ export class AddEditLCLChargeComponent extends BaseComponent {
             }
         }
 
+        this.DataContext.BuildPriceBreaksTooltips();
         this.DataContext.fatherComponent.ComputeTotals();
         this.CurrentSession.CloseCurrentWindowEmit("OK");
     }

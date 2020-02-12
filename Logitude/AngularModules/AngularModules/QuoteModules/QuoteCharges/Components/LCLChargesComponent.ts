@@ -1086,8 +1086,62 @@ export class QuoteChargeItem extends BaseComponent {
         this.SetUIProperties();
         this.ReadVatTypeData();
         this.ComputeMarkUpString();
+        this.BuildPriceBreaksTooltips();
     }
-    
+
+    public HasCostPriceBreaks: boolean = false;
+    public HasSalePriceBreaks: boolean = false;
+    public CostPriceBreaksTooltip: string = "";
+    public SalePriceBreaksTooltip: string = "";
+    BuildPriceBreaksTooltips() {
+        this.HasCostPriceBreaks = false;
+        this.HasSalePriceBreaks = false;
+        this.CostPriceBreaksTooltip = "";
+        this.SalePriceBreaksTooltip = "";
+
+        if (this.IsChargeBySteps) {
+            var items = this.EntityPM.QuoteChargePriceSteps.filter(f => !AppTool.IsNullOrZero(f.Step));
+
+            if (items.length > 0) {
+                if (items.filter(f => !AppTool.IsNullOrZero(f.CostUnitPrice)).length > 0) {
+                    this.HasCostPriceBreaks = true;
+
+                    items.filter(f => !AppTool.IsNullOrZero(f.CostUnitPrice)).forEach(item => {
+                        if (AppTool.IsNullOrEmpty(this.CostPriceBreaksTooltip)) {
+                            this.CostPriceBreaksTooltip = "+" + item.Step + ": " + this.GetValueOrZero(item.CostUnitPrice);
+                        }
+
+                        else {
+                            this.CostPriceBreaksTooltip += " / " + "+" + item.Step + ": " + this.GetValueOrZero(item.CostUnitPrice);
+                        }
+                    });
+                }
+
+                if (items.filter(f => !AppTool.IsNullOrZero(f.SaleUnitPrice)).length > 0) {
+                    this.HasSalePriceBreaks = true;
+
+                    items.filter(f => !AppTool.IsNullOrZero(f.SaleUnitPrice)).forEach(item => {
+                        if (AppTool.IsNullOrEmpty(this.SalePriceBreaksTooltip)) {
+                            this.SalePriceBreaksTooltip = "+" + item.Step + ": " + this.GetValueOrZero(item.SaleUnitPrice);
+                        }
+
+                        else {
+                            this.SalePriceBreaksTooltip += " / " + "+" + item.Step + ": " + this.GetValueOrZero(item.SaleUnitPrice);
+                        }
+                    });
+                }
+            }
+        }
+    }
+
+    private GetValueOrZero(value: number) {
+        if (AppTool.IsNullOrEmpty(value)) {
+            return 0;
+        }
+
+        return value;
+    }
+
     public IsEditingEnabled: boolean = false;
     public IsEditExchangeRateVisible: boolean = false;
     SetUIProperties() {

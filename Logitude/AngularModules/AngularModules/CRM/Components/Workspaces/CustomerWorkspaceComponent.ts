@@ -361,14 +361,12 @@ export class CustomerWorkspaceComponent extends BaseComponent {
         this.DecreasedShipmentsDataTypeList.push(new CodeNameClass("C", "Chargeable Weight"));
 
         // TimeRange
-        var todayDateTime = DateTool.GetCurrentDateAsUtc();
-        var last1MonthDateTime = DateTool.GetDateByMonth(-1);
-        var last2MonthDateTime = DateTool.GetDateByMonth(-2);
-
+        var last1MonthDateTime = new Date(new Date().setMonth(new Date().getMonth() - 1));
+        var last2MonthDateTime = new Date(new Date().setMonth(new Date().getMonth() - 2));
         var date1Formats: DateFormats = DateTool.GetDateFormats(last1MonthDateTime);
         var date2Formats: DateFormats = DateTool.GetDateFormats(last2MonthDateTime);
-        var last1MonthLabel: string = date1Formats.MonthName + " " + (date1Formats.DateParts.Year-1);
-        var last2MonthLabel: string = date2Formats.MonthName + " " + (date2Formats.DateParts.Year-1);
+        var last1MonthLabel: string = date1Formats.MonthName + " " + date1Formats.DateParts.Year;
+        var last2MonthLabel: string = date2Formats.MonthName + " " + date2Formats.DateParts.Year;
 
         this.DecreasedShipmentsTimeRangeList = [];
         this.DecreasedShipmentsTimeRangeList.push(new CodeNameClass("LM", last1MonthLabel + " vs. " + last2MonthLabel));
