@@ -221,7 +221,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                     LastSevenDaysDate.setUTCHours(0, 0, 0, 0);
                     var LastThirtyDaysDate = DateTool.AddDays((new Date()), -30);
                     LastThirtyDaysDate.setUTCHours(0, 0, 0, 0);
-                    var CurrentYearFromDate = new Date(new Date().getFullYear(), 0, 1);
+                    var CurrentYearFromDate = new Date(new Date().getFullYear(), 0, 2);
                     CurrentYearFromDate.setUTCHours(0, 0, 0, 0);
                     var CurrentYearToDate = DateTool.AddDays((new Date()), 1);
                     CurrentYearToDate.setUTCHours(0, 0, 0, 0);
@@ -532,7 +532,7 @@ export class ListComponent implements OnInit, AfterViewInit {
             LastSevenDaysDate.setUTCHours(0, 0, 0, 0);
             var LastThirtyDaysDate = DateTool.AddDays((new Date()), -30);
             LastThirtyDaysDate.setUTCHours(0, 0, 0, 0);
-            var CurrentYearFromDate = new Date(new Date().getFullYear(), 0, 1);
+            var CurrentYearFromDate = new Date(new Date().getFullYear(), 0, 2);
             CurrentYearFromDate.setUTCHours(0, 0, 0, 0);
             var CurrentYearToDate = DateTool.AddDays((new Date()), 1);
             CurrentYearToDate.setUTCHours(0, 0, 0, 0);
@@ -1115,7 +1115,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                         LastSevenDaysDate.setUTCHours(0, 0, 0, 0);
                         var LastThirtyDaysDate = DateTool.AddDays((new Date()), -30);
                         LastThirtyDaysDate.setUTCHours(0, 0, 0, 0);
-                        var CurrentYearFromDate = new Date(new Date().getFullYear(), 0, 1);
+                        var CurrentYearFromDate = new Date(new Date().getFullYear(), 0, 2);
                         CurrentYearFromDate.setUTCHours(0, 0, 0, 0);
                         var CurrentYearToDate = DateTool.AddDays((new Date()), 1);
                         CurrentYearToDate.setUTCHours(0, 0, 0, 0);
@@ -1331,7 +1331,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                         LastSevenDaysDate.setUTCHours(0, 0, 0, 0);
                         var LastThirtyDaysDate = DateTool.AddDays((new Date()), -30);
                         LastThirtyDaysDate.setUTCHours(0, 0, 0, 0);
-                        var CurrentYearFromDate = new Date(new Date().getFullYear(), 0, 1);
+                        var CurrentYearFromDate = new Date(new Date().getFullYear(), 0, 2);
                         CurrentYearFromDate.setUTCHours(0, 0, 0, 0);
                         var CurrentYearToDate = DateTool.AddDays((new Date()), 1);
                         CurrentYearToDate.setUTCHours(0, 0, 0, 0);
@@ -2886,7 +2886,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                             LastSevenDaysDate.setUTCHours(0, 0, 0, 0);
                             var LastThirtyDaysDate = DateTool.AddDays((new Date()), -30);
                             LastThirtyDaysDate.setUTCHours(0, 0, 0, 0);
-                            var CurrentYearFromDate = new Date(new Date().getFullYear(), 0, 1);
+                            var CurrentYearFromDate = new Date(new Date().getFullYear(), 0, 2);
                             CurrentYearFromDate.setUTCHours(0, 0, 0, 0);
                             var CurrentYearToDate = DateTool.AddDays((new Date()), 1);
                             CurrentYearToDate.setUTCHours(0, 0, 0, 0);
