@@ -25,6 +25,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             int customerExternalId = 0;
             int.TryParse(requestParams.ImporterNumber, out customerExternalId);
             mySE_NG_6001_MSG01_SealUpdateMessage.General.customerExternalId = customerExternalId;
+            if(customerExternalId!= 0) mySE_NG_6001_MSG01_SealUpdateMessage.General.customerExternalIdSpecified = true;
             // customerExternalIdSpecified
             mySE_NG_6001_MSG01_SealUpdateMessage.General.customerActivityType = 4;
             mySE_NG_6001_MSG01_SealUpdateMessage.General.cargoIdentifier = new cargoIdentifier();
