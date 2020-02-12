@@ -82,6 +82,7 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
                     },
                     Content = new AdditionalInformationContentTextType() { Value = data.Content32 }
                 });
+                
             }
 
              response.Response.AdditionalInformation = AdditionalInformation.ToArray();
@@ -94,25 +95,54 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
             //}
             response.Response.FunctionalReferenceID = new ResponseFunctionalReferenceIDType() { Value = requestNumber };
 
- 
-            response.Response.Error = new ResponseError[1];
-            response.Response.Error[0] = new ResponseError
+
+            if (data.error == "true")
             {
-                ValidationCode = new ErrorValidationCodeType { name = "test error", listVersionID = "4" },
-                Pointer = new ResponseErrorPointer[1]
-                { new ResponseErrorPointer {
+                response.Response.Error = new ResponseError[1];
+                response.Response.Error[0] = new ResponseError
+                {
+                    ValidationCode = new ErrorValidationCodeType { name = "test error", listVersionID = "4", Value = "2584" },
+                    Pointer = new ResponseErrorPointer[1]
+                    { new ResponseErrorPointer {
                     DocumentSectionCode = new PointerDocumentSectionCodeType { Value = "42A" },
                 SequenceNumeric = 0}
 
-                }
+                    }
 
 
 
 
-            };
+                };
 
+            }
+
+
+            if (data.constrain == "true")
+            {
+                response.Response.Error = new ResponseError[1];
+                response.Response.Error[0] = new ResponseError
+                {
+                    ValidationCode = new ErrorValidationCodeType { name = "test constrain", listVersionID = "4", Value = "2584" , listName= "105" },
+                    Pointer = new ResponseErrorPointer[1]
+                    { new ResponseErrorPointer {
+                        DocumentSectionCode = new PointerDocumentSectionCodeType { Value = "42A" },
+                        SequenceNumeric = 0 }
+
+                    }, DMExtensions = new ResponseErrorDMExtensions
+                    {
+                        
+                            ConstraintID=99 , ConstraintStatus=2 , ConstraintType=1
+ 
+                    }
+
+
+
+
+                };
+
+            }
             response.Response.Status = new ResponseStatus() { EffectiveDateTime = DateTime.Now.ToString() };
-            response.Response.Status.NameCode = new StatusNameCodeType() { Value = "5" };
+            response.Response.Status.NameCode = new StatusNameCodeType() { Value = data.status };
 
 
 
