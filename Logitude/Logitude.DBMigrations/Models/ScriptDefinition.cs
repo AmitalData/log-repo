@@ -15,9 +15,9 @@ namespace Logitude.DBMigrations.Models
         public string DBType { get; set; }
 
         [XmlElement]
-        public string Sql { get; set; }
+        public SqlScriptDefinition Sql { get; set; }
 
         [XmlElement]
-        public string Oracle { get; set; }
+        public OracleScriptDefinition Oracle { get; set; }
     }
 }
