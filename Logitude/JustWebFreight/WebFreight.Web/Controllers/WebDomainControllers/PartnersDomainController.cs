@@ -2127,18 +2127,100 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
         private void CreateAccountingPartner(PartnerServicePM args)
         {
+            SecurityUtility.CheckContactFeature("AccountingPartner", "NEW", args.Tenant);
+
             ICommonDataContext objectContext = CommonDataContext.GetContext(args.Tenant);
-            AccountingPartnerService AccountingPartnerService = new AccountingPartnerService(objectContext, args.Tenant);
-            AccountingPartnerService.Create(args.AccountingPartner);
-            var xml = LogitudeXmlSerializer.SerializeObjectToUTF8XmlString(args.AccountingPartner);
+            AccountingPartnerService myPartnerService = new AccountingPartnerService(objectContext, args.Tenant);
+
+            if (args.AccountingPartner.Addresses != null && args.AccountingPartner.Addresses.Count == 0)
+            {
+                if (args.Address != null)
+                {
+                    args.AccountingPartner.Addresses.Add(args.Address);
+                }
+            }
+
+            if (args.AccountingPartner.Contacts != null && args.AccountingPartner.Contacts.Count == 0)
+            {
+                if (args.Contact != null)
+                {
+                    args.AccountingPartner.Contacts.Add(args.Contact);
+                }
+            }
+
+            myPartnerService.Create(args.AccountingPartner);
+
+            if (args.AccountingPartner.Addresses != null && args.AccountingPartner.Addresses.Count > 0)
+            {
+                args.AddressId = args.AccountingPartner.Addresses.FirstOrDefault().Id;
+            }
+
+            if (args.AccountingPartner.Contacts != null && args.AccountingPartner.Contacts.Count > 0)
+            {
+                args.ContactId = args.AccountingPartner.Contacts.FirstOrDefault().Id;
+            }
+
+            args.PartnerId = args.AccountingPartner.Id;
 
         }
         private void UpdateAccountingPartner(PartnerServicePM args)
         {
             ICommonDataContext objectContext = CommonDataContext.GetContext(args.Tenant);
-            AccountingPartnerService AccountingPartnerService = new AccountingPartnerService(objectContext, args.Tenant);
-            AccountingPartnerService.Update(args.AccountingPartner);
-            var xml = LogitudeXmlSerializer.SerializeObjectToUTF8XmlString(args.AccountingPartner);
+
+            if (args.Address != null)
+            {
+                if (args.IsAddressDirty)
+                {
+                    AddressService service = new AddressService(objectContext, args.Tenant);
+
+                    if (args.Address.Id == null)
+                    {
+                        service.Create(args.Address);
+                        args.AddressId = args.Address.Id;
+                    }
+
+                    else
+                    {
+                        service.Update(args.Address);
+                    }
+                }
+            }
+
+            if (args.Contact != null)
+            {
+                if (args.IsContactDirty)
+                {
+                    ContactService service = new ContactService(objectContext, args.Tenant);
+
+                    if (args.Contact.Id == null)
+                    {
+                        SecurityUtility.CheckContactFeature("Contact", "NEW", args.Tenant);
+
+                        service.Create(args.Contact);
+                        args.ContactId = args.Contact.Id;
+                    }
+
+                    else
+                    {
+                        SecurityUtility.CheckContactFeature("Contact", "UPDATE", args.Tenant);
+
+                        service.Update(args.Contact);
+                    }
+                }
+            }
+
+            if (args.IsPartnerDirty)
+            {
+                SecurityUtility.CheckContactFeature("AccountingPartner", "UPDATE", args.Tenant);
+
+                if (args.AccountingPartner.IsFirstContactToAdd)
+                {
+                    args.AccountingPartner.PrimaryContactId = args.ContactId;
+                }
+
+                AccountingPartnerService myPartnerService = new AccountingPartnerService(objectContext, args.Tenant);
+                myPartnerService.Update(args.AccountingPartner);
+            }
 
         }
 
