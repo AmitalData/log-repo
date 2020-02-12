@@ -357,7 +357,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 }
 
                 DateTime? accountingDate = DateHelper.GetDate(accountingDateString);
-                ARInvoiceValidator.ValidateFullAccounting(tenant, billTo, currency, accountingDate, true);
+                ARInvoicePM invoice = new ARInvoicePM() {Tenant = tenant ,BillToId = billTo,InvoiceCurrencyId = currency,InvoiceDate= accountingDate }; 
+                ARInvoiceValidator.ValidateFullAccounting(invoice, true);
 
                 return Request.CreateResponse(HttpStatusCode.OK, "");
             }
