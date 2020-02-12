@@ -204,7 +204,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                 if (value2 != null) {
                     filterOperator = "Between";
                 }
-                if (filter.DataTypeCode == "DateTime") {
+                if (filter.DataTypeCode == "DateTime" || filter.DataTypeCode == "Date") {
                     var TodayDate = new Date();
                     TodayDate.setHours(0, 0, 0, 0);
 
@@ -1102,7 +1102,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                     if (value2 != null) {
                         filterOperator = "Between";
                     }
-                    if (filter.DataTypeCode == "DateTime") {
+                    if (filter.DataTypeCode == "DateTime" || filter.DataTypeCode == "Date") {
                         var TommorowDate = DateTool.AddDays((new Date()), 1);
                         TommorowDate.setUTCHours(0, 0, 0, 0);
                         var TodayDate = new Date();
@@ -1315,7 +1315,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                     if (value2 != null) {
                         filterOperator = "Between";
                     }
-                    if (filter.DataTypeCode == "DateTime") {
+                    if (filter.DataTypeCode == "DateTime" || filter.DataTypeCode == "Date") {
 
                         var TodayDate = new Date();
                         TodayDate.setUTCHours(0, 0, 0, 0);
@@ -2871,7 +2871,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                         if (value2 != null) {
                             filterOperator = "Between";
                         }
-                        if (filter.DataTypeCode == "DateTime") {
+                        if (filter.DataTypeCode == "DateTime" || filter.DataTypeCode == "Date") {
                             var TodayDate = new Date();
                             TodayDate.setUTCHours(0, 0, 0, 0);
 
