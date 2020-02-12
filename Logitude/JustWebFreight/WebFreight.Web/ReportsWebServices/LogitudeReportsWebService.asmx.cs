@@ -8183,6 +8183,7 @@ namespace WebFreight.Web.ReportsWebServices
                                  FinalDestinationPortCode = myShipment.MainCarriageFinalDestinationPortCode,
                                  TransportMode = myShipment.TransportModeName,
                                  ValueOfGoods = myShipment.ValueOfGoods,
+                                 FlightNumber = myShipment.MainCarriageCarrierCode + myShipment.MainCarriageCarrierNumber,
 
                                  ChargeTypeId = myItem.ChargesTypeId,
                                  ChargeTypeCode = myItem.ChargesType == null ? null : myItem.ChargesType.Code,
@@ -8223,6 +8224,7 @@ namespace WebFreight.Web.ReportsWebServices
                                  FinalDestinationPortCode = myShipment.MainCarriageFinalDestinationPortCode,
                                  TransportMode = myShipment.TransportModeName,
                                  ValueOfGoods = myShipment.ValueOfGoods,
+                                 FlightNumber = myShipment.MainCarriageCarrierCode + myShipment.MainCarriageCarrierNumber,
 
                                  ChargeTypeId = myItem.ChargesTypeId,
                                  ChargeTypeCode = myItem.ChargesType == null ? null : myItem.ChargesType.Code,
@@ -8259,7 +8261,8 @@ namespace WebFreight.Web.ReportsWebServices
                                 d.MainCarriagePortCode,
                                 d.FinalDestinationPortCode,
                                 d.TransportMode,
-                                d.ValueOfGoods
+                                d.ValueOfGoods,
+                                d.FlightNumber,
                             })
 
                             .Select(s => new ShipmentsReceivablesPayablesList()
@@ -8287,6 +8290,7 @@ namespace WebFreight.Web.ReportsWebServices
                                 FinalDestinationPortCode = s.Key.FinalDestinationPortCode,
                                 TransportMode = s.Key.TransportMode,
                                 ValueOfGoods = s.Key.ValueOfGoods,
+                                FlightNumber = s.Key.FlightNumber,
                                 ChargeTypeId = s.Key.ChargeTypeId,
                                 ChargeTypeCode = s.Key.ChargeTypeCode,
                                 ChargeTypeName = s.Key.ChargeTypeName,
@@ -8390,6 +8394,7 @@ namespace WebFreight.Web.ReportsWebServices
                                         FinalDestinationPortCode = a.FinalDestinationPortCode,
                                         TransportMode = a.TransportMode,
                                         ValueOfGoods = a.ValueOfGoods,
+                                        FlightNumber = a.FlightNumber,
                                         Receivables_OPEN = 0,
                                         Receivables_ACCT = 0,
                                         Payables_OPEN = myPayables_OPEN,
@@ -8493,6 +8498,7 @@ namespace WebFreight.Web.ReportsWebServices
                                         FinalDestinationPortCode = a.FinalDestinationPortCode,
                                         TransportMode = a.TransportMode,
                                         ValueOfGoods = a.ValueOfGoods,
+                                        FlightNumber = a.FlightNumber,
                                         Receivables_OPEN = myReceivables_OPEN,
                                         Receivables_ACCT = myReceivables_ACCT,
                                         Payables_OPEN = 0,
@@ -8570,6 +8576,7 @@ namespace WebFreight.Web.ReportsWebServices
                     record.Destination = a.FinalDestinationPortCode;
                     record.TransportMode = a.TransportMode;
                     record.ValueOfGoods = a.ValueOfGoods;
+                    record.FlightNumber = a.FlightNumber;
 
                     totalData.ShipmentAnalysisRecordList.Add(record);
                 }
