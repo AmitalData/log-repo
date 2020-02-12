@@ -13,6 +13,9 @@ using System.Web;
 using System.Collections.Generic;
 using System.Linq;
 using Logitude.Server.Tools;
+using Logitude.Customs.Data;
+using Simplog.Server.Infrastructure;
+using System.Diagnostics;
 //using Logitude.Server.Tools.SignalRHubs;
 
 namespace Logitude.BL.Helpers
@@ -243,7 +246,17 @@ namespace Logitude.BL.Helpers
         }
         public static void UpdateCacheTableHistory()
         {
+            string sqlDDL_NoNeedCommit = "delete objecttablelastupdates where objecttableid   in ( select id From  objecttables where id in (select objecttableid from objecttablelastupdates ) and name not like 'Custom%') ";
+            ((CustomContext.GetContext(0)) as DbContextBase).ExecuteReaderSingleResult<int>(sqlDDL_NoNeedCommit,
+(dr) =>
+{
 
+    Debug.WriteLine($"ExecuteReaderSingleResult: {dr.GetString(0)}", false);
+return 0;
+});
+
+
+            
 
             var objectTabelRepository = new ObjectTableRepository(0);
             var list = objectTabelRepository.GetAllCacheOnClient(0);
