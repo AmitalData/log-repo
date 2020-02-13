@@ -313,7 +313,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                         
 
                         ShipmentComputedFieldsHelper shipmentComputedFieldsHelper = new ShipmentComputedFieldsHelper();
-                        shipmentComputedFieldsHelper.UpdateShipmentComputedFields(ShipmentCompField);
+                        shipmentComputedFieldsHelper.UpdateShipmentComputedFields(ShipmentCompField, shipmentComputedFieldsRepository.context);
 
                         // shipmentComputedFieldsRepository.Update(ShipmentCompField);
                         // shipmentComputedFieldsRepository.SubmitChanges();
@@ -540,7 +540,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                         }
 
                         ShipmentComputedFieldsHelper shipmentComputedFieldsHelper = new ShipmentComputedFieldsHelper();
-                        shipmentComputedFieldsHelper.UpdateShipmentComputedFields(ShipmentCompField);
+                        shipmentComputedFieldsHelper.UpdateShipmentComputedFields(ShipmentCompField, shipmentComputedFieldsRepository.context);
                         // shipmentComputedFieldsRepository.Update(ShipmentCompField);
                         //shipmentComputedFieldsRepository.SubmitChanges();
                         try
@@ -744,7 +744,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                             ShipmentCompField.RequestedDocumentsCount++;
                         }
                         ShipmentComputedFieldsHelper shipmentComputedFieldsHelper = new ShipmentComputedFieldsHelper();
-                        shipmentComputedFieldsHelper.UpdateShipmentComputedFields(ShipmentCompField);
+                        shipmentComputedFieldsHelper.UpdateShipmentComputedFields(ShipmentCompField, shipmentComputedFieldsRepository.context);
                         //shipmentComputedFieldsRepository.Update(ShipmentCompField);
                         // shipmentComputedFieldsRepository.SubmitChanges();
                         try
