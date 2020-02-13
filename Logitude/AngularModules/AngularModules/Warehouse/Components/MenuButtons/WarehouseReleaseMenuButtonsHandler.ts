@@ -256,7 +256,7 @@ export class WarehouseReleaseMenuButtonsHandler {
                     if (!pmResponse.HasError) {
                         this.EntityPM = pmResponse.Result;
                         this.CurrentSession.FireEvent("CancelRelease");
-                        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                        this.entityArgs.EditComponent.SaveChanges();
 
                     } else {
 

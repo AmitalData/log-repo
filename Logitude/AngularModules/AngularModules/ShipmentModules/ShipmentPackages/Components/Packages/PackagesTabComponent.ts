@@ -857,7 +857,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     public IsNoPackagesLoadedTextVisible: boolean = false;
     public IsRebuildButtonVisible: boolean = false;
     IsGeneratePackagesfromCrossDockReleasesButtonVisible: boolean = false;
-    IsGeneratePackagesfromCrossDockReleasesButtonEnabled: boolean = false;
+    //IsGeneratePackagesfromCrossDockReleasesButtonEnabled: boolean = false;
     GenerateCrossDockReleasesButtonLabel: string;
 
     GeneratePackagesfromCrossDockReleasesButtonClicked() {
@@ -939,7 +939,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
 
         if (!this.IsEditingEnabled) {
             this.IsGenerateButtonEnabled = false;
-            this.IsGeneratePackagesfromCrossDockReleasesButtonEnabled = false;
+            //this.IsGeneratePackagesfromCrossDockReleasesButtonEnabled = false;
         }
 
         //Cross Dock
@@ -949,16 +949,16 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
                 if (this.EntityPM.ShipmentLevelCode == "D" || this.EntityPM.ShipmentLevelCode == "H") {
                     this.GenerateCrossDockReleasesButtonLabel = "Generate from Cross Dock Releases Packages";
                     this.IsGeneratePackagesfromCrossDockReleasesButtonVisible = true;
-                    var count: number = 0;
-                    var warehouseReleasePackageListExtendedService: WarehouseReleasePackageListExtendedService = new WarehouseReleasePackageListExtendedService();
-                    warehouseReleasePackageListExtendedService.getCheckIfShipmentHasReleasePackages(this.EntityPM.Id, this.EntityPM.Tenant).subscribe((myResponse: ServiceResponse) => {
-                        if (!myResponse.HasError) {
-                            var result: any = myResponse.Result;
-                            if (result == true) {
-                                this.IsGeneratePackagesfromCrossDockReleasesButtonEnabled = true;
-                            }
-                        }
-                    });
+                    //var count: number = 0;
+                    //var warehouseReleasePackageListExtendedService: WarehouseReleasePackageListExtendedService = new WarehouseReleasePackageListExtendedService();
+                    //warehouseReleasePackageListExtendedService.getCheckIfShipmentHasReleasePackages(this.EntityPM.Id, this.EntityPM.Tenant).subscribe((myResponse: ServiceResponse) => {
+                    //    if (!myResponse.HasError) {
+                    //        var result: any = myResponse.Result;
+                    //        if (result == true) {
+                    //            this.IsGeneratePackagesfromCrossDockReleasesButtonEnabled = true;
+                    //        }
+                    //    }
+                    //});
 
                 }
             }
