@@ -17,6 +17,7 @@ using Logitude.Customs.Data.Repsitories;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.Customs.Data.CustomFilters;
+using System.Web;
 
 namespace Logitude.Customs.Data.EntityListQueryServices
 { 
@@ -199,7 +200,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                     //CourierPendingReasonList = rec.myDeclarationCourierStatuses != null ? rec.myDeclarationCourierStatuses.CourierPendingReasonList : null,
                     MAWB = rec.CourierMaster != null ? rec.CourierMaster.MAWB : null,
                     IsCourierMissingClassification = rec.myDeclarationCourierStatuses != null ? rec.myDeclarationCourierStatuses.IsCourierMissingClassification : false,
-                    IsPendingNotNull = rec.myDeclarationCourierStatuses != null ? (rec.myDeclarationCourierStatuses.CourierPendingReasonList != null && rec.myDeclarationCourierStatuses.CourierPendingReasonList.Length > 1 ? true : false) : false,
+                    IsPendingNotNull = rec.myDeclarationCourierStatuses != null ? (rec.myDeclarationCourierStatuses.CourierPendingReasonList != null && rec.myDeclarationCourierStatuses.CourierPendingReasonList.Length > 0 ? true : false) : false,
                 }
                 );
 
@@ -241,8 +242,20 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                 var s = q1stConsignments.ToList();
                 /*var pr = qCourierPendingReasonLocalName.ToList();*/
             }
+            int tenant = 1;
+            try
+            {
 
-            bool isCourierEnv = context.CustomsSettings.FirstOrDefault(r => r.Tenant == 1).CompanyType =="B" ;
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                tenant = authToken.Tenant;
+            }
+            catch (Exception)
+            {
+
+                // throw;
+            }
+            bool isCourierEnv = context.CustomsSettings.FirstOrDefault(r => r.Tenant == tenant).CompanyType =="B" ;
             if (!isCourierEnv)
             {
                 qMyJoin = (from rec in context.CourierDeclarations.Where(r => r.DeclarationId == "-1")

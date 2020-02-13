@@ -126,11 +126,11 @@ namespace Logitude.Customs.BL.BL
 
                 CalcCourierManifestStatusCode(myDeclarationCourierStatusPM);
                 CalcTotalInvoiceAmountInUSD(myDeclarationCourierStatusPM);
+                CalcDocumentStatusCode(myDeclarationCourierStatusPM);
                 CalcCourierDeclarationStatusCode(myDeclarationCourierStatusPM);
                 CalcCourierPaymentStatusCode(myDeclarationCourierStatusPM);
                 CalcIsCourierMissingClassification(myDeclarationCourierStatusPM);
                 CalcHighLowValue(myDeclarationCourierStatusPM);
-                CalcDocumentStatusCode(myDeclarationCourierStatusPM);
                 CalcSpecialActionStatus(myDeclarationCourierStatusPM);
                 CalcFastIndividualProcess(myDeclarationCourierStatusPM);
                 CalcDeclarationPendings(myDeclarationCourierStatusPM);
@@ -145,7 +145,14 @@ namespace Logitude.Customs.BL.BL
         {
             if (myDeclarationCourierStatusPM == null) return;
             //Set DocumentStatusCode
-            if (string.IsNullOrWhiteSpace(myDeclarationCourierStatusPM.DocumentStatusCode)) myDeclarationCourierStatusPM.DocumentStatusCode = "M";
+            if (string.IsNullOrWhiteSpace(myDeclarationCourierStatusPM.DocumentStatusCode))
+            {
+                myDeclarationCourierStatusPM.DocumentStatusCode = "M";
+            }
+            else if (IsDocumentMissing(myDeclarationCourierStatusPM))
+            {
+                myDeclarationCourierStatusPM.DocumentStatusCode = "M";
+            }
         }
 
         public void CalcSpecialActionStatus(DeclarationCourierStatusPM myDeclarationCourierStatusPM)
@@ -293,7 +300,7 @@ namespace Logitude.Customs.BL.BL
             {
                 myDeclarationCourierStatusPM.CourierDeclarationStatusCode = "M";
             }
-            else if (IsDocumentMissing(myDeclarationCourierStatusPM))
+            else if (myDeclarationCourierStatusPM.DocumentStatusCode == "M")
             {
                 myDeclarationCourierStatusPM.CourierDeclarationStatusCode = "M";
             }
@@ -347,7 +354,7 @@ namespace Logitude.Customs.BL.BL
                 foreach (CustomsDocumentsTicketPM customsDocumentsTicketPMItem in customsDocumentsTicketPMList)
                 {
                     CustomDocumentTypePM docType = docTypeQuery.GetSingle(customsDocumentsTicketPMItem.DocumentTypeCode, false, false);
-                    if (docType.IsCourierManadatory)
+                    if (docType != null && docType.IsCourierManadatory)
                     {
                         return true;
                     }                      

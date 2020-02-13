@@ -27,10 +27,18 @@ namespace Logitude.Customs.BL.CloseTables
                 },
                 new SincroTestCaseDetail()
                 {
+                    Code = "2755Payment",
+                    Name = "  ללא חתימה הגשת תשלום",
+                    Entity="DeclarationPayment",
+                    AvoidSign= true
+                },
+
+                new SincroTestCaseDetail()
+                {
                     Code = "2754Constraint",
                     Name = "הצהרת יבוא אילוץ",
                     Entity="Declaration",
-                    Param1= @"{ ""ConstraintName"":""MissingX"", ""MissingX"": ""Hello Word"" }"
+                    Param1= @"{ """":""""}"
                 },
                  new SincroTestCaseDetail()
                 {
@@ -52,12 +60,39 @@ namespace Logitude.Customs.BL.CloseTables
                     Name = "בדיקות פיזיות	",
                     IsDCA = true,
                     Entity="Declaration",
-                    Param1= @"{ ""availability"":""2020-02-04T09:15:03.1085624"" , ""rr"" : ""true"" }",
-                    Param2= @"{ ""availability"":""2020-02-04T09:15:03.1085624"" }",
-
+                    Param1= @"{}",
+                    Param2= @"{}",
                     MainInterfaceCode="190",
-
-
+                },
+                new SincroTestCaseDetail()
+                {
+                    Code = "8215SincroConstraintApprove",
+                    Name = "אישור אילוץ-אישור ללא תנאי",
+                    IsDCA = true,
+                    Entity="Declaration",
+                    Param1= @"{""constraintId"":""18""}",
+                    Param2= @"{}",
+                    MainInterfaceCode="8215",
+                },
+                   new SincroTestCaseDetail()
+                {
+                    Code = "8215SincroConstraintDeny",
+                    Name = "אישור אילוץ-דחייה",
+                    IsDCA = true,
+                    Entity="Declaration",
+                    Param1= @"{""constraintId"":""18""}",
+                    Param2= @"{}",
+                    MainInterfaceCode="8215",
+                },
+                new SincroTestCaseDetail()
+                {
+                    Code = "196Sincro",
+                    Name = "סיום בדיקה פיזית ",
+                    IsDCA = true,
+                    Entity="Declaration",
+                    Param1= @"{ ""checkId"":""""}",
+                    Param2= @"{ }",
+                    MainInterfaceCode="196",
                 }
 
 
@@ -76,6 +111,7 @@ namespace Logitude.Customs.BL.CloseTables
         public string Param2 { get; set; }
         //public FakeServiceEnum FakeService { get; internal set; }
         public string MainInterfaceCode { get; internal set; }
+        public bool AvoidSign { get; internal set; }
     }
     public enum FakeServiceEnum
     {

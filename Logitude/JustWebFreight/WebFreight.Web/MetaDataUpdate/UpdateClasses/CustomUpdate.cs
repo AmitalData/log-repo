@@ -8442,7 +8442,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             QueryColumn pending7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = pending.Id, IndexOrder = 7, ObjectFieldId = CustomsDeclarationFields.Where(d => d.FieldName == "AcceptanceStatusName" && d.ObjectTableId == CustomsDeclarationObject.Id).FirstOrDefault().Id, ColumnWidth = 190 }, QueryColumnsRepository, tenantQueryColumns);
             QueryColumn pending8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = pending.Id, IndexOrder = 8, ObjectFieldId = CustomsDeclarationFields.Where(d => d.FieldName == "CourierPendingReasonList" && d.ObjectTableId == CustomsDeclarationObject.Id).FirstOrDefault().Id, ColumnWidth = 180 }, QueryColumnsRepository, tenantQueryColumns);
             
-            AdvancedQueryFilter pendingPredefinedFilter1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, Operator = "Equals", ObjectFieldId = CustomsDeclarationFields.Where(d => d.FieldName == "IsPendingNotNull" && d.ObjectTableId == CustomsDeclarationObject.Id).FirstOrDefault().Id, PredefinedValue = "false", QueryId = pending.Id, Tenant = 0 }, AdvancedQueryFiltersRepository, tenantAdvancedFilters);
+            AdvancedQueryFilter pendingPredefinedFilter1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, Operator = "Equals", ObjectFieldId = CustomsDeclarationFields.Where(d => d.FieldName == "IsPendingNotNull" && d.ObjectTableId == CustomsDeclarationObject.Id).FirstOrDefault().Id, PredefinedValue = "true", QueryId = pending.Id, Tenant = 0 }, AdvancedQueryFiltersRepository, tenantAdvancedFilters);
             
             #endregion
             /*
@@ -12170,6 +12170,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             Feature DeclarationCargoSplitFeature = tenantFeatures.Where(d => d.Code == "DECLARATIONCASPLIT" && d.ObjectTableId == CustomsDeclarationTable.Id).FirstOrDefault();
             Feature DeclarationCollateralFeature = tenantFeatures.Where(d => d.Code == "COLLATERAL" && d.ObjectTableId == CustomsDeclarationTable.Id).FirstOrDefault();
             Feature DeclarationClassificationFeature = tenantFeatures.Where(d => d.Code == "DECLARATIONCLASSIFICATION" && d.ObjectTableId == CustomsDeclarationTable.Id).FirstOrDefault();
+            Feature DeclarationCargoSealFeature = tenantFeatures.Where(d => d.Code == "DECLARATIONCARGOSEAL" && d.ObjectTableId == CustomsDeclarationTable.Id).FirstOrDefault();
             //Feature CourierDeclarationFeature = tenantFeatures.Where(d => d.Code == "COURIERDECLARATION" && d.ObjectTableId == CustomsDeclarationTable.Id).FirstOrDefault();
 
             //tabs            
@@ -12214,7 +12215,10 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
          //   AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { HtmlComponentName = "DeclarationCargoSplitTabComponent", HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/CargoSplit/DeclarationCargoSplitTabComponent", FeatureId = DeclarationCargoSplitFeature.Id, ControlPath = " ", ObjectTableId = CustomsDeclarationTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Customs.Declaration.TH.CargoSplit" && d.Tenant == 0).FirstOrDefault().Id, Code = "DCCS", Tenant = 0, IndexOrder = 19 }, ObjectTableTabsRepository, TenantObjectTableTabs);
 
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { HtmlComponentName = "DeclarationClassificationComponent", HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/Classification/DeclarationClassificationComponent", FeatureId = DeclarationClassificationFeature.Id, ControlPath = " ", ObjectTableId = CustomsDeclarationTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Customs.Declaration.TH.Classification" && d.Tenant == 0).FirstOrDefault().Id, Code = "DCCF", Tenant = 0, IndexOrder = 20 }, ObjectTableTabsRepository, TenantObjectTableTabs);
-            
+
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { HtmlComponentName = "DeclarationCargoSealTabComponent", HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/CargoSeal/DeclarationCargoSealTabComponent", FeatureId = DeclarationCargoSealFeature.Id, ControlPath = " ", ObjectTableId = CustomsDeclarationTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Customs.Declaration.TH.CargoSeal" && d.Tenant == 0).FirstOrDefault().Id, Code = "DCSE", Tenant = 0, IndexOrder = 21 }, ObjectTableTabsRepository, TenantObjectTableTabs);
+
+
             #endregion
 
             #region Vendors
@@ -12620,7 +12624,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.Notifications", DefaultText = "Notifications", LocalDefaultText = "התראות לתיק", ObjectTableId = CustomsDeclarationTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.Corrections", DefaultText = "Corrections", LocalDefaultText = "תיקון הצהרה", ObjectTableId = CustomsDeclarationTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.CargoSplit", DefaultText = "Cargo Split", LocalDefaultText = "בקשות פיצול מטען", ObjectTableId = CustomsDeclarationTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.CargoSeal", DefaultText = "Cargo Seal", LocalDefaultText = "רשימת סגרים", ObjectTableId = CustomsDeclarationTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.Classification", DefaultText = "Classification", LocalDefaultText = "סיווג", ObjectTableId = CustomsDeclarationTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
 
 
@@ -15333,6 +15337,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             Feature CustomsDeclarationFeature49 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SpecialReplyToCustoms", Packagable = true, ObjectTableId = CustomsDeclarationObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Customs.Declaration.Features.SpecialReplyToCustoms", NameTextCodeDefaultText = "Special Reply To Customs", FullLocalDefaultText = "Special Reply To Customs", FeatureTypeCode = "ACT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature CustomsDeclarationFeature50 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ItemPackageTab", Packagable = true, ObjectTableId = CustomsDeclarationObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Customs.Declaration.Features.ItemPackageTab", NameTextCodeDefaultText = "Item Package Tab", FullLocalDefaultText = "Item Package Tab", FeatureTypeCode = "ACT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature CustomsDeclarationFeature51 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DECLARATIONAMENDMENT", ObjectTableId = CustomsDeclarationObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Customs.Declaration.Features.DeclarationAmendment", NameTextCodeDefaultText = "Declaration Amendment", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature CustomsDeclarationFeature52 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DECLARATIONCARGOSEAL", Packagable = true, ObjectTableId = CustomsDeclarationObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Customs.Declaration.Features.CargoSeal", NameTextCodeDefaultText = "Declaration CargoSeal", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
 
 #if notpaymentOrderFeature19
 

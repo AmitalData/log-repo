@@ -2,6 +2,7 @@ import { RequestParamsBase } from './RequestParamsBase';
 
 export class CargoSealsRequestParams extends RequestParamsBase {
 
+    public CargoSealIdentifierId: string;
     public UpdateDate: Date;
     public ContainerNumber: string;
     public CargoRowNumber: string;
@@ -20,8 +21,12 @@ export class CargoSealDetails {
 
     public SealNumber: string;
     public SealTypeCode: string;
+    public SealTypeName: string;
     public SealCompletenessStateCode: string;
+    public SealCompletenessStateName: string;
     public UpdateReasonCode: string;
+    public UpdateReasonName: string;
     public UpdateTypeCode: string;
+    public UpdateTypeName: string;
     public Remarks: string;
 }

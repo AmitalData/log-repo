@@ -21,7 +21,14 @@ namespace Logitude.Customs.Data.Repsitories
 			throw new NotImplementedException();
         }
 
-   }
+        public List<CargoSealIdentifier> GetDeclarationCargoSealIdentifierList(string declarationId, int tenant)
+        {
+            return (from a in context.CargoSealIdentifiers
+                    where a.DeclarationId == declarationId && a.Tenant == tenant
+                    select a).ToList();
+        }
+
+    }
 
 }
    

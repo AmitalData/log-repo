@@ -10,6 +10,8 @@ using Logitude.Server.Tools;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Def.EntityPMs; 
 using Logitude.Customs.Data;
+using Simplog.Server.Infrastructure;
+using Logitude.Customs.BL.EntityQueryServices;
 
 namespace Logitude.Customs.BL.EntityDataMappings
 {
@@ -19,12 +21,64 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
         public void CustomPMToPOCO(CargoSealPM entityPM, CargoSeal entityPOCO)
         {
-            //throw new NotImplementedException();
+            this.CustomMappedPOCOProperties.Add(POCOPropertyNames.CargoSealIdentifierId);
+            this.CustomMappedPOCOProperties.Add(POCOPropertyNames.Tenant);
+            this.CustomMappedPOCOProperties.Add(POCOPropertyNames.SealNumber);
+
+            if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
+            {
+                entityPOCO.CargoSealIdentifierId = entityPM.CargoSealIdentifierId;
+                entityPOCO.Tenant = entityPM.Tenant;
+                entityPOCO.SealNumber = entityPM.SealNumber;
+            }
         }
 
         public void CustomPOCOToPM(CargoSealPM entityPM, CargoSeal entityPOCO)
         {
-            //throw new NotImplementedException();
+            CustomMappedPMProperties.Add(PMPropertyNames.SealCompletenessStateName);
+            CustomMappedPMProperties.Add(PMPropertyNames.SealTypeName);
+            CustomMappedPMProperties.Add(PMPropertyNames.UpdateReasonName);
+            CustomMappedPMProperties.Add(PMPropertyNames.UpdateTypeName);
+
+            if (entityPOCO.SealCompletenessStateCode != null)
+            {
+                SealCompletenesQueryService sealCompletenesQueryService = new SealCompletenesQueryService(entityPOCO.Tenant);
+                SealCompletenesPM sealCompletenesPM = sealCompletenesQueryService.GetSingle(entityPOCO.SealCompletenessStateCode, false, true);
+                if (sealCompletenesPM != null)
+                {
+                    entityPM.SealCompletenessStateName = sealCompletenesPM.LocalName;
+                }
+            }
+
+            if (entityPOCO.SealTypeCode != null)
+            {
+                SealTypeQueryService sealTypeQueryService = new SealTypeQueryService(entityPOCO.Tenant);
+                SealTypePM sealTypePM = sealTypeQueryService.GetSingle(entityPOCO.SealTypeCode, false, true);
+                if(sealTypePM != null)
+                {
+                    entityPM.SealTypeName = sealTypePM.LocalName;
+                }
+            }
+
+            if (entityPOCO.UpdateReasonCode != null)
+            {
+                SealUpdateReasonTypeQueryService sealUpdateReasonTypeQueryService = new SealUpdateReasonTypeQueryService(entityPOCO.Tenant);
+                SealUpdateReasonTypePM sealUpdateReasonTypePM = sealUpdateReasonTypeQueryService.GetSingle(entityPOCO.UpdateReasonCode, false, true);
+                if (sealUpdateReasonTypePM != null)
+                {
+                    entityPM.UpdateReasonName = sealUpdateReasonTypePM.LocalName;
+                }
+            }
+
+            if (entityPOCO.UpdateTypeCode != null)
+            {
+                AmendmentTypeQueryService amendmentTypeQueryService = new AmendmentTypeQueryService(entityPOCO.Tenant);
+                AmendmentTypePM amendmentTypePM = amendmentTypeQueryService.GetSingle(entityPOCO.UpdateTypeCode, false, true);
+                if (amendmentTypePM != null)
+                {
+                    entityPM.UpdateTypeName = amendmentTypePM.LocalName;
+                }
+            }
         }
    }
 

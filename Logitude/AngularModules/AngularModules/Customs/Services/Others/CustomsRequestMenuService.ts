@@ -109,7 +109,7 @@ export class CustomsRequestMenuService {
 
         this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.CustomsBookQuery"), "CustomsBookQuery", './CustomsModules/CustomsGeneralRequests/Components/CustomsBookQueryComponent', 850, 500, "8361"));
 
-        this._CustomsRequestMenuItems.push(new CustomsMenuItem("CargoSealsQuery", "CargoSealsQuery", './CustomsModules/CustomsRequests/Components/DeclarationRequests/CargoSealsQueryComponent', 820, 550, "6001"));
+        this._CustomsRequestMenuItems.push(new CustomsMenuItem("עדכון סגרים", "CargoSealsQuery", './CustomsModules/CustomsRequests/Components/DeclarationRequests/CargoSealsQueryComponent', 820, 550, "6001"));
         //TextCodeTranslator.Translate("Customs.General.O.CargoSealsQuery")
         //this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.RecallSuppliersFromFile"), "RecallSuppliersFromFile", './CustomsModules/CustomsGeneralRequests/Components/RecallSuppliersFromFileComponent', 500, 400, ""));
 
@@ -137,6 +137,11 @@ export class CustomsRequestMenuService {
            
         ));
 
+        this._CustomsRequestMenuItems.push(new CustomsMenuItem("סיום בדיקה פיזית"
+            , "EndPhysicalCheck",
+            './CustomsModules/CustomsGeneralRequests/Components/EndPhysicalCheckComponent',
+            1010, 450, "196", null, null, null, true
+        ));
         this._CustomsRequestMenuItems.push(new CustomsMenuItem("בדיקה פיזית"
             , "PhysicalCheck",
             './CustomsModules/CustomsGeneralRequests/Components/PhysicalCheckComponent',

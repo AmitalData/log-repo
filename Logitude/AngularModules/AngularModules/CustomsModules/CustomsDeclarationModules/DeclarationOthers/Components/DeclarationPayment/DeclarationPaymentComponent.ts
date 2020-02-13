@@ -35,7 +35,7 @@ import { ObjectTablePM } from '../../../../../Infrastructure/EntityPMs/ObjectTab
 import { CustomFileCreditRequestParams } from '../../../../../Customs/DataContract/RequestParams/CustomFileCreditRequestParams';
 import { CustomFileCreditResponseData } from '../../../../../Customs/DataContract/ResponseData/CustomFileCreditResponseData';
 import { INF_MSG_GenericResponseData } from '../../../../../Customs/DataContract/ResponseData/INF_MSG_GenericResponseData';
-import { CustomSendOptionsArgs, SendRequestVIA } from '../../../../../Customs/DataContract/RequestParams/RequestParamsBase';
+import { CustomSendOptionsArgs, SendRequestVIA, TestCase } from '../../../../../Customs/DataContract/RequestParams/RequestParamsBase';
 import { CustomsRequiredFieldErrors } from '../../../../../Customs/DataContract/CustomsRequiredFieldErrors';
 import {CustomsRequiredFieldListService} from '../../../../../Customs/Services/StandardLists/CustomsRequiredFieldListService';
 
@@ -100,6 +100,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
     ClientBankListLogUntilDateyyyyMMdd = "20180820.ClientBankListLogUntilDateyyyyMMdd";
     _CourierWorksheet: DeclarationCourierStatusList;
     IsDisplayMessage: boolean;
+    _TestCase: TestCase;
     constructor(public declarationExtendedListService: DeclarationExtendedListService) {
         super();
         this.PaymentMethodsList = new ObservableCollection([]);
@@ -1328,6 +1329,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                     //myStoreViewUnifreightInstructionController.DisposeUnifreightMassaging();
 
                 });
+            SessionLocator.SelectedSession.StartBusyIndicator("");
             myStoreViewUnifreightInstructionController.SendRequestInstructionToUnifreightAsync("PAYHAND_STORE");
         }
         else {
@@ -1398,6 +1400,42 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
     Option: string;
     // Before send
     SendButtonClicked(event) {
+        if (event.TestCase) {
+
+            let windowArgs = { "SincroScreen": "SincroSendDeclarationPayment" };
+
+            var logWindow = new LogitudeWindow();
+            logWindow.Width = 600;
+            logWindow.Height = 400;
+            logWindow.Title = "תרחשי DeclarationPayment";
+            logWindow.ShowCloseButton = false;
+            logWindow.WindowArgs = windowArgs;
+
+            logWindow.ComponentLoaded.subscribe(comp => {
+                logWindow.WindowClosed.subscribe(res => {
+                    if (!AppTool.IsNullOrEmpty(res) && res == "Ok") {
+
+                        this._TestCase = new TestCase();
+                        this._TestCase.Code = comp._ScenarioCode;
+                        this._TestCase.Param1 = comp.Param1;
+                        this._TestCase.Param2 = comp.Param2;
+                        this.SendButtonClickedStart(event);
+
+                    }
+                });
+            });
+
+            logWindow.Show('./CustomsModules/CustomControls/Components/TestCase/SendDeclarationTastCaseComponent');
+            ///this.StopMyBusyIndicator();///this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
+
+            return;
+
+        }
+        this._TestCase = null;
+        this.SendButtonClickedStart(event);
+    }
+
+    SendButtonClickedStart(event) {
         if (this._CourierWorksheet != null && this._CourierWorksheet.CourierPendingReasonErrorPlace == "1" /*=="בתשלום"*/) {
             var myMessageWindow = new MessageWindow
             myMessageWindow.Show(/*"לא ניתן לבצע הגשת תשלום כאשר יש השהייה מסוג עצירת תשלום. "*/
@@ -1644,6 +1682,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
         params.Mode = "Check";
         params.RequestVIA = this.customSendOptions.RequestVIA;
         params.ForcePersonalSign = this.customSendOptions.ForcePersonalSign;
+        params.TestCase = this._TestCase;
         let splitRequest = true;
         if (splitRequest) {
             this.CheckCustomFileCreditThenSendPayment(params);
