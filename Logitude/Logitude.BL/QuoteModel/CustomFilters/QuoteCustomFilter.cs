@@ -180,6 +180,19 @@ namespace Logitude.BL.QuoteModel
 
                     }
 
+                    if(item.FieldName == "SentQuotesKPIChartFilter")
+                    {
+                        DateTime? fromDate = item.FieldValue != null && item.FieldValue.ToString() == "null" ? null : StringHelper.GetDate(item.FieldValue.ToString());
+
+
+                        DateTime? toDate = item.FieldValue2 != null && item.FieldValue2.ToString() == "null" ? null : StringHelper.GetDate(item.FieldValue2.ToString().Split(';')[0]);
+
+                        string category = item.FieldValue2 != null && item.FieldValue2.ToString() == "null" ? null : item.FieldValue2.ToString().Split(';')[1];
+
+                        queryableData = queryableData.Where(d => (DbFunctions.TruncateTime(d.OpenDate) >= fromDate && DbFunctions.TruncateTime(d.OpenDate) <= toDate) && d.SentDate != null && d.RequestDate != null);
+                        queryableData = this.SentQuotesKPIChartFilter_Query(queryableData, category);
+                    }
+
                     if (item.FieldName == "ChartAcceptedDateFilter")
                     {
 
@@ -347,6 +360,36 @@ namespace Logitude.BL.QuoteModel
             {
                 queryableData = queryableData.Where(d => d.IsCancelled == false);
             }
+            return queryableData;
+        }
+
+        private IQueryable<Quote> SentQuotesKPIChartFilter_Query(IQueryable<Quote> queryableData, string category)
+        {
+            if (category == "< 1d")
+            {
+                queryableData = queryableData.Where(a => (System.Data.Entity.DbFunctions.DiffDays(a.RequestDate, a.SentDate)).Value < 1);
+            }
+            else if (category == "1-2 d")
+            {
+                queryableData = queryableData.Where(a => (System.Data.Entity.DbFunctions.DiffDays(a.RequestDate, a.SentDate)).Value >= 1 && (System.Data.Entity.DbFunctions.DiffDays(a.RequestDate, a.SentDate)).Value <=2 );
+            }
+            else if (category == "3-4 d")
+            {
+                queryableData = queryableData.Where(a => (System.Data.Entity.DbFunctions.DiffDays(a.RequestDate, a.SentDate)).Value >= 3 && (System.Data.Entity.DbFunctions.DiffDays(a.RequestDate, a.SentDate)).Value <= 4);
+            }
+            else if (category == "5-6 d")
+            {
+                queryableData = queryableData.Where(a => (System.Data.Entity.DbFunctions.DiffDays(a.RequestDate, a.SentDate)).Value >= 5 && (System.Data.Entity.DbFunctions.DiffDays(a.RequestDate, a.SentDate)).Value <= 6);
+            }
+            else if (category == "7-8 d")
+            {
+                queryableData = queryableData.Where(a => (System.Data.Entity.DbFunctions.DiffDays(a.RequestDate, a.SentDate)).Value >= 7 && (System.Data.Entity.DbFunctions.DiffDays(a.RequestDate, a.SentDate)).Value <= 8);
+            }
+            else if (category == "9+ d")
+            {
+                queryableData = queryableData.Where(a => (System.Data.Entity.DbFunctions.DiffDays(a.RequestDate, a.SentDate)).Value >= 9);
+            }
+
             return queryableData;
         }
     }

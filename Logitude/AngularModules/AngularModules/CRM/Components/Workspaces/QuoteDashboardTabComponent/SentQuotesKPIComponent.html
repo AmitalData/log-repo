@@ -1,16 +1,27 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <title></title>
-</head>
-<body>
-    <table style="background-color:burlywood;">
-        <tr>
-            <td>
-                <div></div>
-            </td>
-        </tr>
-    </table>
-</body>
-</html>
+<table>
+    <tr>
+        <td>
+            <div class="MediaFill">
+                <SectionBox>
+                    <SectionHead>
+                        <table>
+                            <tr>
+                                <td>
+                                    <label>Sent Quotes KPI</label>
+                                </td>
+                            </tr>
+                        </table>
+                    </SectionHead>
+                    <SectionBody>
+                        <div class="MediaFill" [id]="SentQuotesKPIChartID" (mousedown)="OnChartMouseDown($event,'null')">
+                            <div class="MediaFill">
+                                <div #SentQuotesKPIDashboard></div>
+                                <div [attr.id]="SentQuotesKPIDashboardId" style="height:95%;width:100%" (click)="Click_SentQuotesKPIBar()"></div>
+                            </div>
+                        </div>
+                    </SectionBody>
+                </SectionBox>
+            </div>
+        </td>
+    </tr>
+</table>
