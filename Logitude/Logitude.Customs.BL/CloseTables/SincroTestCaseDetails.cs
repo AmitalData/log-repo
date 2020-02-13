@@ -46,7 +46,8 @@ namespace Logitude.Customs.BL.CloseTables
                     Name = "הצהרת תקן5117 ",
                     IsDCA= true,
                     Entity="Declaration",
-                    Param1= @"{ ""RequestNumber"" :""1"" ,  ""Content32"" :""1"" , ""Content29"" :""test 29"" , ""Content27"" :""test 27""}",
+                    Param1= @"{ ""RequestNumber"" :""1"" ,  ""Content32"" :""1"" , 
+                              ""Content29"" :""test 29"" , ""Content27"" :""test 27"", ""status"" :""13"" , ""error"" :""true"" , ""constrain"" :""false"" }",
                                                    
                                                
                     MainInterfaceCode="5117",
