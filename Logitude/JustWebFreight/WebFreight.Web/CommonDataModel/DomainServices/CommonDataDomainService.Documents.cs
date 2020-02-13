@@ -2343,7 +2343,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
                 ShipmentCompField.IsRequestedDocuments = documentsFilingQuery.GetIfIsRequestedForEntity(entity.EntityId, Tenant);
                 ShipmentCompField.RequestedDocumentsCount = documentsFilingQuery.GetRequestedDocCountForEntity(entity.EntityId, Tenant);
                 ShipmentComputedFieldsHelper shipmentComputedFieldsHelper = new ShipmentComputedFieldsHelper();
-                shipmentComputedFieldsHelper.UpdateShipmentComputedFields(ShipmentCompField);
+                shipmentComputedFieldsHelper.UpdateShipmentComputedFields(ShipmentCompField, shipmentComputedFieldsRepository.context);
 
 
                // shipmentComputedFieldsRepository.Update(ShipmentCompField);
