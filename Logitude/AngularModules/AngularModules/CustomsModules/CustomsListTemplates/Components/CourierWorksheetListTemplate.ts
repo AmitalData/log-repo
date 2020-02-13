@@ -259,7 +259,10 @@ export class CourierWorksheetListTemplate {
             this.IsDeclarationChecked = false;
         }
     }
-
+    ShowFollowUpStatus() {
+        this._CourierWorksheet
+        this._CourierWorksheet['DeclarationId']
+    }
     SendManifest(event) {
         this.ButtonClick(event);
         let myDeclarationPMService: DeclarationPMService = new DeclarationPMService()
