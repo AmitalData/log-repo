@@ -20,7 +20,7 @@ namespace Logitude.BL.Helpers
     public class ShipmentComputedFieldsHelper
     {
 
-        public void UpdateShipmentComputedFields(ShipmentComputedFields shipmentComputedFields)
+        public void UpdateShipmentComputedFields(ShipmentComputedFields shipmentComputedFields, IShipmentsContext context)
         {
             if (shipmentComputedFields != null)
             {
@@ -55,8 +55,10 @@ namespace Logitude.BL.Helpers
                             shipmentPM.IsImporterShipment = true;
 
                             string email = "system@tenant" + shipmentComputedFields.Tenant.ToString() + ".com"; //SecurityUtility.GetAuthenticatedUser(shipmentComputedFields.Tenant);
-                            IShipmentsContext objectContext = ShipmentsContext.GetContext(shipmentPM.Tenant);
-                            ShipmentService shipmentService = new ShipmentService(objectContext, shipmentPM, email);
+
+                            //IShipmentsContext objectContext = ShipmentsContext.GetContext(shipmentPM.Tenant);                  
+                             
+                            ShipmentService shipmentService = new ShipmentService(context, shipmentPM, email);
                             shipmentService.UpdatedShipmentComputedFields = shipmentComputedFields;
                             shipmentService.Update();
                             isSaveShipmentComputedFields = true;
@@ -66,7 +68,7 @@ namespace Logitude.BL.Helpers
 
                 if (!isSaveShipmentComputedFields)
                 {
-                    ShipmentComputedFieldsRepository shipmentComputedFieldsRepository = new ShipmentComputedFieldsRepository(shipmentComputedFields.Tenant);
+                    ShipmentComputedFieldsRepository shipmentComputedFieldsRepository  = new ShipmentComputedFieldsRepository(context);
                     shipmentComputedFieldsRepository.Update(shipmentComputedFields);
                     shipmentComputedFieldsRepository.SubmitChanges();
                     isSaveShipmentComputedFields = true;

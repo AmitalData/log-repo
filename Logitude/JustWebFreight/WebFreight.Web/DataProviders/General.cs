@@ -183,5 +183,44 @@ namespace WebFreight.Web.DataProviders
 
             return logodata;
         }
+
+        public static string GetFieldString(string field)
+        {
+            string output = field;
+
+            if (string.IsNullOrEmpty(output))
+            {
+                output = "";
+            }
+
+            return output;
+        }
+        public static string GetFieldString(int? field)
+        {
+            string output = "";
+
+            if (field != null)
+            {
+                output = field.Value.ToString();
+            }
+
+            return output;
+        }
+        public static string GetFieldString(double? field, string extension = null)
+        {
+            string output = "";
+
+            if (field != null)
+            {
+                output = field.Value.ToString();
+
+                if(extension != null)
+                {
+                    output += " " + extension;
+                }
+            }
+
+            return output;
+        }
     }
 }

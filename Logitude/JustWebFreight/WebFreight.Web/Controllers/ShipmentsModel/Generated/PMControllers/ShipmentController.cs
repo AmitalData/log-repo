@@ -731,7 +731,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
                 entityComputedFields.RequestedDocumentsCount = 0;
                 entityComputedFields.IsDepositionRequired = false;
                 ShipmentComputedFieldsHelper shipmentComputedFieldsHelper = new ShipmentComputedFieldsHelper();
-                shipmentComputedFieldsHelper.UpdateShipmentComputedFields(entityComputedFields);
+                shipmentComputedFieldsHelper.UpdateShipmentComputedFields(entityComputedFields, shipmentComputedFieldsRepository.context);
 
 
                 //shipmentComputedFieldsRepository.Update(entityComputedFields);

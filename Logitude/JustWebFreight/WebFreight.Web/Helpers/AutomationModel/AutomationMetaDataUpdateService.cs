@@ -302,13 +302,9 @@ namespace WebFreight.Web.Helpers.AutomationModel
             {
                 foreach (AutomationSetValue automationSetValue in automationSetValues)
                 {
-                    if (!string.IsNullOrEmpty(automationSetValue.ObjectFieldId) && string.IsNullOrEmpty(automationSetValue.ObjectFieldCode))
-                    {
-                        automationSetValue.ObjectFieldCode = GetObjectFieldCodeByObjecFieldId(objectFieldLists, automationSetValue.ObjectFieldId);
-                        if (automationSetValue.OperatorCode.Contains("F")) automationSetValue.Value = GetObjectFieldCodeByObjecFieldId(objectFieldLists, automationSetValue.Value);
-
-                        automationSetValueLists.Add(automationSetValue);
-                    }
+                    automationSetValue.ObjectFieldCode = string.IsNullOrEmpty(automationSetValue.ObjectFieldCode) ? GetObjectFieldCodeByObjecFieldId(objectFieldLists, automationSetValue.ObjectFieldId) : automationSetValue.ObjectFieldCode;
+                    if (automationSetValue.OperatorCode.Contains("F")) automationSetValue.Value = GetObjectFieldCodeByObjecFieldId(objectFieldLists, automationSetValue.Value);
+                    automationSetValueLists.Add(automationSetValue);
                 }
             }
 

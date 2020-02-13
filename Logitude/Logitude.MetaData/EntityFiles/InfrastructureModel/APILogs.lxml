@@ -2468,41 +2468,46 @@
     IsHeaderScreen="false"
     Code="&quot;APILogs.GeneralTabScreen&quot;"
     NumberOfColumns="2"
-    NumberOfRows="7">
+    NumberOfRows="8">
     <ScreenFields>
       <ScreenField
         Column="0"
         Row="0"
-        ObjectFieldName="&quot;Direction&quot;"
+        ObjectFieldName="&quot;Id&quot;"
         ScreenName="General Tab Screen" />
       <ScreenField
         Column="0"
         Row="1"
-        ObjectFieldName="&quot;StatusName&quot;"
+        ObjectFieldName="&quot;Direction&quot;"
         ScreenName="General Tab Screen" />
       <ScreenField
         Column="0"
         Row="2"
-        ObjectFieldName="&quot;NumberOfRetries&quot;"
+        ObjectFieldName="&quot;StatusName&quot;"
         ScreenName="General Tab Screen" />
       <ScreenField
         Column="0"
         Row="3"
-        ObjectFieldName="&quot;ExpirationDate&quot;"
+        ObjectFieldName="&quot;NumberOfRetries&quot;"
         ScreenName="General Tab Screen" />
       <ScreenField
         Column="0"
         Row="4"
-        ObjectFieldName="&quot;Subject&quot;"
+        ObjectFieldName="&quot;ExpirationDate&quot;"
         ScreenName="General Tab Screen" />
       <ScreenField
         Column="0"
         Row="5"
-        ObjectFieldName="&quot;ObjectTableName&quot;"
+        ObjectFieldName="&quot;Subject&quot;"
         ScreenName="General Tab Screen" />
       <ScreenField
         Column="0"
         Row="6"
+        ObjectFieldName="&quot;ObjectTableName&quot;"
+        ScreenName="General Tab Screen" />
+      <ScreenField
+        Column="0"
+        Row="7"
         ObjectFieldName="&quot;PartnerName&quot;"
         ScreenName="General Tab Screen" />
       <ScreenField
