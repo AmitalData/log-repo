@@ -433,6 +433,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      IsPendingNotNull = myJoin != null ? myJoin.IsPendingNotNull : false,
                                                      //CourierPendingReasonList = myJoin != null ? myJoin.CourierPendingReasonList : null,
                                                      /*CourierPendingReasonList = mypr != null ? mypr.CourierPendingReasonName : null,*/
+                                                     //CourierPendingReasonName = a.CourierPendingReasonName,
 
                                                      MAWB = myJoin != null ? myJoin.MAWB : null,
                                                      IsCourierMissingClassification = myJoin != null ? myJoin.IsCourierMissingClassification : false,

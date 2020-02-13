@@ -332,7 +332,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         IsValidTicketsDiamond, 
 	         CustomFileAmendment, 
 	         DeclarationNoAmendment, 
-	         AvailabilityDate,
+	         AvailabilityDate, 
+	         CourierPendingReasonName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
