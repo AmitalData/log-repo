@@ -1371,32 +1371,29 @@ namespace Logitude.DBMigrations.Models
                             if (!String.IsNullOrEmpty(sxmlScript))
                             {
                                 scriptBody = "DECLARE\n" +
-                                "StartTime TIMESTAMP;\n" +
-                                "EndTime TIMESTAMP;\n" +
-                                "BEGIN\n" +
-                                "StartTime := SYSTIMESTAMP;\n" +
-                                "BEGIN\n" +
-                                sxmlScript + "\n" +
-                                "END;\n" +
-                                "EndTime:= SYSTIMESTAMP;\n" +
-                                "BEGIN\n" +
-                                "DECLARE ScriptBody NCLOB;\n" +
-                                "BEGIN\n" +
-                                "ScriptBody := '" + sxmlScript.Replace("'", "''").TrimEnd(new char[] { '\r', '\n' }) + "';\n" +
-                                saveScriptHistoryQuery +
-                                "END;\n" +
-                                "END;\n" +
-                                "END;";
-                            }
-                            else
-                            {
-                                scriptBody = "BEGIN\n" +
+                                    "StartTime TIMESTAMP;\n" +
+                                    "EndTime TIMESTAMP;\n" +
+                                    "BEGIN\n" +
+                                    "StartTime := SYSTIMESTAMP;\n" +
+                                    "BEGIN\n" +
+                                    sxmlScript + "\n" +
+                                    "END;\n" +
+                                    "EndTime:= SYSTIMESTAMP;\n" +
+                                    "BEGIN\n" +
                                     "DECLARE ScriptBody NCLOB;\n" +
                                     "BEGIN\n" +
                                     "ScriptBody := '" + sxmlScript.Replace("'", "''").TrimEnd(new char[] { '\r', '\n' }) + "';\n" +
-                                    saveScriptHistoryQuery.Replace("EXTRACT(DAY FROM(EndTime - StartTime) * 24 * 60 * 60 * 1000)", "0") +
+                                    saveScriptHistoryQuery + "\n" +
                                     "END;\n" +
                                     "END;\n" +
+                                    "END;";
+                            }
+                            else
+                            {
+                                scriptBody = "DECLARE ScriptBody NCLOB;\n" +
+                                    "BEGIN\n" +
+                                    "ScriptBody := 'NULL';\n" +
+                                    saveScriptHistoryQuery.Replace("EXTRACT(DAY FROM(EndTime - StartTime) * 24 * 60 * 60 * 1000)", "0") + "\n" +
                                     "END;";
                             }
                         }
@@ -1490,37 +1487,34 @@ namespace Logitude.DBMigrations.Models
                             if (!String.IsNullOrEmpty(sxmlScript))
                             {
                                 scriptBody = "DECLARE\n" +
-                                "StartTime TIMESTAMP;\n" +
-                                "EndTime TIMESTAMP;\n" +
-                                "BEGIN\n" +
-                                "SAVEPOINT ScriptSavePoint;\n" +
-                                "StartTime := SYSTIMESTAMP;\n" +
-                                "BEGIN\n" +
-                                sxmlScript + "\n" +
-                                "END;\n" +
-                                "EndTime:= SYSTIMESTAMP;\n" +
-                                "BEGIN\n" +
-                                "DECLARE ScriptBody NCLOB;\n" +
-                                "BEGIN\n" +
-                                "ScriptBody := '" + sxmlScript.Replace("'", "''").TrimEnd(new char[] { '\r', '\n' }) + "';\n" +
-                                saveScriptHistoryQuery +
-                                "END;\n" +
-                                "END;\n" +
-                                "EXCEPTION\n" +
-                                "WHEN OTHERS THEN\n" +
-                                "ROLLBACK TO ScriptSavePoint;\n" +
-                                "COMMIT;\n" +
-                                "END;";
-                            }
-                            else
-                            {
-                                scriptBody = "BEGIN\n" +
+                                    "StartTime TIMESTAMP;\n" +
+                                    "EndTime TIMESTAMP;\n" +
+                                    "BEGIN\n" +
+                                    "SAVEPOINT ScriptSavePoint;\n" +
+                                    "StartTime := SYSTIMESTAMP;\n" +
+                                    "BEGIN\n" +
+                                    sxmlScript + "\n" +
+                                    "END;\n" +
+                                    "EndTime:= SYSTIMESTAMP;\n" +
+                                    "BEGIN\n" +
                                     "DECLARE ScriptBody NCLOB;\n" +
                                     "BEGIN\n" +
                                     "ScriptBody := '" + sxmlScript.Replace("'", "''").TrimEnd(new char[] { '\r', '\n' }) + "';\n" +
-                                    saveScriptHistoryQuery.Replace("EXTRACT(DAY FROM(EndTime - StartTime) * 24 * 60 * 60 * 1000)", "0") +
+                                    saveScriptHistoryQuery + "\n" +
                                     "END;\n" +
                                     "END;\n" +
+                                    "EXCEPTION\n" +
+                                    "WHEN OTHERS THEN\n" +
+                                    "ROLLBACK TO ScriptSavePoint;\n" +
+                                    "COMMIT;\n" +
+                                    "END;";
+                            }
+                            else
+                            {
+                                scriptBody = "DECLARE ScriptBody NCLOB;\n" +
+                                    "BEGIN\n" +
+                                    "ScriptBody := 'NULL';\n" +
+                                    saveScriptHistoryQuery.Replace("EXTRACT(DAY FROM(EndTime - StartTime) * 24 * 60 * 60 * 1000)", "0") + "\n" +
                                     "END;";
                             }
                         }
