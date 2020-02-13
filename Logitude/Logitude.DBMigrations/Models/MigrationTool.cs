@@ -72,7 +72,7 @@ namespace Logitude.DBMigrations.Models
                     {
                         ValidateSXMLFilesNames(sxmlFiles);
 
-                        ExecutedSxmlFiles = GetExecutedSXMLFilesFromDB();
+                        GetExecutedSXMLFilesFromDB();
 
                         generalScripts = GetGeneralScripts(sxmlFiles);
 
@@ -1556,7 +1556,7 @@ namespace Logitude.DBMigrations.Models
             return generalScripts;
         }
 
-        private List<ExecutedSxmlFile> GetExecutedSXMLFilesFromDB()
+        private void GetExecutedSXMLFilesFromDB()
         {
             Console.WriteLine("Reading Executed SXML Files From DB ...");
 
@@ -1644,7 +1644,7 @@ namespace Logitude.DBMigrations.Models
                 }
             }
 
-            return executedSxmlFiles;
+            ExecutedSxmlFiles = executedSxmlFiles;
         }
 
         private void ValidateSXMLFilesNames(string[] sxmlFiles)
