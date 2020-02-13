@@ -43,6 +43,7 @@ import { CourierPendingReasonListService } from '../../../Customs/Services/Stand
 import { CourierPendingReasonList } from '../../../Customs/EntityLists/CourierPendingReasonList';
 //import { DeclarationPendingPMService } from '../../../Customs/Services/StandardPMs/DeclarationPendingPMService';
 import { DeclarationExtendedListService } from '../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
+import { AmitalGatewayUtil } from "../../../Infrastructure/Utilities/AmitalGatewayUtil";
 
 @Component({
     moduleId: module.id,
@@ -260,8 +261,20 @@ export class CourierWorksheetListTemplate {
         }
     }
     ShowFollowUpStatus() {
-        this._CourierWorksheet
-        this._CourierWorksheet['DeclarationId']
+        if (AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
+            AmitalGatewayUtil.Instance.ShowCFIFILEMFUStatusScreen(
+                    this._CourierWorksheet.CustomFileNo,
+                    this._CourierWorksheet.DeclarationId,
+                    "ShowCFIFILEMFUStatusScreen");
+
+        } else {
+            var myMessageWindow = new MessageWindow();
+            let mess = "ShowFollowUpStatus -" + this._CourierWorksheet.CustomFileNo;
+            myMessageWindow.Show(mess);
+
+        }
+        
+        
     }
     SendManifest(event) {
         this.ButtonClick(event);
