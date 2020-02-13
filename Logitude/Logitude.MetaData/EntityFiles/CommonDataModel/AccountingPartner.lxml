@@ -4442,6 +4442,67 @@
         ScreenName="General Tab Screen" />
     </ScreenFields>
   </Screen>
+  <Screen
+    Name="&quot;Billing Tab Screen&quot;"
+    ObjectTableName="&quot;AccountingPartner&quot;"
+    IsReadOnly="false"
+    IsHeaderScreen="false"
+    Code="&quot;AccountingPartner.BillingTabScreen&quot;"
+    NumberOfColumns="2"
+    NumberOfRows="5">
+    <ScreenFields>
+      <ScreenField
+        Column="0"
+        Row="0"
+        ObjectFieldName="&quot;VatNumber&quot;"
+        ScreenName="Billing Tab Screen" />
+      <ScreenField
+        Column="0"
+        Row="1"
+        ObjectFieldName="&quot;PaymentTermId&quot;"
+        ScreenName="Billing Tab Screen" />
+      <ScreenField
+        Column="0"
+        Row="2"
+        ObjectFieldName="&quot;InvoiceCurrencyId&quot;"
+        ScreenName="Billing Tab Screen" />
+      <ScreenField
+        Column="0"
+        Row="3"
+        ObjectFieldName="&quot;VatTypeId&quot;"
+        ScreenName="Billing Tab Screen" />
+      <ScreenField
+        Column="0"
+        Row="4"
+        ObjectFieldName="&quot;EnableConsolidationInvoices&quot;"
+        ScreenName="Billing Tab Screen" />
+      <ScreenField
+        Column="1"
+        Row="0"
+        ObjectFieldName="&quot;BankName&quot;"
+        ScreenName="Billing Tab Screen" />
+      <ScreenField
+        Column="1"
+        Row="1"
+        ObjectFieldName="&quot;BankAddress&quot;"
+        ScreenName="Billing Tab Screen" />
+      <ScreenField
+        Column="1"
+        Row="2"
+        ObjectFieldName="&quot;Swift&quot;"
+        ScreenName="Billing Tab Screen" />
+      <ScreenField
+        Column="1"
+        Row="3"
+        ObjectFieldName="&quot;AccountNumber&quot;"
+        ScreenName="Billing Tab Screen" />
+      <ScreenField
+        Column="1"
+        Row="4"
+        ObjectFieldName="&quot;IBANNumber&quot;"
+        ScreenName="Billing Tab Screen" />
+    </ScreenFields>
+  </Screen>
   <Tab
     TabName="&quot;General&quot;"
     ObjectTableName="&quot;AccountingPartner&quot;"
@@ -4456,14 +4517,66 @@
     IsSpellChecked="false"
     HasGeneralFeature="false" />
   <Tab
+    TabName="&quot;Billing&quot;"
+    ObjectTableName="&quot;AccountingPartner&quot;"
+    Code="&quot;ACBL&quot;"
+    ControlPath="&quot;Simplog.Infrastructure.GeneralControls.BillingTabControl&quot;"
+    TextCode="&quot;AccountingPartner.TH.Billing&quot;"
+    IsPackagable="true"
+    IndexOrder="1"
+    IsSpellChecked="false"
+    HasGeneralFeature="false" />
+  <Tab
     TabName="&quot;Accounting&quot;"
     ObjectTableName="&quot;AccountingPartner&quot;"
     Code="&quot;APAC&quot;"
     ControlPath="&quot;Simplog.FreightLib.Views.PartnersTabs.PartnersAccountingTab.AccountingTabControl&quot;"
     TextCode="&quot;AccountingPartner.TH.Accounting&quot;"
     IsPackagable="false"
-    IndexOrder="1"
+    IndexOrder="2"
     HtmlComponentURL="&quot;./Common/Components/AccountingTab/AccountingTabComponent&quot;"
+    IsSpellChecked="false"
+    HasGeneralFeature="false" />
+  <Tab
+    TabName="&quot;Addresses&quot;"
+    ObjectTableName="&quot;AccountingPartner&quot;"
+    Code="&quot;ACAD&quot;"
+    ControlPath="&quot;Simplog.FreightLib.Views.PartnersTabs.PartnerAddressesTab&quot;"
+    TextCode="&quot;AccountingPartner.TH.Addresses&quot;"
+    IsPackagable="true"
+    IndexOrder="3"
+    IsSpellChecked="false"
+    HasGeneralFeature="false" />
+  <Tab
+    TabName="&quot;Contacts&quot;"
+    ObjectTableName="&quot;AccountingPartner&quot;"
+    Code="&quot;ACCO&quot;"
+    ControlPath="&quot;Simplog.FreightLib.Views.PartnersTabs.PartnerContactsTab&quot;"
+    TextCode="&quot;AccountingPartner.TH.Contacts&quot;"
+    IsPackagable="true"
+    IndexOrder="4"
+    IsSpellChecked="false"
+    HasGeneralFeature="false" />
+  <Tab
+    TabName="&quot;Docs In&quot;"
+    ObjectTableName="&quot;AccountingPartner&quot;"
+    Code="&quot;ACDI&quot;"
+    ControlPath="&quot;&quot;"
+    TextCode="&quot;AccountingPartner.TH.DocsIn&quot;"
+    IsPackagable="true"
+    IndexOrder="5"
+    HtmlComponentURL="&quot;./CommonModules/CommonPartners/Components/EditTabs/AccountingPartner/AccountingPartnerDocsInTabComponent&quot;"
+    IsSpellChecked="false"
+    HasGeneralFeature="false" />
+  <Tab
+    TabName="&quot;Events&quot;"
+    ObjectTableName="&quot;AccountingPartner&quot;"
+    Code="&quot;ACEV&quot;"
+    ControlPath="&quot;Simplog.Infrastructure.Views.Events.EventsControl&quot;"
+    TextCode="&quot;AccountingPartner.TH.Events&quot;"
+    IsPackagable="true"
+    IndexOrder="6"
+    HtmlComponentURL="&quot;&quot;"
     IsSpellChecked="false"
     HasGeneralFeature="false" />
   <EventTypes>
