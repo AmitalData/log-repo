@@ -68,16 +68,7 @@ namespace Logitude.BL.Helpers
 
                 if (!isSaveShipmentComputedFields)
                 {
-                    ShipmentComputedFieldsRepository shipmentComputedFieldsRepository = null;
-                    if (shipmentContext!=null)
-                    {
-                        shipmentComputedFieldsRepository = new ShipmentComputedFieldsRepository(shipmentContext);
-                    }
-                    else
-                    {
-                        shipmentComputedFieldsRepository = new ShipmentComputedFieldsRepository(shipmentComputedFields.Tenant);
-                    }
-                   
+                    ShipmentComputedFieldsRepository shipmentComputedFieldsRepository  = new ShipmentComputedFieldsRepository(context);
                     shipmentComputedFieldsRepository.Update(shipmentComputedFields);
                     shipmentComputedFieldsRepository.SubmitChanges();
                     isSaveShipmentComputedFields = true;
