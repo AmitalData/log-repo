@@ -185,7 +185,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             apinvoicePM = apinvoiceQuery.APInvoiceCustomDataMappingAndValidating(apinvoice, tenant, computingPartnerCode);
                             apinvoicePM.CreatedFromAPI = true;
                         }
-
+                       
                         if (!string.IsNullOrEmpty(apinvoice.ComputingPartnerCode))
                         {
                             ComputingPartnerQuery computingPartnerQuery = new ComputingPartnerQuery(tenant);
@@ -289,7 +289,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 line.VatRecognizedPercentage = vatType.RecognizedPercentage/100;
 
                 // LocalCurrencyAmount,ForiegnCurrencyAmount
-                double? valueInLocal = line.InvoiceCurrencyAmount * apinvoice.InvoiceCurrencyExchangeRate;
+                double? valueInLocal = line.LocalCurrencyAmount == null ? ( line.InvoiceCurrencyAmount * apinvoice.InvoiceCurrencyExchangeRate) : line.LocalCurrencyAmount;
                 line.LocalCurrencyAmount = valueInLocal.Value;
                 line.ForiegnCurrencyAmount = valueInLocal / line.ForiegnExchangeRate;
 
