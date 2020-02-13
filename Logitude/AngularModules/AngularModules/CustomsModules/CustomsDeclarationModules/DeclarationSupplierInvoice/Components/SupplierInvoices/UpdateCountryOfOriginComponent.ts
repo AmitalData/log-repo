@@ -44,14 +44,14 @@ export class UpdateCountryOfOriginComponent extends BaseComponent {
 
         var dataString: string = "";     
     }
-    countryOfOrigin: string;
-    get CountryOfOrigin() { return this.countryOfOrigin; }
-    set CountryOfOrigin(value: string) {
-        this.countryOfOrigin = value;
+    originCountryCode: string;
+    get OriginCountryCode() { return this.originCountryCode; }
+    set OriginCountryCode(value: string) {
+        this.originCountryCode = value;
     }
     fromNumber: number;
     get FromNumber() { return this.fromNumber }
-    set FromNumber(value: number) { this.fromNumber = value; }
+    set FromNumber(value: number) { this.fromNumber = value; } 
 
     toNumber: number;
     get ToNumber() { return this.toNumber }
