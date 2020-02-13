@@ -38,7 +38,7 @@ namespace Logitude.Customs.BL.CloseTables
                     Code = "2754Constraint",
                     Name = "הצהרת יבוא אילוץ",
                     Entity="Declaration",
-                    Param1= @"{ ""ConstraintName"":""MissingX"", ""MissingX"": ""Hello Word"" }"
+                    Param1= @"{ """":""""}"
                 },
                  new SincroTestCaseDetail()
                 {
@@ -60,9 +60,29 @@ namespace Logitude.Customs.BL.CloseTables
                     Name = "בדיקות פיזיות	",
                     IsDCA = true,
                     Entity="Declaration",
-                    Param1= @"{ """":""""}",
-                    Param2= @"{ ""availability"":""2020-02-04T09:15:03.1085624"" }",
+                    Param1= @"{}",
+                    Param2= @"{}",
                     MainInterfaceCode="190",
+                },
+                new SincroTestCaseDetail()
+                {
+                    Code = "8215SincroConstraintApprove",
+                    Name = "אישור אילוץ-אישור ללא תנאי",
+                    IsDCA = true,
+                    Entity="Declaration",
+                    Param1= @"{""constraintId"":""18""}",
+                    Param2= @"{}",
+                    MainInterfaceCode="8215",
+                },
+                   new SincroTestCaseDetail()
+                {
+                    Code = "8215SincroConstraintDeny",
+                    Name = "אישור אילוץ-דחייה",
+                    IsDCA = true,
+                    Entity="Declaration",
+                    Param1= @"{""constraintId"":""18""}",
+                    Param2= @"{}",
+                    MainInterfaceCode="8215",
                 },
                 new SincroTestCaseDetail()
                 {

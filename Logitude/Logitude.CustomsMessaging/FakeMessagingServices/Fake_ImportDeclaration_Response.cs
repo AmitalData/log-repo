@@ -148,9 +148,9 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
             _Constraints[0].Pointer[3].DMExtensions = new ResponseErrorPointerDMExtensions() { NaturalKey = new NaturalKeyType() };
             _Constraints[0].DMExtensions = new ResponseErrorDMExtensions()
             {
-                ConstraintID = 4348628,
-                ConstraintType = 1,
-                ConstraintStatus = 1,
+                ConstraintID = 18,
+                ConstraintType = 1, //  פרט זיהוי המטען לא קיימים במערכת המכס
+                ConstraintStatus = 2,  // 1 = פוטנציאל 
 
             };
             fakeRespond.Response.Error = _Constraints;
