@@ -108,7 +108,7 @@ export class CRMWorkspaceComponent {
                         case "CUS": {
                             if (this.Page_CUS == null) {
                                 this._entityResourceService.getEntityResourceByTableName("Customer", 0).subscribe(response => {
-                                    this._entityResourceService.getEntityResourceByTableName("AccountingNote").subscribe((response: any) => {
+                                    this._entityResourceService.getEntityResourceByTableName("AccountingNote",0).subscribe((response: any) => {
                                     SessionLocator.DynamicLoader.Load('./CRM/Components/Workspaces/CustomerWorkspaceComponent', myLocation.viewContainerRef)
                                         .then(cmpRef => {
                                             this.Page_CUS = cmpRef.instance;
