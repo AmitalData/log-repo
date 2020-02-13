@@ -39,6 +39,7 @@ import { DecimalFormatter } from '../../../Infrastructure/Utilities/DecimalForma
 })
 
 export class FCLChargesComponent extends BaseComponent implements OnDestroy {
+
     public EntityPM: QuotePM = null;
     public ObjectTableName: string = "Quote";
     public DataContext = this;
@@ -50,6 +51,8 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
     public LocalCurrencyCode: string;
     public AllInMatchText: string;
     IsShowTotalPerContainer: boolean = false;
+    IsRouteRate: boolean = false;
+
     private CurrentSession = SessionLocator.SelectedSession;
     public HideFCLAllIn: boolean = false;
     constructor(private entityArgs: EntityArgs) {
@@ -77,7 +80,16 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
         this.SetGridColumns();
         this.BuildItemsSource();
         this.InitializeProfit();
+        this.GetQuoteType();
         this.Listen();
+    }
+
+    GetQuoteType() {
+        if (this.EntityPM != null) {
+            if (this.EntityPM.QuoteTypeCode == "P") {
+                this.IsRouteRate = true;
+            }
+        }
     }
 
     private SessionEvent: any = null;
