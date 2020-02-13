@@ -1,3 +1,13 @@
+<style type="text/css">
+    .SquareIcon {
+        width: 15px;
+        height: 15px;
+        line-height: 10px;
+        -webkit-border-radius: 2px;
+        -moz-border-radius: 2px;
+        border-radius: 2px;
+    }
+</style>
 
 <table>
     <tr>
@@ -24,7 +34,7 @@
                                             <div [attr.id]="QuoteConversionId" style="height:95%;width:100%" (click)="BarClicking()"></div>
                                         </td>
 
-                                        <!--<td style="width:80px;">
+                                        <!--<td style="width:60px;">
                                             <div class="MediaFill">
                                                 <ScrollViewer [Small]="true">
                                                     <div [attr.id]="legenddiv" style="width:100%;"></div>
@@ -34,7 +44,25 @@
                                     </tr>
 
                                     <tr style="height:25px;">
+                                        <td>
+                                            <table>
+                                                <tr>
+                                                    <td style="width:20px;">
+                                                        <div>
+                                                        </div>
+                                                    </td>
 
+                                                    <td style="width: 60px; vertical-align:middle;" *ngFor="let item of ProductTypes">
+                                                        <div class="SquareIcon" style="display:inline-block;" [ngStyle]="{background: chartColrs['Color_' + item]}"></div>
+                                                        <span style="width:45px; max-width:45px; font-size: 11px; color: #282E30; text-indent: 15px;" class="TextTrimming">{{item}}</span>
+                                                    </td>
+
+                                                    <td>
+                                                        <div></div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>                                        
                                     </tr>
                                 </table>
                             </div>

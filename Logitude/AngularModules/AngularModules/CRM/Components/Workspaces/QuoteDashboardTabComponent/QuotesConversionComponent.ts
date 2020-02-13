@@ -26,7 +26,7 @@ export class QuotesConversionComponent implements OnInit {
     public QuoteConversionDashboard: Array<ChartingDataClass>;
     public QuoteConversionId: string = "QuoteConversionId_";
     public legenddiv: string = "Legends_ID_";
-    private chartColrs: ChartColors;
+    public chartColrs: ChartColors;
     constructor(private _entityResourceService: EntityResourceService) {
         if (this.CurrentSession == null) {
             this.ChartID = "ChartID_-1_-1";
@@ -77,8 +77,23 @@ export class QuotesConversionComponent implements OnInit {
 
         this.dashboardService.GetDashboardChartValues(this.dashboardArgs).subscribe((myResult: any) => {
             this.QuoteConversionDashboard = myResult;
-            this.FillQuoteConversionDashboardData();
+
+            this.GetProducts();
+            //this.FillQuoteConversionDashboardData();
         });
+    }
+
+    public ProductTypes: string[] = [];
+    private GetProducts() {
+        this.ProductTypes = [];
+
+        this.QuoteConversionDashboard.forEach(item => {
+            if (!this.ProductTypes.includes(item.TransportModeDirection)) {
+                this.ProductTypes.push(item.TransportModeDirection);
+            }
+        });
+
+        this.FillQuoteConversionDashboardData();
     }
 
     public QuoteConversionYAxis: any[] = [];
@@ -153,6 +168,7 @@ export class QuotesConversionComponent implements OnInit {
                             "lineColor": this.chartColrs["Color_" + element.ProductTypes[i]],
                             "borderAlpha": 0,
                             "showHandOnHover": true,
+                            //"hidden": element.data1[i] == 0 ? true: false,
                             //"fixedColumnWidth": 20
                         };
                     //{
@@ -213,7 +229,11 @@ export class QuotesConversionComponent implements OnInit {
                 while (maximum % 5 != 0) {
                     maximum += 1;
                 }
-                
+
+                //for (var g = 0; g < myGraphs.length; g++) {
+                //    Graphs.push(myGraphs[g][0]);
+                //}
+
                 makeAmBarChart(this.QuoteConversionId, Graphs, DataProvider, maximum, false);
             }
         }
