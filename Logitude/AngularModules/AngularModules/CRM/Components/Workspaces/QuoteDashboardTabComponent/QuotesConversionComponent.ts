@@ -26,6 +26,7 @@ export class QuotesConversionComponent implements OnInit {
     public QuoteConversionDashboard: Array<ChartingDataClass>;
     public QuoteConversionId: string = "QuoteConversionId_";
     public legenddiv: string = "Legends_ID_";
+    private chartColrs: ChartColors;
     constructor(private _entityResourceService: EntityResourceService) {
         if (this.CurrentSession == null) {
             this.ChartID = "ChartID_-1_-1";
@@ -38,6 +39,7 @@ export class QuotesConversionComponent implements OnInit {
         }
 
         this.QuoteConversionId = this.QuoteConversionId + this.CurrentSession.GetChartId();
+        this.chartColrs = new ChartColors;
     }
 
     ngOnInit() {
@@ -80,13 +82,12 @@ export class QuotesConversionComponent implements OnInit {
     }
 
     public QuoteConversionYAxis: any[] = [];
-    public QuoteConversionXAxis: string[] = [];
+    public QuoteConversionXAxis: string[] = [];    
     FillQuoteConversionDashboardData() {
-        var index = 0;
         this.QuoteConversionXAxis = [];        
         var StringArr: Array<string> = new Array<string>();
         var j = 0;
-
+        
         this.QuoteConversionDashboard.forEach(element => {
             if (!StringArr.includes(element.SalesmanUserName) && element.SalesmanUserName != null) {
                 StringArr.push(element.SalesmanUserName);
@@ -96,9 +97,7 @@ export class QuotesConversionComponent implements OnInit {
             }
         });
 
-        StringArr.sort((a, b) => { return (a === b) ? 0 : (a < b) ? -1 : 1 });
-        var Graphs = [];
-        var index = 0;
+        StringArr.sort((a, b) => { return (a === b) ? 0 : (a < b) ? -1 : 1 });        
         this.QuoteConversionDashboard.forEach(element => {
             for (var i = 0; i < StringArr.length; i++) {
                 if (element.SalesmanUserName == StringArr[i]) {
@@ -108,14 +107,18 @@ export class QuotesConversionComponent implements OnInit {
                     this.QuoteConversionYAxis[i].ProductTypesFilters.push(element.TransportModeDirection_Display);
                     this.QuoteConversionYAxis[i].SalesmanId = element.SalesmanUserId;
                     if (!this.QuoteConversionXAxis.includes(element.SalesmanUserName) && element.SalesmanUserName != null) {
-                        if (this.QuoteConversionXAxis[i] == null)
+                        if (this.QuoteConversionXAxis[i] == null) {
                             this.QuoteConversionXAxis[i] = (element.SalesmanUserName);
-
+                        }
                     }
                 }
             }
         });
-        
+
+        var Graphs = [];
+        var myGraphs = [];
+        var index = 0;
+
         var DataProvider = [];
         var objectArray_1 = [];
         var objectArray_2 = [];
@@ -127,52 +130,52 @@ export class QuotesConversionComponent implements OnInit {
         if (this.QuoteConversionYAxis.length > 0) {
             maximum = this.QuoteConversionYAxis[0].data1[0];
         }
-
+        
         this.QuoteConversionYAxis.forEach(element => {
             objectArray_1 = [];
-            objectArray_2 = [];
+            //objectArray_2 = [];
 
-            for (var i = 0; i < element.ProductTypes.length; i++) {                
-
+            for (var i = 0; i < element.ProductTypes.length; i++) {
                 if (element.data1[i] > maximum) {
                     maximum = element.data1[i];
                 }
-                
+
                 if (index == 0) {
                     Graphs[i] =
                         {
                             "balloonText": FormatTool.FormatBigNumbersToExtension("[[value]]") + "",
-                            "fillAlphas": 0.3,
+                            "fillAlphas": 1,
                             "lineAlpha": 1,
                             "id": "AmGraph-1" + i,
                             "title": element.ProductTypes[i] + "",
                             "type": "column",
                             "valueField": "acol" + (i + 1),
-                            "lineColor": this.barChartColors[i].backgroundColor1,
+                            "lineColor": this.chartColrs["Color_" + element.ProductTypes[i]],
                             "borderAlpha": 0,
                             "showHandOnHover": true,
-                            //"clustered": false
+                            //"fixedColumnWidth": 20
                         };
-                    //    {
-                    //        "balloonText": FormatTool.FormatBigNumbersToExtension("[[value]]") + "",
-                    //        "fillAlphas": 1,
-                    //        "lineAlpha": 1,
-                    //        "id": "AmGraph-1_1" + i,
-                    //        "title": element.ProductTypes[i] + "",
-                    //        "type": "column",
-                    //        "valueField": "ccol" + (i + 1),
-                    //        "lineColor": this.barChartColors[i].backgroundColor1,
-                    //        "borderAlpha": 0,
-                    //        "showHandOnHover": true,
-                    //        //"clustered": false
-                    //    }
+                    //{
+                    //    "balloonText": FormatTool.FormatBigNumbersToExtension("[[value]]") + "",
+                    //    "fillAlphas": 1,
+                    //    "lineAlpha": 1,
+                    //    //"id": "AmGraph-1_1" + i,
+                    //    "title": element.ProductTypes[i] + "",
+                    //    "type": "column",
+                    //    "valueField": "ccol" + (i + 1),
+                    //    "lineColor": this.barChartColors[i].backgroundColor1,
+                    //    "borderAlpha": 0,
+                    //    "showHandOnHover": true,
+                    //    "clustered": false,
+                    //    "fixedColumnWidth": 20
+                    //}
                     //];
                 }
 
-                objectArray_1[i] = (element.data1[i]);
-                objectArray_2[i] = (element.data2[i]);
+                objectArray_1[i] = element.data1[i];
+                //objectArray_2[i] = element.data2[i];               
             }
-
+            
             DataProvider[index] = {
                 "category": this.QuoteConversionXAxis[index],
                 "acol1": objectArray_1[0],
@@ -180,12 +183,26 @@ export class QuotesConversionComponent implements OnInit {
                 "acol3": objectArray_1[2],
                 "acol4": objectArray_1[3],
                 "acol5": objectArray_1[4],
+                "acol6": objectArray_1[5],
+                "acol7": objectArray_1[6],
+                "acol8": objectArray_1[7],
+                "acol9": objectArray_1[8],
+                "acol10": objectArray_1[9],
+                "acol11": objectArray_1[10],
+                "acol12": objectArray_1[11],
 
-                "ccol1": objectArray_2[0],
-                "ccol2": objectArray_2[1],
-                "ccol3": objectArray_2[2],
-                "ccol4": objectArray_2[3],
-                "ccol5": objectArray_2[4]
+                //"ccol1": objectArray_2[0],
+                //"ccol2": objectArray_2[1],
+                //"ccol3": objectArray_2[2],
+                //"ccol4": objectArray_2[3],
+                //"ccol5": objectArray_2[4],
+                //"ccol6": objectArray_2[5],
+                //"ccol7": objectArray_2[6],
+                //"ccol8": objectArray_2[7],
+                //"ccol9": objectArray_2[8],
+                //"ccol10": objectArray_2[9],
+                //"ccol11": objectArray_2[10],
+                //"ccol12": objectArray_2[11],
             };
             index++;
         });
@@ -196,9 +213,8 @@ export class QuotesConversionComponent implements OnInit {
                 while (maximum % 5 != 0) {
                     maximum += 1;
                 }
-
-                //name, graphs, dataprovider, max, legendFlag, LegendDiv, minimum, stacked, IsRtl
-                makeAmBarChart(this.QuoteConversionId, Graphs, DataProvider, maximum, true, this.legenddiv, null, false, false);
+                
+                makeAmBarChart(this.QuoteConversionId, Graphs, DataProvider, maximum, false);
             }
         }
 
@@ -265,51 +281,20 @@ export class QuotesConversionComponent implements OnInit {
                     this.CurrentSession.AddMenuReference(cmpRef);
                 });
         }
-    }
+    }    
+}
 
-    barChartColors: any[] = [
-        {
-            backgroundColor1: '#487E9F',
-        },
-
-        {
-            backgroundColor1: '#DA7B38',
-        },
-
-        {
-            backgroundColor1: '#21782E',
-        },
-
-        {
-            backgroundColor1: '#FF00B2',
-        },
-
-        {
-            backgroundColor1: '#FF0000',
-        },
-
-        {
-            backgroundColor1: '#FF00B2',
-        },
-
-        {
-            backgroundColor1: '#4D3AAF',
-        },
-
-        {
-            backgroundColor1: '#956027',
-        },
-
-        {
-            backgroundColor1: '#540000',
-        },
-
-        {
-            backgroundColor1: '#FF6270',
-        },
-
-        {
-            backgroundColor1: '#41D900',
-        },
-    ]
+export class ChartColors {
+    public Color_AD: string = "#FF0F00";
+    public Color_AE: string = "#0D52D1";
+    public Color_AI: string = "#04D215";
+    public Color_AR: string = "#FF6600";
+    public Color_ID: string = "#CD0D74";
+    public Color_IE: string = "#2A0CD0";
+    public Color_II: string = "#FF9E01";
+    public Color_IR: string = "#FCD202";
+    public Color_OD: string = "#F8FF01";
+    public Color_OE: string = "#B0DE09";
+    public Color_OI: string = "#0D8ECF";
+    public Color_OR: string = "#520000";
 }
