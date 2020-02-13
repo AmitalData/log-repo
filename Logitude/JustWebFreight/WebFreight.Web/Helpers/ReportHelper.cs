@@ -232,7 +232,7 @@ namespace WebFreight.Web.Helpers
    
        private bool IsUsingFileStreamAndTiffImage(int tenant)
         {
-            return (tenant == 1526 || tenant == 2) ? true : false;
+            return (tenant == 1526 || tenant == 1) ? true : false;
         }
 
         public string GetSpecificPageFromStimulReportAsBase64(ReportFliter reportFliter)
