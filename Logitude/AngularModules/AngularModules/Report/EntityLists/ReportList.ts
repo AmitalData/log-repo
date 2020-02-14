@@ -1,4 +1,4 @@
-﻿export class ReportList {
+export class ReportList {
 
     Id: string;
     Tenant: number;
@@ -15,5 +15,5 @@
     InActive: boolean;
     FilterHtmlComponentUrl: string;
     DefaultTemplateId: string;
+    AvailableForScheduling: boolean;
 }
- 

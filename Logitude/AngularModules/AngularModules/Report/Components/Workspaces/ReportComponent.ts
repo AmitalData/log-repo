@@ -19,11 +19,13 @@ import {ReportsTemplateListExtendedService} from '../../../Common/Services/Exten
 export class ReportComponent {
     public ItemsSource: ReportsGrpupClass[] = [];
     public ItemsSourceTemp: ReportsGrpupClass[] = [];
+    public IsAvailableForScheduling: boolean = false;
     reportsTemplateListExtendedService: ReportsTemplateListExtendedService;
     IsViewReport: boolean = false;
     showLocal: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityResourceService: EntityResourceService) {
+        this.IsAvailableForScheduling = FeatureLocator.HasFeaturePermession("Report", "ReportsScheduler");
         this.reportsTemplateListExtendedService = new ReportsTemplateListExtendedService();
         this.LoadData();
         this.showLocal = !SessionLocator.LoggedUserPM.DontShowLocal;
@@ -239,6 +241,10 @@ export class ReportComponent {
     SearchTextChanged(text: string) {         
         this.mySearchText = text;
         this.FillTempItemsSource();
+    }
+
+    onReportSchedulerClick(Report: ReportList) {
+
     }
 }
 export class ReportsGrpupClass {
