@@ -7790,6 +7790,8 @@ namespace WebFreight.Web.ReportsWebServices
                         string ref2 = "";
                         string ref3 = "";
                         string ref4 = "";
+                        string packagesNotes = "";
+                        string packagesQuantity = "";
 
                         foreach (ShipmentPackage package in packages)
                         {
@@ -7846,6 +7848,24 @@ namespace WebFreight.Web.ReportsWebServices
 
                                 ref4 = ref4 + package.Reference4;
                             }
+
+                            if (!string.IsNullOrEmpty(package.Notes))
+                            {
+                                if (!string.IsNullOrEmpty(packagesNotes))
+                                {
+                                    packagesNotes = packagesNotes + Environment.NewLine;
+                                }
+                                packagesNotes = packagesNotes + package.Notes;
+                            }
+
+                            if (package.Quantity != null)
+                            {
+                                if (!string.IsNullOrEmpty(packagesQuantity))
+                                {
+                                    packagesQuantity = packagesQuantity + Environment.NewLine;
+                                }
+                                packagesQuantity = packagesQuantity + package.Quantity.ToString();
+                            }
                         }
 
                         flightBookingRecord.Dimensions = dim;
@@ -7853,6 +7873,8 @@ namespace WebFreight.Web.ReportsWebServices
                         flightBookingRecord.PackagesRef2 = ref2;
                         flightBookingRecord.PackagesRef3 = ref3;
                         flightBookingRecord.PackagesRef4 = ref4;
+                        flightBookingRecord.PackagesQuantity = packagesQuantity;
+                        flightBookingRecord.PackagesNotes = packagesNotes;
                     }
 
                     totalData.FlightBookingRecordList.Add(flightBookingRecord);
