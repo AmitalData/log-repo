@@ -57,22 +57,32 @@
             <tr>
               <td>
                 <table>
-                  <tr>
+                    <tr>
+                        <!-- from date -->
+                        <td style="width:10px"></td>
+                        <td style="width: 75px;">
+                            {{'Accounting.O.FromDate' | TextCodeTranslationPipe}}
+                        </td>
 
-                    <!-- ToDate -->
-                    <td style="width:10px"></td>
-                    <td style="width: 70px;">
-                      {{'Accounting.General.O.ToDate' | TextCodeTranslationPipe}}
-                    </td>
+                        <td style="width:150px;">
+                            <LogDatePicker [ObjectFieldName]="'FromDate'" [NoObjectField]="true" [DataContext]="DataContext"></LogDatePicker>
+                        </td>
 
-                    <td style="width:150px;">
-                      <LogDatePicker [ObjectFieldName]="'ToDate'" [NoObjectField]="true" [DataContext]="DataContext"></LogDatePicker>
-                    </td>
+                        <td style="width:20px;"></td>
+                        <!-- ToDate -->
+                        <td style="width:10px"></td>
+                        <td style="width: 70px;">
+                            {{'Accounting.General.O.ToDate' | TextCodeTranslationPipe}}
+                        </td>
 
-                    <td></td>
+                        <td style="width:150px;">
+                            <LogDatePicker [ObjectFieldName]="'ToDate'" [NoObjectField]="true" [DataContext]="DataContext"></LogDatePicker>
+                        </td>
+
+                        <td></td>
 
 
-                  </tr>
+                    </tr>
                 </table>
               </td>
 
