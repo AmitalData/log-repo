@@ -55,11 +55,11 @@ export class EditProductPotentialComponent extends BaseComponent {
                 if (list != null) {
                     this.myCurrencyCode = list.Code;
                 }
-                this.CustomerProductionRevenueHeader = TextCodeTranslator.Translate("CustomerProductLocation.F.Revenue") + " (" + this.myCurrencyCode + ")";
+                this.CustomerProductionRevenueHeader = TextCodeTranslator.Translate("CustomerProductLocation.F.PotentialRevenue") + " (" + this.myCurrencyCode + ")";
             });
         }
         else {
-            this.CustomerProductionRevenueHeader = TextCodeTranslator.Translate("CustomerProductLocation.F.Revenue");
+            this.CustomerProductionRevenueHeader = TextCodeTranslator.Translate("CustomerProductLocation.F.PotentialRevenue");
         }
     }
 
