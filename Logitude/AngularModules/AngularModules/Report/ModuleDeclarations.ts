@@ -1,5 +1,7 @@
 import { ReportComponent } from './Components/Workspaces/ReportComponent';
 import { MainReportsWorkspace } from './Components/Workspaces/MainReportsWorkspace';
+import { MainReportSchedulerComponent } from './Components/Scheduler/MainReportSchedulerComponent';
+import { TaskReportSchedulerComponent } from './Components/Scheduler/TaskReportSchedulerComponent';
 import { BIReportComponent } from './Components/Workspaces/BIReportComponent';
 import { BIFolderReportComponent } from './Components/Workspaces/BIFolderReportComponent';
 import {ReportTemplateComponent} from './Components/ReportTemplateComponent';
@@ -87,6 +89,8 @@ import { VDKFilterComponent } from './Components/FilterReportComponent/VDKFilter
 export const Components =
     [
         MainReportsWorkspace,
+        MainReportSchedulerComponent,
+        TaskReportSchedulerComponent,
         ReportComponent,
         BIReportComponent,
         BIFolderReportComponent,
@@ -162,6 +166,8 @@ export class ModuleDeclarations {
 
         switch (name) {
             case "MainReportsWorkspace": { myResult = MainReportsWorkspace; break; }
+            case "MainReportSchedulerComponent": { myResult = MainReportSchedulerComponent; break; }
+            case "TaskReportSchedulerComponent": { myResult = TaskReportSchedulerComponent; break; }
             case "ReportComponent": { myResult = ReportComponent; break; }
             case "BIReportComponent": { myResult = BIReportComponent; break; }
             case "BIFolderReportComponent": { myResult = BIFolderReportComponent; break; }

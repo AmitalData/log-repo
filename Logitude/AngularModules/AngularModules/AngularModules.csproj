@@ -1170,6 +1170,8 @@
     <Content Include="Report\Components\FiltersComponent\Operational\ShipmentsEventsListFilterComponent.html" />
     <Content Include="Report\Components\FiltersComponent\Operational\UnicargoExportReportFilterComponent.html" />
     <Content Include="Report\Components\FiltersComponent\Operational\VehiclesFilterComponent.html" />
+    <Content Include="Report\Components\Scheduler\MainReportSchedulerComponent.html" />
+    <Content Include="Report\Components\Scheduler\TaskReportSchedulerComponent.html" />
     <Content Include="Report\Components\Workspaces\BIFolderReportComponent.html" />
     <Content Include="Report\Components\Workspaces\BIReportComponent.html" />
     <Content Include="Report\Components\Workspaces\MainReportsWorkspace.html" />
@@ -3645,6 +3647,8 @@
     <TypeScriptCompile Include="Report\Components\FiltersComponent\Operational\ShipmentsEventsListFilterComponent.ts" />
     <TypeScriptCompile Include="Report\Components\FiltersComponent\Operational\UnicargoExportReportFilterComponent.ts" />
     <TypeScriptCompile Include="Report\Components\FiltersComponent\Operational\VehiclesFilterComponent.ts" />
+    <TypeScriptCompile Include="Report\Components\Scheduler\MainReportSchedulerComponent.ts" />
+    <TypeScriptCompile Include="Report\Components\Scheduler\TaskReportSchedulerComponent.ts" />
     <TypeScriptCompile Include="Report\Components\Workspaces\BIFolderReportComponent.ts" />
     <TypeScriptCompile Include="Report\Components\Workspaces\BIReportComponent.ts" />
     <TypeScriptCompile Include="Report\Components\Workspaces\MainReportsWorkspace.ts" />

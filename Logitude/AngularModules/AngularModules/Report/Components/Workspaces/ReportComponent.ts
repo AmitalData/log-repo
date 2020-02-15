@@ -10,6 +10,7 @@ import {ReportGroupService} from '../../../Common/Services/ExtendedLists/ReportG
 import {ServiceLocator} from '../../../Infrastructure/Locators/ServiceLocator';
 import {AppTool} from '../../../Infrastructure/Tools';
 import {ReportsTemplateListExtendedService} from '../../../Common/Services/ExtendedLists/ReportsTemplateListExtendedService';
+import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 
 @Component({
     moduleId: './Report/Components/Workspaces/',
@@ -244,7 +245,16 @@ export class ReportComponent {
     }
 
     onReportSchedulerClick(Report: ReportList) {
+        this.entityResourceService.getEntityResourceByTableName("TasksScheduler", 0).subscribe(response => {
 
+            var logWindow = new LogitudeWindow();
+            logWindow.Width = 1200;
+            logWindow.Height = 1000;
+
+            logWindow.Title = "Report Scheduler";
+
+            logWindow.Show('./Report/Components/Scheduler/MainReportSchedulerComponent');
+        });
     }
 }
 export class ReportsGrpupClass {
