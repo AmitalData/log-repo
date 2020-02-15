@@ -71,7 +71,13 @@ export class RevenueExpenseFilterComponent extends BaseComponent{
             this.useBalanceFilter = value;
         }
     }
-
+ private fromDate: Date;
+  public get FromDate() { return this.fromDate; }
+  public set FromDate(value: Date) {
+    if (this.fromDate != value) {
+      this.fromDate = value;
+    }
+  }
   public FilterSelectedValue: string = 'GLAccount';
   FilterItemClicked(itemValue: string) {
     if (this.FilterSelectedValue != itemValue) {
