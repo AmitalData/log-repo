@@ -2629,7 +2629,7 @@
         DefaultText="&quot;Return To Queue&quot;"
         MenuButtonType="&quot;menuitem&quot;"
         IndexOrder="2"
-        IsPackagable="false"
+        IsPackagable="true"
         TextCodeCode="&quot;ApiLogs.B.ReturnToQueue&quot;" />
     </MenuButton>
   </MenuButtons>
