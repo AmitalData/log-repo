@@ -262,7 +262,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                     }
                     else if (value1 == "NoDate" || value1 == "No Date") {
                         value1 = "NoDate";
-                        filterOperator = "NoDate";
+                        filterOperator = "Equals";
                     }
                 }
               var field = window.ObjectFields.filter(a => a.FieldCode == filter.ObjectFieldCode)[0];
@@ -511,7 +511,7 @@ export class ListComponent implements OnInit, AfterViewInit {
             if (this.AdvanceFilters.AdditionalFilters.filter(a => a.FieldName == filters.FieldName).length > 0) {
                 this.AdvanceFilters.AdditionalFilters = this.AdvanceFilters.AdditionalFilters.filter(a => a.FieldName != filters.FieldName);
             }
-            this.AdvanceFilters.addAdditionalFilter(filters.FieldName, null, null, null, "NoDate", filters.ObjectField.IsCustomFilter, filters.ObjectField.DisplayInList, filters.ObjectField.IsCustom, filters.ObjectField.DataTypeCode);
+            this.AdvanceFilters.addAdditionalFilter(filters.FieldName, null, null, null, "Equals", filters.ObjectField.IsCustomFilter, filters.ObjectField.DisplayInList, filters.ObjectField.IsCustom, filters.ObjectField.DataTypeCode);
 
         }
         else if (!AppTool.IsNullOrEmpty(filters.MyName)) {
@@ -1208,7 +1208,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                         }
                         else if (value1 == "NoDate" || value1 == "No Date") {
                             value1 = "NoDate";
-                            filterOperator = "NoDate";
+                            filterOperator = "Equals";
                         }
                     }
                     var field = window.ObjectFields.filter(a => a.FieldCode == filter.ObjectFieldCode)[0];
@@ -1424,7 +1424,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                         }
                         else if (value1 == "NoDate" || value1 == "No Date") {
                             value1 = "NoDate";
-                            filterOperator = "NoDate";
+                            filterOperator = "Equals";
                         }
                     }
                     var field = window.ObjectFields.filter(a => a.FieldCode == filter.ObjectFieldCode)[0];
