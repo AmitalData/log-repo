@@ -2170,7 +2170,16 @@ namespace MeatadataGeneratorTool
                 try
                 {
                     //doc.Save(dxmlFilePath);
-                    FileStream fileStream = new FileStream(dxmlFilePath, FileMode.Truncate, FileAccess.Write);
+                    FileStream fileStream;
+                    if (File.Exists(dxmlFilePath))
+                    {
+                        fileStream = new FileStream(dxmlFilePath, FileMode.Truncate, FileAccess.Write);
+                    }
+                    else
+                    {
+                        fileStream = new FileStream(dxmlFilePath, FileMode.CreateNew, FileAccess.Write);
+                    }
+
                     XmlWriterSettings xmlWriterSettings = new XmlWriterSettings() { Indent = true, NewLineOnAttributes = true, OmitXmlDeclaration = false, WriteEndDocumentOnClose = false };
                     XmlWriter xmlWriter = XmlWriter.Create(fileStream, xmlWriterSettings);
 
