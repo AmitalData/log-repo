@@ -1539,7 +1539,7 @@ namespace WebFreight.Web.Helpers
         {
             string tempFilePath = Path.Combine(Path.GetTempPath(), reportFliter.ReportKey + ".tiff");
             var fileStream = new FileStream(tempFilePath, FileMode.Create, FileAccess.Write);
-            report.ExportDocument(StiExportFormat.ImageTiff, fileStream, new StiTiffExportSettings() { PageRange = StiPagesRange.All , ImageResolution = 200});
+            report.ExportDocument(StiExportFormat.ImageTiff, fileStream, new StiTiffExportSettings() { PageRange = StiPagesRange.All});
             fileStream.Close();
             ReadFileFromStreamFileAndSaveOnStorgeByChunks(tempFilePath, reportFliter, "tiff");
         }
