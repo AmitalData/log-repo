@@ -184,6 +184,7 @@ namespace Logitude.DBMigrations.Models
             List<DXMLTable> dxmlTables = dxmlDefinitions.DXMLTables;
             List<DXMLView> dxmlViews = dxmlDefinitions.DXMLViews;
             List<DXMLProcedure> dxmlProcedures = dxmlDefinitions.DXMLProcedures;
+            List<DXMLTrigger> dxmlTriggers = dxmlDefinitions.DXMLTriggers;
 
             foreach (var dxmlTable in dxmlTables)
             {
@@ -291,6 +292,18 @@ namespace Logitude.DBMigrations.Models
                 if (!String.IsNullOrEmpty(procedureScript))
                 {
                     generatedScript = AppendToGeneratedScript(generatedScript, dxmlProcedure.ProcedureDefinition.DBType, ReplaceScriptSemicolon(procedureScript));
+                }
+            }
+
+            foreach (var dxmlTrigger in dxmlTriggers)
+            {
+                Console.WriteLine("Generating Script For " + dxmlTrigger.DXMLFileName + " ...");
+
+                string triggerScript = GetScriptFromTriggerDefinition(dxmlTrigger.TriggerDefinition, dxmlTrigger.DXMLFileName);
+
+                if (!String.IsNullOrEmpty(triggerScript))
+                {
+                    generatedScript = AppendToGeneratedScript(generatedScript, dxmlTrigger.TriggerDefinition.DBType, ReplaceScriptSemicolon(triggerScript));
                 }
             }
 
@@ -604,6 +617,7 @@ namespace Logitude.DBMigrations.Models
             List<DXMLTable> dxmlTables = new List<DXMLTable>();
             List<DXMLView> dxmlViews = new List<DXMLView>();
             List<DXMLProcedure> dxmlProcedures = new List<DXMLProcedure>();
+            List<DXMLTrigger> dxmlTriggers = new List<DXMLTrigger>();
             bool checkDxmlHash = !IsArgumentProvided("-ignorehash");
 
             foreach (var dxmlFile in dxmlFiles)
@@ -656,6 +670,15 @@ namespace Logitude.DBMigrations.Models
                         }
                         dxmlProcedures.Add(dxmlProcedure);
                     }
+                    else if (dxmlString.EndsWith("</Trigger>"))
+                    {
+                        DXMLTrigger dxmlTrigger = CreateDXMLTrigger(dxmlString, dxmlFile);
+                        if (dxmlTrigger == null)
+                        {
+                            ExitTool("Error: Cannot Create Trigger Definition For " + Path.GetFileName(dxmlFile));
+                        }
+                        dxmlTriggers.Add(dxmlTrigger);
+                    }
                     else
                     {
                         ExitTool("Error: Cannot Create Class Definition For " + Path.GetFileName(dxmlFile));
@@ -667,7 +690,8 @@ namespace Logitude.DBMigrations.Models
             {
                 DXMLTables = dxmlTables,
                 DXMLViews = dxmlViews,
-                DXMLProcedures = dxmlProcedures
+                DXMLProcedures = dxmlProcedures,
+                DXMLTriggers = dxmlTriggers
             };
         }
 
@@ -742,6 +766,36 @@ namespace Logitude.DBMigrations.Models
             }
         }
 
+        private string GetScriptFromTriggerDefinition(TriggerDefinition triggerDefinition, string dxmlFileName)
+        {
+            return null;
+
+            string triggerScript = "-- Trigger Script From " + dxmlFileName + "\n";
+
+            if (DatabaseType.ToLower() == "oracle")
+            {
+                if (String.IsNullOrEmpty(triggerDefinition.OracleScript))
+                {
+                    return null;
+                }
+
+                string unescapedScript = UnescapeScript(triggerDefinition.OracleScript);
+                triggerScript += unescapedScript + (unescapedScript.EndsWith(";") ? null : ";") + "\n\n";
+                return triggerScript;
+            }
+            else
+            {
+                if (String.IsNullOrEmpty(triggerDefinition.SqlScript))
+                {
+                    return null;
+                }
+
+                triggerScript += "EXEC('IF (OBJECT_ID(''" + "[" + triggerDefinition.Schema + "].[" + triggerDefinition.Name + "]" + "'', ''TR'') IS NOT NULL) BEGIN DROP TRIGGER " + "[" + triggerDefinition.Schema + "].[" + triggerDefinition.Name + "]" + " END" + "');\n";
+                triggerScript += "EXEC('" + UnescapeScript(triggerDefinition.SqlScript).Replace("'", "''") + "');" + "\n\n";
+                return triggerScript;
+            }
+        }
+
         private DXMLTable CreateDXMLTable(string dxmlString, string dxmlFile)
         {
             try
@@ -811,6 +865,34 @@ namespace Logitude.DBMigrations.Models
                 };
 
                 return dxmlProcedure;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        private DXMLTrigger CreateDXMLTrigger(string dxmlString, string dxmlFile)
+        {
+            try
+            {
+                string sqlScriptFromXmlString = dxmlString.Split(new string[] { "<SqlScript>" }, StringSplitOptions.None)[1].Split(new string[] { "</SqlScript>" }, StringSplitOptions.None)[0];
+                string escapedSqlScript = SecurityElement.Escape(GetScriptFromCDataSection(sqlScriptFromXmlString)).Trim();
+
+                string oracleScriptFromXmlString = dxmlString.Split(new string[] { "<OracleScript>" }, StringSplitOptions.None)[1].Split(new string[] { "</OracleScript>" }, StringSplitOptions.None)[0];
+                string escapedOracleScript = SecurityElement.Escape(GetScriptFromCDataSection(oracleScriptFromXmlString)).Trim();
+
+                dxmlString = dxmlString.Split(new string[] { "<SqlScript>" }, StringSplitOptions.None)[0] + "<SqlScript>" + escapedSqlScript + "</SqlScript>" + "<OracleScript>" + escapedOracleScript + "</OracleScript>" + "</Trigger>";
+
+                TriggerDefinition dxmlTriggerDefinition = dxmlString.ParseXML<TriggerDefinition>();
+
+                DXMLTrigger dxmlTrigger = new DXMLTrigger
+                {
+                    DXMLFileName = Path.GetFileName(dxmlFile),
+                    TriggerDefinition = dxmlTriggerDefinition
+                };
+
+                return dxmlTrigger;
             }
             catch (Exception)
             {
