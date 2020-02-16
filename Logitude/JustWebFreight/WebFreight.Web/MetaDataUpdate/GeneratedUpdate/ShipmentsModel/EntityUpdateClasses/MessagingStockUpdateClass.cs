@@ -1158,9 +1158,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
-					  		
+               }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "StockType",
