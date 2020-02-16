@@ -29,9 +29,14 @@ namespace Logitude.BL.QuoteModel.EntityQueries.Charts
             dataSourceQuery =
                 (from d in context.Quotes
                  where d.Tenant == tenant
-                 && !d.IsClosed
+                 //&& !d.IsClosed
                  && !d.IsCancelled
                  select d);
+
+            if(quoteDashboardArgs.ChartCode != "QCV")
+            {
+                dataSourceQuery = dataSourceQuery.Where(d => !d.IsClosed);
+            }
 
             QuoteBusinessUnitFilter filter = new QuoteBusinessUnitFilter(tenant);
             dataSourceQuery = filter.RunFilter(dataSourceQuery);
@@ -107,7 +112,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries.Charts
             else if (chartCode == "QCV")
             {
                 QuoteConversionQuery myQuery = new QuoteConversionQuery();
-                result = myQuery.FilterQuotesBySalesman(dataSourceQuery);
+                result = myQuery.FilterQuotesByProductType(dataSourceQuery);
             }
 
             else if (chartCode == "TFS")

@@ -1,13 +1,3 @@
-<style type="text/css">
-    .SquareIcon {
-        width: 15px;
-        height: 15px;
-        line-height: 10px;
-        -webkit-border-radius: 2px;
-        -moz-border-radius: 2px;
-        border-radius: 2px;
-    }
-</style>
 
 <table>
     <tr>
@@ -18,54 +8,32 @@
                         <table>
                             <tr>
                                 <td>
-                                    <label>Quote Conversion by Salesman/Product</label>
+                                    <label>Quote Conversion by Product</label>
                                 </td>
                             </tr>
                         </table>
                     </SectionHead>
 
                     <SectionBody>
-                        <div class="MediaFill" [id]="ChartID" (mousedown)="OnMyMouseDown($event,'null')">
-                            <div class="MediaFill">
-                                <table>
-                                    <tr style="height:100%;width:100%">
-                                        <td>
-                                            <div [attr.id]="QuoteConversionId" style="height:95%;width:100%" (click)="BarClicking()"></div>
-                                        </td>
+                        <table>
+                            <tr style="height:1px">
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <div style="cursor:pointer;" [attr.id]="QuoteConversionId" class="MediaFill" (click)="BarClicking()"></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
 
-                                        <!--<td style="width:60px;">
-                                            <div class="MediaFill">
-                                                <ScrollViewer [Small]="true">
-                                                    <div [attr.id]="legenddiv" style="width:100%;"></div>
-                                                </ScrollViewer>
-                                            </div>
-                                        </td>-->
-                                    </tr>
-
-                                    <tr style="height:25px;">
-                                        <td>
-                                            <table>
-                                                <tr>
-                                                    <td style="width:20px;">
-                                                        <div>
-                                                        </div>
-                                                    </td>
-
-                                                    <td style="width: 60px; vertical-align:middle;" *ngFor="let item of ProductTypes">
-                                                        <div class="SquareIcon" style="display:inline-block;" [ngStyle]="{background: chartColrs['Color_' + item]}"></div>
-                                                        <span style="width:45px; max-width:45px; font-size: 11px; color: #282E30; text-indent: 15px;" class="TextTrimming">{{item}}</span>
-                                                    </td>
-
-                                                    <td>
-                                                        <div></div>
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </td>                                        
-                                    </tr>
-                                </table>
-                            </div>
-                        </div>
+                            <tr *ngIf="NoQuotes">
+                                <td class="NoDataText">
+                                    No Quotes
+                                </td>
+                            </tr>
+                        </table>
                     </SectionBody>
                 </SectionBox>
             </div>
