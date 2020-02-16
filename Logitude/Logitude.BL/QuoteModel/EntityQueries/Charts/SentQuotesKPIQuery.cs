@@ -23,40 +23,42 @@ namespace Logitude.BL.QuoteModel.EntityQueries.Charts
                              }).ToList();
 
 
+            var totalQuotesCount = quoteList.Count() == 0 ? 1: quoteList.Count(); 
+
             quoteChartist_Labels.Add(new ChartingDataClass()
             {
                 StringProperty = "< 1d",
-                IntegerProperty = quoteList.Where(a=>a.Period < 1).Count() * 100 / quoteList.Count(),
+                IntegerProperty = quoteList.Where(a=>a.Period < 1).Count() * 100 / totalQuotesCount,
             });
 
             quoteChartist_Labels.Add(new ChartingDataClass()
             {
                 StringProperty = "1-2 d",
-                IntegerProperty = quoteList.Where(a => a.Period >= 1 && a.Period <= 2).Count() * 100 / quoteList.Count(),
+                IntegerProperty = quoteList.Where(a => a.Period >= 1 && a.Period <= 2).Count() * 100 / totalQuotesCount,
             });
 
             quoteChartist_Labels.Add(new ChartingDataClass()
             {
                 StringProperty = "3-4 d",
-                IntegerProperty = quoteList.Where(a => a.Period >= 3 && a.Period <= 4).Count() * 100 / quoteList.Count(),
+                IntegerProperty = quoteList.Where(a => a.Period >= 3 && a.Period <= 4).Count() * 100 / totalQuotesCount,
             });
 
             quoteChartist_Labels.Add(new ChartingDataClass()
             {
                 StringProperty = "5-6 d",
-                IntegerProperty = quoteList.Where(a => a.Period >= 5 && a.Period <= 6).Count() * 100 / quoteList.Count(),
+                IntegerProperty = quoteList.Where(a => a.Period >= 5 && a.Period <= 6).Count() * 100 / totalQuotesCount,
             });
 
             quoteChartist_Labels.Add(new ChartingDataClass()
             {
                 StringProperty = "7-8 d",
-                IntegerProperty = quoteList.Where(a => a.Period >= 7 && a.Period <= 8).Count() * 100 / quoteList.Count(),
+                IntegerProperty = quoteList.Where(a => a.Period >= 7 && a.Period <= 8).Count() * 100 / totalQuotesCount,
             });
 
             quoteChartist_Labels.Add(new ChartingDataClass()
             {
                 StringProperty = "9+ d",
-                IntegerProperty = quoteList.Where(a => a.Period >= 9).Count() * 100 / quoteList.Count(),
+                IntegerProperty = quoteList.Where(a => a.Period >= 9).Count() * 100 / totalQuotesCount,
             });
 
             quoteChartListResult = (from a in quoteChartist_Labels
