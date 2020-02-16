@@ -476,6 +476,11 @@ export class UserPM {
     public set AdditionalPackagesOnly(newValue: boolean) { if (this.additionalPackagesOnly != newValue) { this.additionalPackagesOnly = newValue; this.MarkAsDirty("AdditionalPackagesOnly"); } }
        
 	 
+    private layoutDirection: string;
+    public get LayoutDirection() { return this.layoutDirection; }
+    public set LayoutDirection(newValue: string) { if (this.layoutDirection != newValue) { this.layoutDirection = newValue; this.MarkAsDirty("LayoutDirection"); } }
+       
+	 
 
     public OldEntityPM: UserPM;
 		

@@ -69,7 +69,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
 
             this.Property(t => t.ShowLogBoxToolTip).IsRequired();
             this.Property(t => t.UserRoles).HasMaxLength(400).IsUnicode(false);
-
+            Property(t => t.LayoutDirection).HasMaxLength(3).IsUnicode(false);
             // Table & Column Mappings
             this.ToTable("Users");
             this.Property(t => t.Tenant).HasColumnName("Tenant");
@@ -98,7 +98,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.ShowLocalNameInLOV).HasColumnName("ShowLocalNameInLOV");
             this.Property(t => t.UserRoles).HasColumnName("UserRoles");
             this.Property(t => t.AdditionalPackagesOnly).HasColumnName("AdditionalPackagesOnly");
-
+            this.Property(t => t.LayoutDirection).HasColumnName("LayoutDirection");
             //#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")

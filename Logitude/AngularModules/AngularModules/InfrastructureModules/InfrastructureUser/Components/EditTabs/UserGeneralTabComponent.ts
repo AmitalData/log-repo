@@ -30,7 +30,10 @@ export class UserGeneralTabComponent extends BaseComponent implements OnDestroy 
         this.BuildTechnologyList();
         this.SetUIProperties();
         this.Listen();
-        this.CheckSecurityPolicySettingToShowPhone();        
+        this.CheckSecurityPolicySettingToShowPhone();
+        this.BuildLayoutDirectionList();
+
+        this.SelectedDirection = this.EntityPM.LayoutDirection == 'ltr' ? this.LayoutDirections[0] : this.LayoutDirections[1];
     }
 
     private SaveCompletedEvent: any = null;
@@ -163,7 +166,22 @@ export class UserGeneralTabComponent extends BaseComponent implements OnDestroy 
         this.UIProperties.SetEnabled("IsShowContactDetailsInTheMobileApp", this.ObjectTableName, isEditingEnabled);
         this.UIProperties.SetEnabled("ShowLocalNameInLOV", this.ObjectTableName, isEditingEnabled);
     }
+    public LayoutDirections: CodeNameClass[];
+    BuildLayoutDirectionList() {
 
+        this.LayoutDirections = [];
+        this.LayoutDirections.push(new CodeNameClass("1", "LTR"));
+        this.LayoutDirections.push(new CodeNameClass("2", "RTL"));
+    }
+
+    private selectedDirection: CodeNameClass;
+    get SelectedDirection() { return this.selectedDirection; }
+    set SelectedDirection(value: CodeNameClass) {
+        if (this.selectedDirection != value) {
+            this.selectedDirection = value;
+            this.EntityPM.LayoutDirection = value.Name.toLowerCase();
+        }
+    }
     public get Email() { return this.EntityPM.Email; }
     public set Email(value: string) {
         if (this.EntityPM.Email != value) {
