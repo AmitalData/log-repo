@@ -124,14 +124,23 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.BankAccountId)
                 .HasMaxLength(15).IsUnicode(true);
 
+            this.Property(t => t.Field1).HasMaxLength(250).IsUnicode(true);
+            this.Property(t => t.Field2).HasMaxLength(250).IsUnicode(true);
+            this.Property(t => t.Field3).HasMaxLength(250).IsUnicode(true);
+            this.Property(t => t.Field4).HasMaxLength(250).IsUnicode(true);
+            this.Property(t => t.Field5).HasMaxLength(250).IsUnicode(true);
+            this.Property(t => t.Field6).HasMaxLength(250).IsUnicode(true);
+            this.Property(t => t.Field7).HasMaxLength(250).IsUnicode(true);
+            this.Property(t => t.Field8).HasMaxLength(250).IsUnicode(true);
+            this.Property(t => t.Field9).HasMaxLength(250).IsUnicode(true);
+            this.Property(t => t.Field10).HasMaxLength(250).IsUnicode(true);
 
 
-
-        //public string VendorBankAddress { get; set; }
-        //public string VendorBankName { get; set; }
-        //public string VendorBankAccountNumber { get; set; }
-        //public string VendorSwift { get; set; }
-        //public string VendorIBANNumber { get; set; }
+            //public string VendorBankAddress { get; set; }
+            //public string VendorBankName { get; set; }
+            //public string VendorBankAccountNumber { get; set; }
+            //public string VendorSwift { get; set; }
+            //public string VendorIBANNumber { get; set; }
 
 
             this.Property(t => t.VendorBankAddress)
@@ -203,6 +212,16 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.VendorBankAccountNumber).HasColumnName("VendorBankAccountNumber");
             this.Property(t => t.VendorSwift).HasColumnName("VendorSwift");
             this.Property(t => t.VendorIBANNumber).HasColumnName("VendorIBANNumber");
+            this.Property(t => t.Field1).HasColumnName("Field1");
+            this.Property(t => t.Field2).HasColumnName("Field2");
+            this.Property(t => t.Field3).HasColumnName("Field3");
+            this.Property(t => t.Field4).HasColumnName("Field4");
+            this.Property(t => t.Field5).HasColumnName("Field5");
+            this.Property(t => t.Field6).HasColumnName("Field6");
+            this.Property(t => t.Field7).HasColumnName("Field7");
+            this.Property(t => t.Field8).HasColumnName("Field8");
+            this.Property(t => t.Field9).HasColumnName("Field9");
+            this.Property(t => t.Field10).HasColumnName("Field10");
 
             //#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
