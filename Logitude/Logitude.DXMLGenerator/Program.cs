@@ -37,24 +37,25 @@ namespace Logitude.DXMLGenerator
             string globalConnectionString = ConfigurationManager.AppSettings["GlobalConnectionString"];
             string mainConnectionString = ConfigurationManager.AppSettings["MainConnectionString"];
             string systemLogsConnectionString = ConfigurationManager.AppSettings["SystemLogsConnectionString"];
+            bool includeCustoms = ConfigurationManager.AppSettings["IncludeCustoms"].ToLower() == "true";
 
 
             Console.WriteLine("Generate DXML Files From Global Database ...\n");
-            DXMLFilesGenerator globalDBGenerator = new DXMLFilesGenerator(globalConnectionString, "GlobalErrors.txt");
+            DXMLFilesGenerator globalDBGenerator = new DXMLFilesGenerator(globalConnectionString, "GlobalErrors.txt", includeCustoms);
             globalDBGenerator.GenerateDXMLFiles();
-            Console.WriteLine("\n\n\n");
+            Console.WriteLine("\n\n");
 
 
             Console.WriteLine("Generate DXML Files From Main Database ...\n");
-            DXMLFilesGenerator mainDBGenerator = new DXMLFilesGenerator(mainConnectionString, "MainErrors.txt");
+            DXMLFilesGenerator mainDBGenerator = new DXMLFilesGenerator(mainConnectionString, "MainErrors.txt", includeCustoms);
             mainDBGenerator.GenerateDXMLFiles();
-            Console.WriteLine("\n\n\n");
+            Console.WriteLine("\n\n");
 
 
             Console.WriteLine("Generate DXML Files From SystemLogs Database ...\n");
-            DXMLFilesGenerator systemLogsDBGenerator = new DXMLFilesGenerator(systemLogsConnectionString, "SystemLogsErrors.txt");
+            DXMLFilesGenerator systemLogsDBGenerator = new DXMLFilesGenerator(systemLogsConnectionString, "SystemLogsErrors.txt", includeCustoms);
             systemLogsDBGenerator.GenerateDXMLFiles();
-            Console.WriteLine("\n\n\n");
+            Console.WriteLine("\n\n");
         }
     }
 }

@@ -3592,8 +3592,6 @@
   <Index
     Columns="QuoteId" />
   <Index
-    Columns="AutomaticLastUpdateDate" />
-  <Index
     Columns="Tenant,ShipmentNumber" />
   <Index
     Columns="ForwardingPartnerId" />

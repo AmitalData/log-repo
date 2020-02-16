@@ -17,6 +17,7 @@ namespace Logitude.DXMLGenerator.Models
 
         private readonly string ConnectionString;
         private readonly string ErrorsFileName;
+        private readonly bool IncludeCustoms;
 
         private List<string> ExcludedTables;
         private List<string> ExcludedTablesNames;
@@ -28,10 +29,11 @@ namespace Logitude.DXMLGenerator.Models
         private List<Index> Indexes;
         private List<UniqueConstraint> UniqueConstraints;
 
-        public DXMLFilesGenerator(string connectionString, string errorsFileName)
+        public DXMLFilesGenerator(string connectionString, string errorsFileName, bool includeCustoms)
         {
             ConnectionString = connectionString;
             ErrorsFileName = errorsFileName;
+            IncludeCustoms = includeCustoms;
             BuildExcludedTablesList();
             ReadColumnsDefaultValues();
             ReadIndexes();
@@ -81,7 +83,9 @@ namespace Logitude.DXMLGenerator.Models
 
         private List<DBTable> GetTablesFromDB()
         {
-            string queryString = @"SELECT TABLE_CATALOG, TABLE_SCHEMA, TABLE_NAME FROM INFORMATION_SCHEMA.TABLES";
+            string queryCondition = IncludeCustoms ? null : " WHERE TABLE_SCHEMA = 'dbo'";
+
+            string queryString = @"SELECT TABLE_CATALOG, TABLE_SCHEMA, TABLE_NAME FROM INFORMATION_SCHEMA.TABLES" + queryCondition;
 
             SqlDataReader reader = null;
             SqlConnection connection = new SqlConnection(ConnectionString);
@@ -98,7 +102,7 @@ namespace Logitude.DXMLGenerator.Models
                 {
                     string tableName = reader["TABLE_NAME"].ToString();
 
-                    if (tableName != "__MigrationHistory" && tableName == "Shipments")
+                    if (tableName != "__MigrationHistory")
                     {
                         string schema = reader["TABLE_SCHEMA"].ToString();
                         string dbName = reader["TABLE_CATALOG"].ToString();
@@ -202,15 +206,35 @@ namespace Logitude.DXMLGenerator.Models
                 reader.Close();
                 connection.Close();
 
+                List<string> tableColumnsNames = columnsDefinitions.Select(c => c.Name).ToList();
+
+                string tableDBType = GetDatabaseType(table.DBName);
+                List<RelationDefinition> tableRelations = GetTableRelations(table.Name);
+                List<IndexDefinition> tableIndexes = GetTableIndexes(table.Name).Where(i => !tableRelations.Select(r => r.ForeignKeyColumn).Contains(i.Columns)).ToList();
+
+                List<IndexDefinition> indexesWithWrongColumns = tableIndexes
+                    .Where(i => (!tableColumnsNames.Contains(i.Columns) && !i.Columns.Contains(",")) || (i.Columns.Split(',')
+                    .Where(cc => tableColumnsNames.All(c => c != cc)).Any() && i.Columns.Contains(","))).ToList();
+
+                List<IndexDefinition> indexesWithWrongInclude = tableIndexes
+                    .Where(i => (i.Include != null && !tableColumnsNames.Contains(i.Include) && !i.Include.Contains(",")) || (i.Include != null && i.Include.Split(',')
+                    .Where(cc => tableColumnsNames.All(c => c != cc)).Any() && i.Include.Contains(","))).ToList();
+
+                List<IndexDefinition> wrongIndexes = indexesWithWrongColumns.Concat(indexesWithWrongInclude).ToList();
+
+                tableIndexes = tableIndexes.Where(i => !wrongIndexes.Select(ii => ii.Columns).Contains(i.Columns)).ToList();
+
+                List<UniqueConstraintDefinition> tableUniqueConstraints = GetTableUniqueConstraints(table.Name);
+
                 tableDefinition = new TableDefinition
                 {
                     Name = table.Name,
                     Schema = table.Schema,
-                    DBType = GetDatabaseType(table.DBName),
+                    DBType = tableDBType,
                     Columns = columnsDefinitions,
-                    Relations = GetTableRelations(table.Name),
-                    Indexes = GetTableIndexes(table.Name),
-                    UniqueConstraints = GetTableUniqueConstraints(table.Name)
+                    Relations = tableRelations,
+                    Indexes = tableIndexes,
+                    UniqueConstraints = tableUniqueConstraints
                 };
             }
             catch (Exception)
