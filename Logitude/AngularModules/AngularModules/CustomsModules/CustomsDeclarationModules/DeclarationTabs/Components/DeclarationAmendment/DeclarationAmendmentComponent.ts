@@ -154,9 +154,9 @@ export class DeclarationAmendmentComponent extends BaseComponent implements OnIn
 
         this.columns.push({
 
-            FieldName: 'DeclarationNumberandVersionId',
+            FieldName: 'DeclarationVersionId',
             DataTypeCode: 'String',//'Number',
-            Display: TextCodeTranslator.Translate("Customs.Declaration.F.DeclarationNumberandVersionId"),
+            Display: TextCodeTranslator.Translate("Customs.Declaration.F.VersionId"),
             Styles: { width: '120px' },
             IsCustomTemplate: true
             , ServerSideSortable: true,
