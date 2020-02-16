@@ -37,6 +37,7 @@ using Unifreight.BL.EntityQueryServices;
 using ResponseError = UnifreightIIG.Common.MessageLib.ID.ResponseError;
 using DeclarationGoodsShipment = UnifreightIIG.Common.MessageLib.ID.DeclarationGoodsShipment;
 using DeclarationGoodsShipmentCustomsValuation = UnifreightIIG.Common.MessageLib.ID.DeclarationGoodsShipmentCustomsValuation;
+using UnifreightIIG.Common.MessageLib.Ransom;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -58,6 +59,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             string error = "";
             var dec = new UnifreightIIG.Common.ImportDeclarationServiceReference.Declaration();
 
+            bool fromMehes = false;
             if (customResponse.Response.Declaration != null && customResponse.Response.Declaration.ID != null && customResponse.Response.Declaration.ID.Value != null)
             {
  
@@ -92,8 +94,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         //שדה AmendmentCorrectedByUserId=MEHES
                         //  AmendmentissueDate =< issueDateTime
 
+                        string id = myDeclarationQueryService.GetIdByDeclarationNumber(customResponse.Response.Declaration.ID.Value,requestParams.Tenant);
 
-                        _MyDeclarationPM = dF_NG_2754_MSG10004_ImportFixedDeclarationResponseService.MapResponseToDeclaration(CastDeclaration(customResponse.Response.Declaration), requestParams.Tenant, true, requestParams.AppicationId, out error, true);
+                        _MyDeclarationPM = dF_NG_2754_MSG10004_ImportFixedDeclarationResponseService.MapResponseToDeclaration(CastDeclaration(customResponse.Response.Declaration), requestParams.Tenant, true, id, out error, true);
+                        fromMehes = true;
                     }
 
 
@@ -120,6 +124,16 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                 //_currentDeclarationId = _MyDeclarationPM.AmendmentOriginalDeclartation;
                 //if (string.IsNullOrEmpty(_currentDeclarationId)) _currentDeclarationId = _MyDeclarationPM.Id;
+
+                string loggingUserId = "";
+                UserRepository userRepository = new UserRepository(_MyDeclarationPM.Tenant);
+                var user = userRepository.GetSingleUserByCode("MEHES", _MyDeclarationPM.Tenant, true);
+                if (user != null)
+                {
+                    loggingUserId = user.Id;
+                }
+
+
 
                 string key = ProcessLockTableUtil.Instance.GetKey4Declaration(_MyDeclarationPM.Id, requestParams.Tenant);
                 using (var disposableToken =
@@ -152,7 +166,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                     {
                                         case "1":
                                             
-                                        var declarationParent = myDeclarationQueryService.GetDeclarationNotAmendmentDontDisplayInList(_MyDeclarationPM.Id, _MyDeclarationPM.AmendmentOriginalDeclartation, requestParams.Tenant);
+                                        var declarationParent = myDeclarationQueryService.GetSingleDeclarationById(_MyDeclarationPM.AmendmentOriginalDeclartation, requestParams.Tenant);
 
                                         _MyDeclarationPM.AmendmentDontDisplayInList = false;
                                         _MyDeclarationPM.AmendmentStatus = "3";
@@ -182,7 +196,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                                     notes = null,
                                                     CommunicationLoggingEntityReference = _MyDeclarationPMOrg.DeclarationNumber,
                                                     EntityId = _MyDeclarationPM.AmendmentOriginalDeclartation,
-                                                    UserId = _MyDeclarationPM.CreatedByUserId,
+                                                    UserId = loggingUserId,
 
                                                     CommunicationSubject = "FU Status DMA from logitude ",
                                                     MyFUStatus = new AmitalEventTracerModel.FUStatus()
@@ -211,7 +225,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                                     notes = null,
                                                     CommunicationLoggingEntityReference = _MyDeclarationPMOrg.DeclarationNumber,
                                                     EntityId = _MyDeclarationPM.AmendmentOriginalDeclartation,
-                                                    UserId = _MyDeclarationPM.CreatedByUserId,
+                                                    UserId = loggingUserId,
 
                                                     CommunicationSubject = "FU Status DMD from logitude ",
                                                     MyFUStatus = new AmitalEventTracerModel.FUStatus()
@@ -243,7 +257,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                                     notes = null,
                                                     CommunicationLoggingEntityReference = _MyDeclarationPMOrg.DeclarationNumber,
                                                     EntityId = _MyDeclarationPM.AmendmentOriginalDeclartation,
-                                                    UserId = _MyDeclarationPM.CreatedByUserId,
+                                                    UserId = loggingUserId,
 
                                                     CommunicationSubject = "FU Status DMC from logitude ",
                                                     MyFUStatus = new AmitalEventTracerModel.FUStatus()
@@ -271,7 +285,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                         case "2":
                                             _MyDeclarationPM.AmendmentStatus = "6";
                                             _MyDeclarationPM.AmendmentDontDisplayInList = false;
-                                              declarationParent = myDeclarationQueryService.GetDeclarationNotAmendmentDontDisplayInList(_MyDeclarationPM.Id, _MyDeclarationPM.AmendmentOriginalDeclartation, requestParams.Tenant);
+                                              declarationParent = myDeclarationQueryService.GetSingleDeclarationById(_MyDeclarationPM.AmendmentOriginalDeclartation, requestParams.Tenant);
                                             declarationParent.AmendmentDontDisplayInList = true;
                                                 declarationParent.ChangeSetOp = ChangeSetOperation.Update;
                                                 myDeclarationUpdateService.Update(declarationParent, true);
@@ -283,7 +297,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                                     notes = null,
                                                     CommunicationLoggingEntityReference = _MyDeclarationPMOrg.DeclarationNumber,
                                                     EntityId = _MyDeclarationPM.AmendmentOriginalDeclartation,
-                                                    UserId = _MyDeclarationPM.CreatedByUserId,
+                                                    UserId = loggingUserId,
 
                                                     CommunicationSubject = "FU Status DMP from logitude ",
                                                     MyFUStatus = new AmitalEventTracerModel.FUStatus()
@@ -313,25 +327,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     }
                 }
 
-                    DF_NG_2754_MSG10004_ImportDeclarationResponseService dF_NG_2754_MSG10004_ImportDeclarationResponseService = new DF_NG_2754_MSG10004_ImportDeclarationResponseService();
-
-                    UnifreightIIG.Common.ImportDeclarationServiceReference.DF_NG_2754_MSG10004_ImportDeclarationResponse dec_2754 = new UnifreightIIG.Common.ImportDeclarationServiceReference.DF_NG_2754_MSG10004_ImportDeclarationResponse();
-                    dec_2754.Response = new UnifreightIIG.Common.ImportDeclarationServiceReference.Response();
-                    dec_2754.Response.Declaration = CastDeclaration(customResponse.Response.Declaration);
-                    dec_2754.Response.Status = CastStatus(customResponse.Response.Status);
-
-                    dec_2754.Response.Error = CastError(customResponse.Response.Error);
-
-
-                    GenericRequestParams requestParams_2754 = new GenericRequestParams
-                    {
-                        Tenant = _MyDeclarationPM.Tenant,
-                        AppicationId = _MyDeclarationPM.Id,
-                        ResponseName ="5117"
-                    };
-
-                    dF_NG_2754_MSG10004_ImportDeclarationResponseService.Update(dec_2754, requestParams_2754);
-
                     //UpdateDeclaration(customResponse.Response)
                  
 
@@ -340,16 +335,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     //{
                     //    this._MyDeclarationPM = myDeclarationQueryService.GetSingle(requestParams.AppicationId, true, false);
                     //}
-                    string loggingUserId = "";
-                    UserRepository userRepository = new UserRepository(_MyDeclarationPM.Tenant);
-                    var user = userRepository.GetSingleUserByCode("MEHES", _MyDeclarationPM.Tenant, true);
-                    if (user != null)
-                    {
-                        loggingUserId = user.Id;
-                    }
+              
 
                     _MyDeclarationPM.AmendmentCorrectedByUserId = loggingUserId;
                     _MyDeclarationPM.DeclarationStatusTypeCode = customResponse.Response.Status.NameCode.Value;
+                    //_MyDeclarationPM.VersionId = "1";
                     //var myUpdateEventContextTagModel = new EventContextTagModel()
                     //{
                     //    CallProccessID = EventContextTagModel.ProccessEnum.DF_NG_5117_ImportDeclerationAmendmentReplyResponseService,
@@ -433,7 +423,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
                     myDeclarationUpdateService.Update(this._MyDeclarationPM, true);
 
- 
+
 
 
                     this.MyResponseData.ApplicationID = requestParams.AppicationId;
@@ -481,6 +471,81 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         DF_MSG10040_CollateralRequestMsgResponseService.Update(ser, requestParams);
                     }
 
+                }
+
+
+                //if (!fromMehes)
+                //{
+                    DF_NG_2754_MSG10004_ImportDeclarationResponseService dF_NG_2754_MSG10004_ImportDeclarationResponseService = new DF_NG_2754_MSG10004_ImportDeclarationResponseService();
+
+                    UnifreightIIG.Common.ImportDeclarationServiceReference.DF_NG_2754_MSG10004_ImportDeclarationResponse dec_2754 = new UnifreightIIG.Common.ImportDeclarationServiceReference.DF_NG_2754_MSG10004_ImportDeclarationResponse();
+                    dec_2754.Response = new UnifreightIIG.Common.ImportDeclarationServiceReference.Response();
+                    dec_2754.Response.Declaration = CastDeclaration(customResponse.Response.Declaration);
+                    dec_2754.Response.Status = CastStatus(customResponse.Response.Status);
+
+               
+                if (customResponse.Response.Error != null)
+                    dec_2754.Response.Error = CastError(customResponse.Response.Error);
+
+
+                GenericRequestParams requestParams_2754 = new GenericRequestParams
+                {
+                    Tenant = _MyDeclarationPM.Tenant,
+                    AppicationId = _MyDeclarationPM.Id,
+                    ResponseName = "5117"
+                };
+
+                dF_NG_2754_MSG10004_ImportDeclarationResponseService.Update(dec_2754, requestParams_2754);
+ //}
+
+                if (customResponse.AmendmentDocumentDetails != null) // Create Document 
+                {
+                    LogMessagingUtil.Instance.AppendLine("ConstraintApprovalDecision: Create Document");
+                    //var headerXml = XmlGenericUtil<UnifreightIIG.Common.MessageLib.Constraint.RequestContentHeader>
+                    //                .SerializeObject(customResponse.);
+                    //var header = XmlGenericUtil<UnifreightIIG.Common.MessageLib.Ransom.RequestContentHeader>.DeSerializeObject(headerXml);
+
+                    foreach (var documentItem in customResponse.AmendmentDocumentDetails)
+                    {
+
+                        //Get Document Detail
+                        var documentXml = new UnifreightIIG.Common.MessageLib.Ransom.RequiredDocumentDetails();
+                        documentXml.documentID = documentItem.RequiredDocumentDetails.documentID;
+                        documentXml.remarks = documentItem.RequiredDocumentDetails.remarks;
+                        documentXml.requiredDocumentMessageType = documentItem.RequiredDocumentDetails.requiredDocumentMessageType;
+                        documentXml.typeID = documentItem.RequiredDocumentDetails.typeID.ToString();
+                        //Get Entity Details
+                        RequiredDocumentRequestParams documentRequestParams = new RequiredDocumentRequestParams();
+                        documentRequestParams.Tenant = requestParams.Tenant;
+                        documentRequestParams.ParentEntityCode = "Declaration";
+                        documentRequestParams.ParentEntityId = _MyDeclarationPM.Id;
+                     
+                        var listConnectedEntity = new List<UnifreightIIG.Common.MessageLib.Ransom.ConnectedEntity>();
+                        var entityXml = new UnifreightIIG.Common.MessageLib.Ransom.ConnectedEntity();
+                        entityXml.entityType = 1055;
+                    //    entityXml.entityIdKey1 = customResponse..LeadDocumentIDNum;
+                        listConnectedEntity.Add(entityXml);
+
+                        VAL_NG_8227_MSG_520_RequiredDocumentMessage myVAL_NG_8227_MSG_520_RequiredDocumentMessage = new VAL_NG_8227_MSG_520_RequiredDocumentMessage();
+                      //  myVAL_NG_8227_MSG_520_RequiredDocumentMessage.RequestContentHeader = header;
+                        myVAL_NG_8227_MSG_520_RequiredDocumentMessage.RequiredDocumentDetails = documentXml;
+
+                        myVAL_NG_8227_MSG_520_RequiredDocumentMessage.RelatedEntity = listConnectedEntity.ToArray();
+                        //if (customResponse.CollateralRequestMsg != null)
+                        //{
+                        //    var worker = new UnifreightIIG.Common.MessageLib.Ransom.Worker();
+                        //    worker.customsHouse = customResponse.ConstraintApprovalDecision.CollateralRequestMsg[0].Worker.customsHouse;
+                        //    worker.organizationUnitType = customResponse.ConstraintApprovalDecision.CollateralRequestMsg[0].Worker.organizationUnitType;
+                        //    worker.workerName = customResponse.ConstraintApprovalDecision.CollateralRequestMsg[0].Worker.workerName;
+                        //    myVAL_NG_8227_MSG_520_RequiredDocumentMessage.Worker = worker;
+                        //}
+                        var xml = XmlGenericUtil<UnifreightIIG.Common.MessageLib.Ransom.VAL_NG_8227_MSG_520_RequiredDocumentMessage>
+                            .SerializeObject(myVAL_NG_8227_MSG_520_RequiredDocumentMessage);
+
+                        var ser = XmlGenericUtil<UnifreightIIG.Common.MessageLib.Ransom.VAL_NG_8227_MSG_520_RequiredDocumentMessage>.DeSerializeObject(xml);
+                        var myVAL_NG_8227_MSG_520_RequiredDocumentMessageResponseService = new VAL_NG_8227_MSG_520_RequiredDocumentMessageResponseService();
+                        myVAL_NG_8227_MSG_520_RequiredDocumentMessageResponseService.Update(ser, documentRequestParams);
+                    }
                 }
 
 
