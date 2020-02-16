@@ -35,7 +35,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;dc11&quot;"
+  Code="&quot;6d3f&quot;"
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -6268,6 +6268,15 @@
       FeatureDefaultText="&quot;Journal Action Types&quot;"
       IsPackagable="true"
       IsOld="true"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;QPDB&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      FeatureTextCodeCode="&quot;General.Features.QPDB&quot;"
+      FeatureDefaultText="&quot;Quotes Performance Dashboard&quot;"
+      IsPackagable="true"
+      IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
   </AdditionalFeatures>
