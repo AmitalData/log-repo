@@ -832,20 +832,20 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
         }
         else {
             if (!this.IsMultiPackage) {
-                if (this.NumberOfUsers) {
+                //if (this.NumberOfUsers) {
                     this.TotalNumberOfUsers = this.NumberOfUsers;
-                }
+                //}
 
-                if (this.FreeUsers) {
+                //if (this.FreeUsers) {
                     this.TotalFreeUsers = this.FreeUsers;
-                }
+               // }
 
-                if (this.LicensePrice) {
+                //if (this.LicensePrice) {
                     this.PackagesTotalPrice = this.LicensePrice;
-                }
-                if (this.TotalPrice) {
+                //}
+                //if (this.TotalPrice) {
                     this.TotalPaymentamount = this.TotalPrice;
-                }
+               // }
             }
             else {
                 this.TotalPaymentamount = this.PackagesTotalTotalPrice;
