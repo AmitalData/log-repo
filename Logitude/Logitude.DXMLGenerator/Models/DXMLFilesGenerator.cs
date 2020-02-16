@@ -98,7 +98,7 @@ namespace Logitude.DXMLGenerator.Models
                 {
                     string tableName = reader["TABLE_NAME"].ToString();
 
-                    if (tableName != "__MigrationHistory")
+                    if (tableName != "__MigrationHistory" && tableName == "Shipments")
                     {
                         string schema = reader["TABLE_SCHEMA"].ToString();
                         string dbName = reader["TABLE_CATALOG"].ToString();
@@ -304,10 +304,23 @@ namespace Logitude.DXMLGenerator.Models
                     {
                         XmlSerializerNamespaces emptyNamespace = new XmlSerializerNamespaces(new[] { XmlQualifiedName.Empty });
                         XmlSerializer xmlSerializer = new XmlSerializer(typeof(TableDefinition));
-                        TextWriter textWriter = new StreamWriter(path);
-                        xmlSerializer.Serialize(textWriter, tableDefinition, emptyNamespace);
-                        textWriter.Close();
+                        FileStream fileStream = new FileStream(path, FileMode.OpenOrCreate, FileAccess.Write);
+                        XmlWriterSettings xmlWriterSettings = new XmlWriterSettings() { Indent = true, NewLineOnAttributes = true, OmitXmlDeclaration = false, WriteEndDocumentOnClose = false };
+                        XmlWriter xmlWriter = XmlWriter.Create(fileStream, xmlWriterSettings);
+
+                        xmlSerializer.Serialize(xmlWriter, tableDefinition, emptyNamespace);
+                        xmlWriter.Close();
+                        xmlWriter.Dispose();
+                        fileStream.Close();
+
                         GeneratedDXMLFilesCounter++;
+
+                        //XmlSerializerNamespaces emptyNamespace = new XmlSerializerNamespaces(new[] { XmlQualifiedName.Empty });
+                        //XmlSerializer xmlSerializer = new XmlSerializer(typeof(TableDefinition));
+                        //TextWriter textWriter = new StreamWriter(path);
+                        //xmlSerializer.Serialize(textWriter, tableDefinition, emptyNamespace);
+                        //textWriter.Close();
+                        //GeneratedDXMLFilesCounter++;
                     }
                     else
                     {
