@@ -232,7 +232,7 @@ namespace WebFreight.Web.Helpers
    
        private bool IsUsingFileStreamAndTiffImage(int tenant)
         {
-            return (tenant == 1526 || tenant == 2) ? true : false;
+            return (tenant == 1526 || tenant == 1) ? true : false;
         }
 
         public string GetSpecificPageFromStimulReportAsBase64(ReportFliter reportFliter)
@@ -1539,7 +1539,7 @@ namespace WebFreight.Web.Helpers
         {
             string tempFilePath = Path.Combine(Path.GetTempPath(), reportFliter.ReportKey + ".tiff");
             var fileStream = new FileStream(tempFilePath, FileMode.Create, FileAccess.Write);
-            report.ExportDocument(StiExportFormat.ImageTiff, fileStream, new StiTiffExportSettings() { PageRange = StiPagesRange.All , ImageResolution = 200});
+            report.ExportDocument(StiExportFormat.ImageTiff, fileStream, new StiTiffExportSettings() { PageRange = StiPagesRange.All});
             fileStream.Close();
             ReadFileFromStreamFileAndSaveOnStorgeByChunks(tempFilePath, reportFliter, "tiff");
         }
