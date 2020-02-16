@@ -32,36 +32,38 @@ namespace WarehouseData.Helper
         public List<TableClass> FillTable()
         {
             List<TableClass> tableNameLists = new List<TableClass>();
+            //DW
             tableNameLists.Add(new TableClass() { TableName = "DWHSetting", DBTableName = "DWHSettings", Dw_TableName = "dw_DWHSettings", KeyName = "Tenant", HasConstraint = true, HasNotSpecifiedValue = true });
             tableNameLists.Add(new TableClass() { TableName = "Address", DBTableName = "Addresses", Dw_TableName = "dw_Addresses", KeyName = "Id", HasConstraint = true, HasNotSpecifiedValue = true });
             tableNameLists.Add(new TableClass() { TableName = "Country", DBTableName = "Countries", Dw_TableName = "dw_Countries", KeyName = "Id", HasNotSpecifiedValue = true });
             tableNameLists.Add(new TableClass() { TableName = "State", DBTableName = "States", Dw_TableName = "dw_States", KeyName = "Id", HasNotSpecifiedValue = true });
-            tableNameLists.Add(new TableClass() { TableName = "PartnerType", DBTableName = "PartnerTypes", Dw_TableName = "dw_PartnerTypes", KeyName = "Id", HasNotSpecifiedValue = true });
+            tableNameLists.Add(new TableClass() { TableName = "PartnerType", IsCloseTable = true, DBTableName = "PartnerTypes", Dw_TableName = "dw_PartnerTypes", KeyName = "Id", HasNotSpecifiedValue = true });
             tableNameLists.Add(new TableClass() { TableName = "ObjectField", DBTableName = "ObjectFields", Dw_TableName = "dw_ObjectFields", KeyName = "Id", FieldsDBName = "FieldName,DataTypeCode,ObjectTableId,IsCustom" });
+            tableNameLists.Add(new TableClass() { TableName = "Rank", DBTableName = "Ranks", Dw_TableName = "dw_Ranks", KeyName = "Id", });
+            tableNameLists.Add(new TableClass() { TableName = "Region", DBTableName = "Regions", Dw_TableName = "dw_Regions", KeyName = "Id" });
+            tableNameLists.Add(new TableClass() { TableName = "CustomerSize", DBTableName = "CustomerSizes", Dw_TableName = "dw_CustomerSizes", KeyName = "Id" });
+            tableNameLists.Add(new TableClass() { TableName = "Industry", DBTableName = "Industries", Dw_TableName = "dw_Industries", KeyName = "Id" });
+            tableNameLists.Add(new TableClass() { TableName = "ShipmentMasterData", FieldsDBName = "MasterShipmentNumber", DBTableName = "ShipmentMasterDatas", Dw_TableName = "dw_ShipmentMasterDatas", KeyName = "Id", HasNotSpecifiedValue = true, HasConstraint = true, DispayInScreen = true });
+            tableNameLists.Add(new TableClass() { TableName = "ShipmentComputedFields", DBTableName = "ShipmentComputedFields", Dw_TableName = "dw_ShipmentComputedFields", KeyName = "Id", HasConstraint = true, DispayInScreen = true });
 
+            //tableNameLists.Add(new TableClass() { TableName = "ShipmentPayable", DBTableName = "ShipmentPayables", Dw_TableName = "dw_ShipmentPayables", KeyName = "Id", HasNotSpecifiedValue = true });
+            //tableNameLists.Add(new TableClass() { TableName = "APInvoiceLine", DBTableName = "APInvoiceLines", Dw_TableName = "dw_APInvoiceLines", KeyName = "APInvoiceId", FieldsDBName = "EntityPayableId", HasNotSpecifiedValue = true });
+            //tableNameLists.Add(new TableClass() { TableName = "APInvoice", DBTableName = "APInvoices", Dw_TableName = "dw_APInvoices", KeyName = "Id", HasNotSpecifiedValue = true });
+            //tableNameLists.Add(new TableClass() { TableName = "ShipmentReceivable", DBTableName = "ShipmentReceivables", Dw_TableName = "dw_ShipmentReceivables", KeyName = "Id", HasNotSpecifiedValue = true });
+            //tableNameLists.Add(new TableClass() { TableName = "ARInvoiceLine", DBTableName = "ARInvoiceLines", Dw_TableName = "dw_ARInvoiceLines", KeyName = "Id", HasNotSpecifiedValue = true , FieldsDBName= "ARInvoiceId,ReceivableId" });
+            //tableNameLists.Add(new TableClass() { TableName = "ARInvoice", DBTableName = "ARInvoices", Dw_TableName = "dw_ARInvoices", KeyName = "Id", HasNotSpecifiedValue = true });
+            //tableNameLists.Add(new TableClass() { TableName = "ChargesType", DBTableName = "ChargesTypes", Dw_TableName = "dw_ChargesTypes", KeyName = "Id", HasNotSpecifiedValue = true });
+
+
+            //EntityPayableId
+            //DiM
             tableNameLists.Add(new TableClass() { TableName = "CustomPickList", DBTableName = "CustomPickLists", Dw_TableName = "dw_CustomPickLists", KeyName = "Id", HasDimensionTable = true, DWObjectTableCode = "DIM_CustomPickLists", BuildScriptName = "BuildCustomPickListDimensionsTable", IncrementalScriptName = "UpdateCustomPickListDimensionsTable", FieldsDBName = "Code,Value,IsMultipleChoice" });
-
-
-
             tableNameLists.Add(new TableClass() { IsCloseTable = true, TableName = "Direction", DBTableName = "Directions", Dw_TableName = "dw_Directions", KeyName = "Id", HasDimensionTable = true, DWObjectTableCode = "DIM_Directions", BuildScriptName = "BuildDirectionDimensionsTable", IncrementalScriptName = "UpdateDirectionDimensionTable" });
             tableNameLists.Add(new TableClass() { IsCloseTable = true, TableName = "TransportMode", DBTableName = "TransportModes", Dw_TableName = "dw_TransportModes", KeyName = "Id", HasDimensionTable = true, DWObjectTableCode = "DIM_TransportModes", BuildScriptName = "BuildTransportModeDimensionTable", IncrementalScriptName = "UpdateTransportModeDimensionTable" });
             tableNameLists.Add(new TableClass() { IsCloseTable = true, TableName = "ShipmentLevel", DBTableName = "ShipmentLevels", Dw_TableName = "dw_Levels", KeyName = "Code", HasDimensionTable = true, DWObjectTableCode = "DIM_Levels", BuildScriptName = "BuildShipmentLevelDimensionTable", IncrementalScriptName = "UpdateShipmentLevelDimensionTable" });
             tableNameLists.Add(new TableClass() { IsCloseTable = true, TableName = "ShipmentType", DBTableName = "ShipmentTypes", Dw_TableName = "dw_Types", KeyName = "Id", HasDimensionTable = true, DWObjectTableCode = "DIM_Types", HasNotSpecifiedValue = true, BuildScriptName = "BuildShipmentTypeDimensionTable", IncrementalScriptName = "UpdateShipmentTypeDimensionTable" });
             tableNameLists.Add(new TableClass() { TableName = "Branch", DBTableName = "Branches", Dw_TableName = "dw_Branches", KeyName = "Id", HasDimensionTable = true, DWObjectTableCode = "DIM_Branches", BuildScriptName = "BuildBrancheDimensionTable", IncrementalScriptName = "UpdateBrancheDimensionTable" });
             tableNameLists.Add(new TableClass() { TableName = "EntityStatus", DBTableName = "EntityStatus", Dw_TableName = "dw_ShipmentStatuses", KeyName = "Id", HasDimensionTable = true, DWObjectTableCode = "DIM_ShipmentStatuses", BuildScriptName = "BuildEntityStatusDimensionTable", IncrementalScriptName = "UpdateEntityStatusDimensionTable" });
-            tableNameLists.Add(new TableClass() { TableName = "Rank", DBTableName = "Ranks", Dw_TableName = "dw_Ranks", KeyName = "Id", });
-
-              
-            tableNameLists.Add(new TableClass() { TableName = "Region", DBTableName = "Regions", Dw_TableName = "dw_Regions", KeyName = "Id"});
-            tableNameLists.Add(new TableClass() { TableName = "CustomerSize", DBTableName = "CustomerSizes", Dw_TableName = "dw_CustomerSizes", KeyName = "Id" });
-            tableNameLists.Add(new TableClass() { TableName = "Industry", DBTableName = "Industries", Dw_TableName = "dw_Industries", KeyName = "Id"});
-
-            tableNameLists.Add(new TableClass() { TableName = "ShipmentComputedFields", DBTableName = "ShipmentComputedFields", Dw_TableName = "dw_ShipmentComputedFields", KeyName = "Id" , HasConstraint = true,DispayInScreen = true});
-
-
-
-            tableNameLists.Add(new TableClass() { TableName = "Shipment", FieldIndexes = "Source Tenant,Parent Tenant", DWObjectTableCode = "Fact_Shipments", FieldsDBName = "ToPortId,FromPortId", KeyName = "Id", DBTableName = "Shipments", Dw_TableName = "dw_Shipments", HasConstraint = true, HasFactTable = true, BuildScriptName = "BuildFactShipmentTable", IncrementalScriptName = "UpdateFactShipmentTable", DispayInScreen = true });
-            tableNameLists.Add(new TableClass() { TableName = "ShipmentMasterData", FieldsDBName = "MasterShipmentNumber", DBTableName = "ShipmentMasterDatas", Dw_TableName = "dw_ShipmentMasterDatas", KeyName = "Id", HasNotSpecifiedValue = true, HasConstraint = true, DispayInScreen = true });
             tableNameLists.Add(new TableClass() { TableName = "Card", DBTableName = "Cards", Dw_TableName = "dw_Partners", KeyName = "Id", HasDimensionTable = true, DWObjectTableCode = "DIM_Partners", BuildScriptName = "BuildCardsDimensionTable", IncrementalScriptName = "UpdateCardDimensionTable", HasConstraint = true, DispayInScreen = true });
             tableNameLists.Add(new TableClass() { TableName = "Port", DBTableName = "Ports", Dw_TableName = "dw_Ports", KeyName = "Id", HasDimensionTable = true, DWObjectTableCode = "DIM_Ports", BuildScriptName = "BuildPortsDimensionTable", IncrementalScriptName = "UpdatePortsDimensionTable", HasConstraint = true, DispayInScreen = true });
             tableNameLists.Add(new TableClass() { TableName = "User", DBTableName = "Users", Dw_TableName = "dw_Users", KeyName = "Id", HasDimensionTable = true, DWObjectTableCode = "DIM_Users", BuildScriptName = "BuildUsersDimensionTable", IncrementalScriptName = "UpdateUsersDimensionTable", DispayInScreen = true });
@@ -74,7 +76,23 @@ namespace WarehouseData.Helper
             tableNameLists.Add(new TableClass() { TableName = "MoveType", DBTableName = "MoveTypes", Dw_TableName = "dw_MoveTypes", KeyName = "Id", HasDimensionTable = true, DWObjectTableCode = "DIM_MoveTypes", BuildScriptName = "BuildMoveTypeDimensionTable", IncrementalScriptName = "UpdateMoveTypeDimensionTable", HasConstraint = true });
             tableNameLists.Add(new TableClass() { TableName = "Vessel", DBTableName = "Vessels", Dw_TableName = "dw_Vessels", KeyName = "Id", HasDimensionTable = true, DWObjectTableCode = "DIM_Vessels", BuildScriptName = "BuildVesselDimensionTable", IncrementalScriptName = "UpdateVesselDimensionTable", HasConstraint = true });
             tableNameLists.Add(new TableClass() { TableName = "SpecialServicesType", DBTableName = "SpecialServicesTypes", Dw_TableName = "dw_SpecialServicesTypes", KeyName = "Id", HasDimensionTable = true, DWObjectTableCode = "DIM_SpecialServicesTypes", BuildScriptName = "BuildSpecialServicesTypeDimensionTable", IncrementalScriptName = "UpdateSpecialServicesTypeDimensionTable", HasConstraint = true });
+
+            //Fact
+            tableNameLists.Add(new TableClass() { TableName = "Shipment", FieldIndexes = "Source Tenant,Parent Tenant", DWObjectTableCode = "Fact_Shipments", FieldsDBName = "ToPortId,FromPortId", KeyName = "Id", DBTableName = "Shipments", Dw_TableName = "dw_Shipments", HasConstraint = true, HasFactTable = true, BuildScriptName = "BuildFactShipmentTable", IncrementalScriptName = "UpdateFactShipmentTable", DispayInScreen = true });
+            //tableNameLists.Add(new TableClass() { TableName = "ChargeType", FieldIndexes = "Source Tenant,Parent Tenant", DWObjectTableCode = "Fact_Charges", KeyName = "Id", DBTableName = "ChargeTypes", Dw_TableName = "dw_ChargeTypes", HasConstraint = true, HasFactTable = true, BuildScriptName = "BuildFactChargeTable", IncrementalScriptName = "UpdateFactChargeTable", DispayInScreen = true });
+
+
+
+            //WaterMark
             tableNameLists.Add(new TableClass() { TableName = "WaterMark", DBTableName = "WaterMarks", Dw_TableName = "dw_WaterMarks", KeyName = "TableName", FieldsDBName = "TableName,LastUpdateDate" });
+
+            //tableNameLists.Add(new TableClass() { TableName = "ShipmentPayable", DBTableName = "ShipmentPayables", Dw_TableName = "dw_ShipmentPayables", KeyName = "Id", HasNotSpecifiedValue = true });
+            // tableNameLists.Add(new TableClass() { TableName = "ChargesType", DBTableName = "ChargesTypes", Dw_TableName = "dw_ChargesTypes", KeyName = "Id", HasNotSpecifiedValue = true });
+
+
+
+
+
             FullShipmentCustomFields(tableNameLists.Where(d => d.TableName == "Shipment").FirstOrDefault());
             tableLists = tableNameLists;
             return tableNameLists;
@@ -91,37 +109,32 @@ namespace WarehouseData.Helper
             }
         }
 
-        public void BuildDWObjectFieldDB(List<TableClass> tableNameLists, string connectionString)
+
+        private List<DWObjectFieldDB> GetDWObjectFieldDBLists(List<DataRow> rowList)
         {
-
-            var dWObjectFieldDB = new DataTable();
-
-            using (SqlConnection sourceConnection = new SqlConnection(connectionString))
+           var result= new List<DWObjectFieldDB>();
+            foreach (DataRow row in rowList)
             {
-                sourceConnection.Open();
-                SqlCommand commandSourceData = new SqlCommand("SELECT  Code, DWObjectTableCode,DataTypeCode,MaxLength,MinLength,IsRequired ,IsPrimaryKey,DimensionTableCode from DWObjectFields", sourceConnection);
-                SqlDataReader reader = commandSourceData.ExecuteReader();
-                dWObjectFieldDB.Load(reader);
-                reader.Close();
-
+                var fieldDB = new DWObjectFieldDB();
+                fieldDB.FieldName = row["Code"].ToString();
+                fieldDB.DataTypeCode = row["DataTypeCode"].ToString();
+                fieldDB.MaxLength = Int32.Parse(row["MaxLength"].ToString());
+                fieldDB.MinLength = Int32.Parse(row["MinLength"].ToString());
+                fieldDB.IsRequired = bool.Parse(row["IsRequired"].ToString());
+                fieldDB.IsPrimaryKey = bool.Parse(row["IsPrimaryKey"].ToString());
+                fieldDB.DimensionTableCode = row["DimensionTableCode"].ToString();
+                result.Add(fieldDB);
             }
 
+            return result;
+        }
+        public void BuildDWObjectFieldDB(List<TableClass> tableNameLists, string connectionString)
+        {
+            var dWObjectFieldsMetaData = GetDWObjectFieldsMetaData(connectionString);
             foreach (TableClass tableClass in tableNameLists.Where(d => d.HasDimensionTable || d.HasFactTable).ToList())
             {
-                var rowList = dWObjectFieldDB.AsEnumerable().Where(row => row["DWObjectTableCode"].ToString() == tableClass.DWObjectTableCode).ToList();
-                tableClass.DWObjectFieldDBLists = new List<DWObjectFieldDB>();
-                foreach (DataRow row in rowList)
-                {
-                    var fieldDB = new DWObjectFieldDB();
-                    fieldDB.FieldName = row["Code"].ToString();
-                    fieldDB.DataTypeCode = row["DataTypeCode"].ToString();
-                    fieldDB.MaxLength = Int32.Parse(row["MaxLength"].ToString());
-                    fieldDB.MinLength = Int32.Parse(row["MinLength"].ToString());
-                    fieldDB.IsRequired = bool.Parse(row["IsRequired"].ToString());
-                    fieldDB.IsPrimaryKey = bool.Parse(row["IsPrimaryKey"].ToString());
-                    fieldDB.DimensionTableCode = row["DimensionTableCode"].ToString();
-                    tableClass.DWObjectFieldDBLists.Add(fieldDB);
-                }
+                var rowList = dWObjectFieldsMetaData.AsEnumerable().Where(row => row["DWObjectTableCode"].ToString() == tableClass.DWObjectTableCode).ToList();
+                tableClass.DWObjectFieldDBLists = GetDWObjectFieldDBLists(rowList);
             }
 
             foreach (TableClass tableClass in tableNameLists.Where(d => d.HasDimensionTable || d.HasFactTable).ToList())
@@ -154,6 +167,21 @@ namespace WarehouseData.Helper
 
         }
 
+        private static DataTable GetDWObjectFieldsMetaData(string connectionString)
+        {
+            var dWObjectFieldsMetaData = new DataTable();
+            using (SqlConnection sourceConnection = new SqlConnection(connectionString))
+            {
+                sourceConnection.Open();
+                SqlCommand commandSourceData = new SqlCommand("SELECT  Code, DWObjectTableCode,DataTypeCode,MaxLength,MinLength,IsRequired ,IsPrimaryKey,DimensionTableCode from DWObjectFields", sourceConnection);
+                SqlDataReader reader = commandSourceData.ExecuteReader();
+                dWObjectFieldsMetaData.Load(reader);
+                reader.Close();
+
+            }
+            return dWObjectFieldsMetaData;
+        }
+
         public void RunSqlFunctions(string connectionString)
         {
             ExecuteScript("Others", connectionString, "Day 06 [Abed]Add Function Date");
@@ -164,7 +192,76 @@ namespace WarehouseData.Helper
 
         public void BuildWarehouseObjectField(List<TableClass> tableNameLists, string connectionString)
         {
-            var objectFieldsTable = new DataTable();
+            var dwObjectFieldLists = GetCopyToDWObjectFields(connectionString);
+            var objectTableLists = GetDWObjectTableLists(tableNameLists, connectionString);
+
+            foreach (DataRow row in objectTableLists.Rows)
+            {
+                string tableName = GetTableName(row["Name"].ToString());
+                string tableId = row["Id"].ToString();
+
+                var fields = (from rowfield in dwObjectFieldLists.AsEnumerable()
+                              where rowfield.Field<string>("ObjectTableId") == tableId
+                              select rowfield.Field<string>("FieldName")).ToList();
+
+                TableClass tableClass = tableNameLists.Where(d => d.TableName == tableName).FirstOrDefault();
+                if (tableClass != null) tableClass.ObjectTableId = tableId;
+                tableClass.FieldsDBName = GetDWObjectFieldsDBName(fields, tableClass);
+            }
+
+            foreach (TableClass tableClass in tableNameLists)
+            {
+                if (tableClass.TableName != "WaterMark") tableClass.FieldsDBName = GetAdditionalDWObjectFieldsDBName(tableClass);
+            }
+        }
+
+        private static string GetDWObjectFieldsDBName(List<string> fields, TableClass tableClass)
+        {
+            string dwFieldsDBName = tableClass.FieldsDBName;
+            if (fields.Count > 0)
+            {
+                dwFieldsDBName += !string.IsNullOrEmpty(dwFieldsDBName) ? "," : "";
+                foreach (string fieldName in fields)
+                {
+                    dwFieldsDBName += fieldName + ",";
+                }
+                dwFieldsDBName += "@";
+                dwFieldsDBName = dwFieldsDBName.Replace(",@", "");
+            }
+            return dwFieldsDBName;
+        }
+
+        private  DataTable GetDWObjectTableLists(List<TableClass> tableNameLists, string connectionString)
+        {
+            var objectTablesLists = new DataTable();
+            using (SqlConnection sourceConnection = new SqlConnection(connectionString))
+            {
+                sourceConnection.Open();
+                string sql = "SELECT  Id,Name from  ObjectTables where Name in " + GetDWTableNamesAsString(tableNameLists);
+                SqlCommand commandSourceData = new SqlCommand(sql, sourceConnection);
+                SqlDataReader reader = commandSourceData.ExecuteReader();
+                objectTablesLists.Load(reader);
+                reader.Close();
+            }
+            return objectTablesLists;
+        }
+
+        private static string GetDWTableNamesAsString(List<TableClass> tableNameLists)
+        {
+            string tableNames = "(";
+            foreach (TableClass table in tableNameLists)
+            {
+                string name = table.TableName == "ShipmentMasterData" ? "Master" : table.TableName;
+                tableNames += ("'" + name + "',");
+            }
+            tableNames += ")";
+            tableNames = tableNames.Replace(",)", ")");
+            return tableNames;
+        }
+
+        private  DataTable GetCopyToDWObjectFields(string connectionString)
+        {
+            DataTable objectFieldsTable = new DataTable();
             using (SqlConnection sourceConnection = new SqlConnection(connectionString))
             {
                 sourceConnection.Open();
@@ -174,96 +271,17 @@ namespace WarehouseData.Helper
                 reader.Close();
             }
 
-            using (SqlConnection sourceConnection = new SqlConnection(connectionString))
-            {
-                sourceConnection.Open();
-                string sql = "SELECT  Id,Name from  ObjectTables where Name in (";
-                foreach (TableClass table in tableNameLists)
-                {
-                    string name = table.TableName == "ShipmentMasterData" ? "Master" : table.TableName;
-                    sql += ("'" + name + "',");
-                }
-                sql += ")";
-                sql = sql.Replace(",)", ")");
-
-                SqlCommand commandSourceData = new SqlCommand(sql, sourceConnection);
-                SqlDataReader reader = commandSourceData.ExecuteReader();
-                var objectTables = new DataTable();
-                objectTables.Load(reader);
-
-                reader.Close();
-
-                foreach (DataRow row in objectTables.Rows)
-                {
-                    string tableName = row["Name"].ToString() == "Master" ? "ShipmentMasterData" : row["Name"].ToString();
-                    string tableId = row["Id"].ToString();
-
-                    var fields = from rowfield in objectFieldsTable.AsEnumerable()
-                                 where rowfield.Field<string>("ObjectTableId") == tableId
-                                 select rowfield;
-
-                    var result = fields
-                             .Cast<DataRow>()
-                             .Select(r => (string)r["FieldName"].ToString())
-                             .ToList();
-
-                    TableClass tableClass = tableNameLists.Where(d => d.TableName == tableName).FirstOrDefault();
-                    if (tableClass != null)
-                    {
-                        tableClass.ObjectTableId = tableId;
-                    }
-
-
-
-
-                    if (result.Count > 0)
-                    {
-                        int count = 0;
-                        foreach (string fieldName in result)
-                        {
-                            count += 1;
-                            if (count == 1)
-                            {
-                                if (string.IsNullOrEmpty(tableClass.FieldsDBName)) tableClass.FieldsDBName += fieldName;
-                                else tableClass.FieldsDBName += ("," + fieldName);
-                            }
-                            else tableClass.FieldsDBName += ("," + fieldName);
-                        }
-                    }
-
-
-
-                }
-
-            }
-
-            foreach (TableClass tableClass in tableNameLists)
-            {
-                if (tableClass.TableName != "WaterMark")
-                {
-                    if (!tableClass.IsCloseTable)
-                    {
-                        if (tableClass.TableName != "DWHSetting")
-                        {
-                            if (tableClass.TableName != "PartnerType" && tableClass.TableName != "Tenant") tableClass.FieldsDBName = "Id,Tenant," + tableClass.FieldsDBName;
-                            else tableClass.FieldsDBName = "Id," + tableClass.FieldsDBName;
-                        }
-                        else tableClass.FieldsDBName = tableClass.FieldsDBName;
-
-                    }
-                    else
-                    {
-                        if (tableClass.KeyName == "Id") tableClass.FieldsDBName = "Id," + tableClass.FieldsDBName;
-                    }
-
-                    tableClass.FieldsDBName += ",AutomaticLastUpdateDate";
-                }
-            }
-
-
-
+            return objectFieldsTable;
         }
 
+        private static string GetAdditionalDWObjectFieldsDBName(TableClass tableClass)
+        {
+            string fieldsDBName = (tableClass.KeyName) + "," + (!tableClass.IsCloseTable && tableClass.KeyName != "Tenant" && tableClass.TableName != "Tenant" ? "Tenant," : "");
+            fieldsDBName = fieldsDBName + tableClass.FieldsDBName;
+            fieldsDBName += ",AutomaticLastUpdateDate";
+            return fieldsDBName;
+        }
+         
         public void BuildAndExecuteDataWarehouseScript(string forderName, string connectionString, TableClass table)
         {
             string scriptName = forderName == "BuildWarehouse" ? table.BuildScriptName : table.IncrementalScriptName;
@@ -318,7 +336,12 @@ namespace WarehouseData.Helper
             return sql;
         }
 
-
+        private string GetTableName(string tableName)
+        {
+            string result = tableName;
+            if(tableName == "Master") result = "ShipmentMasterData";
+            return result;
+        }
 
         private string GetCustomFieldTenantsUpdated(string desconnectionString)
         {

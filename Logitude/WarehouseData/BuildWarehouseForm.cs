@@ -200,7 +200,11 @@ namespace WarehouseData
 
                             foreach (TableClass table in tableNameLists)
                             {
-                                    stepName = table.DBTableName;
+                                if (table.TableName == "ShipmentPayable")
+                                {
+
+                                }
+                                stepName = table.DBTableName;
 
                                     Stopwatch stopWatchDWTable = null;
                                     if (table.DispayInScreen)
@@ -252,7 +256,7 @@ namespace WarehouseData
                             foreach (TableClass table in tableNameLists.Where(d => d.HasDimensionTable).ToList())
                             {
                                     Stopwatch stopWatchDimensionsTable = null;
-
+                             
                                     if (table.DispayInScreen)
                                     {
                                         stopWatchDimensionsTable = new Stopwatch();
