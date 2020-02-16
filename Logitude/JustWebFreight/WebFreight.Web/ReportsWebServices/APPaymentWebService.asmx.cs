@@ -51,6 +51,7 @@ namespace WebFreight.Web.ReportsWebServices
 
         public APPaymentDataProvider GetAPPaymentDataProvider(string paymentId, int tenant, string documentTypeId)
         {
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
             APPaymentDataProvider apPaymentDataProvider = new APPaymentDataProvider();
             IInvoiceContext invoiceCotnext = InvoiceContext.GetContext(tenant);
             APPaymentRepository paymentRep = new APPaymentRepository(invoiceCotnext);
@@ -64,12 +65,12 @@ namespace WebFreight.Web.ReportsWebServices
             if (currentPayment != null)
             {
                 Tenant tenantSettings = (from a in commonContext.Tenants
-                                 where a.Id == currentPayment.Tenant
-                                 select a).FirstOrDefault();
+                                         where a.Id == currentPayment.Tenant
+                                         select a).FirstOrDefault();
 
                 ObjectTable currentObjectTable = (from obj in webFreighContext.ObjectTables
-                                      where obj.Name == "APPayment" 
-                                      select obj).FirstOrDefault();
+                                                  where obj.Name == "APPayment"
+                                                  select obj).FirstOrDefault();
                 apPaymentDataProvider.CreateDate = currentPayment.CreateDate;
                 apPaymentDataProvider.VendorBankName = currentPayment.VendorBankName;
                 apPaymentDataProvider.VendorBankAddress = currentPayment.VendorBankAddress;
@@ -81,7 +82,7 @@ namespace WebFreight.Web.ReportsWebServices
                 {
                     if (loggedContact.DontShowLocalLabels)
                     {
-                        apPaymentDataProvider.BankAccountName  = bankAccount.EnglishName;
+                        apPaymentDataProvider.BankAccountName = bankAccount.EnglishName;
                     }
                     else
                     {
@@ -89,7 +90,7 @@ namespace WebFreight.Web.ReportsWebServices
                     }
 
                 }
-             
+
                 // tenant data
                 if (tenantSettings != null)
                 {
@@ -128,7 +129,7 @@ namespace WebFreight.Web.ReportsWebServices
                         apPaymentDataProvider.TenantData = tenantSettings.Company != null ? tenantSettings.Company : "";
                     }
                 }
-                
+
                 DocumentTypeCopy documenttypecopy = (from copy in commonContext.DocumentTypeCopies
                                                      where copy.DocumentTypeId == documentTypeId
                                                      select copy).FirstOrDefault();
@@ -142,7 +143,7 @@ namespace WebFreight.Web.ReportsWebServices
                     Card paidToCard = (from a in commonContext.Cards.Include("Airline")
                                        where a.Id == currentPayment.VendorId && a.Tenant == currentPayment.Tenant
                                        select a).FirstOrDefault();
-                     
+
                     if (paidToCard != null)
                     {
                         apPaymentDataProvider.PaidToVatNo = paidToCard.VatNumber != null ? paidToCard.VatNumber : "";
@@ -162,7 +163,7 @@ namespace WebFreight.Web.ReportsWebServices
                         apPaymentDataProvider.Swift = paidToCard.Swift;
                         apPaymentDataProvider.AccountNumber = GetPartnerAccountNumber(paidToCard);
                         apPaymentDataProvider.PaidToCode = paidToCard.Code;
-                     
+
                         Address address = addressRepository.GetSingleAddress(currentPayment.VendorAddressId, tenant);
                         if (address != null)
                         {
@@ -193,7 +194,7 @@ namespace WebFreight.Web.ReportsWebServices
                             CustomerPM customer = customerQuery.GetSinglePM(paidToCard.Id, tenant);
                             if (customer != null)
                             {
-                                CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+                              
                                 customFieldResolver.SetDataProviderCustomFieldsValues("Customer", tenant, customer, apPaymentDataProvider);
                             }
                         }
@@ -242,7 +243,7 @@ namespace WebFreight.Web.ReportsWebServices
                                                                         where a.FieldCode == "PaidBy"
                                                                         select a).FirstOrDefault();
                         //paid by   
-                        apPaymentDataProvider.PaidBy = paidByCustomField != null ? paidByCustomField.Value : (paidByDocumentCustom != null ? paidByDocumentCustom.DefaultValue : ""); 
+                        apPaymentDataProvider.PaidBy = paidByCustomField != null ? paidByCustomField.Value : (paidByDocumentCustom != null ? paidByDocumentCustom.DefaultValue : "");
                     }
 
                     // payment currency
@@ -279,7 +280,7 @@ namespace WebFreight.Web.ReportsWebServices
                         }
                     }
 
-                 
+
 
                     if (currentPayment.PaymentMethod != null)
                     {
@@ -302,7 +303,7 @@ namespace WebFreight.Web.ReportsWebServices
                     {
                         apPaymentDataProvider = SetDataProviderbankFields(currentPayment, apPaymentDataProvider);
                     }
-                    
+
                     apPaymentDataProvider.ValueDate = currentPayment.ValueDate;
 
                     if (!string.IsNullOrEmpty(currentPayment.BranchId))
@@ -336,7 +337,7 @@ namespace WebFreight.Web.ReportsWebServices
                                         a.APInvoice.InvoiceNumber,
                                         a.APInvoice.MainEntityReference,
                                         a.ForeignAmount,
-                                        a.APInvoice.AmountDue,                                        
+                                        a.APInvoice.AmountDue,
                                         a.APInvoice.AmountInInvoiceCurrency,
                                         a.APInvoice.InvoiceDate,
                                     } into gr
@@ -376,7 +377,10 @@ namespace WebFreight.Web.ReportsWebServices
                 }
             }
 
-         return apPaymentDataProvider;
+            customFieldResolver = new CustomFieldResolver();
+            customFieldResolver.SetDataProviderCustomFieldsValues("APPayment", tenant, currentPayment, apPaymentDataProvider);
+
+            return apPaymentDataProvider;
         }
      
 
