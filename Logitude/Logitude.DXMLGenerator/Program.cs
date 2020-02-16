@@ -22,11 +22,16 @@ namespace Logitude.DXMLGenerator
 
             foreach(var dxmlFile in dxmlFiles)
             {
-                string xmlString = File.ReadAllText(dxmlFile);
-                if (xmlString.EndsWith("</Table>"))
+                string dxmlFileName = Path.GetFileName(dxmlFile);
+
+                if (dxmlFileName.ToLower() != "DBMigrationsHistory.dxml".ToLower() && dxmlFileName.ToLower() != "DBScriptsHistory.dxml".ToLower())
                 {
-                    File.Delete(dxmlFile);
-                    deletedDxmlFilesCount++;
+                    string xmlString = File.ReadAllText(dxmlFile);
+                    if (xmlString.EndsWith("</Table>"))
+                    {
+                        File.Delete(dxmlFile);
+                        deletedDxmlFilesCount++;
+                    }
                 }
             }
 

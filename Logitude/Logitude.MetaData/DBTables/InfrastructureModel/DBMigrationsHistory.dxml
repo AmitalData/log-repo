@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="DBMigrationsHistory" Schema="dbo">
+
+  <Column Name="Id" Type="bigint" Identity="true">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+
+  <Column Name="DxmlFileName" Type="varchar" Size="500">
+    <Constraints Nullable="false" />
+  </Column>
+
+  <Column Name="TableName" Type="varchar" Size="500">
+    <Constraints Nullable="false" />
+  </Column>
+
+  <Column Name="ColumnName" Type="varchar" Size="-1">
+    <Constraints Nullable="true" />
+  </Column>
+
+  <Column Name="MigrationType" Type="varchar" Size="50">
+    <Constraints Nullable="false" />
+  </Column>
+  
+  <Column Name="ExecutionDate" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
+  
+  <Column Name="MigrationScript" Type="nvarchar" Size="-1">
+    <Constraints Nullable="false" />
+  </Column>
+
+</Table>
