@@ -54,6 +54,7 @@ export class WarehouseReleasePackagesDetailsComponent extends BaseComponent impl
     DimensionsColumnHeader: string;
     VolumetricWeightColumnHeader: string;
     PackageTypeColumnHeader: string;
+    IsFilterByShipmentId: boolean = true;
 
     ShowAddPackageButton: boolean = false;
     SelectedWarehouseReleasePackage: WarehouseReleasePackagePM;
@@ -130,6 +131,7 @@ export class WarehouseReleasePackagesDetailsComponent extends BaseComponent impl
         this.IsEditMode = args.IsEditMode;
         this.IsFromFullWarehouseReleaseComponent = args.IsFromFullWarehouseReleaseComponent;
         this.ShipmentPM = args.ShipmentPM;
+        this.IsFilterByShipmentId = args.IsFilterByShipmentId;
         this.ShowPackageSummary = args.ShowPackageSummary;
         this.WarehouseEntryId = args.WarehouseEntryId;
         if (this.warehouseReleasePM) {
@@ -158,7 +160,8 @@ export class WarehouseReleasePackagesDetailsComponent extends BaseComponent impl
 
                 var shipmentId = this.warehouseReleasePM.ShipmentId ? this.warehouseReleasePM.ShipmentId:"";
                 this.AllWarehouseEntryPackagesLists = [];
-                this.warehouseEntryPackagePMExtendedService.GetWarehouseEntryPackagePMListsByShipmentIdAndWarehouseIdAndCustomerId(shipmentId, this.warehouseReleasePM.CustomerId, this.warehouseReleasePM.WarehouseId, this.warehouseReleasePM.Tenant).subscribe((res: any) => {
+                
+                this.warehouseEntryPackagePMExtendedService.GetWarehouseEntryPackagePMListsByShipmentIdAndWarehouseIdAndCustomerId(this.IsFilterByShipmentId ? shipmentId : null, this.warehouseReleasePM.CustomerId, this.warehouseReleasePM.WarehouseId, this.warehouseReleasePM.Tenant).subscribe((res: any) => {
                     var pmResponse: ServiceResponse = res;
                     if (!pmResponse.HasError) {
                         this.AllWarehouseEntryPackagesLists = pmResponse.Result;
@@ -169,6 +172,7 @@ export class WarehouseReleasePackagesDetailsComponent extends BaseComponent impl
                     }
 
                 });
+                
 
             } else {
                 this.OpenChoosePackage(packageType);

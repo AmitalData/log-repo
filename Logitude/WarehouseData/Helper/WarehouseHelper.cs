@@ -56,7 +56,7 @@ namespace WarehouseData.Helper
             tableNameLists.Add(new TableClass() { TableName = "CustomerSize", DBTableName = "CustomerSizes", Dw_TableName = "dw_CustomerSizes", KeyName = "Id" });
             tableNameLists.Add(new TableClass() { TableName = "Industry", DBTableName = "Industries", Dw_TableName = "dw_Industries", KeyName = "Id"});
 
-            tableNameLists.Add(new TableClass() { TableName = "ShipmentComputedFields", DBTableName = "ShipmentComputedFields", Dw_TableName = "dw_ShipmentComputedFields", KeyName = "Id" ,DispayInScreen = true});
+            tableNameLists.Add(new TableClass() { TableName = "ShipmentComputedFields", DBTableName = "ShipmentComputedFields", Dw_TableName = "dw_ShipmentComputedFields", KeyName = "Id" , HasConstraint = true,DispayInScreen = true});
 
 
 
@@ -1358,6 +1358,14 @@ namespace WarehouseData.Helper
                     cmd = " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "ParentTenant DEFAULT -1 FOR ParentTenant";
 
                     break;
+
+                case "ShipmentComputedFields":
+
+                    cmd = " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "DeliveryToPortId DEFAULT '-1' FOR DeliveryToPortId;"
+                   +  " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "OperationallyClosedByUserId DEFAULT '-1' FOR OperationallyClosedByUserId;";
+
+                    break;
+
 
                 default:
                     cmd = string.Empty;

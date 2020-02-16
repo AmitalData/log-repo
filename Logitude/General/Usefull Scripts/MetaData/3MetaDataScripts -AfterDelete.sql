@@ -155,7 +155,7 @@ JOIN TempOldFeatures temp
 
 update tc
 set tc.DefaultText = temp.DefaultText, tc.DefaultTextPlural = temp.DefaultTextPlural, tc.SpellCheckDate = temp.SpellCheckDate,
-tc.SpellCheckedByUserId = temp.SpellCheckedByUserId,tc.LocalDefaultText = temp.LocalDefaultText
+tc.SpellCheckedByUserId = temp.SpellCheckedByUserId,tc.LocalDefaultText = temp.LocalDefaultText,IsSpellChecked = temp.IsSpellChecked
 from TextCodes tc
 Join TempIsSpellCheckedTextCodes temp
 on tc.Code = temp.Code

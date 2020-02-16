@@ -13,4 +13,16 @@
     <Constraints Nullable="false" />
   </Column>
 
+  <Column Name="ElapsedTimeInMs" Type="bigint">
+    <Constraints Nullable="false" />
+  </Column>
+
+  <Column Name="HashValue" Type="nvarchar" Size="-1">
+    <Constraints Nullable="false" />
+  </Column>
+
+  <Column Name="Version" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+
 </Table>

@@ -101,7 +101,7 @@ export class ShipmentAdditionalCloudDataService {
 
                 shipString = JSON.stringify(entityPM);
                 //console.log(shipString);
-                return this._http.put(this._apiUrl, shipString,
+            return this._http.put(this._apiUrl + '/PutMain', shipString,
                     { headers: authHeader }).map((res) => {
                         var pm = res.json();
                         response.Result = pm;

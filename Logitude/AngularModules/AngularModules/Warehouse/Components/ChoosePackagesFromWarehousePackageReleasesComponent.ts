@@ -282,6 +282,12 @@ export class ChoosePackagesFromWarehousePackageReleasesComponent extends BaseCom
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run({ EntityId: warehouseReleaseItem.Id, ObjectTableName: "WarehouseRelease", BackButtonLabel: myBackButtonLabel });
 
+                
+                cmpRef.instance.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                    if (isSaveSuccess) {
+                        this.LoadWarehouseReleasePackages();
+                    }
+                });
             });
     }
 

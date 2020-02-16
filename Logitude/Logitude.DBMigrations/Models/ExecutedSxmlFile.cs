@@ -10,5 +10,7 @@ namespace Logitude.DBMigrations.Models
     {
         public string SxmlFileName { get; set; }
         public string DBType { get; set; }
+        public string HashValue { get; set; }
+        public int Version { get; set; }
     }
 }
