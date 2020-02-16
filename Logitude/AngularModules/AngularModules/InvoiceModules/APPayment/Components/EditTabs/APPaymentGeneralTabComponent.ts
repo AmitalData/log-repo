@@ -70,7 +70,7 @@ this.SetUIProperties_GeneratedComponent();
 });
 
 var screenCode = this.additionalFieldsScreenCode;
-cmpRef.instance.LabelWidth = 110;
+cmpRef.instance.LabelWidth = 160;
 cmpRef.instance.Run(this.EntityPM, this.ObjectTableName, screenCode);
 });
 }
