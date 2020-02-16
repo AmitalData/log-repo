@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="OceanInsightsRequests"
+  Schema="dbo"
+  DBType="Main">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="SCACCode"
+    Type="varchar"
+    Size="250">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ContainerNumber"
+    Type="varchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="OceanInsigntId"
+    Type="varchar"
+    Size="500">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CreateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="UpdateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Type"
+    Type="varchar"
+    Size="15"
+    DefaultValue="''">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="BLNumber"
+    Type="varchar"
+    Size="18">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="FromPushPage"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+</Table>

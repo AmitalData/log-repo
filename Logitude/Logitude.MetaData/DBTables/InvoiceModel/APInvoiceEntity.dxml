@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="APInvoiceEntities"
+  Schema="dbo"
+  DBType="Main">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="EntityId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="EntityReference"
+    Type="varchar"
+    Size="20">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ObjectTableId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="APInvoiceId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IndexOrder"
+    Type="int"
+    DefaultValue="0">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Relation
+    ForeignKeyColumn="ObjectTableId"
+    ReferencedTable="ObjectTables"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="APInvoiceId"
+    ReferencedTable="APInvoices"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Index
+    Columns="EntityId" />
+</Table>

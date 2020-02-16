@@ -1,0 +1,470 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="GLAccounts"
+  Schema="dbo"
+  DBType="Main">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="InternalNumber"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="AccountTypeCode"
+    Type="varchar"
+    Size="1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="DisplayNumber"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="LocalName"
+    Type="nvarchar"
+    Size="105">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="EnglishName"
+    Type="varchar"
+    Size="75">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="SearchFields"
+    Type="nvarchar"
+    Size="4000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="IsMultiCurrency"
+    Type="bit">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CurrencyId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="RevenueExpenseType"
+    Type="varchar"
+    Size="1">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsControlAccount"
+    Type="bit">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ChartOfAccountsId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Inactive"
+    Type="bit">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ChartOfAccountsTypeCode"
+    Type="varchar"
+    Size="1">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ReconcileMethodCode"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ControlAccountId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="AutomaticReconcileId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PreviousEnglishName"
+    Type="varchar"
+    Size="75">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PreviousEnglishNameChangeDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PreviousLocalName"
+    Type="nvarchar"
+    Size="105">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PreviousLocalNameChangeDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PreviousNumber"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PreviousNumberChangeDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PreviousChartOfAccountsId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PreviousChartOfAccountsChangeDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CustomerGLAccountId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="RevaluationEnabled"
+    Type="bit">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ParentAccountId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Category1Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Category2Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Category3Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Category4Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Category5Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="IsVATExempt"
+    Type="bit">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="DeductionFileTypeId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="DeductionFileNumber"
+    Type="varchar"
+    Size="30">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="AssessingOfficeCode"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Occupation"
+    Type="nvarchar"
+    Size="60">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="DeductionTypeId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ConsolidationVat"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="IsEquipmentVendor"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ExcludeFromDeductionReport"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="CreatedByUserId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="UpdatedByUserId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CreateDate"
+    Type="datetime"
+    DefaultValue="'1900-01-01T00:00:00.000'">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="UpdateDate"
+    Type="datetime"
+    DefaultValue="'1900-01-01T00:00:00.000'">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="AllowEditChequePayToName"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ActiveForInterest"
+    Type="bit">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="InterestCalculationStartDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ActiveForInterestCreditInvoice"
+    Type="bit">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="MinimumInterestInvoiceBilling"
+    Type="int">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="InterestCreditLimit"
+    Type="decimal"
+    Precision="18"
+    Scale="2">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="NameForPrintingCheques"
+    Type="nvarchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Relation
+    ForeignKeyColumn="AccountTypeCode"
+    ReferencedTable="GLAccountTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="CurrencyId"
+    ReferencedTable="Currencies"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="RevenueExpenseType"
+    ReferencedTable="RevenueExpenseTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ChartOfAccountsId"
+    ReferencedTable="ChartOfAccounts"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ChartOfAccountsTypeCode"
+    ReferencedTable="ChartOfAccountsTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ReconcileMethodCode"
+    ReferencedTable="ReconcileMethods"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ControlAccountId"
+    ReferencedTable="GLAccounts"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="AutomaticReconcileId"
+    ReferencedTable="AutomaticReconcileMethods"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="PreviousChartOfAccountsId"
+    ReferencedTable="ChartOfAccounts"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="Category1Id"
+    ReferencedTable="Category1"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="Category2Id"
+    ReferencedTable="Category2"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="Category3Id"
+    ReferencedTable="Category3"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="Category4Id"
+    ReferencedTable="Category4"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="Category5Id"
+    ReferencedTable="Category5"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="DeductionFileTypeId"
+    ReferencedTable="WithholdingTaxDeductionTypes"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="AssessingOfficeCode"
+    ReferencedTable="TaxWithholdingAssessOffices"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="DeductionTypeId"
+    ReferencedTable="AccountingCompanyTypes"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="CreatedByUserId"
+    ReferencedTable="Users"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="UpdatedByUserId"
+    ReferencedTable="Users"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Index
+    Columns="Tenant,InternalNumber" />
+  <Index
+    Columns="DisplayNumber" />
+  <UniqueConstraint
+    Columns="DisplayNumber,Tenant" />
+</Table>

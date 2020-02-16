@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="GeneralLocks"
+  Schema="dbo"
+  DBType="Main">
+  <Column
+    Name="GeneralKey"
+    Type="varchar"
+    Size="128">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="CreatedAt"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
+  </Column>
+</Table>

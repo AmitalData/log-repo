@@ -1,0 +1,168 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="EntityChanges"
+  Schema="dbo"
+  DBType="Main">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ObjectTableId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="EntityId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="CreateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CreateByUserId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="AutomationConditionFieldsXml"
+    Type="nvarchar"
+    Size="-1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CheckStartDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="DoneDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="HasExecutedRecord"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ChangesFieldsXml"
+    Type="nvarchar"
+    Size="-1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ChangesAutomationFieldsXml"
+    Type="nvarchar"
+    Size="-1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="SetAutomationSsucceedXml"
+    Type="nvarchar"
+    Size="-1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="EmailAutomationSsucceedXml"
+    Type="nvarchar"
+    Size="-1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="SetAutomationFailedXml"
+    Type="nvarchar"
+    Size="-1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="EmailAutomationFailedXml"
+    Type="nvarchar"
+    Size="-1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="FollowUpAutomationFailedXml"
+    Type="nvarchar"
+    Size="-1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="SetSLAAutomationFailedXml"
+    Type="nvarchar"
+    Size="-1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="FollowUpAutomationSsucceedXml"
+    Type="nvarchar"
+    Size="-1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="SetSLAAutomationSsucceedXml"
+    Type="nvarchar"
+    Size="-1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="QueuedTaskAutomationFailedXml"
+    Type="nvarchar"
+    Size="-1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="QueuedTaskAutomationSsucceedXml"
+    Type="nvarchar"
+    Size="-1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ExecutionTime"
+    Type="int"
+    DefaultValue="0">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Relation
+    ForeignKeyColumn="CreateByUserId"
+    ReferencedTable="Users"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+</Table>

@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="Branches"
+  Schema="dbo"
+  DBType="Main">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Code"
+    Type="varchar"
+    Size="10">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="EnglishName"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="LocalName"
+    Type="nvarchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Notes"
+    Type="nvarchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="InActive"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="SearchFields"
+    Type="nvarchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ExternalId"
+    Type="nvarchar"
+    Size="25">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="AddressId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Signature"
+    Type="varchar"
+    Size="60">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="INTTRAId"
+    Type="varchar"
+    Size="35">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="INTTRAContactId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="INTTRAAlias"
+    Type="varchar"
+    Size="35">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CounterCode"
+    Type="varchar"
+    Size="5">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Relation
+    ForeignKeyColumn="AddressId"
+    ReferencedTable="Addresses"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="INTTRAContactId"
+    ReferencedTable="Contacts"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+</Table>

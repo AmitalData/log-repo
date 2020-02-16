@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="BlobFiles"
+  Schema="dbo"
+  DBType="Main">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="200">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Blob"
+    Type="varbinary"
+    Size="-1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="IsCompressed"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+</Table>

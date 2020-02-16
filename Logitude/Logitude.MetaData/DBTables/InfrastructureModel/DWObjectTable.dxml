@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="DWObjectTables"
+  Schema="dbo"
+  DBType="Main">
+  <Column
+    Name="Code"
+    Type="varchar"
+    Size="50">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Name"
+    Type="varchar"
+    Size="50">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="TypeCode"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsClosed"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="DefaultFilterBy"
+    Type="varchar"
+    Size="50">
+    <Constraints
+      Nullable="true" />
+  </Column>
+</Table>

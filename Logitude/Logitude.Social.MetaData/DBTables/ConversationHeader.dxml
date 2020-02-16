@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="ConversationHeaders"
+  Schema="dbo"
+  DBType="Main">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="CreatedByUserId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="CreateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ObjectTableId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="EntityId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="IsWaitingForResponse"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="EntityDescription"
+    Type="nvarchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Relation
+    ForeignKeyColumn="CreatedByUserId"
+    ReferencedTable="Users"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ObjectTableId"
+    ReferencedTable="ObjectTables"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+</Table>

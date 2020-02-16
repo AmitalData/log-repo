@@ -1,0 +1,252 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="LedgerTransactions"
+  Schema="dbo"
+  DBType="Main">
+  <Column
+    Name="JournalId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="JournalLineNumber"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="CreateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ControlAccountId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="AccountId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="AccountingDate"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="DocumentDate"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="DueDate"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="LocalAmountDebit"
+    Type="decimal"
+    Precision="16"
+    Scale="2">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="LocalAmountCredit"
+    Type="decimal"
+    Precision="16"
+    Scale="2">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="CurrencyId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ForeignAmountDebit"
+    Type="decimal"
+    Precision="16"
+    Scale="2">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ForeignAmountCredit"
+    Type="decimal"
+    Precision="16"
+    Scale="2">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ExchangeRate"
+    Type="decimal"
+    Precision="16"
+    Scale="5">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Reference1"
+    Type="nvarchar"
+    Size="30">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Reference2"
+    Type="nvarchar"
+    Size="30">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Reference3"
+    Type="nvarchar"
+    Size="30">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="OpenAmount"
+    Type="decimal"
+    Precision="16"
+    Scale="2">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="OppositeAccountId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="SearchFields"
+    Type="nvarchar"
+    Size="4000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="OpenAmountCurrencyId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Notes"
+    Type="nvarchar"
+    Size="150">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="AmountToReconcile"
+    Type="decimal"
+    Precision="16"
+    Scale="2">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Mark"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsReconciled"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsExternalReconcile"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="InReconcileProgress"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ReconcileRemarks"
+    Type="nvarchar"
+    Size="400">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="InProgressExternalReconcile"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Relation
+    ForeignKeyColumn="JournalId,JournalLineNumber"
+    ReferencedTable="JournalLines"
+    ReferencedColumn="JournalId,Line"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ControlAccountId"
+    ReferencedTable="GLAccounts"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="AccountId"
+    ReferencedTable="GLAccounts"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="CurrencyId"
+    ReferencedTable="Currencies"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="OppositeAccountId"
+    ReferencedTable="GLAccounts"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="OpenAmountCurrencyId"
+    ReferencedTable="Currencies"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Index
+    Columns="AccountId,IsReconciled,InReconcileProgress" />
+</Table>

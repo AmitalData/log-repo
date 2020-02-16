@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="CustomerTenantAccesses"
+  Schema="dbo"
+  DBType="Main">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="CustomerTenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ContactName"
+    Type="varchar"
+    Size="60">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CompanyVat"
+    Type="varchar"
+    Size="20">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CompanyName"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CompanyEmail"
+    Type="varchar"
+    Size="70">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ContactPhone"
+    Type="varchar"
+    Size="25">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ContactMobile"
+    Type="varchar"
+    Size="25">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="RequestDateTime"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="LastShipmentDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Status"
+    Type="varchar"
+    Size="2">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="UpdatedByUserId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="LastUpdateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="SearchFields"
+    Type="nvarchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="IsPrivateLabelCustomer"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="StockTypeCode"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Relation
+    ForeignKeyColumn="Status"
+    ReferencedTable="CustomerTenantAccessStatusTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="UpdatedByUserId"
+    ReferencedTable="Users"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+</Table>

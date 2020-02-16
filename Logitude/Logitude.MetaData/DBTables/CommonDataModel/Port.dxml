@@ -1,0 +1,209 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="Ports"
+  Schema="dbo"
+  DBType="Main">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Code"
+    Type="char"
+    Size="3">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="EnglishName"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="LocalName"
+    Type="nvarchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Notes"
+    Type="nvarchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CountryId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="InActive"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsAir"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsOcean"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsInland"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="AddedManually"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Latitude"
+    Type="float">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Longtitude"
+    Type="float">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Field1"
+    Type="nvarchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Field2"
+    Type="nvarchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Field3"
+    Type="nvarchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Field4"
+    Type="nvarchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Field5"
+    Type="nvarchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Field6"
+    Type="nvarchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Field7"
+    Type="nvarchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Field8"
+    Type="nvarchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Field9"
+    Type="nvarchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Field10"
+    Type="nvarchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="SearchFields"
+    Type="nvarchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="StateId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="StateName"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CombinedCode"
+    Type="varchar"
+    Size="30">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Relation
+    ForeignKeyColumn="CountryId"
+    ReferencedTable="Countries"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="StateId"
+    ReferencedTable="States"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Index
+    Columns="Tenant,InActive,IsAir,EnglishName" />
+  <UniqueConstraint
+    Columns="Tenant,Code,CountryId" />
+</Table>

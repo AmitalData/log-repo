@@ -1,0 +1,144 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="Correspondences"
+  Schema="dbo"
+  DBType="Main">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="CreatedByContactId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="CreateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Description"
+    Type="nvarchar"
+    Size="4000">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsInternal"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ObjectTableId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="EntityId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ActivityTypeCode"
+    Type="varchar"
+    Size="2">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ActivityId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ActivitySubject"
+    Type="nvarchar"
+    Size="255">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CCs"
+    Type="varchar"
+    Size="500">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Bcc"
+    Type="varchar"
+    Size="500">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="NotifyMe"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="NotifyOwner"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="InternalUsers"
+    Type="varchar"
+    Size="500">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Direction"
+    Type="varchar"
+    Size="1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="HTMLFullBody"
+    Type="nvarchar"
+    Size="-1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="RightToLeft"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Relation
+    ForeignKeyColumn="CreatedByContactId"
+    ReferencedTable="Contacts"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ObjectTableId"
+    ReferencedTable="ObjectTables"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+</Table>

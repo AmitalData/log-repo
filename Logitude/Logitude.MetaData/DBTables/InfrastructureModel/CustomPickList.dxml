@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="CustomPickLists"
+  Schema="dbo"
+  DBType="Main">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Code"
+    Type="nvarchar"
+    Size="100">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Value"
+    Type="nvarchar"
+    Size="1000">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsMultipleChoice"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+</Table>

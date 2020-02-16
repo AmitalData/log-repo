@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="TermsofUses"
+  Schema="dbo"
+  DBType="Main">
+  <Column
+    Name="Version"
+    Type="int">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Date"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
+  </Column>
+</Table>

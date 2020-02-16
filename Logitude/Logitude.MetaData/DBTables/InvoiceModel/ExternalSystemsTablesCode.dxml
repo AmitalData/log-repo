@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="ExternalSystemsTablesCodes"
+  Schema="dbo"
+  DBType="Main">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="LogitudeTable"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Code"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Name"
+    Type="varchar"
+    Size="60">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CreatedDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="UpdatedDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="SearchFields"
+    Type="nvarchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+</Table>

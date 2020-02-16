@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="CustomerMediatorByProducts"
+  Schema="dbo"
+  DBType="Main">
+  <Column
+    Name="ProductTypeCode"
+    Type="varchar"
+    Size="2">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="CustomerId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="MediatorId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Relation
+    ForeignKeyColumn="MediatorId"
+    ReferencedTable="Cards"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+</Table>

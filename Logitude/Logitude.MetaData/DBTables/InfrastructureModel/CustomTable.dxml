@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="CustomTables"
+  Schema="dbo"
+  DBType="Main">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ObjectTableId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Field1"
+    Type="nvarchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Field2"
+    Type="nvarchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Field3"
+    Type="nvarchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Field4"
+    Type="nvarchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Field5"
+    Type="nvarchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Field6"
+    Type="nvarchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Field7"
+    Type="nvarchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Field8"
+    Type="nvarchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Field9"
+    Type="nvarchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Field10"
+    Type="nvarchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Relation
+    ForeignKeyColumn="ObjectTableId"
+    ReferencedTable="ObjectTables"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+</Table>

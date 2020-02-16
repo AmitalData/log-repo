@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="TenantManagementLicenses"
+  Schema="dbo"
+  DBType="Global">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="PackageCode"
+    Type="varchar"
+    Size="5">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="NumberOfUsers"
+    Type="int">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="FreeUsers"
+    Type="int">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Price"
+    Type="float">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="TotalPrice"
+    Type="float">
+    <Constraints
+      Nullable="true" />
+  </Column>
+</Table>

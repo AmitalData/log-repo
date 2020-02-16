@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="BluesnapContracts"
+  Schema="dbo"
+  DBType="Global">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15"
+    DefaultValue="''">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Code"
+    Type="varchar"
+    Size="10">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Name"
+    Type="varchar"
+    Size="50">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ContractId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="SearchFields"
+    Type="nvarchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="InActive"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="BluesnapContractTypeCode"
+    Type="varchar"
+    Size="4"
+    DefaultValue="'BA'">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Relation
+    ForeignKeyColumn="BluesnapContractTypeCode"
+    ReferencedTable="BluesnapContractTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+</Table>

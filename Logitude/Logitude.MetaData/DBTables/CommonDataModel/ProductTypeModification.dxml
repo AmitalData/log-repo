@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="ProductTypeModifications"
+  Schema="dbo"
+  DBType="Main">
+  <Column
+    Name="ProductTypeCode"
+    Type="varchar"
+    Size="2">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="InActive"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="QuotationDefaultTemplateId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="RoutingRQuoteDefaultTemplateId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Relation
+    ForeignKeyColumn="ProductTypeCode"
+    ReferencedTable="ProductTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+</Table>

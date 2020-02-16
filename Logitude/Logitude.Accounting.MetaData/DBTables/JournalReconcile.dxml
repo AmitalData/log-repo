@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="JournalReconciles"
+  Schema="dbo"
+  DBType="Main">
+  <Column
+    Name="JournalId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Line"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="LedgerTransactionId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="CurrencyId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ReconciliationAmount"
+    Type="decimal"
+    Precision="16"
+    Scale="2">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsPartial"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Relation
+    ForeignKeyColumn="JournalId"
+    ReferencedTable="Journals"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="LedgerTransactionId"
+    ReferencedTable="LedgerTransactions"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="CurrencyId"
+    ReferencedTable="Currencies"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+</Table>

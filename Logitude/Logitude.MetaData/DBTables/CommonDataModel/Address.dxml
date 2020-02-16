@@ -1,0 +1,159 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="Addresses"
+  Schema="dbo"
+  DBType="Main">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Description"
+    Type="nvarchar"
+    Size="70">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="City"
+    Type="nvarchar"
+    Size="25">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="StateId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ZipCode"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="FaxNumber"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PhoneNumber"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ATTN"
+    Type="nvarchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="AddressTypeId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Address1"
+    Type="nvarchar"
+    Size="65">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Address2"
+    Type="nvarchar"
+    Size="65">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Name"
+    Type="nvarchar"
+    Size="70">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="CountryId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CardId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="InActive"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsLocalLanguage"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="SearchFields"
+    Type="nvarchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ExternalId"
+    Type="varchar"
+    Size="10">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Relation
+    ForeignKeyColumn="StateId"
+    ReferencedTable="States"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="AddressTypeId"
+    ReferencedTable="AddressTypes"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="CountryId"
+    ReferencedTable="Countries"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="CardId"
+    ReferencedTable="Cards"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Index
+    Columns="Tenant,ExternalId" />
+</Table>

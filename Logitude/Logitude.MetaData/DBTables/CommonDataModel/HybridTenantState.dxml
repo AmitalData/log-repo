@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="HybridTenantStates"
+  Schema="dbo"
+  DBType="Main">
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="FailedQueue"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="WaitingQueue"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="LastUpdateDateTime"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="LastQueueDateTime"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+</Table>

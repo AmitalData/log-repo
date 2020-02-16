@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="HarmonizeCodes"
+  Schema="dbo"
+  DBType="Main">
+  <Column
+    Name="Code"
+    Type="varchar"
+    Size="6">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Description"
+    Type="varchar"
+    Size="1000">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ChapterCode"
+    Type="varchar"
+    Size="2">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ChapterDescription"
+    Type="varchar"
+    Size="1000">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="SubChapterCode"
+    Type="varchar"
+    Size="4">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="SubChapterDescription"
+    Type="varchar"
+    Size="1000">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="SearchFields"
+    Type="nvarchar"
+    Size="4000">
+    <Constraints
+      Nullable="false" />
+  </Column>
+</Table>

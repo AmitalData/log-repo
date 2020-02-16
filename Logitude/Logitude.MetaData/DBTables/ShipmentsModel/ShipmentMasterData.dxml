@@ -1,0 +1,814 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="ShipmentMasterDatas"
+  Schema="dbo"
+  DBType="Main">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Master"
+    Type="varchar"
+    Size="20">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="MAWBOBLDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="MainCarriageIsFromStack"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="BookingConfirmationNumber"
+    Type="varchar"
+    Size="25">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="BookingConfirmedBy"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="BookingConfirmationNotes"
+    Type="nvarchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="MainCarriageFromPortId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="MainCarriageToPortId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="MainCarriageATD"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="MainCarriageATA"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="MainCarriageETD"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="MainCarriageETA"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="MainCarriageCarrierNumber"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="MainCarriageCarrierId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Transshipment1FromPortId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Transshipment1ToPortId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Transshipment1ATD"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Transshipment1ATA"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Transshipment1ETD"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Transshipment1ETA"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Transshipment1CarrierNumber"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Transshipment1CarrierId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Transshipment2FromPortId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Transshipment2ToPortId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Transshipment2ATD"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Transshipment2ATA"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Transshipment2ETD"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Transshipment2ETA"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Transshipment2CarrierNumber"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Transshipment2CarrierId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Transshipment3FromPortId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Transshipment3ToPortId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Transshipment3ATD"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Transshipment3ATA"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Transshipment3ETD"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Transshipment3ETA"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Transshipment3CarrierNumber"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Transshipment3CarrierId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="MainCarriageVesselId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Transshipment1VesselId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Transshipment2VesselId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Transshipment3VesselId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Transshipment1AdditionalMAWBOBLBL"
+    Type="varchar"
+    Size="20">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Transshipment2AdditionalMAWBOBLBL"
+    Type="varchar"
+    Size="20">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Transshipment3AdditionalMAWBOBLBL"
+    Type="varchar"
+    Size="20">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="MainCarriageFinalDestinationPortId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="MainCarriageFinalDestinationETA"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="MainCarriageFinalDestinationATA"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="DepartureArrivalFromDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="DepartureArrivalToDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="MasterShipmentNumber"
+    Type="varchar"
+    Size="20">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="FWBStatusCode"
+    Type="varchar"
+    Size="4">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="FWBStatusDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="MainCarriageFromPartnerId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="MainCarriageFromAddressId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="MainCarriageToPartnerId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="MainCarriageToAddressId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Driver"
+    Type="nvarchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="TruckNumber"
+    Type="nvarchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="TrailerNumber"
+    Type="nvarchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="MainCarriageSTD"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="MainCarriageSTA"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Transshipment1STD"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Transshipment1STA"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Transshipment2STD"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Transshipment2STA"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Transshipment3STD"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Transshipment3STA"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ImportManifest"
+    Type="varchar"
+    Size="50">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CarrierTransportDocumentNumber"
+    Type="varchar"
+    Size="50">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="StatusId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="StatusDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="StatusLocation"
+    Type="nvarchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CargonautFWBStatusCode"
+    Type="varchar"
+    Size="4">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CargonautFWBStatusDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="MainCarriageCarrierPrefix"
+    Type="char"
+    Size="2">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Transshipment1CarrierPrefix"
+    Type="char"
+    Size="2">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Transshipment2CarrierPrefix"
+    Type="char"
+    Size="2">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Transshipment3CarrierPrefix"
+    Type="char"
+    Size="2">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="IsKnownCargo"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="RegulatedAgentRANumber"
+    Type="varchar"
+    Size="5">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="KnownConsignorNumber"
+    Type="varchar"
+    Size="9">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ColoaderRANumber"
+    Type="varchar"
+    Size="5">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="KCExpirationDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="AWBPrintingSecurityStatusId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="AWBPrintingRANumber"
+    Type="varchar"
+    Size="5">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="AdditionalHandlingInfo"
+    Type="varchar"
+    Size="65">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="AWBPrintingSecurityStatusEdited"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="AWBPrintingRANumberEdited"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="AdditionalHandlingInfoEdited"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="InterlineId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="AirlinePrefix"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ManifestReason"
+    Type="varchar"
+    Size="500">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ManifestStatusCode"
+    Type="varchar"
+    Size="4">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ProrateReceivables"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="DocumentsClosingDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="OBLTypeCode"
+    Type="varchar"
+    Size="4">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CutoffDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Relation
+    ForeignKeyColumn="Id"
+    ReferencedTable="Shipments"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="MainCarriageFromPortId"
+    ReferencedTable="Ports"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="MainCarriageToPortId"
+    ReferencedTable="Ports"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="MainCarriageCarrierId"
+    ReferencedTable="Cards"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="Transshipment1FromPortId"
+    ReferencedTable="Ports"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="Transshipment1ToPortId"
+    ReferencedTable="Ports"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="Transshipment1CarrierId"
+    ReferencedTable="Cards"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="Transshipment2FromPortId"
+    ReferencedTable="Ports"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="Transshipment2ToPortId"
+    ReferencedTable="Ports"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="Transshipment2CarrierId"
+    ReferencedTable="Cards"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="Transshipment3FromPortId"
+    ReferencedTable="Ports"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="Transshipment3ToPortId"
+    ReferencedTable="Ports"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="Transshipment3CarrierId"
+    ReferencedTable="Cards"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="MainCarriageVesselId"
+    ReferencedTable="Vessels"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="Transshipment1VesselId"
+    ReferencedTable="Vessels"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="Transshipment2VesselId"
+    ReferencedTable="Vessels"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="Transshipment3VesselId"
+    ReferencedTable="Vessels"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="MainCarriageFinalDestinationPortId"
+    ReferencedTable="Ports"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="FWBStatusCode"
+    ReferencedTable="FWBStatus"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="MainCarriageFromPartnerId"
+    ReferencedTable="Cards"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="MainCarriageFromAddressId"
+    ReferencedTable="Addresses"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="MainCarriageToPartnerId"
+    ReferencedTable="Cards"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="MainCarriageToAddressId"
+    ReferencedTable="Addresses"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="StatusId"
+    ReferencedTable="EntityStatus"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="CargonautFWBStatusCode"
+    ReferencedTable="FWBStatus"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="AWBPrintingSecurityStatusId"
+    ReferencedTable="AWBSpecialHandlingCodes"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="InterlineId"
+    ReferencedTable="Cards"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ManifestStatusCode"
+    ReferencedTable="ManifestStatus"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="OBLTypeCode"
+    ReferencedTable="OBLTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Index
+    Columns="Tenant,Master,InterlineId" />
+  <Index
+    Columns="Master,InterlineId" />
+</Table>
