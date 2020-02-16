@@ -3,6 +3,7 @@ import {SessionLocator} from '../Utilities/SessionLocator';
 import { AppTool } from '../Tools';
 import { retry } from 'rxjs/operator/retry';
 import { isNullOrUndefined } from 'util';
+import { ObjectsLocator } from '../Locators/ObjectsLocator';
 
 export class TextCodeTranslator {
 
@@ -103,8 +104,8 @@ export class TextCodeTranslator {
                 window.TextCodesCache.push(translationObject);
             }
             else {
-                if (!isNullOrUndefined(value) && value.indexOf(".NewButton") < 0 && value != "No Filter") {
-                    // alert("This Code '" + value + "' Not Found!");
+                if (this.ShowAlertMessage(value)) {
+                    alert("This Code '" + value + "' Not Found!");
                 }
             }
         }
@@ -120,6 +121,17 @@ export class TextCodeTranslator {
         else {
             return translation;
         }
+    }
+    static ShowAlertMessage(value) {
+        if (isNullOrUndefined(value) || value.indexOf(".NewButton") >= 0 || value == "No Filter")
+            return false;
+
+        var productionStages: Array<string> = ["simplog", "logboxwe1", "amitalstorage"];
+        if (!productionStages.find(stage => stage == ObjectsLocator.GlobalSetting.DeploymentStage.toLowerCase())) {
+            if (!SessionLocator.ProtractorEmails.find(userEmail => userEmail == SessionLocator.LoggedUserPM.Email.toLowerCase()))
+                return true;
+        }
+        return false;
     }
     static TranslateTable(value: string): string {
 

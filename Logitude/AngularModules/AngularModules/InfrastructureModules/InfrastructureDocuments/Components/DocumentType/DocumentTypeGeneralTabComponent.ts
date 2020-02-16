@@ -149,6 +149,7 @@ export class DocumentTypeGeneralTabComponent extends BaseComponent implements On
                 case "ShippingLine":
                 case "Trucker":
                 case "Vendor":
+                case "AccountingPartner":
                 case "Warehouse":
                 case "Occasion":
                     {

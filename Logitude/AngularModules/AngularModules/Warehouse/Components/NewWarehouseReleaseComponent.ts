@@ -72,6 +72,7 @@ export class NewWarehouseReleaseComponent extends BaseComponent implements OnIni
     DimensionsLabel: string;
     ChargeableWeightLabel: string;
     DataContext: any = this;
+    IsFilterByShipmentId: boolean = true;
     private CurrentSession = SessionLocator.SelectedSession;
     public FromPortId: string;
     public ToPortId: string;
@@ -147,6 +148,7 @@ export class NewWarehouseReleaseComponent extends BaseComponent implements OnIni
         if (this.warehouseReleasePM) {
             if (this.ShipmentPM) {
                 this.UIProperties.SetEnabled("ShipmentId", "WarehouseRelease", false);
+                this.IsFilterByShipmentId = false;
                 if (this.ShipmentPM.ShipmentLevelCode == "D") this.warehouseReleasePM.CustomerId = this.ShipmentPM.CustomerId;
                 this.warehouseReleasePM.ShipmentId = this.ShipmentPM.Id;
                 this.warehouseReleasePM.ShipmentNumber = this.ShipmentPM.ShipmentNumber;
@@ -462,7 +464,7 @@ export class NewWarehouseReleaseComponent extends BaseComponent implements OnIni
         if (warehouseEntryPackagesDetailsComponenttLocation != null) {
             SessionLocator.DynamicLoader.Load('./Warehouse/Components/WarehouseReleasePackagesDetailsComponent', warehouseEntryPackagesDetailsComponenttLocation.viewContainerRef)
                 .then(cmpRef => {
-                    var windowArgs: any = { WarehouseReleasePM: this.warehouseReleasePM, ViewModelTrigger: this, ShipmentPM: this.ShipmentPM, WarehouseEntryId: this.WarehouseEntryId };
+                    var windowArgs: any = { WarehouseReleasePM: this.warehouseReleasePM, ViewModelTrigger: this, ShipmentPM: this.ShipmentPM, WarehouseEntryId: this.WarehouseEntryId, IsFilterByShipmentId: this.IsFilterByShipmentId };
                     cmpRef.instance.SetWindowArgs(windowArgs);
                     this.warehouseReleasePackagesDetailsComponent = cmpRef.instance;
                 });

@@ -636,7 +636,7 @@
                                         </div>
 
                                         <div *ngIf="IsGeneratePackagesfromCrossDockReleasesButtonVisible">
-                                            <Hyperlink id="{{ 'GenerateCrossDockReleases' | IdGeneratorPipe}}" [IsEnabled]="IsGeneratePackagesfromCrossDockReleasesButtonEnabled" (click)="GeneratePackagesfromCrossDockReleasesButtonClicked()">{{GenerateCrossDockReleasesButtonLabel}}</Hyperlink>
+                                            <Hyperlink id="{{ 'GenerateCrossDockReleases' | IdGeneratorPipe}}" (click)="GeneratePackagesfromCrossDockReleasesButtonClicked()">{{GenerateCrossDockReleasesButtonLabel}}</Hyperlink>
                                         </div>
                                     </div>
                                 </div>
