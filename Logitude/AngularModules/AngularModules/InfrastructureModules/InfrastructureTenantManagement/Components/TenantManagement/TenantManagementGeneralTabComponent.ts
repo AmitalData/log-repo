@@ -758,6 +758,7 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
                 logeWindow.WindowClosed.subscribe(s => {
                     if (s) {
                         this.BuildPackagesList();
+                        this.ComputePackagesTotals();
                     }
                 });
             });
@@ -785,7 +786,7 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
                 }
             });
 
-            this.ComputePackagesTotals();
+            //this.ComputePackagesTotals();
         });
     }
 
@@ -817,15 +818,15 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
                 this.TotalFreeUsers = this.PackagesTotalFreeUsers;
             }   
             else {
-                if (this.NumberOfUsers) {
+               // if (this.NumberOfUsers) {
                     this.TotalNumberOfUsers = this.NumberOfUsers;
-                }
-                if (this.FreeUsers) {
+               // }
+               // if (this.FreeUsers) {
                     this.TotalFreeUsers = this.FreeUsers;
-                }
-                if (this.TotalPrice) {
+               // }
+                //if (this.TotalPrice) {
                     this.TotalPaymentamount = this.TotalPrice;
-                }
+               // }
             }
            
         }
@@ -922,6 +923,7 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
             logeWindow.WindowClosed.subscribe(s => {
                 if (s) {
                     this.BuildPackagesList();
+                    this.ComputePackagesTotals();
                 }
             });
         });
@@ -940,6 +942,7 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
                 this.EntityPM.RemoveTenantManagementLicensePM(itemViewModel.EntityPM);
 
                 this.BuildPackagesList();
+                this.ComputePackagesTotals();
             }
         });
     }
