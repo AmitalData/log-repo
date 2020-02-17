@@ -16,6 +16,7 @@ using Simplog.Global.Data.GlobalModel;
 using System.Configuration;
 using Devart.Data.Oracle;
 using CustomsWorkerRole;
+using Logitude.Customs.BL.PatchDistribution;
 
 namespace AmitalCustomsWindowsService
 {
@@ -60,7 +61,7 @@ namespace AmitalCustomsWindowsService
         {
 
             Program.ThreadStartStaticIsMustB4UsingTheDB();
-            if (!HaveDB())
+            if (!HaveDB() || IsOldDB())
             {
                 StopThreads();
                 return;
@@ -75,6 +76,54 @@ namespace AmitalCustomsWindowsService
             AllThreadsAreAlive();
 
             
+        }
+
+        private bool IsOldDB()
+        {
+            try
+            {
+
+                //var myP19R03_0000_PatchDist = new P19R03_0001_PatchDist();
+                //myP19R03_0000_PatchDist.Enshure_SeedDbMigrateTable();
+
+                var _PatchDistributionManager = new PatchDistributionManager();
+                _PatchDistributionManager.Check_PatchDistributionListAreValid();
+
+
+
+                var assemblyUtil = new Logitude.Server.Tools.Helpers.AssemblyUtil();
+                var prodInfo = assemblyUtil.GetProductInfo(typeof(JustWebFreight.WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses.MyEntityUpdateClass).Assembly);
+                var assemblyVersion = assemblyUtil.GetVersion(prodInfo);
+                Logger.LogMe($"assemblyVersion ={assemblyVersion}", false);
+
+
+                var patchDistributionMatch = new PatchDistributionMatch();
+                var _PatchDistributionMatchModel = patchDistributionMatch.GetPatchDistributionMatchModel(assemblyVersion);
+                Logger.LogMe(_PatchDistributionMatchModel.Message, false);
+                Logger.LogMe($"DB MajorVersion={_PatchDistributionMatchModel.LastClosed_DBMigration.MajorVersion}", false);
+                Logger.LogMe($"DB MinorVersion Last Closed !!!={_PatchDistributionMatchModel.LastClosed_DBMigration.MinorVersion}", false);
+                //Logger.LogMe($"DB MinorLine={_PatchDistributionMatchModel.Last_DBMigrationLine.CounterKey}", false);
+                if (_PatchDistributionMatchModel.MajorVersionMatch == PatchDistributionMatch.MajorVersionMatchEnum.OldDB)
+                {
+                    Logger.LogMe($"shuttttdown !!!_PatchDistributionMatchModel.MajorVersionMatch == PatchDistributionMatch.MajorVersionMatchEnum.OldDB", true);
+                    return true;
+
+                }
+                if (
+                    _PatchDistributionMatchModel.MyAssemblyDBMigrationModel.MinorVersion 
+                    > 
+                    _PatchDistributionMatchModel.LastClosed_DBMigration.MinorVersion)
+                {
+                    Logger.LogMe($"shuttttdown !!!OldDB !!! MyAssemblyDBMigrationModel.MinorVersion {_PatchDistributionMatchModel.MyAssemblyDBMigrationModel.MinorVersion }> _PatchDistributionMatchModel.LastClosed_DBMigration.MinorVersion {_PatchDistributionMatchModel.LastClosed_DBMigration.MinorVersion}", true);
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception ee )
+            {
+                Logger.LogMe("IsOldDB -- " + ee.ToString(), true);
+                throw;
+            }
         }
 
         private void AllThreadsAreAlive()
