@@ -59,6 +59,7 @@ import {ErrorLogPM} from '../../../../../Infrastructure/EntityPMs/ErrorLogPM';
 import { DateTimeFormat } from '../../../../../Infrastructure/Utilities/DateTimeZone';
 import { DeclarationCourierStatusList } from '../../../../../Customs/EntityLists/DeclarationCourierStatusList';
 import { DeclarationCourierStatusListService } from '../../../../../Customs/Services/StandardLists/DeclarationCourierStatusListService';
+import { Observable } from 'rxjs';
 
 
 @Component({
@@ -1269,70 +1270,118 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
 
         var isFuturePaymentDateValid = this.IsFuturePaymentDateValid(); // WI 32593
         var isPaymentDateValid = this.IsPaymentDateValid();
+        var isBlockTime = false;
+        if (!isFuturePaymentDateValid || !isPaymentDateValid) {
 
-        if (isFuturePaymentDateValid && isPaymentDateValid) {
-
-
-            var isNotBlockTime: boolean;
-
-            isNotBlockTime = this.CheckIfBlockTime();
-            if (isNotBlockTime) {
-            this.ValidationErrorsList = [];
-                this.ActivateUnifreightInstructionOK();
-            }
-        }
-        else {
             this.ValidationErrorsList = [];
             if (!isFuturePaymentDateValid)
                 this.ValidationErrorsList.push(TextCodeTranslator.Translate("Customs.Declaration.O.futuredatecantbepast"));
             if (!isPaymentDateValid)
                 this.ValidationErrorsList.push("לא ניתן להזין תאריך בעבר");
+
         }
+        else {
+            this._CustomsSettingExtendedListService.GetDefault("ISRAEL", "CGG_PAY_BLK_RNG", "NON", "NON", SessionLocator.Tenant).subscribe((response: ServiceResponse) => {
+                let obj = response.Result;
+                if (obj) {
+                    let timeCompany = obj['DefaultValue'];
+                    //timeCompany = "12:00 - 13:00";
+                    this._CustomsSettingExtendedListService.GetDefault("ISRAEL", "CIM_PAY_BLK_RNG", "NON", this.DeclarationPM.CustomerCode, SessionLocator.Tenant).subscribe((response: ServiceResponse) => {
+                        let obj = response.Result;
+                     //   debugger;
+                        if (obj) {
+                            let timeCustomer = obj['DefaultValue'];
+                         //   timeCustomer = "20:00 - 22:00";
+                            if (AppTool.IsNullOrEmpty(timeCompany) && AppTool.IsNullOrEmpty(timeCustomer)) {
+                                isBlockTime = false;
+                            }
+                            else {
+
+
+                                if (!AppTool.IsNullOrEmpty(this.FuturePaymentDateTime)) {
+                                    if (!AppTool.IsNullOrEmpty(timeCompany)) {
+                                        if (this.CheckIdDateBetween2Times(timeCompany, this.FuturePaymentDateTime)) {
+                                            this.ValidationErrorsList.push("לא ניתן להגיש תשלום בשעות שהוזנו , לפי הגדרה ברמת חברה");
+                                            isBlockTime = true;
+                                        }
+
+                                    }
+                                    if (!AppTool.IsNullOrEmpty(timeCustomer)) {
+
+                                        if (this.CheckIdDateBetween2Times(timeCustomer, this.FuturePaymentDateTime)) {
+                                            this.ValidationErrorsList.push("לא ניתן להגיש תשלום בשעות שהוזנו , לפי הגדרה ברמת לקוח");
+                                        isBlockTime = true;
+                                    }
+                                    }
+                                }
+
+                                else {
+                                if (!AppTool.IsNullOrEmpty(timeCompany)) {
+
+                                    if (this.CheckIdDateBetween2Times(timeCompany, this.PaymentDate)) {
+                                        this.ValidationErrorsList.push("לא ניתן להגיש תשלום בשעות שהוזנו , לפי הגדרה ברמת חברה");
+                                    isBlockTime = true;
+                                }
+                                }
+                                if (!AppTool.IsNullOrEmpty(timeCustomer)) {
+
+                                    if (this.CheckIdDateBetween2Times(timeCustomer, this.PaymentDate)) {
+                                        this.ValidationErrorsList.push("לא ניתן להגיש תשלום בשעות שהוזנו , לפי הגדרה ברמת לקוח");
+                                    isBlockTime = true;
+                                }
+                                }
+}
+
+                            }
+
+
+                            if (!isBlockTime) {
+                                this.ValidationErrorsList = [];
+                                this.ActivateUnifreightInstructionOK();
+                            }
+ 
+                        }
+
+
+
+
+                    });
+                }
+            });
+        }
+  
+
+
+            //var isBlockTime: boolean;
+
+            //isBlockTime = this.CheckIfBlockTime();
+  
 
 
 
     }
 
-
-    CheckIfBlockTime() {
-
-        this._CustomsSettingExtendedListService.GetDefault("ISRAEL", "CGG_PAY_BLK_RNG", "NON", "NON", SessionLocator.Tenant).subscribe((response: ServiceResponse) => {
-            debugger;
-            let obj = response.Result;
-            if (obj) {
-                let timeCompany = obj['DefaultValue'];
-
-                this._CustomsSettingExtendedListService.GetDefault("ISRAEL", "CIM_PAY_BLK_RNG", "NON", this.DeclarationPM.CustomerCode, SessionLocator.Tenant).subscribe((response: ServiceResponse) => {
-                    let obj = response.Result;
-                    if (obj) {
-                        let timeCustomer = obj['DefaultValue'];
-                        if (AppTool.IsNullOrEmpty(timeCompany) && AppTool.IsNullOrEmpty(timeCustomer) ) {
-                            return true;  
-                        }
-                        else {
-                            debugger;
-                            var parsedDate = Date.parse(timeCompany);
-
-   
-                            if (isNaN(timeCompany) && !isNaN(parsedDate)) {
-                                 
-                            }
-                            }
-                            
-
-                        }
-                     
-                });
 
  
-            }
-        });
+    CheckIdDateBetween2Times(times: any,date1:Date) {
 
-          
-         this.ValidationErrorsList.push("לא ניתן להזין תאריך בעבר");
+        var startTime = times.split(" - ")[0];
+        var endTime = times.split(" - ")[1];
+        var date = new Date(date1.getFullYear(), date1.getMonth(), date1.getDate(), date1.getUTCHours(), date1.getUTCMinutes(), 0);
 
-        return true;
+         var startDate = new Date(date.getTime());
+        startDate.setHours(startTime.split(":")[0]);
+        startDate.setMinutes(startTime.split(":")[1]);
+
+        var endDate = new Date(date.getTime());
+        endDate.setHours(endTime.split(":")[0]);
+        endDate.setMinutes(endTime.split(":")[1]);
+
+
+
+        return startDate < date && endDate > date
     }
+    
     ActivateUnifreightInstructionOK() {
         //if (!AppTool.IsNullOrEmpty(this.DeclarationPM.CustomFileNo) && AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
         if (AmitalGatewayUtil.Instance.IsDeclarationInUse(this.DeclarationPM.CustomFileNo, this.DeclarationPM.IsConvertedDeclaration, this.DeclarationPM.IsConnectedToUnifreight)) {
