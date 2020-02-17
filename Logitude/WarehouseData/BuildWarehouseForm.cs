@@ -255,6 +255,11 @@ namespace WarehouseData
 
                             foreach (TableClass table in tableNameLists.Where(d => d.HasDimensionTable).ToList())
                             {
+                                if(table.TableName == "ChargesType")
+                                {
+
+                                }
+
                                     Stopwatch stopWatchDimensionsTable = null;
                              
                                     if (table.DispayInScreen)

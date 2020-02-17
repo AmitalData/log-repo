@@ -46,13 +46,12 @@ namespace WarehouseData.Helper
             tableNameLists.Add(new TableClass() { TableName = "ShipmentMasterData", FieldsDBName = "MasterShipmentNumber", DBTableName = "ShipmentMasterDatas", Dw_TableName = "dw_ShipmentMasterDatas", KeyName = "Id", HasNotSpecifiedValue = true, HasConstraint = true, DispayInScreen = true });
             tableNameLists.Add(new TableClass() { TableName = "ShipmentComputedFields", DBTableName = "ShipmentComputedFields", Dw_TableName = "dw_ShipmentComputedFields", KeyName = "Id", HasConstraint = true, DispayInScreen = true });
 
-            //tableNameLists.Add(new TableClass() { TableName = "ShipmentPayable", DBTableName = "ShipmentPayables", Dw_TableName = "dw_ShipmentPayables", KeyName = "Id", HasNotSpecifiedValue = true });
-            //tableNameLists.Add(new TableClass() { TableName = "APInvoiceLine", DBTableName = "APInvoiceLines", Dw_TableName = "dw_APInvoiceLines", KeyName = "APInvoiceId", FieldsDBName = "EntityPayableId", HasNotSpecifiedValue = true });
-            //tableNameLists.Add(new TableClass() { TableName = "APInvoice", DBTableName = "APInvoices", Dw_TableName = "dw_APInvoices", KeyName = "Id", HasNotSpecifiedValue = true });
-            //tableNameLists.Add(new TableClass() { TableName = "ShipmentReceivable", DBTableName = "ShipmentReceivables", Dw_TableName = "dw_ShipmentReceivables", KeyName = "Id", HasNotSpecifiedValue = true });
-            //tableNameLists.Add(new TableClass() { TableName = "ARInvoiceLine", DBTableName = "ARInvoiceLines", Dw_TableName = "dw_ARInvoiceLines", KeyName = "Id", HasNotSpecifiedValue = true , FieldsDBName= "ARInvoiceId,ReceivableId" });
-            //tableNameLists.Add(new TableClass() { TableName = "ARInvoice", DBTableName = "ARInvoices", Dw_TableName = "dw_ARInvoices", KeyName = "Id", HasNotSpecifiedValue = true });
-            //tableNameLists.Add(new TableClass() { TableName = "ChargesType", DBTableName = "ChargesTypes", Dw_TableName = "dw_ChargesTypes", KeyName = "Id", HasNotSpecifiedValue = true });
+            tableNameLists.Add(new TableClass() { TableName = "ShipmentPayable", DBTableName = "ShipmentPayables", Dw_TableName = "dw_ShipmentPayables", KeyName = "Id", HasNotSpecifiedValue = true });
+            tableNameLists.Add(new TableClass() { TableName = "APInvoiceLine", DBTableName = "APInvoiceLines", Dw_TableName = "dw_APInvoiceLines", KeyName = "APInvoiceId", FieldsDBName = "EntityPayableId", HasNotSpecifiedValue = true });
+            tableNameLists.Add(new TableClass() { TableName = "APInvoice", DBTableName = "APInvoices", Dw_TableName = "dw_APInvoices", KeyName = "Id", HasNotSpecifiedValue = true });
+            tableNameLists.Add(new TableClass() { TableName = "ShipmentReceivable", DBTableName = "ShipmentReceivables", Dw_TableName = "dw_ShipmentReceivables", KeyName = "Id", HasNotSpecifiedValue = true });
+            tableNameLists.Add(new TableClass() { TableName = "ARInvoiceLine", DBTableName = "ARInvoiceLines", Dw_TableName = "dw_ARInvoiceLines", KeyName = "Id", HasNotSpecifiedValue = true, FieldsDBName = "ARInvoiceId,ReceivableId" });
+            tableNameLists.Add(new TableClass() { TableName = "ARInvoice", DBTableName = "ARInvoices", Dw_TableName = "dw_ARInvoices", KeyName = "Id", HasNotSpecifiedValue = true });
 
 
             //EntityPayableId
@@ -76,6 +75,7 @@ namespace WarehouseData.Helper
             tableNameLists.Add(new TableClass() { TableName = "MoveType", DBTableName = "MoveTypes", Dw_TableName = "dw_MoveTypes", KeyName = "Id", HasDimensionTable = true, DWObjectTableCode = "DIM_MoveTypes", BuildScriptName = "BuildMoveTypeDimensionTable", IncrementalScriptName = "UpdateMoveTypeDimensionTable", HasConstraint = true });
             tableNameLists.Add(new TableClass() { TableName = "Vessel", DBTableName = "Vessels", Dw_TableName = "dw_Vessels", KeyName = "Id", HasDimensionTable = true, DWObjectTableCode = "DIM_Vessels", BuildScriptName = "BuildVesselDimensionTable", IncrementalScriptName = "UpdateVesselDimensionTable", HasConstraint = true });
             tableNameLists.Add(new TableClass() { TableName = "SpecialServicesType", DBTableName = "SpecialServicesTypes", Dw_TableName = "dw_SpecialServicesTypes", KeyName = "Id", HasDimensionTable = true, DWObjectTableCode = "DIM_SpecialServicesTypes", BuildScriptName = "BuildSpecialServicesTypeDimensionTable", IncrementalScriptName = "UpdateSpecialServicesTypeDimensionTable", HasConstraint = true });
+            tableNameLists.Add(new TableClass() { TableName = "ChargesType", DBTableName = "ChargesTypes", Dw_TableName = "dw_ChargesTypes", KeyName = "Id", HasDimensionTable = true, DWObjectTableCode = "DIM_ChargesTypes", BuildScriptName = "BuildChargesTypeDimensionTable", IncrementalScriptName = "UpdateChargesTypeDimensionTable" });
 
             //Fact
             tableNameLists.Add(new TableClass() { TableName = "Shipment", FieldIndexes = "Source Tenant,Parent Tenant", DWObjectTableCode = "Fact_Shipments", FieldsDBName = "ToPortId,FromPortId", KeyName = "Id", DBTableName = "Shipments", Dw_TableName = "dw_Shipments", HasConstraint = true, HasFactTable = true, BuildScriptName = "BuildFactShipmentTable", IncrementalScriptName = "UpdateFactShipmentTable", DispayInScreen = true });
@@ -211,7 +211,9 @@ namespace WarehouseData.Helper
 
             foreach (TableClass tableClass in tableNameLists)
             {
-                if (tableClass.TableName != "WaterMark") tableClass.FieldsDBName = GetAdditionalDWObjectFieldsDBName(tableClass);
+
+                    if (tableClass.TableName != "WaterMark") tableClass.FieldsDBName = GetAdditionalDWObjectFieldsDBName(tableClass);
+               
             }
         }
 

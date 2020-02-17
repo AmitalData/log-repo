@@ -161,6 +161,7 @@
     <Content Include="WarehouseScript\BuildWarehouse\BuildCardsDimensionTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="WarehouseScript\BuildWarehouse\BuildChargesTypeDimensionTable.sql" />
     <Content Include="WarehouseScript\BuildWarehouse\BuildCurrencyDimensionTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -212,6 +213,7 @@
     <Content Include="WarehouseScript\BuildWarehouse\BuildVesselDimensionTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="WarehouseScript\IncrementalWarehouse\UpdateChargesTypeDimensionTable.sql" />
     <Content Include="WarehouseScript\IncrementalWarehouse\UpdateCustomPickListDimensionsTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

@@ -128,6 +128,7 @@
     <None Include="Files\DIM_Branches.dwml">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Files\DIM_ChargesTypes.dwml" />
     <None Include="Files\DIM_Currencies.dwml" />
     <None Include="Files\DIM_CustomPickLists.dwml" />
     <None Include="Files\DIM_Dates.dwml" />

@@ -31,6 +31,35 @@ declare @DIM_BranchesParentTenantNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_BranchesParentTenantNewId OUTPUT,'DWObjectField' 
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom) Values(@DIM_BranchesParentTenantNewId,0,'DIM_Branches','[Parent Tenant]','Parent Tenant','Integer','true',0,0,'false','false','false','false','false','false')  
 ------------------------------------------------------------------------------------
+declare @DIM_ChargesTypesNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_ChargesTypesNewId OUTPUT,'DWObjectTable' 
+insert into DWObjectTables(Id,Tenant,Code,Name,TypeCode,IsClosed,DefaultFilterBy) Values(@DIM_ChargesTypesNewId,0,'DIM_ChargesTypes','DIM_ChargesTypes','Dimension','false','[English Name]')  
+--Fields --
+declare @DIM_ChargesTypesId_NumberNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_ChargesTypesId_NumberNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom) Values(@DIM_ChargesTypesId_NumberNewId,0,'DIM_ChargesTypes','[Id_Number]','Id_Number','Integer','true',0,0,'true','false','false','false','false','false')  
+declare @DIM_ChargesTypesIdNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_ChargesTypesIdNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom) Values(@DIM_ChargesTypesIdNewId,0,'DIM_ChargesTypes','[Id]','Id','Text','true',0,15,'false','false','false','false','false','false')  
+declare @DIM_ChargesTypesCodeNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_ChargesTypesCodeNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,LOVAdditionalColumns,HideTree,CannotFilter,IsCustom) Values(@DIM_ChargesTypesCodeNewId,0,'DIM_ChargesTypes','[Code]','Code','Text','false',0,15,'false','false','true','[English Name],[Local Name]','false','false','false')  
+declare @DIM_ChargesTypesEnglishNameNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_ChargesTypesEnglishNameNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,LOVAdditionalColumns,HideTree,CannotFilter,IsCustom) Values(@DIM_ChargesTypesEnglishNameNewId,0,'DIM_ChargesTypes','[English Name]','English Name','Text','true',0,40,'false','false','true','[Code]','false','true','false')  
+declare @DIM_ChargesTypesLocalNameNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_ChargesTypesLocalNameNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom) Values(@DIM_ChargesTypesLocalNameNewId,0,'DIM_ChargesTypes','[Local Name]','Local Name','nText','false',0,40,'false','false','true','false','true','false')  
+declare @DIM_ChargesTypesChargeGroupCodeNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_ChargesTypesChargeGroupCodeNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom) Values(@DIM_ChargesTypesChargeGroupCodeNewId,0,'DIM_ChargesTypes','[Charge Group Code]','Charge Group Code','Text','false',0,5,'false','false','true','false','false','false')  
+declare @DIM_ChargesTypesParentTenantNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_ChargesTypesParentTenantNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom) Values(@DIM_ChargesTypesParentTenantNewId,0,'DIM_ChargesTypes','[Parent Tenant]','Parent Tenant','Integer','true',0,0,'false','false','false','false','false','false')  
+declare @DIM_ChargesTypesSourceTenantNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_ChargesTypesSourceTenantNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom) Values(@DIM_ChargesTypesSourceTenantNewId,0,'DIM_ChargesTypes','[Source Tenant]','Source Tenant','Integer','true',0,0,'false','false','false','false','false','false')  
+------------------------------------------------------------------------------------
 declare @DIM_CurrenciesNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_CurrenciesNewId OUTPUT,'DWObjectTable' 
 insert into DWObjectTables(Id,Tenant,Code,Name,TypeCode,IsClosed,DefaultFilterBy) Values(@DIM_CurrenciesNewId,0,'DIM_Currencies','DIM_Currencies','Dimension','false','[Name]')  
