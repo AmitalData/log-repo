@@ -3,6 +3,7 @@ using Logitude.Accounting.Def.EntityQueryServicesExt;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.InvoiceModel.EntityPMs;
+using Logitude.BL.Resolvers;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Helpers;
 using Microsoft.Practices.Unity;
@@ -183,9 +184,8 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
         {
             var errors = "";
             var tenant = entityPM.Tenant;
-            bool useLocal = true;
-            ContactPM user = GetLoggedContact(tenant);
-            useLocal = user == null ? true : (!user.DontShowLocal);
+            
+            bool useLocal = LoggedContactResolver.GetLoggedContactShowLocal(entityPM.Tenant);
 
             string rmsg = TranslateTextsClass.Translate("General.M.FieldIsRequired", tenant, useLocal);
             TenantRepository tenantRepository = new TenantRepository(tenant);
