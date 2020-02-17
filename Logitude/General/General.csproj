@@ -235,6 +235,7 @@
     <Content Include="2019.R5\12 - 2019\Day 18 [Abed] fill the subject for all emails opened to tenants in Logbox from automation in tenant 0.sql" />
     <Content Include="2020.R1\02 - 2020\Day 12 [Abed] UpdateAddressesSetOneMainAddressToCard.sql" />
     <Content Include="2020.R1\02 - 2020\Day 17 [Samar] delete from query columns vat external card.sql" />
+    <Content Include="2020.R1\02 - 2020\Day 16 [Samar] calculate quotes usage count.sql" />
     <Content Include="Accounting\2015 - 8\day 10 [alex] unique constraint in JournalActionTypes.sql" />
     <Content Include="2019.R2\06 - 2019\Day 24 [Rabaia] DalayWithReturnStatusToZeroSP.sql" />
     <Content Include="Customs\2018 - 04\[Abdullah] Day 10 Delete forign keys for table CustomCountry.sql" />
