@@ -1261,8 +1261,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
     }
 
     OkButtonClicked() {
-
-        if (!this.FuturePaymentTime && this.FuturePaymentDateTime) {
+         if (!this.FuturePaymentTime && this.FuturePaymentDateTime) {
             this.ValidationErrorsList = [];
             this.ValidationErrorsList.push("הזן זמן עתידי"); // Please enter a future time
             return;
@@ -1272,8 +1271,15 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
         var isPaymentDateValid = this.IsPaymentDateValid();
 
         if (isFuturePaymentDateValid && isPaymentDateValid) {
+
+
+            var isNotBlockTime: boolean;
+
+            isNotBlockTime = this.CheckIfBlockTime();
+            if (isNotBlockTime) {
             this.ValidationErrorsList = [];
-            this.ActivateUnifreightInstructionOK();
+                this.ActivateUnifreightInstructionOK();
+            }
         }
         else {
             this.ValidationErrorsList = [];
@@ -1282,8 +1288,51 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
             if (!isPaymentDateValid)
                 this.ValidationErrorsList.push("לא ניתן להזין תאריך בעבר");
         }
+
+
+
     }
 
+
+    CheckIfBlockTime() {
+
+        this._CustomsSettingExtendedListService.GetDefault("ISRAEL", "CGG_PAY_BLK_RNG", "NON", "NON", SessionLocator.Tenant).subscribe((response: ServiceResponse) => {
+            debugger;
+            let obj = response.Result;
+            if (obj) {
+                let timeCompany = obj['DefaultValue'];
+
+                this._CustomsSettingExtendedListService.GetDefault("ISRAEL", "CIM_PAY_BLK_RNG", "NON", this.DeclarationPM.CustomerCode, SessionLocator.Tenant).subscribe((response: ServiceResponse) => {
+                    let obj = response.Result;
+                    if (obj) {
+                        let timeCustomer = obj['DefaultValue'];
+                        if (AppTool.IsNullOrEmpty(timeCompany) && AppTool.IsNullOrEmpty(timeCustomer) ) {
+                            return true;  
+                        }
+                        else {
+                            debugger;
+                            var parsedDate = Date.parse(timeCompany);
+
+   
+                            if (isNaN(timeCompany) && !isNaN(parsedDate)) {
+                                 
+                            }
+                            }
+                            
+
+                        }
+                     
+                });
+
+ 
+            }
+        });
+
+          
+         this.ValidationErrorsList.push("לא ניתן להזין תאריך בעבר");
+
+        return true;
+    }
     ActivateUnifreightInstructionOK() {
         //if (!AppTool.IsNullOrEmpty(this.DeclarationPM.CustomFileNo) && AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
         if (AmitalGatewayUtil.Instance.IsDeclarationInUse(this.DeclarationPM.CustomFileNo, this.DeclarationPM.IsConvertedDeclaration, this.DeclarationPM.IsConnectedToUnifreight)) {
