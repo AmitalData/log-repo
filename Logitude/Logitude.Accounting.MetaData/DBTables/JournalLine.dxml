@@ -1,76 +1,195 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Table Name="JournalLines" Schema="dbo" DBType="Main">
-  <Column Name="JournalId" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="JournalLines"
+  Schema="dbo"
+  DBType="Main">
+  <Column
+    Name="JournalId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="Line" Type="int">
-    <Constraints PrimaryKey="true" Nullable="false" />
+  <Column
+    Name="Line"
+    Type="int">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="ActionCode" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ActionCode"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="DebitControlAccountId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="DebitControlAccountId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="DebitAccountId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="DebitAccountId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="CreditControlAccountId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="CreditControlAccountId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="CreditAccountId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="CreditAccountId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="DocumentDate" Type="datetime">
-    <Constraints Nullable="false" />
+  <Column
+    Name="DocumentDate"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="AccountingDate" Type="datetime">
-    <Constraints Nullable="false" />
+  <Column
+    Name="AccountingDate"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="DueDate" Type="datetime">
-    <Constraints Nullable="false" />
+  <Column
+    Name="DueDate"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="LocalAmount" Type="decimal" Precision="16" Scale="2">
-    <Constraints Nullable="false" />
+  <Column
+    Name="LocalAmount"
+    Type="decimal"
+    Precision="16"
+    Scale="2">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="CurrencyId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="CurrencyId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="ForeignAmount" Type="decimal" Precision="16" Scale="2">
-    <Constraints Nullable="false" />
+  <Column
+    Name="ForeignAmount"
+    Type="decimal"
+    Precision="16"
+    Scale="2">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="ExchangeRate" Type="decimal" Precision="16" Scale="5">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ExchangeRate"
+    Type="decimal"
+    Precision="16"
+    Scale="5">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Reference1" Type="nvarchar" Size="30">
-    <Constraints Nullable="true" />
+  <Column
+    Name="Reference1"
+    Type="nvarchar"
+    Size="30">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Reference2" Type="nvarchar" Size="30">
-    <Constraints Nullable="true" />
+  <Column
+    Name="Reference2"
+    Type="nvarchar"
+    Size="30">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Reference3" Type="nvarchar" Size="30">
-    <Constraints Nullable="true" />
+  <Column
+    Name="Reference3"
+    Type="nvarchar"
+    Size="30">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Notes" Type="nvarchar" Size="1000">
-    <Constraints Nullable="true" />
+  <Column
+    Name="Notes"
+    Type="nvarchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="ExternalOpenAmount" Type="decimal" Precision="16" Scale="2">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ExternalOpenAmount"
+    Type="decimal"
+    Precision="16"
+    Scale="2">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="ExternalReconcileNumber" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ExternalReconcileNumber"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="IsExternalReconcile" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="IsExternalReconcile"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Relation ForeignKeyColumn="JournalId" ReferencedTable="Journals" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="ActionCode" ReferencedTable="JournalActionTypes" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="DebitControlAccountId" ReferencedTable="GLAccounts" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="DebitAccountId" ReferencedTable="GLAccounts" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="CreditControlAccountId" ReferencedTable="GLAccounts" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="CreditAccountId" ReferencedTable="GLAccounts" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="CurrencyId" ReferencedTable="Currencies" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="JournalId"
+    ReferencedTable="Journals"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ActionCode"
+    ReferencedTable="JournalActionTypes"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="DebitControlAccountId"
+    ReferencedTable="GLAccounts"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="DebitAccountId"
+    ReferencedTable="GLAccounts"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="CreditControlAccountId"
+    ReferencedTable="GLAccounts"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="CreditAccountId"
+    ReferencedTable="GLAccounts"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="CurrencyId"
+    ReferencedTable="Currencies"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
 </Table>

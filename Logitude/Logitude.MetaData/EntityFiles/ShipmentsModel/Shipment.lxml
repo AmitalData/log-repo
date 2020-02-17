@@ -36866,7 +36866,7 @@
     SystemRequired="false"
     ObjectFieldNotRequired="false"
     SystemMaxLength="0"
-    DisplayInList="true"
+    DisplayInList="false"
     ConverterName="&quot;Simplog.Infrastructure.Utilities.Converters.DateTimeNewFormatConverter&quot;"
     IsCustomFilter="false"
     MultiLine="false"
@@ -81112,7 +81112,6 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
- 
   <Query
     Code="&quot;Shipments&quot;"
     TextCode="&quot;Shipments&quot;"

@@ -2887,6 +2887,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         }
         private InterestTransactionPM CreateInterestTransactionLineForVatLine(ARInvoiceTotalVAT invoiceTotalVat,GLAccountPM account)
         {
+            ARInvoiceLinePM invoiceLine = entityPM.InvoiceLines.Where(d => d.VatTypeId == invoiceTotalVat.VatTypeId).FirstOrDefault();
+            dateForInterest = invoiceLine.DateForInterest == null ? (invoiceLine.ValueDate == null ? entityPM.InvoiceDate : invoiceLine.ValueDate) : invoiceLine.DateForInterest;
+
             InterestTransactionPM InterestTransactionVatLine = new InterestTransactionPM()
             {
 
@@ -2906,7 +2909,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         private InterestTransactionPM CreateInterestTransactionLineForInvoiceLine(ARInvoiceLinePM invoiceLine, GLAccountPM account)
         {
-            dateForInterest = invoiceLine.DateForInterest == null ? DateTime.Now : invoiceLine.DateForInterest;
+            dateForInterest = invoiceLine.DateForInterest == null ? (invoiceLine.ValueDate==null? entityPM.InvoiceDate: invoiceLine.ValueDate)  : invoiceLine.DateForInterest;
             InterestTransactionPM interestTransaction = new InterestTransactionPM()
             {
                 InterestEntityTypeCode = "1",
@@ -2919,6 +2922,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 Tenant = invoiceLine.Tenant,
                 ChangeSetOp = ChangeSetOperation.Insert,
                 CurrencyId = invoiceLine.ForiegnCurrencyId,
+               
             };
             return interestTransaction;
         }

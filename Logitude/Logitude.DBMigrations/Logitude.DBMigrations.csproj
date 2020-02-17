@@ -52,6 +52,7 @@
     <Compile Include="Models\ConstraintsDefinition.cs" />
     <Compile Include="Models\DXMLDefinitions.cs" />
     <Compile Include="Models\DXMLHash.cs" />
+    <Compile Include="Models\DXMLTrigger.cs" />
     <Compile Include="Models\DXMLProcedure.cs" />
     <Compile Include="Models\DXMLTable.cs" />
     <Compile Include="Models\DXMLValidation.cs" />
@@ -60,6 +61,7 @@
     <Compile Include="Models\ExecuteSxmlFileResult.cs" />
     <Compile Include="Models\IndexDefinition.cs" />
     <Compile Include="Models\MigrationTool.cs" />
+    <Compile Include="Models\TriggerDefinition.cs" />
     <Compile Include="Models\ProcedureDefinition.cs" />
     <Compile Include="Models\RelationsScript.cs" />
     <Compile Include="Models\GeneratedScript.cs" />

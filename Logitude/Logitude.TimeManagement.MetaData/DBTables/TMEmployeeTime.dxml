@@ -1,61 +1,149 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Table Name="TMEmployeeTimes" Schema="dbo" DBType="Main">
-  <Column Name="Id" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="TMEmployeeTimes"
+  Schema="dbo"
+  DBType="Main">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="CreateDate" Type="datetime">
-    <Constraints Nullable="false" />
+  <Column
+    Name="CreateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="CreatedByUserId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
+  <Column
+    Name="CreatedByUserId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="UpdateDate" Type="datetime">
-    <Constraints Nullable="false" />
+  <Column
+    Name="UpdateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="UpdatedByUserId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
+  <Column
+    Name="UpdatedByUserId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="EmployeeUserId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
+  <Column
+    Name="EmployeeUserId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="DateOfWork" Type="datetime">
-    <Constraints Nullable="false" />
+  <Column
+    Name="DateOfWork"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="Description" Type="nvarchar" Size="500">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Description"
+    Type="nvarchar"
+    Size="500">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="TimeInMinutes" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="TimeInMinutes"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="WINumber" Type="varchar" Size="20">
-    <Constraints Nullable="true" />
+  <Column
+    Name="WINumber"
+    Type="varchar"
+    Size="20">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="ProjectId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ProjectId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="LocationCode" Type="varchar" Size="3">
-    <Constraints Nullable="false" />
+  <Column
+    Name="LocationCode"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="AnalyzeQueueId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="AnalyzeQueueId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="SprintId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="SprintId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="ProratedDuration" Type="float">
-    <Constraints Nullable="false" />
+  <Column
+    Name="ProratedDuration"
+    Type="float"
+    DefaultValue="0">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="FullDuration" Type="float">
-    <Constraints Nullable="false" />
+  <Column
+    Name="FullDuration"
+    Type="float"
+    DefaultValue="0">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="NeedsProrating" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="NeedsProrating"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Relation ForeignKeyColumn="CreatedByUserId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="UpdatedByUserId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="EmployeeUserId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="LocationCode" ReferencedTable="TMLocations" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="CreatedByUserId"
+    ReferencedTable="Users"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="UpdatedByUserId"
+    ReferencedTable="Users"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="EmployeeUserId"
+    ReferencedTable="Users"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="LocationCode"
+    ReferencedTable="TMLocations"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Index
+    Columns="ProjectId" />
 </Table>

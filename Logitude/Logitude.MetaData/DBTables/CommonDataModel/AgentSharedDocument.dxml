@@ -1,36 +1,89 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Table Name="AgentSharedDocuments" Schema="dbo" DBType="Main">
-  <Column Name="Id" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="AgentSharedDocuments"
+  Schema="dbo"
+  DBType="Main">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="AgentReference" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
+  <Column
+    Name="AgentReference"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="AgentSharedManifestRef" Type="varchar" Size="20">
-    <Constraints Nullable="true" />
+  <Column
+    Name="AgentSharedManifestRef"
+    Type="varchar"
+    Size="20">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="UpdateDate" Type="datetime">
-    <Constraints Nullable="false" />
+  <Column
+    Name="UpdateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="CreateDate" Type="datetime">
-    <Constraints Nullable="false" />
+  <Column
+    Name="CreateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="DocumentXML" Type="nvarchar" Size="-1">
-    <Constraints Nullable="false" />
+  <Column
+    Name="DocumentXML"
+    Type="nvarchar"
+    Size="-1">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="ShipmentLevelCode" Type="varchar" Size="1">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ShipmentLevelCode"
+    Type="varchar"
+    Size="1">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="AgentId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="AgentId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="StatusCode" Type="varchar" Size="4">
-    <Constraints Nullable="false" />
+  <Column
+    Name="StatusCode"
+    Type="varchar"
+    Size="4">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Relation ForeignKeyColumn="ShipmentLevelCode" ReferencedTable="ShipmentLevels" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="AgentId" ReferencedTable="Agents" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="StatusCode" ReferencedTable="SharedManifestsStatuses" ReferencedColumn="StatusCode" ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ShipmentLevelCode"
+    ReferencedTable="ShipmentLevels"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="AgentId"
+    ReferencedTable="Agents"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="StatusCode"
+    ReferencedTable="SharedManifestsStatuses"
+    ReferencedColumn="StatusCode"
+    ReferencedTableSchema="dbo" />
 </Table>

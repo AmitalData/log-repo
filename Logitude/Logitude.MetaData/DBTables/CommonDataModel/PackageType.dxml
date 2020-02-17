@@ -1,64 +1,146 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Table Name="PackageTypes" Schema="dbo" DBType="Main">
-  <Column Name="Id" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="PackageTypes"
+  Schema="dbo"
+  DBType="Main">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="Code" Type="varchar" Size="4">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Code"
+    Type="varchar"
+    Size="4">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="EnglishName" Type="nvarchar" Size="40">
-    <Constraints Nullable="false" />
+  <Column
+    Name="EnglishName"
+    Type="nvarchar"
+    Size="40">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="LocalName" Type="nvarchar" Size="40">
-    <Constraints Nullable="true" />
+  <Column
+    Name="LocalName"
+    Type="nvarchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="IsOcean" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="IsOcean"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="IsAir" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="IsAir"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="IsInland" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="IsInland"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="AddedManually" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="AddedManually"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="Notes" Type="nvarchar" Size="250">
-    <Constraints Nullable="true" />
+  <Column
+    Name="Notes"
+    Type="nvarchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="IsContainer" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="IsContainer"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="TEU" Type="float">
-    <Constraints Nullable="false" />
+  <Column
+    Name="TEU"
+    Type="float">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="ContainerSize" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="ContainerSize"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="Volume" Type="decimal" Precision="18" Scale="2">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Volume"
+    Type="decimal"
+    Precision="18"
+    Scale="2">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="InActive" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="InActive"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="MeasurementId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="MeasurementId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="SearchFields" Type="nvarchar" Size="1000">
-    <Constraints Nullable="true" />
+  <Column
+    Name="SearchFields"
+    Type="nvarchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="PrintAs" Type="varchar" Size="20">
-    <Constraints Nullable="false" />
+  <Column
+    Name="PrintAs"
+    Type="varchar"
+    Size="20">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="IsRefrigerated" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="IsRefrigerated"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="IsVehicle" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="IsVehicle"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Relation ForeignKeyColumn="MeasurementId" ReferencedTable="Measurements" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="MeasurementId"
+    ReferencedTable="Measurements"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Index
+    Columns="Tenant" />
+  <UniqueConstraint
+    Columns="Tenant,Code" />
 </Table>

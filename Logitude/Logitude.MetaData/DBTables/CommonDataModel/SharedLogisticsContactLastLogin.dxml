@@ -1,22 +1,56 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Table Name="SharedLogisticsContactLastLogins" Schema="dbo" DBType="Main">
-  <Column Name="ContactId" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="SharedLogisticsContactLastLogins"
+  Schema="dbo"
+  DBType="Main">
+  <Column
+    Name="ContactId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="CardId" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
+  <Column
+    Name="CardId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="PartnerTypeId" Type="varchar" Size="2">
-    <Constraints PrimaryKey="true" Nullable="false" />
+  <Column
+    Name="PartnerTypeId"
+    Type="varchar"
+    Size="2">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="Via" Type="varchar" Size="20">
-    <Constraints PrimaryKey="true" Nullable="false" />
+  <Column
+    Name="Via"
+    Type="varchar"
+    Size="20"
+    DefaultValue="''">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="LoginDateTime" Type="datetime">
-    <Constraints Nullable="true" />
+  <Column
+    Name="LoginDateTime"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Relation ForeignKeyColumn="ContactId" ReferencedTable="Contacts" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ContactId"
+    ReferencedTable="Contacts"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
 </Table>

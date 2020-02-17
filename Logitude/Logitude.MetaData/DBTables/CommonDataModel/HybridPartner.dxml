@@ -1,41 +1,96 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Table Name="HybridPartners" Schema="dbo" DBType="Main">
-  <Column Name="Id" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="HybridPartners"
+  Schema="dbo"
+  DBType="Main">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="Name" Type="varchar" Size="25">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Name"
+    Type="varchar"
+    Size="25">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="PartnerTenant" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="PartnerTenant"
+    Type="int"
+    DefaultValue="0">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="LocalName" Type="nvarchar" Size="25">
-    <Constraints Nullable="true" />
+  <Column
+    Name="LocalName"
+    Type="nvarchar"
+    Size="25">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="LogoId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="LogoId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="SmallLogoId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="SmallLogoId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="SearchFields" Type="nvarchar" Size="1000">
-    <Constraints Nullable="true" />
+  <Column
+    Name="SearchFields"
+    Type="nvarchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="IsMislakaActivated" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="IsMislakaActivated"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="InActive" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="InActive"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="IsExternalPartner" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="IsExternalPartner"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="ReceiveAllStatuses" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="ReceiveAllStatuses"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="AllowSendingDocsToAgent" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="AllowSendingDocsToAgent"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Relation ForeignKeyColumn="LogoId" ReferencedTable="ImageDetails" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="SmallLogoId" ReferencedTable="ImageDetails" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="LogoId"
+    ReferencedTable="ImageDetails"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="SmallLogoId"
+    ReferencedTable="ImageDetails"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
 </Table>

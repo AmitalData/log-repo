@@ -1,52 +1,145 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Table Name="MenuButtons" Schema="dbo" DBType="Main">
-  <Column Name="Id" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="MenuButtons"
+  Schema="dbo"
+  DBType="Main">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="EventCode" Type="varchar" Size="50">
-    <Constraints Nullable="true" />
+  <Column
+    Name="EventCode"
+    Type="varchar"
+    Size="50">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="LabelTextCodeId" Type="varchar" Size="30">
-    <Constraints Nullable="false" />
+  <Column
+    Name="LabelTextCodeId"
+    Type="varchar"
+    Size="30">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="MenuButtonGroupId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
+  <Column
+    Name="MenuButtonGroupId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="ParentMenuButtonId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ParentMenuButtonId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Index" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Index"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="IsActive" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="IsActive"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="FeatureId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="FeatureId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="MenuButtonType" Type="varchar" Size="40">
-    <Constraints Nullable="true" />
+  <Column
+    Name="MenuButtonType"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="DropDownControl" Type="varchar" Size="250">
-    <Constraints Nullable="true" />
+  <Column
+    Name="DropDownControl"
+    Type="varchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Style" Type="varchar" Size="50">
-    <Constraints Nullable="true" />
+  <Column
+    Name="Style"
+    Type="varchar"
+    Size="50">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Width" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Width"
+    Type="int"
+    DefaultValue="'0'">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="ControlPath" Type="varchar" Size="250">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ControlPath"
+    Type="varchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="HtmlComponentPath" Type="varchar" Size="250">
-    <Constraints Nullable="true" />
+  <Column
+    Name="HtmlComponentPath"
+    Type="varchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Relation ForeignKeyColumn="LabelTextCodeId" ReferencedTable="TextCodes" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="MenuButtonGroupId" ReferencedTable="MenuButtonGroups" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="ParentMenuButtonId" ReferencedTable="MenuButtons" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="FeatureId" ReferencedTable="Features" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Column
+    Name="FeatureUniqeCode"
+    Type="varchar"
+    Size="120">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="LabelTextCodeCode"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Relation
+    ForeignKeyColumn="LabelTextCodeId"
+    ReferencedTable="TextCodes"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="MenuButtonGroupId"
+    ReferencedTable="MenuButtonGroups"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ParentMenuButtonId"
+    ReferencedTable="MenuButtons"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="FeatureId"
+    ReferencedTable="Features"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <UniqueConstraint
+    Columns="EventCode,MenuButtonGroupId,Tenant" />
 </Table>

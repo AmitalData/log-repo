@@ -1,50 +1,110 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Table Name="CardContacts" Schema="dbo" DBType="Main">
-  <Column Name="Id" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="CardContacts"
+  Schema="dbo"
+  DBType="Main">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="ContactId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
+  <Column
+    Name="ContactId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="CardId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
+  <Column
+    Name="CardId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="InternetAccess" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="InternetAccess"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="IsAirExport" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="IsAirExport"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="IsAirImport" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="IsAirImport"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="IsOceanExport" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="IsOceanExport"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="IsOceanImport" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="IsOceanImport"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="IsInlandExport" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="IsInlandExport"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="IsInlandImport" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="IsInlandImport"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="IsCustomsImport" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="IsCustomsImport"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="IsInlandDomestic" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="IsInlandDomestic"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="IsAll" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="IsAll"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="LastLoginDate" Type="datetime">
-    <Constraints Nullable="true" />
+  <Column
+    Name="LastLoginDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Relation ForeignKeyColumn="ContactId" ReferencedTable="Contacts" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="CardId" ReferencedTable="Cards" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ContactId"
+    ReferencedTable="Contacts"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="CardId"
+    ReferencedTable="Cards"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
 </Table>

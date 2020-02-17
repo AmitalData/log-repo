@@ -1,36 +1,90 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Table Name="ChargesExternalAccountsByProducts" Schema="dbo" DBType="Main">
-  <Column Name="Id" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="ChargesExternalAccountsByProducts"
+  Schema="dbo"
+  DBType="Main">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="PayablesGLAccount" Type="varchar" Size="25">
-    <Constraints Nullable="true" />
+  <Column
+    Name="PayablesGLAccount"
+    Type="varchar"
+    Size="25">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="PayablesCostCenter" Type="varchar" Size="25">
-    <Constraints Nullable="true" />
+  <Column
+    Name="PayablesCostCenter"
+    Type="varchar"
+    Size="25">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="ReceivablesGLAccount" Type="varchar" Size="25">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ReceivablesGLAccount"
+    Type="varchar"
+    Size="25">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="ReceivablesCostCenter" Type="varchar" Size="25">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ReceivablesCostCenter"
+    Type="varchar"
+    Size="25">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="UpdateDate" Type="datetime">
-    <Constraints Nullable="true" />
+  <Column
+    Name="UpdateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="ChargesTypeId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
+  <Column
+    Name="ChargesTypeId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="ProductTypeCode" Type="varchar" Size="2">
-    <Constraints Nullable="false" />
+  <Column
+    Name="ProductTypeCode"
+    Type="varchar"
+    Size="2">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="UpdatedByUserId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
+  <Column
+    Name="UpdatedByUserId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Relation ForeignKeyColumn="ChargesTypeId" ReferencedTable="ChargesTypes" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="ProductTypeCode" ReferencedTable="ProductTypes" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="UpdatedByUserId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ChargesTypeId"
+    ReferencedTable="ChargesTypes"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ProductTypeCode"
+    ReferencedTable="ProductTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="UpdatedByUserId"
+    ReferencedTable="Users"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
 </Table>

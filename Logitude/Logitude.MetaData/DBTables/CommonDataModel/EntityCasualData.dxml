@@ -1,45 +1,104 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Table Name="EntityCasualData" Schema="dbo" DBType="Main">
-  <Column Name="Id" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="EntityCasualData"
+  Schema="dbo"
+  DBType="Main">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="CasualTypeCode" Type="varchar" Size="4">
-    <Constraints Nullable="true" />
+  <Column
+    Name="CasualTypeCode"
+    Type="varchar"
+    Size="4">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="ObjectTableId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ObjectTableId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="EntityId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="EntityId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="LocalName" Type="varchar" Size="100">
-    <Constraints Nullable="true" />
+  <Column
+    Name="LocalName"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="EnglishName" Type="varchar" Size="100">
-    <Constraints Nullable="true" />
+  <Column
+    Name="EnglishName"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="City" Type="varchar" Size="100">
-    <Constraints Nullable="true" />
+  <Column
+    Name="City"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="ZipCode" Type="varchar" Size="100">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ZipCode"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="FaxNumber" Type="varchar" Size="40">
-    <Constraints Nullable="true" />
+  <Column
+    Name="FaxNumber"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="PhoneNumber" Type="varchar" Size="40">
-    <Constraints Nullable="true" />
+  <Column
+    Name="PhoneNumber"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Address1" Type="varchar" Size="150">
-    <Constraints Nullable="true" />
+  <Column
+    Name="Address1"
+    Type="varchar"
+    Size="150">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Address2" Type="varchar" Size="150">
-    <Constraints Nullable="true" />
+  <Column
+    Name="Address2"
+    Type="varchar"
+    Size="150">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="SearchFields" Type="varchar" Size="-1">
-    <Constraints Nullable="true" />
+  <Column
+    Name="SearchFields"
+    Type="varchar"
+    Size="-1">
+    <Constraints
+      Nullable="true" />
   </Column>
 </Table>

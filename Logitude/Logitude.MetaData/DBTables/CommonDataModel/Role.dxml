@@ -1,31 +1,75 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Table Name="Roles" Schema="dbo" DBType="Main">
-  <Column Name="Id" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="Roles"
+  Schema="dbo"
+  DBType="Main">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="Code" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Code"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="Name" Type="varchar" Size="40">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Name"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="RoleTypeCode" Type="varchar" Size="4">
-    <Constraints Nullable="false" />
+  <Column
+    Name="RoleTypeCode"
+    Type="varchar"
+    Size="4">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="Description" Type="nvarchar" Size="250">
-    <Constraints Nullable="true" />
+  <Column
+    Name="Description"
+    Type="nvarchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="ParentRoleId" Type="nvarchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ParentRoleId"
+    Type="nvarchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="IsCustomRole" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="IsCustomRole"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="SearchFields" Type="nvarchar" Size="1000">
-    <Constraints Nullable="true" />
+  <Column
+    Name="SearchFields"
+    Type="nvarchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Relation ForeignKeyColumn="RoleTypeCode" ReferencedTable="RoleTypes" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="RoleTypeCode"
+    ReferencedTable="RoleTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <UniqueConstraint
+    Columns="Tenant,Code" />
 </Table>
