@@ -57,6 +57,7 @@ namespace Logitude.Accounting.BL.CoreBL
         public static string FilePath = @"E:\PCN874.txt";
         private static Simplog.Data.CommonDataModel.EntityPOCOs.Card card;
         private static List<TaxReportData> ledgerTransactons;
+        private static List<LedgerTransaction> journalsTransactions;
         public static List<TaxReportLinePM> CreateTaxReportLines(TaxReportPM taxReport, int tenant)
         {
 
@@ -183,7 +184,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 List<string> JournalIds = ledgerTransactons.Where(d => d.JournalId != null).Select(d => d.JournalId).ToList();
                 List<JournalPM> journalPMs = journalQueryService.GetJournalsByIds(JournalIds, tenant);
-
+                journalsTransactions = ledgerTransactionRepository.GetLedgerTransactionsByJournalIds(JournalIds, tenant);
                 List<string> ids = new List<string>();
                 ids = aPInvoices.Select(d => d.Id).ToList();
                 APInvoiceTotalVATQuery myTotalVATQuery = new APInvoiceTotalVATQuery(tenant);
@@ -195,6 +196,8 @@ namespace Logitude.Accounting.BL.CoreBL
                 foreach (TaxReportData a in ledgerTransactons)
                 {
                     VatNumber = null;
+                    InputVatAmount = 0;
+                    InputInvoiceAmount = 0;
                      card = cards.Where(d => d.GLAccountId == a.OppositGLAccount).FirstOrDefault();
                     if (a.AccountingEntity == AccountingEntityValues.APInvoice)
                     {
@@ -442,7 +445,7 @@ namespace Logitude.Accounting.BL.CoreBL
             if (card != null && card.PartnerTypeId == PartnerTypeValues.Vendor)
                 VatNumber = card.VatNumber;
           
-            var transactionSum = ledgerTransactons.Where(d => d.JournalId == report.JournalId && d.Reference == report.Reference).Sum(d => d.LocalAmountCredit);
+            var transactionSum = journalsTransactions.Where(d => d.JournalId == report.JournalId && d.Reference1 == report.Reference).Sum(d => d.LocalAmountCredit);
             InputInvoiceAmount = transactionSum - InputVatAmount;
 
         }
