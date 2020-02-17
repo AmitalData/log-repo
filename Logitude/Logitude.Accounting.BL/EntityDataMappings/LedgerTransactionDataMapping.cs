@@ -122,9 +122,10 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             Journal parent = journalRepository.GetSingle(journalId, tenant);
             //JournalQueryService journalQueryService = new JournalQueryService(tenant);
             //JournalPM parent = journalQueryService.GetSingle(journalId, false, false);
-
-            AccountingEntityRepository accountingEntityRepository = new AccountingEntityRepository(tenant);
-            var accountingEntity = accountingEntityRepository.GetSingle(parent.AccountingEntityCode);
+            AccountingEntityQueryService accountingEntityQueryService = new AccountingEntityQueryService(tenant);
+            var accountingEntity = accountingEntityQueryService.GetSingle(parent.AccountingEntityCode, false, true);
+            //AccountingEntityRepository accountingEntityRepository = new AccountingEntityRepository(tenant);
+            //var accountingEntity = accountingEntityRepository.GetSingle(parent.AccountingEntityCode);
 
             entityPM.Source = parent.AccountingEntityId;
             entityPM.SourceType = accountingEntity.EnglishName;
