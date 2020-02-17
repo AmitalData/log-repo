@@ -1,4 +1,4 @@
-import {Component, OnInit, ElementRef}  from '@angular/core';
+import {Component, OnInit, ElementRef, Output, EventEmitter}  from '@angular/core';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
@@ -226,14 +226,17 @@ export class ReportComponent {
     //}
     
     LoadComplete(groupList: ReportGroupList, reportList: ReportList) {
-
         if (!this.IsLoadReportsTemplateListRuning) {
-            SessionLocator.DynamicLoader.Load("./Report/Components/ReportsPreviewComponent", this.CurrentSession.SessionLocation.viewContainerRef)
-                .then(cmpRef => {
-                    cmpRef.instance.ComponentRef = cmpRef;
-                    cmpRef.instance.ReportsPreview(groupList, reportList, this.ReportTemplates);
-                });
+            if (true) {
+                SessionLocator.DynamicLoader.Load("./Report/Components/ReportsPreviewComponent", this.CurrentSession.SessionLocation.viewContainerRef)
+                    .then(cmpRef => {
+                        cmpRef.instance.ComponentRef = cmpRef;
+                        cmpRef.instance.ReportsPreview(groupList, reportList, this.ReportTemplates);
+                    });
+            }
+            else {
 
+            }
             this.IsViewReport = false;
         }
     }
@@ -244,15 +247,19 @@ export class ReportComponent {
         this.FillTempItemsSource();
     }
 
-    onReportSchedulerClick(Report: ReportList) {
+    onReportSchedulerClick(groupList: ReportGroupList, reportList: ReportList) {
         this.entityResourceService.getEntityResourceByTableName("TasksScheduler", 0).subscribe(response => {
+
+            var windowArgs: any = {};
+            windowArgs.ReportGroupList = groupList;
+            windowArgs.ReportList = reportList;
 
             var logWindow = new LogitudeWindow();
             logWindow.Width = 1200;
             logWindow.Height = 1000;
 
             logWindow.Title = "Report Scheduler";
-
+            logWindow.WindowArgs = windowArgs;
             logWindow.Show('./Report/Components/Scheduler/MainReportSchedulerComponent');
         });
     }

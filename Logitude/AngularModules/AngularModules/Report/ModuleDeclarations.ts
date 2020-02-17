@@ -2,6 +2,9 @@ import { ReportComponent } from './Components/Workspaces/ReportComponent';
 import { MainReportsWorkspace } from './Components/Workspaces/MainReportsWorkspace';
 import { MainReportSchedulerComponent } from './Components/Scheduler/MainReportSchedulerComponent';
 import { TaskReportSchedulerComponent } from './Components/Scheduler/TaskReportSchedulerComponent';
+import { AddEditReportTaskSchedulerComponent } from './Components/Scheduler/AddEditReportTaskSchedulerComponent';
+import { AddEditReportSchedulerComponent } from './Components/Scheduler/AddEditReportSchedulerComponent';
+import { ReportSchedulerDateListTemplate } from './Components/Scheduler/ListTemplates/ReportSchedulerDateListTemplate';
 import { BIReportComponent } from './Components/Workspaces/BIReportComponent';
 import { BIFolderReportComponent } from './Components/Workspaces/BIFolderReportComponent';
 import {ReportTemplateComponent} from './Components/ReportTemplateComponent';
@@ -91,6 +94,9 @@ export const Components =
         MainReportsWorkspace,
         MainReportSchedulerComponent,
         TaskReportSchedulerComponent,
+        AddEditReportTaskSchedulerComponent,
+        AddEditReportSchedulerComponent,
+        ReportSchedulerDateListTemplate,
         ReportComponent,
         BIReportComponent,
         BIFolderReportComponent,
@@ -168,6 +174,9 @@ export class ModuleDeclarations {
             case "MainReportsWorkspace": { myResult = MainReportsWorkspace; break; }
             case "MainReportSchedulerComponent": { myResult = MainReportSchedulerComponent; break; }
             case "TaskReportSchedulerComponent": { myResult = TaskReportSchedulerComponent; break; }
+            case "AddEditReportTaskSchedulerComponent": { myResult = AddEditReportTaskSchedulerComponent; break; }
+            case "AddEditReportSchedulerComponent": { myResult = AddEditReportSchedulerComponent; break; }
+            case "ReportSchedulerDateListTemplate": { myResult = ReportSchedulerDateListTemplate; break; }
             case "ReportComponent": { myResult = ReportComponent; break; }
             case "BIReportComponent": { myResult = BIReportComponent; break; }
             case "BIFolderReportComponent": { myResult = BIFolderReportComponent; break; }

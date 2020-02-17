@@ -63,7 +63,7 @@
                 <td style="width:16px"><div style="width:16px"></div></td>
 
                 <td *ngIf="IsShowExportPrinttoPDF" style="width:68px;vertical-align:middle;">
-                    <button [disabled]="!IsEditingEnabled" style="width:68px" class="Button" (click)="PrintToPDF()">
+                    <button [disabled]="!IsEditingEnabled || IsSchedulerReport" style="width:68px" class="Button" (click)="PrintToPDF()">
                         <table class="LeftCenter">
                             <tr>
                                 <td style="width:5px">
@@ -193,12 +193,12 @@
                                         <img style="margin-left:10px" src="./Images/ToggleIcon.png" />
                                         <div style="float:right;left:-65px;width:120px" class="ToggleButtonMenu">
 
-                                            <button [disabled]="!IsEditingEnabled" (click)="SendButtonClick('Excel')">
+                                            <button [disabled]="!IsEditingEnabled || IsSchedulerReport" (click)="SendButtonClick('Excel')">
                                                 <div>Send as Excel File</div>
                                             </button>
 
 
-                                            <button [disabled]="!IsEditingEnabled" (click)="SendButtonClick('Pdf')">
+                                            <button [disabled]="!IsEditingEnabled || IsSchedulerReport" (click)="SendButtonClick('Pdf')">
                                                 <div>Send as Pdf File</div>
                                             </button>
 

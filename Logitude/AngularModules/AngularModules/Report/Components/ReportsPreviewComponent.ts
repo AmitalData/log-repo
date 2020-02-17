@@ -1,5 +1,5 @@
 declare var window: any;
-import {Component, AfterViewInit, ViewChild, ViewContainerRef, ComponentRef, ChangeDetectorRef}  from '@angular/core';
+import {Component, AfterViewInit, ViewChild, ViewContainerRef, ComponentRef, ChangeDetectorRef, Output, EventEmitter}  from '@angular/core';
 import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
 import {ReportFliter} from '../Components/Filters/ReportFliter';
 import {ReportService} from '../../Common/Services/ExtendedLists/ReportService';
@@ -17,6 +17,7 @@ import {ObjectsLocator} from '../../Infrastructure/Locators/ObjectsLocator';
 
 import {Observable}     from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
+import { ReportsTemplateListExtendedService } from '../../Common/Services/ExtendedLists/ReportsTemplateListExtendedService';
 
 @Component({
     moduleId: './Report/Components/',
@@ -38,6 +39,8 @@ export class ReportsPreviewComponent implements AfterViewInit {
     public FiltersAreaId: string;
     public IsResourcesReady: boolean = false;
     public ComponentRef: ComponentRef<ReportsPreviewComponent>;
+    public IsSchedulerReport: boolean = false;
+    reportsTemplateListExtendedService: ReportsTemplateListExtendedService;
     StimulsoftArg: StimulsoftArg;
     ReportFliter: ReportFliter;
     heighthwindow: number;
@@ -60,6 +63,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
         var idIndex = this.CurrentSession.GetNewId("ReportsPreviewComponent");
         this.ComponentId = "ReportsPreview_" + idIndex;
         this.FiltersAreaId = "ReportFiltersArea_" + idIndex;
+        this.reportsTemplateListExtendedService = new ReportsTemplateListExtendedService();
 
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
 
@@ -83,6 +87,10 @@ export class ReportsPreviewComponent implements AfterViewInit {
 
     ngAfterViewInit() {
         this.BuildStimulsoft();
+    }
+
+    PreviewSchedulerReport() {
+        this.IsSchedulerReport = true;
     }
 
     private Retries: number = 0;
@@ -147,9 +155,14 @@ export class ReportsPreviewComponent implements AfterViewInit {
             var filtersArea = document.getElementById(this.FiltersAreaId);
 
             if (Component && filtersArea) {
-                this.FilterConrolHeight = filtersArea.clientHeight;
-
                 this.StimulsoftArg = new StimulsoftArg();
+                if (filtersArea.clientHeight == 0) {
+                    this.FilterConrolHeight = 72;
+                    this.StimulsoftArg.IsSchedulerReport = true;
+                }
+                else {
+                    this.FilterConrolHeight = filtersArea.clientHeight;
+                }
                 this.StimulsoftArg.Tenant = SessionLocator.Tenant;
                 this.StimulsoftArg.ReportsPreviewComponent = this;
                 this.StimulsoftArg.TypePage = "Report";
@@ -188,6 +201,9 @@ export class ReportsPreviewComponent implements AfterViewInit {
 
         if (width < 1024) {
             width = 1024;
+        }
+        if (height == 0) {
+            height = 724;
         }
 
         width = width - 20;

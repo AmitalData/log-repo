@@ -1,6 +1,8 @@
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {LocationDirective} from '../../../Infrastructure/Utilities/LocationDirective';
-import {Component, OnInit, QueryList, ViewChildren}  from '@angular/core';
+import {Component, OnInit, QueryList, ViewChildren, ViewChild, ViewContainerRef}  from '@angular/core';
+import { ReportGroupList } from '../../EntityLists/ReportGroupList';
+import { ReportList } from '../../EntityLists/ReportList';
 
 @Component({
     moduleId: module.id,
@@ -10,26 +12,48 @@ import {Component, OnInit, QueryList, ViewChildren}  from '@angular/core';
 export class MainReportSchedulerComponent implements OnInit {
     private CurrentSession = SessionLocator.SelectedSession;
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
-    private PageChild_RTASK: any = null;
-    
+    private PageChild_RETASK: any = null;
+    public ShowPreviewReport: boolean = false;
+    public ReportGroupList: ReportGroupList;
+    public ReportList: ReportList;
     constructor() {
     }
 
     ngOnInit() {
     }
 
-    ngAfterViewInit() {
+    SetWindowArgs(windowArgs) {
+        this.ReportGroupList = windowArgs.ReportGroupList;
+        this.ReportList = windowArgs.ReportList;
         this.RunComponent();
+    }
+
+    private Retries: number = 0;
+    private timerToken: any;
+    private RunComponentTimer() {
+        this.Retries++;
+
+        if (this.timerToken) {
+            clearTimeout(this.timerToken);
+        }
+
+        if (this.Retries < 20) {
+            this.timerToken = setTimeout(() => this.RunComponent(), 1);
+        }
     }
 
     RunComponent() {
         if (this.AllLocations) {
-
-            if (this.AllLocations.length != 0) {
-                var tabCode = "RTASK";
-
+            if (this.AllLocations.toArray().length == 0) {
+                this.RunComponentTimer();
+            }
+            else {
+                var tabCode = "RETASK";
                 this.SetSelectedItem(tabCode);
             }
+        }
+        else {
+            this.RunComponentTimer();
         }
     }
 
@@ -54,11 +78,12 @@ export class MainReportSchedulerComponent implements OnInit {
 
             switch (this.SelectedTabCode) {
                 //Report Task
-                case "RTASK": {
-                    if (this.PageChild_RTASK == null) {
+                case "RETASK": {
+                    if (this.PageChild_RETASK == null) {
                         SessionLocator.DynamicLoader.Load('./Report/Components/Scheduler/TaskReportSchedulerComponent', myLocation.viewContainerRef)
                             .then(cmpRef => {
-                                this.PageChild_RTASK = cmpRef.instance;
+                                this.PageChild_RETASK = cmpRef.instance;
+                                this.PageChild_RETASK.SetWindowArgs({ ReportGroupList: this.ReportGroupList, ReportList: this.ReportList });
                             });
                     }
 
@@ -73,7 +98,7 @@ export class MainReportSchedulerComponent implements OnInit {
     }
 
     NextButtonClicked() {
-        this.CurrentSession.CloseCurrentWindow();
+        this.ShowPreviewReport = true;
     }
 
 }

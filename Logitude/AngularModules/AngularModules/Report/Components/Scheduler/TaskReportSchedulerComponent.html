@@ -46,14 +46,14 @@
         <td></td>
     </tr>
 
-    <!-- Tasks -->
+     <!-- Tasks -->
     <tr style="height:65%;">
         <td>
             <div class="MediaFill">
                 <div style="background-color:white;border-radius: 0 0 0 7px;">
                     <logitude-grid GridWidth="100%" GridHeight="100%" [ObjectTable]="'TaskScheduler'" [IgnoreRowHoverVisibilityQueryName]="true" [ShowArrow]="true" [dataSource]="TasksDataSource" [MenuHeaderchangeevent]="MenuHeaderchangeeventTasks"
                                    [columns]="Taskscolumns" [autoLoad]="true" [CustomColumnsReady]="TasksCustomColumnsReady" [IsCustomTemplate]="true" (rowSelectedEvent)="onRowSelected($event)">
-                    </logitude-grid> 
+                    </logitude-grid>
                 </div>
             </div>
         </td>
@@ -63,7 +63,7 @@
         <td></td>
     </tr>
 
-    <!-- History -->
+     <!-- History -->
     <tr style="height:35%;">
         <td>
             <table *ngIf="IsHistoryGridVsisible">
@@ -71,11 +71,11 @@
                     <td>
                         <div class="MediaFill">
                             <div style="background-color:white;border-radius: 0 0 0 7px;">
-                                <logitude-grid GridWidth="100%" GridHeight="100%" [ObjectTable]="'TaskSchedulerHistory'" [IgnoreRowHoverVisibilityQueryName]="true" [ShowArrow]="true" [dataSource]="DataSource" [MenuHeaderchangeevent]="MenuHeaderchangeevent"
-                                               [columns]="columns" [autoLoad]="true" [CustomColumnsReady]="CustomColumnsReady" [IsCustomTemplate]="true">
+                                <logitude-grid GridWidth="100%" GridHeight="100%" [ObjectTable]="'TaskSchedulerHistory'" [IgnoreRowHoverVisibilityQueryName]="true" [ShowArrow]="true" [dataSource]="TasksHistoryDataSource" [MenuHeaderchangeevent]="MenuHeaderchangeevent"
+                                               [columns]="TasksHistorycolumns" [autoLoad]="true" [CustomColumnsReady]="TasksHistoryCustomColumnsReady" [IsCustomTemplate]="true">
                                 </logitude-grid>
                             </div>
-                            
+
                         </div>
                     </td>
                 </tr>

@@ -75,6 +75,7 @@ export class StimulsoftViewerComponent implements OnInit {
     HeightImg: number = 1;
     MaxScreenwidth: string;
     IsEditingEnabled: boolean;
+    IsSchedulerReport: boolean;
     IsShowShiftToolbar: boolean = false;
     ShowReportsTemlatesLists: boolean = false;
     PreviewStimualDivId: string;
@@ -152,6 +153,7 @@ export class StimulsoftViewerComponent implements OnInit {
         this.IsShowExportMicrosoftExcel = this.StimulsoftArgData.IsShowExportMicrosoftExcel;
         this.IsShowExportPrinttoPDF = this.StimulsoftArgData.IsShowExportPrinttoPDF;
         this.IsShowSendButton = this.StimulsoftArgData.IsShowSendButton;
+        this.IsSchedulerReport = this.StimulsoftArgData.IsSchedulerReport;
 
    
 

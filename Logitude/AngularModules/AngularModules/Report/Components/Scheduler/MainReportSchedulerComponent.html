@@ -11,9 +11,9 @@
 
                         <div class="TabControlBody">
 
-                            <div class="MediaFillRelative">
+                            <div class="MediaFillRelative" [hidden]="SelectedTabCode != 'RETASK'">
                                 <div class="MediaFillAbsolute" style="top: 5px;margin:5px">
-                                    <div LocationDirective Code="RTASK"></div>
+                                    <div LocationDirective Code="RETASK"></div>
                                 </div>
                             </div>
 
@@ -42,9 +42,6 @@
 
                         <td style="width: 57px;">
                             <button class="Button" (click)="CloseButtonClicked()">{{'General.B.Close' | TextCodeTranslationPipe}}</button>
-                        </td>
-                        <td style="width: 57px;">
-                            <button class="Button" (click)="NextButtonClicked()">{{'General.B.Next' | TextCodeTranslationPipe}}</button>
                         </td>
                     </tr>
                 </table>
