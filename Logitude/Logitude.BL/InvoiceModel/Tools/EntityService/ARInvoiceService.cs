@@ -810,85 +810,87 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         public void OnCreatingAutoCredit()
         {
             ARInvoice entityPOCO = invoiceRepository.GetSingleInvoice(this.entityPM.CreditedByARInvoiceId);
-
-            if (entityPOCO.StatusCode == "AR")
+            if (entityPOCO != null)
             {
-                throw new ApplicationException("This invoice is already auto credited");
-            }
+                if (entityPOCO.StatusCode == "AR")
+                {
+                    throw new ApplicationException("This invoice is already auto credited");
+                }
 
-            else if (entityPOCO.StatusCode == "VD")
-            {
-                throw new ApplicationException("This invoice is already voided");
-            }
-
-            else
-            {
-                this.isAutoCreditingInvoice = true;
-
-                ARInvoiceQuery entityQuery = new ARInvoiceQuery(invoiceRepository);
-                ARInvoicePM oldEntityPM = entityQuery.GetSinglePM(this.entityPM.CreditedByARInvoiceId, tenant);
-                
-                //this.AddARInvoiceJournalAndJournalLines(this.entityPM, true);
-
-                // Update Old Invoice
-                if (oldEntityPM.IsConsolidationInvoice)
-                {                    
-                    #region
-                    this.allConnectedInvoices = invoiceRepository.GetConnectedInvoices(tenant, this.entityPM.CreditedByARInvoiceId).ToList();
-
-                    foreach (ARInvoice item in allConnectedInvoices)
-                    {
-                        item.IsClosed = false;
-                        item.StatusCode = "NT";
-                        item.ConsolidationInvoiceId = null;
-
-                        EventTracer.CreateTraceEvent(new EventTracerArgs()
-                        {
-                            EntityId = item.Id,
-                            ObjectTableName = "ARInvoice",
-                            Tenant = tenant,
-                            UserId = loggedContactId,
-                            EventTypeCode = "INDS",
-                        });
-                    }
-                    #endregion
+                else if (entityPOCO.StatusCode == "VD")
+                {
+                    throw new ApplicationException("This invoice is already voided");
                 }
 
                 else
                 {
-                    #region Disconnect Receivables
-                    List<string> iReceivablesIds = (from a in oldEntityPM.InvoiceLines group a by new { a.ReceivableId } into gr select gr.Key.ReceivableId).ToList();
-                    List<ShipmentReceivable> iReceivables = shipmentReceivableRepository.GetShipmentReceivablesByIds(iReceivablesIds, tenant);
-                    if (iReceivables.Count > 0)
+                    this.isAutoCreditingInvoice = true;
+
+                    ARInvoiceQuery entityQuery = new ARInvoiceQuery(invoiceRepository);
+                    ARInvoicePM oldEntityPM = entityQuery.GetSinglePM(this.entityPM.CreditedByARInvoiceId, tenant);
+
+                    //this.AddARInvoiceJournalAndJournalLines(this.entityPM, true);
+
+                    // Update Old Invoice
+                    if (oldEntityPM.IsConsolidationInvoice)
                     {
-                        foreach (ShipmentReceivable item in iReceivables)
+                        #region
+                        this.allConnectedInvoices = invoiceRepository.GetConnectedInvoices(tenant, this.entityPM.CreditedByARInvoiceId).ToList();
+
+                        foreach (ARInvoice item in allConnectedInvoices)
                         {
-                            item.ARInvoiceId = null;
-                            item.ARInvoiceLineId = null;
-                            item.ShipmentReceivableLineStatusCode = "OAMT";
-                            shipmentReceivableRepository.Update(item);
+                            item.IsClosed = false;
+                            item.StatusCode = "NT";
+                            item.ConsolidationInvoiceId = null;
+
+                            EventTracer.CreateTraceEvent(new EventTracerArgs()
+                            {
+                                EntityId = item.Id,
+                                ObjectTableName = "ARInvoice",
+                                Tenant = tenant,
+                                UserId = loggedContactId,
+                                EventTypeCode = "INDS",
+                            });
+                        }
+                        #endregion
+                    }
+
+                    else
+                    {
+                        #region Disconnect Receivables
+                        List<string> iReceivablesIds = (from a in oldEntityPM.InvoiceLines group a by new { a.ReceivableId } into gr select gr.Key.ReceivableId).ToList();
+                        List<ShipmentReceivable> iReceivables = shipmentReceivableRepository.GetShipmentReceivablesByIds(iReceivablesIds, tenant);
+                        if (iReceivables.Count > 0)
+                        {
+                            foreach (ShipmentReceivable item in iReceivables)
+                            {
+                                item.ARInvoiceId = null;
+                                item.ARInvoiceLineId = null;
+                                item.ShipmentReceivableLineStatusCode = "OAMT";
+                                shipmentReceivableRepository.Update(item);
+                            }
+
+                            shipmentReceivableRepository.SubmitChanges();
                         }
 
-                        shipmentReceivableRepository.SubmitChanges();
+                        List<ARInvoiceLine> lines = invoiceLineRepository.GetInvoiceLinesByInvoiceId(this.entityPM.CreditedByARInvoiceId, this.tenant).ToList();
+                        foreach (ARInvoiceLine line in lines)
+                        {
+                            line.ReceivableId = null;
+                            invoiceLineRepository.Update(line);
+                        }
+                        #endregion
                     }
 
-                    List<ARInvoiceLine> lines = invoiceLineRepository.GetInvoiceLinesByInvoiceId(this.entityPM.CreditedByARInvoiceId, this.tenant).ToList();
-                    foreach (ARInvoiceLine line in lines)
-                    {
-                        line.ReceivableId = null;
-                        invoiceLineRepository.Update(line);
-                    }
-                    #endregion
+                    entityPOCO.IsCancelled = true;
+                    entityPOCO.CancelledByARInvoiceId = this.entityPM.Id;
+                    entityPOCO.StatusCode = "AR";
+                    entityPOCO.AmountDue = 0;
+                    entityPOCO.AmountDueInLocalCurrency = 0;
+                    entityPOCO.AmountDueInProfitCurrency = 0;
+                    invoiceRepository.Update(entityPOCO);
+                    invoiceRepository.SubmitChanges();
                 }
-
-                entityPOCO.IsCancelled = true;
-                entityPOCO.CancelledByARInvoiceId = this.entityPM.Id;
-                entityPOCO.StatusCode = "AR";
-                entityPOCO.AmountDue = 0;
-                entityPOCO.AmountDueInLocalCurrency = 0;
-                entityPOCO.AmountDueInProfitCurrency = 0;
-                invoiceRepository.Update(entityPOCO);
-                invoiceRepository.SubmitChanges();
             }
         }
 
