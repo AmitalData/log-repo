@@ -50,7 +50,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 		
 		protected override EntityKeyFields GetKeys(CargoSealPM entityPM)
         {
-            CargoSealKeys entityKeys = new CargoSealKeys() { CargoSealIdentifierId = entityPM.CargoSealIdentifierId, SealNumber = entityPM.SealNumber, SealCompletenessStateCode = entityPM.SealCompletenessStateCode, SealTypeCode = entityPM.SealTypeCode, UpdateReasonCode = entityPM.UpdateReasonCode, UpdateTypeCode = entityPM.UpdateTypeCode };
+            CargoSealKeys entityKeys = new CargoSealKeys() { CargoSealIdentifierId = entityPM.CargoSealIdentifierId, SealNumber = entityPM.SealNumber };
             return entityKeys;
         }
 
