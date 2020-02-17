@@ -12,6 +12,8 @@ using Logitude.Accounting.Data.EntityPOCOs;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.Accounting.BL.CoreBL;
+using System.Text.RegularExpressions;
+
 
 namespace Logitude.Accounting.BL.Utils
 {
@@ -40,8 +42,76 @@ namespace Logitude.Accounting.BL.Utils
         {
             return _StatusCode;
         }
-        
+
         public void RunReconciliationAfterConversion(int tenant, string fromExtNum, string toExtNum)
+        {
+            long fromExt_long = Convert.ToInt64(fromExtNum);
+            long toExt_long = Convert.ToInt64(toExtNum);
+            if (toExt_long >= 1000)
+            {
+                IAccountingContext context = AccountingContext.GetContext(tenant);
+                JournalLineQueryService journalLineQueryService = new JournalLineQueryService(context);
+                string maxExt = journalLineQueryService.GetMaxExternalRecoNum(tenant);
+                if (!String.IsNullOrEmpty(maxExt))
+                {
+                    toExtNum = maxExt;
+                    toExt_long = Convert.ToInt64(maxExt);
+                }
+            }
+
+            for (long lower = fromExt_long; ;)
+            {
+
+                long upper = lower + 99;
+                if (upper > toExt_long)
+                {
+                    upper = toExt_long;
+                }
+                string lower_str = "";
+                if (lower <= 0)
+                {
+                    lower_str = "000000000000001";
+                }
+                else
+                {
+                    lower_str = Regex.Replace(lower.ToString(), @"\d+", n => n.Value.PadLeft(15, '0'));
+                }
+
+                string upper_str = "";
+                upper_str = Regex.Replace(upper.ToString(), @"\d+", n => n.Value.PadLeft(15, '0'));
+                try
+                {
+                    RunReconciliationAfterConversionInner(tenant, lower_str, upper_str);
+                }
+                catch (Exception e)
+                {
+                    string message = e.Message;
+                    // there to put message into the batch task log
+                }
+                double percentage_double = Convert.ToDouble(upper) / Convert.ToDouble(toExt_long) * 100.0;
+                int percentage = Convert.ToInt32(Math.Round(percentage_double));
+                // there to put percentage into the batch task status 
+
+
+                if (lower == toExt_long)
+                {
+                    break;
+                }
+                else
+                {
+                    lower += 100;
+                    if (lower > toExt_long)
+                    {
+                        lower = toExt_long;
+                    }
+                }
+            } 
+
+
+
+        }
+
+        public void RunReconciliationAfterConversionInner(int tenant, string fromExtNum, string toExtNum)
         {
             try
             {
@@ -84,26 +154,26 @@ namespace Logitude.Accounting.BL.Utils
                     }
                 }
                 reconciableGroupList.Sort((x, y) => x._Ref.CompareTo(y._Ref));
-                    reconciableGroupList.ForEach(recoGroup =>
+                reconciableGroupList.ForEach(recoGroup =>
+                {
+                    string gLAccountId = GetGroupGLAccountId(recoGroup._LineGroup);
+                    if (!String.IsNullOrWhiteSpace(gLAccountId))
                     {
-                        string gLAccountId = GetGroupGLAccountId(recoGroup._LineGroup);
-                        if (!String.IsNullOrWhiteSpace(gLAccountId))
+                        using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(5)))
                         {
-                            using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(5)))
-                            {
-                                _current = recoGroup._Ref.ToString();
-                                ReconcileOneRef(recoGroup._LineGroup, gLAccountId, ledgerTransactionQueryService);
-                                _counter++;
+                            _current = recoGroup._Ref.ToString();
+                            ReconcileOneRef(recoGroup._LineGroup, gLAccountId, ledgerTransactionQueryService);
+                            _counter++;
                                 //      if (_counter%100 == 0)
                                 //      {
                                 scope.Complete();
                                 //      }
                             }
 
-                            madeList.Add(recoGroup._Ref);
-                        }
-                    });
-               //     scope.Complete();
+                        madeList.Add(recoGroup._Ref);
+                    }
+                });
+                //     scope.Complete();
                 _ResponseText = $"Good: {goodList.Count},  Bad: {badList.Count},   Made: {madeList.Count}, No Lines: {String.Join(", ", _NoLines.ToArray())}, Wrong Action: {String.Join(", ", _WrongAction.ToArray())}, Wrong Sum: {String.Join(", ", _WrongSum.ToArray())}, Wrong Sum To Match: {String.Join(", ", _WrongSumToMatch.ToArray())}";
             }
             catch (Exception e)
