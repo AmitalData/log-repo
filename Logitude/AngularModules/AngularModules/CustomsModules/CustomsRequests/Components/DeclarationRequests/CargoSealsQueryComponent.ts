@@ -144,7 +144,7 @@ export class CargoSealsQueryComponent
             this._IsDisplayOnly = value;
         }
     }
-
+    
     get UpdateDate() { return this.RequestParams.UpdateDate; }
     set UpdateDate(value: Date) {
         if (this.RequestParams.UpdateDate != value) {
@@ -427,6 +427,7 @@ export class CargoSealsQueryComponent
         }
 
         SessionLocator.SelectedSession.StartBusyIndicator("");
+        debugger;
          if (this._IsNew) {
             this.CurrentEntity = new CargoSealIdentifierPM();
             this.CurrentEntity.Tenant = SessionLocator.Tenant;
@@ -450,7 +451,25 @@ export class CargoSealsQueryComponent
                 this.SendOptionsButtonClick(customSendOptionsArgs);
             });
         }
-        else {
+         else {
+
+             
+             this.CurrentEntity.Tenant = SessionLocator.Tenant;
+             this.CurrentEntity.CargoRowNumber = this.CargoRowNumber;
+             this.CurrentEntity.DeclarationId = this.DeclarationId;
+             this.CurrentEntity.ContainerNumber = this.ContainerNumber;
+             this.CurrentEntity.UpdateDate = this.UpdateDate;
+             this.CurrentEntity.ImporterId = this.ImporterNumber; //?
+             this.CurrentEntity.CargoIdentifierTypeCode = this.CargoIdentifierTypeCode;
+             this.CurrentEntity.CargoIdentifierKey1 = this.CargoIdentifierKey1;
+             this.CurrentEntity.CargoIdentifierKey2 = this.CargoIdentifierKey2;
+             this.CurrentEntity.CargoIdentifierKey3 = this.CargoIdentifierKey3;
+             this.CurrentEntity.CargoSeals.splice(0, this.CurrentEntity.CargoSeals.length-1)
+             if (this.CargoSealObslist != null) {
+                 this.CargoSealObslist.Collection.forEach((item: CargoSealComponent) => {
+                     this.CurrentEntity.AddCargoSeal(item.entityPM);
+                 });
+             }
             this._CargoSealIdentifierPMService.update(this.CurrentEntity).subscribe(response => {
                 SessionLocator.SelectedSession.StopBusyIndicator();
                 this.SendOptionsButtonClick(customSendOptionsArgs);
