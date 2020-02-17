@@ -1,21 +1,23 @@
 <style>
-    .FormFieldRow{
+    .FormFieldRow {
         height: 32px;
     }
 
 
-    .subTitle{
+    .subTitle {
         color: #1b90cb;
         font-size: 14px;
     }
+
     .FlipImgHoriz {
         transform: rotate(180deg);
     }
+
     .DisbleBox {
         display: inline-block;
         border: 1px solid #ffd800;
         border-radius: 5px;
-        background: #faf5c0;/*fbebbc*/
+        background: #faf5c0; /*fbebbc*/
         padding: 4px 10px;
         color: gray;
         font-family: sans-serif;
@@ -24,7 +26,7 @@
     }
 
     /* Header Screen*/
-     .HeaderScreen {
+    .HeaderScreen {
         height: 100%;
         width: 100%;
         padding-top: 5px;
@@ -51,7 +53,8 @@
         font-size: 12px;
         color: #282E30;
     }
-    .CurvedEditArea{
+
+    .CurvedEditArea {
         box-shadow: 0px -3px 1px #ececec !important;
         -moz-box-shadow: 0px -3px 1px #ececec !important;
         -webkit-box-shadow: 0px -3px 1px #ececec !important;
@@ -252,15 +255,15 @@
                                 {{ErrorMessage}}
                             </div>
                         </div>
-                        <div *ngIf="!IsDisplayOnly && ShowStorageStatusMessage" style="float: right;display: inline-block;width: 665px;">
+                        <div *ngIf="!IsDisplayOnly && (ShowStorageStatusMessage||IsDisplayMessage)" style="float: right;display: inline-block;width: 665px;">
                             <div class="DisbleBox">
                                 {{ErrorMessage}}
                             </div>
                         </div>
 
                         <!-- send button -->
-                        <div style="float: left;display: inline-block;width: 110px;">
-                            <custom-send-options [IsDisabled]="!SendButtonEnabled"
+                        <div style="float: left;display: inline-block;width: 110px;" *ngIf="paymentPM">
+                            <custom-send-options [IsDisabled]="!SendButtonEnabled || AutomaticPayment"
                                                  [AvoidDoubleClick]="true"
                                                  #MyCustomSendOptionsComponent
                                                  (SendButtonClicked)="SendButtonClicked($event)">
@@ -268,7 +271,7 @@
                         </div>
 
 
-                        
+
                     </div>
                 </div>
 
@@ -279,19 +282,18 @@
                         <tr style="height: 100px;">
                             <td colspan="2" style="height: 100px;">
 
-                                <table  *ngIf="paymentPM" style="table-layout: fixed;">
+                                <table *ngIf="paymentPM" style="table-layout: fixed;">
                                     <tr class="FormFieldRow">
                                         <!-- PaymentDate -->
                                         <td style="width: 110px;">
-                                            <LogLabel [ObjectFieldName]="'PaymentDate'" [ObjectTableName]="ObjectTableName" 
+                                            <LogLabel [ObjectFieldName]="'PaymentDate'" [ObjectTableName]="ObjectTableName"
                                                       [DataContext]="DataContext"></LogLabel>
                                         </td>
-                                        <td style="width: 115px;" >
+                                        <td style="width: 115px;">
                                             <LogDatePicker [ObjectFieldName]="'PaymentDate'" [ObjectTableName]="ObjectTableName"
                                                            [DataContext]="DataContext" [HideColumns]="true"
-                                                           [SelectedDateValue]="PaymentDate" 
-                                                           (OnBlurEvent)="PaymentDateTimeOnBlur($event)"
-                                                           ></LogDatePicker>
+                                                           [SelectedDateValue]="PaymentDate"
+                                                           (OnBlurEvent)="PaymentDateTimeOnBlur($event)"></LogDatePicker>
                                         </td>
                                         <td style="width: 40px;"><div></div></td>
 
@@ -301,10 +303,10 @@
                                             <LogLabel [ObjectFieldName]="'TotalTax'" [ObjectTableName]="'Customs.Declaration'"
                                                       [DataContext]="DataContext"></LogLabel>
                                         </td>
-                                        <td style="width: 130px; text-align: right; color: black;" >
+                                        <td style="width: 130px; text-align: right; color: black;">
                                             <span class="hyperlink" (click)="OpenTaxScreen()" style="font-size:10px ;color:blue"> {{ TotalTax | NumbersPipe:'n2' }}</span>
 
-                                        
+
                                         </td>
                                         <td style="width: 40px;"><div></div></td>
 
@@ -313,7 +315,7 @@
                                             <LogLabel [ObjectFieldName]="'CreatedByUserId'" [ObjectTableName]="ObjectTableName"
                                                       [DataContext]="DataContext"></LogLabel>
                                         </td>
-                                        <td style="width: 115px;" >
+                                        <td style="width: 115px;">
                                             <LogLov [ObjectFieldName]="'CreatedByUserId'"
                                                     [ObjectTableName]="ObjectTableName"
                                                     [DataContext]="DataContext"
@@ -326,7 +328,7 @@
                                     </tr>
                                     <tr class="FormFieldRow">
                                         <!-- IsProcessA -->
-                                        <td >
+                                        <td>
                                             <LogLabel [ObjectFieldName]="'IsProcessA'" [ObjectTableName]="ObjectTableName"
                                                       [DataContext]="DataContext"></LogLabel>
                                         </td>
@@ -337,23 +339,23 @@
 
 
                                         <!-- ProcessADescription -->
-                                        <td >
+                                        <td>
                                             <LogLabel [ObjectFieldName]="'ProcessADescription'" [ObjectTableName]="ObjectTableName"
                                                       [DataContext]="DataContext"></LogLabel>
                                         </td>
                                         <td rowspan="2">
                                             <LogTextBox [ObjectFieldName]="'ProcessADescription'" [ObjectTableName]="ObjectTableName" [IsMultiline]="true"
-                                                        [DataContext]="DataContext" [HideColumns]="true" [InputType]="'nText'" 
+                                                        [DataContext]="DataContext" [HideColumns]="true" [InputType]="'nText'"
                                                         style="height: 100%; /*position: absolute;top: 0;*/"></LogTextBox>
                                         </td>
                                         <td><div></div></td>
 
                                         <!-- SignatoryIdentification -->
-                                        <td >
+                                        <td>
                                             <LogLabel [ObjectFieldName]="'SignatoryIdentification'" [ObjectTableName]="ObjectTableName"
                                                       [DataContext]="DataContext"></LogLabel>
                                         </td>
-                                        <td  >
+                                        <td>
                                             <LogTextBox [ObjectFieldName]="'SignatoryIdentification'" [ObjectTableName]="ObjectTableName"
                                                         [DataContext]="DataContext" [HideColumns]="true" [InputType]="'text'" [FocusOnMe]="true" [Text]="SignatoryIdentification"></LogTextBox>
                                         </td>
@@ -361,11 +363,19 @@
                                         <td></td>
                                     </tr>
                                     <tr style="height:28px;">
-                                        <td colspan="6">
+                                        <!--<td colspan="6">
                                             <div></div>
+                                        </td>-->
+                                        <td>
+                                            <LogLabel [ObjectFieldName]="'AutomaticPayment'" [ObjectTableName]="ObjectTableName"
+                                                      [DataContext]="DataContext"></LogLabel>
                                         </td>
-
-                                        <!-- FuturePaymentDateTime --> 
+                                        <td>
+                                            <!-- *ngIf ="IsAutomaticPayment"-->
+                                            <CheckBox [IsChecked]="AutomaticPayment" (Checked)="OnCheckedAutomaticPayment($event)" [IsEnabled]="!IsDisplayOnly || DisplayAutomaticPayment"></CheckBox>
+                                        </td>
+                                        <td colspan="4"><div></div></td>
+                                        <!-- FuturePaymentDateTime -->
                                         <td>
                                             <LogLabel [ObjectFieldName]="'FuturePaymentDateTime'" [ObjectTableName]="ObjectTableName"
                                                       [DataContext]="DataContext"></LogLabel>
@@ -374,7 +384,7 @@
                                             <LogDatePicker [ObjectFieldName]="'FuturePaymentDateTime'" [ObjectTableName]="ObjectTableName"
                                                            [DataContext]="DataContext" [HideColumns]="true"
                                                            [SelectedDateValue]="FuturePaymentDateTime"
-                                                           (OnBlurEvent)="FuturePaymentDateTimeOnBlur($event)"></LogDatePicker>
+                                                           (ValueChanged)="FuturePaymentDateTimeOnBlur($event)"></LogDatePicker>
                                         </td>
                                         <td colspan="2" style="padding-right: 10px;">
                                             <LogDatePicker [ObjectFieldName]="'FuturePaymentTime'" [ObjectTableName]="ObjectTableName"
@@ -390,7 +400,6 @@
                         </tr>
 
                         <!-- #region Payment method grid -->
-
                         <!-- Toolbar-->
                         <tr style="height: 28px;">
                             <td>
@@ -440,7 +449,7 @@
                                                             [HideColumns]="true"
                                                             [LookUpTableName]="'Customs.PaymentMethodType'"
                                                             (SelectedItemChanged)="item.SetLocalName($event, 'MethodTypeName')"
-                                                              [SelectedValue]="item.MethodTypeCode"
+                                                            [SelectedValue]="item.MethodTypeCode"
                                                             [FocusOnMe]="true">
                                                     </LogLov>
                                                 </div>
@@ -454,8 +463,8 @@
                                                     <span>{{ item.Amount | NumbersPipe:'n2' }}</span>
                                                 </div>
                                                 <div *ngIf="logcelltemplate.IsEditMode">
-                                                    <LogTextBox [ObjectFieldName]="'Amount'" [InputType]="'double'" [DataContext]="item" 
-                                                                [Text]="item.Amount" (dblclick)="item.OnDblClick()" 
+                                                    <LogTextBox [ObjectFieldName]="'Amount'" [InputType]="'double'" [DataContext]="item"
+                                                                [Text]="item.Amount" (dblclick)="item.OnDblClick()"
                                                                 [ObjectTableName]="'Customs.DeclarationPaymentMethod'" [HideColumns]="true" [FocusOnMe]="true"></LogTextBox>
                                                 </div>
                                             </log-cell-template>
@@ -493,7 +502,7 @@
                                                             [LookUpTableName]="'Customs.CustomerActivityType'"
                                                             (SelectedItemChanged)="item.CustomerActivityType = $event"
                                                             [SelectedValue]="PayerActivityTypeCode"
-                                                              [FocusOnMe]="true">
+                                                            [FocusOnMe]="true">
                                                     </LogLov>
                                                 </div>
                                             </log-cell-template>
@@ -505,7 +514,7 @@
                                                 <span class="CellSeparator" style="float: right;"></span>
                                                 <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="RemovePaymentMethodClicked(item)"
                                                             [IsEnabled]="!IsDisplayOnly"
-                                                          style="display: inline-block; float: right; margin-right:3px; margin-top:2px;"></IconButton>
+                                                            style="display: inline-block; float: right; margin-right:3px; margin-top:2px;"></IconButton>
                                             </log-cell-template>
                                         </log-column>
 
@@ -516,7 +525,6 @@
                         </tr>
 
                         <!-- #endregion -->
-                            
                         <!-- Total -->
                         <tr style="height: 32px;">
                             <td colspan="3" style="padding-bottom: 5px;">
@@ -526,7 +534,6 @@
                         </tr>
 
                         <!-- #region Protest grid -->
-
                         <!-- Toolbar-->
                         <tr style="height: 28px;">
                             <td>
