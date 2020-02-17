@@ -212,11 +212,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     dirtyDeclarationPM.Consignments = consignmentQueryService.GetMulti(declarationKeys, true);
                 }
 
-                if (dirtyDeclarationPM.SupplierInvoices != null && dirtyDeclarationPM.SupplierInvoices.Count() > 0)
-                {
-                    dirtyDeclarationPM.TotalInvoiceAmountInUSD = 0;
-                    dirtyDeclarationPM.TotalInvoiceAmountInUSD = dirtyDeclarationPM.SupplierInvoices.Sum(r => r.InvoiceAmountInUSD);
-                }
                 var myUnifrightDeclarationUpdateService = new UnifrightDeclarationUpdateService(dirtyDeclarationPM, dbOccDeclarationPM, loggingUserId);
                 myUnifrightDeclarationUpdateService.Update(doTask);
                 this._NO_LD2U = myUnifrightDeclarationUpdateService._NO_LD2U;
