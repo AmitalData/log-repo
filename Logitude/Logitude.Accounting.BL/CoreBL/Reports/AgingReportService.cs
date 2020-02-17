@@ -431,8 +431,8 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                 List<PeriodMExtended> namedPeriods = (from line in reportList
                                                       join account in accountsList on line.AccountId equals account.Id
                                                       join currency in currencies.DefaultIfEmpty() on line.CurrencyId equals currency.Id
-                                                      join card in cards.DefaultIfEmpty() on account.CardId equals card.Id
-                                                      join paymentTerm in paymentTerms.DefaultIfEmpty() on account.PaymentTermId equals paymentTerm.Id
+                                                      //join card in cards.DefaultIfEmpty() on account.CardId equals card.Id
+                                                      //join paymentTerm in paymentTerms.DefaultIfEmpty() on account.PaymentTermId equals paymentTerm.Id
 
                                                       select new PeriodMExtended()
                                                       {
@@ -446,19 +446,19 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                                                           AccountEnglishName = account.EnglishName,
                                                           AccountLocalName = account.LocalName,
                                                           AccountDisplayNumber = account.DisplayNumber,
-                                                          AccountPaymentTermName = paymentTerm.EnglishName,
-                                                          AccountPhone = card.BusinessPhone,
+                                                          //AccountPaymentTermName = paymentTerm.EnglishName,
+                                                          //AccountPhone = card.BusinessPhone,
 
-                                                          OpenCredit = line.OpenCredit,
-                                                          OpenDebit = line.OpenDebit,
+                                                          //OpenCredit = line.OpenCredit,
+                                                          //OpenDebit = line.OpenDebit,
                                                           CurrencyCode = currency.Code,
 
-                                                          // credit data
-                                                          CreditLimit = (decimal)card.CreditLimitAmount,
-                                                          //CreditStatus = account.cred,
-                                                          TotalOpenShipments = card.OpenShipments,
-                                                          TotalFutureOpenCheques = (decimal)account.TotFutureOpenChequesInLocalCur,
-                                                          TotalOpenCheques = (decimal)account.TotalOpenChequesInLocalCur,
+                                                          //// credit data
+                                                          //CreditLimit = (decimal)card.CreditLimitAmount,
+                                                          ////CreditStatus = account.cred,
+                                                          //TotalOpenShipments = card.OpenShipments,
+                                                          //TotalFutureOpenCheques = (decimal)account.TotFutureOpenChequesInLocalCur,
+                                                          //TotalOpenCheques = (decimal)account.TotalOpenChequesInLocalCur,
 
                                                       }).ToList();
 
