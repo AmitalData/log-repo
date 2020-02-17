@@ -26,6 +26,7 @@ export class SentQuotesKPIComponent implements OnInit {
     private dashboardArgs: QuoteDashboardArguments;
     private dashboardService: DashboardService;
     public SentQuotesKPIData: Array<ChartingDataClass>;
+    public NoQuotesData = false;
 
     constructor(private _entityResourceService: EntityResourceService) {
         this.SetChartId();
