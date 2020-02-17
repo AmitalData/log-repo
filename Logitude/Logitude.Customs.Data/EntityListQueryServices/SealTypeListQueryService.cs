@@ -41,8 +41,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
 		private IQueryable<SealType> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<SealType> iQueryable)
         {
-			return iQueryable;
-		}
+            return iQueryable;
+
+ 		}
 			}
 
 

@@ -32,16 +32,18 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 					                          EnglishName = a.EnglishName,
 					
 					                          SearchFields = a.SearchFields,
-												Inactive = a.Inactive,
-		                    	            });
+                                                Inactive = a.Inactive,
+
+                                            });
             return query;
 		}
 
 		private IQueryable<SealCompletenes> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<SealCompletenes> iQueryable)
         {
-			return iQueryable;
-		}
-			}
+            return iQueryable;
+
+        }
+    }
 
 
 }

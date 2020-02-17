@@ -26,8 +26,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 											{
                      
 					                          Code = a.Code,
-
-											  EnglishName = a.EnglishName,
+					
+					                          EnglishName = a.EnglishName,
 					
 					                          SearchFields = a.SearchFields,
 					
@@ -41,8 +41,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
 		private IQueryable<SealUpdateReasonType> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<SealUpdateReasonType> iQueryable)
         {
-			return iQueryable;
-		}
-			}
+            return iQueryable;
+        }
+    }
+
 
 }
+	
