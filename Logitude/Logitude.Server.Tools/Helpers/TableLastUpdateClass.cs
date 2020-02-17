@@ -260,6 +260,10 @@ return 0;
 
             var objectTabelRepository = new ObjectTableRepository(0);
             var list = objectTabelRepository.GetAllCacheOnClient(0);
+            if (LogitudeSettings.IsCostomsDeploy)
+            {
+                list = list.Where(r => (r.Name ?? "").StartsWith("Customs.")).ToList();
+            }
             foreach (var item in list)
             {
                 TableLastUpdateClass.UpdateTableHistory(0, item.Name, new TableLastUpdateM()
