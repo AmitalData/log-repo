@@ -80,9 +80,13 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new AmendmentRequestStatusMap());
 	
+
             modelBuilder.Configurations.Add(new AmendmentStatusMap());
 	
             modelBuilder.Configurations.Add(new AmendmentTypeMap());
+
+            modelBuilder.Configurations.Add(new AmendmentTypeMap());
+
 	
             modelBuilder.Configurations.Add(new ApprovedProfessionMap());
 	
@@ -1170,12 +1174,21 @@ namespace Logitude.Customs.Data
 	      get; set;
 	 
 	 }
+
 	
 	 public IDbSet<AmendmentStatus> AmendmentStatuses 
 	 {
 	      get; set;
 	 
 	 }
+
+	
+	 public IDbSet<AmendmentType> AmendmentTypes 
+	 {
+	      get; set;
+	 
+	 }
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 19R03P
 	
 	 public IDbSet<AmendmentType> AmendmentTypes 
 	 {
@@ -2986,4 +2999,4 @@ namespace Logitude.Customs.Data
  }
 
 
-}
+}

@@ -260,7 +260,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
                 customsDocumentsTicketUpdateService.Update(customsDocumentsTicketPM, true);
             }
-                return declarationPM;
+
+                return myQueryService.GetSingleDeclarationById(declarationPM.Id, declarationPM.Tenant);
+                //return declarationPM;
 
             }
         catch(System.Exception ex)
@@ -1005,19 +1007,20 @@ namespace Logitude.CustomsMessaging.ResponseServices
         {
             List<SupplierInvoiceItemsModPM> supplierInvoiceItemsModPMs = new List<SupplierInvoiceItemsModPM>();
 
-
-            foreach (var valuationAdjustment in governmentAgencyGoodsItem.ValuationAdjustment)
+            if (governmentAgencyGoodsItem != null && governmentAgencyGoodsItem.ValuationAdjustment!= null)
             {
-                SupplierInvoiceItemsModPM supplierInvoiceItemsMod = new SupplierInvoiceItemsModPM();
-               supplierInvoiceItemsMod.DeclarationId = declarationId;
-                supplierInvoiceItemsMod.ChangeSetOp = ChangeSetOperation.Insert;
-                supplierInvoiceItemsMod.TypeCode = GetValueCodeType( valuationAdjustment.AdditionCode);
-                supplierInvoiceItemsMod.CurrencyTypeCode = valuationAdjustment.AmountAmount.currencyID.ToString();
-                supplierInvoiceItemsMod.Amount = GetValueAmountType(valuationAdjustment.AmountAmount);
-                supplierInvoiceItemsMod.Tenant = tenant;
-                supplierInvoiceItemsModPMs.Add(supplierInvoiceItemsMod);
+                foreach (var valuationAdjustment in governmentAgencyGoodsItem.ValuationAdjustment)
+                {
+                    SupplierInvoiceItemsModPM supplierInvoiceItemsMod = new SupplierInvoiceItemsModPM();
+                    supplierInvoiceItemsMod.DeclarationId = declarationId;
+                    supplierInvoiceItemsMod.ChangeSetOp = ChangeSetOperation.Insert;
+                    supplierInvoiceItemsMod.TypeCode = GetValueCodeType(valuationAdjustment.AdditionCode);
+                    supplierInvoiceItemsMod.CurrencyTypeCode = valuationAdjustment.AmountAmount.currencyID.ToString();
+                    supplierInvoiceItemsMod.Amount = GetValueAmountType(valuationAdjustment.AmountAmount);
+                    supplierInvoiceItemsMod.Tenant = tenant;
+                    supplierInvoiceItemsModPMs.Add(supplierInvoiceItemsMod);
+                }
             }
-
             return supplierInvoiceItemsModPMs;
         }
 
@@ -1064,8 +1067,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             foreach (var customsValuation in declarationGoodsShipment.CustomsValuation)
             {if (customsValuation.ExitToEntryChargeAmount == null) continue;
-                 string[] ChargesTypeCode = new string[] { "67,144,I02" };
-                if (!ChargesTypeCode.Contains(GetValueCodeType(customsValuation.ChargesTypeCode))) {
+            if(GetValueAmountType(customsValuation.OtherChargeDeductionAmount) ==0) continue;
+                string[] ChargesTypeCode = new string[] { "67,144,I02" };
+                if (!ChargesTypeCode.Contains(GetValueCodeType(customsValuation.ChargesTypeCode))  ) {
                     SupplierInvoiceModificationPM supplierInvoiceModificationPM = new SupplierInvoiceModificationPM()
                     { ChangeSetOp = ChangeSetOperation.Insert,
                         DeclarationId = declarationId,
@@ -1077,13 +1081,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
                   }
 
 
-                if (customsValuation.ChargesTypeCode.Value=="67")
+                if (customsValuation.ChargesTypeCode.Value=="67" )
                 {
                     supplierInvoicePM.InsruanceCurrencyTypeCode = customsValuation.ExitToEntryChargeAmount.currencyID.ToString();
                     supplierInvoicePM.InsuranceAmount = GetValueAmountType(customsValuation.ExitToEntryChargeAmount);
                 }
 
-                if (customsValuation.ChargesTypeCode.Value == "144")
+                if (customsValuation.ChargesTypeCode.Value == "144"  )
                 {
                     supplierInvoicePM.FreightCurrencyTypeCode = customsValuation.ExitToEntryChargeAmount.currencyID.ToString();
                     supplierInvoicePM.TotalFreightInFreightCurrency = GetValueAmountType(customsValuation.ExitToEntryChargeAmount);
@@ -3075,8 +3079,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
             {
                 var declarationTaxPM = new DeclarationTaxPM();
                 declarationTaxPM.ChangeSetOp = ChangeSetOperation.Insert;
-                declarationTaxPM.DeclarationId = this._MyDeclarationPM.Id;
-                declarationTaxPM.Tenant = this._MyDeclarationPM.Tenant;
+                declarationTaxPM.DeclarationId = declarationId;
+                declarationTaxPM.Tenant = declarationPMOrg.Tenant;
                 declarationTaxPM.TaxTypeCode = dutyTaxFee.TypeCode.Value;
                 declarationTaxPM.TotalAmount = dutyTaxFee.DMExtensions.CalculatedTax.Amount.Value;
                 declarationTaxPM.DeferredTaxAmount = dutyTaxFee.DMExtensions.CalculatedTax.DeferedTaxAmount.Value;

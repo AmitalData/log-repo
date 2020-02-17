@@ -36,13 +36,13 @@ export class DeclarationCargoSealTabComponent extends BaseComponent implements O
         super();
         this.CargoSealObslist = new ObservableCollection([]);
 
-            this.EntityResourceService.getEntityResourceByTableName("Customs.CargoSealIdentifier").subscribe((response: any) => {
-                this.EntityResourceService.getEntityResourceByTableName("Customs.CargoSeal").subscribe((response: any) => {
-                    this.EntityPM = this.entityArgs.EntityPM;
-                    this.ObjectTableName = this.entityArgs.ObjectTableName;
-                    this.LoadCargoSealsList();
-                    this.Listen();
-                    this.IsLoaded = true;
+        this.EntityResourceService.getEntityResourceByTableName("Customs.CargoSealIdentifier").subscribe((response: any) => {
+            this.EntityResourceService.getEntityResourceByTableName("Customs.CargoSeal").subscribe((response: any) => {
+                this.EntityPM = this.entityArgs.EntityPM;
+                this.ObjectTableName = this.entityArgs.ObjectTableName;
+                this.LoadCargoSealsList();
+                this.Listen();
+                this.IsLoaded = true;
             });
         });
     }
