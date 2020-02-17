@@ -1537,8 +1537,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         }
         private void InitializeTransferFields()
         {
-            if (!IsFullAccountingActivated(entityPM.Tenant))
-            {
+           
                 bool isInitializing = true;
 
                 if (entityPM.IsConstituentInvoice)
@@ -1687,11 +1686,14 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     else
                     {
                         entityPM.TransferStatusCode = "NR";
+                    if (!IsFullAccountingActivated(entityPM.Tenant))
+                    {
                         entityPM.TransferError = myError;
+                    }
                     }
                     #endregion
                 }
-            }
+            
         }
         Tenant tenantPOCO;
         private void InitializeGLAccountFields()
