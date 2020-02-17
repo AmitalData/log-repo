@@ -1537,157 +1537,160 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         }
         private void InitializeTransferFields()
         {
-            bool isInitializing = true;
-
-            if (entityPM.IsConstituentInvoice)
+            if (!IsFullAccountingActivated(entityPM.Tenant))
             {
-                isInitializing = false;
-                entityPM.TransferError = "Constituent Invoice";
-                entityPM.TransferStatusCode = "NR";
-            }
+                bool isInitializing = true;
 
-            else if (entityPM.IsTransferStatusSetManually)
-            {
-                isInitializing = false;
-            }
-
-            else if (entityPM.SetReTransfer)
-            {
-                isInitializing = true;
-            }
-
-            else if (invoice.TransferStatusCode == "TR")
-            {
-                isInitializing = false;
-                entityPM.TransferError = null;
-                entityPM.TransferStatusCode = "TR";
-            }
-
-            else if (entityPM.TransferStatusCode == "BL")
-            {
-                isInitializing = false;
-                entityPM.TransferError = null;
-                entityPM.TransferStatusCode = "BL";
-            }
-
-            else if (entityPM.TransferStatusCode == "IP" || entityPM.TransferStatusCode=="ET")
-            {
-                isInitializing = false;            
-            }
-
-            if (isInitializing)
-            {
-                #region
-
-                bool isReady = true;
-                string myError = null;
-                string ExternalCodeError = "Currency External Code is missing";
-                string paymentTermError = "Payment Term External Id is missing";
-                string vatError = "External VAT Card is missing";
-                string linesError = " Charge Type Receivable Credit Account is missing";
-
-                if (FieldIsEmpty(entityPM.DebitAccount))
+                if (entityPM.IsConstituentInvoice)
                 {
-                    isReady = false;
-                    myError = "Debit Account is missing";
-                }
-
-                if (isExternal)
-                {
-                    if (FieldIsEmpty(entityPM.PaymentTermExternalId))
-                    {
-                        isReady = false;
-                        if (!FieldIsEmpty(entityPM.PaymentTermName))
-                        {
-                            paymentTermError = "Payment Term: " + entityPM.PaymentTermName + ". External Id is missing";
-                        }
-                        myError = string.IsNullOrEmpty(myError) ? paymentTermError : myError + "," + paymentTermError;
-                    }
-                }
-
-                else
-                {
-                    if (FieldIsEmpty(entityPM.AccountingExternalCode))
-                    {
-                        isReady = false;
-                        if (!FieldIsEmpty(entityPM.AccountingExternalName))
-                        {
-                            ExternalCodeError = "External Code: " + entityPM.AccountingExternalName + " is missing";
-                        }
-                        myError = string.IsNullOrEmpty(myError) ? ExternalCodeError : myError + "," + ExternalCodeError;
-                    }
-                }
-
-                List<ARInvoiceLinePM> myLines = new List<ARInvoiceLinePM>();
-                if (isNewEntity)
-                {
-                    myLines = entityPM.InvoiceLines.ToList();
-                }
-
-                else
-                {
-                    myLines = invoiceLinesChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
-                }
-
-                if (myLines.Count == 0)
-                {
-                    isReady = false;
-                    myError = string.IsNullOrEmpty(myError) ? linesError : myError + "," + linesError;
-                }
-
-                else
-                {
-                    List<ARInvoiceLinePM> arInvoiceLines_CreditError = myLines.Where(d => d.CreditAccount == null || (d.CreditAccount != null && string.IsNullOrEmpty(d.CreditAccount.Trim()))).ToList();
-                    if (arInvoiceLines_CreditError != null && arInvoiceLines_CreditError.Count() > 0)
-                    {
-                        isReady = false;
-                        foreach (ARInvoiceLinePM item in arInvoiceLines_CreditError)
-                        {
-                            ChargesType myChargesType = ChargesTypeRepository.GetSingleChargesType(item.ChargesTypeId, tenant, true);
-                            string myChargesTypeName = myChargesType != null ? myChargesType.EnglishName : "";
-                            myError = string.IsNullOrEmpty(myError) ? myChargesTypeName + linesError : myError + "," + myChargesTypeName + linesError;
-                        }
-                    }
-
-                    var myGroup = (from a in myLines
-                                   where a.VatTypeId != null
-                                   && a.VatPercentage != null
-                                   && a.VatPercentage != 0
-                                   group a by new { a.VatTypeId,  a.VatPercentage, a.ExternalVATCard, a.ExternalTAXItemId } into g
-                                   select new
-                                   {
-                                       VatTypeId = g.Key.VatTypeId,
-                                       VatPercentage = g.Key.VatPercentage,
-                                       ExternalVATCard = g.Key.ExternalVATCard,
-                                       ExternalTAXItemId = g.Key.ExternalTAXItemId,
-                                   });
-
-                    foreach (var g in myGroup)
-                    {
-                        if (FieldIsEmpty(g.ExternalVATCard))
-                        {
-                            VatType lineVatType = this.allVatTypes.Where(d => d.Id == g.VatTypeId).FirstOrDefault();
-                            var lineVatTypeName = lineVatType != null ? lineVatType.EnglishName : "";
-                            isReady = false;
-                            vatError = lineVatTypeName  + " VAT External Id is missing";
-                            myError = string.IsNullOrEmpty(myError) ? vatError : myError + "," + vatError;
-                            //break;
-                        }
-                    }
-                }
-
-                if (isReady)
-                {
-                    entityPM.TransferStatusCode = "RD";
-                    entityPM.TransferError = null;
-                }
-
-                else
-                {
+                    isInitializing = false;
+                    entityPM.TransferError = "Constituent Invoice";
                     entityPM.TransferStatusCode = "NR";
-                    entityPM.TransferError = myError;
                 }
-                #endregion
+
+                else if (entityPM.IsTransferStatusSetManually)
+                {
+                    isInitializing = false;
+                }
+
+                else if (entityPM.SetReTransfer)
+                {
+                    isInitializing = true;
+                }
+
+                else if (invoice.TransferStatusCode == "TR")
+                {
+                    isInitializing = false;
+                    entityPM.TransferError = null;
+                    entityPM.TransferStatusCode = "TR";
+                }
+
+                else if (entityPM.TransferStatusCode == "BL")
+                {
+                    isInitializing = false;
+                    entityPM.TransferError = null;
+                    entityPM.TransferStatusCode = "BL";
+                }
+
+                else if (entityPM.TransferStatusCode == "IP" || entityPM.TransferStatusCode == "ET")
+                {
+                    isInitializing = false;
+                }
+
+                if (isInitializing)
+                {
+                    #region
+
+                    bool isReady = true;
+                    string myError = null;
+                    string ExternalCodeError = "Currency External Code is missing";
+                    string paymentTermError = "Payment Term External Id is missing";
+                    string vatError = "External VAT Card is missing";
+                    string linesError = " Charge Type Receivable Credit Account is missing";
+
+                    if (FieldIsEmpty(entityPM.DebitAccount))
+                    {
+                        isReady = false;
+                        myError = "Debit Account is missing";
+                    }
+
+                    if (isExternal)
+                    {
+                        if (FieldIsEmpty(entityPM.PaymentTermExternalId))
+                        {
+                            isReady = false;
+                            if (!FieldIsEmpty(entityPM.PaymentTermName))
+                            {
+                                paymentTermError = "Payment Term: " + entityPM.PaymentTermName + ". External Id is missing";
+                            }
+                            myError = string.IsNullOrEmpty(myError) ? paymentTermError : myError + "," + paymentTermError;
+                        }
+                    }
+
+                    else
+                    {
+                        if (FieldIsEmpty(entityPM.AccountingExternalCode))
+                        {
+                            isReady = false;
+                            if (!FieldIsEmpty(entityPM.AccountingExternalName))
+                            {
+                                ExternalCodeError = "External Code: " + entityPM.AccountingExternalName + " is missing";
+                            }
+                            myError = string.IsNullOrEmpty(myError) ? ExternalCodeError : myError + "," + ExternalCodeError;
+                        }
+                    }
+
+                    List<ARInvoiceLinePM> myLines = new List<ARInvoiceLinePM>();
+                    if (isNewEntity)
+                    {
+                        myLines = entityPM.InvoiceLines.ToList();
+                    }
+
+                    else
+                    {
+                        myLines = invoiceLinesChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
+                    }
+
+                    if (myLines.Count == 0)
+                    {
+                        isReady = false;
+                        myError = string.IsNullOrEmpty(myError) ? linesError : myError + "," + linesError;
+                    }
+
+                    else
+                    {
+                        List<ARInvoiceLinePM> arInvoiceLines_CreditError = myLines.Where(d => d.CreditAccount == null || (d.CreditAccount != null && string.IsNullOrEmpty(d.CreditAccount.Trim()))).ToList();
+                        if (arInvoiceLines_CreditError != null && arInvoiceLines_CreditError.Count() > 0)
+                        {
+                            isReady = false;
+                            foreach (ARInvoiceLinePM item in arInvoiceLines_CreditError)
+                            {
+                                ChargesType myChargesType = ChargesTypeRepository.GetSingleChargesType(item.ChargesTypeId, tenant, true);
+                                string myChargesTypeName = myChargesType != null ? myChargesType.EnglishName : "";
+                                myError = string.IsNullOrEmpty(myError) ? myChargesTypeName + linesError : myError + "," + myChargesTypeName + linesError;
+                            }
+                        }
+
+                        var myGroup = (from a in myLines
+                                       where a.VatTypeId != null
+                                       && a.VatPercentage != null
+                                       && a.VatPercentage != 0
+                                       group a by new { a.VatTypeId, a.VatPercentage, a.ExternalVATCard, a.ExternalTAXItemId } into g
+                                       select new
+                                       {
+                                           VatTypeId = g.Key.VatTypeId,
+                                           VatPercentage = g.Key.VatPercentage,
+                                           ExternalVATCard = g.Key.ExternalVATCard,
+                                           ExternalTAXItemId = g.Key.ExternalTAXItemId,
+                                       });
+
+                        foreach (var g in myGroup)
+                        {
+                            if (FieldIsEmpty(g.ExternalVATCard))
+                            {
+                                VatType lineVatType = this.allVatTypes.Where(d => d.Id == g.VatTypeId).FirstOrDefault();
+                                var lineVatTypeName = lineVatType != null ? lineVatType.EnglishName : "";
+                                isReady = false;
+                                vatError = lineVatTypeName + " VAT External Id is missing";
+                                myError = string.IsNullOrEmpty(myError) ? vatError : myError + "," + vatError;
+                                //break;
+                            }
+                        }
+                    }
+
+                    if (isReady)
+                    {
+                        entityPM.TransferStatusCode = "RD";
+                        entityPM.TransferError = null;
+                    }
+
+                    else
+                    {
+                        entityPM.TransferStatusCode = "NR";
+                        entityPM.TransferError = myError;
+                    }
+                    #endregion
+                }
             }
         }
         Tenant tenantPOCO;
