@@ -30,6 +30,8 @@ namespace Logitude.Customs.Data.EntityLists
        public int Tenant  { get; set; }
        [DataMember]
        public DateTime? FuturePaymentDateTime  { get; set; }
+       [DataMember]
+       public int AutomaticPayment  { get; set; }
    }
 
 }
