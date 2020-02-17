@@ -61,13 +61,13 @@ export class AccountReceivablesComponent implements OnInit {
     }
 
     InitComponent() {
-      this.LoadAllScreenData();
-      
-      this.ARInvoicesSATFailedVisibility = (FeatureLocator.HasFeaturePermession("ARInvoice", "SATFAILEDINVOICES") && SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33") ? true : false;
-      this.ARPaymentsSATFailedVisibility = (FeatureLocator.HasFeaturePermession("ARPayment", "SATFAILEDPAYMENTS") && SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33") ? true : false;
-      this.ARInvoiceErrorInTransferVisibility = (FeatureLocator.HasFeaturePermession("ARInvoice", "ErrorInTransferInvoices")) ? true : false;
-      this.ARPaymentErrorInTransferVisibility = (FeatureLocator.HasFeaturePermession("ARPayment", "ErrorInTransfer")) ? true : false;
+        this.LoadAllScreenData();
 
+        this.ARInvoicesSATFailedVisibility = (FeatureLocator.HasFeaturePermession("ARInvoice", "SATFAILEDINVOICES") && SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33") ? true : false;
+        this.ARPaymentsSATFailedVisibility = (FeatureLocator.HasFeaturePermession("ARPayment", "SATFAILEDPAYMENTS") && SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33") ? true : false;
+
+        this.ARInvoiceErrorInTransferVisibility = (FeatureLocator.HasFeaturePermession("ARInvoice", "ARInvoice.Q.ErrorInTransfer")) ? true : false;
+        this.ARPaymentErrorInTransferVisibility = (FeatureLocator.HasFeaturePermession("ARPayment", "ARPayment.Q.ErrorInTransfer")) ? true : false;
     }
 
     FillFilters() {
@@ -373,11 +373,10 @@ export class AccountReceivablesComponent implements OnInit {
                 this.ARInvoicesOpenConstituentCount = myResult.ARInvoicesOpenConstituentCount > 1000 ? "1000+" : myResult.ARInvoicesOpenConstituentCount.toString();
                 this.ARPaymentsDraftsCount = myResult.ARPaymentsDraftsCount > 1000 ? "1000+" : myResult.ARPaymentsDraftsCount.toString();
                 this.ARPaymentsOpenedCount = myResult.ARPaymentsOpenedCount > 1000 ? "1000+" : myResult.ARPaymentsOpenedCount.toString();
-              this.ARInvoicesSATFailedCount = myResult.ARPaymentsOpenedCount > 1000 ? "1000+" : myResult.ARInvoicesSATFailedCount.toString();
+                this.ARInvoicesSATFailedCount = myResult.ARPaymentsOpenedCount > 1000 ? "1000+" : myResult.ARInvoicesSATFailedCount.toString();
                 this.ARPaymentsSATFailedCount = myResult.ARPaymentsOpenedCount > 1000 ? "1000+" : myResult.ARPaymentsSATFailedCount.toString();
                 this.ARInvoiceErrorInTransferCount = myResult.ARInvoicesFailedCount > 1000 ? "1000+" : myResult.ARInvoicesFailedCount.toString();
                 this.ARPaymentErrorInTransferCount = myResult.ARPaymentFailedCount > 1000 ? "1000+" : myResult.ARPaymentFailedCount.toString();
-
             }
         });
     }

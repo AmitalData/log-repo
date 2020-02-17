@@ -8753,7 +8753,7 @@
   <Query
     Code="&quot;ErrorInTransfer&quot;"
     TextCode="&quot;Error In Transfer&quot;"
-    LocalTextCode="&quot;ErrorInTransfer&quot;"
+    LocalTextCode="&quot;Error In Transfer&quot;"
     QueryGroupCode="&quot;APIN&quot;"
     IndexOrder="9"
     ObjectTableName="&quot;APInvoice&quot;"
