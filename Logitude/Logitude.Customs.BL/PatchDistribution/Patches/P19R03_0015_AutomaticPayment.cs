@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Logitude.Customs.BL.PatchDistribution.Patches
 {
-    class P19R03_0009_AutomaticPayment : PatchDistributionBase
+    class P19R03_0015_AutomaticPayment : PatchDistributionBase
     {
-        public P19R03_0009_AutomaticPayment()
+        public P19R03_0015_AutomaticPayment()
              : base("תשלום אוטמטי ", new DateTime(2020, 02, 17))
         {
 
@@ -24,7 +24,7 @@ namespace Logitude.Customs.BL.PatchDistribution.Patches
         {
 
 
-             this.AddUpSqlScript("ALTER TABLE Declarations ADD (AvailabilityDate DATETIME) ");
+            this.AddUpSqlScript("ALTER TABLE Declarations ADD (AvailabilityDate DATE) ");
             this.AddUpSqlScript("ALTER TABLE DECLARATIONPAYMENTS ADD (AutomaticPayment NUMBER(1,0)) ");
 
 
