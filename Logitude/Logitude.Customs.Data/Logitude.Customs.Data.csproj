@@ -100,7 +100,10 @@
     <Compile Include="EntityKeys\AcceptanceStatusKeys.cs" />
     <Compile Include="EntityKeys\ActionCodeKeys.cs" />
     <Compile Include="EntityKeys\AgentTalkBackTypeKeys.cs" />
+    <Compile Include="EntityKeys\AmendmentTypeKeys.cs" />
     <Compile Include="EntityKeys\ApprovedProfessionKeys.cs" />
+    <Compile Include="EntityKeys\CargoSealIdentifierKeys.cs" />
+    <Compile Include="EntityKeys\CargoSealKeys.cs" />
     <Compile Include="EntityKeys\CargoSplitRequestStatusKeys.cs" />
     <Compile Include="EntityKeys\CargoStatusKeys.cs" />
     <Compile Include="EntityKeys\ClaimsRelatedEntitiesRefundKeys.cs" />
@@ -147,6 +150,9 @@
     <Compile Include="EntityKeys\PointerLevelKeys.cs" />
     <Compile Include="EntityKeys\RefundCustomerActivityTypeKeys.cs" />
     <Compile Include="EntityKeys\RequestTypeKeys.cs" />
+    <Compile Include="EntityKeys\SealCompletenesKeys.cs" />
+    <Compile Include="EntityKeys\SealTypeKeys.cs" />
+    <Compile Include="EntityKeys\SealUpdateReasonTypeKeys.cs" />
     <Compile Include="EntityKeys\SeizureFactorTypeKeys.cs" />
     <Compile Include="EntityKeys\SeizureMethodTypeKeys.cs" />
     <Compile Include="EntityKeys\SplitOrMergeReasonKeys.cs" />
@@ -159,7 +165,10 @@
     <Compile Include="EntityListQueryServices\AcceptanceStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ActionCodeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\AgentTalkBackTypeListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\AmendmentTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ApprovedProfessionListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\CargoSealIdentifierListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\CargoSealListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CargoSplitRequestStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CargoStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ClaimsRelatedEntitiesRefundListQueryService.cs" />
@@ -199,7 +208,10 @@
     <Compile Include="EntityListQueryServices\Generated\AcceptanceStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ActionCodeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\AgentTalkBackTypeListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\AmendmentTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ApprovedProfessionListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\CargoSealIdentifierListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\CargoSealListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CargoSplitRequestStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CargoStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ClaimsRelatedEntitiesRefundListQueryService.Generated.cs" />
@@ -246,6 +258,9 @@
     <Compile Include="EntityListQueryServices\Generated\PointerLevelListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\RefundCustomerActivityTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\RequestTypeListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\SealCompletenesListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\SealTypeListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\SealUpdateReasonTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\SeizureFactorTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\SeizureMethodTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\SplitOrMergeReasonListQueryService.Generated.cs" />
@@ -265,6 +280,9 @@
     <Compile Include="EntityListQueryServices\PointerLevelListQueryService.cs" />
     <Compile Include="EntityListQueryServices\RefundCustomerActivityTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\RequestTypeListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\SealCompletenesListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\SealTypeListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\SealUpdateReasonTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\SeizureFactorTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\SeizureMethodTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\SplitOrMergeReasonListQueryService.cs" />
@@ -277,7 +295,10 @@
     <Compile Include="EntityLists\Generated\AcceptanceStatusList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ActionCodeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\AgentTalkBackTypeList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\AmendmentTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ApprovedProfessionList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\CargoSealIdentifierList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\CargoSealList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CargoSplitRequestStatusList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CargoStatusList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ClaimsRelatedEntitiesRefundList.Generated.cs" />
@@ -325,6 +346,9 @@
     <Compile Include="EntityLists\Generated\ProceduralFaultList.Generated.cs" />
     <Compile Include="EntityLists\Generated\RefundCustomerActivityTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\RequestTypeList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\SealCompletenesList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\SealTypeList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\SealUpdateReasonTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\SeizureFactorTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\SeizureMethodTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\SplitOrMergeReasonList.Generated.cs" />
@@ -337,7 +361,10 @@
     <Compile Include="EntityMapping\AcceptanceStatusMap.cs" />
     <Compile Include="EntityMapping\ActionCodeMap.cs" />
     <Compile Include="EntityMapping\AgentTalkBackTypeMap.cs" />
+    <Compile Include="EntityMapping\AmendmentTypeMap.cs" />
     <Compile Include="EntityMapping\ApprovedProfessionMap.cs" />
+    <Compile Include="EntityMapping\CargoSealIdentifierMap.cs" />
+    <Compile Include="EntityMapping\CargoSealMap.cs" />
     <Compile Include="EntityMapping\CargoSplitRequestStatusMap.cs" />
     <Compile Include="EntityMapping\CargoStatusMap.cs" />
     <Compile Include="EntityMapping\ClaimsRelatedEntitiesRefundMap.cs" />
@@ -384,6 +411,9 @@
     <Compile Include="EntityMapping\PointerLevelMap.cs" />
     <Compile Include="EntityMapping\RefundCustomerActivityTypeMap.cs" />
     <Compile Include="EntityMapping\RequestTypeMap.cs" />
+    <Compile Include="EntityMapping\SealCompletenesMap.cs" />
+    <Compile Include="EntityMapping\SealTypeMap.cs" />
+    <Compile Include="EntityMapping\SealUpdateReasonTypeMap.cs" />
     <Compile Include="EntityMapping\SeizureFactorTypeMap.cs" />
     <Compile Include="EntityMapping\SeizureMethodTypeMap.cs" />
     <Compile Include="EntityMapping\SplitOrMergeReasonMap.cs" />
@@ -396,7 +426,10 @@
     <Compile Include="EntityPOCOs\AcceptanceStatus.cs" />
     <Compile Include="EntityPOCOs\ActionCode.cs" />
     <Compile Include="EntityPOCOs\AgentTalkBackType.cs" />
+    <Compile Include="EntityPOCOs\AmendmentType.cs" />
     <Compile Include="EntityPOCOs\ApprovedProfession.cs" />
+    <Compile Include="EntityPOCOs\CargoSeal.cs" />
+    <Compile Include="EntityPOCOs\CargoSealIdentifier.cs" />
     <Compile Include="EntityPOCOs\CargoSplitRequestStatus.cs" />
     <Compile Include="EntityPOCOs\CargoStatus.cs" />
     <Compile Include="EntityPOCOs\ClaimsRelatedEntitiesRefund.cs" />
@@ -444,6 +477,9 @@
     <Compile Include="EntityPOCOs\ProceduralFault.cs" />
     <Compile Include="EntityPOCOs\RefundCustomerActivityType.cs" />
     <Compile Include="EntityPOCOs\RequestType.cs" />
+    <Compile Include="EntityPOCOs\SealCompletenes.cs" />
+    <Compile Include="EntityPOCOs\SealType.cs" />
+    <Compile Include="EntityPOCOs\SealUpdateReasonType.cs" />
     <Compile Include="EntityPOCOs\SeizureFactorType.cs" />
     <Compile Include="EntityPOCOs\SeizureMethodType.cs" />
     <Compile Include="EntityPOCOs\SplitOrMergeReason.cs" />
@@ -456,7 +492,10 @@
     <Compile Include="Repsitories\AcceptanceStatusRepository.cs" />
     <Compile Include="Repsitories\ActionCodeRepository.cs" />
     <Compile Include="Repsitories\AgentTalkBackTypeRepository.cs" />
+    <Compile Include="Repsitories\AmendmentTypeRepository.cs" />
     <Compile Include="Repsitories\ApprovedProfessionRepository.cs" />
+    <Compile Include="Repsitories\CargoSealIdentifierRepository.cs" />
+    <Compile Include="Repsitories\CargoSealRepository.cs" />
     <Compile Include="Repsitories\CargoSplitRequestStatusRepository.cs" />
     <Compile Include="Repsitories\CargoStatusRepository.cs" />
     <Compile Include="Repsitories\ClaimsRelatedEntitiesRefundRepository.cs" />
@@ -496,7 +535,10 @@
     <Compile Include="Repsitories\Generated\AcceptanceStatusRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ActionCodeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\AgentTalkBackTypeRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\AmendmentTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ApprovedProfessionRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\CargoSealIdentifierRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\CargoSealRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CargoSplitRequestStatusRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CargoStatusRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ClaimsRelatedEntitiesRefundRepository.Generated.cs" />
@@ -543,6 +585,9 @@
     <Compile Include="Repsitories\Generated\PointerLevelRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\RefundCustomerActivityTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\RequestTypeRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\SealCompletenesRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\SealTypeRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\SealUpdateReasonTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\SeizureFactorTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\SeizureMethodTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\SplitOrMergeReasonRepository.Generated.cs" />
@@ -562,6 +607,9 @@
     <Compile Include="Repsitories\PointerLevelRepository.cs" />
     <Compile Include="Repsitories\RefundCustomerActivityTypeRepository.cs" />
     <Compile Include="Repsitories\RequestTypeRepository.cs" />
+    <Compile Include="Repsitories\SealCompletenesRepository.cs" />
+    <Compile Include="Repsitories\SealTypeRepository.cs" />
+    <Compile Include="Repsitories\SealUpdateReasonTypeRepository.cs" />
     <Compile Include="Repsitories\SeizureFactorTypeRepository.cs" />
     <Compile Include="Repsitories\SeizureMethodTypeRepository.cs" />
     <Compile Include="Repsitories\SplitOrMergeReasonRepository.cs" />

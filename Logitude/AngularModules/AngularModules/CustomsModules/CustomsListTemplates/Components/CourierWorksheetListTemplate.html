@@ -194,6 +194,10 @@
     </li>
         -->
                         <li style="text-align: center; border-bottom: 1px solid #555;"></li>
+                        <li  (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); ShowFollowUpStatus();">
+                            <span>כניסה ל-F/U</span>
+                        </li>
+
 
                         <li *ngIf="IsWebAPICourierGWMessageECTHRDataMamanEnable === true && !IsReceivingDelayCertificate" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); SendMamanSpecialAction(_CourierWorksheet['DeclarationId'],'U','2');">
                             <span>הפקת תעודת עיכוב</span>

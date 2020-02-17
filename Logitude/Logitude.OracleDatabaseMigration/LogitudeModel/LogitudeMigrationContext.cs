@@ -1996,6 +1996,18 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
 
         }
 
+        public IDbSet<CargoSeal> CargoSeals
+        {
+            get; set;
+
+        }
+
+        public IDbSet<CargoSealIdentifier> CargoSealIdentifiers
+        {
+            get; set;
+
+        }
+
         public IDbSet<CheckQueueType> CheckQueueTypes
         {
             get;
@@ -2079,6 +2091,33 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
 
         }
 
+          public IDbSet<SealType> SealTypes
+        {
+            get; set;
+
+        }
+
+
+
+
+        public IDbSet<SealUpdateReasonType> SealUpdateReasonTypes
+        {
+            get; set;
+
+        }
+
+
+        public IDbSet<SealCompletenes> SealCompleteness
+        {
+            get; set;
+
+        }
+
+        public IDbSet<AmendmentType> AmendmentTypes
+        {
+            get; set;
+
+        }
         public IDbSet<ConstraintType> ConstraintTypes
         {
             get;
@@ -3565,6 +3604,10 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
 
             modelBuilder.Configurations.Add(new CargoIdentityQualifierMap());
 
+            modelBuilder.Configurations.Add(new CargoSealMap());
+
+            modelBuilder.Configurations.Add(new CargoSealIdentifierMap());
+
             modelBuilder.Configurations.Add(new CertificateExemptionTypeMap());
 
             modelBuilder.Configurations.Add(new CheckEntityTypeMap());
@@ -4049,7 +4092,11 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new ContinuousRequestTypeMap());
             modelBuilder.Configurations.Add(new RequestTypeMap());
             modelBuilder.Configurations.Add(new DeficitDecisionMap());
-            
+            modelBuilder.Configurations.Add(new AmendmentTypeMap());
+            modelBuilder.Configurations.Add(new SealCompletenesMap());
+            modelBuilder.Configurations.Add(new SealTypeMap());
+            modelBuilder.Configurations.Add(new SealUpdateReasonTypeMap());
+
             #endregion
 
             #region Accounting
