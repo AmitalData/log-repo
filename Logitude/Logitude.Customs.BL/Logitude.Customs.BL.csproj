@@ -1882,6 +1882,7 @@
     <Compile Include="PatchDistribution\Patches\P19R03_0004_DeleteQMessWhenDone.cs" />
     <Compile Include="PatchDistribution\Patches\P19R03_0005_SInvoiceitemsEntryTk2.cs" />
     <Compile Include="PatchDistribution\Patches\P19R03_0006_QueueMessagesShrinkTk2.cs" />
+    <Compile Include="PatchDistribution\Patches\P19R03_0015_AutomaticPayment.cs" />
     <Compile Include="PatchDistribution\Patches\P19R03_0008_Diamonds.cs" />
     <Compile Include="PatchDistribution\Patches\P19R03_0007_AutonomyKeywords.cs" />
     <Compile Include="PatchDistribution\Patches\P19R03_0014_CargoSeal.cs" />
