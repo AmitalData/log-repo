@@ -1867,18 +1867,20 @@ export class ARInvoiceLineItem extends BaseComponent {
         this.fatherComponent.ComputeTotals();
     }
     OnInvoiceExchangeRateChanged() {
-        if (this.ForiegnCurrencyId == this.fatherComponent.InvoiceCurrencyId) {
-            this.ForiegnExchangeRate = this.fatherComponent.InvoiceCurrencyExchangeRate;
+        if (this.fatherComponent.IsEditingEnabled) {
+            if (this.ForiegnCurrencyId == this.fatherComponent.InvoiceCurrencyId) {
+                this.ForiegnExchangeRate = this.fatherComponent.InvoiceCurrencyExchangeRate;
+            }
+
+            else {
+                this.ForiegnExchangeRate = this.fatherComponent.GetCurrencyRate(this.ForiegnCurrencyId);
+            }
+
+            this.ExchangeRateDate = this.fatherComponent.GetCurrencyRateDate(this.ForiegnCurrencyId);
+
+            this.ComputeRelativeRateDate();
+            this.CalculateInvoiceCurrencyAmount();
         }
-
-        else {
-            this.ForiegnExchangeRate = this.fatherComponent.GetCurrencyRate(this.ForiegnCurrencyId);
-        }
-
-        this.ExchangeRateDate = this.fatherComponent.GetCurrencyRateDate(this.ForiegnCurrencyId);
-
-        this.ComputeRelativeRateDate();
-        this.CalculateInvoiceCurrencyAmount();
     }
     CalculateInvoiceCurrencyAmount() {
         if (this.ForiegnCurrencyId == this.fatherComponent.InvoiceCurrencyId) {
