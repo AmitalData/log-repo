@@ -1299,6 +1299,11 @@ implements OnDestroy
                 filters.addAdditionalFilter("CourierCustomStatusCode", "2", null, null, "Equals", false, false, false, "string");
                 break;
             }
+            case "N": {
+                filters.addAdditionalFilter("CourierCustomStatusCode", "2", "1", null, "NotEqual", false, false, false, "string");
+ 
+                break;
+            }
         }
     }
 
@@ -1506,6 +1511,7 @@ implements OnDestroy
     }
 
     SelectedCustomStatusValueClick(value: string) {
+        debugger;
         this._SelectedCustomStatusValue = value;
         if (this._SelectedBOLValue == "A" && this._SelectedTotalInvoiceValue == "A" && this._SelectedStatusValue == "A" && this._SelectedAvailableValue == "A" && this._SelectedFastIndividualProcessValue == 'A' && this._SelectedCustomStatusValue == 'A') {
             this.IsFiltered = false;
