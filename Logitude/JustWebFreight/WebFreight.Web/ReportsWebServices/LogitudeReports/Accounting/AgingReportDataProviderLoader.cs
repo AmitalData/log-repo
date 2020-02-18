@@ -71,11 +71,14 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         private void FilterCustomerPeriodsOnBalance(AccountingAgingDataProvider totalData)
         {
             List<AgingPeriod> totalBalances = GetTotalBalancePeriods(totalData, showLocals);
+
+            var balanceFilterAmount = GetFilterValue<decimal>("BalanceFilterValue");
+
             foreach (var totalBalance in totalBalances)
             {
                 if (GetFilterValue<string>("BalanceFilter") == "Debtors" && !(totalBalance.Total >= 0))
                     RemoveCustomerPeriods(totalData, totalBalance);
-                else if (GetFilterValue<string>("BalanceFilter") == "DebtAbove" && !(totalBalance.Total >= GetFilterValue<decimal>("BalanceFilterValue")))
+                else if (GetFilterValue<string>("BalanceFilter") == "DebtAbove" && !(totalBalance.Total >= Convert.ToDecimal(balanceFilterAmount)))
                     RemoveCustomerPeriods(totalData, totalBalance);
             }
         }
@@ -339,9 +342,21 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             QueryFilterItem filterItem = reportQueryOperations.QueryFilterItems
                 .Where(d => d.FieldName == FieldName).FirstOrDefault();
 
+            
+
             if (filterItem != null && filterItem.FieldValue != null)
             {
-                return (T)filterItem.FieldValue;
+                if (filterItem.FieldDataType == "decimal")
+                {
+                    decimal value = Convert.ToDecimal(filterItem.FieldValue);
+                    object x = value;
+
+                    return (T)x;
+                }
+                else
+                {
+                    return (T)filterItem.FieldValue; 
+                }
             }
 
             return default(T);
