@@ -94,7 +94,7 @@ export class QuoteDashboardComponent extends BaseComponent {
 
     RefreshButtonClicked() {
         this.LoadFilteredQueries();
-        this.LoadComponents();
+        //this.LoadComponents();
     }
 
     LoadFilteredQueries() {
