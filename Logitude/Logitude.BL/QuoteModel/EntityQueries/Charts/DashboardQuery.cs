@@ -65,7 +65,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries.Charts
         {
             if (!string.IsNullOrEmpty(ownerId))
             {
-                dataSourceQuery = dataSourceQuery.Where(d => d.CreatedByUserId == ownerId);
+                dataSourceQuery = dataSourceQuery.Where(d => d.SalesmanUserId == ownerId);
             }
         }
 

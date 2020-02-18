@@ -195,9 +195,9 @@ export class QuotesConversionComponent implements OnInit {
         if (flag) {
 
             filterAgrs.addAdditionalFilter("ChartCreateDateFilter", ServiceHelper.GetDateString(this.Wizard.FromDate), ServiceHelper.GetDateString(this.Wizard.ToDate), null, "Equals", true, false, false, "String");
-            //filterAgrs.addAdditionalFilter("IsClosed", false, null, null, "Equals", true, false, false, "Boolean");
             filterAgrs.addAdditionalFilter("IsCancelled", false, null, null, "Equals", true, false, false, "Boolean");
-            filterAgrs.addAdditionalFilter("SalesmanUserId", this.Wizard.OwnerId, null, null, "Equals", false, false, false, "String");
+            filterAgrs.addAdditionalFilter("SalesmanUserId", this.dashboardArgs.OwnerId, null, null, "Equals", false, false, false, "String");
+            filterAgrs.addAdditionalFilter("BusinessUnitId", this.dashboardArgs.BusinessUnitId, null, null, "Equals", true, false, false, "string");
             filterAgrs.addAdditionalFilter("TransportModeId", this.YAxis[e.index].transportModeId, null, null, "Equals", false, false, false, "String");
             filterAgrs.addAdditionalFilter("DirectionId", this.YAxis[e.index].directionId, null, null, "Equals", false, false, false, "String");
 
