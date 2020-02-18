@@ -446,5 +446,8 @@ namespace WebFreight.Web.DataProviders
         public string PickUpInstructions { get; set; }
         public string DeliveryInstructions { get; set; }
         public string ConnectedQuoteNumber { get; set; }
+
+        public byte[] MainCarriageCarrierLogo { get; set; }
+
     }
 }
