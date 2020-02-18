@@ -140,8 +140,13 @@ namespace Logitude.Customs.Data.EntityLists
        public string MasterStorageSiteCode  { get; set; }
        [DataMember]
        public string MasterHAWB  { get; set; }
+
        [DataMember]
        public string LastMileStatusName  { get; set; }
+
+       [DataMember]
+       public string CustomFileNo  { get; set; }
+
    }
 
 }

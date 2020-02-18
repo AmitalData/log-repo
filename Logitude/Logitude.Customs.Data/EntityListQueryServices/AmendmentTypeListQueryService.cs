@@ -41,9 +41,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
 		private IQueryable<AmendmentType> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<AmendmentType> iQueryable)
         {
-			return iQueryable;
-		}
-			}
+            return iQueryable;
+
+        }
+    }
 
 
 }

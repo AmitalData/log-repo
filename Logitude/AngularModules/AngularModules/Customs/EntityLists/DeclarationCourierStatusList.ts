@@ -72,6 +72,7 @@ export class DeclarationCourierStatusList {
 	MasterStorageSiteCode: string;
 	MasterHAWB: string;
 	LastMileStatusName: string;
+	CustomFileNo: string;
 	
 }
  

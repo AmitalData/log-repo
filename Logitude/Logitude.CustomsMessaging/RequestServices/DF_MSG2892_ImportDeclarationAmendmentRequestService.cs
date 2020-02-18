@@ -320,9 +320,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                 {
                     var attachment = new Attachment();
                     attachment.attachmentID = customsDocumentPM.ExternalAttachmentId;
-                    attachment.keywords = "test";
-                    attachment.fileName = "test";
-                    attachment.documentType = customsDocumentPM.DocumentTypeCode;
+                    attachment.IsAttachment = "False";
                      attachments.Add(attachment);
                 }
             }
@@ -334,7 +332,6 @@ namespace Logitude.CustomsMessaging.RequestServices
         {
             DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(_context, new Dictionary<string, IContext>(), _DeclarationPM.Tenant);
             _DeclarationPM.AmendmentissueDate = DateTime.Now;
-            _DeclarationPM.AmendmentCorrectedByUserId = LoggingUserId;
             _DeclarationPM.AmendmentRequestNumber = response.FunctionalReferenceID.Value;
             _DeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
             //var myUpdateEventContextTagModel = new EventContextTagModel()

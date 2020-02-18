@@ -47,23 +47,6 @@ namespace Logitude.Customs.Def.ClosedTable
 
             all.Add(new InterfaceManagementDetails()
             {
-                Code = "2892",
-                InOut = InOutEnum.O.ToString(),
-                Description = "מסר תקן/בטל",
-                DcaPrefixName = "",
-                DefaultSendOptionsCode = Logitude.Customs.Def.ClosedTable.InterfaceSendOptionsDetails.InterfaceSendOptionEnum.WI.ToString(),
-                DefaultPriority = 5,
-                AllowRestore = true,
-                //NotificationId = "",//NotificationDefinitionDetails.GetAll().FirstOrDefault(rec=> rec.Code="").Code
-                Active = true,
-                SendAsDual = false,
-                ResponseInterfaceCode = "2892",
-                //   NeedSignature = false,
-          //     SignatureTypeCode = "C"
-            });
-
-            all.Add(new InterfaceManagementDetails()
-            {
                 Code = "2754",
                 InOut = InOutEnum.I.ToString(),
                 Description = "מסר תשובה להגשה / הצהרה יבוא",
@@ -2666,12 +2649,11 @@ namespace Logitude.Customs.Def.ClosedTable
                 //  NeedSignature = false
             });
 
-
             all.Add(new InterfaceManagementDetails()
             {
                 Code = "6001",
                 InOut = InOutEnum.O.ToString(),
-                Description = "בקשה לעדכון סגרים",
+                Description = "עדכון סגרים",
                 DcaPrefixName = "",
                 DefaultSendOptionsCode = Logitude.Customs.Def.ClosedTable.InterfaceSendOptionsDetails.InterfaceSendOptionEnum.WI.ToString(),
                 DefaultPriority = 5,
