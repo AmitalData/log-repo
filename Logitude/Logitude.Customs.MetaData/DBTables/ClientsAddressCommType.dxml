@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="ClientsAddressCommTypes"
+  Schema="Customs"
+  DBType="Main">
+  <Column
+    Name="ClientId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="AddressId"
+    Type="varchar"
+    Size="9">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Line"
+    Type="int">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="CommunicationTypeCode"
+    Type="varchar"
+    Size="2">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CommunicationAddress"
+    Type="varchar"
+    Size="50">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Relation
+    ForeignKeyColumn="ClientId,AddressId"
+    ReferencedTable="ClientAddresses"
+    ReferencedColumn="ClientId,AddressId"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="CommunicationTypeCode"
+    ReferencedTable="CommunicationTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+</Table>

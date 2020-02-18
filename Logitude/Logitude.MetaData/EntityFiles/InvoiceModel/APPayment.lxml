@@ -7069,7 +7069,7 @@
     ObjectTableName="&quot;APPayment&quot;"
     Code="&quot;APDO&quot;"
     ControlPath="&quot;Simplog.InvoiceLib.Views.Tabs.APPaymentsTabs.APPaymentDocsOutTabControl&quot;"
-    TextCode="&quot;APPayment.TH.Docs&quot;"
+    TextCode="&quot;APPayment.TH.DocsOut&quot;"
     IsPackagable="true"
     IndexOrder="1"
     HtmlComponentURL="&quot;./InvoiceModules/APPayment/Components/EditTabs/APPaymentDocsOutTabComponent&quot;"

@@ -47,6 +47,10 @@ namespace Logitude.DBMigrations.Models
                 if (error != null) break;
                 error = ValidateUniqueConstraintsColumns(dxmlTable);
                 if (error != null) break;
+                error = ValidateDuplicateIndexes(dxmlTable);
+                if (error != null) break;
+                error = ValidateDuplicateUniqueConstraints(dxmlTable);
+                if (error != null) break;
             }
 
             if (!String.IsNullOrEmpty(error))
@@ -325,6 +329,34 @@ namespace Logitude.DBMigrations.Models
             if (uniqueConstraintsWithWrongColumnsNames.Any())
             {
                 error = "Invalid DXML Syntax: All Or Some Of Columns [" + uniqueConstraintsWithWrongColumnsNames.First().Columns + "] Not In The Table [" + dxmlTable.TableDefinition.Name + "] For Unique Constraint In [" + dxmlTable.DXMLFileName + "]";
+            }
+
+            return error;
+        }
+
+        private string ValidateDuplicateIndexes(DXMLTable dxmlTable)
+        {
+            string error = null;
+
+            List<string> duplicatedIndexesColumns = dxmlTable.TableDefinition.Indexes.Select(i => i.Columns).ToList().GroupBy(i => i).SelectMany(g => g.Skip(1)).ToList();
+            
+            if (duplicatedIndexesColumns.Any())
+            {
+                error = "Invalid DXML Syntax: Duplicate Index On Columns [" + duplicatedIndexesColumns.First() + "] In [" + dxmlTable.DXMLFileName + "]";
+            }
+
+            return error;
+        }
+
+        private string ValidateDuplicateUniqueConstraints(DXMLTable dxmlTable)
+        {
+            string error = null;
+
+            List<string> duplicatedUniqueConstraintsColumns = dxmlTable.TableDefinition.UniqueConstraints.Select(u => u.Columns).ToList().GroupBy(u => u).SelectMany(g => g.Skip(1)).ToList();
+
+            if (duplicatedUniqueConstraintsColumns.Any())
+            {
+                error = "Invalid DXML Syntax: Duplicate Unique Constraint On Columns [" + duplicatedUniqueConstraintsColumns.First() + "] In [" + dxmlTable.DXMLFileName + "]";
             }
 
             return error;
