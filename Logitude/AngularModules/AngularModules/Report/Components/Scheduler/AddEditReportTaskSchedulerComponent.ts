@@ -1,7 +1,6 @@
 import {Validator} from '../../../Infrastructure/Validators/Validator';
 import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import {TasksSchedulerPM} from '../../../Infrastructure/EntityPMs/TasksSchedulerPM';
-
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {Cloner} from '../../../Infrastructure/Utilities/Cloner';
 import {AppTool} from '../../../Infrastructure/Tools';
@@ -9,6 +8,7 @@ import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResp
 import {SchedulerExtendedPMService} from '../../../Infrastructure/Services/ExtendedPMs/SchedulerExtendedPMService';
 import {Component, }  from '@angular/core';
 import { TaskReportSchedulerItemClass } from './TaskReportSchedulerComponent';
+import { SchedulerDetails, ReportSchedulerDetails } from '../../DataContracts/SchedulerDetails';
 
 @Component({
     moduleId: module.id,
@@ -40,13 +40,20 @@ export class AddEditReportTaskSchedulerComponent  {
     }
 
     BuildSchedulerDetailsData() {
-        if (this.EntityPM.SchedulerDetailsData) {
-            this.SetSchedulerDetailsData();
-        }
+            if (this.EntityPM.SchedulerDetailsData) {
+                this.SetReportSchedulerDetailsData(this.EntityPM.SchedulerDetailsData);
+            }
+            else if (this.EntityPM.Id) {
+                //this.LoadSchedulerDetailsData();
+            } else {
+                var schedulerDetailsData = new SchedulerDetails();
+                schedulerDetailsData.ReportDetails = new ReportSchedulerDetails();
+                this.SetReportSchedulerDetailsData(schedulerDetailsData);
+            }
     }
 
-    SetSchedulerDetailsData() {
-        this.DataContext.SetReportSchedulerDetailsData(this.EntityPM.SchedulerDetailsData);
+    SetReportSchedulerDetailsData(schedulerDetailsData: SchedulerDetails) {
+        this.DataContext.SetReportSchedulerDetailsData(schedulerDetailsData);
         this.Clone();
     }
 
@@ -168,11 +175,30 @@ export class AddEditReportTaskSchedulerComponent  {
         }
     }
 
+    //LoadSchedulerDetailsData() {
+
+    //    this.CurrentSession.StartBusyIndicator("Loading...");
+
+    //    this.schedulerExtendedPMService.GetSchedulerDetailsById(this.EntityPM.Id).subscribe(myResult => {
+    //        var myResponse: ServiceResponse = myResult;
+    //        if (!myResponse.HasError) {
+    //            this.SetReportSchedulerDetailsData(myResponse.Result);
+    //        }
+
+    //        else {
+    //            this.ValidationErrorsList = myResponse.ErrorsArray;
+    //            this.Clone();
+    //        }
+
+    //        this.CurrentSession.StopBusyIndicator();
+    //    });
+    //}
+
     SaveButtonClicked() {
         this.CurrentSession.StartBusyIndicatorSaving();
 
         if (this.DataContext.IsNew) {
-
+            this.DataContext.ReportDetails.CreateDate = new Date();
             this.schedulerExtendedPMService.insert(this.EntityPM).subscribe(myResult => {
                 var myResponse: ServiceResponse = myResult;
                 if (!myResponse.HasError) {
@@ -239,8 +265,6 @@ export class AddEditReportTaskSchedulerComponent  {
         this.myCloner.AddField('Thursday');
         this.myCloner.AddField('Friday');
         this.myCloner.AddField('TriggerType');
-
-        this.myCloner.AddField('ReportId');
 
         this.myCloner.AddEntity(this.EntityPM);
     }

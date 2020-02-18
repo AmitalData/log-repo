@@ -45,18 +45,20 @@
                     <td style="width: 5px;">
                         <div></div>
                     </td>
-
-                    <td style="width: 57px;">
+                    <td style="width: 57px;" [hidden]="!IsNextButtonClicked">
+                        <button class="Button" (click)="BackButtonClicked()">{{'General.B.Back' | TextCodeTranslationPipe}}</button>
+                    </td>
+                    <td style="width: 57px;" [hidden]="IsNextButtonClicked">
                         <button class="Button" (click)="CloseButtonClicked()">{{'General.B.Close' | TextCodeTranslationPipe}}</button>
                     </td>
                     <td style="width: 5px;">
                         <div></div>
                     </td>
                     <td style="width: 57px;" [hidden]="IsNextButtonClicked">
-                        <button class="Button" (click)="NextButtonClicked()">{{'General.B.Next' | TextCodeTranslationPipe}}</button>
+                        <button class="RedButton" (click)="NextButtonClicked()">{{'General.B.Next' | TextCodeTranslationPipe}}</button>
                     </td>
                     <td style="width: 57px;" [hidden]="!IsNextButtonClicked">
-                        <button class="Button" (click)="SaveButtonClicked()">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
+                        <button class="RedButton" (click)="SaveButtonClicked()">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
                     </td>
                 </tr>
             </table>

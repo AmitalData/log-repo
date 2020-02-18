@@ -152,4 +152,8 @@ export class AddEditReportSchedulerComponent implements OnInit {
         this.CurrentSession.CloseCurrentWindow();
     }
 
+    BackButtonClicked() {
+        this.IsNextButtonClicked = false;
+        this.SetSelectedItem("RETASK");
+    }
 }

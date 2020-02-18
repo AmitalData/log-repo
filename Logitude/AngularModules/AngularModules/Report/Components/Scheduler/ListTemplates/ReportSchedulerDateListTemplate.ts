@@ -24,21 +24,21 @@ export class ReportSchedulerDateListTemplate {
     public fieldName: any;
     public dateValue: any;
     public Type: string;
+    public AdditionalData: any;
     SchedulerType: string = '';
     ReportGroupList: ReportGroupList;
     ReportList: ReportList;
-    schedulerExtendedPMService: SchedulerExtendedPMService;
     myTasksSchedulerPMService: TasksSchedulerPMService;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private CD: ChangeDetectorRef) {
-        this.schedulerExtendedPMService = new SchedulerExtendedPMService();
         this.myTasksSchedulerPMService = new TasksSchedulerPMService();
     }
 
-    setVariables(rowData: any, fieldName: string) {
+    setVariables(rowData: any, fieldName: string, myAdditionalData: any) {
         this.rowData = rowData;
         var MyFieldName = fieldName.split(';');
         this.fieldName = MyFieldName[0];
+        this.AdditionalData = myAdditionalData;
         if (MyFieldName.length > 1) {
             this.SchedulerType = MyFieldName[1];
         }

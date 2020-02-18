@@ -1,9 +1,7 @@
 import { Component, Output, EventEmitter, OnInit } from '@angular/core';
 import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
-import { InfrastructureDomainService } from '../../../Infrastructure/Services/InfrastructureDomainService';
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
-import { TaskSchedulerHistoryList } from '../../../Infrastructure/EntityLists/TaskSchedulerHistoryList';
 import { TasksSchedulerPM } from '../../../Infrastructure/EntityPMs/TasksSchedulerPM';
 import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { AppTool } from '../../../Infrastructure/Tools';
@@ -20,7 +18,6 @@ import { ReportList } from '../../EntityLists/ReportList';
 export class TaskReportSchedulerComponent implements OnInit {
     public ItemsSource: TaskReportSchedulerItemClass[] = [];
     public FixedItemsSource: TaskReportSchedulerItemClass[] = [];
-    public HistoryItemsSource: TaskSchedulerHistoryList[] = [];
     public TasksHistoryColumns: any[] = null;
     public Taskscolumns: any[] = null;
     private loadedDataList: TasksSchedulerPM[] = [];
@@ -39,8 +36,8 @@ export class TaskReportSchedulerComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.LoadTaskSchedulers();
         this.LoadTaskHistories();
+        this.LoadTaskSchedulers();
         this.CurrentSession.SessionEvent.subscribe(($event: any) => {
             if ($event.Name == "ReloadTasks") {
                 this.RefreshButtonClicked();
@@ -51,6 +48,7 @@ export class TaskReportSchedulerComponent implements OnInit {
     SetWindowArgs(windowArgs) {
         this.ReportGroupList = windowArgs.ReportGroupList;
         this.ReportList = windowArgs.ReportList;
+        this.LoadTaskHistories();
     }
 
     public IsHistoryGridVsisible = false;
@@ -190,7 +188,7 @@ export class TaskReportSchedulerComponent implements OnInit {
         test.ReportList = this.ReportList;
         this.Taskscolumns.push({
             FieldName: "EditTaskButton;" + this.SchedulerType,
-            AdditionalData: test,
+            AdditionalData: this.ReportGroupList,
             DataTypeCode: 'String',
             Display: '',
             Styles: { width: '30px' },
@@ -298,7 +296,7 @@ export class TaskReportSchedulerComponent implements OnInit {
 
         filters = new ApiQueryFilters();
         if (!sortingCol) {
-            sortingCol = "StartDateTimeUTC";
+            sortingCol = "StartDateTime";
             sortingDir = "descending";
         }
         if (this.SelectedRow) {
