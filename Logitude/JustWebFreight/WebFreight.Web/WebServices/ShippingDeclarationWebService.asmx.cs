@@ -27,6 +27,8 @@ using Logitude.BL.Helpers;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.QuoteModel.Repositories;
 using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.Repositories;
+using Microsoft.Practices.Unity;
 
 namespace WebFreight.Web.WebServices
 {
@@ -43,6 +45,9 @@ namespace WebFreight.Web.WebServices
         private int tenant;
         private WebServiceHelper myServicHelper;
         private IShipmentsContext shipmentsContext;
+        private ICommonDataContext commonContext;
+        private IWebFreightContext webfreightContext;
+        private ShipmentPM shipment;
 
         [WebMethod]
         public byte[] GetShippingDeclarationData(string shipmentId, int tenant, string documentTypeCode)
@@ -68,8 +73,8 @@ namespace WebFreight.Web.WebServices
             ShippingDeclarationDataProvider myDataProvider = new ShippingDeclarationDataProvider();
 
             shipmentsContext = ShipmentsContext.GetContext(tenant);
-            ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
-            IWebFreightContext webfreightContext = WebFreightContext.GetContext(tenant);
+            commonContext = CommonDataContext.GetContext(tenant);
+            webfreightContext = WebFreightContext.GetContext(tenant);
 
             ShipmentRepository shipmentRepository = new ShipmentRepository(shipmentsContext);
             ShipmentQuery shipmentQuery = new ShipmentQuery(shipmentRepository);
@@ -86,7 +91,7 @@ namespace WebFreight.Web.WebServices
             CountryRepository countryRepository = new CountryRepository(commonContext);
             CardQuery cardQuery = new CardQuery(tenant);
 
-            ShipmentPM shipment = shipmentQuery.GetSinglePM(shipmentId, tenant);
+            this.shipment = shipmentQuery.GetSinglePM(shipmentId, tenant);
 
             Tenant currentTenant = tenantRepository.GetSingleTenant(tenant);
             if (currentTenant != null)
@@ -735,6 +740,8 @@ namespace WebFreight.Web.WebServices
                 #endregion
 
                 #region Carrier
+
+                myDataProvider.MainCarriageCarrierLogo = this.GetMainCarriageCarrierLogo();
 
                 myDataProvider.MainCarriageCarrierName = shipment.MainCarriageCarrierName;
                 myDataProvider.VoyageNumber = shipment.MainCarriageCarrierNumber;
@@ -3521,6 +3528,7 @@ namespace WebFreight.Web.WebServices
 
             return myDataProvider;
         }
+
         private ShipmentPickUpDelivery GetLastPickUp(string shipmentId)
         {
             return (from pickUp in shipmentsContext.ShipmentPickUpDeliveries
@@ -3936,6 +3944,52 @@ namespace WebFreight.Web.WebServices
             }
 
             return myResult;
+        }
+
+        private byte[] GetMainCarriageCarrierLogo()
+        {
+            byte[] output = null;
+
+            if (shipment.MainCarriageCarrierId != null)
+            {
+                string imageDetailId = (from d in commonContext.Cards where d.Id == shipment.MainCarriageCarrierId select d.ImageDetailId).FirstOrDefault();
+
+                if (!string.IsNullOrEmpty(imageDetailId))
+                {
+                    ImageDetailRepository imageDetailsRepository = new ImageDetailRepository(webfreightContext);
+                    ImageDetail imageDetail = imageDetailsRepository.GetSingleImageDetail(imageDetailId, tenant);
+
+                    if (imageDetail != null)
+                    {
+                        output = this.GetFile(imageDetail.Id, imageDetail.Extension, "images", tenant);                                           
+                    }
+                }
+            }
+
+            return output;
+        }
+        public byte[] GetFile(string fileid, string extention, string location, int tenant)
+        {
+            try
+            {
+                Logitude.Server.Tools.BlobFileInfo fileInfo = new Logitude.Server.Tools.BlobFileInfo()
+                {
+                    FileName = fileid,
+                    FolderName = location,
+                    Extension = extention,
+                    Tenant = tenant,
+
+                };
+
+                Logitude.Server.Tools.StorageService.IBlobService storageservice = Logitude.Server.Tools.ContainerAccessor.Container.Resolve(typeof(Logitude.Server.Tools.StorageService.IBlobService), "StorageService", new ParameterOverride("", 1)) as Logitude.Server.Tools.StorageService.IBlobService;
+
+                return storageservice.Read(fileInfo);
+            }
+
+            catch (Exception e)
+            {
+                return null;
+            }
         }
     }
 }
