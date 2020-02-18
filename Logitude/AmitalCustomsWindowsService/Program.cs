@@ -23,6 +23,7 @@ using WebFreight.Web.Security;
 
 namespace AmitalCustomsWindowsService
 {
+    //TEST !!
     static class Program
     {
         /// <summary>
@@ -128,6 +129,7 @@ namespace AmitalCustomsWindowsService
             {
                 var assemblyUtil = new Logitude.Server.Tools.Helpers.AssemblyUtil();
                 prodInfo = assemblyUtil.GetProductInfo(typeof(Program).Assembly);
+                Logger.LogMe(prodInfo, false);
 
                 Action<bool, bool> BuildObjectTablesZipFilesDataAction = WebFreight.Web.MetaDataUpdate.TenantsUpdateClass.BuildObjectTablesZipFilesData;
                 CustomsWorkerRole.CustomsWorkerEntryPoint.StartStatic(false, BuildObjectTablesZipFilesDataAction, prodInfo, SecurityUtility.CheckContactFeature);

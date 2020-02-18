@@ -25,6 +25,7 @@ import { Validator } from '../../../Infrastructure/Validators/Validator';
 import { CustomDocumentViewerService } from '../../../Customs/Services/WebServices/CustomDocumentViewerService';
 import { CustomsSettingListService } from '../../../Customs/Services/StandardLists/CustomsSettingListService';
 import { CustomDocumentTypeListService } from '../../../Customs/Services/StandardLists/CustomDocumentTypeListService';
+import { DocumentTypeMetaDataExtendedService } from '../../../Common/Services/ExtendedPMs/DocumentTypeMetaDataExtendedService'
 
 @Component({
     moduleId: module.id,
@@ -961,6 +962,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
         this.previousValueList = previousList;
         var custDocTypeMetaDataWebService: CustDocTypeMetaDataWebService = new CustDocTypeMetaDataWebService();
         var customDocumentTypeListService: CustomDocumentTypeListService = new CustomDocumentTypeListService();
+        var _DocumentTypeMetaDataExtendedService: DocumentTypeMetaDataExtendedService = new DocumentTypeMetaDataExtendedService();
         custDocTypeMetaDataWebService.GetCustomDocumentTypeMetaDataByType(this.CustomsDocument.DocumentTypeCode).subscribe((res: ServiceResponse) => {
             this.customDocumentTypeMetaDataList = res.Result;
             this.customDocumentMetaDataValueList = this.CustomsDocument.CustomsDocumentMetaDataValues;
@@ -971,21 +973,39 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
 
                     if (this.previousValueList != null) {
                         this.customDocumentTypeMetaDataList.forEach((metaData) => {
-                            var value: CustomsDocumentMetaDataValuePM = this.customDocumentMetaDataValueList.filter(d => d.MetaDataTypeCode == metaData.MetaDataTypeCode)[0];
-                            if (value == null) {
-                                value = new CustomsDocumentMetaDataValuePM(this.CustomsDocument);
-                                value.MetaDataTypeCode = metaData.MetaDataTypeCode;
-                                value.Tenant = SessionLocator.Tenant;
-                                value.CustomsDocumentId = this.CustomsDocument.DocumentsFilingId;
-                                value.ChangeSetOp = "Insert";
-                                if (docTypeRes.Result) {
-                                    if (docTypeRes.Result.AutoSetOriginalDocumentTrue) {
-                                        if (value.MetaDataTypeCode == "87") {
-                                            value.MetaDataValue = "True";
-                                        }
-                                    }
+                            if (!AppTool.IsNullOrEmpty(this.customDocumentMetaDataValueList) && this.customDocumentMetaDataValueList.length >0) {
+                                var value: CustomsDocumentMetaDataValuePM = this.customDocumentMetaDataValueList.filter(d => d.MetaDataTypeCode == metaData.MetaDataTypeCode)[0];
+                                if (value == null) {
+
+
+                                    _DocumentTypeMetaDataExtendedService.GetDocumentsFilingMetaDataValueByFilingIdAndCode(this.CustomsDocument.DocumentsFilingId, metaData.MetaDataTypeCode)
+                                        .subscribe(myDocFilingResult => {
+                                            value = new CustomsDocumentMetaDataValuePM(this.CustomsDocument);
+                                            value.MetaDataTypeCode = metaData.MetaDataTypeCode;
+                                            value.Tenant = SessionLocator.Tenant;
+                                            value.CustomsDocumentId = this.CustomsDocument.DocumentsFilingId;
+                                            value.ChangeSetOp = "Insert";
+                                            if (docTypeRes.Result) {
+                                                if (docTypeRes.Result.AutoSetOriginalDocumentTrue) {
+                                                    if (value.MetaDataTypeCode == "87") {
+                                                        value.MetaDataValue = "True";
+                                                    }
+                                                }
+                                            }
+                                            if (!myDocFilingResult.Result || myDocFilingResult.Result.length == 1) {
+                                                if (AppTool.IsNullOrEmpty(value.MetaDataValue) && !AppTool.IsNullOrEmpty(myDocFilingResult.Result.MetaDataValue)) {
+                                                    value.MetaDataValue = myDocFilingResult.Result.MetaDataValue;
+                                                }
+                                            }
+                                            else {
+
+                                            }
+                                        });
+
+
+
+                                    this.customDocumentMetaDataValueList.push(value);
                                 }
-                                this.customDocumentMetaDataValueList.push(value);
                             }
                         });
                         this.SetCommonMetaDataValues(this.previousValueList, docTypeRes.Result);

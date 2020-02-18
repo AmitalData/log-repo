@@ -3701,26 +3701,99 @@ namespace Logitude.Customs.Def.EntityPMs
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CourierMasterId  
-	   {
-	    
-	     get
-		{
-		   return courierMasterId;
-		 }
-		 set
-		 {
-		   if(courierMasterId != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CourierMasterId",OldValue=courierMasterId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   courierMasterId=value;
-		   }
-			
-		 }
-	   }
+        [DataMember]
+        public string CourierMasterId
+        {
+
+            get
+            {
+                return courierMasterId;
+            }
+            set
+            {
+                if (courierMasterId != value)
+                {
+                    NotifyPropertyChangeValues values = new NotifyPropertyChangeValues() { PropertyName = "CourierMasterId", OldValue = courierMasterId, NewValue = value, PropertyType = "string" };
+                    NotifyPropertyChanged(values);
+                    courierMasterId = value;
+                }
+
+            }
+        }
+
+            private bool isDiamondDeclaration;
+
+
+        [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+        [DataMember]
+        public bool IsDiamondDeclaration
+        {
+
+            get
+            {
+                return isDiamondDeclaration;
+            }
+            set
+            {
+                if (isDiamondDeclaration != value)
+                {
+                    NotifyPropertyChangeValues values = new NotifyPropertyChangeValues() { PropertyName = "IsDiamondDeclaration", OldValue = isDiamondDeclaration, NewValue = value, PropertyType = "bool" };
+                    NotifyPropertyChanged(values);
+                    isDiamondDeclaration = value;
+                }
+
+            }
+        }
+
+
+        private bool isMissMandatoryDiamond;
+
+
+        [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+        [DataMember]
+        public bool IsMissMandatoryDiamond
+        {
+
+            get
+            {
+                return isMissMandatoryDiamond;
+            }
+            set
+            {
+                if (isMissMandatoryDiamond != value)
+                {
+                    NotifyPropertyChangeValues values = new NotifyPropertyChangeValues() { PropertyName = "IsMissMandatoryDiamond", OldValue = isMissMandatoryDiamond, NewValue = value, PropertyType = "bool" };
+                    NotifyPropertyChanged(values);
+                    isMissMandatoryDiamond = value;
+                }
+
+            }
+        }
+        private bool isValidTicketsDiamond;
+
+
+        [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+        [DataMember]
+        public bool IsValidTicketsDiamond
+        {
+
+            get
+            {
+                return isValidTicketsDiamond;
+            }
+            set
+            {
+                if (isValidTicketsDiamond != value)
+                {
+                    NotifyPropertyChangeValues values = new NotifyPropertyChangeValues() { PropertyName = "IsValidTicketsDiamond", OldValue = isValidTicketsDiamond, NewValue = value, PropertyType = "bool" };
+                    NotifyPropertyChanged(values);
+                    isValidTicketsDiamond = value;
+                }
+
+            }
+        }
+    }
    }
    
-}
+ 
 	 

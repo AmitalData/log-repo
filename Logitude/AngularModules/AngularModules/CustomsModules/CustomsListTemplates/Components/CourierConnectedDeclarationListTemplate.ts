@@ -6,6 +6,7 @@ import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 import { CourierMasterPM } from '../../../Customs/EntityPMs/CourierMasterPM';
 import { CourierMasterValidator } from '../../../Customs/Validators/CourierMasterValidator';
 import { CustomsRequestsSheetPM } from '../../../Customs/EntityPMs/CustomsRequestsSheetPM';
+import { CourierMasterService } from '../../../Customs/Services/Others/CourierMasterService';
 
 @Component({
     moduleId: module.id,
@@ -24,7 +25,7 @@ export class CourierConnectedDeclarationListTemplate {
     public IsDisplayOnly: boolean = false;
     _CourierMasterValidator: CourierMasterValidator = new CourierMasterValidator();
 
-    constructor(private CD: ChangeDetectorRef) {
+    constructor(private CD: ChangeDetectorRef, private _courierMasterService: CourierMasterService) {
         
     }
 
@@ -33,7 +34,8 @@ export class CourierConnectedDeclarationListTemplate {
         this.rowData = rowData;
         this.fieldName = fieldName;
         this.entityPM = SessionLocator.SelectedSession.CurrentEditComponent.EntityPM as CourierMasterPM;
-
+        this.entityPM.IsDirty =  !this._courierMasterService.isNotDirty;
+ 
         this.DisplayOnlyCheck();
         this.BuildDeclarationsCheckBox();       
         this.CD.detectChanges();
@@ -49,11 +51,34 @@ export class CourierConnectedDeclarationListTemplate {
         }
 
         let sConnectedDeclarations = this.entityPM.ConnectedDeclarations as string;
-        if (!AppTool.IsNullOrEmpty(sConnectedDeclarations)) {
+         if (!AppTool.IsNullOrEmpty(sConnectedDeclarations)) {
             let ConnectedDeclarations = sConnectedDeclarations.split(',')
             let res = ConnectedDeclarations.filter(r => r == this.rowData.Id)[0];
             this.IsNotConnectedDeclarationChecked = !AppTool.IsNullOrEmpty(res);
         }
+
+        if (!this.entityPM.NotConnectedDeclarations) {
+            this.entityPM.NotConnectedDeclarations = "";
+        }
+
+        if (!this.entityPM.ConnectedDeclarations) {
+            this.entityPM.ConnectedDeclarations = "";
+        }
+
+ 
+        if (this._courierMasterService.connectedSelectAll == true) {
+            this.IsConnectedDeclarationChecked = true;
+        }
+        else {
+            this.IsConnectedDeclarationChecked = false;
+
+        }
+         if (this._courierMasterService.disconnectedSelectAll == true) {
+             this.IsNotConnectedDeclarationChecked = true;
+
+ 
+       }
+
     }
     
     ShowDeclarationScreen() {
@@ -76,6 +101,10 @@ export class CourierConnectedDeclarationListTemplate {
         if (!this.entityPM.NotConnectedDeclarations) {
             this.entityPM.NotConnectedDeclarations = "";
         }
+ 
+        this._courierMasterService.connectedSelectAll = false;
+                this.entityPM.NotConnectedDeclarations=   this.entityPM.NotConnectedDeclarations.replace("ALL", "");
+
         if (!$event) {
             if (!this.entityPM.NotConnectedDeclarations.includes(this.rowData.Id)) {
                 this.entityPM.NotConnectedDeclarations = this.entityPM.NotConnectedDeclarations + this.rowData.Id + ",";
@@ -83,7 +112,7 @@ export class CourierConnectedDeclarationListTemplate {
         }
         else {
             if (this.entityPM.NotConnectedDeclarations.includes(this.rowData.Id)) {
-
+ 
                 this.entityPM.NotConnectedDeclarations = this.entityPM.NotConnectedDeclarations.replace(this.rowData.Id + ",", "");
             }
         }
@@ -94,6 +123,9 @@ export class CourierConnectedDeclarationListTemplate {
         if (!this.entityPM.ConnectedDeclarations) {
             this.entityPM.ConnectedDeclarations = "";
         }
+ 
+        this._courierMasterService.disconnectedSelectAll = false;
+             this.entityPM.ConnectedDeclarations = this.entityPM.ConnectedDeclarations.replace("ALL", "");
         if ($event) {
             if (!this.entityPM.ConnectedDeclarations.includes(this.rowData.Id)) {
                 this.entityPM.ConnectedDeclarations = this.entityPM.ConnectedDeclarations + this.rowData.Id + ",";
@@ -101,6 +133,7 @@ export class CourierConnectedDeclarationListTemplate {
         }
         else {
             if (this.entityPM.ConnectedDeclarations.includes(this.rowData.Id)) {
+ 
                 this.entityPM.ConnectedDeclarations = this.entityPM.ConnectedDeclarations.replace(this.rowData.Id + ",", "");
             }
         }

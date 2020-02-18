@@ -262,7 +262,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             }
 
             DeclarationRepository declarationRep = new DeclarationRepository(tenant);
-            IQueryable<Declaration> declarations = declarationRep.GetNotConnectedDeclaratins( tenant);
+            IQueryable<Declaration> declarations = declarationRep.GetNotConnectedDeclarations( tenant);
 
             IQueryable<DeclarationPM> declarationPMs;
             if (string.IsNullOrWhiteSpace(CourierSearchField))

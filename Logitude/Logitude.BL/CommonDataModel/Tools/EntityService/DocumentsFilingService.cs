@@ -383,6 +383,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
 
         }
+
         private void TryBuildUD2LT(DocumentsFilingPM extDocPM)
         {
             ICreateUD2LTService myICreateUD2LTService = ContainerAccessor.Container.Resolve(typeof(ICreateUD2LTService), "CreateUD2LTService", new ParameterOverride("", tenant)) as ICreateUD2LTService;
@@ -1195,8 +1196,10 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                             string xmlstring = LogitudeXmlSerializer.SerializeObjectToXmlString(mappedPM);
 
                             //54378
-                            string UseSend2UServer =ConfigurationManager.AppSettings["20190909.UseSend2UServer8302"]??"";
-                            if (!string.IsNullOrWhiteSpace(UseSend2UServer) && !string.IsNullOrWhiteSpace(this.MetaDataVersionValue))//DeclarationPrint
+                            //string UseSend2UServer =ConfigurationManager.AppSettings["20190909.UseSend2UServer8302"]??"";
+                            string SuppressUseSend2UServer8302 = ConfigurationManager.AppSettings["20200123.SuppressUseSend2UServer8302"] ?? "";
+                            if (string.IsNullOrWhiteSpace(SuppressUseSend2UServer8302)//!string.IsNullOrWhiteSpace(UseSend2UServer) 
+                                && !string.IsNullOrWhiteSpace(this.MetaDataVersionValue))//DeclarationPrint
                             {
                                 Send2UServer(mappedPM, loggedUserId, extDocPM.Id);
                             }
@@ -1391,6 +1394,25 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         }
         protected UniFileVerM MyUniFileVerM { get; set; }
         protected string MetaDataVersionValue { get; set; }
+
+        public DocumentsFilingMetaDataValuePM GetDocumentsFilingMetaDataValueByFilingIdAndCode(string documentsFilingId, string code, string type = null)
+        {
+            DocumentsFilingMetaDataValuePM MyDocumentMetaDataValues = null;
+            if (string.IsNullOrEmpty(type) && !string.IsNullOrEmpty(code))
+            {
+                var documentTypeMetaDataRepo = new DocumentsMetaDataTypeRepository(tenant);
+                //                DocumentsMetaDataType myDocumentsMetaDataType = documentTypeMetaDataRepo.GetSingleDocumentsMetaDataTypeByCode(code, tenant);
+                DocumentsMetaDataType myDocumentsMetaDataType = documentTypeMetaDataRepo.GetSingleDocumentsMetaDataTypeByCustomsMetaDataCode(code, tenant);
+                if (myDocumentsMetaDataType != null) type = myDocumentsMetaDataType.Id;
+            }
+            
+            if (!string.IsNullOrEmpty(type))
+            {
+                var documentsFilingMetaDataValueQuery = new DocumentsFilingMetaDataValueQuery(tenant);
+                MyDocumentMetaDataValues = documentsFilingMetaDataValueQuery.GetDocumentsFilingMetaDataValuePMsByDocumentIdTypeTenant(documentsFilingId, type, tenant);
+            }
+            return MyDocumentMetaDataValues;
+        }
 
     }
     public class UniFileVerM

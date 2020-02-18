@@ -46,6 +46,10 @@ export class CourierMasterService {
 
     }
 
+    public connectedSelectAll: boolean;
+    public disconnectedSelectAll: boolean;
+    public isNotDirty: boolean;
+
     getPromiseByFilters(filters: ApiQueryFilters) {
 
         return new Promise((resolve, reject) => {

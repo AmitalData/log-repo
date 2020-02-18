@@ -487,7 +487,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                         CourierSearchField = CourierSearchFieldFilter.FieldValue.ToString();
                     }
                     DeclarationRepository declarationRep = new DeclarationRepository(tenant);
-                    var  declarationsAll = declarationRep.GetNotConnectedDeclaratins(tenant);
+                    var  declarationsAll = declarationRep.GetNotConnectedDeclarations(tenant);
                     if (!string.IsNullOrWhiteSpace(CourierSearchField))
                     {
                         declarationsAll = declarationsAll.Where(r => r.CourierSearchFields.Contains(CourierSearchField));

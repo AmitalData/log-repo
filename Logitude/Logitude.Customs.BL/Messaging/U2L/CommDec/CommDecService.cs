@@ -261,6 +261,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
                     {
                         this._MyDeclarationPM.SupplierInvoices = new List<SupplierInvoicePM>();
                     }
+                    /*
                     else if (this._MyDeclarationPM.SupplierInvoices.Count() > 1)
                     {
                         AppendLogLine("Declaration has More than one Invoice, Invoice will not be Updated..");
@@ -268,6 +269,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
                     }
                     else
                     {
+                    
                         if (this._MyDeclarationPM.SupplierInvoices.FirstOrDefault().SupplierInvoiceItems != null && this._MyDeclarationPM.SupplierInvoices.FirstOrDefault().SupplierInvoiceItems.Count() > 1)
                         {
                             AppendLogLine("Declaration has More than one Invoice item, Invoice will not be Updated..");
@@ -287,7 +289,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
                             }
                         }
                     }
-
+                    */
                     foreach (var itemINVOICE in this._LogitudeCommDecFile.INVOICE)
                     {
                         this._INVOICE = itemINVOICE;
@@ -374,7 +376,10 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
 
             _MyDeclarationPM.CurrentContextTag = UpsertActionConst; // moran 28.7.16 - Task 22249
 
-
+            if(this._MyDeclarationPM.ProcedureCurrentCode == "4000020")
+            {
+                this._MyDeclarationPM.ExcludeConsignment = true;
+            }
 
             declarationUpdateService = new DeclarationUpdateService(_context, new Dictionary<string, IContext>(), ResolvedTenant());
 
@@ -912,13 +917,13 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
         {
             //CheckExist();
 
-            if (this._MyDeclarationPM.SupplierInvoices == null || this._MyDeclarationPM.SupplierInvoices.Count() == 0)
+            if (this._MyDeclarationPM.SupplierInvoices == null || this._MyDeclarationPM.SupplierInvoices.Count() == 0 || this._MyDeclarationPM.SupplierInvoices.Where(r => r.ChangeSetOp != ChangeSetOperation.Insert).Count() == 0)
             {
                 AppendLogLine("Insert Invoice..");
                 this._MySupplierInvoicePM = new SupplierInvoicePM();
                 this._MySupplierInvoicePM.ChangeSetOp = ChangeSetOperation.Insert;
             }
-            else if (this._MyDeclarationPM.SupplierInvoices.Count() == 1)
+            else if (this._MyDeclarationPM.SupplierInvoices.Count() == 1 && this._MyDeclarationPM.SupplierInvoices.FirstOrDefault().ChangeSetOp != ChangeSetOperation.Insert)
             {
                 AppendLogLine("Update Invoice..");
                 this._MySupplierInvoicePM = this._MyDeclarationPM.SupplierInvoices.FirstOrDefault();
@@ -926,7 +931,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
             }
             else
             {
-                AppendLogLine("More than one Invoice, Invoice will not be Updated..");
+                AppendLogLine("Unknown state of Invoice update, Invoice will not be Updated..");
                 return;
             }
 
@@ -941,11 +946,11 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
             {
                 this._MySupplierInvoicePM.SupplierInvoiceItems = new List<SupplierInvoiceItemPM>();
             }
-            if (this._MySupplierInvoicePM.SupplierInvoiceItems.Count == 0)
+            if (this._MySupplierInvoicePM.SupplierInvoiceItems.Count == 0 || this._MySupplierInvoicePM.SupplierInvoiceItems.Where(r => r.ChangeSetOp != ChangeSetOperation.Insert).Count() == 0)
             {
                 this._MySupplierInvoicePM.SupplierInvoiceItems.Add(new SupplierInvoiceItemPM() { ChangeSetOp = ChangeSetOperation.Insert });
             }
-            else if (this._MySupplierInvoicePM.SupplierInvoiceItems.Count == 1)
+            else if (this._MySupplierInvoicePM.SupplierInvoiceItems.Count == 1 && this._MySupplierInvoicePM.SupplierInvoiceItems.FirstOrDefault().ChangeSetOp != ChangeSetOperation.Insert)
             {
                 this._MySupplierInvoicePM.SupplierInvoiceItems.FirstOrDefault().ChangeSetOp = ChangeSetOperation.Update;
             }

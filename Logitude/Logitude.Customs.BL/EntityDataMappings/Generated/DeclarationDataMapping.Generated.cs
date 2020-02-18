@@ -124,7 +124,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         IsClose, 
 	         CourierSuspentionCode, 
 	         DepositionStatusCode,
-	      }
+            IsDiamondDeclaration,
+            IsMissMandatoryDiamond,
+            IsValidTicketsDiamond,
+        }
 
 
 	      public enum PMPropertyNames
@@ -282,7 +285,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         CourierSuspentionName, 
 	         DepositionStatusCode, 
 	         CourierMasterId,
-	      }
+            IsDiamondDeclaration,
+            IsMissMandatoryDiamond,
+            IsValidTicketsDiamond,
+        }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
         List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
@@ -794,8 +800,22 @@ namespace Logitude.Customs.BL.EntityDataMappings
             {
 				entityPOCO.DepositionStatusCode = entityPM.DepositionStatusCode;
 			}
-			
-				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
+
+            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsDiamondDeclaration))
+            {
+                entityPOCO.IsDiamondDeclaration = entityPM.IsDiamondDeclaration;
+            }
+
+            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsMissMandatoryDiamond))
+            {
+                entityPOCO.IsMissMandatoryDiamond = entityPM.IsMissMandatoryDiamond;
+            }
+
+            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsValidTicketsDiamond))
+            {
+                entityPOCO.IsValidTicketsDiamond = entityPM.IsValidTicketsDiamond;
+            }
+            BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
 		  }
 
 		public void POCOToPM(DeclarationPM entityPM, Declaration entityPOCO)
@@ -1311,9 +1331,33 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.DepositionStatusCode = entityPOCO.DepositionStatusCode;
             }
 
-		}
+            if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsDiamondDeclaration))
+            {
+					entityPM.IsDiamondDeclaration = entityPOCO.IsDiamondDeclaration;
+            }
+        
 
-		public void PMToOldPM(DeclarationPM entityPM, DeclarationPM oldEntityPM)
+	 
+
+    	   if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsDiamondDeclaration))
+            {
+					entityPM.IsDiamondDeclaration = entityPOCO.IsDiamondDeclaration;
+            }
+
+            if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsMissMandatoryDiamond))
+            {
+                entityPM.IsMissMandatoryDiamond = entityPOCO.IsMissMandatoryDiamond;
+            }
+
+            if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsValidTicketsDiamond))
+            {
+                entityPM.IsValidTicketsDiamond = entityPOCO.IsValidTicketsDiamond;
+            }
+
+        }
+
+
+        public void PMToOldPM(DeclarationPM entityPM, DeclarationPM oldEntityPM)
         {
 		     oldEntityPM.ChangedProperties.Clear();
 			 
@@ -1821,8 +1865,22 @@ namespace Logitude.Customs.BL.EntityDataMappings
             {
                 oldEntityPM.DepositionStatusCode = entityPM.DepositionStatusCode;
             }
-			
-		}
+
+    if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsDiamondDeclaration))
+    {
+        oldEntityPM.IsDiamondDeclaration = entityPM.IsDiamondDeclaration;
+    }
+
+            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsMissMandatoryDiamond))
+            {
+                oldEntityPM.IsMissMandatoryDiamond = entityPM.IsMissMandatoryDiamond;
+            }
+
+            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsValidTicketsDiamond))
+            {
+                oldEntityPM.IsValidTicketsDiamond = entityPM.IsValidTicketsDiamond;
+            }
+        }
 
 	    public void EncodeBase64NVARCHARFields(DeclarationPM entityPM)
         {
