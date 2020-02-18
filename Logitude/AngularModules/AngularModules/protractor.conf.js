@@ -203,6 +203,13 @@ exports.config = {
             browser.params.Login.Email = "raghad@automation.com";
             browser.params.Login.Password = "!RS123Rs";
         }
+
+        else if (browser.params.Env == "test_staging_951") {
+            browser.params.Link = "https://test.logitudeworld.com/staging";
+            browser.params.Login.Email = "raghad@protractor.com";
+            browser.params.Login.Password = "!RS123Rs";
+        }
+
  	 else if (browser.params.Env == "Prod_Staging") {
             browser.params.Link = "https://staging.logitudeworld.com/";
             browser.params.Login.Email = "protractor2@test.com";
