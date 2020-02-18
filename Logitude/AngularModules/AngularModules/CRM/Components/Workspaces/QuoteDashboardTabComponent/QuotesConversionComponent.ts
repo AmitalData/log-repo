@@ -126,7 +126,7 @@ export class QuotesConversionComponent implements OnInit {
                 "value1": element.data1,
                 "value2": element.data2,
                 "color": this.chartColrs["Color_" + element.groupedId],
-                "opacity": element.data2 == 0 ? 1 : 0.2,
+                //"opacity": element.data2 == 0 ? 1 : 0.2,
             };
             
             index++;
@@ -135,7 +135,8 @@ export class QuotesConversionComponent implements OnInit {
         Graphs =
             [{
                 "balloonText": FormatTool.FormatBigNumbersToExtension("[[value]]") + "",
-                "alphaField": "opacity",
+                //"alphaField": "opacity",
+                "fillAlphas": 0.2,
                 "lineAlpha": 1,
                 "fillColorsField": "color",
                 "lineColorField": "color",
