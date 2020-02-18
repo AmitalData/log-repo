@@ -21,6 +21,14 @@ namespace Logitude.Accounting.Data.Repositories
 			throw new NotImplementedException();
         }
 
+        public InterestReport GetSingleByCusstomerAndStatudDraft(string CustomerId,int tenant)
+        {
+            InterestReport interestReport = (from a in context.InterestReports
+                                      where a.Tenant == tenant && a.InterestReportStatusCode == "1"  &&a.CustomerId== CustomerId
+                                      select a ).FirstOrDefault();
+            return interestReport;
+        }
+
         public decimal GetClosedBalanceOfLastInvoicedOrClosedWithoutInvoiceInterestReport(int tenant)
         {
             decimal? closedBalance = (from a in context.InterestReports
