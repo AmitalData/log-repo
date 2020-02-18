@@ -129,7 +129,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         string decIdOrg;
 
-        public DeclarationPM MapResponseToDeclaration(UnifreightIIG.Common.ImportDeclarationServiceReference.Declaration declaration, int tenant, bool FromImporter , string idOrg, out string error ,bool isUpdate=false)
+        public DeclarationPM MapResponseToDeclaration(UnifreightIIG.Common.ImportDeclarationServiceReference.Declaration declaration, int tenant, bool FromImporter , string idOrg, out string error ,bool isUpdate=false, string user=null)
         {
             error = "";
             try
@@ -195,6 +195,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 //declarationGoodsShipment.AdditionalDocument
             };
 
+                if(isFromImporter)
+                {
+                    declarationPM.AmendmentCorrectedByUserId = user;
+
+                }
                 GetAgent(declaration , ref declarationPM); 
 
             if (declaration.GovernmentProcedure!= null)
