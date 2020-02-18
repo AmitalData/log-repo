@@ -926,7 +926,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 entityPM.InvoiceNumber = MethodHelper.Trim(entityPM.InvoiceNumber);
             }
-
+            entityPM.BillToPartnerTypeId = SetBillToPartnerId();
             // DR: Draft
             // CN: Connected
             // NT: Not Connected
@@ -1127,6 +1127,16 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             }
         }
 
+        private string SetBillToPartnerId()
+        {
+            CardRepository cardRepository = new CardRepository(entityPM.Tenant);
+            Card card = cardRepository.GetSingleCard(entityPM.BillToId, entityPM.Tenant);
+            if (card != null)
+            {
+                return card.PartnerTypeId;
+            }
+            else return null;
+        }
         private void InitializeDueDate()
         {
             if (entityPM.DueDate == null)
@@ -2280,7 +2290,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         sumOfVATsAmounts += record.InvoiceCurrencyVATAmount;
                         sumOfVATsAmounts_Local += record.LocalVATAmount;
                         sumOfVATsAmounts_Profit += record.ProfitCurrencyVATAmount;
-                        if (IsFullAccountingActivated(entityPM.Tenant) && entityPM.BillToPartnerTypeId=="CS")
+                        if (IsFullAccountingActivated(entityPM.Tenant) && entityPM.BillToPartnerTypeId=="CS" && entityPM.StatusCode=="AD")
                         {
                            CreateInterestTransactionLine(null, record);
                         }
@@ -2873,7 +2883,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 invoiceLineRepository.SubmitChanges();
             }
-            if (IsFullAccountingActivated(entityPM.Tenant) && entityPM.BillToPartnerTypeId == "CS")
+            if (IsFullAccountingActivated(entityPM.Tenant) && entityPM.BillToPartnerTypeId == "CS" && entityPM.StatusCode=="AD")
             {
                 CreateInterestTransactionLine(item, null);
             }
