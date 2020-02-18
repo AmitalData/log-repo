@@ -13,7 +13,7 @@
                         </table>
                     </SectionHead>
                     <SectionBody>
-                        <div class="MediaFill" [id]="SentQuotesKPIChartID" (mousedown)="OnChartMouseDown($event,'null')">
+                        <div  class="MediaFill" [id]="SentQuotesKPIChartID" (mousedown)="OnChartMouseDown($event,'null')">
                             <div *ngIf="!NoQuotesData" class="MediaFill">
                                 <div #SentQuotesKPIDashboard></div>
                                 <div [attr.id]="SentQuotesKPIDashboardId" style="height:95%;width:100%" (click)="Click_SentQuotesKPIBar()"></div>

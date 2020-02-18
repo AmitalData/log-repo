@@ -75,10 +75,19 @@ export class SentQuotesKPIComponent implements OnInit {
     LoadDashboardData() {
         this.dashboardService.GetDashboardChartValues(this.dashboardArgs).subscribe((myResult: any) => {
             this.SentQuotesKPIData = myResult;
+            this.CheckIfEmptyList();
             this.FillDashboardData();
         });
     }
 
+    private CheckIfEmptyList() {
+        this.NoQuotesData = false;
+        var isEmpty = this.SentQuotesKPIData.filter(a => a.DoubleProperty != 0);
+        if (!(isEmpty != null && isEmpty.length > 0)) {
+            this.NoQuotesData = true;
+        }
+
+    }
 
     private SentQuotesKPIChart: any;
     public IsNoData: boolean = false;
@@ -135,11 +144,11 @@ export class SentQuotesKPIComponent implements OnInit {
         var index = 0;
 
         for (var i = 0; i < this.SentQuotesKPIData.length; i++) {
-            this.QuotesKPIYAxis[i] = { data: 0, label: null, BindingElement: null, };
-            this.QuotesKPIYAxis[i].data = this.SentQuotesKPIData[i].IntegerProperty;
+            this.QuotesKPIYAxis[i] = { data: 0.0, maximumValue : 0, label: null, BindingElement: null, };
+            this.QuotesKPIYAxis[i].data = this.SentQuotesKPIData[i].DoubleProperty;
             this.QuotesKPIYAxis[i].label = this.SentQuotesKPIData[i].Code;
-            this.QuotesKPIYAxis[i].BindingElement = this.SentQuotesKPIData[i].StringProperty;
-
+            this.QuotesKPIYAxis[i].maximumValue = this.SentQuotesKPIData[i].IntegerProperty;
+            this.QuotesKPIYAxis[i].data = this.SentQuotesKPIData[i].DoubleProperty;
             if (!quotesKPIXAxis.includes(this.SentQuotesKPIData[i].StringProperty) && this.SentQuotesKPIData[i].StringProperty != null) {
                 if (quotesKPIXAxis[i] == null) {
                     quotesKPIXAxis[i] = (this.SentQuotesKPIData[i].StringProperty);
@@ -152,14 +161,14 @@ export class SentQuotesKPIComponent implements OnInit {
 
         var maximum = 0;
         if (this.QuotesKPIYAxis.length > 0)
-            maximum = this.QuotesKPIYAxis[0].data;
+            maximum = this.QuotesKPIYAxis[0].maximumValue;
 
         if (maximum == null || maximum === undefined)
             maximum = 0;
 
         this.QuotesKPIYAxis.forEach(element => {
-            if (element.data > maximum) {
-                maximum = element.data;
+            if (element.maximumValue > maximum) {
+                maximum = element.maximumValue;
             }
             if (index == 0) {
                 Graphs[0] = {
