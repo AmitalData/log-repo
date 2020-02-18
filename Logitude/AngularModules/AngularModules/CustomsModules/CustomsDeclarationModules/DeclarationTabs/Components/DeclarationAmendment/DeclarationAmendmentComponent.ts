@@ -133,7 +133,7 @@ export class DeclarationAmendmentComponent extends BaseComponent implements OnIn
         this.columns = [];
         this.columns.push({
 
-            FieldName: 'LineNumber',
+            FieldName: 'AmendmentNumber',
             DataTypeCode: 'String',//'Number',
             Display:"#",
             Styles: { width: '55px' },
