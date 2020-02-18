@@ -1884,6 +1884,22 @@ namespace Logitude.Customs.Def.ClosedTable
                 ResponseInterfaceCode = "8290",
                 //          NeedSignature = false,
             });
+            all.Add(new InterfaceManagementDetails()
+            {
+                Code = "2892",
+                InOut = InOutEnum.O.ToString(),
+                Description = "מסר תקן/בטל",
+                DcaPrefixName = "",
+                DefaultSendOptionsCode = Logitude.Customs.Def.ClosedTable.InterfaceSendOptionsDetails.InterfaceSendOptionEnum.WI.ToString(),
+                DefaultPriority = 5,
+                AllowRestore = true,
+                //NotificationId = "",//NotificationDefinitionDetails.GetAll().FirstOrDefault(rec=> rec.Code="").Code
+                Active = true,
+                SendAsDual = false,
+                ResponseInterfaceCode = "2892",
+                //   NeedSignature = false,
+                //     SignatureTypeCode = "C"
+            });
 
             all.Add(new InterfaceManagementDetails()
             {
