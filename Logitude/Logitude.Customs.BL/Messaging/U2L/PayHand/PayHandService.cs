@@ -435,7 +435,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.PayHand
                         string bank = GetDefault("ISRAEL", "CIM_AGENT_BANK", "NON", _MyDeclarationPM.CustomerCode, _MyDeclarationPM.Tenant);
                         if (!String.IsNullOrWhiteSpace(bank))
                         {
-                            customBanksList = customBankListQueryService.GetList(_MyDeclarationPM.Tenant).Where(r => r.BankCode == bank && !r.InActive).ToList();
+                            customBanksList = customBankListQueryService.GetList(_MyDeclarationPM.Tenant).Where(r => r.InternalCode == bank && !r.InActive).ToList();
                             customBankList = customBanksList.FirstOrDefault();
                         }
                     }
