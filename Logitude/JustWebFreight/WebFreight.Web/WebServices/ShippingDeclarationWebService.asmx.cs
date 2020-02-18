@@ -3967,8 +3967,6 @@ namespace WebFreight.Web.WebServices
 
             return output;
         }
-
-
         public byte[] GetFile(string fileid, string extention, string location, int tenant)
         {
             try
