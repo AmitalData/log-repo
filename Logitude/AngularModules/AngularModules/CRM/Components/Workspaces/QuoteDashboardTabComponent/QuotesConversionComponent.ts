@@ -22,22 +22,14 @@ export class QuotesConversionComponent implements OnInit {
     private CurrentSession = SessionLocator.SelectedSession;
     private dashboardArgs: QuoteDashboardArguments;
     private dashboardService: DashboardService;
-    public ChartID: string = null;
     public QuoteConversionDashboard: Array<ChartingDataClass>;
-    public QuoteConversionId: string = "QuoteConversionId_";
+    public QuoteConversionId: string;
     public legenddiv: string = "Legends_ID_";
-    constructor(private _entityResourceService: EntityResourceService) {
-        if (this.CurrentSession == null) {
-            this.ChartID = "ChartID_-1_-1";
-            this.legenddiv = "Legends_ID_-1_-1";
-        }
-
-        else {
-            this.ChartID = "ChartID_" + this.CurrentSession.GetChartId();
-            this.legenddiv = this.legenddiv + this.CurrentSession.GetChartId();
-        }
-
-        this.QuoteConversionId = this.QuoteConversionId + this.CurrentSession.GetChartId();
+    public chartColrs: ChartColors;
+    public NoQuotes: boolean = false;
+    constructor(private _entityResourceService: EntityResourceService) {        
+        this.QuoteConversionId = "QuoteConversionId+" + this.CurrentSession.GetNewId("QuoteConversionDashboard");
+        this.chartColrs = new ChartColors;
     }
 
     ngOnInit() {
@@ -52,13 +44,11 @@ export class QuotesConversionComponent implements OnInit {
 
     InitTab(wizard: QuoteDashboardComponent) {
         this.Wizard = wizard;
-        console.log("Init Tab");
     }
     RefreshTab(wizard: QuoteDashboardComponent) {
         this.Wizard = wizard;
         this.FillDashboardArgs();
         this.LoadDashboardData();
-        console.log("Refresh Tab");
     }
 
     private FillDashboardArgs() {
@@ -74,150 +64,113 @@ export class QuotesConversionComponent implements OnInit {
         this.QuoteConversionDashboard = new Array<ChartingDataClass>();
 
         this.dashboardService.GetDashboardChartValues(this.dashboardArgs).subscribe((myResult: any) => {
-            this.QuoteConversionDashboard = myResult;
+            this.QuoteConversionDashboard = myResult;            
             this.FillQuoteConversionDashboardData();
         });
     }
+     
+    private FillQuoteConversionDashboardData() {
+        if (this.QuoteConversionDashboard.length == 0) {
+            this.NoQuotes = true;
+        }
 
-    public QuoteConversionYAxis: any[] = [];
-    public QuoteConversionXAxis: string[] = [];
-    FillQuoteConversionDashboardData() {
-        var index = 0;
-        this.QuoteConversionXAxis = [];        
-        var StringArr: Array<string> = new Array<string>();
+        else {
+            this.DrawChart();
+            this.NoQuotes = false;
+        }        
+    }
+
+    public YAxis: any[] = [];
+    public XAxis: string[] = []; 
+    private DrawChart() {
+        this.XAxis = [];
+        this.YAxis = [];
         var j = 0;
 
         this.QuoteConversionDashboard.forEach(element => {
-            if (!StringArr.includes(element.SalesmanUserName) && element.SalesmanUserName != null) {
-                StringArr.push(element.SalesmanUserName);
-                this.QuoteConversionYAxis[j] = { data1: [], data2: [], ProductTypes: [], SalesmanId: null, ProductTypesFilters: [] };
-                this.QuoteConversionYAxis[j].data = [];
+            if (!this.XAxis.includes(element.StringProperty) && element.StringProperty != null) {
+                this.XAxis.push(element.StringProperty);
+                this.YAxis[j] = { data1: null, data2: null, directionId: null, transportModeId: null, groupedId: null };
                 j++;
             }
         });
-
-        StringArr.sort((a, b) => { return (a === b) ? 0 : (a < b) ? -1 : 1 });
-        var Graphs = [];
-        var index = 0;
+        
         this.QuoteConversionDashboard.forEach(element => {
-            for (var i = 0; i < StringArr.length; i++) {
-                if (element.SalesmanUserName == StringArr[i]) {
-                    this.QuoteConversionYAxis[i].data1.push(element.Count_All);
-                    this.QuoteConversionYAxis[i].data2.push(element.Count_Convert);
-                    this.QuoteConversionYAxis[i].ProductTypes.push(element.TransportModeDirection);
-                    this.QuoteConversionYAxis[i].ProductTypesFilters.push(element.TransportModeDirection_Display);
-                    this.QuoteConversionYAxis[i].SalesmanId = element.SalesmanUserId;
-                    if (!this.QuoteConversionXAxis.includes(element.SalesmanUserName) && element.SalesmanUserName != null) {
-                        if (this.QuoteConversionXAxis[i] == null)
-                            this.QuoteConversionXAxis[i] = (element.SalesmanUserName);
-
-                    }
+            for (var i = 0; i < this.XAxis.length; i++) {
+                if (element.StringProperty == this.XAxis[i]) {
+                    this.YAxis[i].directionId = element.DirectionId;
+                    this.YAxis[i].transportModeId = element.TransportModeId;
+                    this.YAxis[i].groupedId = element.GroupedId;
+                    this.YAxis[i].data1 = element.Count_All;
+                    this.YAxis[i].data2 = element.Count_Converted;                    
                 }
             }
         });
-        
+
+        var Graphs = [];
+        var index = 0;
         var DataProvider = [];
-        var objectArray_1 = [];
-        var objectArray_2 = [];
-        var maximum = 0;
+        var maximum = 0;        
 
-        objectArray_1.length = 20;
-        objectArray_2.length = 20;
-
-        if (this.QuoteConversionYAxis.length > 0) {
-            maximum = this.QuoteConversionYAxis[0].data1[0];
+        if (this.YAxis.length > 0) {
+            maximum = this.YAxis[0].data1;
         }
 
-        this.QuoteConversionYAxis.forEach(element => {
-            objectArray_1 = [];
-            objectArray_2 = [];
-
-            for (var i = 0; i < element.ProductTypes.length; i++) {                
-
-                if (element.data1[i] > maximum) {
-                    maximum = element.data1[i];
-                }
-                
-                if (index == 0) {
-                    Graphs[i] =
-                        {
-                            "balloonText": FormatTool.FormatBigNumbersToExtension("[[value]]") + "",
-                            "fillAlphas": 0.3,
-                            "lineAlpha": 1,
-                            "id": "AmGraph-1" + i,
-                            "title": element.ProductTypes[i] + "",
-                            "type": "column",
-                            "valueField": "acol" + (i + 1),
-                            "lineColor": this.barChartColors[i].backgroundColor1,
-                            "borderAlpha": 0,
-                            "showHandOnHover": true,
-                            //"clustered": false
-                        };
-                    //    {
-                    //        "balloonText": FormatTool.FormatBigNumbersToExtension("[[value]]") + "",
-                    //        "fillAlphas": 1,
-                    //        "lineAlpha": 1,
-                    //        "id": "AmGraph-1_1" + i,
-                    //        "title": element.ProductTypes[i] + "",
-                    //        "type": "column",
-                    //        "valueField": "ccol" + (i + 1),
-                    //        "lineColor": this.barChartColors[i].backgroundColor1,
-                    //        "borderAlpha": 0,
-                    //        "showHandOnHover": true,
-                    //        //"clustered": false
-                    //    }
-                    //];
-                }
-
-                objectArray_1[i] = (element.data1[i]);
-                objectArray_2[i] = (element.data2[i]);
+        this.YAxis.forEach(element => {
+            if (element.data1 > maximum) {
+                maximum = element.data1;
             }
 
             DataProvider[index] = {
-                "category": this.QuoteConversionXAxis[index],
-                "acol1": objectArray_1[0],
-                "acol2": objectArray_1[1],
-                "acol3": objectArray_1[2],
-                "acol4": objectArray_1[3],
-                "acol5": objectArray_1[4],
-
-                "ccol1": objectArray_2[0],
-                "ccol2": objectArray_2[1],
-                "ccol3": objectArray_2[2],
-                "ccol4": objectArray_2[3],
-                "ccol5": objectArray_2[4]
+                "category": this.XAxis[index],
+                "value1": element.data1,
+                "value2": element.data2,
+                "color": this.chartColrs["Color_" + element.groupedId],
+                //"opacity": element.data2 == 0 ? 1 : 0.2,
             };
+            
             index++;
         });
-        
+
+        Graphs =
+            [{
+                "balloonText": FormatTool.FormatBigNumbersToExtension("[[value]]") + "",
+                //"alphaField": "opacity",
+                "fillAlphas": 0.2,
+                "lineAlpha": 1,
+                "fillColorsField": "color",
+                "lineColorField": "color",
+                "type": "column",
+                "valueField": "value1",
+                "clustered": false,
+                "showHandOnHover": true,
+            },
+            {
+                "balloonText": FormatTool.FormatBigNumbersToExtension("[[value]]") + "",
+                "fillAlphas": 1,
+                "lineAlpha": 1,
+                "fillColorsField": "color",
+                "lineColorField": "color",
+                "type": "column",
+                "valueField": "value2",
+                "clustered": false,
+                "showHandOnHover": true,
+            }];
+
         try {
-            if (this.QuoteConversionXAxis.length != 0) {
+            if (this.XAxis.length != 0) {
                 maximum += 1;
                 while (maximum % 5 != 0) {
                     maximum += 1;
                 }
-
-                //name, graphs, dataprovider, max, legendFlag, LegendDiv, minimum, stacked, IsRtl
-                makeAmBarChart(this.QuoteConversionId, Graphs, DataProvider, maximum, true, this.legenddiv, null, false, false);
+                
+                makeAmBarChart(this.QuoteConversionId, Graphs, DataProvider, maximum, false);
             }
         }
 
         catch (e) {
 
         }
-    }
-
-    isResizing: boolean = false;
-    ChartLeft: number = 0;
-    lastDownX: number = 0;
-    lastDownY: number = 0;
-    OnMyMouseDown($event, arg) {
-        this.isResizing = true;
-        var grid = document.getElementById(this.ChartID);
-        var rec = grid.getBoundingClientRect();
-        this.ChartLeft = rec.left;
-        this.lastDownY = ($event.clientY - rec.bottom);
-        this.lastDownX = ($event.clientX - this.ChartLeft);
     }
     
     BarClicking() {
@@ -241,15 +194,13 @@ export class QuotesConversionComponent implements OnInit {
         var filterAgrs = new ApiQueryFilters();
 
         if (flag) {
-            var product: string = this.QuoteConversionYAxis[e.index].ProductTypesFilters[e.target.columnIndex];
-            var array: string[] = product.split(",");
 
             filterAgrs.addAdditionalFilter("ChartCreateDateFilter", ServiceHelper.GetDateString(this.Wizard.FromDate), ServiceHelper.GetDateString(this.Wizard.ToDate), null, "Equals", true, false, false, "String");
-            filterAgrs.addAdditionalFilter("IsClosed", false, null, null, "Equals", true, false, false, "Boolean");
             filterAgrs.addAdditionalFilter("IsCancelled", false, null, null, "Equals", true, false, false, "Boolean");
-            filterAgrs.addAdditionalFilter("SalesmanUserId", this.QuoteConversionYAxis[e.index].SalesmanId, null, null, "Equals", false, false, false, "String");
-            filterAgrs.addAdditionalFilter("TransportModeId", array[0], null, null, "Equals", false, false, false, "String");
-            filterAgrs.addAdditionalFilter("DirectionId", array[1], null, null, "Equals", false, false, false, "String");
+            filterAgrs.addAdditionalFilter("SalesmanUserId", this.dashboardArgs.OwnerId, null, null, "Equals", false, false, false, "String");
+            filterAgrs.addAdditionalFilter("BusinessUnitId", this.dashboardArgs.BusinessUnitId, null, null, "Equals", true, false, false, "string");
+            filterAgrs.addAdditionalFilter("TransportModeId", this.YAxis[e.index].transportModeId, null, null, "Equals", false, false, false, "String");
+            filterAgrs.addAdditionalFilter("DirectionId", this.YAxis[e.index].directionId, null, null, "Equals", false, false, false, "String");
 
             var listArgs = new ListComponentArgs();
             listArgs.Filters = filterAgrs;
@@ -265,51 +216,20 @@ export class QuotesConversionComponent implements OnInit {
                     this.CurrentSession.AddMenuReference(cmpRef);
                 });
         }
-    }
+    }    
+}
 
-    barChartColors: any[] = [
-        {
-            backgroundColor1: '#487E9F',
-        },
-
-        {
-            backgroundColor1: '#DA7B38',
-        },
-
-        {
-            backgroundColor1: '#21782E',
-        },
-
-        {
-            backgroundColor1: '#FF00B2',
-        },
-
-        {
-            backgroundColor1: '#FF0000',
-        },
-
-        {
-            backgroundColor1: '#FF00B2',
-        },
-
-        {
-            backgroundColor1: '#4D3AAF',
-        },
-
-        {
-            backgroundColor1: '#956027',
-        },
-
-        {
-            backgroundColor1: '#540000',
-        },
-
-        {
-            backgroundColor1: '#FF6270',
-        },
-
-        {
-            backgroundColor1: '#41D900',
-        },
-    ]
+export class ChartColors {
+    public Color_AD: string = "#FF0F00";
+    public Color_AE: string = "#FF6600";
+    public Color_AI: string = "#FF9E01";
+    public Color_AR: string = "#CD0D74";
+    public Color_ID: string = "#F8FF01";
+    public Color_IE: string = "#B0DE09";
+    public Color_II: string = "#04D215";
+    public Color_IR: string = "#0D8ECF";
+    public Color_OD: string = "#0D52D1";
+    public Color_OE: string = "#2A0CD0";
+    public Color_OI: string = "#8A0CCF";
+    public Color_OR: string = "#FCD202";
 }
