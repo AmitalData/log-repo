@@ -4,7 +4,7 @@
   <field Id="&quot;a296aa80-8d1e-493d-9216-30c1a4a99b40&quot;" FieldName="&quot;Tenant&quot;" OldFieldName="&quot;Tenant&quot;" IsNew="false" IsChecked="false" IsDeleted="false" ObjectTableName="&quot;ARInvoice&quot;" FieldsDataType="&quot;Integer&quot;" MinLength="0" MaxLength="0" IsRequired="false" CopyToDW="false" DisplayOnLookUp="false" DisplayOnLookUpLocal="false" CanFilter="false" DisplayOnly="false" SystemRequired="false" ObjectFieldNotRequired="false" SystemMaxLength="0" DisplayInList="true" IsCustomFilter="false" MultiLine="false" IsTimeFrameFilter="false" DisplayInSearchWindowList="false" PMPropertyPath="&quot;Tenant&quot;" ListPropertyPath="&quot;Tenant&quot;" DisplayInLookUpIndex="0" AutomaticField="false" UniqueField="false" DisplayInSearchWindowListIndex="0" IsMulti="false" DependencyFilter1IsList="false" DependencyFilter2IsList="false" DependencyFilter3IsList="false" ValidForQuerySection1="&quot;ARInvoice&quot;" IsRestrictable="false" DisplayInEntityVariables="false" AllowedInCustomerFieldsSettings="false" DisplayInSearchWindowFilters="false" DisplayInSearchWindowFiltersIndex="0" DisplayInDocumentReferences="false" InActive="false" DisplayLongName="false" FullFieldLable="&quot;Tenant&quot;" DefaultText="&quot;Tenant&quot;" FullLocalDefaultText="&quot;Tenant&quot;" ListFieldLable="&quot;TenantListLable&quot;" ListLableDefaultText="&quot;Tenant&quot;" ListLocalDefaultText="&quot;Tenant&quot;" IsNullable="false" IsForeignKey="false" IsPrimaryKey="false" HasDataBaseField="true" HasPMField="true" IsComposition="false" IsMaxLength="false" NoMetaDataField="true" GenerateInList="true" IsFixedLength="false" EnableAutoFill="false" IncludeInSearchField="false" AllowedinAutomationConditions="false" AutomationEmailRecipient="false" CanAutomateSetValue="false" HasTemplate="false" IsCustom="false" IsSpellCheckedFullFieldLable="false" IsSpellCheckedHelpLocalDefaultText="false" IsSpellCheckedShortLocalDefaultText="false" IsSpellCheckedListLocalDefaultText="false" EnableFullscreenTextBox="false" />
   <field Id="&quot;75b6daba-6b8e-4a8c-96c7-26002cd345a2&quot;" FieldName="&quot;MainEntityId&quot;" OldFieldName="&quot;MainEntityId&quot;" IsNew="false" IsChecked="false" IsDeleted="false" ObjectTableName="&quot;ARInvoice&quot;" FieldsDataType="&quot;Text&quot;" MinLength="0" MaxLength="0" IsRequired="false" CopyToDW="false" DisplayOnLookUp="false" DisplayOnLookUpLocal="false" CanFilter="false" DisplayOnly="false" SystemRequired="false" ObjectFieldNotRequired="false" SystemMaxLength="0" DisplayInList="true" IsCustomFilter="false" MultiLine="false" IsTimeFrameFilter="false" DisplayInSearchWindowList="false" PMPropertyPath="&quot;MainEntityId&quot;" ListPropertyPath="&quot;MainEntityId&quot;" DisplayInLookUpIndex="0" AutomaticField="false" UniqueField="false" DisplayInSearchWindowListIndex="0" IsMulti="false" DependencyFilter1IsList="false" DependencyFilter2IsList="false" DependencyFilter3IsList="false" ValidForQuerySection1="&quot;ARInvoice&quot;" IsRestrictable="false" DisplayInEntityVariables="false" AllowedInCustomerFieldsSettings="false" DisplayInSearchWindowFilters="false" DisplayInSearchWindowFiltersIndex="0" DisplayInDocumentReferences="false" InActive="false" DisplayLongName="false" FullFieldLable="&quot;MainEntityId&quot;" DefaultText="&quot;MainEntityId&quot;" FullLocalDefaultText="&quot;MainEntityId&quot;" ListFieldLable="&quot;MainEntityIdListLable&quot;" ListLableDefaultText="&quot;MainEntityId&quot;" ListLocalDefaultText="&quot;MainEntityId&quot;" IsNullable="false" IsForeignKey="false" IsPrimaryKey="false" HasDataBaseField="true" HasPMField="true" IsComposition="false" IsMaxLength="false" NoMetaDataField="true" GenerateInList="true" IsFixedLength="false" EnableAutoFill="false" IncludeInSearchField="false" AllowedinAutomationConditions="false" AutomationEmailRecipient="false" CanAutomateSetValue="false" HasTemplate="false" IsCustom="false" IsSpellCheckedFullFieldLable="false" IsSpellCheckedHelpLocalDefaultText="false" IsSpellCheckedShortLocalDefaultText="false" IsSpellCheckedListLocalDefaultText="false" EnableFullscreenTextBox="false" />
   <field Id="&quot;d85f3de4-7d6c-47ed-a055-68b9c6635221&quot;" FieldName="&quot;IsClosed&quot;" OldFieldName="&quot;IsClosed&quot;" IsNew="false" IsChecked="false" IsDeleted="false" ObjectTableName="&quot;ARInvoice&quot;" FieldsDataType="&quot;Boolean&quot;" MinLength="0" MaxLength="0" IsRequired="false" CopyToDW="false" DisplayOnLookUp="false" DisplayOnLookUpLocal="false" CanFilter="false" DisplayOnly="false" SystemRequired="false" ObjectFieldNotRequired="false" SystemMaxLength="0" DisplayInList="true" IsCustomFilter="false" MultiLine="false" IsTimeFrameFilter="false" DisplayInSearchWindowList="false" PMPropertyPath="&quot;IsClosed&quot;" ListPropertyPath="&quot;IsClosed&quot;" DisplayInLookUpIndex="0" AutomaticField="false" UniqueField="false" DisplayInSearchWindowListIndex="0" IsMulti="false" DependencyFilter1IsList="false" DependencyFilter2IsList="false" DependencyFilter3IsList="false" ValidForQuerySection1="&quot;ARInvoice&quot;" IsRestrictable="false" DisplayInEntityVariables="false" AllowedInCustomerFieldsSettings="false" DisplayInSearchWindowFilters="false" DisplayInSearchWindowFiltersIndex="0" DisplayInDocumentReferences="false" InActive="false" DisplayLongName="false" FullFieldLable="&quot;IsClosed&quot;" DefaultText="&quot;IsClosed&quot;" FullLocalDefaultText="&quot;IsClosed&quot;" ListFieldLable="&quot;IsClosedListLable&quot;" ListLableDefaultText="&quot;IsClosed&quot;" ListLocalDefaultText="&quot;IsClosed&quot;" IsNullable="false" IsForeignKey="false" IsPrimaryKey="false" HasDataBaseField="true" HasPMField="true" IsComposition="false" IsMaxLength="false" NoMetaDataField="true" GenerateInList="true" IsFixedLength="false" EnableAutoFill="false" IncludeInSearchField="false" AllowedinAutomationConditions="false" AutomationEmailRecipient="false" CanAutomateSetValue="false" HasTemplate="false" IsCustom="false" IsSpellCheckedFullFieldLable="false" IsSpellCheckedHelpLocalDefaultText="false" IsSpellCheckedShortLocalDefaultText="false" IsSpellCheckedListLocalDefaultText="false" EnableFullscreenTextBox="false" />
-  <field Id="&quot;ff976fdc-9bc0-4db3-b02e-45ebcc75bbef&quot;" FieldName="&quot;AmountInProfitCurrency&quot;" OldFieldName="&quot;AmountInProfitCurrency&quot;" IsNew="false" IsChecked="false" IsDeleted="false" ObjectTableName="&quot;ARInvoice&quot;" FieldsDataType="&quot;Double&quot;" MinLength="0" MaxLength="0" IsRequired="false" CopyToDW="false" DisplayOnLookUp="false" DisplayOnLookUpLocal="false" CanFilter="false" DisplayOnly="false" SystemRequired="false" ObjectFieldNotRequired="false" SystemMaxLength="0" DisplayInList="true" IsCustomFilter="false" MultiLine="false" IsTimeFrameFilter="false" DisplayInSearchWindowList="false" PMPropertyPath="&quot;AmountInProfitCurrency&quot;" ListPropertyPath="&quot;AmountInProfitCurrency&quot;" DisplayInLookUpIndex="0" AutomaticField="false" UniqueField="false" DisplayInSearchWindowListIndex="0" IsMulti="false" DependencyFilter1IsList="false" DependencyFilter2IsList="false" DependencyFilter3IsList="false" ValidForQuerySection1="&quot;ARInvoice&quot;" IsRestrictable="false" DisplayInEntityVariables="false" AllowedInCustomerFieldsSettings="false" DisplayInSearchWindowFilters="false" DisplayInSearchWindowFiltersIndex="0" DisplayInDocumentReferences="false" InActive="false" DisplayLongName="false" FullFieldLable="&quot;AmountInProfitCurrency&quot;" DefaultText="&quot;AmountInProfitCurrency&quot;" FullLocalDefaultText="&quot;AmountInProfitCurrency&quot;" ListFieldLable="&quot;AmountInProfitCurrencyListLable&quot;" ListLableDefaultText="&quot;AmountInProfitCurrency&quot;" ListLocalDefaultText="&quot;AmountInProfitCurrency&quot;" IsNullable="true" IsForeignKey="false" IsPrimaryKey="false" HasDataBaseField="true" HasPMField="true" IsComposition="false" IsMaxLength="false" NoMetaDataField="true" GenerateInList="true" IsFixedLength="false" EnableAutoFill="false" IncludeInSearchField="false" AllowedinAutomationConditions="false" AutomationEmailRecipient="false" CanAutomateSetValue="false" HasTemplate="false" IsCustom="false" IsSpellCheckedFullFieldLable="false" IsSpellCheckedHelpLocalDefaultText="false" IsSpellCheckedShortLocalDefaultText="false" IsSpellCheckedListLocalDefaultText="false" EnableFullscreenTextBox="false" />
+  <field Id="&quot;ff976fdc-9bc0-4db3-b02e-45ebcc75bbfef&quot;" FieldName="&quot;AmountInProfitCurrency&quot;" OldFieldName="&quot;AmountInProfitCurrency&quot;" IsNew="false" IsChecked="false" IsDeleted="false" ObjectTableName="&quot;ARInvoice&quot;" FieldsDataType="&quot;Double&quot;" MinLength="0" MaxLength="0" IsRequired="false" CopyToDW="false" DisplayOnLookUp="false" DisplayOnLookUpLocal="false" CanFilter="false" DisplayOnly="false" SystemRequired="false" ObjectFieldNotRequired="false" SystemMaxLength="0" DisplayInList="true" IsCustomFilter="false" MultiLine="false" IsTimeFrameFilter="false" DisplayInSearchWindowList="false" PMPropertyPath="&quot;AmountInProfitCurrency&quot;" ListPropertyPath="&quot;AmountInProfitCurrency&quot;" DisplayInLookUpIndex="0" AutomaticField="false" UniqueField="false" DisplayInSearchWindowListIndex="0" IsMulti="false" DependencyFilter1IsList="false" DependencyFilter2IsList="false" DependencyFilter3IsList="false" ValidForQuerySection1="&quot;ARInvoice&quot;" IsRestrictable="false" DisplayInEntityVariables="false" AllowedInCustomerFieldsSettings="false" DisplayInSearchWindowFilters="false" DisplayInSearchWindowFiltersIndex="0" DisplayInDocumentReferences="false" InActive="false" DisplayLongName="false" FullFieldLable="&quot;AmountInProfitCurrency&quot;" DefaultText="&quot;AmountInProfitCurrency&quot;" FullLocalDefaultText="&quot;AmountInProfitCurrency&quot;" ListFieldLable="&quot;AmountInProfitCurrencyListLable&quot;" ListLableDefaultText="&quot;AmountInProfitCurrency&quot;" ListLocalDefaultText="&quot;AmountInProfitCurrency&quot;" IsNullable="true" IsForeignKey="false" IsPrimaryKey="false" HasDataBaseField="true" HasPMField="true" IsComposition="false" IsMaxLength="false" NoMetaDataField="true" GenerateInList="true" IsFixedLength="false" EnableAutoFill="false" IncludeInSearchField="false" AllowedinAutomationConditions="false" AutomationEmailRecipient="false" CanAutomateSetValue="false" HasTemplate="false" IsCustom="false" IsSpellCheckedFullFieldLable="false" IsSpellCheckedHelpLocalDefaultText="false" IsSpellCheckedShortLocalDefaultText="false" IsSpellCheckedListLocalDefaultText="false" EnableFullscreenTextBox="false" />
   <field Id="&quot;0827b8b7-9fc8-46d8-884a-348dd2c10813&quot;" FieldName="&quot;ProfitCurrencyExchangeRate&quot;" OldFieldName="&quot;ProfitCurrencyExchangeRate&quot;" IsNew="false" IsChecked="false" IsDeleted="false" ObjectTableName="&quot;ARInvoice&quot;" FieldsDataType="&quot;Double&quot;" MinLength="0" MaxLength="0" IsRequired="false" CopyToDW="false" DisplayOnLookUp="false" DisplayOnLookUpLocal="false" CanFilter="false" DisplayOnly="false" SystemRequired="false" ObjectFieldNotRequired="false" SystemMaxLength="0" DisplayInList="true" IsCustomFilter="false" MultiLine="false" IsTimeFrameFilter="false" DisplayInSearchWindowList="false" PMPropertyPath="&quot;ProfitCurrencyExchangeRate&quot;" ListPropertyPath="&quot;ProfitCurrencyExchangeRate&quot;" DisplayInLookUpIndex="0" AutomaticField="false" UniqueField="false" DisplayInSearchWindowListIndex="0" IsMulti="false" DependencyFilter1IsList="false" DependencyFilter2IsList="false" DependencyFilter3IsList="false" ValidForQuerySection1="&quot;ARInvoice&quot;" IsRestrictable="false" DisplayInEntityVariables="false" AllowedInCustomerFieldsSettings="false" DisplayInSearchWindowFilters="false" DisplayInSearchWindowFiltersIndex="0" DisplayInDocumentReferences="false" InActive="false" DisplayLongName="false" FullFieldLable="&quot;ProfitCurrencyExchangeRate&quot;" DefaultText="&quot;ProfitCurrencyExchangeRate&quot;" FullLocalDefaultText="&quot;ProfitCurrencyExchangeRate&quot;" ListFieldLable="&quot;ProfitCurrencyExchangeRateListLable&quot;" ListLableDefaultText="&quot;ProfitCurrencyExchangeRate&quot;" ListLocalDefaultText="&quot;ProfitCurrencyExchangeRate&quot;" IsNullable="true" IsForeignKey="false" IsPrimaryKey="false" HasDataBaseField="true" HasPMField="true" IsComposition="false" IsMaxLength="false" NoMetaDataField="true" GenerateInList="true" IsFixedLength="false" EnableAutoFill="false" IncludeInSearchField="false" AllowedinAutomationConditions="false" AutomationEmailRecipient="false" CanAutomateSetValue="false" HasTemplate="false" IsCustom="false" IsSpellCheckedFullFieldLable="false" IsSpellCheckedHelpLocalDefaultText="false" IsSpellCheckedShortLocalDefaultText="false" IsSpellCheckedListLocalDefaultText="false" EnableFullscreenTextBox="false" />
   <field Id="&quot;55568135-c2b9-4928-ad25-8103205e8422&quot;" FieldName="&quot;Description&quot;" OldFieldName="&quot;Description&quot;" IsNew="false" IsChecked="false" IsDeleted="false" ObjectTableName="&quot;ARInvoice&quot;" FieldsDataType="&quot;Text&quot;" MinLength="0" MaxLength="0" IsRequired="false" CopyToDW="false" DisplayOnLookUp="false" DisplayOnLookUpLocal="false" CanFilter="false" DisplayOnly="false" SystemRequired="false" ObjectFieldNotRequired="false" SystemMaxLength="0" DisplayInList="true" IsCustomFilter="false" MultiLine="false" IsTimeFrameFilter="false" DisplayInSearchWindowList="false" PMPropertyPath="&quot;Description&quot;" ListPropertyPath="&quot;Description&quot;" DisplayInLookUpIndex="0" AutomaticField="false" UniqueField="false" DisplayInSearchWindowListIndex="0" IsMulti="false" DependencyFilter1IsList="false" DependencyFilter2IsList="false" DependencyFilter3IsList="false" ValidForQuerySection1="&quot;ARInvoice&quot;" IsRestrictable="false" DisplayInEntityVariables="false" AllowedInCustomerFieldsSettings="false" DisplayInSearchWindowFilters="false" DisplayInSearchWindowFiltersIndex="0" DisplayInDocumentReferences="false" InActive="false" DisplayLongName="false" FullFieldLable="&quot;Description&quot;" DefaultText="&quot;Description&quot;" FullLocalDefaultText="&quot;Description&quot;" ListFieldLable="&quot;DescriptionListLable&quot;" ListLableDefaultText="&quot;Description&quot;" ListLocalDefaultText="&quot;Description&quot;" IsNullable="false" IsForeignKey="false" IsPrimaryKey="false" HasDataBaseField="true" HasPMField="true" IsComposition="false" IsMaxLength="false" NoMetaDataField="true" GenerateInList="true" IsFixedLength="false" EnableAutoFill="false" IncludeInSearchField="false" AllowedinAutomationConditions="false" AutomationEmailRecipient="false" CanAutomateSetValue="false" HasTemplate="false" IsCustom="false" IsSpellCheckedFullFieldLable="false" IsSpellCheckedHelpLocalDefaultText="false" IsSpellCheckedShortLocalDefaultText="false" IsSpellCheckedListLocalDefaultText="false" EnableFullscreenTextBox="false" />
   <field Id="&quot;7f62bc6a-52e7-47cd-aacc-575e2d5c1abd&quot;" FieldName="&quot;PaymentTermExternalId&quot;" OldFieldName="&quot;PaymentTermExternalId&quot;" IsNew="false" IsChecked="false" IsDeleted="false" ObjectTableName="&quot;ARInvoice&quot;" FieldsDataType="&quot;Text&quot;" MinLength="0" MaxLength="0" IsRequired="false" CopyToDW="false" DisplayOnLookUp="false" DisplayOnLookUpLocal="false" CanFilter="false" DisplayOnly="false" SystemRequired="false" ObjectFieldNotRequired="false" SystemMaxLength="0" DisplayInList="true" IsCustomFilter="false" MultiLine="false" IsTimeFrameFilter="false" DisplayInSearchWindowList="false" PMPropertyPath="&quot;PaymentTermExternalId&quot;" ListPropertyPath="&quot;PaymentTermExternalId&quot;" DisplayInLookUpIndex="0" AutomaticField="false" UniqueField="false" DisplayInSearchWindowListIndex="0" IsMulti="false" DependencyFilter1IsList="false" DependencyFilter2IsList="false" DependencyFilter3IsList="false" ValidForQuerySection1="&quot;ARInvoice&quot;" IsRestrictable="false" DisplayInEntityVariables="false" AllowedInCustomerFieldsSettings="false" DisplayInSearchWindowFilters="false" DisplayInSearchWindowFiltersIndex="0" DisplayInDocumentReferences="false" InActive="false" DisplayLongName="false" FullFieldLable="&quot;PaymentTermExternalId&quot;" DefaultText="&quot;PaymentTermExternalId&quot;" FullLocalDefaultText="&quot;PaymentTermExternalId&quot;" ListFieldLable="&quot;PaymentTermExternalIdListLable&quot;" ListLableDefaultText="&quot;PaymentTermExternalId&quot;" ListLocalDefaultText="&quot;PaymentTermExternalId&quot;" IsNullable="false" IsForeignKey="false" IsPrimaryKey="false" HasDataBaseField="true" HasPMField="true" IsComposition="false" IsMaxLength="false" NoMetaDataField="true" GenerateInList="true" IsFixedLength="false" EnableAutoFill="false" IncludeInSearchField="false" AllowedinAutomationConditions="false" AutomationEmailRecipient="false" CanAutomateSetValue="false" HasTemplate="false" IsCustom="false" IsSpellCheckedFullFieldLable="false" IsSpellCheckedHelpLocalDefaultText="false" IsSpellCheckedShortLocalDefaultText="false" IsSpellCheckedListLocalDefaultText="false" EnableFullscreenTextBox="false" />
@@ -399,6 +399,105 @@
     </QueryFilters>
   </Query>
   <Screen Name="&quot;Header Screen&quot;" ObjectTableName="&quot;ARInvoice&quot;" NumberOfColumns="5" NumberOfRows="1" IsReadOnly="true" IsHeaderScreen="true" Code="&quot;ARInvoice.FullAccHeaderScreen&quot;">
+  <Query
+    Code="&quot;ErrorInTransfer&quot;"
+    TextCode="&quot;Error In Transfer&quot;"
+    LocalTextCode="&quot;Error In Transfer&quot;"
+    QueryGroupCode="&quot;INVC&quot;"
+    IndexOrder="12"
+    ObjectTableName="&quot;ARInvoice&quot;"
+    QuerySection="&quot;ARInvoice&quot;"
+    SystemLevel="true"
+    IsAddNewEntity="false"
+    IsPackagable="true"
+    DefaultSortName="&quot;CreateDate&quot;"
+    DefaultSortDirection="&quot;Desending&quot;"
+    IsSpellChecked="false">
+    <QueryColumns>
+      <QueryColumn
+        QueryCode="&quot;ErrorInTransfer&quot;"
+        IndexOrder="0"
+        ObjectFieldName="&quot;TransferError&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;ErrorInTransfer&quot;"
+        IndexOrder="1"
+        ObjectFieldName="&quot;IsPrinted&quot;"
+        ColumnWidth="30" />
+      <QueryColumn
+        QueryCode="&quot;ErrorInTransfer&quot;"
+        IndexOrder="2"
+        ObjectFieldName="&quot;Sent&quot;"
+        ColumnWidth="30" />
+      <QueryColumn
+        QueryCode="&quot;ErrorInTransfer&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;InvoiceNumber&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;ErrorInTransfer&quot;"
+        IndexOrder="4"
+        ObjectFieldName="&quot;ARInvoiceTypeName&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;ErrorInTransfer&quot;"
+        IndexOrder="5"
+        ObjectFieldName="&quot;BillToName&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;ErrorInTransfer&quot;"
+        IndexOrder="6"
+        ObjectFieldName="&quot;StatusName&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;ErrorInTransfer&quot;"
+        IndexOrder="7"
+        ObjectFieldName="&quot;DueDate&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;ErrorInTransfer&quot;"
+        IndexOrder="8"
+        ObjectFieldName="&quot;InvoiceCurrencyCode&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;ErrorInTransfer&quot;"
+        IndexOrder="9"
+        ObjectFieldName="&quot;AmountInInvoiceCurrency&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;ErrorInTransfer&quot;"
+        IndexOrder="10"
+        ObjectFieldName="&quot;AmountDue&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;ErrorInTransfer&quot;"
+        IndexOrder="11"
+        ObjectFieldName="&quot;CreateDate&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;ErrorInTransfer&quot;"
+        IndexOrder="12"
+        ObjectFieldName="&quot;CreatedByUserName&quot;"
+        ColumnWidth="130" />
+    </QueryColumns>
+    <QueryFilters>
+      <QueryFilter
+        QueryCode="&quot;ErrorInTransfer&quot;"
+        PredefinedValue="&quot;ET&quot;"
+        ObjectFieldName="&quot;TransferStatusCode&quot;"
+        IsPredefined="true"
+        Operator="&quot;Equal&quot;"
+        IndexOrder="0" />
+    </QueryFilters>
+  </Query>
+  <Screen
+    Name="&quot;Header Screen&quot;"
+    ObjectTableName="&quot;ARInvoice&quot;"
+    IsReadOnly="true"
+    IsHeaderScreen="true"
+    Code="&quot;ARInvoice.FullAccHeaderScreen&quot;"
+    NumberOfColumns="5"
+    NumberOfRows="1">
     <ScreenFields>
       <ScreenField Column="0" Row="0" ObjectFieldName="&quot;MainEntityReference&quot;" ScreenName="Header Screen" />
       <ScreenField Column="1" Row="0" ObjectFieldName="&quot;DueDate&quot;" ScreenName="Header Screen" />

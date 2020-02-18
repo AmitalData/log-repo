@@ -182,6 +182,11 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 ContactRepository contactRepository = new ContactRepository(myCommonContext);
                 ContactQuery contactQuery = new ContactQuery(contactRepository);
                 loggedContact = contactQuery.GetSinglePM(entityPM.UpdatedByUserId, tenant);
+
+                if (loggedContact == null)
+                {
+                    loggedContact = contactQuery.GetSinglePM(entityPM.UpdatedByUserId, 0);
+                }
             }
 
             else
