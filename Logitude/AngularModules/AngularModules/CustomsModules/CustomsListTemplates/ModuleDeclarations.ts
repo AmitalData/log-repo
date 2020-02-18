@@ -14,6 +14,8 @@ import { DeclarationQueryListTemplate } from './Components/DeclarationQueryListT
 import { CourierDeclarationWorkspaceListTemplate } from './Components/CourierDeclarationWorkspaceListTemplate'
  import { CustomsCollateralListTemplate } from './Components/CustomsCollateralListTemplate';
 import { DeclarationAmendmentListTemplate } from './Components/DeclarationAmendmentDeclarationListTemplate';
+import { DeclarationListTemplate } from './Components/DeclarationListTemplate';
+
  
 export const Components =
   [
@@ -31,7 +33,9 @@ export const Components =
     SupplierInvoiceItemsTaxListTemplate,
     CustomsCollateralListTemplate,
     CourierDeclarationWorkspaceListTemplate,
-    DeclarationAmendmentListTemplate
+    DeclarationAmendmentListTemplate,
+    DeclarationListTemplate
+
   ];
 
 export class ModuleDeclarations {
@@ -54,7 +58,8 @@ export class ModuleDeclarations {
           case "DeclarationQueryListTemplate": { myResult = DeclarationQueryListTemplate; break; }
           case "CustomsCollateralListTemplate": { myResult = CustomsCollateralListTemplate; break; } 
           case "CourierDeclarationWorkspaceListTemplate": { myResult = CourierDeclarationWorkspaceListTemplate; break; }
-          case "DeclarationAmendmentListTemplate": { myResult = DeclarationAmendmentListTemplate; break; } 
+          case "DeclarationAmendmentListTemplate": { myResult = DeclarationAmendmentListTemplate; break; }
+          case "DeclarationListTemplate": { myResult = DeclarationListTemplate; break; }
       }
 
     return myResult;
