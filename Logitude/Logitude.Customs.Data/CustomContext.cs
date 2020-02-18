@@ -79,9 +79,9 @@ namespace Logitude.Customs.Data
             modelBuilder.Configurations.Add(new AmendmentFieldReasonTypeMap());
 	
             modelBuilder.Configurations.Add(new AmendmentRequestStatusMap());
-
+	
             modelBuilder.Configurations.Add(new AmendmentTypeMap());
-
+	
             modelBuilder.Configurations.Add(new ApprovedProfessionMap());
 	
             modelBuilder.Configurations.Add(new AssigneeNotificationTypeMap());
@@ -1218,30 +1218,8 @@ namespace Logitude.Customs.Data
 	      get; set;
 	 
 	 }
-
-        public IDbSet<SealType> SealTypes
-        {
-            get; set;
-
-        }
-
- 
-
-
-        public IDbSet<SealUpdateReasonType> SealUpdateReasonTypes
-        {
-            get; set;
-
-        }
-
-
-        public IDbSet<SealCompletenes> SealCompleteness
-        {
-            get; set;
-
-        }
-
-        public IDbSet<CargoSeal> CargoSeals 
+	
+	 public IDbSet<CargoSeal> CargoSeals 
 	 {
 	      get; set;
 	 
@@ -2591,7 +2569,24 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
- 
+	 public IDbSet<SealCompletenes> SealCompleteness 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<SealType> SealTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<SealUpdateReasonType> SealUpdateReasonTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<SeizureFactorType> SeizureFactorTypes 
 	 {
 	      get; set;

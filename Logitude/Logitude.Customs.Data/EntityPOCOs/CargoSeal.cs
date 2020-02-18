@@ -31,25 +31,21 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string SealNumber { get; set; }
         [Column("Remarks")]
 	    public string Remarks { get; set; }
-     [Key]
         [ForeignKey("SealCompletenes")]
         [Column("SealCompletenessStateCode")]
 	    public string SealCompletenessStateCode { get; set; }
 	      
         public virtual SealCompletenes SealCompletenes { get; set; }
-     [Key]
         [ForeignKey("SealType")]
         [Column("SealTypeCode")]
 	    public string SealTypeCode { get; set; }
 	      
         public virtual SealType SealType { get; set; }
-     [Key]
         [ForeignKey("SealUpdateReasonType")]
         [Column("UpdateReasonCode")]
 	    public string UpdateReasonCode { get; set; }
 	      
         public virtual SealUpdateReasonType SealUpdateReasonType { get; set; }
-     [Key]
         [ForeignKey("AmendmentType")]
         [Column("UpdateTypeCode")]
 	    public string UpdateTypeCode { get; set; }

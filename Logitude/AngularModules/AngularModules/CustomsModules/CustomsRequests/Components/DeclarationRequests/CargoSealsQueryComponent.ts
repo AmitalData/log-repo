@@ -144,7 +144,7 @@ export class CargoSealsQueryComponent
             this._IsDisplayOnly = value;
         }
     }
-
+    
     get UpdateDate() { return this.RequestParams.UpdateDate; }
     set UpdateDate(value: Date) {
         if (this.RequestParams.UpdateDate != value) {
@@ -197,12 +197,12 @@ export class CargoSealsQueryComponent
         if (this.RequestParams.CargoIdentifierKey1 != value) {
             this.RequestParams.CargoIdentifierKey1 = value;
         }
-        if (value) {
-            this.UIProperties.SetRequired("CargoIdentifierKey1", this.ObjectTableName, false);
-        }
-        else {
-            this.UIProperties.SetRequired("CargoIdentifierKey1", this.ObjectTableName, true);
-        }
+        //if (value) {
+        //    this.UIProperties.SetRequired("CargoIdentifierKey1", this.ObjectTableName, false);
+        //}
+        //else {
+        //    this.UIProperties.SetRequired("CargoIdentifierKey1", this.ObjectTableName, true);
+        //}
     }
 
     get CargoIdentifierKey2() { return this.RequestParams.CargoIdentifierKey2; }
@@ -210,12 +210,12 @@ export class CargoSealsQueryComponent
         if (this.RequestParams.CargoIdentifierKey2 != value) {
             this.RequestParams.CargoIdentifierKey2 = value;
         }
-        if (value) {
-            this.UIProperties.SetRequired("CargoIdentifierKey2", this.ObjectTableName, false);
-        }
-        else {
-            this.UIProperties.SetRequired("CargoIdentifierKey2", this.ObjectTableName, true);
-        }
+        //if (value) {
+        //    this.UIProperties.SetRequired("CargoIdentifierKey2", this.ObjectTableName, false);
+        //}
+        //else {
+        //    this.UIProperties.SetRequired("CargoIdentifierKey2", this.ObjectTableName, true);
+        //}
     }
 
     get CargoIdentifierKey3() { return this.RequestParams.CargoIdentifierKey3; }
@@ -223,12 +223,12 @@ export class CargoSealsQueryComponent
         if (this.RequestParams.CargoIdentifierKey3 != value) {
             this.RequestParams.CargoIdentifierKey3 = value;
         }
-        if (value) {
-            this.UIProperties.SetRequired("CargoIdentifierKey3", this.ObjectTableName, false);
-        }
-        else {
-            this.UIProperties.SetRequired("CargoIdentifierKey3", this.ObjectTableName, true);
-        }
+        //if (value) {
+        //    this.UIProperties.SetRequired("CargoIdentifierKey3", this.ObjectTableName, false);
+        //}
+        //else {
+        //    this.UIProperties.SetRequired("CargoIdentifierKey3", this.ObjectTableName, true);
+        //}
     }
 
     get CargoRowNumber() { return this.RequestParams.CargoRowNumber; }
@@ -306,20 +306,20 @@ export class CargoSealsQueryComponent
             this.ValidationErrorsList.push(msg);
         }
 
-        if (AppTool.IsNullOrEmpty(this.CargoIdentifierKey1)) {
-            var msg = TextCodeTranslator.Translate("Customs.SpecialActivityRequest.F.CargoIdentifierKey1Mandatory");
-            this.ValidationErrorsList.push(msg);
-        }
+        //if (AppTool.IsNullOrEmpty(this.CargoIdentifierKey1)) {
+        //    var msg = TextCodeTranslator.Translate("Customs.SpecialActivityRequest.F.CargoIdentifierKey1Mandatory");
+        //    this.ValidationErrorsList.push(msg);
+        //}
 
-        if (AppTool.IsNullOrEmpty(this.CargoIdentifierKey2)) {
-            var msg = TextCodeTranslator.Translate("Customs.SpecialActivityRequest.F.CargoIdentifierKey2Mandatory");
-            this.ValidationErrorsList.push(msg);
-        }
+        //if (AppTool.IsNullOrEmpty(this.CargoIdentifierKey2)) {
+        //    var msg = TextCodeTranslator.Translate("Customs.SpecialActivityRequest.F.CargoIdentifierKey2Mandatory");
+        //    this.ValidationErrorsList.push(msg);
+        //}
 
-        if (AppTool.IsNullOrEmpty(this.CargoIdentifierKey3) && this.CargoIdentifierTypeCode!="11")  {
-            var msg = TextCodeTranslator.Translate("Customs.CargoSealsQuery.F.CargoIdentifierKey3Mandatory");
-            this.ValidationErrorsList.push(msg);
-        }
+        //if (AppTool.IsNullOrEmpty(this.CargoIdentifierKey3) && this.CargoIdentifierTypeCode!="11")  {
+        //    var msg = TextCodeTranslator.Translate("Customs.CargoSealsQuery.F.CargoIdentifierKey3Mandatory");
+        //    this.ValidationErrorsList.push(msg);
+        //}
 
         if (AppTool.IsNullOrEmpty(this.CargoRowNumber)) {
             var msg = TextCodeTranslator.Translate("Customs.SpecialActivityRequest.F.CargoRowNumbeMandatory");
@@ -427,6 +427,7 @@ export class CargoSealsQueryComponent
         }
 
         SessionLocator.SelectedSession.StartBusyIndicator("");
+        debugger;
          if (this._IsNew) {
             this.CurrentEntity = new CargoSealIdentifierPM();
             this.CurrentEntity.Tenant = SessionLocator.Tenant;
@@ -450,7 +451,25 @@ export class CargoSealsQueryComponent
                 this.SendOptionsButtonClick(customSendOptionsArgs);
             });
         }
-        else {
+         else {
+
+             
+             this.CurrentEntity.Tenant = SessionLocator.Tenant;
+             this.CurrentEntity.CargoRowNumber = this.CargoRowNumber;
+             this.CurrentEntity.DeclarationId = this.DeclarationId;
+             this.CurrentEntity.ContainerNumber = this.ContainerNumber;
+             this.CurrentEntity.UpdateDate = this.UpdateDate;
+             this.CurrentEntity.ImporterId = this.ImporterNumber; //?
+             this.CurrentEntity.CargoIdentifierTypeCode = this.CargoIdentifierTypeCode;
+             this.CurrentEntity.CargoIdentifierKey1 = this.CargoIdentifierKey1;
+             this.CurrentEntity.CargoIdentifierKey2 = this.CargoIdentifierKey2;
+             this.CurrentEntity.CargoIdentifierKey3 = this.CargoIdentifierKey3;
+             this.CurrentEntity.CargoSeals.splice(0, this.CurrentEntity.CargoSeals.length-1)
+             if (this.CargoSealObslist != null) {
+                 this.CargoSealObslist.Collection.forEach((item: CargoSealComponent) => {
+                     this.CurrentEntity.AddCargoSeal(item.entityPM);
+                 });
+             }
             this._CargoSealIdentifierPMService.update(this.CurrentEntity).subscribe(response => {
                 SessionLocator.SelectedSession.StopBusyIndicator();
                 this.SendOptionsButtonClick(customSendOptionsArgs);

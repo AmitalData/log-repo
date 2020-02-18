@@ -20,27 +20,11 @@ namespace Logitude.Customs.Data.EntityKeys
 	  
 				 
 	    			   
-	  public string SealCompletenessStateCode  { get; set; }
-	  
-				 
-	    			   
-	  public string SealTypeCode  { get; set; }
-	  
-				 
-	    			   
-	  public string UpdateReasonCode  { get; set; }
-	  
-				 
-	    			   
-	  public string UpdateTypeCode  { get; set; }
-	  
-				 
-	    			   
 	
 	 
 	  public override string GetFullKey()
       {
-          return CargoSealIdentifierId+'_'+SealNumber+'_'+SealCompletenessStateCode+'_'+SealTypeCode+'_'+UpdateReasonCode+'_'+UpdateTypeCode;
+          return CargoSealIdentifierId+'_'+SealNumber;
       }
 
       public override string GetEntityPMName()

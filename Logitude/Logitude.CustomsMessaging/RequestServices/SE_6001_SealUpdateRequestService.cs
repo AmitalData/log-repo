@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using UnifreightIIG.Common.SealUpdateServiceReference;
 
@@ -23,11 +24,11 @@ namespace Logitude.CustomsMessaging.RequestServices
             mySE_NG_6001_MSG01_SealUpdateMessage.General.containerNumber = requestParams.ContainerNumber;
             mySE_NG_6001_MSG01_SealUpdateMessage.General.updateDate = requestParams.UpdateDate;
             int customerExternalId = 0;
-            int.TryParse(requestParams.ImporterNumber, out customerExternalId);
-            mySE_NG_6001_MSG01_SealUpdateMessage.General.customerExternalId = customerExternalId;
+            int.TryParse(Regex.Match(requestParams.ImporterNumber, @"\d+").Value, out customerExternalId);
+            mySE_NG_6001_MSG01_SealUpdateMessage.General.customerExternalId =  customerExternalId;
             if(customerExternalId!= 0) mySE_NG_6001_MSG01_SealUpdateMessage.General.customerExternalIdSpecified = true;
             // customerExternalIdSpecified
-            mySE_NG_6001_MSG01_SealUpdateMessage.General.customerActivityType = 4;
+            mySE_NG_6001_MSG01_SealUpdateMessage.General.customerActivityType = 3;
             mySE_NG_6001_MSG01_SealUpdateMessage.General.cargoIdentifier = new cargoIdentifier();
             int cargoIdentifier = 0;
             int.TryParse(requestParams.CargoIdentifierTypeCode, out cargoIdentifier);

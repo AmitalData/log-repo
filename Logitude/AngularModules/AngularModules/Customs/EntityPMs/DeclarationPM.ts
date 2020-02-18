@@ -949,6 +949,11 @@ export class DeclarationPM {
     public set IsValidTicketsDiamond(newValue: boolean) { if (this.isValidTicketsDiamond != newValue) { this.isValidTicketsDiamond = newValue; this.MarkAsDirty("IsValidTicketsDiamond"); } }
        
 	 
+    private availabilityDate: Date;
+    public get AvailabilityDate() { return this.availabilityDate; }
+    public set AvailabilityDate(newValue: Date) { if (this.availabilityDate != newValue) { this.availabilityDate = newValue; this.MarkAsDirty("AvailabilityDate"); } }
+       
+	 
 
     public OldEntityPM: DeclarationPM;
 		
