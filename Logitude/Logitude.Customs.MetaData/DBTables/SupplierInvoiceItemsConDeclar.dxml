@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="SupplierInvoiceItemsConDeclars"
+  Schema="Customs"
+  DBType="Main">
+  <Column
+    Name="DeclarationId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="InvoiceCounterKey"
+    Type="int">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="InvoiceItemLineNumber"
+    Type="int">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="LineNumber"
+    Type="int">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="DeclarationNumber"
+    Type="varchar"
+    Size="35">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ItemSequence"
+    Type="int">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="DeclarationTypeCode"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="InvoiceNumber"
+    Type="int">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Quantity"
+    Type="decimal"
+    Precision="14"
+    Scale="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="QuantityTypeCode"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Relation
+    ForeignKeyColumn="DeclarationId,InvoiceCounterKey,InvoiceItemLineNumber"
+    ReferencedTable="SupplierInvoiceItems"
+    ReferencedColumn="DeclarationId,CounterKey,LineNumber"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="DeclarationTypeCode"
+    ReferencedTable="LeadDocumentTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="QuantityTypeCode"
+    ReferencedTable="MeasurmentUnits"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+</Table>

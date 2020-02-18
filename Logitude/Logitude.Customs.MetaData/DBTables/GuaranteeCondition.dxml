@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="GuaranteeConditions"
+  Schema="Customs"
+  DBType="Main">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="GuaranteeId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ReturnConditionCode"
+    Type="varchar"
+    Size="2">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="GuaranteeAmount"
+    Type="decimal"
+    Precision="16"
+    Scale="2">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Relation
+    ForeignKeyColumn="GuaranteeId"
+    ReferencedTable="Guarantees"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="ReturnConditionCode"
+    ReferencedTable="ReturnConditions"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+</Table>

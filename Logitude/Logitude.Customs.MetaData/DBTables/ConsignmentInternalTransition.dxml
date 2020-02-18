@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="ConsignmentInternalTransitions"
+  Schema="Customs"
+  DBType="Main">
+  <Column
+    Name="DeclarationId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ConsignmentNumber"
+    Type="int">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="LineNumber"
+    Type="int">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="SiteCode"
+    Type="varchar"
+    Size="20">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Relation
+    ForeignKeyColumn="DeclarationId,ConsignmentNumber"
+    ReferencedTable="Consignments"
+    ReferencedColumn="DeclarationId,ConsignmentNumber"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="SiteCode"
+    ReferencedTable="InternalBorderSiteTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+</Table>
