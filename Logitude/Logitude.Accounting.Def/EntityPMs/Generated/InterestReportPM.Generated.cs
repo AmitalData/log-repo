@@ -595,7 +595,42 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-   }
+
+	   private List<InterestReportLinesByDatePM> interestReportLinesByDates;
+	    
+       [Composition]
+ 
+		     
+	   [Include]
+	   [Association("InterestReportLinesByDateInterestReport", "Id","InterestReportId")]
+	   [DataMember]
+	   public virtual List<InterestReportLinesByDatePM> InterestReportLinesByDates  
+	   {
+	        get
+             {
+                 if (interestReportLinesByDates == null)
+                 {
+                     interestReportLinesByDates = new List<InterestReportLinesByDatePM>();
+                 }
+                 return interestReportLinesByDates;
+              }
+             set { interestReportLinesByDates = value; }
+	    }
+		   
+	   private List<InterestReportLinesByDatePM>  deletedInterestReportLinesByDates;
+	   public virtual List<InterestReportLinesByDatePM> DeletedInterestReportLinesByDates  
+	   {
+	        get
+             {
+                 if ( deletedInterestReportLinesByDates == null)
+                 {
+                      deletedInterestReportLinesByDates = new List<InterestReportLinesByDatePM>();
+                 }
+                 return  deletedInterestReportLinesByDates;
+              }
+             set {  deletedInterestReportLinesByDates = value; }
+	    }
+	     }
    
 }
 	 

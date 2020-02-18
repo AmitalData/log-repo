@@ -44,6 +44,20 @@ namespace Logitude.Accounting.Data.EntityLists
        public string InterestReportId  { get; set; }
        [DataMember]
        public bool IsClosed  { get; set; }
+       [DataMember]
+       public string CurrencyCode  { get; set; }
+       [DataMember]
+       public string InterestEntityNumber  { get; set; }
+       [DataMember]
+       public string JournalNumber  { get; set; }
+       [DataMember]
+       public string InterestEntityType  { get; set; }
+       [DataMember]
+       public string InterestEntityIconCode  { get; set; }
+       [DataMember]
+       public string JournalId  { get; set; }
+       [DataMember]
+       public string AccountEntityCode  { get; set; }
    }
 
 }

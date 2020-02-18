@@ -57,7 +57,14 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         CurrencyId, 
 	         InterestValueDate, 
 	         InterestReportId, 
-	         IsClosed,
+	         IsClosed, 
+	         CurrencyCode, 
+	         InterestEntityNumber, 
+	         JournalNumber, 
+	         InterestEntityType, 
+	         InterestEntityIconCode, 
+	         JournalId, 
+	         AccountEntityCode,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

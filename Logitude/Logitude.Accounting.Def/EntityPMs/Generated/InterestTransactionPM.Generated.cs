@@ -365,6 +365,167 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private string currencyCode ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CurrencyCode  
+	   {
+	    
+	     get
+		{
+		   return currencyCode;
+		 }
+		 set
+		 {
+		   if(currencyCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CurrencyCode",OldValue=currencyCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   currencyCode=value;
+		   }
+			
+		 }
+	   }
+	  private string interestEntityNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string InterestEntityNumber  
+	   {
+	    
+	     get
+		{
+		   return interestEntityNumber;
+		 }
+		 set
+		 {
+		   if(interestEntityNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InterestEntityNumber",OldValue=interestEntityNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   interestEntityNumber=value;
+		   }
+			
+		 }
+	   }
+	  private string journalNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string JournalNumber  
+	   {
+	    
+	     get
+		{
+		   return journalNumber;
+		 }
+		 set
+		 {
+		   if(journalNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="JournalNumber",OldValue=journalNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   journalNumber=value;
+		   }
+			
+		 }
+	   }
+	  private string interestEntityType ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string InterestEntityType  
+	   {
+	    
+	     get
+		{
+		   return interestEntityType;
+		 }
+		 set
+		 {
+		   if(interestEntityType != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InterestEntityType",OldValue=interestEntityType,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   interestEntityType=value;
+		   }
+			
+		 }
+	   }
+	  private string interestEntityIconCode ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string InterestEntityIconCode  
+	   {
+	    
+	     get
+		{
+		   return interestEntityIconCode;
+		 }
+		 set
+		 {
+		   if(interestEntityIconCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InterestEntityIconCode",OldValue=interestEntityIconCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   interestEntityIconCode=value;
+		   }
+			
+		 }
+	   }
+	  private string journalId ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string JournalId  
+	   {
+	    
+	     get
+		{
+		   return journalId;
+		 }
+		 set
+		 {
+		   if(journalId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="JournalId",OldValue=journalId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   journalId=value;
+		   }
+			
+		 }
+	   }
+	  private string accountEntityCode ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string AccountEntityCode  
+	   {
+	    
+	     get
+		{
+		   return accountEntityCode;
+		 }
+		 set
+		 {
+		   if(accountEntityCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AccountEntityCode",OldValue=accountEntityCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   accountEntityCode=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

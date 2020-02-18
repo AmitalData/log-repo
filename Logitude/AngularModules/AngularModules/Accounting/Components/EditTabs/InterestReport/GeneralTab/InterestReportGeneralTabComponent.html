@@ -1,0 +1,302 @@
+
+<div class="TabHolder">
+    <table>
+        <tr *ngIf="IsNew && ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+            <td colspan="4">
+                <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="true"></ValidationSummary>
+            </td>
+        </tr>
+        <tr class="TabTitleRow">
+            <td>
+                {{'General.O.General' | TextCodeTranslationPipe}}
+            </td>
+        </tr>
+        <tr style="height: 1px;vertical-align:top">
+            <td>
+                <table>
+                    <tr>
+                        <td style="width: 510px;">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <table>
+                                            <!-- CustomerId -->
+                                            <tr class="FormFieldRow">
+                                                <td style="width: 100px;">
+                                                    <table>
+                                                        <tr style="height:15px;">
+                                                            <LogLabel [ObjectFieldName]="'CustomerId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                        </tr>
+                                                        <tr style="height:5px;">
+                                                            <td>
+                                                                <div></div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><div></div></td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                                <td>
+                                                    <table>
+                                                        <tr style="height:15px;">
+                                                            <LogLov [ObjectFieldName]="'CustomerId'"
+                                                                    [SelectedValue]="CustomerId"
+                                                                    [ObjectTableName]="ObjectTableName"
+                                                                    [DataContext]="DataContext"
+                                                                    [LookUpTableName]="'Card'"
+                                                                    [DependencyFilter1Value]="'CS'"
+                                                                    [HideLastColumn]="true">
+                                                            </LogLov>
+                                                        </tr>
+                                                        <tr style="height:5px;">
+                                                            <td>
+                                                                <div></div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><div></div></td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                            <tr style="height:5px;">
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                            <!-- InterestCalculationDate -->
+                                            <tr class="FormFieldRow">
+                                                <td style="width: 100px;">
+                                                    <table>
+                                                        <tr style="height:15px;">
+                                                            <LogLabel [ObjectFieldName]="'InterestCalculationDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                        </tr>
+                                                        <tr style="height:5px;">
+                                                            <td>
+                                                                <div></div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><div></div></td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                                <td>
+                                                    <table>
+                                                        <tr style="height:5px;">
+                                                            <LogDatePicker [ObjectFieldName]="'InterestCalculationDate'" [ObjectTableName]="ObjectTableName"
+                                                                           [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                                        </tr>
+                                                        <tr style="height:20px;">
+                                                            <td><div></div></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><div></div></td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                            <tr><td></td></tr>
+                                        </table>
+                                    </td>
+                                    <td style="width:20px;">
+                                        <div></div>
+                                    </td>
+                                    <td>
+                                        <table>
+                                            <!-- OpenBalance -->
+                                            <tr class="FormFieldRow">
+                                                <td style="width: 130px;">
+                                                    <table>
+                                                        <tr style="height:15px;">
+                                                            <LogLabel [ObjectFieldName]="'OpenBalance'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                        </tr>
+                                                        <tr style="height:5px;">
+                                                            <td>
+                                                                <div></div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><div></div></td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                                <td>
+                                                    <table>
+                                                        <tr style="height:15px;">
+                                                            <LogTextBox [Text]="OpenBalance" [ObjectFieldName]="'OpenBalance'" [HideColumns]="true" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                        </tr>
+                                                        <tr style="height:5px;">
+                                                            <td>
+                                                                <div></div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><div></div></td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                            <tr style="height:5px;">
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                            <!-- GLAccountInterestCreditLimit -->
+                                            <tr class="FormFieldRow">
+                                                <td style="width: 130px;">
+                                                    <table>
+                                                        <tr style="height:15px;">
+                                                            <LogLabel [ObjectFieldName]="'GLAccountInterestCreditLimit'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                        </tr>
+                                                        <tr style="height:5px;">
+                                                            <td>
+                                                                <div></div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><div></div></td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                                <td>
+                                                    <table>
+                                                        <tr style="height:5px;">
+                                                            <LogTextBox [Text]="GLAccountInterestCreditLimit" [ObjectFieldName]="'GLAccountInterestCreditLimit'" [HideColumns]="true" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                        </tr>
+                                                        <tr style="height:20px;">
+                                                            <td><div></div></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><div></div></td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                            <tr><td></td></tr>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr style="height: 32px;"><td><div></div></td></tr>
+        <tr>
+            <td colspan="5" style="height: 100%; padding-bottom: 115px;">
+                <div class="GeneratedGridContainer">
+                    <logitude-grid GridWidth="100%" GridHeight="100%" [ObjectTable]="'InterestReportLinesByDate'"
+                                   [dataSource]="DataSource" [columns]="columns"
+                                   [autoLoad]="true"
+                                   [IsCustomTemplate]="true">
+                    </logitude-grid>
+                </div>
+            </td>
+        </tr>
+        <!--<tr>
+        <td>
+            <logitude-edit-grid GridWidth="100%" [HeaderHeight]="25" GridHeight="100%" [ItemSource]="InterestReportLinesByDateList">
+
+
+                <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'100'" [header]="LineNumberHeader">
+                    <log-cell-template template="let item" #logcelltemplate>
+                        <div [style.text-align]="isRTL ? 'right' : 'left'"> {{item.LineNumber}} </div>
+                    </log-cell-template>
+                </log-column>
+
+
+                <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'100'" [header]="FromDateHeader">
+                    <log-cell-template template="let item" #logcelltemplate>
+                        <div [style.text-align]="isRTL ? 'right' : 'left'"> {{item.FromDate | DateTimeToDatePipe}} </div>
+                    </log-cell-template>
+                </log-column>
+
+
+                <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'100'" [header]="ToDateHeader">
+                    <log-cell-template template="let item" #logcelltemplate>
+                        <div [style.text-align]="isRTL ? 'right' : 'left'"> {{item.ToDate | DateTimeToDatePipe}} </div>
+                    </log-cell-template>
+                </log-column>
+
+
+                <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'100'" [header]="TotalInterestDaysHeader">
+                    <log-cell-template template="let item" #logcelltemplate>
+                        <div [style.text-align]="isRTL ? 'right' : 'left'"> {{item.TotalInterestDays}} </div>
+                    </log-cell-template>
+                </log-column>
+
+
+                <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'100'" [header]="TotalAmountHeader">
+                    <log-cell-template template="let item" #logcelltemplate>
+                        <div [style.text-align]="isRTL ? 'right' : 'left'"> {{item.TotalAmount}} </div>
+                    </log-cell-template>
+                </log-column>
+
+
+                <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'100'" [header]="AccumulatedAmountHeader">
+                    <log-cell-template template="let item" #logcelltemplate>
+                        <div [style.text-align]="isRTL ? 'right' : 'left'"> {{item.AccumulatedAmount}} </div>
+                    </log-cell-template>
+                </log-column>
+
+
+                <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'100'" [header]="StandardInterestPercentageHeader">
+                    <log-cell-template template="let item" #logcelltemplate>
+                        <div [style.text-align]="isRTL ? 'right' : 'left'"> {{item.StandardInterestPercentage}}% </div>
+                    </log-cell-template>
+                </log-column>
+
+
+                <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'100'" [header]="ExceptionalInterestPercentageHeader">
+                    <log-cell-template template="let item" #logcelltemplate>
+                        <div [style.text-align]="isRTL ? 'right' : 'left'"> {{item.ExceptionalInterestPercentage}}% </div>
+                    </log-cell-template>
+                </log-column>
+
+
+                <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'100'" [header]="CreditInterestPercentageHeader">
+                    <log-cell-template template="let item" #logcelltemplate>
+                        <div [style.text-align]="isRTL ? 'right' : 'left'"> {{item.CreditInterestPercentage}}% </div>
+                    </log-cell-template>
+                </log-column>
+
+
+                <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'80'" [header]="' '" class="CellTools">
+                    <log-cell-template template="let item" #logcelltemplate>
+                        <div [style.text-align]="isRTL ? 'right' : 'left'" style="margin-top:4px;">
+                            <button style="height: 18px;" class="Button sm" (click)="LogWindowShow(item)">
+                                {{'General.O.NoDataFound' | TextCodeTranslationPipe}}
+                            </button>
+                        </div>
+                    </log-cell-template>
+                </log-column>
+
+            </logitude-edit-grid>
+        </td>
+    </tr>-->
+    </table>
+    </div>

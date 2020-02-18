@@ -1,0 +1,50 @@
+<style>
+    .red {
+        color: red !important;
+    }
+
+    .orangeCircle {
+        background: #ff7920 !important;
+    }
+
+    .circleDraw {
+        background: #00b1e9;
+        margin: 0 auto;
+        margin-top: 9px;
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        display: block;
+    }
+    .circleWrapper{
+        /*padding: 9px;*/
+    }
+
+
+</style>
+<div>
+    <div [style.text-align]="isRTL ? 'right' : 'left'" class="TextTrimming" *ngIf="fieldName == 'LineNumber'">{{ rowData[fieldName]}}</div>
+
+    <div [style.text-align]="isRTL ? 'right' : 'left'" class="TextTrimming" *ngIf="fieldName == 'FromDate'">{{ rowData[fieldName] | DateTimePipe:'SD' }}</div>
+
+    <div [style.text-align]="isRTL ? 'right' : 'left'" class="TextTrimming" *ngIf="fieldName == 'ToDate'">{{ rowData[fieldName] | DateTimePipe:'SD' }}</div>
+
+    <div [style.text-align]="isRTL ? 'right' : 'left'" class="TextTrimming" *ngIf="fieldName == 'TotalInterestDays'">{{ rowData[fieldName] }}</div>
+
+    <div [style.text-align]="isRTL ? 'right' : 'left'" class="TextTrimming" *ngIf="fieldName == 'TotalAmount'">{{ rowData[fieldName]}}</div>
+
+    <div [style.text-align]="isRTL ? 'right' : 'left'" class="TextTrimming" *ngIf="fieldName == 'AccumulatedAmount'">{{ rowData[fieldName]}}</div>
+
+    <div [style.text-align]="isRTL ? 'right' : 'left'" class="TextTrimming" *ngIf="fieldName == 'StandardInterestPercentage'">{{ rowData[fieldName]  }}%</div>
+
+    <div [style.text-align]="isRTL ? 'right' : 'left'" class="TextTrimming" *ngIf="fieldName == 'ExceptionalInterestPercentage'">{{ rowData[fieldName] }}%</div>
+
+    <div [style.text-align]="isRTL ? 'right' : 'left'" class="TextTrimming" *ngIf="fieldName == 'CreditInterestPercentage'">{{ rowData[fieldName] }}%</div>
+
+    <div [style.text-align]="isRTL ? 'right' : 'left'" class="TextTrimming" *ngIf="fieldName == 'ShowDetails'">
+        <button style="height: 18px;margin-top: 3px;" class="Button sm" (click)="LogWindowShow(item)">
+            {{'InterestReport.O.ShowDetails' | TextCodeTranslationPipe}}
+        </button>
+    </div>
+
+</div>

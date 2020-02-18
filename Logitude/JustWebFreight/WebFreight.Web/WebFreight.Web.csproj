@@ -928,6 +928,7 @@
     <Content Include="App_Code\PodSecurityController.cs" />
     <Content Include="App_Code\BrandingController.cs" />
     <Compile Include="AccountingModel\AccountingRegistrations.cs" />
+    <Compile Include="AccountingModel\DomainServices\AccountingDomainService.InterestTransaction.CS" />
     <Compile Include="AccountingModel\DomainServices\AccountingDomainService.ReconcileExternalPageStatus.CS" />
     <Compile Include="AccountingModel\DomainServices\AccountingDomainService.GLAccountTotalDateType.CS" />
     <Compile Include="AccountingModel\DomainServices\AccountingDomainService.BankPageEntryType.CS" />
@@ -1002,6 +1003,7 @@
     <Compile Include="Controllers\AccountingModel\AccountingNoteViewsController.cs" />
     <Compile Include="Controllers\AccountingModel\AccountingOpController.cs" />
     <Compile Include="Controllers\AccountingModel\BankDepositController.cs" />
+    <Compile Include="Controllers\AccountingModel\InterestTransactionViewsController.cs" />
     <Compile Include="Controllers\AccountingModel\CardGLAccountConnectController.cs" />
     <Compile Include="Controllers\AccountingModel\CashbookOpController.cs" />
     <Compile Include="Controllers\AccountingModel\CashBookViewsController.cs" />
@@ -1027,6 +1029,7 @@
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\InterestReportLineViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\InterestReportStatuseViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\InterestReportViewsController.Generated.cs" />
+    <Compile Include="Controllers\AccountingModel\Generated\ListControllers\InterestTransactionViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\JournalMoreDataViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\OpenFormatReportStatusViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\OpenFormatReportViewsController.Generated.cs" />

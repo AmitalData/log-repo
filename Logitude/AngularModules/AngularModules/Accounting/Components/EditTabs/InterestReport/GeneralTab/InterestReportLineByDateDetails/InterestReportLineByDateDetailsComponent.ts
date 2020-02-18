@@ -1,0 +1,88 @@
+import { Component} from '@angular/core';
+import { SessionLocator } from '../../../../../../Infrastructure/Utilities/SessionLocator';
+import { InterestReportLinesByDatePM } from '../../../../../EntityPMs/InterestReportLinesByDatePM';
+import { InterestTransactionExtendedListService } from '../../../../../Services/ExtendedLists/InterestTransactionExtendedListService';
+import { InterestTransactionList } from '../../../../../EntityLists/InterestTransactionList';
+import { ServiceResponse } from '../../../../../../Infrastructure/DataContracts/ServiceResponse';
+import { ObservableCollection } from '../../../../../../Infrastructure/Utilities/ObservableCollection';
+import { TextCodeTranslator } from '../../../../../../Infrastructure/Utilities/TextCodeTranslator';
+import { ObjectsLocator } from '../../../../../../Infrastructure/Locators/ObjectsLocator';
+import { AccountingEntityHelper } from '../../../../../Utilities/AccountingEntityHelper';
+import { AppTool } from '../../../../../../Infrastructure/Tools';
+
+
+@Component({
+    moduleId: module.id,
+    templateUrl: './InterestReportLineByDateDetailsComponent.html',
+})
+
+export class InterestReportLineByDateDetailsComponent {
+    private CurrentSession = SessionLocator.SelectedSession;
+    public EntityPM: InterestReportLinesByDatePM;
+    public myService: InterestTransactionExtendedListService;
+    public InterestTransactions: ObservableCollection;
+    public isRTL: boolean = false;
+    public IconCode: string=null;
+    constructor() {
+        if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
+        this.myService = new InterestTransactionExtendedListService();
+        this.InterestTransactions = new ObservableCollection([]);
+    }
+
+    //Grid Header Label
+    public InterestEntityTypeCodeHeader = TextCodeTranslator.Translate("InterestTransaction.F.InterestEntityTypeCode");
+    public InterestValueDateHeader = TextCodeTranslator.Translate("InterestTransaction.F.InterestValueDate");
+    public LocalAmountHeader = TextCodeTranslator.Translate("InterestTransaction.F.LocalAmount");
+    public CurrencyCodeHeader = TextCodeTranslator.Translate("InterestTransaction.F.CurrencyCode");
+    public ForiegnAmountHeader = TextCodeTranslator.Translate("InterestTransaction.F.ForeignAmount");
+    public JournalNumberHeader = TextCodeTranslator.Translate("InterestTransaction.F.JournalNumber");
+
+    GetAllInterestLinesByDate(InterestReportId: string, InterestCalculationDate: Date) {
+        this.CurrentSession.StartBusyIndicatorLoading();
+        this.myService.GetAllInterestTransactionByDate(InterestReportId, InterestCalculationDate).subscribe(myResult => {
+            this.CurrentSession.StopBusyIndicator();
+            var mm: ServiceResponse = myResult;
+            if (!mm.HasError) {
+                this.InterestTransactions.InsertCollection(mm.Result);
+            }
+        });
+    }
+    OpenSource(id: string, sourceTypeCode: string) {
+
+        // Type:    SourceTypeCode
+        // Id:      SourceId
+        // Display: SourceNumber
+        var tableName = AccountingEntityHelper.getEntityObjectTableName(sourceTypeCode);
+
+
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+            .then(cmpRef => {
+                cmpRef.instance.ComponentRef = cmpRef;
+                cmpRef.instance.Run({
+                    EntityId: id,
+                    ObjectTableName: tableName,
+                    BackButtonLabel: 'GLAccount'
+                });
+            });
+
+    }
+    OpenJournal(id) {
+        if (!AppTool.IsNullOrEmpty(id)) {
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+                .then(cmpRef => {
+                    cmpRef.instance.ComponentRef = cmpRef;
+                    cmpRef.instance.Run({ EntityId: id, ObjectTableName: 'Journal', BackButtonLabel: 'Back' });
+                    cmpRef.instance.BackCompleted.subscribe(bk => {
+                    });
+                });
+        }
+    }
+    SetDataContext(entityPM: InterestReportLinesByDatePM) {
+        this.EntityPM = entityPM;
+        this.GetAllInterestLinesByDate(this.EntityPM.InterestReportId, this.EntityPM.FromDate);
+    }
+
+    CancelButtonClicked() {
+        this.CurrentSession.CloseCurrentWindow();
+    }
+}

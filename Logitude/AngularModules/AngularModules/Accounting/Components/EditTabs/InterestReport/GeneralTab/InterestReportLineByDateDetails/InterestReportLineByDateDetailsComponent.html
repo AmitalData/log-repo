@@ -1,0 +1,90 @@
+<style>
+    .CenterCenter {
+        position: absolute;
+        right: 0;
+        left: 0;
+        top: 50px;
+        bottom: 0;
+        margin: auto;
+    }
+</style>
+
+<div class="TabHolder">
+    <table>
+        <tr>
+            <td>
+                <logitude-edit-grid GridWidth="100%" [HeaderHeight]="25" GridHeight="100%" [ItemSource]="InterestTransactions" [UseVirtuallization]="true">
+
+                    <!-- InterestEntityTypeCode -->
+                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'130'" [header]="InterestEntityTypeCodeHeader">
+                        <log-cell-template template="let item" #logcelltemplate>
+                            <div [style.text-align]="isRTL ? 'right' : 'left'">
+                                <span title="{{item.InterestEntityType}}" *ngIf="item.InterestEntityIconCode" (click)="OpenSource(item.EntityId,item.AccountEntityCode)"
+                                      [class]="'SourceTypeIcon color-' + item.AccountEntityCode">{{item.InterestEntityIconCode}}</span>
+                                <a href="javascript:;" (click)="OpenSource(item.EntityId,item.AccountEntityCode)">{{item.InterestEntityNumber}}</a>
+                            </div>
+                        </log-cell-template>
+                    </log-column>
+
+                    <!--InterestValueDate -->
+                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'130'" [header]="InterestValueDateHeader">
+                        <log-cell-template template="let item" #logcelltemplate>
+                            <div [style.text-align]="isRTL ? 'right' : 'left'"> {{item.InterestValueDate | DateTimeToDatePipe}} </div>
+                        </log-cell-template>
+                    </log-column>
+
+                    <!--LocalAmount-->
+                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'130'" [header]="LocalAmountHeader">
+                        <log-cell-template template="let item" #logcelltemplate>
+                            <div [style.text-align]="isRTL ? 'right' : 'left'"> {{item.LocalAmount}} </div>
+                        </log-cell-template>
+                    </log-column>
+
+                    <!--CurrencyCode-->
+                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'130'" [header]="CurrencyCodeHeader">
+                        <log-cell-template template="let item" #logcelltemplate>
+                            <div [style.text-align]="isRTL ? 'right' : 'left'"> {{item.CurrencyCode}} </div>
+                        </log-cell-template>
+                    </log-column>
+
+                    <!--ForiegnAmount-->
+                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'130'" [header]="ForiegnAmountHeader">
+                        <log-cell-template template="let item" #logcelltemplate>
+                            <div [style.text-align]="isRTL ? 'right' : 'left'"> {{item.ForeignAmount}} </div>
+                        </log-cell-template>
+                    </log-column>
+
+                    <!--JournalNumber-->
+                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'100'" [header]="JournalNumberHeader">
+                        <log-cell-template template="let item" #logcelltemplate>
+                            <div [style.text-align]="isRTL ? 'right' : 'left'">
+                                <a style="cursor:pointer" (click)="OpenJournal(item.JournalId)" href="javascript:;">
+                                    {{item.JournalNumber}}
+                                </a>
+                            </div>
+                        </log-cell-template>
+                    </log-column>
+
+                </logitude-edit-grid>
+
+                <label *ngIf="InterestTransactions && InterestTransactions.Collection && InterestTransactions.Collection.length==0" class="CenterCenter" style="text-align:center;font-size:18px;color:gray">
+                    {{'General.O.NoDataFound' | TextCodeTranslationPipe}}
+                </label>
+             </td>
+        </tr>
+        <tr style="height: 32px;">
+            <td colspan="4" style="vertical-align: bottom">
+                <table style="height: 22px;">
+                    <tr>
+                        <td>
+                            <div></div>
+                        </td>
+                        <td style="width: 57px;">
+                            <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</div>

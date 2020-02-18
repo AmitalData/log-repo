@@ -16,6 +16,7 @@ using Logitude.Server.Tools;
 using Simplog.Data.InvoiceModel;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Logitude.Accounting.Data.DataContract;
+using Logitude.Accounting.Data.EntityLists;
 
 namespace Logitude.Accounting.Data.Repositories
 {
@@ -288,6 +289,17 @@ namespace Logitude.Accounting.Data.Repositories
                                      where a.JournalNumber == number && a.Tenant == tenant
                                      select a).FirstOrDefault();
             return Journal;
+        }
+
+        public List<string> GetJournalNumbersByTransactionsList(List<InterestTransactionList> interestTransactionLists, int tenant)
+        {
+            List<string> entityIdsWithCodes = interestTransactionLists.Select(d => d.EntityId+ "," +( d.InterestEntityTypeCode == "1" ? "2" :
+                                                                                                      d.InterestEntityTypeCode == "2" ? "3" : "1")).ToList();
+            List<string> JournalNumbers = (from a in context.Journals
+                                     where entityIdsWithCodes.Contains(a.AccountingEntityId+","+a.AccountingEntityCode)  && a.Tenant == tenant
+                                     select a.JournalNumber+","+ a.AccountingEntityId + ","  +(a.AccountingEntityCode == "2" ? "1" :
+                                                                                               a.AccountingEntityCode == "3" ? "2" : "3")).ToList();
+            return JournalNumbers;
         }
 
         public Journal GetSingleJournalByExternalNoAndExternalSystem(string externalNo,string externalSystem ,int tenant)
