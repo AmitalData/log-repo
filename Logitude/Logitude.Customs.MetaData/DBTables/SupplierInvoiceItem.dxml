@@ -1,0 +1,394 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="SupplierInvoiceItems"
+  Schema="Customs"
+  DBType="Main">
+  <Column
+    Name="DeclarationId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="CounterKey"
+    Type="int">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="LineNumber"
+    Type="int">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ItemCode"
+    Type="varchar"
+    Size="30">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="OriginCountryCode"
+    Type="varchar"
+    Size="2">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ClassificationCode"
+    Type="varchar"
+    Size="11">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="DangerousClassificationCode"
+    Type="varchar"
+    Size="11">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="DangerousPackingGroupTypeCode"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ItemPrice"
+    Type="decimal"
+    Precision="16"
+    Scale="2">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="NonCustomsItemPrice"
+    Type="decimal"
+    Precision="16"
+    Scale="2">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="WholeSaleItemPrice"
+    Type="decimal"
+    Precision="16"
+    Scale="2">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ManufactureIdentifier"
+    Type="varchar"
+    Size="17">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CustomsBookTypeCode"
+    Type="varchar"
+    Size="4">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="TaxExemptCode"
+    Type="nvarchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="OptionalTamaPercentage"
+    Type="decimal"
+    Precision="18"
+    Scale="2">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="SalesTaxExemptionTypeCode"
+    Type="varchar"
+    Size="4">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="SequenceNumeric"
+    Type="int">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ItemPriceCurrencyCode"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="NonCustomsItemPriceCurCode"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="WholeSaleItemPriceCurrencyCode"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ActualInvoiceLines"
+    Type="varchar"
+    Size="512">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="TradeAgreementCode"
+    Type="varchar"
+    Size="8">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="StatisticQuantity"
+    Type="decimal"
+    Precision="14"
+    Scale="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="InvoiceQuantity"
+    Type="decimal"
+    Precision="14"
+    Scale="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="AdditionalQuantity"
+    Type="decimal"
+    Precision="14"
+    Scale="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="InvoiceQuantityType"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="StatisticQuantityType"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="AdditionalQuantityType"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PreferenceDocumentNumber"
+    Type="varchar"
+    Size="35">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ItemDescription"
+    Type="nvarchar"
+    Size="30">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CertificatesStatusCode"
+    Type="varchar"
+    Size="1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="IsUsed"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="DeferredCustomsTax"
+    Type="decimal"
+    Precision="5"
+    Scale="2">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="DeferredPurchaseTax"
+    Type="decimal"
+    Precision="5"
+    Scale="2">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="VehicleStatus"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ItemAdditionalStatus"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ItemHash"
+    Type="varchar"
+    Size="36">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ParentLineNumber"
+    Type="int">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="NotForAccumaltion"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsParent"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="UnfInvoiceLine"
+    Type="int">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="OrderByLineNo"
+    Type="varchar"
+    Size="3000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="LastCopyFromOrderNo"
+    Type="varchar"
+    Size="3000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ClasifiedRemarks"
+    Type="nvarchar"
+    Size="1024">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="SearchFields"
+    Type="nvarchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Relation
+    ForeignKeyColumn="DeclarationId,CounterKey"
+    ReferencedTable="SupplierInvoices"
+    ReferencedColumn="DeclarationId,InvoiceCounterKey"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="OriginCountryCode"
+    ReferencedTable="CustomsCountries"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="DangerousPackingGroupTypeCode"
+    ReferencedTable="DangerousGoodsPackingReqs"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="CustomsBookTypeCode"
+    ReferencedTable="CustomsBookTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="SalesTaxExemptionTypeCode"
+    ReferencedTable="SalesTaxExemptionTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="ItemPriceCurrencyCode"
+    ReferencedTable="CurrencyTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="NonCustomsItemPriceCurCode"
+    ReferencedTable="CurrencyTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="WholeSaleItemPriceCurrencyCode"
+    ReferencedTable="CurrencyTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="TradeAgreementCode"
+    ReferencedTable="TradeAgreements"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="InvoiceQuantityType"
+    ReferencedTable="MeasurmentUnits"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="StatisticQuantityType"
+    ReferencedTable="MeasurmentUnits"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="AdditionalQuantityType"
+    ReferencedTable="MeasurmentUnits"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="CertificatesStatusCode"
+    ReferencedTable="CertificatesStatuses"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+</Table>

@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="DeclarationConstraints"
+  Schema="Customs"
+  DBType="Main">
+  <Column
+    Name="DeclarationID"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ConstraintNumber"
+    Type="varchar"
+    Size="9">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ConstraintTypeCode"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ConstraintStatusCode"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="AgentExplanation"
+    Type="nvarchar"
+    Size="512">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ApprovalNote"
+    Type="nvarchar"
+    Size="512">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ApprovalAuthorityDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ApprovalUserName"
+    Type="nvarchar"
+    Size="256">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ApprovalDecision"
+    Type="varchar"
+    Size="2">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CustomsCollateralId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="AgentObjection"
+    Type="nvarchar"
+    Size="512">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Relation
+    ForeignKeyColumn="DeclarationID"
+    ReferencedTable="Declarations"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="ConstraintTypeCode"
+    ReferencedTable="ConstraintProcessTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="ConstraintStatusCode"
+    ReferencedTable="ConstraintStatuses"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="ApprovalDecision"
+    ReferencedTable="ConstraintApprovalDecisions"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="CustomsCollateralId"
+    ReferencedTable="CustomsCollaterals"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="Customs" />
+</Table>
