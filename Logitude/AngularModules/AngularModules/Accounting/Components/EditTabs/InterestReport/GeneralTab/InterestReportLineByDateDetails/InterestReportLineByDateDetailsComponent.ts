@@ -37,13 +37,20 @@ export class InterestReportLineByDateDetailsComponent {
     public ForiegnAmountHeader = TextCodeTranslator.Translate("InterestTransaction.F.ForeignAmount");
     public JournalNumberHeader = TextCodeTranslator.Translate("InterestTransaction.F.JournalNumber");
 
+    public interestTransactionsWithTotal: InterestTransactionsWithTotal;
+    public TotalLocalAmount: number;
+    public ReportIsLoading: boolean = false;
     GetAllInterestLinesByDate(InterestReportId: string, InterestCalculationDate: Date) {
         this.CurrentSession.StartBusyIndicatorLoading();
+        this.ReportIsLoading = true;
         this.myService.GetAllInterestTransactionByDate(InterestReportId, InterestCalculationDate).subscribe(myResult => {
             this.CurrentSession.StopBusyIndicator();
+            this.ReportIsLoading = false;
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {
-                this.InterestTransactions.InsertCollection(mm.Result);
+                this.interestTransactionsWithTotal = mm.Result;
+                this.TotalLocalAmount = this.interestTransactionsWithTotal.TotalLocalAmount;
+                this.InterestTransactions.InsertCollection(this.interestTransactionsWithTotal.interestTransactionLists);
             }
         });
     }
@@ -61,7 +68,7 @@ export class InterestReportLineByDateDetailsComponent {
                 cmpRef.instance.Run({
                     EntityId: id,
                     ObjectTableName: tableName,
-                    BackButtonLabel: 'GLAccount'
+                    BackButtonLabel: 'Back'
                 });
             });
 
@@ -77,12 +84,19 @@ export class InterestReportLineByDateDetailsComponent {
                 });
         }
     }
+
     SetDataContext(entityPM: InterestReportLinesByDatePM) {
         this.EntityPM = entityPM;
         this.GetAllInterestLinesByDate(this.EntityPM.InterestReportId, this.EntityPM.FromDate);
+        this.ReportIsLoading = true;
     }
 
     CancelButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
     }
 }
+
+export class  InterestTransactionsWithTotal {
+    public interestTransactionLists: InterestTransactionList[];
+    public TotalLocalAmount: number;
+  }

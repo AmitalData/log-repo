@@ -10,13 +10,16 @@ using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.Def.EntityPMs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
+using WebFreight.Web.App_Code.AngularJS_App_Code.Generated;
 
 namespace WebFreight.Web.AccountingModel.DomainServices
 {
     public partial class AccountingDomainService
     {
-        public List<InterestTransactionList> GetAllInterestTransactionByDate(string ReportId, DateTime InterestCalculationDate, int Tenant, IAccountingContext MyContext)
+        public InterestTransactionsWithTotal GetAllInterestTransactionByDate(string ReportId, DateTime InterestCalculationDate, int Tenant, IAccountingContext MyContext)
         {
+            InterestTransactionsWithTotal interestTransactionsWithTotal = new InterestTransactionsWithTotal();
+            decimal TotalLocalAmount=0; 
             List<InterestTransactionList> interestTransactionLists = (from a in MyContext.InterestReportLines
                                                                       where a.Tenant == Tenant && a.InterestReportId == ReportId && DbFunctions.TruncateTime(a.InterestTransaction.InterestValueDate) == InterestCalculationDate.Date
                                                                       select new InterestTransactionList()
@@ -62,6 +65,7 @@ namespace WebFreight.Web.AccountingModel.DomainServices
                     interestTransactionLists[i].InterestEntityIconCode = entityResult.EntityTypeCode;
                     interestTransactionLists[i].JournalId = entityResult.JournalId;
                     interestTransactionLists[i].AccountEntityCode = entityResult.AccountCode;
+                    TotalLocalAmount += interestTransactionLists[i].LocalAmount;
                     if (interestTransactionLists[i].CurrencyId != null)
                     {
                         CurrencyRepository currencyRepository = new CurrencyRepository();
@@ -70,8 +74,10 @@ namespace WebFreight.Web.AccountingModel.DomainServices
                     }
                 }
             }
+            interestTransactionsWithTotal.interestTransactionLists = interestTransactionLists;
+            interestTransactionsWithTotal.TotalLocalAmount = TotalLocalAmount;
 
-            return interestTransactionLists;
+            return interestTransactionsWithTotal;
         }
     }
 }

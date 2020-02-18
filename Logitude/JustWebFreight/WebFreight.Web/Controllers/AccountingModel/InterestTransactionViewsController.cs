@@ -57,7 +57,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 SecurityUtility.CheckContactFeature("InterestTransaction", "READ", authToken.Tenant);
                 IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
                 AccountingDomainService interestTransactionQuery = new AccountingDomainService();
-                List<InterestTransactionList> myResult = interestTransactionQuery.GetAllInterestTransactionByDate(ReportId, InterestCalculationDate, tenant, MyContext);
+                InterestTransactionsWithTotal myResult  = interestTransactionQuery.GetAllInterestTransactionByDate(ReportId, InterestCalculationDate, tenant, MyContext);
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
             }
             catch (Exception ex)
@@ -65,6 +65,13 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+
+    }
+
+    public class InterestTransactionsWithTotal
+    {
+        public List<InterestTransactionList> interestTransactionLists { get; set; }
+        public decimal TotalLocalAmount { get; set; }
 
     }
 }

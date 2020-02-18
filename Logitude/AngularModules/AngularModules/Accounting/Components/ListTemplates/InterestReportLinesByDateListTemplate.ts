@@ -52,7 +52,7 @@ export class InterestReportLinesByDateListTemplate {
         logWindow.Title = TextCodeTranslator.Translate("Accounting.General.O.Details");
         var myPath = "./Accounting/Components/Packages/EditTabs/InterestReport/GeneralTab/InterestReportLineByDateDetails/InterestReportLineByDateDetailsComponent";
         logWindow.Width = 850;
-        logWindow.Height = 350;
+        logWindow.Height = 400;
         logWindow.DataContext = this.rowData ;
         logWindow.Show(myPath);
     }

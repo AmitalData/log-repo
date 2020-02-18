@@ -62,16 +62,6 @@ export class InterestReportGeneralTabComponent extends BaseComponent implements 
         this.UIProperties.SetEnabled("InterestCalculationDate", "InterestReport", false);
         this.UIProperties.SetEnabled("GLAccountInterestCreditLimit", "InterestReport", false);
     }
-    LogWindowShow(itemComponent: InterestReportLinesByDatePM) {
-        var logWindow = new LogitudeWindow();
-        logWindow.Title = TextCodeTranslator.Translate("Accounting.General.O.Details");
-        var myPath = "./Accounting/Components/Packages/EditTabs/InterestReport/GeneralTab/InterestReportLineByDateDetails/InterestReportLineByDateDetailsComponent";
-        logWindow.Width = 850;
-        logWindow.Height = 350;
-        itemComponent.InterestReportId = this.EntityPM.Id;
-        logWindow.DataContext = itemComponent;
-        logWindow.Show(myPath);
-    }
      public DataSource = {
         pageSize: 50,
         rowCount: null,

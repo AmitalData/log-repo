@@ -67,24 +67,65 @@
 
                 </logitude-edit-grid>
 
-                <label *ngIf="InterestTransactions && InterestTransactions.Collection && InterestTransactions.Collection.length==0" class="CenterCenter" style="text-align:center;font-size:18px;color:gray">
+                <label *ngIf="!ReportIsLoading && InterestTransactions && InterestTransactions.Collection && InterestTransactions.Collection.length==0" class="CenterCenter" style="text-align:center;font-size:18px;color:gray">
                     {{'General.O.NoDataFound' | TextCodeTranslationPipe}}
                 </label>
              </td>
         </tr>
-        <tr style="height: 32px;">
-            <td colspan="4" style="vertical-align: bottom">
-                <table style="height: 22px;">
+
+
+           <tr style="height: 1px;">
+        <td>
+            <TabSummary [Height]="90">
+                <table>
                     <tr>
                         <td>
-                            <div></div>
+                            <table>
+                                <tr style="height: 1px;">
+                                    <td class="TabSummaryTitle">
+                                        {{'InterestTransaction.O.TotalLocalAmount' | TextCodeTranslationPipe}}
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <table>
+                                            <tr>
+                                                <td   style="text-indent: 10px; width: 1px;">
+                                                    <div [style.text-align]="isRTL ? 'right' : 'left'" class="TabSummaryValue">{{TotalLocalAmount}}</div>
+                                                    <div class="TabSummaryLabel">
+                                                        {{'InterestTransaction.F.LocalAmount' | TextCodeTranslationPipe}}
+                                                    </div>
+                                                </td>
+
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
                         </td>
-                        <td style="width: 57px;">
-                            <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
+
+                        <td colspan="4" style="vertical-align: bottom">
+                            <table style="height: 22px;">
+                                <tr>
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                    <td style="width: 57px;">
+                                        <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                                    </td>
+                                </tr>
+                            </table>
                         </td>
+
                     </tr>
                 </table>
-            </td>
-        </tr>
+            </TabSummary>
+        </td>
+    </tr>
+     
     </table>
 </div>

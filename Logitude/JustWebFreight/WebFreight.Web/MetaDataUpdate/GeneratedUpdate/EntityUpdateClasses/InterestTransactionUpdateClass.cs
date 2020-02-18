@@ -116,7 +116,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Interest Transactions",
-			      				    Code =  "3ce5",
+			      				    Code =  "73a6",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Accounting",
@@ -1274,6 +1274,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "AccountEntityCode",
+					  						OldFieldName =  "AccountEntityCode",
 					  						ObjectTableName =  "InterestTransaction",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1293,6 +1294,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "AccountEntityCode",
 					  						ListPropertyPath =  "AccountEntityCode",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -1408,7 +1410,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable InterestTransactionObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "InterestTransaction" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode InterestTransactionTextCode_InterestTransactionOTotalLocalAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestTransaction.O.TotalLocalAmount", DefaultText = "Total",LocalDefaultText = "סה''כ", ObjectTableId = InterestTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
 	    
 }
 
