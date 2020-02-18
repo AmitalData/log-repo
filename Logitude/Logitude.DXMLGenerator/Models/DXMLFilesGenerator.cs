@@ -667,7 +667,17 @@ namespace Logitude.DXMLGenerator.Models
                 IncludedColumns = (String.IsNullOrEmpty(l.Split(',')[2]) || l.Split(',')[2] == "NULL") ? null : l.Split(',')[2].Replace("; ", ",")
             }).ToList();
 
-            Indexes = indexes;
+            List<Index> processedIndexes = new List<Index>();
+
+            foreach(var index in indexes)
+            {
+                if(!processedIndexes.Where(i => i.TableName.ToLower() == index.TableName.ToLower() && i.Columns.ToLower() == index.Columns.ToLower()).Any())
+                {
+                    processedIndexes.Add(index);
+                }
+            }
+
+            Indexes = processedIndexes;
         }
 
         private void ReadUniqueConstraints()
@@ -683,7 +693,17 @@ namespace Logitude.DXMLGenerator.Models
                 Columns = l.Split(',')[1].Replace("; ", ",")
             }).ToList();
 
-            UniqueConstraints = uniqueConstraints;
+            List<UniqueConstraint> processedUniqueConstraints = new List<UniqueConstraint>();
+
+            foreach (var uniqueConstraint in uniqueConstraints)
+            {
+                if (!processedUniqueConstraints.Where(u => u.TableName.ToLower() == uniqueConstraint.TableName.ToLower() && u.Columns.ToLower() == uniqueConstraint.Columns.ToLower()).Any())
+                {
+                    processedUniqueConstraints.Add(uniqueConstraint);
+                }
+            }
+
+            UniqueConstraints = processedUniqueConstraints;
         }
         
         private List<IndexDefinition> GetTableIndexes(string tableName)

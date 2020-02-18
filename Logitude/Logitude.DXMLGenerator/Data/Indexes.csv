@@ -179,7 +179,6 @@ QueryColumns,ObjectFieldId,NULL
 QueryColumns,QueryId,NULL
 QueryColumns,UserId,NULL
 QueryColumns,Tenant,NULL
-QueryColumns,Tenant,NULL
 QueryColumns,Tenant; UserId,NULL
 CustomerDepositions,CustomsShipperId,NULL
 AccountingPeriods,PeriodTypeCode,NULL
@@ -317,7 +316,6 @@ QueueMessageMoreDetails,Field1,NULL
 QueueMessageMoreDetails,Field2,NULL
 QueueMessageMoreDetails,CreateDateTime,NULL
 QueueMessageMoreDetails,QueueDefinitionCode,NULL
-QueueMessageMoreDetails,CreateDateTime,NULL
 EmployeeGroups,CreatedByUserId,NULL
 EmployeeGroups,ManagerUserId,NULL
 EmployeeGroups,UpdatedByUserId,NULL
@@ -741,7 +739,6 @@ EventTypes,CustomerRoleId,NULL
 EventTypes,EventTypeCategoryCode,NULL
 EventTypes,EntityStatusId,NULL
 EventTypes,ObjectTableId,NULL
-EventTypes,Tenant; Code; ObjectTableId,NULL
 CustomerAdditionalServices,AdditionalServiceId,NULL
 SLAEscalations,EscalationActionTimeIndicator,NULL
 SLAEscalations,EscalationTimeUnit,NULL

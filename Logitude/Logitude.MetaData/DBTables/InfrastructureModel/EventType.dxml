@@ -183,8 +183,6 @@
     Columns="Tenant" />
   <Index
     Columns="Tenant,Code,ObjectTableId" />
-  <Index
-    Columns="Tenant,Code,ObjectTableId" />
   <UniqueConstraint
     Columns="Tenant,Code,ObjectTableId" />
 </Table>
