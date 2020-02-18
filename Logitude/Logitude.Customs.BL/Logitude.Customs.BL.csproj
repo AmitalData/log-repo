@@ -900,7 +900,6 @@
     <Compile Include="EntityQueryServices\ClientQueryService.cs" />
     <Compile Include="EntityQueryServices\ConsignmentPackageQueryService.cs" />
     <Compile Include="EntityQueryServices\CustomDocumentTypeQueryService.cs" />
-    <Compile Include="EntityQueryServices\CustomDocumentTypeQueryService.cs" />
     <Compile Include="EntityQueryServices\CustomsAutonomyKeywordQueryService.cs" />
     <Compile Include="EntityQueryServices\DBMigrationQueryService.cs" />
     <Compile Include="EntityQueryServices\DeclarationPendingQueryService.cs" />
@@ -910,10 +909,6 @@
     <Compile Include="EntityQueryServices\Generated\CargoSealIdentifierQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CargoSealQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ConsignmentPackDangerQueryService.Generated.cs" />
-    <Compile Include="EntityQueryServices\Generated\AmendmentTypeQueryService.Generated.cs" />
-    <Compile Include="EntityQueryServices\Generated\ApprovedProfessionQueryService.Generated.cs" />
-    <Compile Include="EntityQueryServices\Generated\CargoSealIdentifierQueryService.Generated.cs" />
-    <Compile Include="EntityQueryServices\Generated\CargoSealQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ContinuousRequestTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CustomsAutonomyKeywordQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DBMigrationLineQueryService.Generated.cs" />

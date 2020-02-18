@@ -85,9 +85,6 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new AmendmentTypeMap());
 
-            modelBuilder.Configurations.Add(new AmendmentTypeMap());
-
-	
             modelBuilder.Configurations.Add(new ApprovedProfessionMap());
 	
             modelBuilder.Configurations.Add(new AssigneeNotificationTypeMap());
@@ -1188,13 +1185,7 @@ namespace Logitude.Customs.Data
 	      get; set;
 	 
 	 }
->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 19R03P
 	
-	 public IDbSet<AmendmentType> AmendmentTypes 
-	 {
-	      get; set;
-	 
-	 }
 	
 	 public IDbSet<ApprovedProfession> ApprovedProfessions 
 	 {
