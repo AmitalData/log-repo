@@ -1443,6 +1443,7 @@ namespace WebFreight.Web.WebServices
                             if (myPartnerAddress != null)
                             {
                                 myDataProvider.FullPickupAddress = DataProviders.General.GetAddress(myPartnerAddress);
+                                myDataProvider.PickupFromPartnerName = myPartnerAddress.Name;
                             }
                         }
                     }
