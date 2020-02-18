@@ -410,10 +410,10 @@ namespace Logitude.Customs.BL.Messaging.U2L.PayHand
             CustomBankQueryService customBankQueryService = new CustomBankQueryService(_context);
             CustomBankListQueryService customBankListQueryService = new CustomBankListQueryService(_context);
             List<CustomBankList> customBanksList = new List<CustomBankList>();
-            CustomBankList customBankList = null;
+            CustomBankList customBankList = new CustomBankList();
             customBanksList = customBankQueryService.GetCustomBanksByCard(_MyDeclarationPM.CustomerId, _MyDeclarationPM.Tenant);
             if (customBanksList != null && customBanksList.Count() == 1) customBankList = customBanksList.Where(d => !d.InActive).FirstOrDefault();
-            if (customBankList == null || string.IsNullOrWhiteSpace(customBankList.BankCode))
+            if (customBankList == null)
             {
                 if(!BlockAgentBankForMasabDefaultValue)
                 {
@@ -424,20 +424,18 @@ namespace Logitude.Customs.BL.Messaging.U2L.PayHand
                     }
                 }
             }
-            if (customBankList == null || string.IsNullOrWhiteSpace(customBankList.BankCode))
+            if (customBankList == null)
             {
-                Boolean credit = false;
-                if(credit)customBankList = GetBankFromCreditCheck(customBankListQueryService, customBanksList);
-                if (customBankList == null || string.IsNullOrWhiteSpace(customBankList.BankCode))
+                //customBankList = GetBankFromUnifreight(customBankListQueryService, customBanksList);
+                string bank = "";
+
+                if (!string.IsNullOrWhiteSpace(_MyDeclarationPM.CustomerCode))
                 {
-                    if (!string.IsNullOrWhiteSpace(_MyDeclarationPM.CustomerCode))
+                    bank = GetDefault("ISRAEL", "CIM_AGENT_BANK", "NON", _MyDeclarationPM.CustomerCode, _MyDeclarationPM.Tenant);
+                    if (!String.IsNullOrWhiteSpace(bank))
                     {
-                        string bank = GetDefault("ISRAEL", "CIM_AGENT_BANK", "NON", _MyDeclarationPM.CustomerCode, _MyDeclarationPM.Tenant);
-                        if (!String.IsNullOrWhiteSpace(bank))
-                        {
-                            customBanksList = customBankListQueryService.GetList(_MyDeclarationPM.Tenant).Where(r => r.BankCode == bank && !r.InActive).ToList();
-                            customBankList = customBanksList.FirstOrDefault();
-                        }
+                        customBanksList = customBankListQueryService.GetList(_MyDeclarationPM.Tenant).Where(r => r.InternalCode == bank && !r.InActive).ToList();
+                        customBankList = customBanksList.FirstOrDefault();
                     }
                 }
             }
@@ -445,49 +443,47 @@ namespace Logitude.Customs.BL.Messaging.U2L.PayHand
             return customBankList;
         }
 
-        private CustomBankList GetBankFromCreditCheck(CustomBankListQueryService customBankListQueryService, List<CustomBankList> customBanksList)
+        private CustomBankList GetBankFromUnifreight(CustomBankListQueryService customBankListQueryService, List<CustomBankList> customBanksList)
         {
-            using (_AmitalContext = AmitalContext.GetContext(this._MyDeclarationPM.Tenant))
+
+            CustomBankList customBankList = new CustomBankList();
+            using (var logger = (_AmitalContext as DbContextBase).CreateLogger())
             {
-                CustomBankList customBankList = new CustomBankList();
-                using (var logger = (_AmitalContext as DbContextBase).CreateLogger())
+                try
                 {
-                    try
+                    string user = this.MyCommunicationsParams.LoggingUserId;
+                    if (String.IsNullOrWhiteSpace(user)) user = AuthenticationUtil.ResolveUserId(ResolvedTenant());
+                    CustomFileCreditRequestParams requestParamsCredit = new CustomFileCreditRequestParams()
                     {
-                        string user = this.MyCommunicationsParams.LoggingUserId;
-                        if (String.IsNullOrWhiteSpace(user)) user = AuthenticationUtil.ResolveUserId(ResolvedTenant());
-                        CustomFileCreditRequestParams requestParamsCredit = new CustomFileCreditRequestParams()
-                        {
-                            Tenant = _MyDeclarationPM.Tenant,
-                            AppicationId = declarationPaymentPM.DeclarationId,
-                            LoggingEnabled = true,
-                            LoggingEntityId = _MyDeclarationPM.Id,
-                            InterfaceTypeCode = "2755",
-                            LoggingObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration"),
-                            LoggingEntityReference = _MyDeclarationPM.DeclarationNumber,
-                            LoggingUserId = user,
-                            RequestName = "Send Credit to Get Bank Request",
-                            ResponseName = "Get Credit to Get Bank Response",
-                            Mode = "GetBank",
-                            RequestVIA = SendRequestVIA.WebServiceBatch,
-                        };
-                        var myCustomFileCreditService = new CustomFileCreditService(requestParamsCredit);
-                        CUSTOMCREDIT_UL creditResponseData = myCustomFileCreditService.CheckFileCredit();
-                        if (creditResponseData.CustomFileCredit != null && !String.IsNullOrWhiteSpace(creditResponseData.CustomFileCredit[0].BankCode))
-                        {
-                            customBanksList = customBankListQueryService.GetList(_MyDeclarationPM.Tenant).Where(r => r.InternalCode == creditResponseData.CustomFileCredit[0].BankCode && !r.InActive).ToList();
-                            customBankList = customBanksList.FirstOrDefault();
-                        }
-                    }
-                    catch (Exception e)
+                        Tenant = _MyDeclarationPM.Tenant,
+                        AppicationId = declarationPaymentPM.DeclarationId,
+                        LoggingEnabled = true,
+                        LoggingEntityId = _MyDeclarationPM.Id,
+                        InterfaceTypeCode = "2755",
+                        LoggingObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration"),
+                        LoggingEntityReference = _MyDeclarationPM.DeclarationNumber,
+                        LoggingUserId = user,
+                        RequestName = "Send Credit to Get Bank Request",
+                        ResponseName = "Get Credit to Get Bank Response",
+                        Mode = "GetBank",
+                        RequestVIA = SendRequestVIA.WebServiceBatch,
+                    };
+                    var myCustomFileCreditService = new CustomFileCreditService(requestParamsCredit);
+                    CUSTOMCREDIT_UL creditResponseData = myCustomFileCreditService.CheckFileCredit();
+                    if (creditResponseData.CustomFileCredit != null && !String.IsNullOrWhiteSpace(creditResponseData.CustomFileCredit[0].BankCode))
                     {
-                        LogMessagingUtil.Instance.Append("CCUFILEMUpdateService.Update: " + e.ToString());
-                        LogMessagingUtil.Instance.AppendLine(logger.ToString(2040));
-                        // throw;
+                        customBanksList = customBankListQueryService.GetList(_MyDeclarationPM.Tenant).Where(r => r.InternalCode == creditResponseData.CustomFileCredit[0].BankCode && !r.InActive).ToList();
+                        customBankList = customBanksList.FirstOrDefault();
                     }
                 }
-                return customBankList;
+                catch (Exception e)
+                {
+                    LogMessagingUtil.Instance.Append("CCUFILEMUpdateService.Update: " + e.ToString());
+                    LogMessagingUtil.Instance.AppendLine(logger.ToString(2040));
+                    // throw;
+                }
             }
+            return customBankList;
         }
 
         private string GetDefault(string DISTRID, string DEFID, string BRANCHID, string CARDID, int tenant)
