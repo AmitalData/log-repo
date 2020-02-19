@@ -2988,7 +2988,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     if ((entityPM.DeclarationXMLData != shipmentAdditionalCloudData.DeclarationXmlData && !string.IsNullOrEmpty(entityPM.DeclarationXMLData)) && entityPM.CustomsClearanceDate == null)
                     {
                        
-                        if (loggedTenant.LogBoxTenantSetting.IsDocumentsArchive && (shipmentAdditionalCloudData.IsImporterApprovalRequried != entityPM.IsImporterApprovalRequired))
+                        if (loggedTenant.LogBoxTenantSetting.IsDocumentsArchive)// && (shipmentAdditionalCloudData.IsImporterApprovalRequried != entityPM.IsImporterApprovalRequired))
                         {
                             AddImporterApprovalReceivedQueue();
                         }

@@ -89,7 +89,7 @@ namespace CommunicationWorkerRole
                     worker.CurrentThread = myThread;
                     threads.Add(myThread);
                 }
-                   
+
 
                 foreach (Thread thread in threads)
                     thread.Start();
@@ -204,8 +204,16 @@ namespace CommunicationWorkerRole
 "O3AB8EeDCQ6EgM8TcUesQBZZrUA4ZUFpxsCdvL0n4DQiB1tIof1TGHXCtZ62S1kAfU4XJzEGM/g3MYbKridAK5ckyc" +
 "0xwsK2y46rm9W3EV0m49Na0pcJe+2ZScc6BP1o3tDS9ddHbfkt7hFZpUNTqOxn9BOP0YVoQul+dPckYle4PS4mzXVp" +
 "tMrKV4En69rnW/z658axW0kQ2GxorKwW0IAR";
+            if (BatchServicesParam.Contains("SATInterface"))
+            {
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls11;
 
-            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+            }
+            else
+            {
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+
+            }
 
             StartStatic();
             ContainerAccessor.InitContainer();
@@ -323,24 +331,24 @@ namespace CommunicationWorkerRole
             {
                 BatchServicesDefinitionsTemp = GetActiveBatchServiceDef();
             }
-            if (Environment.MachineName == "LogitudeWR2")
-            {
-                BatchServicesDefinitions = BatchServicesDefinitionsTemp;
-                //var temp = SpecialBatchCode.Split(',');
-                //if (temp.Length > 0)
-                //{
-                //    var BatchCode = temp[0].ToLower();
-                //    var IsActivate = temp[1].ToLower();
-                //    if (IsActivate == "true")
-                //    {
-                //        BatchServicesDefinitionsTemp = BatchServicesDefinitionsTemp.Where(a => a.Code.ToLower() == BatchCode).ToList();
-                //    }
-                //    else
-                //    {
-                //        BatchServicesDefinitionsTemp = BatchServicesDefinitionsTemp.Where(a => a.Code.ToLower() != BatchCode).ToList();
-                //    }
-                //}
-            }
+            //if (Environment.MachineName == "LogitudeWR2")
+            //{
+            //    BatchServicesDefinitions = BatchServicesDefinitionsTemp;
+            //    //var temp = SpecialBatchCode.Split(',');
+            //    //if (temp.Length > 0)
+            //    //{
+            //    //    var BatchCode = temp[0].ToLower();
+            //    //    var IsActivate = temp[1].ToLower();
+            //    //    if (IsActivate == "true")
+            //    //    {
+            //    //        BatchServicesDefinitionsTemp = BatchServicesDefinitionsTemp.Where(a => a.Code.ToLower() == BatchCode).ToList();
+            //    //    }
+            //    //    else
+            //    //    {
+            //    //        BatchServicesDefinitionsTemp = BatchServicesDefinitionsTemp.Where(a => a.Code.ToLower() != BatchCode).ToList();
+            //    //    }
+            //    //}
+            //}
             if (BatchServicesDefinitions == null)
             {
                 BatchServicesDefinitions = BatchServicesDefinitionsTemp;
@@ -505,35 +513,35 @@ namespace CommunicationWorkerRole
         }
         private List<BatchServicesDefinitionPM> GetActiveBatchServiceDef()
         {
-            string SpecialBatchCode = null;
+            //string SpecialBatchCode = null;
 
-            var iAppSettings = System.Configuration.ConfigurationManager.AppSettings;
-            if (iAppSettings != null)
-            {
-                if (iAppSettings["BatchCode"] != null)
-                {
-                    SpecialBatchCode = iAppSettings["BatchCode"].ToString();
-                }
-            }
+            //var iAppSettings = System.Configuration.ConfigurationManager.AppSettings;
+            //if (iAppSettings != null)
+            //{
+            //    if (iAppSettings["BatchCode"] != null)
+            //    {
+            //        SpecialBatchCode = iAppSettings["BatchCode"].ToString();
+            //    }
+            //}
 
             BatchServicesDefinitionRepository BatchServicesRepository = new BatchServicesDefinitionRepository();
             BatchServicesDefinitionQuery BatchServicesQuery = new BatchServicesDefinitionQuery(BatchServicesRepository);
             List<BatchServicesDefinitionPM> BatchServicesDefinitionsTemp = BatchServicesQuery.GetAllActiveBatchServicesDefinitions().ToList();//.Where(b => b.Code == "EmailOut-EmailQueue")
-            var temp = SpecialBatchCode.Split(',');
-            if (temp.Length > 1)
-            {
-                var BatchCode = temp[0].ToLower();
-                var IsActivate = temp[1].ToLower();
-                if (IsActivate == "true")
-                {
-                    BatchServicesDefinitionsTemp = BatchServicesDefinitionsTemp.Where(a => a.Code.ToLower() == BatchCode).ToList();
-                }
-                else
-                {
-                    BatchServicesDefinitionsTemp = BatchServicesDefinitionsTemp.Where(a => a.Code.ToLower() != BatchCode).ToList();
-                }
-            }
-            
+                                                                                                                                              //var temp = SpecialBatchCode.Split(',');
+                                                                                                                                              //if (temp.Length > 1)
+                                                                                                                                              //{
+                                                                                                                                              //    var BatchCode = temp[0].ToLower();
+                                                                                                                                              //    var IsActivate = temp[1].ToLower();
+                                                                                                                                              //    if (IsActivate == "true")
+                                                                                                                                              //    {
+                                                                                                                                              //        BatchServicesDefinitionsTemp = BatchServicesDefinitionsTemp.Where(a => a.Code.ToLower() == BatchCode).ToList();
+                                                                                                                                              //    }
+                                                                                                                                              //    else
+                                                                                                                                              //    {
+                                                                                                                                              //        BatchServicesDefinitionsTemp = BatchServicesDefinitionsTemp.Where(a => a.Code.ToLower() != BatchCode).ToList();
+                                                                                                                                              //    }
+                                                                                                                                              //}
+
 
             return BatchServicesDefinitionsTemp;
         }
