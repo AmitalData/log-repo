@@ -75,7 +75,18 @@ namespace WebFreight.Web.DataProviders
 
         public double? AmountInLocalCurrency { get; set; }
 
-        public List<InvoicePayments> PaidInvoicesList { get; set; }     
+        public List<InvoicePayments> PaidInvoicesList { get; set; }
+
+        public string ARPaymentField1 { get; set; }
+        public string ARPaymentField2 { get; set; }
+        public string ARPaymentField3 { get; set; }
+        public string ARPaymentField4 { get; set; }
+        public string ARPaymentField5 { get; set; }
+        public string ARPaymentField6 { get; set; }
+        public string ARPaymentField7 { get; set; }
+        public string ARPaymentField8 { get; set; }
+        public string ARPaymentField9 { get; set; }
+        public string ARPaymentField10 { get; set; }
 
         public class InvoicePayments
         {

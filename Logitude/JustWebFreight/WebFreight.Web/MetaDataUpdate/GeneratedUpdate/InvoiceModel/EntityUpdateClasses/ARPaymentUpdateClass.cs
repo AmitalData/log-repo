@@ -89,7 +89,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			      				    ObjectTableSingular =  "A/R Payment",
 			      				    ObjectTablePlural =  "A/R Payments",
 			      				    HasCustomFilter =  true,
-			      				    HasCustomFields =  false,
+			      				    HasCustomFields =  true,
 			      				    HasHelper =  true,
 			      				    HasShortTitle =  true,
 			      				    HasFiltersMenu =  false,
@@ -111,10 +111,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			      				    IsSaveButtonVisible =  true,
 			      				    IsComposition =  false,
 			      				    EnableSecurity =  true,
-			      				    AllowCustomFields =  false,
+			      				    AllowCustomFields =  true,
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "BR",
-			      				    MaxNumberOfCustomFields =  0,
+			      				    MaxNumberOfCustomFields =  10,
 			      				    NewWizardControlName =  "Simplog.InvoiceLib.NewARPaymentCommand",
 			      				    LocalDefaultText =  "קבלה",
 			      				    DefaultText =  "A/R Payment",
@@ -5957,6 +5957,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 		    ARPaymentObjectTable.HeaderScreenCode = ARPaymentHeaderScreenScreen2.Code;
 
 	   		  
+	      
+
+	         Screen ARPaymentNewARPaymentScreen3 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "NewARPayment", Name = "New AR Payment", ObjectTableId = ARPaymentObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = false }, screensRepository, tenantScreens);
+        
 
 	    }
 

@@ -29,11 +29,8 @@ namespace Logitude.Accounting.Data.EntityPOCOs
      [Key]
         [Column("Line" ,Order = 2)]
 	    public int Line { get; set; }
-        [ForeignKey("JournalActionType")]
         [Column("ActionCode")]
 	    public string ActionCode { get; set; }
-	      
-        public virtual JournalActionType JournalActionType { get; set; }
         [ForeignKey("DebitControlAccount")]
         [Column("DebitControlAccountId")]
 	    public string DebitControlAccountId { get; set; }
@@ -85,6 +82,11 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public string ExternalReconcileNumber { get; set; }
         [Column("IsExternalReconcile")]
 	    public bool IsExternalReconcile { get; set; }
+        [ForeignKey("JournalActionType")]
+        [Column("ActionId")]
+	    public string ActionId { get; set; }
+	      
+        public virtual JournalActionType JournalActionType { get; set; }
     }
 }
 	 
