@@ -398,7 +398,6 @@
       <QueryFilter QueryCode="&quot;OpenInvoices&quot;" PredefinedValue="&quot;true&quot;" ObjectFieldName="&quot;OpenInvoices&quot;" IsPredefined="true" IndexOrder="0" />
     </QueryFilters>
   </Query>
-  <Screen Name="&quot;Header Screen&quot;" ObjectTableName="&quot;ARInvoice&quot;" NumberOfColumns="5" NumberOfRows="1" IsReadOnly="true" IsHeaderScreen="true" Code="&quot;ARInvoice.FullAccHeaderScreen&quot;">
   <Query
     Code="&quot;ErrorInTransfer&quot;"
     TextCode="&quot;Error In Transfer&quot;"

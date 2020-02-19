@@ -149,7 +149,6 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                                                             && allInvoiceIds.Contains(d.APInvoiceId)
                                                             select d).ToList();
 
-
             CardExternalAccountsByProductRepository myCardExternalAccountsByProductRepository = new CardExternalAccountsByProductRepository(commonContext);
             MeasurementRepository measurementRepository = new MeasurementRepository(this.commonContext);
             AddressQuery addressQuery = new AddressQuery(new AddressRepository(this.commonContext));
@@ -161,6 +160,8 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
             foreach (APInvoice item in invoices)
             {
                 APInvoiceElement invoiceElement = new APInvoiceElement();
+
+                List<APInvoiceTotalVAT> myTotalVATs = allInvoicesTotalVATs.Where(d => d.APInvoiceId == item.Id).ToList();
 
                 ShipmentPM shipment = null;
                 if (!item.IsMultipleEntities)
@@ -188,6 +189,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                 invoiceElement.RateInvoiceCurrency = item.InvoiceCurrencyExchangeRate == null ? 0 : (decimal)item.InvoiceCurrencyExchangeRate;
                 invoiceElement.VATNumber = item.VATNumber;
                 invoiceElement.PaymentTermExternalId = item.PaymentTermExternalId;
+                invoiceElement.TotalTaxAmountInInvoiceCurrency = (decimal)myTotalVATs.Sum(s => s.InvoiceCurrencyVATAmount);
                 #endregion
 
                 #region Card
@@ -380,6 +382,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                             List<VATTypesGroup> myVATTypesGroups = allVATTypesGroups.Where(d => d.GroupVATTypeId == LineVat.Id).ToList();
                             foreach (VATTypesGroup vATGroupItem in myVATTypesGroups)
                             {
+                                APInvoiceTotalVAT myTotalVAT = myTotalVATs.Where(d => d.VatTypeId == vATGroupItem.SingleVATTypeId).FirstOrDefault();
                                 VatTypePercentage percentageItem = vatTypePercentageRepository.GetVatTypePercentageByDate(vATGroupItem.SingleVATTypeId, tenant, item.InvoiceDate);
 
                                 if (percentageItem != null)
@@ -393,7 +396,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                                     {
                                         TaxCode = percentageItem.VatType == null ? null : percentageItem.VatType.Code,
                                         TaxPercentage = percentageItem.Percentage == null ? 0 : (decimal)percentageItem.Percentage,
-                                        VATExternalId = percentageItem.VatType == null ? null : percentageItem.VatType.ReceivablesExternalId,
+                                        VATExternalId = percentageItem.VatType != null ? percentageItem.VatType.PayablesExternalId : (myTotalVAT == null ? null : myTotalVAT.ExternalVATCard),
                                     });
                                 }
                             }
@@ -403,13 +406,14 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
 
                         else
                         {
+                            APInvoiceTotalVAT myTotalVAT = myTotalVATs.Where(d => d.VatTypeId == LineVat.Id).FirstOrDefault();
                             lineElement.TaxPercentage = myline.VatPercentage == null ? 0 : (decimal)myline.VatPercentage;
 
                             lineElement.TaxDetails.Add(new LineTaxDetailsElement()
                             {
                                 TaxCode = LineVat.Code,
                                 TaxPercentage = myline.VatPercentage == null ? 0 : (decimal)myline.VatPercentage,
-                                VATExternalId = LineVat.ReceivablesExternalId,
+                                VATExternalId = !string.IsNullOrEmpty(LineVat.ReceivablesExternalId) ? LineVat.ReceivablesExternalId : (myTotalVAT == null ? null : myTotalVAT.ExternalVATCard),
                             });
                         }
                     }
@@ -425,18 +429,18 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                     #endregion
                 }
 
-                if (dueVatLines.Count != 0)
-                {
-                    foreach (APInvoiceLine myline in dueVatLines)
-                    {
-                        invoiceElement.TotalTaxAmountInInvoiceCurrency += (decimal)((myline.InvoiceCurrencyAmount != null ? myline.InvoiceCurrencyAmount : 0) * (myline.VatPercentage != null ? (myline.VatPercentage / 100) : 0)).Value;
-                    }
-                }
+                //if (dueVatLines.Count != 0)
+                //{
+                //    foreach (APInvoiceLine myline in dueVatLines)
+                //    {
+                //        invoiceElement.TotalTaxAmountInInvoiceCurrency += (decimal)((myline.InvoiceCurrencyAmount != null ? myline.InvoiceCurrencyAmount : 0) * (myline.VatPercentage != null ? (myline.VatPercentage / 100) : 0)).Value;
+                //    }
+                //}
 
-                else
-                {
-                    invoiceElement.TotalTaxAmountInInvoiceCurrency = 0;
-                }
+                //else
+                //{
+                //    invoiceElement.TotalTaxAmountInInvoiceCurrency = 0;
+                //}
                 #endregion
 
                 #region Shipment
@@ -1038,8 +1042,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
 
                 #region TAX
                 invoiceElement.TaxTotalsInInvoiceCurrency = new List<InvoiceTaxElement>();
-
-                List<APInvoiceTotalVAT> myTotalVATs = allInvoicesTotalVATs.Where(d => d.APInvoiceId == item.Id).ToList();
+                
                 foreach (APInvoiceTotalVAT myline in myTotalVATs)
                 {
                     InvoiceTaxElement invoiceTaxElement = new InvoiceTaxElement()
