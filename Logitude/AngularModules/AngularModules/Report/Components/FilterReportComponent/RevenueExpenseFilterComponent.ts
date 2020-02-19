@@ -1,7 +1,7 @@
 
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {ReportsPreviewComponent} from '../../Components/ReportsPreviewComponent';
-import {Component, OnInit}  from '@angular/core';
+import {Component, OnInit,ChangeDetectorRef}  from '@angular/core';
 import {QueryFilterItem} from '../../Components/Filters/QueryFilterItem';
 import {ReportFliter} from '../../Components/Filters/ReportFliter';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
@@ -36,7 +36,7 @@ export class RevenueExpenseFilterComponent extends BaseComponent{
  // ToDate: Date = new Date();
     DataContext: any = this;
     showlocal: boolean;
-    constructor() {
+    constructor(private CD: ChangeDetectorRef) {
 
         super();
         this.chartofaccounttypeHtmlinputId = Guid.newGuid();
@@ -84,7 +84,11 @@ export class RevenueExpenseFilterComponent extends BaseComponent{
     if (this.fromDate != value) {
         this.fromDate = value;
         if (value > this.ToDate) {
-            this.UIProperties.SetValidity("FromDate", null, false, TextCodeTranslator.Translate("Accounting.General.FromDateMustBeLTT"));
+        
+            setTimeout(() => {
+                this.UIProperties.SetValidity("FromDate", null, false, TextCodeTranslator.Translate("Accounting.General.FromDateMustBeLTT"));
+                this.CD.detectChanges();
+            }, 200);
 
         }
     }
@@ -96,8 +100,13 @@ export class RevenueExpenseFilterComponent extends BaseComponent{
         if (this.toDate != value) {
             this.toDate = value;
             if (value < this.FromDate) {
-                this.UIProperties.SetValidity("ToDate", null, false, TextCodeTranslator.Translate("Accounting.General.O.ToDateMustBeGTF"));
 
+                setTimeout(() => {
+                    this.UIProperties.SetValidity("ToDate", null, false, TextCodeTranslator.Translate("Accounting.General.O.ToDateMustBeGTF"));
+                
+                    this.CD.detectChanges();
+                }, 200);
+                
             }
             if (value > new Date()) {
                 this.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.General.O.FutureDate"));

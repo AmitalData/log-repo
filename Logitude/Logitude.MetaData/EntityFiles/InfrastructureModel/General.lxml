@@ -35,7 +35,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;f88c&quot;"
+  Code="&quot;2da9&quot;"
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -4461,14 +4461,14 @@
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;Accounting.General.FromDateMustBeLTT&quot;"
-      DefaultText="&quot;The &quot;From date&quot; field must be less or equal then the &quot;To date&quot; field  &quot;"
-      LocalDefaultText="&quot;השדה &quot;מתאריך &quot; חייב להיות קטן או שווה לשדה &quot;עד תאריך&quot;"
+      DefaultText="&quot;From date&quot; field must be less than or equal to &quot;To date&quot; field  &quot;"
+      LocalDefaultText="&quot;מ-תאריך חייב להיות קטן או שווה לשדה  עד תאריך &quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;Accounting.General.O.ToDateMustBeGTF&quot;"
-      DefaultText="&quot;The &quot;To date&quot;  field must be equal or greater than the &quot;From date&quot; field&quot;"
-      LocalDefaultText="&quot;עד תאריך חייב להיות גדול מ-תאריך&quot;"
+      DefaultText="&quot;To date&quot;  field must be greater than or equal to &quot;From date&quot; field&quot;"
+      LocalDefaultText="&quot;עד תאריך חייב להיות גדול או שווה לשדה מ-תאריך&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
