@@ -114,11 +114,11 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
             ICommonDataContext iContext = CommonDataContext.GetContext(tenant);
             IQueryable<TenantManagement> iQueryable_Tenantmanagements = globalObjectContext.TenantManagements;
             iQueryable_BluesnapTransactions = globalObjectContext.BluesnapTransactions;
-            iQueryable_BluesnapTransactions = iQueryable_BluesnapTransactions.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.CreateDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate) && System.Data.Entity.DbFunctions.TruncateTime(d.CreateDate) <= System.Data.Entity.DbFunctions.TruncateTime(toDate));
+            iQueryable_BluesnapTransactions = iQueryable_BluesnapTransactions.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.TransactionDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate) && System.Data.Entity.DbFunctions.TruncateTime(d.TransactionDate) <= System.Data.Entity.DbFunctions.TruncateTime(toDate));
 
             if (this.showAllRecurringTenants == true)
             {
-                iQueryable_Tenantmanagements = iQueryable_Tenantmanagements.Where(a => a.IsRecurring == true && a.RecurringPeriodCode == "MO");
+                iQueryable_Tenantmanagements = iQueryable_Tenantmanagements.Where(a => a.IsRecurring == true && a.RecurringPeriodCode == "MO" && a.PaymentChannelCode == "PL");
             }
 
             this.iQueryable_JoinTenantBluesnapTransaction = (from tenantmanagements in iQueryable_Tenantmanagements
@@ -154,14 +154,15 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
                 itemRecord.AmountToPay = item.AmountToPay;
                 itemRecord.TransactionCount = item.Transactions != null ? item.Transactions.Count() : 0;
                 double? totalPayments = 0;
+                List<string> Contracts = new List<string>();
                 foreach (var transaction in item.Transactions)
                 {
                     var queryParameters = DeserializeDocumentBody(transaction.DocumentId, transaction.Tenant);
                     if (queryParameters != null && queryParameters.Count > 0)
                     {
-                        if (queryParameters.ContainsKey("promoteContractsNum"))
+                        if (queryParameters.ContainsKey("contractId"))
                         {
-                            itemRecord.ContractCount = int.Parse(queryParameters["promoteContractsNum"]);
+                            Contracts.Add(queryParameters["contractId"]);
                         }
                         if (queryParameters.ContainsKey("invoiceAmountUSD"))
                         {
@@ -169,6 +170,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
                         }
                     }
                 }
+
+                itemRecord.ContractCount = new HashSet<string>(Contracts).Count();
                 itemRecord.TotalPayments = totalPayments;
                 itemRecord.PaymentDifference = itemRecord.TotalPayments - itemRecord.AmountToPay;
 
