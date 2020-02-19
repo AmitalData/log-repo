@@ -90,6 +90,24 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         }
 
 
+        public string GetMaxExternalRecoNum(int tenant)
+        {
+            string rv;
+            var pre_q = this.repository.GetAll(tenant)
+                        .Where(rec => rec.ExternalReconcileNumber != null && rec.ExternalReconcileNumber != ""
+                         && rec.ExternalReconcileNumber != "0"
+                         && rec.ExternalReconcileNumber != "0.00" && rec.ExternalReconcileNumber != "000000000000000");
+            if (pre_q != null)
+            {
+                rv = pre_q.Max(i => i.ExternalReconcileNumber);
+            }
+            else
+            {
+                rv = "";
+            }
+            return rv;
+        }
+
 
         public IQueryable<JournalLineLedgerTransactionAccDTO>
             GetQJournalLinesByExternalNo_NotReconciled(int tenant)
