@@ -29,15 +29,15 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.DeclarationId).HasColumnName("DeclarationId").HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.CargoRowNumber).HasColumnName("CargoRowNumber").HasMaxLength(9).IsUnicode(false);
+            this.Property(t => t.CargoRowNumber).HasColumnName("CargoRowNumber").IsRequired().HasMaxLength(9).IsUnicode(false);
 
             this.Property(t => t.ContainerNumber).HasColumnName("ContainerNumber").HasMaxLength(11).IsUnicode(false);
 
-            this.Property(t => t.UpdateDate).HasColumnName("UpdateDate");
+            this.Property(t => t.UpdateDate).HasColumnName("UpdateDate").IsRequired();
 
-            this.Property(t => t.ImporterId).HasColumnName("ImporterId").HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.ImporterId).HasColumnName("ImporterId").IsRequired().HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.CargoIdentifierTypeCode).HasColumnName("CargoIdentifierTypeCode").HasMaxLength(2).IsUnicode(false);
+            this.Property(t => t.CargoIdentifierTypeCode).HasColumnName("CargoIdentifierTypeCode").IsRequired().HasMaxLength(2).IsUnicode(false);
 
             this.Property(t => t.CargoIdentifierKey1).HasColumnName("CargoIdentifierKey1").HasMaxLength(35).IsUnicode(false);
 

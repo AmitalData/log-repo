@@ -69,13 +69,16 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
 			
 	             				    ObjectTableName =  "Customs.CustomDocumentType",
+			      				    IsNew =  false,
 			      				    DBTableName =  "Customs.CustomDocumentTypes",
+			      				    OldDBTableName =  "Customs.CustomDocumentTypes",
 			      				    ObjectTableSingular =  "CustomDocumentType",
 			      				    ObjectTablePlural =  "CustomDocumentTypes",
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
+			      				    HasFiltersMenu =  false,
 			      				    IsEditable =  false,
 			      				    IsNewWizard =  false,
 			      				    LookUp1 =  "Code",
@@ -101,7 +104,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Custom Document Type",
-			      				    Code =  "1923",
+			      				    Code =  "d3da",
 			      				    Name =  "Customs.CustomDocumentType Query Group",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "LocalName",
@@ -109,7 +112,16 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ClientModuleName =  "Customs",
 			      				    ServerModuleName =  "Customs",
 			      				    NoTS =  false,
+			      				    //NoDefaultFeatures =  false,
 			      				    HasMenuButtons =  false,
+			      				    AllowedForComputingPartners =  false,
+			      				    Code1 =  "8875",
+			      				    Name1 =  " Query Group",
+			      				    CustomFieldsCount =  0,
+			      				    DisableSearchBox =  false,
+			      				    HasDocuments =  false,
+			      				    IsLookUp =  false,
+			      				    IsTabsHidden =  false,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
@@ -121,12 +133,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Code",
+					  						OldFieldName =  "Code",
+					  						IsNew =  false,
+					  						IsChecked =  false,
+					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CustomDocumentType",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  7,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  true,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -146,8 +164,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
 					  						ValidForQuerySection1 =  "Customs.CustomDocumentType",
+					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Code",
@@ -165,6 +189,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						IsSpellCheckedFullFieldLable =  false,
+					  						IsSpellCheckedHelpLocalDefaultText =  false,
+					  						IsSpellCheckedShortLocalDefaultText =  false,
+					  						IsSpellCheckedListLocalDefaultText =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -173,12 +202,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "EnglishName",
+					  						OldFieldName =  "EnglishName",
+					  						IsNew =  false,
+					  						IsChecked =  false,
+					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CustomDocumentType",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  100,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -198,8 +233,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
 					  						ValidForQuerySection1 =  "Customs.CustomDocumentType",
+					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "EnglishName",
@@ -217,6 +258,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						IsSpellCheckedFullFieldLable =  false,
+					  						IsSpellCheckedHelpLocalDefaultText =  false,
+					  						IsSpellCheckedShortLocalDefaultText =  false,
+					  						IsSpellCheckedListLocalDefaultText =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -225,12 +271,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "LocalName",
+					  						OldFieldName =  "LocalName",
+					  						IsNew =  false,
+					  						IsChecked =  false,
+					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CustomDocumentType",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  120,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  true,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -250,8 +302,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
 					  						ValidForQuerySection1 =  "Customs.CustomDocumentType",
+					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LocalName",
@@ -269,6 +327,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						IsSpellCheckedFullFieldLable =  false,
+					  						IsSpellCheckedHelpLocalDefaultText =  false,
+					  						IsSpellCheckedShortLocalDefaultText =  false,
+					  						IsSpellCheckedListLocalDefaultText =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -277,12 +340,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "SearchFields",
+					  						OldFieldName =  "SearchFields",
+					  						IsNew =  false,
+					  						IsChecked =  false,
+					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CustomDocumentType",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  1000,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -301,8 +370,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
 					  						ValidForQuerySection1 =  "Customs.CustomDocumentType",
+					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SearchFields",
@@ -318,6 +393,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						IsSpellCheckedFullFieldLable =  false,
+					  						IsSpellCheckedHelpLocalDefaultText =  false,
+					  						IsSpellCheckedShortLocalDefaultText =  false,
+					  						IsSpellCheckedListLocalDefaultText =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -326,12 +406,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Inactive",
+					  						OldFieldName =  "Inactive",
+					  						IsNew =  false,
+					  						IsChecked =  false,
+					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CustomDocumentType",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -351,8 +437,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
 					  						ValidForQuerySection1 =  "Customs.CustomDocumentType",
+					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Inactive",
@@ -370,6 +462,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						IsSpellCheckedFullFieldLable =  false,
+					  						IsSpellCheckedHelpLocalDefaultText =  false,
+					  						IsSpellCheckedShortLocalDefaultText =  false,
+					  						IsSpellCheckedListLocalDefaultText =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -378,13 +475,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "PointerLevel",
+					  						OldFieldName =  "PointerLevel",
+					  						IsNew =  false,
+					  						IsChecked =  false,
+					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CustomDocumentType",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.PointerLevel",
 					  						MinLength =  0,
 					  						MaxLength =  1,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -404,8 +507,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
 					  						ValidForQuerySection1 =  "Customs.CustomDocumentType",
+					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PointerLevel",
@@ -423,6 +532,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						IsSpellCheckedFullFieldLable =  false,
+					  						IsSpellCheckedHelpLocalDefaultText =  false,
+					  						IsSpellCheckedShortLocalDefaultText =  false,
+					  						IsSpellCheckedListLocalDefaultText =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -431,12 +545,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "AutoSetOriginalDocumentTrue",
+					  						OldFieldName =  "AutoSetOriginalDocumentTrue",
+					  						IsNew =  false,
+					  						IsChecked =  false,
+					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CustomDocumentType",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -456,8 +576,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
 					  						ValidForQuerySection1 =  "Customs.CustomDocumentType",
+					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AutoSetOriginalDocumentTrue",
@@ -475,6 +601,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						IsSpellCheckedFullFieldLable =  false,
+					  						IsSpellCheckedHelpLocalDefaultText =  false,
+					  						IsSpellCheckedShortLocalDefaultText =  false,
+					  						IsSpellCheckedListLocalDefaultText =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -483,12 +614,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "PointerLevelName",
+					  						OldFieldName =  "PointerLevelName",
+					  						IsNew =  false,
+					  						IsChecked =  false,
+					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CustomDocumentType",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  40,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -507,8 +644,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
 					  						ValidForQuerySection1 =  "Customs.CustomDocumentType",
+					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PointerLevelName",
@@ -526,9 +669,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						IsSpellCheckedFullFieldLable =  false,
+					  						IsSpellCheckedHelpLocalDefaultText =  false,
+					  						IsSpellCheckedShortLocalDefaultText =  false,
+					  						IsSpellCheckedListLocalDefaultText =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
- 
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -623,8 +770,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
          
             ScreenField CustomDocumentTypeGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = CustomDocumentTypeObjectFields.Where(d => d.FieldName == "AutoSetOriginalDocumentTrue").FirstOrDefault().Id, ScreenId = CustomDocumentTypeGeneralTabScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-         
-            ScreenField CustomDocumentTypeGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ObjectFieldId = CustomDocumentTypeObjectFields.Where(d => d.FieldName == "IsDiamondManadatory").FirstOrDefault().Id, ScreenId = CustomDocumentTypeGeneralTabScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomDocumentTypeGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ObjectFieldId = CustomDocumentTypeObjectFields.Where(d => d.FieldName == "IsDiamondManadatory").FirstOrDefault().Id, ScreenId = CustomDocumentTypeGeneralTabScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 
 	    }

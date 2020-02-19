@@ -5,6 +5,9 @@ using Logitude.Server.Tools.Helpers;
 using Microsoft.Practices.Unity;
 using System.Diagnostics;
 using System.Linq;
+using Logitude.SystemLogs;
+using System;
+
 namespace Logitude.CustomsMessaging.MessagingServices
 {
     public class MessagingServiceFactoryHelper
@@ -530,6 +533,11 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 mainInterfaceCode = GetMainInteface(mainInterfaceCode);
 
                 anaO = ContainerAccessor.Container.Resolve<IMessagingServiceInterfaceType>(mainInterfaceCode);
+            }
+            if (anaO==null)
+            {
+                throw new Exception("CustomsMessagingSheetWR: anaO==null >>ProcessMessage():!ContainerAccessor.Container.IsRegistered :analyzeClass=" + mainInterfaceCode );
+                
             }
 
             anaO.CurrentCustomsCommandWR = myCustomsCommandEnum;

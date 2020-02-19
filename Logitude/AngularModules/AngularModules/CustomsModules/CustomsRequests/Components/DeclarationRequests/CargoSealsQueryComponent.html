@@ -35,7 +35,7 @@
 
         <!-- Request -->
         <div class="class-request-content">
-            <table *ngIf="_IsReady" style="width: 750px;height: 400px; padding-top: 10px;">
+            <table *ngIf="IsReady" style="width: 750px;height: 400px; padding-top: 10px;">
 
                 <tr class="FormFieldRow" *ngIf="IsDisplayOnly">
                     <td colspan="6">
@@ -306,14 +306,14 @@
 
                                                             <!-- Remarks -->
                                                             <log-column [header]="'Customs.CargoSeal.F.Remarks' | TextCodeTranslationPipe"
-                                                                        [binding]="'Remarks'" [width]="'150'" [Alignment]="'right'">
+                                                                        [binding]="'Remarks'" [width]="'150'" [Alignment]="'right'"  [Editable]="true" >
                                                                 <log-cell-template template="let item" #logcelltemplate>
-                                                                    <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                    <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode"  style="text-align:right">
                                                                         <span>{{item.Remarks}}</span>
                                                                     </div>
-                                                                    <div *ngIf="logcelltemplate.IsEditMode" style="height: 90%; width: 90%;">
+                                                                    <div *ngIf="logcelltemplate.IsEditMode" style="height: 100%; width: 100%;"  >
                                                                         <LogTextBox [ObjectFieldName]="'Remarks'" [InputType]="'ntext'" [DataContext]="item"
-                                                                                    [ObjectTableName]="'Customs.SealType'" [HideColumns]="true"
+                                                                                    [ObjectTableName]="'Customs.SealType'" [HideColumns]="true" 
                                                                                     [IsMultiline]="true"></LogTextBox>
                                                                     </div>
                                                                 </log-cell-template>

@@ -14053,6 +14053,11 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CargoSealsQuery.F.UpdateReasonCodeMandatory", DefaultText = "Update Reason field is mandatory", LocalDefaultText = "סיבת עדכון הסגר הוא שדה חובה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CargoSealsQuery.F.UpdateTypeCodeMandatory", DefaultText = "Update Type field is mandatory", LocalDefaultText = "סוג עדכון של הסגר הוא שדה חובה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
 
+            //Task 62936 
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.UpdateCountryOfOrigin", DefaultText = "Update Country of Origin", LocalDefaultText = "עדכון ארץ מקור", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.MultiCountryOfOrigin", DefaultText = "This screen allows to multi update Country of Origin", LocalDefaultText = "מסך זה מאפשר לעדכן את ארץ המקור באופן גורף לכל שורות פרטי המכס או לחלקן . אנא בחר בקוד התהליך ובפעולה הרצויה.", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ItemsWithNoCountrOfOrigin", DefaultText = "Update Items with no Country of Origin", LocalDefaultText = "עדכן פריטים ללא ערך מקור", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+
 
             ObjectContext.SaveChanges();
 
@@ -14512,6 +14517,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.HighLowValue.High", DefaultText = "High", LocalDefaultText = "מהיר", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.HighLowValue.Low", DefaultText = "Low", LocalDefaultText = "פרטני", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.MNF.CompleteMissing", DefaultText = "Complete Missing Data", LocalDefaultText = "השלם נתונים חסרים", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.CourierCustomStatus.NoValue", DefaultText = "No Value", LocalDefaultText = "ללא ערך", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.MNF.HandleWrong", DefaultText = "Handle Wrong Feedback", LocalDefaultText = "טפל במשובים שגויים", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.ACC.Wrong", DefaultText = "Wrong", LocalDefaultText = "ש.מ.ב שגויים", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.ACC.WrongSpecial", DefaultText = "Wrong Special", LocalDefaultText = "מיוחדות שגויים", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);

@@ -63,6 +63,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
             AppendLogLine("CheckIntegrity:Took:" + _Stopwatch.Elapsed.ToString());_Stopwatch.Restart(); 
             MyGenericResponseObj.Stage = "GetContext";
             _context = CustomContext.GetContext(ResolvedTenant());
+            AppendLogLine($"ResolvedTenant()={ResolvedTenant()}");
             var myQueryService = new DeclarationQueryService(_context);
 
             MyGenericResponseObj.Stage = "GetSingle";
@@ -78,6 +79,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
             {
                 throw new BusinessErrorException("Declaration has already been payed");
             }
+            
 
             MyGenericResponseObj.Stage = "Add Ticket for file " + this._MyDeclarationPM.CustomFileNo;
 
@@ -217,8 +219,11 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
 
                     }
 
+                    
                     customsDocumentPM.IsSendToQueue = false;
+                    AppendLogLine("AddPerfectCustomsDocumentMetaDataValues");
                     myCustomsDocumentUpdateService.AddPerfectCustomsDocumentMetaDataValues(customsDocumentPM);
+                    AppendLogLine("myCustomsDocumentUpdateService.Update");
                     myCustomsDocumentUpdateService.Update(customsDocumentPM, true);
 
                     customsDocumentPM = myCustomsDocumentQueryService.GetSingle(this._LogitudeDocs.COM_ID, true, false);
@@ -229,6 +234,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
                     customsDocumentPM.ChangeSetOp = ChangeSetOperation.Update;
                     customsDocumentPM.IsSendToQueue = true;
                     myCustomsDocumentUpdateService.IgnoreSendFailure = true;
+                    AppendLogLine("myCustomsDocumentUpdateService.Update:IsSendToQueue = true");
                     myCustomsDocumentUpdateService.Update(customsDocumentPM, true);
 
                     AppendLogLine("after Update Document");
@@ -238,7 +244,10 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
                     throw new BusinessErrorException("Document with Id " + this._LogitudeDocs.COM_ID + " not found");
                 }
             }
-
+            else
+            {
+                AppendLogLine($"this._LogitudeDocs.COM_ID is null nothing done ");
+            }
             DeclarationUpdateService DeclarationUpdateService = new DeclarationUpdateService(dbContext, new Dictionary<string, IContext>(), ResolvedTenant());
             this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
             this._MyDeclarationPM.MarkAsChanged = true;

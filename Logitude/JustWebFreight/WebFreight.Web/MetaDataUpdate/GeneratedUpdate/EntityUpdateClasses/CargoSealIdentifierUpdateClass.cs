@@ -104,12 +104,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "CargoSealIdentifier",
-			      				    Code =  "3932",
+			      				    Code =  "481d",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
 			      				    ServerModuleName =  "Customs",
 			      				    NoTS =  false,
+			      				    NoDefaultFeatures =  false,
 			      				    HasMenuButtons =  false,
 			      				    AllowedForComputingPartners =  false,
 			      				    Code1 =  "0a7b",
@@ -118,6 +119,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
+			      				    IsTabsHidden =  false,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
@@ -189,6 +191,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsSpellCheckedHelpLocalDefaultText =  false,
 					  						IsSpellCheckedShortLocalDefaultText =  false,
 					  						IsSpellCheckedListLocalDefaultText =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -205,13 +208,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  9,
-					  						IsRequired =  false,
+					  						IsRequired =  true,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
+					  						SystemRequired =  true,
 					  						SystemMaxLength =  9,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
@@ -257,6 +260,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsSpellCheckedHelpLocalDefaultText =  false,
 					  						IsSpellCheckedShortLocalDefaultText =  false,
 					  						IsSpellCheckedListLocalDefaultText =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -325,6 +329,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsSpellCheckedHelpLocalDefaultText =  false,
 					  						IsSpellCheckedShortLocalDefaultText =  false,
 					  						IsSpellCheckedListLocalDefaultText =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -341,13 +346,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
 					  						MaxLength =  15,
-					  						IsRequired =  false,
+					  						IsRequired =  true,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
+					  						SystemRequired =  true,
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
@@ -392,6 +397,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsSpellCheckedHelpLocalDefaultText =  false,
 					  						IsSpellCheckedShortLocalDefaultText =  false,
 					  						IsSpellCheckedListLocalDefaultText =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -409,13 +415,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						LookUpTableName =  "Customs.Client",
 					  						MinLength =  0,
 					  						MaxLength =  15,
-					  						IsRequired =  false,
+					  						IsRequired =  true,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
+					  						SystemRequired =  true,
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
@@ -461,6 +467,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsSpellCheckedHelpLocalDefaultText =  false,
 					  						IsSpellCheckedShortLocalDefaultText =  false,
 					  						IsSpellCheckedListLocalDefaultText =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -478,13 +485,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						LookUpTableName =  "Customs.CargoIdentifireType",
 					  						MinLength =  0,
 					  						MaxLength =  2,
-					  						IsRequired =  false,
+					  						IsRequired =  true,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
+					  						SystemRequired =  true,
 					  						SystemMaxLength =  2,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
@@ -530,6 +537,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsSpellCheckedHelpLocalDefaultText =  false,
 					  						IsSpellCheckedShortLocalDefaultText =  false,
 					  						IsSpellCheckedListLocalDefaultText =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -597,6 +605,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsSpellCheckedHelpLocalDefaultText =  false,
 					  						IsSpellCheckedShortLocalDefaultText =  false,
 					  						IsSpellCheckedListLocalDefaultText =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -664,6 +673,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsSpellCheckedHelpLocalDefaultText =  false,
 					  						IsSpellCheckedShortLocalDefaultText =  false,
 					  						IsSpellCheckedListLocalDefaultText =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -731,6 +741,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsSpellCheckedHelpLocalDefaultText =  false,
 					  						IsSpellCheckedShortLocalDefaultText =  false,
 					  						IsSpellCheckedListLocalDefaultText =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -798,6 +809,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsSpellCheckedHelpLocalDefaultText =  false,
 					  						IsSpellCheckedShortLocalDefaultText =  false,
 					  						IsSpellCheckedListLocalDefaultText =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -866,6 +878,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsSpellCheckedHelpLocalDefaultText =  false,
 					  						IsSpellCheckedShortLocalDefaultText =  false,
 					  						IsSpellCheckedListLocalDefaultText =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -874,6 +887,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CargoSeals",
+					  						OldFieldName =  "CargoSeals",
 					  						IsNew =  true,
 					  						IsChecked =  true,
 					  						IsDeleted =  false,
@@ -896,6 +910,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "CargoSeals",
 					  						ListPropertyPath =  "CargoSeals",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -927,6 +942,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsSpellCheckedHelpLocalDefaultText =  false,
 					  						IsSpellCheckedShortLocalDefaultText =  false,
 					  						IsSpellCheckedListLocalDefaultText =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  

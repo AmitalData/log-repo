@@ -211,6 +211,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     Logitude.Customs.BL.EntityQueryServices.ConsignmentQueryService consignmentQueryService = new Logitude.Customs.BL.EntityQueryServices.ConsignmentQueryService(dirtyDeclarationPM.Tenant);
                     dirtyDeclarationPM.Consignments = consignmentQueryService.GetMulti(declarationKeys, true);
                 }
+
                 var myUnifrightDeclarationUpdateService = new UnifrightDeclarationUpdateService(dirtyDeclarationPM, dbOccDeclarationPM, loggingUserId);
                 myUnifrightDeclarationUpdateService.Update(doTask);
                 this._NO_LD2U = myUnifrightDeclarationUpdateService._NO_LD2U;
