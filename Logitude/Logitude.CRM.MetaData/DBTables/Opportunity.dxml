@@ -1,174 +1,443 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Table Name="Opportunities" Schema="dbo" DBType="Main">
-  <Column Name="Id" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="Opportunities"
+  Schema="dbo"
+  DBType="Main">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="OwnerId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
+  <Column
+    Name="OwnerId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="Subject" Type="nvarchar" Size="250">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Subject"
+    Type="nvarchar"
+    Size="250">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="CustomerId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
+  <Column
+    Name="CustomerId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="LeadSourceId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="LeadSourceId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="ContactId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ContactId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="EstimatedClosingDate" Type="datetime">
-    <Constraints Nullable="true" />
+  <Column
+    Name="EstimatedClosingDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="StageId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
+  <Column
+    Name="StageId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="Probability" Type="int">
-    <Constraints Nullable="true" />
+  <Column
+    Name="Probability"
+    Type="int">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="CreateDate" Type="datetime">
-    <Constraints Nullable="false" />
+  <Column
+    Name="CreateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="CreatedByUserId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
+  <Column
+    Name="CreatedByUserId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="UpdateDate" Type="datetime">
-    <Constraints Nullable="false" />
+  <Column
+    Name="UpdateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="UpdatedByUserId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
+  <Column
+    Name="UpdatedByUserId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="RatingCode" Type="varchar" Size="1">
-    <Constraints Nullable="false" />
+  <Column
+    Name="RatingCode"
+    Type="varchar"
+    Size="1">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="IsClosed" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="IsClosed"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="ActualClosingDate" Type="datetime">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ActualClosingDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="ClosingDescription" Type="nvarchar" Size="1000">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ClosingDescription"
+    Type="nvarchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="SearchFields" Type="nvarchar" Size="1000">
-    <Constraints Nullable="true" />
+  <Column
+    Name="SearchFields"
+    Type="nvarchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="NumberOfShipments" Type="int">
-    <Constraints Nullable="true" />
+  <Column
+    Name="NumberOfShipments"
+    Type="int">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="ValueField" Type="decimal" Precision="18" Scale="2">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ValueField"
+    Type="decimal"
+    Precision="18"
+    Scale="2">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="LastStageDate" Type="datetime">
-    <Constraints Nullable="true" />
+  <Column
+    Name="LastStageDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="LastStageIdBeforeClosure" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="LastStageIdBeforeClosure"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Field1" Type="nvarchar" Size="250">
-    <Constraints Nullable="true" />
+  <Column
+    Name="Field1"
+    Type="nvarchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Field2" Type="nvarchar" Size="250">
-    <Constraints Nullable="true" />
+  <Column
+    Name="Field2"
+    Type="nvarchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Field3" Type="nvarchar" Size="250">
-    <Constraints Nullable="true" />
+  <Column
+    Name="Field3"
+    Type="nvarchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Field4" Type="nvarchar" Size="250">
-    <Constraints Nullable="true" />
+  <Column
+    Name="Field4"
+    Type="nvarchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Field5" Type="nvarchar" Size="250">
-    <Constraints Nullable="true" />
+  <Column
+    Name="Field5"
+    Type="nvarchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Field6" Type="nvarchar" Size="250">
-    <Constraints Nullable="true" />
+  <Column
+    Name="Field6"
+    Type="nvarchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Field7" Type="nvarchar" Size="250">
-    <Constraints Nullable="true" />
+  <Column
+    Name="Field7"
+    Type="nvarchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Field8" Type="nvarchar" Size="250">
-    <Constraints Nullable="true" />
+  <Column
+    Name="Field8"
+    Type="nvarchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Field9" Type="nvarchar" Size="250">
-    <Constraints Nullable="true" />
+  <Column
+    Name="Field9"
+    Type="nvarchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Field10" Type="nvarchar" Size="250">
-    <Constraints Nullable="true" />
+  <Column
+    Name="Field10"
+    Type="nvarchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="LastCompletedActivityDate" Type="datetime">
-    <Constraints Nullable="true" />
+  <Column
+    Name="LastCompletedActivityDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="LeadDescription" Type="nvarchar" Size="100">
-    <Constraints Nullable="true" />
+  <Column
+    Name="LeadDescription"
+    Type="nvarchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="LastCompletedActivityTypeCode" Type="varchar" Size="2">
-    <Constraints Nullable="true" />
+  <Column
+    Name="LastCompletedActivityTypeCode"
+    Type="varchar"
+    Size="2">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="LastActivitySubject" Type="nvarchar" Size="255">
-    <Constraints Nullable="true" />
+  <Column
+    Name="LastActivitySubject"
+    Type="nvarchar"
+    Size="255">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="NextActivityDate" Type="datetime">
-    <Constraints Nullable="true" />
+  <Column
+    Name="NextActivityDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="NextActivityTypeCode" Type="varchar" Size="2">
-    <Constraints Nullable="true" />
+  <Column
+    Name="NextActivityTypeCode"
+    Type="varchar"
+    Size="2">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="NextActivitySubject" Type="nvarchar" Size="255">
-    <Constraints Nullable="true" />
+  <Column
+    Name="NextActivitySubject"
+    Type="nvarchar"
+    Size="255">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Notes" Type="nvarchar" Size="-1">
-    <Constraints Nullable="true" />
+  <Column
+    Name="Notes"
+    Type="nvarchar"
+    Size="-1">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="StageDueDate" Type="datetime">
-    <Constraints Nullable="true" />
+  <Column
+    Name="StageDueDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="BusinessUnitId" Type="varchar" Size="50">
-    <Constraints Nullable="false" />
+  <Column
+    Name="BusinessUnitId"
+    Type="varchar"
+    Size="50"
+    DefaultValue="'0'">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="LeadUserId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="LeadUserId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="LeadPartnerId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="LeadPartnerId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="AgentId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="AgentId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="ForeignClientId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ForeignClientId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="ConcurrencyGUID" Type="varchar" Size="40">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ConcurrencyGUID"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="ClosingReasonId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ClosingReasonId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="IsCancelled" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="IsCancelled"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="OpportunityTypeId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
+  <Column
+    Name="OpportunityTypeId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Relation ForeignKeyColumn="OwnerId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="CustomerId" ReferencedTable="Cards" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="LeadSourceId" ReferencedTable="LeadSources" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="ContactId" ReferencedTable="Contacts" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="StageId" ReferencedTable="Stages" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="CreatedByUserId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="UpdatedByUserId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="RatingCode" ReferencedTable="Ratings" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="LastStageIdBeforeClosure" ReferencedTable="Stages" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="LastCompletedActivityTypeCode" ReferencedTable="ActivityTypes" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="NextActivityTypeCode" ReferencedTable="ActivityTypes" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="BusinessUnitId" ReferencedTable="BusinessUnits" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="LeadUserId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="LeadPartnerId" ReferencedTable="Cards" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="AgentId" ReferencedTable="Cards" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="ForeignClientId" ReferencedTable="Cards" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="ClosingReasonId" ReferencedTable="OpportunityClosingReasons" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="OpportunityTypeId" ReferencedTable="OpportunityTypes" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="OwnerId"
+    ReferencedTable="Users"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="CustomerId"
+    ReferencedTable="Cards"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="LeadSourceId"
+    ReferencedTable="LeadSources"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ContactId"
+    ReferencedTable="Contacts"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="StageId"
+    ReferencedTable="Stages"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="CreatedByUserId"
+    ReferencedTable="Users"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="UpdatedByUserId"
+    ReferencedTable="Users"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="RatingCode"
+    ReferencedTable="Ratings"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="LastStageIdBeforeClosure"
+    ReferencedTable="Stages"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="LastCompletedActivityTypeCode"
+    ReferencedTable="ActivityTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="NextActivityTypeCode"
+    ReferencedTable="ActivityTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="BusinessUnitId"
+    ReferencedTable="BusinessUnits"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="LeadUserId"
+    ReferencedTable="Users"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="LeadPartnerId"
+    ReferencedTable="Cards"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="AgentId"
+    ReferencedTable="Cards"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ForeignClientId"
+    ReferencedTable="Cards"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ClosingReasonId"
+    ReferencedTable="OpportunityClosingReasons"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="OpportunityTypeId"
+    ReferencedTable="OpportunityTypes"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
 </Table>

@@ -1,77 +1,188 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Table Name="EventTypes" Schema="dbo" DBType="Main">
-  <Column Name="Id" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="EventTypes"
+  Schema="dbo"
+  DBType="Main">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="Code" Type="varchar" Size="4">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Code"
+    Type="varchar"
+    Size="4">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="AddedManually" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="AddedManually"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="EnglishName" Type="varchar" Size="40">
-    <Constraints Nullable="false" />
+  <Column
+    Name="EnglishName"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="LocalName" Type="nvarchar" Size="40">
-    <Constraints Nullable="true" />
+  <Column
+    Name="LocalName"
+    Type="nvarchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="IsManualEntry" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="IsManualEntry"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="EntityStatusId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="EntityStatusId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="ObjectTableId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
+  <Column
+    Name="ObjectTableId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="ShortView" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="ShortView"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="IsFollowUp" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="IsFollowUp"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="FollowUpEnglishName" Type="varchar" Size="40">
-    <Constraints Nullable="true" />
+  <Column
+    Name="FollowUpEnglishName"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="FollowUpLocalName" Type="nvarchar" Size="40">
-    <Constraints Nullable="true" />
+  <Column
+    Name="FollowUpLocalName"
+    Type="nvarchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="ManualActivatedFollowUp" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="ManualActivatedFollowUp"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="InActive" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="InActive"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="CustomerRoleId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="CustomerRoleId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="AgentRoleId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="AgentRoleId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="IsCustomerView" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="IsCustomerView"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="IsAgentView" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="IsAgentView"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="IsSharedLogisticsEnabled" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="IsSharedLogisticsEnabled"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="EventTypeCategoryCode" Type="nvarchar" Size="128">
-    <Constraints Nullable="true" />
+  <Column
+    Name="EventTypeCategoryCode"
+    Type="nvarchar"
+    Size="4">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="SearchFields" Type="nvarchar" Size="1000">
-    <Constraints Nullable="true" />
+  <Column
+    Name="SearchFields"
+    Type="nvarchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="AllowedInAutomation" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="AllowedInAutomation"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Relation ForeignKeyColumn="EntityStatusId" ReferencedTable="EntityStatus" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="ObjectTableId" ReferencedTable="ObjectTables" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="CustomerRoleId" ReferencedTable="Roles" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="AgentRoleId" ReferencedTable="Roles" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="EventTypeCategoryCode" ReferencedTable="EventTypeCategories" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="EntityStatusId"
+    ReferencedTable="EntityStatus"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ObjectTableId"
+    ReferencedTable="ObjectTables"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="CustomerRoleId"
+    ReferencedTable="Roles"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="AgentRoleId"
+    ReferencedTable="Roles"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="EventTypeCategoryCode"
+    ReferencedTable="EventTypeCategories"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Index
+    Columns="Tenant" />
+  <Index
+    Columns="Tenant,Code,ObjectTableId" />
+  <UniqueConstraint
+    Columns="Tenant,Code,ObjectTableId" />
 </Table>

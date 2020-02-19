@@ -1,135 +1,337 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Table Name="CommunicationLogs" Schema="dbo" DBType="Main">
-  <Column Name="Id" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="CommunicationLogs"
+  Schema="dbo"
+  DBType="Main">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="CreateDate" Type="datetime">
-    <Constraints Nullable="false" />
+  <Column
+    Name="CreateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="CreateDateUTC" Type="datetime">
-    <Constraints Nullable="false" />
+  <Column
+    Name="CreateDateUTC"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="DoneDate" Type="datetime">
-    <Constraints Nullable="true" />
+  <Column
+    Name="DoneDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="DoneDateUTC" Type="datetime">
-    <Constraints Nullable="true" />
+  <Column
+    Name="DoneDateUTC"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="LastStatusDate" Type="datetime">
-    <Constraints Nullable="false" />
+  <Column
+    Name="LastStatusDate"
+    Type="datetime"
+    DefaultValue="CurrentDate">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="LastStatusDateUTC" Type="datetime">
-    <Constraints Nullable="false" />
+  <Column
+    Name="LastStatusDateUTC"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="NextTryDateTime" Type="datetime">
-    <Constraints Nullable="true" />
+  <Column
+    Name="NextTryDateTime"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="NextTryDateTimeUTC" Type="datetime">
-    <Constraints Nullable="true" />
+  <Column
+    Name="NextTryDateTimeUTC"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="CommunicationLogTypeCode" Type="varchar" Size="4">
-    <Constraints Nullable="false" />
+  <Column
+    Name="CommunicationLogTypeCode"
+    Type="varchar"
+    Size="4">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="CommunicationStatusTypeCode" Type="varchar" Size="4">
-    <Constraints Nullable="false" />
+  <Column
+    Name="CommunicationStatusTypeCode"
+    Type="varchar"
+    Size="4">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="Subject" Type="nvarchar" Size="500">
-    <Constraints Nullable="true" />
+  <Column
+    Name="Subject"
+    Type="nvarchar"
+    Size="500">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="InOut" Type="varchar" Size="3">
-    <Constraints Nullable="false" />
+  <Column
+    Name="InOut"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="EntityId" Type="varchar" Size="40">
-    <Constraints Nullable="true" />
+  <Column
+    Name="EntityId"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="CC" Type="varchar" Size="4000">
-    <Constraints Nullable="true" />
+  <Column
+    Name="CC"
+    Type="varchar"
+    Size="4000">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="ObjectTableId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ObjectTableId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="DocumentOutId" Type="varchar" Size="40">
-    <Constraints Nullable="true" />
+  <Column
+    Name="DocumentOutId"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="DocumentsFilingId" Type="varchar" Size="40">
-    <Constraints Nullable="true" />
+  <Column
+    Name="DocumentsFilingId"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="CreatedByUserId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="CreatedByUserId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="DocumentId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
+  <Column
+    Name="DocumentId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="To" Type="varchar" Size="4000">
-    <Constraints Nullable="true" />
+  <Column
+    Name="To"
+    Type="varchar"
+    Size="4000">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Retries" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Retries"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="BCC" Type="varchar" Size="4000">
-    <Constraints Nullable="true" />
+  <Column
+    Name="BCC"
+    Type="varchar"
+    Size="4000">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="From" Type="varchar" Size="1000">
-    <Constraints Nullable="true" />
+  <Column
+    Name="From"
+    Type="varchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="SearchFields" Type="nvarchar" Size="1000">
-    <Constraints Nullable="true" />
+  <Column
+    Name="SearchFields"
+    Type="nvarchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="EntityReference" Type="varchar" Size="50">
-    <Constraints Nullable="true" />
+  <Column
+    Name="EntityReference"
+    Type="varchar"
+    Size="50">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="ExceptionMessage" Type="nvarchar" Size="-1">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ExceptionMessage"
+    Type="nvarchar"
+    Size="-1">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Logs" Type="nvarchar" Size="-1">
-    <Constraints Nullable="true" />
+  <Column
+    Name="Logs"
+    Type="nvarchar"
+    Size="-1">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="CorrelationID" Type="varchar" Size="64">
-    <Constraints Nullable="true" />
+  <Column
+    Name="CorrelationID"
+    Type="varchar"
+    Size="64">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="ResponseDocumentId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ResponseDocumentId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Priority" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Priority"
+    Type="int"
+    DefaultValue="0">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="QueueName" Type="varchar" Size="100">
-    <Constraints Nullable="true" />
+  <Column
+    Name="QueueName"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="MessageLockId" Type="varchar" Size="40">
-    <Constraints Nullable="true" />
+  <Column
+    Name="MessageLockId"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="AWBNumber" Type="varchar" Size="20">
-    <Constraints Nullable="true" />
+  <Column
+    Name="AWBNumber"
+    Type="varchar"
+    Size="20">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="ReplyToList" Type="varchar" Size="500">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ReplyToList"
+    Type="varchar"
+    Size="500">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="ChildEntityId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ChildEntityId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="ChildObjectTableId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ChildObjectTableId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="LogSettings" Type="varchar" Size="350">
-    <Constraints Nullable="true" />
+  <Column
+    Name="LogSettings"
+    Type="varchar"
+    Size="350">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="IsSecured" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="IsSecured"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="EmailDeliveryError" Type="nvarchar" Size="-1">
-    <Constraints Nullable="true" />
+  <Column
+    Name="EmailDeliveryError"
+    Type="nvarchar"
+    Size="-1">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Relation ForeignKeyColumn="Tenant" ReferencedTable="Tenants" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="CommunicationLogTypeCode" ReferencedTable="CommunicationLogTypes" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="CommunicationStatusTypeCode" ReferencedTable="CommunicationStatusTypes" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="ObjectTableId" ReferencedTable="ObjectTables" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="DocumentOutId" ReferencedTable="DocumentOuts" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="DocumentsFilingId" ReferencedTable="DocumentsFilings" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="CreatedByUserId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="DocumentId" ReferencedTable="Documents" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="ResponseDocumentId" ReferencedTable="Documents" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="Tenant"
+    ReferencedTable="Tenants"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="CommunicationLogTypeCode"
+    ReferencedTable="CommunicationLogTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="CommunicationStatusTypeCode"
+    ReferencedTable="CommunicationStatusTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ObjectTableId"
+    ReferencedTable="ObjectTables"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="DocumentOutId"
+    ReferencedTable="DocumentOuts"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="DocumentsFilingId"
+    ReferencedTable="DocumentsFilings"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="CreatedByUserId"
+    ReferencedTable="Users"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="DocumentId"
+    ReferencedTable="Documents"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ResponseDocumentId"
+    ReferencedTable="Documents"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Index
+    Columns="CreateDateUTC" />
+  <Index
+    Columns="EntityId" />
+  <Index
+    Columns="CreateDate" />
+  <Index
+    Columns="CreateDateUTC,CommunicationStatusTypeCode" />
 </Table>

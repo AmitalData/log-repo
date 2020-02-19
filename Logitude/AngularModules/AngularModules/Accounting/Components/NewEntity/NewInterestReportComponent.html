@@ -25,20 +25,21 @@
                                 </td>
                                 <td><div></div></td>
                             </tr>
-                            <!-- GLAccountId -->
+                            <!-- CustomerId -->
                             <tr class="FormFieldRow">
                                 <td>
-                                    <LogLabel [ObjectFieldName]="'GLAccountId'" [ObjectTableName]="ObjectTableName"
+                                    <LogLabel [ObjectFieldName]="'CustomerId'" [ObjectTableName]="ObjectTableName"
                                               [DataContext]="DataContext"></LogLabel>
                                 </td>
 
                                 <td>
-                                    <LogLov [ObjectFieldName]="'GLAccountId'"
+                                    <LogLov [ObjectFieldName]="'CustomerId'"
+                                            [SelectedValue]="CustomerId"
                                             [ObjectTableName]="ObjectTableName"
                                             [DataContext]="DataContext"
-                                            [LookUpTableName]="'GLAccount'"
-                                            [DependencyFilter2Value]="'2'"
-                                            [HideColumns]="true">
+                                            [LookUpTableName]="'Card'"
+                                            [DependencyFilter1Value]="'CS'"
+                                            [HideLastColumn]="true">
                                     </LogLov>
                                 </td>
                                 <td><div></div></td>

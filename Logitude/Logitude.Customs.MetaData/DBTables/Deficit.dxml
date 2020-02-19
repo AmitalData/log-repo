@@ -1,35 +1,84 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Table Name="Deficits" Schema="Customs" DBType="Main">
-  <Column Name="Id" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="Deficits"
+  Schema="Customs"
+  DBType="Main">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="NotificationTypeCode" Type="varchar" Size="2">
-    <Constraints Nullable="true" />
+  <Column
+    Name="NotificationTypeCode"
+    Type="varchar"
+    Size="2">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="DebtNotificationNumber" Type="varchar" Size="9">
-    <Constraints Nullable="true" />
+  <Column
+    Name="DebtNotificationNumber"
+    Type="varchar"
+    Size="9">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="ProductionDate" Type="datetime">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ProductionDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="DebtNotificationReason" Type="nvarchar" Size="512">
-    <Constraints Nullable="true" />
+  <Column
+    Name="DebtNotificationReason"
+    Type="nvarchar"
+    Size="512">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="RealesGoodsDescription" Type="nvarchar" Size="512">
-    <Constraints Nullable="true" />
+  <Column
+    Name="RealesGoodsDescription"
+    Type="nvarchar"
+    Size="512">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="ValidityDateTo" Type="datetime">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ValidityDateTo"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="PaymentOrderNumber" Type="varchar" Size="9">
-    <Constraints Nullable="true" />
+  <Column
+    Name="PaymentOrderNumber"
+    Type="varchar"
+    Size="9">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="TapagId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="TapagId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Relation ForeignKeyColumn="NotificationTypeCode" ReferencedTable="DebtNotificationTypes" ReferencedColumn="Code" ReferencedTableSchema="Customs" />
-  <Relation ForeignKeyColumn="TapagId" ReferencedTable="Tapags" ReferencedColumn="Id" ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="NotificationTypeCode"
+    ReferencedTable="DebtNotificationTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="TapagId"
+    ReferencedTable="Tapags"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="Customs" />
 </Table>

@@ -1,29 +1,73 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Table Name="SupplierInvoiceItemVehicleMods" Schema="Customs" DBType="Main">
-  <Column Name="DeclarationId" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="SupplierInvoiceItemVehicleMods"
+  Schema="Customs"
+  DBType="Main">
+  <Column
+    Name="DeclarationId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="InvoiceCounterKey" Type="int">
-    <Constraints PrimaryKey="true" Nullable="false" />
+  <Column
+    Name="InvoiceCounterKey"
+    Type="int">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="InvoiceItemLineNumber" Type="int">
-    <Constraints PrimaryKey="true" Nullable="false" />
+  <Column
+    Name="InvoiceItemLineNumber"
+    Type="int">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="VehicleLineNumber" Type="int">
-    <Constraints PrimaryKey="true" Nullable="false" />
+  <Column
+    Name="VehicleLineNumber"
+    Type="int">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="LineNumber" Type="int">
-    <Constraints PrimaryKey="true" Nullable="false" />
+  <Column
+    Name="LineNumber"
+    Type="int">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="AdjustmentTypeCode" Type="varchar" Size="4">
-    <Constraints Nullable="true" />
+  <Column
+    Name="AdjustmentTypeCode"
+    Type="varchar"
+    Size="4">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="DeductAmount" Type="decimal" Precision="16" Scale="2">
-    <Constraints Nullable="true" />
+  <Column
+    Name="DeductAmount"
+    Type="decimal"
+    Precision="16"
+    Scale="2">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Relation ForeignKeyColumn="DeclarationId,InvoiceCounterKey,InvoiceItemLineNumber,VehicleLineNumber" ReferencedTable="SupplierInvoiceItemVehicles" ReferencedColumn="DeclarationId,InvoiceCounterKey,InvoiceItemLineNumber,LineNumber" ReferencedTableSchema="Customs" />
-  <Relation ForeignKeyColumn="AdjustmentTypeCode" ReferencedTable="VehicleReductionTypes" ReferencedColumn="Code" ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="DeclarationId,InvoiceCounterKey,InvoiceItemLineNumber,VehicleLineNumber"
+    ReferencedTable="SupplierInvoiceItemVehicles"
+    ReferencedColumn="DeclarationId,InvoiceCounterKey,InvoiceItemLineNumber,LineNumber"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="AdjustmentTypeCode"
+    ReferencedTable="VehicleReductionTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
 </Table>

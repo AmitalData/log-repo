@@ -937,6 +937,11 @@ namespace Logitude.DBMigrations.Models
             else if (IsTableHasPrimaryKeys(DXMLTable))
             {
                 string primaryKeyConstraintName = "PK_" + TableMigrations.DxmlTableName + "_" + GenerateRandomString();
+                if(primaryKeyConstraintName.Length > 128)
+                {
+                    primaryKeyConstraintName = primaryKeyConstraintName.Substring(0, 128);
+                }
+
                 alterPrimaryKeyScript += GetAddPrimaryKeyConstraintScript(primaryKeyConstraintName); 
             }
             return alterPrimaryKeyScript;
@@ -1072,6 +1077,11 @@ namespace Logitude.DBMigrations.Models
             string tableName = "[" + DXMLTable.Schema + "].[" + DXMLTable.Name + "]";
             string createIndexScript = "-- Create Index On " + DXMLTable.Name + " Table\n";
             string indexName = "IX_" + DXMLTable.Name + "_" + (!indexColumns.Contains(",") ? indexColumns : string.Join("_", indexColumns.Split(',').ToArray())).Replace("[", String.Empty).Replace("]", String.Empty);
+            if(indexName.Length > 128)
+            {
+                indexName = indexName.Substring(0, 128);
+            }
+
             if (includeColumns != null)
             {
                 createIndexScript += "EXEC('CREATE NONCLUSTERED INDEX " + "[" + indexName + "]" + " ON " + tableName + "(" + indexColumns + ") INCLUDE(" + includeColumns + ")')";
@@ -1094,6 +1104,11 @@ namespace Logitude.DBMigrations.Models
             string tableName = "[" + DXMLTable.Schema + "].[" + DXMLTable.Name + "]";
             string createUniqueConstraintScript = "-- Create Unique Constraint On " + DXMLTable.Name + " Table\n";
             string uniqueConstraintName = "UQ_" + DXMLTable.Name + "_" + (!uniqueConstraintColumns.Contains(",") ? uniqueConstraintColumns : string.Join("_", uniqueConstraintColumns.Split(',').ToArray())).Replace("[", String.Empty).Replace("]", String.Empty);
+            if (uniqueConstraintName.Length > 128)
+            {
+                uniqueConstraintName = uniqueConstraintName.Substring(0, 128);
+            }
+
             createUniqueConstraintScript += "EXEC('ALTER TABLE " + tableName + " ADD CONSTRAINT " + "[" + uniqueConstraintName + "]" + " UNIQUE(" + uniqueConstraintColumns + ")')";
 
             createUniqueConstraintScript += ";\n\n";

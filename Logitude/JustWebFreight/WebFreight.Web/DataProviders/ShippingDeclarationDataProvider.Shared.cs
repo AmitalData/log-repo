@@ -425,6 +425,7 @@ namespace WebFreight.Web.DataProviders
 
         public string NotifyContactDetails { get; set; }      
         public string FullPickupAddress { get; set; }
+        public string PickupFromPartnerName { get; set; }
         public double? ChargeableWeight { get; set; }
         public string ChargeableWeightUnitCode { get; set; }
 
@@ -445,5 +446,8 @@ namespace WebFreight.Web.DataProviders
         public string PickUpInstructions { get; set; }
         public string DeliveryInstructions { get; set; }
         public string ConnectedQuoteNumber { get; set; }
+
+        public byte[] MainCarriageCarrierLogo { get; set; }
+
     }
 }

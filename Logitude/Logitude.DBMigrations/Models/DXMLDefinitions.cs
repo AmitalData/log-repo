@@ -13,5 +13,7 @@ namespace Logitude.DBMigrations.Models
         public List<DXMLView> DXMLViews { get; set; }
 
         public List<DXMLProcedure> DXMLProcedures { get; set; }
+
+        public List<DXMLTrigger> DXMLTriggers { get; set; }
     }
 }

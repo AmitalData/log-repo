@@ -1,45 +1,111 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Table Name="CustomBanks" Schema="Customs" DBType="Main">
-  <Column Name="Id" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="CustomBanks"
+  Schema="Customs"
+  DBType="Main">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="InternalCode" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
+  <Column
+    Name="InternalCode"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="BankCode" Type="varchar" Size="2">
-    <Constraints Nullable="true" />
+  <Column
+    Name="BankCode"
+    Type="varchar"
+    Size="2">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="BranchCode" Type="varchar" Size="3">
-    <Constraints Nullable="true" />
+  <Column
+    Name="BranchCode"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="AccountNumber" Type="varchar" Size="11">
-    <Constraints Nullable="true" />
+  <Column
+    Name="AccountNumber"
+    Type="varchar"
+    Size="11">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="LocalName" Type="nvarchar" Size="30">
-    <Constraints Nullable="true" />
+  <Column
+    Name="LocalName"
+    Type="nvarchar"
+    Size="30">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="EnglishName" Type="varchar" Size="30">
-    <Constraints Nullable="true" />
+  <Column
+    Name="EnglishName"
+    Type="varchar"
+    Size="30">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="InActive" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="InActive"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="PayerTypeCode" Type="varchar" Size="2">
-    <Constraints Nullable="true" />
+  <Column
+    Name="PayerTypeCode"
+    Type="varchar"
+    Size="2">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="BankAddress" Type="nvarchar" Size="1024">
-    <Constraints Nullable="true" />
+  <Column
+    Name="BankAddress"
+    Type="nvarchar"
+    Size="1024">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="SearchFields" Type="nvarchar" Size="1000">
-    <Constraints Nullable="true" />
+  <Column
+    Name="SearchFields"
+    Type="nvarchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="CustomsBranchId" Type="varchar" Size="6">
-    <Constraints Nullable="true" />
+  <Column
+    Name="CustomsBranchId"
+    Type="varchar"
+    Size="6">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Relation ForeignKeyColumn="BankCode" ReferencedTable="Banks" ReferencedColumn="Code" ReferencedTableSchema="Customs" />
-  <Relation ForeignKeyColumn="PayerTypeCode" ReferencedTable="CustomerActivityTypes" ReferencedColumn="Code" ReferencedTableSchema="Customs" />
-  <Relation ForeignKeyColumn="CustomsBranchId" ReferencedTable="CustomsBranches" ReferencedColumn="Id" ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="BankCode"
+    ReferencedTable="Banks"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="PayerTypeCode"
+    ReferencedTable="CustomerActivityTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="CustomsBranchId"
+    ReferencedTable="CustomsBranches"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="Customs" />
 </Table>

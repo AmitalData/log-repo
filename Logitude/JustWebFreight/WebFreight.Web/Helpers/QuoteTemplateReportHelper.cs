@@ -3431,7 +3431,8 @@ namespace Logitude.BL.Helpers
                 {
                     double value = (double)chargePM.SaleUnitPrice;
                     saleUnitPriceValues = value.ToString("N"); // 1,234.512
-                    saleUnitPriceValues += " " + chargePM.CurrencyCode;
+                    string saleUnitPriceCurrency = chargePM.SaleMeasurementCode == "PRFR" ? "%" : chargePM.CurrencyCode;
+                    saleUnitPriceValues += " " + saleUnitPriceCurrency;
                 }
                 if (included)
                 {

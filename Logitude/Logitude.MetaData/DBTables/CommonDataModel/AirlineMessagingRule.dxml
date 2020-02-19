@@ -1,43 +1,113 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Table Name="AirlineMessagingRules" Schema="dbo" DBType="Main">
-  <Column Name="Id" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="AirlineMessagingRules"
+  Schema="dbo"
+  DBType="Main">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="MessageTypeCode" Type="varchar" Size="3">
-    <Constraints Nullable="false" />
+  <Column
+    Name="MessageTypeCode"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="RuleFieldId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
+  <Column
+    Name="RuleFieldId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="IsMandatoryForSending" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="IsMandatoryForSending"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="MaxSize" Type="int">
-    <Constraints Nullable="true" />
+  <Column
+    Name="MaxSize"
+    Type="int">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="AirlineId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
+  <Column
+    Name="AirlineId"
+    Type="varchar"
+    Size="15"
+    DefaultValue="''">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="InActive" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="InActive"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="CreatedByUserId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="CreatedByUserId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="CreateDate" Type="datetime">
-    <Constraints Nullable="true" />
+  <Column
+    Name="CreateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="UpdatedByUserId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="UpdatedByUserId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="UpdateDate" Type="datetime">
-    <Constraints Nullable="true" />
+  <Column
+    Name="RuleFieldCode"
+    Type="varchar"
+    Size="200">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Relation ForeignKeyColumn="RuleFieldId" ReferencedTable="ObjectFields" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="AirlineId" ReferencedTable="Cards" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="CreatedByUserId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="UpdatedByUserId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Column
+    Name="UpdateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Relation
+    ForeignKeyColumn="RuleFieldId"
+    ReferencedTable="ObjectFields"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="AirlineId"
+    ReferencedTable="Cards"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="CreatedByUserId"
+    ReferencedTable="Users"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="UpdatedByUserId"
+    ReferencedTable="Users"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
 </Table>

@@ -1,17 +1,45 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Table Name="CustomsDocumentMetaDataValues" Schema="Customs" DBType="Main">
-  <Column Name="CustomsDocumentId" Type="varchar" Size="40">
-    <Constraints PrimaryKey="true" Nullable="false" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="CustomsDocumentMetaDataValues"
+  Schema="Customs"
+  DBType="Main">
+  <Column
+    Name="CustomsDocumentId"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="MetaDataTypeCode" Type="varchar" Size="6">
-    <Constraints PrimaryKey="true" Nullable="false" />
+  <Column
+    Name="MetaDataTypeCode"
+    Type="varchar"
+    Size="6">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="MetaDataValue" Type="varchar" Size="128">
-    <Constraints Nullable="true" />
+  <Column
+    Name="MetaDataValue"
+    Type="varchar"
+    Size="128">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Relation ForeignKeyColumn="CustomsDocumentId" ReferencedTable="CustomsDocuments" ReferencedColumn="DocumentsFilingId" ReferencedTableSchema="Customs" />
-  <Relation ForeignKeyColumn="MetaDataTypeCode" ReferencedTable="CustomMetaDataTypes" ReferencedColumn="Code" ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="CustomsDocumentId"
+    ReferencedTable="CustomsDocuments"
+    ReferencedColumn="DocumentsFilingId"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="MetaDataTypeCode"
+    ReferencedTable="CustomMetaDataTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
 </Table>

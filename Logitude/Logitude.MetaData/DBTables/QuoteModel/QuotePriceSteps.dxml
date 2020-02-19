@@ -1,29 +1,68 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Table Name="QuotePriceSteps" Schema="dbo" DBType="Main">
-  <Column Name="Id" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="QuotePriceSteps"
+  Schema="dbo"
+  DBType="Main">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="CostUnitPrice" Type="float">
-    <Constraints Nullable="true" />
+  <Column
+    Name="CostUnitPrice"
+    Type="float">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="SaleUnitPrice" Type="float">
-    <Constraints Nullable="true" />
+  <Column
+    Name="SaleUnitPrice"
+    Type="float">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Step" Type="float">
-    <Constraints Nullable="true" />
+  <Column
+    Name="Step"
+    Type="float">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="MarkupValue" Type="float">
-    <Constraints Nullable="true" />
+  <Column
+    Name="MarkupValue"
+    Type="float">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="QuoteId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
+  <Column
+    Name="QuoteId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="QuoteChargeId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="QuoteChargeId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Relation ForeignKeyColumn="QuoteId" ReferencedTable="Quotes" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="QuoteChargeId" ReferencedTable="QuoteCharges" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="QuoteId"
+    ReferencedTable="Quotes"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="QuoteChargeId"
+    ReferencedTable="QuoteCharges"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
 </Table>

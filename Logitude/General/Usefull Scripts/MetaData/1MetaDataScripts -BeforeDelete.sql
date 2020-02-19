@@ -1,3 +1,7 @@
+
+----------------------------------------------------------------Run automation Update before delete 
+
+
 ----MetaData All Scripts: Never Apply these scripts
 
 ----*--Before Delete--*--
@@ -20,6 +24,8 @@
 --update ObjectTables set HeaderScreenCode = (select Code from Screens where Id=ObjectTables.HeaderScreenId) where tenant!=0
 
 ----Queries
+  --update Queries set UniqueCode = (select ObjectTables.Name from ObjectTables where Id= Queries.ObjectTableId)+'.'+Queries.UserId+'.'+Queries.Code where  userid is not null;
+  --update Queries set UniqueCode = (select ObjectTables.Name from ObjectTables where Id= Queries.ObjectTableId)+'.'+Queries.Code where Tenant = 0 and userid is null;
 --update Queries set OriginalQueryCode = (select q1.UniqueCode from Queries q1 where q1.Id = Queries.OriginalQueryId)
 --update AdvancedQueryFilters set QueryCode = (select Queries.UniqueCode from Queries where Id = AdvancedQueryFilters.QueryId)
 --update QueryColumns set QueryCode = (select Queries.UniqueCode from Queries where Id = QueryColumns.QueryId)

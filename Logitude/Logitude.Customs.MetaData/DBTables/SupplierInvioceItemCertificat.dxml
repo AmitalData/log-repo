@@ -1,53 +1,135 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Table Name="SupplierInvioceItemCertificats" Schema="Customs" DBType="Main">
-  <Column Name="DeclarationId" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="SupplierInvioceItemCertificats"
+  Schema="Customs"
+  DBType="Main">
+  <Column
+    Name="DeclarationId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="InvoiceCounterKey" Type="int">
-    <Constraints PrimaryKey="true" Nullable="false" />
+  <Column
+    Name="InvoiceCounterKey"
+    Type="int">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="LineNumber" Type="int">
-    <Constraints PrimaryKey="true" Nullable="false" />
+  <Column
+    Name="LineNumber"
+    Type="int">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="ItemCertificateCounterKey" Type="int">
-    <Constraints PrimaryKey="true" Nullable="false" />
+  <Column
+    Name="ItemCertificateCounterKey"
+    Type="int">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="CertificateNumber" Type="varchar" Size="35">
-    <Constraints Nullable="true" />
+  <Column
+    Name="CertificateNumber"
+    Type="varchar"
+    Size="35">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="ReqConfirmationTypeCode" Type="varchar" Size="4">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ReqConfirmationTypeCode"
+    Type="varchar"
+    Size="4">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="CertificateExemptionTypeCode" Type="varchar" Size="3">
-    <Constraints Nullable="true" />
+  <Column
+    Name="CertificateExemptionTypeCode"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="AttachmentTypeCode" Type="varchar" Size="3">
-    <Constraints Nullable="true" />
+  <Column
+    Name="AttachmentTypeCode"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="ResConfirmationTypeCode" Type="varchar" Size="4">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ResConfirmationTypeCode"
+    Type="varchar"
+    Size="4">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="CustomsAttachmentID" Type="varchar" Size="35">
-    <Constraints Nullable="true" />
+  <Column
+    Name="CustomsAttachmentID"
+    Type="varchar"
+    Size="35">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="SequenceNumeric" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="SequenceNumeric"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="ExternalCertificatCode" Type="varchar" Size="8">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ExternalCertificatCode"
+    Type="varchar"
+    Size="8">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="ExternalRequestTypeCode" Type="varchar" Size="4">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ExternalRequestTypeCode"
+    Type="varchar"
+    Size="4">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="ApprovalRequestNumber" Type="varchar" Size="50">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ApprovalRequestNumber"
+    Type="varchar"
+    Size="50">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Relation ForeignKeyColumn="DeclarationId,InvoiceCounterKey,LineNumber" ReferencedTable="SupplierInvoiceItems" ReferencedColumn="DeclarationId,CounterKey,LineNumber" ReferencedTableSchema="Customs" />
-  <Relation ForeignKeyColumn="ReqConfirmationTypeCode" ReferencedTable="ConfirmationTypes" ReferencedColumn="Code" ReferencedTableSchema="Customs" />
-  <Relation ForeignKeyColumn="CertificateExemptionTypeCode" ReferencedTable="CertificateExemptionTypes" ReferencedColumn="Code" ReferencedTableSchema="Customs" />
-  <Relation ForeignKeyColumn="AttachmentTypeCode" ReferencedTable="AttachmentTypes" ReferencedColumn="Code" ReferencedTableSchema="Customs" />
-  <Relation ForeignKeyColumn="ResConfirmationTypeCode" ReferencedTable="ConfirmationTypes" ReferencedColumn="Code" ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="DeclarationId,InvoiceCounterKey,LineNumber"
+    ReferencedTable="SupplierInvoiceItems"
+    ReferencedColumn="DeclarationId,CounterKey,LineNumber"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="ReqConfirmationTypeCode"
+    ReferencedTable="ConfirmationTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="CertificateExemptionTypeCode"
+    ReferencedTable="CertificateExemptionTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="AttachmentTypeCode"
+    ReferencedTable="AttachmentTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="ResConfirmationTypeCode"
+    ReferencedTable="ConfirmationTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
 </Table>

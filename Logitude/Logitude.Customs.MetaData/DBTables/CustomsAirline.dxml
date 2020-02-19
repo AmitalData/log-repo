@@ -1,30 +1,68 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Table Name="CustomsAirlines" Schema="Customs" DBType="Main">
-  <Column Name="Id" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="CustomsAirlines"
+  Schema="Customs"
+  DBType="Main">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="AirlineCode" Type="varchar" Size="2">
-    <Constraints Nullable="false" />
+  <Column
+    Name="AirlineCode"
+    Type="varchar"
+    Size="2">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="LocalName" Type="nvarchar" Size="100">
-    <Constraints Nullable="true" />
+  <Column
+    Name="LocalName"
+    Type="nvarchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="EnglishName" Type="varchar" Size="70">
-    <Constraints Nullable="true" />
+  <Column
+    Name="EnglishName"
+    Type="varchar"
+    Size="70">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="InActive" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="InActive"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="SearchFields" Type="nvarchar" Size="500">
-    <Constraints Nullable="true" />
+  <Column
+    Name="SearchFields"
+    Type="nvarchar"
+    Size="500">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="AirlinePrefix" Type="varchar" Size="3">
-    <Constraints Nullable="false" />
+  <Column
+    Name="AirlinePrefix"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="ICAO" Type="varchar" Size="3">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ICAO"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
   </Column>
 </Table>

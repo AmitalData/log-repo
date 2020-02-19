@@ -2051,6 +2051,18 @@
     <Compile Include="Migrations\202001301242182_addShipmentNumberColumnInTransferHistory.Designer.cs">
       <DependentUpon>202001301242182_addShipmentNumberColumnInTransferHistory.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202002130847310_Mutaz_Add_CustomerFiled_To_InterestReport.cs" />
+    <Compile Include="Migrations\202002130847310_Mutaz_Add_CustomerFiled_To_InterestReport.Designer.cs">
+      <DependentUpon>202002130847310_Mutaz_Add_CustomerFiled_To_InterestReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202002130920422_Mutaz_Update_Field_CustomerId_In_InterestReport.cs" />
+    <Compile Include="Migrations\202002130920422_Mutaz_Update_Field_CustomerId_In_InterestReport.Designer.cs">
+      <DependentUpon>202002130920422_Mutaz_Update_Field_CustomerId_In_InterestReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202002130933146_Mutaz_Update_CustomerId_Required_In_InterestReport.cs" />
+    <Compile Include="Migrations\202002130933146_Mutaz_Update_CustomerId_Required_In_InterestReport.Designer.cs">
+      <DependentUpon>202002130933146_Mutaz_Update_CustomerId_Required_In_InterestReport.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\202002160701461_ar_ap_payment_customfields.cs" />
     <Compile Include="Migrations\202002160701461_ar_ap_payment_customfields.Designer.cs">
       <DependentUpon>202002160701461_ar_ap_payment_customfields.cs</DependentUpon>
@@ -3709,6 +3721,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202001301242182_addShipmentNumberColumnInTransferHistory.resx">
       <DependentUpon>202001301242182_addShipmentNumberColumnInTransferHistory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002130847310_Mutaz_Add_CustomerFiled_To_InterestReport.resx">
+      <DependentUpon>202002130847310_Mutaz_Add_CustomerFiled_To_InterestReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002130920422_Mutaz_Update_Field_CustomerId_In_InterestReport.resx">
+      <DependentUpon>202002130920422_Mutaz_Update_Field_CustomerId_In_InterestReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002130933146_Mutaz_Update_CustomerId_Required_In_InterestReport.resx">
+      <DependentUpon>202002130933146_Mutaz_Update_CustomerId_Required_In_InterestReport.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202002160701461_ar_ap_payment_customfields.resx">
       <DependentUpon>202002160701461_ar_ap_payment_customfields.cs</DependentUpon>

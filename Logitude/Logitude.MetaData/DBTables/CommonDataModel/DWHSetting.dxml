@@ -1,24 +1,53 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Table Name="DWHSettings" Schema="dbo" DBType="Main">
-  <Column Name="Tenant" Type="int">
-    <Constraints PrimaryKey="true" Nullable="false" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="DWHSettings"
+  Schema="dbo"
+  DBType="Main">
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="ParentTenant" Type="int">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ParentTenant"
+    Type="int">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Server" Type="varchar" Size="200">
-    <Constraints Nullable="true" />
+  <Column
+    Name="Server"
+    Type="varchar"
+    Size="200">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="UserName" Type="varchar" Size="200">
-    <Constraints Nullable="true" />
+  <Column
+    Name="UserName"
+    Type="varchar"
+    Size="200">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Password" Type="varchar" Size="200">
-    <Constraints Nullable="true" />
+  <Column
+    Name="Password"
+    Type="varchar"
+    Size="200">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Catalog" Type="varchar" Size="200">
-    <Constraints Nullable="true" />
+  <Column
+    Name="Catalog"
+    Type="varchar"
+    Size="200">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="IsParentTenant" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="IsParentTenant"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
 </Table>

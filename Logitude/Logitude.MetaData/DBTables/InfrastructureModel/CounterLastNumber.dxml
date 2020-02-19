@@ -1,15 +1,32 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Table Name="CounterLastNumbers" Schema="dbo" DBType="Main">
-  <Column Name="Id" Type="int">
-    <Constraints PrimaryKey="true" Nullable="false" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="CounterLastNumbers"
+  Schema="dbo"
+  DBType="Main">
+  <Column
+    Name="Id"
+    Type="int">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="TableName" Type="varchar" Size="40">
-    <Constraints Nullable="false" />
+  <Column
+    Name="TableName"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="LastNumber" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="LastNumber"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
 </Table>

@@ -1,22 +1,52 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Table Name="CustomsExchangeRates" Schema="Customs" DBType="Main">
-  <Column Name="Id" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="CustomsExchangeRates"
+  Schema="Customs"
+  DBType="Main">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="CurrencyTypeCode" Type="varchar" Size="3">
-    <Constraints Nullable="true" />
+  <Column
+    Name="CurrencyTypeCode"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="ExchangeRate" Type="decimal" Precision="12" Scale="10">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ExchangeRate"
+    Type="decimal"
+    Precision="12"
+    Scale="10">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="RateDate" Type="datetime">
-    <Constraints Nullable="true" />
+  <Column
+    Name="RateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="UpdateDateTime" Type="datetime">
-    <Constraints Nullable="true" />
+  <Column
+    Name="UpdateDateTime"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Relation ForeignKeyColumn="CurrencyTypeCode" ReferencedTable="CurrencyTypes" ReferencedColumn="Code" ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="CurrencyTypeCode"
+    ReferencedTable="CurrencyTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
 </Table>

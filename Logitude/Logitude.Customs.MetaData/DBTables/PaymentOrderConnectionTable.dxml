@@ -1,16 +1,40 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Table Name="PaymentOrderConnectionTables" Schema="Customs" DBType="Main">
-  <Column Name="PaymentOrderId" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="PaymentOrderConnectionTables"
+  Schema="Customs"
+  DBType="Main">
+  <Column
+    Name="PaymentOrderId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="ConnectedEntityId" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
+  <Column
+    Name="ConnectedEntityId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="ConnectedEntityCode" Type="varchar" Size="1">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ConnectedEntityCode"
+    Type="varchar"
+    Size="1">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Relation ForeignKeyColumn="PaymentOrderId" ReferencedTable="PaymentOrders" ReferencedColumn="Id" ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="PaymentOrderId"
+    ReferencedTable="PaymentOrders"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="Customs" />
 </Table>

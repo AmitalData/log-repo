@@ -7565,6 +7565,92 @@
         IndexOrder="0" />
     </QueryFilters>
   </Query>
+  <Query
+    Code="&quot;ErrorInTransfer&quot;"
+    TextCode="&quot;Error In Transfer&quot;"
+    LocalTextCode="&quot;Error In Transfer&quot;"
+    QueryGroupCode="&quot;APPY&quot;"
+    IndexOrder="5"
+    ObjectTableName="&quot;APPayment&quot;"
+    QuerySection="&quot;APPayment&quot;"
+    SystemLevel="true"
+    IsAddNewEntity="false"
+    IsPackagable="true"
+    DefaultSortName="&quot;CreateDate&quot;"
+    DefaultSortDirection="&quot;Desending&quot;"
+    IsSpellChecked="false">
+    <QueryColumns>
+      <QueryColumn
+        QueryCode="&quot;ErrorInTransfer&quot;"
+        IndexOrder="0"
+        ObjectFieldName="&quot;TransferError&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;ErrorInTransfer&quot;"
+        IndexOrder="1"
+        ObjectFieldName="&quot;PaymentNo&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;ErrorInTransfer&quot;"
+        IndexOrder="2"
+        ObjectFieldName="&quot;VendorName&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;ErrorInTransfer&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;RegisterDate&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;ErrorInTransfer&quot;"
+        IndexOrder="4"
+        ObjectFieldName="&quot;PaymentCurrencyCode&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;ErrorInTransfer&quot;"
+        IndexOrder="5"
+        ObjectFieldName="&quot;CreateDate&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;ErrorInTransfer&quot;"
+        IndexOrder="6"
+        ObjectFieldName="&quot;CreatedByUserName&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;ErrorInTransfer&quot;"
+        IndexOrder="7"
+        ObjectFieldName="&quot;StatusName&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;ErrorInTransfer&quot;"
+        IndexOrder="8"
+        ObjectFieldName="&quot;PaymentMethodName&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;ErrorInTransfer&quot;"
+        IndexOrder="9"
+        ObjectFieldName="&quot;AmountInPaymentCurrency&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;ErrorInTransfer&quot;"
+        IndexOrder="10"
+        ObjectFieldName="&quot;OpenAmount&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;ErrorInTransfer&quot;"
+        IndexOrder="11"
+        ObjectFieldName="&quot;InternalNotes&quot;"
+        ColumnWidth="130" />
+    </QueryColumns>
+    <QueryFilters>
+      <QueryFilter
+        QueryCode="&quot;ErrorInTransfer&quot;"
+        PredefinedValue="&quot;ET&quot;"
+        ObjectFieldName="&quot;TransferStatusCode&quot;"
+        IsPredefined="true"
+        Operator="&quot;Equal&quot;"
+        IndexOrder="0" />
+    </QueryFilters>
+  </Query>
   <Screen
     Name="&quot;Header Screen&quot;"
     ObjectTableName="&quot;APPayment&quot;"
@@ -7713,7 +7799,7 @@
     ObjectTableName="&quot;APPayment&quot;"
     Code="&quot;APDO&quot;"
     ControlPath="&quot;Simplog.InvoiceLib.Views.Tabs.APPaymentsTabs.APPaymentDocsOutTabControl&quot;"
-    TextCode="&quot;APPayment.TH.Docs&quot;"
+    TextCode="&quot;APPayment.TH.DocsOut&quot;"
     IsPackagable="true"
     IndexOrder="1"
     HtmlComponentURL="&quot;./InvoiceModules/APPayment/Components/EditTabs/APPaymentDocsOutTabComponent&quot;"

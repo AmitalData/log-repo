@@ -1,19 +1,45 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Table Name="AutomationHistorys" Schema="dbo" DBType="Main">
-  <Column Name="Version" Type="int">
-    <Constraints PrimaryKey="true" Nullable="false" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="AutomationHistorys"
+  Schema="dbo"
+  DBType="Main">
+  <Column
+    Name="Version"
+    Type="int">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="AutomationsId" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
+  <Column
+    Name="AutomationsId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="AutomationXML" Type="nvarchar" Size="-1">
-    <Constraints Nullable="true" />
+  <Column
+    Name="AutomationXML"
+    Type="nvarchar"
+    Size="-1">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="CreateDate" Type="datetime">
-    <Constraints Nullable="true" />
+  <Column
+    Name="CreateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Relation ForeignKeyColumn="AutomationsId" ReferencedTable="Automations" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="AutomationsId"
+    ReferencedTable="Automations"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
 </Table>

@@ -1,79 +1,196 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Table Name="CourierMasters" Schema="Customs" DBType="Main">
-  <Column Name="Id" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="CourierMasters"
+  Schema="Customs"
+  DBType="Main">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="CreateDateTime" Type="datetime">
-    <Constraints Nullable="true" />
+  <Column
+    Name="CreateDateTime"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="CreatedByUserId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="CreatedByUserId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="UpdateDateTime" Type="datetime">
-    <Constraints Nullable="true" />
+  <Column
+    Name="UpdateDateTime"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="SearchFields" Type="nvarchar" Size="1000">
-    <Constraints Nullable="true" />
+  <Column
+    Name="SearchFields"
+    Type="nvarchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="AirlineId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
+  <Column
+    Name="AirlineId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="MAWB" Type="nvarchar" Size="35">
-    <Constraints Nullable="false" />
+  <Column
+    Name="MAWB"
+    Type="nvarchar"
+    Size="35">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="HAWB" Type="nvarchar" Size="35">
-    <Constraints Nullable="true" />
+  <Column
+    Name="HAWB"
+    Type="nvarchar"
+    Size="35">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="EstimatedArrivalDate" Type="datetime">
-    <Constraints Nullable="true" />
+  <Column
+    Name="EstimatedArrivalDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="GatewayPortCode" Type="varchar" Size="17">
-    <Constraints Nullable="true" />
+  <Column
+    Name="GatewayPortCode"
+    Type="varchar"
+    Size="17">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="OriginPortCode" Type="varchar" Size="17">
-    <Constraints Nullable="true" />
+  <Column
+    Name="OriginPortCode"
+    Type="varchar"
+    Size="17">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="IsOpen" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="IsOpen"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="IsCancelled" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="IsCancelled"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="UpdatedByUserId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="UpdatedByUserId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="MAWBTypeCode" Type="varchar" Size="3">
-    <Constraints Nullable="true" />
+  <Column
+    Name="MAWBTypeCode"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="ManifestNumber" Type="varchar" Size="35">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ManifestNumber"
+    Type="varchar"
+    Size="35">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="PackageQuantity" Type="int">
-    <Constraints Nullable="true" />
+  <Column
+    Name="PackageQuantity"
+    Type="int">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="GrossMassMeasure" Type="decimal" Precision="18" Scale="2">
-    <Constraints Nullable="true" />
+  <Column
+    Name="GrossMassMeasure"
+    Type="decimal"
+    Precision="18"
+    Scale="2">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="ShortHAWB" Type="nvarchar" Size="8">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ShortHAWB"
+    Type="nvarchar"
+    Size="8">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="FlightNumber" Type="nvarchar" Size="4">
-    <Constraints Nullable="true" />
+  <Column
+    Name="FlightNumber"
+    Type="nvarchar"
+    Size="4">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="DepartureDate" Type="datetime">
-    <Constraints Nullable="true" />
+  <Column
+    Name="DepartureDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="WeightValueCode" Type="varchar" Size="3">
-    <Constraints Nullable="true" />
+  <Column
+    Name="WeightValueCode"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Relation ForeignKeyColumn="CreatedByUserId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="AirlineId" ReferencedTable="CustomsAirlines" ReferencedColumn="Id" ReferencedTableSchema="Customs" />
-  <Relation ForeignKeyColumn="GatewayPortCode" ReferencedTable="InternationalSites" ReferencedColumn="Code" ReferencedTableSchema="Customs" />
-  <Relation ForeignKeyColumn="OriginPortCode" ReferencedTable="InternationalSites" ReferencedColumn="Code" ReferencedTableSchema="Customs" />
-  <Relation ForeignKeyColumn="UpdatedByUserId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="MAWBTypeCode" ReferencedTable="MAWBTypes" ReferencedColumn="Code" ReferencedTableSchema="Customs" />
-  <Relation ForeignKeyColumn="WeightValueCode" ReferencedTable="FreightPaymentMethods" ReferencedColumn="Code" ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="CreatedByUserId"
+    ReferencedTable="Users"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="AirlineId"
+    ReferencedTable="CustomsAirlines"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="GatewayPortCode"
+    ReferencedTable="InternationalSites"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="OriginPortCode"
+    ReferencedTable="InternationalSites"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="UpdatedByUserId"
+    ReferencedTable="Users"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="MAWBTypeCode"
+    ReferencedTable="MAWBTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="WeightValueCode"
+    ReferencedTable="FreightPaymentMethods"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
 </Table>

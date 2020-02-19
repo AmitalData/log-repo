@@ -1,64 +1,155 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Table Name="Guarantees" Schema="Customs" DBType="Main">
-  <Column Name="Id" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="Guarantees"
+  Schema="Customs"
+  DBType="Main">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="TapagID" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="TapagID"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="GuaranteeRequestStatusCode" Type="varchar" Size="2">
-    <Constraints Nullable="true" />
+  <Column
+    Name="GuaranteeRequestStatusCode"
+    Type="varchar"
+    Size="2">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="GuaranteeRequestNumber" Type="varchar" Size="25">
-    <Constraints Nullable="true" />
+  <Column
+    Name="GuaranteeRequestNumber"
+    Type="varchar"
+    Size="25">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="NumeralRequest" Type="varchar" Size="3">
-    <Constraints Nullable="true" />
+  <Column
+    Name="NumeralRequest"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="MsgID" Type="varchar" Size="5">
-    <Constraints Nullable="true" />
+  <Column
+    Name="MsgID"
+    Type="varchar"
+    Size="5">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="ClientActivityCode" Type="varchar" Size="2">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ClientActivityCode"
+    Type="varchar"
+    Size="2">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="CustomEntityTypeCode" Type="varchar" Size="9">
-    <Constraints Nullable="true" />
+  <Column
+    Name="CustomEntityTypeCode"
+    Type="varchar"
+    Size="9">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="CustomEntityNumber" Type="varchar" Size="25">
-    <Constraints Nullable="true" />
+  <Column
+    Name="CustomEntityNumber"
+    Type="varchar"
+    Size="25">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="RequestValidityDate" Type="datetime">
-    <Constraints Nullable="true" />
+  <Column
+    Name="RequestValidityDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="GuaranteeValidityDate" Type="datetime">
-    <Constraints Nullable="true" />
+  <Column
+    Name="GuaranteeValidityDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="BrandNumber" Type="varchar" Size="6">
-    <Constraints Nullable="true" />
+  <Column
+    Name="BrandNumber"
+    Type="varchar"
+    Size="6">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="LawyerNumber" Type="varchar" Size="9">
-    <Constraints Nullable="true" />
+  <Column
+    Name="LawyerNumber"
+    Type="varchar"
+    Size="9">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="BirthDate" Type="datetime">
-    <Constraints Nullable="true" />
+  <Column
+    Name="BirthDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="VehicleChassisNumber" Type="varchar" Size="20">
-    <Constraints Nullable="true" />
+  <Column
+    Name="VehicleChassisNumber"
+    Type="varchar"
+    Size="20">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="EngineNumber" Type="varchar" Size="25">
-    <Constraints Nullable="true" />
+  <Column
+    Name="EngineNumber"
+    Type="varchar"
+    Size="25">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="UpdateDate" Type="datetime">
-    <Constraints Nullable="true" />
+  <Column
+    Name="UpdateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="GuaranteeExternalNumber" Type="varchar" Size="13">
-    <Constraints Nullable="true" />
+  <Column
+    Name="GuaranteeExternalNumber"
+    Type="varchar"
+    Size="13">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Relation ForeignKeyColumn="TapagID" ReferencedTable="Tapags" ReferencedColumn="Id" ReferencedTableSchema="Customs" />
-  <Relation ForeignKeyColumn="GuaranteeRequestStatusCode" ReferencedTable="RequestStatuses" ReferencedColumn="Code" ReferencedTableSchema="Customs" />
-  <Relation ForeignKeyColumn="ClientActivityCode" ReferencedTable="GuaranteeCustomerActivities" ReferencedColumn="Code" ReferencedTableSchema="Customs" />
-  <Relation ForeignKeyColumn="CustomEntityTypeCode" ReferencedTable="EntityTypeLookups" ReferencedColumn="Code" ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="TapagID"
+    ReferencedTable="Tapags"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="GuaranteeRequestStatusCode"
+    ReferencedTable="RequestStatuses"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="ClientActivityCode"
+    ReferencedTable="GuaranteeCustomerActivities"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="CustomEntityTypeCode"
+    ReferencedTable="EntityTypeLookups"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
 </Table>

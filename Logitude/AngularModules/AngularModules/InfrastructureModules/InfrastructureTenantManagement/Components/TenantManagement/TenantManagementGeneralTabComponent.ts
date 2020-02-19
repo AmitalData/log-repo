@@ -758,6 +758,7 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
                 logeWindow.WindowClosed.subscribe(s => {
                     if (s) {
                         this.BuildPackagesList();
+                        this.ComputePackagesTotals();
                     }
                 });
             });
@@ -785,7 +786,7 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
                 }
             });
 
-            this.ComputePackagesTotals();
+            //this.ComputePackagesTotals();
         });
     }
 
@@ -815,30 +816,36 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
                 this.TotalPaymentamount = this.PackagesTotalTotalPrice;
                 this.TotalNumberOfUsers = this.PackagesTotalNumberOfUsers;
                 this.TotalFreeUsers = this.PackagesTotalFreeUsers;
-            }
+            }   
             else {
-                this.TotalPaymentamount = this.TotalPrice;
-                this.TotalNumberOfUsers = this.NumberOfUsers; 
-                this.TotalFreeUsers = this.FreeUsers;
+               // if (this.NumberOfUsers) {
+                    this.TotalNumberOfUsers = this.NumberOfUsers;
+               // }
+               // if (this.FreeUsers) {
+                    this.TotalFreeUsers = this.FreeUsers;
+               // }
+                //if (this.TotalPrice) {
+                    this.TotalPaymentamount = this.TotalPrice;
+               // }
             }
            
         }
         else {
             if (!this.IsMultiPackage) {
-                if (this.NumberOfUsers) {
+                //if (this.NumberOfUsers) {
                     this.TotalNumberOfUsers = this.NumberOfUsers;
-                }
+                //}
 
-                if (this.FreeUsers) {
+                //if (this.FreeUsers) {
                     this.TotalFreeUsers = this.FreeUsers;
-                }
+               // }
 
-                if (this.LicensePrice) {
+                //if (this.LicensePrice) {
                     this.PackagesTotalPrice = this.LicensePrice;
-                }
-                if (this.TotalPrice) {
+                //}
+                //if (this.TotalPrice) {
                     this.TotalPaymentamount = this.TotalPrice;
-                }
+               // }
             }
             else {
                 this.TotalPaymentamount = this.PackagesTotalTotalPrice;
@@ -916,6 +923,7 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
             logeWindow.WindowClosed.subscribe(s => {
                 if (s) {
                     this.BuildPackagesList();
+                    this.ComputePackagesTotals();
                 }
             });
         });
@@ -934,6 +942,7 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
                 this.EntityPM.RemoveTenantManagementLicensePM(itemViewModel.EntityPM);
 
                 this.BuildPackagesList();
+                this.ComputePackagesTotals();
             }
         });
     }

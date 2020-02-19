@@ -1,35 +1,86 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Table Name="DecCargoSplitConsPackDets" Schema="Customs" DBType="Main">
-  <Column Name="DeclarationCargoSplitId" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="DecCargoSplitConsPackDets"
+  Schema="Customs"
+  DBType="Main">
+  <Column
+    Name="DeclarationCargoSplitId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="DecCargoSplitConsLineNo" Type="int">
-    <Constraints PrimaryKey="true" Nullable="false" />
+  <Column
+    Name="DecCargoSplitConsLineNo"
+    Type="int">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="DecCargoSplitConsItemLine" Type="int">
-    <Constraints PrimaryKey="true" Nullable="false" />
+  <Column
+    Name="DecCargoSplitConsItemLine"
+    Type="int">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="PackageLine" Type="int">
-    <Constraints PrimaryKey="true" Nullable="false" />
+  <Column
+    Name="PackageLine"
+    Type="int">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="PackageQuantity" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="PackageQuantity"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="GrossMassMeasure" Type="decimal" Precision="18" Scale="2">
-    <Constraints Nullable="true" />
+  <Column
+    Name="GrossMassMeasure"
+    Type="decimal"
+    Precision="18"
+    Scale="2">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="PackageTypeCode" Type="varchar" Size="4">
-    <Constraints Nullable="false" />
+  <Column
+    Name="PackageTypeCode"
+    Type="varchar"
+    Size="4">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="MarksNumbers" Type="varchar" Size="255">
-    <Constraints Nullable="true" />
+  <Column
+    Name="MarksNumbers"
+    Type="varchar"
+    Size="255">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="ManifestNumber" Type="varchar" Size="35">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ManifestNumber"
+    Type="varchar"
+    Size="35">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Relation ForeignKeyColumn="DeclarationCargoSplitId,DecCargoSplitConsLineNo,DecCargoSplitConsItemLine" ReferencedTable="DecCargoSplitConsItems" ReferencedColumn="DeclarationCargoSplitId,DecCargoSplitConsLineNo,ItemLine" ReferencedTableSchema="Customs" />
-  <Relation ForeignKeyColumn="PackageTypeCode" ReferencedTable="PackingTypes" ReferencedColumn="Code" ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="DeclarationCargoSplitId,DecCargoSplitConsLineNo,DecCargoSplitConsItemLine"
+    ReferencedTable="DecCargoSplitConsItems"
+    ReferencedColumn="DeclarationCargoSplitId,DecCargoSplitConsLineNo,ItemLine"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="PackageTypeCode"
+    ReferencedTable="PackingTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
 </Table>

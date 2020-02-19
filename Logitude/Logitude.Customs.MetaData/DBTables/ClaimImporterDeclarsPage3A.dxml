@@ -1,17 +1,45 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Table Name="ClaimImporterDeclarsPage3As" Schema="Customs" DBType="Main">
-  <Column Name="ClaimId" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="ClaimImporterDeclarsPage3As"
+  Schema="Customs"
+  DBType="Main">
+  <Column
+    Name="ClaimId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="LineNo" Type="int">
-    <Constraints PrimaryKey="true" Nullable="false" />
+  <Column
+    Name="LineNo"
+    Type="int">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Tenant"
+    Type="int"
+    DefaultValue="0">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="CommercialSaleTypeCode" Type="varchar" Size="2">
-    <Constraints Nullable="true" />
+  <Column
+    Name="CommercialSaleTypeCode"
+    Type="varchar"
+    Size="2">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Relation ForeignKeyColumn="ClaimId" ReferencedTable="Claims" ReferencedColumn="Id" ReferencedTableSchema="Customs" />
-  <Relation ForeignKeyColumn="CommercialSaleTypeCode" ReferencedTable="CommercialSales" ReferencedColumn="Code" ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="ClaimId"
+    ReferencedTable="Claims"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="CommercialSaleTypeCode"
+    ReferencedTable="CommercialSales"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
 </Table>

@@ -204,7 +204,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                 if (value2 != null) {
                     filterOperator = "Between";
                 }
-                if (filter.DataTypeCode == "DateTime") {
+                if (filter.DataTypeCode == "DateTime" || filter.DataTypeCode == "Date") {
                     var TodayDate = new Date();
                     TodayDate.setHours(0, 0, 0, 0);
 
@@ -221,7 +221,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                     LastSevenDaysDate.setUTCHours(0, 0, 0, 0);
                     var LastThirtyDaysDate = DateTool.AddDays((new Date()), -30);
                     LastThirtyDaysDate.setUTCHours(0, 0, 0, 0);
-                    var CurrentYearFromDate = new Date(new Date().getFullYear(), 0, 1);
+                    var CurrentYearFromDate = new Date(new Date().getFullYear(), 0, 2);
                     CurrentYearFromDate.setUTCHours(0, 0, 0, 0);
                     var CurrentYearToDate = DateTool.AddDays((new Date()), 1);
                     CurrentYearToDate.setUTCHours(0, 0, 0, 0);
@@ -262,7 +262,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                     }
                     else if (value1 == "NoDate" || value1 == "No Date") {
                         value1 = "NoDate";
-                        filterOperator = "NoDate";
+                        filterOperator = "Equals";
                     }
                 }
               var field = window.ObjectFields.filter(a => a.FieldCode == filter.ObjectFieldCode)[0];
@@ -511,7 +511,7 @@ export class ListComponent implements OnInit, AfterViewInit {
             if (this.AdvanceFilters.AdditionalFilters.filter(a => a.FieldName == filters.FieldName).length > 0) {
                 this.AdvanceFilters.AdditionalFilters = this.AdvanceFilters.AdditionalFilters.filter(a => a.FieldName != filters.FieldName);
             }
-            this.AdvanceFilters.addAdditionalFilter(filters.FieldName, null, null, null, "NoDate", filters.ObjectField.IsCustomFilter, filters.ObjectField.DisplayInList, filters.ObjectField.IsCustom, filters.ObjectField.DataTypeCode);
+            this.AdvanceFilters.addAdditionalFilter(filters.FieldName, null, null, null, "Equals", filters.ObjectField.IsCustomFilter, filters.ObjectField.DisplayInList, filters.ObjectField.IsCustom, filters.ObjectField.DataTypeCode);
 
         }
         else if (!AppTool.IsNullOrEmpty(filters.MyName)) {
@@ -532,7 +532,7 @@ export class ListComponent implements OnInit, AfterViewInit {
             LastSevenDaysDate.setUTCHours(0, 0, 0, 0);
             var LastThirtyDaysDate = DateTool.AddDays((new Date()), -30);
             LastThirtyDaysDate.setUTCHours(0, 0, 0, 0);
-            var CurrentYearFromDate = new Date(new Date().getFullYear(), 0, 1);
+            var CurrentYearFromDate = new Date(new Date().getFullYear(), 0, 2);
             CurrentYearFromDate.setUTCHours(0, 0, 0, 0);
             var CurrentYearToDate = DateTool.AddDays((new Date()), 1);
             CurrentYearToDate.setUTCHours(0, 0, 0, 0);
@@ -1102,7 +1102,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                     if (value2 != null) {
                         filterOperator = "Between";
                     }
-                    if (filter.DataTypeCode == "DateTime") {
+                    if (filter.DataTypeCode == "DateTime" || filter.DataTypeCode == "Date") {
                         var TommorowDate = DateTool.AddDays((new Date()), 1);
                         TommorowDate.setUTCHours(0, 0, 0, 0);
                         var TodayDate = new Date();
@@ -1115,7 +1115,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                         LastSevenDaysDate.setUTCHours(0, 0, 0, 0);
                         var LastThirtyDaysDate = DateTool.AddDays((new Date()), -30);
                         LastThirtyDaysDate.setUTCHours(0, 0, 0, 0);
-                        var CurrentYearFromDate = new Date(new Date().getFullYear(), 0, 1);
+                        var CurrentYearFromDate = new Date(new Date().getFullYear(), 0, 2);
                         CurrentYearFromDate.setUTCHours(0, 0, 0, 0);
                         var CurrentYearToDate = DateTool.AddDays((new Date()), 1);
                         CurrentYearToDate.setUTCHours(0, 0, 0, 0);
@@ -1208,7 +1208,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                         }
                         else if (value1 == "NoDate" || value1 == "No Date") {
                             value1 = "NoDate";
-                            filterOperator = "NoDate";
+                            filterOperator = "Equals";
                         }
                     }
                     var field = window.ObjectFields.filter(a => a.FieldCode == filter.ObjectFieldCode)[0];
@@ -1315,7 +1315,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                     if (value2 != null) {
                         filterOperator = "Between";
                     }
-                    if (filter.DataTypeCode == "DateTime") {
+                    if (filter.DataTypeCode == "DateTime" || filter.DataTypeCode == "Date") {
 
                         var TodayDate = new Date();
                         TodayDate.setUTCHours(0, 0, 0, 0);
@@ -1331,7 +1331,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                         LastSevenDaysDate.setUTCHours(0, 0, 0, 0);
                         var LastThirtyDaysDate = DateTool.AddDays((new Date()), -30);
                         LastThirtyDaysDate.setUTCHours(0, 0, 0, 0);
-                        var CurrentYearFromDate = new Date(new Date().getFullYear(), 0, 1);
+                        var CurrentYearFromDate = new Date(new Date().getFullYear(), 0, 2);
                         CurrentYearFromDate.setUTCHours(0, 0, 0, 0);
                         var CurrentYearToDate = DateTool.AddDays((new Date()), 1);
                         CurrentYearToDate.setUTCHours(0, 0, 0, 0);
@@ -1424,7 +1424,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                         }
                         else if (value1 == "NoDate" || value1 == "No Date") {
                             value1 = "NoDate";
-                            filterOperator = "NoDate";
+                            filterOperator = "Equals";
                         }
                     }
                     var field = window.ObjectFields.filter(a => a.FieldCode == filter.ObjectFieldCode)[0];
@@ -2871,7 +2871,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                         if (value2 != null) {
                             filterOperator = "Between";
                         }
-                        if (filter.DataTypeCode == "DateTime") {
+                        if (filter.DataTypeCode == "DateTime" || filter.DataTypeCode == "Date") {
                             var TodayDate = new Date();
                             TodayDate.setUTCHours(0, 0, 0, 0);
 
@@ -2886,7 +2886,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                             LastSevenDaysDate.setUTCHours(0, 0, 0, 0);
                             var LastThirtyDaysDate = DateTool.AddDays((new Date()), -30);
                             LastThirtyDaysDate.setUTCHours(0, 0, 0, 0);
-                            var CurrentYearFromDate = new Date(new Date().getFullYear(), 0, 1);
+                            var CurrentYearFromDate = new Date(new Date().getFullYear(), 0, 2);
                             CurrentYearFromDate.setUTCHours(0, 0, 0, 0);
                             var CurrentYearToDate = DateTool.AddDays((new Date()), 1);
                             CurrentYearToDate.setUTCHours(0, 0, 0, 0);
