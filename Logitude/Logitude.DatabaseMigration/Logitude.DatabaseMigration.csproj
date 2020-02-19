@@ -2067,6 +2067,14 @@
     <Compile Include="Migrations\202002160701461_ar_ap_payment_customfields.Designer.cs">
       <DependentUpon>202002160701461_ar_ap_payment_customfields.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202002120919405_NewField_JournalLine_ActionId.cs" />
+    <Compile Include="Migrations\202002120919405_NewField_JournalLine_ActionId.Designer.cs">
+      <DependentUpon>202002120919405_NewField_JournalLine_ActionId.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202002120951340_MoveConstraint_JounralLine_ActionIdFK.cs" />
+    <Compile Include="Migrations\202002120951340_MoveConstraint_JounralLine_ActionIdFK.Designer.cs">
+      <DependentUpon>202002120951340_MoveConstraint_JounralLine_ActionIdFK.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\202002041333119_InterestTransactionMigration.cs" />
     <Compile Include="Migrations\202002041333119_InterestTransactionMigration.Designer.cs">
@@ -3733,6 +3741,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202002160701461_ar_ap_payment_customfields.resx">
       <DependentUpon>202002160701461_ar_ap_payment_customfields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002120919405_NewField_JournalLine_ActionId.resx">
+      <DependentUpon>202002120919405_NewField_JournalLine_ActionId.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002120951340_MoveConstraint_JounralLine_ActionIdFK.resx">
+      <DependentUpon>202002120951340_MoveConstraint_JounralLine_ActionIdFK.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
