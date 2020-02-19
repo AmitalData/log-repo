@@ -111,6 +111,8 @@ import { InterestBasesTypeShortTitleComponent } from './Components/ShortTiTles/I
 import { GLAccountInterestComponent } from './Components/EditTabs/GLAccount/GLAccountInterestComponent';
 import { NewInterestReportComponent } from './Components/NewEntity/NewInterestReportComponent';
 import { InterestReportGeneralTabComponent } from './Components/EditTabs/InterestReport/GeneralTab/InterestReportGeneralTabComponent';
+import { InterestReportLineByDateDetailsComponent } from './Components/EditTabs/InterestReport/GeneralTab/InterestReportLineByDateDetails/InterestReportLineByDateDetailsComponent';
+import { InterestReportLinesByDateListTemplate } from './Components/ListTemplates/InterestReportLinesByDateListTemplate';
 
 //import { CashBookGeneralTabComponent } from './Components/EditTabs/CashBook/CashBookGeneralTabComponent';
 
@@ -228,7 +230,9 @@ export const Components =
         InterestBasesTypeShortTitleComponent,
         ExtReconcileAdjustBankFeeComponent,
         NewInterestReportComponent,
-        InterestReportGeneralTabComponent
+        InterestReportGeneralTabComponent,
+        InterestReportLineByDateDetailsComponent,
+        InterestReportLinesByDateListTemplate
     ];
 
 export class ModuleDeclarations {
@@ -323,6 +327,7 @@ export class ModuleDeclarations {
             case "TaxReportListTemplate": { myResult = TaxReportListTemplate; break; }
             case "ReconciliationLineListTemplate": { myResult = ReconciliationLineListTemplate; break; }
             case "CashBookLineListTemplate": { myResult = CashBookLineListTemplate; break; }
+            case "InterestReportLinesByDateListTemplate": { myResult = InterestReportLinesByDateListTemplate; break; }
 
             //Others
             case "ReconcileComponent": { myResult = ReconcileComponent; break; }
@@ -336,6 +341,7 @@ export class ModuleDeclarations {
             case "ReconciliationShortTitleComponent": { myResult = ReconciliationShortTitleComponent; break; }
             case "ExternalReconciliationShortTitleComponent": { myResult = ExternalReconciliationShortTitleComponent; break; }
             case "TaxReportShortTitleComponent": { myResult = TaxReportShortTitleComponent; break; }
+            case "InterestReportLineByDateDetailsComponent": { myResult = InterestReportLineByDateDetailsComponent; break; }
             case "GLAccountSearchWindowComponent": {
                 myResult = GLAccountSearchWindowComponent; break;
             }

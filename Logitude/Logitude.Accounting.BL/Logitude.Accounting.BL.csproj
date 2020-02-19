@@ -653,6 +653,12 @@
     <Compile Include="CoreBL\TaxReportService.cs" />
     <Compile Include="EntityUpdateServices\TaxReportUpdateService.cs" />
     <Compile Include="EntityUpdateServices\TaxWithholdingAssessOfficeUpdateService.cs" />
+    <Compile Include="InterestEntityQueryServices\IInterestEntityQueryService.cs" />
+    <Compile Include="InterestEntityQueryServices\InterestEntityResult\InterestEntityResult.cs" />
+    <Compile Include="InterestEntityQueryServices\InterestFactory\InterestQueryFactory.cs" />
+    <Compile Include="InterestEntityQueryServices\InterestQueryServises\InterestARPaymentQueryService.cs" />
+    <Compile Include="InterestEntityQueryServices\InterestQueryServises\InterestARInvoiceQueryService.cs" />
+    <Compile Include="InterestEntityQueryServices\InterestQueryServises\InterestJournalQueryService.cs" />
     <Compile Include="TestService\BatchTestService.cs" />
     <Compile Include="Utils\AccountingLogger.cs" />
     <Compile Include="Utils\CardGLAccountConnectBatch.cs" />

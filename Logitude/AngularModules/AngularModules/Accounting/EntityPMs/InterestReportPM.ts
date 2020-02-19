@@ -7,6 +7,7 @@
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 
+import {InterestReportLinesByDatePM} from './InterestReportLinesByDatePM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -144,7 +145,46 @@ export class InterestReportPM {
     public set InterestReportStatusLocalName(newValue: string) { if (this.interestReportStatusLocalName != newValue) { this.interestReportStatusLocalName = newValue; this.MarkAsDirty("InterestReportStatusLocalName"); } }
        
 	 
+    private customerId: string;
+    public get CustomerId() { return this.customerId; }
+    public set CustomerId(newValue: string) { if (this.customerId != newValue) { this.customerId = newValue; this.MarkAsDirty("CustomerId"); } }
+       
+	 
+     
+	private interestReportLinesByDates: InterestReportLinesByDatePM[];
+    get  InterestReportLinesByDates() {
+        if (this.interestReportLinesByDates == null) {
+            this.interestReportLinesByDates = [];
+        }
 
+        return this.interestReportLinesByDates;
+    }
+    set  InterestReportLinesByDates(newValue: InterestReportLinesByDatePM[]) {
+        if (this.interestReportLinesByDates != newValue) {
+            this.interestReportLinesByDates = newValue;
+        }
+    }
+    public AddInterestReportLinesByDate(item: InterestReportLinesByDatePM) {
+        if (item != null) {
+            var index = this. InterestReportLinesByDates.indexOf(item);
+            if (index == -1) {
+                item.EntityParentPM = this;
+                this. InterestReportLinesByDates.push(item);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    public RemoveInterestReportLinesByDate(item: InterestReportLinesByDatePM) {
+        if (item != null) {
+            var index = this. InterestReportLinesByDates.indexOf(item);
+            if (index > -1) {
+                this. InterestReportLinesByDates.splice(index, 1);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    //public InterestReportLinesByDates: Array<InterestReportLinesByDatePM>= [];
+ 
     public OldEntityPM: InterestReportPM;
 		
     public IsDirty: boolean;

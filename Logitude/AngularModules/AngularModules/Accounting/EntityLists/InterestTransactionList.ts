@@ -23,6 +23,13 @@ export class InterestTransactionList {
 	InterestValueDate: Date;
 	InterestReportId: string;
 	IsClosed: boolean;
+	CurrencyCode: string;
+	InterestEntityNumber: string;
+	JournalNumber: string;
+	InterestEntityType: string;
+	InterestEntityIconCode: string;
+	JournalId: string;
+	AccountEntityCode: string;
 	
 }
  

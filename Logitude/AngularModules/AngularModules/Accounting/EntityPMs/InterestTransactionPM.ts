@@ -99,6 +99,41 @@ export class InterestTransactionPM {
     public set IsClosed(newValue: boolean) { if (this.isClosed != newValue) { this.isClosed = newValue; this.MarkAsDirty("IsClosed"); } }
        
 	 
+    private currencyCode: string;
+    public get CurrencyCode() { return this.currencyCode; }
+    public set CurrencyCode(newValue: string) { if (this.currencyCode != newValue) { this.currencyCode = newValue; this.MarkAsDirty("CurrencyCode"); } }
+       
+	 
+    private interestEntityNumber: string;
+    public get InterestEntityNumber() { return this.interestEntityNumber; }
+    public set InterestEntityNumber(newValue: string) { if (this.interestEntityNumber != newValue) { this.interestEntityNumber = newValue; this.MarkAsDirty("InterestEntityNumber"); } }
+       
+	 
+    private journalNumber: string;
+    public get JournalNumber() { return this.journalNumber; }
+    public set JournalNumber(newValue: string) { if (this.journalNumber != newValue) { this.journalNumber = newValue; this.MarkAsDirty("JournalNumber"); } }
+       
+	 
+    private interestEntityType: string;
+    public get InterestEntityType() { return this.interestEntityType; }
+    public set InterestEntityType(newValue: string) { if (this.interestEntityType != newValue) { this.interestEntityType = newValue; this.MarkAsDirty("InterestEntityType"); } }
+       
+	 
+    private interestEntityIconCode: string;
+    public get InterestEntityIconCode() { return this.interestEntityIconCode; }
+    public set InterestEntityIconCode(newValue: string) { if (this.interestEntityIconCode != newValue) { this.interestEntityIconCode = newValue; this.MarkAsDirty("InterestEntityIconCode"); } }
+       
+	 
+    private journalId: string;
+    public get JournalId() { return this.journalId; }
+    public set JournalId(newValue: string) { if (this.journalId != newValue) { this.journalId = newValue; this.MarkAsDirty("JournalId"); } }
+       
+	 
+    private accountEntityCode: string;
+    public get AccountEntityCode() { return this.accountEntityCode; }
+    public set AccountEntityCode(newValue: string) { if (this.accountEntityCode != newValue) { this.accountEntityCode = newValue; this.MarkAsDirty("AccountEntityCode"); } }
+       
+	 
 
     public OldEntityPM: InterestTransactionPM;
 		

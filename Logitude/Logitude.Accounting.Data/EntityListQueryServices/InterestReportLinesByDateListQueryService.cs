@@ -28,6 +28,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 					                          Id = a.Id,
 					
 					                          Tenant = a.Tenant,
+
+                                              LineNumber = a.LineNumber,
 					
 					                          InterestReportId = a.InterestReportId,
 					
@@ -67,8 +69,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
 		private IQueryable<InterestReportLinesByDate> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<InterestReportLinesByDate> iQueryable, int tenant)
         {
-			throw new NotImplementedException();
-		}
+            return iQueryable;
+        }
 				private IQueryable<InterestReportLinesByDate> ApplyBusinessUnitFilters(QueryOperations queryOperations,IQueryable<InterestReportLinesByDate> iQueryable, int tenant)
         {
 			return iQueryable;

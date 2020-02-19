@@ -103,19 +103,20 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasCounter =  false,
 			      				    EnableAddFromLOV =  false,
 			      				    IsRestrictable =  false,
-			      				    IsMain =  false,
+			      				    IsMain =  true,
 			      				    IsAutoComplete =  false,
 			      				    EnableEditFromLOV =  false,
+			      				    SortingByObjectField =  "FromDate",
 			      				    InActive =  false,
 			      				    IsSaveButtonVisible =  false,
-			      				    IsComposition =  false,
+			      				    IsComposition =  true,
 			      				    EnableSecurity =  false,
 			      				    AllowCustomFields =  false,
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Interest Report Lines By Date",
-			      				    Code =  "ce96",
+			      				    Code =  "2c76",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Accounting",
@@ -1169,13 +1170,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable InterestReportLinesByDateObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "InterestReportLinesByDate" && d.Tenant == 0).FirstOrDefault(); 
-
-		   Feature InterestReportLinesByDateFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = InterestReportLinesByDateObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestReportLinesByDate.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature InterestReportLinesByDateFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = InterestReportLinesByDateObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestReportLinesByDate.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature InterestReportLinesByDateFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = InterestReportLinesByDateObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestReportLinesByDate.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature InterestReportLinesByDateFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = InterestReportLinesByDateObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestReportLinesByDate.Features.PackageFeature", NameTextCodeDefaultText = "InterestReportLinesByDate Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+	    {     
 	    
 		}
 

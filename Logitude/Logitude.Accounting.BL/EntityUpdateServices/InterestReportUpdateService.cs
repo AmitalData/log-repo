@@ -24,19 +24,41 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
     {
         protected override void OnCreating(InterestReportPM entityPM, EntityPM entityParentPM)
         {
+            ContactPM contact = GetLoggedContact(entityPM.Tenant);
+            bool showLocals = !contact.DontShowLocal;
             entityPM.CreateDateTime = DateTime.UtcNow;
             entityPM.InterestReportStatusCode = "1";
             entityPM.ReportNumber = CodeCounter.GetNumber("InterestReport", entityPM.Tenant).ToString();
+            CardRepository cardRepository = new CardRepository(entityPM.Tenant);
+            Card card = cardRepository.GetSingleCard(entityPM.CustomerId, entityPM.Tenant);
+            InterestReportRepository interestReportRepository = new InterestReportRepository(entityPM.Tenant);
+            InterestReport interestReport = interestReportRepository.GetSingleByCusstomerAndStatudDraft(entityPM.CustomerId, entityPM.Tenant);
+            if (interestReport != null)
+            {
+                throw new Exception(TextCodesTranslator.TranslateText("InterestReport.O.CustomeralreadyhasaDraftinterest", entityPM.Tenant, showLocals)+" "+interestReport.ReportNumber);
+            }
+            if (card.GLAccountId == null)
+            {
+                throw new Exception(TextCodesTranslator.TranslateText("InterestReport.O.Customerisnotconnected", entityPM.Tenant, showLocals));
+            }
+            entityPM.GLAccountId = card.GLAccountId;
             GLAccountRepository gLAccountRepository = new GLAccountRepository(entityPM.Tenant);
             GLAccount gLAccount = gLAccountRepository.GetSingle(entityPM.GLAccountId, entityPM.Tenant);
             entityPM.GLAccountInterestCreditLimit = gLAccount.InterestCreditLimit;
-            ContactPM contact = GetLoggedContact(entityPM.Tenant);
-            bool showLocals = !contact.DontShowLocal;
             if (gLAccount.ActiveForInterest == false)
             {
                 throw new Exception(TextCodesTranslator.TranslateText("InterestReport.O.Customerisnotdefined", entityPM.Tenant, showLocals));
             }
             CreateBatchTaskExecution(entityPM);
+        }
+
+        protected override void UpdateComposition(InterestReportPM entityPM)
+        {
+            InterestReportLinesByDateUpdateService interestReportLinesByDateUpdateService = new InterestReportLinesByDateUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
+            interestReportLinesByDateUpdateService.UpdateMulti(entityPM.InterestReportLinesByDates, entityPM.DeletedInterestReportLinesByDates, entityPM, false);
+            ContactPM contactLocal = GetLoggedContact(entityPM.Tenant);
+            bool showLocals = !contactLocal.DontShowLocal;
+ 
         }
 
         protected override void OnUpdating(InterestReportPM entityPM, InterestReport entityPOCO)
