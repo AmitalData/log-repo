@@ -205,7 +205,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     name = customResponse.GeneralDetails.name,
                     statusName = customResponse.GeneralDetails.statusName,
                 };
-                if (customResponse.GeneralDetails.externalIDSpecified == true)
+                if (customResponse.GeneralDetails.externalID != null)
                 {
                     MyResponseData.GeneralDetailsData.externalID = customResponse.GeneralDetails.externalID.ToString();
                 }
