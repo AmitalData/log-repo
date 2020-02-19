@@ -11182,6 +11182,8 @@ namespace WebFreight.Web.ReportsWebServices
             QueryFilterItem filterItem_tODate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CreateDate").FirstOrDefault();
             QueryFilterItem filterItem_level = queryOperations.QueryFilterItems.Where(d => d.FieldName == "Level").FirstOrDefault();
             QueryFilterItem filterItem_card = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CardFilter").FirstOrDefault();
+            QueryFilterItem filterItem_fromDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "FromDate").FirstOrDefault();
+
             //ToDate
             DateTime? toDate = null;
             if (filterItem_tODate != null)
@@ -11191,7 +11193,15 @@ namespace WebFreight.Web.ReportsWebServices
                     toDate = (DateTime)filterItem_tODate.FieldValue;
                 }
             }
-
+            //FromDate
+            DateTime? fromDate = null;
+            if (filterItem_fromDate != null)
+            {
+                if (filterItem_fromDate.FieldValue != null)
+                {
+                   fromDate = (DateTime)filterItem_fromDate.FieldValue;
+                }
+            }
             //Level
             string level = null;
             if (filterItem_level != null)
@@ -11221,6 +11231,7 @@ namespace WebFreight.Web.ReportsWebServices
                 Tenant = tenant,
                 //  MyRevenueExpenseReportLevel = ReportLevel.,
                 ToDate = (DateTime)toDate,
+                FromDate =(DateTime) fromDate
             };
 
             switch (level)
@@ -11264,6 +11275,7 @@ namespace WebFreight.Web.ReportsWebServices
 
             }
             totalData.ForDate = toDate;
+            totalData.FromDate = fromDate;
             List<RevenueExpenseReportM> result = null;
             List<string> GLAccountParents = new List<string>();
 
