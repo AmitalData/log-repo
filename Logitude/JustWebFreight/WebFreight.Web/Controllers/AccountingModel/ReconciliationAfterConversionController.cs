@@ -108,7 +108,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
                         Tenant = tenant,
                         FromExtNum = _myfromExtNum,
                         ToExtNum = _mytoExtNum,
-                    }
+                    };
                     reconciliationAfterConversionBatch.RunReconciliationAfterConversion(reconciliationAfterConversionArg);
                     string responseText = reconciliationAfterConversionBatch.ResponseText();
                     HttpStatusCode StatusCode = reconciliationAfterConversionBatch.StatusCode();
