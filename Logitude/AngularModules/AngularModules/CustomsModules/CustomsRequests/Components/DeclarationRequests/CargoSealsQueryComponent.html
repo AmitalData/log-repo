@@ -26,12 +26,19 @@
             color: black;
             font-family: sans-serif;
         }
+
+     .disabled{
+        pointer-events: none;
+        opacity: 0.7;
+        cursor: default;
+    }
     </style>
 
-<div>
+<div [ngClass] ="{'disabled' : IsDisplayOnly}">
 
     <custom-message-wrapper [CustomSendOptionsButtonCanForcePersonalSign]="false"
-                            [IsShowCustomResponseContent]="false">
+                            [IsShowCustomResponseContent]="false"
+                           >
 
         <!-- Request -->
         <div class="class-request-content">
@@ -172,6 +179,7 @@
                                                [IsImporterDetails]="true"
                                                [ItemHeight]="36"
                                                [HideIcons]="true"
+                                               [IsDisabled] ="IsDisplayOnly"
                                                [HasFilters]="true"
                                                (LostFocus)="ImporterNumberLostFocus($event)"
                                                (TextChanged)="ImporterNumberTextChanged($event)"
@@ -389,7 +397,8 @@
                                     <LogLabel [ObjectFieldName]="'ResponseMessage'" [DataContext]="DataContext" [TextCode]="'Customs.Claim.TH.CustomAnswer'"></LogLabel>
                                 </td>
                                 <td style="width: 130px;">
-                                    <LogTextBox [ObjectFieldName]="'ResponseMessage'" [DataContext]="DataContext"> </LogTextBox>
+                                    <LogTextBox [ObjectFieldName]="'ResponseMessage'" [DataContext]="DataContext"  
+> </LogTextBox>
                                 </td>
 
                                 <td><div></div></td>

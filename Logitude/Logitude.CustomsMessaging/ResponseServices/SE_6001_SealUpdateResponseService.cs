@@ -50,7 +50,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 cargoSealIdentifierPM.Status = "1";
                 this.MyResponseData.UserMessage = "התקבלה תשובה תקינה והסגר עודכן";
             }
-
+            cargoSealIdentifierPM.ChangeSetOp = ChangeSetOperation.Update;
             cargoSealIdentifierUpdateService.Update(cargoSealIdentifierPM, true);
         }
     }
