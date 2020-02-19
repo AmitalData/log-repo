@@ -161,4 +161,6 @@
     ReferencedTable="Ports"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
+  <Index
+    Columns="RecordHash" />
 </Table>

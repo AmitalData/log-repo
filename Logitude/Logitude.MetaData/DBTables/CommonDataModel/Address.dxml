@@ -154,6 +154,4 @@
     ReferencedTable="Cards"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
-  <Index
-    Columns="Tenant,ExternalId" />
 </Table>

@@ -641,9 +641,9 @@
   <Index
     Columns="Tenant,ObjectTableId" />
   <Index
-    Columns="ObjectTableId,Tenant,InActive" />
-  <Index
     Columns="FieldCode" />
   <UniqueConstraint
     Columns="FieldName,ObjectTableId,Tenant" />
+  <UniqueConstraint
+    Columns="Tenant,Code,ObjectTableId" />
 </Table>

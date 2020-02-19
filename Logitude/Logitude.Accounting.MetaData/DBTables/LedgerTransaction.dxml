@@ -247,6 +247,4 @@
     ReferencedTable="Currencies"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
-  <Index
-    Columns="AccountId,IsReconciled,InReconcileProgress" />
 </Table>

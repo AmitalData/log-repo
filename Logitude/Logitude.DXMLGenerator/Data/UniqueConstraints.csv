@@ -1,46 +1,45 @@
-﻿Contacts,ComputedKey; Tenant
+﻿MAWBStacks,Tenant; AirlineId; Number
+ARInvoices,Tenant; InvoiceNumber
+Screens,Tenant; Code; ObjectTableId
+RoleFeatures,RoleId; FeatureId; Tenant
+Shipments,Tenant; ShipmentNumber
+Quotes,Tenant; QuoteNumber
+sysdiagrams,principal_id; name
+InterestBasesTypes,Tenant; Code
+PackageTypes,Tenant; Code
+ObjectFields,FieldName; ObjectTableId; Tenant
+ObjectFields,Tenant; Code; ObjectTableId
+Incoterms,Tenant; Code
 Queries,Code; ObjectTableId; UserId; Tenant
+Queries,UniqueCode
+EntityStatus,Code; Tenant
+InterestTransactions,Tenant; InterestEntityTypeCode; EntityId; OriginalEntityLineNumber; GLAccountId
 DocumentTypes,Tenant; Code
-MAWBStacks,Tenant; AirlineId; Number
-Measurements,Code; Tenant
-MessagingStockUsageHistories,EntityId; MessageType
-MenuButtonGroups,Name; Tenant
-VatTypes,Tenant; Code
-PaymentCheques,UniqueField; BankAccountId; Tenant
-MenuButtons,EventCode; MenuButtonGroupId; Tenant
 MenusTables,Code; Tenant
+GLAccounts,DisplayNumber; Tenant
+EventTypes,Tenant; Code; ObjectTableId
+TextCodes,Tenant; Code; ObjectTableId
+ObjectTableRuleFields,ObjectFieldId; ObjectTableRuleId; Tenant
+Cards,Tenant; Code; PartnerTypeId
+PaymentCheques,UniqueField; BankAccountId; Tenant
+MenuButtonGroups,Name; Tenant
+ObjectTableTabs,Code; Tenant
+ObjectTableRules,RuleCode; Tenant
 Countries,Tenant; Code
 GLAccountCounters,Tenant; Prefix
-CountryCities,CountryId; Code; Tenant
-Shipments,Tenant; ComputedForwarderShipmentNumber
-ObjectFields,FieldName; ObjectTableId; Tenant
+MenuButtons,EventCode; MenuButtonGroupId; Tenant
+MessagingStockUsageHistories,EntityId; MessageType
 Currencies,Tenant; Code
 ObjectTableHelperControls,Code; Tenant
-Quotes,Tenant; QuoteNumber
-EventTypes,Tenant; Code; ObjectTableId
-ObjectTableRuleFields,ObjectFieldId; ObjectTableRuleId; Tenant
-ObjectTableRules,RuleCode; Tenant
-ObjectTables,Name; Tenant
-ObjectTableTabs,Code; Tenant
-InterestTransactions,Tenant; InterestEntityTypeCode; EntityId; OriginalEntityLineNumber
-Features,Code; ObjectTableId; Tenant
-States,Tenant; Code; CountryId
-sysdiagrams,principal_id; name
-Cards,Tenant; Code; PartnerTypeId
+VatTypes,Tenant; Code
 Ranks,Code; Tenant
-TariffLines,TariffId; Version; LineUniqueKeyText
-PackageTypes,Tenant; Code
-GLAccounts,DisplayNumber; Tenant
-TextCodes,Tenant; Code; ObjectTableId
-DBIdCounters,TableName
-InterestBasesTypes,Tenant; Code
-RoleFeatures,RoleId; FeatureId; Tenant
+Measurements,Code; Tenant
 Roles,Tenant; Code
-Persons,ID
 Ports,Tenant; Code; CountryId
-zzz_yymm,ID
-Screens,Tenant; Code; ObjectTableId
-Incoterms,Tenant; Code
 Industries,Code; Tenant
-GlobalContacts,Email; GlobalTenantId
-sysdiagrams,principal_id; name
+ObjectTables,Name; Tenant
+States,Tenant; Code; CountryId
+DBIdCounters,TableName
+CountryCities,CountryId; Code; Tenant
+TariffLines,TariffId; Version; LineUniqueKeyText
+Features,Code; ObjectTableId; Tenant

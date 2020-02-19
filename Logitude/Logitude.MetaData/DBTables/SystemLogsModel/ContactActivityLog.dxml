@@ -77,4 +77,12 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Index
+    Columns="Tenant,GMTLogDateTime" />
+  <Index
+    Columns="Tenant,IsSharedLogisticsContact" />
+  <Index
+    Columns="GMTLogDateTime" />
+  <Index
+    Columns="Tenant,LogDateTime,PartnerTypeId" />
 </Table>

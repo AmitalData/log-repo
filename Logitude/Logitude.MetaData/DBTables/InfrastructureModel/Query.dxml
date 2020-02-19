@@ -265,4 +265,6 @@
     ReferencedTableSchema="dbo" />
   <UniqueConstraint
     Columns="Code,ObjectTableId,UserId,Tenant" />
+  <UniqueConstraint
+    Columns="UniqueCode" />
 </Table>
