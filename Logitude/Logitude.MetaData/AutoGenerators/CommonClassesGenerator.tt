@@ -43,7 +43,7 @@ GenerateMetaDataUpdateClass("../EntityFiles/CommonDataModel","../../JustWebFreig
 GenerateAllCloseTableDetailsEnumsClasss("../EntityFiles/CommonDataModel","../../Logitude.BL/CommonDataModel/CloseTables","CommonDataModel");
  
  
- GenerateAllControllers("../EntityFiles/CommonDataModel","../.../JustWebFreight/WebFreight.Web/Controllers","CommonDataContext","CommonDataModel");
+ GenerateAllControllers("../EntityFiles/CommonDataModel","../../JustWebFreight/WebFreight.Web/Controllers","CommonDataContext","CommonDataModel");
 
  // Generate Commmon TS files---------------------------------------------------------------------------------------------------------------
 GenerateAllPMTS("../EntityFiles/CommonDataModel","../../Logitude.BL/CommonDataModel/EntityPMs","../../AngularModules/AngularModules/Common/EntityPMs");
