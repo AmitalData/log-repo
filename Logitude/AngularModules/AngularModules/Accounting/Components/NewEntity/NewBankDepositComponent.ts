@@ -159,6 +159,8 @@ export class NewBankDepositComponent extends BaseComponent implements OnInit {
     CheckIfThereIsCheques(id) {
 
         // 1-get cashbook pm
+        this.CurrentSession.CurrentWindow.StartBusyIndicator("...");
+
         this.cashBookPMService.get(id).subscribe(myResult => {
             var myResponse: ServiceResponse = myResult;
 
