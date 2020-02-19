@@ -34,9 +34,9 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
 
                     //entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
                     //service.Update(entityPM, true);
-
+                    
                     ReconciliationAfterConversionBatch reconciliationAfterConversionBatch = new ReconciliationAfterConversionBatch();
-                    reconciliationAfterConversionBatch.RunReconciliationAfterConversion(parameterArgs.Tenant, parameterArgs.FromExtNum, parameterArgs.ToExtNum);
+                    reconciliationAfterConversionBatch.RunReconciliationAfterConversion(parameterArgs);
                     string responseText = reconciliationAfterConversionBatch.ResponseText();
                     ChangeStatus("D", null, responseText);
 

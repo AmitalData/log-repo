@@ -13,7 +13,9 @@ using Simplog.Server.Infrastructure.Helpers;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.Accounting.BL.CoreBL;
 using System.Text.RegularExpressions;
-
+using Logitude.Infrastructure.BL.EntityPMs;
+using Logitude.Infrastructure.BL.EntityUpdateServices;
+using Logitude.Infrastructure.Data;
 
 namespace Logitude.Accounting.BL.Utils
 {
@@ -43,8 +45,19 @@ namespace Logitude.Accounting.BL.Utils
             return _StatusCode;
         }
 
-        public void RunReconciliationAfterConversion(int tenant, string fromExtNum, string toExtNum)
+        public void RunReconciliationAfterConversion(ReconciliationAfterConversionArg reconciliationAfterConversionArg)
         {
+            string returnedMessage = "";
+            int tenant = reconciliationAfterConversionArg.Tenant;
+            string fromExtNum = reconciliationAfterConversionArg.FromExtNum;
+            string toExtNum = reconciliationAfterConversionArg.ToExtNum;
+            BatchTaskExecutionPM batchTaskExecutionPM = reconciliationAfterConversionArg.BatchTask;
+            BatchTaskExecutionUpdateService batchTaskExecutionUpdateService = null;
+            if (batchTaskExecutionPM != null)
+            { 
+                batchTaskExecutionUpdateService = GetBatchTaskUpdateServiceInstance(tenant); 
+            }
+
             long fromExt_long = Convert.ToInt64(fromExtNum);
             long toExt_long = Convert.ToInt64(toExtNum);
             if (toExt_long >= 1000)
@@ -85,12 +98,24 @@ namespace Logitude.Accounting.BL.Utils
                 }
                 catch (Exception e)
                 {
-                    string message = e.Message;
-                    // there to put message into the batch task log
+                    string message = e.Message + System.Environment.NewLine;
+                    if (batchTaskExecutionPM != null)
+                    {
+                        // there to put message into the batch task log
+                        batchTaskExecutionPM.ErrorLog = batchTaskExecutionPM.ErrorLog + " " + message;
+                    }
+                    else
+                    {
+                        returnedMessage = returnedMessage + " " + message;
+                    }
                 }
-                double percentage_double = Convert.ToDouble(upper) / Convert.ToDouble(toExt_long) * 100.0;
-                int percentage = Convert.ToInt32(Math.Round(percentage_double));
-                // there to put percentage into the batch task status 
+                if (batchTaskExecutionPM != null)
+                {
+                    double percentage_double = Convert.ToDouble(upper) / Convert.ToDouble(toExt_long) * 100.0;
+                    int percentage = Convert.ToInt32(Math.Round(percentage_double));
+                    batchTaskExecutionPM.ProgressPercentage = percentage;
+                    // there to put percentage into the batch task status 
+                }
 
 
                 if (lower == toExt_long)
@@ -105,10 +130,30 @@ namespace Logitude.Accounting.BL.Utils
                         lower = toExt_long;
                     }
                 }
-            } 
+            }
+            if (batchTaskExecutionPM != null)
+            {
+                batchTaskExecutionPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+                if (batchTaskExecutionUpdateService != null)
+                { 
+                    batchTaskExecutionUpdateService.Update(batchTaskExecutionPM, true); 
+                }
+            }
+            else 
+            { 
+                if (!String.IsNullOrEmpty(returnedMessage))
+                {
+                    throw new Exception(returnedMessage);
+                }
+            }
 
+        }
 
-
+        private BatchTaskExecutionUpdateService GetBatchTaskUpdateServiceInstance(int tenant)
+        {
+            IInfrastructureContext context = InfrastructureContext.GetContext(tenant);
+            BatchTaskExecutionUpdateService batchTaskExecutionUpdateService = new BatchTaskExecutionUpdateService(context, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), tenant);
+            return batchTaskExecutionUpdateService;
         }
 
         public void RunReconciliationAfterConversionInner(int tenant, string fromExtNum, string toExtNum)
@@ -338,5 +383,6 @@ namespace Logitude.Accounting.BL.Utils
         public int Tenant { get; set; }
         public string FromExtNum { get; set; }
         public string ToExtNum { get; set; }
+        public BatchTaskExecutionPM BatchTask { get; set; }
     }
 }
