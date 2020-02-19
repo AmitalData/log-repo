@@ -510,6 +510,16 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
 
                     break;
 
+                case "MLDT":
+                    {
+                        MementoPrintService service = new MementoPrintService();
+                        MementoDataProvider MementoDP = service.LoadDataProvider(entityId, tenant);
+                        theT2 = System.DateTime.Now.Ticks;
+                        StiBusinessObject currentBusinessObject = new StiBusinessObject() { Category = "MLDT", Name = "MementoDataProvider", BusinessObjectValue = MementoDP };
+                        report = LoadandRender(defaulttemplate, currentBusinessObject, tenant);
+
+                    }
+                    break;
                 case "JRPR":
                     {
                         JournalPrintService service = new JournalPrintService();

@@ -933,6 +933,7 @@
     <Compile Include="AccountingModel\DomainServices\AccountingDomainService.BankPageEntryType.CS" />
     <Compile Include="AccountingModel\Reports\BankDeposit\BankDepositDataProvider.cs" />
     <Compile Include="AccountingModel\Reports\BankDeposit\BankDepositPrintService.cs" />
+    <Compile Include="AccountingModel\Reports\Interest\InterestPrintService.cs" />
     <Compile Include="AccountingModel\Reports\Journal\JournalDataProvider.cs" />
     <Compile Include="AccountingModel\Reports\Journal\JournalPrintService.cs" />
     <Compile Include="AccountingModel\DomainServices\Generated\ARPaymentChequeStatusDomainService.Generated.cs" />
@@ -2027,7 +2028,7 @@
     <Compile Include="DataContracts\DWObjectFieldsDetails.cs" />
     <Compile Include="DataContracts\DWQueryData.cs" />
     <Compile Include="DataContracts\ShipmentTestData.cs" />
-    <Compile Include="DataProviders\InterestDataProvider.cs" />
+    <Compile Include="AccountingModel\Reports\Interest\InterestDataProvider.cs" />
     <Compile Include="DataProviders\BluesnapPaymentsDataProvider.cs" />
     <Compile Include="DataProviders\FlightBookingsManifestDataProvider.cs" />
     <Compile Include="DataProviders\LedgerTransactionDataProvider.cs" />
