@@ -1,4 +1,4 @@
-﻿var item;
+var item;
 var barChart;
 var itemLine;
 var PieItem;
@@ -715,7 +715,7 @@ function ResetItemFunnel() {
     }
 
 
-    function makeAMLineChartMultiple(name, chartData, alpha, graphs, legendFlag,LegendDiv) {
+    function makeAMLineChartMultiple(name, chartData, alpha, graphs, legendFlag,LegendDiv, title) {
 
 
         var chart = AmCharts.makeChart(name, {
@@ -760,12 +760,12 @@ function ResetItemFunnel() {
             "valueAxes": [
            {
                "minorGridEnabled": false,
-               "title": "[Hours]",
+                    "title": title,
            }],
-
             "export": {
                 "enabled": false
-            }
+            },
+            
         });
 
 

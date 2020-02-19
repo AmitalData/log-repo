@@ -19,13 +19,15 @@ namespace Logitude.BL.QuoteModel.EntityQueries.Charts
         int tenant;
         IQueryable<Quote> dataSourceQuery;
         IQuotesContext context;
+        private QuoteDashboardArguments args;
         public DashboardQuery(int tenant)
         {
             this.tenant = tenant;
             context = QuotesContext.GetContext(tenant);
         }
-        public IQueryable<Quote> FilterBasicValues(QuoteDashboardArguments quoteDashboardArgs)
+        public IQueryable<Quote> FilterBasicValues(QuoteDashboardArguments args)
         {
+            this.args = args;
             dataSourceQuery =
                 (from d in context.Quotes
                  where d.Tenant == tenant
@@ -35,13 +37,13 @@ namespace Logitude.BL.QuoteModel.EntityQueries.Charts
 
             QuoteBusinessUnitFilter filter = new QuoteBusinessUnitFilter(tenant);
             dataSourceQuery = filter.RunFilter(dataSourceQuery);
-            FilterOwner(quoteDashboardArgs.OwnerId);
-            FilterBusinessUnit(quoteDashboardArgs.BusinessUnitId);
-            FilterCreateDate(quoteDashboardArgs.FromDate, quoteDashboardArgs.ToDate);
+            FilterOwner(args.OwnerId);
+            FilterBusinessUnit(args.BusinessUnitId);
+            FilterCreateDate(args.FromDate, args.ToDate);
 
-            if (quoteDashboardArgs.ChartCode == "QOC")
+            if (args.ChartCode == "QOC")
             {
-                FilterDirectionAndTransportMode(quoteDashboardArgs.DirectionId, quoteDashboardArgs.TransportModeId);
+                FilterDirectionAndTransportMode(args.DirectionId, args.TransportModeId);
             }
 
             return dataSourceQuery;
@@ -113,7 +115,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries.Charts
             else if (chartCode == "TFS")
             {
                 TopFiveSalesmanQuery topFiveSalesmanQuery = new TopFiveSalesmanQuery();
-                result = topFiveSalesmanQuery.FilterToFiveSalesmanByProfit(dataSourceQuery);
+                result = topFiveSalesmanQuery.FilterToFiveSalesmanByProfit(dataSourceQuery, args, tenant);
             }
 
             else if (chartCode == "KPI")

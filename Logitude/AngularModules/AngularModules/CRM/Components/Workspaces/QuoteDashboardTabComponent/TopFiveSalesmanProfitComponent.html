@@ -5,12 +5,51 @@
     <title></title>
 </head>
 <body>
-    <table style="background-color:darkkhaki;">
-        <tr>
-            <td>
-                <div></div>
-            </td>
-        </tr>
-    </table>
+    <SectionBox>
+        <SectionHead>
+            <table>
+                <tr class="SectionHeader" style="height:27px">
+                    <td>
+                        <label>Top 5 Salesman (Profit)</label>
+                    </td>
+                    <td></td>
+
+                    <td style="width:80px">
+                        <ul class="FiltersMenu">
+                            <li (click)="ChangeCurrency(ProfitCurrencyCode)" [class.SelectedFilter]="SelectedCurrency === '2'" style="width:33px;">
+                                {{ProfitCurrencyCode}}
+                            </li>
+                            <li (click)="ChangeCurrency(LocalCurrencyCode)" [class.SelectedFilter]="SelectedCurrency === '1'" style="width:33px;">
+                                {{LocalCurrencyCode}}
+                            </li>
+                        </ul>
+                    </td>
+
+                </tr>
+            </table>
+        </SectionHead>
+        <SectionBody>
+            <table>
+                <tr *ngIf="PerformanceChartIdExistance">
+                    <td>
+                        <div [attr.id]="PerformanceChartId" style="background: white;" class="MediaFill"></div>
+                    </td>
+                </tr>
+                <tr style="height:25px" *ngIf="PerformanceChartIdExistance">
+                    <td>
+                        <div [attr.id]="LegendDiv" style="position:relative;width:90%;"></div>
+                    </td>
+                </tr>
+                <tr *ngIf="!PerformanceChartIdExistance">
+                    <td style="vertical-align:top">
+                        <div style="text-align:center;vertical-align:top;margin-top:10px;width:100%;overflow-y:hidden">
+                            <label style="font-size:small;color:gray;text-align:center;vertical-align:central;width:100%;height:100%">No Data</label>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </SectionBody>
+    </SectionBox>
+   
 </body>
 </html>

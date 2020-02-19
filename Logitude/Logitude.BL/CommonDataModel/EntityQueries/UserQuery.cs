@@ -1681,5 +1681,24 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             return usersIds;
         }
+        public Dictionary<string, string> GetUsersListFromIdList(List<string> ids, int tenant)
+        {
+            Dictionary<string, string> salesmanNames = new Dictionary<string, string>();
+
+            List<UserPM> users = (from a in repository.context.Users.Include("Contact")
+                             where a.Tenant == tenant 
+                             && ids.Contains(a.Id)
+                             select new UserPM()
+                             {
+                                 Id = a.Id,
+                                 EnglishName = a.Contact.EnglishName,
+                             }).ToList();
+
+            foreach (UserPM item in users)
+            {
+                salesmanNames.Add(item.Id, item.EnglishName);
+            }
+            return salesmanNames;
+        }
     }
 }

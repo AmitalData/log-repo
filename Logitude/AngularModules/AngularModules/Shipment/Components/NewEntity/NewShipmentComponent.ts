@@ -568,7 +568,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, OnDes
         }
 
         else {
-            this.ChargeableWeightLabel = TextCodeTranslator.Translate("Shipment.F.ChargeableWeight.Short").replace("%ChargWeightCode", this.EntityPM.ChargeableWeightUnitCode);
+            this.ChargeableWeightLabel = TextCodeTranslator.Translate("Shipment.F.WtMsr.Short").replace("%ChargWeightCode", this.EntityPM.ChargeableWeightUnitCode);
         }
     }
     SetUnits() {
