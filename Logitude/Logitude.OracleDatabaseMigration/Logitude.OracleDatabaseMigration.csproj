@@ -504,6 +504,10 @@
     <Compile Include="Migrations\202002021214069_AddDeclarationReferantDataTable.Designer.cs">
       <DependentUpon>202002021214069_AddDeclarationReferantDataTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202002191332025_CargoSealsChanges.cs" />
+    <Compile Include="Migrations\202002191332025_CargoSealsChanges.Designer.cs">
+      <DependentUpon>202002191332025_CargoSealsChanges.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -872,6 +876,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202002021214069_AddDeclarationReferantDataTable.resx">
       <DependentUpon>202002021214069_AddDeclarationReferantDataTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002191332025_CargoSealsChanges.resx">
+      <DependentUpon>202002191332025_CargoSealsChanges.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\logitude.oracledatabasemigration.dll.licenses" />
   </ItemGroup>
