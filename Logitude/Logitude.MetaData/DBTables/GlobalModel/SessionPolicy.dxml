@@ -13,15 +13,13 @@
   </Column>
   <Column
     Name="WebTokenLifeTimeInMinutes"
-    Type="int"
-    DefaultValue="0">
+    Type="int">
     <Constraints
       Nullable="false" />
   </Column>
   <Column
     Name="WebTokenExpirationWarningInMinutes"
-    Type="int"
-    DefaultValue="0">
+    Type="int">
     <Constraints
       Nullable="false" />
   </Column>

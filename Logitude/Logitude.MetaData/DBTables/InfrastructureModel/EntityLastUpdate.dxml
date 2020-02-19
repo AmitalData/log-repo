@@ -61,4 +61,6 @@
     ReferencedTable="Users"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
+  <Index
+    Columns="Tenant,ObjectTableId,EntityId" />
 </Table>

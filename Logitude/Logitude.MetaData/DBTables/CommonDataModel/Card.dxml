@@ -479,8 +479,6 @@
     Columns="Tenant,InActive,PartnerTypeId,EnglishName" />
   <Index
     Columns="Tenant,InActive,PartnerTypeId,IsCustomer" />
-  <Index
-    Columns="Code" />
   <UniqueConstraint
     Columns="Tenant,Code,PartnerTypeId" />
 </Table>

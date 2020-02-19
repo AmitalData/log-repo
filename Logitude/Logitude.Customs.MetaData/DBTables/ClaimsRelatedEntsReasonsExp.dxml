@@ -27,7 +27,8 @@
   </Column>
   <Column
     Name="LineNo"
-    Type="int">
+    Type="int"
+    DefaultValue="0">
     <Constraints
       PrimaryKey="true"
       Nullable="false" />

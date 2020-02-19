@@ -548,5 +548,7 @@
     ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
   <Index
+    Columns="Tenant" />
+  <Index
     Columns="CashbookId" />
 </Table>

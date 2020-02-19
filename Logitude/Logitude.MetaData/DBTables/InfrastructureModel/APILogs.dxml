@@ -165,7 +165,5 @@
   <Index
     Columns="Tenant,CorrelationId" />
   <Index
-    Columns="CreateDate" />
-  <Index
     Columns="Id" />
 </Table>

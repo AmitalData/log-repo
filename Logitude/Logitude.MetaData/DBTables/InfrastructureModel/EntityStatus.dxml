@@ -70,4 +70,6 @@
     ReferencedTable="ObjectTables"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
+  <UniqueConstraint
+    Columns="Code,Tenant" />
 </Table>

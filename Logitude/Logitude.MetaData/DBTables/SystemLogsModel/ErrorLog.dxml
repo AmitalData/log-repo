@@ -73,4 +73,6 @@
   </Column>
   <Index
     Columns="LogDate" />
+  <Index
+    Columns="Tenant" />
 </Table>
