@@ -93,6 +93,16 @@ namespace Logitude.Customs.BL.CloseTables
                     Param1= @"{ ""checkId"":""""}",
                     Param2= @"{ }",
                     MainInterfaceCode="196",
+                },
+                new SincroTestCaseDetail()
+                {
+                    Code = "2470Sincro",
+                    Name = "מסר התרת ",
+                    IsDCA = true,
+                    Entity="Declaration",
+                    Param1= @"{}",
+                    Param2= @"{}",
+                    MainInterfaceCode="2470",
                 }
 
 

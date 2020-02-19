@@ -152,6 +152,7 @@
     <Compile Include="FakeMessagingServices\Fake_DCAInCH_NG_5117_MSG14003_Amendment_Service.cs" />
     <Compile Include="FakeMessagingServices\Fake_DCAInCH_NG_190_MSG1_NoticeToClient_Service.cs" />
     <Compile Include="FakeMessagingServices\Fake_8215_MSG23002_ConstraintApprovalDecision.cs" />
+    <Compile Include="FakeMessagingServices\Fake_DCAInDF_NG_2470_MSG16001_ReleaseGoodsMessagingService.cs" />
     <Compile Include="FakeMessagingServices\Fake_ImportDeclaration_Response.cs" />
     <Compile Include="MessagingServices\DCAInDE_NG_5108_DecisionMessageMessagingService.cs" />
     <Compile Include="Dca\DCAMoveIncomeFileToDirService.cs" />
