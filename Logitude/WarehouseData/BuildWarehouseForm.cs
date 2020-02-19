@@ -159,26 +159,23 @@ namespace WarehouseData
                             MessageBox.Show("connection not valid");
                             return; 
                         }
-         
-                        WarehouseHelper warehouseHelper = new WarehouseHelper();
-                        string sourceConnectionString = warehouseHelper.BuildConnectionString(sourceConnectionArray[0], sourceConnectionArray[1], sourceConnectionArray[2], sourceConnectionArray[3]);
-                        string destinationConnectionString = warehouseHelper.BuildConnectionString(destinationConnectionArray[0], destinationConnectionArray[1], destinationConnectionArray[2], destinationConnectionArray[3]);
+
+                        MainDataWarehouseService mainDataWarehouseService = new MainDataWarehouseService();
+                        string sourceConnectionString = mainDataWarehouseService.BuildConnectionString(sourceConnectionArray[0], sourceConnectionArray[1], sourceConnectionArray[2], sourceConnectionArray[3]);
+                        string destinationConnectionString = mainDataWarehouseService.BuildConnectionString(destinationConnectionArray[0], destinationConnectionArray[1], destinationConnectionArray[2], destinationConnectionArray[3]);
 
                         string stepName = "";
                         try
                         {
                             SetControlPropertyValue("ForeColor", Color.Black);
                             SetControlPropertyValue("Text", "Starting...");
-
+           
                             Stopwatch stopWatch = new Stopwatch();
                             stopWatch.Start();
 
-                            warehouseHelper.CreateWaterMarksTable("WaterMarks",sourceConnectionString);
+                            mainDataWarehouseService.CreateWaterMarksTable("WaterMarks",sourceConnectionString);
 
-                            List<TableClass> tableNameLists = warehouseHelper.FillTable();
-
-                            warehouseHelper.BuildWarehouseObjectField( tableNameLists, sourceConnectionString);
-                            warehouseHelper.BuildDWObjectFieldDB(tableNameLists, sourceConnectionString);
+                            List<TableClass> tableNameLists = mainDataWarehouseService.BulidDataWarehouseTableLists(sourceConnectionString);
                             
                             foreach (TableClass table in tableNameLists)
                             {
@@ -198,12 +195,9 @@ namespace WarehouseData
 
                             #region Create and Build  DW Table
 
-                            foreach (TableClass table in tableNameLists)
+                            foreach (TableClass table in tableNameLists.Where(d=>!d.HasFactTable))
                             {
-                                if (table.TableName == "ShipmentPayable")
-                                {
-
-                                }
+                                
                                 stepName = table.DBTableName;
 
                                     Stopwatch stopWatchDWTable = null;
@@ -214,20 +208,9 @@ namespace WarehouseData
                                         SetControlPropertyValue("Text", "Copying...", table.DBTableName);
                                     }
 
-                                warehouseHelper.InitializationDWTable(table, sourceConnectionString, destinationConnectionString);
-                                warehouseHelper.CreateIndex(table, table.KeyName, destinationConnectionString);
+              
+                                mainDataWarehouseService.BuildDWDataBase(sourceConnectionString, destinationConnectionString, table, TotalCountLable);
 
-                                if (table.TableName != "WaterMark")
-                                {
-                                    warehouseHelper.CreateIndex(table, "AutomaticLastUpdateDate", destinationConnectionString);
-                                    if (table.HasConstraint) warehouseHelper.AddConstraint(table, destinationConnectionString);
-                                    if (table.HasNotSpecifiedValue) warehouseHelper.InSertNotSpecifiedValueToDW(table, destinationConnectionString);
-                                }
-
-                                else warehouseHelper.CreateIndex(table, "LastUpdateDate", destinationConnectionString);
-                                warehouseHelper.CopyDataBase(TotalCountLable,table, sourceConnectionString, destinationConnectionString);
-
-                                warehouseHelper.UpdateAutomaticLastUpdate(table, sourceConnectionString, destinationConnectionString);
                                 if (table.DispayInScreen)
                                 {
                                     stopWatchDWTable.Stop();
@@ -245,21 +228,15 @@ namespace WarehouseData
                             #region Create and Build Dimensions Table
 
 
-                              stepName = "BuildDateDimensionsTable";
-                            warehouseHelper.ExecuteScript("BuildWarehouse", destinationConnectionString, "BuildDateDimensionsTable");
+                             stepName = "BuildDateDimensionsTable";
+                            mainDataWarehouseService.ExecuteScript("BuildWarehouse",  "BuildDateDimensionsTable", destinationConnectionString);
                             stepName = "RunOtherScripte";
-                            warehouseHelper.RunOtherScripte(destinationConnectionString);
-               
+                            mainDataWarehouseService.RunAdditionalScripte(destinationConnectionString, tableNameLists);
 
 
-
+     
                             foreach (TableClass table in tableNameLists.Where(d => d.HasDimensionTable).ToList())
                             {
-                                if(table.TableName == "ChargesType")
-                                {
-
-                                }
-
                                     Stopwatch stopWatchDimensionsTable = null;
                              
                                     if (table.DispayInScreen)
@@ -271,9 +248,8 @@ namespace WarehouseData
                                     }
 
                                     stepName = table.BuildScriptName;
-                                   
-                                    warehouseHelper.BuildAndExecuteDataWarehouseScript("BuildWarehouse", destinationConnectionString , table);
-
+     
+                                mainDataWarehouseService.BuildDimensionTable(destinationConnectionString, table);
 
                                     if (table.DispayInScreen)
                                     {
@@ -300,9 +276,10 @@ namespace WarehouseData
                                         SetControlPropertyValue("ForeColor", Color.Black, table.DBTableName, "Fact");
                                         SetControlPropertyValue("Text", "Building...", table.DBTableName, "Fact");
                                     }
-                                    warehouseHelper.BuildAndExecuteDataWarehouseScript("BuildWarehouse", destinationConnectionString , table);
-                          
-                                    if (table.TableName == "Shipment")
+           
+                                mainDataWarehouseService.BuildFactTable(destinationConnectionString, table);
+
+                                if (table.TableName == "Shipment")
                                     {
                                         stopWatchDFactTable.Stop();
                                         TimeSpan stopWatchDFactTableTs = stopWatchDFactTable.Elapsed;
@@ -315,6 +292,9 @@ namespace WarehouseData
 
                             #endregion
 
+
+
+                            mainDataWarehouseService.FinishBuildingDataWarehouse(destinationConnectionString, tableNameLists);
                             stopWatch.Stop();
                             TimeSpan ts = stopWatch.Elapsed;
                             SetControlPropertyValue("Text", "Done in ( " + ts.ToString(@"hh\:mm\:ss") + " )");
@@ -335,8 +315,14 @@ namespace WarehouseData
                                 GetCount(table, "DIM", destinationConnectionString);
                             }
 
-                            stepName = "Fact table count";
-                            GetCount(tableNameLists.Where(d => d.DBTableName == "Shipments").FirstOrDefault(), "Fact", destinationConnectionString);
+                            foreach (TableClass table in tableNameLists.Where(d => d.HasFactTable).ToList())
+                            {
+                                stepName = table.DWObjectTableCode + " table count";
+                                GetCount(table, "Fact", destinationConnectionString);
+                            }
+
+
+      
 
                             #endregion
 

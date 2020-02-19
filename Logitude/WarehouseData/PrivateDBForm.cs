@@ -5,11 +5,13 @@ using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WarehouseData.Helper;
+using WarehouseData.Service;
 
 namespace WarehouseData
 {
@@ -24,7 +26,7 @@ namespace WarehouseData
             InitializeComponent();
             this.SourceConnectionlTextBox.Text = dbSourceConnection;
             this.DestinationConnectiontextBox.Text = dbDestinationConnection;
-            
+
 
         }
 
@@ -45,7 +47,7 @@ namespace WarehouseData
         }
 
         bool IsBuildDataRunning = false;
-     
+
         private void Start(string type)
         {
 
@@ -65,25 +67,25 @@ namespace WarehouseData
                 {
                     IsBuildDataRunning = true;
 
-                    WarehouseHelper warehouseHelper = new WarehouseHelper();
-                    string sourceConnectionString = warehouseHelper.BuildConnectionString(sourceConnectionArray[0], sourceConnectionArray[1], sourceConnectionArray[2], sourceConnectionArray[3]);
+                    MainDataWarehouseService mainDataWarehouseService = new MainDataWarehouseService();
+
+                    string sourceConnectionString = mainDataWarehouseService.BuildConnectionString(sourceConnectionArray[0], sourceConnectionArray[1], sourceConnectionArray[2], sourceConnectionArray[3]);
                     try
                     {
 
-                        warehouseHelper.SetControlPropertyValue(label, "Text", type == "Build" ? "Building data..." : "Updating data...");
-                        warehouseHelper.SetControlPropertyValue(label, "ForeColor", Color.Black);
-
-                        warehouseHelper.SetControlPropertyValue(PrivateDblabel, "Text", "");
-                        warehouseHelper.SetControlPropertyValue(PrivateDblabel, "ForeColor", Color.Black);
+                        SetControlPropertyValue(label, "Text", type == "Build" ? "Building data..." : "Updating data...");
+                        SetControlPropertyValue(label, "ForeColor", Color.Black);
+                        SetControlPropertyValue(PrivateDblabel, "Text", "");
+                        SetControlPropertyValue(PrivateDblabel, "ForeColor", Color.Black);
 
 
                         Stopwatch stopWatch = new Stopwatch();
                         stopWatch.Start();
                         string allMessage = "";
 
-                        if (type == "Build") warehouseHelper.CreatePrivateWaterMarksTable(sourceConnectionString);
+                        if (type == "Build") mainDataWarehouseService.CreateWaterMarksTable("PrivateWaterMarks", sourceConnectionString, true);
 
-                        var dWHSettingsTable = warehouseHelper.GetPrivateTenant(sourceConnectionString);
+                        var dWHSettingsTable = mainDataWarehouseService.privateTenantDataWarehouse.GetPrivateTenant(sourceConnectionString);
 
                         string userName = destinationConnectionArray[1];
                         string password = destinationConnectionArray[2];
@@ -98,42 +100,42 @@ namespace WarehouseData
                             if (string.IsNullOrEmpty(allMessage)) allMessage = message + System.Environment.NewLine;
                             else allMessage += (message + System.Environment.NewLine);
 
-                            warehouseHelper.SetControlPropertyValue(PrivateDblabel, "Text", allMessage);
+                            SetControlPropertyValue(PrivateDblabel, "Text", allMessage);
 
                             Stopwatch stopWatchPrivateDB = new Stopwatch();
                             stopWatchPrivateDB.Start();
 
-                            string destinationConnectionString = warehouseHelper.BuildConnectionString(catalog, userName, password, server);
-                            List<int> relatedTenants = warehouseHelper.GetPrivateRelatedTenants(sourceConnectionString, tenant);
+                            string destinationConnectionString = mainDataWarehouseService.BuildConnectionString(catalog, userName, password, server);
+                            List<int> relatedTenants = mainDataWarehouseService.privateTenantDataWarehouse.GetPrivateRelatedTenants(sourceConnectionString, tenant);
 
                             if (!relatedTenants.Contains(tenant)) relatedTenants.Add(tenant);
 
-                            string tenants = warehouseHelper.ConvertIntgerListToString(relatedTenants);
+                            string tenants = mainDataWarehouseService.privateTenantDataWarehouse.ConvertIntgerListToString(relatedTenants);
 
-                            if (type == "Build") warehouseHelper.BuildDataBase(sourceConnectionString, destinationConnectionString, tenant, tenants);
-                            else warehouseHelper.UpdateWarehouseData(sourceConnectionString, destinationConnectionString, tenant, tenants);
+                            if (type == "Build") mainDataWarehouseService.BuildDataWarehouse(sourceConnectionString, destinationConnectionString, tenant, tenants);
+                            else mainDataWarehouseService.UpdateDataWarehouse(sourceConnectionString, destinationConnectionString, tenant, tenants);
 
                             stopWatchPrivateDB.Stop();
                             TimeSpan tsPrivateDB = stopWatchPrivateDB.Elapsed;
                             string replaceMessage = "Updated Private Tenant (" + tenant + ")" + "    Children Tenants" + tenants.Replace(", " + tenant.ToString(), "").Replace(tenant.ToString() + ",", "") + "   Done in ( " + tsPrivateDB.ToString(@"hh\:mm\:ss") + " )";
                             if (type == "Build")
                             {
-                                string count = warehouseHelper.GetCount("Fact_Shipments", destinationConnectionString).ToString();
+                                string count = mainDataWarehouseService.GetRecordDataCountByTableName("Fact_Shipments", destinationConnectionString).ToString();
                                 replaceMessage = "Private Tenant (" + tenant + ")" + "    Children Tenants" + tenants.Replace(", " + tenant.ToString(), "").Replace(tenant.ToString() + ",", "") + "    Fact Count (" + count + ")  Done in ( " + tsPrivateDB.ToString(@"hh\:mm\:ss") + " )";
                             }
 
                             allMessage = allMessage.Replace(message, replaceMessage);
-                            warehouseHelper.SetControlPropertyValue(PrivateDblabel, "Text", allMessage);
+                            SetControlPropertyValue(PrivateDblabel, "Text", allMessage);
 
                         }
-                        warehouseHelper.SetControlPropertyValue(PrivateDblabel, "ForeColor", Color.Green);
+                        SetControlPropertyValue(PrivateDblabel, "ForeColor", Color.Green);
                         IsBuildDataRunning = false;
 
                         stopWatch.Stop();
                         TimeSpan ts = stopWatch.Elapsed;
 
-                        warehouseHelper.SetControlPropertyValue(label, "Text", "Done in ( " + ts.ToString(@"hh\:mm\:ss") + " )");
-                        warehouseHelper.SetControlPropertyValue(label, "ForeColor", Color.Green);
+                        SetControlPropertyValue(label, "Text", "Done in ( " + ts.ToString(@"hh\:mm\:ss") + " )");
+                        SetControlPropertyValue(label, "ForeColor", Color.Green);
                     }
                     catch (Exception ex)
                     {
@@ -169,8 +171,30 @@ namespace WarehouseData
         }
 
 
+        delegate void SetControlValueCallback(Control oControl, string propName, object propValue);
+        public void SetControlPropertyValue(Control oControl, string propName, object propValue)
+        {
+            if (oControl.InvokeRequired)
+            {
+                SetControlValueCallback d = new SetControlValueCallback(SetControlPropertyValue);
+                oControl.Invoke(d, new object[] { oControl, propName, propValue });
+            }
+            else
+            {
+                Type t = oControl.GetType();
+                PropertyInfo[] props = t.GetProperties();
+                foreach (PropertyInfo p in props)
+                {
+                    if (p.Name.ToUpper() == propName.ToUpper())
+                    {
+                        p.SetValue(oControl, propValue, null);
+                    }
+                }
+            }
+        }
 
- 
+
+
 
 
     }

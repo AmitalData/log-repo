@@ -92,19 +92,29 @@
     <Compile Include="BuildWarehouseForm.Designer.cs">
       <DependentUpon>BuildWarehouseForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Service\WarehouseHelper.cs" />
+    <Compile Include="Service\CustomFieldWarehouseService.cs" />
+    <Compile Include="Service\DimensionWarehouseService.cs" />
+    <Compile Include="Service\DWDataWarehouseService.cs" />
+    <Compile Include="Service\FactWarehouseService.cs" />
+    <Compile Include="Service\FinalDataWarehouseService.cs" />
+    <Compile Include="Service\GeneralDataWarehouseService.cs" />
+    <Compile Include="Service\MainDataWarehouseService.cs" />
+    <Compile Include="Service\ObjectFieldDataWarehouseService.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Service\PrivateTenantDataWarehouse.cs" />
+    <Compile Include="Service\WaterMarkDataWarehouseService.cs" />
     <Compile Include="UpdateWarehouseForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="UpdateWarehouseForm.Designer.cs">
       <DependentUpon>UpdateWarehouseForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Helper\WarehouseHelper.cs" />
     <Compile Include="PrivateDBForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -161,7 +171,9 @@
     <Content Include="WarehouseScript\BuildWarehouse\BuildCardsDimensionTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="WarehouseScript\BuildWarehouse\BuildChargesTypeDimensionTable.sql" />
+    <Content Include="WarehouseScript\BuildWarehouse\BuildChargesTypeDimensionTable.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="WarehouseScript\BuildWarehouse\BuildCurrencyDimensionTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -213,7 +225,9 @@
     <Content Include="WarehouseScript\BuildWarehouse\BuildVesselDimensionTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="WarehouseScript\IncrementalWarehouse\UpdateChargesTypeDimensionTable.sql" />
+    <Content Include="WarehouseScript\IncrementalWarehouse\UpdateChargesTypeDimensionTable.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="WarehouseScript\IncrementalWarehouse\UpdateCustomPickListDimensionsTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
