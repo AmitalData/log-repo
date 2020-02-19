@@ -126,7 +126,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         DepositionStatusCode, 
 	         IsDiamondDeclaration, 
 	         IsMissMandatoryDiamond, 
-	         IsValidTicketsDiamond,
+	         IsValidTicketsDiamond, 
+	         AvailabilityDate,
 	      }
 
 
@@ -287,7 +288,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         CourierMasterId, 
 	         IsDiamondDeclaration, 
 	         IsMissMandatoryDiamond, 
-	         IsValidTicketsDiamond,
+	         IsValidTicketsDiamond, 
+	         AvailabilityDate,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -814,6 +816,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsValidTicketsDiamond))
             {
 				entityPOCO.IsValidTicketsDiamond = entityPM.IsValidTicketsDiamond;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AvailabilityDate))
+            {
+				entityPOCO.AvailabilityDate = entityPM.AvailabilityDate;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -1347,6 +1354,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.IsValidTicketsDiamond = entityPOCO.IsValidTicketsDiamond;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AvailabilityDate))
+            {
+					entityPM.AvailabilityDate = entityPOCO.AvailabilityDate;
+            }
+
 		}
 
 		public void PMToOldPM(DeclarationPM entityPM, DeclarationPM oldEntityPM)
@@ -1871,6 +1883,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsValidTicketsDiamond))
             {
                 oldEntityPM.IsValidTicketsDiamond = entityPM.IsValidTicketsDiamond;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AvailabilityDate))
+            {
+                oldEntityPM.AvailabilityDate = entityPM.AvailabilityDate;
             }
 			
 		}
