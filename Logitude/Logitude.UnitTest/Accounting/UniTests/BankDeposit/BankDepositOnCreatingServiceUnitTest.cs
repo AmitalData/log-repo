@@ -138,8 +138,6 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 IsCashDeposit = isCashDeposit,
             };
 
-            JournalPM newJournal = new JournalPM() { };
-
             JournalPM expectedJournal = new JournalPM()
             {
                 ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
@@ -167,7 +165,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
             A.CallTo(() => bankDepositOnCreatingService.LogActivity(entityPM)).DoesNothing();
 
             // Act
-            bankDepositOnCreatingService.InitJournal(entityPM, newJournal);
+            JournalPM newJournal = bankDepositOnCreatingService.InitJournal(entityPM);
 
             // Assert
             AssertHelper.HasEqualFieldValues(expectedJournal, newJournal, Environment.NewLine + "[TEST ERROR] Initiated Jounal does not match expected #DP04");

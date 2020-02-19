@@ -40,7 +40,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         protected override void OnCreating(BankDepositPM entityPM, EntityPM entityParentPM)
         {
 
-            BankDepositOnCreatingService bankDepositOnCreatingService = new BankDepositOnCreatingService(currentContext);
+            BankDepositOnCreatingService bankDepositOnCreatingService = new BankDepositOnCreatingService(currentContext, entityPM.Tenant);
             bankDepositOnCreatingService.OnCreating(entityPM);
 
 

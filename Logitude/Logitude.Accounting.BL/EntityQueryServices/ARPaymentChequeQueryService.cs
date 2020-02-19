@@ -154,6 +154,15 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
             return pocos.Select(r => this.GetEntityPM(r)).ToList();
         }
+
+        public List<ARPaymentChequePM> GetChequesByIds(List<string> ids, int tenant)
+        {
+            List<ARPaymentCheque> cheques = (from a in context.ARPaymentCheques
+                                                    where ids.Contains(a.Id) && a.Tenant == tenant
+                                                    select a).ToList();
+
+            return cheques.Select(rec => GetEntityPM(rec)).ToList();
+        }
     }
 }
 
