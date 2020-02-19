@@ -338,13 +338,13 @@
                                     </log-column>
 
                                     <!-- ActionCode -->
-                                    <log-column [header]="'JournalLine.F.ActionName' | TextCodeTranslationPipe" [width]="'120'" [Alignment]="isRTL ? 'right' : 'left'" [binding]="'ActionCode'">
+                                    <log-column [header]="'JournalLine.F.ActionName' | TextCodeTranslationPipe" [width]="'120'" [Alignment]="isRTL ? 'right' : 'left'" [binding]="'ActionId'">
                                         <log-cell-template  template="let item" #logcelltemplate>
                                             <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" [style.text-align]="isRTL ? 'right' : 'left'" >
                                                 <span>{{item.ActionName}}</span>
                                             </div>
                                             <div *ngIf="logcelltemplate.IsEditMode">
-                                            <LogLov [ObjectFieldName]="'ActionCode'"
+                                            <LogLov [ObjectFieldName]="'ActionId'"
                                                     [ObjectTableName]="'JournalLine'"
                                                     [DataContext]="item"
                                                     [LookUpTableName]="'JournalActionType'"
@@ -352,7 +352,7 @@
                                                     [DisplayMemberPath]="'LocalName'"
                                                     (SelectedItemChanged)="item.JournalActionType = $event"
                                                     [FocusOnMe]="true"
-                                                    [SelectedValue]="ActionCode"
+                                                    [SelectedValue]="ActionId"
                                                     >
                                             </LogLov>
 
