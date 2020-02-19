@@ -14,8 +14,8 @@ export class PrintDocOut {
        this.helper.WaitEditComponentBusyIndicator();
         
         if (closePopup) {
-        //   this.helper.ItemsPresent(expectedId);
-          this.helper.WaitByCssStringAndClick('.Button', 'Close'); // Edit Component
+            this.helper.ItemsPresentWithOutClick(expectedId);
+           this.helper.WaitByCssStringAndClick('.Button', 'Close'); // Edit Component
           //  this.helper.WaitByIdAndClick('closeButtonId')
 
            this.helper.WaitBusyIndicator(); // Logiude Window
