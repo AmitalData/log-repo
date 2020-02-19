@@ -230,9 +230,18 @@ namespace WebFreight.Web.Helpers
                                 {
                                     WhereStmt = WhereStmt.Substring(0, WhereStmt.Length - 4);
                                 }
-                                if (WhereStmt != " where  ( ")
+                                if (WhereStmt.Replace("(", "").Replace(")", "").Replace(" ", "") != "where")
                                 {
-                                    WhereStmt += " " + AndOr + " " + fieldName + OperationSimpol;// + " " +;//" = " + "'" + filter.TextValue + "' and ";
+                                    if (WhereStmt.EndsWith("( "))
+                                    {
+                                        WhereStmt = WhereStmt.TrimEnd(' ').TrimEnd('(');
+                                        WhereStmt += " " + AndOr + " ( " + fieldName + OperationSimpol;// + " " +;//" = " + "'" + filter.TextValue + "' and ";
+                                    }
+                                    else
+                                    {
+                                        WhereStmt += " " + AndOr + " " + fieldName + OperationSimpol;// + " " +;//" = " + "'" + filter.TextValue + "' and ";
+                                    }
+                                    
                                 }
                                 else
                                 {
@@ -254,9 +263,18 @@ namespace WebFreight.Web.Helpers
                             {
                                 WhereStmt = WhereStmt.Substring(0, WhereStmt.Length - 4);
                             }
-                            if (WhereStmt != " where  ( ")
+                            if (WhereStmt.Replace("(", "").Replace(")", "").Replace(" ", "") != "where")
                             {
-                                WhereStmt += " " + AndOr + " " + sqlCommandDefinitionDateFilter.SQLString;// + " " + AndOr + " ";
+                                if (WhereStmt.EndsWith("( "))
+                                {
+                                    WhereStmt = WhereStmt.TrimEnd(' ').TrimEnd('(');
+                                     WhereStmt += " " + AndOr + " ( " + sqlCommandDefinitionDateFilter.SQLString;// + " " + AndOr + " ";
+
+                                }
+                                else
+                                {
+                                    WhereStmt += " " + AndOr + " " + sqlCommandDefinitionDateFilter.SQLString;// + " " + AndOr + " ";
+                                }
                             }
                             else
                             {
