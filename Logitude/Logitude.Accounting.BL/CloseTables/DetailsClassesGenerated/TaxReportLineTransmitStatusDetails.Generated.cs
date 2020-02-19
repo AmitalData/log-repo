@@ -44,6 +44,14 @@ namespace Logitude.Accounting.BL
                 LocalName = "לא לשידור בכלל", 
                 SearchFields = "3,Not for transmit at all,לא לשידור בכלל", 
 			});
+			 
+            all.Add(new TaxReportLineTransmitStatusDetails()
+            {    
+                Code = "0", 
+                EnglishName = "Without Transmit", 
+                LocalName = "ללא סטטוס העברה", 
+                SearchFields = "0,ללא סטטוס העברה,Without Transmit", 
+			});
 			
             return all;
        }

@@ -148,18 +148,18 @@ export class NewTaxReportComponent extends BaseComponent {
                     //this.CurrentSession.StartBusyIndicator("");
                 //    this.CurrentSession.CloseCurrentWindowEmit("ok");
 
-                    this._TaxReportExtendedPMService.PostCreateTaxReportInBatch(entity).subscribe(myResult => {
-                        var mm: ServiceResponse = myResult;
-                        var entity = mm.Result;
-                        this.btePM = entity;
+                    //this._TaxReportExtendedPMService.PostCreateTaxReportInBatch(entity).subscribe(myResult => {
+                    //    var mm: ServiceResponse = myResult;
+                    //    var entity = mm.Result;
+                    //    this.btePM = entity;
 
-                        //this.ChangeStatus("inprogress");
+                    //    this.ChangeStatus("inprogress");
 
-                        this.timer = setInterval(() => {
-                            this.GetBTE();
-                        }, this.timerInterval);
+                    //    this.timer = setInterval(() => {
+                    //        this.GetBTE();
+                    //    }, this.timerInterval);
 
-                    });
+                    //});
                     //SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent',
                     //    this.CurrentSession.SessionLocation.viewContainerRef)
                     //    .then(cmpRef => {

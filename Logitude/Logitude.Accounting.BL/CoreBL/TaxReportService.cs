@@ -86,7 +86,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 decimal? VatAmount = 0;
                 decimal? InvoiceAmount = 0;
-              
+                string transmitStatus = "1";
                 foreach (TaxReportData a in TaxReportJournalData)
                 {
                     string vatNumber = null;
@@ -97,7 +97,10 @@ namespace Logitude.Accounting.BL.CoreBL
                         ARInvoice invoice = invoices.Where(d => d.Id == a.AccountingEntityId).FirstOrDefault();
                         if (invoice != null)
                         {
-                            VatAmount = invoice.TotalVAT != null ? invoice.TotalVAT : 0;
+                           if(invoice.InvoiceDate.Value.Month != taxReport.TaxReportMonth.Month) {
+                            transmitStatus = "0";
+                            }
+                           VatAmount = invoice.TotalVAT != null ? invoice.TotalVAT : 0;
                             InvoiceAmount = invoice.TotalAmountForTaxReport != null ? invoice.TotalAmountForTaxReport : 0;
                             if (invoice.InvoiceNumber.Length == 9)
                             {
@@ -124,7 +127,7 @@ namespace Logitude.Accounting.BL.CoreBL
                                 VatAmount = Math.Round(VatAmount.Value, MidpointRounding.AwayFromZero),
                                 VatableInvoiceAmount = Math.Round(InvoiceAmount.Value, MidpointRounding.AwayFromZero),
                                 IsManuallyChanged = false,
-                                TransmitStatusCode = "1",
+                                TransmitStatusCode = transmitStatus ,
                                 TaxReportId = taxReport.Id,
                                 ChangeSetOp = ChangeSetOperation.Insert,
                                 LastUpdateDateTime = DateTime.Now,
