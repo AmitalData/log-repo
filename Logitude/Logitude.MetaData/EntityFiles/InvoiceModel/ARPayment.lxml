@@ -8838,6 +8838,16 @@
         ScreenName="Header Screen" />
     </ScreenFields>
   </Screen>
+  <Screen
+    Name="&quot;New AR Payment&quot;"
+    ObjectTableName="&quot;ARPayment&quot;"
+    IsReadOnly="false"
+    IsHeaderScreen="false"
+    Code="&quot;NewARPayment&quot;"
+    NumberOfColumns="2"
+    NumberOfRows="1">
+    <ScreenFields />
+  </Screen>
   <Tab
     TabName="&quot;Details&quot;"
     TabLocalName="&quot;פרטים&quot;"
