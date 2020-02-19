@@ -222,21 +222,25 @@ export class AddEditLCLChargeComponent extends BaseComponent {
             var quoteValidator: QuoteValidator = new QuoteValidator();
             quoteValidator.CheckDuplicateInCharges(this.QuotePM, this.EntityPM, errors);
         }
-       
-        this.StepsItemsSource.Collection.forEach(priceStep => {
-            Validator.TryValidateObject(priceStep, this.QuotePriceObjectTableName, errors);
-            this.DataContext.EntityPM.QuoteChargePriceSteps.filter(d => d.Step != null && d.Step == priceStep.Step).forEach((item) => {
-                if (item != priceStep.EntityPM) {
+
+        if (this.DataContext.IsChargeBySteps) {
+            this.StepsItemsSource.Collection.forEach(priceStep => {
+
+                Validator.TryValidateObject(priceStep, this.QuotePriceObjectTableName, errors);
+
+                this.DataContext.EntityPM.QuoteChargePriceSteps.filter(d => d.Step != null && d.Step == priceStep.Step).forEach((item) => {
+                    if (item != priceStep.EntityPM) {
+                        errors.push("Price Steps list already contains Step: " + AppTool.Round(priceStep.Step, 2));
+                    }
+                });
+
+
+                var duplicates = this.StepsItemsSource.Collection.filter(d => d.Step != null && d.Step == priceStep.Step);
+                if (duplicates && duplicates.length > 1) {
                     errors.push("Price Steps list already contains Step: " + AppTool.Round(priceStep.Step, 2));
                 }
             });
-
-
-            var duplicates = this.StepsItemsSource.Collection.filter(d => d.Step != null && d.Step == priceStep.Step);
-            if (duplicates && duplicates.length > 1) {
-                errors.push("Price Steps list already contains Step: " + AppTool.Round(priceStep.Step, 2));
-            }
-        });
+        }
 
         if (this.EntityPM.ChargesGroupCode == "FRT") {
             if (this.DataContext.QuotePM.QuoteCharges.filter(d => d.ChargesGroupCode == "FRT" && d != this.EntityPM).length > 0) {
@@ -331,6 +335,7 @@ export class AddEditLCLChargeComponent extends BaseComponent {
             }
         }
 
+        this.DataContext.BuildPriceBreaksTooltips();
         this.DataContext.fatherComponent.ComputeTotals();
         this.CurrentSession.CloseCurrentWindowEmit("OK");
     }
