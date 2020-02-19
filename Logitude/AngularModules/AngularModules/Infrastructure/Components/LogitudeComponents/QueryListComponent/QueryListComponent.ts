@@ -25,6 +25,8 @@ import { SharedUserQueryPM } from '../../../EntityPMs/SharedUserQueryPM';
 import { QueryPM } from '../../../EntityPMs/QueryPM';
 import { ServiceResponse } from '../../../DataContracts/ServiceResponse';
 import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
+import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
+
 
 @Component({
     moduleId: module.id,
@@ -101,25 +103,27 @@ export class QueryListComponent implements OnInit, AfterViewInit {
 
         this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
     }
-
+    private _entityResourceService: EntityResourceService = new EntityResourceService();
     ngOnInit() {
-        if (this.SelectedItem != null) {
-            this.SetDisplayText();
-        }
+        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe(response => {
+            if (this.SelectedItem != null) {
+                this.SetDisplayText();
+            }
 
-        var xx = this.DropdownId;
-        var temp = this.ignorePublicClicked;
+            var xx = this.DropdownId;
+            var temp = this.ignorePublicClicked;
 
-        this.onSelectedQueryChangeEvent.subscribe((res) => {
-            this.ItemClicked(res, true);
-            this.ComputeListHeight(this.ItemsSource.length + this.UserItemSource.length);
-        });
+            this.onSelectedQueryChangeEvent.subscribe((res) => {
+                this.ItemClicked(res, true);
+                this.ComputeListHeight(this.ItemsSource.length + this.UserItemSource.length);
+            });
 
-        this.FillUserItemSource_Share();
+            this.FillUserItemSource_Share();
 
-        this.QueryListSourceChanged.subscribe((res) => {
-            this.UserItemSource = res;
-        });        
+            this.QueryListSourceChanged.subscribe((res) => {
+                this.UserItemSource = res;
+            });        
+        }); 
     }
 
     private FillUserItemSource_Share() {
