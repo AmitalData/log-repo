@@ -5,38 +5,44 @@ using System.Web;
 
 namespace WebFreight.Web.DataProviders
 {
-    public class AccountingAgingDataProvider : BaseDataProvider
+    public class InterestDataProvider : BaseDataProvider
     {
-        public AccountingAgingDataProvider()
+        public InterestDataProvider()
         {
-            AgingPeriods = new List<AgingPeriod>();
+            InterestReportLinesByDateList = new List<InterestReportLinesByDateProvider>();
         }
-        public string CustomerFilterValue { get; set; }
-        public DateTime? Month { get; set; }
-        public string PrintedByUser { get; set; }
-
-        public List<AgingPeriod> AgingPeriods { get; set; }
+        public decimal? OpenBalance { get; set; }
+        public string CustomerName { get; set; }
+        public string InvoiceNumber { get; set; }
+        public DateTime? InterestCalculationDate { get; set; }
+        public List<InterestReportLinesByDateProvider> InterestReportLinesByDateList { get; set; }
     }
 
-    public class AgingPeriod
+    public class InterestReportLinesByDateProvider
     {
-        public string PeriodName { get; set; }
-        public string CreditOrDebit { get; set; } // contains credit/debit labels 
-        public decimal Total { get; set; } // contains credit/debit total 
-        public decimal GrandTotal { get; set; } // used to calculate credit total and debit total from two records
-        public int OrderIndex { get; set; }
-        public List<AgingPeriodTotal> Totals { get; set; }
-
-
-        public string AccountEnglishName { get; set; }
-        public string AccountLocalName { get; set; }
-        public string AccountName { get; set; }
+        public InterestReportLinesByDateProvider()
+        {
+            InterestTransactionList = new List<InterestTransactionProvider>();
+        }
+        public DateTime FromDate { get; set; }
+        public DateTime ToDate { get; set; }  
+        public decimal AccumulatedAmount { get; set; }   
+        public decimal TotalAmount { get; set; }
+        public int TotalInterestDays { get; set; }
+        public decimal StandardInterestPercentage { get; set; }
+        public decimal ExceptionalInterestPercentage { get; set; }
+        public decimal CreditInterestPercentage { get; set; }
+        public List<InterestTransactionProvider> InterestTransactionList { get; set; }
 
     }
-
-    public class AgingPeriodTotal
+    public class InterestTransactionProvider
     {
-        public decimal TotalCredit { get; set; } 
-        public decimal TotalDebit { get; set; } 
+        public string EntityType { get; set; }
+        public string EntityNumber { get; set; }
+        public decimal LocalAmount { get; set; }
+        public DateTime InterestValueDate { get; set; }
+        public string CurrencyCode { get; set; }
+        public decimal ForeignAmount { get; set; }
+
     }
 }

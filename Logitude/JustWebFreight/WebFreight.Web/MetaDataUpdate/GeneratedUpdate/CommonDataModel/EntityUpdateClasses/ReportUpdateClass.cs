@@ -940,6 +940,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 		   Feature ReportFeature_BLUESNAPPAYMENTREPORT = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BLUESNAPPAYMENTREPORT", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "Report.Features.BLUESNAPPAYMENTREPORT", NameTextCodeDefaultText = @"Bluesnap Payments Report" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
+		   Feature ReportFeature_INTERESTREPORT = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "INTERESTREPORT", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "Report.Features.INTERESTREPORT", NameTextCodeDefaultText = @"Interest Report" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
    
 	    
 		}
