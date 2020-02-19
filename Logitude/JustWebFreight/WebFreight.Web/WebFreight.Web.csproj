@@ -2579,6 +2579,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\FTPDetailUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\GlobalZoneUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\HybridPartnerUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\HybridTenantStateUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\HybridTenantThresholdUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\IncotermUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\IndustryUpdateClass.cs" />
