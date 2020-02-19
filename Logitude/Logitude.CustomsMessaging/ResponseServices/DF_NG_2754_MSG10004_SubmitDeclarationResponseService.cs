@@ -17,6 +17,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnifreightIIG.Common.ImportDeclarationSubmitRequestServiceReference;
 using Logitude.Customs.BL.BL;
+using Logitude.Customs.BL.TraceEvents;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -93,7 +94,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     var declarationException = new UnifreightIIG.Common.ImportDeclarationServiceReference.Exception();
                     declarationException.ExeptionDescription = customResponse.ResponseContentHeader.Remark;
                     this._MyDeclarationPM.ErrosXml = mydDclarationErrorPointerService.AddDeclarationException(this._MyDeclarationPM.ErrosXml, "Warning", declarationException);
-
+                    
                     //Update Status- Future Payment(In case of sending DeclarationStatus message will fail)
                     this._MyDeclarationPM.DeclarationStatusTypeCode = "10";
                     if (_MyDeclarationPM.UserNotes == "LoadTestOnProgress")
@@ -101,6 +102,28 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         _MyDeclarationPM.UserNotes = "LoadTest";
                     }
                     this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
+
+                    var myDeclarationPaymentQueryService = new DeclarationPaymentQueryService(_MyDeclarationPM.Tenant);
+                    var declarationPaymentPM = myDeclarationPaymentQueryService.GetSingle(_MyDeclarationPM.Id, true, false);
+
+                    if(declarationPaymentPM.AutomaticPayment==1)
+                    {
+                        var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
+                        {
+                            Tenant = _MyDeclarationPM.Tenant,
+                            objectTableName = "Customs.Declaration",
+                            EventCode = "APAY",
+                            notes = "",
+                            CommunicationLoggingEntityReference = _MyDeclarationPM.DeclarationNumber,
+                            EntityId = _MyDeclarationPM.Id,
+                            UserId = requestParams.LoggingUserId,
+ 
+                        };
+                      
+
+                         AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel);
+                    }
+
                     myDeclarationUpdateService.Update(this._MyDeclarationPM, true);
 
                     //Send interactive declaration Status request - will send from GetResponse

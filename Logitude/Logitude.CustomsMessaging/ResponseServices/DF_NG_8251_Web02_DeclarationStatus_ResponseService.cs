@@ -18,6 +18,7 @@ using System.Configuration;
 using Unifreight.Data.AmitalModel;
 using Unifreight.BL.EntityQueryServices;
 using Unifreight.BL.EntityPMs.UGenerated;
+using Logitude.CustomsMessaging.MessagingServices;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -205,6 +206,40 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                     RaiseStatus(declarationPM, "", availableStatus);
                                     if(availableStatus != "SMG") RaiseStatus(declarationPM, "", "SMG");
                                 }
+
+
+                                if(availableStatus == "SMG")
+                                {
+                                    declarationPM.AvailabilityDate = DateTime.Now;
+                                    var myDeclarationPaymentQueryService = new DeclarationPaymentQueryService(dbContext);
+                                    var declarationPaymentPM = myDeclarationPaymentQueryService.GetSingle(declarationPM.Id, true, false);
+
+                                    if(declarationPaymentPM!=null)
+                                    {
+                                        if(declarationPaymentPM.AutomaticPayment==1)
+                                        {
+                                            GenericRequestParams submitRequestParams = new GenericRequestParams();
+                                            submitRequestParams.AppicationId = declarationPM.Id;
+                                            submitRequestParams.InterfaceTypeCode = "2755";
+                                         //   submitRequestParams.PBId = requestParamsCredit.PBId;
+                                          //  submitRequestParams.CustomsRequestsSheetId = requestParamsCredit.CustomsRequestsSheetId;
+                                            submitRequestParams.Tenant = declarationPM.Tenant;
+                                            submitRequestParams.RequestVIA = SendRequestVIA.Default;
+                                            submitRequestParams.LoggingUserId = requestParams.LoggingUserId;
+                                           // submitRequestParams.ForcePersonalSign = requestParamsCredit.ForcePersonalSign;
+
+                                            //submitRequestParams.LoggingEntityId = requestParamsCredit.LoggingEntityId;
+                                            //submitRequestParams.LoggingEntityId2 = requestParamsCredit.LoggingEntityId2;
+                                            //submitRequestParams.LoggingObjectTableId = requestParamsCredit.LoggingObjectTableId;
+                                            //submitRequestParams.LoggingObjectTableId2 = requestParamsCredit.LoggingObjectTableId2;
+
+                                            var messagingService = new
+                                                DF_NG_2755_MSG12001_SubmitDeclarationMessagingService();
+                                            INF_MSG_GenericResponseData submitResponseData = messagingService.Send(submitRequestParams);
+                                        }
+                                    }
+                                }
+
                             }
 
                             if (declarationPM.IsCourierDeclaration)
