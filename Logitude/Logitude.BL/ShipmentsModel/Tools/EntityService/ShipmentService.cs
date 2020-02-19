@@ -4933,6 +4933,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             }
         }
 
+        public Dictionary<string,string> DummyIdGuidPackages { get; set; }
         private void CreateShipmentPackage(ShipmentPackagePM itemPM)
         {
             itemPM.Id = IdCounter.GetNumber("ShipmentPackage", tenant).ToString();
@@ -4987,11 +4988,19 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 }
             }
 
-
-
             calculateProfit = true;
             calculatePayables = true;
             calculateReceivables = true;
+
+            if (itemPM.DummyIdGuid != null)
+            {
+                if (DummyIdGuidPackages == null)
+                {
+                    DummyIdGuidPackages = new Dictionary<string, string>();
+                }
+
+                DummyIdGuidPackages.Add(itemPM.Id, itemPM.DummyIdGuid);
+            }
         }
 
         private void UpdateIsUsedPackagesFromWarehouseReleases()
