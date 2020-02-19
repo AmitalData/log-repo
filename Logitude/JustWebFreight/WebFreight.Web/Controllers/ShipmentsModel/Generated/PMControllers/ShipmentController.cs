@@ -167,7 +167,6 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
                         SecurityUtility.CheckContactFeature("Shipment", "UPDATE", tenant);
 						SecurityUtility.AuthenticationOnEntityTenant("Shipment", entityPM.Tenant, authToken.Tenant);
 
-
 						IShipmentsContext objectContext = ShipmentsContext.GetContext(entityPM.Tenant);
                         ShipmentService service = new ShipmentService(objectContext, entityPM, SecurityUtility.GetAuthenticatedUser());
                         service.Update(true);
@@ -176,6 +175,18 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
                         ShipmentRepository updatedEntityRepository = new ShipmentRepository(updatedEntityContext);
                         ShipmentQuery updatedShipmentQuery = new ShipmentQuery(updatedEntityRepository);
                         entityPM = updatedShipmentQuery.GetSinglePM(entityPM.Id, entityPM.Tenant);
+
+                        if (service.DummyIdGuidPackages != null)
+                        {
+                            foreach (var item in service.DummyIdGuidPackages)
+                            {
+                                ShipmentPackagePM itemPM = entityPM.ShipmentPackages.Where(d => d.Id == item.Key).FirstOrDefault();
+                                if (itemPM != null)
+                                {
+                                    itemPM.DummyIdGuid = item.Value;
+                                }
+                            }
+                        }
 
                         scope.Complete();
                         return Request.CreateResponse(HttpStatusCode.OK, entityPM);
