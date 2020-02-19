@@ -1035,10 +1035,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                 bool isReady = true;
                 string myError = null;
-                string ExternalCodeError = "External Code is missing";
+                string ExternalCodeError = "Currency External Code is missing";
                 string paymentTermError = "Payment Term External Id is missing";
                 string vatError = "External VAT Card is missing";
-                string linesError = "Debit Account is missing";
+                string linesError = " Charge Type Payable Debit Account is missing";
 
                 if (FieldIsEmpty(entityPM.CreditAccount))
                 {
@@ -1091,10 +1091,16 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                 else
                 {
-                    if (myLines.Where(d => d.DebitAccount == null || (d.DebitAccount != null && string.IsNullOrEmpty(d.DebitAccount.Trim()))).Any())
+                    List<APInvoiceLinePM> apInvoiceLines_DebitError = myLines.Where(d => d.DebitAccount == null || (d.DebitAccount != null && string.IsNullOrEmpty(d.DebitAccount.Trim()))).ToList();
+                    if (apInvoiceLines_DebitError != null && apInvoiceLines_DebitError.Count() > 0)
                     {
                         isReady = false;
-                        myError = string.IsNullOrEmpty(myError) ? linesError : myError + "," + linesError;
+                        foreach (APInvoiceLinePM item in apInvoiceLines_DebitError)
+                        {
+                            ChargesType myChargesType = ChargesTypeRepository.GetSingleChargesType(item.ChargesTypeId, tenant, true);
+                            string myChargesTypeName = myChargesType != null ? myChargesType.EnglishName : "";
+                            myError = string.IsNullOrEmpty(myError) ? myChargesTypeName + linesError : myError + "," + myChargesTypeName + linesError;
+                        }
                     }
 
                     var myGroup = (from a in myLines
@@ -1114,10 +1120,11 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     {
                         if (FieldIsEmpty(g.ExternalVATCard))
                         {
+                            VatType lineVatType = this.allVatTypes.Where(d => d.Id == g.VatTypeId).FirstOrDefault();
+                            var lineVatTypeName = lineVatType != null ? lineVatType.EnglishName : "";
                             isReady = false;
-                            vatError = "External VAT Card is missing";
+                            vatError = lineVatTypeName + " VAT External Id is missing";
                             myError = string.IsNullOrEmpty(myError) ? vatError : myError + "," + vatError;
-                            break;
                         }
                     }
                 }

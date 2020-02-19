@@ -31,6 +31,8 @@ export class QuoteActions {
         this.Helper.WaitByIdAndClick('MenuButtons');
         this.Helper.WaitByIdAndClick('Quote.B.CopyQuote');
         this.Helper.WaitEditComponentBusyIndicator();
+        var EC = protractor.ExpectedConditions;
+        console.log(EC.urlContains('https://cloud.amital.co.il/'));
         //if (Direction == 'Domestic' && TransportMode == 'I') {
 
         //}
@@ -56,8 +58,13 @@ export class QuoteActions {
     }
 
     BuildShipmentFromQuote(QuoteType: string) {
-        if (QuoteType != 'RoutingRate') {
+        var EC = protractor.ExpectedConditions;
+        if (EC.urlContains('https://cloud.amital.co.il/') || EC.urlContains('https://staging.amital.co.il/')) {
+
+        }
+        else if (QuoteType != 'RoutingRate' ) {
             this.Helper.WaitByIdAndClick('Quote.B.BuildShipment_1');
+            
 
             this.Helper.ItemsVisibility('LogLov_Shipment_ShipperId');
             this.Helper.ItemsPresent('LogLov_Shipment_ShipperId');
@@ -82,6 +89,7 @@ export class QuoteActions {
         });
         this.Helper.WaitByIdAndClick('ConfrimApproved');
         this.Helper.WaitEditComponentBusyIndicator();
+      
 
     }
     QuoteDeclined() {
