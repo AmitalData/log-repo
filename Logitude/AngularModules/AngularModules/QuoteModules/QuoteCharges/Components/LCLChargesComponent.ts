@@ -1100,13 +1100,13 @@ export class QuoteChargeItem extends BaseComponent {
         this.SalePriceBreaksTooltip = "";
 
         if (this.IsChargeBySteps) {
-            var items = this.EntityPM.QuoteChargePriceSteps.filter(f => !AppTool.IsNullOrZero(f.Step));
+            var items = this.EntityPM.QuoteChargePriceSteps.filter(f => !AppTool.IsNullOrEmpty(f.Step));
 
             if (items.length > 0) {
-                if (items.filter(f => !AppTool.IsNullOrZero(f.CostUnitPrice)).length > 0) {
+                if (items.filter(f => !AppTool.IsNullOrEmpty(f.CostUnitPrice)).length > 0) {
                     this.HasCostPriceBreaks = true;
 
-                    items.filter(f => !AppTool.IsNullOrZero(f.CostUnitPrice)).forEach(item => {
+                    items.filter(f => !AppTool.IsNullOrEmpty(f.CostUnitPrice)).forEach(item => {
                         if (AppTool.IsNullOrEmpty(this.CostPriceBreaksTooltip)) {
                             this.CostPriceBreaksTooltip = "+" + item.Step + ": " + this.GetValueOrZero(item.CostUnitPrice);
                         }
@@ -1117,10 +1117,10 @@ export class QuoteChargeItem extends BaseComponent {
                     });
                 }
 
-                if (items.filter(f => !AppTool.IsNullOrZero(f.SaleUnitPrice)).length > 0) {
+                if (items.filter(f => !AppTool.IsNullOrEmpty(f.SaleUnitPrice)).length > 0) {
                     this.HasSalePriceBreaks = true;
 
-                    items.filter(f => !AppTool.IsNullOrZero(f.SaleUnitPrice)).forEach(item => {
+                    items.filter(f => !AppTool.IsNullOrEmpty(f.SaleUnitPrice)).forEach(item => {
                         if (AppTool.IsNullOrEmpty(this.SalePriceBreaksTooltip)) {
                             this.SalePriceBreaksTooltip = "+" + item.Step + ": " + this.GetValueOrZero(item.SaleUnitPrice);
                         }
@@ -2584,6 +2584,7 @@ export class QuoteChargeItem extends BaseComponent {
             else {
                 this.CostMinAmount = null;
                 this.SaleMinAmount = null;
+                this.EntityPM.QuoteChargePriceSteps = [];
             }
 
             if (newValue && (this.EntityPM.QuoteChargePriceSteps == null || (this.EntityPM.QuoteChargePriceSteps != null && this.EntityPM.QuoteChargePriceSteps.length == 0))) {
