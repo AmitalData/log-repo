@@ -40,6 +40,7 @@
   Code="&quot;ADHI&quot;"
   Name="&quot;AWB Additional Handling Info&quot;"
   GenerateDomainService="false"
+  ClientModuleName="&quot;Shipment&quot;"
   NoViewController="false"
   NoPMController="false"
   NoTS="false"

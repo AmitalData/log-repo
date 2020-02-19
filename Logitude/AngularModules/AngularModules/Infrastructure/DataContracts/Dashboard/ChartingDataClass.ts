@@ -249,38 +249,22 @@ export class ChartingDataClass {
         this.count_All = value;
     }
 
-    private count_Convert: number;
-    public get Count_Convert() { return this.count_Convert; }
-    public set Count_Convert(value: number) {
-        this.count_Convert = value;
+    private count_Converted: number;
+    public get Count_Converted() { return this.count_Converted; }
+    public set Count_Converted(value: number) {
+        this.count_Converted = value;
     }
 
-    private salesmanUserName: string;
-    public get SalesmanUserName() { return this.salesmanUserName; }
-    public set SalesmanUserName(value: string) {
-        this.salesmanUserName = value;
+    private transportModeId: string;
+    public get TransportModeId() { return this.transportModeId; }
+    public set TransportModeId(value: string) {
+        this.transportModeId = value;
     }
 
-    private salesmanUserId: string;
-    public get SalesmanUserId() { return this.salesmanUserId; }
-    public set SalesmanUserId(value: string) {
-        this.salesmanUserId = value;
-    }
-
-    private transportModeDirection_Display: string;
-    public get TransportModeDirection_Display() { return this.transportModeDirection_Display; }
-    public set TransportModeDirection_Display(value: string) {
-        this.transportModeDirection_Display = value;
-    }
-
-    private transportModeDirection: string;
-    public get TransportModeDirection() { return this.transportModeDirection; }
-    public set TransportModeDirection(value: string) {
-        this.transportModeDirection = value;
+    private directionId: string;
+    public get DirectionId() { return this.directionId; }
+    public set DirectionId(value: string) {
+        this.directionId = value;
     }
     
-    //public string TransportModeId { get; set; }
-    //public string DirectionId { get; set; }
-    //public string TransportModeName { get; set; }
-    //public string DirectionName { get; set; }
 }

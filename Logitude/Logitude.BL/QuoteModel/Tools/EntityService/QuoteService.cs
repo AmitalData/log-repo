@@ -1956,24 +1956,24 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
 
         private void ComputeExpectedProfit()
         {
-            if (entityPM.EstimateProfit != null)
-            {
-                double? myProfitAmount = 0;
+            //if (entityPM.EstimateProfit != null)
+            //{
+            //    double? myProfitAmount = 0;
 
-                double? myCostAmountLocal = MethodHelper.Round(entityPM.QuoteCharges.Where(d => d.CostTotalAmountLocal != null).Sum(s => s.CostTotalAmountLocal), 2);
-                double? mySaleAmountLocal = MethodHelper.Round(entityPM.QuoteCharges.Where(d => d.IsAllIN == false && d.SaleTotalAmountLocal != null).Sum(s => s.SaleTotalAmountLocal), 2);
-                double? mySaleProfitLocal = MethodHelper.Round(mySaleAmountLocal - myCostAmountLocal, 2);
+            //    double? myCostAmountLocal = MethodHelper.Round(entityPM.QuoteCharges.Where(d => d.CostTotalAmountLocal != null).Sum(s => s.CostTotalAmountLocal), 2);
+            //    double? mySaleAmountLocal = MethodHelper.Round(entityPM.QuoteCharges.Where(d => d.IsAllIN == false && d.SaleTotalAmountLocal != null).Sum(s => s.SaleTotalAmountLocal), 2);
+            //    double? mySaleProfitLocal = MethodHelper.Round(mySaleAmountLocal - myCostAmountLocal, 2);
 
-                if (entityPM.ExchangeRate != null && entityPM.ExchangeRate != 0)
-                {
-                    myProfitAmount = MethodHelper.Round(mySaleProfitLocal / entityPM.ExchangeRate, 2);
-                }
+            //    if (entityPM.ExchangeRate != null && entityPM.ExchangeRate != 0)
+            //    {
+            //        myProfitAmount = MethodHelper.Round(mySaleProfitLocal / entityPM.ExchangeRate, 2);
+            //    }
 
-                if (entityPM.EstimateProfit != myProfitAmount)
-                {
-                    throw new Exception("Wrong Estimate Profit");
-                }
-            }
+            //    if (entityPM.EstimateProfit != myProfitAmount)
+            //    {
+            //        throw new Exception("Wrong Estimate Profit");
+            //    }
+            //}
         }
     }
     public class QuoteTotalsClass
