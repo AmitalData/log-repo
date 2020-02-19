@@ -100,6 +100,11 @@ namespace AmitalCustomsWindowsService
                 var patchDistributionMatch = new PatchDistributionMatch();
                 var _PatchDistributionMatchModel = patchDistributionMatch.GetPatchDistributionMatchModel(assemblyVersion);
                 Logger.LogMe(_PatchDistributionMatchModel.Message, false);
+                if (assemblyVersion == "1.0.0.0" && _PatchDistributionMatchModel.LastClosed_DBMigration == null)
+                {
+                    return false;
+                }
+
                 Logger.LogMe($"DB MajorVersion={_PatchDistributionMatchModel.LastClosed_DBMigration.MajorVersion}", false);
                 Logger.LogMe($"DB MinorVersion Last Closed !!!={_PatchDistributionMatchModel.LastClosed_DBMigration.MinorVersion}", false);
                 //Logger.LogMe($"DB MinorLine={_PatchDistributionMatchModel.Last_DBMigrationLine.CounterKey}", false);
