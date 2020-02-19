@@ -240,14 +240,6 @@ namespace WebFreight.Web.Helpers
 
                                 #endregion
 
-                                if (IsFirstTicket)
-                                {
-                                    User myUser = userRepository.GetSingleUser(contact.Id, Tenant, false);
-                                    if (myUser != null)
-                                    {
-                                        myTicket.InternalUsers = this.AppendEmails(myTicket.InternalUsers, contact.Email);
-                                    }
-                                }
                             }
 
                             #endregion
@@ -299,7 +291,7 @@ namespace WebFreight.Web.Helpers
                             //if the internal user forward a message to the system, add him as the contact and to the notify internal 
                             if (IsFirstTicket && userRepository.DoesUserExist(emailDetails.Sender, Tenant))
                             {
-                                emailLine.InternalUsers = this.AppendEmails(emailLine.InternalUsers, emailDetails.Sender);
+                                //emailLine.InternalUsers = this.AppendEmails(emailLine.InternalUsers, emailDetails.Sender);
                             }
 
                             repository.Add(emailLine);
