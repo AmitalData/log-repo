@@ -42,7 +42,7 @@ namespace WebFreight.Web.AccountingModel.Reports.Interest
         public decimal LocalAmount { get; set; }
         public DateTime InterestValueDate { get; set; }
         public string CurrencyCode { get; set; }
-        public decimal ForeignAmount { get; set; }
+        public decimal? ForeignAmount { get; set; }
 
     }
 }

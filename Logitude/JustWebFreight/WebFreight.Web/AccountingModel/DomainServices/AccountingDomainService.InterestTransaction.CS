@@ -16,8 +16,12 @@ namespace WebFreight.Web.AccountingModel.DomainServices
 {
     public partial class AccountingDomainService
     {
-        public InterestTransactionsWithTotal GetAllInterestTransactionByDate(string ReportId, DateTime InterestCalculationDate, int Tenant, IAccountingContext MyContext)
+        public InterestTransactionsWithTotal GetAllInterestTransactionByDate(string ReportId, DateTime InterestCalculationDate, int Tenant, IAccountingContext MyContext=null)
         {
+            if (MyContext == null)
+            {
+                MyContext = AccountingContext.GetContext(Tenant);
+            }
             InterestTransactionsWithTotal interestTransactionsWithTotal = new InterestTransactionsWithTotal();
             decimal TotalLocalAmount=0; 
             List<InterestTransactionList> interestTransactionLists = (from a in MyContext.InterestReportLines

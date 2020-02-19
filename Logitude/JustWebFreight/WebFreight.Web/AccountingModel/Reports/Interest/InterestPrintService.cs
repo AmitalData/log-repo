@@ -19,50 +19,48 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Xml.Serialization;
+using WebFreight.Web.AccountingModel.DomainServices;
 using WebFreight.Web.Helpers;
  namespace WebFreight.Web.AccountingModel.Reports.Interest
 {
     public class InterestPrintService
     {
-        public void /*InterestDataProvider*/ LoadDataProvider(string entityId, int tenant)
+        public InterestDataProvider LoadDataProvider(string entityId, int tenant)
         {
             InterestDataProvider InterestReportDP = new InterestDataProvider();
             InterestReportQueryService InterestReportQuery = new InterestReportQueryService(tenant);
-            InterestReportPM InteerstPM = InterestReportQuery.GetSingle(entityId, true, false);
-            InterestReportDP.OpenBalance = InteerstPM.OpenBalance;
-            //InterestReportDP.CustomerName = InteerstPM.cu;
-            InterestReportDP.InterestCalculationDate = InteerstPM.InterestCalculationDate;
-            InterestReportDP.InvoiceNumber = InteerstPM.ARInvoiceNumber;
+            InterestReportPM InteerstReportPM = InterestReportQuery.GetSingle(entityId, true, false);
+            AccountingDomainService interestTransactionQuery = new AccountingDomainService();
+            List<InterestReportLinesByDateProvider> InterestReportLines = InteerstReportPM.InterestReportLinesByDates.Select(d => new InterestReportLinesByDateProvider
+            {
+                FromDate = d.FromDate,
+                ToDate = d.ToDate,
+                AccumulatedAmount = d.AccumulatedAmount,
+                TotalAmount = d.TotalAmount,
+                TotalInterestDays = d.TotalInterestDays,
+                StandardInterestPercentage = d.StandardInterestPercentage,
+                ExceptionalInterestPercentage = d.ExceptionalInterestPercentage,
+                CreditInterestPercentage = d.CreditInterestPercentage,
+                InterestTransactionList = interestTransactionQuery.GetAllInterestTransactionByDate(entityId, d.FromDate, tenant).interestTransactionLists.Select (a =>
+                new InterestTransactionProvider
+                {
+                    EntityType = a.InterestEntityTypeCode,
+                    EntityNumber = a.InterestEntityNumber,
+                    LocalAmount = a.LocalAmount,
+                    InterestValueDate = a.InterestValueDate,
+                    CurrencyCode = a.CurrencyCode,
+                    ForeignAmount = a.ForeignAmount,
+                }).ToList(),
+            }).ToList();
 
-            //     public decimal? OpenBalance { get; set; }
-            //public string CustomerName { get; set; }
-            //public string InvoiceNumber { get; set; }
-            //public DateTime? InterestCalculationDate { get; set; }
-            //public List<InterestReportLinesByDateProvider> InterestReportLinesByDateList { get; set; }
 
-            //MementoDP.MementoSingleList = new MementoListProvider
-            //{
-            //    CreateDate = mementoPM.CreateDate,
-            //    OwnerName = mementoPM.OwnerName,
-            //    TypeName = mementoPM.TypeName,
-            //    SeverityName = mementoPM.SeverityName,
-            //    CreatedBy = mementoPM.CreatedByUserName,
-            //    Subject = mementoPM.Subject
-            //};
+            InterestReportDP.OpenBalance = InteerstReportPM.OpenBalance;
+            InterestReportDP.CustomerName = InteerstReportPM.CustomerName;
+            InterestReportDP.InterestCalculationDate = InteerstReportPM.InterestCalculationDate;
+            InterestReportDP.InvoiceNumber = InteerstReportPM.ARInvoiceNumber;
+            InterestReportDP.InterestReportLinesByDateList = InterestReportLines;
 
-
-
-            //List<MementoLineListProvider> lines = mementoPM.MementoLines.Select(d => new MementoLineListProvider
-            //{
-            //    CreateDate = d.CreateDate,
-            //    Contact = d.ContactName,
-            //    Description = d.Description,
-            //    Status = d.MementoLineStatusName
-            //}).ToList();
-
-            //MementoDP.MementoLineList = lines;
-
-            //return MementoDP;
+            return InterestReportDP;
         }
 
     }

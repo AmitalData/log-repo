@@ -1960,6 +1960,74 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+  <field
+    Id="&quot;e6e9f853-2828-47bd-95c2-272e9bd08051&quot;"
+    FieldName="&quot;CustomerName&quot;"
+    OldFieldName="&quot;CustomerName&quot;"
+    IsNew="true"
+    IsChecked="true"
+    IsDeleted="false"
+    ObjectTableName="&quot;InterestReport&quot;"
+    FieldsDataType="&quot;nText&quot;"
+    MinLength="0"
+    MaxLength="100"
+    IsRequired="false"
+    CopyToDW="false"
+    DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
+    CanFilter="false"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="100"
+    DisplayInList="false"
+    IsCustomFilter="false"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;CustomerName&quot;"
+    ListPropertyPath="&quot;CustomerName&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    DependencyFilter3IsList="false"
+    IsRestrictable="false"
+    DisplayInEntityVariables="false"
+    AllowedInCustomerFieldsSettings="false"
+    DisplayInSearchWindowFilters="false"
+    DisplayInSearchWindowFiltersIndex="0"
+    DisplayInDocumentReferences="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;CustomerName&quot;"
+    DefaultText="&quot;Customer&quot;"
+    IsNullable="false"
+    IsForeignKey="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="false"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="true"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
+    HasTemplate="false"
+    IsCustom="false"
+    IsSpellCheckedFullFieldLable="false"
+    IsSpellCheckedHelpLocalDefaultText="false"
+    IsSpellCheckedShortLocalDefaultText="false"
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <Query
     Code="&quot;Interest Report&quot;"
     TextCode="&quot;Interest Report&quot;"
@@ -2105,6 +2173,25 @@
       IsFollowUp="false" />
   </EventTypes>
   <Records />
+  <MenuButtons
+    MenuButtonGroupType="&quot;InterestReportEdit&quot;"
+    MenuButtonGroupName="&quot;InterestReportEditButtonsGroup&quot;">
+    <MenuButton
+      EventCode="&quot;More&quot;"
+      DefaultText="&quot;More&quot;"
+      MenuButtonType="&quot;dropdownbutton&quot;"
+      IndexOrder="0"
+      LocalDefaultText="&quot;נוספים&quot;"
+      IsPackagable="false">
+      <MenuItem
+        EventCode="&quot;InterestPrint&quot;"
+        DefaultText="&quot;Print&quot;"
+        MenuButtonType="&quot;menuitem&quot;"
+        IndexOrder="0"
+        LocalDefaultText="&quot;הדפסה&quot;"
+        IsPackagable="false" />
+    </MenuButton>
+  </MenuButtons>
   <DataContracts />
   <AdditionalTextCodes>
     <TextCode

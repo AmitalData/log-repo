@@ -70,7 +70,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         InterestReportStatusName, 
 	         SearchFields, 
 	         InterestReportStatusLocalName, 
-	         CustomerId,
+	         CustomerId, 
+	         CustomerName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
