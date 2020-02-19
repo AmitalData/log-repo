@@ -85,7 +85,7 @@
         border-bottom-left-radius: 3px;
     }
     .FiltersMenu li {
-        width: fit-content;
+        width: 75px;
         height: 22px;
         padding: 0 10px;
     }
@@ -107,7 +107,7 @@
 
         <tr >
             <td>
-                <div style="width: 1360px;">
+                <div style="width: 1375px;">
 
                     <table class="AbdullahTable" *ngIf="isReady">
 
@@ -201,7 +201,7 @@
                                         [DataContext]="DataContext"></LogLabel>
                             </td>
 
-                            <td style="width: 225px;">
+                            <td style="width: 230px;">
                                 <ul class="FiltersMenu" [class.aboodRTLFilterMenu]="isRTL" float-start>
                                     <li float-start id="filter_All" (click)="BalanceFilterItemClicked('filter_All')"
                                         style="height: 22px;width: fit-content;"
