@@ -29,6 +29,7 @@ import {INTTRADocumentTypeListService} from './Services/StandardLists/INTTRADocu
 import { HarmonizeCodeListService } from './Services/StandardLists/HarmonizeCodeListService';
 import { CustomsTransferHeaderListService } from './Services/StandardLists/CustomsTransferHeaderListService';
 import { CustomsTransferHeaderPMService } from './Services/StandardPMs/CustomsTransferHeaderPMService';
+import { AWBAdditionalHandlingInfoListService } from './Services/StandardLists/AWBAdditionalHandlingInfoListService';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -62,6 +63,7 @@ export class ModuleProviders {
             case "INTTRADocumentTypeListService": { myResult = new INTTRADocumentTypeListService(); break; }               
             case "HarmonizeCodeListService": { myResult = new HarmonizeCodeListService(); break; }
             case "CustomsTransferHeaderListService": { myResult = new CustomsTransferHeaderListService(); break; }
+            case "AWBAdditionalHandlingInfoListService": { myResult = new AWBAdditionalHandlingInfoListService(); break; }               
 
             // PM
             case "MessagingStockPMService": { myResult = new MessagingStockPMService(); break; }

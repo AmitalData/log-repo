@@ -6615,6 +6615,7 @@
     <TypeScriptCompile Include="Shipment\Components\Spotlight\ShipmentSpotlightComponent.ts" />
     <TypeScriptCompile Include="Shipment\EntityPMs\ShipmentFollowUpPM.ts" />
     <TypeScriptCompile Include="Shipment\Services\SplitShipmentService.ts" />
+    <TypeScriptCompile Include="Shipment\Services\StandardLists\AWBAdditionalHandlingInfoListService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardLists\ContainerFollowUpListService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardLists\CustomsTransferHeaderListService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardLists\CustomsTransferTypeListService.ts" />
