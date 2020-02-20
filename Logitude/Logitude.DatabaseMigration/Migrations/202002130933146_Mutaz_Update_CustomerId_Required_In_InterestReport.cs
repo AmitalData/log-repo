@@ -7,11 +7,11 @@ namespace Logitude.DatabaseMigration.Migrations
     {
         public override void Up()
         {
-            DropForeignKey("dbo.InterestReports", "CustomerId", "dbo.Cards");
-            DropIndex("dbo.InterestReports", new[] { "CustomerId" });
-            AlterColumn("dbo.InterestReports", "CustomerId", c => c.String(nullable: false, maxLength: 15, unicode: false));
-            CreateIndex("dbo.InterestReports", "CustomerId");
-            AddForeignKey("dbo.InterestReports", "CustomerId", "dbo.Cards", "Id");
+            //DropForeignKey("dbo.InterestReports", "CustomerId", "dbo.Cards");
+            //DropIndex("dbo.InterestReports", new[] { "CustomerId" });
+            //AlterColumn("dbo.InterestReports", "CustomerId", c => c.String(nullable: false, maxLength: 15, unicode: false));
+            //CreateIndex("dbo.InterestReports", "CustomerId");
+            //AddForeignKey("dbo.InterestReports", "CustomerId", "dbo.Cards", "Id");
         }
 
         public override void Down()
