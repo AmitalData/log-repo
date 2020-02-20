@@ -259,9 +259,7 @@
     ReferencedColumn="ContactId,CardId,PartnerTypeId,Via"
     ReferencedTableSchema="dbo" />
   <Index
-    Columns="Tenant" />
-  <Index
     Columns="Tenant,Email" />
-  <UniqueConstraint
-    Columns="ComputedKey,Tenant" />
+  <Index
+    Columns="Tenant" />
 </Table>

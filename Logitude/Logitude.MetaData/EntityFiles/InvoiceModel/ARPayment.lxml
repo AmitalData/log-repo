@@ -8,7 +8,7 @@
   ObjectTableSingular="&quot;A/R Payment&quot;"
   ObjectTablePlural="&quot;A/R Payments&quot;"
   HasCustomFilter="true"
-  HasCustomFields="false"
+  HasCustomFields="true"
   HasHelper="true"
   HasShortTitle="true"
   HasFiltersMenu="false"
@@ -31,10 +31,10 @@
   IsSaveButtonVisible="true"
   IsComposition="false"
   EnableSecurity="true"
-  AllowCustomFields="false"
+  AllowCustomFields="true"
   HasDynamicHeader="false"
   ObjectTableTypeCode="&quot;BR&quot;"
-  MaxNumberOfCustomFields="0"
+  MaxNumberOfCustomFields="10"
   NewWizardControlName="&quot;Simplog.InvoiceLib.NewARPaymentCommand&quot;"
   LocalDefaultText="&quot;קבלה&quot;"
   DefaultText="&quot;A/R Payment&quot;"
@@ -8838,6 +8838,16 @@
         ScreenName="Header Screen" />
     </ScreenFields>
   </Screen>
+  <Screen
+    Name="&quot;New AR Payment&quot;"
+    ObjectTableName="&quot;ARPayment&quot;"
+    IsReadOnly="false"
+    IsHeaderScreen="false"
+    Code="&quot;NewARPayment&quot;"
+    NumberOfColumns="2"
+    NumberOfRows="1">
+    <ScreenFields />
+  </Screen>
   <Tab
     TabName="&quot;Details&quot;"
     TabLocalName="&quot;פרטים&quot;"
@@ -8887,7 +8897,7 @@
     ObjectTableName="&quot;ARPayment&quot;"
     Code="&quot;ARDO&quot;"
     ControlPath="&quot;Simplog.InvoiceLib.Views.Tabs.ARPaymentsTabs.ARPaymentDocsOutTabControl&quot;"
-    TextCode="&quot;ARPayment.TH.Docs&quot;"
+    TextCode="&quot;ARPayment.TH.DocsOut&quot;"
     IsPackagable="true"
     IndexOrder="2"
     HtmlComponentURL="&quot;./InvoiceModules/ARPayment/Components/EditTabs/ARPaymentDocsOutTabComponent&quot;"

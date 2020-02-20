@@ -147,5 +147,10 @@
       Nullable="true" />
   </Column>
   <Index
-    Columns="Email,IsDelete,CreateDate" />
+    Columns="IsRead,IsDelete"
+    Include="Email" />
+  <Index
+    Columns="AndroidStatus,IOSStatus" />
+  <Index
+    Columns="Email,IsRead,IsDelete" />
 </Table>

@@ -70,6 +70,7 @@ namespace WebFreight.Web.ReportsWebServices
 
         public PaymentDataProvider GetPaymentDataProvider(string paymentId, int tenant, string documentTypeId)
         {
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
             PaymentDataProvider paymentDataProvider = new PaymentDataProvider();
             IInvoiceContext invoiceCotnext = InvoiceContext.GetContext(tenant);
             ARPaymentRepository paymentRep = new ARPaymentRepository(invoiceCotnext);
@@ -218,7 +219,7 @@ namespace WebFreight.Web.ReportsWebServices
                             CustomerPM customer = customerQuery.GetSinglePM(billToCard.Id, tenant);
                             if (customer != null)
                             {
-                                CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+                              
                                 customFieldResolver.SetDataProviderCustomFieldsValues("Customer", tenant, customer, paymentDataProvider);
                             }
                         }
@@ -463,6 +464,9 @@ namespace WebFreight.Web.ReportsWebServices
                 paymentDataProvider.AmountInLocalCurrency =  currentPayment.AmountInLocalCurrency;
 
             }
+
+             
+            customFieldResolver.SetDataProviderCustomFieldsValues("ARPayment", tenant, currentPayment, paymentDataProvider);
 
             return paymentDataProvider;
         }

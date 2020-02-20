@@ -1,0 +1,244 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="ClaimsRelatedEntities"
+  Schema="Customs"
+  DBType="Main">
+  <Column
+    Name="ClaimId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="EntityCounterKey"
+    Type="int">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ClaimEntityTypeCode"
+    Type="varchar"
+    Size="5">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ClaimEntityNumber"
+    Type="varchar"
+    Size="35">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ExternalClaimNumber"
+    Type="varchar"
+    Size="35">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CourtCode"
+    Type="varchar"
+    Size="2">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ProceedingNumber"
+    Type="varchar"
+    Size="22">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="IsFinancialRefundDemand"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="SeconderyClaimEntityCode"
+    Type="varchar"
+    Size="5">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="SeconderyClaimEntityID"
+    Type="varchar"
+    Size="35">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ClaimAmount"
+    Type="decimal"
+    Precision="16"
+    Scale="2">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="DeclarationVersion"
+    Type="decimal"
+    Precision="5"
+    Scale="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CommitteeDecisionNumber"
+    Type="varchar"
+    Size="22">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="AbandonmentDestructionReferenc"
+    Type="varchar"
+    Size="22">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="WarehouseTypeCode"
+    Type="varchar"
+    Size="17">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ClaimExplanation"
+    Type="nvarchar"
+    Size="256">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ContinuousMessagesTypeCode"
+    Type="varchar"
+    Size="9">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ClaimRequestNumber"
+    Type="varchar"
+    Size="9">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CustomsExceptions"
+    Type="nvarchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="TapagNumber"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Numeral"
+    Type="int">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CustomsBranchCode"
+    Type="varchar"
+    Size="17">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="DecisionCode"
+    Type="nvarchar"
+    Size="128">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="DecisionNote"
+    Type="nvarchar"
+    Size="256">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="EilatVatRefoundDecision"
+    Type="nvarchar"
+    Size="256">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="DepositingAmount"
+    Type="decimal"
+    Precision="16"
+    Scale="2">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="RefundAmount"
+    Type="decimal"
+    Precision="16"
+    Scale="2">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Relation
+    ForeignKeyColumn="ClaimId"
+    ReferencedTable="Claims"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="ClaimEntityTypeCode"
+    ReferencedTable="ClaimEntities"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="CourtCode"
+    ReferencedTable="CourtInstances"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="SeconderyClaimEntityCode"
+    ReferencedTable="ClaimEntities"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="WarehouseTypeCode"
+    ReferencedTable="SiteLookups"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="ContinuousMessagesTypeCode"
+    ReferencedTable="ContinuousMessagesTypeCodes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="CustomsBranchCode"
+    ReferencedTable="CustomsHouseTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="DecisionCode"
+    ReferencedTable="DecisionTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+</Table>

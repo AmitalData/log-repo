@@ -864,6 +864,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
 
     private listArgs: ListComponentArgs;
     ShowViews: boolean = true;
+    ResourcesLoaded: boolean = false;
     Run(args: ListComponentArgs) {
         this.CurrentSession.AddMenuReference(this.ComponentRef);
         this.CurrentSession.AddListComponent(this);
@@ -904,6 +905,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
         this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe(response => {
             this.BackBtnTitle = this.listArgs.BackButtonTitle;
             //this.Title = this.listArgs.DisplayTitle;
+            this.ResourcesLoaded = true;
             this.ViewQuery(this.listArgs.Filters, this.listArgs.DisplayTitle, this.listArgs.BackButtonTitle, this.listArgs.IsReadOnlyList, this.listArgs.IsBackToCurrentListView);
             //this.CD.detectChanges();
         });
@@ -1003,6 +1005,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
             }
             //console.log("dataSource", this.dataSource);
             this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe(response => {
+                this.ResourcesLoaded = true;
                 this.GetQueryColumns(this.SelectedQuery.UniqueCode, this.UserId);
             });
         }
@@ -2418,6 +2421,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
             else {
                 var isNewWizard = this.SelectedQuery.ObjectTableIsNewWizard;
                 this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe(response => {
+                    this.ResourcesLoaded = true;
                     if (isNewWizard) {
                         var IsOriginalMaster: boolean = false;
                         if (!AppTool.IsNullOrEmpty(this.SelectedQuery.OriginalQueryCode)) {

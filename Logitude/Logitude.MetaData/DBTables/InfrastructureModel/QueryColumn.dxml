@@ -82,7 +82,5 @@
   <Index
     Columns="Tenant" />
   <Index
-    Columns="Tenant" />
-  <Index
     Columns="Tenant,UserId" />
 </Table>

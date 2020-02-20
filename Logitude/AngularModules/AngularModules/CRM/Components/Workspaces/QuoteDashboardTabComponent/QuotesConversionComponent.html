@@ -8,31 +8,32 @@
                         <table>
                             <tr>
                                 <td>
-                                    <label>Quote Conversion by Salesman/Product</label>
+                                    <label>Quote Conversion by Product</label>
                                 </td>
                             </tr>
                         </table>
                     </SectionHead>
 
                     <SectionBody>
-                        <div class="MediaFill" [id]="ChartID" (mousedown)="OnMyMouseDown($event,'null')">
-                            <div class="MediaFill">
-                                <table>
-                                    <tr style="height:100%;width:100%">
-                                        <td>
-                                            <div #QuoteConversionDashboard></div>
-                                            <div [attr.id]="QuoteConversionId" style="height:95%;width:100%" (click)="BarClicking()"></div>
-                                        </td>                                       
-                                    </tr>
+                        <table>
+                            <tr style="height:1px">
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <div style="cursor:pointer;" [attr.id]="QuoteConversionId" class="MediaFill" (click)="BarClicking()"></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
 
-                                    <tr style="height:25px;">
-                                        <td>
-                                            <div [attr.id]="legenddiv" style="width:100%;"></div>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </div>
+                            <tr *ngIf="NoQuotes">
+                                <td class="NoDataText">
+                                    No Quotes
+                                </td>
+                            </tr>
+                        </table>
                     </SectionBody>
                 </SectionBox>
             </div>

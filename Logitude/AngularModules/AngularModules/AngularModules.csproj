@@ -459,6 +459,7 @@
     <TypeScriptCompile Include="Accounting\EntityPMs\IntegrityCheckStatusPM.ts" />
     <TypeScriptCompile Include="Accounting\EntityPMs\InterestBasesPeriodPM.ts" />
     <TypeScriptCompile Include="Accounting\EntityPMs\InterestBasesTypePM.ts" />
+    <TypeScriptCompile Include="Accounting\EntityPMs\InterestReportPM.ts" />
     <TypeScriptCompile Include="Accounting\EntityPMs\JournalAdditionalDataPM.ts" />
     <TypeScriptCompile Include="Accounting\EntityPMs\OpenFormatReportPM.ts" />
     <TypeScriptCompile Include="Accounting\Services\ExtendedLists\TaxReportLineExtendedListService.ts" />
@@ -1029,6 +1030,7 @@
     <TypeScriptCompile Include="Infrastructure\EntityLists\DWSubQueryList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\DWQueryList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\FeatureToggleList.ts" />
+    <TypeScriptCompile Include="Infrastructure\EntityLists\LogitudeLeadList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\PriceStepList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\RuleUpdateHistoryList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\SchedulerLogsList.ts" />
@@ -1047,6 +1049,7 @@
     <TypeScriptCompile Include="Infrastructure\EntityPMs\DWQueryPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\FeatureTogglePM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\LBPTeamMemberPM.ts" />
+    <TypeScriptCompile Include="Infrastructure\EntityPMs\LogitudeLeadPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\PriceStepPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\RuleUpdateHistoryPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\SchedulerLogsPM.ts" />
@@ -6615,6 +6618,7 @@
     <TypeScriptCompile Include="Shipment\Components\Spotlight\ShipmentSpotlightComponent.ts" />
     <TypeScriptCompile Include="Shipment\EntityPMs\ShipmentFollowUpPM.ts" />
     <TypeScriptCompile Include="Shipment\Services\SplitShipmentService.ts" />
+    <TypeScriptCompile Include="Shipment\Services\StandardLists\AWBAdditionalHandlingInfoListService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardLists\ContainerFollowUpListService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardLists\CustomsTransferHeaderListService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardLists\CustomsTransferTypeListService.ts" />

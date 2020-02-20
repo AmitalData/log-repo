@@ -92,8 +92,4 @@
     ReferencedTable="Documents"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
-  <Index
-    Columns="StartDateTime" />
-  <Index
-    Columns="EndDateTime" />
 </Table>

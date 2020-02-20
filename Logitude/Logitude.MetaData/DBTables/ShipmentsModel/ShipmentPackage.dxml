@@ -636,4 +636,6 @@
     ReferencedTable="Countries"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
+  <Index
+    Columns="Tenant,CommodityId" />
 </Table>

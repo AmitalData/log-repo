@@ -33,7 +33,13 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 //SecurityUtility.CheckContactFeature("TaxDeductionReport", "NEW", authToken.Tenant);
 
                 ReconciliationAfterConversionBatch reconciliationAfterConversionBatch = new ReconciliationAfterConversionBatch();
-                reconciliationAfterConversionBatch.RunReconciliationAfterConversion(tenant, fromExtNum, toExtNum);
+                ReconciliationAfterConversionArg reconciliationAfterConversionArg = new ReconciliationAfterConversionArg()
+                {
+                    Tenant = tenant,
+                    FromExtNum = fromExtNum,
+                    ToExtNum = toExtNum,
+                };
+                reconciliationAfterConversionBatch.RunReconciliationAfterConversion(reconciliationAfterConversionArg);
                 string responseText = reconciliationAfterConversionBatch.ResponseText();
                 HttpStatusCode StatusCode = reconciliationAfterConversionBatch.StatusCode();
                 var res1 = new { Success = true, Message = responseText };
@@ -97,7 +103,13 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 else
                 {
                     ReconciliationAfterConversionBatch reconciliationAfterConversionBatch = new ReconciliationAfterConversionBatch();
-                    reconciliationAfterConversionBatch.RunReconciliationAfterConversion(tenant, _myfromExtNum, _mytoExtNum);
+                    ReconciliationAfterConversionArg reconciliationAfterConversionArg = new ReconciliationAfterConversionArg()
+                    {
+                        Tenant = tenant,
+                        FromExtNum = _myfromExtNum,
+                        ToExtNum = _mytoExtNum,
+                    };
+                    reconciliationAfterConversionBatch.RunReconciliationAfterConversion(reconciliationAfterConversionArg);
                     string responseText = reconciliationAfterConversionBatch.ResponseText();
                     HttpStatusCode StatusCode = reconciliationAfterConversionBatch.StatusCode();
                     var res1 = new { Success = true, Message = responseText };

@@ -426,8 +426,6 @@
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Index
-    Columns="MainEntityId" />
-  <Index
     Columns="Tenant,StatusCode" />
   <Index
     Columns="VendorGLAccountId" />

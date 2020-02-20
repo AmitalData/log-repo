@@ -331,7 +331,9 @@
   <Index
     Columns="EntityId" />
   <Index
-    Columns="CreateDate" />
-  <Index
     Columns="CreateDateUTC,CommunicationStatusTypeCode" />
+  <Index
+    Columns="CreateDate,CommunicationStatusTypeCode" />
+  <Index
+    Columns="CreateDate" />
 </Table>

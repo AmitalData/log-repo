@@ -439,4 +439,6 @@
     Columns="Tenant,EntityId,IsRequested" />
   <Index
     Columns="Tenant,EntityId,IsDeleted" />
+  <Index
+    Columns="Tenant,SecurityId" />
 </Table>

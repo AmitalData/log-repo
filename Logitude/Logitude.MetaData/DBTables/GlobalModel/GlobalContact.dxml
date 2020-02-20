@@ -49,6 +49,6 @@
     ReferencedTableSchema="dbo" />
   <Index
     Columns="GlobalTenantId,Email" />
-  <UniqueConstraint
-    Columns="Email,GlobalTenantId" />
+  <Index
+    Columns="Email,InActive,InternetAccess" />
 </Table>

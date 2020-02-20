@@ -3573,30 +3573,36 @@
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Index
-    Columns="MasterShipmentDataId" />
+    Columns="Tenant,CustomFileNumber" />
   <Index
     Columns="Tenant,CustomFileId" />
   <Index
-    Columns="Tenant,CustomFileNumber" />
+    Columns="Tenant,CreateDateTime" />
   <Index
     Columns="Tenant,IsOperationalClosed" />
   <Index
-    Columns="Tenant,CreateDateTime" />
+    Columns="MasterShipmentDataId" />
   <Index
     Columns="Tenant,TransportModeId,DirectionId,IsCancelled,ShipmentLevelCode"
     Include="Id,StatusId,MasterShipmentDataId" />
   <Index
     Columns="Tenant,IsCancelled,CarrierLastStatusDate" />
   <Index
-    Columns="StatusDate" />
+    Columns="Tenant,TransportModeId,IsCancelled,LastFSRStatusRequestDate"
+    Include="Id,ShipmentLevelCode" />
+  <Index
+    Columns="Tenant,DirectionId,IsOperationalClosed,IsCancelled"
+    Include="ShipmentLevelCode,NoFreightFile" />
+  <Index
+    Columns="Tenant,IsCancelled,IsNewARInvoiceBlocked,ProductCode" />
+  <Index
+    Columns="ForwardingPartnerId" />
+  <Index
+    Columns="Tenant,IsCancelled" />
   <Index
     Columns="QuoteId" />
   <Index
     Columns="Tenant,ShipmentNumber" />
-  <Index
-    Columns="ForwardingPartnerId" />
-  <Index
-    Columns="SecurityKey,Tenant,IsCancelled" />
   <UniqueConstraint
-    Columns="Tenant,ComputedForwarderShipmentNumber" />
+    Columns="Tenant,ShipmentNumber" />
 </Table>

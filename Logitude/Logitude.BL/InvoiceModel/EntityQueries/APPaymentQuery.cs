@@ -87,9 +87,9 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                        BranchId = a.BranchId,
                                        UpdateDate = a.UpdateDate,
                                        UpdatedByUserId = a.UpdatedByUserId,
-                                       VendorName = a.VendorCard == null ? "" : (loggedContact.DontShowLocalLabels  ? a.VendorCard.EnglishName   : a.VendorCard.LocalName  ),
+                                       VendorName = a.VendorCard == null ? "" : (loggedContact.DontShowLocalLabels ? a.VendorCard.EnglishName : a.VendorCard.LocalName),
                                        VendorLocalName = a.VendorCard == null ? "" : a.VendorCard.LocalName,
-                                       ExternalAccountingEntityId=a.ExternalAccountingEntityId,
+                                       ExternalAccountingEntityId = a.ExternalAccountingEntityId,
                                        TransferError = a.TransferError,
                                        TransferStatusCode = a.TransferStatusCode,
                                        TransferStatusName = a.TransferStatus == null ? "" : a.TransferStatus.Name,
@@ -109,7 +109,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                        VendorIBANNumber = a.VendorIBANNumber,
                                        VendorSwift = a.VendorSwift,
                                        AccountingCancelationDate = a.AccountingCancelationDate,
-                                       CancelationNotes=a.CancelationNotes,
+                                       CancelationNotes = a.CancelationNotes,
                                        DontIncludeInDeductionReport = a.DontIncludeInDeductionReport,
 
 
@@ -123,10 +123,10 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
             Currency currency = CurrencyRepository.GetSingleCurrency(payment.PaymentCurrencyId, payment.Tenant, true);
             payment.PaymentCurrencyCode = currency != null ? currency.Code : null;
-            if(payment.StatusCode == "VD")
+            if (payment.StatusCode == "VD")
             {
                 JournalPM voidedByJournal = GetApprovedJournalByAccountingEntityId(payment);
-                if(voidedByJournal != null)
+                if (voidedByJournal != null)
                 {
                     payment.VoidedByJournalNumber = voidedByJournal.JournalNumber;
                 }
@@ -134,10 +134,33 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             APPaymentPM securedPM = new APPaymentPM();
             SecuredMapping.GetMappedPM(payment, securedPM, "APPayment", tenant);
 
+            MapCustomFieldValues(payment, securedPM);
+
             if (IsFullAccountingActivated(tenant))
                 MapJournalFields(securedPM);
-           
+
             return BranchPermitionsFilter.AddUserBranchRestrictionFilters(new QueryOperations(), securedPM, tenant);
+        }
+
+        private void MapCustomFieldValues(APPaymentPM payment, APPaymentPM securedPM)
+        {
+            if (securedPM != null && payment != null)
+            {
+                APPayment entityPOC = (from s in repository.context.APPayments
+                                       where s.Id == securedPM.Id
+                                       select s).FirstOrDefault();
+
+                securedPM.Field1 = new CustomFieldClass("Field1", "APPayment", entityPOC.Field1);
+                securedPM.Field2 = new CustomFieldClass("Field2", "APPayment", entityPOC.Field2);
+                securedPM.Field3 = new CustomFieldClass("Field3", "APPayment", entityPOC.Field3);
+                securedPM.Field4 = new CustomFieldClass("Field4", "APPayment", entityPOC.Field4);
+                securedPM.Field5 = new CustomFieldClass("Field5", "APPayment", entityPOC.Field5);
+                securedPM.Field6 = new CustomFieldClass("Field6", "APPayment", entityPOC.Field6);
+                securedPM.Field7 = new CustomFieldClass("Field7", "APPayment", entityPOC.Field7);
+                securedPM.Field8 = new CustomFieldClass("Field8", "APPayment", entityPOC.Field8);
+                securedPM.Field9 = new CustomFieldClass("Field9", "APPayment", entityPOC.Field9);
+                securedPM.Field10 = new CustomFieldClass("Field10", "APPayment", entityPOC.Field10);
+            }
         }
 
         private JournalPM GetApprovedJournalByAccountingEntityId(APPaymentPM aPPaymentPM)
@@ -265,7 +288,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
                 APPaymentPM securedPM = new APPaymentPM();
                 SecuredMapping.GetMappedPM(payment, securedPM, "APPayment", tenant);
-
+                MapCustomFieldValues(payment, securedPM);
 
                 return BranchPermitionsFilter.AddUserBranchRestrictionFilters(new QueryOperations(), securedPM, tenant);
             }
@@ -468,8 +491,20 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                                    VendorBankAddress = a.VendorBankAddress,
                                                    VendorBankName = a.VendorBankName,
                                                    VendorIBANNumber = a.VendorIBANNumber,
-                                                   VendorSwift = a.VendorSwift
+                                                   VendorSwift = a.VendorSwift,
+                                                   Field1 = a.Field1,
+                                                   Field2 = a.Field2,
+                                                   Field3 = a.Field3,
+                                                   Field4 = a.Field4,
+                                                   Field5 = a.Field5,
+                                                   Field6 = a.Field6,
+                                                   Field7 = a.Field7,
+                                                   Field8 = a.Field8,
+                                                   Field9 = a.Field9,
+                                                   Field10 = a.Field10,
                                                };
+
+
             return result;
         }
 
@@ -536,7 +571,17 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                             VendorBankAddress = a.VendorBankAddress,
                             VendorBankName = a.VendorBankName,
                             VendorIBANNumber = a.VendorIBANNumber,
-                            VendorSwift = a.VendorSwift
+                            VendorSwift = a.VendorSwift,
+                            Field1 = a.Field1,
+                            Field2 = a.Field2,
+                            Field3 = a.Field3,
+                            Field4 = a.Field4,
+                            Field5 = a.Field5,
+                            Field6 = a.Field6,
+                            Field7 = a.Field7,
+                            Field8 = a.Field8,
+                            Field9 = a.Field9,
+                            Field10 = a.Field10,
                         };
 
             return query;

@@ -1,7 +1,7 @@
 
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {ReportsPreviewComponent} from '../../Components/ReportsPreviewComponent';
-import {Component, OnInit}  from '@angular/core';
+import {Component, OnInit,ChangeDetectorRef}  from '@angular/core';
 import {QueryFilterItem} from '../../Components/Filters/QueryFilterItem';
 import {ReportFliter} from '../../Components/Filters/ReportFliter';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
@@ -9,6 +9,8 @@ import {CodeNameClass} from '../../../Infrastructure/DataContracts/CodeNameClass
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
 import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
+import { UIProperties, UIProperty } from '../../../Infrastructure/Components/LogitudeComponents/UIProperties';
+import { DateTool } from '../../../Infrastructure/Tools';
 
 
 
@@ -31,17 +33,21 @@ export class RevenueExpenseFilterComponent extends BaseComponent{
     public ValidationErrorsList: string[] = [];
     queryFilterItem: QueryFilterItem;
     Level: string = "GLAccount";
-  ToDate: Date = new Date();
+ // ToDate: Date = new Date();
     DataContext: any = this;
     showlocal: boolean;
-    constructor() {
+    constructor(private CD: ChangeDetectorRef) {
 
         super();
         this.chartofaccounttypeHtmlinputId = Guid.newGuid();
         this.GLAccountHtmlinputId = Guid.newGuid();
         this.ChartofaccountHtmlinputId = Guid.newGuid();
         this.showlocal = !SessionLocator.LoggedUserPM.DontShowLocal;
-
+        var date = new Date();
+        this.ToDate = new Date();
+        date.setDate(1);
+        date.setMonth(0);
+        this.fromDate = date;
     }
     InitializeComponent(myReportsPreview: ReportsPreviewComponent) {
         this.ReportsPreview = myReportsPreview;    
@@ -71,7 +77,42 @@ export class RevenueExpenseFilterComponent extends BaseComponent{
             this.useBalanceFilter = value;
         }
     }
+  
+    private fromDate: Date;
+  public get FromDate() { return this.fromDate; }
+  public set FromDate(value: Date) {
+    if (this.fromDate != value) {
+        this.fromDate = value;
+        if (value > this.ToDate) {
+        
+            setTimeout(() => {
+                this.UIProperties.SetValidity("FromDate", null, false, TextCodeTranslator.Translate("Accounting.General.FromDateMustBeLTT"));
+                this.CD.detectChanges();
+            }, 200);
 
+        }
+    }
+    }
+
+    private toDate: Date = new Date()
+    public get ToDate() { return this.toDate; }
+    public set ToDate(value: Date) {
+        if (this.toDate != value) {
+            this.toDate = value;
+            if (value < this.FromDate) {
+
+                setTimeout(() => {
+                    this.UIProperties.SetValidity("ToDate", null, false, TextCodeTranslator.Translate("Accounting.General.O.ToDateMustBeGTF"));
+                
+                    this.CD.detectChanges();
+                }, 200);
+                
+            }
+            if (value > new Date()) {
+                this.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.General.O.FutureDate"));
+            }
+        }
+    }
   public FilterSelectedValue: string = 'GLAccount';
   FilterItemClicked(itemValue: string) {
     if (this.FilterSelectedValue != itemValue) {
@@ -82,25 +123,8 @@ export class RevenueExpenseFilterComponent extends BaseComponent{
   }
 
     RunReport() {
-        this.ValidationErrorsList = [];
-        if (this.ToDate > new Date()) {
-            this.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.General.O.FutureDate"));
-
-        }
-        if (this.ToDate == null)
-        {
-            var FIELD_IS_REQUIERD: string = null;
-            FIELD_IS_REQUIERD = TextCodeTranslator.Translate("General.M.FieldIsRequired");
-         
-          
-            var s: string = FIELD_IS_REQUIERD.replace("%FieldName", TextCodeTranslator.Translate("Accounting.General.O.Date"));
-            this.ValidationErrorsList.push(s);
-        }
-
-        
-
-        
-
+       
+        this.ValidationErrorsList = this.ValidateFilters();
         if (this.ValidationErrorsList.length == 0) {
 
             this.queryFilterItems = new Array<QueryFilterItem>();
@@ -112,7 +136,9 @@ export class RevenueExpenseFilterComponent extends BaseComponent{
                 this.queryFilterItem.FieldValue = this.ToDate;
                 this.queryFilterItem.FieldDataType = "Date";
                 this.queryFilterItem.Operator = "LessThanOrEqual";
-                this.queryFilterItems.push(this.queryFilterItem);
+            this.queryFilterItems.push(this.queryFilterItem);
+            this.queryFilterItems.push(new QueryFilterItem("FromDate", this.FromDate, "Date"));
+
           if (!this.Level) this.Level = "GLAccount";
           this.queryFilterItems.push(new QueryFilterItem("Level", this.Level));
                 if (!this.UseBalanceFilter && this.SelectedBalanceOptionFilter.Code == "WITHOUT") {
@@ -153,4 +179,28 @@ export class RevenueExpenseFilterComponent extends BaseComponent{
         }
 
     }
-}
+
+    ValidateFilters() {
+        this.ValidationErrorsList = [];    
+        var FIELD_IS_REQUIERD: string = TextCodeTranslator.Translate("General.M.FieldIsRequired");
+        if (this.ToDate > new Date()) {
+            this.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.General.O.FutureDate"));
+        }
+        if (this.ToDate == null) {
+            var s: string = FIELD_IS_REQUIERD.replace("%FieldName", TextCodeTranslator.Translate("Accounting.General.O.ToDate"));
+            this.ValidationErrorsList.push(s);
+        }
+        if (this.FromDate == null) {
+            var s: string = FIELD_IS_REQUIERD.replace("%FieldName", TextCodeTranslator.Translate("Accounting.O.FromDate"));
+            this.ValidationErrorsList.push(s);
+        }
+        if (this.ToDate < this.FromDate) {
+            this.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.General.O.ToDateMustBeGTF"));
+        }
+       
+        return this.ValidationErrorsList;
+    }
+
+
+    }
+

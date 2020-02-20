@@ -786,6 +786,12 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit{
                     this.ValidationErrorsList.push("Expiration date must be less than start date");
                 }
             }
+
+            if (this.EntityPM.TypeCode == "AFC" || this.EntityPM.TypeCode == "OLC") {
+                if (AppTool.IsNullOrEmpty(this.PriceSteps)) {
+                    this.ValidationErrorsList.push("Price Steps Field is Required");
+                }
+            }
         }
 
         else if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFS") {
