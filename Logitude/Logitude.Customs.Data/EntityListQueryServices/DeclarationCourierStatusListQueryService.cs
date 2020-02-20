@@ -24,7 +24,6 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
         private IQueryable<DeclarationCourierStatusList> GetIqueryableList(IQueryable<DeclarationCourierStatus> iQueryable)
         {
-            //var qMmmnActionError = (from action in context.DeclarationMamanSpecialActions
             //            .Where( r=> r.MamanSpecialActionStatusCode== "2" )
             //            group action by action.DeclarationId into gaction
             //            select new
@@ -116,6 +115,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                   IsClosedForFollowUp = a.IsClosedForFollowUp,
                                                                   HighLowValue = a.HighLowValue,
                                                                   DocumentStatusCode = a.DocumentStatusCode,
+                                                                  SortedDocumentStatusCode= (a.DocumentStatusCode == "M" || a.DocumentStatusCode == "X")? "M" : a.DocumentStatusCode,
+                                                                  SortedCourierDeclarationStatus=(a.CourierDeclarationStatusCode == "M" || a.CourierDeclarationStatusCode == "X") ? "M" : a.CourierDeclarationStatusCode,
+                                                                  SortedCourierManifestStatus = (a.CourierManifestStatusCode == "M" || a.CourierManifestStatusCode == "X") ? "M" : a.CourierManifestStatusCode,
                                                                   CourierHawb = d.CourierHAWB,
                                                                   ProcedureCurrentCode = d.ProcedureCurrentCode,
                                                                   ProcedureCurrentName = d.GovernmentProcedureCurrent != null ? d.GovernmentProcedureCurrent.LocalName : null,
@@ -124,6 +126,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                   DeclarationStatusTypeName = d.DeclarationStatusType == null ? null : d.DeclarationStatusType.LocalName,
                                                                   ImporterCode = d.ImporterCode,
                                                                   ImporterName = d.ImporterName != null ? d.ImporterName : (d.ImporterId != null ? d.Importer.FullName : d.ImporterName),
+                                                                  SortedImporterCode=d.ImporterCode,
                                                                   CustomerName = d.CustomerCard.LocalName != null ? d.CustomerCard.LocalName : d.CustomerCard.EnglishName,
                                                                   CourierSearchFields = d.CourierSearchFields,
                                                                   TotalInvoiceAmountInUSD = a.TotalInvoiceAmountInUSD,
