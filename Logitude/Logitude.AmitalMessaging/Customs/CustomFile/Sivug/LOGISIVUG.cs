@@ -801,6 +801,8 @@
 
         private string serialNumField;
 
+        private string uNFINVOICEKEYField;
+
         /// <remarks/>
         public string Entname
         {
@@ -876,6 +878,19 @@
             set
             {
                 this.serialNumField = value;
+            }
+        }
+
+        /// <remarks/>
+        public string UNFINVOICEKEY
+        {
+            get
+            {
+                return this.uNFINVOICEKEYField;
+            }
+            set
+            {
+                this.uNFINVOICEKEYField = value;
             }
         }
     }
