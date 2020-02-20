@@ -1550,7 +1550,7 @@ namespace WebFreight.Web.Helpers
             IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
             List<string> blockIdsList = new List<string>();
             int bufferNumber = 0;
-            const int chunkSize = 200000;
+            const int chunkSize = 1000000; // 1 MB
             long sendSize = 0;
             using (FileStream fileStream = new FileStream(tempFilePath, FileMode.Open, FileAccess.Read))
             {
