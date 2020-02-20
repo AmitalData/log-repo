@@ -317,11 +317,11 @@ namespace WebFreight.Web.Helpers
                             CheckLineCcInternalUsers(CorrespondenceLine, null);
 
                             //if the internal user forward a message to the system, add him as the contact and to the notify internal 
-                            if (IsFirstTicket && userRepository.DoesUserExist(emailDetails.Sender, Tenant))
-                            {
-                                CorrespondenceLine.IsInternal = false;
-                                CorrespondenceLine.InternalUsers = this.AppendEmails(CorrespondenceLine.InternalUsers, emailDetails.Sender);
-                            }
+                            //if (IsFirstTicket && userRepository.DoesUserExist(emailDetails.Sender, Tenant))
+                            //{
+                            //    CorrespondenceLine.IsInternal = false;
+                            //    CorrespondenceLine.InternalUsers = this.AppendEmails(CorrespondenceLine.InternalUsers, emailDetails.Sender);
+                            //}
 
                             correspondenceRep.Add(CorrespondenceLine);
 
