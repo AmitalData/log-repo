@@ -17,6 +17,7 @@ using System.Configuration;
 using Devart.Data.Oracle;
 using CustomsWorkerRole;
 using Logitude.Customs.BL.PatchDistribution;
+using System.Diagnostics;
 
 namespace AmitalCustomsWindowsService
 {
@@ -78,7 +79,7 @@ namespace AmitalCustomsWindowsService
             
         }
 
-        private bool IsOldDB()
+        public static bool IsOldDB()
         {
             try
             {
@@ -94,20 +95,21 @@ namespace AmitalCustomsWindowsService
                 var assemblyUtil = new Logitude.Server.Tools.Helpers.AssemblyUtil();
                 var prodInfo = assemblyUtil.GetProductInfo(typeof(JustWebFreight.WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses.MyEntityUpdateClass).Assembly);
                 var assemblyVersion = assemblyUtil.GetVersion(prodInfo);
-                Logger.LogMe($"assemblyVersion ={assemblyVersion}", false);
+                
 
 
                 var patchDistributionMatch = new PatchDistributionMatch();
                 var _PatchDistributionMatchModel = patchDistributionMatch.GetPatchDistributionMatchModel(assemblyVersion);
-                Logger.LogMe(_PatchDistributionMatchModel.Message, false);
+                
+                Debug.WriteLine(_PatchDistributionMatchModel.Message);
                 if (assemblyVersion == "1.0.0.0" || _PatchDistributionMatchModel.LastClosed_DBMigration == null)
                 {
                     return false;
                 }
-
-                Logger.LogMe($"DB MajorVersion={_PatchDistributionMatchModel.LastClosed_DBMigration.MajorVersion}", false);
-                Logger.LogMe($"DB MinorVersion Last Closed !!!={_PatchDistributionMatchModel.LastClosed_DBMigration.MinorVersion}", false);
-                //Logger.LogMe($"DB MinorLine={_PatchDistributionMatchModel.Last_DBMigrationLine.CounterKey}", false);
+                Debug.WriteLine($"assemblyVersion ={assemblyVersion}");
+                Debug.WriteLine($"DB MajorVersion={_PatchDistributionMatchModel.LastClosed_DBMigration.MajorVersion}");
+                Debug.WriteLine($"DB MinorVersion Last Closed !!!={_PatchDistributionMatchModel.LastClosed_DBMigration.MinorVersion}");
+                //Debug.WriteLine($"DB MinorLine={_PatchDistributionMatchModel.Last_DBMigrationLine.CounterKey}");
                 if (_PatchDistributionMatchModel.MajorVersionMatch == PatchDistributionMatch.MajorVersionMatchEnum.OldDB)
                 {
                     Logger.LogMe($"shuttttdown !!!_PatchDistributionMatchModel.MajorVersionMatch == PatchDistributionMatch.MajorVersionMatchEnum.OldDB", true);
@@ -127,7 +129,7 @@ namespace AmitalCustomsWindowsService
             catch (Exception ee )
             {
                 Logger.LogMe("IsOldDB -- " + ee.ToString(), true);
-                throw;
+                return true;
             }
         }
 
