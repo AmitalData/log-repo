@@ -60,6 +60,7 @@ namespace Logitude.Accounting.BL.DataContract
         public TaxDeductionReportData GetTaxDeductionReportData()
         {            
             TaxDeductionReportData taxDeductionReport = new TaxDeductionReportData();
+            taxDeductionReport.TaxYear = ReportYear;
             taxDeductionReport.deductionLines = GetTaxReportDeductionLines();
            
             taxDeductionReport.ByVendorList = FillGroupByVendorList(taxDeductionReport.deductionLines);
