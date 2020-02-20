@@ -1,4 +1,4 @@
-import {Component, ChangeDetectorRef} from '@angular/core';
+import {Component, ChangeDetectorRef, Output, EventEmitter} from '@angular/core';
 import {ServiceArgs} from '../../../Infrastructure/DataContracts/ServiceArgs';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {AppTool} from '../../../Infrastructure/Tools';
@@ -13,6 +13,8 @@ import { SendRequestVIA } from '../../../Customs/DataContract/RequestParams/Requ
 import { DeclarationWebService } from '../../../Customs/Services/WebServices/DeclarationWebService';
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
+import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { DeclarationAmendmentComponent } from '../../CustomsDeclarationModules/DeclarationTabs/Components/DeclarationAmendment/DeclarationAmendmentComponent';
 
 @Component({
     moduleId: module.id,
@@ -29,10 +31,13 @@ export class DeclarationAmendmentListTemplate {
     IsNotConnectedDeclarationChecked: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     public ObjectTableName: string = "Customs.Declaration";
+    filterAgrs: ApiQueryFilters;
+    @Output() MenuHeaderchangeevent = new EventEmitter();
 
     public IsDisplayOnly: boolean = false;
     public color: string;
-    constructor(private CD: ChangeDetectorRef, private _declarationWebService: DeclarationWebService, private EntityResourceService: EntityResourceService) {
+    constructor(private CD: ChangeDetectorRef, private _declarationWebService: DeclarationWebService,
+        private EntityResourceService: EntityResourceService, private comp: DeclarationAmendmentComponent) {
         
     }
 
@@ -48,63 +53,70 @@ export class DeclarationAmendmentListTemplate {
     }
  
 
-    ChangeAmendment(id:string) {
-        this.OpenNewAmendment(id);
+    ChangeAmendment(id: string) {
+        debugger;
+        this.comp.OpenNewAmendment(id, this.rowData.DeclarationNumber);
     }
 
 
-    public OpenNewAmendment(id:string) {
+    //public OpenNewAmendment(id:string) {
 
 
-        var searchParams: GenericRequestParams = new GenericRequestParams();
-        searchParams.Tenant = SessionLocator.Tenant;
-        searchParams.AppicationId = id;
-        searchParams.LoggingEnabled = true;
-        searchParams.LoggingEntityId = id;
-        searchParams.LoggingEntityReference = this.rowData.DeclarationNumber;
-        searchParams.LoggingObjectTableId = this.ObjectTableName;
-        searchParams.LoggingUserId = SessionLocator.LoggedUserId;
-        searchParams.RequestName = "Declaration Request";
-        searchParams.ResponseName = "Declaration Response";
-        searchParams.RequestVIA = SendRequestVIA.DCABatch;
-        searchParams.ForcePersonalSign = false;
-         this._declarationWebService
-            .GetNewAmendmentDeclaration(searchParams)
-            .subscribe((response: any) => {
+    //    var searchParams: GenericRequestParams = new GenericRequestParams();
+    //    searchParams.Tenant = SessionLocator.Tenant;
+    //    searchParams.AppicationId = id;
+    //    searchParams.LoggingEnabled = true;
+    //    searchParams.LoggingEntityId = id;
+    //    searchParams.LoggingEntityReference = this.rowData.DeclarationNumber;
+    //    searchParams.LoggingObjectTableId = this.ObjectTableName;
+    //    searchParams.LoggingUserId = SessionLocator.LoggedUserId;
+    //    searchParams.RequestName = "Declaration Request";
+    //    searchParams.ResponseName = "Declaration Response";
+    //    searchParams.RequestVIA = SendRequestVIA.DCABatch;
+    //    searchParams.ForcePersonalSign = false;
+    //     this._declarationWebService
+    //        .GetNewAmendmentDeclaration(searchParams)
+    //        .subscribe((response: any) => {
 
-                if (response) {
-                    if (!response.HasError) {
-                        var entity = response.Result;
-                        if (entity != null) {
-                            // this.LoadDeclarationAmendmentsList();
-                            //setTimeout(() => {
-                            //    this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
-                            //}, 10);
-                            this.CurrentSession.StopBusyIndicator();
-                             this.openNewDeclaration(entity.Id);
+    //            if (response) {
+    //                if (!response.HasError) {
+    //                    var entity = response.Result;
+    //                    if (entity != null) {
+    //                        // this.LoadDeclarationAmendmentsList();
+    //                        //setTimeout(() => {
+    //                        //    this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
+    //                        //}, 10);
+    //                        this.CurrentSession.StopBusyIndicator();
+    //                         this.openNewDeclaration(entity.Id);
 
-                        }
+    //                    }
 
-                    }
-                }
-            });
-
-
-    }
+    //                }
+    //            }
+    //        });
 
 
-    openNewDeclaration(id: string) {
-         SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
-            .then(cmpRef => {
-                cmpRef.instance.ComponentRef = cmpRef;
-                cmpRef.instance.Run({ EntityId: id, ObjectTableName: 'Customs.Declaration', BackButtonLabel: "תיקוני הצהרה" });
-                cmpRef.instance.BackCompleted.subscribe(($event: any) => {
-                    if (SessionLocator.SelectedSession != null && SessionLocator.SelectedSession.CurrentWindow != null) {
-                        SessionLocator.SelectedSession.CurrentWindow.SuppressBusyIndicator = false;
-                    }
-                });
+    //}
 
-            });
-    }
+
+    //openNewDeclaration(id: string) {
+    //     SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+    //        .then(cmpRef => {
+    //            cmpRef.instance.ComponentRef = cmpRef;
+    //            cmpRef.instance.Run({ EntityId: id, ObjectTableName: 'Customs.Declaration', BackButtonLabel: "תיקוני הצהרה" });
+    //            cmpRef.instance.BackCompleted.subscribe(($event: any) => {
+    //                if (SessionLocator.SelectedSession != null && SessionLocator.SelectedSession.CurrentWindow != null) {
+    //                    SessionLocator.SelectedSession.CurrentWindow.SuppressBusyIndicator = false;
+    //                    //setTimeout(() => {
+    //                    //    this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
+    //                    //}, 10);
+    //                    //   this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+              
+                       
+    //                }
+    //            });
+
+    //        });
+    //}
 
 }

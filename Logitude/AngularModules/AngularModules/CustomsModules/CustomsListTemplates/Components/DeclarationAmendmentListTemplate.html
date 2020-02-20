@@ -2,7 +2,7 @@
 
     <button class="Button"
             style="padding-right:10px;" [disabled] ="rowData.AmendmentStatus!=1"
-            (click)="ChangeAmendment(rowData.AmendmentOriginalDeclartation)">
+            (click)="ChangeAmendment(rowData.Id)">
       
        {{'Customs.Declaration.O.ChangeAmendment' | TextCodeTranslationPipe}} 
     </button>
