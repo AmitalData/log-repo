@@ -20,6 +20,7 @@ export class CargoSealIdentifierList {
 	CargoIdentifierKey1: string;
 	CargoIdentifierKey3: string;
 	Status: string;
+	StatusName: string;
 	
 }
  
