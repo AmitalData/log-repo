@@ -439,10 +439,12 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                          AccountDisplayNumber = a.DisplayNumber,
                          AccountTermName = card.PaymentTerm.EnglishName,
 
-                         CreditLimitAmount = cust!=null?(double)cust.CreditLimitAmount:0,
+                         CreditLimitAmount =
+                         //cust!=null?(double)cust.CreditLimitAmount:0,
+                         cust != null ? (cust.CreditLimitAmount != null ? (double)cust.CreditLimitAmount : 0) : 0,
 
-                         CreditStatusAmount_AsIs= cust != null ? (double)cust.CreditLimitAmount:0,
-                         BalanceInLocalCurrency= (decimal)moredata.BalanceInLocalCurrency,
+                         CreditStatusAmount_AsIs = cust != null ? (cust.CreditLimitAmount!=null ?(double)cust.CreditLimitAmount:0):0,
+                         BalanceInLocalCurrency= moredata!=null ?(decimal)moredata.BalanceInLocalCurrency:0,
                          //CreditStatusAmount= 
                          //((decimal)(cust.CreditLimitAmount.GetValueOrDefault())
                          //- (
@@ -454,13 +456,13 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                          //),
 
                          TotalOpenShipments= custOFiles != null ?  custOFiles.TotalOpenFilesAmount:0,
-                         TotalFutureOpenCheques = (decimal)moredata.TotalOpenChequesInLocalCur,
-                         TotalOpenCheques = (decimal)moredata.TotFutureOpenChequesInLocalCur
+                         TotalFutureOpenCheques = moredata !=null ?(decimal)moredata.TotalOpenChequesInLocalCur:0,
+                         TotalOpenCheques = moredata!=null? (decimal)moredata.TotFutureOpenChequesInLocalCur:0
                      }
 
                  );
 
-                var list1=periodMExtendeds.ToList();
+                ///var list1=periodMExtendeds.ToList();
 
 
                 List<PeriodMExtended> namedPeriods = (from line in reportList
