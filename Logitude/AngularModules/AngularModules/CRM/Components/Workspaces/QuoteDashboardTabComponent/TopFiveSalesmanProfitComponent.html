@@ -30,12 +30,12 @@
         </SectionHead>
         <SectionBody>
             <table>
-                <tr *ngIf="PerformanceChartIdExistance">
-                    <td>
+                <tr>
+                    <td *ngIf="PerformanceChartIdExistance">
                         <div [attr.id]="PerformanceChartId" style="background: white;" class="MediaFill"></div>
                     </td>
                 </tr>
-                <tr style="height:25px" *ngIf="PerformanceChartIdExistance">
+                <tr *ngIf="PerformanceChartIdExistance" style="height:25px">
                     <td>
                         <div [attr.id]="LegendDiv" style="position:relative;width:90%;"></div>
                     </td>

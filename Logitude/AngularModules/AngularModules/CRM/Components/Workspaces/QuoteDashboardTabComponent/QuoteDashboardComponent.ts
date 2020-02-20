@@ -114,8 +114,7 @@ export class QuoteDashboardComponent extends BaseComponent {
         }
 
         this.selectedDateFilter = this.DateFilterList.filter(d => d.Code == defaultFilterCode)[0];
-
-
+        this.DatesCode = this.selectedDateFilter.Code;
 
         if (this.selectedDateFilter.Code == "-2") {
             var ActiviytFromDate = LastFilterClass.GetFilterValue(this.filterControlNameSpace, "ByCreateFromDate");

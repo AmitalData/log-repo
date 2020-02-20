@@ -24,6 +24,8 @@ export class TopFiveSalesmanProfitComponent implements OnInit {
     public ProfitCurrencyCode: string = SessionLocator.TenantPM.ProfitCurrencyCode;
     public LocalCurrencyCode: string = SessionLocator.TenantPM.AccountingCurrencyCode;
     public SelectedCurrency: string = "1";
+    public SalesmanNumber: number;
+    public dataProvider: any = [];
 
     constructor(private _entityResourceService: EntityResourceService) {
         this.PerformanceChartId = "PerformanceChartId_" + this.CurrentSession.GetNewId("PerformanceChartId");
@@ -45,6 +47,8 @@ export class TopFiveSalesmanProfitComponent implements OnInit {
         this.dashboardService.GetDashboardChartValues(this.dashboardArgs).subscribe((myResult: any) => {
             if (myResult != null && !myResult.HasError) {
                 this.TopFiveSalesmanData = myResult;
+                if (this.TopFiveSalesmanData && this.TopFiveSalesmanData .length > 0 )
+                    this.PerformanceChartIdExistance = true;
                 this.FillPerformanceChart();
             }
             else
@@ -68,14 +72,12 @@ export class TopFiveSalesmanProfitComponent implements OnInit {
     }
 
     RefreshTab(wizard: QuoteDashboardComponent) {
-        this.PerformanceChartIdExistance = false;
         this.Wizard = wizard;
         this.FillChartArgs();
         this.LoadChartData();
     }
 
-    public SalesmanNumber: number;
-
+    
     FillPerformanceChart() {
         this.DeterminePeriod(this.TopFiveSalesmanData);
 
@@ -106,17 +108,17 @@ export class TopFiveSalesmanProfitComponent implements OnInit {
 
     }
 
-    public dataProvider: any = [];
+    
+     DeterminePeriod(data) {
 
-    DeterminePeriod(data) {
-
-        if (data) {
-            if (this.TopFiveSalesmanData.length == 0) {
-                this.PerformanceChartIdExistance = false;
-            } else {
+        if (data)
+            if (this.TopFiveSalesmanData.length != 0) {
                 this.PerformanceChartIdExistance = true;
             }
-        }
+            else { 
+                this.PerformanceChartIdExistance = false;
+                this.LoadChartData();
+            }
         this.dataProvider = [];
         this.SalesmanNames = [];
         switch (this.dashboardArgs.DatesCode) {
@@ -323,7 +325,7 @@ export class TopFiveSalesmanProfitComponent implements OnInit {
 
     MapData(data, i) {
         this.dataProvider[i] = {
-            "Category": data[0] != null ? data[0].Label : null,
+            "Category": data[0] != null ? data[0].Label : "",
             "Value1": data[0] != null ? data[0].Value : 0,
             "Value2": data[1] != null ? data[1].Value : 0,
             "Value3": data[2] != null ? data[2].Value : 0,
