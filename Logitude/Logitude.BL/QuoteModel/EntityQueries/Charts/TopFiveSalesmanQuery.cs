@@ -69,6 +69,10 @@ namespace Logitude.BL.QuoteModel.EntityQueries.Charts
                 {
                     item.Value = 0;
                 }
+                else
+                {
+                    item.Value = MethodHelper.Round(item.Value, 2);
+                }
             }
         }
 
@@ -341,7 +345,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries.Charts
                     Key = SalemanId,
                     SalesmanUserName = salesmanName,
                     Label = date1.ToString("MMM") + " - " + date2.ToString("MMM"),
-                    Value = MethodHelper.Round(entry.Value.Sum(s => s.Value), 2)
+                    Value = entry.Value.Sum(s => s.Value)
                 });
             }
             output.Reverse();
@@ -409,7 +413,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries.Charts
                     Key = salemanId,
                     SalesmanUserName = salesmanName,
                     Label = tempDate.Day.ToString() + "/" + tempDate.Month.ToString() + " - " + toDate.Day.ToString() + "/" + toDate.Month.ToString(),
-                    Value = MethodHelper.Round(items.Sum(x => x.Value), 2)
+                    Value = items.Sum(x => x.Value)
                 });
                 i++;
                 fromDate = toDate.AddDays(1);
@@ -427,7 +431,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries.Charts
                                               {
                                                   Key = g.Key.SalesmanUserId,
                                                   SalesmanUserName = g.Key.EnglishName,
-                                                  Value = MethodHelper.Round(args.SelectedCurrency == "1" ? g.Sum(s => s.EstimatedProfitInLocal) : g.Sum(s => s.EstimatedProfitInProfit), 2),
+                                                  Value = args.SelectedCurrency == "1" ? g.Sum(s => s.EstimatedProfitInLocal) : g.Sum(s => s.EstimatedProfitInProfit),
                                                   Label = (g.Key.Month).ToString()
                                               }).OrderByDescending(s => s.Key).ToList();
             output = ConvertLabel(output);
@@ -443,7 +447,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries.Charts
                                               {
                                                   Key = g.Key.SalesmanUserId,
                                                   SalesmanUserName = g.Key.EnglishName,
-                                                  Value = MethodHelper.Round(args.SelectedCurrency == "1" ? g.Sum(s => s.EstimatedProfitInLocal) : g.Sum(s => s.EstimatedProfitInProfit), 2),
+                                                  Value = args.SelectedCurrency == "1" ? g.Sum(s => s.EstimatedProfitInLocal) : g.Sum(s => s.EstimatedProfitInProfit),
                                                   Label = g.Key.Day.ToString(),
                                               }).OrderByDescending(s => s.Key).ToList();
             output = ConvertLabel(output);

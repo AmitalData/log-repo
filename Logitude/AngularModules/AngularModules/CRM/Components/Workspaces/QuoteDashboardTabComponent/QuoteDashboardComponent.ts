@@ -94,7 +94,7 @@ export class QuoteDashboardComponent extends BaseComponent {
 
     RefreshButtonClicked() {
         this.LoadFilteredQueries();
-        this.LoadComponents();
+        //this.LoadComponents();
     }
 
     LoadFilteredQueries() {
@@ -396,7 +396,13 @@ export class QuoteDashboardComponent extends BaseComponent {
         return days;
     }
 
-
+    private datesCode: string;
+    public get DatesCode() { return this.datesCode; }
+    public set DatesCode(value: string) {
+        if (value != this.datesCode) {
+            this.datesCode = value;
+        }
+    }
     private toDate: Date;
     public get ToDate() { return this.toDate; }
     public set ToDate(value: Date) {
@@ -424,7 +430,7 @@ export class QuoteDashboardComponent extends BaseComponent {
 
         if (this.selectedDateFilter != value) {
             this.selectedDateFilter = value;
-
+            this.DatesCode = value.Code;
             LastFilterClass.UpdateFilter(this.filterControlNameSpace, this.filterName_CreateDate, (value == null ? null : value.Code));
             if (value.Code == "-2") {
                 LastFilterClass.UpdateFilter(this.filterControlNameSpace, "ByCreateFromDate", (value == null ? null : ServiceHelper.GetDateString(this.FromDate)));

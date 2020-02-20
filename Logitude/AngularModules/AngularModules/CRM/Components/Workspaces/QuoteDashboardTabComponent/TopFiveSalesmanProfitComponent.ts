@@ -68,6 +68,7 @@ export class TopFiveSalesmanProfitComponent implements OnInit {
     }
 
     RefreshTab(wizard: QuoteDashboardComponent) {
+        this.PerformanceChartIdExistance = false;
         this.Wizard = wizard;
         this.FillChartArgs();
         this.LoadChartData();
@@ -109,44 +110,45 @@ export class TopFiveSalesmanProfitComponent implements OnInit {
 
     DeterminePeriod(data) {
 
-        if (data)
-            if (this.TopFiveSalesmanData.length > 0)
+        if (data) {
+            if (this.TopFiveSalesmanData.length == 0) {
+                this.PerformanceChartIdExistance = false;
+            } else {
                 this.PerformanceChartIdExistance = true;
-        
-        if (this.PerformanceChartIdExistance) {
-            this.dataProvider = [];
-            this.SalesmanNames = [];
-            switch (this.dashboardArgs.DatesCode) {
-                case '0':
-                case '-1': {
-                    this.SalesmanNumber = this.TopFiveSalesmanData.length;
-                    this.GroupingDataByOne(data);
-                    break;
-                }
-                case '-7': {
-                    this.SalesmanNumber = this.TopFiveSalesmanData.length / 7;
-                    this.GroupingDataBySeven(data);
-                    break;
-                }
-                case '-30': {
-                    this.SalesmanNumber = this.TopFiveSalesmanData.length / 5;
-                    this.GroupingDataByFive(data);
-                    break;
-                }
-                case '-90': {
-                    this.SalesmanNumber = this.TopFiveSalesmanData.length / 3;
-                    this.GroupingDataByMonth(data);
-                    break;
-                }
-                case "-365": {
-                    this.SalesmanNumber = this.TopFiveSalesmanData.length / 4;
-                    this.GroupingDataByQuarter(data);
-                    break;
-                }
-                case "-2": {
-                    this.SalesmanNumber = this.TopFiveSalesmanData.length / 4;
-                    this.GroupingDataByQuarter(data);
-                }
+            }
+        }
+        this.dataProvider = [];
+        this.SalesmanNames = [];
+        switch (this.dashboardArgs.DatesCode) {
+            case '0':
+            case '-1': {
+                this.SalesmanNumber = this.TopFiveSalesmanData.length;
+                this.GroupingDataByOne(data);
+                break;
+            }
+            case '-7': {
+                this.SalesmanNumber = this.TopFiveSalesmanData.length / 7;
+                this.GroupingDataBySeven(data);
+                break;
+            }
+            case '-30': {
+                this.SalesmanNumber = this.TopFiveSalesmanData.length / 5;
+                this.GroupingDataByFive(data);
+                break;
+            }
+            case '-90': {
+                this.SalesmanNumber = this.TopFiveSalesmanData.length / 3;
+                this.GroupingDataByMonth(data);
+                break;
+            }
+            case "-365": {
+                this.SalesmanNumber = this.TopFiveSalesmanData.length / 4;
+                this.GroupingDataByQuarter(data);
+                break;
+            }
+            case "-2": {
+                this.SalesmanNumber = this.TopFiveSalesmanData.length / 4;
+                this.GroupingDataByQuarter(data);
             }
         }
     }
@@ -231,6 +233,7 @@ export class TopFiveSalesmanProfitComponent implements OnInit {
     }
 
     GroupingDataByOne(data) {
+        this.GetSalesmanNames(data);
         this.MapData(data, 0);
     }
 
