@@ -238,19 +238,19 @@ namespace WebFreight.Web.Helpers
         public string GetSpecificPageFromStimulReportAsBase64(ReportFliter reportFliter)
         {
             string url = "";
-            string extension = IsUsingFileStreamAndTiffImage(reportFliter.tenant) ? "tiff" : "mdc";
+            string extension = "mdc"; //IsUsingFileStreamAndTiffImage(reportFliter.tenant) ? "tiff" : "mdc";
             IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
             BlobFileInfo fileInfo = GetNewBlobFileInfo(reportFliter.ReportKey + "@" + reportFliter.ReportName, extension, reportFliter.tenant);
             byte[] result = storageservice.Read(fileInfo);
             if (result != null)
             {
-                if (IsUsingFileStreamAndTiffImage(reportFliter.tenant)) url = GetSpecificPageFromTiffImageAsBase64(reportFliter, result);
-                else
-                {
+               // if (IsUsingFileStreamAndTiffImage(reportFliter.tenant)) url = GetSpecificPageFromTiffImageAsBase64(reportFliter, result);
+               // else
+               // {
                     StiReport stiReport = new StiReport();
                     stiReport.LoadDocument(result);
                     url = ExportStimulaImage(stiReport, reportFliter);
-                }
+               // }
             }
             return url;
         }
@@ -1515,7 +1515,7 @@ namespace WebFreight.Web.Helpers
             try
             {
                 SaveStimulReportToMdcUsingFileStream(reportFliter, report);//mdc
-                SaveStimulReportToTiffImageUsingFileStream(reportFliter, report);//tiff
+               // SaveStimulReportToTiffImageUsingFileStream(reportFliter, report);//tiff
 
             }
             catch (Exception ex)
