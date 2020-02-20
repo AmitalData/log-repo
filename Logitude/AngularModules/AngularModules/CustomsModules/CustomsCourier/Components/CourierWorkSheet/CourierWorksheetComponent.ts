@@ -907,7 +907,7 @@ export class CourierWorksheetComponent extends BaseComponent
             HtmlListComponentName: 'CourierWorksheetListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
             ServerSideSortable: true,
-            SortByName: 'HighLowValue'
+            SortByName: 'FastIndividualProcessCode'
         });
 
         this.columns.push({
@@ -927,7 +927,7 @@ export class CourierWorksheetComponent extends BaseComponent
             Styles: { width: '100px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
-            SortByName: 'ImporterCode'
+            SortByName: 'SortedImporterCode'
         });
 
         this.columns.push({
@@ -939,7 +939,7 @@ export class CourierWorksheetComponent extends BaseComponent
             HtmlListComponentName: 'CourierWorksheetListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
             ServerSideSortable: true,
-            SortByName: 'DocumentStatusCode'
+            SortByName: 'SortedDocumentStatusCode'
         });
 
         this.columns.push({
@@ -963,7 +963,7 @@ export class CourierWorksheetComponent extends BaseComponent
             HtmlListComponentName: 'CourierWorksheetListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
             ServerSideSortable: true,
-            SortByName: 'CourierManifestStatusCode'
+            SortByName: 'SortedCourierManifestStatus'
         });
 
         this.columns.push({
@@ -975,7 +975,7 @@ export class CourierWorksheetComponent extends BaseComponent
             HtmlListComponentName: 'CourierWorksheetListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
             ServerSideSortable: true,
-            SortByName: 'CourierDeclarationStatusCode'
+            SortByName: 'SortedCourierDeclarationStatus'
         });
 
         this.columns.push({
@@ -1113,7 +1113,6 @@ export class CourierWorksheetComponent extends BaseComponent
         if (filters == null) {
             filters = new ApiQueryFilters();
         }
-
         filters.PageSize = take;
         filters.PageIndex = skip;
         filters.GetAll = false;

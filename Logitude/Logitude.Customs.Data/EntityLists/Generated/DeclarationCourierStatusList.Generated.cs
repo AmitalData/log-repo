@@ -146,7 +146,14 @@ namespace Logitude.Customs.Data.EntityLists
 
        [DataMember]
        public string CustomFileNo  { get; set; }
-
+       [DataMember]
+       public string SortedImporterCode  { get; set; }
+       [DataMember]
+       public string SortedDocumentStatusCode  { get; set; }
+       [DataMember]
+       public string SortedCourierManifestStatus  { get; set; }
+       [DataMember]
+       public string SortedCourierDeclarationStatus  { get; set; }
    }
 
 }

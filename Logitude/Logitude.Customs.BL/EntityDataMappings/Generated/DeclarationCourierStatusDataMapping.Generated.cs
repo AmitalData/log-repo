@@ -106,6 +106,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         StorageSiteStatusName, 
 	         CourierPendingReasonList, 
 	         LastMileStatusName,
+	         SortedImporterCode, 
+	         SortedDocumentStatusCode, 
+	         SortedCourierManifestStatus, 
+	         SortedCourierDeclarationStatus,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
