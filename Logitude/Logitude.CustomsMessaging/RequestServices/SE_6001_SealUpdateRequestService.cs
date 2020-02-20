@@ -13,6 +13,12 @@ namespace Logitude.CustomsMessaging.RequestServices
 {
     public class SE_6001_SealUpdateRequestService : RequestServiceBase<SE_NG_6001_MSG01_SealUpdateMessage, CargoSealsRequestParams>
     {
+
+        public override void OnRequestFail(CargoSealsRequestParams requestParams)
+        {
+            base.OnRequestFail(requestParams);
+        }
+
         public override SE_NG_6001_MSG01_SealUpdateMessage GetRequest(CargoSealsRequestParams requestParams)
         {
             var mySE_NG_6001_MSG01_SealUpdateMessage = new SE_NG_6001_MSG01_SealUpdateMessage();

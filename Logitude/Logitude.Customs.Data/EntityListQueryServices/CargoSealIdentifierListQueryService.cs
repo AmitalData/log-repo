@@ -21,7 +21,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
     {
 	    private IQueryable<CargoSealIdentifierList> GetIqueryableList(IQueryable<CargoSealIdentifier> iQueryable)
         {
-		IQueryable<CargoSealIdentifierList> query = (from a in iQueryable
+           
+
+            IQueryable<CargoSealIdentifierList> query = (from a in iQueryable
                                             select new CargoSealIdentifierList()
 											{
                      
@@ -46,6 +48,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 					                          CargoIdentifierKey3 = a.CargoIdentifierKey3,
 					
 					                          Status = a.Status,
+
 					
 		                    	            });
             return query;
