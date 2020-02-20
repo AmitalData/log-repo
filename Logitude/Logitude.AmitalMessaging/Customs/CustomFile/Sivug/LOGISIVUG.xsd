@@ -131,6 +131,7 @@
         <xs:element minOccurs="0" maxOccurs="1" ref="FromDeclartion" />
         <xs:element minOccurs="0" maxOccurs="1" ref="COM_ID" />
         <xs:element minOccurs="0" maxOccurs="1" ref="SerialNum" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="UNFINVOICEKEY" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -140,4 +141,5 @@
   <xs:element name="FromDeclartion" type="xs:string" />
   <xs:element name="COM_ID" type="xs:string" />
   <xs:element name="SerialNum" type="xs:string" />
+  <xs:element name="UNFINVOICEKEY" type="xs:string" />
 </xs:schema>

@@ -243,9 +243,9 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                         DeclarationUpdateService.MarkToDeleteSupplierInvoice(_MyDeclarationPM);
                     }
                     AppendLogLine("InvoiceInsert:All:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
-                    if (this._MyDeclarationPM.SupplierInvoices != null && this._MyDeclarationPM.SupplierInvoices.Count() > 0) // moran 8.10.15 - Task 16452
+                    if (this._MyDeclarationPM.SupplierInvoices != null && this._MyDeclarationPM.SupplierInvoices.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).Count() > 0) // moran 8.10.15 - Task 16452
                     {
-                        this._MyDeclarationPM.SupplierInvoices.FirstOrDefault().IsPrimarySupplierInvoice = true;
+                        this._MyDeclarationPM.SupplierInvoices.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).FirstOrDefault().IsPrimarySupplierInvoice = true;
                         //this._MyDeclarationPM.PrimaryInvoiceCounterKey = this._MyDeclarationPM.SupplierInvoices.FirstOrDefault().InvoiceCounterKey.ToString();
                     }
                     _MyDeclarationPM.CurrentContextTag = UpsertActionConst; // moran 28.7.16 - Task 22249
@@ -316,22 +316,23 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                                 customsDocumentPointerPM.ParentEntityId = _MyDeclarationPM.Id;
                                 if (customsDocument.Entname == "SI")
                                 {
-                                    if (!string.IsNullOrWhiteSpace(customsDocument.SerialNum))
+                                    if (isNewHandleDocSIPointer)
+                                    {
+                                        if (this._MyDeclarationPM.SupplierInvoices != null && this._MyDeclarationPM.SupplierInvoices.Count() > 0)
+                                        {
+                                            customsDocumentPointerPM.Child1EntityCode = "SupplierInvoice";
+                                            customsDocumentPointerPM.Child1EntityId = this._MyDeclarationPM.SupplierInvoices.Where(d => d.UnfInvoiceCounterKey == customsDocument.UNFINVOICEKEY).FirstOrDefault().SequenceNumeric.ToString();
+                                        }
+                                    }
+                                    else
                                     {
                                         if (!string.IsNullOrWhiteSpace(customsDocument.SerialNum))
                                         {
-                                            customsDocumentPointerPM.Child1EntityCode = "SupplierInvoice";
-                                            customsDocumentPointerPM.Child1EntityId = customsDocument.SerialNum;
-                                            if (mode == "INSERT_UPDATE_DELETE")
+                                            if (!string.IsNullOrWhiteSpace(customsDocument.SerialNum))
                                             {
-                                                if (isNewHandleDocSIPointer)
-                                                {
-                                                    if(this._MyDeclarationPM.SupplierInvoices != null && this._MyDeclarationPM.SupplierInvoices.Count() > 0)
-                                                    {
-                                                        customsDocumentPointerPM.Child1EntityId = this._MyDeclarationPM.SupplierInvoices.Where(d => d.UnfInvoiceCounterKey == customsDocument.SerialNum).FirstOrDefault().SequenceNumeric.ToString();
-                                                    }
-                                                }
-                                                else
+                                                customsDocumentPointerPM.Child1EntityCode = "SupplierInvoice";
+                                                customsDocumentPointerPM.Child1EntityId = customsDocument.SerialNum;
+                                                if (mode == "INSERT_UPDATE_DELETE")
                                                 {
                                                     int int1, int2;
                                                     if (int.TryParse(customsDocument.SerialNum, out int1))
@@ -368,7 +369,7 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                                         {
                                             if (this._MyDeclarationPM.SupplierInvoices != null && this._MyDeclarationPM.SupplierInvoices.Count() > 0)
                                             {
-                                                var sequenceNumeric = this._MyDeclarationPM.SupplierInvoices.Where(d => d.UnfInvoiceCounterKey == customsDocument.SerialNum).FirstOrDefault().SequenceNumeric.ToString();
+                                                var sequenceNumeric = this._MyDeclarationPM.SupplierInvoices.Where(d => d.UnfInvoiceCounterKey == customsDocument.UNFINVOICEKEY).FirstOrDefault().SequenceNumeric.ToString();
                                                 customsDocumentPointerPM = customsDocumentPointerListPM.FirstOrDefault();
                                                 if (customsDocumentPointerPM.Child1EntityCode == "SupplierInvoice" && customsDocumentPointerPM.Child1EntityId != sequenceNumeric)
                                                 {
