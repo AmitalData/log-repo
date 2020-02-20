@@ -62,7 +62,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             var pre_q = from j_lines in this.repository.GetAll(tenant)
                         .Where(rec => rec.ExternalReconcileNumber != null && rec.ExternalReconcileNumber != ""
                          && rec.ExternalReconcileNumber != "0"
-                         && rec.ExternalReconcileNumber != "0.00" && rec.ExternalReconcileNumber != "000000000000000"
+                         && rec.ExternalReconcileNumber != "0.00" && rec.ExternalReconcileNumber != "000000000000000" && rec.ExternalReconcileNumber != "99999999"
                          && rec.ExternalReconcileNumber.CompareTo(fromExtNum) >= 0
                          && rec.ExternalReconcileNumber.CompareTo(toExtNum) <= 0)
                         select j_lines;
@@ -96,7 +96,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             var pre_q = this.repository.GetAll(tenant)
                         .Where(rec => rec.ExternalReconcileNumber != null && rec.ExternalReconcileNumber != ""
                          && rec.ExternalReconcileNumber != "0"
-                         && rec.ExternalReconcileNumber != "0.00" && rec.ExternalReconcileNumber != "000000000000000");
+                         && rec.ExternalReconcileNumber != "0.00" && rec.ExternalReconcileNumber != "000000000000000" && rec.ExternalReconcileNumber != "99999999");
             if (pre_q != null)
             {
                 rv = pre_q.Max(i => i.ExternalReconcileNumber);
