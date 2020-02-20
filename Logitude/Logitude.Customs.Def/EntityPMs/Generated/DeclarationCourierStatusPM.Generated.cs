@@ -1320,8 +1320,8 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-   }
-	  	  private string sortedImporterCode ;
+  
+	  	private string sortedImporterCode ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
