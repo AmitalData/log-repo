@@ -5,6 +5,8 @@ import { EntityArgs } from '../../../Infrastructure/DataContracts/EntityArgs';
 import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator';
 import { InterestBasesTypePM } from '../../EntityPMs/InterestBasesTypePM';
 import { InterestReportPM } from '../../EntityPMs/InterestReportPM';
+import { GeneralPrintHelper } from '../../../Infrastructure/Helpers/GeneralPrintHelper';
+import { ServiceLocator } from '../../../Infrastructure/Locators/ServiceLocator';
 
 export class InterestReportMenuButtonsHandler {
     public EntityPM: InterestReportPM;
@@ -44,8 +46,7 @@ export class InterestReportMenuButtonsHandler {
             switch (menuButton.EventCode) {
                 case "InterestPrint":
                     {
-                        //this.EntityPM.InActive = true;
-                        this.entityArgs.EditComponent.SaveChanges();
+                        this.PrintInterestReport();
                         break;
                     }
             }
@@ -53,6 +54,14 @@ export class InterestReportMenuButtonsHandler {
         else {
             this.entityArgs.EditComponent.ValidationErrorsList = [];
             this.entityArgs.EditComponent.ValidationErrorsList = errors;
+        }
+    }
+
+    private PrintInterestReport() {
+        var myPrintHelper = new GeneralPrintHelper(this.ObjectTableName, "ITDT", this.EntityPM.Id, null, this.EntityPM.ReportNumber, null);
+        if (myPrintHelper.IsLoadPrintControl) {
+            ServiceLocator.SendTotangoUserActivity(this.ObjectTableName, "InterestReport");
+            myPrintHelper.ShowPrintControl();
         }
     }
 }

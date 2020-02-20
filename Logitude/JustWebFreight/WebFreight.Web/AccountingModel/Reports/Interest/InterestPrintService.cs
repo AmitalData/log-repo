@@ -20,6 +20,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Xml.Serialization;
 using WebFreight.Web.AccountingModel.DomainServices;
+using WebFreight.Web.App_Code.AngularJS_App_Code.Generated;
 using WebFreight.Web.Helpers;
  namespace WebFreight.Web.AccountingModel.Reports.Interest
 {
@@ -41,7 +42,11 @@ using WebFreight.Web.Helpers;
                 StandardInterestPercentage = d.StandardInterestPercentage,
                 ExceptionalInterestPercentage = d.ExceptionalInterestPercentage,
                 CreditInterestPercentage = d.CreditInterestPercentage,
-                InterestTransactionList = interestTransactionQuery.GetAllInterestTransactionByDate(entityId, d.FromDate, tenant).interestTransactionLists.Select (a =>
+                CalculationDetails = d.CalculationDetails,
+                InterestTransactionsWithTotal = GetCurrentInterestTransactionsWithTotal(interestTransactionQuery.GetAllInterestTransactionByDate(entityId, d.FromDate, tenant)),
+                TotalInterest = d.CalculatedCreditInterestAmount + d.CalculatedExcepInterestAmount + d.CalculatedStandInterestAmount,
+                TotalLocalAmount = GetCurrentInterestTransactionsWithTotal(interestTransactionQuery.GetAllInterestTransactionByDate(entityId, d.FromDate, tenant)).TotalLocalAmount,
+                InterestTransactionList = GetCurrentInterestTransactionsWithTotal(interestTransactionQuery.GetAllInterestTransactionByDate(entityId, d.FromDate, tenant)).interestTransactionLists.Select (a =>
                 new InterestTransactionProvider
                 {
                     EntityType = a.InterestEntityTypeCode,
@@ -61,6 +66,17 @@ using WebFreight.Web.Helpers;
             InterestReportDP.InterestReportLinesByDateList = InterestReportLines;
 
             return InterestReportDP;
+        }
+
+        private InterestTransactionsWithTotal CurrentInterestTransactionsWithTotal;
+        public InterestTransactionsWithTotal GetCurrentInterestTransactionsWithTotal(InterestTransactionsWithTotal interestTransactionsWithTotal=null)
+        {
+            if (CurrentInterestTransactionsWithTotal == null  && interestTransactionsWithTotal!=null)
+            {
+                CurrentInterestTransactionsWithTotal = new InterestTransactionsWithTotal();
+                CurrentInterestTransactionsWithTotal = interestTransactionsWithTotal;
+            }
+            return CurrentInterestTransactionsWithTotal;
         }
 
     }

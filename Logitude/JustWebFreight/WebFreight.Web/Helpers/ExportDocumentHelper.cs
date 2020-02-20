@@ -511,12 +511,12 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
 
                     break;
 
-                case "MLDT":
+                case "ITDT":
                     {
                         InterestPrintService service = new InterestPrintService();
                         InterestDataProvider InterestReportDP = service.LoadDataProvider(entityId, tenant);
                         theT2 = System.DateTime.Now.Ticks;
-                        StiBusinessObject currentBusinessObject = new StiBusinessObject() { Category = "ITDT", Name = "InterestPrintService", BusinessObjectValue = InterestReportDP };
+                        StiBusinessObject currentBusinessObject = new StiBusinessObject() { Category = "ITDT", Name = "InterestDataProvider", BusinessObjectValue = InterestReportDP };
                         report = LoadandRender(defaulttemplate, currentBusinessObject, tenant);
 
                     }
