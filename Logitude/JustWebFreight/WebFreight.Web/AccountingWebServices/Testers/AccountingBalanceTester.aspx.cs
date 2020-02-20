@@ -809,8 +809,8 @@ namespace WebFreight.Web.AccountingWebServices.Testers
 
                 var agingReport = new AgingReportService(myAgingReportParam);
                 var xml = agingReport.RunReport();
-                var MyPeriodList = agingReport.MyPeriodList;
-                var xmlMyPeriodList = LogitudeXmlSerializer.SerializeObjectToXmlString(agingReport.MyPeriodList);
+                //var MyPeriodList = agingReport.MyPeriodList;
+                var xmlMyPeriodList = LogitudeXmlSerializer.SerializeObjectToXmlString(agingReport.MyPeriodExtendedList);
                 _LabelResult.Text = xmlMyPeriodList;
 
                 ReloadGrid(System.Text.Encoding.UTF8.GetBytes(xml));
