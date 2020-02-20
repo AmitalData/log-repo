@@ -47,6 +47,7 @@ namespace Logitude.Accounting.BL.Utils
 
         public void RunReconciliationAfterConversion(ReconciliationAfterConversionArg reconciliationAfterConversionArg)
         {
+            int SUB_BATCH_SIZE = 100;
             string returnedMessage = "";
             int tenant = reconciliationAfterConversionArg.Tenant;
             string fromExtNum = reconciliationAfterConversionArg.FromExtNum;
@@ -60,12 +61,12 @@ namespace Logitude.Accounting.BL.Utils
 
             long fromExt_long = Convert.ToInt64(fromExtNum);
             long toExt_long = Convert.ToInt64(toExtNum);
-            if (toExt_long >= 1000)
+            if (toExt_long >= 10 * SUB_BATCH_SIZE)
             {
                 IAccountingContext context = AccountingContext.GetContext(tenant);
                 JournalLineQueryService journalLineQueryService = new JournalLineQueryService(context);
                 string maxExt = journalLineQueryService.GetMaxExternalRecoNum(tenant);
-                if (!String.IsNullOrEmpty(maxExt))
+                if (!String.IsNullOrEmpty(maxExt) && toExt_long > Convert.ToInt64(maxExt))
                 {
                     toExtNum = maxExt;
                     toExt_long = Convert.ToInt64(maxExt);
@@ -75,7 +76,7 @@ namespace Logitude.Accounting.BL.Utils
             for (long lower = fromExt_long; ;)
             {
 
-                long upper = lower + 99;
+                long upper = lower + SUB_BATCH_SIZE - 1;
                 if (upper > toExt_long)
                 {
                     upper = toExt_long;
@@ -118,13 +119,13 @@ namespace Logitude.Accounting.BL.Utils
                 }
 
 
-                if (lower == toExt_long)
+                if (lower + SUB_BATCH_SIZE - 1 >= toExt_long)
                 {
                     break;
                 }
                 else
                 {
-                    lower += 100;
+                    lower += SUB_BATCH_SIZE;
                     if (lower > toExt_long)
                     {
                         lower = toExt_long;
@@ -219,7 +220,7 @@ namespace Logitude.Accounting.BL.Utils
                     }
                 });
                 //     scope.Complete();
-                _ResponseText = $"Good: {goodList.Count},  Bad: {badList.Count},   Made: {madeList.Count}, No Lines: {String.Join(", ", _NoLines.ToArray())}, Wrong Action: {String.Join(", ", _WrongAction.ToArray())}, Wrong Sum: {String.Join(", ", _WrongSum.ToArray())}, Wrong Sum To Match: {String.Join(", ", _WrongSumToMatch.ToArray())}";
+                _ResponseText += $"Good: {goodList.Count},  Bad: {badList.Count},   Made: {madeList.Count}, No Lines: {String.Join(", ", _NoLines.ToArray())}, Wrong Action: {String.Join(", ", _WrongAction.ToArray())}, Wrong Sum: {String.Join(", ", _WrongSum.ToArray())}, Wrong Sum To Match: {String.Join(", ", _WrongSumToMatch.ToArray())}";
             }
             catch (Exception e)
             {
