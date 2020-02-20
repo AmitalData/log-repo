@@ -63,8 +63,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         }
         private  void SetTaxReportLineStatusCodeAndLineTypeCode(TaxReportLinePM entityPM)
         {
-            TaxReportQueryService taxReportQueryService = new TaxReportQueryService(entityPM.Tenant);
-            TaxReportPM taxReport = taxReportQueryService.GetSingle(entityPM.TaxReportId, false, false);
+       
             TenantQuery tenantQuery = new TenantQuery(entityPM.Tenant);           
             string vatNumber = tenantQuery.GetTenantVatNumber(entityPM.Tenant);         
             entityPM.StatusCode = "6";
@@ -74,7 +73,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             if (entityPM.OutputOrInput == "O")
             {
                
-                if(entityPM.ReferenceDate.Value.Month != taxReport.TaxReportMonth.Month)
+                if(entityPM.ReferenceDate.Value.Month != entityPM.TaxReportDate.Month)
                 {
                     entityPM.StatusCode = "7";
                 }

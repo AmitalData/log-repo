@@ -133,7 +133,7 @@ namespace Logitude.Accounting.BL.CoreBL
                                 LastUpdateDateTime = DateTime.Now,
                                 UpdatedByUserId = taxReport.UpdatedByUserId,
                                 Tenant = tenant,
-
+                                TaxReportDate=taxReport.TaxReportMonth
 
                             };
                             Simplog.Data.CommonDataModel.EntityPOCOs.Card card = cards.Where(d => d.Id == invoice.BillToId).FirstOrDefault();
@@ -267,7 +267,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     UpdatedByUserId = taxReport.UpdatedByUserId,
                     Tenant = tenant,
                     TransmitStatusCode = transmitStatusCode,
-
+                    TaxReportDate = taxReport.TaxReportMonth
 
                 };
 
@@ -487,11 +487,12 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 };
 
-
+               
                 IInfrastructureContext MyContext = InfrastructureContext.GetContext(tenant);
                 BatchTaskExecutionUpdateService bteUpdateService = new BatchTaskExecutionUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
                 bteUpdateService.Update(taskExe, true);
 
+               
                 // 2- Send to queue
                 IQueueService queueservice = new DbQueueService();
                 queueservice.InitializeQueue("batchtaskexecutionqueue", 0);
@@ -514,6 +515,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 //get tax report
                 TaxReportQueryService reportQS = new TaxReportQueryService(tenant);
                 TaxReportPM taxReport = reportQS.GetSingle(taxReportId, false, false);
+             
                 IAccountingContext MyContext = AccountingContext.GetContext(tenant);
 
                 //DECLARATIONS
@@ -673,6 +675,8 @@ namespace Logitude.Accounting.BL.CoreBL
                 return docOut;
             }
         }
+
+     
         public static void CalculateReportTotals(TaxReportPM taxReportPM, List<TaxReportLinePM> lines)
         {
             if (lines.Count > 0)
