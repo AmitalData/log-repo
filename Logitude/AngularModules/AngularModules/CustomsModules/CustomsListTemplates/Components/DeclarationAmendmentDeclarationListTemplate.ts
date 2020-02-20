@@ -99,24 +99,20 @@ export class DeclarationAmendmentListTemplate {
     //}
 
 
-    //openNewDeclaration(id: string) {
-    //     SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
-    //        .then(cmpRef => {
-    //            cmpRef.instance.ComponentRef = cmpRef;
-    //            cmpRef.instance.Run({ EntityId: id, ObjectTableName: 'Customs.Declaration', BackButtonLabel: "תיקוני הצהרה" });
-    //            cmpRef.instance.BackCompleted.subscribe(($event: any) => {
-    //                if (SessionLocator.SelectedSession != null && SessionLocator.SelectedSession.CurrentWindow != null) {
-    //                    SessionLocator.SelectedSession.CurrentWindow.SuppressBusyIndicator = false;
-    //                    //setTimeout(() => {
-    //                    //    this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
-    //                    //}, 10);
-    //                    //   this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-              
+    openNewDeclaration(id: string) {
+         SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+            .then(cmpRef => {
+                cmpRef.instance.ComponentRef = cmpRef;
+                cmpRef.instance.Run({ EntityId: id, ObjectTableName: 'Customs.Declaration', BackButtonLabel: "תיקוני הצהרה" });
+                cmpRef.instance.BackCompleted.subscribe(($event: any) => {
+                    if (SessionLocator.SelectedSession != null && SessionLocator.SelectedSession.CurrentWindow != null) {
+                        SessionLocator.SelectedSession.CurrentWindow.SuppressBusyIndicator = false;
+          
                        
-    //                }
-    //            });
+                    }
+                });
 
-    //        });
-    //}
+            });
+   }
 
 }

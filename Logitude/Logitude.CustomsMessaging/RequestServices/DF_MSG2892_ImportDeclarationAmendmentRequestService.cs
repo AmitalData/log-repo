@@ -319,9 +319,13 @@ namespace Logitude.CustomsMessaging.RequestServices
                 if (!string.IsNullOrWhiteSpace(customsDocumentPM.CustomsDocId))  
                 {
                     var attachment = new Attachment();
-                    attachment.attachmentID = customsDocumentPM.ExternalAttachmentId;
-                    attachment.IsAttachment = "False";
-                     attachments.Add(attachment);
+                    attachment.externalAttachmentID = customsDocumentPM.ExternalAttachmentId;
+                    attachment.IsAttachment = "false";
+                    attachment.keywords = "test";
+                    attachment.fileName = "test";
+
+                    attachment.documentType = customsDocumentPM.DocumentTypeCode;
+                    attachments.Add(attachment);
                 }
             }
             return attachments.ToArray();
