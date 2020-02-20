@@ -41,7 +41,7 @@
                            >
 
         <!-- Request -->
-        <div class="class-request-content">
+        <div class="class-request-content" *ngIf="IsReady">
             <table *ngIf="IsReady" style="width: 750px;height: 400px; padding-top: 10px;">
 
                 <tr class="FormFieldRow" *ngIf="IsDisplayOnly">
@@ -179,11 +179,24 @@
                                                [IsImporterDetails]="true"
                                                [ItemHeight]="36"
                                                [HideIcons]="true"
-                                               [IsDisabled] ="IsDisplayOnly"
+                                               [IsDisabled]="IsDisplayOnly"
                                                [HasFilters]="true"
                                                (LostFocus)="ImporterNumberLostFocus($event)"
                                                (TextChanged)="ImporterNumberTextChanged($event)"
                                                (ItemClicked)="ImporterNumberClicked($event)"></SearchBox>
+                                </td>
+
+
+                                <td style="width: 90px;">
+                                    <LogLabel [ObjectFieldName]="'StatusName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td style="width: 120px;">
+                                    <LogTextBox [ObjectFieldName]="'StatusName'"
+                                                [InputType]="text"
+                                                [DataContext]="DataContext"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [HideColumns]="true"
+                                                [Text]="StatusName"></LogTextBox>
                                 </td>
                             </tr>
 

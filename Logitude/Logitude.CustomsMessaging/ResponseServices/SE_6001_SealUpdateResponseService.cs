@@ -16,6 +16,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
 {
     public class SE_6001_SealUpdateResponseService : ResponseServiceBase<INF_MSG_GenericResponseData, INF_MSG_Generic, CargoSealsRequestParams>
     {
+
+
+        public override void OnRequestFail(INF_MSG_Generic customResponse, CargoSealsRequestParams requestParams)
+        {
+            base.OnRequestFail(customResponse, requestParams);
+        }
+
         public override INF_MSG_GenericResponseData GetResponse(INF_MSG_Generic customResponse, CargoSealsRequestParams requestParams)
         {
             return this.MyResponseData;

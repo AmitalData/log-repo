@@ -91,7 +91,7 @@ export class CargoSealsQueryComponent
             //this.UIProperties.SetRequired("ContainerNumber", this.ObjectTableName, true);
             //this.UIProperties.SetRequired("ImporterNumber", this.ObjectTableName, true);
         }
-
+   
         if (this.ResponseData) {
             this.IsResponseMessageVisibility = true;
             if (this.RequestParams.CargoSealList != null) {
@@ -100,6 +100,7 @@ export class CargoSealsQueryComponent
                 });
             }
         }
+ 
     }
 
     SetMenuArg(menuArg) {
@@ -107,8 +108,8 @@ export class CargoSealsQueryComponent
         this._IsFromDeclaration = true;
         this.CustomFileNo = menuArg.CustomFileNo;
         this.DeclarationId = menuArg.DeclarationId;
-
         this.UIProperties.SetEnabled("CustomFileNo", null, false);
+        this.UIProperties.SetEnabled("StatusName", this.ObjectTableName, false);
 
         this._CargoSealIdentifierPMService.get(menuArg.CargoSealIdentifierID).subscribe(response => {
             var result = response.Result;
@@ -124,6 +125,7 @@ export class CargoSealsQueryComponent
                 this.CargoIdentifierKey1 = this.CurrentEntity.CargoIdentifierKey1;
                 this.CargoIdentifierKey2 = this.CurrentEntity.CargoIdentifierKey2;
                 this.CargoIdentifierKey3 = this.CurrentEntity.CargoIdentifierKey3;
+                this.StatusName = this.CurrentEntity.StatusName;
                 if (this.CurrentEntity.CargoSeals != null) {
                     this.CurrentEntity.CargoSeals.forEach((item: CargoSealPM) => {
                         this.CargoSealObslist.Insert(new CargoSealComponent(item));
@@ -138,6 +140,9 @@ export class CargoSealsQueryComponent
                     this.SetFieldsEnabled(false);
                 }
             }
+            if (this.CustomFileNo != null)
+                this.CustomFileNoTextChanged(this.CustomFileNo);
+          
         });
 
     }
@@ -252,6 +257,13 @@ export class CargoSealsQueryComponent
     set ContainerNumber(value: string) {
         if (this.RequestParams.ContainerNumber != value) {
             this.RequestParams.ContainerNumber = value;
+        }
+    }
+
+    get StatusName() { return this.RequestParams.StatusName; }
+    set StatusName(value: string) {
+        if (this.RequestParams.StatusName != value) {
+            this.RequestParams.StatusName = value;
         }
     }
     get CargoSealIdentifierId() { return this.RequestParams.CargoSealIdentifierId; }
@@ -527,6 +539,7 @@ export class CargoSealsQueryComponent
                             .subscribe((myResponse: ServiceResponse) => {
                                 this.CurrentSession.StopBusyIndicator();
                                 this.FetchConsignment(myResponse, false);
+ 
                             });
                     }
 
