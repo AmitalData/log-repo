@@ -140,7 +140,7 @@ export class CargoSealsQueryComponent
                     this.SetFieldsEnabled(false);
                 }
             }
-            if (this.CustomFileNo != null)
+            if (this.CustomFileNo != null && this.CurrentEntity.Status!= null)
                 this.CustomFileNoTextChanged(this.CustomFileNo);
           
         });
@@ -319,38 +319,18 @@ export class CargoSealsQueryComponent
     FillErrors() {
 
         var errors: string[] = [];
-        //Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
-        this.ValidationErrorsList = errors;
+         this.ValidationErrorsList = errors;
 
         if (AppTool.IsNullOrEmpty(this.CargoIdentifierTypeCode)) {
             var msg = TextCodeTranslator.Translate("Customs.SpecialActivityRequest.F.CargoIdentifierTypeCode");
             this.ValidationErrorsList.push(msg);
         }
-
-        //if (AppTool.IsNullOrEmpty(this.CargoIdentifierKey1)) {
-        //    var msg = TextCodeTranslator.Translate("Customs.SpecialActivityRequest.F.CargoIdentifierKey1Mandatory");
-        //    this.ValidationErrorsList.push(msg);
-        //}
-
-        //if (AppTool.IsNullOrEmpty(this.CargoIdentifierKey2)) {
-        //    var msg = TextCodeTranslator.Translate("Customs.SpecialActivityRequest.F.CargoIdentifierKey2Mandatory");
-        //    this.ValidationErrorsList.push(msg);
-        //}
-
-        //if (AppTool.IsNullOrEmpty(this.CargoIdentifierKey3) && this.CargoIdentifierTypeCode!="11")  {
-        //    var msg = TextCodeTranslator.Translate("Customs.CargoSealsQuery.F.CargoIdentifierKey3Mandatory");
-        //    this.ValidationErrorsList.push(msg);
-        //}
-
+ 
         if (AppTool.IsNullOrEmpty(this.CargoRowNumber)) {
             var msg = TextCodeTranslator.Translate("Customs.SpecialActivityRequest.F.CargoRowNumbeMandatory");
             this.ValidationErrorsList.push(msg);
         }
-
-        //if (AppTool.IsNullOrEmpty(this.ContainerNumber)) {
-        //    var msg = TextCodeTranslator.Translate("Customs.CargoSealsQuery.F.ContainerNumberMandatory");
-        //    this.ValidationErrorsList.push(msg);
-        //}
+ 
 
         if (AppTool.IsNullOrEmpty(this.UpdateDate)) {
             var msg = TextCodeTranslator.Translate("Customs.CargoSealsQuery.F.UpdateDateMandatory");
@@ -443,14 +423,12 @@ export class CargoSealsQueryComponent
         this._DeclarationWebService.PostSendCargoSealsRequest(currRequestParams)
             .subscribe((myServiceResponse: ServiceResponse) => {
                 this._IsNew = false;
-              //  this.CurrentEntity.CargoSeals = null;
-            });
+             });
     }
 
 
     RefreshEntity() {
-        //SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.ResetMustRefresh();
-        SessionLocator.SelectedSession.CurrentEditComponent.ReloadEntityPM();
+         SessionLocator.SelectedSession.CurrentEditComponent.ReloadEntityPM();
     }
     OnCustomSendOptionsButtonClick(customSendOptionsArgs: CustomSendOptionsArgs) {
 
@@ -497,20 +475,15 @@ export class CargoSealsQueryComponent
              this.CurrentEntity.CargoIdentifierKey2 = this.CargoIdentifierKey2;
               this.CurrentEntity.CargoIdentifierKey3 = this.CargoIdentifierKey3;
  
-             //this.CurrentEntity.CargoSeals.splice(0, this.CurrentEntity.CargoSeals.length-1)
-             if (this.CargoSealObslist != null) {
+              if (this.CargoSealObslist != null) {
                  this.CargoSealObslist.Collection.forEach((item: CargoSealComponent) => {
                       
                      if (this.CurrentEntity.CargoSeals.filter(x => x.SealNumber == item.SealNumber).length == 0) {
                          item.entityPM.ChangeSetOp = "1";
                          this.CurrentEntity.AddCargoSeal(item.entityPM);
-                    //     this.CurrentEntity.CargoSeals.filter(x => x.SealNumber == item.SealNumber)[0] = item.entityPM;
-                     }
+                      }
                      
-                     //else {
-                     //    item.entityPM.ChangeSetOp = "1"
-                     //    this.CurrentEntity.AddCargoSeal(item.entityPM);
-                     //}
+          
                  });
              }
             this._CargoSealIdentifierPMService.update(this.CurrentEntity).subscribe(response => {
