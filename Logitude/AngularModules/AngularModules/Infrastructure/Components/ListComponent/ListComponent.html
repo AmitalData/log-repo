@@ -264,7 +264,7 @@
                         </td>
 
                         <td style="vertical-align: middle;">
-                            <QueryList *ngIf="ShowViews" [ItemsSource]="Queries" [UserItemSource]="UserQueries" [Binding]="'NameTextCodeCode'" [onSelectedQueryChangeEvent]="onSelectedQueryChangeEvent" [SelectedItem]="SelectedQuery" [ObjectTableName]="ObjectTableName" (itemSelectedEvent)="QueryValueChanged($event)" [QueryListSourceChanged]="QueryListSourceChanged" (QueriesChangedEvent)="QueriesChangedEvent($event)" [LoadResourceCompleted]="LoadResourceCompleted" [pubSubAdvanceQueryFiltersService]="AdvanceQFiltersService" (NewViewClosedEvent)="NewViewClosedEvent($event)"></QueryList>
+                            <QueryList *ngIf="ShowViews && ResourcesLoaded" [ItemsSource]="Queries" [UserItemSource]="UserQueries" [Binding]="'NameTextCodeCode'" [onSelectedQueryChangeEvent]="onSelectedQueryChangeEvent" [SelectedItem]="SelectedQuery" [ObjectTableName]="ObjectTableName" (itemSelectedEvent)="QueryValueChanged($event)" [QueryListSourceChanged]="QueryListSourceChanged" (QueriesChangedEvent)="QueriesChangedEvent($event)" [LoadResourceCompleted]="LoadResourceCompleted" [pubSubAdvanceQueryFiltersService]="AdvanceQFiltersService" (NewViewClosedEvent)="NewViewClosedEvent($event)"></QueryList>
 
 
 
