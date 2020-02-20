@@ -113,7 +113,8 @@ namespace Logitude.Accounting.BL.CoreBL
                     JournalActionTypeListGetByCode(journalLinePM);
                 if (action != null)
                 {
-                    journalLinePM.ActionCode = action.Id;
+                    journalLinePM.ActionId = action.Id;
+                    journalLinePM.ActionCode = action.Code;
                     journalLinePM.ActionName = action.EnglishName;
                 }
             }
