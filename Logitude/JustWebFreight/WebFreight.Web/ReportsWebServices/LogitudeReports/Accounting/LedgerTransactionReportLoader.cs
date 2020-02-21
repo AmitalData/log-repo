@@ -32,6 +32,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         private int tenant;
         private IAccountingContext accountingContext;
         LedgerTransactionsDataProvider transactionsDataProvider;
+        private GLAccountPM glaccountPM;
+        private List<GLAccountList> transactionsAccounts = new List<GLAccountList>();
 
         public LedgerTransactionReportLoader(int _tenant)
         {
@@ -47,6 +49,11 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
             CardIndexReportService cardIndexReportService = new CardIndexReportService(accountingContext, BuildReportParameters());
             cardIndexReportService.Run();
+
+            glaccountPM = GetGLAccountById(GetFilterValue<string>("GLAccountId"));
+
+
+
 
             return BuildDataProvider(cardIndexReportService);
         }
@@ -175,7 +182,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             Currency currency = currencyRepo.GetSingleCurrency(currencyId, tenant);
             return currency;
         }
-
         private void FillLedgerTransactions(CardIndexReportService cardIndexReportService)
         {
             List<LedgerTransactionList> transactions = new List<LedgerTransactionList>();
@@ -187,18 +193,46 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 transactions.AddRange(collection);
             });
 
-            transactionsDataProvider.Transactions = new List<ReportLedgerTransaction>();
 
-            GLAccountPM glaccountPM = GetGLAccountById(GetFilterValue<string>("GLAccountId"));
+            if (GetFilterValue<string>("ChartOfAccountId") != null)
+                transactionsAccounts = GetGLAccountsInsideTransactions(transactions);
+
+            transactionsDataProvider.Transactions = new List<ReportLedgerTransaction>();
 
             foreach (LedgerTransactionList transaction in transactions)
             {
                 ReportLedgerTransaction reportTransaction = GetReportNewLedgerTransaction(transaction);
-
-                if (glaccountPM != null)
-                    reportTransaction.GLAccountRecoMethodCode = glaccountPM.ReconcileMethodCode;
+                FillReportTransactionGLAccountFields(glaccountPM, transactionsAccounts, reportTransaction);
 
                 transactionsDataProvider.Transactions.Add(reportTransaction);
+            }
+        }
+
+        private List<GLAccountList> GetGLAccountsInsideTransactions(List<LedgerTransactionList> transactions)
+        {
+            List<string> accountsIds = transactions.GroupBy(d => d.AccountId).Select(d => d.Key).ToList();
+            GLAccountListQueryService gLAccountListQueryService = new GLAccountListQueryService(accountingContext);
+            var glaccounts = gLAccountListQueryService.GetByIds(accountsIds, tenant).ToList();
+            return glaccounts;
+        }
+
+        private void FillReportTransactionGLAccountFields(GLAccountPM glaccountPM, List<GLAccountList> accounts, ReportLedgerTransaction reportTransaction)
+        {
+            if (glaccountPM != null)
+            {
+                reportTransaction.GLAccountRecoMethodCode = glaccountPM.ReconcileMethodCode;
+                reportTransaction.AccountNumber = glaccountPM.DisplayNumber;
+                reportTransaction.AccountEnglishName = glaccountPM.EnglishName;
+                reportTransaction.AccountLocalName = glaccountPM.LocalName;
+            }
+            else if (GetFilterValue<string>("ChartOfAccountId") != null)
+            {
+                GLAccountList account = accounts.FirstOrDefault(d => d.Id == reportTransaction.AccountId);
+                reportTransaction.GLAccountRecoMethodCode = account.ReconcileMethodCode;
+                reportTransaction.AccountNumber = account.DisplayNumber;
+                reportTransaction.AccountEnglishName = account.EnglishName;
+                reportTransaction.AccountLocalName = account.LocalName;
+
             }
         }
 

@@ -38,6 +38,9 @@ namespace WebFreight.Web.DataProviders
 
     public class ReportLedgerTransaction
     {
+        public string AccountEnglishName { get; set; }
+        public string AccountLocalName { get; set; }
+        public string AccountNumber { get; set; }
         public string Id { get; set; }
         public int Tenant { get; set; }
         public string JournalId { get; set; }
