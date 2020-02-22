@@ -36,7 +36,6 @@ export class MainReportSchedulerComponent implements OnInit {
         if (this.timerToken) {
             clearTimeout(this.timerToken);
         }
-
         if (this.Retries < 20) {
             this.timerToken = setTimeout(() => this.RunComponent(), 1);
         }
@@ -52,16 +51,12 @@ export class MainReportSchedulerComponent implements OnInit {
                 this.SetSelectedItem(tabCode);
             }
         }
-        else {
-            this.RunComponentTimer();
-        }
+        else this.RunComponentTimer();
     }
 
     SetSelectedItem(tabCode: string) {
         this.SelectedTabCode = tabCode;
-
     }
-
 
     private selectedTabCode: string;
     get SelectedTabCode() { return this.selectedTabCode; }
@@ -94,11 +89,7 @@ export class MainReportSchedulerComponent implements OnInit {
     }
 
     CloseButtonClicked() {
+        this.PageChild_RETASK.CloseButtonClicked();
         this.CurrentSession.CloseCurrentWindow();
     }
-
-    NextButtonClicked() {
-        this.ShowPreviewReport = true;
-    }
-
 }

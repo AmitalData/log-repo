@@ -6,9 +6,11 @@ import { TasksSchedulerPM } from '../../../Infrastructure/EntityPMs/TasksSchedul
 import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { AppTool } from '../../../Infrastructure/Tools';
 import { EntityListService } from '../../../Infrastructure/Services/EntityListService';
-import { ReportSchedulerDetails, SchedulerDetails } from '../../DataContracts/SchedulerDetails';
 import { ReportGroupList } from '../../EntityLists/ReportGroupList';
 import { ReportList } from '../../EntityLists/ReportList';
+import { QueryFilterItem } from '../Filters/QueryFilterItem';
+import { List } from '../../../Infrastructure/DataContracts/Dashboard/List';
+import { SchedulerDetails, ReportSchedulerDetails } from '../../../Infrastructure/DataContracts/SchedulerDetails';
 
 @Component({
     moduleId: module.id,
@@ -26,29 +28,37 @@ export class TaskReportSchedulerComponent implements OnInit {
     public ReportList: ReportList;
     filterAgrs: ApiQueryFilters;
     SchedulerType: string = "Report";
-
+    EditReportSchedulerEventAlreadyExist: boolean = false;
     @Output() TasksHistoryCustomColumnsReady = new EventEmitter();
     @Output() TasksCustomColumnsReady = new EventEmitter();
     @Output() MenuHeaderchangeevent = new EventEmitter();
     @Output() MenuHeaderchangeeventTasks = new EventEmitter();
 
     constructor(private _entityListService: EntityListService) {
+        this.LoadTaskHistories();
+        this.LoadTaskHistories();
+        this.CurrentSession.SessionEvent.subscribe(($event: any) => {
+            if ($event && $event.Name == "EditReportScheduler") {
+                if (!this.EditReportSchedulerEventAlreadyExist) {
+                    this.EditReportSchedulerEventAlreadyExist = true;
+                    this.EditTaskClicked($event.DataContext);
+                }
+            }
+        });
     }
 
     ngOnInit() {
-        this.LoadTaskHistories();
-        this.LoadTaskSchedulers();
-        this.CurrentSession.SessionEvent.subscribe(($event: any) => {
-            if ($event.Name == "ReloadTasks") {
-                this.RefreshButtonClicked();
-            } 
-        });
+        this.RefreshButtonClicked();
+        //this.LoadTaskSchedulers();
+        //this.LoadTaskHistories();
+        //this.LoadTaskHistories();
     }
+
+
 
     SetWindowArgs(windowArgs) {
         this.ReportGroupList = windowArgs.ReportGroupList;
         this.ReportList = windowArgs.ReportList;
-        this.LoadTaskHistories();
     }
 
     public IsHistoryGridVsisible = false;
@@ -85,9 +95,26 @@ export class TaskReportSchedulerComponent implements OnInit {
         logWindow.WindowArgs = windowArgs;
         logWindow.Show('./Report/Components/Scheduler/AddEditReportSchedulerComponent');
         logWindow.WindowClosed.subscribe(closed => {
-            if (closed) {
-                this.RefreshButtonClicked();
-            }
+            this.EditReportSchedulerEventAlreadyExist = false;
+            this.RefreshButtonClicked();
+        });
+    }
+
+    EditTaskClicked(DataContext) {
+        var windowArgs: any = {};
+        windowArgs.ReportGroupList = this.ReportGroupList;
+        windowArgs.ReportList = this.ReportList;
+
+        var logWindow = new LogitudeWindow();
+        logWindow.DataContext = DataContext;
+        logWindow.WindowArgs = windowArgs;
+        logWindow.Title = "Report Scheduler Details";
+        logWindow.Width = 900;
+        logWindow.Height = 820;
+        logWindow.Show('./Report/Components/Scheduler/AddEditReportSchedulerComponent');
+        logWindow.WindowClosed.subscribe(closed => {
+            this.EditReportSchedulerEventAlreadyExist = false;
+            this.RefreshButtonClicked();
         });
     }
 
@@ -132,10 +159,11 @@ export class TaskReportSchedulerComponent implements OnInit {
 
     RefreshButtonClicked() {
         this.LoadTaskSchedulers();
+        this.LoadTaskHistories();
     }
 
     CloseButtonClicked() {
-        this.CurrentSession.CloseCurrentWindow();
+        this.EditReportSchedulerEventAlreadyExist = true;
     }
 
     BuildTasksColumns() {
@@ -164,7 +192,7 @@ export class TaskReportSchedulerComponent implements OnInit {
             DataTypeCode: 'String',
             Display: 'Last Run Date',
             Styles: { width: '160px' },
-            HtmlListComponentName: 'SchedulerDateListTemplate',
+            HtmlListComponentName: 'ReportSchedulerDateListTemplate',
             HtmlListComponentUrl: '../Report/Components/Scheduler/ListTemplates/ReportSchedulerDateListTemplate',
             IsCustomTemplate: true,
             ServerSideSortable: true,
@@ -176,23 +204,19 @@ export class TaskReportSchedulerComponent implements OnInit {
             DataTypeCode: 'Boolean',
             Display: 'In Active',
             Styles: { width: '90px' },
-            HtmlListComponentName: 'SchedulerDateListTemplate',
+            HtmlListComponentName: 'ReportSchedulerDateListTemplate',
             HtmlListComponentUrl: '../Report/Components/Scheduler/ListTemplates/ReportSchedulerDateListTemplate',
             IsCustomTemplate: true,
             ServerSideSortable: true,
             SortByName: "InActive"
         });
 
-        var test: any = [];
-        test.ReportGroupList = this.ReportGroupList;
-        test.ReportList = this.ReportList;
         this.Taskscolumns.push({
             FieldName: "EditTaskButton;" + this.SchedulerType,
-            AdditionalData: this.ReportGroupList,
             DataTypeCode: 'String',
             Display: '',
             Styles: { width: '30px' },
-            HtmlListComponentName: 'SchedulerDateListTemplate',
+            HtmlListComponentName: 'ReportSchedulerDateListTemplate',
             HtmlListComponentUrl: '../Report/Components/Scheduler/ListTemplates/ReportSchedulerDateListTemplate',
             IsCustomTemplate: true,
             ServerSideSortable: false
@@ -204,34 +228,35 @@ export class TaskReportSchedulerComponent implements OnInit {
     BuildTasksHistoryColumns() {
         this.TasksHistoryColumns = [];
         this.TasksHistoryColumns.push({
-                FieldName: "StartDateTime",
-                DataTypeCode: 'String',
-                Display: 'Start Date',
-                Styles: { width: '200px' },
-                HtmlListComponentName: 'SchedulerDateListTemplate',
-                HtmlListComponentUrl: '../Report/Components/Scheduler/ListTemplates/ReportSchedulerDateListTemplate',
-                IsCustomTemplate: true,
-                ServerSideSortable: true,
-                SortByName: "StartDateTime"
-            });
+            FieldName: "StartDateTime",
+            DataTypeCode: 'String',
+            Display: 'Start Date',
+            Styles: { width: '200px' },
+            HtmlListComponentName: 'ReportSchedulerDateListTemplate',
+            HtmlListComponentUrl: '../Report/Components/Scheduler/ListTemplates/ReportSchedulerDateListTemplate',
+            IsCustomTemplate: true,
+            ServerSideSortable: true,
+            SortByName: "StartDateTime"
+        });
+
         this.TasksHistoryColumns.push({
-                FieldName: "EndDateTime",
-                DataTypeCode: 'String',
-                Display: 'End Date',
-                Styles: { width: '200px' },
-                HtmlListComponentName: 'SchedulerDateListTemplate',
-                HtmlListComponentUrl: '../Report/Components/Scheduler/ListTemplates/ReportSchedulerDateListTemplate',
-                IsCustomTemplate: true,
-                ServerSideSortable: true,
-                SortByName: "EndDateTime"
-            });
+            FieldName: "EndDateTime",
+            DataTypeCode: 'String',
+            Display: 'End Date',
+            Styles: { width: '200px' },
+            HtmlListComponentName: 'ReportSchedulerDateListTemplate',
+            HtmlListComponentUrl: '../Report/Components/Scheduler/ListTemplates/ReportSchedulerDateListTemplate',
+            IsCustomTemplate: true,
+            ServerSideSortable: true,
+            SortByName: "EndDateTime"
+        });
         
         this.TasksHistoryColumns.push({
             FieldName: "Duration",
             DataTypeCode: 'String',
             Display: 'Duration',
             Styles: { width: '100px' },
-            HtmlListComponentName: 'SchedulerDateListTemplate',
+            HtmlListComponentName: 'ReportSchedulerDateListTemplate',
             HtmlListComponentUrl: '../Report/Components/Scheduler/ListTemplates/ReportSchedulerDateListTemplate',
             IsCustomTemplate: true,
             ServerSideSortable: false
@@ -242,31 +267,12 @@ export class TaskReportSchedulerComponent implements OnInit {
             DataTypeCode: 'String',
             Display: 'Status',
             Styles: { width: '90px' },
-            HtmlListComponentName: 'SchedulerDateListTemplate',
+            HtmlListComponentName: 'ReportSchedulerDateListTemplate',
             HtmlListComponentUrl: '../Report/Components/Scheduler/ListTemplates/ReportSchedulerDateListTemplate',
             IsCustomTemplate: true,
             ServerSideSortable: false
         });
 
-        //this.columns.push({
-        //    FieldName: "ViewLog",
-        //    DataTypeCode: 'String',
-        //    Display: '',
-        //    Styles: { width: '100px' },
-        //    HtmlListComponentName: 'SchedulerDateListTemplate',
-        //    HtmlListComponentUrl: '../InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/ListTemplates/SchedulerDateListTemplate',
-        //    IsCustomTemplate: true,
-        //    ServerSideSortable: false
-        //});
-        
-        //this.columns.push({
-        //    FieldName: "RunResult",
-        //    DataTypeCode: 'String',
-        //    Display: 'Run Result',
-        //    Styles: { width: '200px' },
-        //    IsCustomTemplate: true,
-        //    ServerSideSortable: false
-        //});
         this.TasksHistoryCustomColumnsReady.emit(this.TasksHistoryColumns);
     }
 
@@ -296,19 +302,20 @@ export class TaskReportSchedulerComponent implements OnInit {
 
         filters = new ApiQueryFilters();
         if (!sortingCol) {
-            sortingCol = "StartDateTime";
+            sortingCol = "StartDateTimeUTC";
             sortingDir = "descending";
         }
-        if (this.SelectedRow) {
+        if (!this.SelectedRow) {
+            filters.addAdditionalFilter("TaskId", "0-0", null, null, "Equals", false, false, false, "String");
+
+        }
+        else {
             if (!AppTool.IsNullOrEmpty(this.SelectedRow.Id)) {
                 if (filters.AdditionalFilters.filter(a => a.FieldName == "TaskId").length > 0) {
                     filters.AdditionalFilters = filters.AdditionalFilters.filter(a => a.FieldName != "TaskId");
                 }
                 filters.addAdditionalFilter("TaskId", this.SelectedRow.Id, null, null, "Equals", false, false, false, "String");
             }
-        }
-        else {
-            filters.addAdditionalFilter("TaskId", "0-0", null, null, "Equals", false, false, false, "String");
         }
 
         filters.GetCount = getCount;
@@ -420,8 +427,8 @@ export class TaskReportSchedulerItemClass extends BaseComponent {
     public IsNew: boolean = false;
     private newValueinDateFormat: Date;
 
-    ReportDetails: ReportSchedulerDetails;
-    SchedulerDetailsData: SchedulerDetails = new SchedulerDetails();
+    SchedulerDetails: SchedulerDetails;
+    ReportSchedulerDetails: ReportSchedulerDetails;
 
     constructor(item: TasksSchedulerPM, public fatherComponent: TaskReportSchedulerComponent, isNew: boolean = false) {
         super();
@@ -533,10 +540,23 @@ export class TaskReportSchedulerItemClass extends BaseComponent {
         }
     }
 
-    SetReportSchedulerDetailsData(schedulerDetailsData: SchedulerDetails) {
-        this.SchedulerDetailsData = schedulerDetailsData;
-        if (schedulerDetailsData) {
-            this.EntityPM.SchedulerDetailsData = schedulerDetailsData;
+    recepients: string;
+    get Recepients() { return this.recepients; }
+    set Recepients(newValue: string) {
+        if (this.recepients != newValue) {
+            this.recepients = newValue;
+            this.SchedulerDetails.ReportDetails.Recepients = newValue;
+        }
+    }
+
+    SetReportSchedulerDetailsData(schedulerDetails: SchedulerDetails) {
+        this.SchedulerDetails = schedulerDetails;
+        if (schedulerDetails) {
+            if (!schedulerDetails.ReportDetails) {
+                schedulerDetails.ReportDetails = new ReportSchedulerDetails;
+            }
+            this.EntityPM.SchedulerDetailsData = schedulerDetails;
+            this.recepients = this.SchedulerDetails.ReportDetails.Recepients;
         }
     }
 }

@@ -8,7 +8,8 @@ import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResp
 import {SchedulerExtendedPMService} from '../../../Infrastructure/Services/ExtendedPMs/SchedulerExtendedPMService';
 import {Component, }  from '@angular/core';
 import { TaskReportSchedulerItemClass } from './TaskReportSchedulerComponent';
-import { SchedulerDetails, ReportSchedulerDetails } from '../../DataContracts/SchedulerDetails';
+import { QueryFilterItem } from '../Filters/QueryFilterItem';
+import { SchedulerDetails, ReportSchedulerDetails } from '../../../Infrastructure/DataContracts/SchedulerDetails';
 
 @Component({
     moduleId: module.id,
@@ -40,22 +41,24 @@ export class AddEditReportTaskSchedulerComponent  {
     }
 
     BuildSchedulerDetailsData() {
-            if (this.EntityPM.SchedulerDetailsData) {
-                this.SetReportSchedulerDetailsData(this.EntityPM.SchedulerDetailsData);
-            }
-            else if (this.EntityPM.Id) {
-                //this.LoadSchedulerDetailsData();
-            } else {
-                var schedulerDetailsData = new SchedulerDetails();
-                schedulerDetailsData.ReportDetails = new ReportSchedulerDetails();
-                this.SetReportSchedulerDetailsData(schedulerDetailsData);
-            }
+        if (this.EntityPM.SchedulerDetailsData) {
+            this.SetSchedulerDetailsData(this.EntityPM.SchedulerDetailsData);
+        }
+        else if (this.EntityPM.Id) {
+            this.LoadReportSchedulerDetailsData();
+        }
+        else {
+            var schedulerDetails = new SchedulerDetails();
+            schedulerDetails.ReportDetails = new ReportSchedulerDetails();
+            this.SetSchedulerDetailsData(schedulerDetails);
+        }
     }
 
-    SetReportSchedulerDetailsData(schedulerDetailsData: SchedulerDetails) {
-        this.DataContext.SetReportSchedulerDetailsData(schedulerDetailsData);
+    SetSchedulerDetailsData(schedulerDetails: SchedulerDetails) {
+        this.DataContext.SetReportSchedulerDetailsData(schedulerDetails);
         this.Clone();
     }
+
 
     StartTimeTabTitle: string = "One Time";
 
@@ -175,30 +178,31 @@ export class AddEditReportTaskSchedulerComponent  {
         }
     }
 
-    //LoadSchedulerDetailsData() {
+    LoadReportSchedulerDetailsData() {
 
-    //    this.CurrentSession.StartBusyIndicator("Loading...");
+        this.CurrentSession.StartBusyIndicator("Loading...");
 
-    //    this.schedulerExtendedPMService.GetSchedulerDetailsById(this.EntityPM.Id).subscribe(myResult => {
-    //        var myResponse: ServiceResponse = myResult;
-    //        if (!myResponse.HasError) {
-    //            this.SetReportSchedulerDetailsData(myResponse.Result);
-    //        }
+        this.schedulerExtendedPMService.GetSchedulerDetailsById(this.EntityPM.Id).subscribe(myResult => {
+            var myResponse: ServiceResponse = myResult;
+            if (!myResponse.HasError) {
+                this.SetSchedulerDetailsData(myResponse.Result);
+            }
 
-    //        else {
-    //            this.ValidationErrorsList = myResponse.ErrorsArray;
-    //            this.Clone();
-    //        }
+            else {
+                this.ValidationErrorsList = myResponse.ErrorsArray;
+                this.Clone();
+            }
 
-    //        this.CurrentSession.StopBusyIndicator();
-    //    });
-    //}
+            this.CurrentSession.StopBusyIndicator();
+        });
+    }
 
-    SaveButtonClicked() {
+    SaveButtonClicked(reportFilterItems: Array<QueryFilterItem>,reportTemplateId: string) {
         this.CurrentSession.StartBusyIndicatorSaving();
 
+        this.DataContext.SchedulerDetails.ReportDetails.ReportFilterItems = reportFilterItems;
+        this.DataContext.SchedulerDetails.ReportDetails.ReportTemplateId = reportTemplateId;
         if (this.DataContext.IsNew) {
-            this.DataContext.ReportDetails.CreateDate = new Date();
             this.schedulerExtendedPMService.insert(this.EntityPM).subscribe(myResult => {
                 var myResponse: ServiceResponse = myResult;
                 if (!myResponse.HasError) {
@@ -207,7 +211,6 @@ export class AddEditReportTaskSchedulerComponent  {
                     if (this.DataContext.fatherComponent) {
                         this.DataContext.fatherComponent.RefreshTasksSchedular(this.EntityPM);
                     }
-                    return true;
                 }
 
                 else {
@@ -230,7 +233,6 @@ export class AddEditReportTaskSchedulerComponent  {
                         if (this.DataContext.fatherComponent) {
                             this.DataContext.fatherComponent.RefreshTasksSchedular(this.EntityPM);
                         }
-                        return true;
                     }
 
                     else {
@@ -243,7 +245,6 @@ export class AddEditReportTaskSchedulerComponent  {
 
             else {
                 this.CurrentSession.StopBusyIndicator();
-                return true;
             }
         }
     }
