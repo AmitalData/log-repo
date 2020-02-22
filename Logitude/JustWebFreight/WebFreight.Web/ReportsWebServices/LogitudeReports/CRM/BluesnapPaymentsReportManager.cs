@@ -30,6 +30,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
         private IQueryable<BluesnapTransaction> iQueryable_BluesnapTransactions;
         IBlobService storageservice;
         DocumentRepository documentRepository;
+        private List<BlusnapTransactionsList> otherTenantTransactions; 
 
         public BluesnapPaymentsReportManager(byte[] xmlFilters, int tenant)
         {
@@ -151,10 +152,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
 
         private void BuildOthersTenantData()
         {
-            List<BlusnapTransactionsList> otherTenantTransactions = new List<BlusnapTransactionsList>();
+            otherTenantTransactions = new List<BlusnapTransactionsList>();
             foreach (var item in iQueryable_JoinTenantBluesnapTransaction.Where(a => a.Tenant != 0))
             {
-                AddToBlueSnapTransactionList(otherTenantTransactions, item);
+                AddToBlueSnapTransactionList(item);
             }
             this.iDataProvider.BlusnapTransactionsList.AddRange(otherTenantTransactions);
         }
@@ -162,20 +163,29 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
         private void BuildTenantZeroData()
         {
             List<BlusnapTransactionsList> tenantZeroTransactions = new List<BlusnapTransactionsList>();
-            var tenantZeroList = iQueryable_JoinTenantBluesnapTransaction
-                .Where(a => a.Tenant == 0).GroupBy(a => a.ShopperId)
+            var tenantZeroList = iQueryable_JoinTenantBluesnapTransaction.Where(a => a.Tenant == 0).GroupBy(a => a.ShopperId)
                 .Select(g => new
                 {
-
+                    ShopperId = g.Key,
+                    TransactionCount = g.Sum(a => a.Transactions.Count()),
+                    Transactions = g.SelectMany(x => x.Transactions).ToList(),
                 });
+
             foreach (var item in tenantZeroList)
             {
-
+                var itemRecord = new BlusnapTransactionsList();
+                itemRecord.Tenant = 0;
+                itemRecord.TenantName = "";
+                itemRecord.ShopperId = item.ShopperId;
+                itemRecord.TransactionCount = item.TransactionCount;
+                this.CalculateContractCountAndTotalPayments(itemRecord, item.Transactions);
+                itemRecord.Notes = "unmatched transaction";
+                tenantZeroTransactions.Add(itemRecord);
             }
             this.iDataProvider.BlusnapTransactionsList.AddRange(tenantZeroTransactions);
         }
 
-        private void AddToBlueSnapTransactionList(List<BlusnapTransactionsList> tenantTransactions, TenantJoinBluesnapTransactionList item)
+        private void AddToBlueSnapTransactionList(TenantJoinBluesnapTransactionList item)
         {
             var itemRecord = new BlusnapTransactionsList();
             itemRecord.Tenant = item.Tenant;
@@ -183,9 +193,24 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
             itemRecord.ShopperId = item.ShopperId;
             itemRecord.AmountToPay = item.AmountToPay;
             itemRecord.TransactionCount = item.Transactions != null ? item.Transactions.Count() : 0;
+            this.CalculateContractCountAndTotalPayments(itemRecord, item.Transactions);
+            itemRecord.PaymentDifference = itemRecord.TotalPayments - itemRecord.AmountToPay;
+            itemRecord.Notes = itemRecord.PaymentDifference != 0 ? "payment missing " : "";
+            if (!this.showAllRecurringTenants && itemRecord.PaymentDifference != null && itemRecord.PaymentDifference != 0)
+            {
+                otherTenantTransactions.Add(itemRecord);
+            }
+            if (this.showAllRecurringTenants)
+            {
+                otherTenantTransactions.Add(itemRecord);
+            }
+        }
+
+        private void CalculateContractCountAndTotalPayments(BlusnapTransactionsList itemRecord, List<BluesnapTransactionItem> transactions)
+        {
             double? totalPayments = 0;
             List<string> Contracts = new List<string>();
-            foreach (var transaction in item.Transactions)
+            foreach (var transaction in transactions)
             {
                 var queryParameters = DeserializeDocumentBody(transaction.DocumentId, transaction.Tenant);
                 if (queryParameters != null && queryParameters.Count > 0)
@@ -202,25 +227,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
             }
             itemRecord.ContractCount = new HashSet<string>(Contracts).Count();
             itemRecord.TotalPayments = totalPayments;
-            itemRecord.PaymentDifference = itemRecord.TotalPayments - itemRecord.AmountToPay;
-
-            if (item.Tenant == 0)
-            {
-                itemRecord.Notes = "unmatched transaction";
-            }
-            else
-            {
-                itemRecord.Notes = itemRecord.PaymentDifference != 0 ? "payment missing " : "";
-            }
-
-            if (!this.showAllRecurringTenants && itemRecord.PaymentDifference != null && itemRecord.PaymentDifference != 0)
-            {
-                tenantTransactions.Add(itemRecord);
-            }
-            if (this.showAllRecurringTenants)
-            {
-                tenantTransactions.Add(itemRecord);
-            }
         }
 
         private Dictionary<string, string> DeserializeDocumentBody(string documentId, int tenant)
@@ -263,6 +269,11 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
 
     public class TenantJoinBluesnapTransactionList
     {
+        public TenantJoinBluesnapTransactionList()
+        {
+            this.Transactions = new List<BluesnapTransactionItem>();
+        }
+
         public int Tenant { get; set; }
         public string TenantName { get; set; }
         public string ShopperId { get; set; }
