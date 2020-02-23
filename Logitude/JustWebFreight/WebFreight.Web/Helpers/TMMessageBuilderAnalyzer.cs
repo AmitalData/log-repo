@@ -24,7 +24,7 @@ namespace WebFreight.Web.Helpers
         {
             // Create a connection to the account
             string accountUri = "https://logitudeteam.visualstudio.com";
-            var personalAccessToken = "qsxsy6j454xpslikiuzc5oynhh5djttgxj4gmnlzpuaeypbuyc3q";
+            var personalAccessToken = "xbekti46cnnxsz3selcaazf7lx5ypsm774cwd35wtbj2bswz6xha";
             int workItemId = wi;
             // new VssOAuthAccessTokenCredential(personalAccessToken)
             VssConnection connection = new VssConnection(new Uri(String.Format(accountUri)), new VssBasicCredential("logitudo@live.com", personalAccessToken));
