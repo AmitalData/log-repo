@@ -37,96 +37,32 @@ namespace WarehouseData
 
 
         delegate void SetControlValueCallback(string propName, object propValue, string tableName = null, string typeTable = null);
-        private void SetControlPropertyValue(string propName, object propValue, string tableName = null, string typeTable = null)
+        private void SetControlPropertyValue(string propName, object propValue, string tableName = null, string typeTable = "DW")
         {
             Control oControl = null;
-            switch (tableName)
+            if (!string.IsNullOrEmpty(tableName))
             {
-                case "Shipments":
-                    if (typeTable == "Fact") oControl = FactShipmentsLabel;
-                    else oControl = DWShipmentLable;
-
-                    break;
-                case "Cards":
-                    if (typeTable == "DIM") oControl = DimPartnersLabel;
-                    else oControl = DWPartnersLabel;
-
-                    break;
-
-                case "ShipmentMasterDatas":
-                    oControl = DWShipmentMasterDatasLable;
-                    break;
-
-
-                case "Users":
-                    if (typeTable == "DIM") oControl = DimUsersLabel;
-                    else oControl = DWUserLabel;
-                    break;
-
-
-                case "Contacts":
-                    oControl = DWContactsLabel;
-                    break;
-
-                case "Customers":
-                    oControl = DWCustomersLabel;
-                    break;
-                case "Ports":
-                    oControl = DWPortsLabel;
-                    if (typeTable == "DIM") oControl = DimPortsLabel;
-                    break;
-
-                case "Tenants":
-                    if (typeTable == "DIM") oControl = DimTenantLabel;
-                    else oControl = DWTenantLabel;
-
-
-                    break;
-
-                case "Incoterms":
-                    if (typeTable == "DIM") oControl = DimIncotermLabel;
-                    else oControl = DWIcontermLabel;
-
-
-                    break;
-
-                case "Currencies":
-                    if (typeTable == "DIM") oControl = DimCurrencyLabel;
-                    else oControl = DWCurrencyLabel;
-
-
-                    break;
-
-                case "Departments":
-
-                    if (typeTable == "DIM") oControl = DimDepartmentLabel;
-                    else oControl = DWDepartmentLabel;
-
-                    break;
-                case "ShipmentComputedFields":
-
-                    oControl = DWShipmentComputedFieldLabel;
-                    break;
-
-                default:
-                    oControl = BuildWarehouseData;
-                    break;
+                 oControl = this.Controls.OfType<Control>().Where(l => l.Name.ToLower().Contains((typeTable + tableName + "Label").ToLower())).FirstOrDefault();
             }
+            else oControl = BuildWarehouseData;
+            if (oControl != null)
+            {
 
-            if (oControl.InvokeRequired)
-            {
-                SetControlValueCallback d = new SetControlValueCallback(SetControlPropertyValue);
-                oControl.Invoke(d, new object[] { propName, propValue, tableName, typeTable });
-            }
-            else
-            {
-                Type t = oControl.GetType();
-                PropertyInfo[] props = t.GetProperties();
-                foreach (PropertyInfo p in props)
+                if (oControl.InvokeRequired)
                 {
-                    if (p.Name.ToUpper() == propName.ToUpper())
+                    SetControlValueCallback d = new SetControlValueCallback(SetControlPropertyValue);
+                    oControl.Invoke(d, new object[] { propName, propValue, tableName, typeTable });
+                }
+                else
+                {
+                    Type t = oControl.GetType();
+                    PropertyInfo[] props = t.GetProperties();
+                    foreach (PropertyInfo p in props)
                     {
-                        p.SetValue(oControl, propValue, null);
+                        if (p.Name.ToUpper() == propName.ToUpper())
+                        {
+                            p.SetValue(oControl, propValue, null);
+                        }
                     }
                 }
             }
@@ -209,7 +145,7 @@ namespace WarehouseData
                                     }
 
               
-                                mainDataWarehouseService.BuildDWDataBase(sourceConnectionString, destinationConnectionString, table, TotalCountLable);
+                                mainDataWarehouseService.BuildDWDataBase(sourceConnectionString, destinationConnectionString, table, TotalCountLabel);
 
                                 if (table.DispayInScreen)
                                 {
@@ -382,6 +318,8 @@ namespace WarehouseData
 
         private void GetCount(TableClass table , string typeTable , string connectionString)
         {
+
+
             string name = "";
             if (typeTable == "DW") name = table.Dw_TableName;
             else if (typeTable == "DIM")
@@ -409,98 +347,27 @@ namespace WarehouseData
                 {
                     long countStart = System.Convert.ToInt32(
                         commandRowCount.ExecuteScalar());
-
-                    switch (table.DBTableName)
-                    {
-                        case "Shipments":
-                            if (typeTable == "Fact") SetControlPropertyValue("Text", FactShipmentsLabel.Text + "     (" + countStart + ")", table.DBTableName, "Fact");
-                            else  SetControlPropertyValue("Text", DWShipmentLable.Text + "     (" + countStart + ")", table.DBTableName);  ;
-
-                            break;
-                        case "Cards":
-          
-                            if (typeTable == "DIM") SetControlPropertyValue("Text", DimPartnersLabel.Text + "     (" + countStart + ")", table.DBTableName, "DIM");
-                            else  SetControlPropertyValue("Text", DWPartnersLabel.Text + "     (" + countStart + ")", table.DBTableName) ;
-
-                            break;
-
-                        case "ShipmentMasterDatas":
-                  
-                            SetControlPropertyValue("Text", DWShipmentMasterDatasLable.Text + "     (" + countStart + ")", table.DBTableName);
-                            break;
-
-
-                        case "Users":
-                  
-                            if (typeTable == "DIM") SetControlPropertyValue("Text", DimUsersLabel.Text + "     (" + countStart + ")", table.DBTableName, "DIM");
-                            else SetControlPropertyValue("Text", DWUserLabel.Text + "     (" + countStart + ")", table.DBTableName);
-
-                            break;
-
-
-                        case "Contacts":
-           
-                            SetControlPropertyValue("Text", DWContactsLabel.Text + "     (" + countStart + ")", table.DBTableName);
-                            break;
-
-                        case "Customers":
-                     
-                            SetControlPropertyValue("Text", DWCustomersLabel.Text + "     (" + countStart + ")", table.DBTableName);
-                            break;
-                        case "Ports":
-
-                            if (typeTable == "DIM") SetControlPropertyValue("Text", DimPortsLabel.Text + "     (" + countStart + ")", table.DBTableName, "DIM");
-                            else SetControlPropertyValue("Text", DWPortsLabel.Text + "     (" + countStart + ")", table.DBTableName);
-
-                            break;
-
-                        case "Tenants":
-
-                            if (typeTable == "DIM") SetControlPropertyValue("Text", DimTenantLabel.Text + "     (" + countStart + ")", table.DBTableName, "DIM");
-                            else SetControlPropertyValue("Text", DWTenantLabel.Text + "     (" + countStart + ")", table.DBTableName);
-
-                            break;
-                        case "Departments":
-
-                            if (typeTable == "DIM") SetControlPropertyValue("Text", DimDepartmentLabel.Text + "     (" + countStart + ")", table.DBTableName, "DIM");
-                            else SetControlPropertyValue("Text", DWDepartmentLabel.Text + "     (" + countStart + ")", table.DBTableName);
-
-                            break;
-                        case "Incoterms":
-
-                            if (typeTable == "DIM") SetControlPropertyValue("Text", DimIncotermLabel.Text + "     (" + countStart + ")", table.DBTableName, "DIM");
-                            else SetControlPropertyValue("Text", DWIcontermLabel.Text + "     (" + countStart + ")", table.DBTableName);
-
-                            break;
-
-                        case "Currencies":
-
-                            if (typeTable == "DIM") SetControlPropertyValue("Text", DimCurrencyLabel.Text + "     (" + countStart + ")", table.DBTableName, "DIM");
-                            else SetControlPropertyValue("Text", DWCurrencyLabel.Text + "     (" + countStart + ")", table.DBTableName);
-
-                            break;
-                
-                        case "ShipmentComputedFields":
-                            SetControlPropertyValue("Text", DWShipmentComputedFieldLabel.Text + "     (" + countStart + ")", table.DBTableName);
-               
-                            break;
-
-
-                    }
+                    DisplayCountValueToScreen(table, typeTable, countStart);
                 }
                 catch (Exception ex)
                 {
 
                     MessageBox.Show(ex.Message);
                 }
-
-
-
-
             }
 
         }
 
+        private void DisplayCountValueToScreen(TableClass table, string typeTable, long count)
+        {
+            var labelEntity = this.Controls.OfType<Label>().Where(l => l.Name.ToLower().Contains((typeTable + table.DBTableName + "Label").ToLower())).FirstOrDefault();
+            if(labelEntity != null)
+            {
+                SetControlPropertyValue("Text", labelEntity.Text + "     (" + count + ")", table.DBTableName, typeTable);
+            }
+        }
+
+ 
     }
 
 

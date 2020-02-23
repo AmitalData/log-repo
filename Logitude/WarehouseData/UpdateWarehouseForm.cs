@@ -98,7 +98,6 @@ namespace WarehouseData
                                     SetControlPropertyValue("Text", "", table.DBTableName, "Dim");
                                     SetControlPropertyValue("ForeColor", Color.Black, table.DBTableName, "Fact");
                                     SetControlPropertyValue("Text", "", table.DBTableName, "Fact");
-
                                 }
                             }
 
@@ -122,6 +121,10 @@ namespace WarehouseData
                                     if (table.DispayInScreen)
                                     {
 
+                                        if(table.TableName == "Tenant")
+                                        {
+
+                                        }
                                         string message = !table.IsUpdated ? "  No update available" : ("  Updated (" + table.UpdatedCount.ToString() + "Records )");
                                         stopWatchDWTable.Stop();
                                         TimeSpan stopWatchDWTableTs = stopWatchDWTable.Elapsed;
@@ -137,7 +140,7 @@ namespace WarehouseData
 
                             mainDataWarehouseService.RunAdditionalScripte(destinationConnectionString, tableNameLists,true);
 
-                      
+
                             #region Update Dimensions Table
                             foreach (TableClass table in tableNameLists.Where(d => d.HasDimensionTable).ToList())
                             {
@@ -150,7 +153,7 @@ namespace WarehouseData
 
 
                                 mainDataWarehouseService.UpdateDimensionTable(destinationConnectionString, table);
-                  
+
                                 stopWatchDimensionsTable.Stop();
                                 TimeSpan stopWatchDimensionsTableTs = stopWatchDimensionsTable.Elapsed;
                                 SetControlPropertyValue("Text", "Done in ( " + stopWatchDimensionsTableTs.ToString(@"hh\:mm\:ss") + " )", table.DBTableName, "Dim");
@@ -174,7 +177,7 @@ namespace WarehouseData
                                     SetControlPropertyValue("Text", "Updating...", table.DBTableName, "Fact");
                                 }
 
-                  
+
                                 mainDataWarehouseService.UpdateFactTable(destinationConnectionString, table);
                                 if (table.TableName == "Shipment")
                                 {
@@ -217,85 +220,34 @@ namespace WarehouseData
         }
 
 
-        delegate void SetControlValueCallback(string propName, object propValue, string tableName = null, string typeTable = null);
-        private void SetControlPropertyValue(string propName, object propValue, string tableName = null, string typeTable = null)
+        delegate void SetControlValueCallback(string propName, object propValue, string tableName = null, string typeTable = "DW");
+        private void SetControlPropertyValue(string propName, object propValue, string tableName = null, string typeTable = "DW")
         {
             Control oControl = null;
-            switch (tableName)
+            if (!string.IsNullOrEmpty(tableName)) 
             {
-                case "Shipments":
-                    if (typeTable == "Fact") oControl = FactShipmentsLabel;
-                    else oControl = DWShipmentLable;
-
-                    break;
-                case "Cards":
-                    if (typeTable == "Dim") oControl = DimPartnersLabel;
-                    else oControl = DWPartnersLabel;
-
-                    break;
-
-                case "ShipmentMasterDatas":
-                    oControl = DWShipmentMasterDatasLable;
-                    break;
-
-
-                case "Users":
-                    if (typeTable == "Dim") oControl = DimUsersLabel;
-                    else oControl = DWUserLabel;
-                    break;
-
-                case "Ports":
-                    oControl = DWPortsLabel;
-                    if (typeTable == "Dim") oControl = DimPortsLabel;
-                    break;
-
-                case "Tenants":
-                    if (typeTable == "Dim") oControl = DimTenantLabel;
-                    else oControl = DWTenantLabel;
-          
-
-                    break;
-     
-                case "Incoterms":
-                    if (typeTable == "Dim") oControl = DimIncotermLabel;
-                    else oControl = DWIcontermLabel;
-
-
-                    break;
-
-                case "Currencies":
-                    if (typeTable == "Dim") oControl = DimCurrencyLabel;
-                    else oControl = DWCurrencyLabel;
-
-
-                    break;
-
-                case "Departments":
-                    
-                    if (typeTable == "Dim") oControl = DimDepartmentLabel;
-                    else oControl = DWDepartmentLabel;
-
-                    break;
-
-                default:
-                    oControl = BuildWarehouseData;
-                    break;
+                oControl = this.Controls.OfType<Control>().Where(l => l.Name.ToLower().Contains((typeTable + tableName + "Label").ToLower())).FirstOrDefault();
             }
+            else oControl = BuildWarehouseData;
 
-            if (oControl.InvokeRequired)
+            if (oControl != null)
             {
-                SetControlValueCallback d = new SetControlValueCallback(SetControlPropertyValue);
-                oControl.Invoke(d, new object[] { propName, propValue, tableName, typeTable });
-            }
-            else
-            {
-                Type t = oControl.GetType();
-                PropertyInfo[] props = t.GetProperties();
-                foreach (PropertyInfo p in props)
+        
+                if (oControl.InvokeRequired)
                 {
-                    if (p.Name.ToUpper() == propName.ToUpper())
+                    SetControlValueCallback d = new SetControlValueCallback(SetControlPropertyValue);
+                    oControl.Invoke(d, new object[] { propName, propValue, tableName, typeTable });
+                }
+                else
+                {
+                    Type t = oControl.GetType();
+                    PropertyInfo[] props = t.GetProperties();
+                    foreach (PropertyInfo p in props)
                     {
-                        p.SetValue(oControl, propValue, null);
+                        if (p.Name.ToUpper() == propName.ToUpper())
+                        {
+                            p.SetValue(oControl, propValue, null);
+                        }
                     }
                 }
             }
@@ -319,6 +271,11 @@ namespace WarehouseData
             {
                 this.dbDestinationConnection = textbox.Text;
             }
+        }
+
+        private void UpdateWarehouseForm_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
