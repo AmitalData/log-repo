@@ -83,14 +83,7 @@ export class RevenueExpenseFilterComponent extends BaseComponent{
   public set FromDate(value: Date) {
     if (this.fromDate != value) {
         this.fromDate = value;
-        if (value > this.ToDate) {
-        
-            setTimeout(() => {
-                this.UIProperties.SetValidity("FromDate", null, false, TextCodeTranslator.Translate("Accounting.General.FromDateMustBeLTT"));
-                this.CD.detectChanges();
-            }, 200);
-
-        }
+            this.Validate("FromDate");     
     }
     }
 
@@ -99,19 +92,54 @@ export class RevenueExpenseFilterComponent extends BaseComponent{
     public set ToDate(value: Date) {
         if (this.toDate != value) {
             this.toDate = value;
-            if (value < this.FromDate) {
-
-                setTimeout(() => {
-                    this.UIProperties.SetValidity("ToDate", null, false, TextCodeTranslator.Translate("Accounting.General.O.ToDateMustBeGTF"));
-                
-                    this.CD.detectChanges();
-                }, 200);
-                
-            }
-            if (value > new Date()) {
-                this.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.General.O.FutureDate"));
-            }
+                this.Validate("ToDate");
+           
         }
+    }
+
+    Validate(dateFieldName) {
+        if (this.FromDate > this.ToDate) {
+
+            setTimeout(() => {
+                this.UIProperties.SetValidity("ToDate", null, false, TextCodeTranslator.Translate("Accounting.General.O.ToDateMustBeGTF"));
+                this.UIProperties.SetValidity("FromDate", null, false, TextCodeTranslator.Translate("Accounting.General.FromDateMustBeLTT"));
+                this.CD.detectChanges();
+            }, 200);
+
+        } else {
+            setTimeout(() => {
+                this.UIProperties.SetValidity("ToDate", null, true, "");
+                this.UIProperties.SetValidity("FromDate", null, true, "");
+                this.CD.detectChanges();
+            }, 200);
+
+        }
+
+
+
+        //var errorMessage: string;
+        //if (dateFieldName == "FromDate") {
+        //    errorMessage = "Accounting.General.FromDateMustBeLTT";
+        //}
+        //else {
+        //    errorMessage = "Accounting.General.O.ToDateMustBeGTF";
+        //}
+        //if (this.ToDate < this.FromDate) {
+
+        //    setTimeout(() => {
+        //        this.UIProperties.SetValidity(dateFieldName, null, false, TextCodeTranslator.Translate(errorMessage));
+
+        //        this.CD.detectChanges();
+        //    }, 200);
+
+        //}
+        //else {
+        //    setTimeout(() => {
+        //        this.UIProperties.SetValidity(dateFieldName, null, true, null);
+        //        this.CD.detectChanges();
+        //    }, 200);
+            
+        //}
     }
   public FilterSelectedValue: string = 'GLAccount';
   FilterItemClicked(itemValue: string) {
