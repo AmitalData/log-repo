@@ -97,6 +97,7 @@ namespace WebFreight.Web.Helpers
                                     InActive = report.InActive,
                                     ReportGroupId = report.ReportGroupId,
                                     FeatureId = report.FeatureId,
+                                    AvailableForScheduling = report.AvailableForScheduling,
                                 };
                                 reportRepository.Add(newReport);
                                 myReports.Add(newReport);
