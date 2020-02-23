@@ -339,9 +339,21 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             QueryFilterItem filterItem = reportQueryOperations.QueryFilterItems
                 .Where(d => d.FieldName == FieldName).FirstOrDefault();
 
+            
+
             if (filterItem != null && filterItem.FieldValue != null)
             {
-                return (T)filterItem.FieldValue;
+                if (filterItem.FieldDataType == "decimal")
+                {
+                    decimal value = Convert.ToDecimal(filterItem.FieldValue);
+                    object x = value;
+
+                    return (T)x;
+                }
+                else
+                {
+                    return (T)filterItem.FieldValue; 
+                }
             }
 
             return default(T);

@@ -53,30 +53,75 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             {
                 var periodsByDate = customer.GroupBy(r => r.PeriodName).ToList();
 
-                CustomerStatus customerStatus = new CustomerStatus()
+                string balanceFilter = GetFilterValue<string>("BalanceFilter");
+                decimal balanceFilterValue = GetFilterValue<decimal>("BalanceFilterValue");
+                decimal customerBalance = customer.Sum(d => d.Total);
+
+
+                if (balanceFilter == "debtors" && customerBalance >= 0
+                    || balanceFilter == "debt" && customerBalance >= balanceFilterValue
+                    || balanceFilter == "all" || balanceFilter == null)
                 {
-                    // account details
-                    CustomerName = customer.First().AccountEnglishName,
-                    CustomerDisplayNumber = customer.First().AccountDisplayNumber,
-                    CustomerPaymentTerm = customer.First().AccountPaymentTermName,
-                    CustomerPhone = customer.First().AccountPhone,
+                    CustomerStatus customerStatus = CreateNewCustomerStatus(customer, periodsByDate);
 
-                    // credit details
-                    CreditLimit = customer.First().CreditLimit,
-                    CreditStatus = customer.First().CreditStatus,
-                    TotalFutureOpenCheques = customer.First().TotalFutureOpenCheques,
-                    TotalOpenCheques = customer.First().TotalOpenCheques,
-                    TotalOpenShipments = customer.First().TotalOpenShipments,
+                    dataProvider.CustomersStatuses.Add(customerStatus);
+                }
 
-                    AccountingBalance = customer.Sum(d => d.Total),
-                    Periods = GetStatusPeriods(periodsByDate)
-                };
-
-                dataProvider.CustomersStatuses.Add(customerStatus);
             }
+
+            SortCustomerStatuses(dataProvider);
 
             return dataProvider;
         }
+
+        private void SortCustomerStatuses(CustomerStatusDataProvider dataProvider)
+        {
+            string sortField = GetFilterValue<string>("SortField");
+            string sortDirection = GetFilterValue<string>("SortDirection");
+
+            if (sortField == "balance")
+            {
+                if (sortDirection == "Descending")
+                    dataProvider.CustomersStatuses = dataProvider.CustomersStatuses.OrderByDescending(d => d.AccountingBalance).ToList();
+                else
+                    dataProvider.CustomersStatuses = dataProvider.CustomersStatuses.OrderBy(d => d.AccountingBalance).ToList();
+            }
+            else if (sortField == "customer")
+            {
+                if (sortDirection == "Descending")
+                    dataProvider.CustomersStatuses = dataProvider.CustomersStatuses.OrderByDescending(d => d.CustomerName).ToList();
+                else
+                    dataProvider.CustomersStatuses = dataProvider.CustomersStatuses.OrderBy(d => d.CustomerName).ToList();
+            }
+            else
+            {
+                dataProvider.CustomersStatuses = dataProvider.CustomersStatuses.OrderBy(d => d.CustomerName).ToList();
+            }
+        }
+
+        private CustomerStatus CreateNewCustomerStatus(IGrouping<string, PeriodMExtended> customer, List<IGrouping<string, PeriodMExtended>> periodsByDate)
+        {
+            CustomerStatus customerStatus = new CustomerStatus()
+            {
+                // account details
+                CustomerName = customer.First().AccountEnglishName,
+                CustomerDisplayNumber = customer.First().AccountDisplayNumber,
+                CustomerPaymentTerm = customer.First().AccountPaymentTermName,
+                CustomerPhone = customer.First().AccountPhone,
+
+                // credit details
+                CreditLimit = customer.First().CreditLimit,
+                CreditStatus = customer.First().CreditStatus,
+                TotalFutureOpenCheques = customer.First().TotalFutureOpenCheques,
+                TotalOpenCheques = customer.First().TotalOpenCheques,
+                TotalOpenShipments = customer.First().TotalOpenShipments,
+
+                AccountingBalance = customer.Sum(d => d.Total),
+                Periods = GetStatusPeriods(periodsByDate)
+            };
+            return customerStatus;
+        }
+
         private List<StatusPeriod> GetStatusPeriods(List<IGrouping<string, PeriodMExtended>> customerDatePeriods)
         {
             List<StatusPeriod> ssss = new List<StatusPeriod>();
@@ -204,9 +249,21 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             QueryFilterItem filterItem = reportQueryOperations.QueryFilterItems
                 .Where(d => d.FieldName == FieldName).FirstOrDefault();
 
+
+
             if (filterItem != null && filterItem.FieldValue != null)
             {
-                return (T)filterItem.FieldValue;
+                if (filterItem.FieldDataType == "decimal")
+                {
+                    decimal value = Convert.ToDecimal(filterItem.FieldValue);
+                    object x = value;
+
+                    return (T)x;
+                }
+                else
+                {
+                    return (T)filterItem.FieldValue;
+                }
             }
 
             return default(T);

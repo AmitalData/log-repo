@@ -290,8 +290,12 @@ export class CustomerStatusReportFilterComponent extends BaseComponent implement
             myFilterItems.push(new QueryFilterItem("CategoryValue", categoryValue));
             myFilterItems.push(new QueryFilterItem("GroupByDate", ""));
 
-            // myFilterItems.push(new QueryFilterItem("BalanceFilter", this.balanceFilterSelectedValue.replace("filter_","")));
-            // myFilterItems.push(new QueryFilterItem("BalanceFilterValue", this.balance||0));
+            myFilterItems.push(new QueryFilterItem("BalanceFilter", this.SelectedBalanceTypeItem.Code));
+            myFilterItems.push(new QueryFilterItem("BalanceFilterValue", this.balance||0,"decimal"));
+
+            myFilterItems.push(new QueryFilterItem("SortField", this.SelectedSortTypeItem.Code));
+            myFilterItems.push(new QueryFilterItem("SortDirection", this.SelectedSortDirectionCode));
+
 
             var myReportFliter: ReportFliter = new ReportFliter();
             myReportFliter.NumberOfPage = 1;
@@ -391,34 +395,34 @@ export class CustomerStatusReportFilterComponent extends BaseComponent implement
     }
       //#endregion
 
-    //   public balanceFilterSelectedValue: string = 'filter_All';
-    //   BalanceFilterItemClicked(itemValue: string)
-    //   {
-    //       if (this.balanceFilterSelectedValue != itemValue) {
-    //           this.balanceFilterSelectedValue = itemValue;
-    //           this.BalanceFilterChanged();
-    //       }
-    //   }
-    //   BalanceFilterChanged()
-    //   {
+      public balanceFilterSelectedValue: string = 'filter_All';
+      BalanceFilterItemClicked(itemValue: string)
+      {
+          if (this.balanceFilterSelectedValue != itemValue) {
+              this.balanceFilterSelectedValue = itemValue;
+              this.BalanceFilterChanged();
+          }
+      }
+      BalanceFilterChanged()
+      {
 
-    //       switch (this.balanceFilterSelectedValue) {
-    //           case 'filter_All':
-    //             //   this.AccountTypeCode = '2';
-    //               break;
-    //           case 'filter_Debtors':
-    //             //   this.AccountTypeCode = '2';
-    //               break;
-    //           case 'filter_DebtAbove':
-    //               this.balance = 0;
-    //               break;
-    //           default:
-    //               break;
-    //       }
+          switch (this.balanceFilterSelectedValue) {
+              case 'filter_All':
+                //   this.AccountTypeCode = '2';
+                  break;
+              case 'filter_Debtors':
+                //   this.AccountTypeCode = '2';
+                  break;
+              case 'filter_DebtAbove':
+                  this.balance = 0;
+                  break;
+              default:
+                  break;
+          }
 
-    //       this.SetUIProperties();
+          this.SetUIProperties();
 
-    //   }
+      }
 
     // Filter Methods
     // public DateFilterSelectedValue: string = 'filter_Due';
