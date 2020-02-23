@@ -31,9 +31,9 @@
 
     <div [style.text-align]="isRTL ? 'right' : 'left'" class="TextTrimming" *ngIf="fieldName == 'TotalInterestDays'">{{ rowData[fieldName] }}</div>
 
-    <div [style.text-align]="'right'" class="TextTrimming" *ngIf="fieldName == 'TotalAmount'">{{ rowData[fieldName]}}</div>
+    <div [style.text-align]="'right'" class="TextTrimming" *ngIf="fieldName == 'TotalAmount'">{{ rowData[fieldName] | NumbersPipe:'N2'}}</div>
 
-    <div [style.text-align]="'right'" class="TextTrimming" *ngIf="fieldName == 'AccumulatedAmount'">{{ rowData[fieldName]}}</div>
+    <div [style.text-align]="'right'" class="TextTrimming" *ngIf="fieldName == 'AccumulatedAmount'">{{ rowData[fieldName] | NumbersPipe:'N2'}}</div>
 
     <div [style.text-align]="isRTL ? 'right' : 'left'" class="TextTrimming" *ngIf="fieldName == 'StandardInterestPercentage'">{{ rowData[fieldName] | NumbersPipe:'N2' }}%</div>
 

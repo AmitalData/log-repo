@@ -11,6 +11,7 @@ using Logitude.Accounting.Def.EntityPMs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using WebFreight.Web.App_Code.AngularJS_App_Code.Generated;
+using Logitude.Server.Tools.Helpers;
 
 namespace WebFreight.Web.AccountingModel.DomainServices
 {
@@ -75,7 +76,14 @@ namespace WebFreight.Web.AccountingModel.DomainServices
                 }
             }
             interestTransactionsWithTotal.interestTransactionLists = interestTransactionLists;
-            interestTransactionsWithTotal.TotalLocalAmount = TotalLocalAmount;
+            decimal? TotalLocal = MethodHelper.Round(TotalLocalAmount, 2);
+            if (TotalLocal == null){
+                interestTransactionsWithTotal.TotalLocalAmount = 0;
+            }
+            else
+            {
+                interestTransactionsWithTotal.TotalLocalAmount = (decimal)MethodHelper.Round(TotalLocalAmount, 2);
+            }
 
             return interestTransactionsWithTotal;
         }

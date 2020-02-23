@@ -36,7 +36,7 @@
                     <!--LocalAmount-->
                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'130'" [header]="LocalAmountHeader">
                         <log-cell-template template="let item" #logcelltemplate>
-                            <div [style.text-align]="'right'"> {{item.LocalAmount}} </div>
+                            <div [style.text-align]="'right'"> {{item.LocalAmount | NumbersPipe:'N2'}} </div>
                         </log-cell-template>
                     </log-column>
 
@@ -50,7 +50,7 @@
                     <!--ForiegnAmount-->
                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'130'" [header]="ForiegnAmountHeader">
                         <log-cell-template template="let item" #logcelltemplate>
-                            <div [style.text-align]="'right'"> {{item.ForeignAmount}} </div>
+                            <div [style.text-align]="'right'"> {{item.ForeignAmount | NumbersPipe:'N2'}} </div>
                         </log-cell-template>
                     </log-column>
 
@@ -92,7 +92,7 @@
                                         <table>
                                             <tr>
                                                 <td   style="text-indent: 10px; width: 1px;">
-                                                    <div [style.text-align]="isRTL ? 'right' : 'left'" class="TabSummaryValue">{{TotalLocalAmount}}</div>
+                                                    <div [style.text-align]="isRTL ? 'right' : 'left'" class="TabSummaryValue">{{TotalLocalAmount| NumbersPipe:'N2'}}</div>
                                                     <div class="TabSummaryLabel">
                                                         {{'InterestTransaction.F.LocalAmount' | TextCodeTranslationPipe}}
                                                     </div>
