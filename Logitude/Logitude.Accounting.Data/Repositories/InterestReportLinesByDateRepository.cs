@@ -14,11 +14,11 @@ namespace Logitude.Accounting.Data.Repositories
 {
    public partial class InterestReportLinesByDateRepository:IRepository<InterestReportLinesByDate>
    {
-        
-		public List<InterestReportLinesByDate> GetMulti(EntityKeyFields entityKeys)
+
+        public List<InterestReportLinesByDate> GetMulti(EntityKeyFields entityKeys)
         {
-            
-			throw new NotImplementedException();
+            InterestReportKeys myEntityKeys = entityKeys as InterestReportKeys;
+            return (from a in context.InterestReportLinesByDates where a.InterestReportId == myEntityKeys.Id select a).ToList();
         }
 
    }

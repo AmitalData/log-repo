@@ -26,10 +26,20 @@ update  Vessels set AutomaticLastUpdateDate =GETDATE() where AutomaticLastUpdate
 update  SpecialServicesTypes set AutomaticLastUpdateDate =GETDATE() where AutomaticLastUpdateDate is null
 update  ObjectFields set AutomaticLastUpdateDate =GETDATE() where AutomaticLastUpdateDate is null
 update  CustomPickLists set AutomaticLastUpdateDate =GETDATE() where AutomaticLastUpdateDate is null
-
-
-    
 update  Regions set AutomaticLastUpdateDate =GETDATE() where AutomaticLastUpdateDate is null
 update  CustomerSizes set AutomaticLastUpdateDate =GETDATE() where AutomaticLastUpdateDate is null
 update  Industries set AutomaticLastUpdateDate =GETDATE() where AutomaticLastUpdateDate is null
 update  ShipmentComputedFields set AutomaticLastUpdateDate =GETDATE() where AutomaticLastUpdateDate is null
+
+
+
+ --____________________________________ Fact Charge_____________________________________
+
+ update  ShipmentPayables set AutomaticLastUpdateDate =GETDATE() where AutomaticLastUpdateDate is null
+ update  APInvoiceLines set AutomaticLastUpdateDate =GETDATE() where AutomaticLastUpdateDate is null
+ update  APInvoices set AutomaticLastUpdateDate =GETDATE() where AutomaticLastUpdateDate is null
+ update  ShipmentReceivables set AutomaticLastUpdateDate =GETDATE() where AutomaticLastUpdateDate is null
+ update  ARInvoiceLines set AutomaticLastUpdateDate =GETDATE() where AutomaticLastUpdateDate is null
+ update  ARInvoices set AutomaticLastUpdateDate =GETDATE() where AutomaticLastUpdateDate is null
+ update  ChargesTypes set AutomaticLastUpdateDate =GETDATE() where AutomaticLastUpdateDate is null
+  --update  ChargesGroups set AutomaticLastUpdateDate =GETDATE() where AutomaticLastUpdateDate is null
