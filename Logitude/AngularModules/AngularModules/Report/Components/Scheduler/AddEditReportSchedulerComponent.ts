@@ -135,7 +135,7 @@ export class AddEditReportSchedulerComponent implements OnInit {
     SaveButtonClicked() {
         var reportFilterItems: Array<QueryFilterItem> = this.PageChild_PRREP.GetReportFilterItems();
         var reportTemplateId: string = this.PageChild_PRREP.GetReportTemplate();
-        this.PageChild_RETASK.SaveButtonClicked(reportFilterItems,reportTemplateId);
+        this.PageChild_RETASK.SaveButtonClicked(reportFilterItems, reportTemplateId);
         this.CurrentSession.CloseCurrentWindow();
     }
 

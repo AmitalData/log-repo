@@ -372,7 +372,7 @@
 
                                                                         <tr style="height:50px;">
                                                                             <td style="width:300px;vertical-align:top">
-                                                                                <LogTextBox [ObjectFieldName]="'Recepients'" [Text]="DataContext.Recepients" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                                <EmailSearchTextBox [DontInCludeInactive]="true" [EmailsText]="Recepients" [SelectedValuePath]="'Id'" [IsUsersList]="true" (EmailsTextChanged)="Recepients = $event"></EmailSearchTextBox>
                                                                             </td>
                                                                             <td></td>
                                                                         </tr>

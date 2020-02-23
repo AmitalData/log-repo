@@ -234,7 +234,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
             width = 1024;
         }
         if (this.IsSchedulerReport) {
-            height = 650;
+            height = 700;
         }
 
         width = width - 20;

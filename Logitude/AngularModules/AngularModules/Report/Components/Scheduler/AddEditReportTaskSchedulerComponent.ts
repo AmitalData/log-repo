@@ -21,6 +21,7 @@ export class AddEditReportTaskSchedulerComponent  {
     public DataContext: TaskReportSchedulerItemClass;
     public ObjectTableName: string = "TasksScheduler";
     public ValidationErrorsList: string[];
+    public Recepients: string = "";
     schedulerExtendedPMService: SchedulerExtendedPMService;
 
     private CurrentSession = SessionLocator.SelectedSession;
@@ -56,6 +57,7 @@ export class AddEditReportTaskSchedulerComponent  {
 
     SetSchedulerDetailsData(schedulerDetails: SchedulerDetails) {
         this.DataContext.SetReportSchedulerDetailsData(schedulerDetails);
+        this.Recepients = this.DataContext.SchedulerDetails.ReportDetails.Recepients;
         this.Clone();
     }
 
@@ -200,8 +202,7 @@ export class AddEditReportTaskSchedulerComponent  {
     SaveButtonClicked(reportFilterItems: Array<QueryFilterItem>,reportTemplateId: string) {
         this.CurrentSession.StartBusyIndicatorSaving();
 
-        this.DataContext.SchedulerDetails.ReportDetails.ReportFilterItems = reportFilterItems;
-        this.DataContext.SchedulerDetails.ReportDetails.ReportTemplateId = reportTemplateId;
+        this.FillReportDetails(reportFilterItems, reportTemplateId);
         if (this.DataContext.IsNew) {
             this.schedulerExtendedPMService.insert(this.EntityPM).subscribe(myResult => {
                 var myResponse: ServiceResponse = myResult;
@@ -249,6 +250,11 @@ export class AddEditReportTaskSchedulerComponent  {
         }
     }
 
+    FillReportDetails(reportFilterItems: Array<QueryFilterItem>, reportTemplateId: string) {
+        this.DataContext.SchedulerDetails.ReportDetails.ReportFilterItems = reportFilterItems;
+        this.DataContext.SchedulerDetails.ReportDetails.ReportTemplateId = reportTemplateId;
+        this.DataContext.SchedulerDetails.ReportDetails.Recepients = this.Recepients;
+    }
 
     private myCloner: Cloner;
     private Clone() {

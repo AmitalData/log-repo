@@ -540,15 +540,6 @@ export class TaskReportSchedulerItemClass extends BaseComponent {
         }
     }
 
-    recepients: string;
-    get Recepients() { return this.recepients; }
-    set Recepients(newValue: string) {
-        if (this.recepients != newValue) {
-            this.recepients = newValue;
-            this.SchedulerDetails.ReportDetails.Recepients = newValue;
-        }
-    }
-
     SetReportSchedulerDetailsData(schedulerDetails: SchedulerDetails) {
         this.SchedulerDetails = schedulerDetails;
         if (schedulerDetails) {
@@ -556,7 +547,6 @@ export class TaskReportSchedulerItemClass extends BaseComponent {
                 schedulerDetails.ReportDetails = new ReportSchedulerDetails;
             }
             this.EntityPM.SchedulerDetailsData = schedulerDetails;
-            this.recepients = this.SchedulerDetails.ReportDetails.Recepients;
         }
     }
 }
