@@ -43,7 +43,11 @@ import { CourierPendingReasonListService } from '../../../Customs/Services/Stand
 import { CourierPendingReasonList } from '../../../Customs/EntityLists/CourierPendingReasonList';
 //import { DeclarationPendingPMService } from '../../../Customs/Services/StandardPMs/DeclarationPendingPMService';
 import { DeclarationExtendedListService } from '../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
+
 import { CacheCourierPendingReasonService } from "../../../Customs/Services/Others/CacheCourierPendingReasonService";
+
+import { AmitalGatewayUtil } from "../../../Infrastructure/Utilities/AmitalGatewayUtil";
+
 
 @Component({
     moduleId: module.id,
@@ -261,7 +265,22 @@ export class CourierWorksheetListTemplate {
             this.IsDeclarationChecked = false;
         }
     }
+    ShowFollowUpStatus() {
+        if (AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
+            AmitalGatewayUtil.Instance.ShowCFIFILEMFUStatusScreen(
+                    this._CourierWorksheet.CustomFileNo,
+                    this._CourierWorksheet.DeclarationId,
+                    "ShowCFIFILEMFUStatusScreen");
 
+        } else {
+            var myMessageWindow = new MessageWindow();
+            let mess = "ShowFollowUpStatus -" + this._CourierWorksheet.CustomFileNo;
+            myMessageWindow.Show(mess);
+
+        }
+        
+        
+    }
     SendManifest(event) {
         this.ButtonClick(event);
         let myDeclarationPMService: DeclarationPMService = new DeclarationPMService()
@@ -505,7 +524,7 @@ export class CourierWorksheetListTemplate {
         if (this._CourierWorksheet.CourierPendingReasonErrorPlace == "1" /*=="בתשלום"*/) {
             var myMessageWindow = new MessageWindow
             myMessageWindow.Show(
-                //"לא ניתן לבצע הגשת תשלום כאשר יש השהייה מסוג עצירת תשלום. "
+                //"לם ניתן לבצע הגשת תשלום כםשר יש השהייה מסוג עצירת תשלום. "
                 TextCodeTranslator.Translate("Customs.CourierMaster.M.PaymentPendingHold")
             );
             return;
@@ -666,7 +685,7 @@ export class CourierWorksheetListTemplate {
                     confirm.Title = "מחיקת Pending";
                     confirm.YesButtonText = TextCodeTranslator.Translate("General.B.Yes");
                     confirm.ShowNoButton = true;
-                    confirm.Show("האם למחוק Pending?");
+                    confirm.Show("הםם למחוק Pending?");
                     confirm.WindowClosed.subscribe((event: any) => {
                         if (confirm.Yes) {
                             this.DeletePending(response.Result);
@@ -754,54 +773,54 @@ export class CourierWorksheetListTemplate {
 
     SendMamanSpecialAction(declarationId: string, actionCode: string, mamanSpecialActionCode: string) {
         var titleText: string = "מסר פעולות מיוחדות";
-        var questionText: string = "אשר שליחת מסר ביטול פעולה מיוחדת";
+        var questionText: string = "םשר שליחת מסר ביטול פעולה מיוחדת";
         var declarationMamanSpecialActionPM: DeclarationMamanSpecialActionPM = null;
 
         switch (mamanSpecialActionCode) {
             case "2": {
                 if (actionCode == "U") {
                     titleText = "הפקת תעודת עיכוב";
-                    questionText = "אשר שליחת מסר פעולה מיוחדת של תעודת עיכוב למסוף";
+                    questionText = "םשר שליחת מסר פעולה מיוחדת של תעודת עיכוב למסוף";
                     if (this.DelayCertificateDetails != null) {
                         declarationMamanSpecialActionPM = this.DelayCertificateDetails;
                     }
                 }
                 else if (actionCode == "C") {
                     titleText = "ביטול תעודת עיכוב";
-                    questionText = "אשר שליחת מסר ביטול פעולה מיוחדת של תעודת עיכוב למסוף";
+                    questionText = "םשר שליחת מסר ביטול פעולה מיוחדת של תעודת עיכוב למסוף";
                 }
                 break;
             }
             case "4": {
                 titleText = "ביטול הפקת מדבקה";
-                questionText = "אשר שליחת מסר ביטול פעולה מיוחדת של הדפסת מדבקה";
+                questionText = "םשר שליחת מסר ביטול פעולה מיוחדת של הדפסת מדבקה";
                 break;
             }
             case "5": {
                 if (actionCode == "U") {
                     titleText = "הדפסת מסמכים";
-                    questionText = "אשר שליחת מסר פעולה מיוחדת של הדפסת מסמכים";
+                    questionText = "םשר שליחת מסר פעולה מיוחדת של הדפסת מסמכים";
                     if (this.PrintDocumentsDetails != null) {
                         declarationMamanSpecialActionPM = this.PrintDocumentsDetails;
                     }
                 }
                 else if (actionCode == "C") {
                     titleText = "ביטול הדפסת מסמכים";
-                    questionText = "אשר שליחת מסר ביטול פעולה מיוחדת של הדפסת מסמכים";
+                    questionText = "םשר שליחת מסר ביטול פעולה מיוחדת של הדפסת מסמכים";
                 }
                 break;
             }
             case "6": {
                 if (actionCode == "U") {
                     titleText = "סב''ן";
-                    questionText = "אשר שליחת מסר פעולה מיוחדת של שליחה לסב''ן";
+                    questionText = "םשר שליחת מסר פעולה מיוחדת של שליחה לסב''ן";
                     if (this.SbanDetails != null) {
                         declarationMamanSpecialActionPM = this.SbanDetails;
                     }
                 }
                 else if (actionCode == "C") {
                     titleText = "ביטול סב''ן";
-                    questionText = "אשר שליחת מסר ביטול פעולה מיוחדת של שליחה לסב''ן";
+                    questionText = "םשר שליחת מסר ביטול פעולה מיוחדת של שליחה לסב''ן";
                 }
                 break;
             }

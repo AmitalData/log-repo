@@ -307,8 +307,7 @@ namespace Logitude.Customs.Data.Repsitories
         }
 
         public List<Declaration> GetDeclarationsById(List<string> declarationIds)
-        {
-
+        { 
             List<Declaration> declarations = (from a in context.Declarations
                                               where declarationIds.Contains(a.Id)
                                               select a).ToList();

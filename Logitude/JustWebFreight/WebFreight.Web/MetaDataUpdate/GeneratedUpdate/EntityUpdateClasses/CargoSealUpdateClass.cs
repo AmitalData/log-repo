@@ -103,12 +103,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "פרטי סגר",
 			      				    DefaultText =  "CargoSeal",
-			      				    Code =  "d90f",
+			      				    Code =  "cf08",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
 			      				    ServerModuleName =  "Customs",
 			      				    NoTS =  false,
+			      				    NoDefaultFeatures =  false,
 			      				    HasMenuButtons =  false,
 			      				    AllowedForComputingPartners =  false,
 			      				    Code1 =  "e89f",
@@ -117,6 +118,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
+			      				    IsTabsHidden =  false,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
@@ -188,6 +190,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsSpellCheckedHelpLocalDefaultText =  false,
 					  						IsSpellCheckedShortLocalDefaultText =  false,
 					  						IsSpellCheckedListLocalDefaultText =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -210,7 +213,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
+					  						SystemRequired =  true,
 					  						SystemMaxLength =  35,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
@@ -255,6 +258,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsSpellCheckedHelpLocalDefaultText =  false,
 					  						IsSpellCheckedShortLocalDefaultText =  false,
 					  						IsSpellCheckedListLocalDefaultText =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -322,6 +326,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsSpellCheckedHelpLocalDefaultText =  false,
 					  						IsSpellCheckedShortLocalDefaultText =  false,
 					  						IsSpellCheckedListLocalDefaultText =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -339,7 +344,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						LookUpTableName =  "Customs.SealCompletenes",
 					  						MinLength =  0,
 					  						MaxLength =  2,
-					  						IsRequired =  false,
+					  						IsRequired =  true,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
@@ -391,6 +396,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsSpellCheckedHelpLocalDefaultText =  false,
 					  						IsSpellCheckedShortLocalDefaultText =  false,
 					  						IsSpellCheckedListLocalDefaultText =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -458,6 +464,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsSpellCheckedHelpLocalDefaultText =  false,
 					  						IsSpellCheckedShortLocalDefaultText =  false,
 					  						IsSpellCheckedListLocalDefaultText =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -475,7 +482,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						LookUpTableName =  "Customs.SealType",
 					  						MinLength =  0,
 					  						MaxLength =  3,
-					  						IsRequired =  false,
+					  						IsRequired =  true,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
@@ -527,6 +534,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsSpellCheckedHelpLocalDefaultText =  false,
 					  						IsSpellCheckedShortLocalDefaultText =  false,
 					  						IsSpellCheckedListLocalDefaultText =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -594,6 +602,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsSpellCheckedHelpLocalDefaultText =  false,
 					  						IsSpellCheckedShortLocalDefaultText =  false,
 					  						IsSpellCheckedListLocalDefaultText =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -611,7 +620,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						LookUpTableName =  "Customs.SealUpdateReasonType",
 					  						MinLength =  0,
 					  						MaxLength =  3,
-					  						IsRequired =  false,
+					  						IsRequired =  true,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
@@ -663,6 +672,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsSpellCheckedHelpLocalDefaultText =  false,
 					  						IsSpellCheckedShortLocalDefaultText =  false,
 					  						IsSpellCheckedListLocalDefaultText =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -730,6 +740,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsSpellCheckedHelpLocalDefaultText =  false,
 					  						IsSpellCheckedShortLocalDefaultText =  false,
 					  						IsSpellCheckedListLocalDefaultText =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -747,7 +758,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						LookUpTableName =  "Customs.AmendmentType",
 					  						MinLength =  0,
 					  						MaxLength =  2,
-					  						IsRequired =  false,
+					  						IsRequired =  true,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
@@ -799,6 +810,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsSpellCheckedHelpLocalDefaultText =  false,
 					  						IsSpellCheckedShortLocalDefaultText =  false,
 					  						IsSpellCheckedListLocalDefaultText =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -866,6 +878,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsSpellCheckedHelpLocalDefaultText =  false,
 					  						IsSpellCheckedShortLocalDefaultText =  false,
 					  						IsSpellCheckedListLocalDefaultText =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  

@@ -219,7 +219,7 @@ namespace Logitude.Server.Tools
             //scope.Complete();
         }
         
-
+        
         protected virtual void SubmitChanges()
         {
             try

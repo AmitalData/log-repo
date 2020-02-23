@@ -163,6 +163,7 @@ export class DeclarationList {
 	IsValidTicketsDiamond: boolean;
 	CustomFileAmendment: string;
 	DeclarationNoAmendment: string;
+	AmendmentNumber: number;
 	
 }
  

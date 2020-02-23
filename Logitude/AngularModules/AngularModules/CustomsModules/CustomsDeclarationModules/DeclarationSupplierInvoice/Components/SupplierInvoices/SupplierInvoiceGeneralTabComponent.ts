@@ -1185,7 +1185,60 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent
         });
       logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/UpdateProcessCodeComponent');
     }
-
+    UpdateCountryOfOriginClicked(){
+        var windowArgs: any = {};
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 700;
+        logWindow.Height = 500;
+        logWindow.ShowCloseButton = true;
+        windowArgs.SupplierInvoicePM = this.EntityPM;
+        logWindow.WindowArgs = windowArgs;
+        logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.O.UpdateCountryOfOrigin");
+        logWindow.ComponentLoaded.subscribe(comp => {
+            logWindow.WindowClosed.subscribe(s => {
+                if (s) {
+                    this.SelectionOriginCompleted(comp);
+                }
+            });
+        });
+      logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/UpdateCountryOfOriginComponent');
+    }
+    private _CustomsCountryListService: CustomsCountryListService = new CustomsCountryListService();
+    SelectionOriginCompleted(args) {
+        if (args.UpdateAll) {
+            for (let item of this.EntityPM.SupplierInvoiceItems.filter(d => !d.IsParent)) {
+                if (item.OriginCountryCode != args.OriginCountryCode) {
+                    this.UpdateOriginCountry(item, args.OriginCountryCode);
+                }
+            }
+        } else {
+            if (args.UpdateItemsWithNoValue) {
+                for (let item of this.EntityPM.SupplierInvoiceItems.filter(d => !d.IsParent)) {
+                    if (item.OriginCountryCode == "" || item.OriginCountryCode == null) {
+                        this.UpdateOriginCountry(item, args.OriginCountryCode);
+                    }
+                }
+            } else {
+                if (args.ItemsSource) {
+                    for (let item of this.EntityPM.SupplierInvoiceItems.filter(d => !d.IsParent)) {
+                        var number = args.ItemsSource.Collection.filter(d => d.Number == item.SequenceNumeric)[0];
+                        if (number) {
+                            this.UpdateOriginCountry(item, args.OriginCountryCode);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    UpdateOriginCountry(item,code) {
+        this._CustomsCountryListService.getSingle(code).subscribe((res) => {
+            var entity = res.Result;
+            if (entity) {
+                item.OriginCountryCode = code;
+                item.OriginCountryName = entity.LocalName;
+            }
+        });
+    }
     SelectionCompleted(args) {
 
         if (args.UpdateAll) {
@@ -1200,7 +1253,6 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent
                     processType.ProcessTypeCode = args.ProcessTypeCode;
 
                     this.itemGovernmentProcedureTypeListService.getSingleFromCache(args.ProcessTypeCode).subscribe(response => {
-
                         var result: ItemGovernmentProcedureTypeList = response.Result;
                         processType.ProcessTypeName = result.LocalName;
                     });
