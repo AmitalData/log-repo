@@ -123,7 +123,8 @@ namespace Logitude.BL.QuoteModel.EntityQueries.Charts
 
             else if (chartCode == "KPI")
             {
-
+                SentQuotesKPIQuery sentQuotesKPIQuery = new SentQuotesKPIQuery();
+                result = sentQuotesKPIQuery.FilterQuotesByKPI(dataSourceQuery);
             }
 
             return result;
