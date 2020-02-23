@@ -317,11 +317,13 @@ namespace Logitude.Customs.Data.EntityPOCOs
         [Column("DepositionStatusCode")]
 	    public string DepositionStatusCode { get; set; }
         [Column("IsDiamondDeclaration")]
-        public bool IsDiamondDeclaration { get; set; }
+	    public bool IsDiamondDeclaration { get; set; }
         [Column("IsMissMandatoryDiamond")]
-        public bool IsMissMandatoryDiamond { get; set; }
+	    public bool IsMissMandatoryDiamond { get; set; }
         [Column("IsValidTicketsDiamond")]
-        public bool IsValidTicketsDiamond { get; set; }
+	    public bool IsValidTicketsDiamond { get; set; }
+        [Column("AvailabilityDate")]
+	    public DateTime AvailabilityDate { get; set; }
     }
 }
 	 

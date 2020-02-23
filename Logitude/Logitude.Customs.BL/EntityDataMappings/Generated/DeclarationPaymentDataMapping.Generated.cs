@@ -30,7 +30,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ProcessADescription, 
 	         Tenant, 
 	         ConcurrencyGUID, 
-	         FuturePaymentDateTime,
+	         FuturePaymentDateTime, 
+	         AutomaticPayment,
 	      }
 
 
@@ -49,7 +50,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ConcurrencyGUID, 
 	         NewConcurrencyGUID, 
 	         CustomsAgentExplanationDefault, 
-	         FuturePaymentDateTime,
+	         FuturePaymentDateTime, 
+	         AutomaticPayment,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -96,6 +98,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FuturePaymentDateTime))
             {
 				entityPOCO.FuturePaymentDateTime = entityPM.FuturePaymentDateTime;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AutomaticPayment))
+            {
+				entityPOCO.AutomaticPayment = entityPM.AutomaticPayment;
 			}
 			}
 
@@ -147,6 +154,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.FuturePaymentDateTime = entityPOCO.FuturePaymentDateTime;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AutomaticPayment))
+            {
+					entityPM.AutomaticPayment = entityPOCO.AutomaticPayment;
+            }
+
 		}
 
 		public void PMToOldPM(DeclarationPaymentPM entityPM, DeclarationPaymentPM oldEntityPM)
@@ -191,6 +203,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FuturePaymentDateTime))
             {
                 oldEntityPM.FuturePaymentDateTime = entityPM.FuturePaymentDateTime;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AutomaticPayment))
+            {
+                oldEntityPM.AutomaticPayment = entityPM.AutomaticPayment;
             }
 			
 		}

@@ -27,6 +27,7 @@ using System.Data.Entity.Infrastructure;
 using Simplog.Server.Infrastructure.DataContracts;
 using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
+using System.Text.RegularExpressions;
 
 namespace Logitude.BL.CommonDataModel.EntityQueries
 {
@@ -342,7 +343,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public DocumentsFilingPM GetSinglePM(string id, int tenant)
         {
-            DocumentsFilingPM extDocPm = (from a in repository.context.DocumentsFilings.Include("CreatedByUser.Contact").Include("ReceivedByUser.Contact").Include("Document").Include("DocumentType").Include("Owner.Contact")
+            id = Regex.Replace(id, " ", "+");
+              DocumentsFilingPM extDocPm = (from a in repository.context.DocumentsFilings.Include("CreatedByUser.Contact").Include("ReceivedByUser.Contact").Include("Document").Include("DocumentType").Include("Owner.Contact")
                                           where a.Id == id && a.Tenant == tenant
                                           select new DocumentsFilingPM()
                                           {

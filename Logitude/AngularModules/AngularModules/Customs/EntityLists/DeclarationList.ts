@@ -133,9 +133,9 @@ export class DeclarationList {
 	AcceptanceStatusName: string;
 	CourierSuspentionCode: string;
 	CourierSuspentionName: string;
-    DepositionStatusCode: string;
-    IsMissMandatoryDiamond: boolean;
-    IsValidTicketsDiamond: boolean;
+	DepositionStatusCode: string;
+	IsMissMandatoryDiamond: boolean;
+	IsValidTicketsDiamond: boolean;
 	
 }
  

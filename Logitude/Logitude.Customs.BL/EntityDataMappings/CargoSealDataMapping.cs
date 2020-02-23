@@ -24,6 +24,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
             this.CustomMappedPOCOProperties.Add(POCOPropertyNames.CargoSealIdentifierId);
             this.CustomMappedPOCOProperties.Add(POCOPropertyNames.Tenant);
             this.CustomMappedPOCOProperties.Add(POCOPropertyNames.SealNumber);
+            this.CustomMappedPOCOProperties.Add(POCOPropertyNames.SealTypeCode);
+            this.CustomMappedPOCOProperties.Add(POCOPropertyNames.UpdateTypeCode);
+            this.CustomMappedPOCOProperties.Add(POCOPropertyNames.UpdateReasonCode);
+            this.CustomMappedPOCOProperties.Add(POCOPropertyNames.SealCompletenessStateCode);
 
             if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
             {
@@ -31,6 +35,12 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 entityPOCO.Tenant = entityPM.Tenant;
                 entityPOCO.SealNumber = entityPM.SealNumber;
             }
+                entityPOCO.SealTypeCode = entityPM.SealTypeCode;
+                entityPOCO.UpdateTypeCode = entityPM.UpdateTypeCode;
+                entityPOCO.UpdateReasonCode = entityPM.UpdateReasonCode;
+                entityPOCO.SealCompletenessStateCode = entityPM.SealCompletenessStateCode;
+
+           
         }
 
         public void CustomPOCOToPM(CargoSealPM entityPM, CargoSeal entityPOCO)

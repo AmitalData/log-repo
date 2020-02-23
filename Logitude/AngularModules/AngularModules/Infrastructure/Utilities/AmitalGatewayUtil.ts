@@ -72,6 +72,27 @@ export class AmitalGatewayUtil {
         unifreightMessageM.Response = [];
         return unifreightMessageM;
     }
+
+    public ShowCFIFILEMFUStatusScreen(
+        UnifreightEntityNumber: string,
+        LogitudeEntityNumber: string,
+        ViewModelName: string
+        ) {
+        //var unifreightMessageM = GetMessage(UnifreightEntityNumber, LogitudeEntityNumber, ViewModelName);
+        var unifreightMessageM =
+            AmitalGatewayUtil.Instance.
+                DeclarationMessaging.GetMessage(UnifreightEntityNumber, LogitudeEntityNumber, ViewModelName);
+        
+
+        AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
+            "AmitalGatewayUtil.ShowCFIFILEMFUStatusScreen",
+            "CFIHMAIN.LogitudeTask",
+            "ShowCFIFILEMFUStatusScreen",
+            unifreightMessageM,
+            " Feature 62838: מסך עבודה כניסה ל-F/U ביונפרייט");
+    }
+
+
     public ShowDeclarationCertificatesByGroups(
         UnifreightEntityNumber: string,
         LogitudeEntityNumber: string,

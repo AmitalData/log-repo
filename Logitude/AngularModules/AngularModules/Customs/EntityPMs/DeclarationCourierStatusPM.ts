@@ -329,7 +329,27 @@ export class DeclarationCourierStatusPM {
         }
     }
     //public DeclarationPendings: Array<DeclarationPendingPM>= [];
- 
+     private sortedImporterCode: string;
+    public get SortedImporterCode() { return this.sortedImporterCode; }
+    public set SortedImporterCode(newValue: string) { if (this.sortedImporterCode != newValue) { this.sortedImporterCode = newValue; this.MarkAsDirty("SortedImporterCode"); } }
+       
+	 
+    private sortedDocumentStatusCode: string;
+    public get SortedDocumentStatusCode() { return this.sortedDocumentStatusCode; }
+    public set SortedDocumentStatusCode(newValue: string) { if (this.sortedDocumentStatusCode != newValue) { this.sortedDocumentStatusCode = newValue; this.MarkAsDirty("SortedDocumentStatusCode"); } }
+       
+	 
+    private sortedCourierManifestStatus: string;
+    public get SortedCourierManifestStatus() { return this.sortedCourierManifestStatus; }
+    public set SortedCourierManifestStatus(newValue: string) { if (this.sortedCourierManifestStatus != newValue) { this.sortedCourierManifestStatus = newValue; this.MarkAsDirty("SortedCourierManifestStatus"); } }
+       
+	 
+    private sortedCourierDeclarationStatus: string;
+    public get SortedCourierDeclarationStatus() { return this.sortedCourierDeclarationStatus; }
+    public set SortedCourierDeclarationStatus(newValue: string) { if (this.sortedCourierDeclarationStatus != newValue) { this.sortedCourierDeclarationStatus = newValue; this.MarkAsDirty("SortedCourierDeclarationStatus"); } }
+       
+	 
+
     public OldEntityPM: DeclarationCourierStatusPM;
 		
     public IsDirty: boolean;

@@ -6,6 +6,7 @@ import { SupplierInvoiceItemCertificatesComponent } from './Components/SupplierI
 import { DeclarationSupplierInvoiceTabComponent } from './Components/SupplierInvoices/DeclarationSupplierInvoiceTabComponent';
 import { VendorExtendedSearchComponent } from './Components/SupplierInvoices/VendorExtendedSearchComponent';
 import { UpdateProcessCodeComponent } from './Components/SupplierInvoices/UpdateProcessCodeComponent';
+import { UpdateCountryOfOriginComponent } from './Components/SupplierInvoices/UpdateCountryOfOriginComponent';
 import { AddEditSupplierInvoiceComponent } from './Components/SupplierInvoices/AddEditSupplierInvoiceComponent';
 import { SupplierInvoiceGeneralTabComponent } from './Components/SupplierInvoices/SupplierInvoiceGeneralTabComponent';
 import { SupplierInvoiceMoreTabComponent } from './Components/SupplierInvoices/SupplierInvoiceMoreTabComponent';
@@ -27,6 +28,7 @@ export const Components =
     SupplierInvoiceItemCertificatesComponent,
     VendorExtendedSearchComponent,
     UpdateProcessCodeComponent,
+    UpdateCountryOfOriginComponent,
     AddEditSupplierInvoiceComponent,
     SupplierInvoiceGeneralTabComponent,
     SupplierInvoiceMoreTabComponent,
@@ -49,6 +51,7 @@ export class ModuleDeclarations {
       case "SupplierInvoiceItemCertificatesComponent": { myResult = SupplierInvoiceItemCertificatesComponent; break; }
       case "VendorExtendedSearchComponent": { myResult = VendorExtendedSearchComponent; break; }
       case "UpdateProcessCodeComponent": { myResult = UpdateProcessCodeComponent; break; }
+      case "UpdateCountryOfOriginComponent": { myResult = UpdateCountryOfOriginComponent; break; }
       case "AddEditSupplierInvoiceComponent": { myResult = AddEditSupplierInvoiceComponent; break; }
       case "SupplierInvoiceGeneralTabComponent": { myResult = SupplierInvoiceGeneralTabComponent; break; }
       case "SupplierInvoiceMoreTabComponent": { myResult = SupplierInvoiceMoreTabComponent; break; }
