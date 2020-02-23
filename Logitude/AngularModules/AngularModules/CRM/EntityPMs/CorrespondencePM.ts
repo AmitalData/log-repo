@@ -143,6 +143,21 @@ export class CorrespondencePM {
             this.attachments = newValue;
         }
     }
+    private contactImageDetailId: string;
+    public get ContactImageDetailId() { return this.contactImageDetailId; }
+    public set ContactImageDetailId(newValue: string) { if (this.contactImageDetailId != newValue) { this.contactImageDetailId = newValue; this.MarkAsDirty("ContactImageDetailId"); } }
+       
+	 
+    private contactDefaultColor: string;
+    public get ContactDefaultColor() { return this.contactDefaultColor; }
+    public set ContactDefaultColor(newValue: string) { if (this.contactDefaultColor != newValue) { this.contactDefaultColor = newValue; this.MarkAsDirty("ContactDefaultColor"); } }
+       
+	 
+    private contactIndexColor: number;
+    public get ContactIndexColor() { return this.contactIndexColor; }
+    public set ContactIndexColor(newValue: number) { if (this.contactIndexColor != newValue) { this.contactIndexColor = newValue; this.MarkAsDirty("ContactIndexColor"); } }
+       
+	 
 
     public OldEntityPM: CorrespondencePM;
 		
