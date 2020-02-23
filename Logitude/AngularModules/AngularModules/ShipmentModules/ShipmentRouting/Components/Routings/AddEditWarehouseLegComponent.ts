@@ -300,6 +300,8 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
                 this.SetLastFreeDate();
                 this.SetStorageDays();
             }
+
+            this.ComputeGrossWeight_PerStorageDays();
         }
     }
 
@@ -312,9 +314,18 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
                 this.WarehouseLegActualReleaseDate = null;
                 this.StorageDays = null;
                 this.Days = null;
-            } else {
+            }
+            else {
                 this.SetStorageDays();
             }
+            this.ComputeGrossWeight_PerStorageDays();
+        }
+    }
+
+    get GrossWeightPerStorageDays() { return this.EntityPM.GrossWeightPerStorageDays == null ? 0 : this.EntityPM.GrossWeightPerStorageDays; }
+    set GrossWeightPerStorageDays(newValue: number) {
+        if (this.EntityPM.GrossWeightPerStorageDays != newValue) {
+            this.EntityPM.GrossWeightPerStorageDays = AppTool.Round(newValue, 3);
         }
     }
 
@@ -349,6 +360,8 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
             } else {
                 this.SetLastFreeDate();
             }
+
+
         }
     }
 
@@ -372,9 +385,12 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
                 } else if (this.WarehouseStorageFreeDays != days) {
                     this.WarehouseStorageFreeDays = days;
                 }
-            } else {
+            }
+            else {
                 this.WarehouseStorageFreeDays = 0;
             }
+
+            this.ComputeGrossWeight_PerStorageDays();
         }
     }
 
@@ -546,5 +562,12 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
         }
 
         this.myCloner.RejectChanges();
+    }
+
+    private ComputeGrossWeight_PerStorageDays() {
+        var StorageDays = DateTool.GetDaysBetweenDates(this.EntityPM.WarehouseLegActualReleaseDate, this.EntityPM.WarehouseLegActualEntryDate);
+        var grossWeightPerStorageDays = this.EntityPM.GrossWeightPerTon * (StorageDays - this.EntityPM.WarehouseStorageFreeDays);
+        this.GrossWeightPerStorageDays = grossWeightPerStorageDays < 0 ? 0 : grossWeightPerStorageDays;
+        ShipmentTool.OnShipmentQuantitiesChanged(this.EntityPM);
     }
 }
