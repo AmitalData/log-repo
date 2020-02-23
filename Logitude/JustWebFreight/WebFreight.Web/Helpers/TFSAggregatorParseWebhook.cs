@@ -58,7 +58,7 @@ namespace WebFreight.Web.Helpers
         private void DOJOB(int wi)
         {
             string accountUri = "https://logitudeteam.visualstudio.com";
-            var personalAccessToken = "qsxsy6j454xpslikiuzc5oynhh5djttgxj4gmnlzpuaeypbuyc3q";
+            var personalAccessToken = "xbekti46cnnxsz3selcaazf7lx5ypsm774cwd35wtbj2bswz6xha";
             int workItemId = wi;
             VssConnection connection = new VssConnection(new Uri(String.Format(accountUri)), new VssBasicCredential("logitudo@live.com", personalAccessToken));
             WorkItemTrackingHttpClient witClient = connection.GetClient<WorkItemTrackingHttpClient>();
@@ -157,7 +157,7 @@ namespace WebFreight.Web.Helpers
         private WorkItem GetWorkItemById(int id)
         {
             string accountUri = "https://logitudeteam.visualstudio.com";
-            var personalAccessToken = "qsxsy6j454xpslikiuzc5oynhh5djttgxj4gmnlzpuaeypbuyc3q";
+            var personalAccessToken = "xbekti46cnnxsz3selcaazf7lx5ypsm774cwd35wtbj2bswz6xha";
             VssConnection connection = new VssConnection(new Uri(String.Format(accountUri)), new VssBasicCredential("maram@logitudeworld.com", personalAccessToken));
             WorkItemTrackingHttpClient witClient = connection.GetClient<WorkItemTrackingHttpClient>();
             object projectNo = "";
