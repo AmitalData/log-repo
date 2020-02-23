@@ -4,6 +4,7 @@ import { QuoteDashboardArguments } from '../../../../Quote/DataContracts/QuoteDa
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { DashboardService } from '../../../../Quote/Services/QuoteDashboard/DashboardService';
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
+import { DateTool } from '../../../../Infrastructure/Tools';
 
 
 declare var makeAMLineChartMultiple: any;
@@ -140,21 +141,172 @@ export class TopFiveSalesmanProfitComponent implements OnInit {
             }
             case '-90': {
                 this.SalesmanNumber = this.TopFiveSalesmanData.length / 3;
-                this.GroupingDataByMonth(data);
+                this.GroupingDataByThree(data);
                 break;
             }
             case "-365": {
                 this.SalesmanNumber = this.TopFiveSalesmanData.length / 4;
-                this.GroupingDataByQuarter(data);
+                this.GroupingDataByFour(data);
                 break;
             }
             case "-2": {
-                this.SalesmanNumber = this.TopFiveSalesmanData.length / 4;
-                this.GroupingDataByQuarter(data);
+                this.CustomGrouping(data);
+                
             }
         }
     }
-  
+
+    CustomGrouping(data) {
+        var days = DateTool.GetDaysBetweenDates(this.Wizard.FromDate, this.Wizard.ToDate);
+        if (days < 7) {
+            switch (days) {
+                case 0: {
+                    this.SalesmanNumber = this.TopFiveSalesmanData.length;
+                    this.GroupingDataByOne(data);
+                    break;
+                }
+                case 1: {
+                    this.SalesmanNumber = this.TopFiveSalesmanData.length / 2;
+                    this.GroupingDataByTwo(data);
+                    break;
+                }
+                case 2: {
+                    this.SalesmanNumber = this.TopFiveSalesmanData.length / 3;
+                    this.GroupingDataByThree(data);
+                    break;
+                }
+                case 3: {
+                    this.SalesmanNumber = this.TopFiveSalesmanData.length / 4;
+                    this.GroupingDataByFour(data);
+                    break;
+                }
+                case 4: {
+                    this.SalesmanNumber = this.TopFiveSalesmanData.length / 5;
+                    this.GroupingDataByFive(data);
+                    break;
+                }
+                case 5: {
+                    this.SalesmanNumber = this.TopFiveSalesmanData.length / 6;
+                    this.GroupingDataBySix(data);
+                    break;
+                }
+                case 6: {
+                    this.SalesmanNumber = this.TopFiveSalesmanData.length / 7;
+                    this.GroupingDataBySeven(data);
+                    break;
+                }
+
+            }
+        } else {
+            this.SalesmanNumber = this.TopFiveSalesmanData.length / 4;
+            this.GroupingDataByFour(data);
+        }
+    }
+
+    GroupingDataBySeven(data) {
+        var category1: any = [];
+        var category2: any = [];
+        var category3: any = [];
+        var category4: any = [];
+        var category5: any = [];
+        var category6: any = [];
+        var category7: any = [];
+        var index = 0;
+        data.forEach(item => {
+            var value = index % 7;
+            index++;
+            switch (value) {
+                case 0: {
+                    category1.push(item);
+                    break;
+                }
+                case 1: {
+                    category2.push(item);
+                    break;
+                }
+                case 2: {
+                    category3.push(item);
+                    break;
+                }
+                case 3: {
+                    category4.push(item);
+                    break;
+                }
+                case 4: {
+                    category5.push(item);
+                    break;
+                }
+                case 5: {
+                    category6.push(item);
+                    break;
+                }
+                case 6: {
+                    category7.push(item);
+                    break;
+                }
+            }
+
+        });
+
+        this.GetSalesmanNames(category1);
+        this.MapData(category1, 0);
+        this.MapData(category2, 1);
+        this.MapData(category3, 2);
+        this.MapData(category4, 3);
+        this.MapData(category5, 4);
+        this.MapData(category6, 5);
+        this.MapData(category7, 6);
+    }
+
+    GroupingDataBySix(data) {
+        var category1: any = [];
+        var category2: any = [];
+        var category3: any = [];
+        var category4: any = [];
+        var category5: any = [];
+        var category6: any = [];
+        var index = 0;
+        data.forEach(item => {
+            var value = index % 6;
+            index++;
+            switch (value) {
+                case 0: {
+                    category1.push(item);
+                    break;
+                }
+                case 1: {
+                    category2.push(item);
+                    break;
+                }
+                case 2: {
+                    category3.push(item);
+                    break;
+                }
+                case 3: {
+                    category4.push(item);
+                    break;
+                }
+                case 4: {
+                    category5.push(item);
+                    break;
+                }
+                case 5: {
+                    category6.push(item);
+                    break;
+                }
+            }
+
+        });
+
+        this.GetSalesmanNames(category1);
+        this.MapData(category1, 0);
+        this.MapData(category2, 1);
+        this.MapData(category3, 2);
+        this.MapData(category4, 3);
+        this.MapData(category5, 4);
+        this.MapData(category6, 4);
+    }
+
     GroupingDataByFive(data) {
         var category1: any = [];
         var category2: any = [];
@@ -198,7 +350,7 @@ export class TopFiveSalesmanProfitComponent implements OnInit {
         this.MapData(category5, 4);
     }
 
-    GroupingDataByQuarter(data) {
+    GroupingDataByFour(data) {
         var category1: any = [];
         var category2: any = [];
         var category3: any = [];
@@ -234,67 +386,7 @@ export class TopFiveSalesmanProfitComponent implements OnInit {
         this.MapData(category4, 3);
     }
 
-    GroupingDataByOne(data) {
-        this.GetSalesmanNames(data);
-        this.MapData(data, 0);
-    }
-
-    GroupingDataBySeven(data) {
-        var category1: any = [];
-        var category2: any = [];
-        var category3: any = [];
-        var category4: any = [];
-        var category5: any = [];
-        var category6: any = [];
-        var category7: any = [];
-        var index = 0;
-        data.forEach(item => {
-            var value = index % 7;
-            index++;
-            switch (value) {
-                case 0: {
-                    category1.push(item);
-                    break;
-                } 
-                case 1: {
-                    category2.push(item);
-                    break;
-                }
-                case 2: {
-                    category3.push(item);
-                    break;
-                }
-                case 3: {
-                    category4.push(item);
-                    break;
-                }
-                case 4: {
-                    category5.push(item);
-                    break;
-                }
-                case 5: {
-                    category6.push(item);
-                    break;
-                }
-                case 6: {
-                    category7.push(item);
-                    break;
-                }
-            }
-
-        });
-
-        this.GetSalesmanNames(category1);
-        this.MapData(category1, 0);
-        this.MapData(category2, 1);
-        this.MapData(category3, 2);
-        this.MapData(category4, 3);
-        this.MapData(category5, 4);
-        this.MapData(category6, 5);
-        this.MapData(category7, 6);
-    }
-
-    GroupingDataByMonth(data) {
+    GroupingDataByThree(data) {
         var category1: any = [];
         var category2: any = [];
         var category3: any = [];
@@ -321,6 +413,34 @@ export class TopFiveSalesmanProfitComponent implements OnInit {
         this.MapData(category1, 0);
         this.MapData(category2, 1);
         this.MapData(category3, 2);
+    }
+
+    GroupingDataByTwo(data) {
+        var category1: any = [];
+        var category2: any = [];
+        var index = 0;
+        data.forEach(item => {
+            var value = index % 2;
+            index++;
+            switch (value) {
+                case 0: {
+                    category1.push(item);
+                    break;
+                }
+                case 1: {
+                    category2.push(item);
+                    break;
+                }
+            }
+        });
+        this.GetSalesmanNames(category1);
+        this.MapData(category1, 0);
+        this.MapData(category2, 1);
+    }
+
+    GroupingDataByOne(data) {
+        this.GetSalesmanNames(data);
+        this.MapData(data, 0);
     }
 
     MapData(data, i) {

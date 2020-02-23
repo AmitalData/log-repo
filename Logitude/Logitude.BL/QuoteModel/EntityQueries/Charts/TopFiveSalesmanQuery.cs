@@ -167,27 +167,62 @@ namespace Logitude.BL.QuoteModel.EntityQueries.Charts
                 case "-2":
                     {
                         double differnceDays = ((TimeSpan)(args.ToDate - args.FromDate)).TotalDays;
-                        double period = Math.Ceiling(differnceDays / 4);
-                        DateTime fromDate = (DateTime)args.FromDate;
-                        DateTime toDate = fromDate.AddDays(period);
-                        for (int i = 0; i < 4; i++)
+                        double period = Math.Floor(differnceDays / 4);
+                        DateTime fromDate = (DateTime) args.FromDate;
+                        DateTime toDate;
+                        if((int) differnceDays < 7)
                         {
-                            if(differnceDays > 365)
+                            toDate = (DateTime) args.ToDate;
+                            while (fromDate <= toDate)
                             {
-                                output.Add(fromDate.ToString("MMM yy") + " - " + toDate.ToString("MMM yy") + " ");
-                            } else {
-                                output.Add(fromDate.ToString("dd MMM") + " - " + toDate.ToString("dd MMM") + " ");
+                                output.Add(fromDate.ToString("dd MMM"));
+                                fromDate = fromDate.AddDays(1);
                             }
-                            
-                            fromDate = toDate.AddDays(1);
+
+                        }
+                        else {
                             toDate = fromDate.AddDays(period);
-                            if (toDate > args.ToDate)
+
+                            for (int i = 0; i < 4; i++)
                             {
-                                toDate = (DateTime)args.ToDate;
+                                if (differnceDays > 365)
+                                {
+                                    if (fromDate == toDate)
+                                    {
+                                        output.Add(fromDate.ToString("MMM yy"));
+                                    }
+                                    else
+                                    {
+                                        output.Add(fromDate.ToString("MMM yy") + " - " + toDate.ToString("MMM yy") + " ");
+                                    }
+                                }
+                                else
+                                {
+                                    if (fromDate == toDate)
+                                    {
+                                        output.Add(fromDate.ToString("dd MMM"));
+                                    }
+                                    else
+                                    {
+                                        output.Add(fromDate.ToString("dd MMM") + " - " + toDate.ToString("dd MMM") + " ");
+                                    }
+                                }
+
+                                fromDate = toDate.AddDays(1);
+                                toDate = fromDate.AddDays(period);
+                                if (toDate > args.ToDate)
+                                {
+                                    toDate = (DateTime)args.ToDate;
+                                }
+                                if (toDate <= fromDate)
+                                {
+                                    fromDate = toDate;
+                                }
                             }
                         }
                         break;
                     }
+                        
             }
             labels = output;
         }
@@ -235,47 +270,75 @@ namespace Logitude.BL.QuoteModel.EntityQueries.Charts
         private List<ChartingDataClass> GetChartItemsInCustom(IQueryable<Quote> dataSourceQuery)
         {
             double differnceDays = ((TimeSpan)(args.ToDate - args.FromDate)).TotalDays;
+            List<ChartingDataClass> output = new List<ChartingDataClass>();
 
             if (differnceDays < 0)
                 throw new ApplicationException("To date must be smaller than from date");
 
-            double period = Math.Ceiling(differnceDays / 4);
-            DateTime fromDate = (DateTime)args.FromDate;
-            DateTime toDate = fromDate.AddDays(period);
-            List<ChartingDataClass> output = new List<ChartingDataClass>();
-            List<ChartingDataClass> items = new List<ChartingDataClass>();
-            IQueryable<Quote> temp;
-            for (int i = 0; i < 4; i++)
+            if ((int) differnceDays < 7)
             {
-                temp = FilterPeriod(dataSourceQuery, fromDate, toDate);
-                items  = (from d in temp.Include("SalesmanUser").Include("SalesmanUser.Contact")
-                          group d by new { d.SalesmanUserId, d.SalesmanUser.Contact.EnglishName } into g
-                               select new ChartingDataClass
-                               {
-                                   Key = g.Key.SalesmanUserId,
-                                   SalesmanUserName = g.Key.EnglishName,
-                                   Value = args.SelectedCurrency == "1" ? g.Sum(s => s.EstimatedProfitInLocal) : g.Sum(s => s.EstimatedProfitInProfit),
-                               }).OrderByDescending(s => s.Key).ToList();
+                output = GetChartItemsByDay(dataSourceQuery);
+            } else {
 
-                foreach (ChartingDataClass item in items) 
+                double period = Math.Floor(differnceDays / 4);
+                DateTime fromDate = (DateTime)args.FromDate;
+                DateTime toDate = fromDate.AddDays(period);
+                List<ChartingDataClass> items = new List<ChartingDataClass>();
+                IQueryable<Quote> temp;
+                for (int i = 0; i < 4; i++)
                 {
-                    if (differnceDays > 365)
+                    temp = FilterPeriod(dataSourceQuery, fromDate, toDate);
+                    items = (from d in temp.Include("SalesmanUser").Include("SalesmanUser.Contact")
+                             group d by new { d.SalesmanUserId, d.SalesmanUser.Contact.EnglishName } into g
+                             select new ChartingDataClass
+                             {
+                                 Key = g.Key.SalesmanUserId,
+                                 SalesmanUserName = g.Key.EnglishName,
+                                 Value = args.SelectedCurrency == "1" ? g.Sum(s => s.EstimatedProfitInLocal) : g.Sum(s => s.EstimatedProfitInProfit),
+                             }).OrderByDescending(s => s.Key).ToList();
+
+                    foreach (ChartingDataClass item in items)
                     {
-                        item.Label = fromDate.ToString("MMM yy") + " - " + toDate.ToString("MMM yy") + " ";
+                        if (differnceDays > 365)
+                        {
+                            if (fromDate == toDate)
+                            {
+                                item.Label = fromDate.ToString("MMM yy");
+                            }
+                            else
+                            {
+                                item.Label = fromDate.ToString("MMM yy") + " - " + toDate.ToString("MMM yy") + " ";
+                            }
+
+                        }
+                        else
+                        {
+                            if (fromDate == toDate)
+                            {
+                                item.Label = fromDate.ToString("dd MMM");
+                            }
+                            else
+                            {
+                                item.Label = fromDate.ToString("dd MMM") + " - " + toDate.ToString("dd MMM") + " ";
+                            }
+
+                        }
                     }
-                    else
+                    fromDate = toDate.AddDays(1);
+                    toDate = fromDate.AddDays(period);
+                    if (toDate > args.ToDate)
                     {
-                        item.Label = fromDate.ToString("dd MMM") + " - " + toDate.ToString("dd MMM") + " ";
+                        toDate = (DateTime)args.ToDate;
                     }
+                    if (toDate <= fromDate)
+                    {
+                        fromDate = toDate;
+                    }
+                    output = output.Concat(items).OrderByDescending(x => x.Key).ToList();
                 }
-                fromDate = toDate.AddDays(1);
-                toDate = fromDate.AddDays(period);
-                if (toDate > args.ToDate)
-                {
-                    toDate = (DateTime)args.ToDate;
-                }
-                output = output.Concat(items).OrderByDescending(x => x.Key).ToList();
             }
+                
+
             return output;
         }
       
@@ -481,6 +544,22 @@ namespace Logitude.BL.QuoteModel.EntityQueries.Charts
                     {
                         return SetMonths(list, today);
                     }
+                case "-2":
+                    {
+                        return SetDatesForDays(list);
+                    }
+            }
+            return list;
+        }
+
+        private List<ChartingDataClass> SetDatesForDays(List<ChartingDataClass> list)
+        {
+            int differenceDays;
+            DateTime fromDate = (DateTime)args.FromDate;
+            foreach (ChartingDataClass item in list)
+            {
+                differenceDays = Int32.Parse(item.Label) - fromDate.Day;
+                item.Label = fromDate.AddDays(differenceDays).ToString("dd MMM");
             }
             return list;
         }
