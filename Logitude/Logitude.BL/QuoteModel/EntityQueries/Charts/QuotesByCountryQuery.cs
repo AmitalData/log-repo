@@ -12,61 +12,64 @@ namespace Logitude.BL.QuoteModel.EntityQueries.Charts
     public class QuotesByCountryQuery
     {
         List<ChartingDataClass> myResult;
-        public List<ChartingDataClass> FilterQuotesByCountry(IQueryable<Quote> dataSourceQuery, bool incluseOtherCoutnries, int? top)
+        public List<ChartingDataClass> FilterQuotesByCountry(IQueryable<Quote> dataSourceQuery, bool includeOtherCoutnries, int? top)
         {
             List<ChartingDataClass> resultList = null;
-            List<ChartingDataClass> othersResultList = null;
 
             if (top < 0)
             {
                 top = 0;
             }
 
-            resultList = (from s in dataSourceQuery.Include("CountryForStatistics")
-                          group s by new
-                          {
-                              s.CountryForStatisticsId,
-                              s.CountryForStatistics.EnglishName,
-                          } into m
-                          select new ChartingDataClass()
-                          {
-                              CountryId = m.Key.CountryForStatisticsId,
-                              CountryName = m.Key.EnglishName,
-                              Total = m.Count(),
-                          }).OrderByDescending(d => d.Total).Take(top.Value).ToList();
+            List<ChartingDataClass> allCountriesResult = (from s in dataSourceQuery.Include("CountryForStatistics")
+                                                          group s by new
+                                                          {
+                                                              s.CountryForStatisticsId,
+                                                              s.CountryForStatistics.EnglishName,
+                                                          } into m
+                                                          select new ChartingDataClass()
+                                                          {
+                                                              CountryId = m.Key.CountryForStatisticsId,
+                                                              CountryName = m.Key.EnglishName,
+                                                              Total = m.Count(),
+                                                          }).ToList();
 
-            if (incluseOtherCoutnries)
+            resultList = allCountriesResult.OrderByDescending(d => d.Total).Take(top.Value).ToList();
+
+            if (includeOtherCoutnries)
             {
-                List<ChartingDataClass> allCountriesResult = (from s in dataSourceQuery.Include("CountryForStatistics")
-                                                              group s by new
-                                                              {
-                                                                  s.CountryForStatisticsId,
-                                                                  s.CountryForStatistics.EnglishName,
-                                                              } into m
-                                                              select new ChartingDataClass()
-                                                              {
-                                                                  CountryId = m.Key.CountryForStatisticsId,
-                                                                  CountryName = m.Key.EnglishName,
-                                                                  Total = m.Count(),
-                                                              }).ToList();
-
-                othersResultList = (from a in allCountriesResult
+                List<ChartingDataClass> othersResultList = (from a in allCountriesResult
                                     where !(from r in resultList where r.CountryId == a.CountryId select r).Any()
                                     select a).ToList();
-
-                foreach (ChartingDataClass d in othersResultList)
+                
+                if (othersResultList.Count > 0)
                 {
-                    d.CountryName = "Others";
+                    double othersTotal = othersResultList.Sum(s => s.Total);
+                    string otherCountriesIds = null;
+
+                    foreach (ChartingDataClass otherCountry in othersResultList)
+                    {
+                        if (string.IsNullOrEmpty(otherCountriesIds))
+                        {
+                            otherCountriesIds = otherCountry.CountryId;
+                        }
+
+                        else
+                        {
+                            otherCountriesIds = otherCountriesIds + "," + otherCountry.CountryId;
+                        }
+                    }
+
+                    resultList.Add(new ChartingDataClass()
+                    {
+                        CountryName = "Others",
+                        CountryId = otherCountriesIds,
+                        Total = othersTotal,
+                    });
                 }
-
-                myResult = resultList.Union(othersResultList).OrderByDescending(d => d.Total).ToList();
             }
 
-            else
-            {
-                myResult = resultList.ToList();
-            }
-
+            myResult = resultList.ToList();
             return myResult;
         }
     }

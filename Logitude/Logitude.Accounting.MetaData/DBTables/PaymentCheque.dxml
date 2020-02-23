@@ -1,107 +1,276 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Table Name="PaymentCheques" Schema="dbo" DBType="Main">
-  <Column Name="Id" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="PaymentCheques"
+  Schema="dbo"
+  DBType="Main">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="CreateDate" Type="datetime">
-    <Constraints Nullable="false" />
+  <Column
+    Name="CreateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="CreatedByUserId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
+  <Column
+    Name="CreatedByUserId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="UpdateDate" Type="datetime">
-    <Constraints Nullable="false" />
+  <Column
+    Name="UpdateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="UpdatedByUserId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
+  <Column
+    Name="UpdatedByUserId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="SearchFields" Type="nvarchar" Size="-1">
-    <Constraints Nullable="true" />
+  <Column
+    Name="SearchFields"
+    Type="nvarchar"
+    Size="-1">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="InternalNumber" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="InternalNumber"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="ChequeNumber" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ChequeNumber"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="PayToGLAccountId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
+  <Column
+    Name="PayToGLAccountId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="PayToName" Type="nvarchar" Size="100">
-    <Constraints Nullable="false" />
+  <Column
+    Name="PayToName"
+    Type="nvarchar"
+    Size="100">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="BankAccountId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
+  <Column
+    Name="BankAccountId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="BankAccountGLAccountId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="BankAccountGLAccountId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="LocalAmount" Type="decimal" Precision="16" Scale="2">
-    <Constraints Nullable="false" />
+  <Column
+    Name="LocalAmount"
+    Type="decimal"
+    Precision="16"
+    Scale="2">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="CurrencyId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="CurrencyId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="ForeignAmount" Type="decimal" Precision="16" Scale="2">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ForeignAmount"
+    Type="decimal"
+    Precision="16"
+    Scale="2">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="ExchangeRate" Type="decimal" Precision="5" Scale="3">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ExchangeRate"
+    Type="decimal"
+    Precision="5"
+    Scale="3">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="ValueDate" Type="datetime">
-    <Constraints Nullable="false" />
+  <Column
+    Name="ValueDate"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="PrintDate" Type="datetime">
-    <Constraints Nullable="true" />
+  <Column
+    Name="PrintDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="ApproveDate" Type="datetime">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ApproveDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="ApprovedByUserId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ApprovedByUserId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="IsCancelled" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="IsCancelled"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="CancelledByUserId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="CancelledByUserId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="CancelledDate" Type="datetime">
-    <Constraints Nullable="true" />
+  <Column
+    Name="CancelledDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="CancellationRemarks" Type="nvarchar" Size="400">
-    <Constraints Nullable="true" />
+  <Column
+    Name="CancellationRemarks"
+    Type="nvarchar"
+    Size="400">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="PaymentChequeStatusCode" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="PaymentChequeStatusCode"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="EntityId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="EntityId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="ObjectTableId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ObjectTableId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Notes" Type="nvarchar" Size="250">
-    <Constraints Nullable="true" />
+  <Column
+    Name="Notes"
+    Type="nvarchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="UniqueField" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="UniqueField"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="APPaymentId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="APPaymentId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Relation ForeignKeyColumn="CreatedByUserId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="UpdatedByUserId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="PayToGLAccountId" ReferencedTable="GLAccounts" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="BankAccountId" ReferencedTable="BankAccounts" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="BankAccountGLAccountId" ReferencedTable="GLAccounts" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="CurrencyId" ReferencedTable="Currencies" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="ApprovedByUserId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="CancelledByUserId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="PaymentChequeStatusCode" ReferencedTable="PaymentChequeStatuses" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="ObjectTableId" ReferencedTable="ObjectTables" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="APPaymentId" ReferencedTable="APPayments" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="CreatedByUserId"
+    ReferencedTable="Users"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="UpdatedByUserId"
+    ReferencedTable="Users"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="PayToGLAccountId"
+    ReferencedTable="GLAccounts"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="BankAccountId"
+    ReferencedTable="BankAccounts"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="BankAccountGLAccountId"
+    ReferencedTable="GLAccounts"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="CurrencyId"
+    ReferencedTable="Currencies"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ApprovedByUserId"
+    ReferencedTable="Users"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="CancelledByUserId"
+    ReferencedTable="Users"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="PaymentChequeStatusCode"
+    ReferencedTable="PaymentChequeStatuses"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ObjectTableId"
+    ReferencedTable="ObjectTables"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="APPaymentId"
+    ReferencedTable="APPayments"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <UniqueConstraint
+    Columns="UniqueField,BankAccountId,Tenant" />
 </Table>

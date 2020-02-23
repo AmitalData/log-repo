@@ -1,26 +1,61 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Table Name="LogBoxTenantSettings" Schema="dbo" DBType="Main">
-  <Column Name="Id" Type="int">
-    <Constraints PrimaryKey="true" Nullable="false" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="LogBoxTenantSettings"
+  Schema="dbo"
+  DBType="Main">
+  <Column
+    Name="Id"
+    Type="int">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="IsDocumentsArchive" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="IsDocumentsArchive"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="CustomerTenantShareImportFile" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="CustomerTenantShareImportFile"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="LogBoxAdminUserId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="LogBoxAdminUserId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="DocumentShareAsDefault" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="DocumentShareAsDefault"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="StockTypeCode" Type="nvarchar" Size="-1">
-    <Constraints Nullable="true" />
+  <Column
+    Name="StockTypeCode"
+    Type="nvarchar"
+    Size="-1">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="AutoArchiveOnInvoice" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="AutoArchiveOnInvoice"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Relation ForeignKeyColumn="Id" ReferencedTable="Tenants" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="LogBoxAdminUserId" ReferencedTable="Contacts" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="Id"
+    ReferencedTable="Tenants"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="LogBoxAdminUserId"
+    ReferencedTable="Contacts"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
 </Table>

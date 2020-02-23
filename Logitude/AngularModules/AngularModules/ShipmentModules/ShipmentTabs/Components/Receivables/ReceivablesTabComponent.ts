@@ -1246,6 +1246,13 @@ export class ReceivablesTabComponent extends BaseComponent implements OnInit, On
 
             activeLines.forEach(item => {
                 switch (item.MeasurementCode) {
+                    case "SCGW": {
+                        if (item.Quantity != this.EntityPM.GrossWeightPerStorageDays) {
+                            isDifferentOrders = true;
+                        }
+                        break;
+                    }
+
                     case "CWKG": {
                         if (item.Quantity != this.EntityPM.ChargeableWeightInKG) {
                             isDifferentOrders = true;
@@ -1780,7 +1787,12 @@ export class ShipmentReceivableItem extends BaseComponent {
                                     this.IsByContainerType = true;
                                     this.BuildByContainersItemsSource();
                                     break;
-                                }                                
+                                }
+                                    
+                                case "SCGW": {
+                                    this.Quantity = this.ShipmentPM.GrossWeightPerStorageDays;
+                                    break;
+                                }
 
                                 default: {
                                     var myGrouped: ByPckageType[] = ShipmentTool.GetByPckageTypeGrouped(this.ShipmentPM);
@@ -2399,6 +2411,14 @@ export class ShipmentReceivableItem extends BaseComponent {
                                 break;
                             }
 
+                            case "SCGW": {
+                                _QuantityTotal = ArrayTool.Sum(this.InsideItemsSource, "GrossWeightPerStorageDays");
+                                _Ratio = _QuantityTotal == 0 ? 0 : this.Quantity / _QuantityTotal;
+                                unitPrice = _Ratio * this.UnitPrice;
+                                quantity = item.GrossWeightPerStorageDays;
+                                break;
+                            }
+
                             default: {
                                 if (this.fatherComponent.IsFCLEntity) {
                                     var list: PackageTypeList = AllPackageTypes.filter(f => f.MeasurementId == this.MeasurementId)[0];
@@ -2512,6 +2532,9 @@ export class ShipmentReceivableItem extends BaseComponent {
             case "BCNT": {
                 break;
             }
+            case "SCGW": {
+                result = this.ShipmentPM.GrossWeightPerStorageDays; break; 
+            }
 
             default: {
                 if (!AppTool.IsNullOrEmpty(this.MeasurementId)) {
@@ -2575,6 +2598,7 @@ export class InsideReceivableViewModel {
     get ChargeableWeightInKG() { return this.ShipmentPM.ChargeableWeightInKG; }
     get GrossWeightInKG() { return this.ShipmentPM.GrossWeightInKG; }
     get VolumeInCBM() { return this.ShipmentPM.VolumeInCBM; }
+    get GrossWeightPerStorageDays() { return this.ShipmentPM.GrossWeightPerStorageDays; }
 
     // Receivable Properties
     get ShipmentId() { return this.EntityPM.ShipmentId; }
@@ -2634,6 +2658,14 @@ export class InsideReceivableViewModel {
         var myQuantity = null;
 
         switch (this.MeasurementCode) {
+            case "SCGW": {
+                if (this.ShipmentPM) {
+                    myQuantity = this.ShipmentPM.GrossWeightPerStorageDays;
+                }
+
+                break;
+            }
+
             case "CWKG": {
                 if (this.ShipmentPM) {
                     myQuantity = this.ShipmentPM.ChargeableWeightInKG;

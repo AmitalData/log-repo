@@ -27,6 +27,11 @@ namespace Logitude.BL.CommonDataModel.Tools.Validating
                     }
                 }
 
+                if (!string.IsNullOrEmpty(entityPM.CardId) && entityPM.AddressTypeId == "M" )
+                {
+                    ValidateIfCardHaveMoreThanOneMainAddress(entityPM);
+                }
+
                 if (myCountry.HasCitiesList && !entityPM.IsHybrid)
                 {
                     if (!string.IsNullOrEmpty(entityPM.City))
@@ -47,6 +52,16 @@ namespace Logitude.BL.CommonDataModel.Tools.Validating
             }
 
 
+        }
+
+        private static void ValidateIfCardHaveMoreThanOneMainAddress(AddressPM entityPM)
+        {
+            AddressRepository addressRepository = new AddressRepository(entityPM.Tenant);
+            bool isHaveMainAddress = addressRepository.CheckIfCardHaveMainAddressByAddressIdAndCardId(entityPM.Id, entityPM.CardId, entityPM.Tenant);
+            if (isHaveMainAddress)
+            {
+                throw new ApplicationException("Partner must have one main address");
+            }
         }
 
         public static void ValidatePickUp(ShipmentPickUpPM entityPM)

@@ -120,6 +120,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    Code =  "ADHI",
 			      				    Name =  "AWB Additional Handling Info",
 			      				    GenerateDomainService =  false,
+			      				    ClientModuleName =  "Shipment",
 			      				    NoTS =  false,
 			      				    HasMenuButtons =  false,
 			      				    AllowedForComputingPartners =  false,

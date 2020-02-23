@@ -313,6 +313,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
                 case "SBOLP":
                 case "CRR":
                 case "BDE":
+                case "WELB":
                     return true;
 
                 default:

@@ -349,13 +349,13 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     if (newPayment.SATTransferStatusCode == "TD")
                         this.sATInterfaceHelper.SendPaymentSATCancellationRequest(entityPM, newPayment);
                     else if (newPayment.SATTransferStatusCode == "TG")
-                        throw new ApplicationException("Can't cancel payment while being transfered to SAT");
+                        throw new ApplicationException("You are not allowed to cancel the payment while its status is Transferring to SAT");
                 }
 
                 if (theEntityPm.SetVoided)
                 {
                     if (newPayment.SATTransferStatusCode == "TG")
-                        throw new ApplicationException("Can't void payment while being transfered to SAT");
+                        throw new ApplicationException("You are not allowed to void the payment while its status is Transferring to SAT");
                     else if (newPayment.SATTransferStatusCode == "TE" && !string.IsNullOrEmpty(newPayment.SATXML))
                         throw new ApplicationException("Can't void payment because it wasn't cancelled by SAT");
 
@@ -605,18 +605,20 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         int lineNumber = 0;
         private void CreateInterestTransactionLine(ARPaymentPM payment)
         {
+            GLAccountPM account = getGLAccount(payment.BillToId, payment.Tenant);
             if (tenantPOCO != null && tenantPOCO.AccountingActivated && payment.BillToPartnerTypeId == "CS")
             {
                 DateTime? dateForInterest = payment.ValueDate == null ? DateTime.Now : payment.ValueDate;
-            InterestTransactionPM interestTransaction = new InterestTransactionPM()
-            {
-                InterestEntityTypeCode = "2",
-                EntityId = payment.Id,
-                OriginalEntityLineNumber = ++lineNumber,
-                LocalAmount = (decimal)payment.AmountInLocalCurrency,
-                ForeignAmount = (decimal?)payment.AmountInPaymentCurrency,
-                InterestValueDate = (DateTime)dateForInterest,
-                Tenant = entityPM.Tenant,
+                InterestTransactionPM interestTransaction = new InterestTransactionPM()
+                {
+                    InterestEntityTypeCode = "2",
+                    EntityId = payment.Id,
+                    OriginalEntityLineNumber = ++lineNumber,
+                    LocalAmount = (decimal)payment.AmountInLocalCurrency,
+                    ForeignAmount = (decimal?)payment.AmountInPaymentCurrency,
+                    InterestValueDate = (DateTime)dateForInterest,
+                    Tenant = entityPM.Tenant,
+                    GLAccountId = account!= null? account.Id:null,
                 ChangeSetOp = ChangeSetOperation.Insert,
                 CurrencyId = payment.PaymentCurrencyId,
             };

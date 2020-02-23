@@ -7,7 +7,7 @@ namespace Logitude.IntegrationTest.Shipment.Tests
 {
     public class IntegrationShipmentReceivable
     {
-        static List<ShipmentReceivablePM> shipmentReceivablePM = new List<ShipmentReceivablePM>();;
+        static List<ShipmentReceivablePM> shipmentReceivablePM = new List<ShipmentReceivablePM>();
         public static List<ShipmentReceivablePM> ShipmentReceivables()
         {
             for(int i = 0; i < 2; i++)

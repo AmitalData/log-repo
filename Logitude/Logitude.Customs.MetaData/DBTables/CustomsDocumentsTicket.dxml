@@ -1,39 +1,96 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Table Name="CustomsDocumentsTickets" Schema="Customs" DBType="Main">
-  <Column Name="Id" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="CustomsDocumentsTickets"
+  Schema="Customs"
+  DBType="Main">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="DocumentsFilingId" Type="varchar" Size="40">
-    <Constraints Nullable="true" />
+  <Column
+    Name="DocumentsFilingId"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="DocumentTypeCode" Type="varchar" Size="7">
-    <Constraints Nullable="false" />
+  <Column
+    Name="DocumentTypeCode"
+    Type="varchar"
+    Size="7">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="RequestedCustomsDocId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="RequestedCustomsDocId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Remarks" Type="nvarchar" Size="512">
-    <Constraints Nullable="true" />
+  <Column
+    Name="Remarks"
+    Type="nvarchar"
+    Size="512">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="UploadApproved" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="UploadApproved"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="VerificationStatusTypeCode" Type="varchar" Size="1">
-    <Constraints Nullable="true" />
+  <Column
+    Name="VerificationStatusTypeCode"
+    Type="varchar"
+    Size="1">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="VerificationRemarks" Type="nvarchar" Size="500">
-    <Constraints Nullable="true" />
+  <Column
+    Name="VerificationRemarks"
+    Type="nvarchar"
+    Size="500">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="UserRemarks" Type="nvarchar" Size="512">
-    <Constraints Nullable="true" />
+  <Column
+    Name="UserRemarks"
+    Type="nvarchar"
+    Size="512">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="IsSendMandatory" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="IsSendMandatory"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Relation ForeignKeyColumn="DocumentsFilingId" ReferencedTable="DocumentsFilings" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="DocumentTypeCode" ReferencedTable="CustomDocumentTypes" ReferencedColumn="Code" ReferencedTableSchema="Customs" />
-  <Relation ForeignKeyColumn="VerificationStatusTypeCode" ReferencedTable="CustomsVerificationStatusTypes" ReferencedColumn="Code" ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="DocumentsFilingId"
+    ReferencedTable="DocumentsFilings"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="DocumentTypeCode"
+    ReferencedTable="CustomDocumentTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="VerificationStatusTypeCode"
+    ReferencedTable="CustomsVerificationStatusTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
 </Table>

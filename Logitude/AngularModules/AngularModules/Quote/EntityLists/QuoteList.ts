@@ -183,5 +183,8 @@ export class QuoteList {
 		Field18: string;
 		Field19: string;
 		Field20: string;
+		RequestDate: Date;
+		EstimatedProfitInLocal: number;
+		EstimatedProfitInProfit: number;
 	
 }

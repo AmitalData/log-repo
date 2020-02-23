@@ -139,5 +139,10 @@ namespace Logitude.BL.GlobalModel.EntityLists
         public bool MainAdditionalPackageApplied { get; set; }
         public double? TotalPrice { get; set; }
 
+
+        public int? TotalNumberOfUsers { get; set; }
+        public int? TotalFreeUsers { get; set; }
+        public double? AveragePrice { get; set; }
+        public double? TotalPaymentamount { get; set; }
     }
 }

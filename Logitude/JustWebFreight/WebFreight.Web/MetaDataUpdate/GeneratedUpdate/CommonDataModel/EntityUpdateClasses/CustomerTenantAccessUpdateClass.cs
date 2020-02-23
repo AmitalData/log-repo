@@ -1608,7 +1608,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 		   //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
 		   ObjectTable CustomerTenantAccessObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CustomerTenantAccess" && d.Tenant == 0).FirstOrDefault();       
     
-			   Feature CustomerTenantAccessFeature_MB0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Deny", ObjectTableId = CustomerTenantAccessObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomerTenantAccess.Features.Deny", NameTextCodeDefaultText = "Deny", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature CustomerTenantAccessFeature_MB0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Deny", ObjectTableId = CustomerTenantAccessObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomerTenantAccess.Features.Deny", NameTextCodeDefaultText = "Deny", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
  
 

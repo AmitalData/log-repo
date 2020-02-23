@@ -1,38 +1,86 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Table Name="QuotePackages" Schema="dbo" DBType="Main">
-  <Column Name="Id" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="QuotePackages"
+  Schema="dbo"
+  DBType="Main">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="PackageTypeId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="PackageTypeId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="QuoteId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="QuoteId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Quantity" Type="int">
-    <Constraints Nullable="true" />
+  <Column
+    Name="Quantity"
+    Type="int">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="GrossWeight" Type="float">
-    <Constraints Nullable="true" />
+  <Column
+    Name="GrossWeight"
+    Type="float">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Volume" Type="float">
-    <Constraints Nullable="true" />
+  <Column
+    Name="Volume"
+    Type="float">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Height" Type="float">
-    <Constraints Nullable="true" />
+  <Column
+    Name="Height"
+    Type="float">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Width" Type="float">
-    <Constraints Nullable="true" />
+  <Column
+    Name="Width"
+    Type="float">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Length" Type="float">
-    <Constraints Nullable="true" />
+  <Column
+    Name="Length"
+    Type="float">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="VolumetricWeight" Type="float">
-    <Constraints Nullable="true" />
+  <Column
+    Name="VolumetricWeight"
+    Type="float">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Relation ForeignKeyColumn="PackageTypeId" ReferencedTable="PackageTypes" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="QuoteId" ReferencedTable="Quotes" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="PackageTypeId"
+    ReferencedTable="PackageTypes"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="QuoteId"
+    ReferencedTable="Quotes"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
 </Table>

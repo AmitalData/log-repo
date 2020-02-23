@@ -44,6 +44,7 @@
   NoViewController="false"
   NoPMController="true"
   NoTS="false"
+  NoDefaultFeatures="false"
   HasCompactSearch="false"
   ApplyDefaultValues="false"
   HasMenuButtons="true"
@@ -56,6 +57,7 @@
   DisableSearchBox="false"
   HasDocuments="false"
   IsLookUp="false"
+  IsTabsHidden="false"
   SearchFields="&quot;MessagingStock,MessagingStocks,Simplog.ShipmentLib.NewMessagingStockCommand,Id,&quot;">
   <field
     Id="&quot;593d1dd2-4fe0-4ff2-ad11-014fb0c3139c&quot;"
@@ -71,6 +73,7 @@
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
     CanFilter="false"
     DisplayOnly="false"
     SystemRequired="false"
@@ -121,12 +124,14 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <field
     Id="&quot;3b382674-5565-4d12-bd35-5b542df952f6&quot;"
     FieldName="&quot;SearchFields&quot;"
@@ -141,6 +146,7 @@
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
     CanFilter="false"
     DisplayOnly="false"
     SystemRequired="false"
@@ -191,12 +197,14 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <field
     Id="&quot;e02aa178-24ac-491c-9e23-545882a87a7f&quot;"
     FieldName="&quot;Amount&quot;"
@@ -211,6 +219,7 @@
     IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
     CanFilter="true"
     DisplayOnly="false"
     SystemRequired="false"
@@ -263,13 +272,15 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;Amount&quot;"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <field
     Id="&quot;10be096f-8252-459e-8fb8-f4a16953e5d4&quot;"
     FieldName="&quot;Remaining&quot;"
@@ -284,6 +295,7 @@
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
     CanFilter="false"
     DisplayOnly="false"
     SystemRequired="false"
@@ -334,13 +346,15 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;Remaining&quot;"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <field
     Id="&quot;9c24b25d-1128-4e5e-a6da-2b761f4f4108&quot;"
     FieldName="&quot;StartDate&quot;"
@@ -355,6 +369,7 @@
     IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
     CanFilter="true"
     DisplayOnly="false"
     SystemRequired="false"
@@ -408,13 +423,15 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;StartDate&quot;"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <field
     Id="&quot;ace7f9f8-664c-4cc5-8b7c-7c9d7056ddda&quot;"
     FieldName="&quot;EndDate&quot;"
@@ -429,6 +446,7 @@
     IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
     CanFilter="true"
     DisplayOnly="false"
     SystemRequired="false"
@@ -482,13 +500,15 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;EndDate&quot;"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <field
     Id="&quot;42feb71f-4aaa-424b-ae5e-2f9821eb679b&quot;"
     FieldName="&quot;CreateDate&quot;"
@@ -503,6 +523,7 @@
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
     CanFilter="true"
     DisplayOnly="false"
     SystemRequired="false"
@@ -555,13 +576,15 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;CreateDate&quot;"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <field
     Id="&quot;e44fcbc2-939a-4f25-9747-90a86004904f&quot;"
     FieldName="&quot;UpdateDate&quot;"
@@ -576,6 +599,7 @@
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
     CanFilter="true"
     DisplayOnly="false"
     SystemRequired="false"
@@ -628,13 +652,15 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;UpdateDate&quot;"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <field
     Id="&quot;900c7a46-d47b-4ca5-bcc4-05be07cbb8a6&quot;"
     FieldName="&quot;CreatedByUserId&quot;"
@@ -650,6 +676,7 @@
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
     CanFilter="true"
     DisplayOnly="false"
     SystemRequired="false"
@@ -700,13 +727,15 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;CreatedByUserId&quot;"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <field
     Id="&quot;262da65c-bc7a-4975-af1e-9bb38e01b807&quot;"
     FieldName="&quot;UpdatedByUserId&quot;"
@@ -722,6 +751,7 @@
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
     CanFilter="true"
     DisplayOnly="false"
     SystemRequired="false"
@@ -772,13 +802,15 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;UpdatedByUserId&quot;"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <field
     Id="&quot;f168c281-37dc-4a7d-82f1-d9ecc8957481&quot;"
     FieldName="&quot;IsCancelled&quot;"
@@ -793,6 +825,7 @@
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
     CanFilter="true"
     DisplayOnly="false"
     SystemRequired="false"
@@ -843,13 +876,15 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;IsCancelled&quot;"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <field
     Id="&quot;3f3d3e9f-4016-4768-8fe7-fa05c47f39aa&quot;"
     FieldName="&quot;Status&quot;"
@@ -864,6 +899,7 @@
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
     CanFilter="true"
     DisplayOnly="false"
     SystemRequired="false"
@@ -917,13 +953,15 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;Status&quot;"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <field
     Id="&quot;8431f248-ee94-4e46-8d31-b8ca4ea5bbeb&quot;"
     FieldName="&quot;Notes&quot;"
@@ -938,6 +976,7 @@
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
     CanFilter="false"
     DisplayOnly="false"
     SystemRequired="false"
@@ -990,13 +1029,15 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;Notes&quot;"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <field
     Id="&quot;08af015b-6e79-489d-b068-12f92d4c632e&quot;"
     FieldName="&quot;TenantNumber&quot;"
@@ -1011,6 +1052,7 @@
     IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
     CanFilter="false"
     DisplayOnly="false"
     SystemRequired="false"
@@ -1063,13 +1105,15 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;TenantNumber&quot;"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <field
     Id="&quot;54fd5d70-5d83-47da-a7e4-3d9483c2284f&quot;"
     FieldName="&quot;TenantName&quot;"
@@ -1084,6 +1128,7 @@
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
     CanFilter="false"
     DisplayOnly="false"
     SystemRequired="false"
@@ -1136,13 +1181,15 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;TenantName&quot;"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <field
     Id="&quot;4aade85b-4689-4c2c-b31a-2a04094def1c&quot;"
     FieldName="&quot;TotalPrice&quot;"
@@ -1157,6 +1204,7 @@
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
     CanFilter="true"
     DisplayOnly="false"
     SystemRequired="false"
@@ -1209,13 +1257,15 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;TotalPrice&quot;"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <field
     Id="&quot;868c0df6-b0ba-484a-9ddb-8dbabfd574a9&quot;"
     FieldName="&quot;IsTotalPriceChanged&quot;"
@@ -1230,6 +1280,7 @@
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
     CanFilter="false"
     DisplayOnly="false"
     SystemRequired="false"
@@ -1280,12 +1331,14 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <field
     Id="&quot;ab55c3c7-c667-4e8a-adb6-36bee4bf88a0&quot;"
     FieldName="&quot;IsOtherFieldsChanged&quot;"
@@ -1300,6 +1353,7 @@
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
     CanFilter="false"
     DisplayOnly="false"
     SystemRequired="false"
@@ -1350,12 +1404,14 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <field
     Id="&quot;30d4fd64-3d83-43c9-98d1-1314b9de755c&quot;"
     FieldName="&quot;StockUsageHistories&quot;"
@@ -1370,6 +1426,7 @@
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
     CanFilter="false"
     DisplayOnly="false"
     SystemRequired="false"
@@ -1424,12 +1481,14 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <field
     Id="&quot;db09bcdc-7d88-4e66-90fa-8a6d5fa4fd8a&quot;"
     FieldName="&quot;DummyTenant&quot;"
@@ -1444,6 +1503,7 @@
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
     CanFilter="false"
     DisplayOnly="false"
     SystemRequired="false"
@@ -1494,12 +1554,14 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <field
     Id="&quot;8833dae8-e733-4dd3-9fc3-db4802c99c5a&quot;"
     FieldName="&quot;StockType&quot;"
@@ -1514,6 +1576,7 @@
     IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
     CanFilter="false"
     DisplayOnly="false"
     SystemRequired="false"
@@ -1560,12 +1623,81 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
+  <field
+    Id="&quot;a37966d9-73b4-47e8-ad21-7e58ae49c0ce&quot;"
+    FieldName="&quot;SearchFields&quot;"
+    IsNew="true"
+    IsChecked="true"
+    IsDeleted="false"
+    ObjectTableName="&quot;MessagingStock&quot;"
+    FieldsDataType="&quot;nText&quot;"
+    MinLength="0"
+    MaxLength="1000"
+    IsRequired="false"
+    CopyToDW="false"
+    DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
+    CanFilter="true"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="0"
+    DisplayInList="false"
+    IsCustomFilter="false"
+    Operator="&quot;Contains&quot;"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;SearchFields&quot;"
+    ListPropertyPath="&quot;SearchFields&quot;"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    DependencyFilter3IsList="false"
+    IsRestrictable="false"
+    DisplayInEntityVariables="true"
+    AllowedInCustomerFieldsSettings="false"
+    DisplayInSearchWindowFilters="false"
+    DisplayInSearchWindowFiltersIndex="0"
+    DisplayInDocumentReferences="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;SearchFields&quot;"
+    DefaultText="&quot;Search..&quot;"
+    IsNullable="false"
+    IsForeignKey="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="true"
+    HasPMField="false"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="true"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
+    HasTemplate="false"
+    IsCustom="false"
+    IsSpellCheckedFullFieldLable="false"
+    IsSpellCheckedHelpLocalDefaultText="false"
+    IsSpellCheckedShortLocalDefaultText="false"
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <Query
     Code="&quot;All Messaging Stocks&quot;"
     TextCode="&quot;All Messaging Stocks&quot;"
@@ -1629,11 +1761,11 @@
   <Screen
     Name="&quot;Header Screen&quot;"
     ObjectTableName="&quot;MessagingStock&quot;"
-    NumberOfColumns="2"
-    NumberOfRows="2"
     IsReadOnly="true"
     IsHeaderScreen="true"
-    Code="&quot;MessagingStock.HeaderScreen&quot;">
+    Code="&quot;MessagingStock.HeaderScreen&quot;"
+    NumberOfColumns="2"
+    NumberOfRows="2">
     <ScreenFields>
       <ScreenField
         Column="0"
@@ -1669,7 +1801,8 @@
     FeatureCode="&quot;MessagingStock.Tab.General&quot;"
     FeatureTextCodeCode="&quot;MessagingStock.Features.General&quot;"
     FeatureDefaultText="&quot;General&quot;"
-    IsSpellChecked="false" />
+    IsSpellChecked="false"
+    HasGeneralFeature="false" />
   <Tab
     TabName="&quot;Events&quot;"
     ObjectTableName="&quot;MessagingStock&quot;"
@@ -1681,7 +1814,8 @@
     FeatureCode="&quot;MessagingStock.Tab.Events&quot;"
     FeatureTextCodeCode="&quot;MessagingStock.Features.Events&quot;"
     FeatureDefaultText="&quot;Events&quot;"
-    IsSpellChecked="false" />
+    IsSpellChecked="false"
+    HasGeneralFeature="false" />
   <EventTypes>
     <EventType
       Code="&quot;UPMS&quot;"
@@ -1718,24 +1852,25 @@
     MenuButtonGroupName="&quot;MessagingStockEditButtonsGroup&quot;">
     <MenuButton
       EventCode="&quot;Actions&quot;"
-      TextCodeCode="&quot;MessagingStock.B.More&quot;"
       DefaultText="&quot;More&quot;"
       MenuButtonType="&quot;dropdownbutton&quot;"
-      IndexOrder="100">
+      IndexOrder="100"
+      IsPackagable="false"
+      TextCodeCode="&quot;MessagingStock.B.More&quot;">
       <MenuItem
         EventCode="&quot;Cancel&quot;"
-        TextCodeCode="&quot;MessagingStock.B.Cancel&quot;"
         DefaultText="&quot;Cancel&quot;"
         MenuButtonType="&quot;menuitem&quot;"
         IndexOrder="2"
         FeatureCode="&quot;MessagingStock.Action.Cancel&quot;"
         IsPackagable="true"
+        TextCodeCode="&quot;MessagingStock.B.Cancel&quot;"
         FeatureTextCodeCode="&quot;MessagingStock.Features.Cancel&quot;"
         FeatureDefaultText="&quot;Cancel&quot;" />
     </MenuButton>
   </MenuButtons>
   <DataContracts />
-  <AdditionalTextCodes></AdditionalTextCodes>
+  <AdditionalTextCodes />
   <AdditionalFeatures>
     <Feature
       Code="&quot;MessagingStock.M.MessagingStocks&quot;"

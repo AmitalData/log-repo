@@ -1,33 +1,76 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Table Name="ErrorLogs" Schema="dbo" DBType="SystemLogs">
-  <Column Name="Id" Type="varchar" Size="40">
-    <Constraints PrimaryKey="true" Nullable="false" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="ErrorLogs"
+  Schema="dbo"
+  DBType="SystemLogs">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="UserName" Type="varchar" Size="100">
-    <Constraints Nullable="false" />
+  <Column
+    Name="UserName"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="LogDate" Type="datetime">
-    <Constraints Nullable="false" />
+  <Column
+    Name="LogDate"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="ClientDate" Type="datetime">
-    <Constraints Nullable="false" />
+  <Column
+    Name="ClientDate"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="Tier" Type="varchar" Size="40">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Tier"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="Exception" Type="varchar" Size="7000">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Exception"
+    Type="varchar"
+    Size="7000">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="StackTrace" Type="varchar" Size="7000">
-    <Constraints Nullable="true" />
+  <Column
+    Name="StackTrace"
+    Type="varchar"
+    Size="7000">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="SearchFields" Type="varchar" Size="8000">
-    <Constraints Nullable="true" />
+  <Column
+    Name="SearchFields"
+    Type="varchar"
+    Size="8000">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="IP" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="IP"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
+  <Index
+    Columns="LogDate" />
 </Table>

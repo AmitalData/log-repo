@@ -1,26 +1,63 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Table Name="DWQueries" Schema="dbo" DBType="Main">
-  <Column Name="Id" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="DWQueries"
+  Schema="dbo"
+  DBType="Main">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="SQLString" Type="nvarchar" Size="-1">
-    <Constraints Nullable="true" />
+  <Column
+    Name="SQLString"
+    Type="nvarchar"
+    Size="-1">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="CreatedByUserId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
+  <Column
+    Name="CreatedByUserId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="UpdateByUserId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
+  <Column
+    Name="UpdateByUserId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="CreatedDate" Type="datetime">
-    <Constraints Nullable="false" />
+  <Column
+    Name="CreatedDate"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="UpdatedDate" Type="datetime">
-    <Constraints Nullable="false" />
+  <Column
+    Name="UpdatedDate"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Relation ForeignKeyColumn="CreatedByUserId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="UpdateByUserId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="CreatedByUserId"
+    ReferencedTable="Users"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="UpdateByUserId"
+    ReferencedTable="Users"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
 </Table>

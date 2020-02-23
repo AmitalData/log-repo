@@ -2376,6 +2376,7 @@
     <Compile Include="Helpers\BluesnapAnalyzer.cs" />
     <Compile Include="Helpers\BluesnapExecutionService.cs" />
     <Compile Include="Helpers\DataProviderHelpers\AutomationTestReportDataProvider.cs" />
+    <Compile Include="Helpers\DataProviderHelpers\CrossDockEntryLabelDataProviderHelper.cs" />
     <Compile Include="Helpers\DataProviderHelpers\ShipmentsEventsListDataProvider.cs" />
     <Compile Include="Helpers\DWQueryBuilderHelper.cs" />
     <Compile Include="Helpers\AgentSharedManifestHelper.cs" />
@@ -5314,8 +5315,8 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="ReportsWebServices\LogitudeReports\Accounting\CustomerStatusDataProviderLoader.cs" />
-    <Compile Include="ReportsWebServices\LogitudeReports\Accounting\LedgerTransactionReportLoader.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\Accounting\AgingReportDataProviderLoader.cs" />
+    <Compile Include="ReportsWebServices\LogitudeReports\Accounting\LedgerTransactionReportLoader.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\CRM\RacingQuoteManager.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\CRM\BluesnapPaymentsReportManager.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\Operational\ShipperReturnsManager.cs" />

@@ -1,25 +1,63 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Table Name="ObjectFieldModifications" Schema="dbo" DBType="Main">
-  <Column Name="Id" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="ObjectFieldModifications"
+  Schema="dbo"
+  DBType="Main">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="MaxLength" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="MaxLength"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="MinLength" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="MinLength"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="IsRequired" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="IsRequired"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="ObjectFieldId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
+  <Column
+    Name="ObjectFieldId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="UpdateDateGMT" Type="datetime">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ObjectFieldCode"
+    Type="varchar"
+    Size="200">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Relation ForeignKeyColumn="ObjectFieldId" ReferencedTable="ObjectFields" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Column
+    Name="UpdateDateGMT"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Relation
+    ForeignKeyColumn="ObjectFieldId"
+    ReferencedTable="ObjectFields"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
 </Table>

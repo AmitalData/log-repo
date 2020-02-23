@@ -5052,6 +5052,16 @@
         ScreenName="Header Screen" />
     </ScreenFields>
   </Screen>
+  <Screen
+    Name="&quot;General Tab Screen&quot;"
+    ObjectTableName="&quot;ChargesType&quot;"
+    IsReadOnly="false"
+    IsHeaderScreen="false"
+    Code="&quot;ChargesType.GeneralTabScreen&quot;"
+    NumberOfColumns="2"
+    NumberOfRows="1">
+    <ScreenFields />
+  </Screen>
   <Tab
     TabName="&quot;General&quot;"
     ObjectTableName="&quot;ChargesType&quot;"

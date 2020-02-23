@@ -75,18 +75,12 @@ namespace WebFreight.Web.AccountingModel.Reports.TaxDeductionReport
         public TaxDeductionReportData LoadDataProvider(string entityId, int tenant)
         {
             TaxDeductionReportData TaxDeductionDP = new TaxDeductionReportData();
-            
-            
-            GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(tenant);
-            TaxDeductionReportQueryService taxDeductionReportQueryService = new TaxDeductionReportQueryService(tenant);
+             TaxDeductionReportQueryService taxDeductionReportQueryService = new TaxDeductionReportQueryService(tenant);
             TaxDeductionReportPM taxDeductionReportPM = taxDeductionReportQueryService.GetSingle(entityId, false, false);
             //TenantQuery tenantQuery = new TenantQuery(tenant);
             //TenantPM tenantPM = TenantQuery.GetSingleTenantPM(tenant, false);
-
-            TaxDeductionDP = gLAccountQueryService.GetTaxDeductionReportData(taxDeductionReportPM.TaxYear, tenant);
-
-
-
+            TaxDeductionReportDataProvider deductionReportDataProvider = new TaxDeductionReportDataProvider(taxDeductionReportPM.TaxYear, tenant);
+            TaxDeductionReportData data = deductionReportDataProvider.GetTaxDeductionReportData();
             return TaxDeductionDP;
         }
 

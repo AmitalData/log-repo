@@ -1,30 +1,66 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Table Name="OpportunityClosingReasons" Schema="dbo" DBType="Main">
-  <Column Name="Id" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="OpportunityClosingReasons"
+  Schema="dbo"
+  DBType="Main">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="Code" Type="varchar" Size="2">
-    <Constraints Nullable="true" />
+  <Column
+    Name="Code"
+    Type="varchar"
+    Size="2">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Name" Type="varchar" Size="60">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Name"
+    Type="varchar"
+    Size="60">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="LocalName" Type="nvarchar" Size="60">
-    <Constraints Nullable="true" />
+  <Column
+    Name="LocalName"
+    Type="nvarchar"
+    Size="60">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="IsClosedLost" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="IsClosedLost"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="AddedManually" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="AddedManually"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="SearchFields" Type="nvarchar" Size="1000">
-    <Constraints Nullable="true" />
+  <Column
+    Name="SearchFields"
+    Type="nvarchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="InActive" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="InActive"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
 </Table>

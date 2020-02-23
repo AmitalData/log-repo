@@ -1,16 +1,39 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Table Name="QuestionnaireAnswerLines" Schema="dbo" DBType="Main">
-  <Column Name="QuestionnaireAnswerId" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="QuestionnaireAnswerLines"
+  Schema="dbo"
+  DBType="Main">
+  <Column
+    Name="QuestionnaireAnswerId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="QuestionNumber" Type="int">
-    <Constraints PrimaryKey="true" Nullable="false" />
+  <Column
+    Name="QuestionNumber"
+    Type="int">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="AnswerValue" Type="nvarchar" Size="1000">
-    <Constraints Nullable="false" />
+  <Column
+    Name="AnswerValue"
+    Type="nvarchar"
+    Size="1000">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Relation ForeignKeyColumn="QuestionnaireAnswerId" ReferencedTable="QuestionnaireAnswers" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="QuestionnaireAnswerId"
+    ReferencedTable="QuestionnaireAnswers"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
 </Table>

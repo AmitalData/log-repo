@@ -1,39 +1,88 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Table Name="ApiCredintials" Schema="dbo" DBType="Global">
-  <Column Name="Id" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="ApiCredintials"
+  Schema="dbo"
+  DBType="Global">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="UsedFor" Type="nvarchar" Size="250">
-    <Constraints Nullable="true" />
+  <Column
+    Name="UsedFor"
+    Type="nvarchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="HashedPrimaryAccessKey" Type="nvarchar" Size="40">
-    <Constraints Nullable="false" />
+  <Column
+    Name="HashedPrimaryAccessKey"
+    Type="nvarchar"
+    Size="40">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="HashedSeconderyAccessKey" Type="nvarchar" Size="40">
-    <Constraints Nullable="false" />
+  <Column
+    Name="HashedSeconderyAccessKey"
+    Type="nvarchar"
+    Size="40">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="CreateDate" Type="datetime">
-    <Constraints Nullable="false" />
+  <Column
+    Name="CreateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="UpdateDate" Type="datetime">
-    <Constraints Nullable="false" />
+  <Column
+    Name="UpdateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="AllowedIPs" Type="nvarchar" Size="1000">
-    <Constraints Nullable="false" />
+  <Column
+    Name="AllowedIPs"
+    Type="nvarchar"
+    Size="1000">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="CreatedBy" Type="varchar" Size="100">
-    <Constraints Nullable="false" />
+  <Column
+    Name="CreatedBy"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="UpdatedBy" Type="varchar" Size="100">
-    <Constraints Nullable="false" />
+  <Column
+    Name="UpdatedBy"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="maskedPrimaryAccessKey" Type="nvarchar" Size="40">
-    <Constraints Nullable="false" />
+  <Column
+    Name="maskedPrimaryAccessKey"
+    Type="nvarchar"
+    Size="40">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="maskedSeconderyAccessKey" Type="nvarchar" Size="40">
-    <Constraints Nullable="false" />
+  <Column
+    Name="maskedSeconderyAccessKey"
+    Type="nvarchar"
+    Size="40">
+    <Constraints
+      Nullable="false" />
   </Column>
 </Table>

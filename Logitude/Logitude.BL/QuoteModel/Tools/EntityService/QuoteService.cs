@@ -163,6 +163,15 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
             ActivityLogger.AddAcitivityLog(entityPM.Id, objecttable.Id, entityPM.Tenant, "N", loggedContact.Id);
         }
 
+        private void ComputeProfit()
+        {
+            if(entityPM.EstimateProfit != null && entityPM.ExchangeRate != null)
+            {
+                entityPM.EstimatedProfitInLocal = MethodHelper.Round(entityPM.EstimateProfit * entityPM.ExchangeRate, 2);
+                entityPM.EstimatedProfitInProfit = MethodHelper.Round(entityPM.EstimatedProfitInLocal / entityPM.ProfitExchangeRate, 2);
+            }
+        }
+
         public void Update(QuotePM entityPM, bool mapComposition = false)
         {
             //if(entityPM.TotalPerContainer && entityPM.IsSaleCurrencySameAsCost)
@@ -492,9 +501,19 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                     entityPM.QuoteNumber = TableCounter.GetNumber(tenant, "QUOT", entityPM.DirectionId, entityPM.TransportModeId);
                 }
 
+                if (entityPM.IsCreatedFromTicket)
+                {
+                    entityPM.RequestDate = entityPM.TicketCreateDate;
+                }
+                else
+                {
+                    entityPM.RequestDate = entityPM.OpenDate;
+                }
+
                 this.InitializeStage();
                 this.InitializeSaleCurrency();
                 this.InitializeSalesman();
+                this.InitializeProfitCurrency();
 
                 if (!entityPM.IsHybrid)
                 {
@@ -561,6 +580,10 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                 entityPM.ChargeableWeight = null;
                 entityPM.VolumetricWeight = null;
                 entityPM.Volume = null;
+                entityPM.EstimateProfit = null;
+                entityPM.EstimatedProfitInLocal = null;
+                entityPM.EstimatedProfitInProfit = null;
+                entityPM.EstimateProfitInSaleCurrency = null;
 
                 foreach (QuotePackagePM pm in entityPM.QuotePackages)
                 {
@@ -574,8 +597,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
 
                 entityPM.QuotePackages.Clear();
                 entityPM.QuoteCharges.Clear();
-
-
+                
                 if (entityPM.ConvertToFCL)
                 {
                     this.isLCLQuote = false;
@@ -591,6 +613,8 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                 this.GenerateDefaultCharges();
             }
 
+            this.ComputeExpectedProfit();
+            this.ComputeProfit();
         }
 
         private bool isEnableMultiPercentageVATTypes;
@@ -835,6 +859,41 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                 }
             }
         }
+
+        private void InitializeProfitCurrency()
+        {
+            if (isNewEntity)
+            {
+                if (string.IsNullOrEmpty(entityPM.ProfitCurrencyId))
+                {
+                    entityPM.ProfitCurrencyId = loggedTenant.ProfitCurrencyId;
+                }
+
+                if (!this.entityPM.IsCopyExchangeRates)
+                {
+                    if (string.IsNullOrEmpty(entityPM.ProfitCurrencyId))
+                    {
+                        entityPM.ProfitExchangeRate = null;
+                    }
+
+                    else if (entityPM.ProfitCurrencyId == loggedTenant.CurrencyId)
+                    {
+                        entityPM.ProfitExchangeRate = 1;
+                    }
+
+                    else
+                    {
+                        RatesTableQuery myQuery = new RatesTableQuery(tenant);
+                        LastRate lastRate = myQuery.GetLastRecordByValueDate(tenant, entityPM.ProfitCurrencyId, loggedTenant.CurrencyId, entityPM.OpenDate);
+                        if (lastRate != null)
+                        {
+                            entityPM.ProfitExchangeRate = MethodHelper.Round(lastRate.Rate, 5);
+                        }
+                    }
+                }
+            }
+        }
+
         private void InitializeInlandDomestic()
         {
             if (isInlandDomestic)
@@ -1893,6 +1952,28 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                     entityPM.CountryForStatisticsId = port.CountryId;
                 }
             }
+        }
+
+        private void ComputeExpectedProfit()
+        {
+            //if (entityPM.EstimateProfit != null)
+            //{
+            //    double? myProfitAmount = 0;
+
+            //    double? myCostAmountLocal = MethodHelper.Round(entityPM.QuoteCharges.Where(d => d.CostTotalAmountLocal != null).Sum(s => s.CostTotalAmountLocal), 2);
+            //    double? mySaleAmountLocal = MethodHelper.Round(entityPM.QuoteCharges.Where(d => d.IsAllIN == false && d.SaleTotalAmountLocal != null).Sum(s => s.SaleTotalAmountLocal), 2);
+            //    double? mySaleProfitLocal = MethodHelper.Round(mySaleAmountLocal - myCostAmountLocal, 2);
+
+            //    if (entityPM.ExchangeRate != null && entityPM.ExchangeRate != 0)
+            //    {
+            //        myProfitAmount = MethodHelper.Round(mySaleProfitLocal / entityPM.ExchangeRate, 2);
+            //    }
+
+            //    if (entityPM.EstimateProfit != myProfitAmount)
+            //    {
+            //        throw new Exception("Wrong Estimate Profit");
+            //    }
+            //}
         }
     }
     public class QuoteTotalsClass

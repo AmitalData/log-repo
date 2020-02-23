@@ -8,6 +8,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 {
     public class UserIdNumberRequestPM
     {
+        public string Id { get; set; }
         public string ForwarderShipmentNumber { get; set; }
         public string CustomerName { get; set; }
         public string CustomerAddress { get; set; }
@@ -20,7 +21,9 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string Quantity { get; set; }
         public string Weight { get; set; }
         public int Tenant { get; set; }
-
+        public bool IsUserIDNumberRequired { get; set; }
+        public DateTime? UserIdNumberUpdateDate { get; set; }
+        public string UserIdNumber { get; set; }
 
     }
 }

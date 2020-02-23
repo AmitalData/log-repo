@@ -264,7 +264,7 @@ namespace WebFreight.Web.WebServices
                             //ShipmentCompField.MissingDocumentsCount = documentsFilingQuery.GetMissingDocCountForEntity(extDocPM.EntityId, extDocPM.ObjectTableId, tenant);
 
                             ShipmentComputedFieldsHelper shipmentComputedFieldsHelper = new ShipmentComputedFieldsHelper();
-                            shipmentComputedFieldsHelper.UpdateShipmentComputedFields(ShipmentCompField);
+                            shipmentComputedFieldsHelper.UpdateShipmentComputedFields(ShipmentCompField, shipmentComputedFieldsRepository.context);
 
                             //shipmentComputedFieldsRepository.Update(ShipmentCompField);
                             // shipmentComputedFieldsRepository.SubmitChanges();

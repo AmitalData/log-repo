@@ -5591,28 +5591,27 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "IsPaymentNumberManuallySet",
-					  						OldFieldName =  "IsPaymentNumberManuallySet",
+					 						FieldName =  "BankAccountNumber",
+					  						OldFieldName =  "BankAccountNumber",
 					  						ObjectTableName =  "ARPayment",
-					  						FieldsDataType =  "Boolean",
+					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
-					  						MaxLength =  0,
+					  						MaxLength =  15,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  true,
+					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
-					  						SystemMaxLength =  0,
+					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
-					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "IsPaymentNumberManuallySet",
-					  						ListPropertyPath =  "IsPaymentNumberManuallySet",
+					  						PMPropertyPath =  "BankAccountNumber",
+					  						ListPropertyPath =  "BankAccountNumber",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -5621,19 +5620,16 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "ARPayment",
 					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  true,
+					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInSearchWindowFilters =  false,
 					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "IsPaymentNumberManuallySet",
-					  						DefaultText =  "Manually Set",
-					  						ListFieldLable =  "IsPaymentNumberManuallySetListLable",
-					  						ListLableDefaultText =  "Number Manually Set",
+					  						FullFieldLable =  "BankAccountNumber",
+					  						DefaultText =  "Bank Account Number",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -5684,6 +5680,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
 			   TextCode ARPaymentTextCode_5 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.Q.FailedSAT", DefaultText = @"SAT Failed Payments",LocalDefaultText = null, ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
 			   Feature ARPaymentFeature_5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SATFAILEDPAYMENTS", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARPayment.Features.SATFailedPayments", NameTextCodeDefaultText = "Payments Failed to Open in SAT", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+ 
+
+			   TextCode ARPaymentTextCode_6 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.Q.FailedSAT", DefaultText = @"SAT Failed Payments",LocalDefaultText = null, ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature ARPaymentFeature_6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SATFAILEDPAYMENTS", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARPayment.Features.SATFailedPayments", NameTextCodeDefaultText = "Payments Failed to Open in SAT", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+ 
+
+			   TextCode ARPaymentTextCode_7 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.Q.ErrorInTransfer", DefaultText = @"Error In Transfer",LocalDefaultText = "Error In Transfer", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature ARPaymentFeature_7 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ARPayment.Q.ErrorInTransfer", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARPaymentFeatures.ErrorInTransfer", NameTextCodeDefaultText = "ErrorInTransfer", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -5850,6 +5854,56 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
              AdvancedQueryFilter PaymentsFailedtoOpeninSATQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = ARPaymentObjectFields.Where(d => d.FieldName == "SATTransferStatusCode" && d.ObjectTableId == ARPaymentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARPaymentObjectFields.Where(d => d.FieldName == "SATTransferStatusCode" && d.ObjectTableId == ARPaymentObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "TE",PredefinedValue2 = null, QueryId = PaymentsFailedtoOpeninSATQuery.Id,QueryCode = PaymentsFailedtoOpeninSATQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
+  
+	      
+
+			  Query SATFailedPaymentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ARPaymentTextCode_6.Id, NameTextCodeCode = ARPaymentTextCode_6.Code, ObjectTableName = "ARPayment", Code = "SAT Failed Payments",  QueryGroupCode = "ARPT", IndexOrder = 6, Tenant = 0, ObjectTableId = ARPaymentObjectTable.Id, QuerySection = "ARPayment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ARPaymentFeature_6.Id,FeatureUniqeCode= ARPaymentFeature_6.FeatureUniqeCode, DefaultSortName = "PaymentNo", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
+	
+			 QueryColumn SATFailedPaymentsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SATFailedPaymentsQuery.Id,QueryCode = SATFailedPaymentsQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = ARPaymentObjectFields.Where(d => d.FieldName == "RegisterDate" && d.ObjectTableId == ARPaymentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARPaymentObjectFields.Where(d => d.FieldName == "RegisterDate" && d.ObjectTableId == ARPaymentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn SATFailedPaymentsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SATFailedPaymentsQuery.Id,QueryCode = SATFailedPaymentsQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = ARPaymentObjectFields.Where(d => d.FieldName == "PaymentNo" && d.ObjectTableId == ARPaymentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARPaymentObjectFields.Where(d => d.FieldName == "PaymentNo" && d.ObjectTableId == ARPaymentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn SATFailedPaymentsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SATFailedPaymentsQuery.Id,QueryCode = SATFailedPaymentsQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = ARPaymentObjectFields.Where(d => d.FieldName == "BillToName" && d.ObjectTableId == ARPaymentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARPaymentObjectFields.Where(d => d.FieldName == "BillToName" && d.ObjectTableId == ARPaymentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 190 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn SATFailedPaymentsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SATFailedPaymentsQuery.Id,QueryCode = SATFailedPaymentsQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = ARPaymentObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == ARPaymentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARPaymentObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == ARPaymentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn SATFailedPaymentsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SATFailedPaymentsQuery.Id,QueryCode = SATFailedPaymentsQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = ARPaymentObjectFields.Where(d => d.FieldName == "AmountInPaymentCurrency" && d.ObjectTableId == ARPaymentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARPaymentObjectFields.Where(d => d.FieldName == "AmountInPaymentCurrency" && d.ObjectTableId == ARPaymentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn SATFailedPaymentsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SATFailedPaymentsQuery.Id,QueryCode = SATFailedPaymentsQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = ARPaymentObjectFields.Where(d => d.FieldName == "ReadyForTransfer" && d.ObjectTableId == ARPaymentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARPaymentObjectFields.Where(d => d.FieldName == "ReadyForTransfer" && d.ObjectTableId == ARPaymentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 50 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn SATFailedPaymentsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SATFailedPaymentsQuery.Id,QueryCode = SATFailedPaymentsQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = ARPaymentObjectFields.Where(d => d.FieldName == "TransferError" && d.ObjectTableId == ARPaymentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARPaymentObjectFields.Where(d => d.FieldName == "TransferError" && d.ObjectTableId == ARPaymentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 500 }, queryColumnsRepository, tenantQueryColumns);
+
+             AdvancedQueryFilter SATFailedPaymentsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = ARPaymentObjectFields.Where(d => d.FieldName == "SATTransferStatusCode" && d.ObjectTableId == ARPaymentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARPaymentObjectFields.Where(d => d.FieldName == "SATTransferStatusCode" && d.ObjectTableId == ARPaymentObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "TE",PredefinedValue2 = null, QueryId = SATFailedPaymentsQuery.Id,QueryCode = SATFailedPaymentsQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+
+  
+	      
+
+			  Query ErrorInTransferQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ARPaymentTextCode_7.Id, NameTextCodeCode = ARPaymentTextCode_7.Code, ObjectTableName = "ARPayment", Code = "ErrorInTransfer",  QueryGroupCode = "ARPT", IndexOrder = 7, Tenant = 0, ObjectTableId = ARPaymentObjectTable.Id, QuerySection = "ARPayment", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ARPaymentFeature_7.Id,FeatureUniqeCode= ARPaymentFeature_7.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
+	
+			 QueryColumn ErrorInTransferQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ErrorInTransferQuery.Id,QueryCode = ErrorInTransferQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = ARPaymentObjectFields.Where(d => d.FieldName == "TransferError" && d.ObjectTableId == ARPaymentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARPaymentObjectFields.Where(d => d.FieldName == "TransferError" && d.ObjectTableId == ARPaymentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn ErrorInTransferQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ErrorInTransferQuery.Id,QueryCode = ErrorInTransferQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = ARPaymentObjectFields.Where(d => d.FieldName == "PaymentNo" && d.ObjectTableId == ARPaymentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARPaymentObjectFields.Where(d => d.FieldName == "PaymentNo" && d.ObjectTableId == ARPaymentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn ErrorInTransferQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ErrorInTransferQuery.Id,QueryCode = ErrorInTransferQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = ARPaymentObjectFields.Where(d => d.FieldName == "BillToName" && d.ObjectTableId == ARPaymentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARPaymentObjectFields.Where(d => d.FieldName == "BillToName" && d.ObjectTableId == ARPaymentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn ErrorInTransferQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ErrorInTransferQuery.Id,QueryCode = ErrorInTransferQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = ARPaymentObjectFields.Where(d => d.FieldName == "RegisterDate" && d.ObjectTableId == ARPaymentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARPaymentObjectFields.Where(d => d.FieldName == "RegisterDate" && d.ObjectTableId == ARPaymentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn ErrorInTransferQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ErrorInTransferQuery.Id,QueryCode = ErrorInTransferQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = ARPaymentObjectFields.Where(d => d.FieldName == "PaymentCurrencyCode" && d.ObjectTableId == ARPaymentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARPaymentObjectFields.Where(d => d.FieldName == "PaymentCurrencyCode" && d.ObjectTableId == ARPaymentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn ErrorInTransferQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ErrorInTransferQuery.Id,QueryCode = ErrorInTransferQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = ARPaymentObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == ARPaymentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARPaymentObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == ARPaymentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn ErrorInTransferQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ErrorInTransferQuery.Id,QueryCode = ErrorInTransferQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = ARPaymentObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == ARPaymentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARPaymentObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == ARPaymentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn ErrorInTransferQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ErrorInTransferQuery.Id,QueryCode = ErrorInTransferQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = ARPaymentObjectFields.Where(d => d.FieldName == "PaymentMethodName" && d.ObjectTableId == ARPaymentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARPaymentObjectFields.Where(d => d.FieldName == "PaymentMethodName" && d.ObjectTableId == ARPaymentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn ErrorInTransferQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ErrorInTransferQuery.Id,QueryCode = ErrorInTransferQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = ARPaymentObjectFields.Where(d => d.FieldName == "AmountInPaymentCurrency" && d.ObjectTableId == ARPaymentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARPaymentObjectFields.Where(d => d.FieldName == "AmountInPaymentCurrency" && d.ObjectTableId == ARPaymentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn ErrorInTransferQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ErrorInTransferQuery.Id,QueryCode = ErrorInTransferQuery.UniqueCode, IndexOrder = 9, ObjectFieldId = ARPaymentObjectFields.Where(d => d.FieldName == "OpenAmount" && d.ObjectTableId == ARPaymentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARPaymentObjectFields.Where(d => d.FieldName == "OpenAmount" && d.ObjectTableId == ARPaymentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn ErrorInTransferQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ErrorInTransferQuery.Id,QueryCode = ErrorInTransferQuery.UniqueCode, IndexOrder = 10, ObjectFieldId = ARPaymentObjectFields.Where(d => d.FieldName == "InternalNotes" && d.ObjectTableId == ARPaymentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARPaymentObjectFields.Where(d => d.FieldName == "InternalNotes" && d.ObjectTableId == ARPaymentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+             AdvancedQueryFilter ErrorInTransferQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = ARPaymentObjectFields.Where(d => d.FieldName == "TransferStatusCode" && d.ObjectTableId == ARPaymentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARPaymentObjectFields.Where(d => d.FieldName == "TransferStatusCode" && d.ObjectTableId == ARPaymentObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "ET",PredefinedValue2 = null, QueryId = ErrorInTransferQuery.Id,QueryCode = ErrorInTransferQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+
 	   
 	    }
 
@@ -5922,7 +5976,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   Feature ARPaymentGeneralFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARPayment.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
  
                  
-			   TextCode ARPaymentDocsOutTextCode_TH3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.TH.Docs", DefaultText = "Docs Out",LocalDefaultText = "מסמכים שיצאו", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   TextCode ARPaymentDocsOutTextCode_TH3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.TH.DocsOut", DefaultText = "Docs Out",LocalDefaultText = "מסמכים שיצאו", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature ARPaymentDocsOutFeature_TH3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DOCSOUT", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARPayment.Features.DocsOut", NameTextCodeDefaultText = "Docs Out", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
  
                  

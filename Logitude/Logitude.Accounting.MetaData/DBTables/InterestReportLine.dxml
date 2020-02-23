@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="InterestReportLines"
+  Schema="dbo"
+  DBType="Main">
+  <Column
+    Name="InterestReportId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="InterestTransactionId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Relation
+    ForeignKeyColumn="InterestReportId"
+    ReferencedTable="InterestReports"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="InterestTransactionId"
+    ReferencedTable="InterestTransactions"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+</Table>

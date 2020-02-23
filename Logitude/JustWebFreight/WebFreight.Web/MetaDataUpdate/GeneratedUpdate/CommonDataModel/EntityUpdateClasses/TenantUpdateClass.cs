@@ -116,7 +116,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Tenant",
-			      				    Code =  "a122",
+			      				    Code =  "0df7",
 			      				    Name =  "Tenant",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Common",
@@ -7320,6 +7320,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
  		   TextCode TenantTextCode_TenantHPrepaidCollectHelpText = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Tenant.H.PrepaidCollectHelpText", DefaultText = "Default payment method for freight and other charges, in direct and consolidation (Master) shipments, for export and import. P-Prepaid: by sender at origin. C-Collect: by receiver at destination.",LocalDefaultText = null, ObjectTableId = TenantObjectTable.Id, Tenant = 0, TextCodeTypeCode = "H", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode TenantTextCode_TenantHDefaultUnitsHelpText = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Tenant.H.DefaultUnitsHelpText", DefaultText = "The default unit of measurement for the weight, volume and dimension entries.",LocalDefaultText = null, ObjectTableId = TenantObjectTable.Id, Tenant = 0, TextCodeTypeCode = "H", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode TenantTextCode_TenantOLogoHelpText = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Tenant.O.LogoHelpText", DefaultText = "Your company logo will appear in all outgoing documents and messages. To upload it: Click the Upload button.",LocalDefaultText = null, ObjectTableId = TenantObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

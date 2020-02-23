@@ -1,93 +1,208 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Table Name="LogitudeLeads" Schema="dbo" DBType="Global">
-  <Column Name="Id" Type="varchar" Size="40">
-    <Constraints PrimaryKey="true" Nullable="false" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="LogitudeLeads"
+  Schema="dbo"
+  DBType="Global">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="PhoneNumber" Type="varchar" Size="40">
-    <Constraints Nullable="true" />
+  <Column
+    Name="PhoneNumber"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="CreateDate" Type="datetime">
-    <Constraints Nullable="false" />
+  <Column
+    Name="CreateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="CompanyName" Type="nvarchar" Size="100">
-    <Constraints Nullable="false" />
+  <Column
+    Name="CompanyName"
+    Type="nvarchar"
+    Size="100">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="ContactName" Type="nvarchar" Size="40">
-    <Constraints Nullable="false" />
+  <Column
+    Name="ContactName"
+    Type="nvarchar"
+    Size="40">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="NumberOfBranches" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="NumberOfBranches"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="Country" Type="varchar" Size="120">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Country"
+    Type="varchar"
+    Size="120">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="Email" Type="varchar" Size="70">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Email"
+    Type="varchar"
+    Size="70">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="NumberOfUsers" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="NumberOfUsers"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="Comments" Type="nvarchar" Size="500">
-    <Constraints Nullable="true" />
+  <Column
+    Name="Comments"
+    Type="nvarchar"
+    Size="500">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="RequestType" Type="varchar" Size="20">
-    <Constraints Nullable="true" />
+  <Column
+    Name="RequestType"
+    Type="varchar"
+    Size="20">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="IsEmailVerified" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="IsEmailVerified"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="TenantNumber" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="TenantNumber"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="LastUpdateDate" Type="datetime">
-    <Constraints Nullable="false" />
+  <Column
+    Name="LastUpdateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="IsSentToCustomer" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="IsSentToCustomer"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="StatusCode" Type="varchar" Size="20">
-    <Constraints Nullable="true" />
+  <Column
+    Name="StatusCode"
+    Type="varchar"
+    Size="20">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="IsUserOpened" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="IsUserOpened"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="CustomerId" Type="nvarchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="CustomerId"
+    Type="nvarchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="OpportunityId" Type="nvarchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="OpportunityId"
+    Type="nvarchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="SearchFields" Type="nvarchar" Size="1000">
-    <Constraints Nullable="true" />
+  <Column
+    Name="SearchFields"
+    Type="nvarchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="LeadSource" Type="varchar" Size="60">
-    <Constraints Nullable="true" />
+  <Column
+    Name="LeadSource"
+    Type="varchar"
+    Size="60">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="IATACode" Type="varchar" Size="7">
-    <Constraints Nullable="true" />
+  <Column
+    Name="IATACode"
+    Type="varchar"
+    Size="7">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="CASSCode" Type="varchar" Size="4">
-    <Constraints Nullable="true" />
+  <Column
+    Name="CASSCode"
+    Type="varchar"
+    Size="4">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="PackageCode" Type="varchar" Size="5">
-    <Constraints Nullable="true" />
+  <Column
+    Name="PackageCode"
+    Type="varchar"
+    Size="5">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="State" Type="varchar" Size="40">
-    <Constraints Nullable="true" />
+  <Column
+    Name="State"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="City" Type="varchar" Size="25">
-    <Constraints Nullable="true" />
+  <Column
+    Name="City"
+    Type="varchar"
+    Size="25">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="ZipCode" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ZipCode"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Street" Type="varchar" Size="65">
-    <Constraints Nullable="true" />
+  <Column
+    Name="Street"
+    Type="varchar"
+    Size="65">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="VatNumber" Type="varchar" Size="20">
-    <Constraints Nullable="true" />
+  <Column
+    Name="VatNumber"
+    Type="varchar"
+    Size="20">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="IsUserEmailSent" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="IsUserEmailSent"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
 </Table>

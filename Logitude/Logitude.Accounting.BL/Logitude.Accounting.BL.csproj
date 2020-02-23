@@ -222,6 +222,12 @@
     <Compile Include="CoreBL\CashbookService.cs" />
     <Compile Include="CoreBL\FunctionalTests\ClearAccountingDB.cs" />
     <Compile Include="CoreBL\FunctionalTests\JournalToGLAccountMoreData.cs" />
+    <Compile Include="CoreBL\InterestReport\InterestCalculationDetails.cs" />
+    <Compile Include="CoreBL\InterestReport\InterestReportArgs.cs" />
+    <Compile Include="CoreBL\InterestReport\InterestReportCalculationPreparations.cs" />
+    <Compile Include="CoreBL\InterestReport\InterestReportDataCalculations.cs" />
+    <Compile Include="CoreBL\InterestReport\InterestReportLinesCreationService.cs" />
+    <Compile Include="CoreBL\InterestReport\InterestTransactionsGroupedByDate.cs" />
     <Compile Include="CoreBL\InterestTrans\RegularJournalInterestTransactionMapping.cs" />
     <Compile Include="CoreBL\ISystem1000Service.cs" />
     <Compile Include="CoreBL\OpenFormatReportService.cs" />
@@ -289,6 +295,7 @@
     <Compile Include="DataContract\OpenFormatReportData.cs" />
     <Compile Include="DataContract\OpenFormatReportDataProvider.cs" />
     <Compile Include="DataContract\TaxDeductionReportData.cs" />
+    <Compile Include="DataContract\TaxDeductionReportDataProvider.cs" />
     <Compile Include="DataContract\TaxReportLinesCounter.cs" />
     <Compile Include="EntityDataMappings\AccountingCompanyTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\AccountingEntityDataMapping.cs" />
@@ -534,9 +541,13 @@
     <Compile Include="EntityQueryServices\Generated\VatReportStatusQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\WithholdingTaxDeductionTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\GLAccountCounterQueryService.cs" />
+    <Compile Include="EntityQueryServices\GLAccountInterestPeriodQueryService.cs" />
     <Compile Include="EntityQueryServices\GLAccountMoreDataQueryService.cs" />
     <Compile Include="EntityQueryServices\GLAccountTypeQueryService.cs" />
     <Compile Include="EntityQueryServices\GLAccountWithholdingTaxQueryService.cs" />
+    <Compile Include="EntityQueryServices\InterestBasesPeriodQueryService.cs" />
+    <Compile Include="EntityQueryServices\InterestReportQueryService.cs" />
+    <Compile Include="EntityQueryServices\InterestTransactionQueryService.cs" />
     <Compile Include="EntityQueryServices\JournalLineLedgerTransactionAccDTO.cs" />
     <Compile Include="EntityQueryServices\JournalLineLedgerTransactionDTO.cs" />
     <Compile Include="EntityQueryServices\InterestBasesTypeQueryService.cs" />
@@ -624,6 +635,7 @@
     <Compile Include="EntityUpdateServices\Generated\WithholdingTaxDeductionTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\GLAccountWithholdingTaxUpdateService.cs" />
     <Compile Include="EntityUpdateServices\IJournalUpdateServiceProvider.cs" />
+    <Compile Include="EntityUpdateServices\InterestReportLinesByDateUpdateService.cs" />
     <Compile Include="EntityUpdateServices\InterestReportUpdateService.cs" />
     <Compile Include="EntityUpdateServices\InterestBasesTypeUpdateService.cs" />
     <Compile Include="EntityUpdateServices\InterestTransactionUpdateService.cs" />

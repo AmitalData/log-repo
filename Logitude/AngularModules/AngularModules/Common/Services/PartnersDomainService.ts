@@ -43,6 +43,7 @@ import { CardContactAdditionalServicePM } from '../EntityPMs/CardContactAddition
 import { CarrierAreaList } from '../EntityLists/CarrierAreaList';
 import { CarrierAreaPM } from '../EntityPMs/CarrierAreaPM';
 import { CarrierAreasPortPM } from '../EntityPMs/CarrierAreasPortPM';
+import { AccountingPartnerPMService } from './StandardPMs/AccountingPartnerPMService';
 
 @Injectable()
 
@@ -1130,6 +1131,13 @@ export class PartnersDomainService {
                 }
             }
 
+            else if (property === "AccountingPartner") {
+                if (jsonPM[property]) {
+                    var myAccountingPartnerPMService = new AccountingPartnerPMService();
+                    entity[property] = myAccountingPartnerPMService.MapJsonToEntityPM(jsonPM[property], getCallMap);
+                }
+            }
+
             else if (property === "Warehouse") {
                 if (jsonPM[property]) {
                     var myWarehousePMService = new WarehousePMService();
@@ -1279,6 +1287,11 @@ export class PartnersDomainService {
 
                 case "VD": {
                     args.Vendor = myPartner;
+                    break;
+                }
+
+                case "AC": {
+                    args.AccountingPartner = myPartner;
                     break;
                 }
 

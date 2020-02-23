@@ -386,6 +386,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ConsigneeContactId).HasColumnName("ConsigneeContactId");
             this.Property(t => t.ChargeableWeightInKG).HasColumnName("ChargeableWeightInKG");
             this.Property(t => t.GrossWeightInKG).HasColumnName("GrossWeightInKG");
+            this.Property(t => t.GrossWeightPerStorageDays).HasColumnName("GrossWeightPerStorageDays");
             this.Property(t => t.Field1).HasColumnName("Field1");
             this.Property(t => t.Field2).HasColumnName("Field2");
             this.Property(t => t.Field3).HasColumnName("Field3");

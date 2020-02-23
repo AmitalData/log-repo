@@ -98,5 +98,6 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string BusinessPhone { get; set; }
 
 
+        public int? StorageFreeDays { get; set; }
     }
 }

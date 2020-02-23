@@ -65,7 +65,7 @@ export class AgingFilterComponent extends BaseComponent implements OnInit {
     //#region Filters
 
     //row 1
-    private agingForDate: Date = null;
+    private agingForDate: Date = new Date();
     public get AgingForDate() { return this.agingForDate; }
     public set AgingForDate(value: Date) {
         if (this.agingForDate != value) {

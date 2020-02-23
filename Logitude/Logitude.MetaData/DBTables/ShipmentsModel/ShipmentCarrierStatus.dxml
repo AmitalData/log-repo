@@ -1,68 +1,164 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Table Name="ShipmentCarrierStatuses" Schema="dbo" DBType="Main">
-  <Column Name="Id" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="ShipmentCarrierStatuses"
+  Schema="dbo"
+  DBType="Main">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="ShipmentId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
+  <Column
+    Name="ShipmentId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="Status" Type="varchar" Size="4">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Status"
+    Type="varchar"
+    Size="4">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="FromPortId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="FromPortId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="ToPortId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ToPortId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Details" Type="nvarchar" Size="250">
-    <Constraints Nullable="true" />
+  <Column
+    Name="Details"
+    Type="nvarchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="RecordHash" Type="nvarchar" Size="500">
-    <Constraints Nullable="false" />
+  <Column
+    Name="RecordHash"
+    Type="nvarchar"
+    Size="500">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="Pieces" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Pieces"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="Weight" Type="float">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Weight"
+    Type="float">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="ReceivingDate" Type="datetime">
-    <Constraints Nullable="false" />
+  <Column
+    Name="ReceivingDate"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="EventDate" Type="datetime">
-    <Constraints Nullable="true" />
+  <Column
+    Name="EventDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Partial" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Partial"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="FlightNumber" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="FlightNumber"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Location" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="Location"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="AirlineName" Type="varchar" Size="60">
-    <Constraints Nullable="true" />
+  <Column
+    Name="AirlineName"
+    Type="varchar"
+    Size="60">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="DepartureDate" Type="datetime">
-    <Constraints Nullable="true" />
+  <Column
+    Name="DepartureDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="ArrivalDate" Type="datetime">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ArrivalDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="TimeOfDepartureInfo" Type="varchar" Size="1">
-    <Constraints Nullable="true" />
+  <Column
+    Name="TimeOfDepartureInfo"
+    Type="varchar"
+    Size="1">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="TimeOfArrivalInfo" Type="varchar" Size="1">
-    <Constraints Nullable="true" />
+  <Column
+    Name="TimeOfArrivalInfo"
+    Type="varchar"
+    Size="1">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Relation ForeignKeyColumn="ShipmentId" ReferencedTable="Shipments" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="Status" ReferencedTable="AWBStatus" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="FromPortId" ReferencedTable="Ports" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="ToPortId" ReferencedTable="Ports" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="Location" ReferencedTable="Ports" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ShipmentId"
+    ReferencedTable="Shipments"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="Status"
+    ReferencedTable="AWBStatus"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="FromPortId"
+    ReferencedTable="Ports"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ToPortId"
+    ReferencedTable="Ports"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="Location"
+    ReferencedTable="Ports"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
 </Table>

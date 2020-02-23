@@ -912,7 +912,10 @@ namespace Logitude.Accounting.BL.CoreBL
         public class JournalApproveWorker
         {
             private static DateTime _NextDueDoneAt = DateTime.MinValue;
-
+            static JournalApproveWorker()
+            {
+                _NextDueDoneAt = DateTime.UtcNow.Date.AddDays(1);//tomorrow at 00:00
+            }
             public Action LogDoneItemInMemoryAction { get; set; }
             public Action SetLastActivate { get; set; }
 

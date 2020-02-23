@@ -1,19 +1,51 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Table Name="ScreenModifications" Schema="dbo" DBType="Main">
-  <Column Name="Id" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="ScreenModifications"
+  Schema="dbo"
+  DBType="Main">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="ScreenId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
+  <Column
+    Name="ScreenId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="NumberOfRows" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="NumberOfRows"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="NumberOfColumns" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="NumberOfColumns"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Relation ForeignKeyColumn="ScreenId" ReferencedTable="Screens" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Column
+    Name="ScreenCode"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Relation
+    ForeignKeyColumn="ScreenId"
+    ReferencedTable="Screens"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
 </Table>

@@ -1,72 +1,171 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Table Name="APILogs" Schema="dbo" DBType="Main">
-  <Column Name="Id" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="APILogs"
+  Schema="dbo"
+  DBType="Main">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="Direction" Type="varchar" Size="1">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Direction"
+    Type="varchar"
+    Size="1">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="Status" Type="varchar" Size="1">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Status"
+    Type="varchar"
+    Size="1">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="CreateDate" Type="datetime">
-    <Constraints Nullable="false" />
+  <Column
+    Name="CreateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="CreateDateUTC" Type="datetime">
-    <Constraints Nullable="false" />
+  <Column
+    Name="CreateDateUTC"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="LastUpdateDate" Type="datetime">
-    <Constraints Nullable="false" />
+  <Column
+    Name="LastUpdateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="LastUpdateDateUTC" Type="datetime">
-    <Constraints Nullable="false" />
+  <Column
+    Name="LastUpdateDateUTC"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="NumberOfRetries" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="NumberOfRetries"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="ExpirationDate" Type="datetime">
-    <Constraints Nullable="false" />
+  <Column
+    Name="ExpirationDate"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="Subject" Type="varchar" Size="100">
-    <Constraints Nullable="true" />
+  <Column
+    Name="Subject"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="EntityId" Type="varchar" Size="40">
-    <Constraints Nullable="true" />
+  <Column
+    Name="EntityId"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="ObjectTableId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ObjectTableId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="PartnerName" Type="varchar" Size="100">
-    <Constraints Nullable="true" />
+  <Column
+    Name="PartnerName"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Refrence" Type="varchar" Size="40">
-    <Constraints Nullable="true" />
+  <Column
+    Name="Refrence"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="SearchFields" Type="nvarchar" Size="1000">
-    <Constraints Nullable="true" />
+  <Column
+    Name="SearchFields"
+    Type="nvarchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="LastExceptionMessage" Type="nvarchar" Size="250">
-    <Constraints Nullable="true" />
+  <Column
+    Name="LastExceptionMessage"
+    Type="nvarchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="CorrelationId" Type="varchar" Size="64">
-    <Constraints Nullable="true" />
+  <Column
+    Name="CorrelationId"
+    Type="varchar"
+    Size="64">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="BatchNumber" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="BatchNumber"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="QueueType" Type="varchar" Size="100">
-    <Constraints Nullable="true" />
+  <Column
+    Name="QueueType"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="QueueMessage" Type="varchar" Size="400">
-    <Constraints Nullable="true" />
+  <Column
+    Name="QueueMessage"
+    Type="varchar"
+    Size="400">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="QueueMessageMoreDetailsId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="QueueMessageMoreDetailsId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="CustomerId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="CustomerId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
+  <Index
+    Columns="Tenant,BatchNumber,CreateDate" />
+  <Index
+    Columns="Tenant,BatchNumber,CreateDate,CustomerId" />
+  <Index
+    Columns="Tenant,CorrelationId" />
+  <Index
+    Columns="CreateDate" />
+  <Index
+    Columns="Id" />
 </Table>

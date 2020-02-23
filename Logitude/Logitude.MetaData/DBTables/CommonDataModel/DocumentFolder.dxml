@@ -1,28 +1,66 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Table Name="DocumentFolders" Schema="dbo" DBType="Main">
-  <Column Name="Id" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="DocumentFolders"
+  Schema="dbo"
+  DBType="Main">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="Code" Type="varchar" Size="5">
-    <Constraints Nullable="true" />
+  <Column
+    Name="Code"
+    Type="varchar"
+    Size="5">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="EnglishName" Type="varchar" Size="40">
-    <Constraints Nullable="false" />
+  <Column
+    Name="EnglishName"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="LocalName" Type="nvarchar" Size="40">
-    <Constraints Nullable="true" />
+  <Column
+    Name="LocalName"
+    Type="nvarchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="IsExternalFolder" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="IsExternalFolder"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="ParentFolderId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ParentFolderId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="SearchFields" Type="nvarchar" Size="1000">
-    <Constraints Nullable="true" />
+  <Column
+    Name="SearchFields"
+    Type="nvarchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Relation ForeignKeyColumn="ParentFolderId" ReferencedTable="DocumentFolders" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ParentFolderId"
+    ReferencedTable="DocumentFolders"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
 </Table>

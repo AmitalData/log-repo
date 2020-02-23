@@ -1,9 +1,21 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Table Name="TranslationHeaders" Schema="dbo" DBType="Main">
-  <Column Name="Code" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="TranslationHeaders"
+  Schema="dbo"
+  DBType="Main">
+  <Column
+    Name="Code"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="Description" Type="varchar" Size="250">
-    <Constraints Nullable="true" />
+  <Column
+    Name="Description"
+    Type="varchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
   </Column>
 </Table>

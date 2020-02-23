@@ -2,6 +2,7 @@ import {Component, ViewChildren, QueryList} from '@angular/core';
 import {LocationDirective} from '../../../Infrastructure/Utilities/LocationDirective';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator';
 
 
 @Component({
@@ -12,11 +13,16 @@ import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponen
 export class DashboardWorkspaceComponent extends BaseComponent{
 
     private isViewInited = false;
+    public HasQuoteDashboardFeature = false;
+
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
 
     constructor() {
         super();
         this.selectedTabCode = "BCD";
+        if (FeatureLocator.HasFeaturePermession("General", "QPDB")) {
+            this.HasQuoteDashboardFeature = true;
+        }
         this.RunComponent();
     }    
 

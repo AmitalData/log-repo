@@ -1251,7 +1251,19 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
 
                         report = LoadandRender(defaulttemplate, currentBusinessObject, tenant);
                         break;
-                    }                    
+                    }
+
+                case "WELB":
+                    {
+                        CrossDockEntryLabelDataProviderHelper crossDockEntryLabelDataProviderHelper = new CrossDockEntryLabelDataProviderHelper();
+                        byte[] byteArray = crossDockEntryLabelDataProviderHelper.LoadCrossDockEntryLabelDataProvider(entityId, tenant);
+                        MemoryStream memorystream = new MemoryStream(byteArray);
+                        XmlSerializer serializer = new XmlSerializer(typeof(List<CrossDockEntryDataProvider>));
+                        List<CrossDockEntryDataProvider> crossDockEntryDataProviderLists = (List<CrossDockEntryDataProvider>)serializer.Deserialize(memorystream);
+                        StiBusinessObject currentBusinessObject = new StiBusinessObject() { Category = "Cross Docks Entry Labels", Name = "CrossDockEntryDataProvider", BusinessObjectValue = crossDockEntryDataProviderLists };
+                        report = LoadandRender(defaulttemplate, currentBusinessObject, tenant);
+                    }
+                    break;
             }
 
             return report;

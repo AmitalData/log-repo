@@ -174,7 +174,7 @@ export class ObjectFieldTemplate implements OnInit, OnDestroy  {
                                     }
 
                                     else {
-                                        this.FieldValue = (this.CustomField.ResolvedValue == true || this.CustomField.Value == "true") ? true : false;
+                                        this.FieldValue = (this.CustomField == "True" || this.CustomField == "true") ? true : false;
                                     }
                                 }
 

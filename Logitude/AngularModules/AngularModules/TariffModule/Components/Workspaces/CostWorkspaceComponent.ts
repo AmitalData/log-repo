@@ -154,17 +154,17 @@ export class CostWorkspaceComponent implements OnInit {
                 break;
             }
             case "OSC": {
-                windowTitle = "New " + TextCodeTranslator.Translate("Tariff.Q.Ocean.LCL.Surcharges.Cost") + " Surcharges Cost";
+                windowTitle = "New " + TextCodeTranslator.Translate("Tariff.Q.Ocean.LCL.Surcharges.Cost");
                 typeCode = "OSC";
                 break;
             }
             case "OFC": {
-                windowTitle = "New " + TextCodeTranslator.Translate("Tariff.Q.OceanFCLFreightCost") + " Freight Cost";
+                windowTitle = "New " + TextCodeTranslator.Translate("Tariff.Q.OceanFCLFreightCost");
                 typeCode = "OFC";
                 break;
             }
             case "OFS": {
-                windowTitle = "New " + TextCodeTranslator.Translate("Tariff.Q.OceanFCLSurchargesCost") + " Surcharges Cost";
+                windowTitle = "New " + TextCodeTranslator.Translate("Tariff.Q.OceanFCLSurchargesCost");
                 typeCode = "OFS";
                 break;
             }
@@ -237,7 +237,7 @@ export class CostWorkspaceComponent implements OnInit {
                 var listArgs = new ListComponentArgs();
                 listArgs.QueryCode = "Ocean.LCL.Surcharges.Cost";
                 listArgs.ObjectTableName = "Tariff";
-                listArgs.DisplayTitle = TextCodeTranslator.Translate("Tariff.Q.Ocean.LCL.Surcharges.Cost") + " Surcharges Cost";
+                listArgs.DisplayTitle = TextCodeTranslator.Translate("Tariff.Q.Ocean.LCL.Surcharges.Cost");
                 listArgs.BackButtonTitle = "Tariff";
                 this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
                     SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)

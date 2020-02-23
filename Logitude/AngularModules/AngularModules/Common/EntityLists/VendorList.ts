@@ -38,5 +38,6 @@ export class VendorList {
 		PrimaryContactEmail: string;
 		PrimaryContactPhone: string;
 		CreatedByPartner: string;
+		StateName: string;
 	
 }

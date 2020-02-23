@@ -2138,7 +2138,7 @@
     FieldName="&quot;PaymentMethodName&quot;"
     OldFieldName="&quot;PaymentMethodName&quot;"
     IsNew="false"
-    IsChecked="false"
+    IsChecked="true"
     IsDeleted="false"
     ObjectTableName="&quot;ARPayment&quot;"
     FieldsDataType="&quot;Text&quot;"
@@ -8053,33 +8053,32 @@
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
   <field
-    Id="&quot;102652ce-3ebd-46dd-a5a3-b7e871f7a1bd&quot;"
-    FieldName="&quot;IsPaymentNumberManuallySet&quot;"
-    OldFieldName="&quot;IsPaymentNumberManuallySet&quot;"
+    Id="&quot;aeb5d667-0e76-4a50-b4e9-8106d1264672&quot;"
+    FieldName="&quot;BankAccountNumber&quot;"
+    OldFieldName="&quot;BankAccountNumber&quot;"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
     ObjectTableName="&quot;ARPayment&quot;"
-    FieldsDataType="&quot;Boolean&quot;"
+    FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="0"
+    MaxLength="15"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
-    CanFilter="true"
+    CanFilter="false"
     DisplayOnly="false"
     SystemRequired="false"
     ObjectFieldNotRequired="false"
-    SystemMaxLength="0"
+    SystemMaxLength="15"
     DisplayInList="false"
     IsCustomFilter="false"
-    Operator="&quot;Equals&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
-    PMPropertyPath="&quot;IsPaymentNumberManuallySet&quot;"
-    ListPropertyPath="&quot;IsPaymentNumberManuallySet&quot;"
+    PMPropertyPath="&quot;BankAccountNumber&quot;"
+    ListPropertyPath="&quot;BankAccountNumber&quot;"
     DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
@@ -8088,28 +8087,25 @@
     DependencyFilter1IsList="false"
     DependencyFilter2IsList="false"
     DependencyFilter3IsList="false"
-    ValidForQuerySection1="&quot;ARPayment&quot;"
     IsRestrictable="false"
-    DisplayInEntityVariables="true"
+    DisplayInEntityVariables="false"
     AllowedInCustomerFieldsSettings="false"
     DisplayInSearchWindowFilters="false"
     DisplayInSearchWindowFiltersIndex="0"
     DisplayInDocumentReferences="false"
     InActive="false"
     DisplayLongName="false"
-    FullFieldLable="&quot;IsPaymentNumberManuallySet&quot;"
-    DefaultText="&quot;Manually Set&quot;"
-    ListFieldLable="&quot;IsPaymentNumberManuallySetListLable&quot;"
-    ListLableDefaultText="&quot;Number Manually Set&quot;"
+    FullFieldLable="&quot;BankAccountNumber&quot;"
+    DefaultText="&quot;Bank Account Number&quot;"
     IsNullable="false"
     IsForeignKey="false"
     IsPrimaryKey="false"
-    HasDataBaseField="true"
+    HasDataBaseField="false"
     HasPMField="true"
     IsComposition="false"
     IsMaxLength="false"
     NoMetaDataField="false"
-    GenerateInList="true"
+    GenerateInList="false"
     IsFixedLength="false"
     EnableAutoFill="false"
     IncludeInSearchField="false"
@@ -8604,6 +8600,151 @@
         IndexOrder="0" />
     </QueryFilters>
   </Query>
+  <Query
+    Code="&quot;SAT Failed Payments&quot;"
+    TextCode="&quot;SAT Failed Payments&quot;"
+    QueryGroupCode="&quot;ARPT&quot;"
+    IndexOrder="6"
+    ObjectTableName="&quot;ARPayment&quot;"
+    QuerySection="&quot;ARPayment&quot;"
+    SystemLevel="true"
+    IsAddNewEntity="true"
+    IsPackagable="true"
+    DefaultSortName="&quot;PaymentNo&quot;"
+    DefaultSortDirection="&quot;Descending&quot;"
+    QueryGroupName="&quot;AR Payments&quot;"
+    TextCodeCode="&quot;ARPayment.Q.FailedSAT&quot;"
+    FeatureCode="&quot;SATFAILEDPAYMENTS&quot;"
+    FeatureTextCodeCode="&quot;ARPayment.Features.SATFailedPayments&quot;"
+    FeatureDefaultText="&quot;Payments Failed to Open in SAT&quot;"
+    IsSpellChecked="false">
+    <QueryColumns>
+      <QueryColumn
+        QueryCode="&quot;SAT Failed Payments&quot;"
+        IndexOrder="0"
+        ObjectFieldName="&quot;RegisterDate&quot;"
+        ColumnWidth="120" />
+      <QueryColumn
+        QueryCode="&quot;SAT Failed Payments&quot;"
+        IndexOrder="1"
+        ObjectFieldName="&quot;PaymentNo&quot;"
+        ColumnWidth="120" />
+      <QueryColumn
+        QueryCode="&quot;SAT Failed Payments&quot;"
+        IndexOrder="2"
+        ObjectFieldName="&quot;BillToName&quot;"
+        ColumnWidth="190" />
+      <QueryColumn
+        QueryCode="&quot;SAT Failed Payments&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;StatusName&quot;"
+        ColumnWidth="120" />
+      <QueryColumn
+        QueryCode="&quot;SAT Failed Payments&quot;"
+        IndexOrder="4"
+        ObjectFieldName="&quot;AmountInPaymentCurrency&quot;"
+        ColumnWidth="120" />
+      <QueryColumn
+        QueryCode="&quot;SAT Failed Payments&quot;"
+        IndexOrder="5"
+        ObjectFieldName="&quot;ReadyForTransfer&quot;"
+        ColumnWidth="50" />
+      <QueryColumn
+        QueryCode="&quot;SAT Failed Payments&quot;"
+        IndexOrder="6"
+        ObjectFieldName="&quot;TransferError&quot;"
+        ColumnWidth="500" />
+    </QueryColumns>
+    <QueryFilters>
+      <QueryFilter
+        QueryCode="&quot;SAT Failed Payments&quot;"
+        PredefinedValue="&quot;TE&quot;"
+        ObjectFieldName="&quot;SATTransferStatusCode&quot;"
+        IsPredefined="true"
+        IndexOrder="0" />
+    </QueryFilters>
+  </Query>
+  <Query
+    Code="&quot;ErrorInTransfer&quot;"
+    TextCode="&quot;Error In Transfer&quot;"
+    LocalTextCode="&quot;Error In Transfer&quot;"
+    QueryGroupCode="&quot;ARPT&quot;"
+    IndexOrder="7"
+    ObjectTableName="&quot;ARPayment&quot;"
+    QuerySection="&quot;ARPayment&quot;"
+    SystemLevel="true"
+    IsAddNewEntity="false"
+    IsPackagable="true"
+    DefaultSortName="&quot;CreateDate&quot;"
+    DefaultSortDirection="&quot;Desending&quot;"
+    IsSpellChecked="false">
+    <QueryColumns>
+      <QueryColumn
+        QueryCode="&quot;ErrorInTransfer&quot;"
+        IndexOrder="0"
+        ObjectFieldName="&quot;TransferError&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;ErrorInTransfer&quot;"
+        IndexOrder="1"
+        ObjectFieldName="&quot;PaymentNo&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;ErrorInTransfer&quot;"
+        IndexOrder="2"
+        ObjectFieldName="&quot;BillToName&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;ErrorInTransfer&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;RegisterDate&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;ErrorInTransfer&quot;"
+        IndexOrder="4"
+        ObjectFieldName="&quot;PaymentCurrencyCode&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;ErrorInTransfer&quot;"
+        IndexOrder="5"
+        ObjectFieldName="&quot;CreateDate&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;ErrorInTransfer&quot;"
+        IndexOrder="6"
+        ObjectFieldName="&quot;StatusName&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;ErrorInTransfer&quot;"
+        IndexOrder="7"
+        ObjectFieldName="&quot;PaymentMethodName&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;ErrorInTransfer&quot;"
+        IndexOrder="8"
+        ObjectFieldName="&quot;AmountInPaymentCurrency&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;ErrorInTransfer&quot;"
+        IndexOrder="9"
+        ObjectFieldName="&quot;OpenAmount&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;ErrorInTransfer&quot;"
+        IndexOrder="10"
+        ObjectFieldName="&quot;InternalNotes&quot;"
+        ColumnWidth="130" />
+    </QueryColumns>
+    <QueryFilters>
+      <QueryFilter
+        QueryCode="&quot;ErrorInTransfer&quot;"
+        PredefinedValue="&quot;ET&quot;"
+        ObjectFieldName="&quot;TransferStatusCode&quot;"
+        IsPredefined="true"
+        Operator="&quot;Equal&quot;"
+        IndexOrder="0" />
+    </QueryFilters>
+  </Query>
   <Screen
     Name="&quot;HeaderScreen&quot;"
     ObjectTableName="&quot;ARPayment&quot;"
@@ -8746,7 +8887,7 @@
     ObjectTableName="&quot;ARPayment&quot;"
     Code="&quot;ARDO&quot;"
     ControlPath="&quot;Simplog.InvoiceLib.Views.Tabs.ARPaymentsTabs.ARPaymentDocsOutTabControl&quot;"
-    TextCode="&quot;ARPayment.TH.Docs&quot;"
+    TextCode="&quot;ARPayment.TH.DocsOut&quot;"
     IsPackagable="true"
     IndexOrder="2"
     HtmlComponentURL="&quot;./InvoiceModules/ARPayment/Components/EditTabs/ARPaymentDocsOutTabComponent&quot;"
@@ -9384,6 +9525,20 @@
         IsNullable="false"
         IsSpecialField="false"
         IsCustomType="true"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false" />
+      <DCField
+        DCFieldName="&quot;BankAccountNumber&quot;"
+        FieldName="&quot;BankAccountNumber&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;Text&quot;"
+        IsNullable="false"
+        IsSpecialField="false"
+        IsCustomType="false"
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"

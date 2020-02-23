@@ -247,14 +247,27 @@ export class RootComponent_Cust implements OnInit {
         //    }
         //});
       });
-  }
+    }
+
+    VieUserIdNumberMobileComponent() {
+        this.ClearLocation();
+        SessionLocator.DynamicLoader.Load("./ShipmentModules/ShipmentLogBox/Components/Logbox/UserIdNumberMobileComponent", this.location)
+            .then(cmpRef => {
+                cmpRef.instance.RunComponent();
+            });
+    }
 
   OnLoginCompleted(Param: any = null) {
 
-    if (Param == "IgnoreTerms") {
-      this.ViewEComercePaymentRequestComponent();
-      return;
-    }
+      if (Param == "IgnoreTerms") {
+          if (SessionLocator.IsExternalParams && SessionLocator.ExternalParams && SessionLocator.ExternalParams.Menu && SessionLocator.ExternalParams.Menu.toLocaleLowerCase() == "uid") {
+              this.VieUserIdNumberMobileComponent();
+          }
+          else {
+              this.ViewEComercePaymentRequestComponent();
+          }
+          return;
+      }
     this._FinishLogin = true;
     var termsofUseService = new TermsofUseService();
     termsofUseService.GetCheckIfGoToTermUseComponent(SessionLocator.Tenant, SessionLocator.LoggedUserId).subscribe(res => {
@@ -306,6 +319,9 @@ export class RootComponent_Cust implements OnInit {
             }
             else if (SessionLocator.IsExternalParams && SessionLocator.ExternalParams && SessionLocator.ExternalParams.Menu && SessionLocator.ExternalParams.Menu.toLocaleLowerCase() == "preq" && IsMobileDetected() == true) {
               this.ViewEComercePaymentRequestComponent();
+            }
+            else if (SessionLocator.IsExternalParams && SessionLocator.ExternalParams && SessionLocator.ExternalParams.Menu && SessionLocator.ExternalParams.Menu.toLocaleLowerCase() == "uid" && IsMobileDetected() == true) {
+                this.VieUserIdNumberMobileComponent();
             }
             else {
               this.ViewHomeComponent();

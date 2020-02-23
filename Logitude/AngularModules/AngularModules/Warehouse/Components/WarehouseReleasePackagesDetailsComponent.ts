@@ -54,6 +54,7 @@ export class WarehouseReleasePackagesDetailsComponent extends BaseComponent impl
     DimensionsColumnHeader: string;
     VolumetricWeightColumnHeader: string;
     PackageTypeColumnHeader: string;
+    IsFilterByShipmentId: boolean = true;
 
     ShowAddPackageButton: boolean = false;
     SelectedWarehouseReleasePackage: WarehouseReleasePackagePM;
@@ -103,13 +104,20 @@ export class WarehouseReleasePackagesDetailsComponent extends BaseComponent impl
         this.VolumeLabel = "Volume (" + SessionLocator.TenantPM.VolumeUnitCode + ")";
         this.GrossWeightLabel = "Gross Weight (" + SessionLocator.TenantPM.GrossWeightUnitCode + ")";
         this.DimensionsLabel = "Dim(L-W-H) (" + SessionLocator.TenantPM.DimensionsUnitCode + ")";
-        this.PackageTypeColumnHeader = TextCodeTranslator.Translate("ShipmentPackage.F.PackageTypeId");
+        //this.PackageTypeColumnHeader = TextCodeTranslator.Translate("ShipmentPackage.F.PackageTypeId");
+        this.PackageTypeColumnHeader = "Package Type";
         if (this.warehouseReleasePM) {
-            this.WeightColumnHeader = TextCodeTranslator.Translate("Shipment.O.Packages.GrossWeight").replace("%UnitCode", this.warehouseReleasePM.GrossWeightUnitCode);
-            this.DimensionsColumnHeader = TextCodeTranslator.Translate("Shipment.O.Packages.Dimensions").replace("%UnitCode", this.warehouseReleasePM.DimensionsUnitCode);
-            this.VolumetricWeightColumnHeader = TextCodeTranslator.Translate("Shipment.O.Packages.VolWeight").replace("%UnitCode", this.warehouseReleasePM.ChargeableWeightUnitCode);
-     
+
+            this.WeightColumnHeader = "Gross Weight (" + this.warehouseReleasePM.GrossWeightUnitCode + ")";
+            this.DimensionsColumnHeader = "Dim(L-W-H) (" + this.warehouseReleasePM.DimensionsUnitCode + ")";
+            this.VolumetricWeightColumnHeader = "Volumetric Weight (" + this.warehouseReleasePM.ChargeableWeightUnitCode + ")";
+
             this.VolumetricWeightLabel = "Volumetric Weight (" + this.warehouseReleasePM.ChargeableWeightUnitCode + ")";
+
+
+
+
+
         }
 
 
@@ -123,6 +131,7 @@ export class WarehouseReleasePackagesDetailsComponent extends BaseComponent impl
         this.IsEditMode = args.IsEditMode;
         this.IsFromFullWarehouseReleaseComponent = args.IsFromFullWarehouseReleaseComponent;
         this.ShipmentPM = args.ShipmentPM;
+        this.IsFilterByShipmentId = args.IsFilterByShipmentId;
         this.ShowPackageSummary = args.ShowPackageSummary;
         this.WarehouseEntryId = args.WarehouseEntryId;
         if (this.warehouseReleasePM) {
@@ -151,7 +160,8 @@ export class WarehouseReleasePackagesDetailsComponent extends BaseComponent impl
 
                 var shipmentId = this.warehouseReleasePM.ShipmentId ? this.warehouseReleasePM.ShipmentId:"";
                 this.AllWarehouseEntryPackagesLists = [];
-                this.warehouseEntryPackagePMExtendedService.GetWarehouseEntryPackagePMListsByShipmentIdAndWarehouseIdAndCustomerId(shipmentId, this.warehouseReleasePM.CustomerId, this.warehouseReleasePM.WarehouseId, this.warehouseReleasePM.Tenant).subscribe((res: any) => {
+                
+                this.warehouseEntryPackagePMExtendedService.GetWarehouseEntryPackagePMListsByShipmentIdAndWarehouseIdAndCustomerId(this.IsFilterByShipmentId ? shipmentId : null, this.warehouseReleasePM.CustomerId, this.warehouseReleasePM.WarehouseId, this.warehouseReleasePM.Tenant).subscribe((res: any) => {
                     var pmResponse: ServiceResponse = res;
                     if (!pmResponse.HasError) {
                         this.AllWarehouseEntryPackagesLists = pmResponse.Result;
@@ -162,6 +172,7 @@ export class WarehouseReleasePackagesDetailsComponent extends BaseComponent impl
                     }
 
                 });
+                
 
             } else {
                 this.OpenChoosePackage(packageType);

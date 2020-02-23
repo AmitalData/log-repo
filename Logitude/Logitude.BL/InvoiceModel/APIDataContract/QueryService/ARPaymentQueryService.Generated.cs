@@ -137,7 +137,8 @@ using Simplog.Data.InvoiceModel;
 					 temp.ARPaymentCheques = ARPaymentChequeService6.ARPaymentChequeDataMapping(MyEntityPM.ARPaymentChequeReplicas,Tenant);
 				}
 
-							 					
+							 
+				   temp.BankAccountNumber = MyEntityPM.BankAccountNumber;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -278,7 +279,8 @@ using Simplog.Data.InvoiceModel;
 						temp.ARPaymentChequeReplicas = ARPaymentChequeService6.ARPaymentChequeDataMappingAndValidatin(MyEntity.ARPaymentCheques,Tenant,ComputingPartnerName);
 					}
 
-								 					   
+								 
+					temp.BankAccountNumber = MyEntity.BankAccountNumber;					   
 					   return temp;
 		    }
             catch (Exception ex)

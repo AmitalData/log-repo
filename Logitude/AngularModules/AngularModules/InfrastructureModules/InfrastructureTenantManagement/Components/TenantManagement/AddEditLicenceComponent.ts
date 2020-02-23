@@ -31,8 +31,8 @@ export class AddEditLicenceComponent {
     }
 
     CancelButtonClicked() {
-        this.DataContext.ResetOldData();
-
+        //this.DataContext.ResetOldData();
+        this.RejectChanges();
         this.CurrentSession.CloseCurrentWindow();
     }
 

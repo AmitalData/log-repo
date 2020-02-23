@@ -70,7 +70,7 @@ namespace WebFreight.Web.Monitoring
                 try
                 {
                     IsFaild = (from a in Context.CommunicationLogs
-                               where a.CommunicationStatusTypeCode.ToLower() == "w"  && (DbFunctions.DiffMinutes(a.CreateDateUTC, DateTime.Now) > 5) && a.To == "Profact 3.3"
+                               where a.CommunicationStatusTypeCode.ToLower() == "w" && (a.CreateDateUTC > twoDaysBefore) && (DbFunctions.DiffMinutes(a.CreateDateUTC, DateTime.Now) > 5) && a.To == "Profact 3.3"
                                select a).Any();
                 }
 

@@ -1,16 +1,42 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <title></title>
-</head>
-<body>
-    <table style="background-color:brown;">
-        <tr>
-            <td>
-                <div></div>
-            </td>
-        </tr>
-    </table>
-</body>
-</html>
+
+<table>
+    <tr>
+        <td>
+            <div class="MediaFill">
+                <SectionBox>
+                    <SectionHead>
+                        <table>
+                            <tr>
+                                <td>
+                                    <label>Quote Conversion by Product</label>
+                                </td>
+                            </tr>
+                        </table>
+                    </SectionHead>
+
+                    <SectionBody>
+                        <table>
+                            <tr style="height:1px">
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <div style="cursor:pointer;" [attr.id]="QuoteConversionId" class="MediaFill" (click)="BarClicking()"></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+
+                            <tr *ngIf="NoQuotes">
+                                <td class="NoDataText">
+                                    No Quotes
+                                </td>
+                            </tr>
+                        </table>
+                    </SectionBody>
+                </SectionBox>
+            </div>
+        </td>
+    </tr>
+</table>

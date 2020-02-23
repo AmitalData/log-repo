@@ -186,6 +186,7 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
 
         public double? GrossWeightInKG { get; set; }
         public double? VolumetricWeight { get; set; }
+        public double? GrossWeightPerStorageDays { get; set; }
 
         public double? ChargeableWeight { get; set; }
         public double? GrossWeight { get; set; }
@@ -527,5 +528,7 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public double? NotInvoicedReceivablesAmount { get; set; }
         public string CreatedByPartner { get; set; }
         public DateTime? FirstARInvoiceApprovalDate { get; set; }
+
+
     }
 }

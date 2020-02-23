@@ -3090,6 +3090,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "StateName",
+					  						OldFieldName =  "StateName",
 					  						ObjectTableName =  "ShippingLine",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -3109,6 +3110,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "StateName",
 					  						ListPropertyPath =  "StateName",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -3413,7 +3415,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    {  
 		   FeatureRepository featureRepository = new FeatureRepository(0); 
 		   //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
-		   ObjectTable ShippingLineObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ShippingLine" && d.Tenant == 0).FirstOrDefault(); 			   Feature ShippingLineFeature_MB00 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Disconnect", ObjectTableId = ShippingLineObjectTable.Id, Tenant = 0, NameTextCodeCode = "ShippingLine.Features.DisconnectGLAccount", NameTextCodeDefaultText = "Disconnect GLAccount", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+		   ObjectTable ShippingLineObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ShippingLine" && d.Tenant == 0).FirstOrDefault(); 			   Feature ShippingLineFeature_MB00 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Disconnect", ObjectTableId = ShippingLineObjectTable.Id, Tenant = 0, NameTextCodeCode = "ShippingLine.Features.DisconnectGLAccount", NameTextCodeDefaultText = "Disconnect GLAccount", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
               
 
 		   TextCodeRepository.SubmitChanges();

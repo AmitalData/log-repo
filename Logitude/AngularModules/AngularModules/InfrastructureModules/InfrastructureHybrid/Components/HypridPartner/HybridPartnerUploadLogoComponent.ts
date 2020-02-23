@@ -34,7 +34,7 @@ export class HybridPartnerUploadLogoComponent implements AfterViewInit {
     SharedLogisticsLogoFileHtmlId: string = Guid.NewRandomString();
     EntityPM: HybridPartnerPM;
     LogoFileHtmlId: string = Guid.NewRandomString();
-    LogoHelpText: string = TextCodeTranslator.Translate("Tenant.LogoHelpText");
+    LogoHelpText: string = TextCodeTranslator.Translate("Tenant.O.LogoHelpText");
     DemoMessageVisibility: boolean;
     ShowUploadSharedLogisLogo: boolean = false;
 

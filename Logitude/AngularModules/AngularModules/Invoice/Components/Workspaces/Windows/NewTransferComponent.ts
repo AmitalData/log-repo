@@ -69,7 +69,7 @@ export class NewTransferComponent extends BaseComponent {
                 this.HeaderLabel_Date = TextCodeTranslator.Translate("ARInvoice.CH.InvoiceDateListLable");
                 this.HeaderLabel_Number = TextCodeTranslator.Translate("ARInvoice.CH.InvoiceNumberListLable");
                 this.HeaderLabel_Partner = TextCodeTranslator.Translate("ARInvoice.CH.BillToNameListLable");
-                this.HeaderLabel_Status = TextCodeTranslator.Translate("ARInvoice.CH.StatusNameRateListLable");
+                this.HeaderLabel_Status = TextCodeTranslator.Translate("ARInvoice.O.StatusNameRateListLable");
                 this.HeaderLabel_Amount = TextCodeTranslator.Translate("ARInvoice.CH.AmountInInvoiceCurrencyListLable");
                 break;
             }

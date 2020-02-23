@@ -805,10 +805,10 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         }
         this.searchFields = temp;
         this.SearchFilter = temp;
-        if (this.searchFields != temp) {
+        //if (this.searchFields != temp) {
             this.LoadImporterShipments();
             ServiceLocator.SendTotangoUserActivity("LogBox", "SearchFields filter changed");
-        }
+        //}
         //this.SearchFieldchangeevent.emit(this.searchFields);
         //this.SelectedRow = null;
     }

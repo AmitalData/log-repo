@@ -1,96 +1,237 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Table Name="BookingPackages" Schema="dbo" DBType="Main">
-  <Column Name="Id" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="BookingPackages"
+  Schema="dbo"
+  DBType="Main">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="BookingId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
+  <Column
+    Name="BookingId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="Description" Type="nvarchar" Size="250">
-    <Constraints Nullable="true" />
+  <Column
+    Name="Description"
+    Type="nvarchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="PackageTypeId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="PackageTypeId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="ContainerNumber" Type="varchar" Size="20">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ContainerNumber"
+    Type="varchar"
+    Size="20">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Seal" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="Seal"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Quantity" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Quantity"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="Weight" Type="decimal" Precision="18" Scale="3">
-    <Constraints Nullable="true" />
+  <Column
+    Name="Weight"
+    Type="decimal"
+    Precision="18"
+    Scale="3">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Volume" Type="decimal" Precision="18" Scale="3">
-    <Constraints Nullable="true" />
+  <Column
+    Name="Volume"
+    Type="decimal"
+    Precision="18"
+    Scale="3">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Tare" Type="decimal" Precision="18" Scale="2">
-    <Constraints Nullable="true" />
+  <Column
+    Name="Tare"
+    Type="decimal"
+    Precision="18"
+    Scale="2">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Height" Type="decimal" Precision="18" Scale="2">
-    <Constraints Nullable="true" />
+  <Column
+    Name="Height"
+    Type="decimal"
+    Precision="18"
+    Scale="2">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Width" Type="decimal" Precision="18" Scale="2">
-    <Constraints Nullable="true" />
+  <Column
+    Name="Width"
+    Type="decimal"
+    Precision="18"
+    Scale="2">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Length" Type="decimal" Precision="18" Scale="2">
-    <Constraints Nullable="true" />
+  <Column
+    Name="Length"
+    Type="decimal"
+    Precision="18"
+    Scale="2">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="UnNumber" Type="varchar" Size="4">
-    <Constraints Nullable="true" />
+  <Column
+    Name="UnNumber"
+    Type="varchar"
+    Size="4">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="ClassNumber" Type="varchar" Size="10">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ClassNumber"
+    Type="varchar"
+    Size="10">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Temperature" Type="decimal" Precision="18" Scale="2">
-    <Constraints Nullable="true" />
+  <Column
+    Name="Temperature"
+    Type="decimal"
+    Precision="18"
+    Scale="2">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Ventilation" Type="decimal" Precision="18" Scale="2">
-    <Constraints Nullable="true" />
+  <Column
+    Name="Ventilation"
+    Type="decimal"
+    Precision="18"
+    Scale="2">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Seal2" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="Seal2"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="SOC" Type="int">
-    <Constraints Nullable="true" />
+  <Column
+    Name="SOC"
+    Type="int">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="MarksAndNumbers" Type="varchar" Size="250">
-    <Constraints Nullable="true" />
+  <Column
+    Name="MarksAndNumbers"
+    Type="varchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="PackagingGroup" Type="varchar" Size="10">
-    <Constraints Nullable="true" />
+  <Column
+    Name="PackagingGroup"
+    Type="varchar"
+    Size="10">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="IMDGCode" Type="varchar" Size="4">
-    <Constraints Nullable="true" />
+  <Column
+    Name="IMDGCode"
+    Type="varchar"
+    Size="4">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="FlashPoint" Type="varchar" Size="8">
-    <Constraints Nullable="true" />
+  <Column
+    Name="FlashPoint"
+    Type="varchar"
+    Size="8">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Harmonize" Type="varchar" Size="60">
-    <Constraints Nullable="true" />
+  <Column
+    Name="Harmonize"
+    Type="varchar"
+    Size="60">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="MaterialDescription" Type="varchar" Size="30">
-    <Constraints Nullable="true" />
+  <Column
+    Name="MaterialDescription"
+    Type="varchar"
+    Size="30">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="IsDangerous" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="IsDangerous"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="OriginalBookingPackageId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="OriginalBookingPackageId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="VolumetricWeight" Type="decimal" Precision="18" Scale="3">
-    <Constraints Nullable="true" />
+  <Column
+    Name="VolumetricWeight"
+    Type="decimal"
+    Precision="18"
+    Scale="3">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="CommodityId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="CommodityId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Relation ForeignKeyColumn="BookingId" ReferencedTable="Bookings" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="PackageTypeId" ReferencedTable="PackageTypes" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="CommodityId" ReferencedTable="ShipmentCommodities" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="BookingId"
+    ReferencedTable="Bookings"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="PackageTypeId"
+    ReferencedTable="PackageTypes"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="CommodityId"
+    ReferencedTable="ShipmentCommodities"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
 </Table>

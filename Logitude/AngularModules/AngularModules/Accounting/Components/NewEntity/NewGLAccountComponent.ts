@@ -164,6 +164,14 @@ export class NewGLAccountComponent extends BaseComponent {
         }
     }
 
+    get Smallcashbook() { return this.EntityPM.Smallcashbook }
+    set Smallcashbook(value: boolean) {
+        if (this.EntityPM.Smallcashbook != value) {
+            this.EntityPM.Smallcashbook = value;
+
+        }
+    }
+
     IsVendor: boolean = false;
     IsMultiCurrencyCheckboxEnabled: boolean = true;
     get ChartOfAccountsTypeCode() { return this.EntityPM.ChartOfAccountsTypeCode; }

@@ -86,33 +86,27 @@ namespace WebFreight.Web.Controllers.WarehouseModel.Extended
             }
         }
 
+        public HttpResponseMessage GetWarehouseReleaseByCstomerIdIdAndwarehouseId(string customerId, string warehouseId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.CheckContactFeature("WarehouseRelease", "READ", authToken.Tenant);
+                WarehouseReleaseQueryService warehouseReleaseQueryService = new WarehouseReleaseQueryService(authToken.Tenant);
+                var myResult = warehouseReleaseQueryService.GetWarehouseReleaseListsByCustomerIdAndWarehouseId(customerId, warehouseId, authToken.Tenant);
+                return Request.CreateResponse(HttpStatusCode.OK, myResult);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
 
 
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    public HttpResponseMessage PostWarehouseReleasePM(WarehouseReleasePM entityPM)
+        public HttpResponseMessage PostWarehouseReleasePM(WarehouseReleasePM entityPM)
         {
             if (ModelState.IsValid)
             {

@@ -1217,6 +1217,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                                       BranchName = f.BranchName,
                                                       CustomerName = f.CustomerName,
                                                       GrossWeightInKG = f.GrossWeightInKG,
+                                                      GrossWeightPerStorageDays= f.GrossWeightPerStorageDays,
                                                       ShipmentLevelCode = f.ShipmentLevelCode,
                                                       ShipmentLevelName = f.ShipmentLevelName,
                                                       VolumetricWeight = f.VolumetricWeight,

@@ -80,7 +80,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                  MetodoPagoCode = a.Card.MetodoPagoCode,
                                  UsoCFDICode = a.Card.UsoCFDICode,
                                  GLAccountId = a.Card.GLAccountId,
-
+                                 StorageFreeDays = a.Card.StorageFreeDays,
                                  Card = new CardPM()
                                  {
                                      Id = a.Id,

@@ -41,7 +41,17 @@ namespace WebFreight.Web.DataProviders
         public string DestinationCountryName { get; set; }
         public string Trucker { get; set; }
         public string BarCode { get; set; }
-        public List<EntryPackage> EntryPackages { get; set; }        
+        public List<EntryPackage> EntryPackages { get; set; }
+        public int NumberOfPackages { get; set; }
+
+
+
+        public CrossDockEntryDataProvider ShallowCopy()
+        {
+            return (CrossDockEntryDataProvider)this.MemberwiseClone();
+        }
+
+
     }
 
     public class EntryPackage

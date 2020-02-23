@@ -1,13 +1,33 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Table Name="DWObjectFieldCategories" Schema="dbo" DBType="Main">
-  <Column Name="Id" Type="nvarchar" Size="128">
-    <Constraints PrimaryKey="true" Nullable="false" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="DWObjectFieldCategories"
+  Schema="dbo"
+  DBType="Main">
+  <Column
+    Name="Id"
+    Type="nvarchar"
+    Size="128">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="DWObjectFieldCode" Type="varchar" Size="50">
-    <Constraints Nullable="false" />
+  <Column
+    Name="DWObjectFieldCode"
+    Type="varchar"
+    Size="50">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="DWCategoryCode" Type="varchar" Size="50">
-    <Constraints Nullable="false" />
+  <Column
+    Name="DWCategoryCode"
+    Type="varchar"
+    Size="50">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Relation ForeignKeyColumn="DWCategoryCode" ReferencedTable="DWCategories" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="DWCategoryCode"
+    ReferencedTable="DWCategories"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
 </Table>

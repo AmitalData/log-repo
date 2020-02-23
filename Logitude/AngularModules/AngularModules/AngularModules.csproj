@@ -143,6 +143,7 @@
     <Content Include="CommonModules\CommonPartners\Components\EditTabs\ShippingAgent\ShippingAgentDocsInTabComponent.html" />
     <Content Include="CommonModules\CommonPartners\Components\EditTabs\ShippingLine\ShippingLineDocsInTabComponent.html" />
     <Content Include="CommonModules\CommonPartners\Components\EditTabs\Trucker\TruckerDocsInTabComponent.html" />
+    <Content Include="CommonModules\CommonPartners\Components\EditTabs\AccountingPartner\AccountingPartnerDocsInTabComponent.html" />
     <Content Include="CommonModules\CommonPartners\Components\EditTabs\Vendor\VendorDocsInTabComponent.html" />
     <Content Include="CommonModules\CommonPartners\Components\EditTabs\Warehouse\WarehouseDocsInTabComponent.html" />
     <Content Include="CommonModules\CommonPartners\Components\NewEntity\NewAccountingPartnerComponent.html" />
@@ -458,6 +459,7 @@
     <TypeScriptCompile Include="Accounting\EntityPMs\IntegrityCheckStatusPM.ts" />
     <TypeScriptCompile Include="Accounting\EntityPMs\InterestBasesPeriodPM.ts" />
     <TypeScriptCompile Include="Accounting\EntityPMs\InterestBasesTypePM.ts" />
+    <TypeScriptCompile Include="Accounting\EntityPMs\InterestReportPM.ts" />
     <TypeScriptCompile Include="Accounting\EntityPMs\JournalAdditionalDataPM.ts" />
     <TypeScriptCompile Include="Accounting\EntityPMs\OpenFormatReportPM.ts" />
     <TypeScriptCompile Include="Accounting\Services\ExtendedLists\TaxReportLineExtendedListService.ts" />
@@ -501,6 +503,7 @@
     <TypeScriptCompile Include="CommonModules\CommonPartners\Components\EditTabs\ShippingAgent\ShippingAgentDocsInTabComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonPartners\Components\EditTabs\ShippingLine\ShippingLineDocsInTabComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonPartners\Components\EditTabs\Trucker\TruckerDocsInTabComponent.ts" />
+    <TypeScriptCompile Include="CommonModules\CommonPartners\Components\EditTabs\AccountingPartner\AccountingPartnerDocsInTabComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonPartners\Components\EditTabs\Vendor\VendorDocsInTabComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonPartners\Components\EditTabs\Warehouse\WarehouseDocsInTabComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonPartners\Components\NewEntity\NewAccountingPartnerComponent.ts" />
@@ -1183,6 +1186,7 @@
     <Content Include="ShipmentModules\ShipmentINTTRA\Components\Wizard\SimulatorBookingComponent.html" />
     <Content Include="ShipmentModules\ShipmentINTTRA\Components\Wizard\SimulatorBookingLoadComponent.html" />
     <Content Include="ShipmentModules\ShipmentLogBox\Components\Logbox\DepositionRequestComponent.html" />
+    <Content Include="ShipmentModules\ShipmentLogBox\Components\Logbox\UserIdNumberMobileComponent.html" />
     <Content Include="ShipmentModules\ShipmentLogBox\Components\Logbox\LogBoxPackagesComponent.html" />
     <Content Include="ShipmentModules\ShipmentLogBox\Components\Logbox\ECommercePaymentRequestMobileComponent.html" />
     <Content Include="ShipmentModules\ShipmentLogBox\Components\Logbox\LogBoxApprovePaymentComponent.html" />
@@ -2327,6 +2331,7 @@
     <Content Include="TimeManagement\Components\Workspaces\TimeSheet\TimeSheetWorkspaceComponent.html" />
     <Content Include="TimeManagement\Components\Workspaces\TimeSheet\VacationsComponent.html" />
     <Content Include="TimeManagement\Components\Workspaces\TimeSheet\WeeklyTimeSheetComponent.html" />
+    <Content Include="Warehouse\Components\ChoosePackagesFromWarehousePackageReleasesComponent.html" />
     <Content Include="Warehouse\Components\CopyFromReleasesPackagesComponent.html" />
     <Content Include="Warehouse\Components\EditTabs\ConnectionsTab\WarehouseConnectionsTabComponent.html" />
     <Content Include="Warehouse\Components\EditTabs\DocsIn\WarehouseDocsInTabComponent.html" />
@@ -3658,6 +3663,7 @@
     <TypeScriptCompile Include="ShipmentModules\ShipmentINTTRA\Components\Wizard\SimulatorBookingComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentINTTRA\Components\Wizard\SimulatorBookingLoadComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentLogBox\Components\Logbox\DepositionRequestComponent.ts" />
+    <TypeScriptCompile Include="ShipmentModules\ShipmentLogBox\Components\Logbox\UserIdNumberMobileComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentLogBox\Components\Logbox\LogBoxPackagesComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentLogBox\Components\Logbox\ECommercePaymentRequestMobileComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentLogBox\Components\Logbox\LogBoxApprovePaymentComponent.ts" />
@@ -6586,6 +6592,7 @@
     <TypeScriptCompile Include="Shipment\EntityLists\MessagingStockUsageHistoryList.ts" />
     <TypeScriptCompile Include="Shipment\EntityLists\OBLTypeList.ts" />
     <TypeScriptCompile Include="Shipment\EntityLists\PickUpDeliveryTransportModeList.ts" />
+    <TypeScriptCompile Include="Shipment\EntityLists\ShipmentComputedFieldsList.ts" />
     <TypeScriptCompile Include="Shipment\EntityLists\ShipmentCustomsMessageTypeList.ts" />
     <TypeScriptCompile Include="Shipment\EntityLists\ShipmentCustomsTransmissionList.ts" />
     <TypeScriptCompile Include="Shipment\EntityPMs\ContainerFollowUpPM.ts" />
@@ -6596,6 +6603,7 @@
     <TypeScriptCompile Include="Shipment\EntityPMs\MessagingStockUsageHistoryPM.ts" />
     <TypeScriptCompile Include="Shipment\EntityPMs\PickUpDeliveryPackageHarmonizePM.ts" />
     <TypeScriptCompile Include="Shipment\EntityPMs\ShipmentAssemblyPM.ts" />
+    <TypeScriptCompile Include="Shipment\EntityPMs\ShipmentComputedFieldsPM.ts" />
     <TypeScriptCompile Include="Shipment\EntityPMs\ShipmentCustomsTransmissionPM.ts" />
     <TypeScriptCompile Include="Shipment\EntityPMs\ShipmentPackageHarmonizePM.ts" />
     <TypeScriptCompile Include="Shipment\Services\ContainersFUDomainService.ts" />
@@ -6799,6 +6807,7 @@
     <TypeScriptCompile Include="Warehouse\Components\AddEditWarehouseEntryPackagesAndContainers.ts" />
     <TypeScriptCompile Include="SharedLogistics\Components\CutsomerTenantAccessManagementComponent.ts" />
     <TypeScriptCompile Include="SharedLogistics\DataContracts\CustomerTenantAccessRequestStatusCount.ts" />
+    <TypeScriptCompile Include="Warehouse\Components\ChoosePackagesFromWarehousePackageReleasesComponent.ts" />
     <TypeScriptCompile Include="Warehouse\Components\CopyFromReleasesPackagesComponent.ts" />
     <TypeScriptCompile Include="Warehouse\Components\EditTabs\ConnectionsTab\WarehouseConnectionsTabComponent.ts" />
     <TypeScriptCompile Include="Warehouse\Components\EditTabs\DocsIn\WarehouseDocsInTabComponent.ts" />

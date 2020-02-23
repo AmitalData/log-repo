@@ -629,6 +629,11 @@ export class GLAccountPM {
     public set NameForPrintingCheques(newValue: string) { if (this.nameForPrintingCheques != newValue) { this.nameForPrintingCheques = newValue; this.MarkAsDirty("NameForPrintingCheques"); } }
        
 	 
+    private smallcashbook: boolean;
+    public get Smallcashbook() { return this.smallcashbook; }
+    public set Smallcashbook(newValue: boolean) { if (this.smallcashbook != newValue) { this.smallcashbook = newValue; this.MarkAsDirty("Smallcashbook"); } }
+       
+	 
 
     public OldEntityPM: GLAccountPM;
 		

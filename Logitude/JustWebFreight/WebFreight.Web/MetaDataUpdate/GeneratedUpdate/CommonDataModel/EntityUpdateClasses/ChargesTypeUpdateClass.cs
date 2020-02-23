@@ -3368,6 +3368,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 		    ChargesTypeObjectTable.HeaderScreenCode = ChargesTypeHeaderScreenScreen0.Code;
 
 	   		  
+	      
+
+	         Screen ChargesTypeGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ChargesType.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = ChargesTypeObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = false }, screensRepository, tenantScreens);
+        
 
 	    }
 

@@ -160,6 +160,12 @@ namespace WebFreight.Web.MetaDataUpdate
 
                             break;
                         }
+                    case "LoadOtherFields":
+                        {
+                            MetaDataUpdateClass updateClass = new MetaDataUpdateClass();
+                            updateClass.LoadOtherFields(context);
+                            break;
+                        }
                     case "updatetenantzero":
                         {
                             MetaDataUpdateClass updateClass = new MetaDataUpdateClass();

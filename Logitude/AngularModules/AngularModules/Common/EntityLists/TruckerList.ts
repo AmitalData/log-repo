@@ -39,5 +39,6 @@ export class TruckerList {
 		PrimaryContactName: string;
 		PrimaryContactEmail: string;
 		PrimaryContactPhone: string;
+		StateName: string;
 	
 }

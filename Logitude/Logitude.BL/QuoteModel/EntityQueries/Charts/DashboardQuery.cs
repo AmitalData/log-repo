@@ -1,4 +1,4 @@
-﻿using CHAMP17;
+﻿//using CHAMP17;
 using Logitude.BL.DataContracts;
 using Logitude.BL.QuoteModel.BusinessUnitFilters;
 using Simplog.Data.QuoteModel;
@@ -29,9 +29,14 @@ namespace Logitude.BL.QuoteModel.EntityQueries.Charts
             dataSourceQuery =
                 (from d in context.Quotes
                  where d.Tenant == tenant
-                 && !d.IsClosed
+                 //&& !d.IsClosed
                  && !d.IsCancelled
                  select d);
+
+            if(quoteDashboardArgs.ChartCode != "QCV")
+            {
+                dataSourceQuery = dataSourceQuery.Where(d => !d.IsClosed);
+            }
 
             QuoteBusinessUnitFilter filter = new QuoteBusinessUnitFilter(tenant);
             dataSourceQuery = filter.RunFilter(dataSourceQuery);
@@ -60,7 +65,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries.Charts
         {
             if (!string.IsNullOrEmpty(ownerId))
             {
-                dataSourceQuery = dataSourceQuery.Where(d => d.CreatedByUserId == ownerId);
+                dataSourceQuery = dataSourceQuery.Where(d => d.SalesmanUserId == ownerId);
             }
         }
 
@@ -106,12 +111,14 @@ namespace Logitude.BL.QuoteModel.EntityQueries.Charts
 
             else if (chartCode == "QCV")
             {
-
+                QuoteConversionQuery myQuery = new QuoteConversionQuery();
+                result = myQuery.FilterQuotesByProductType(dataSourceQuery);
             }
 
             else if (chartCode == "TFS")
             {
-
+                TopFiveSalesmanQuery topFiveSalesmanQuery = new TopFiveSalesmanQuery();
+                result = topFiveSalesmanQuery.FilterToFiveSalesmanByProfit(dataSourceQuery);
             }
 
             else if (chartCode == "KPI")

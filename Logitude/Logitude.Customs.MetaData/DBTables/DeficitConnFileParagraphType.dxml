@@ -1,21 +1,59 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Table Name="DeficitConnFileParagraphTypes" Schema="Customs" DBType="Main">
-  <Column Name="DeficitId" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="DeficitConnFileParagraphTypes"
+  Schema="Customs"
+  DBType="Main">
+  <Column
+    Name="DeficitId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="DeclarationId" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
+  <Column
+    Name="DeclarationId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="ParagraphTypeCode" Type="varchar" Size="3">
-    <Constraints PrimaryKey="true" Nullable="false" />
+  <Column
+    Name="ParagraphTypeCode"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="Amount" Type="decimal" Precision="16" Scale="2">
-    <Constraints Nullable="true" />
+  <Column
+    Name="Amount"
+    Type="decimal"
+    Precision="16"
+    Scale="2">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Relation ForeignKeyColumn="DeficitId" ReferencedTable="Deficits" ReferencedColumn="Id" ReferencedTableSchema="Customs" />
-  <Relation ForeignKeyColumn="DeclarationId" ReferencedTable="Declarations" ReferencedColumn="Id" ReferencedTableSchema="Customs" />
-  <Relation ForeignKeyColumn="ParagraphTypeCode" ReferencedTable="ParagraphTypes" ReferencedColumn="Code" ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="DeficitId"
+    ReferencedTable="Deficits"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="DeclarationId"
+    ReferencedTable="Declarations"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="ParagraphTypeCode"
+    ReferencedTable="ParagraphTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
 </Table>

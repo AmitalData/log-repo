@@ -96,6 +96,7 @@ namespace Logitude.BL.Validators
                     && documentType.ObjectTableName != "ShippingLine"
                     && documentType.ObjectTableName != "Trucker"
                     && documentType.ObjectTableName != "Vendor"
+                    && documentType.ObjectTableName != "AccountingPartner"
                     && documentType.ObjectTableName != "Warehouse"
                     && documentType.ObjectTableName != "OpenFormatReport"
                     && documentType.ObjectTableName != "Occasion")

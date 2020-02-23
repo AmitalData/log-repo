@@ -1,20 +1,52 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Table Name="RequiredGuaranteeTypes" Schema="Customs" DBType="Main">
-  <Column Name="Id" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="RequiredGuaranteeTypes"
+  Schema="Customs"
+  DBType="Main">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="GuaranteeId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="GuaranteeId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="GuaranteeTypeCode" Type="varchar" Size="2">
-    <Constraints Nullable="true" />
+  <Column
+    Name="GuaranteeTypeCode"
+    Type="varchar"
+    Size="2">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="GuaranteeAmount" Type="decimal" Precision="16" Scale="2">
-    <Constraints Nullable="true" />
+  <Column
+    Name="GuaranteeAmount"
+    Type="decimal"
+    Precision="16"
+    Scale="2">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Relation ForeignKeyColumn="GuaranteeId" ReferencedTable="Guarantees" ReferencedColumn="Id" ReferencedTableSchema="Customs" />
-  <Relation ForeignKeyColumn="GuaranteeTypeCode" ReferencedTable="GuaranteeCertificateTypes" ReferencedColumn="Code" ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="GuaranteeId"
+    ReferencedTable="Guarantees"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="GuaranteeTypeCode"
+    ReferencedTable="GuaranteeCertificateTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
 </Table>

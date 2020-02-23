@@ -1,32 +1,76 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Table Name="DeclarationPayments" Schema="Customs" DBType="Main">
-  <Column Name="DeclarationId" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="DeclarationPayments"
+  Schema="Customs"
+  DBType="Main">
+  <Column
+    Name="DeclarationId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="PaymentDate" Type="datetime">
-    <Constraints Nullable="true" />
+  <Column
+    Name="PaymentDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="CreatedByUserId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="CreatedByUserId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="SignatoryIdentification" Type="varchar" Size="17">
-    <Constraints Nullable="true" />
+  <Column
+    Name="SignatoryIdentification"
+    Type="varchar"
+    Size="17">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="IsProcessA" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="IsProcessA"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="ProcessADescription" Type="nvarchar" Size="512">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ProcessADescription"
+    Type="nvarchar"
+    Size="512">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="ConcurrencyGUID" Type="varchar" Size="40">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ConcurrencyGUID"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="FuturePaymentDateTime" Type="datetime">
-    <Constraints Nullable="true" />
+  <Column
+    Name="FuturePaymentDateTime"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Relation ForeignKeyColumn="DeclarationId" ReferencedTable="Declarations" ReferencedColumn="Id" ReferencedTableSchema="Customs" />
-  <Relation ForeignKeyColumn="CreatedByUserId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="DeclarationId"
+    ReferencedTable="Declarations"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="CreatedByUserId"
+    ReferencedTable="Users"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
 </Table>

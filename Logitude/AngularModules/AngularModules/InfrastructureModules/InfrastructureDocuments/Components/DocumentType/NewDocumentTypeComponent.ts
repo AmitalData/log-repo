@@ -115,6 +115,7 @@ export class NewDocumentTypeComponent extends BaseComponent implements OnInit {
                 case "ShippingLine":
                 case "Trucker":
                 case "Vendor":
+                case "AccountingPartner":
                 case "Warehouse":
                 case "OpenFormatReport":
                 case "Occasion":

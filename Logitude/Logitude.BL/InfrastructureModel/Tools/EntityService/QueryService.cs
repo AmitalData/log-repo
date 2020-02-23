@@ -47,7 +47,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             this.isNewEntity = true;
             this.entityPM = theEntityPm;
              theEntityPm.Code = this.entityPM.Id;
-             theEntityPm.UniqueCode = this.entityPM.ObjectTableName + '.' + this.entityPM.Code;
+            theEntityPm.UniqueCode = this.entityPM.UniqueCode;
 
             this.Poco = new Query();
             this.Poco.Id = this.entityPM.Id;

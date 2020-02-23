@@ -64362,9 +64362,9 @@ namespace WebFreight.Web.MetaDataUpdate
             #endregion
 
             #region 
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.CH.OtherPayments", DefaultText = "Other Payments", LocalDefaultText = "קבלות אחרות", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "CH", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.CH.AmountToPay", DefaultText = "Amount To Pay", LocalDefaultText = "סכום שהותאם", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "CH", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.CH.ShipmentNo", DefaultText = "Shipment #", LocalDefaultText = "משלוח", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "CH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.O.OtherPayments", DefaultText = "Other Payments", LocalDefaultText = "קבלות אחרות", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "CH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.O.AmountToPay", DefaultText = "Amount To Pay", LocalDefaultText = "סכום שהותאם", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "CH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.O.ShipmentNo", DefaultText = "Shipment #", LocalDefaultText = "משלוח", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "CH", }, TextCodeRepository, textcodes);
             #endregion
 
             ObjectContext.SaveChanges();

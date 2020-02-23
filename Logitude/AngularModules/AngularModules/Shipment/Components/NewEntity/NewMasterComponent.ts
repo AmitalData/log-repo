@@ -447,7 +447,7 @@ export class NewMasterComponent extends BaseComponent implements OnInit {
         }
 
         else {
-            this.ChargeableWeightLabel = TextCodeTranslator.Translate("Master.F.WtMsr.Short").replace("%ChargWeightCode", this.EntityPM.ChargeableWeightUnitCode);
+            this.ChargeableWeightLabel = TextCodeTranslator.Translate("Master.F.ChargeableWeight.Short").replace("%ChargWeightCode", this.EntityPM.ChargeableWeightUnitCode);
         }
     }
     SetUnits() {
@@ -1505,6 +1505,7 @@ export class NewMasterComponent extends BaseComponent implements OnInit {
                 this.EntityPM.NumberOfPackages = this.SourceEntityPM.NumberOfPackages;
                 this.EntityPM.TEU = this.SourceEntityPM.TEU;
                 this.EntityPM.GrossWeightPerTon = this.SourceEntityPM.GrossWeightPerTon;
+                this.EntityPM.GrossWeightPerStorageDays = this.SourceEntityPM.GrossWeightPerStorageDays;
             }
 
             else {
@@ -1528,6 +1529,7 @@ export class NewMasterComponent extends BaseComponent implements OnInit {
                 this.EntityPM.NumberOfPackages = null;
                 this.EntityPM.TEU = null;
                 this.EntityPM.GrossWeightPerTon = null;
+                this.EntityPM.GrossWeightPerStorageDays = null;
             }
 
             this.SetUIProperties_OrderDetails();

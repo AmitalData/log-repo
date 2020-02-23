@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="TariffLinesContainersPrices"
+  Schema="dbo"
+  DBType="Main">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="TariffId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="TariffLineId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="SurchargeId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Price1"
+    Type="decimal"
+    Precision="18"
+    Scale="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Price2"
+    Type="decimal"
+    Precision="18"
+    Scale="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Price3"
+    Type="decimal"
+    Precision="18"
+    Scale="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Price4"
+    Type="decimal"
+    Precision="18"
+    Scale="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Price5"
+    Type="decimal"
+    Precision="18"
+    Scale="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Relation
+    ForeignKeyColumn="TariffId"
+    ReferencedTable="Tariffs"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="TariffLineId"
+    ReferencedTable="TariffLines"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="SurchargeId"
+    ReferencedTable="ChargesTypes"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+</Table>

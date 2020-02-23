@@ -1,62 +1,140 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Table Name="DWObjectFields" Schema="dbo" DBType="Main">
-  <Column Name="Id" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="DWObjectFields"
+  Schema="dbo"
+  DBType="Main">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="Name" Type="varchar" Size="100">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Name"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="Code" Type="varchar" Size="100">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Code"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="DWObjectTableCode" Type="varchar" Size="50">
-    <Constraints Nullable="false" />
+  <Column
+    Name="DWObjectTableCode"
+    Type="varchar"
+    Size="50">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="DataTypeCode" Type="varchar" Size="10">
-    <Constraints Nullable="false" />
+  <Column
+    Name="DataTypeCode"
+    Type="varchar"
+    Size="10">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="DimensionTableCode" Type="varchar" Size="50">
-    <Constraints Nullable="true" />
+  <Column
+    Name="DimensionTableCode"
+    Type="varchar"
+    Size="50">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="MaxLength" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="MaxLength"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="MinLength" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="MinLength"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="IsRequired" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="IsRequired"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="IsPrimaryKey" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="IsPrimaryKey"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="IsMeasurement" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="IsMeasurement"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="AggregationTypeCode" Type="varchar" Size="5">
-    <Constraints Nullable="true" />
+  <Column
+    Name="AggregationTypeCode"
+    Type="varchar"
+    Size="5">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="DisplayInQueryBuilder" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="DisplayInQueryBuilder"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="LOVAdditionalColumns" Type="varchar" Size="1000">
-    <Constraints Nullable="true" />
+  <Column
+    Name="LOVAdditionalColumns"
+    Type="varchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="HideTree" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="HideTree"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="CannotFilter" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="CannotFilter"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="HelpText" Type="varchar" Size="2000">
-    <Constraints Nullable="true" />
+  <Column
+    Name="HelpText"
+    Type="varchar"
+    Size="2000">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="IsCustom" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="IsCustom"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Relation ForeignKeyColumn="DWObjectTableCode" ReferencedTable="DWObjectTables" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="DimensionTableCode" ReferencedTable="DWObjectTables" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="DWObjectTableCode"
+    ReferencedTable="DWObjectTables"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="DimensionTableCode"
+    ReferencedTable="DWObjectTables"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
 </Table>

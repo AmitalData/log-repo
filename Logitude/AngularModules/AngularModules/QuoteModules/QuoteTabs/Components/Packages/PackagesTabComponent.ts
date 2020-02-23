@@ -63,11 +63,6 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         this.UIProperties.SetEnabled("Volume", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("ChargeableWeight", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("NumberOfPackages", this.ObjectTableName, false);
-        this.UIProperties.SetEnabled("PackageType1Id", this.ObjectTableName, false);
-        this.UIProperties.SetEnabled("PackageType2Id", this.ObjectTableName, false);
-        this.UIProperties.SetEnabled("PackageType3Id", this.ObjectTableName, false);
-        this.UIProperties.SetEnabled("PackageType4Id", this.ObjectTableName, false);
-        this.UIProperties.SetEnabled("PackageType5Id", this.ObjectTableName, false);
     }
 
     private TabSelectedEvent: any = null;
@@ -815,8 +810,8 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         }
 
         else {
-            this.ChargeableWeightLabel = TextCodeTranslator.Translate("Quote.F.WtMsr.Short").replace("%ChargWeightCode", this.EntityPM.ChargeableWeightUnitCode);
-            this.ChargeableWeightUnitCodeLabel = TextCodeTranslator.Translate("Quote.F.WtMsrUnitCode.Short");
+            this.ChargeableWeightLabel = TextCodeTranslator.Translate("Quote.F.ChargeableWeight.Short").replace("%ChargWeightCode", this.EntityPM.ChargeableWeightUnitCode);
+            this.ChargeableWeightUnitCodeLabel = TextCodeTranslator.Translate("Quote.F.ChargeableWeightUnitCode.Short");
         }
     }
 

@@ -144,6 +144,11 @@ export class InterestReportPM {
     public set InterestReportStatusLocalName(newValue: string) { if (this.interestReportStatusLocalName != newValue) { this.interestReportStatusLocalName = newValue; this.MarkAsDirty("InterestReportStatusLocalName"); } }
        
 	 
+    private customerId: string;
+    public get CustomerId() { return this.customerId; }
+    public set CustomerId(newValue: string) { if (this.customerId != newValue) { this.customerId = newValue; this.MarkAsDirty("CustomerId"); } }
+       
+	 
 
     public OldEntityPM: InterestReportPM;
 		

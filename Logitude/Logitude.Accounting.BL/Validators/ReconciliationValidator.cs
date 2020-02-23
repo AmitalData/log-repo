@@ -103,8 +103,9 @@ namespace Logitude.Accounting.BL.Validators
             List<LedgerTransactionPM> transactionsPMList = //transQuery.GetLedgerTransactionPMsByIdList(transactionsId, myReconciliationPM.Tenant);
                 myDataProvider.GetLedgerTransactionPMsByIdList(transactionsId, myReconciliationPM.Tenant);
             paymentsCount = transactionsPMList.Count(d => (d.SourceTypeCode == "3" || d.SourceTypeCode == "5") && d.OriginalJournalId == null); // 3- ARPayment , or 5- APPayment , and not storno
-            if (paymentsCount > 1)
-            {
+            if (paymentsCount > 1 && transactionsPMList.GroupBy(d => d.SourceId).Count() > 1)
+            {                
+
                 //Can’t include more than one payment in the same reconciliation” ?? ???? ????? ???? ????? ??? ????? ?????
                 AddError(errorsList, TranslateMyTextCode(/*"Accounting.O.CantIncludeTwoOrMorePayment"*/M_CantIncludeTwoOrMorePayment, 0, useLocal));
             }
@@ -136,7 +137,9 @@ namespace Logitude.Accounting.BL.Validators
             {
                 if (reconciliationLine.ChangeSetOp != ChangeSetOperation.None)// in 
                 {
-                    CheckReconciliationLine(errorsList, ledgerTransactionPMs, myGLAccount, ref sum, reconciliationLine, myReconciliationPM.CreatedByReconciliationAfterConversion);
+                    CheckReconciliationLine(errorsList, ledgerTransactionPMs, myGLAccount, ref sum, reconciliationLine
+                        , myReconciliationPM.CreatedByReconciliationAfterConversion
+                        , myReconciliationPM.CreatedByReconciliationStageB);
                 }
             }
             if (sum != 0)
@@ -191,7 +194,7 @@ namespace Logitude.Accounting.BL.Validators
             }
         }
 
-        private static void CheckReconciliationLine(List<string> errorsList, List<LedgerTransactionPM> ledgerTransactionPMs, GLAccountPM myGLAccount, ref decimal sum, ReconciliationLinePM reconciliationLine,bool CreatedByReconciliationAfterConversion)
+        private static void CheckReconciliationLine(List<string> errorsList, List<LedgerTransactionPM> ledgerTransactionPMs, GLAccountPM myGLAccount, ref decimal sum, ReconciliationLinePM reconciliationLine,bool CreatedByReconciliationAfterConversion, bool createdByReconciliationStageB)
         {
             if (reconciliationLine.ChangeSetOp != ChangeSetOperation.Insert)
             {
@@ -247,7 +250,7 @@ namespace Logitude.Accounting.BL.Validators
                                 AddError(errorsList, /*"Insert ledger Transaction but Is not Reconciled "*/M_InsertledgerTransactionbutIsnotReconciled);
                             }
                         }
-                        if (!CreatedByReconciliationAfterConversion)
+                        if (!(CreatedByReconciliationAfterConversion  || createdByReconciliationStageB))
                         {
 
 

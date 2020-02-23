@@ -335,6 +335,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	         Screen INTTRABookingTransStatusINTTRABookingTransStatusHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "INTTRABookingTransStatus.HeaderScreen", Name = "INTTRABookingTransStatusHeaderScreen", ObjectTableId = INTTRABookingTransStatusObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       	
 		    INTTRABookingTransStatusObjectTable.HeaderScreenId = INTTRABookingTransStatusINTTRABookingTransStatusHeaderScreenScreen0.Id;
+		    INTTRABookingTransStatusObjectTable.HeaderScreenCode = INTTRABookingTransStatusINTTRABookingTransStatusHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }

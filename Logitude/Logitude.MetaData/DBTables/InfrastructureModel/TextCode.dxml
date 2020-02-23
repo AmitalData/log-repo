@@ -1,42 +1,106 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Table Name="TextCodes" Schema="dbo" DBType="Main">
-  <Column Name="Id" Type="varchar" Size="30">
-    <Constraints PrimaryKey="true" Nullable="false" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="TextCodes"
+  Schema="dbo"
+  DBType="Main">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="30">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="Code" Type="varchar" Size="100">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Code"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="DefaultText" Type="nvarchar" Size="500">
-    <Constraints Nullable="true" />
+  <Column
+    Name="DefaultText"
+    Type="nvarchar"
+    Size="500">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="ObjectTableId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
+  <Column
+    Name="ObjectTableId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="TextCodeTypeCode" Type="varchar" Size="4">
-    <Constraints Nullable="false" />
+  <Column
+    Name="TextCodeTypeCode"
+    Type="varchar"
+    Size="4">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="DefaultTextPlural" Type="varchar" Size="500">
-    <Constraints Nullable="true" />
+  <Column
+    Name="DefaultTextPlural"
+    Type="varchar"
+    Size="500">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="IsSpellChecked" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="IsSpellChecked"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="SpellCheckDate" Type="datetime">
-    <Constraints Nullable="true" />
+  <Column
+    Name="SpellCheckDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="SpellCheckedByUserId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="SpellCheckedByUserId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="InActive" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="InActive"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="LocalDefaultText" Type="nvarchar" Size="500">
-    <Constraints Nullable="true" />
+  <Column
+    Name="LocalDefaultText"
+    Type="nvarchar"
+    Size="500">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Relation ForeignKeyColumn="ObjectTableId" ReferencedTable="ObjectTables" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="TextCodeTypeCode" ReferencedTable="TextCodeTypes" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="SpellCheckedByUserId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ObjectTableId"
+    ReferencedTable="ObjectTables"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="TextCodeTypeCode"
+    ReferencedTable="TextCodeTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="SpellCheckedByUserId"
+    ReferencedTable="Users"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Index
+    Columns="Tenant" />
+  <UniqueConstraint
+    Columns="Tenant,Code,ObjectTableId" />
 </Table>

@@ -187,6 +187,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -246,6 +247,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -305,6 +307,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -364,6 +367,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -423,6 +427,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -480,6 +485,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -539,6 +545,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -598,6 +605,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -657,6 +665,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -714,6 +723,67 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "ShipmentNumber",
+					  						OldFieldName =  "ShipmentNumber",
+					  						ObjectTableName =  "CustomsTransferHeader",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  1000,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  1000,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "ShipmentNumber",
+					  						ListPropertyPath =  "ShipmentNumber",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "CustomsTransferHeader",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "ShipmentNumber",
+					  						DefaultText =  "Shipment Number",
+					  						ListFieldLable =  "ShipmentNumberListLable",
+					  						ListLableDefaultText =  "Shipment Number",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -745,9 +815,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	
 			 QueryColumn ShipmentsTransferHistoryQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShipmentsTransferHistoryQuery.Id,QueryCode = ShipmentsTransferHistoryQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = CustomsTransferHeaderObjectFields.Where(d => d.FieldName == "TransferNumber" && d.ObjectTableId == CustomsTransferHeaderObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomsTransferHeaderObjectFields.Where(d => d.FieldName == "TransferNumber" && d.ObjectTableId == CustomsTransferHeaderObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 110 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ShipmentsTransferHistoryQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShipmentsTransferHistoryQuery.Id,QueryCode = ShipmentsTransferHistoryQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = CustomsTransferHeaderObjectFields.Where(d => d.FieldName == "TransferDate" && d.ObjectTableId == CustomsTransferHeaderObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomsTransferHeaderObjectFields.Where(d => d.FieldName == "TransferDate" && d.ObjectTableId == CustomsTransferHeaderObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 140 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ShipmentsTransferHistoryQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShipmentsTransferHistoryQuery.Id,QueryCode = ShipmentsTransferHistoryQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = CustomsTransferHeaderObjectFields.Where(d => d.FieldName == "ShipmentNumber" && d.ObjectTableId == CustomsTransferHeaderObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomsTransferHeaderObjectFields.Where(d => d.FieldName == "ShipmentNumber" && d.ObjectTableId == CustomsTransferHeaderObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 300 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ShipmentsTransferHistoryQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShipmentsTransferHistoryQuery.Id,QueryCode = ShipmentsTransferHistoryQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = CustomsTransferHeaderObjectFields.Where(d => d.FieldName == "FileName" && d.ObjectTableId == CustomsTransferHeaderObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomsTransferHeaderObjectFields.Where(d => d.FieldName == "FileName" && d.ObjectTableId == CustomsTransferHeaderObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ShipmentsTransferHistoryQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShipmentsTransferHistoryQuery.Id,QueryCode = ShipmentsTransferHistoryQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = CustomsTransferHeaderObjectFields.Where(d => d.FieldName == "TransferDate" && d.ObjectTableId == CustomsTransferHeaderObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomsTransferHeaderObjectFields.Where(d => d.FieldName == "TransferDate" && d.ObjectTableId == CustomsTransferHeaderObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 140 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn ShipmentsTransferHistoryQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShipmentsTransferHistoryQuery.Id,QueryCode = ShipmentsTransferHistoryQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = CustomsTransferHeaderObjectFields.Where(d => d.FieldName == "FileName" && d.ObjectTableId == CustomsTransferHeaderObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomsTransferHeaderObjectFields.Where(d => d.FieldName == "FileName" && d.ObjectTableId == CustomsTransferHeaderObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 	   
 	    }
 

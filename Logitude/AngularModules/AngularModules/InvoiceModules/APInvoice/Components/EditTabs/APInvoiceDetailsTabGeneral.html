@@ -276,14 +276,20 @@
                                     </log-column>
 
                                     <!-- Name -->
-                                    <log-column [width]="'160'" [header]="'APInvoiceLine.O.Name' | TextCodeTranslationPipe">
+                                    <!--<log-column [width]="'160'" [header]="'APInvoiceLine.O.Name' | TextCodeTranslationPipe">
                                         <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1" [CellColor]="item.CellBackgroundColor">
                                             <div style="width: 100%;" [ngStyle]="{color: item.CellReadOnlyForeground}">
                                                 {{item.ChargesTypeName}}
                                             </div>
                                         </log-cell-template>
+                                    </log-column>-->
+                                    <log-column [width]="'160'" [header]="InvoiceLineHeader">
+                                        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1" [CellColor]="item.CellBackgroundColor">
+                                            <div style="width: 100%;" [ngStyle]="{color: item.CellReadOnlyForeground}">
+                                                {{accountingActivated? item.Description: item.ChargesTypeName}}
+                                            </div>
+                                        </log-cell-template>
                                     </log-column>
-
                                     <!-- Vendor -->
                                     <log-column [width]="'130'" [header]="'APInvoiceLine.O.Vendor' | TextCodeTranslationPipe">
                                         <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1" [CellColor]="item.CellBackgroundColor">
@@ -507,7 +513,7 @@
                                         <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1">
                                             <table>
                                                 <tr>
-                                                    <td float-start >
+                                                    <td float-start>
                                                         <span class="CellSeparator"></span>
                                                     </td>
 

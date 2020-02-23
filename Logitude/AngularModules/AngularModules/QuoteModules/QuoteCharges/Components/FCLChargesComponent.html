@@ -1329,7 +1329,7 @@
                                     <td colspan="2">
                                         <table>
                                             <tr>
-                                                <td style="width:120px">
+                                                <td style="width:120px" *ngIf="!IsRouteRate">
                                                     <LogLabel [ObjectFieldName]="'IsFixedPrice'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                 </td>
 
@@ -1337,7 +1337,7 @@
 
                                                     <table>
                                                         <tr>
-                                                            <td style="width:40px"><LogCheckBox [ObjectFieldName]="'IsFixedPrice'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Checked]="IsFixedPrice"></LogCheckBox></td>
+                                                            <td style="width:40px" *ngIf="!IsRouteRate"><LogCheckBox [ObjectFieldName]="'IsFixedPrice'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Checked]="IsFixedPrice"></LogCheckBox></td>
 
                                                             <td *ngIf="IsShowTotalPerContainer">
                                                                 <table>

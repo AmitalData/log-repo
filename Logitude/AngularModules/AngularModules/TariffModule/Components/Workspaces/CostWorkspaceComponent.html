@@ -23,13 +23,13 @@
                                         </div>
                                         <div>
                                             <div *ngIf="AirFreightCostVisibility">
-                                                <HyperlinkQuery (click)="ViewTariffs('A')">{{'Tariff.Q.AirFreightCostTariffs' | TextCodeTranslationPipe}} ({{AirFreightCount}})</HyperlinkQuery>
+                                                <HyperlinkQuery (click)="ViewTariffs('A')">Air ({{AirFreightCount}})</HyperlinkQuery>
                                             </div>
                                             <div *ngIf="OceanLCLFreightCostVisibility">
-                                                <HyperlinkQuery (click)="ViewTariffs('OLC')">{{'Tariff.Q.OceanLCLFreightCost' | TextCodeTranslationPipe}} ({{OceanLCLFreightCount}})</HyperlinkQuery>
+                                                <HyperlinkQuery (click)="ViewTariffs('OLC')">Ocean LCL ({{OceanLCLFreightCount}})</HyperlinkQuery>
                                             </div>
                                             <div *ngIf="OceanFCLFreightCostVisibility">
-                                                <HyperlinkQuery (click)="ViewTariffs('OFC')">{{'Tariff.Q.OceanFCLFreightCost' | TextCodeTranslationPipe}} ({{OceanFCLFreightCount}})</HyperlinkQuery>
+                                                <HyperlinkQuery (click)="ViewTariffs('OFC')">Ocean FCL ({{OceanFCLFreightCount}})</HyperlinkQuery>
                                             </div>
                                         </div>
                                     </div>
@@ -49,13 +49,13 @@
                                         </div>
                                         <div>
                                             <div *ngIf="AirSurchargesCostVisibility">
-                                                <HyperlinkQuery (click)="ViewTariffs('AS')">{{'Tariff.Q.AirSurchargesCostTariffs' | TextCodeTranslationPipe}} ({{AirSurchargeCount}})</HyperlinkQuery>
+                                                <HyperlinkQuery (click)="ViewTariffs('AS')">Air ({{AirSurchargeCount}})</HyperlinkQuery>
                                             </div>
                                             <div *ngIf="OceanLCLSurchargesCostVisibility">
-                                                <HyperlinkQuery (click)="ViewTariffs('OSC')">{{'Tariff.Q.Ocean.LCL.Surcharges.Cost' | TextCodeTranslationPipe}} ({{OceanSurchargeCount}})</HyperlinkQuery>
+                                                <HyperlinkQuery (click)="ViewTariffs('OSC')">Ocean LCL ({{OceanSurchargeCount}})</HyperlinkQuery>
                                             </div>
                                             <div *ngIf="OceanFCLSurchargesCostVisibility">
-                                                <HyperlinkQuery (click)="ViewTariffs('OFS')">{{'Tariff.Q.OceanFCLSurchargesCost' | TextCodeTranslationPipe}} ({{OceanFCLSurchargesCount}})</HyperlinkQuery>
+                                                <HyperlinkQuery (click)="ViewTariffs('OFS')">Ocean FCL ({{OceanFCLSurchargesCount}})</HyperlinkQuery>
                                             </div>
                                         </div>
                                     </div>

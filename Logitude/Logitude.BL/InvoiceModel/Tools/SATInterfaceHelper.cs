@@ -1396,6 +1396,9 @@ namespace Logitude.BL.InvoiceModel.Tools
 
         private void SendProfactoCancellationRequest33(ARInvoicePM entityPM, ARInvoice entityPoco)
         {
+            if (entityPoco.SATTransferStatusCode == "TG")
+                throw new ApplicationException("You are not allowed to void the invoice while its status is Transferring to SAT");
+
             if (!string.IsNullOrEmpty(entityPoco.SATXML))
             {
                 Encoding encoding = Encoding.UTF8;

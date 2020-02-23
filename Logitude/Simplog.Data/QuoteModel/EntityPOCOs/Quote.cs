@@ -357,5 +357,13 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
 
         [ForeignKey("CountryForStatisticsId")]
         public virtual Country CountryForStatistics { get; set; }
+
+        public DateTime? RequestDate { get; set; }
+        public double? EstimatedProfitInLocal { get; set; }
+        public double? EstimatedProfitInProfit { get; set; }
+        public string ProfitCurrencyId { get; set; }
+        public double? ProfitExchangeRate { get; set; }
+        [ForeignKey("ProfitCurrencyId")]
+        public virtual Currency ProfitCurrency { get; set; }
     }
 }

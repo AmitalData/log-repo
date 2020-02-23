@@ -453,6 +453,11 @@ export class ARPaymentPM {
     public set BankAccountName(newValue: string) { if (this.bankAccountName != newValue) { this.bankAccountName = newValue; this.MarkAsDirty("BankAccountName"); } }
        
 	 
+    private bankAccountNumber: string;
+    public get BankAccountNumber() { return this.bankAccountNumber; }
+    public set BankAccountNumber(newValue: string) { if (this.bankAccountNumber != newValue) { this.bankAccountNumber = newValue; this.MarkAsDirty("BankAccountNumber"); } }
+       
+	 
     private metodoPagoCode: string;
     public get MetodoPagoCode() { return this.metodoPagoCode; }
     public set MetodoPagoCode(newValue: string) { if (this.metodoPagoCode != newValue) { this.metodoPagoCode = newValue; this.MarkAsDirty("MetodoPagoCode"); } }

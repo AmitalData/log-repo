@@ -4277,21 +4277,6 @@
     IsSpellChecked="false"
     HasGeneralFeature="false" />
   <Tab
-    TabName="&quot;Digital Sign&quot;"
-    ObjectTableName="&quot;DocumentType&quot;"
-    Code="&quot;DTLB&quot;"
-    ControlPath="&quot;Simplog.Infrastructure.Views.Documents.DocumentTypes.LogBoxTabComponent&quot;"
-    TextCode="&quot;DocumentType.TH.LogBoxTab&quot;"
-    IsPackagable="true"
-    IndexOrder="1"
-    HtmlComponentURL="&quot;./InfrastructureModules/InfrastructureDocuments/Components/DocumentType/Tab/LogBoxTabComponent&quot;"
-    HtmlComponentName="&quot;LogBoxTabComponent&quot;"
-    FeatureCode="&quot;LogBoxTab&quot;"
-    FeatureTextCodeCode="&quot;General.Features.DocumentTypesDS&quot;"
-    FeatureDefaultText="&quot;Digital Sign Definitions&quot;"
-    IsSpellChecked="false"
-    HasGeneralFeature="true" />
-  <Tab
     TabName="&quot;Custom Fields&quot;"
     ObjectTableName="&quot;DocumentType&quot;"
     Code="&quot;DTCF&quot;"
@@ -4494,6 +4479,15 @@
       FeatureDefaultText="&quot;Document Types Category&quot;"
       IsPackagable="true"
       IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;LogBoxTab&quot;"
+      FeatureTypeCode="&quot;OTH&quot;"
+      FeatureTextCodeCode="&quot;DocumentType.Features.LogBoxTab&quot;"
+      FeatureDefaultText="&quot;Digital Sign Definitions&quot;"
+      IsPackagable="true"
+      IsOld="true"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
   </AdditionalFeatures>

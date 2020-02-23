@@ -213,6 +213,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       IsInternationalPartner = a.IsInternationalPartner,
                                       IsAutonomy = a.IsAutonomy,
                                       CreatedByPartner = a.CreatedByPartner,
+                                      StorageFreeDays = a.StorageFreeDays,
                                   }).FirstOrDefault();
 
 

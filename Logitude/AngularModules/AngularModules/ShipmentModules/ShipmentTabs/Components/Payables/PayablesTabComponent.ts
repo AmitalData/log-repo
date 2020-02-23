@@ -1036,6 +1036,12 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
 
             activeLines.forEach(item => {
                 switch (item.MeasurementCode) {
+                    case "SCGW": {
+                        if (item.Quantity != this.EntityPM.GrossWeightPerStorageDays) {
+                            isDifferentOrders = true;
+                        }
+                        break;
+                    }
                     case "CWKG": {
                         if (item.Quantity != this.EntityPM.ChargeableWeightInKG) {
                             isDifferentOrders = true;
@@ -1770,6 +1776,11 @@ export class ShipmentPayableItem extends BaseComponent {
                                 case "BCNT": {
                                     this.IsByContainerType = true;
                                     this.BuildByContainersItemsSource();
+                                    break;
+                                }
+
+                                case "SCGW": {
+                                    this.Quantity = this.ShipmentPM.GrossWeightPerStorageDays;
                                     break;
                                 }
 
@@ -2602,6 +2613,14 @@ export class ShipmentPayableItem extends BaseComponent {
                                 break;
                             }
 
+                            case "SCGW": {
+                                _QuantityTotal = ArrayTool.Sum(this.InsideItemsSource, "GrossWeightPerStorageDays");
+                                _Ratio = _QuantityTotal == 0 ? 0 : this.Quantity / _QuantityTotal;
+                                unitPrice = _Ratio * this.UnitPrice;
+                                quantity = item.GrossWeightPerStorageDays;
+                                break;
+                            }
+
                             default: {
                                 if (this.fatherComponent.IsFCLEntity) {
                                     var list: PackageTypeList = AllPackageTypes.filter(f => f.MeasurementId == this.MeasurementId)[0];
@@ -2691,6 +2710,7 @@ export class ShipmentPayableItem extends BaseComponent {
             case "CWKG": { result = this.ShipmentPM.ChargeableWeightInKG; break; }
             case "GWKG": { result = this.ShipmentPM.GrossWeightInKG; break; }
             case "VCBM": { result = this.ShipmentPM.VolumeInCBM; break; }
+            case "SCGW": { result = this.ShipmentPM.GrossWeightPerStorageDays; break;}
             case "BCNT": {
                 break;
             }
@@ -2758,6 +2778,7 @@ export class InsidePayableViewModel {
     get ChargeableWeightInKG() { return this.ShipmentPM.ChargeableWeightInKG; }
     get GrossWeightInKG() { return this.ShipmentPM.GrossWeightInKG; }
     get VolumeInCBM() { return this.ShipmentPM.VolumeInCBM; }
+    get GrossWeightPerStorageDays() { return this.ShipmentPM.GrossWeightPerStorageDays; }
 
     // Payable Properties
     get ShipmentId() { return this.EntityPM.ShipmentId; }
@@ -2831,6 +2852,14 @@ export class InsidePayableViewModel {
         var myQuantity = null;
 
         switch (this.MeasurementCode) {
+            case "SCGW": {
+                if (this.ShipmentPM) {
+                    myQuantity = this.ShipmentPM.GrossWeightPerStorageDays;
+                }
+
+                break;
+            }
+
             case "CWKG": {
                 if (this.ShipmentPM) {
                     myQuantity = this.ShipmentPM.ChargeableWeightInKG;

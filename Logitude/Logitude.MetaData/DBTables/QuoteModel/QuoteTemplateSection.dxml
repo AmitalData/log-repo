@@ -1,33 +1,83 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Table Name="QuoteTemplateSections" Schema="dbo" DBType="Main">
-  <Column Name="Id" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="QuoteTemplateSections"
+  Schema="dbo"
+  DBType="Main">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="QuoteTemplateId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
+  <Column
+    Name="QuoteTemplateId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="SectionDocId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="SectionDocId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Name" Type="nvarchar" Size="60">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Name"
+    Type="nvarchar"
+    Size="60"
+    DefaultValue="''">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="Order" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Order"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="Description" Type="nvarchar" Size="500">
-    <Constraints Nullable="true" />
+  <Column
+    Name="Description"
+    Type="nvarchar"
+    Size="500">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="IsCancel" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="IsCancel"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="QuoteTemplateSectionTypeCode" Type="varchar" Size="2">
-    <Constraints Nullable="false" />
+  <Column
+    Name="QuoteTemplateSectionTypeCode"
+    Type="varchar"
+    Size="2">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Relation ForeignKeyColumn="QuoteTemplateId" ReferencedTable="QuoteTemplates" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="SectionDocId" ReferencedTable="Documents" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="QuoteTemplateSectionTypeCode" ReferencedTable="QuoteTemplateSectionTypes" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="QuoteTemplateId"
+    ReferencedTable="QuoteTemplates"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="SectionDocId"
+    ReferencedTable="Documents"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="QuoteTemplateSectionTypeCode"
+    ReferencedTable="QuoteTemplateSectionTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
 </Table>

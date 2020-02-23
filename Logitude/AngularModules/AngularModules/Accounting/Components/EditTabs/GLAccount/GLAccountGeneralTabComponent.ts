@@ -243,6 +243,14 @@ export class GLAccountGeneralTabComponent extends BaseComponent {
         }
     }
 
+    get Smallcashbook() { return this.EntityPM.Smallcashbook }
+    set Smallcashbook(value: boolean) {
+        if (this.EntityPM.Smallcashbook != value) {
+            this.EntityPM.Smallcashbook = value;
+
+        }
+    }
+
     IsMultiCurrencyCheckboxEnabled: boolean = true;
     get ChartOfAccountsTypeCode() { return this.EntityPM.ChartOfAccountsTypeCode; }
     set ChartOfAccountsTypeCode(value: string) {

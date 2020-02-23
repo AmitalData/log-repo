@@ -143,5 +143,7 @@ export class CustomerList {
 		CompetitorFields: string;
 		LeadSourceName: string;
 		CreatedByPartner: string;
+		StateName: string;
+		StorageFreeDays: number;
 	
 }

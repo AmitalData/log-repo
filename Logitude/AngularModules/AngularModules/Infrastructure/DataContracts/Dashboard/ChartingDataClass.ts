@@ -242,4 +242,29 @@ export class ChartingDataClass {
     public set Total(value: number) {
         this.total = value;
     }
+
+    private count_All: number;
+    public get Count_All() { return this.count_All; }
+    public set Count_All(value: number) {
+        this.count_All = value;
+    }
+
+    private count_Converted: number;
+    public get Count_Converted() { return this.count_Converted; }
+    public set Count_Converted(value: number) {
+        this.count_Converted = value;
+    }
+
+    private transportModeId: string;
+    public get TransportModeId() { return this.transportModeId; }
+    public set TransportModeId(value: string) {
+        this.transportModeId = value;
+    }
+
+    private directionId: string;
+    public get DirectionId() { return this.directionId; }
+    public set DirectionId(value: string) {
+        this.directionId = value;
+    }
+    
 }

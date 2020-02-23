@@ -125,8 +125,8 @@ namespace Logitude.Server.Tools
                     case ChangeSetOperation.Insert:
                         {
                             EntityPOCO = new TEntityPOCO();
-                            OnCreating(EntityPM, EntityParentPM);
                             FillDefaultValuesOnCreate(entityPM);
+                            OnCreating(EntityPM, EntityParentPM);
                             break;
                         }
                     case ChangeSetOperation.Update:

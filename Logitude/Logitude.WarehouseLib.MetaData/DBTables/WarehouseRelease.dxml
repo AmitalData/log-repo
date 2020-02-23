@@ -1,156 +1,404 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Table Name="WarehouseReleases" Schema="dbo" DBType="Main">
-  <Column Name="Id" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="WarehouseReleases"
+  Schema="dbo"
+  DBType="Main">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="CreateDate" Type="datetime">
-    <Constraints Nullable="false" />
+  <Column
+    Name="CreateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="CreatedByUserId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
+  <Column
+    Name="CreatedByUserId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="UpdateDate" Type="datetime">
-    <Constraints Nullable="false" />
+  <Column
+    Name="UpdateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="UpdatedByUserId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
+  <Column
+    Name="UpdatedByUserId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="ReleaseNumber" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
+  <Column
+    Name="ReleaseNumber"
+    Type="varchar"
+    Size="15"
+    DefaultValue="''">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="CustomerId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
+  <Column
+    Name="CustomerId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="ShipmentId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ShipmentId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="ShipmentNumber" Type="varchar" Size="100">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ShipmentNumber"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="WarehouseId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
+  <Column
+    Name="WarehouseId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="ExpectedReleaseDate" Type="datetime">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ExpectedReleaseDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="ActualReleaseDate" Type="datetime">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ActualReleaseDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="ReleaseBy" Type="varchar" Size="40">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ReleaseBy"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="SpecialInstruction" Type="varchar" Size="250">
-    <Constraints Nullable="true" />
+  <Column
+    Name="SpecialInstruction"
+    Type="varchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="StatusCode" Type="varchar" Size="4">
-    <Constraints Nullable="false" />
+  <Column
+    Name="StatusCode"
+    Type="varchar"
+    Size="4">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="TotalPieces" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="TotalPieces"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="TotalGrossWeight" Type="decimal" Precision="18" Scale="3">
-    <Constraints Nullable="false" />
+  <Column
+    Name="TotalGrossWeight"
+    Type="decimal"
+    Precision="18"
+    Scale="3">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="GrossWeightUnitCode" Type="varchar" Size="3">
-    <Constraints Nullable="false" />
+  <Column
+    Name="GrossWeightUnitCode"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="TotalVolume" Type="decimal" Precision="18" Scale="3">
-    <Constraints Nullable="false" />
+  <Column
+    Name="TotalVolume"
+    Type="decimal"
+    Precision="18"
+    Scale="3">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="VolumeUnitCode" Type="varchar" Size="3">
-    <Constraints Nullable="false" />
+  <Column
+    Name="VolumeUnitCode"
+    Type="varchar"
+    Size="3"
+    DefaultValue="''">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="Notes" Type="nvarchar" Size="1000">
-    <Constraints Nullable="true" />
+  <Column
+    Name="Notes"
+    Type="nvarchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="CustomerRef1" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="CustomerRef1"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="CustomerRef2" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="CustomerRef2"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="HouseNumber" Type="varchar" Size="20">
-    <Constraints Nullable="true" />
+  <Column
+    Name="HouseNumber"
+    Type="varchar"
+    Size="20">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="MasterNumber" Type="varchar" Size="30">
-    <Constraints Nullable="true" />
+  <Column
+    Name="MasterNumber"
+    Type="varchar"
+    Size="30">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="DimensionsUnitCode" Type="varchar" Size="4">
-    <Constraints Nullable="false" />
+  <Column
+    Name="DimensionsUnitCode"
+    Type="varchar"
+    Size="4"
+    DefaultValue="''">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="ShipmentTypeId" Type="varchar" Size="4">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ShipmentTypeId"
+    Type="varchar"
+    Size="4">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="TransportModeId" Type="char" Size="1">
-    <Constraints Nullable="true" />
+  <Column
+    Name="TransportModeId"
+    Type="char"
+    Size="1">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="ShipmentLevelCode" Type="varchar" Size="1">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ShipmentLevelCode"
+    Type="varchar"
+    Size="1">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="SearchFields" Type="nvarchar" Size="1000">
-    <Constraints Nullable="true" />
+  <Column
+    Name="SearchFields"
+    Type="nvarchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="DirectionId" Type="char" Size="1">
-    <Constraints Nullable="true" />
+  <Column
+    Name="DirectionId"
+    Type="char"
+    Size="1">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="TotalQuantity" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="TotalQuantity"
+    Type="int"
+    DefaultValue="0">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="ChargeableWeightUnitCode" Type="varchar" Size="3">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ChargeableWeightUnitCode"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="ConnectedTo" Type="varchar" Size="100">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ConnectedTo"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="FromPortId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="FromPortId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="ToPortId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ToPortId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="CustomerAddressId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="CustomerAddressId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="TotalVolumetricWeight" Type="decimal" Precision="18" Scale="3">
-    <Constraints Nullable="false" />
+  <Column
+    Name="TotalVolumetricWeight"
+    Type="decimal"
+    Precision="18"
+    Scale="3"
+    DefaultValue="0">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="Ratio" Type="float">
-    <Constraints Nullable="true" />
+  <Column
+    Name="Ratio"
+    Type="float">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="ToTypeCode" Type="varchar" Size="4">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ToTypeCode"
+    Type="varchar"
+    Size="4">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="ToPartnerCardId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ToPartnerCardId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="ToAddressId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ToAddressId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="ToAddressZipCode" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ToAddressZipCode"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="ToAddressCity" Type="nvarchar" Size="25">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ToAddressCity"
+    Type="nvarchar"
+    Size="25">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="ToAddressCountryId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ToAddressCountryId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Relation ForeignKeyColumn="CreatedByUserId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="UpdatedByUserId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="CustomerId" ReferencedTable="Cards" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="ShipmentId" ReferencedTable="Shipments" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="WarehouseId" ReferencedTable="Warehouses" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="StatusCode" ReferencedTable="WarehouseReleaseStatuses" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="ShipmentTypeId" ReferencedTable="ShipmentTypes" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="TransportModeId" ReferencedTable="TransportModes" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="ShipmentLevelCode" ReferencedTable="ShipmentLevels" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="DirectionId" ReferencedTable="Directions" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="FromPortId" ReferencedTable="Ports" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="ToPortId" ReferencedTable="Ports" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="ToPartnerCardId" ReferencedTable="Cards" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="ToAddressId" ReferencedTable="Addresses" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="ToAddressCountryId" ReferencedTable="Countries" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="CreatedByUserId"
+    ReferencedTable="Users"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="UpdatedByUserId"
+    ReferencedTable="Users"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="CustomerId"
+    ReferencedTable="Cards"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ShipmentId"
+    ReferencedTable="Shipments"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="WarehouseId"
+    ReferencedTable="Warehouses"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="StatusCode"
+    ReferencedTable="WarehouseReleaseStatuses"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ShipmentTypeId"
+    ReferencedTable="ShipmentTypes"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="TransportModeId"
+    ReferencedTable="TransportModes"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ShipmentLevelCode"
+    ReferencedTable="ShipmentLevels"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="DirectionId"
+    ReferencedTable="Directions"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="FromPortId"
+    ReferencedTable="Warehouses"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ToPortId"
+    ReferencedTable="Ports"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ToPartnerCardId"
+    ReferencedTable="Cards"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ToAddressId"
+    ReferencedTable="Addresses"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ToAddressCountryId"
+    ReferencedTable="Countries"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
 </Table>

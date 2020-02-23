@@ -1,39 +1,112 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Table Name="Features" Schema="dbo" DBType="Main">
-  <Column Name="Id" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="Features"
+  Schema="dbo"
+  DBType="Main">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="FeatureUniqeCode"
+    Type="varchar"
+    Size="120">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="Code" Type="varchar" Size="80">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="ObjectTableId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Code"
+    Type="varchar"
+    Size="80">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="NameTextCodeId" Type="varchar" Size="30">
-    <Constraints Nullable="false" />
+  <Column
+    Name="ObjectTableId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="FeatureTypeCode" Type="varchar" Size="4">
-    <Constraints Nullable="false" />
+  <Column
+    Name="NameTextCodeId"
+    Type="varchar"
+    Size="30">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="Packagable" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="FeatureTypeCode"
+    Type="varchar"
+    Size="4">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="IsBusinessUnitEnabled" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Packagable"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="IsOld" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="IsBusinessUnitEnabled"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="IsCoreFeature" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="IsOld"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="ToggleCode" Type="varchar" Size="3">
-    <Constraints Nullable="true" />
+  <Column
+    Name="IsCoreFeature"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Relation ForeignKeyColumn="ObjectTableId" ReferencedTable="ObjectTables" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="NameTextCodeId" ReferencedTable="TextCodes" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="FeatureTypeCode" ReferencedTable="FeatureTypes" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
+  <Column
+    Name="ToggleCode"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="NameTextCodeCode"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Relation
+    ForeignKeyColumn="ObjectTableId"
+    ReferencedTable="ObjectTables"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="NameTextCodeId"
+    ReferencedTable="TextCodes"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="FeatureTypeCode"
+    ReferencedTable="FeatureTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Index
+    Columns="FeatureUniqeCode" />
+  <UniqueConstraint
+    Columns="Code,ObjectTableId,Tenant" />
 </Table>

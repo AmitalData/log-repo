@@ -1,39 +1,82 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Table Name="DocumentFilingBackupBatches" Schema="dbo" DBType="Main">
-  <Column Name="Id" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="DocumentFilingBackupBatches"
+  Schema="dbo"
+  DBType="Main">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="BatchNumber" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
+  <Column
+    Name="BatchNumber"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="DoneDate" Type="datetime">
-    <Constraints Nullable="true" />
+  <Column
+    Name="DoneDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Status" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Status"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="CreateDateTime" Type="datetime">
-    <Constraints Nullable="false" />
+  <Column
+    Name="CreateDateTime"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="FromDatetime" Type="datetime">
-    <Constraints Nullable="true" />
+  <Column
+    Name="FromDatetime"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="ToDatetime" Type="datetime">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ToDatetime"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="TotalDocuments" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="TotalDocuments"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="TotalSucceeded" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="TotalSucceeded"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="TotalFailed" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="TotalFailed"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="IncludeBackedUp" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="IncludeBackedUp"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
 </Table>
