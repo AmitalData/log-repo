@@ -8,7 +8,7 @@ import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {ReportFliter} from '../../Components/Filters/ReportFliter';
 import {QueryFilterItem} from '../../Components/Filters/QueryFilterItem';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
-import {Component, OnInit, Output, ElementRef}  from '@angular/core';
+import {Component, OnInit, Output, ElementRef, EventEmitter}  from '@angular/core';
 import {FormBuilder, FormGroup, FormsModule} from '@angular/forms';
 import {CodeNameClass} from './CodeNameClass';
 import {AppTool} from '../../../Infrastructure/Tools';
@@ -21,11 +21,12 @@ import { isNullOrUndefined } from 'util';
 })
 
 export class InventoryReportFilterConmponent extends BaseComponent implements OnInit {
+    @Output() RunReportEvent: EventEmitter<ReportFliter> = new EventEmitter<ReportFliter>();
+
     public ReportsPreview: ReportsPreviewComponent;
     WarehouseId: string;
     CustomerId: string;
     public myForm: FormGroup;
-    queryFilterItems: QueryFilterItem[];
     reportFliter: ReportFliter;
     queryFilterItem: QueryFilterItem;
     public ObjectTableName: string = "Report";
@@ -49,17 +50,19 @@ export class InventoryReportFilterConmponent extends BaseComponent implements On
     }
 
     ngOnInit() {
+        this.FillDaysinWarehouseFilterItemSource();
+        this.ValidationErrorsList = [];
+    }
 
+    FillDaysinWarehouseFilterItemSource() {
         this.DaysinWarehouseFilterItemSource = [];
         this.DaysinWarehouseFilterItemSource.push(new CodeNameClass("Empty", ""));
-        this.DaysinWarehouseFilterItemSource.push(new CodeNameClass("Equals","Equal to"));
+        this.DaysinWarehouseFilterItemSource.push(new CodeNameClass("Equals", "Equal to"));
         this.DaysinWarehouseFilterItemSource.push(new CodeNameClass("NotEquals", "Not Equal to"));
         this.DaysinWarehouseFilterItemSource.push(new CodeNameClass("GreaterThan", "Greater than"));
         this.DaysinWarehouseFilterItemSource.push(new CodeNameClass("Lessthan", "Less than"));
         this.DaysinWarehouseFilterItemSource.push(new CodeNameClass("GreaterThanOREqualTo", "Greater than or equal to"));
         this.DaysinWarehouseFilterItemSource.push(new CodeNameClass("LessThanOrEqualTo", "Less than or equal to"));
-        this.SelectedItemDaysinWarehouseFilter = this.DaysinWarehouseFilterItemSource.filter(d => d.Code == "Empty")[0];
-        this.ValidationErrorsList = [];
     }
 
     onSelectedItemDaysinWarehouseFilterChange(item) {
@@ -81,15 +84,9 @@ export class InventoryReportFilterConmponent extends BaseComponent implements On
     }
 
 
-    RunReport(isloading: boolean) {
-        if (this.IsDaysInWarehouseRequired && isNullOrUndefined(this.DaysInWarehouse)) {
-            this.ValidationErrorsList.push("Days In Warehouse Field Required");
-        }
-        if (this.ValidationErrorsList.length > 0) {
-            return;
-        }
+    GetQueryFilterItems() {
 
-        this.queryFilterItems = new Array<QueryFilterItem>();
+        var queryFilterItems = new Array<QueryFilterItem>();
 
         if (!AppTool.IsNullOrEmpty(this.CustomerId)) {
             this.queryFilterItem = new QueryFilterItem();
@@ -97,7 +94,7 @@ export class InventoryReportFilterConmponent extends BaseComponent implements On
             this.queryFilterItem.FieldName = "CustomerId";
             this.queryFilterItem.FieldValue = this.CustomerId;
             this.queryFilterItem.Operator = "Equals";
-            this.queryFilterItems.push(this.queryFilterItem);
+            queryFilterItems.push(this.queryFilterItem);
         }
 
         if (!AppTool.IsNullOrEmpty(this.WarehouseId)) {
@@ -106,7 +103,7 @@ export class InventoryReportFilterConmponent extends BaseComponent implements On
             this.queryFilterItem.FieldName = "WarehouseId";
             this.queryFilterItem.FieldValue = this.WarehouseId;
             this.queryFilterItem.Operator = "Equals";
-            this.queryFilterItems.push(this.queryFilterItem);
+            queryFilterItems.push(this.queryFilterItem);
         }
 
         if (!AppTool.IsNullOrEmpty(this.ShipperConsigneeId)) {
@@ -115,8 +112,9 @@ export class InventoryReportFilterConmponent extends BaseComponent implements On
             this.queryFilterItem.FieldName = "ShipperConsigneeId";
             this.queryFilterItem.FieldValue = this.ShipperConsigneeId;
             this.queryFilterItem.Operator = "Equals";
-            this.queryFilterItems.push(this.queryFilterItem);
-        }
+            queryFilterItems.push(this.queryFilterItem);
+        } 
+
         if (this.SelectedItemDaysinWarehouseFilter) {
             if (this.SelectedItemDaysinWarehouseFilter.Code != "Empty") {
                 this.queryFilterItem = new QueryFilterItem();
@@ -124,19 +122,56 @@ export class InventoryReportFilterConmponent extends BaseComponent implements On
                 this.queryFilterItem.FieldName = "DaysInWarehouse";
                 this.queryFilterItem.FieldValue = this.DaysInWarehouse;
                 this.queryFilterItem.Operator = this.SelectedItemDaysinWarehouseFilter.Code;
-                this.queryFilterItems.push(this.queryFilterItem);
+                queryFilterItems.push(this.queryFilterItem);
             }
         }
 
+        return queryFilterItems;
+    }
+    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>) {
+        if (queryFilterItems) {
+            queryFilterItems.forEach(queryFilterItem => {
+                this.SetFilterItem(queryFilterItem);
+            });
+        }
+    }
 
-       
+    private SetFilterItem(queryFilterItem: QueryFilterItem) {
+        this.FillDaysinWarehouseFilterItemSource();
+        if (queryFilterItem) {
+            if (queryFilterItem.FieldName == "CustomerId") {
+                this.CustomerId = queryFilterItem.FieldValue;
+            }
+            else if (queryFilterItem.FieldName == "WarehouseId") {
+                this.WarehouseId = queryFilterItem.FieldValue;
+            }
+            else if (queryFilterItem.FieldName == "ShipperConsigneeId") {
+                this.ShipperConsigneeId = queryFilterItem.FieldValue;
+            }
+            else if (queryFilterItem.FieldName == "DaysInWarehouse") {
+                this.DaysInWarehouse = queryFilterItem.FieldValue;
+                this.SelectedItemDaysinWarehouseFilter = this.DaysinWarehouseFilterItemSource.filter(d => d.Code == queryFilterItem.Operator)[0];
+                if (this.SelectedItemDaysinWarehouseFilter.Code != "Empty") {
+                    this.IsDaysInWarehouseRequired = true;
+                }
+            }
+        }
+
+    }
 
 
+    RunReport(isloading: boolean) {
+        if (this.IsDaysInWarehouseRequired && isNullOrUndefined(this.DaysInWarehouse)) {
+            this.ValidationErrorsList.push("Days In Warehouse Field Required");
+        }
+        if (this.ValidationErrorsList.length > 0) {
+            return;
+        }
 
 
         this.reportFliter = new ReportFliter();
         this.reportFliter.Tenant = SessionInfo.LoggedUserTenant;
-        this.reportFliter.QueryFilterItemLists = this.queryFilterItems;
+        this.reportFliter.QueryFilterItemLists = this.GetQueryFilterItems();
         this.reportFliter.FilterControlName = this.ReportsPreview.FilterControlName;
         this.reportFliter.ReportDocumentId = this.ReportsPreview.Report.ReportDocumentId;
         this.reportFliter.ReportCode = this.ReportsPreview.Report.Code;
@@ -151,7 +186,9 @@ export class InventoryReportFilterConmponent extends BaseComponent implements On
             this.ReportsPreview.AddPartner("Customer", this.CustomerId);
         }
 
-        this.ReportsPreview.GenerateReport(this.reportFliter, isloading);
+
+        this.RunReportEvent.emit(this.reportFliter);
+      //  this.ReportsPreview.GenerateReport(this.reportFliter, isloading);
 
 
     }

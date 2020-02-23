@@ -330,6 +330,7 @@
     <Content Include="Images\Menu\Documents.Selected.png" />
     <Content Include="Images\Menu\Shared.png" />
     <Content Include="Images\numberIcon.png" />
+    <Content Include="Images\ReportScheduler.png" />
     <Content Include="Images\ShowFilters.png" />
     <Content Include="Images\train.png" />
     <Content Include="Images\truck.png" />
@@ -1181,6 +1182,11 @@
     <Content Include="Report\Components\FiltersComponent\Operational\ShipmentsEventsListFilterComponent.html" />
     <Content Include="Report\Components\FiltersComponent\Operational\UnicargoExportReportFilterComponent.html" />
     <Content Include="Report\Components\FiltersComponent\Operational\VehiclesFilterComponent.html" />
+    <Content Include="Report\Components\Scheduler\AddEditReportTaskSchedulerComponent.html" />
+    <Content Include="Report\Components\Scheduler\AddEditReportSchedulerComponent.html" />
+    <Content Include="Report\Components\Scheduler\ListTemplates\ReportSchedulerDateListTemplate.html" />
+    <Content Include="Report\Components\Scheduler\MainReportSchedulerComponent.html" />
+    <Content Include="Report\Components\Scheduler\TaskReportSchedulerComponent.html" />
     <Content Include="Report\Components\Workspaces\BIFolderReportComponent.html" />
     <Content Include="Report\Components\Workspaces\BIReportComponent.html" />
     <Content Include="Report\Components\Workspaces\MainReportsWorkspace.html" />
@@ -3656,9 +3662,15 @@
     <TypeScriptCompile Include="Report\Components\FiltersComponent\Operational\ShipmentsEventsListFilterComponent.ts" />
     <TypeScriptCompile Include="Report\Components\FiltersComponent\Operational\UnicargoExportReportFilterComponent.ts" />
     <TypeScriptCompile Include="Report\Components\FiltersComponent\Operational\VehiclesFilterComponent.ts" />
+    <TypeScriptCompile Include="Report\Components\Scheduler\AddEditReportTaskSchedulerComponent.ts" />
+    <TypeScriptCompile Include="Report\Components\Scheduler\AddEditReportSchedulerComponent.ts" />
+    <TypeScriptCompile Include="Report\Components\Scheduler\ListTemplates\ReportSchedulerDateListTemplate.ts" />
+    <TypeScriptCompile Include="Report\Components\Scheduler\MainReportSchedulerComponent.ts" />
+    <TypeScriptCompile Include="Report\Components\Scheduler\TaskReportSchedulerComponent.ts" />
     <TypeScriptCompile Include="Report\Components\Workspaces\BIFolderReportComponent.ts" />
     <TypeScriptCompile Include="Report\Components\Workspaces\BIReportComponent.ts" />
     <TypeScriptCompile Include="Report\Components\Workspaces\MainReportsWorkspace.ts" />
+    <TypeScriptCompile Include="Report\DataContracts\SchedulerDetails.ts" />
     <TypeScriptCompile Include="SharedLogistics\Components\SharedLogisticsMoneyPermissiosComponent.ts" />
     <TypeScriptCompile Include="SharedLogistics\Components\SharedLogisticsPartnersPermissiosComponent.ts" />
     <TypeScriptCompile Include="SharedLogistics\Components\TenantAccessSettingsComponent.ts" />

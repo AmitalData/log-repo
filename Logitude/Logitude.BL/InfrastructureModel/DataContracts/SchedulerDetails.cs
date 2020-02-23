@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Simplog.Server.Infrastructure.DataContracts;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -15,6 +16,9 @@ namespace Logitude.BL.InfrastructureModel.DataContracts
 
 		[DataMember]
         public FTPSchedulerDetails FTPDetails { get; set; }
+
+        [DataMember]
+        public ReportSchedulerDetails ReportDetails { get; set; }
 
     }
 
@@ -45,6 +49,40 @@ namespace Logitude.BL.InfrastructureModel.DataContracts
 
     }
 
+    [DataContract(Namespace = "")]
+    public class ReportSchedulerDetails
+    {
+        [DataMember]
+        public string ReportTemplateId { get; set; }
+        [DataMember]
+        public string Recepients { get; set; }
+        [DataMember]
+        public List<ReportFilterItem> ReportFilterItems { get; set; }
 
+    }
+
+    [DataContract(Namespace = "")]
+    public class ReportFilterItem
+    {
+        [DataMember]
+        public string FieldName { get; set; }
+        [DataMember]
+        public object FieldValue { get; set; }
+        [DataMember]
+        public object FieldValue2 { get; set; }
+        [DataMember]
+        public object FieldValue3 { get; set; }
+        [DataMember]
+        public string Operator { get; set; }
+        [DataMember]
+        public bool IsCustom { get; set; }
+        [DataMember]
+        public bool DisplayInList { get; set; }
+        [DataMember]
+        public bool IsCustomField { get; set; }
+        [DataMember]
+        public string FieldDataType { get; set; }
+
+    }
 
 }
