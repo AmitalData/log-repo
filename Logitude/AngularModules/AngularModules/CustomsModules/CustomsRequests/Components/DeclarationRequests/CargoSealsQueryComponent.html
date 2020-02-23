@@ -34,10 +34,10 @@
     }
     </style>
 
-<div [ngClass] ="{'disabled' : IsDisplayOnly}">
+<div >
 
     <custom-message-wrapper [CustomSendOptionsButtonCanForcePersonalSign]="false"
-                            [IsShowCustomResponseContent]="false"
+                            [IsShowCustomResponseContent]="false" [CustomRequestContentIsDisable] ="IsDisplayOnly"
                            >
 
         <!-- Request -->
