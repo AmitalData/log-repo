@@ -53,46 +53,56 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
             }
 
-
-
-            var creditIVerifyGLAccountManager = GetIVerifyGLAccountManager();
-            creditIVerifyGLAccountManager.Verify(this._MainContext, journalLinePM.Tenant, journalLinePM.CreditAccountId, journalLinePM.CreditAccountNumber, journalLinePM.CurrencyId);
             bool haveChange = false;
-            haveChange = (journalLinePM.CreditAccountId != creditIVerifyGLAccountManager.AccountId ||
-                journalLinePM.CreditControlAccountId != creditIVerifyGLAccountManager.ControlAccountId);
-            journalLinePM.CreditAccountId = creditIVerifyGLAccountManager.AccountId;
-            journalLinePM.CreditControlAccountId = creditIVerifyGLAccountManager.ControlAccountId;
+            if (journalLinePM.ActionTypeCodeEnum == MyJournalActionTypeEnum.Credit || 
+                journalLinePM.ActionTypeCodeEnum == MyJournalActionTypeEnum.DebitAndCredit ||
+                journalLinePM.ActionTypeCodeEnum == MyJournalActionTypeEnum.DebitCreditAndVatdeduction
+                ) 
+            {
+                var creditIVerifyGLAccountManager = GetIVerifyGLAccountManager();
+                creditIVerifyGLAccountManager.Verify(this._MainContext, journalLinePM.Tenant, journalLinePM.CreditAccountId, journalLinePM.CreditAccountNumber, journalLinePM.CurrencyId);
 
+                haveChange = (journalLinePM.CreditAccountId != creditIVerifyGLAccountManager.AccountId ||
+                    journalLinePM.CreditControlAccountId != creditIVerifyGLAccountManager.ControlAccountId);
+                journalLinePM.CreditAccountId = creditIVerifyGLAccountManager.AccountId;
+                journalLinePM.CreditControlAccountId = creditIVerifyGLAccountManager.ControlAccountId;
+            }
 
             FullAccountingSettingPM accountingSettings = getFullAccountingSettings(journalPM.Tenant);
 
-            var debitIVerifyGLAccountManager = GetIVerifyGLAccountManager();
-            debitIVerifyGLAccountManager.Verify(
-                this._MainContext,
-                journalLinePM.Tenant,
-                journalLinePM.DebitAccountId,
-                journalLinePM.DebitAccountNumber,
-                journalLinePM.CurrencyId
-                );
-            if (!haveChange)
+            if (journalLinePM.ActionTypeCodeEnum == MyJournalActionTypeEnum.Debit ||
+    journalLinePM.ActionTypeCodeEnum == MyJournalActionTypeEnum.DebitAndCredit ||
+    journalLinePM.ActionTypeCodeEnum == MyJournalActionTypeEnum.DebitCreditAndVatdeduction
+    )
             {
-                haveChange = (journalLinePM.DebitAccountId != debitIVerifyGLAccountManager.AccountId ||
-                    journalLinePM.DebitControlAccountId != debitIVerifyGLAccountManager.ControlAccountId);
+
+                var debitIVerifyGLAccountManager = GetIVerifyGLAccountManager();
+                debitIVerifyGLAccountManager.Verify(
+                    this._MainContext,
+                    journalLinePM.Tenant,
+                    journalLinePM.DebitAccountId,
+                    journalLinePM.DebitAccountNumber,
+                    journalLinePM.CurrencyId
+                    );
+                if (!haveChange)
+                {
+                    haveChange = (journalLinePM.DebitAccountId != debitIVerifyGLAccountManager.AccountId ||
+                        journalLinePM.DebitControlAccountId != debitIVerifyGLAccountManager.ControlAccountId);
+                }
+
+                if (
+                    //from mumps >>> CHANGE DEBIT
+                    IsFromMumps(journalLinePM)
+                    ||
+                    // Regular Journal do not  CHANGE DEBIT if credit equal VATOutputGLAccountId
+                    CreditAccountIsNotVATOutputGLAccountId(journalLinePM, accountingSettings)
+                    )
+                {
+                    journalLinePM.DebitAccountId = debitIVerifyGLAccountManager.AccountId;
+                    journalLinePM.DebitControlAccountId = debitIVerifyGLAccountManager.ControlAccountId;
+                }
+
             }
-
-            if (
-                //from mumps >>> CHANGE DEBIT
-                IsFromMumps(journalLinePM)
-                ||
-                // Regular Journal do not  CHANGE DEBIT if credit equal VATOutputGLAccountId
-                CreditAccountIsNotVATOutputGLAccountId(journalLinePM, accountingSettings)
-                )
-            {
-                journalLinePM.DebitAccountId = debitIVerifyGLAccountManager.AccountId;
-                journalLinePM.DebitControlAccountId = debitIVerifyGLAccountManager.ControlAccountId;
-            }
-
-
 
 
             if (haveChange && journalLinePM.ChangeSetOp == ChangeSetOperation.None)
