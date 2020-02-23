@@ -47,7 +47,7 @@ namespace Logitude.Accounting.BL.Utils
 
         public void RunReconciliationAfterConversion(ReconciliationAfterConversionArg reconciliationAfterConversionArg)
         {
-            int SUB_BATCH_SIZE = 100;
+            int SUB_BATCH_SIZE = 5; // 100;
             string returnedMessage = "";
             int tenant = reconciliationAfterConversionArg.Tenant;
             string fromExtNum = reconciliationAfterConversionArg.FromExtNum;
@@ -292,6 +292,11 @@ namespace Logitude.Accounting.BL.Utils
                 rv = false;
             }
             else if (journalLineRecoList.Exists(line => line._journalLine.ActionCode != "1" && line._journalLine.ActionCode != "2"))
+            {
+                _WrongAction.Add(groupKey);
+                rv = false;
+            }
+            else if (journalLineRecoList.Exists(line => line._oneLineLedger.IsReconciled == true))
             {
                 _WrongAction.Add(groupKey);
                 rv = false;
