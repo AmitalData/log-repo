@@ -1,3 +1,4 @@
+import { ObservableCollection } from './../../../../Infrastructure/Utilities/ObservableCollection';
 import { ARPaymentChequeList } from './../../../EntityLists/ARPaymentChequeList';
 import { ARPaymentChequeListService } from './../../../Services/StandardLists/ARPaymentChequeListService';
 import {Component}  from '@angular/core';
@@ -47,6 +48,7 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
     currencyListService: CurrencyListService = new CurrencyListService();
     _BankDepositExtendedPMService: BankDepositExtendedPMService = new BankDepositExtendedPMService();
     _ARPaymentChequeListService: ARPaymentChequeListService = new ARPaymentChequeListService();
+    CashBookLines2: ObservableCollection = new ObservableCollection([]);
 
     public isRTL: boolean = false;
     public IsReturnChequeEnabled: boolean = false;
@@ -133,6 +135,7 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
         this.IsLinesSelection = false;
         this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
         this.CashBookLines = [];
+        this.CashBookLines2.InsertCollection(this.CashBookLines);
         this.BankDepositLines = this.EntityPM.BankDepositLines;
         this.CalculateTotals();
 
@@ -319,7 +322,10 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
             this.UIProperties.SetEnabled("DepositCurrencyId", this.ObjectTableName, false);
         }
     }
-
+    GetAmountHeader(){
+        var msg = TextCodeTranslator.Translate("CashBookLine.F.LocalAmount");
+        return msg + " (" + this.tenantCurrencyCode + ")";
+    }
     //#region Filter Methods
     public FilterSelectedValue: string = 'cash';
     FilterItemClicked(itemValue: string) {
@@ -359,6 +365,8 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
         }
 
         this.CashBookLines = lines;
+        this.CashBookLines2.InsertCollection(this.CashBookLines);
+
 
         // remove deposited lines
         this.RemoveDepositedLines();
@@ -402,7 +410,7 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
 
     //#region Get Methods
     GetCashBook() {
-        this.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicator("Loading Cashbook Data ...");
         this._CashBookPMService.get(this.EntityPM.CashBookId).subscribe(myResult => {
             this.CurrentSession.StopBusyIndicator();
 
@@ -435,6 +443,7 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
                     {  // Cheque
 
                         this.CashBookLines = this.CashBookPM.CashBookLines;
+                        this.CashBookLines2.InsertCollection(this.CashBookLines);
                         this.ComputeTotals();
 
                         this.RemoveDepositedLines();
@@ -607,6 +616,7 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
             }); //// 5- Returned to Customer
 
             this.CashBookLines = nonDepositedlines;
+            this.CashBookLines2.InsertCollection(this.CashBookLines);
         }
 
     }
