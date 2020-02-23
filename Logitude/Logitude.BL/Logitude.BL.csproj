@@ -533,6 +533,7 @@
     <Compile Include="Helpers\ShipmentComputedFieldsHelper.cs" />
     <Compile Include="QuoteModel\EntityQueries\Charts\DashboardQuery.cs" />
     <Compile Include="QuoteModel\EntityQueries\Charts\QuoteConversionQuery.cs" />
+    <Compile Include="QuoteModel\EntityQueries\Charts\SentQuotesKPIQuery.cs" />
     <Compile Include="QuoteModel\EntityQueries\Charts\TopFiveSalesmanQuery.cs" />
     <Compile Include="QuoteModel\EntityQueries\Charts\QuotesByCountryQuery.cs" />
     <Compile Include="QuoteModel\EntityQueries\Charts\StageFunnelQuery.cs" />
