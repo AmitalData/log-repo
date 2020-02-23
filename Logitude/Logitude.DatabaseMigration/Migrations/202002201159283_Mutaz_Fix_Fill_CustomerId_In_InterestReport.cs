@@ -7,8 +7,7 @@ namespace Logitude.DatabaseMigration.Migrations
     {
         public override void Up()
         {
-            Sql("update InterestReports set CustomerId = (select Cards.Id from Cards where GLAccountId = InterestReports.GLAccountId and Cards.Id in (select Id from customers) )");
-            AlterColumn("dbo.InterestReports", "CustomerId", c => c.String(maxLength: 15, unicode: false));
+            Sql("update InterestReports set CustomerId = (select top 1 Cards.Id from Cards where GLAccountId = InterestReports.GLAccountId and Cards.Id in (select Id from customers) )");
             DropForeignKey("dbo.InterestReports", "CustomerId", "dbo.Cards");
             DropIndex("dbo.InterestReports", new[] { "CustomerId" });
             AlterColumn("dbo.InterestReports", "CustomerId", c => c.String(nullable: false, maxLength: 15, unicode: false));
