@@ -28,6 +28,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries.Charts
         public IQueryable<Quote> FilterBasicValues(QuoteDashboardArguments args)
         {
             this.args = args;
+
             dataSourceQuery =
                 (from d in context.Quotes
                  where d.Tenant == tenant
@@ -53,8 +54,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries.Charts
         {
             if (fromDate != null && toDate != null)
             {
-                dataSourceQuery = dataSourceQuery.Where(d => DbFunctions.TruncateTime(d.OpenDate) >= fromDate && 
-                                                             DbFunctions.TruncateTime(d.OpenDate) <= toDate);
+                dataSourceQuery = dataSourceQuery.Where(d => DbFunctions.TruncateTime(d.OpenDate) >= fromDate && DbFunctions.TruncateTime(d.OpenDate) <= toDate);
             }
         }        
 
@@ -114,8 +114,8 @@ namespace Logitude.BL.QuoteModel.EntityQueries.Charts
 
             else if (chartCode == "TFS")
             {
-                TopFiveSalesmanQuery topFiveSalesmanQuery = new TopFiveSalesmanQuery();
-                result = topFiveSalesmanQuery.FilterToFiveSalesmanByProfit(dataSourceQuery, args, tenant);
+                TopFiveSalesmanQuery topFiveSalesmanQuery = new TopFiveSalesmanQuery(dataSourceQuery, args, tenant);
+                result = topFiveSalesmanQuery.FilterToFiveSalesmanByProfit();
             }
 
             else if (chartCode == "KPI")

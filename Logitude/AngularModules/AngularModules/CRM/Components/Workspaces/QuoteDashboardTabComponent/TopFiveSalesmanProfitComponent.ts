@@ -18,15 +18,12 @@ export class TopFiveSalesmanProfitComponent implements OnInit {
     private CurrentSession = SessionLocator.SelectedSession;
     private dashboardService: DashboardService;
     private dashboardArgs: QuoteDashboardArguments;
-    public PerformanceChartIdExistance: Boolean = false;
     public PerformanceChartId: string;
     public LegendDiv: string;
     public ProfitCurrencyCode: string = SessionLocator.TenantPM.ProfitCurrencyCode;
     public LocalCurrencyCode: string = SessionLocator.TenantPM.AccountingCurrencyCode;
-    public SelectedCurrency: string = "1";
-    public SalesmanNumber: number;
-    public dataProvider: any = [];
-
+    public SelectedCurrency: string = "1";   
+    public IsNoDataVisible: boolean = false;
     constructor(private _entityResourceService: EntityResourceService) {
         this.PerformanceChartId = "PerformanceChartId_" + this.CurrentSession.GetNewId("PerformanceChartId");
         this.LegendDiv = "LegendDiv_" + this.CurrentSession.GetNewId("LegendDiv");
@@ -40,20 +37,10 @@ export class TopFiveSalesmanProfitComponent implements OnInit {
             this.LoadChartData();
         });
     }
-
-    // Load chart Data
-    public TopFiveSalesmanData: any[] = [];
-    LoadChartData() {
-        this.dashboardService.GetDashboardChartValues(this.dashboardArgs).subscribe((myResult: any) => {
-            if (myResult != null && !myResult.HasError) {
-                this.TopFiveSalesmanData = myResult;
-                if (this.TopFiveSalesmanData && this.TopFiveSalesmanData .length > 0 )
-                    this.PerformanceChartIdExistance = true;
-                this.FillPerformanceChart();
-            }
-            else
-                this.PerformanceChartIdExistance = false;
-        });
+   
+    private Wizard: QuoteDashboardComponent;
+    InitTab(wizard: QuoteDashboardComponent) {
+        this.Wizard = wizard;
     }
 
     FillChartArgs() {
@@ -66,91 +53,199 @@ export class TopFiveSalesmanProfitComponent implements OnInit {
         this.dashboardArgs.SelectedCurrency = "1";
     }
 
-    private Wizard: QuoteDashboardComponent;
-    InitTab(wizard: QuoteDashboardComponent) {
-        this.Wizard = wizard;
-    }
-
     RefreshTab(wizard: QuoteDashboardComponent) {
         this.Wizard = wizard;
         this.FillChartArgs();
         this.LoadChartData();
     }
 
-    
-    FillPerformanceChart() {
-        this.DeterminePeriod(this.TopFiveSalesmanData);
+    LoadChartData() {
 
-        var colors: string[] = ['#6AA4D9', '#ADADAD', '#EF8E4C', '#FFC208', '#84B761'];
+        this.IsNoDataVisible = false;
+        this.DataSource = [];
+
+        this.dashboardService.GetDashboardChartValues(this.dashboardArgs).subscribe((myResult: any) => {
+
+            this.IsNoDataVisible = false;
+            this.DataSource = [];
+
+            if (myResult != null && !myResult.HasError) {
+                var data: any[] = myResult;
+
+                if (data.length == 0) {
+                    this.IsNoDataVisible = true;
+                }
+
+                this.ExctractData(data);
+                this.FillChartData();
+            }
+        });
+    }
+
+    public DataSource: ChartItem[] = [];
+    public ChartLabels: string[] = [];
+    //private chartItems: ChartItem[] = [];
+    ExctractData(data:any[]) {
+
+        this.DataSource = [];
+        this.ChartLabels = [];
+        //var names: string[] = [];
+
+        var index: number = 0;
+        data.forEach(item => {
+
+            var chartItem: ChartItem = this.DataSource.filter(f => f.Id == item.Key)[0];
+            if (chartItem) {
+                chartItem.Values.push(new ChartItemValue(item.Label, item.Value));
+            }
+
+            else {
+                chartItem = new ChartItem(item.Key, item.SalesmanUserName);
+                chartItem.Index = index;
+                chartItem.Values.push(new ChartItemValue(item.Label, item.Value));
+                this.DataSource.push(chartItem);
+                index++;
+            }
+
+            if (this.ChartLabels.filter(f => f == item.Label).length == 0) {
+                this.ChartLabels.push(item.Label);
+            }
+        });
+    }
+
+    public SalesmanNumber: number;
+    public dataProvider: any = [];
+    FillChartData() {
+
         var graphs: any[] = [];
-        var valueNumber: string;
-        var idNumber: string;
-        for (var i = 0; i < this.SalesmanNumber; i++) {
-            valueNumber = "Value" + (i+1).toString();
-            idNumber = "g" + (i+1).toString();
-            graphs.push({
-                id: idNumber,
-                "useNegativeColorIfDown": false,
-                "bullet": "round",
-                "bulletBorderAlpha": 1,
-                "bulletBorderColor": colors[i],
-                "hideBulletsCount": 50,
-                "lineThickness": 2,
-                "lineColor": colors[i],
-                "negativeLineColor": colors[i],
-                "valueField": valueNumber,
-                "title": this.SalesmanNames[i] != null ? this.SalesmanNames[i] : "",
-            })
+        this.dataProvider = [];
+
+        if (this.DataSource.length > 0) {
+
+            var colors: string[] = ['#6AA4D9', '#ADADAD', '#EF8E4C', '#FFC208', '#84B761'];
+
+            this.DataSource.forEach(item => {
+
+                var itemColor = colors[item.Index];
+
+                graphs.push({
+                    id: item.Index.toString(),
+                    "useNegativeColorIfDown": false,
+                    "bullet": "round",
+                    "bulletBorderAlpha": 1,
+                    "bulletBorderColor": itemColor,
+                    "hideBulletsCount": 50,
+                    "lineThickness": 2,
+                    "lineColor": itemColor,
+                    "negativeLineColor": itemColor,
+                    "valueField": item.Id,
+                    "title": item.Name,
+                });
+
+                item.Values.forEach(itemValue => {
+                    //var itemProvider = this.dataProvider.filter(f => f.Category == itemValue.Label && f.)[0];
+                });
+
+                //var itemProvider = this.dataProvider.filter(f => f.Category == )
+                this.dataProvider[item.Index] = {
+
+                };
+
+            });
         }
 
-        if (this.PerformanceChartIdExistance)
-            makeAMLineChartMultiple(this.PerformanceChartId, this.dataProvider, null, graphs, true, this.LegendDiv, "Profit");
+        //this.dataProvider[i] = {
+        //    "Category": data[0] != null ? data[0].Label : "",
+        //    "Value1": data[0] != null ? data[0].Value : 0,
+        //    "Value2": data[1] != null ? data[1].Value : 0,
+        //    "Value3": data[2] != null ? data[2].Value : 0,
+        //    "Value4": data[3] != null ? data[3].Value : 0,
+        //    "Value5": data[4] != null ? data[4].Value : 0
+        //};
 
+        //var salesmanNames:string[] = 
+    }
+
+
+
+    FillPerformanceChart() {
+        this.DeterminePeriod(this.DataSource);
+
+        var graphs: any[] = [];
+
+        if (this.DataSource.length > 0) {
+            var colors: string[] = ['#6AA4D9', '#ADADAD', '#EF8E4C', '#FFC208', '#84B761'];
+            var valueNumber: string;
+            var idNumber: string;
+            for (var i = 0; i < this.SalesmanNumber; i++) {
+                valueNumber = "Value" + (i + 1).toString();
+                idNumber = "g" + (i + 1).toString();
+                graphs.push({
+                    id: idNumber,
+                    "useNegativeColorIfDown": false,
+                    "bullet": "round",
+                    "bulletBorderAlpha": 1,
+                    "bulletBorderColor": colors[i],
+                    "hideBulletsCount": 50,
+                    "lineThickness": 2,
+                    "lineColor": colors[i],
+                    "negativeLineColor": colors[i],
+                    "valueField": valueNumber,
+                    "title": this.SalesmanNames[i] != null ? this.SalesmanNames[i] : "",
+                })
+            }
+        }
+
+        makeAMLineChartMultiple(this.PerformanceChartId, this.dataProvider, null, graphs, true, this.LegendDiv, "Profit");
     }
 
     
-     DeterminePeriod(data) {
+    DeterminePeriod(data) {
 
-        if (data)
-            if (this.TopFiveSalesmanData.length != 0) {
-                this.PerformanceChartIdExistance = true;
-            }
-            else { 
-                this.PerformanceChartIdExistance = false;
-                this.LoadChartData();
-            }
+        //if (data)
+        //    if (this.DataSource.length != 0) {
+        //        this.PerformanceChartIdExistance = true;
+        //    }
+        //    else { 
+        //        this.PerformanceChartIdExistance = false;
+        //        this.LoadChartData();
+        //     }
+
         this.dataProvider = [];
         this.SalesmanNames = [];
-        switch (this.dashboardArgs.DatesCode) {
-            case '0':
-            case '-1': {
-                this.SalesmanNumber = this.TopFiveSalesmanData.length;
-                this.GroupingDataByOne(data);
-                break;
-            }
-            case '-7': {
-                this.SalesmanNumber = this.TopFiveSalesmanData.length / 7;
-                this.GroupingDataBySeven(data);
-                break;
-            }
-            case '-30': {
-                this.SalesmanNumber = this.TopFiveSalesmanData.length / 5;
-                this.GroupingDataByFive(data);
-                break;
-            }
-            case '-90': {
-                this.SalesmanNumber = this.TopFiveSalesmanData.length / 3;
-                this.GroupingDataByMonth(data);
-                break;
-            }
-            case "-365": {
-                this.SalesmanNumber = this.TopFiveSalesmanData.length / 4;
-                this.GroupingDataByQuarter(data);
-                break;
-            }
-            case "-2": {
-                this.SalesmanNumber = this.TopFiveSalesmanData.length / 4;
-                this.GroupingDataByQuarter(data);
+
+        if (this.DataSource.length > 0) {
+            switch (this.dashboardArgs.DatesCode) {
+                case '0':
+                case '-1': {
+                    this.SalesmanNumber = this.DataSource.length;
+                    this.GroupingDataByOne(data);
+                    break;
+                }
+                case '-7': {
+                    this.SalesmanNumber = this.DataSource.length / 7;
+                    this.GroupingDataBySeven(data);
+                    break;
+                }
+                case '-30': {
+                    this.SalesmanNumber = this.DataSource.length / 5;
+                    this.GroupingDataByFive(data);
+                    break;
+                }
+                case '-90': {
+                    this.SalesmanNumber = this.DataSource.length / 3;
+                    this.GroupingDataByMonth(data);
+                    break;
+                }
+                case "-365": {
+                    this.SalesmanNumber = this.DataSource.length / 4;
+                    this.GroupingDataByQuarter(data);
+                    break;
+                }
+                case "-2": {
+                    this.SalesmanNumber = this.DataSource.length / 4;
+                    this.GroupingDataByQuarter(data);
+                }
             }
         }
     }
@@ -359,3 +454,27 @@ export class TopFiveSalesmanProfitComponent implements OnInit {
     }
     
 }
+
+class ChartItem {
+    public Id: string;
+    public Name: string;
+    public Index: number;
+    public Values: ChartItemValue[];
+    constructor(id: string, name: string) {
+        this.Id = id;
+        this.Name = name;
+        this.Index = 0;
+        this.Values = [];
+    }
+}
+
+class ChartItemValue {
+    public Label: string;
+    public Value: number;
+    constructor(label: string, value: number) {
+        this.Label = label;
+        this.Value = value;
+    }
+}
+
+

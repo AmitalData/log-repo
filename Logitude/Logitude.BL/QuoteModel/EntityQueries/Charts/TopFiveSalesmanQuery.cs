@@ -16,28 +16,168 @@ namespace Logitude.BL.QuoteModel.EntityQueries.Charts
     {
         int tenant;
         IQueryable<Quote> dataSourceQuery;
-        QuoteDashboardArguments args;
-        Dictionary<string, string> salesmanNames;
+        QuoteDashboardArguments args;       
         List<string> keys;
         List<string> labels;
+        Dictionary<string, string> salesmanNames;
         List<ChartingDataClass> data;
-
-        public List<ChartingDataClass> FilterToFiveSalesmanByProfit(IQueryable<Quote> dataSourceQuery, QuoteDashboardArguments args, int tenant)
+        private DateTime todayDate;
+        public TopFiveSalesmanQuery(IQueryable<Quote> iQueryable, QuoteDashboardArguments args, int tenant)
         {
-            this.tenant = tenant;
             this.args = args;
-            this.dataSourceQuery = dataSourceQuery;
+            this.tenant = tenant;
+            this.data = new List<ChartingDataClass>();
+            this.todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
 
-            GetTopFiveSalesman();
-            GetSalesmanName();
-            this.dataSourceQuery = this.dataSourceQuery.Where(d => keys.Contains(d.SalesmanUserId));
-            this.dataSourceQuery = this.dataSourceQuery.Where(d => d.QuoteTypeCode.Equals("A"));
+            this.dataSourceQuery = (from d in iQueryable
+                                    where d.QuoteTypeCode == "A"
+                                    && d.EstimateProfit != null
+                                    && d.EstimateProfit != 0
+                                    select d);
+        }
 
+        public List<ChartingDataClass> FilterToFiveSalesmanByProfit()
+        {
+            GetChartKeys();
             GetChartLabels();
-            GetChartDataItems();
-            FillMissingData();
-            
+
+            if (keys.Count > 0)
+            {
+                this.dataSourceQuery = this.dataSourceQuery.Where(d => keys.Contains(d.SalesmanUserId));
+                
+                GetChartDataItems();
+                FillMissingData();
+            }
+
             return data;
+        }
+
+        private void GetChartKeys()
+        {
+            var topFiveSalesman = (from d in dataSourceQuery
+                                   group d by d.SalesmanUserId into g
+                                   select new
+                                   {
+                                       Id = g.Key,
+                                       Profit = g.Sum(s => s.EstimatedProfitInLocal),
+                                   }).OrderByDescending(o => o.Profit).Take(5).ToList();
+
+            keys = topFiveSalesman.Select(s => s.Id).ToList();
+
+            if (keys.Count > 0)
+            {
+                UserQuery userQuery = new UserQuery();
+                salesmanNames = userQuery.GetUsersListFromIdList(keys, tenant);
+            }
+        }
+        private void GetChartLabels()
+        {
+            labels = new List<string>();
+
+            switch (args.DatesCode)
+            {
+                case "0":
+                    {
+                        labels = DateLabelBuilder.GetDays(todayDate, todayDate);
+                        break;
+                    }
+
+                case "-1":
+                    {
+                        labels = DateLabelBuilder.GetDays(todayDate.AddDays(-1), todayDate.AddDays(-1));
+                        break;
+                    }
+
+                case "-7":
+                    {
+                        labels = DateLabelBuilder.GetDays(todayDate.AddDays(-6), todayDate);
+                        break;
+                    }
+
+                case "-30":
+                    {
+                        labels = DateLabelBuilder.GetWeeks(todayDate.AddMonths(-1), todayDate);
+                        break;
+                    }
+
+                case "-90":
+                    {
+                        labels = DateLabelBuilder.GetMonths(todayDate.AddMonths(-3), todayDate);
+                        break;
+                    }
+
+                case "-365":
+                    {
+                        labels = DateLabelBuilder.GetQuarters(todayDate.AddYears(-1), todayDate);
+                        break;
+                    }
+
+                case "-2":
+                    {
+                        if (args.FromDate != null && args.ToDate != null)
+                        {
+                            DateTime date1 = args.FromDate.Value;
+                            DateTime date2 = args.ToDate.Value;
+
+                            double days = ((TimeSpan)(args.ToDate - args.FromDate)).TotalDays;
+
+                            if (days <= 7)
+                            {
+                                labels = DateLabelBuilder.GetDays(date1, date2);
+                            }
+
+                            else if (days <= 30)
+                            {
+                                labels = DateLabelBuilder.GetWeeks(date1, date2);
+                            }
+
+                            else if (days <= 90)
+                            {
+                                labels = DateLabelBuilder.GetMonths(date1, date2);
+                            }
+
+                            else if (days <= 365)
+                            {
+                                labels = DateLabelBuilder.GetQuarters(date1, date2);
+                            }
+
+                            else
+                            {
+                                labels = DateLabelBuilder.GetYears(date1, date2);
+                            }
+                        }
+
+                        
+
+
+
+                        //double period = Math.Ceiling(differnceDays / 4);
+                        //DateTime fromDate = (DateTime)args.FromDate;
+                        //DateTime toDate = fromDate.AddDays(period);
+                        //for (int i = 0; i < 4; i++)
+                        //{
+                        //    if (differnceDays > 365)
+                        //    {
+                        //        output.Add(fromDate.ToString("MMM yy") + " - " + toDate.ToString("MMM yy") + " ");
+                        //    }
+                        //    else
+                        //    {
+                        //        output.Add(fromDate.ToString("dd MMM") + " - " + toDate.ToString("dd MMM") + " ");
+                        //    }
+
+                        //    fromDate = toDate.AddDays(1);
+                        //    toDate = fromDate.AddDays(period);
+                        //    if (toDate > args.ToDate)
+                        //    {
+                        //        toDate = (DateTime)args.ToDate;
+                        //    }
+                        //}
+
+                        //labels = output;
+
+                        break;
+                    }
+            }            
         }
 
         private void FillMissingData()
@@ -76,121 +216,10 @@ namespace Logitude.BL.QuoteModel.EntityQueries.Charts
             }
         }
 
-        private void GetTopFiveSalesman()
-        {
-            var topItems = (from d in dataSourceQuery.Include("SalesmanUser").Include("SalesmanUser.Contact")
-                            group d by d.SalesmanUserId into g
-                            select new
-                            {
-                                Id = g.Key,
-                                Profit = g.Sum(s => s.EstimatedProfitInLocal),
-                            }).OrderByDescending(o => o.Profit).Take(5);
 
-            keys = topItems.OrderByDescending(s => s.Id).Select(s => s.Id).ToList();
-        }
 
-        private  void GetSalesmanName()
-        {
-            UserQuery userQuery = new UserQuery();
-            salesmanNames = userQuery.GetUsersListFromIdList(keys, tenant);
-        }
 
-        private void GetChartLabels()
-        {
-            List<string> output = new List<string>();
-            string datesCode = args.DatesCode;
-            DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
 
-            switch (datesCode)
-            {
-                case "0":
-                    {
-                        output.Add(todayDate.DayOfWeek.ToString());
-                        break;
-                    }
-
-                case "-1":
-                    {
-                        output.Add(todayDate.AddDays(-1).DayOfWeek.ToString());
-                        break;
-                    }
-
-                case "-7":
-                    {
-                        DateTime date1 = todayDate.AddDays(-6);
-                        while (date1 <= todayDate)
-                        {
-                            output.Add(date1.DayOfWeek.ToString());
-                            date1 = date1.AddDays(1);
-                        }
-
-                        break;
-                    }
-                case "-30":
-                    {
-                        DateTime fromDate = todayDate.AddMonths(-1).AddDays(1);
-                        DateTime toDate = fromDate.AddDays(7);
-                        for (int i = 1; i <= 5; i++)
-                        {
-                            if(toDate > todayDate)
-                            {
-                                toDate = todayDate;
-                            }
-                            output.Add(fromDate.Day.ToString() + "/" + fromDate.Month.ToString() + " - " + toDate.Day.ToString() + "/" + toDate.Month.ToString());
-                            fromDate = toDate.AddDays(1);
-                            toDate = toDate.AddDays(7);
-                        }
-                        break;
-                    }
-                case "-90":
-                    {
-                        DateTime date1 = todayDate.AddMonths(-2);
-                        while (date1 <= todayDate)
-                        {
-                            output.Add(date1.ToString("MMM"));
-                            date1 = date1.AddMonths(1);
-                        }
-                        break;
-                    }
-                case "-365":
-                    {
-                        DateTime date1 = todayDate.AddMonths(-11);
-                        DateTime date2 = todayDate.AddMonths(-9);
-                        while (date2 <= todayDate)
-                        {
-                            output.Add(date1.ToString("MMM") + " - " + date2.ToString("MMM"));
-                            date1 = date1.AddMonths(3);
-                            date2 = date2.AddMonths(3);
-                        }
-                        break;
-                    }
-                case "-2":
-                    {
-                        double differnceDays = ((TimeSpan)(args.ToDate - args.FromDate)).TotalDays;
-                        double period = Math.Ceiling(differnceDays / 4);
-                        DateTime fromDate = (DateTime)args.FromDate;
-                        DateTime toDate = fromDate.AddDays(period);
-                        for (int i = 0; i < 4; i++)
-                        {
-                            if(differnceDays > 365)
-                            {
-                                output.Add(fromDate.ToString("MMM yy") + " - " + toDate.ToString("MMM yy") + " ");
-                            } else {
-                                output.Add(fromDate.ToString("dd MMM") + " - " + toDate.ToString("dd MMM") + " ");
-                            }
-                            
-                            fromDate = toDate.AddDays(1);
-                            toDate = fromDate.AddDays(period);
-                            if (toDate > args.ToDate)
-                            {
-                                toDate = (DateTime)args.ToDate;
-                            }
-                        }
-                        break;
-                    }
-            }
-            labels = output;
-        }
 
         private void GetChartDataItems()
         {
@@ -523,6 +552,107 @@ namespace Logitude.BL.QuoteModel.EntityQueries.Charts
                                                              DbFunctions.TruncateTime(d.OpenDate) <= toDate);
             }
             return dataSourceQuery;
+        }
+    }
+
+    public class DateLabelBuilder
+    {
+        public static List<string> GetDays(DateTime date1, DateTime date2)
+        {
+            List<string> output = new List<string>();
+
+            while (date1 <= date2)
+            {
+                output.Add(date1.ToString("ddd"));
+
+                date1 = date1.AddDays(1);
+            }
+
+            return output;
+        }
+
+        public static List<string> GetWeeks(DateTime date1, DateTime date2)
+        {
+            List<string> output = new List<string>();
+
+            while (date1 <= date2)
+            {
+                DateTime stepDate = date1.AddDays(7);
+
+                if (stepDate > date2)
+                {
+                    stepDate = date2;
+                }
+
+                output.Add(date1.Day.ToString() + "/" + date1.Month.ToString() + " - " + stepDate.Day.ToString() + "/" + stepDate.Month.ToString());
+
+                date1 = stepDate.AddDays(1);
+            }
+
+            return output;
+        }
+
+        public static List<string> GetMonths(DateTime date1, DateTime date2)
+        {
+            List<string> output = new List<string>();
+
+            while (date1 <= date2)
+            {
+                DateTime stepDate = date1.AddMonths(1);
+
+                if (stepDate > date2)
+                {
+                    stepDate = date2;
+                }
+
+                output.Add(date1.Day.ToString() + "/" + date1.Month.ToString() + " - " + stepDate.Day.ToString() + "/" + stepDate.Month.ToString());
+
+                date1 = stepDate.AddDays(1);
+            }
+
+            return output;
+        }
+
+        public static List<string> GetQuarters(DateTime date1, DateTime date2)
+        {
+            List<string> output = new List<string>();
+
+            while (date1 <= date2)
+            {
+                DateTime stepDate = date1.AddMonths(3);
+
+                if (stepDate > date2)
+                {
+                    stepDate = date2;
+                }
+
+                output.Add(date1.Day.ToString() + "/" + date1.Month.ToString() + " - " + stepDate.Day.ToString() + "/" + stepDate.Month.ToString());
+
+                date1 = stepDate.AddDays(1);
+            }
+
+            return output;
+        }
+
+        public static List<string> GetYears(DateTime date1, DateTime date2)
+        {
+            List<string> output = new List<string>();
+
+            while (date1 <= date2)
+            {
+                DateTime stepDate = date1.AddYears(1);
+
+                if (stepDate > date2)
+                {
+                    stepDate = date2;
+                }
+
+                output.Add(date1.Day.ToString() + "/" + date1.Month.ToString() + date1.Year.ToString() + " - " + stepDate.Day.ToString() + "/" + stepDate.Month.ToString() + stepDate.Year.ToString());
+
+                date1 = stepDate.AddDays(1);
+            }
+
+            return output;
         }
     }
 }
