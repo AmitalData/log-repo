@@ -71,9 +71,9 @@ namespace WarehouseData
                             return;
                         }
 
-                        WarehouseHelper warehouseHelper = new WarehouseHelper();
-                        string sourceConnectionString = warehouseHelper.BuildConnectionString(sourceConnectionArray[0], sourceConnectionArray[1], sourceConnectionArray[2], sourceConnectionArray[3]);
-                        string destinationConnectionString = warehouseHelper.BuildConnectionString(destinationConnectionArray[0], destinationConnectionArray[1], destinationConnectionArray[2], destinationConnectionArray[3]);
+                        MainDataWarehouseService mainDataWarehouseService = new MainDataWarehouseService();
+                        string sourceConnectionString = mainDataWarehouseService.BuildConnectionString(sourceConnectionArray[0], sourceConnectionArray[1], sourceConnectionArray[2], sourceConnectionArray[3]);
+                        string destinationConnectionString = mainDataWarehouseService.BuildConnectionString(destinationConnectionArray[0], destinationConnectionArray[1], destinationConnectionArray[2], destinationConnectionArray[3]);
                         
                         string stepName = "";
                         try
@@ -83,10 +83,8 @@ namespace WarehouseData
 
                             Stopwatch stopWatch = new Stopwatch();
                             stopWatch.Start();
-
-                            List<TableClass> tableNameLists = warehouseHelper.FillTable();
-                            warehouseHelper.BuildWarehouseObjectField(tableNameLists, sourceConnectionString);
-
+                            List<TableClass> tableNameLists = mainDataWarehouseService.BulidDataWarehouseTableLists(sourceConnectionString);
+           
                             #region Update DW Table
 
                             foreach (TableClass table in tableNameLists)
@@ -119,7 +117,7 @@ namespace WarehouseData
                                 stepName = table.DBTableName;
                                 if (table.DBTableName != "WaterMarks")
                                 {
-                                    warehouseHelper.UpdateDWDataBase(table, sourceConnectionString, destinationConnectionString);
+                                    mainDataWarehouseService.UpdateDWDataBase(table, sourceConnectionString, destinationConnectionString);
                 
                                     if (table.DispayInScreen)
                                     {
@@ -137,7 +135,7 @@ namespace WarehouseData
 
                             #endregion
 
-                            warehouseHelper.RunOtherScripte(destinationConnectionString, true);
+                            mainDataWarehouseService.RunAdditionalScripte(destinationConnectionString, tableNameLists,true);
 
                       
                             #region Update Dimensions Table
@@ -150,8 +148,9 @@ namespace WarehouseData
                                 SetControlPropertyValue("Text", "Updating ...", table.DBTableName, "Dim");
                                 SetControlPropertyValue("ForeColor", Color.Black, table.DBTableName, "Dim");
 
-                                warehouseHelper.BuildAndExecuteDataWarehouseScript("IncrementalWarehouse", destinationConnectionString , table);
 
+                                mainDataWarehouseService.UpdateDimensionTable(destinationConnectionString, table);
+                  
                                 stopWatchDimensionsTable.Stop();
                                 TimeSpan stopWatchDimensionsTableTs = stopWatchDimensionsTable.Elapsed;
                                 SetControlPropertyValue("Text", "Done in ( " + stopWatchDimensionsTableTs.ToString(@"hh\:mm\:ss") + " )", table.DBTableName, "Dim");
@@ -175,10 +174,8 @@ namespace WarehouseData
                                     SetControlPropertyValue("Text", "Updating...", table.DBTableName, "Fact");
                                 }
 
-                                warehouseHelper.RemoveOldRowsFromFactTable(table, destinationConnectionString);
-                                warehouseHelper.BuildAndExecuteDataWarehouseScript( "IncrementalWarehouse", destinationConnectionString, table);
-
-
+                  
+                                mainDataWarehouseService.UpdateFactTable(destinationConnectionString, table);
                                 if (table.TableName == "Shipment")
                                 {
                                     stopWatchDFactTable.Stop();
