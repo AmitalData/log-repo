@@ -207,23 +207,17 @@ namespace WarehouseData
 
                                     Stopwatch stopWatchDFactTable = new Stopwatch();
                                     stopWatchDFactTable.Start();
-                                    if (table.TableName == "Shipment")
-                                    {
-                                        SetControlPropertyValue("ForeColor", Color.Black, table.DBTableName, "Fact");
-                                        SetControlPropertyValue("Text", "Building...", table.DBTableName, "Fact");
-                                    }
-           
+
+                                    SetControlPropertyValue("ForeColor", Color.Black, table.DBTableName, "Fact");
+                                    SetControlPropertyValue("Text", "Building...", table.DBTableName, "Fact");
+
                                 mainDataWarehouseService.BuildFactTable(destinationConnectionString, table);
 
-                                if (table.TableName == "Shipment")
-                                    {
-                                        stopWatchDFactTable.Stop();
-                                        TimeSpan stopWatchDFactTableTs = stopWatchDFactTable.Elapsed;
-                                        SetControlPropertyValue("ForeColor", Color.Green, table.DBTableName, "Fact");
-                                        SetControlPropertyValue("Text", "Done in ( " + stopWatchDFactTableTs.ToString(@"hh\:mm\:ss") + " )", table.DBTableName, "Fact");
+                                stopWatchDFactTable.Stop();
+                                TimeSpan stopWatchDFactTableTs = stopWatchDFactTable.Elapsed;
+                                SetControlPropertyValue("ForeColor", Color.Green, table.DBTableName, "Fact");
+                                SetControlPropertyValue("Text", "Done in ( " + stopWatchDFactTableTs.ToString(@"hh\:mm\:ss") + " )", table.DBTableName, "Fact");
 
-                                    }
-                                
                             }
 
                             #endregion

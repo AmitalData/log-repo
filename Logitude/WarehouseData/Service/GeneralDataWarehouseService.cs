@@ -152,7 +152,7 @@ namespace WarehouseData.Helper
             tableNameLists.Add(new TableClass() { TableName = "Shipment", FieldIndexes = "Source Tenant,Parent Tenant", DWObjectTableCode = "Fact_Shipments", Dw_TableName = "dw_Shipments" , FieldsDBName = (("ToPortId,FromPortId") + GetCustomFieldAsDBFieldOnTable(40)), KeyName = "Id", DBTableName = "Shipments",  HasFactTable = true, BuildScriptName = "BuildFactShipmentTable", IncrementalScriptName = "UpdateFactShipmentTable", HasCustomFields = true, CustomFieldsCount = 40 });
 
 
-            //tableNameLists.Add(new TableClass() { TableName = "ChargeType", FieldIndexes = "Source Tenant,Parent Tenant", DWObjectTableCode = "Fact_Charges", KeyName = "Id", DBTableName = "ChargeTypes", Dw_TableName = "dw_ChargeTypes", HasConstraint = true, HasFactTable = true, BuildScriptName = "BuildFactChargeTable", IncrementalScriptName = "UpdateFactChargeTable", DispayInScreen = true });
+            tableNameLists.Add(new TableClass() { TableName = "ChargeType", FieldIndexes = "Source Tenant,Parent Tenant", DWObjectTableCode = "Fact_Charges", KeyName = "Id", DBTableName = "Charges", Dw_TableName = "dw_Shipments", HasConstraint = true, HasFactTable = true, BuildScriptName = "BuildFactChargesTable", IncrementalScriptName = "UpdateFactChargesTable", DispayInScreen = true });
 
 
 
