@@ -36,7 +36,7 @@
                     <!--LocalAmount-->
                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'130'" [header]="LocalAmountHeader">
                         <log-cell-template template="let item" #logcelltemplate>
-                            <div [style.text-align]="isRTL ? 'right' : 'left'"> {{item.LocalAmount}} </div>
+                            <div [style.text-align]="'right'"> {{item.LocalAmount}} </div>
                         </log-cell-template>
                     </log-column>
 
@@ -50,7 +50,7 @@
                     <!--ForiegnAmount-->
                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'130'" [header]="ForiegnAmountHeader">
                         <log-cell-template template="let item" #logcelltemplate>
-                            <div [style.text-align]="isRTL ? 'right' : 'left'"> {{item.ForeignAmount}} </div>
+                            <div [style.text-align]="'right'"> {{item.ForeignAmount}} </div>
                         </log-cell-template>
                     </log-column>
 

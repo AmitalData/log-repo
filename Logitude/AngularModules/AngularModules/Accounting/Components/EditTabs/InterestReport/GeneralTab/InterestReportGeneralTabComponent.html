@@ -70,7 +70,7 @@
                                             </tr>
                                             <!-- InterestCalculationDate -->
                                             <tr class="FormFieldRow">
-                                                <td style="width: 100px;">
+                                                <td style="width: 110px;">
                                                     <table>
                                                         <tr style="height:15px;">
                                                             <LogLabel [ObjectFieldName]="'InterestCalculationDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
@@ -207,10 +207,12 @@
         </tr>
         <tr style="height: 32px;"><td><div></div></td></tr>
         <tr>
-            <td colspan="5" style="height: 100%; padding-bottom: 115px;">
+            <td colspan="5" style="height: 100%;">
                 <div class="GeneratedGridContainer">
-                    <logitude-grid GridWidth="100%" GridHeight="100%" [ObjectTable]="'InterestReportLinesByDate'"
-                                   [dataSource]="DataSource" [columns]="columns"
+                    <logitude-grid GridWidth="100%" GridHeight="100%"
+                                   [ObjectTable]="'InterestReportLinesByDate'"
+                                   [dataSource]="DataSource"
+                                   [columns]="columns"
                                    [autoLoad]="true"
                                    [IsCustomTemplate]="true">
                     </logitude-grid>
