@@ -313,7 +313,6 @@ namespace Logitude.CustomsMessaging.RequestServices
             //Raise event PHF- Declaration Payment Sent
             SendPHF(declarationPaymentsPM, requestParams.LoggingUserId);
 
-
             return myDF_NG_2755_MSG12001_SubmitDeclaration;
         }
 
@@ -440,6 +439,8 @@ namespace Logitude.CustomsMessaging.RequestServices
 
             return myAnswerForCollateralList.ToArray();
         }
+
+
 
         private void SendPHF(DeclarationPaymentPM declarationPaymentPM, string loggingUserId)
         {
