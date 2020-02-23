@@ -30,7 +30,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
         private IQueryable<BluesnapTransaction> iQueryable_BluesnapTransactions;
         IBlobService storageservice;
         DocumentRepository documentRepository;
-        private List<BlusnapTransactionsList> otherTenantTransactions; 
+        private List<BlusnapTransactionsList> otherTenantsTransactions;
 
         public BluesnapPaymentsReportManager(byte[] xmlFilters, int tenant)
         {
@@ -138,46 +138,45 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
                                                                                      TransactionDate = a.TransactionDate,
                                                                                  }).ToList(),
                                                              });
-
-
-            this.iQueryable_JoinTenantBluesnapTransaction = this.iQueryable_JoinTenantBluesnapTransaction.Where(a => a.Transactions.Count > 0);
         }
 
         private void BuildReportData()
         {
             this.iDataProvider.BlusnapTransactionsList = new List<BlusnapTransactionsList>();
             this.BuildOthersTenantData();
-            this.BuildTenantZeroData();
         }
 
         private void BuildOthersTenantData()
         {
-            otherTenantTransactions = new List<BlusnapTransactionsList>();
-            foreach (var item in iQueryable_JoinTenantBluesnapTransaction.Where(a => a.Tenant != 0))
+            otherTenantsTransactions = new List<BlusnapTransactionsList>();
+            var otherTenantTransactions_List = iQueryable_JoinTenantBluesnapTransaction.Where(a => a.Tenant != 0).ToList();
+            foreach (var item in otherTenantTransactions_List)
             {
                 AddToBlueSnapTransactionList(item);
             }
-            this.iDataProvider.BlusnapTransactionsList.AddRange(otherTenantTransactions);
+            this.iDataProvider.BlusnapTransactionsList.AddRange(otherTenantsTransactions);
+            this.BuildTenantZeroData();
         }
 
         private void BuildTenantZeroData()
         {
             List<BlusnapTransactionsList> tenantZeroTransactions = new List<BlusnapTransactionsList>();
-            var tenantZeroList = iQueryable_JoinTenantBluesnapTransaction.Where(a => a.Tenant == 0).GroupBy(a => a.ShopperId)
-                .Select(g => new
-                {
-                    ShopperId = g.Key,
-                    TransactionCount = g.Sum(a => a.Transactions.Count()),
-                    Transactions = g.SelectMany(x => x.Transactions).ToList(),
-                });
+            var tenantZeroTransactions_List = iQueryable_JoinTenantBluesnapTransaction.Where(a => a.Tenant == 0).ToList();
+            var tenantZeroList = (from tenant in tenantZeroTransactions_List
+                                  group tenant by tenant.ShopperId into g
+                                  select new
+                                  {
+                                      ShopperId = g.Key,
+                                      Transactions = g.SelectMany(x => x.Transactions).ToList(),
+                                  }).ToList();
 
             foreach (var item in tenantZeroList)
             {
                 var itemRecord = new BlusnapTransactionsList();
-                itemRecord.Tenant = 0;
+                itemRecord.Tenant = null;
                 itemRecord.TenantName = "";
                 itemRecord.ShopperId = item.ShopperId;
-                itemRecord.TransactionCount = item.TransactionCount;
+                itemRecord.TransactionCount = item.Transactions != null ? item.Transactions.Count() : 0;
                 this.CalculateContractCountAndTotalPayments(itemRecord, item.Transactions);
                 itemRecord.Notes = "unmatched transaction";
                 tenantZeroTransactions.Add(itemRecord);
@@ -198,11 +197,11 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
             itemRecord.Notes = itemRecord.PaymentDifference != 0 ? "payment missing " : "";
             if (!this.showAllRecurringTenants && itemRecord.PaymentDifference != null && itemRecord.PaymentDifference != 0)
             {
-                otherTenantTransactions.Add(itemRecord);
+                otherTenantsTransactions.Add(itemRecord);
             }
             if (this.showAllRecurringTenants)
             {
-                otherTenantTransactions.Add(itemRecord);
+                otherTenantsTransactions.Add(itemRecord);
             }
         }
 
@@ -244,7 +243,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
                     FileSize = document.FileSize,
                 };
 
-                byte[]  fileData = storageservice.Read(fileInfo);
+                byte[] fileData = storageservice.Read(fileInfo);
 
                 if (fileData != null)
                 {
