@@ -346,8 +346,8 @@ s             b                   a
             var externalPageAdditionalData =qsExternalPageAdditionalData.GetSingle(ObjectTableId1, dbBankaccountPM.Id, false, false);
             ReconcileExternalPagePM prevReconcileExternalPagePM = null;
 
-            
-            if (!String.IsNullOrWhiteSpace(externalPageAdditionalData.LastPageNumber))//if (dbBankaccountPM.LastPageNumber != null)
+
+            if (externalPageAdditionalData != null && !String.IsNullOrWhiteSpace(externalPageAdditionalData.LastPageNumber))//if (dbBankaccountPM.LastPageNumber != null)
             {
                 _ReconcileExternalPageQueryService = new ReconcileExternalPageQueryService(tenant);
                 prevReconcileExternalPagePM =
