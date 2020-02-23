@@ -613,8 +613,10 @@ namespace Logitude.UnitTest.Accounting.UniTests
 
             ///check
             Assert.AreEqual(journalLinePM.ActionTypeCode, myJournalActionTypeList.Code);
-            Assert.AreEqual(journalLinePM.ActionCode, myJournalActionTypeList.Id);
-            
+            //Assert.AreEqual(journalLinePM.ActionCode, myJournalActionTypeList.Id);
+            Assert.AreEqual(journalLinePM.ActionId, myJournalActionTypeList.Id);
+            //Assert.AreEqual(journalLinePM.ActionId, myJournalActionTypeList.N);
+
 
         }
   
