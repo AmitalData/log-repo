@@ -15305,16 +15305,7 @@
         IndexOrder="0" />
     </QueryFilters>
   </Query>
-  <Screen
-    Name="&quot;Header Screen&quot;"
-    ObjectTableName="&quot;ARInvoice&quot;"
-    IsReadOnly="true"
-    IsHeaderScreen="true"
-    Code="&quot;ARInvoice.FullAccHeaderScreen&quot;"
-    NumberOfColumns="2"
-    NumberOfRows="1">
-    <ScreenFields />
-  </Screen>
+  
   <Screen
     Name="&quot;Header Screen&quot;"
     ObjectTableName="&quot;ARInvoice&quot;"
