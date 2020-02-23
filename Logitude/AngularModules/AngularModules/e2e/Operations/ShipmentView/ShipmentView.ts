@@ -39,7 +39,7 @@ export class ShipmentView {
     }
 
     EditNewView() {
-       // browser.sleep(1000)
+        browser.sleep(1000)
         this.helper.WaitBusyIndicator()
         this.helper.WaitByIdAndClick('QueryList_0_0');
         this.helper.WaitActionButtonAndClick('ActionButtonsParent', true);
