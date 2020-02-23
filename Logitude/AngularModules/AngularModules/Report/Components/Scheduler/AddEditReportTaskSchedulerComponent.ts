@@ -210,7 +210,7 @@ export class AddEditReportTaskSchedulerComponent  {
                     this.EntityPM = myResponse.Result;
                     this.EntityPM.IsDirty = false;
                     if (this.DataContext.fatherComponent) {
-                        this.DataContext.fatherComponent.RefreshTasksSchedular(this.EntityPM);
+                        this.DataContext.fatherComponent.RefreshButtonClicked();
                     }
                 }
 
@@ -232,7 +232,7 @@ export class AddEditReportTaskSchedulerComponent  {
                         this.EntityPM = myResponse.Result;
                         this.EntityPM.IsDirty = false;
                         if (this.DataContext.fatherComponent) {
-                            this.DataContext.fatherComponent.RefreshTasksSchedular(this.EntityPM);
+                            this.DataContext.fatherComponent.RefreshButtonClicked();
                         }
                     }
 

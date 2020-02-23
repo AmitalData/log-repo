@@ -35,8 +35,6 @@ export class TaskReportSchedulerComponent implements OnInit {
     @Output() MenuHeaderchangeeventTasks = new EventEmitter();
 
     constructor(private _entityListService: EntityListService) {
-        this.LoadTaskHistories();
-        this.LoadTaskHistories();
         this.CurrentSession.SessionEvent.subscribe(($event: any) => {
             if ($event && $event.Name == "EditReportScheduler") {
                 if (!this.EditReportSchedulerEventAlreadyExist) {
@@ -49,9 +47,6 @@ export class TaskReportSchedulerComponent implements OnInit {
 
     ngOnInit() {
         this.RefreshButtonClicked();
-        //this.LoadTaskSchedulers();
-        //this.LoadTaskHistories();
-        //this.LoadTaskHistories();
     }
 
 
@@ -96,7 +91,6 @@ export class TaskReportSchedulerComponent implements OnInit {
         logWindow.Show('./Report/Components/Scheduler/AddEditReportSchedulerComponent');
         logWindow.WindowClosed.subscribe(closed => {
             this.EditReportSchedulerEventAlreadyExist = false;
-            this.RefreshButtonClicked();
         });
     }
 
@@ -106,6 +100,7 @@ export class TaskReportSchedulerComponent implements OnInit {
         windowArgs.ReportList = this.ReportList;
 
         var logWindow = new LogitudeWindow();
+        DataContext.fatherComponent = this;
         logWindow.DataContext = DataContext;
         logWindow.WindowArgs = windowArgs;
         logWindow.Title = "Report Scheduler Details";
@@ -114,7 +109,6 @@ export class TaskReportSchedulerComponent implements OnInit {
         logWindow.Show('./Report/Components/Scheduler/AddEditReportSchedulerComponent');
         logWindow.WindowClosed.subscribe(closed => {
             this.EditReportSchedulerEventAlreadyExist = false;
-            this.RefreshButtonClicked();
         });
     }
 
