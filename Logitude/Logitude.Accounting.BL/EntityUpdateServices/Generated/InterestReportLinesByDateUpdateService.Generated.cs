@@ -22,7 +22,7 @@ using Logitude.Accounting.Data;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 { 
-   public partial class InterestReportLinesByDateUpdateService:EntityUpdateService<InterestReportLinesByDate,InterestReportLinesByDatePM,EntityPM>
+   public partial class InterestReportLinesByDateUpdateService:EntityUpdateService<InterestReportLinesByDate,InterestReportLinesByDatePM,InterestReportPM>
    {
    
         InterestReportLinesByDateRepository entityRepository;

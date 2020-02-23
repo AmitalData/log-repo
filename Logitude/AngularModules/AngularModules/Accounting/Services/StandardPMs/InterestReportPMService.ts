@@ -19,6 +19,7 @@ import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLo
 
 import {InterestReportPM} from '../../EntityPMs/InterestReportPM';
 
+import {InterestReportLinesByDatePM} from '../../EntityPMs/InterestReportLinesByDatePM';
 
 @Injectable()
 
@@ -209,12 +210,22 @@ export class InterestReportPMService {
                  
             }
 			
+               this.MapInterestReportLinesByDates(entityPM, jsonPM, mapParent); // Call composition tables map methods
 			 
             
 
 		if (mapParent) {
                 entityPM.OldEntityPM = this.clone(entityPM);
-
+			   			   
+            entityPM.OldEntityPM.InterestReportLinesByDates = [];
+            for (var item in entityPM.InterestReportLinesByDates) {
+            var myInterestReportLinesByDatePM = entityPM.InterestReportLinesByDates[item];
+            var newInterestReportLinesByDatePM: InterestReportLinesByDatePM = this.clone(myInterestReportLinesByDatePM);
+						
+							 
+            entityPM.OldEntityPM.InterestReportLinesByDates.push(newInterestReportLinesByDatePM);
+            }
+			   
 		}
         else {
 
@@ -224,6 +235,96 @@ export class InterestReportPMService {
         return entityPM;
     }
 
+    MapInterestReportLinesByDates(entityPM: InterestReportPM, jsonPM: any, mapParent: boolean = true) {
+
+        var oldInterestReportLinesByDates: InterestReportLinesByDatePM[] = [];
+        if (entityPM.OldEntityPM && !mapParent) {
+            oldInterestReportLinesByDates = entityPM.OldEntityPM.InterestReportLinesByDates;
+        }
+
+        entityPM.InterestReportLinesByDates = new Array<InterestReportLinesByDatePM>();
+        for (var item in jsonPM.InterestReportLinesByDates) {
+            var jItem = jsonPM.InterestReportLinesByDates[item];
+            if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
+                continue;
+            }
+            var newInterestReportLinesByDatePM: InterestReportLinesByDatePM;
+	  
+            if (mapParent) {
+                newInterestReportLinesByDatePM = new InterestReportLinesByDatePM(entityPM);
+            }
+            else
+            {
+                newInterestReportLinesByDatePM = new InterestReportLinesByDatePM(null);
+            }
+                
+            var pmKeysArray = Object.keys(jItem);
+            for (var pmKey in pmKeysArray) {
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+                    continue;
+                }
+                var pmProperty = pmKeysArray[pmKey];
+                newInterestReportLinesByDatePM[pmProperty] = jItem[pmProperty];
+            }
+           
+			 
+            if (mapParent) {
+                newInterestReportLinesByDatePM.UniqueKey = Guid.newGuid();
+                newInterestReportLinesByDatePM.ChangeSetOp = "None";
+                jItem.ChangeSetOp = "None";
+                newInterestReportLinesByDatePM.OldEntityPM = this.clone(newInterestReportLinesByDatePM);
+
+				
+            }
+            else {
+                if (newInterestReportLinesByDatePM.UniqueKey) {
+
+                    if (jItem.IsDirty)
+                        newInterestReportLinesByDatePM.ChangeSetOp = "Update";
+                }
+                else {
+                        newInterestReportLinesByDatePM.ChangeSetOp = "Insert";
+                }
+ 
+                newInterestReportLinesByDatePM.OldEntityPM = null;
+                newInterestReportLinesByDatePM.EntityParentPM = null;
+            }
+			
+			 newInterestReportLinesByDatePM.IsDirty = false;
+            entityPM.InterestReportLinesByDates.push(newInterestReportLinesByDatePM);
+        }
+        if (oldInterestReportLinesByDates) {
+            
+            for (var itemKey in oldInterestReportLinesByDates) {
+                if (entityPM.InterestReportLinesByDates.filter(p=> p.UniqueKey === oldInterestReportLinesByDates[itemKey].UniqueKey).length === 0) {
+				
+                    if (oldInterestReportLinesByDates[itemKey]) {
+                        //oldInterestReportLinesByDates[itemKey].ChangeSetOp = "Delete";
+                        //entityPM.InterestReportLinesByDates.push(oldInterestReportLinesByDates[itemKey]);
+						var oldItemJson = oldInterestReportLinesByDates[itemKey];
+                        var deletedPM: InterestReportLinesByDatePM = new InterestReportLinesByDatePM(null);
+                        var pmKeys = Object.keys(oldItemJson);
+                        for (var key in pmKeys) {
+
+                            if ((!mapParent && pmKeys[key] === "entityParentPM") || pmKeys[key] === "UIProperties" || pmKeys[key] === "OldEntityPM" || pmKeys[key] === "PropertyChanged") {
+                                continue;
+                            }
+
+                            var property = pmKeys[key];
+                            deletedPM[property] = oldItemJson[property];
+                        }
+
+                      
+                        deletedPM.IsDirty = false;
+                        deletedPM.ChangeSetOp = "Delete";
+                        
+                        deletedPM.OldEntityPM = null;
+                        entityPM.InterestReportLinesByDates.push(deletedPM);
+                    }
+                }
+            }
+        }
+    }
 
 	  public clone(jsonPM: any) {
         var entityPM: any;
