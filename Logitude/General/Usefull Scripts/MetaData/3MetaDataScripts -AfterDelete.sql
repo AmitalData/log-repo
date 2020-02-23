@@ -84,7 +84,7 @@
 --update translations set textcodecode = 'Quote.F.GrossWeightUnitCode.Short' where textcodecode = 'Quote.F.WtMsrUnitCode.Short'
 --update translations set textcodecode = 'QuoteCharge.CH.ChargesTypeIdListLable' where textcodecode = 'QuoteCharge.CH.ChargesTypeId'
 --update translations set textcodecode = 'QuoteCharge.CH.CostMeasurementIdListLable' where textcodecode = 'QuoteCharge.CH.CostMeasurementId'
---update translations set textcodecode = 'QuoteCharge.CH.IsAllInListLable' where textcodecode = 'QuoteCharge.CH.IsAllIn'
+--update translations set textcodecode = 'QuoteCharge.CH.IsAllINListLable' where textcodecode = 'QuoteCharge.CH.IsAllIn'
 --update translations set textcodecode = 'QuoteCharge.CH.SaleCurrencyIdListLable' where textcodecode = 'QuoteCharge.CH.SaleCurrencyId'
 --update translations set textcodecode = 'QuoteCharge.CH.VendorIdListLable' where textcodecode = 'QuoteCharge.CH.VendorId'
 --update translations set textcodecode = 'QuoteCharge.F.SaleCurrencyId' where textcodecode = 'QuoteCharge.F.SaleCurrency'
