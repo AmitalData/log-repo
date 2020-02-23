@@ -728,7 +728,7 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
         var logWindow = new LogitudeWindow();
         logWindow.Title = "Copy BI Report";
         var windowArgs: any = {};
-        windowArgs.Name = this.EntityPM.Name;
+        windowArgs.Name = this.BIReportName;
         windowArgs.Description = this.EntityPM.Description;
         windowArgs.DWQueryId = this.EntityPM.DWQueryId;
         windowArgs.IsCopy = true;
