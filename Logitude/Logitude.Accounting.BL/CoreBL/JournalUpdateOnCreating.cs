@@ -69,6 +69,8 @@ namespace Logitude.Accounting.BL.CoreBL
                 if (myAccEntityReconciliation10.Code == entityPM.AccountingEntityCode)
                 {
                     //entityPM.AccountingEntityReference = will be enter WhileStreaming ;
+                    entityPM.AccountingEntityReference = entityPM.JournalNumber;
+
                 }
                 else
                 {
@@ -96,6 +98,8 @@ namespace Logitude.Accounting.BL.CoreBL
                 if (myAccEntityReconciliation10.Code == entityPM.AccountingEntityCode)
                 {
                     //do not set  entityPM.AccountingEntityId!!! will be enter WhileStreaming 
+                    entityPM.AccountingEntityId = entityPM.Id;
+
                 }
                 else
                 {
