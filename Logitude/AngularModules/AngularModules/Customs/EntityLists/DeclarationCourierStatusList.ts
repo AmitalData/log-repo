@@ -72,6 +72,10 @@ export class DeclarationCourierStatusList {
 	MasterStorageSiteCode: string;
 	MasterHAWB: string;
 	CustomFileNo: string;
+	SortedImporterCode: string;
+	SortedDocumentStatusCode: string;
+	SortedCourierManifestStatus: string;
+	SortedCourierDeclarationStatus: string;
 	
 }
  

@@ -1,4 +1,5 @@
-﻿using Logitude.CustomsMessaging.Common.RequestParams;
+﻿using Logitude.Customs.BL.EntityQueryServices;
+using Logitude.CustomsMessaging.Common.RequestParams;
 using Simplog.Data.InfrastructureModel.Repositories;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,12 @@ namespace Logitude.CustomsMessaging.RequestServices
 {
     public class SE_6001_SealUpdateRequestService : RequestServiceBase<SE_NG_6001_MSG01_SealUpdateMessage, CargoSealsRequestParams>
     {
+
+        public override void OnRequestFail(CargoSealsRequestParams requestParams)
+        {
+            base.OnRequestFail(requestParams);
+        }
+
         public override SE_NG_6001_MSG01_SealUpdateMessage GetRequest(CargoSealsRequestParams requestParams)
         {
             var mySE_NG_6001_MSG01_SealUpdateMessage = new SE_NG_6001_MSG01_SealUpdateMessage();
@@ -24,7 +31,8 @@ namespace Logitude.CustomsMessaging.RequestServices
             mySE_NG_6001_MSG01_SealUpdateMessage.General.containerNumber = requestParams.ContainerNumber;
             mySE_NG_6001_MSG01_SealUpdateMessage.General.updateDate = requestParams.UpdateDate;
             int customerExternalId = 0;
-            int.TryParse(Regex.Match(requestParams.ImporterNumber, @"\d+").Value, out customerExternalId);
+            var CustomsSetting = CustomsSettingQueryService.GetSettingByTenant(requestParams.Tenant);
+            int.TryParse(Regex.Match(CustomsSetting.CustomsAgentId, @"\d+").Value, out customerExternalId);
             mySE_NG_6001_MSG01_SealUpdateMessage.General.customerExternalId =  customerExternalId;
             if(customerExternalId!= 0) mySE_NG_6001_MSG01_SealUpdateMessage.General.customerExternalIdSpecified = true;
             // customerExternalIdSpecified

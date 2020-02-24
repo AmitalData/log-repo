@@ -52,7 +52,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         CargoIdentifierKey1, 
 	         CargoIdentifierKey2, 
 	         CargoIdentifierKey3, 
-	         Status,
+	         Status, 
+	         StatusName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

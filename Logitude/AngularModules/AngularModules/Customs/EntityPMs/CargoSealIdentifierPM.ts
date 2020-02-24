@@ -124,7 +124,12 @@ export class CargoSealIdentifierPM {
         }
     }
     //public CargoSeals: Array<CargoSealPM>= [];
- 
+     private statusName: string;
+    public get StatusName() { return this.statusName; }
+    public set StatusName(newValue: string) { if (this.statusName != newValue) { this.statusName = newValue; this.MarkAsDirty("StatusName"); } }
+       
+	 
+
     public OldEntityPM: CargoSealIdentifierPM;
 		
     public IsDirty: boolean;

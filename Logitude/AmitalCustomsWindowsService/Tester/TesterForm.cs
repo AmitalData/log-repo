@@ -822,6 +822,11 @@ namespace AmitalCustomsWindowsService.Tester
         private void TesterForm_Load(object sender, EventArgs e)
         {
             WebFreight.Web.CustomWebServices.Testers.Tester.GetSingleDeclarationPMByNumber();
+            if (DBWorkerService.IsOldDB())
+            {
+                MessageBox.Show("DBWorkerService.IsOldDB !!! - Please do Logitute.Update> Update DB !!!");
+            }
+            ;
         }
 
         private void buildMamanBaldarSTBToolStripMenuItem_Click(object sender, EventArgs e)
