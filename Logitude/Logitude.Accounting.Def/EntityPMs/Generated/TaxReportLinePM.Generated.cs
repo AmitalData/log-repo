@@ -528,6 +528,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private DateTime taxReportDate ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime TaxReportDate  
+	   {
+	    
+	     get
+		{
+		   return taxReportDate;
+		 }
+		 set
+		 {
+		   if(taxReportDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TaxReportDate",OldValue=taxReportDate,NewValue=value,PropertyType="DateTime"};
+		    NotifyPropertyChanged(values);
+		   taxReportDate=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

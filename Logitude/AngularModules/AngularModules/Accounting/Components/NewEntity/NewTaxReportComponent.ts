@@ -153,7 +153,7 @@ export class NewTaxReportComponent extends BaseComponent {
                         var entity = mm.Result;
                         this.btePM = entity;
 
-                        //this.ChangeStatus("inprogress");
+                      //  this.ChangeStatus("inprogress");
 
                         this.timer = setInterval(() => {
                             this.GetBTE();
