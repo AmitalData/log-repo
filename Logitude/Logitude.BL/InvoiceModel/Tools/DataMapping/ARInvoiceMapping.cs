@@ -160,7 +160,7 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.Field10 = entityPM.Field10 != null ? entityPM.Field10.Value : null;
             entity.DebitAccount = entityPM.DebitAccount;
             entity.TransferTries = entityPM.TransferTries;
-            entity.TransferError = entityPM.TransferError;
+            //entity.TransferError = entityPM.TransferError;
             entity.IsTransferStarted = entityPM.IsTransferStarted;
             entity.TransferStatusCode = entityPM.TransferStatusCode;
             entity.AccountingExternalCode = entityPM.AccountingExternalCode;
@@ -189,6 +189,15 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entityPM.SetReTransfer = false;
             entityPM.SetCancelDraft = false;
             entityPM.SetReSendQBO = false;
+
+            string transferError = entityPM.TransferError;
+            if (transferError.Length > 250)
+            {
+                transferError = transferError.Substring(0, 250);
+            }
+
+            entity.TransferError = transferError;
+
             //Full Accounting 
             TenantRepository tenantRepository = new TenantRepository(entityPM.Tenant);
             Tenant tenantPOCO = tenantRepository.GetSingleTenant(entityPM.Tenant);
