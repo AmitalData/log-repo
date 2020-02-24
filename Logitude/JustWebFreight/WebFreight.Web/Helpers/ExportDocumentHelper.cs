@@ -654,6 +654,8 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                 case "CRCCB":
                 case "DESCH":
                 case "WESL":
+                case "SHCO":
+                case "ABOCO":
                     {
                         theT1 = System.DateTime.Now.Ticks;
                         ShippingDeclarationWebService shippingDeclarationWebService = new ShippingDeclarationWebService();
@@ -941,6 +943,7 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
 
                 case "OMBC":
                 case "785O":
+                case "INMA":
                     {
                         theT1 = System.DateTime.Now.Ticks;
                         ManifestWebService cmrwebService = new ManifestWebService();
