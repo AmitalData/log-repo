@@ -427,9 +427,9 @@ namespace WebFreight.Web.MetaDataUpdate
                             break;
                         }
 
-                    case "oldcode":
+                    case "nonegeneratedcode":
                         {
-                            UpdateOldCode(context);
+                            RunNoneGeneratedUpdateCode(context);
 
                             break;
                         }
@@ -876,8 +876,9 @@ namespace WebFreight.Web.MetaDataUpdate
             {
                 updateClass.UpdateShipmentLogboxAuomationObjectFields(context);
             }
+            updateClass.LoadObjectTableRulesANDFieldsValidations();
         }
-        private static void UpdateOldCode(IWebFreightContext context)
+        private static void RunNoneGeneratedUpdateCode(IWebFreightContext context)
         {
             MetaDataUpdateClass updateClass = new MetaDataUpdateClass();
             updateClass.LoadObjectTablesToTenantZero(context);
@@ -908,6 +909,8 @@ namespace WebFreight.Web.MetaDataUpdate
             {
                 updateClass.UpdateShipmentLogboxAuomationObjectFields(context);
             }
+
+            updateClass.LoadObjectTableRulesANDFieldsValidations();
         }
         private static void ForCourier()
         {

@@ -4102,7 +4102,7 @@ User/Pass",
 
         private void btnCallOldUpdate_Click(object sender, EventArgs e)
         {
-            Thread thread = new Thread(() => UpdateModule(0, "oldcode", lblUShipment));
+            Thread thread = new Thread(() => UpdateModule(0, "nonegeneratedcode", lblUShipment));
             thread.IsBackground = true;
             thread.Start();
         }
