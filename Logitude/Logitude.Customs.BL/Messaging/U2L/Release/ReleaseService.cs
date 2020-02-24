@@ -1190,39 +1190,42 @@ namespace Logitude.Customs.BL.Messaging.U2L.Release
                         SupplierInvoiceModificationPMList.Add(SupplierInvoiceModificationPM);
                     }
                 }
-                else if (!string.IsNullOrWhiteSpace(_LogitudeReleaseFile.agent_fee) && _LogitudeReleaseFile.agent_fee != "0")
+                if (SupplierInvoiceModificationPMList == null || SupplierInvoiceModificationPMList.Count() < 1 || SupplierInvoiceModificationPMList.Where(r => r.TypeCode == "160").FirstOrDefault() == null)
                 {
-                    var SupplierInvoiceModificationPM = new SupplierInvoiceModificationPM();
-                    if (decimal.TryParse(_LogitudeReleaseFile.agent_fee, out decimal1))
+                    if (!string.IsNullOrWhiteSpace(_LogitudeReleaseFile.agent_fee) && _LogitudeReleaseFile.agent_fee != "0")
                     {
-                        SupplierInvoiceModificationPM.Amount = decimal1;
-                    }
-                    else
-                    {
-                        throw new BusinessErrorException("Error in parsing agent_fee (" + _LogitudeReleaseFile.agent_fee + ") into integer");
-                    }
-                    if (!String.IsNullOrWhiteSpace(_LogitudeReleaseFile.agent_fee_currency))
-                    {
-                        var agentFeeCurrency = new CurrencyTypeRepository(ResolvedTenant());
-                        var myagentFeeCurrency = agentFeeCurrency.GetSingle(_LogitudeReleaseFile.agent_fee_currency);
-                        if (myagentFeeCurrency == null)
+                        var SupplierInvoiceModificationPM = new SupplierInvoiceModificationPM();
+                        if (decimal.TryParse(_LogitudeReleaseFile.agent_fee, out decimal1))
                         {
-                            string agentFeeCurrencyCode = "";
-                            agentFeeCurrencyCode = GetTranslationL2P("IIGC", "CTBCURRENCY", this._INVOICE.TRANSP_VALUE_CURR);
-                            if (!string.IsNullOrWhiteSpace(agentFeeCurrencyCode)) SupplierInvoiceModificationPM.CurrencyTypeCode = agentFeeCurrencyCode;
+                            SupplierInvoiceModificationPM.Amount = decimal1;
                         }
                         else
                         {
-                            SupplierInvoiceModificationPM.CurrencyTypeCode = myagentFeeCurrency.Code.ToString();
+                            throw new BusinessErrorException("Error in parsing agent_fee (" + _LogitudeReleaseFile.agent_fee + ") into integer");
                         }
-                    }
-                    SupplierInvoiceModificationPM.DeclarationId = this._MySupplierInvoicePM.DeclarationId;
-                    if (this._MySupplierInvoicePM.InvoiceCounterKey > 0) SupplierInvoiceModificationPM.InvoiceCounterKey = this._MySupplierInvoicePM.InvoiceCounterKey;
-                    SupplierInvoiceModificationPM.TypeCode = "160";
-                    SupplierInvoiceModificationPM.Tenant = (this._MyDeclarationPM.Tenant > 0) ? this._MyDeclarationPM.Tenant : ResolvedTenant();
-                    SupplierInvoiceModificationPM.ChangeSetOp = ChangeSetOperation.Insert;
+                        if (!String.IsNullOrWhiteSpace(_LogitudeReleaseFile.agent_fee_currency))
+                        {
+                            var agentFeeCurrency = new CurrencyTypeRepository(ResolvedTenant());
+                            var myagentFeeCurrency = agentFeeCurrency.GetSingle(_LogitudeReleaseFile.agent_fee_currency);
+                            if (myagentFeeCurrency == null)
+                            {
+                                string agentFeeCurrencyCode = "";
+                                agentFeeCurrencyCode = GetTranslationL2P("IIGC", "CTBCURRENCY", this._INVOICE.TRANSP_VALUE_CURR);
+                                if (!string.IsNullOrWhiteSpace(agentFeeCurrencyCode)) SupplierInvoiceModificationPM.CurrencyTypeCode = agentFeeCurrencyCode;
+                            }
+                            else
+                            {
+                                SupplierInvoiceModificationPM.CurrencyTypeCode = myagentFeeCurrency.Code.ToString();
+                            }
+                        }
+                        SupplierInvoiceModificationPM.DeclarationId = this._MySupplierInvoicePM.DeclarationId;
+                        if (this._MySupplierInvoicePM.InvoiceCounterKey > 0) SupplierInvoiceModificationPM.InvoiceCounterKey = this._MySupplierInvoicePM.InvoiceCounterKey;
+                        SupplierInvoiceModificationPM.TypeCode = "160";
+                        SupplierInvoiceModificationPM.Tenant = (this._MyDeclarationPM.Tenant > 0) ? this._MyDeclarationPM.Tenant : ResolvedTenant();
+                        SupplierInvoiceModificationPM.ChangeSetOp = ChangeSetOperation.Insert;
 
-                    SupplierInvoiceModificationPMList.Add(SupplierInvoiceModificationPM);
+                        SupplierInvoiceModificationPMList.Add(SupplierInvoiceModificationPM);
+                    }
                 }
 
                 return SupplierInvoiceModificationPMList;
