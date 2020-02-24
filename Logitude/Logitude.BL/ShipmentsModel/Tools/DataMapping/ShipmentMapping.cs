@@ -133,6 +133,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                 entityPoco.NextLegCode = entityPM.NextLegCode;
             }
 
+            entityPoco.WarehouseStorageFreeDays = entityPM.WarehouseStorageFreeDays;
             entityPoco.FreelancerId = entityPM.FreelancerId;
             entityPoco.FreelancerAddressId = entityPM.FreelancerAddressId;
             entityPoco.FreelancerContactId = entityPM.FreelancerContactId;
