@@ -232,6 +232,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.OrderGrossWeightEdited = entityPM.OrderGrossWeightEdited;
             entityPoco.OrderChargeableWeightEdited = entityPM.OrderChargeableWeightEdited;
             entityPoco.CASSCode = entityPM.CASSCode;
+            entityPoco.SLAC = entityPM.SLAC;
             entityPoco.OrderGrossWeight = entityPM.OrderGrossWeight;
             entityPoco.BookingVolume = entityPM.BookingVolume;
             entityPoco.OrderVolumetricWeight = entityPM.OrderVolumetricWeight;

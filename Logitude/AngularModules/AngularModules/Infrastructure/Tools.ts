@@ -2371,6 +2371,22 @@ export class FormatTool {
 
         return myResult;
     }
+    public static Validate_SLAC(input: string): boolean {
+        var myResult: boolean = false;
+
+        if (!AppTool.IsNullOrEmpty(input)) {
+            if (!AppTool.IsNullOrEmpty(input)) {
+                if (input.length <= 5) {
+                    var pattern = /^\d+$/;
+                    if (pattern.test(input)) {
+                        myResult = true;
+                    }
+                }
+            }
+        }
+
+        return myResult;
+    }
     public static Validate_FlightNumber(input: string): boolean {
         var myResult = false;
 
