@@ -25,7 +25,7 @@ namespace Logitude.Accounting.BL.Utils
         private HttpStatusCode _StatusCode;
         private List<string> _NoLines;
         private List<string> _WrongAction;
-        private List<string> _WrongSum;
+      //  private List<string> _WrongSum;
         private List<string> _WrongSumToMatch;
         private string _current = "";
 
@@ -176,7 +176,7 @@ namespace Logitude.Accounting.BL.Utils
                 List<Int64> madeList = new List<Int64>();
                 _NoLines = new List<string>();
                 _WrongAction = new List<string>();
-                _WrongSum = new List<string>();
+            //    _WrongSum = new List<string>();
                 _WrongSumToMatch = new List<string>();
                 long _counter = 0;
 
@@ -220,7 +220,8 @@ namespace Logitude.Accounting.BL.Utils
                     }
                 });
                 //     scope.Complete();
-                _ResponseText += $"Good: {goodList.Count},  Bad: {badList.Count},   Made: {madeList.Count}, No Lines: {String.Join(", ", _NoLines.ToArray())}, Wrong Action: {String.Join(", ", _WrongAction.ToArray())}, Wrong Sum: {String.Join(", ", _WrongSum.ToArray())}, Wrong Sum To Match: {String.Join(", ", _WrongSumToMatch.ToArray())}";
+            //    _ResponseText += $"Good: {goodList.Count},  Bad: {badList.Count},   Made: {madeList.Count}, No Lines: {String.Join(", ", _NoLines.ToArray())}, Wrong Action: {String.Join(", ", _WrongAction.ToArray())}, Wrong Sum: {String.Join(", ", _WrongSum.ToArray())}, Wrong Sum To Match: {String.Join(", ", _WrongSumToMatch.ToArray())}";
+                _ResponseText += $"Good: {goodList.Count},  Bad: {badList.Count},   Made: {madeList.Count}, No Lines: {String.Join(", ", _NoLines.ToArray())}, Wrong Action: {String.Join(", ", _WrongAction.ToArray())}, Wrong Sum To Match: {String.Join(", ", _WrongSumToMatch.ToArray())}";
             }
             catch (Exception e)
             {
@@ -305,7 +306,7 @@ namespace Logitude.Accounting.BL.Utils
             //  else if ((journalLineRecoList.Sum(line => line._journalLine.LocalAmount) != 0m))
             else if (credit_sum - debit_sum != 0m)
             {
-                _WrongSum.Add(groupKey);
+                _WrongSumToMatch.Add(groupKey);
                 rv = false;
             }
             else if (journalLineRecoList.Exists(line => line._oneLineLedger == null))
@@ -314,13 +315,14 @@ namespace Logitude.Accounting.BL.Utils
             }
             else
             {
-                Decimal sum = 0m;
-                sum = journalLineRecoList.Sum(line => line._valueToMatch);
-                if (sum != 0m)
-                {
-                    _WrongSumToMatch.Add(groupKey);
-                    rv = false;
-                }
+                rv = true;
+                //Decimal sum = 0m;
+                //sum = journalLineRecoList.Sum(line => line._valueToMatch);
+                //if (sum != 0m)
+                //{
+                //    _WrongSumToMatch.Add(groupKey);
+                //    rv = false;
+                //}
             }
             return rv;
         }
