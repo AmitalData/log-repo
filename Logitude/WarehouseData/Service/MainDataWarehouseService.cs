@@ -103,6 +103,8 @@ namespace WarehouseData.Helper
         public void UpdateFactTable(string connectionString, TableClass table)
         {
             factWarehouseService.UpdateFactTable(connectionString, table);
+
+
         }
 
         #endregion
@@ -180,8 +182,8 @@ namespace WarehouseData.Helper
         public void UpdateDataWarehouse(string sourceConnectionString, string destinationConnectionString, int? privateTenant = null, string relatedTenants = null)
         {
             List<TableClass> tableNameLists = this.BulidDataWarehouseTableLists(sourceConnectionString);
-            foreach (TableClass table in tableNameLists.Where(d=>!d.HasFactTable))
-         {
+            foreach (TableClass table in tableNameLists.Where(d => !d.HasFactTable))
+            {
                 if (table.DBTableName != "WaterMarks")
                 {
                     UpdateDWDataBase(table, sourceConnectionString, destinationConnectionString, privateTenant, relatedTenants);

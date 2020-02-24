@@ -90,6 +90,8 @@
             this.DWCurrenciesLabel = new System.Windows.Forms.Label();
             this.DWDepartmentsLabel = new System.Windows.Forms.Label();
             this.DWIncotermsLabel = new System.Windows.Forms.Label();
+            this.FactChargeslabel = new System.Windows.Forms.Label();
+            this.label30 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // DestinationConnectionlTextBox
@@ -790,11 +792,35 @@
             this.DWIncotermsLabel.Size = new System.Drawing.Size(0, 20);
             this.DWIncotermsLabel.TabIndex = 222;
             // 
+            // FactChargeslabel
+            // 
+            this.FactChargeslabel.AutoSize = true;
+            this.FactChargeslabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.FactChargeslabel.ForeColor = System.Drawing.Color.CornflowerBlue;
+            this.FactChargeslabel.Location = new System.Drawing.Point(763, 340);
+            this.FactChargeslabel.Name = "FactChargeslabel";
+            this.FactChargeslabel.Size = new System.Drawing.Size(0, 20);
+            this.FactChargeslabel.TabIndex = 225;
+            // 
+            // label30
+            // 
+            this.label30.AutoSize = true;
+            this.label30.BackColor = System.Drawing.SystemColors.Control;
+            this.label30.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label30.ForeColor = System.Drawing.Color.CornflowerBlue;
+            this.label30.Location = new System.Drawing.Point(550, 341);
+            this.label30.Name = "label30";
+            this.label30.Size = new System.Drawing.Size(105, 20);
+            this.label30.TabIndex = 224;
+            this.label30.Text = "Fact Charges";
+            // 
             // UpdateWarehouseForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1349, 674);
+            this.Controls.Add(this.FactChargeslabel);
+            this.Controls.Add(this.label30);
             this.Controls.Add(this.DWTenantsLabel);
             this.Controls.Add(this.DWCurrenciesLabel);
             this.Controls.Add(this.DWDepartmentsLabel);
@@ -928,5 +954,7 @@
         private System.Windows.Forms.Label DWCurrenciesLabel;
         private System.Windows.Forms.Label DWDepartmentsLabel;
         private System.Windows.Forms.Label DWIncotermsLabel;
+        private System.Windows.Forms.Label FactChargeslabel;
+        private System.Windows.Forms.Label label30;
     }
 }

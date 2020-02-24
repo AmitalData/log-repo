@@ -1,5 +1,19 @@
 
 
+
+ declare @AutomaticLastUpdateDate as datetime
+ declare @LastUpdateDate as datetime
+
+ set @LastUpdateDate = (select top(1) LastUpdateDate from dw_WaterMarks  where TableName = 'Shipment' )
+ set @AutomaticLastUpdateDate = (select  MAX( AutomaticLastUpdateDate) AutomaticLastUpdateDate from dw_Shipments )
+
+ if(@AutomaticLastUpdateDate > @LastUpdateDate)
+
+ begin
+
+
+
+
    declare @Id as varchar(15)
    declare @SourceTenant as int
    declare @ParentTenant as int
@@ -89,42 +103,42 @@
 
 )
 
-	SELECT  dw_Shipments.Id, SourceTenant.[Tenant Number], ParentTenant.[Tenant Number] ,  NewDIM_Directions.Name, TransportModes.Name ,NewDIM_Levels.Name,  NewDIM_Types.Name , NewDIM_Departments.Id_Number ,NewDIM_Branches.Id_Number , dw_Shipments.ShipmentNumber,dw_Shipments.House,dw_ShipmentMasterDatas.Master , agentPartners.Id_Number,customerPartners.Id_Number 
-	,SalesmanUser.Id_Number, AccountManagerUser.Id_Number,NewDIM_ShipmentStatuses.Id_Number ,mainCarriageToPort.Id_Number , fromPort.Id_Number, toPort.Id_Number , dw_Shipments.CreateDateTime
-	,dw_Shipments.AgentReference1, dw_Shipments.AgentReference2,dw_Shipments.CustomerReference1,dw_Shipments.CustomerReference2, createdByUser.Id_Number,mainCarriageCarrierPartners.Id_Number,dw_Shipments.FirstOperationalCloseDate,NewDIM_SpecialServicesTypes.Id_Number,	dw_ShipmentMasterDatas.MasterShipmentNumber,
+	SELECT  dw_Shipments.Id, SourceTenant.[Tenant Number], ParentTenant.[Tenant Number] ,  DIM_Directions.Name, TransportModes.Name ,DIM_Levels.Name,  DIM_Types.Name , DIM_Departments.Id_Number ,DIM_Branches.Id_Number , dw_Shipments.ShipmentNumber,dw_Shipments.House,dw_ShipmentMasterDatas.Master , agentPartners.Id_Number,customerPartners.Id_Number 
+	,SalesmanUser.Id_Number, AccountManagerUser.Id_Number,DIM_ShipmentStatuses.Id_Number ,mainCarriageToPort.Id_Number , fromPort.Id_Number, toPort.Id_Number , dw_Shipments.CreateDateTime
+	,dw_Shipments.AgentReference1, dw_Shipments.AgentReference2,dw_Shipments.CustomerReference1,dw_Shipments.CustomerReference2, createdByUser.Id_Number,mainCarriageCarrierPartners.Id_Number,dw_Shipments.FirstOperationalCloseDate,DIM_SpecialServicesTypes.Id_Number,	dw_ShipmentMasterDatas.MasterShipmentNumber,
 	 dw_Shipments.DirectionId ,dw_Shipments.TransportModeId ,dw_Shipments.Tenant,dw_Shipments.MasterShipmentDataId
-	 ,NewDIM_ChargesTypes.Id_Number, ShipmentPayablesReceivables.EntityType, ShipmentPayablesReceivables.InvoiceNumber,InvoiceCurrency.Id_Number , ShipmentPayablesReceivables.InvoiceCurrencyExchangeRate
+	 ,DIM_ChargesTypes.Id_Number, ShipmentPayablesReceivables.EntityType, ShipmentPayablesReceivables.InvoiceNumber,InvoiceCurrency.Id_Number , ShipmentPayablesReceivables.InvoiceCurrencyExchangeRate
 	 ,ShipmentPayablesReceivables.OpenPayablesinLocal , ShipmentPayablesReceivables.OpenPayablesinProfit ,ShipmentPayablesReceivables.AccountedPayablesinLocal,ShipmentPayablesReceivables.AccountedPayablesinProfit
 	 ,ShipmentPayablesReceivables.ReceivablesTotalAmount,  ShipmentPayablesReceivables.ReceivablesTotalAmountLocal,  ShipmentPayablesReceivables.InvoiceLineId , ShipmentPayablesReceivables.AmountInInvoiceCurrency
 	
 	
 	From dw_Shipments
-	inner JOIN NewDIM_Tenants SourceTenant ON dw_Shipments.Tenant = SourceTenant.[Tenant Number]
+	inner JOIN DIM_Tenants SourceTenant ON dw_Shipments.Tenant = SourceTenant.[Tenant Number]
 	inner JOIN dw_DWHSettings ON dw_Shipments.Tenant = dw_DWHSettings.Tenant
-	inner JOIN NewDIM_Tenants ParentTenant ON dw_DWHSettings.ParentTenant = ParentTenant.[Tenant Number]
+	inner JOIN DIM_Tenants ParentTenant ON dw_DWHSettings.ParentTenant = ParentTenant.[Tenant Number]
     inner JOIN dw_ShipmentComputedFields ON dw_Shipments.Id = dw_ShipmentComputedFields.Id
-	inner JOIN NewDIM_Directions ON dw_Shipments.DirectionId = NewDIM_Directions.Code
-    inner JOIN NewDIM_TransportModes TransportModes ON dw_Shipments.TransportModeId = TransportModes.Code
-	inner JOIN NewDIM_Levels ON dw_Shipments.ShipmentLevelCode = NewDIM_Levels.Code
-	inner JOIN NewDIM_Types ON dw_Shipments.ShipmentTypeId = NewDIM_Types.Code
-	inner JOIN NewDIM_Departments ON dw_Shipments.DepartmentId = NewDIM_Departments.Id
-	inner JOIN NewDIM_Branches ON dw_Shipments.BranchId =NewDIM_Branches.Id
+	inner JOIN DIM_Directions ON dw_Shipments.DirectionId = DIM_Directions.Code
+    inner JOIN DIM_TransportModes TransportModes ON dw_Shipments.TransportModeId = TransportModes.Code
+	inner JOIN DIM_Levels ON dw_Shipments.ShipmentLevelCode = DIM_Levels.Code
+	inner JOIN DIM_Types ON dw_Shipments.ShipmentTypeId = DIM_Types.Code
+	inner JOIN DIM_Departments ON dw_Shipments.DepartmentId = DIM_Departments.Id
+	inner JOIN DIM_Branches ON dw_Shipments.BranchId =DIM_Branches.Id
     inner JOIN dw_ShipmentMasterDatas ON dw_Shipments.MasterShipmentDataId = dw_ShipmentMasterDatas.Id
-	inner JOIN NewDIM_Partners agentPartners ON dw_Shipments.AgentComputed = agentPartners.Id
-	inner JOIN NewDIM_Partners customerPartners ON dw_Shipments.CustomerId = customerPartners.Id
-	inner JOIN NewDIM_Users SalesmanUser ON dw_Shipments.SalesmanUserId = SalesmanUser.Id
-	inner JOIN NewDIM_Users AccountManagerUser ON dw_Shipments.AccountManagerUserId = AccountManagerUser.Id
-	inner JOIN NewDIM_ShipmentStatuses  ON dw_Shipments.StatusId = NewDIM_ShipmentStatuses.Id
+	inner JOIN DIM_Partners agentPartners ON dw_Shipments.AgentComputed = agentPartners.Id
+	inner JOIN DIM_Partners customerPartners ON dw_Shipments.CustomerId = customerPartners.Id
+	inner JOIN DIM_Users SalesmanUser ON dw_Shipments.SalesmanUserId = SalesmanUser.Id
+	inner JOIN DIM_Users AccountManagerUser ON dw_Shipments.AccountManagerUserId = AccountManagerUser.Id
+	inner JOIN DIM_ShipmentStatuses  ON dw_Shipments.StatusId = DIM_ShipmentStatuses.Id
 	inner JOIN dw_Tenants  ON dw_Shipments.Tenant = dw_Tenants.Id
-    inner JOIN NewDIM_Ports fromPort  ON dw_Shipments.FromPortId = FromPort.Id
-	inner JOIN NewDIM_Ports toPort  ON dw_Shipments.ToPortId = toPort.Id
-	inner JOIN NewDIM_Ports mainCarriageToPort  ON dw_ShipmentMasterDatas.MainCarriageToPortId = mainCarriageToPort.Id
-    inner JOIN NewDIM_Users createdByUser ON dw_Shipments.CreatedByUserId = createdByUser.Id
-	inner JOIN NewDIM_Partners mainCarriageCarrierPartners ON dw_ShipmentMasterDatas.MainCarriageCarrierId = mainCarriageCarrierPartners.Id
-    inner JOIN NewDIM_SpecialServicesTypes   ON dw_Shipments.SpecialServicesTypeId = NewDIM_SpecialServicesTypes.Id
+    inner JOIN DIM_Ports fromPort  ON dw_Shipments.FromPortId = FromPort.Id
+	inner JOIN DIM_Ports toPort  ON dw_Shipments.ToPortId = toPort.Id
+	inner JOIN DIM_Ports mainCarriageToPort  ON dw_ShipmentMasterDatas.MainCarriageToPortId = mainCarriageToPort.Id
+    inner JOIN DIM_Users createdByUser ON dw_Shipments.CreatedByUserId = createdByUser.Id
+	inner JOIN DIM_Partners mainCarriageCarrierPartners ON dw_ShipmentMasterDatas.MainCarriageCarrierId = mainCarriageCarrierPartners.Id
+    inner JOIN DIM_SpecialServicesTypes   ON dw_Shipments.SpecialServicesTypeId = DIM_SpecialServicesTypes.Id
     inner JOIN ShipmentPayablesReceivables ON dw_Shipments.Id = ShipmentPayablesReceivables.ShipmentId
-    inner JOIN NewDIM_ChargesTypes  ON ShipmentPayablesReceivables.ChargesTypeId = NewDIM_ChargesTypes.Id
-    inner JOIN NewDIM_Currencies InvoiceCurrency ON ShipmentPayablesReceivables.InvoiceCurrencyId = InvoiceCurrency.Id
+    inner JOIN DIM_ChargesTypes  ON ShipmentPayablesReceivables.ChargesTypeId = DIM_ChargesTypes.Id
+    inner JOIN DIM_Currencies InvoiceCurrency ON ShipmentPayablesReceivables.InvoiceCurrencyId = InvoiceCurrency.Id
 	where dw_Shipments.IsCancelled = 0 and dw_Shipments.ShipmentLevelCode in ('H','D') 
 
 	OPEN ShipmentsChargesCursor FETCH NEXT FROM ShipmentsChargesCursor    INTO   @Id ,@SourceTenant, @ParentTenant ,@Direction , @TransportMode, @DirectHouse , @Type , @Department , @Branch , @ShipmentNumber , @House , @Master , @Agent, @Customer 
@@ -227,7 +241,7 @@
 
 	 BEGIN TRY  
 	 print @Id
-      insert into #Fact_ChargesTemp ([Id],[Source Tenant],[Parent Tenant],[Direction],[Transport Mode],[DirectHouse],[Type],[Department],[Branch],[Shipment Number],[House],[Master],[Agent],[Customer]
+      insert into Fact_Charges ([Id],[Source Tenant],[Parent Tenant],[Direction],[Transport Mode],[DirectHouse],[Type],[Department],[Branch],[Shipment Number],[House],[Master],[Agent],[Customer]
 	  ,[Salesman],[Account Manager],[Status],[MainCarriage From Port],[MainCarriage To Port],[Create Date],  [Create Date Time] , [Agent Ref1],[Agent Ref2],[Customer Ref1],[Customer Ref2] , [Created By]
 	  ,[Carrier] , [First Operational Close Date],     [Special Services] , [Master Shipment Number] 
 	  ,[Charges Type],[Invoice Number] ,[Invoice Currency] , [Invoice Exchange Rate] ,[Open Payables in Local],[Open Payables in Profit] , [Accounted Payables in Local],[Accounted Payables in Profit],[Open Receivables in Local] ,[Open Receivables in Profit],[Accounted Receivables in Local],[Accounted Receivables in Profit], [Is Open Receivable],[Is Open Payable],[Is Accounted Receivable],[Is Accounted Payable],[VAT amount in Invoice Currency]) 
@@ -260,5 +274,6 @@ END CATCH
 	CLOSE ShipmentsChargesCursor
 	DEALLOCATE ShipmentsChargesCursor
 
+	update dw_WaterMarks set LastUpdateDate = @AutomaticLastUpdateDate where TableName = 'Shipment'
 
-	
+	end
