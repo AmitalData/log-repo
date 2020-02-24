@@ -48,7 +48,7 @@ using WebFreight.Web.Helpers;
                 InterestTransactionList = interestTransactionQuery.GetAllInterestTransactionByDate(entityId, d.FromDate, tenant).interestTransactionLists.Select (a =>
                 new InterestTransactionProvider
                 {
-                    EntityType = a.InterestEntityTypeCode,
+                    EntityType = a.InterestEntityIconCode,
                     EntityNumber = a.InterestEntityNumber,
                     LocalAmount = a.LocalAmount,
                     InterestValueDate = a.InterestValueDate,
