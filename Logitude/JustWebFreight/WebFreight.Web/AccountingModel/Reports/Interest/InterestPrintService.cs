@@ -43,10 +43,9 @@ using WebFreight.Web.Helpers;
                 ExceptionalInterestPercentage = d.ExceptionalInterestPercentage,
                 CreditInterestPercentage = d.CreditInterestPercentage,
                 CalculationDetails = d.CalculationDetails,
-                InterestTransactionsWithTotal = GetCurrentInterestTransactionsWithTotal(interestTransactionQuery.GetAllInterestTransactionByDate(entityId, d.FromDate, tenant)),
                 TotalInterest = d.CalculatedCreditInterestAmount + d.CalculatedExcepInterestAmount + d.CalculatedStandInterestAmount,
-                TotalLocalAmount = GetCurrentInterestTransactionsWithTotal(interestTransactionQuery.GetAllInterestTransactionByDate(entityId, d.FromDate, tenant)).TotalLocalAmount,
-                InterestTransactionList = GetCurrentInterestTransactionsWithTotal(interestTransactionQuery.GetAllInterestTransactionByDate(entityId, d.FromDate, tenant)).interestTransactionLists.Select (a =>
+                TotalLocalAmount = interestTransactionQuery.GetAllInterestTransactionByDate(entityId, d.FromDate, tenant).TotalLocalAmount,
+                InterestTransactionList = interestTransactionQuery.GetAllInterestTransactionByDate(entityId, d.FromDate, tenant).interestTransactionLists.Select (a =>
                 new InterestTransactionProvider
                 {
                     EntityType = a.InterestEntityTypeCode,
@@ -67,17 +66,5 @@ using WebFreight.Web.Helpers;
 
             return InterestReportDP;
         }
-
-        private InterestTransactionsWithTotal CurrentInterestTransactionsWithTotal;
-        public InterestTransactionsWithTotal GetCurrentInterestTransactionsWithTotal(InterestTransactionsWithTotal interestTransactionsWithTotal=null)
-        {
-            if (CurrentInterestTransactionsWithTotal == null  && interestTransactionsWithTotal!=null)
-            {
-                CurrentInterestTransactionsWithTotal = new InterestTransactionsWithTotal();
-                CurrentInterestTransactionsWithTotal = interestTransactionsWithTotal;
-            }
-            return CurrentInterestTransactionsWithTotal;
-        }
-
     }
 }
