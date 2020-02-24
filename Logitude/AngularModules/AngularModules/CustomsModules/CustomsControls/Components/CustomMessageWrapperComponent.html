@@ -1,9 +1,15 @@
-﻿<!-- DeclarationRestoreComponent  view  -->
+<!-- DeclarationRestoreComponent  view  -->
 <style>
     .CustomResponseBorderClass {
         border: 1px solid #3BB3E2;
         /*padding: 1rem;*/
         padding: 2px;
+    }
+
+         .disabled{
+        pointer-events: none;
+        opacity: 0.7;
+        cursor: default;
     }
 </style>
 <div class="ScrollViewer">
@@ -31,7 +37,7 @@
                             <td>
 
 
-                                <fieldset [disabled]="CustomRequestContentIsDisable">
+                                <fieldset [disabled]="CustomRequestContentIsDisable" [ngClass] ="{'disabled' : CustomRequestContentIsDisable}">
                                     <div style="border: 1px solid #3BB3E2; padding: 1rem">
                                         <ng-content select=".class-request-content"></ng-content>
                                     </div>
@@ -94,7 +100,7 @@
                                             (SendButtonClicked)="OnCustomSendOptionsClick($event)
                                                 [IsDisabled]="CustomSendOptionsButtonIsDisable"
                                                 -->
-                                            <custom-send-options #MyCustomSendOptionsComponent
+                                            <custom-send-options #MyCustomSendOptionsComponent [IsDisabled] ="CustomRequestContentIsDisable"
                                                                  [CustomSendOptionsButtonCanForcePersonalSign]="CustomSendOptionsButtonCanForcePersonalSign"></custom-send-options>
 
                                         </td>

@@ -907,7 +907,7 @@ export class CourierWorksheetComponent extends BaseComponent
             HtmlListComponentName: 'CourierWorksheetListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
             ServerSideSortable: true,
-            SortByName: 'HighLowValue'
+            SortByName: 'FastIndividualProcessCode'
         });
 
         this.columns.push({
@@ -927,7 +927,7 @@ export class CourierWorksheetComponent extends BaseComponent
             Styles: { width: '100px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
-            SortByName: 'ImporterCode'
+            SortByName: 'SortedImporterCode'
         });
 
         this.columns.push({
@@ -939,7 +939,7 @@ export class CourierWorksheetComponent extends BaseComponent
             HtmlListComponentName: 'CourierWorksheetListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
             ServerSideSortable: true,
-            SortByName: 'DocumentStatusCode'
+            SortByName: 'SortedDocumentStatusCode'
         });
 
         this.columns.push({
@@ -963,7 +963,7 @@ export class CourierWorksheetComponent extends BaseComponent
             HtmlListComponentName: 'CourierWorksheetListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
             ServerSideSortable: true,
-            SortByName: 'CourierManifestStatusCode'
+            SortByName: 'SortedCourierManifestStatus'
         });
 
         this.columns.push({
@@ -975,7 +975,7 @@ export class CourierWorksheetComponent extends BaseComponent
             HtmlListComponentName: 'CourierWorksheetListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
             ServerSideSortable: true,
-            SortByName: 'CourierDeclarationStatusCode'
+            SortByName: 'SortedCourierDeclarationStatus'
         });
 
         this.columns.push({
@@ -1113,7 +1113,6 @@ export class CourierWorksheetComponent extends BaseComponent
         if (filters == null) {
             filters = new ApiQueryFilters();
         }
-
         filters.PageSize = take;
         filters.PageIndex = skip;
         filters.GetAll = false;
@@ -1379,6 +1378,11 @@ export class CourierWorksheetComponent extends BaseComponent
                 filters.addAdditionalFilter("CourierCustomStatusCode", "2", null, null, "Equals", false, false, false, "string");
                 break;
             }
+            case "N": {
+                filters.addAdditionalFilter("CourierCustomStatusCode", "2", "1", null, "NotEqual", false, false, false, "string");
+ 
+                break;
+            }
         }
     }
 
@@ -1587,6 +1591,7 @@ export class CourierWorksheetComponent extends BaseComponent
     }
 
     SelectedCustomStatusValueClick(value: string) {
+        debugger;
         this._SelectedCustomStatusValue = value;
         if (this._SelectedBOLValue == "A" && this._SelectedTotalInvoiceValue == "A" && this._SelectedStatusValue == "A" && this._SelectedAvailableValue == "A" && this._SelectedFastIndividualProcessValue == 'A' && this._SelectedCustomStatusValue == 'A') {
             this.IsFiltered = false;

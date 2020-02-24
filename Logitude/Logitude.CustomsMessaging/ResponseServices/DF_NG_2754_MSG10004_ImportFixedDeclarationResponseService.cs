@@ -128,7 +128,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
         }
 
         string decIdOrg;
-
+        bool isFromAmendment = false;
         public DeclarationPM MapResponseToDeclaration(UnifreightIIG.Common.ImportDeclarationServiceReference.Declaration declaration, int tenant, bool FromImporter , string idOrg, out string error ,bool isUpdate=false, string user=null)
         {
             error = "";
@@ -147,9 +147,18 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
                 DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), tenant);
 
-                declarationOrg.IsAmendment = false;
-                declarationOrg.ChangeSetOp = ChangeSetOperation.Update;
-                declarationUpdateService.Update(declarationOrg, true);
+                if(declarationOrg.IsAmendment==true)
+                {
+                    isFromAmendment = true;
+                }
+
+                if (isFromAmendment)
+                {
+                    declarationOrg.IsAmendment = false;
+                    declarationOrg.ChangeSetOp = ChangeSetOperation.Update;
+                    declarationUpdateService.Update(declarationOrg, true);
+                }
+
                 decIdOrg = declarationOrg.Id;
             isFromImporter = FromImporter;
 
@@ -173,7 +182,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 AmendmentDontDisplayInList= true,
                 //AdditionalDocument ********************
                 IsAmendment = true,
-                AmendmentOriginalDeclartation = declarationOrg.Id,
                 Consignments = GetConsignments(declaration , tenant),
                 LoadingFactor =declarationOrg.LoadingFactor,
                 DealValue=declarationOrg.DealValue,
@@ -195,7 +203,20 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 //declarationGoodsShipment.AdditionalDocument
             };
 
-                if(isFromImporter)
+                if(isFromAmendment)
+                {
+                    declarationPM.AmendmentOriginalDeclartation = declarationOrg.AmendmentOriginalDeclartation;
+                    declarationPM.AmendmentRequestNumber = declarationOrg.AmendmentRequestNumber;
+                }
+                else
+
+                {
+                    declarationPM.AmendmentOriginalDeclartation = declarationOrg.Id;
+
+                }
+
+
+                if (isFromImporter)
                 {
                     declarationPM.AmendmentCorrectedByUserId = user;
 
@@ -211,7 +232,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             if (declaration.DMExtensions != null)
             {
-                //declarationPM.CustomFileNo = GetValueIDType(declaration.DMExtensions.AgentFileReferenceID);
+                 declarationPM.CustomFileNo = GetValueIDType(declaration.DMExtensions.AgentFileReferenceID);
 
                     declarationPM.ExternalDeclarationNumber = GetValueIDType(declaration.DMExtensions.AgentFileReferenceID) + DateTime.Now.Year;
                     declarationPM.ExternalDeclarationNumber = GetValueIDType(declaration.DMExtensions.ExternalDeclarationID);
