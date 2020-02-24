@@ -27,7 +27,7 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
             SetGeneralData(requestParamsData);
             SetMessageCustomers();
             SetMessageSites();
-            GetRequestContentHeader();
+            SetRequestContentHeader();
             DF_NG_2470_DF_MSG16001_ReleaseGoodsMessage fake = new DF_NG_2470_DF_MSG16001_ReleaseGoodsMessage
             {
                 GeneralData = _generalData,
@@ -81,7 +81,7 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
             _messageSites = new DF_NG_2470_DF_MSG16001_ReleaseGoodsMessageSites();
 
         }
-        public void GetRequestContentHeader()
+        public void SetRequestContentHeader()
         {
             _requestContentHeader = new RequestContentHeader
             {
