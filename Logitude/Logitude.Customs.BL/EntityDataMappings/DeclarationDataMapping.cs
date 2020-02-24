@@ -92,6 +92,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
             this.CustomMappedPMProperties.Add(PMPropertyNames.CourierSuspentionReasonName);
             this.CustomMappedPMProperties.Add(PMPropertyNames.AcceptanceStatusName);
             this.CustomMappedPMProperties.Add(PMPropertyNames.CourierSuspentionName);
+            this.CustomMappedPMProperties.Add(PMPropertyNames.AutomaticPayment);
 
             //CardRepository rep = new CardRepository(entityPM.Tenant);
             Card customerCard = CardRepository.GetSingleCard(entityPOCO.CustomerId, entityPOCO.Tenant, true);
@@ -312,6 +313,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
                     entityPM.CourierData = courierMaster.AirlinePrefix + "-" + courierMaster.MAWB;
                 }
             }
+
+            DeclarationPaymentQueryService declarationPaymentQueryService = new DeclarationPaymentQueryService(entityPOCO.Tenant);
+            DeclarationPaymentPM declarationPaymentPM = declarationPaymentQueryService.GetSingle(entityPOCO.Id, false, false);
+         if(declarationPaymentPM!=null)   entityPM.AutomaticPayment = declarationPaymentPM.AutomaticPayment;
 
             if (entityPOCO.WeightValue != null)
             {

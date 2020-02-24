@@ -96,7 +96,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
     _ErrorLogPMFileLoggerService: ErrorLogPMFileLoggerService;
     _2LogBankList: boolean = false;
     IsDisplayMessage: boolean;
-    DisplayAutomaticPayment: boolean;
+    DisplayAutomaticPayment: boolean= true;
     ClientBankListLogUntilDateyyyyMMdd = "20180820.ClientBankListLogUntilDateyyyyMMdd";
     _CourierWorksheet: DeclarationCourierStatusList;
     constructor() {
@@ -120,16 +120,17 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
 
 
     	
-   OnCheckedAutomaticPayment(event) {
-	
-    if (event && this.FuturePaymentDateTime != null) {
+    OnCheckedAutomaticPayment(event) {
+         if (event.target.checked && this.FuturePaymentDateTime != null) {
+           this.AutomaticPayment = 0;
+             event.preventDefault()
         var myMessageWindow = new MessageWindow
         myMessageWindow.Show("לא ניתן לבצע תשלום בזמינות עם תאריך תשלום עתידי");//TextCodeTranslator.Translate("")
-        this.AutomaticPayment = 0;
+       
     }
 	
     else {
-        this.AutomaticPayment = Number(event);
+            this.AutomaticPayment = Number(event.target.checked);
         if (!this.AutomaticPayment) {
         this.ErrorMessage = null;
             this.IsDisplayMessage = false;
@@ -984,12 +985,20 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
             this.ErrorMessage = TextCodeTranslator.Translate("Customs.General.O.SubmitDeclarationAgain");
         }
 
+
         this.CheckTotals();
 
         //this.BuildMethods();
         //this.BuildProtest();
 
         this.DisplayOnlyCheck();
+
+
+        if (entityPM.AutomaticPayment && this.ErrorMessage != TextCodeTranslator.Translate("Customs.General.O.InAutomaticPayment")) {
+            this.OkButtonEnabled = true;
+            this.DisplayAutomaticPayment = false;
+
+        }
 
         this.SetScreenFieldsEditability();
     }
@@ -1004,15 +1013,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
 
         //get declaration display only
         declarationDisplayOnly = SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.InDisplayMode;
-         if (this.AutomaticPayment) {
-          if (!this.IsDisplayOnly) this.DisplayAutomaticPayment = true;
-          this.IsDisplayOnly = true;
-          this.IsDisplayMessage = true;
-             this.ErrorMessage = "הצהרה בתהליך תשלום אוטומטי - לתצוגה בלבד";
-             this.OkButtonEnabled = false;
-             this.SendButtonEnabled = false;
-
-       }
+      
 
         if (declarationDisplayOnly) {
             this.IsDisplayOnly = true;
@@ -1253,10 +1254,10 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
 
     }
     IsFuturePaymentDateValid() {
-        debugger;
-        if (this.AutomaticPayment) {
+        if (this.AutomaticPayment && this.FuturePaymentDateTime != null) {
             var myMessageWindow = new MessageWindow
             myMessageWindow.Show("לא ניתן לבצע תשלום בזמינות עם תאריך תשלום עתידי");//TextCodeTranslator.Translate("")
+            this.FuturePaymentDateTime = null;
             return false;
         }
         if (this.FuturePaymentDateTime) {
@@ -1313,7 +1314,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
             this.ValidationErrorsList.push("הזן זמן עתידי"); // Please enter a future time
             return;
         }
-
+        
         var isFuturePaymentDateValid = this.IsFuturePaymentDateValid(); // WI 32593
         var isPaymentDateValid = this.IsPaymentDateValid();
         var isBlockTime = false;
@@ -1334,8 +1335,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                     //timeCompany = "12:00 - 13:00";
                     this._CustomsSettingExtendedListService.GetDefault("ISRAEL", "CIM_PAY_BLK_RNG", "NON", this.DeclarationPM.CustomerCode, SessionLocator.Tenant).subscribe((response: ServiceResponse) => {
                         let obj = response.Result;
-                     //   debugger;
-                        if (obj) {
+                         if (obj) {
                             let timeCustomer = obj['DefaultValue'];
                          //   timeCustomer = "20:00 - 22:00";
                             if (AppTool.IsNullOrEmpty(timeCompany) && AppTool.IsNullOrEmpty(timeCustomer)) {
@@ -1564,8 +1564,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                 //timeCompany = "12:00 - 13:00";
                 this._CustomsSettingExtendedListService.GetDefault("ISRAEL", "CIM_PAY_BLK_RNG", "NON", this.DeclarationPM.CustomerCode, SessionLocator.Tenant).subscribe((response: ServiceResponse) => {
                     let obj = response.Result;
-                    //   debugger;
-                    if (obj) {
+                     if (obj) {
                         let timeCustomer = obj['DefaultValue'];
                         //   timeCustomer = "20:00 - 22:00";
                         if (AppTool.IsNullOrEmpty(timeCompany) && AppTool.IsNullOrEmpty(timeCustomer)) {
@@ -2073,6 +2072,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                     SessionLocator.SelectedSession.CloseCurrentWindow();
                 });
             });
+        if (this.AutomaticPayment!=1)
         this.declarationMessagesService.PostSendPaymentOnly(params)
             .subscribe(res1 => {
             });

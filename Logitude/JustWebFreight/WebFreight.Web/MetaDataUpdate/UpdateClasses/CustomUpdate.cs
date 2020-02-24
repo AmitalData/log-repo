@@ -12857,6 +12857,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.FreightIncotermMandatory", DefaultText = "Freight amount was entered and it not matches to incoterm code , continue ?", LocalDefaultText = "קיימים נתוני ערך הובלה אך תנאי המכר בתיק אינם דורשים זאת , להמשיך ?", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.DocumetsUploadedCheck", DefaultText = "Documents upload check", LocalDefaultText = "בדיקת מסמכים", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.NoPaymentDate", DefaultText = "Declaration was already paid , can’t send", LocalDefaultText = "הצהרה כבר שולמה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.InAutomaticPayment", DefaultText = "Declaration in automatic payment process.", LocalDefaultText = "הצהרה בתהליך תשלום אוטומטי", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.NoImporterId", DefaultText = "Importer Is Mandatory", LocalDefaultText = "מספר יבואן הוא שדה חובה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.ImporterCodeNoId", DefaultText = "Need to retrieve client before sending", LocalDefaultText = "יש לשלוף לקוח מהמכס לפני שליחה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.ConstraintsInProgress", DefaultText = "Declaration Paid , waiting for constraint approval", LocalDefaultText = "טיוטה ממתינה לאישור אילוץ הגשה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
@@ -17157,8 +17158,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
                 EventTypeCategoryCode = "LOG",
 
             }, EventTypesRepository, tenantEventTypes);
-
-            EventTypesRepository.SubmitChanges();
+             EventTypesRepository.SubmitChanges();
         }
 
         #endregion

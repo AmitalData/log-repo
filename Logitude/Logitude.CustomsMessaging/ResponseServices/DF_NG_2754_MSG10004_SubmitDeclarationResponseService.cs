@@ -108,21 +108,25 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                     if(declarationPaymentPM.AutomaticPayment==1)
                     {
-                        var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
-                        {
-                            Tenant = _MyDeclarationPM.Tenant,
-                            objectTableName = "Customs.Declaration",
-                            EventCode = "APAY",
-                            notes = "",
-                            CommunicationLoggingEntityReference = _MyDeclarationPM.DeclarationNumber,
-                            EntityId = _MyDeclarationPM.Id,
-                            UserId = requestParams.LoggingUserId,
- 
-                        };
                       
 
-                         AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel);
-                    }
+                        var MyUnifreightEventParam = new UnifreightEventParam()
+                        {
+                            Code = "APAY",
+                            Mode = UnifreightEventMode.@new,
+                            EventDateTime = DateTime.Now,
+                            Entname = "CFIFILEM",
+                            PrimaryNum = _MyDeclarationPM.CustomFileNo,
+                            EventRemarks = "",
+                        };
+                        LogMessagingUtil.Instance.AppendLine("MyUnifreightEventParam = " + MyUnifreightEventParam ?? "NULL");
+                        var myOpenUnifreighTask = new UnifreightEventTaskService();
+                        myOpenUnifreighTask.UpsertEventLE2U(
+                            _MyDeclarationPM.Tenant,
+                           requestParams.LoggingUserId,
+                            MyUnifreightEventParam);
+                    
+                }
 
                     myDeclarationUpdateService.Update(this._MyDeclarationPM, true);
 

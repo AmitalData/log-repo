@@ -954,6 +954,11 @@ export class DeclarationPM {
     public set AvailabilityDate(newValue: Date) { if (this.availabilityDate != newValue) { this.availabilityDate = newValue; this.MarkAsDirty("AvailabilityDate"); } }
        
 	 
+    private automaticPayment: number;
+    public get AutomaticPayment() { return this.automaticPayment; }
+    public set AutomaticPayment(newValue: number) { if (this.automaticPayment != newValue) { this.automaticPayment = newValue; this.MarkAsDirty("AutomaticPayment"); } }
+       
+	 
 
     public OldEntityPM: DeclarationPM;
 		

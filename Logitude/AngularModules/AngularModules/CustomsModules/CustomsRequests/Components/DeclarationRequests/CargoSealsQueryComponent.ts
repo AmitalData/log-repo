@@ -606,8 +606,7 @@ export class CargoSealComponent extends BaseComponent {
     public set UpdateTypeName(newValue: string) { this.entityPM.UpdateTypeName = newValue; }
 
     public SetLocalName(entity, fieldName) {
-        debugger;
-        if (!AppTool.IsNullOrEmpty(entity)) {
+         if (!AppTool.IsNullOrEmpty(entity)) {
             this[fieldName] = entity.LocalName;
         } else {
             this[fieldName] = null;

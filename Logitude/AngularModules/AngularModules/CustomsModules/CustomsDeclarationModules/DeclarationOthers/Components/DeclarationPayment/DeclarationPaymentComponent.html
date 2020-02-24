@@ -263,7 +263,7 @@
 
                         <!-- send button -->
                         <div style="float: left;display: inline-block;width: 110px;" *ngIf="paymentPM">
-                            <custom-send-options [IsDisabled]="!SendButtonEnabled || AutomaticPayment"
+                            <custom-send-options [IsDisabled]="!SendButtonEnabled"
                                                  [AvoidDoubleClick]="true"
                                                  #MyCustomSendOptionsComponent
                                                  (SendButtonClicked)="SendButtonClicked($event)">
@@ -372,7 +372,7 @@
                                         </td>
                                         <td>
                                             <!-- *ngIf ="IsAutomaticPayment"-->
-                                            <CheckBox [IsChecked]="AutomaticPayment" (Checked)="OnCheckedAutomaticPayment($event)" [IsEnabled]="!IsDisplayOnly || DisplayAutomaticPayment"></CheckBox>
+                                            <CheckBox [IsChecked]="AutomaticPayment" (change)="OnCheckedAutomaticPayment($event)" [IsEnabled]="!IsDisplayOnly || !DisplayAutomaticPayment"></CheckBox>
                                         </td>
                                         <td colspan="4"><div></div></td>
                                         <!-- FuturePaymentDateTime -->
@@ -389,7 +389,7 @@
                                         <td colspan="2" style="padding-right: 10px;">
                                             <LogDatePicker [ObjectFieldName]="'FuturePaymentTime'" [ObjectTableName]="ObjectTableName"
                                                            [DataContext]="DataContext" [HideColumns]="true" [ForceSubscribe]="true"
-                                                           [SelectedDateValue]="FuturePaymentTime" [InputType]="'time'"></LogDatePicker>
+                                                         (ValueChanged)="FuturePaymentDateTimeOnBlur($event)"  [SelectedDateValue]="FuturePaymentTime" [InputType]="'time'"></LogDatePicker>
                                         </td>
 
                                     </tr>

@@ -462,6 +462,22 @@ export class DeclarationValidator {
         //SubmitDeclarationAgainDoneCheck(); // Mirit 25/06/15 Task 14330 + Remarked by Yuval Chalup 02.08.2015 TASK-15145
         this.CheckIsConvertedDeclaration(); // Mirit 02/12/15 Task 18508
         this.CheckIsCloseDeclaration();
+        this.CheckIfAutomaticPayment();
+    }
+    CheckIfAutomaticPayment() {
+
+        var errorMessage: string = "";
+
+        if (this._DeclarationPM != null) {
+            if (this._DeclarationPM.AutomaticPayment) {
+                //"הצהרה בתהליך תשלום אוטומטי - לתצוגה בלבד"
+                errorMessage = "Customs.General.O.InAutomaticPayment";
+                if (!AppTool.IsNullOrEmpty(errorMessage)) {
+                    this.ValidationErrorMessageCodes.push(errorMessage);
+                }
+            }
+        }
+ 
     }
     //Yuval Chalup 18.11.2014 TASK-4240 --->
 
