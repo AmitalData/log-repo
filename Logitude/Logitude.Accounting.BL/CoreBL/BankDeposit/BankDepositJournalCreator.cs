@@ -51,6 +51,8 @@ namespace Logitude.Accounting.BL.CoreBL.BankDeposit
 
             SubmitJournal();
 
+            SubmitCashbook();
+
             return journal;
 
         }
@@ -78,6 +80,14 @@ namespace Logitude.Accounting.BL.CoreBL.BankDeposit
             {
                 throw new ApplicationException(TextCodesTranslator.TranslateText("BankDeposit.O.DepositAmountmustbelessthanCashbook", 0, ShowLocals));
             }
+        }
+        private void SubmitCashbook()
+        {
+            CashbookPM.ChangeSetOp = ChangeSetOperation.Update;
+
+            IAccountingContext MyContext2 = AccountingContext.GetContext(Tenant);
+            var myCashBookUpdateService = new CashBookUpdateService(MyContext2, new Dictionary<string, IContext>(), Tenant);
+            myCashBookUpdateService.Update(CashbookPM, true);
         }
 
         private CashBookPM GetCashbookById(string id)
