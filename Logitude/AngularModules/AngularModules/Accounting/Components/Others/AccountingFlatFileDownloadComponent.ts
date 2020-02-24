@@ -121,7 +121,7 @@ export class AccountingFlatFileDownloadComponent extends BaseComponent implement
                                 this.Loading = false;
                                 this.Success = false;
                                 this.Failed = true;
-                                this.ShowError("Can't approve report since there are lines without Transmit Status, please update");
+                                this.ShowError(TextCodeTranslator.Translate("TaxReport.O.CantApprove"));
                                 this.CurrentSession.CloseCurrentWindow();
                             }
                         });
