@@ -106,7 +106,7 @@ namespace Logitude.Customs.BL.CloseTables
                 new SincroTestCaseDetail()
                 {
                     Code = "3050Sincro",
-                    Name = "test",
+                    Name = "הודעה לסוכן על הוראת תשלום",
                     IsDCA = true,
                     Entity="Declaration",
                     Param1= @"{}",
@@ -122,6 +122,16 @@ namespace Logitude.Customs.BL.CloseTables
                     Param1= @"{}",
                     Param2= @"{}",
                     MainInterfaceCode="8211",
+                },
+                   new SincroTestCaseDetail()
+                {
+                    Code = "3052Sincro",
+                    Name = " תשלום הוראה ",
+                    IsDCA = true,
+                    Entity="Declaration",
+                    Param1= @"{}",
+                    Param2= @"{}",
+                    MainInterfaceCode="3052",
                 }
 
 

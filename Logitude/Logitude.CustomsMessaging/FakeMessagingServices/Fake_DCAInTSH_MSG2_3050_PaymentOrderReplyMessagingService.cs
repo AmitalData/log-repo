@@ -45,10 +45,19 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
             _paymentOrderReply.customsHouse = 2;
             _paymentOrderReply.paymentProcess = 2;
             _paymentOrderReply.paymentOrderType = 1;
-            _paymentOrderReply.ConnectedEntity = new ConnectedEntity();
-            _paymentOrderReply.ConnectedEntity.entityType = Convert.ToInt32(_con.CargoTypeCode);
-            _paymentOrderReply.ConnectedEntity.entityIdKey1 = _con.ManifestNumber;
-            
+            _paymentOrderReply.ConnectedEntity = new ConnectedEntity
+            {
+                entityType = 1055,
+                entityIdKey1 = _dec.DeclarationNumber
+            };
+            _paymentOrderReply.taxParagraph = new TaxParagraph[1];
+            _paymentOrderReply.taxParagraph[0] = new TaxParagraph
+            {
+                paragraphType = 15,
+                amount = 99
+            };
+
+
         }
 
 
