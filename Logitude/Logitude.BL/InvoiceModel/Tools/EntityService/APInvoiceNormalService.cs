@@ -1043,7 +1043,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 if (FieldIsEmpty(entityPM.CreditAccount))
                 {
                     isReady = false;
-                    myError = "Credit Account is missing";
+                    myError = "Vendor Credit Account is missing";
                 }
 
                 if (isExternal)
