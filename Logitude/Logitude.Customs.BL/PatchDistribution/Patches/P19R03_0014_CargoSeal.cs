@@ -44,7 +44,8 @@ namespace Logitude.Customs.BL.PatchDistribution.Patches
             this.AddUpSqlScript("ALTER TABLE CARGOSEALS MODIFY(CARGOSEALIDENTIFIERID NOT NULL ENABLE)");
             this.AddUpSqlScript("ALTER TABLE CARGOSEALS MODIFY(SEALNUMBER NOT NULL ENABLE)");
             this.AddUpSqlScript("ALTER TABLE CARGOSEALS MODIFY(TENANT NOT NULL ENABLE)");
-            this.AddUpSqlScript("ALTER TABLE CARGOSEALS ADD PRIMARY KEY(SEALNUMBER)");
+            this.AddUpSqlScript("ALTER TABLE CARGOSEALS ADD PRIMARY KEY(CARGOSEALIDENTIFIERID, SEALNUMBER)");
+            //this.AddUpSqlScript("ALTER TABLE CARGOSEALS ADD PRIMARY KEY(SEALNUMBER)");
 
             //itzik !!!- מיכוון שזה פיתוח ישן ויש לצרף להפצות מאתמול - חוטף מקום !!
             //"55108	סימון טיסה כמוכנה להפקת חשבונית"

@@ -16,6 +16,7 @@ export class DeclarationPaymentList {
 	ProcessADescription: string;
 	Tenant: number;
 	FuturePaymentDateTime: Date;
+	AutomaticPayment: number;
 	
 }
  

@@ -64,8 +64,6 @@ export class CustomDocumentTypePM {
     public set PointerLevelName(newValue: string) { if (this.pointerLevelName != newValue) { this.pointerLevelName = newValue; this.MarkAsDirty("PointerLevelName"); } }
        
 	 
-
-	 
     private isDiamondManadatory: boolean;
     public get IsDiamondManadatory() { return this.isDiamondManadatory; }
     public set IsDiamondManadatory(newValue: boolean) { if (this.isDiamondManadatory != newValue) { this.isDiamondManadatory = newValue; this.MarkAsDirty("IsDiamondManadatory"); } }

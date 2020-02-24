@@ -36,7 +36,6 @@ namespace Logitude.Customs.Data.EntityPOCOs
         public virtual PointerLevel Pointer { get; set; }
         [Column("AutoSetOriginalDocumentTrue")]
 	    public bool AutoSetOriginalDocumentTrue { get; set; }
-
         [Column("IsDiamondManadatory")]
 	    public bool IsDiamondManadatory { get; set; }
     }
