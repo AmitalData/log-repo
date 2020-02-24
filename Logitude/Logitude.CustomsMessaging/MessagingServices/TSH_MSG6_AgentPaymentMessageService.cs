@@ -53,8 +53,6 @@ namespace Logitude.CustomsMessaging.MessagingServices
         }
         protected override TSH_MSG7_AgentPaymentReply GetFakeCustomsResponse(GenericRequestParams requestParamsData)
         {
-            requestParamsData.MainInterfaceCode = "3051";
-            requestParamsData.InterfaceTypeCode = "3052";
             var MyFake_TSH_MSG6_AgentPaymentMessageService = new Fake_TSH_MSG6_AgentPaymentMessageService();
             return MyFake_TSH_MSG6_AgentPaymentMessageService.GetFakeCustomsResponse(requestParamsData);
 
@@ -88,11 +86,6 @@ namespace Logitude.CustomsMessaging.MessagingServices
             var myGenericRequestParams = new GenericRequestParams()
             {
                 LoggingObjectTableId = ObjectTableRepository.GetObjectTableByName(tableName),
-                InterfaceTypeCode= "3052",
-                MainInterfaceCode = "3051",
-                Tenant=1,
-                LoggingUserId="1-9"
-
             };
             return myGenericRequestParams;
         }
