@@ -56,5 +56,11 @@ namespace Logitude.BL.DataContracts
         public int Count_Converted { get; set; }
         public string TransportModeId { get; set; }
         public string DirectionId { get; set; }
+        public string TransportModeName { get; set; }
+        public string DirectionName { get; set; }
+        public string TransportModeDirection_Display { get; set; }
+        public string Key { get; set; }
+        public string Label { get; set; }
+        public double? Value { get; set; }
     }
 }
