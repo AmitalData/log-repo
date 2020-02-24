@@ -12,6 +12,10 @@ using Logitude.Accounting.Data.EntityPOCOs;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.Accounting.BL.CoreBL;
+using System.Text.RegularExpressions;
+using Logitude.Infrastructure.BL.EntityPMs;
+using Logitude.Infrastructure.BL.EntityUpdateServices;
+using Logitude.Infrastructure.Data;
 
 namespace Logitude.Accounting.BL.Utils
 {
@@ -40,10 +44,19 @@ namespace Logitude.Accounting.BL.Utils
         {
             return _StatusCode;
         }
-        public void RunReconciliationStageB(int tenant)
+        public void RunReconciliationStageB(ReconciliationStageBArg reconciliationStageBArg)
         {
             try
             {
+                int SUB_BATCH_SIZE = 5; // 100;
+                int tenant = reconciliationStageBArg.Tenant;
+                BatchTaskExecutionPM batchTaskExecutionPM = reconciliationStageBArg.BatchTask;
+                BatchTaskExecutionUpdateService batchTaskExecutionUpdateService = null;
+                if (batchTaskExecutionPM != null)
+                {
+                    batchTaskExecutionUpdateService = GetBatchTaskUpdateServiceInstance(tenant);
+                }
+
                 IAccountingContext context = AccountingContext.GetContext(tenant);
                 JournalLineQueryService journalLineQueryService = new JournalLineQueryService(context);
                 IQueryable<JournalLineLedgerTransactionAccDTO> journalLine_LT_DTOs = journalLineQueryService.GetQJournalLinesByExternalNo_NotReconciled(tenant);
@@ -254,5 +267,19 @@ namespace Logitude.Accounting.BL.Utils
                 this._oneLineLedger.AmountToReconcile = _valueToMatch;
             }
         }
+
+        private BatchTaskExecutionUpdateService GetBatchTaskUpdateServiceInstance(int tenant)
+        {
+            IInfrastructureContext context = InfrastructureContext.GetContext(tenant);
+            BatchTaskExecutionUpdateService batchTaskExecutionUpdateService = new BatchTaskExecutionUpdateService(context, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), tenant);
+            return batchTaskExecutionUpdateService;
+        }
+
     }
+    public class ReconciliationStageBArg
+    {
+        public int Tenant { get; set; }
+        public BatchTaskExecutionPM BatchTask { get; set; }
+    }
+
 }

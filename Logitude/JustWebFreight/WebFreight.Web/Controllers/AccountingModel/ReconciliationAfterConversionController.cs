@@ -121,9 +121,9 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 {
                     var accountingContext = AccountingContext.GetContext(tenant);
 
-                    var myBatckReconciliationAfterConversionTask = new BatckReconciliationAfterConversionTask(null);
+                    var myBatchReconciliationAfterConversionTask = new BatchReconciliationAfterConversionTask(null);
                     string subj = $"Reconciliation After Conversion({_myfromExtNum}- {_mytoExtNum})";
-                    var batchTaskId = myBatckReconciliationAfterConversionTask.CreateQBatchTaskExecution<ReconciliationAfterConversionArg>(
+                    var batchTaskId = myBatchReconciliationAfterConversionTask.CreateQBatchTaskExecution<ReconciliationAfterConversionArg>(
                         new ReconciliationAfterConversionArg()
                         {
                             Tenant = tenant,
@@ -200,9 +200,9 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 {
                     var accountingContext = AccountingContext.GetContext(tenant);
 
-                    var myBatckReconciliationAfterConversionTask = new BatckReconciliationAfterConversionTask(null);
+                    var myBatchReconciliationAfterConversionTask = new BatchReconciliationAfterConversionTask(null);
                     string subj = $"Reconciliation After Conversion({_myfromExtNum}- {_mytoExtNum})";
-                    var batchTaskId = myBatckReconciliationAfterConversionTask.CreateQBatchTaskExecution<ReconciliationAfterConversionArg>(
+                    var batchTaskId = myBatchReconciliationAfterConversionTask.CreateQBatchTaskExecution<ReconciliationAfterConversionArg>(
                         new ReconciliationAfterConversionArg()
                         {
                             Tenant = tenant,
