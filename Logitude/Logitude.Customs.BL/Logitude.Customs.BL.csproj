@@ -333,6 +333,7 @@
     <Compile Include="EntityDataMappings\CouriersVatDataMapping.cs" />
     <Compile Include="EntityDataMappings\CourtInstanceDataMapping.cs" />
     <Compile Include="EntityDataMappings\CurrencyTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CurrencyTypeTenantDataMapping.cs" />
     <Compile Include="EntityDataMappings\CustomBankDataMapping.cs" />
     <Compile Include="EntityDataMappings\CustomBanksCardDataMapping.cs" />
     <Compile Include="EntityDataMappings\CustomDocumentTypeDataMapping.cs" />
@@ -500,6 +501,7 @@
     <Compile Include="EntityDataMappings\Generated\CouriersVatDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CourtInstanceDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CurrencyTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CurrencyTypeTenantDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CustomBankDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CustomBanksCardDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CustomDocumentTypeDataMapping.Generated.cs" />
@@ -893,6 +895,7 @@
     <Compile Include="EntityQueryServices\Generated\CargoSealIdentifierQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CargoSealQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ContinuousRequestTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CurrencyTypeTenantQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CustomsAutonomyKeywordQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DBMigrationLineQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DBMigrationQueryService.Generated.cs" />
@@ -1353,6 +1356,7 @@
     <Compile Include="EntityUpdateServices\Generated\CourierPendingReasonUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CourierStatusUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CouriersVatUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\CurrencyTypeTenantUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CustomsAirlineUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CustomsAutonomyKeywordUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CustomsDocumentsDefinitionUpdateService.Generated.cs" />
