@@ -164,6 +164,8 @@ export class TopFiveSalesmanProfitComponent implements OnInit {
             });
         }
 
+        document.getElementById(this.LegendDiv).innerHTML = "";
+
         makeAMLineChartMultiple(this.PerformanceChartId, dataProvider, null, graphs, true, this.LegendDiv, "Profit");
     }   
 }
