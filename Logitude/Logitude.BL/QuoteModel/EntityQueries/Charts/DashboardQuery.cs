@@ -36,7 +36,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries.Charts
                  && !d.IsCancelled
                  select d);
 
-            if(quoteDashboardArgs.ChartCode != "QCV")
+            if(args.ChartCode != "QCV")
             {
                 dataSourceQuery = dataSourceQuery.Where(d => !d.IsClosed);
             }
