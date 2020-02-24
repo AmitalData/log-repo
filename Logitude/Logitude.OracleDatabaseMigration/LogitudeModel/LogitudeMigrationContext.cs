@@ -2140,6 +2140,11 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
             set;
 
         }
+        public IDbSet<CurrencyTypeTenant> CurrencyTypeTenants
+        {
+            get; set;
+
+        }
 
         public IDbSet<CustomBank> CustomBanks
         {
@@ -3702,6 +3707,8 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new CountryGroupMap());
 
             modelBuilder.Configurations.Add(new CurrencyTypeMap());
+
+            modelBuilder.Configurations.Add(new CurrencyTypeTenantMap());
 
             modelBuilder.Configurations.Add(new CustomBankMap());
 

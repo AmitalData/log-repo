@@ -508,6 +508,10 @@
     <Compile Include="Migrations\202002191332025_CargoSealsChanges.Designer.cs">
       <DependentUpon>202002191332025_CargoSealsChanges.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202002241636132_addCurrencyTypeTenant.cs" />
+    <Compile Include="Migrations\202002241636132_addCurrencyTypeTenant.Designer.cs">
+      <DependentUpon>202002241636132_addCurrencyTypeTenant.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -879,6 +883,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202002191332025_CargoSealsChanges.resx">
       <DependentUpon>202002191332025_CargoSealsChanges.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002241636132_addCurrencyTypeTenant.resx">
+      <DependentUpon>202002241636132_addCurrencyTypeTenant.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\logitude.oracledatabasemigration.dll.licenses" />
   </ItemGroup>
