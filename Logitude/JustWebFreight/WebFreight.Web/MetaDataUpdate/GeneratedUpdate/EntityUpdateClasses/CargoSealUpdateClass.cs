@@ -103,7 +103,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "פרטי סגר",
 			      				    DefaultText =  "CargoSeal",
-			      				    Code =  "a17f",
+			      				    Code =  "cf08",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",

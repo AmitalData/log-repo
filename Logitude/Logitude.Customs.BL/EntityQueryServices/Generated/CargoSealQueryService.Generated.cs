@@ -48,9 +48,9 @@ namespace Logitude.Customs.BL.EntityQueryServices
             mapping = new CargoSealDataMapping();
         }
 		 
-		public  CargoSealPM GetSingle(string cargosealidentifierid, string sealnumber, string sealcompletenessstatecode, string sealtypecode, string updatereasoncode, string updatetypecode,bool getComposition, bool getFromCache)
+		public  CargoSealPM GetSingle(string cargosealidentifierid, string sealnumber,bool getComposition, bool getFromCache)
         {
-             EntityKeys = new CargoSealKeys(){ CargoSealIdentifierId = cargosealidentifierid, SealNumber = sealnumber, SealCompletenessStateCode = sealcompletenessstatecode, SealTypeCode = sealtypecode, UpdateReasonCode = updatereasoncode, UpdateTypeCode = updatetypecode };
+             EntityKeys = new CargoSealKeys(){ CargoSealIdentifierId = cargosealidentifierid, SealNumber = sealnumber };
 
 			 return base.GetSingle(EntityKeys, getComposition, getFromCache);
         }
@@ -58,7 +58,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
        
 	    protected override EntityKeyFields GetKeys(CargoSeal entityPOCO)
         {
-            CargoSealKeys entityKeys = new CargoSealKeys() { CargoSealIdentifierId = entityPOCO.CargoSealIdentifierId, SealNumber = entityPOCO.SealNumber, SealCompletenessStateCode = entityPOCO.SealCompletenessStateCode, SealTypeCode = entityPOCO.SealTypeCode, UpdateReasonCode = entityPOCO.UpdateReasonCode, UpdateTypeCode = entityPOCO.UpdateTypeCode,  };
+            CargoSealKeys entityKeys = new CargoSealKeys() { CargoSealIdentifierId = entityPOCO.CargoSealIdentifierId, SealNumber = entityPOCO.SealNumber,  };
             return entityKeys;
         }
      

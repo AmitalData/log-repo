@@ -949,6 +949,7 @@ export class DeclarationPM {
     public set IsValidTicketsDiamond(newValue: boolean) { if (this.isValidTicketsDiamond != newValue) { this.isValidTicketsDiamond = newValue; this.MarkAsDirty("IsValidTicketsDiamond"); } }
        
 	 
+
     private availabilityDate: Date;
     public get AvailabilityDate() { return this.availabilityDate; }
     public set AvailabilityDate(newValue: Date) { if (this.availabilityDate != newValue) { this.availabilityDate = newValue; this.MarkAsDirty("AvailabilityDate"); } }
@@ -957,6 +958,7 @@ export class DeclarationPM {
     private automaticPayment: number;
     public get AutomaticPayment() { return this.automaticPayment; }
     public set AutomaticPayment(newValue: number) { if (this.automaticPayment != newValue) { this.automaticPayment = newValue; this.MarkAsDirty("AutomaticPayment"); } }
+
        
 	 
 
@@ -983,4 +985,4 @@ export class DeclarationPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

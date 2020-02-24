@@ -39,9 +39,9 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.CargoIdentifierTypeCode).HasColumnName("CargoIdentifierTypeCode").IsRequired().HasMaxLength(2).IsUnicode(false);
 
-            this.Property(t => t.CargoIdentifierKey1).HasColumnName("CargoIdentifierKey1").IsRequired().HasMaxLength(35).IsUnicode(false);
+            this.Property(t => t.CargoIdentifierKey1).HasColumnName("CargoIdentifierKey1").HasMaxLength(35).IsUnicode(false);
 
-            this.Property(t => t.CargoIdentifierKey2).HasColumnName("CargoIdentifierKey2").IsRequired().HasMaxLength(35).IsUnicode(false);
+            this.Property(t => t.CargoIdentifierKey2).HasColumnName("CargoIdentifierKey2").HasMaxLength(35).IsUnicode(false);
 
             this.Property(t => t.CargoIdentifierKey3).HasColumnName("CargoIdentifierKey3").HasMaxLength(35).IsUnicode(false);
 

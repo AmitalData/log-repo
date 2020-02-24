@@ -973,38 +973,39 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
 
                     if (this.previousValueList != null) {
                         this.customDocumentTypeMetaDataList.forEach((metaData) => {
-                            var value: CustomsDocumentMetaDataValuePM = this.customDocumentMetaDataValueList.filter(d => d.MetaDataTypeCode == metaData.MetaDataTypeCode)[0];
-                            if (value == null) {
+                            if (!AppTool.IsNullOrEmpty(this.customDocumentMetaDataValueList) && this.customDocumentMetaDataValueList.length >0) {
+                                var value: CustomsDocumentMetaDataValuePM = this.customDocumentMetaDataValueList.filter(d => d.MetaDataTypeCode == metaData.MetaDataTypeCode)[0];
+                                if (value == null) {
 
 
-                                _DocumentTypeMetaDataExtendedService.GetDocumentsFilingMetaDataValueByFilingIdAndCode(this.CustomsDocument.DocumentsFilingId, metaData.MetaDataTypeCode)
-                                    .subscribe(myDocFilingResult => {
-                                        value = new CustomsDocumentMetaDataValuePM(this.CustomsDocument);
-                                        value.MetaDataTypeCode = metaData.MetaDataTypeCode;
-                                        value.Tenant = SessionLocator.Tenant;
-                                        value.CustomsDocumentId = this.CustomsDocument.DocumentsFilingId;
-                                        value.ChangeSetOp = "Insert";
-                                        if (docTypeRes.Result) {
-                                            if (docTypeRes.Result.AutoSetOriginalDocumentTrue) {
-                                                if (value.MetaDataTypeCode == "87") {
-                                                    value.MetaDataValue = "True";
+                                    _DocumentTypeMetaDataExtendedService.GetDocumentsFilingMetaDataValueByFilingIdAndCode(this.CustomsDocument.DocumentsFilingId, metaData.MetaDataTypeCode)
+                                        .subscribe(myDocFilingResult => {
+                                            value = new CustomsDocumentMetaDataValuePM(this.CustomsDocument);
+                                            value.MetaDataTypeCode = metaData.MetaDataTypeCode;
+                                            value.Tenant = SessionLocator.Tenant;
+                                            value.CustomsDocumentId = this.CustomsDocument.DocumentsFilingId;
+                                            value.ChangeSetOp = "Insert";
+                                            if (docTypeRes.Result) {
+                                                if (docTypeRes.Result.AutoSetOriginalDocumentTrue) {
+                                                    if (value.MetaDataTypeCode == "87") {
+                                                        value.MetaDataValue = "True";
+                                                    }
                                                 }
                                             }
-                                        }
-                                        if (!myDocFilingResult.Result || myDocFilingResult.Result.length == 1) {
-                                            if (AppTool.IsNullOrEmpty(value.MetaDataValue) && !AppTool.IsNullOrEmpty(myDocFilingResult.Result.MetaDataValue))
-                                                {
-                                                value.MetaDataValue = myDocFilingResult.Result.MetaDataValue;
+                                            if (!myDocFilingResult.Result || myDocFilingResult.Result.length == 1) {
+                                                if (AppTool.IsNullOrEmpty(value.MetaDataValue) && !AppTool.IsNullOrEmpty(myDocFilingResult.Result.MetaDataValue)) {
+                                                    value.MetaDataValue = myDocFilingResult.Result.MetaDataValue;
+                                                }
                                             }
-                                        }
-                                        else {
+                                            else {
 
-                                        }
-                                    });
+                                            }
+                                        });
 
 
-                                
-                                this.customDocumentMetaDataValueList.push(value);
+
+                                    this.customDocumentMetaDataValueList.push(value);
+                                }
                             }
                         });
                         this.SetCommonMetaDataValues(this.previousValueList, docTypeRes.Result);

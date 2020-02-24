@@ -824,6 +824,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 				entityPOCO.AvailabilityDate = entityPM.AvailabilityDate;
 			}
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AvailabilityDate))
+            {
+				entityPOCO.AvailabilityDate = entityPM.AvailabilityDate;
+			}
+			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
 		  }
 
@@ -1355,10 +1360,14 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.IsValidTicketsDiamond = entityPOCO.IsValidTicketsDiamond;
             }
 
+
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AvailabilityDate))
             {
 					entityPM.AvailabilityDate = entityPOCO.AvailabilityDate;
             }
+
+		}
+
 
 		}
 

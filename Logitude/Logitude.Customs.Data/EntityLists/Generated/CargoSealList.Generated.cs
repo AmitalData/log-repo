@@ -24,26 +24,18 @@ namespace Logitude.Customs.Data.EntityLists
        public string SealNumber  { get; set; }
        [DataMember]
        public string Remarks  { get; set; }
-
-       [Key]
        [DataMember]
        public string SealCompletenessStateCode  { get; set; }
        [DataMember]
        public string SealCompletenessStateName  { get; set; }
-
-       [Key]
        [DataMember]
        public string SealTypeCode  { get; set; }
        [DataMember]
        public string SealTypeName  { get; set; }
-
-       [Key]
        [DataMember]
        public string UpdateReasonCode  { get; set; }
        [DataMember]
        public string UpdateReasonName  { get; set; }
-
-       [Key]
        [DataMember]
        public string UpdateTypeCode  { get; set; }
        [DataMember]

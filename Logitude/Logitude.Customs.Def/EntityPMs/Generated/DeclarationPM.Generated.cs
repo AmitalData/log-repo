@@ -3789,6 +3789,7 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+
 	  private DateTime availabilityDate ;
 	  	  
        
@@ -3835,6 +3836,8 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+
+
    }
    
 }

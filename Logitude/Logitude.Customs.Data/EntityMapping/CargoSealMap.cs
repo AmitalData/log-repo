@@ -21,7 +21,7 @@ namespace Logitude.Customs.Data.EntityMapping
         { 
 			  this.ToTable("CargoSeals", "Customs");
 		
-		    this.HasKey(t => new { t.CargoSealIdentifierId, t.SealNumber, t.SealCompletenessStateCode, t.SealTypeCode, t.UpdateReasonCode, t.UpdateTypeCode });
+		    this.HasKey(t => new { t.CargoSealIdentifierId, t.SealNumber });
 	 
             this.Property(t => t.CargoSealIdentifierId).HasColumnName("CargoSealIdentifierId").IsRequired().HasMaxLength(15).IsUnicode(false);
 
