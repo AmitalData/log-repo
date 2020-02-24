@@ -1584,11 +1584,11 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
         public bool IsMissingMandatoryFields(DeclarationPM declarationPM)
         {
-            bool isMissingMandatoryFields = true;
+            bool isMissingMandatoryFields = false;
             CustomsRequiredFieldErrors errorsForDeclaration = CustomsRequiredFieldsValidator.GetRequiredFieldErrorsForDeclaration(declarationPM.Id, declarationPM.Tenant, declarationPM);
             if (errorsForDeclaration != null && errorsForDeclaration.RequiredFields != null && errorsForDeclaration.RequiredFields.Count() > 0)
             {
-                isMissingMandatoryFields = false;
+                isMissingMandatoryFields = true;
             }
             return isMissingMandatoryFields;
         }

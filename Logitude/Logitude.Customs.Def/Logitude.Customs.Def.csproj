@@ -184,6 +184,7 @@
     <Compile Include="EntityPMs\Generated\CouriersVatPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CourtInstancePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CurrencyTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CurrencyTypeTenantPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CustomBankPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CustomBanksCardPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CustomDocumentTypeMetaDataPM.Generated.cs" />

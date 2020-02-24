@@ -98,6 +98,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<CouriersVat> CouriersVats { get; }
 		 IDbSet<CourtInstance> CourtInstances { get; }
 		 IDbSet<CurrencyType> CurrencyTypes { get; }
+		 IDbSet<CurrencyTypeTenant> CurrencyTypeTenants { get; }
 		 IDbSet<CustomBank> CustomBanks { get; }
 		 IDbSet<CustomBanksCard> CustomBanksCards { get; }
 		 IDbSet<CustomDocumentType> CustomDocumentTypes { get; }
