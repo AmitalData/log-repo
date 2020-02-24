@@ -90,6 +90,7 @@ export class DeclarationCargoSealTabComponent extends BaseComponent implements O
     }
 
     private LoadCargoSealsList() {
+        debugger;
         this.CargoSealObslist = new ObservableCollection([]);
 
         this._DeclarationWebService.GetDeclarationCargoSealLists(this.EntityPM.Id, this.EntityPM.Tenant)
@@ -135,26 +136,7 @@ export class DeclarationCargoSealTabComponent extends BaseComponent implements O
     }
 
     NewDeclarationCargoSplit(item: CargoSealIdentifierPM) {
-        //SessionLocator.SelectedSession.StartBusyIndicator("");
 
-        //var windowArgs: any = {};
-        //windowArgs.CurrentEntity = item;
-        //windowArgs.IsNewEntity = true;
-        //windowArgs.CustomFileNo = this.EntityPM.CustomFileNo;
-
-        //var logWindow = new LogitudeWindow();
-        //logWindow.Width = 1000;
-        //logWindow.Height = 600;
-        ////windowArgs.WindowTitle = TextCodeTranslator.Translate("Customs.Claim.O.NewClaimsRelatedEntity");
-        //logWindow.ShowCloseButton = true;
-        //logWindow.WindowArgs = windowArgs;
-        //logWindow.WindowClosed.subscribe((event: any) => {
-        //    this.RefreshEntity();
-        //});
-
-        //logWindow.IsHideHeader = true;
-        //logWindow.Show('./CustomsModules/CustomsRequests/Components/DeclarationRequests/CargoSealsQueryComponent');
-        //SessionLocator.SelectedSession.StopBusyIndicator();
         let customsRequestMenuService = new CustomsRequestMenuService();
         let my = {
             "CustomFileNo": this.EntityPM.CustomFileNo,

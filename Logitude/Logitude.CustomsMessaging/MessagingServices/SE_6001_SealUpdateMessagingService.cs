@@ -54,7 +54,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
             }
         
-         using (TransactionScope scope = TransactionFactory.GetTransaction())
+           using (TransactionScope scope = TransactionFactory.GetTransaction())
             {
                 if (response.ResponseContentHeader.Exception != null)
                 {
@@ -69,6 +69,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
                 }
 
+                scope.Complete();
             }
             return response;
         }
