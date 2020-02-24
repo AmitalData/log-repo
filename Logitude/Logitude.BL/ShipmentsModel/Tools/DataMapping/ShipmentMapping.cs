@@ -133,6 +133,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                 entityPoco.NextLegCode = entityPM.NextLegCode;
             }
 
+            entityPoco.WarehouseStorageFreeDays = entityPM.WarehouseStorageFreeDays;
             entityPoco.FreelancerId = entityPM.FreelancerId;
             entityPoco.FreelancerAddressId = entityPM.FreelancerAddressId;
             entityPoco.FreelancerContactId = entityPM.FreelancerContactId;
@@ -1839,6 +1840,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.DimensionsUnitCode = entityPM.DimensionsUnitCode;
             entityPoco.VolumeUnitCode = entityPM.VolumeUnitCode;
             entityPoco.ChargeableWeightUnitCode = entityPM.ChargeableWeightUnitCode;
+            entityPoco.GrossWeightPerStorageDays = entityPM.GrossWeightPerStorageDays;
             entityPoco.GrossWeightEdited = entityPM.GrossWeightEdited;
             entityPoco.ChargeableWeightEdited = entityPM.ChargeableWeightEdited;
             entityPoco.Volume = entityPM.Volume;
