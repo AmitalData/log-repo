@@ -537,6 +537,7 @@
     <Compile Include="QuoteModel\EntityQueries\Charts\TopFiveSalesmanQuery.cs" />
     <Compile Include="QuoteModel\EntityQueries\Charts\QuotesByCountryQuery.cs" />
     <Compile Include="QuoteModel\EntityQueries\Charts\StageFunnelQuery.cs" />
+    <Compile Include="QuoteModel\EntityQueries\Charts\TopFiveSalesmanQueryOld.cs" />
     <Compile Include="QuoteModel\Tools\EntityService\QuoteSubjectService.cs" />
     <Compile Include="Resolvers\LoggedContactResolver.cs" />
     <Compile Include="Mocks\MockLoggedContactUtil.cs" />
