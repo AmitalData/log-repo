@@ -628,6 +628,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                                                        Master = m.Master,
                                                                        LongMaster = x.TransportModeId == "A" ? (!string.IsNullOrEmpty(m.AirlinePrefix) && !string.IsNullOrEmpty(m.Master) ? m.AirlinePrefix + "-" + m.Master : "") : m.Master,
                                                                        House = x.House,
+                                                                       ShipmentLevelCode = x.ShipmentLevelCode,                                                                       
                                                                    }).ToList();
 
                                     return Request.CreateResponse(HttpStatusCode.OK, myResult);
