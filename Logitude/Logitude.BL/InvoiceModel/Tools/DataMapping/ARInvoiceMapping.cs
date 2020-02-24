@@ -191,9 +191,13 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entityPM.SetReSendQBO = false;
 
             string transferError = entityPM.TransferError;
-            if (transferError.Length > 250)
+
+            if (!string.IsNullOrEmpty(transferError))
             {
-                transferError = transferError.Substring(0, 250);
+                if (transferError.Length > 250)
+                {
+                    transferError = transferError.Substring(0, 250);
+                }
             }
 
             entity.TransferError = transferError;
