@@ -36,7 +36,6 @@ namespace WebFreight.Web.AccountingModel.Reports.Interest
         public string CalculationDetails { get; set; }
         public decimal TotalInterest { get; set; }
         public decimal TotalLocalAmount { get; set; }
-        public InterestTransactionsWithTotal InterestTransactionsWithTotal { get; set; }
         public List<InterestTransactionProvider> InterestTransactionList { get; set; }
 
     }
