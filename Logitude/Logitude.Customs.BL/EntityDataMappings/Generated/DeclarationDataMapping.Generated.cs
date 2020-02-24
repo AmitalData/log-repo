@@ -1366,8 +1366,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.AvailabilityDate = entityPOCO.AvailabilityDate;
             }
 
-		}
-
+ 
 
 		}
 
