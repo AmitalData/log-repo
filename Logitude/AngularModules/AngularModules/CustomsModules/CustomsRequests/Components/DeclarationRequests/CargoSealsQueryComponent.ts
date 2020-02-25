@@ -458,13 +458,16 @@ export class CargoSealsQueryComponent
             this._CargoSealIdentifierPMService.insert(this.CurrentEntity).subscribe(response => {
                 SessionLocator.SelectedSession.StopBusyIndicator();
                 this.CargoSealIdentifierId = response.Result.Id;
+                this.CurrentEntity = response.Result;
+                this.CargoSealObslist.Clear();
+                this.CurrentEntity.CargoSeals.forEach((item: CargoSealPM) => {
+                    this.CargoSealObslist.Insert(new CargoSealComponent(item));
+                });
                 this.SendOptionsButtonClick(customSendOptionsArgs);
             });
         }
          else {
-
-             
-             this.CurrentEntity.Tenant = SessionLocator.Tenant;
+               this.CurrentEntity.Tenant = SessionLocator.Tenant;
              this.CurrentEntity.CargoRowNumber = this.CargoRowNumber;
              this.CurrentEntity.DeclarationId = this.DeclarationId;
              this.CurrentEntity.ContainerNumber = this.ContainerNumber;
@@ -477,11 +480,16 @@ export class CargoSealsQueryComponent
  
               if (this.CargoSealObslist != null) {
                  this.CargoSealObslist.Collection.forEach((item: CargoSealComponent) => {
-                      
-                     if (this.CurrentEntity.CargoSeals.filter(x => x.SealNumber == item.SealNumber).length == 0) {
+                     //  if (this.CurrentEntity.CargoSeals.filter(x => x.Id == item.Id).length == 0) {
+                     if (AppTool.IsNullOrEmpty(item.Id)) {
                          item.entityPM.ChangeSetOp = "1";
                          this.CurrentEntity.AddCargoSeal(item.entityPM);
-                      }
+                     }
+
+                     else {
+                         item.entityPM.ChangeSetOp = "2";
+                         this.CurrentEntity.CargoSeals.filter(x => x.Id == item.Id)[0] = item.entityPM;
+                     }
                      
           
                  });
@@ -489,7 +497,11 @@ export class CargoSealsQueryComponent
             this._CargoSealIdentifierPMService.update(this.CurrentEntity).subscribe(response => {
                 SessionLocator.SelectedSession.StopBusyIndicator();
                 this.CargoSealIdentifierId = response.Result.Id;
-
+                this.CurrentEntity = response.Result;
+                this.CargoSealObslist.Clear();
+                this.CurrentEntity.CargoSeals.forEach((item: CargoSealPM) => {
+                    this.CargoSealObslist.Insert(new CargoSealComponent(item));
+                });
                 this.SendOptionsButtonClick(customSendOptionsArgs);
             });
         }
@@ -612,6 +624,9 @@ export class CargoSealComponent extends BaseComponent {
     constructor(public entityPM: CargoSealPM) {
         super();
     }
+
+    public get Id() { return this.entityPM.Id; }
+    public set Id(newValue: string) { this.entityPM.Id = newValue; }
 
     public get SealNumber() { return this.entityPM.SealNumber; }
     public set SealNumber(newValue: string) { this.entityPM.SealNumber = newValue; }
