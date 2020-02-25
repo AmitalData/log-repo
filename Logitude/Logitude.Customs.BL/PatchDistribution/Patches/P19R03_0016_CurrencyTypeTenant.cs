@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 
 namespace Logitude.Customs.BL.PatchDistribution.Patches
 {
-    class P19R03_0017_CurrencyTypeTenant : PatchDistributionBase
+
+    
+    class P19R03_0016_CurrencyTypeTenant : PatchDistributionBase
     {
-        public P19R03_0017_CurrencyTypeTenant()
+        public P19R03_0016_CurrencyTypeTenant()
              : base("טבלת מטבעות", new DateTime(2020, 02, 24))
         {
 
