@@ -113,14 +113,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
         {
             IGlobalContext globalObjectContext = GlobalContext.GetContext();
             ICommonDataContext iContext = CommonDataContext.GetContext(tenant);
-            IQueryable<TenantManagement> iQueryable_Tenantmanagements = globalObjectContext.TenantManagements;
+            IQueryable<TenantManagement> iQueryable_Tenantmanagements = globalObjectContext.TenantManagements.Where(a => a.IsRecurring == true && a.RecurringPeriodCode == "MO" && a.PaymentChannelCode == "PL");
             iQueryable_BluesnapTransactions = globalObjectContext.BluesnapTransactions;
             iQueryable_BluesnapTransactions = iQueryable_BluesnapTransactions.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.TransactionDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate) && System.Data.Entity.DbFunctions.TruncateTime(d.TransactionDate) <= System.Data.Entity.DbFunctions.TruncateTime(toDate));
-
-            if (this.showAllRecurringTenants == true)
-            {
-                iQueryable_Tenantmanagements = iQueryable_Tenantmanagements.Where(a => a.IsRecurring == true && a.RecurringPeriodCode == "MO" && a.PaymentChannelCode == "PL");
-            }
 
             this.iQueryable_JoinTenantBluesnapTransaction = (from tenantmanagements in iQueryable_Tenantmanagements
                                                              select new TenantJoinBluesnapTransactionList()
