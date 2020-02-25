@@ -44,7 +44,7 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
 
     CashBookPM: CashBookPM;
     BankDepositLines: BankDepositLinePM[];
-    CashBookLines: CashBookLinePM[];
+    // CashBookLines: CashBookLinePM[];
     BankDepositPMService: BankDepositPMService = new BankDepositPMService();
     _CashBookPMService: CashBookPMService = new CashBookPMService();
     _CashBookListService: CashBookListService = new CashBookListService();
@@ -342,54 +342,10 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
             this.GetCashbookLines();
 
             this.IsAllSelected = false;
+
         }
     }
-    FilterLines() {
 
-        // this.BankDepositLines = [];
-        // this.EntityPM.BankDepositLines = [];
-
-        // var todayDate = DateTool.GetCurrentDateTimeAsUtc();
-
-        // var lines = this.CashBookPM.CashBookLines;
-
-        // // Filtering
-        // if (!AppTool.IsNullOrEmpty(this.FilterSelectedValue)) {
-        //     lines = lines.filter((el) => {
-
-        //         if (el.DueDate != null) {
-        //             var date = new Date(el.DueDate.toString());
-        //             if (this.FilterSelectedValue == 'postdated') {
-        //                 if (date > todayDate) {
-        //                     return true; //postdated
-        //                 }
-        //             } else if (this.FilterSelectedValue == 'cash') {
-        //                 if (date <= todayDate) {
-        //                     return true;
-        //                 }
-        //             }
-        //         }
-        //         return false;
-        //     });
-        // }
-
-        // this.CashBookLines = lines;
-        // this.CashBookLines2.InsertCollection(this.CashBookLines);
-
-
-        // // remove deposited lines
-        // this.RemoveDepositedLines();
-
-
-        if (this.CashbookLines.Length > 0) {
-            this.NoCashBookRows = false;
-        } else {
-            this.NoCashBookRows = true;
-        }
-
-        this.CalculateTotals();
-
-    }
     private timerToken: any;
     TextChanged(searchtext) {
 
@@ -490,7 +446,7 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
 
             this.UpdateFiltersCounts();
 
-            if (this.CashbookLines.Collection.length > 0) {
+            if (this.CashbookLines.Length > 0) {
                 this.NoCashBookRows = false;
             } else {
                 this.NoCashBookRows = true;
