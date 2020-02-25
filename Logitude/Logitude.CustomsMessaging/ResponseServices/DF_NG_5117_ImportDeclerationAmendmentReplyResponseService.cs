@@ -170,8 +170,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                                                 _MyDeclarationPM.AmendmentDontDisplayInList = false;
                                                 _MyDeclarationPM.AmendmentStatus = "3";
-
+                                                _MyDeclarationPM.DeclarationNumber = declarationParent.DeclarationNumber;
                                                 declarationParent.AmendmentDontDisplayInList = true;
+                                                declarationParent.DeclarationNumber = null;
 
 
                                                 declarationParent.ChangeSetOp = ChangeSetOperation.Update;

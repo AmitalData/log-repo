@@ -17556,7 +17556,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code = "DPR",
-                EnglishName = "Declaration Amendment Waiting for customs response",
+                EnglishName = "Amendment Waiting for customs",
                 Tenant = 0,
                 AddedManually = false,
                 LocalName = "תיקון הצהרה ממתינה לטיפול מכס",
