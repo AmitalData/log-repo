@@ -49,6 +49,11 @@ export class CurrencyTypeTenantPM {
     public set Code(newValue: string) { if (this.code != newValue) { this.code = newValue; this.MarkAsDirty("Code"); } }
        
 	 
+    private tenantInactive: boolean;
+    public get TenantInactive() { return this.tenantInactive; }
+    public set TenantInactive(newValue: boolean) { if (this.tenantInactive != newValue) { this.tenantInactive = newValue; this.MarkAsDirty("TenantInactive"); } }
+       
+	 
 
     public OldEntityPM: CurrencyTypeTenantPM;
 		

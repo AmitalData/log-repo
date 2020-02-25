@@ -135,6 +135,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool tenantInactive ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool TenantInactive  
+	   {
+	    
+	     get
+		{
+		   return tenantInactive;
+		 }
+		 set
+		 {
+		   if(tenantInactive != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TenantInactive",OldValue=tenantInactive,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   tenantInactive=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

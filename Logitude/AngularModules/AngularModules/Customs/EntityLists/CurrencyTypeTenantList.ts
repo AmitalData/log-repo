@@ -13,6 +13,7 @@ export class CurrencyTypeTenantList {
 	UpdateDate: Date;
 	UpdatedByUserId: string;
 	Code: string;
+	TenantInactive: boolean;
 	
 }
  

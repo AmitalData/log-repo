@@ -35,6 +35,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string Code { get; set; }
 	      
         public virtual CurrencyType CurrencyType { get; set; }
+        [Column("TenantInactive")]
+	    public bool TenantInactive { get; set; }
     }
 }
 	 
