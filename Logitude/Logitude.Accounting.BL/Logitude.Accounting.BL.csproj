@@ -195,6 +195,7 @@
     <Compile Include="CoreBL\BankAccountPages\BankAccountPageAnalyzer.cs" />
     <Compile Include="CoreBL\BankAccountPages\BankAccountPagesExample.cs" />
     <Compile Include="CoreBL\Batch\BatchAccountingLoadTestTask.cs" />
+    <Compile Include="CoreBL\Batch\BatchCardGLAccountConnectTask.cs" />
     <Compile Include="CoreBL\Batch\BatchCreateTaxReportService.cs" />
     <Compile Include="CoreBL\Batch\BatchFixIntegrityCheckErrorsService.cs" />
     <Compile Include="CoreBL\Batch\BatchAccFunctionalTestTask.cs" />
