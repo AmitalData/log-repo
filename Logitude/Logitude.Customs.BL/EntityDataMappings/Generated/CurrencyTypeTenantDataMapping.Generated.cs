@@ -26,7 +26,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         Tenant, 
 	         UpdateDate, 
 	         UpdatedByUserId, 
-	         Code,
+	         Code, 
+	         TenantInactive,
 	      }
 
 
@@ -37,7 +38,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         Tenant, 
 	         UpdateDate, 
 	         UpdatedByUserId, 
-	         Code,
+	         Code, 
+	         TenantInactive,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -64,6 +66,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Code))
             {
 				entityPOCO.Code = entityPM.Code;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TenantInactive))
+            {
+				entityPOCO.TenantInactive = entityPM.TenantInactive;
 			}
 			}
 
@@ -95,6 +102,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.Code = entityPOCO.Code;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.TenantInactive))
+            {
+					entityPM.TenantInactive = entityPOCO.TenantInactive;
+            }
+
 		}
 
 		public void PMToOldPM(CurrencyTypeTenantPM entityPM, CurrencyTypeTenantPM oldEntityPM)
@@ -119,6 +131,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Code))
             {
                 oldEntityPM.Code = entityPM.Code;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TenantInactive))
+            {
+                oldEntityPM.TenantInactive = entityPM.TenantInactive;
             }
 			
 		}
