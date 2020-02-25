@@ -41,7 +41,8 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         Description = a.Description,
                         Tenant = a.Tenant,
                         InActive = a.InActive,
-                        PartnerName = a.PartnerName
+                        PartnerName = a.PartnerName,
+                        SearchFields = a.SearchFields
                     });
         }
 
@@ -60,7 +61,8 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                            Description = a.Description,
                                            Tenant = a.Tenant,
                                            InActive = a.InActive,
-                                           PartnerName = a.PartnerName
+                                           PartnerName = a.PartnerName,
+                                           SearchFields = a.SearchFields
                                        }).FirstOrDefault();
 
 
@@ -83,7 +85,8 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                              Description = a.Description,
                                              Tenant = a.Tenant,
                                              InActive = a.InActive,
-                                             PartnerName = a.PartnerName
+                                             PartnerName = a.PartnerName,
+                                             SearchFields = a.SearchFields
                                          }).FirstOrDefault();
 
             return entity;
@@ -104,7 +107,8 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         Description = a.Description,
                         Tenant = a.Tenant,
                         InActive = a.InActive,
-                        PartnerName = a.PartnerName
+                        PartnerName = a.PartnerName,
+                        SearchFields = a.SearchFields
                     });
         }
 
@@ -122,7 +126,8 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                        Description = a.Description,
                        Tenant = a.Tenant,
                        InActive = a.InActive,
-                       PartnerName = a.PartnerName
+                       PartnerName = a.PartnerName,
+                       SearchFields = a.SearchFields
                    };
         }
     }
