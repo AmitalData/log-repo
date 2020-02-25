@@ -48,9 +48,9 @@ namespace Logitude.Customs.BL.EntityQueryServices
             mapping = new CargoSealDataMapping();
         }
 		 
-		public  CargoSealPM GetSingle(string cargosealidentifierid, string sealnumber,bool getComposition, bool getFromCache)
+		public  CargoSealPM GetSingle(string id,bool getComposition, bool getFromCache)
         {
-             EntityKeys = new CargoSealKeys(){ CargoSealIdentifierId = cargosealidentifierid, SealNumber = sealnumber };
+             EntityKeys = new CargoSealKeys(){ Id = id };
 
 			 return base.GetSingle(EntityKeys, getComposition, getFromCache);
         }
@@ -58,7 +58,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
        
 	    protected override EntityKeyFields GetKeys(CargoSeal entityPOCO)
         {
-            CargoSealKeys entityKeys = new CargoSealKeys() { CargoSealIdentifierId = entityPOCO.CargoSealIdentifierId, SealNumber = entityPOCO.SealNumber,  };
+            CargoSealKeys entityKeys = new CargoSealKeys() { Id = entityPOCO.Id,  };
             return entityKeys;
         }
      
