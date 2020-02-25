@@ -22,9 +22,9 @@ namespace Logitude.Customs.BL.PatchDistribution.Patches
         public override void CreateUpScripts()
         {
 
-            this.AddUpSqlScript("Insert into PACKAGES (CODE,NAME,SEARCHFIELDS,INACTIVE,FEATUREPACKAGETYPECODE) values ('SEALB','Seal Base','SEALB,Seal Base',0,'BS');");
-            this.AddUpSqlScript("Insert into PACKAGES (CODE,NAME,SEARCHFIELDS,INACTIVE,FEATUREPACKAGETYPECODE) values ('SEALA','Seal Addon','SEALA,Seal Addon',0,'AD');");
-            this.AddUpSqlScript("Insert into PACKAGECONNECTEDPACKAGES (ID,PACKAGECODE,CONNECTEDPACKAGECODE) values ('G-10','SEALA','SEALB');");
+            this.AddUpSqlScript("Insert into PACKAGES (CODE,NAME,SEARCHFIELDS,INACTIVE,FEATUREPACKAGETYPECODE) values ('SEALB','Seal Base','SEALB,Seal Base',0,'BS')");
+            this.AddUpSqlScript("Insert into PACKAGES (CODE,NAME,SEARCHFIELDS,INACTIVE,FEATUREPACKAGETYPECODE) values ('SEALA','Seal Addon','SEALA,Seal Addon',0,'AD')");
+            this.AddUpSqlScript("Insert into PACKAGECONNECTEDPACKAGES (ID,PACKAGECODE,CONNECTEDPACKAGECODE) values ('G-10','SEALA','SEALB')");
 
         }
     }
