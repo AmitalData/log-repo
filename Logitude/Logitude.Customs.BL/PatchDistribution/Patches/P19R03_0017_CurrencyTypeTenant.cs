@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Logitude.Customs.BL.PatchDistribution.Patches
 {
-    class P19R03_0016_CurrencyTypeTenant : PatchDistributionBase
+    class P19R03_0017_CurrencyTypeTenant : PatchDistributionBase
     {
-        public P19R03_0016_CurrencyTypeTenant()
+        public P19R03_0017_CurrencyTypeTenant()
              : base("טבלת מטבעות", new DateTime(2020, 02, 24))
         {
 
@@ -51,11 +51,14 @@ namespace Logitude.Customs.BL.PatchDistribution.Patches
 
 
             this.AddUpSqlScript("ALTER TABLE CurrencyTypeTenants ADD CONSTRAINT FK_1629748925 FOREIGN KEY(UpdatedByUserId) REFERENCES Users(Id)");
+
+
+
+            this.AddUpSqlScript("ALTER TABLE CurrencyTypeTenants ADD TenantInactive NUMBER(1) DEFAULT 0 NOT NULL");
+
+
+            this.AddUpSqlScript("ALTER TABLE CurrencyTypeTenants ADD CONSTRAINT CurrencyTypeTenantUQ UNIQUE(tenant, code)");
             
-
-
-
-
 
         }
     }

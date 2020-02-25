@@ -935,9 +935,6 @@
     <Content Include="App_Code\AngularJS_App_Code\Common\CommunicationLogStepController.cs" />
     <Content Include="App_Code\PodSecurityController.cs" />
     <Content Include="App_Code\BrandingController.cs" />
-    <Compile Include="..\..\Logitude.Customs.BL\PatchDistribution\Patches\P19R03_0016_CurrencyTypeTenant.cs">
-      <Link>P19R03_0016_CurrencyTypeTenant.cs</Link>
-    </Compile>
     <Compile Include="AccountingModel\AccountingRegistrations.cs" />
     <Compile Include="AccountingModel\DomainServices\AccountingDomainService.ReconcileExternalPageStatus.CS" />
     <Compile Include="AccountingModel\DomainServices\AccountingDomainService.GLAccountTotalDateType.CS" />
