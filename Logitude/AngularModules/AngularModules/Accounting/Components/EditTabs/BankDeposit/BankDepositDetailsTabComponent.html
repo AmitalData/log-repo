@@ -502,11 +502,11 @@
                                 <ul class="FiltersMenu">
                                     <li id="cashcheques" (click)="FilterItemClicked('cash')"  style="width: 105px; height: 22px;"
                                         [class.SelectedFilter]="FilterSelectedValue === 'cash'">
-                                        {{'Accounting.General.O.CashCheques' | TextCodeTranslationPipe}} ({{CashCount}})
+                                        {{'Accounting.General.O.CashCheques' | TextCodeTranslationPipe}} ({{ChequesCounter.CashChequesCount}})
                                     </li>
                                     <li id="postdatedcheques" (click)="FilterItemClicked('postdated')"  style="width: 135px; height: 22px;"
                                         [class.SelectedFilter]="FilterSelectedValue === 'postdated'">
-                                        {{'Accounting.General.O.postdatedCheques' | TextCodeTranslationPipe}} ({{PostdatesCount}})
+                                        {{'Accounting.General.O.postdatedCheques' | TextCodeTranslationPipe}} ({{ChequesCounter.PostdatedChequesCount}})
                                     </li>
                                 </ul>
 

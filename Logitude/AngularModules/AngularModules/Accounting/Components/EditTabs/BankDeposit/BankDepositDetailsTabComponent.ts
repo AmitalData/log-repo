@@ -1,3 +1,4 @@
+import { CashBookExtendedPMService } from './../../../Services/ExtendedPMs/CashBookExtendedPMService';
 import { filter } from 'rxjs/operators';
 import { CashBookLineListService } from './../../../Services/StandardLists/CashBookLineListService';
 import { CashBookListService } from './../../../Services/StandardLists/CashBookListService';
@@ -26,6 +27,7 @@ import {BankDepositExtendedPMService } from '../../../Services/ExtendedPMs/BankD
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 import { BankDepositPMService } from '../../../Services/StandardPMs/BankDepositPMService';
+import { CashbookChequesCounter } from '../../../DataContracts/CashbookChequesCounter';
 
 @Component({
     moduleId: module.id,
@@ -64,6 +66,7 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
     currencyListService: CurrencyListService = new CurrencyListService();
     _BankDepositExtendedPMService: BankDepositExtendedPMService = new BankDepositExtendedPMService();
     _ARPaymentChequeListService: ARPaymentChequeListService = new ARPaymentChequeListService();
+    _CashBookExtendedPMService: CashBookExtendedPMService = new CashBookExtendedPMService();
 
     constructor(private entityArgs: EntityArgs) {
         super();
@@ -96,6 +99,8 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
     {
         this.IsLinesSelection = true;
         this.GetCashBook();
+        this.GetChequesCounter();
+
 
         this.BankDepositLines = new ObservableCollection([]);
     }
@@ -152,6 +157,7 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
         this.CalculateTotals();
 
         this.GetCashBook();
+        this.GetChequesCounter();
         this.CurrentSession.CurrentEditComponent.EntityPM.IsDirty = false;
         this.SetUIProperty();
     }
@@ -457,7 +463,7 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
             // this.CashBookLines = result;
             this.CashbookLines.InsertCollection(result);
 
-            this.UpdateFiltersCounts();
+            // this.UpdateFiltersCounts();
 
             if (this.CashbookLines.Length > 0) {
                 this.NoCashBookRows = false;
@@ -803,32 +809,49 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
     PostdatesCount: number = 0;
 
 
+    public ChequesCounter: CashbookChequesCounter = new CashbookChequesCounter();
+    GetChequesCounter(){
+        this.ChequesCounter = new CashbookChequesCounter();
+        this._CashBookExtendedPMService.GetCashbookChequesCounter(this.EntityPM.CashBookId)
+            .subscribe((response: ServiceResponse) =>
+            {
+                console.log("[GetCashbookChequesCounter]", response);
 
-    private UpdateFiltersCounts()
-    {
-        var todayDate = DateTool.GetCurrentDateTimeAsUtc();
+                if (!response.HasError) {
+                    this.ChequesCounter = response.Result;
+                }
+                else {
+                    console.error(response.ErrorsArray);
+                }
+            });
 
-        this.CashCount = this.CashbookLines.Collection.filter((el) =>
-        {
-            if (el.DueDate != null) {
-                var date = new Date(el.DueDate.toString());
-                if (date <= todayDate) {
-                    return true;
-                }
-                return false;
-            }
-            return false;
-        }).length;
-        this.PostdatesCount = this.CashbookLines.Collection.filter((el) =>
-        {
-            if (el.DueDate != null) {
-                var date = new Date(el.DueDate.toString());
-                if (date > todayDate) {
-                    return true;
-                }
-                return false;
-            }
-            return false;
-        }).length;
     }
+
+    // private UpdateFiltersCounts()
+    // {
+    //     var todayDate = DateTool.GetCurrentDateTimeAsUtc();
+
+    //     this.CashCount = this.CashbookLines.Collection.filter((el) =>
+    //     {
+    //         if (el.DueDate != null) {
+    //             var date = new Date(el.DueDate.toString());
+    //             if (date <= todayDate) {
+    //                 return true;
+    //             }
+    //             return false;
+    //         }
+    //         return false;
+    //     }).length;
+    //     this.PostdatesCount = this.CashbookLines.Collection.filter((el) =>
+    //     {
+    //         if (el.DueDate != null) {
+    //             var date = new Date(el.DueDate.toString());
+    //             if (date > todayDate) {
+    //                 return true;
+    //             }
+    //             return false;
+    //         }
+    //         return false;
+    //     }).length;
+    // }
 }
