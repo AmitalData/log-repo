@@ -162,20 +162,20 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             {
                                 if (additionalInformation.Content != null)
                                 {
-                                    switch (additionalInformation.Content.Value) 
-                                    {
-                                        case "1":
-                                            
-                                        var declarationParent = myDeclarationQueryService.GetSingleDeclarationById(_MyDeclarationPM.AmendmentOriginalDeclartation, requestParams.Tenant);
+                                        switch (additionalInformation.Content.Value)
+                                        {
+                                            case "1":
 
-                                        _MyDeclarationPM.AmendmentDontDisplayInList = false;
-                                        _MyDeclarationPM.AmendmentStatus = "3";
+                                                var declarationParent = myDeclarationQueryService.GetSingleDeclarationById(_MyDeclarationPM.AmendmentOriginalDeclartation, requestParams.Tenant);
 
-                                        declarationParent.AmendmentDontDisplayInList = true;
+                                                _MyDeclarationPM.AmendmentDontDisplayInList = false;
+                                                _MyDeclarationPM.AmendmentStatus = "3";
+
+                                                declarationParent.AmendmentDontDisplayInList = true;
 
 
-                                                 declarationParent.ChangeSetOp = ChangeSetOperation.Update;
-                                                myDeclarationUpdateService.Update( declarationParent, true);
+                                                declarationParent.ChangeSetOp = ChangeSetOperation.Update;
+                                                myDeclarationUpdateService.Update(declarationParent, true);
 
 
                                                 //EventTracer.CreateTraceEvent(new EventTracerArgs()
@@ -188,7 +188,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                                 //    Notes = null
                                                 //});
 
-                                                var  amitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
+                                                var amitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
                                                 {
                                                     Tenant = _MyDeclarationPM.Tenant,
                                                     objectTableName = "Customs.Declaration",
@@ -213,8 +213,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                                 AmitalEventTracer.CreateTraceEvent(amitalEventTracerModel);
                                                 break;
 
-                                        case "4":
-                                            _MyDeclarationPM.AmendmentStatus = "4";
+                                            case "4":
+                                                _MyDeclarationPM.AmendmentStatus = "4";
 
 
                                                 var myAmitalEventTracerModel2 = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
@@ -245,8 +245,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                                                 break;
 
-                                        case "5":
-                                            _MyDeclarationPM.AmendmentStatus = "5";
+                                            case "5":
+                                                _MyDeclarationPM.AmendmentStatus = "5";
 
 
                                                 var myAmitalEventTracerModel3 = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
@@ -276,17 +276,17 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 
 
-                                     
-
-                                            break;
 
 
+                                                break;
 
-                                        case "2":
-                                            _MyDeclarationPM.AmendmentStatus = "6";
-                                            _MyDeclarationPM.AmendmentDontDisplayInList = false;
-                                              declarationParent = myDeclarationQueryService.GetSingleDeclarationById(_MyDeclarationPM.AmendmentOriginalDeclartation, requestParams.Tenant);
-                                            declarationParent.AmendmentDontDisplayInList = true;
+
+
+                                            case "2":
+                                                _MyDeclarationPM.AmendmentStatus = "6";
+                                                _MyDeclarationPM.AmendmentDontDisplayInList = false;
+                                                declarationParent = myDeclarationQueryService.GetSingleDeclarationById(_MyDeclarationPM.AmendmentOriginalDeclartation, requestParams.Tenant);
+                                                declarationParent.AmendmentDontDisplayInList = true;
                                                 declarationParent.ChangeSetOp = ChangeSetOperation.Update;
                                                 myDeclarationUpdateService.Update(declarationParent, true);
                                                 var myAmitalEventTracerModel4 = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
@@ -314,12 +314,42 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                                                 AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel4);
 
-                                   
-                                            break;
-                                    };
 
-                                   
-                                }
+                                                break;
+
+                                         
+                              case "6":
+                                _MyDeclarationPM.AmendmentStatus = "1";
+                                 var myAmitalEventTracerModel5 = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
+                                {
+                                    Tenant = _MyDeclarationPM.Tenant,
+                                    objectTableName = "Customs.Declaration",
+                                    EventCode = "DPR",
+                                    notes = null,
+                                    CommunicationLoggingEntityReference = _MyDeclarationPMOrg.DeclarationNumber,
+                                    EntityId = _MyDeclarationPM.AmendmentOriginalDeclartation,
+                                    UserId = loggingUserId,
+
+                                    CommunicationSubject = "FU Status DPR from logitude ",
+                                    MyFUStatus = new AmitalEventTracerModel.FUStatus()
+                                    {
+                                        entname = "CFIFILEM",
+                                        primary_number = _MyDeclarationPMOrg.CustomFileNo,
+                                        status = "new",
+                                        xml_status = "new",
+                                        status_id = "DPR",
+                                        status_DateTime = DateTime.Now,
+                                        comments = null,
+                                    }
+                                };
+
+                                AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel5);
+
+
+                                break;
+                        };
+
+                    }
  
 
                                 break;

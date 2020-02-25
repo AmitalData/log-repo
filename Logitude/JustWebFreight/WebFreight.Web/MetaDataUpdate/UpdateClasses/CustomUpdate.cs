@@ -17505,7 +17505,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
                 Tenant = 0,
                 AddedManually = false,
                 LocalName = "תיקון הצהרה אושרה",
-                ObjectTableId = courierMasterObject.Id,
+                ObjectTableId = declarationObject.Id,
                 ShortView = false,
                 EventTypeCategoryCode = "LOG",
 
@@ -17518,7 +17518,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
                 Tenant = 0,
                 AddedManually = false,
                 LocalName = "תיקון הצהרה אושרה חלקית",
-                ObjectTableId = courierMasterObject.Id,
+                ObjectTableId = declarationObject.Id,
                 ShortView = false,
                 EventTypeCategoryCode = "LOG",
 
@@ -17530,7 +17530,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
                 Tenant = 0,
                 AddedManually = false,
                 LocalName = "תיקון הצהרה נדחתה",
-                ObjectTableId = courierMasterObject.Id,
+                ObjectTableId = declarationObject.Id,
                 ShortView = false,
                 EventTypeCategoryCode = "LOG",
 
@@ -17542,7 +17542,19 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
                 Tenant = 0,
                 AddedManually = false,
                 LocalName = "תיקון הצהרה בוטלה",
-                ObjectTableId = courierMasterObject.Id,
+                ObjectTableId = declarationObject.Id,
+                ShortView = false,
+                EventTypeCategoryCode = "LOG",
+
+            }, EventTypesRepository, tenantEventTypes);
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code = "DPR",
+                EnglishName = "Declaration Amendment Waiting for customs response",
+                Tenant = 0,
+                AddedManually = false,
+                LocalName = "תיקון הצהרה ממתינה לטיפול מכס",
+                ObjectTableId = declarationObject.Id,
                 ShortView = false,
                 EventTypeCategoryCode = "LOG",
 
