@@ -16,7 +16,9 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Logitude.BL.CommonDataModel.EntityLists;
-
+using Logitude.Infrastructure.BL.EntityPMs;
+using Logitude.Infrastructure.BL.EntityUpdateServices;
+using Logitude.Infrastructure.Data;
 namespace Logitude.Accounting.BL.Utils
 {
     public class CardGLAccountConnectBatch
@@ -43,14 +45,22 @@ namespace Logitude.Accounting.BL.Utils
         {
             return _StatusCode;
         }
-        public void RunCardGLAccountConnect(int tenant)
+        public void RunCardGLAccountConnect(CardGLAccountConnectArg cardGLAccountConnectArg)
         {
             try
             {
+                int tenant = cardGLAccountConnectArg.Tenant;
+
                 _badList = new List<string>();
                 _CustomersMade = 0;
                 _VendorsMade = 0;
                 _AllOthersMade = 0;
+                BatchTaskExecutionPM batchTaskExecutionPM = cardGLAccountConnectArg.BatchTask;
+                BatchTaskExecutionUpdateService batchTaskExecutionUpdateService = null;
+                if (batchTaskExecutionPM != null)
+                {
+                    batchTaskExecutionUpdateService = GetBatchTaskUpdateServiceInstance(tenant);
+                }
 
                 IAccountingContext context = AccountingContext.GetContext(tenant);
                 CardQuery cardQueryService = new CardQuery(tenant);
@@ -329,6 +339,18 @@ namespace Logitude.Accounting.BL.Utils
             }
         }
 
+        private BatchTaskExecutionUpdateService GetBatchTaskUpdateServiceInstance(int tenant)
+        {
+            IInfrastructureContext context = InfrastructureContext.GetContext(tenant);
+            BatchTaskExecutionUpdateService batchTaskExecutionUpdateService = new BatchTaskExecutionUpdateService(context, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), tenant);
+            return batchTaskExecutionUpdateService;
+        }
 
+
+    }
+    public class CardGLAccountConnectArg
+    {
+        public int Tenant { get; set; }
+        public BatchTaskExecutionPM BatchTask { get; set; }
     }
 }
