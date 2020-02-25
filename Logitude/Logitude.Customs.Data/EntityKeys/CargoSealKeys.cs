@@ -12,11 +12,7 @@ namespace Logitude.Customs.Data.EntityKeys
 {
    public partial class CargoSealKeys : EntityKeyFields
    {
-   	  public string CargoSealIdentifierId  { get; set; }
-	  
-				 
-	    			   
-	  public string SealNumber  { get; set; }
+   	  public string Id  { get; set; }
 	  
 				 
 	    			   
@@ -24,7 +20,7 @@ namespace Logitude.Customs.Data.EntityKeys
 	 
 	  public override string GetFullKey()
       {
-          return CargoSealIdentifierId+'_'+SealNumber;
+          return Id;
       }
 
       public override string GetEntityPMName()
