@@ -14,7 +14,7 @@ namespace Logitude.Accounting.BL.InterestEntityQueryServices.InterestQueryServis
     {
         public InterestEntityResult GetInterestEntity(string Id, int Tenant)
         {
-            ARInvoiceQuery aRInvoiceQuery = new ARInvoiceQuery();
+            ARInvoiceQuery aRInvoiceQuery = new ARInvoiceQuery(Tenant);
             ARInvoicePM aRInvoice = aRInvoiceQuery.GetSinglePM(Id, Tenant);
             InterestEntityResult result = new InterestEntityResult();
             result.EntityId = aRInvoice.Id;

@@ -64,6 +64,8 @@ namespace Logitude.Accounting.Data.EntityLists
        public string InterestReportStatusLocalName  { get; set; }
        [DataMember]
        public string CustomerId  { get; set; }
+       [DataMember]
+       public string CustomerName  { get; set; }
    }
 
 }

@@ -21,6 +21,7 @@ namespace Logitude.BL.GlobalModel.EntityPMs
         public string UpdatedByUserName { get; set; }
         public DateTime UpdateDate { get; set; }
         public string Description { get; set; }
+        public string SearchFields { get; set; }
 
     }
 }

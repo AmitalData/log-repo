@@ -381,6 +381,16 @@ namespace WebFreight.Web.WebPages
                     data = manager.DownloadStaticFile(documentName, "how-to");
                     break;
 
+                case "74":
+                    documentName = "amanac_interface_setup_process.pdf";
+                    data = manager.DownloadStaticFile(documentName, "how-to");
+                    break;
+
+                case "75":
+                    documentName = "api_users_guide.pdf";
+                    data = manager.DownloadStaticFile(documentName, "how-to");
+                    break;
+
                 case "REL001":
                     documentName = "december_2015_release.pdf";
                     data = manager.DownloadStaticFile(documentName, "how-to");

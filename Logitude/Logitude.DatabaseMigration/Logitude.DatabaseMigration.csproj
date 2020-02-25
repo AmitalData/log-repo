@@ -2083,6 +2083,10 @@
     <Compile Include="Migrations\202002131039026_WesamAddAvailableForSchedulingFieldToReportTable.Designer.cs">
       <DependentUpon>202002131039026_WesamAddAvailableForSchedulingFieldToReportTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202002241216153_Fix_EntityId_In_Journal.cs" />
+    <Compile Include="Migrations\202002241216153_Fix_EntityId_In_Journal.Designer.cs">
+      <DependentUpon>202002241216153_Fix_EntityId_In_Journal.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\202002041333119_InterestTransactionMigration.cs" />
     <Compile Include="Migrations\202002041333119_InterestTransactionMigration.Designer.cs">
@@ -3761,6 +3765,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202002131039026_WesamAddAvailableForSchedulingFieldToReportTable.resx">
       <DependentUpon>202002131039026_WesamAddAvailableForSchedulingFieldToReportTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002241216153_Fix_EntityId_In_Journal.resx">
+      <DependentUpon>202002241216153_Fix_EntityId_In_Journal.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

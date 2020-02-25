@@ -5474,7 +5474,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
  
                  
 			   TextCode AirlineAreasTextCode_TH6 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Airline.TH.Areas", DefaultText = "Areas",LocalDefaultText = "Areas", ObjectTableId = AirlineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature AirlineAreasFeature_TH6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Airline.Tab.Areas", ObjectTableId = AirlineObjectTable.Id, Tenant = 0, NameTextCodeCode = "AirlineFeatures.ALAR", NameTextCodeDefaultText = "Areas", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature AirlineAreasFeature_TH6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Airline.Tab.Areas", ObjectTableId = AirlineObjectTable.Id, Tenant = 0, NameTextCodeCode = "AirlineFeatures.ALAR", NameTextCodeDefaultText = "Areas", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
  
                  
 			   TextCode AirlineSurchargeTariffTextCode_TH7 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Airline.TH.SurchargeTariff", DefaultText = "Surcharge Tariff",LocalDefaultText = null, ObjectTableId = AirlineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);

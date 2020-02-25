@@ -2614,9 +2614,7 @@ export class ShipmentPayableItem extends BaseComponent {
                             }
 
                             case "SCGW": {
-                                _QuantityTotal = ArrayTool.Sum(this.InsideItemsSource, "GrossWeightPerStorageDays");
-                                _Ratio = _QuantityTotal == 0 ? 0 : this.Quantity / _QuantityTotal;
-                                unitPrice = _Ratio * this.UnitPrice;
+                                unitPrice = this.UnitPrice;
                                 quantity = item.GrossWeightPerStorageDays;
                                 break;
                             }

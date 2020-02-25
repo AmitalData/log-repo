@@ -250,7 +250,7 @@ namespace Logitude.Accounting.BL.Validators
                                 AddError(errorsList, /*"Insert ledger Transaction but Is not Reconciled "*/M_InsertledgerTransactionbutIsnotReconciled);
                             }
                         }
-                        if (!(CreatedByReconciliationAfterConversion  || createdByReconciliationStageB))
+                        if (!(CreatedByReconciliationAfterConversion  /*|| createdByReconciliationStageB*/))
                         {
 
 

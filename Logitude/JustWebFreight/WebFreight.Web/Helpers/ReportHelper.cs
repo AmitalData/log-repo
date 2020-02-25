@@ -97,6 +97,7 @@ namespace WebFreight.Web.Helpers
                                     InActive = report.InActive,
                                     ReportGroupId = report.ReportGroupId,
                                     FeatureId = report.FeatureId,
+                                    FeatureUniqeCode = report.FeatureUniqeCode,
                                     AvailableForScheduling = report.AvailableForScheduling,
                                 };
                                 reportRepository.Add(newReport);
@@ -2162,7 +2163,9 @@ namespace WebFreight.Web.Helpers
                             InActive = report.InActive,
                             ReportGroupId = report.ReportGroupId,
                             FeatureId = report.FeatureId,
-                            LocalName = report.LocalName
+                            LocalName = report.LocalName,
+                            FeatureUniqeCode = report.FeatureUniqeCode,
+                            AvailableForScheduling = report.AvailableForScheduling,
                         };
                         reportRepository.Add(newReport);
                         myReports.Add(newReport);

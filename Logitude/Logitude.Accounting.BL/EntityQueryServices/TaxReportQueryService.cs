@@ -53,7 +53,13 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                     select a);
             return query;
         }
-
+        public bool CheckIfThereIsLineWithoutTransmit(string taxReportId, int tenant)
+        {
+            return (from a in context.TaxReportLines
+                                               where a.TaxReportId == taxReportId && a.Tenant == tenant && a.TransmitStatusCode == "0"
+                                               select a).Any();
+          
+        }
         public List<TaxReport> GetFutureActiveReports(DateTime dateTime, int tenant) // not cancelled
         {
             TaxReportRepository reportsRepo = new TaxReportRepository(context);

@@ -669,8 +669,9 @@ export class NewGeneralAPInvoiceComponent extends BaseComponent {
         this.ValidationErrorsList = errors;
 
         if (this.ValidationErrorsList.length == 0) {
-            this.ValidateInvoiceNumber(errors);
+            this.CompleteSubmission();
         }
+    
     }
 
     ValidateInvoiceNumber(errors:string[]) {

@@ -118,6 +118,7 @@ import { TaxReportExtendedPMService } from './Services/ExtendedPMs/TaxReportExte
 import { OpenFormatReportStatusListService } from './Services/StandardLists/OpenFormatReportStatusListService';
 
 import { InterestBasesTypeMenuButtonsHandler } from './Components/MenuButtons/InterestBasesTypeMenuButtonsHandler';
+import { InterestReportMenuButtonsHandler } from './Components/MenuButtons/InterestReportMenuButtonsHandler';
 import { JournalMenuButtonsHandler } from './Components/MenuButtons/JournalMenuButtonsHandler';
 import { GLAccountMenuButtonsHandler } from './Components/MenuButtons/GLAccountMenuButtonsHandler';
 import { CashBookMenuButtonsHandler } from './Components/MenuButtons/CashBookMenuButtonsHandler';
@@ -283,6 +284,7 @@ export class ModuleProviders {
 
             //Menu Buttons
             case "JournalMenuButtonsHandler": { myResult = new JournalMenuButtonsHandler; break; }
+            case "InterestReportMenuButtonsHandler": { myResult = new InterestReportMenuButtonsHandler; break; }
             case "GLAccountMenuButtonsHandler": { myResult = new GLAccountMenuButtonsHandler; break; }
             case "CashBookMenuButtonsHandler": { myResult = new CashBookMenuButtonsHandler; break; }
             case "BankDepositMenuButtonsHandler": { myResult = new BankDepositMenuButtonsHandler; break; }
