@@ -293,6 +293,16 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
         this.columns = [];
 
         this.columns.push({
+            FieldName: 'IntegratorName',
+            DataTypeCode: 'String',
+            Display: TextCodeTranslator.Translate("Customs.CourierMaster.F.IntegratorName"),
+            Styles: { width: '150px' },
+            IsCustomTemplate: true,
+            //ServerSideSortable: true,
+            //SortByName: 'IntegratorName'
+        });
+
+        this.columns.push({
             FieldName: 'PrefixMAWB',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.CourierMaster.F.MAWB"),

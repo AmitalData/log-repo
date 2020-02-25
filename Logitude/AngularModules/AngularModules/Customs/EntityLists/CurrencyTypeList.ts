@@ -13,6 +13,9 @@ export class CurrencyTypeList {
 	LocalName: string;
 	SearchFields: string;
 	Inactive: boolean;
+	TenantInactive: boolean;
+	MehesInactive: boolean;
+	CodeSorted: string;
 	
 }
  

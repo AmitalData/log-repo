@@ -29,7 +29,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         SealCompletenessStateCode, 
 	         SealTypeCode, 
 	         UpdateReasonCode, 
-	         UpdateTypeCode,
+	         UpdateTypeCode, 
+	         Id,
 	      }
 
 
@@ -47,7 +48,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         UpdateReasonCode, 
 	         UpdateReasonName, 
 	         UpdateTypeCode, 
-	         UpdateTypeName,
+	         UpdateTypeName, 
+	         Id,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -56,9 +58,19 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	    public void PMToPOCO(CargoSealPM entityPM, CargoSeal entityPOCO)
         {
 			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CargoSealIdentifierId))
+            {
+				entityPOCO.CargoSealIdentifierId = entityPM.CargoSealIdentifierId;
+			}
+			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
             {
 				entityPOCO.Tenant = entityPM.Tenant;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SealNumber))
+            {
+				entityPOCO.SealNumber = entityPM.SealNumber;
 			}
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Remarks))
@@ -130,15 +142,30 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.UpdateTypeCode = entityPOCO.UpdateTypeCode;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Id))
+            {
+					entityPM.Id = entityPOCO.Id;
+            }
+
 		}
 
 		public void PMToOldPM(CargoSealPM entityPM, CargoSealPM oldEntityPM)
         {
 		     oldEntityPM.ChangedProperties.Clear();
 			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CargoSealIdentifierId))
+            {
+                oldEntityPM.CargoSealIdentifierId = entityPM.CargoSealIdentifierId;
+            }
+			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
             {
                 oldEntityPM.Tenant = entityPM.Tenant;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SealNumber))
+            {
+                oldEntityPM.SealNumber = entityPM.SealNumber;
             }
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Remarks))

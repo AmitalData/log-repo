@@ -140,7 +140,7 @@ export class CargoSealsQueryComponent
                     this.SetFieldsEnabled(false);
                 }
             }
-            if (this.CustomFileNo != null && this.CurrentEntity.Status== null)
+             if (this.CustomFileNo != null && (this.CurrentEntity==null|| this.CurrentEntity.Status== null))
                 this.CustomFileNoTextChanged(this.CustomFileNo);
           
         });

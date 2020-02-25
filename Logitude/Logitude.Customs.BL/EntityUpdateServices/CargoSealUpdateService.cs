@@ -1,6 +1,7 @@
 ﻿using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Def.EntityPMs;
 using Logitude.Server.Tools;
+using Logitude.Server.Tools.Counters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         {
             if (entityParentPM != null)
             {
+                entityPM.Id = IdCounter.GetNumber("Customs.CargoSeal", entityPM.Tenant);
                 entityPM.CargoSealIdentifierId = entityParentPM.Id;
                 entityPM.Tenant = entityParentPM.Tenant;
             }
