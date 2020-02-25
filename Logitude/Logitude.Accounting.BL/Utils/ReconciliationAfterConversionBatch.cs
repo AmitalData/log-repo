@@ -374,7 +374,8 @@ namespace Logitude.Accounting.BL.Utils
                 this._valueToMatch = 0m;
                 if (journalLine.ActionCode == "1")
                 {
-                    this._valueToMatch = journalLine.LocalAmount + (journalLine.ExternalOpenAmount ?? 0m); // because in credit lines the ExternalOpenAmount is negative 
+ //                   this._valueToMatch = journalLine.LocalAmount + (journalLine.ExternalOpenAmount ?? 0m); // because in credit lines the ExternalOpenAmount is negative 
+                    this._valueToMatch = -(journalLine.LocalAmount + (journalLine.ExternalOpenAmount ?? 0m)); // because in credit lines the ExternalOpenAmount is negative 
                 }
                 else if (journalLine.ActionCode == "2")
                 {
