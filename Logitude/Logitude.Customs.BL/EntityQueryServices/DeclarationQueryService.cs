@@ -1718,15 +1718,15 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return isFreight;
         }
 
-        public List<DeclarationList> GetDeclarationAmendmentsById(int tenant, string id, bool orderById=false)
+        public List<DeclarationList> GetDeclarationAmendmentsById(int tenant, string id, bool orderById = false)
         {
- 
-            List<Declaration> declarations = repository.GetDeclarationAmendmentsById(tenant , id);
+
+            List<Declaration> declarations = repository.GetDeclarationAmendmentsById(tenant, id);
             List<AmendmentStatusPM> amendmentStatusPMs = new List<AmendmentStatusPM>();
             AmendmentStatusRepository amendmentStatusRepository = new AmendmentStatusRepository(context);
             List<DeclarationList> declarationLists = new List<DeclarationList>();
             UserRepository userRepository = new UserRepository();
-             var amendmentStatuses=  amendmentStatusRepository.GetAll();
+            var amendmentStatuses = amendmentStatusRepository.GetAll();
             var users = userRepository.GetAll();
             var i = 1;
             foreach (Declaration item in declarations)
@@ -1742,21 +1742,27 @@ namespace Logitude.Customs.BL.EntityQueryServices
                     AmendmentStatus = item.AmendmentStatus,
                     AmendmentOriginalDeclartation = item.AmendmentOriginalDeclartation,
                     AmendmentissueDate = item.AmendmentissueDate,
-                    AmendmentNumber = i
                 };
                 if (item.AmendmentCorrectedByUserId != null) declarationList.AmendmentCorrectedByUserName = users.FirstOrDefault(x => x.Id == item.AmendmentCorrectedByUserId).Code;
                 if (item.AmendmentStatus != null) declarationList.AmendmentStatusName = amendmentStatuses.FirstOrDefault(x => x.Code == item.AmendmentStatus).Name;
 
-                i++;
                 declarationLists.Add(declarationList);
             }
-            if(orderById)
+            if (orderById)
             {
-                return declarationLists.OrderBy(x => x.AmendmentRequestNumber).ToList();
+                declarationLists = declarationLists.OrderBy(x => x.AmendmentRequestNumber).ToList();
+                declarationLists.ForEach(x => { x.AmendmentNumber = i; i++; });
+
+                return declarationLists.ToList();
 
 
             }
-            return declarationLists.OrderByDescending(x=>x.AmendmentissueDate).ToList();
+            declarationLists = declarationLists.OrderByDescending(x => x.AmendmentissueDate).ToList();
+
+            declarationLists.ForEach(x => { x.AmendmentNumber = i; i++; }) ;
+
+            return declarationLists.ToList();
+
         }
 
     }
