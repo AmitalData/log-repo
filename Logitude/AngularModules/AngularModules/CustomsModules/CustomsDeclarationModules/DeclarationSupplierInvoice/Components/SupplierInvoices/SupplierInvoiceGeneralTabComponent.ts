@@ -1205,25 +1205,27 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent
     }
     private _CustomsCountryListService: CustomsCountryListService = new CustomsCountryListService();
     SelectionOriginCompleted(args) {
-        if (args.UpdateAll) {
-            for (let item of this.EntityPM.SupplierInvoiceItems.filter(d => !d.IsParent)) {
-                if (item.OriginCountryCode != args.OriginCountryCode) {
-                    this.UpdateOriginCountry(item, args.OriginCountryCode);
-                }
-            }
-        } else {
-            if (args.UpdateItemsWithNoValue) {
+        if (args.ItemsSource != null) {
+            if (args.UpdateAll) {
                 for (let item of this.EntityPM.SupplierInvoiceItems.filter(d => !d.IsParent)) {
-                    if (item.OriginCountryCode == "" || item.OriginCountryCode == null) {
+                    if (item.OriginCountryCode != args.OriginCountryCode) {
                         this.UpdateOriginCountry(item, args.OriginCountryCode);
                     }
                 }
             } else {
-                if (args.ItemsSource) {
+                if (args.UpdateItemsWithNoValue) {
                     for (let item of this.EntityPM.SupplierInvoiceItems.filter(d => !d.IsParent)) {
-                        var number = args.ItemsSource.Collection.filter(d => d.Number == item.SequenceNumeric)[0];
-                        if (number) {
+                        if (item.OriginCountryCode == "" || item.OriginCountryCode == null) {
                             this.UpdateOriginCountry(item, args.OriginCountryCode);
+                        }
+                    }
+                } else {
+                    if (args.ItemsSource) {
+                        for (let item of this.EntityPM.SupplierInvoiceItems.filter(d => !d.IsParent)) {
+                            var number = args.ItemsSource.Collection.filter(d => d.Number == item.SequenceNumeric)[0];
+                            if (number) {
+                                this.UpdateOriginCountry(item, args.OriginCountryCode);
+                            }
                         }
                     }
                 }
