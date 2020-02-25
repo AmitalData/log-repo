@@ -86,6 +86,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    DBTableName =  "DocumentFolders",
 			      				    ObjectTableSingular =  "Document Folder",
 			      				    ObjectTablePlural =  "Document Folders",
+			      				    ClientModuleName =  "Common",
 			      				    DefaultText =  "Document Folder",
 			      				    Name =  "Document Folders",
 			      				    IsNewWizard =  true,
