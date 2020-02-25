@@ -26,15 +26,22 @@
             color: black;
             font-family: sans-serif;
         }
+
+     .disabled{
+        pointer-events: none;
+        opacity: 0.7;
+        cursor: default;
+    }
     </style>
 
-<div>
+<div >
 
     <custom-message-wrapper [CustomSendOptionsButtonCanForcePersonalSign]="false"
-                            [IsShowCustomResponseContent]="false">
+                            [IsShowCustomResponseContent]="false" [CustomRequestContentIsDisable] ="IsDisplayOnly"
+                           >
 
         <!-- Request -->
-        <div class="class-request-content">
+        <div class="class-request-content" *ngIf="IsReady">
             <table *ngIf="IsReady" style="width: 750px;height: 400px; padding-top: 10px;">
 
                 <tr class="FormFieldRow" *ngIf="IsDisplayOnly">
@@ -172,10 +179,24 @@
                                                [IsImporterDetails]="true"
                                                [ItemHeight]="36"
                                                [HideIcons]="true"
+                                               [IsDisabled]="IsDisplayOnly"
                                                [HasFilters]="true"
                                                (LostFocus)="ImporterNumberLostFocus($event)"
                                                (TextChanged)="ImporterNumberTextChanged($event)"
                                                (ItemClicked)="ImporterNumberClicked($event)"></SearchBox>
+                                </td>
+
+
+                                <td style="width: 90px;">
+                                    <LogLabel [ObjectFieldName]="'StatusName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td style="width: 120px;">
+                                    <LogTextBox [ObjectFieldName]="'StatusName'"
+                                                [InputType]="text"
+                                                [DataContext]="DataContext"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [HideColumns]="true"
+                                                [Text]="StatusName"></LogTextBox>
                                 </td>
                             </tr>
 
@@ -306,14 +327,14 @@
 
                                                             <!-- Remarks -->
                                                             <log-column [header]="'Customs.CargoSeal.F.Remarks' | TextCodeTranslationPipe"
-                                                                        [binding]="'Remarks'" [width]="'150'" [Alignment]="'right'">
+                                                                        [binding]="'Remarks'" [width]="'150'" [Alignment]="'right'"  [Editable]="true" >
                                                                 <log-cell-template template="let item" #logcelltemplate>
-                                                                    <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                    <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode"  style="text-align:right">
                                                                         <span>{{item.Remarks}}</span>
                                                                     </div>
-                                                                    <div *ngIf="logcelltemplate.IsEditMode" style="height: 90%; width: 90%;">
+                                                                    <div *ngIf="logcelltemplate.IsEditMode" style="height: 100%; width: 100%;"  >
                                                                         <LogTextBox [ObjectFieldName]="'Remarks'" [InputType]="'ntext'" [DataContext]="item"
-                                                                                    [ObjectTableName]="'Customs.SealType'" [HideColumns]="true"
+                                                                                    [ObjectTableName]="'Customs.SealType'" [HideColumns]="true" 
                                                                                     [IsMultiline]="true"></LogTextBox>
                                                                     </div>
                                                                 </log-cell-template>
@@ -345,7 +366,7 @@
                             <tr class="FormFieldRow" *ngIf="IsResponseMessageVisibility">
                                 <td colspan="12" style="width: 500px; height:50px">
                                     <table>
-                                        <tr class="FormFieldRow">
+                                        <!--<tr class="FormFieldRow">
                                             <td style="width: 500px;">
                                                 <div style="width: 100%; height:22px; text-align:right">
                                                     <div>
@@ -355,7 +376,7 @@
                                             </td>
 
                                             <td><div></div></td>
-                                        </tr>
+                                        </tr>-->
 
                                         <tr class="FormFieldRow">
                                             <td style="width: 500px;">
@@ -379,17 +400,18 @@
 
         <!-- Response -->
         <div class="class-response-content" style="width: 500px;height: 50px;">
-            <table style="width: 500px;height: 50px;padding-top: 10px;">
+            <table style="width: 500px;height:70px;padding-top: 10px;">
 
-                <tr style="height: 46px;">
+                <tr style="height: 70px;">
                     <td>
                         <table>
                             <tr class="FormFieldRow">
-                                <td style="width: 130px;">
+                                <!--<td style="width: 300px;">
                                     <LogLabel [ObjectFieldName]="'ResponseMessage'" [DataContext]="DataContext" [TextCode]="'Customs.Claim.TH.CustomAnswer'"></LogLabel>
-                                </td>
-                                <td style="width: 130px;">
-                                    <LogTextBox [ObjectFieldName]="'ResponseMessage'" [DataContext]="DataContext"> </LogTextBox>
+                                </td>-->
+                                <td style="width: 300px;">
+                                    <LogTextBox [ObjectFieldName]="'ResponseMessage'" [DataContext]="DataContext"  
+> </LogTextBox>
                                 </td>
 
                                 <td><div></div></td>

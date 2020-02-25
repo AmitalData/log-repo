@@ -1359,6 +1359,7 @@
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CourierStatusViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CouriersVatViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CourtInstanceViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CurrencyTypeTenantViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CurrencyTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CustomBanksCardViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CustomBankViewsController.Generated.cs" />
@@ -1593,6 +1594,7 @@
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CourierMasterController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CourierPendingReasonController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CouriersVatController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CurrencyTypeTenantController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CustomBankController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CustomDocumentTypeController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CustomsAirlineController.Generated.cs" />
@@ -2668,6 +2670,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CourierPendingReasonUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CourierStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CouriersVatUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CurrencyTypeTenantUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CustomsAirlineUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CustomsAutonomyKeywordUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CustomsDocumentsDefinitionUpdateClass.cs" />
@@ -2973,6 +2976,7 @@
     <Content Include="Integration Test\Security\ShipmentSecurityTest.postman_collection.json" />
     <Content Include="Integration Test\DocsIn\DocumentsIn.postman_collection.json" />
     <Content Include="Integration Test\DocsOut\DocumentsOut.postman_collection.json" />
+    <None Include="Properties\PublishProfiles\FeatureBranchPub.pubxml" />
     <None Include="Properties\PublishProfiles\main.pubxml" />
     <None Include="Properties\PublishProfiles\NewPublish.pubxml" />
     <None Include="Resources\A252_2015_020151011133801779020300040816.mrt" />

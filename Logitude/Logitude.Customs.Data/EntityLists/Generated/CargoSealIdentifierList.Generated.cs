@@ -38,6 +38,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string CargoIdentifierKey3  { get; set; }
        [DataMember]
        public string Status  { get; set; }
+       [DataMember]
+       public string StatusName  { get; set; }
    }
 
 }

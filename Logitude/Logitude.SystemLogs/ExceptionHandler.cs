@@ -16,6 +16,7 @@ namespace Logitude.SystemLogs
             {
                 DbContextBaseUtil.MaxPoolSizeWasReachedWhileSave = DateTime.Now;
             }
+            exception = exception ?? new Exception(ExtraMessage??"");
             if (exception.ToString().Contains("max pool size was reached"))
             {
                 if (InjectionUtil.Instance.IISManager != null)

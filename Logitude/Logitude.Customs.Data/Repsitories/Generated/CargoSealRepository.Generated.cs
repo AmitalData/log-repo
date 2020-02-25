@@ -28,10 +28,10 @@ namespace Logitude.Customs.Data.Repsitories
 
 		 
 		
-		public  CargoSeal GetSingle(string cargosealidentifierid, string sealnumber, int tenant)
+		public  CargoSeal GetSingle(string id, int tenant)
         {
             return (from a in context.CargoSeals
-                    where a.CargoSealIdentifierId == cargosealidentifierid && a.SealNumber == sealnumber && a.Tenant == tenant
+                    where a.Id == id && a.Tenant == tenant
                     select a).FirstOrDefault();
         }
 
@@ -46,7 +46,7 @@ namespace Logitude.Customs.Data.Repsitories
         {
             CargoSealKeys keys = entityKeys as CargoSealKeys;
             return (from a in context.CargoSeals
-                    where a.CargoSealIdentifierId == keys.CargoSealIdentifierId && a.SealNumber == keys.SealNumber
+                    where a.Id == keys.Id
                     select a).FirstOrDefault();
         }
 		         
