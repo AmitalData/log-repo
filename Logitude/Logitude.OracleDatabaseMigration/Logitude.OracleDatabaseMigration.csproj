@@ -516,6 +516,10 @@
     <Compile Include="Migrations\202002250555150_AddTenantInactive.Designer.cs">
       <DependentUpon>202002250555150_AddTenantInactive.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202002250857069_CargoSealsAddIdField.cs" />
+    <Compile Include="Migrations\202002250857069_CargoSealsAddIdField.Designer.cs">
+      <DependentUpon>202002250857069_CargoSealsAddIdField.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -893,6 +897,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202002250555150_AddTenantInactive.resx">
       <DependentUpon>202002250555150_AddTenantInactive.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002250857069_CargoSealsAddIdField.resx">
+      <DependentUpon>202002250857069_CargoSealsAddIdField.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\logitude.oracledatabasemigration.dll.licenses" />
   </ItemGroup>
