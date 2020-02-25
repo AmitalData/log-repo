@@ -6,16 +6,14 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-export class CurrencyTypeList {
+export class CurrencyTypeTenantList {
    
+	Id: string;
+	Tenant: number;
+	UpdateDate: Date;
+	UpdatedByUserId: string;
 	Code: string;
-	EnglishName: string;
-	LocalName: string;
-	SearchFields: string;
-	Inactive: boolean;
 	TenantInactive: boolean;
-	MehesInactive: boolean;
-	CodeSorted: string;
 	
 }
  
