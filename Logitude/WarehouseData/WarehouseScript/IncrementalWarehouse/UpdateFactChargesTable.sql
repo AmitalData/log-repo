@@ -57,24 +57,17 @@
 
 
    declare @ChargesType as int
-   declare @OpenReceivablesinLocal as float
-   declare @AccountedReceivablesinLocal as float
    declare @OpenPayablesinLocal as float
    declare @AccountedPayablesinLocal as float
-   declare @OpenReceivablesinProfit as float
-   declare @AccountedReceivablesinProfit as float
    declare @OpenPayablesinProfit as float
    declare @AccountedPayablesinProfit as float
    declare @InvoiceNumber as varchar(20)
    declare @InvoiceCurrencyExchangeRate as float
-   declare @IsOpenReceivable as bit
-   declare @IsOpenPayable as bit
-   declare @IsAccountedPayable as bit
-   declare @IsAccountedReceivable as bit
+
 
 
    declare @InvoiceCurrency as int
-   declare @VATamountinInvoiceCurrency as int
+   declare @VATamountinInvoiceCurrency as float
     declare @ShipmentPayablesReceivablesType as varchar(20)
 	declare @ReceivablesTotalAmount as float
 	declare @ReceivablesTotalAmountLocal as float
@@ -155,7 +148,14 @@
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
 
-
+	declare @OpenReceivablesinLocal as float =0
+   declare @AccountedReceivablesinLocal as float =0
+    declare @OpenReceivablesinProfit as float =0
+   declare @AccountedReceivablesinProfit as float =0
+    declare @IsOpenReceivable as bit = 0
+   declare @IsOpenPayable as bit = 0
+   declare @IsAccountedPayable as bit = 0
+   declare @IsAccountedReceivable as bit = 0
 
 	--------------Long Master Number------------------
 	 if(@TransportModeId = 'A' and @Master is not null and @AirlinePrefix is not null)
@@ -165,7 +165,7 @@
     ----------------------------------------------
 
 	--------------Shipment Type------------------
-	if(@TransportModeId = 'A' and @type ='Not Specified')  BEGIN
+	if(@TransportModeId = 'A' and @Type ='Not Specified')  BEGIN
 	 set @Type = 'Air';
 	 end
     ----------------------------------------------

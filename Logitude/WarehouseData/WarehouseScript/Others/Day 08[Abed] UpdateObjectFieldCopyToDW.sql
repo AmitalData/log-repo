@@ -88,5 +88,5 @@ update  ObjectFields set CopyToDW = 1  where ObjectTableId = (select id from Obj
 
 
 
-update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'ChargesType') and (FieldName = 'Code' or FieldName = 'EnglishName' or FieldName = 'LocalName' or FieldName = 'Notes' or FieldName = 'ChargesGroupCode' or FieldName='ChargesGroupId')
+update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'ChargesType') and (FieldName = 'Code' or FieldName = 'EnglishName' or FieldName = 'LocalName'  or FieldName = 'ChargesGroupCode' or FieldName='ChargesGroupId')
 

@@ -41,26 +41,18 @@
 
 
 
-
    declare @ChargesType as int
-   declare @OpenReceivablesinLocal as float
-   declare @AccountedReceivablesinLocal as float
+
    declare @OpenPayablesinLocal as float
    declare @AccountedPayablesinLocal as float
-   declare @OpenReceivablesinProfit as float
-   declare @AccountedReceivablesinProfit as float
+  
    declare @OpenPayablesinProfit as float
    declare @AccountedPayablesinProfit as float
    declare @InvoiceNumber as varchar(20)
    declare @InvoiceCurrencyExchangeRate as float
-   declare @IsOpenReceivable as bit
-   declare @IsOpenPayable as bit
-   declare @IsAccountedPayable as bit
-   declare @IsAccountedReceivable as bit
-
 
    declare @InvoiceCurrency as int
-   declare @VATamountinInvoiceCurrency as int
+   declare @VATamountinInvoiceCurrency as float
     declare @ShipmentPayablesReceivablesType as varchar(20)
 	declare @ReceivablesTotalAmount as float
 	declare @ReceivablesTotalAmountLocal as float
@@ -97,6 +89,13 @@
 	 ,ShipmentPayablesReceivables.OpenPayablesinLocal , ShipmentPayablesReceivables.OpenPayablesinProfit ,ShipmentPayablesReceivables.AccountedPayablesinLocal,ShipmentPayablesReceivables.AccountedPayablesinProfit
 	 ,ShipmentPayablesReceivables.ReceivablesTotalAmount,  ShipmentPayablesReceivables.ReceivablesTotalAmountLocal,  ShipmentPayablesReceivables.InvoiceLineId , ShipmentPayablesReceivables.AmountInInvoiceCurrency
 	
+
+	
+
+
+
+
+
 	
 	From dw_Shipments
 	inner JOIN NewDIM_Tenants SourceTenant ON dw_Shipments.Tenant = SourceTenant.[Tenant Number]
@@ -141,6 +140,16 @@
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
 
+    declare @OpenReceivablesinLocal as float =0
+   declare @AccountedReceivablesinLocal as float =0
+    declare @OpenReceivablesinProfit as float =0
+   declare @AccountedReceivablesinProfit as float =0
+      declare @IsOpenReceivable as bit = 0
+   declare @IsOpenPayable as bit = 0
+   declare @IsAccountedPayable as bit = 0
+   declare @IsAccountedReceivable as bit = 0
+
+
 
 
 	--------------Long Master Number------------------
@@ -151,7 +160,7 @@
     ----------------------------------------------
 
 	--------------Shipment Type------------------
-	if(@TransportModeId = 'A' and @type ='Not Specified')  BEGIN
+	if(@TransportModeId = 'A' and @Type ='Not Specified')  BEGIN
 	 set @Type = 'Air';
 	 end
     ----------------------------------------------
@@ -169,13 +178,6 @@
 		 End
 
 
-		 set @IsAccountedReceivable = 0;
-		 set @IsOpenReceivable = 0;
-		 set @IsOpenPayable = 0;
-		 set @IsAccountedPayable = 0;
-
-
-
 		  --Receivables
 		   if(@ShipmentPayablesReceivablesType = 'Receivables')
 		BEGIN
@@ -184,10 +186,11 @@
 				  if(@ReceivablesInvoiceLineId is not null)
 				
 				  BEGIN
-					set @AccountedReceivablesinProfit  = @ReceivablesTotalAmount;
+					set @AccountedReceivablesinProfit  =@ReceivablesTotalAmount;
 					set @AccountedReceivablesinLocal  = @ReceivablesTotalAmountLocal;
 				    set @OpenReceivablesinProfit  = 0;
 					set @OpenReceivablesinLocal  = 0;
+
 					 set @IsOpenReceivable  =0;
 					set  @IsAccountedReceivable = 1;
 
@@ -236,7 +239,7 @@
       values(@Id, @SourceTenant,@ParentTenant,@Direction,@TransportMode, @DirectHouse, @Type , @Department ,@Branch , @ShipmentNumber , @House ,@Master ,  @Agent,@Customer,
 	  @Salesman , @AccountManager ,    @Status, @MainCarriageFromPort ,@MainCarriageToPort , dbo.GetDateFormateAsNumber(@CreateDate) ,@CreateDate  ,@AgentReference1, @AgentReference2,@CustomerReference1, @CustomerReference2, @CreatedBy,
       @Carrier ,   dbo.GetDateFormateAsNumber(@FirstOperationalCloseDate), @SpecialServices , @MasterShipmentNumber,
-     @ChargesType ,  @InvoiceNumber ,@InvoiceCurrency ,@InvoiceCurrencyExchangeRate ,   @OpenPayablesinLocal,@OpenPayablesinProfit,@AccountedPayablesinLocal , @AccountedPayablesinProfit, @OpenReceivablesinLocal,@OpenReceivablesinProfit,@AccountedReceivablesinLocal,@AccountedPayablesinProfit, @IsOpenReceivable,@IsOpenPayable,@IsAccountedReceivable, @IsAccountedPayable, @VATamountinInvoiceCurrency )
+     @ChargesType ,  @InvoiceNumber ,@InvoiceCurrency ,@InvoiceCurrencyExchangeRate ,   @OpenPayablesinLocal,@OpenPayablesinProfit,@AccountedPayablesinLocal , @AccountedPayablesinProfit, @OpenReceivablesinLocal,@OpenReceivablesinProfit,@AccountedReceivablesinLocal,@AccountedReceivablesinProfit, @IsOpenReceivable,@IsOpenPayable,@IsAccountedReceivable, @IsAccountedPayable, @VATamountinInvoiceCurrency )
 
 	END TRY 
 BEGIN CATCH  
