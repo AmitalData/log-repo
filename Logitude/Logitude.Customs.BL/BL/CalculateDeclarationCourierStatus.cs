@@ -347,11 +347,14 @@ namespace Logitude.Customs.BL.BL
         {
             var customContext = CustomContext.GetContext(myDeclarationCourierStatusPM.Tenant);
             CustomsDocumentsTicketQueryService myCustomsDocumentsTicketQueryService = new CustomsDocumentsTicketQueryService(customContext);
-            List<CustomsDocumentsTicketPM> customsDocumentsTicketPMList = myCustomsDocumentsTicketQueryService.GetCustomsDocumentsTicketPMsByEntityIdAndChilds(declarationPM.Id, "", "", "", myDeclarationCourierStatusPM.Tenant, "Declaration").Where(r => r.DocumentStatusCode == "1").ToList();
-            if (customsDocumentsTicketPMList == null || customsDocumentsTicketPMList.Count() < 1)
+            CustomDocumentTypeQueryService docTypeQuery = new CustomDocumentTypeQueryService(customContext);
+            //List<CustomsDocumentsTicketPM> customsDocumentsTicketPMList = myCustomsDocumentsTicketQueryService.GetCustomsDocumentsTicketPMsByEntityIdAndChilds(declarationPM.Id, "", "", "", myDeclarationCourierStatusPM.Tenant, "Declaration").Where(r => r.DocumentStatusCode != "1").ToList();
+
+            List<CustomsDocumentsTicketPM> customsDocumentsTicketPMList = myCustomsDocumentsTicketQueryService.GetCustomsDocumentsTicketPMsByEntityIdAndChilds(declarationPM.Id, "", "", "", myDeclarationCourierStatusPM.Tenant, "Declaration");
+            List<CustomsDocumentsTicketPM> customsDocumentsTicketPMListNotSend = customsDocumentsTicketPMList.Where(r => r.DocumentStatusCode != "1").ToList();
+            if (customsDocumentsTicketPMListNotSend == null || customsDocumentsTicketPMListNotSend.Count() < 1)
             {
-                CustomDocumentTypeQueryService docTypeQuery = new CustomDocumentTypeQueryService(customContext);
-                foreach (CustomsDocumentsTicketPM customsDocumentsTicketPMItem in customsDocumentsTicketPMList)
+                foreach (CustomsDocumentsTicketPM customsDocumentsTicketPMItem in customsDocumentsTicketPMListNotSend)
                 {
                     CustomDocumentTypePM docType = docTypeQuery.GetSingle(customsDocumentsTicketPMItem.DocumentTypeCode, false, false);
                     if (docType.IsCourierManadatory)
@@ -360,6 +363,41 @@ namespace Logitude.Customs.BL.BL
                     }                      
                 }
             }
+
+
+            List<CustomDocumentTypePM> CustomDocumentTypePMList = docTypeQuery.GetMandatoryCustomDocumentTypesForCourier(declarationPM.Tenant);
+            if (CustomDocumentTypePMList != null)
+            {
+                foreach (CustomDocumentTypePM customDocumentTypePMItem in CustomDocumentTypePMList)
+                {
+                    CustomsDocumentsTicketPM customsDocumentsTicketPM = customsDocumentsTicketPMList.Where(d => d.DocumentTypeCode == customDocumentTypePMItem.Code).FirstOrDefault();
+                    if (customsDocumentsTicketPM == null)
+                    {
+                        return true;
+                    }
+                }
+            }
+
+
+            string CargoTypeCode = null;
+            if (declarationPM.Consignments != null && declarationPM.Consignments.Count() > 0)
+            {
+                CargoTypeCode = declarationPM.Consignments[0].CargoTypeCode;
+            }
+            var myCustomsDocumentsDefinitionQueryService = new CustomsDocumentsDefinitionQueryService(declarationPM.Tenant);
+            List<CustomsDocumentsDefinitionPM> listCustomsDocumentsDefinition = myCustomsDocumentsDefinitionQueryService.GetCustomsDocumentsDefinitionsForDeclaration(CargoTypeCode, declarationPM.ProcedureCurrentCode, declarationPM.TransportModeId, 1);
+            if (listCustomsDocumentsDefinition != null || listCustomsDocumentsDefinition.Count() > 0)
+            {
+                foreach (CustomsDocumentsDefinitionPM customsDocumentsDefinitionPMItem in listCustomsDocumentsDefinition)
+                {
+                    CustomsDocumentsTicketPM customsDocumentsTicketPM = customsDocumentsTicketPMList.Where(d => d.DocumentTypeCode == customsDocumentsDefinitionPMItem.DocumentTypeCode).FirstOrDefault();
+                    if (customsDocumentsTicketPM == null)
+                    {
+                        return true;
+                    }
+                }
+            }
+
 
             return false;
         }    
