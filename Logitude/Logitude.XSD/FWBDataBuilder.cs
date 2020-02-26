@@ -395,6 +395,7 @@ namespace Logitude.XSD
             #region [12] RateDescription
 
             bool isHarmonizeExists = !string.IsNullOrEmpty(Context.MainHarmonize) ? true : false;
+            bool isSLACExists = !string.IsNullOrEmpty(Context.SLAC) ? true : false;
 
             if (Context.IsMultipleCommodities)
             {
@@ -601,11 +602,30 @@ namespace Logitude.XSD
                         listRateDescription.Add(listRateHarmonizeItem);
                     }
 
+                    if (isSLACExists)
+                    {
+                        CHAMP.RateDescriptionFullBody listRateSLACItem = new CHAMP.RateDescriptionFullBody()
+                        {
+                            RateDescriptionFullChoices = new CHAMP.RateDescriptionFullChoices()
+                            {
+                                RateDescriptionMainBody = new CHAMP.RateDescriptionMainBody()
+                                {
+                                    Item = new CHAMP.ShippersLoadAndCount()
+                                    {
+                                        SLAC = Context.SLAC,
+                                    },
+                                }
+                            }
+                        };
+
+                        listRateDescription.Add(listRateSLACItem);
+                    }
+
                     #endregion
 
                     myXSDElement.RateDescription = new CHAMP.RateDescription()
                     {
-                        RateDescriptionFullBody = listRateDescription.ToArray<CHAMP.RateDescriptionFullBody>(),
+                        RateDescriptionFullBody = listRateDescription.ToArray<CHAMP.RateDescriptionFullBody>(),                        
                     };
                 }
             }
@@ -842,6 +862,25 @@ namespace Logitude.XSD
 
                         listRateDescription.Add(listRateHarmonizeItem);
                     }
+
+                    if (isSLACExists)
+                    {
+                        CHAMP.RateDescriptionFullBody listRateSLACItem = new CHAMP.RateDescriptionFullBody()
+                        {
+                            RateDescriptionFullChoices = new CHAMP.RateDescriptionFullChoices()
+                            {
+                                RateDescriptionMainBody = new CHAMP.RateDescriptionMainBody()
+                                {
+                                    Item = new CHAMP.ShippersLoadAndCount()
+                                    {
+                                        SLAC = Context.SLAC,
+                                    },
+                                }
+                            }
+                        };
+
+                        listRateDescription.Add(listRateSLACItem);
+                    }
                     #endregion
 
                     myXSDElement.RateDescription = new CHAMP.RateDescription()
@@ -849,7 +888,7 @@ namespace Logitude.XSD
                         RateDescriptionFullBody = listRateDescription.ToArray<CHAMP.RateDescriptionFullBody>(),
                     };
                 }
-            }
+            }            
             #endregion
 
             #region [13] Other Charges
@@ -1631,6 +1670,7 @@ namespace Logitude.XSD
             #region [12] RateDescription
 
             bool isHarmonizeExists = !string.IsNullOrEmpty(Context.MainHarmonize) ? true : false;
+            bool isSLACExists = !string.IsNullOrEmpty(Context.SLAC) ? true : false;
 
             if (Context.IsMultipleCommodities)
             {
@@ -1844,6 +1884,25 @@ namespace Logitude.XSD
                         };
 
                         listRateDescription.Add(listRateHarmonizeItem);
+                    }
+
+                    if (isSLACExists)
+                    {
+                        CHAMP17.RateDescriptionFullBody listRateSLACItem = new CHAMP17.RateDescriptionFullBody()
+                        {
+                            RateDescriptionFullChoices = new CHAMP17.RateDescriptionFullChoices()
+                            {
+                                RateDescriptionMainBody = new CHAMP17.RateDescriptionMainBody()
+                                {
+                                    Item = new CHAMP17.ShippersLoadAndCount()
+                                    {
+                                        SLAC = Context.SLAC,
+                                    },
+                                }
+                            }
+                        };
+
+                        listRateDescription.Add(listRateSLACItem);
                     }
                     #endregion
 
@@ -2138,13 +2197,31 @@ namespace Logitude.XSD
                     }
                     #endregion
 
+                    if (isSLACExists)
+                    {
+                        CHAMP17.RateDescriptionFullBody listRateSLACItem = new CHAMP17.RateDescriptionFullBody()
+                        {
+                            RateDescriptionFullChoices = new CHAMP17.RateDescriptionFullChoices()
+                            {
+                                RateDescriptionMainBody = new CHAMP17.RateDescriptionMainBody()
+                                {
+                                    Item = new CHAMP17.ShippersLoadAndCount()
+                                    {
+                                        SLAC = Context.SLAC,
+                                    },
+                                }
+                            }
+                        };
+
+                        listRateDescription.Add(listRateSLACItem);
+                    }
                     #endregion
 
                     myXSDElement.RateDescription = listRateDescription.ToArray<CHAMP17.RateDescriptionFullBody>();
                 }
             }
             #endregion
-
+            
             #region [13] Other Charges
             if (!Context.AsAgreedOtherCharges)
             {
@@ -3372,9 +3449,9 @@ namespace Logitude.XSD
 
                     myXSDElement.RateDescription = listRateDescription.ToArray<GLSHK.RateDescDetail>();
                 }
-            }            
+            }
             #endregion
-
+            
             #region Other Charges
             if (!Context.AsAgreedOtherCharges)
             {
