@@ -10,20 +10,25 @@ import {ShipmentPMService} from './StandardPMs/ShipmentPMService';
 import {ShipmentList} from '../EntityLists/ShipmentList';
 import { MessagingStockUsageHistoryList } from '../EntityLists/MessagingStockUsageHistoryList';
 import { AppTool } from '../../Infrastructure/Tools';
+
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+
 @Injectable()
 
 export class ShipmentDomainService {
     private _http: Http
+    private _httpClient: HttpClient
     private _apiUrl: string;
     constructor() {
         this._http = ServiceHelper.Http;
+        this._httpClient = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ShipmentDomain';
     }
 
     GetShipmentsCounts(myDirectionId: string, myTransportModeId: string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-
+        
         var url = this._apiUrl + '/GetShipmentsCounts?myDirectionId=' + myDirectionId + '&myTransportModeId=' + myTransportModeId;
 
         return Observable.defer(() => {
