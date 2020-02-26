@@ -34,10 +34,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
             {
                 entityPOCO.CargoSealIdentifierId = entityPM.CargoSealIdentifierId;
                 entityPOCO.Tenant = entityPM.Tenant;
-                entityPOCO.SealNumber = entityPM.SealNumber;
-                entityPOCO.Id = entityPM.Id;
+             
 
             }
+            entityPOCO.Id = entityPM.Id;
+            entityPOCO.SealNumber = entityPM.SealNumber;
             entityPOCO.SealTypeCode = entityPM.SealTypeCode;
                 entityPOCO.UpdateTypeCode = entityPM.UpdateTypeCode;
                 entityPOCO.UpdateReasonCode = entityPM.UpdateReasonCode;
