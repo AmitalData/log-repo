@@ -138,6 +138,18 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             //}
         }
 
+        protected override void OnUpdating(SupplierInvoiceItemPM entityPM, SupplierInvoiceItem entityPOCO)
+        {
+            DateTime stopLogAt = new DateTime(2020, 06, 01);
+            string logData = "";
+            if (entityPM.ClassificationCode != entityPOCO.ClassificationCode)
+            {
+                logData = $"entityPM.ClassificationCode(New value)={entityPM.ClassificationCode},entityPOCO.ClassificationCode(Old value)={entityPOCO.ClassificationCode}"; 
+                LogitudeSettings.HandleLogMe("ClassificationCode changed " + logData, false, "SupplierInvoiceItemUpdate.ClassificationCode", stopLogAt);                
+            }
+            base.OnUpdating(entityPM, entityPOCO);
+        }
+
         protected override void OnUpdating(SupplierInvoiceItemPM entityPM)
         {
             bool isValid = true;
