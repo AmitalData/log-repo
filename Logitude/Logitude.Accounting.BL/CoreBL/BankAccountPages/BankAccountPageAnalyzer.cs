@@ -282,12 +282,15 @@ s             b                   a
             _ReconcileExternalPageQueryService = new ReconcileExternalPageQueryService(tenant);
 
             var bankPagesGBAccountNumber = (from bp in bankPages
-                                            group bp by new { bp.BankCode, bp.MyBankAccountM.AccountNumber }
+                                            group bp by new { bp.BankCode, bp.MyBankAccountM.AccountNumber ,
+                                                CurrencyCode = 
+                                                bp.MyBankAccountM.IsForeignCurrency? bp.MyBankAccountM.CurrencyCodeISO : "NIS" }
                      );
             foreach (var pagesOfAccountGroup in bankPagesGBAccountNumber)
             {
                 var BankCode = pagesOfAccountGroup.Key.BankCode;
                 var AccountNumber = pagesOfAccountGroup.Key.AccountNumber;
+                string currencyCode = pagesOfAccountGroup.Key.CurrencyCode;
                 var pagesOfAccount = pagesOfAccountGroup.ToList();
 
 
@@ -302,13 +305,14 @@ s             b                   a
                     });
                     continue;
                 }
-                var dbBankaccountPM = _BankAccountQueryService.GetBankAccountByBankIdAccNumber(bankcodePM.Id, AccountNumber, tenant);
+                var dbBankaccountPM = _BankAccountQueryService.GetBankAccountListByBankIdAccNumber(bankcodePM.Id, AccountNumber, tenant)
+                    .FirstOrDefault(r => r.CurrencyCode == currencyCode);
                 if (dbBankaccountPM == null)
                 {
                     MyResultLoadBankPage.ValidateBankPageAgaintDBErrors.Add(
                         new MyDTO()
                         {
-                            Message = $"לא אותר חשבון בנק {BankCode}-{AccountNumber}",
+                            Message = $"לא אותר חשבון בנק {BankCode}-{AccountNumber}-{currencyCode}",
                             RawLine = pagesOfAccount.First().RawLine
                             //$"BankCode {BankCode}  ,AccountNumber {AccountNumber} not exist in Tenant  {pagesOfAccount.First().RawLine}"
 
@@ -387,7 +391,7 @@ s             b                   a
                 if (prevReconcileExternalPagePM.CloseBalance != newPageOfBankAccount.MyBankAccountM.OpenBalance)
                 {
                     //MyResultLoadBankPage.ValidateBankPageAgaintDBErrors.Add($"BankCode {newPageOfBankAccount.BankCode}  ,AccountNumber {newPageOfBankAccount.MyBankAccountM.AccountNumber} pageNo {newPageOfBankAccount.MyBankAccountM.PageNo} >  prevReconcileExternalPagePM.CloseBalance {prevReconcileExternalPagePM.CloseBalance} != OpenBalance  {newPageOfBankAccount.MyBankAccountM.OpenBalance}");
-                    var ACCNUMBER = $"{ newPageOfBankAccount.BankCode}-{ newPageOfBankAccount.MyBankAccountM.AccountNumber}";
+                    var ACCNUMBER = $"{ newPageOfBankAccount.BankCode}-{ newPageOfBankAccount.MyBankAccountM.AccountNumber}-{newPageOfBankAccount.MyBankAccountM.CurrencyCodeISO}";
                     MyResultLoadBankPage.ValidateBankPageAgaintDBErrors.Add(
                         new MyDTO()
                         {
@@ -558,7 +562,7 @@ s             b                   a
 
         private void AddSuccessInsertBankPage(ReconcileExternalPagePM entityPM, BankPageDTO newPageOfBankAccount)
         {
-            string b = $"{newPageOfBankAccount.BankCode}-{newPageOfBankAccount.MyBankAccountM.AccountNumber}";
+            string b = $"{newPageOfBankAccount.BankCode}-{newPageOfBankAccount.MyBankAccountM.AccountNumber}-{newPageOfBankAccount.MyBankAccountM.CurrencyCodeISO}";
             this.MyResultLoadBankPage.DBSuccessPageList.Add(
                 new MyDTO()
                 {
