@@ -36,7 +36,7 @@ export class RootComponent_Cust implements OnInit {
 
   Boot(args: any) {
     ServiceHelper.Http = args["Http"];
-    SessionLocator.Http = args["Http"];
+    ServiceHelper.HttpClient = args["HttpClient"];
     DynamicLoader_Cust.Compiler = args["Compiler"];
     DynamicLoader_Cust.Resolver = args["Resolver"];
     DynamicLoader_Cust.Injector = args["Injector"];
