@@ -59,7 +59,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
             List<string> declarationIds = new List<string>();
             declarationPMs.ForEach(x => declarationIds.Add(x.Id));
-
+            declarationIds.Add(declarationId);
                 List<PhysicalCheck> checks = repository.GetPhysicalChecksByDeclarationIds(declarationIds, tenant);
             List<PhysicalCheckList> checkLists = new List<PhysicalCheckList>();
             foreach (PhysicalCheck a in checks)
