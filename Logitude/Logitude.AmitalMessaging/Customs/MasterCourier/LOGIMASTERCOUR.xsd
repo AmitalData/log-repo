@@ -25,6 +25,7 @@
         <xs:element minOccurs="0" maxOccurs="1" ref="StorageSiteCode" />
         <xs:element minOccurs="0" maxOccurs="1" ref="IntegratorIndex" />
         <xs:element minOccurs="0" maxOccurs="1" ref="NoOfCourierHawb" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="TruckerId" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -43,4 +44,5 @@
   <xs:element name="StorageSiteCode" type="xs:string" />
   <xs:element name="IntegratorIndex" type="xs:string" />
   <xs:element name="NoOfCourierHawb" type="xs:string" />
+  <xs:element name="TruckerId" type="xs:string" />
 </xs:schema>
