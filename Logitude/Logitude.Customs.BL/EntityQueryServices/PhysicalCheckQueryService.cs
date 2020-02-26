@@ -21,9 +21,46 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return repository.GetIdByCheckId(CheckId, tenant);
         }
 
+        //public List<PhysicalCheckList> GetPhysicalChecksByDeclarationId(string declarationId, int tenant)
+        //{
+        //    List<PhysicalCheck>  checks=  repository.GetPhysicalChecksByDeclarationId(declarationId, tenant);
+        //    List<PhysicalCheckList> checkLists = new List<PhysicalCheckList>();
+        //    foreach (PhysicalCheck a in checks)
+        //    {
+        //        PhysicalCheckList check = new PhysicalCheckList()
+        //        {
+        //            Id = a.Id,
+        //            Tenant = a.Tenant,
+        //           // DeclarationId = a.DeclarationId,
+        //            CheckSiteCode = a.CheckSiteCode,
+        //           DeclarationNo = a.Declaration != null ? a.Declaration.DeclarationNumber : null,
+        //           CustomerName = a.Declaration.CustomerCard != null? a.Declaration.CustomerCard.LocalName : null,
+        //           StorageSiteName = a.StorageSite != null ? a.StorageSite.LocalName : null,
+        //           CheckSiteName = a.CheckSite != null? a.CheckSite.LocalName : null,
+        //           QueueTypeName  = a.CheckQueueType != null ? a.CheckQueueType.LocalName : null,
+        //           LimitDate = a.LimitDate,
+        //           CheckId = a.CheckId,
+        //           ContainerNubmer = a.ContainerNubmer,
+        //           OperationName = a.Operation != null ? a.Operation.LocalName : null,
+        //        };
+        //        checkLists.Add(check);
+        //    }
+
+        //    return checkLists;
+        //}
+
+
+
         public List<PhysicalCheckList> GetPhysicalChecksByDeclarationId(string declarationId, int tenant)
         {
-            List<PhysicalCheck>  checks=  repository.GetPhysicalChecksByDeclarationId(declarationId, tenant);
+            DeclarationQueryService declarationQueryService = new DeclarationQueryService(tenant);
+
+           var declarationPMs = declarationQueryService.GetDeclarationAmendmentsById(tenant, declarationId);
+
+            List<string> declarationIds = new List<string>();
+            declarationPMs.ForEach(x => declarationIds.Add(x.Id));
+
+                List<PhysicalCheck> checks = repository.GetPhysicalChecksByDeclarationIds(declarationIds, tenant);
             List<PhysicalCheckList> checkLists = new List<PhysicalCheckList>();
             foreach (PhysicalCheck a in checks)
             {
@@ -31,23 +68,24 @@ namespace Logitude.Customs.BL.EntityQueryServices
                 {
                     Id = a.Id,
                     Tenant = a.Tenant,
-                   // DeclarationId = a.DeclarationId,
+                    // DeclarationId = a.DeclarationId,
                     CheckSiteCode = a.CheckSiteCode,
-                   DeclarationNo = a.Declaration != null ? a.Declaration.DeclarationNumber : null,
-                   CustomerName = a.Declaration.CustomerCard != null? a.Declaration.CustomerCard.LocalName : null,
-                   StorageSiteName = a.StorageSite != null ? a.StorageSite.LocalName : null,
-                   CheckSiteName = a.CheckSite != null? a.CheckSite.LocalName : null,
-                   QueueTypeName  = a.CheckQueueType != null ? a.CheckQueueType.LocalName : null,
-                   LimitDate = a.LimitDate,
-                   CheckId = a.CheckId,
-                   ContainerNubmer = a.ContainerNubmer,
-                   OperationName = a.Operation != null ? a.Operation.LocalName : null,
+                    DeclarationNo = a.Declaration != null ? a.Declaration.DeclarationNumber : null,
+                    CustomerName = a.Declaration.CustomerCard != null ? a.Declaration.CustomerCard.LocalName : null,
+                    StorageSiteName = a.StorageSite != null ? a.StorageSite.LocalName : null,
+                    CheckSiteName = a.CheckSite != null ? a.CheckSite.LocalName : null,
+                    QueueTypeName = a.CheckQueueType != null ? a.CheckQueueType.LocalName : null,
+                    LimitDate = a.LimitDate,
+                    CheckId = a.CheckId,
+                    ContainerNubmer = a.ContainerNubmer,
+                    OperationName = a.Operation != null ? a.Operation.LocalName : null,
                 };
                 checkLists.Add(check);
             }
 
             return checkLists;
         }
+
 
         //<--- Yuval Chalup 17.11.2014 TASK-9089
         public List<PhysicalCheck> GethysicalCheckByDeclarationIdOnly(string declarationId, int tenant)
