@@ -330,6 +330,9 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 declare @DIM_PartnersOpenBalanceLocalNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_PartnersOpenBalanceLocalNewId OUTPUT,'DWObjectField' 
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom) Values(@DIM_PartnersOpenBalanceLocalNewId,0,'DIM_Partners','[Open Balance (Local)]','Open Balance (Local)','Decimal','false',0,0,'false','false','true','false','false','false')  
+declare @DIM_PartnersLeadSourceNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_PartnersLeadSourceNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom) Values(@DIM_PartnersLeadSourceNewId,0,'DIM_Partners','[Lead Source]','Lead Source','Text','false',0,60,'false','false','true','false','false','false')  
 ------------------------------------------------------------------------------------
 declare @DIM_PortsNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_PortsNewId OUTPUT,'DWObjectTable' 
