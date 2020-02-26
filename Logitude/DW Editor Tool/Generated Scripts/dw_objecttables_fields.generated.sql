@@ -638,9 +638,9 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 declare @Fact_ChargesMasterShipmentNumberNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ChargesMasterShipmentNumberNewId OUTPUT,'DWObjectField' 
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom) Values(@Fact_ChargesMasterShipmentNumberNewId,0,'Fact_Charges','[Master Shipment Number]','Master Shipment Number','Text','false',0,20,'false','false','true','Operational ','false','false','false')  
-declare @Fact_ChargesChargeTypeNewId varchar(15)
-execute usp_GetNextTableIdValue @Fact_ChargesChargeTypeNewId OUTPUT,'DWObjectField' 
-insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,DimensionTableCode,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom) Values(@Fact_ChargesChargeTypeNewId,0,'Fact_Charges','[Charge Type]','Charge Type','Dimension','true',0,0,'DIM_ChargesTypes','false','false','true','General','false','false','false')  
+declare @Fact_ChargesChargesTypeNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ChargesChargesTypeNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,DimensionTableCode,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom) Values(@Fact_ChargesChargesTypeNewId,0,'Fact_Charges','[Charges Type]','Charges Type','Dimension','true',0,0,'DIM_ChargesTypes','false','false','true','General','false','false','false')  
 declare @Fact_ChargesOpenReceivablesinLocalNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ChargesOpenReceivablesinLocalNewId OUTPUT,'DWObjectField' 
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,AggregationTypeCode,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom) Values(@Fact_ChargesOpenReceivablesinLocalNewId,0,'Fact_Charges','[Open Receivables in Local]','Open Receivables in Local','Decimal','false',0,0,'false','true','SUM','true','false','false','false')  
@@ -665,9 +665,6 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 declare @Fact_ChargesAccountedPayablesinProfitNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ChargesAccountedPayablesinProfitNewId OUTPUT,'DWObjectField' 
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,AggregationTypeCode,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom) Values(@Fact_ChargesAccountedPayablesinProfitNewId,0,'Fact_Charges','[Accounted Payables in Profit]','Accounted Payables in Profit','Decimal','false',0,0,'false','true','SUM','true','false','false','false')  
-declare @Fact_ChargesInvoiceNumberNewId varchar(15)
-execute usp_GetNextTableIdValue @Fact_ChargesInvoiceNumberNewId OUTPUT,'DWObjectField' 
-insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,AggregationTypeCode,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom) Values(@Fact_ChargesInvoiceNumberNewId,0,'Fact_Charges','[Invoice Number]','Invoice Number','Text','false',0,20,'false','false','SUM','true','false','false','false')  
 declare @Fact_ChargesInvoiceExchangeRateNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ChargesInvoiceExchangeRateNewId OUTPUT,'DWObjectField' 
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,AggregationTypeCode,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom) Values(@Fact_ChargesInvoiceExchangeRateNewId,0,'Fact_Charges','[Invoice Exchange Rate]','Invoice Exchange Rate','Decimal','false',0,0,'false','true','SUM','true','false','false','false')  
@@ -679,16 +676,22 @@ execute usp_GetNextTableIdValue @Fact_ChargesIsAccountedReceivableNewId OUTPUT,'
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom) Values(@Fact_ChargesIsAccountedReceivableNewId,0,'Fact_Charges','[Is Accounted Receivable]','Is Accounted Receivable','Boolean','false',0,0,'false','false','true','false','false','false')  
 declare @Fact_ChargesIsOpenPayableNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ChargesIsOpenPayableNewId OUTPUT,'DWObjectField' 
-insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom) Values(@Fact_ChargesIsOpenPayableNewId,0,'Fact_Charges','[ Is Open Payable]',' Is Open Payable','Boolean','false',0,0,'false','false','true','false','false','false')  
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom) Values(@Fact_ChargesIsOpenPayableNewId,0,'Fact_Charges','[Is Open Payable]','Is Open Payable','Boolean','false',0,0,'false','false','true','false','false','false')  
 declare @Fact_ChargesIsAccountedPayableNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ChargesIsAccountedPayableNewId OUTPUT,'DWObjectField' 
-insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom) Values(@Fact_ChargesIsAccountedPayableNewId,0,'Fact_Charges','[ Is Accounted Payable]',' Is Accounted Payable','Boolean','false',0,0,'false','false','true','false','false','false')  
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom) Values(@Fact_ChargesIsAccountedPayableNewId,0,'Fact_Charges','[Is Accounted Payable]','Is Accounted Payable','Boolean','false',0,0,'false','false','true','false','false','false')  
 declare @Fact_ChargesInvoiceCurrencyNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ChargesInvoiceCurrencyNewId OUTPUT,'DWObjectField' 
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,DimensionTableCode,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom) Values(@Fact_ChargesInvoiceCurrencyNewId,0,'Fact_Charges','[Invoice Currency]','Invoice Currency','Dimension','false',0,0,'DIM_Currencies','false','false','true','false','false','false')  
+declare @Fact_ChargesCreateDateTimeNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ChargesCreateDateTimeNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom) Values(@Fact_ChargesCreateDateTimeNewId,0,'Fact_Charges','[Create Date Time]','Create Date Time','DateTime','false',0,0,'false','false','true','Dates','false','false','false')  
+declare @Fact_ChargesInvoiceNumberNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ChargesInvoiceNumberNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom) Values(@Fact_ChargesInvoiceNumberNewId,0,'Fact_Charges','[Invoice Number]','Invoice Number','Text','false',0,20,'false','false','true','false','false','false')  
 declare @Fact_ChargesVATamountinInvoiceCurrencyNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ChargesVATamountinInvoiceCurrencyNewId OUTPUT,'DWObjectField' 
-insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,DimensionTableCode,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom) Values(@Fact_ChargesVATamountinInvoiceCurrencyNewId,0,'Fact_Charges','[VAT amount in Invoice Currency]','VAT amount in Invoice Currency','Dimension','false',0,0,'DIM_Currencies','false','false','true','false','false','false')  
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom) Values(@Fact_ChargesVATamountinInvoiceCurrencyNewId,0,'Fact_Charges','[VAT amount in Invoice Currency]','VAT amount in Invoice Currency','Decimal','false',0,0,'false','false','true','false','false','false')  
 ------------------------------------------------------------------------------------
 declare @Fact_ShipmentsNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ShipmentsNewId OUTPUT,'DWObjectTable' 

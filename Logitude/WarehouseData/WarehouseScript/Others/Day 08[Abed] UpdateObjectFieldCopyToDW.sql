@@ -79,14 +79,14 @@ update  ObjectFields  set CopyToDW = 1  where ObjectTableId = (select id from Ob
 
 
 update  ObjectFields set CopyToDW = 1  where ObjectTableId = (select id from ObjectTables where Name = 'ShipmentPayable') and (FieldName = 'ChargesTypeId' or FieldName = 'ShipmentId'  or FieldName = 'OpenAmount' or FieldName = 'OpenAmountInLocalCurrency' or FieldName = 'OpenAmountInProfitCurrency' or FieldName = 'AccountedAmount' or FieldName = 'AccountedAmountInLocalCurrency' or FieldName = 'AccountedAmountInProfitCurrency' )
-update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'APInvoiceLine') and (FieldName = 'EntityPayableId' or FieldName = 'LineNumber')
+update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'APInvoiceLineId') and (FieldName = 'EntityPayableId' or FieldName = 'LineNumber')
 update  ObjectFields set CopyToDW = 1  where ObjectTableId = (select id from ObjectTables where Name = 'APInvoice') and (FieldName = 'InvoiceNumber' or FieldName = 'AmountInInvoiceCurrency'  or FieldName = 'InvoiceCurrencyId' or FieldName = 'InvoiceCurrencyExchangeRate' )
 
 update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'ShipmentReceivable') and (FieldName = 'ChargesTypeId' or FieldName = 'ShipmentId' or FieldName = 'TotalAmount' or FieldName = 'TotalAmountLocal' or FieldName =  'ARInvoiceLineId' )
-update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'ARInvoiceLine') and (FieldName = 'ReceivableId' or FieldName = 'ARInvoiceId')
+update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'ARInvoiceLineId') and (FieldName = 'ReceivableId' or FieldName = 'ARInvoiceId')
 update  ObjectFields set CopyToDW = 1  where ObjectTableId = (select id from ObjectTables where Name = 'ARInvoice') and (FieldName = 'InvoiceNumber' or FieldName = 'AmountInInvoiceCurrency'  or FieldName = 'InvoiceCurrencyId' or FieldName = 'InvoiceCurrencyExchangeRate' )
 
 
 
-update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'ChargesType') and (FieldName = 'Code' or FieldName = 'EnglishName' or FieldName = 'LocalName' or FieldName = 'Notes' or FieldName = 'ChargesGroupCode' or FieldName='ChargesGroupId')
+update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'ChargesType') and (FieldName = 'Code' or FieldName = 'EnglishName' or FieldName = 'LocalName'  or FieldName = 'ChargesGroupCode' or FieldName='ChargesGroupId')
 
