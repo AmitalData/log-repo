@@ -688,6 +688,70 @@
         }
 
 
+
+
+        function OnClickButtonReconcileStageBNoBatch() {
+
+            var defaultParam = new Object();
+            defaultParam.Tenant = 1;
+
+            if (!_ResponseToken) {
+                getToken();
+            }
+            try {
+                var myJson = $(".classTextBoxParam").val();
+
+                var objToCheck = JSON.parse(myJson);
+            } catch (e) {
+
+                var str = JSON.stringify(defaultParam);
+                $(".classTextBoxParam").val(str);
+                return false;
+            }
+            var objToCheck1 = JSON.parse(myJson);
+
+            var myUrl;
+            myUrl = _ReconciliationStageBUrl + "?tenant=" + objToCheck1.Tenant + "&noBatch=1";
+
+            //alert(myUrl);
+
+
+            $(".class_LabelLog").val("OnClickButtonReconcileStageB ..." + _ResponseToken);
+            $.ajax({
+                url: myUrl,
+                type: 'GET',
+                dataType: 'json',
+                headers: { 'Token': _ResponseToken },
+                contentType: 'application/json; charset=UTF-8', // This is the money shot
+                data: myJson,
+                success: function (response, textStatus, xhr) {
+                    //handle success 
+                    //alert("success ");;
+                    $(".class_LabelLog").val(JSON.stringify(response));
+                    DrawTableReconciliation(response, arryColumns);
+
+                    var obj = JSON.parse(myJson);
+                    obj.CallBack = response;
+                    var str = JSON.stringify(obj);
+                    $(".classTextBoxParam").val(str);
+                    //response.Token = response.Token;
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    if (textStatus != 'abort') {
+                        //handle error
+
+                        alert("error" + textStatus + errorThrown);
+
+                        $(".class_LabelLog").val(xhr.responseText);
+                    }
+                }
+            });
+
+
+            return false;
+        }
+
+
      
         function OnClickButtonCardGLAccountConnect() {
 
@@ -1211,6 +1275,7 @@ div#two {
                     <button id="ButtonReconcileStageB"  onclick="javascript:return OnClickButtonReconcileStageB();">Reconcile Stage B</button>        
                     <asp:Button id="_ButtonExternalReconcile" runat="server" onclick="_ButtonExternalReconcile_click"   Text="ExternalReconcile" />
                     <button id="ButtonReconcileAfterConversionNoBatch"  onclick="javascript:return OnClickButtonReconcileAfterConversionNoBatch();">Reconcile After Conversion - No Batch</button>        
+                    <button id="ButtonReconcileStageBNoBatch"  onclick="javascript:return OnClickButtonReconcileStageBNoBatch();">Reco Stage B - No Batch</button>        
                 </li>
                 <li>
                     <button id="ButtonRevaluationsBatch" onclick="javascript:return OnClickButtonRevaluationsBatch();" >RevaluationsBatch</button>

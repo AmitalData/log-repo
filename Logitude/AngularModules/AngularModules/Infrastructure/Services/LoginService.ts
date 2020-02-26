@@ -6,6 +6,7 @@ import {Observable} from 'rxjs/Observable';
 import {SessionLocator} from '../Utilities/SessionLocator';
 import {SessionInfo} from '../Utilities/SessionInfo';
 import {AppTool} from '../Tools';
+import { ServiceHelper } from '../Utilities/ServiceHelper';
 
 @Injectable()
 
@@ -21,7 +22,7 @@ export class LoginService {
     public LoggedUserId: string;
     public LoggedUserEmail: string;
     constructor() {
-        this._http = SessionLocator.Http;
+        this._http = ServiceHelper.Http;
         this.logitudeURL = AppTool.GetLogitudeURL();
         this.baseUrlApi = this.logitudeURL + "api/";
         this.baseMetaUrlApi = this.logitudeURL + "api/ngMetaData";

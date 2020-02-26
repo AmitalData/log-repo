@@ -184,7 +184,12 @@ export class InterestReportPM {
         }
     }
     //public InterestReportLinesByDates: Array<InterestReportLinesByDatePM>= [];
- 
+     private customerName: string;
+    public get CustomerName() { return this.customerName; }
+    public set CustomerName(newValue: string) { if (this.customerName != newValue) { this.customerName = newValue; this.MarkAsDirty("CustomerName"); } }
+       
+	 
+
     public OldEntityPM: InterestReportPM;
 		
     public IsDirty: boolean;

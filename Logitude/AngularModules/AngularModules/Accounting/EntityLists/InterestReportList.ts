@@ -33,6 +33,7 @@ export class InterestReportList {
 	SearchFields: string;
 	InterestReportStatusLocalName: string;
 	CustomerId: string;
+	CustomerName: string;
 	
 }
  
