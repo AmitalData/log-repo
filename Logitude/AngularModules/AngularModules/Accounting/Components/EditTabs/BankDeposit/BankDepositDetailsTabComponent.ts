@@ -1,3 +1,4 @@
+import { BankDepositLineListService } from './../../../Services/StandardLists/BankDepositLineListService';
 import { CashBookExtendedPMService } from './../../../Services/ExtendedPMs/CashBookExtendedPMService';
 import { filter } from 'rxjs/operators';
 import { CashBookLineListService } from './../../../Services/StandardLists/CashBookLineListService';
@@ -59,14 +60,15 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
 
 
     BankDepositPMService: BankDepositPMService = new BankDepositPMService();
-    _CashBookPMService: CashBookPMService = new CashBookPMService();
-    _CashBookListService: CashBookListService = new CashBookListService();
-    _CashBookLineListService: CashBookLineListService = new CashBookLineListService();
+    cashBookPMService: CashBookPMService = new CashBookPMService();
+    cashBookListService: CashBookListService = new CashBookListService();
+    cashBookLineListService: CashBookLineListService = new CashBookLineListService();
+    bankDepositLineListService: BankDepositLineListService = new BankDepositLineListService();
     ratesTableExtendedListService: RatesTableExtendedListService = new RatesTableExtendedListService();
     currencyListService: CurrencyListService = new CurrencyListService();
-    _BankDepositExtendedPMService: BankDepositExtendedPMService = new BankDepositExtendedPMService();
-    _ARPaymentChequeListService: ARPaymentChequeListService = new ARPaymentChequeListService();
-    _CashBookExtendedPMService: CashBookExtendedPMService = new CashBookExtendedPMService();
+    bankDepositExtendedPMService: BankDepositExtendedPMService = new BankDepositExtendedPMService();
+    arPaymentChequeListService: ARPaymentChequeListService = new ARPaymentChequeListService();
+    cashBookExtendedPMService: CashBookExtendedPMService = new CashBookExtendedPMService();
 
     constructor(private entityArgs: EntityArgs) {
         super();
@@ -87,9 +89,8 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
     private SetViewMode()
     {
         this.CurrentSession.CurrentEditComponent.EntityPM.IsDirty = false;
-
-        this.BankDepositLines = new ObservableCollection(this.EntityPM.BankDepositLines);
-        // this.BankDepositLines = this.EntityPM.BankDepositLines;
+        this.GetDepositLines();
+        // this.BankDepositLines = new ObservableCollection(this.EntityPM.BankDepositLines);
         this.SetUIProperty();
         this.CalculateDepositLinesTotal();
         console.log("Deposit: ", this.EntityPM);
@@ -103,6 +104,36 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
 
 
         this.BankDepositLines = new ObservableCollection([]);
+    }
+
+    GetDepositLines(){
+
+        this.CurrentSession.StartBusyIndicator("Load Deposit Lines ...");
+        this.bankDepositLineListService.getByFilters(this.GetDeposiutAPIFilters()).subscribe((response: ServiceResponse) => {
+            this.CurrentSession.StopBusyIndicator();
+            console.log("[bankDepositLineListService]", response);
+
+            if (!response.HasError) {
+                this.BankDepositLines = new ObservableCollection(response.Result);
+
+            }
+            else {
+                this.CurrentSession.CurrentEditComponent.ValidationErrorsList = response.ErrorsArray;
+            }
+        });
+    }
+
+    private GetDeposiutAPIFilters()
+    {
+        var depositAPIFilters = new ApiQueryFilters();
+        depositAPIFilters.GetAll = true;
+        depositAPIFilters.addAdditionalFilter("DepositId", this.EntityPM.Id, null, null, "Equals", false, false, false, "string");
+
+        if(this.searchText)
+            depositAPIFilters.addAdditionalFilter("SearchFields", this.searchText, null, null, "Contains", false, false, false, "string");
+
+
+        return depositAPIFilters;
     }
 
     private CalculateDepositLinesTotal()
@@ -149,11 +180,12 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
         // Redraw UI
         this.IsLinesSelection = false;
         this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
-        // this.CashBookLines = [];
-        this.CashbookLines = new ObservableCollection([]);
-        this.BankDepositLines = new ObservableCollection(this.EntityPM.BankDepositLines);
 
-        // this.BankDepositLines = this.EntityPM.BankDepositLines;
+        this.GetDepositLines();
+
+        this.CashbookLines = new ObservableCollection([]);
+        // this.BankDepositLines = new ObservableCollection(this.EntityPM.BankDepositLines);
+
         this.CalculateTotals();
 
         this.GetCashBook();
@@ -371,20 +403,21 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
 
     }
     FilterChequeDeposits() {
-        if (AppTool.IsNullOrEmpty(this.searchText)) {
-            // this.BankDepositLines = this.EntityPM.BankDepositLines;
-            this.BankDepositLines = new ObservableCollection(this.EntityPM.BankDepositLines);
+        this.GetDepositLines();
+
+        // if (AppTool.IsNullOrEmpty(this.searchText)) {
+        //     this.BankDepositLines = new ObservableCollection(this.EntityPM.BankDepositLines);
 
 
-        } else {
-            var filteredDepositedCheques = [];
-            filteredDepositedCheques = this.EntityPM.BankDepositLines.filter(d => d.SearchFields.toLowerCase().includes(this.searchText.toLowerCase()));
-            // this.BankDepositLines = filteredDepositedCheques;
+        // } else {
+        //     var filteredDepositedCheques = [];
+        //     filteredDepositedCheques = this.EntityPM.BankDepositLines.filter(d => d.SearchFields.toLowerCase().includes(this.searchText.toLowerCase()));
+        //     // this.BankDepositLines = filteredDepositedCheques;
 
-            this.BankDepositLines.Clear();
-            this.BankDepositLines = new ObservableCollection(filteredDepositedCheques);
+        //     this.BankDepositLines.Clear();
+        //     this.BankDepositLines = new ObservableCollection(filteredDepositedCheques);
 
-        }
+        // }
 
 
     }
@@ -396,7 +429,7 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
         this.CurrentSession.StartBusyIndicator("Loading Cashbook Data ...");
 
         //this._CashBookPMService.get(this.EntityPM.CashBookId)
-        this._CashBookListService.getSingle(this.EntityPM.CashBookId)
+        this.cashBookListService.getSingle(this.EntityPM.CashBookId)
             .subscribe(myResult =>
             {
                 this.CurrentSession.StopBusyIndicator();
@@ -452,9 +485,8 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
         this.BankDepositLines.Clear();
         this.EntityPM.BankDepositLines = [];
 
-        // this.BankDepositLines = [];
 
-        this._CashBookLineListService.getByFilters(this.GetCashbookLinesAPIFilters()).subscribe((response: ServiceResponse) =>
+        this.cashBookLineListService.getByFilters(this.GetCashbookLinesAPIFilters()).subscribe((response: ServiceResponse) =>
         {
             var result = response.Result;
             console.log("CashBookLineListService", result);
@@ -778,7 +810,7 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
     }
     ReturnCheque(chequeId:string ,returnType:string, notes: string) {
         this.CurrentSession.StartBusyIndicatorLoading();
-        this._BankDepositExtendedPMService.returnCheque(this.EntityPM.Id, chequeId, returnType, notes).subscribe(myResult => {
+        this.bankDepositExtendedPMService.returnCheque(this.EntityPM.Id, chequeId, returnType, notes).subscribe(myResult => {
 
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {
@@ -812,7 +844,7 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
     public ChequesCounter: CashbookChequesCounter = new CashbookChequesCounter();
     GetChequesCounter(){
         this.ChequesCounter = new CashbookChequesCounter();
-        this._CashBookExtendedPMService.GetCashbookChequesCounter(this.EntityPM.CashBookId)
+        this.cashBookExtendedPMService.GetCashbookChequesCounter(this.EntityPM.CashBookId)
             .subscribe((response: ServiceResponse) =>
             {
                 console.log("[GetCashbookChequesCounter]", response);

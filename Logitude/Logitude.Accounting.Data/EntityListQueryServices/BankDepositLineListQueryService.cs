@@ -39,6 +39,12 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                          Notes = a.Notes,
                                                          OutOfDepositeDate = a.OutOfDepositeDate,
                                                          Tenant = a.Tenant,
+                                                         ChequeStatusName = a.ARPaymentCheque.ARPaymentChequeStatus.EnglishName,
+                                                         ChequeStatusCode = a.ARPaymentCheque.ARPaymentChequeStatus.Code,
+                                                         ARPaymentId = a.ARPaymentCheque.PaymentId,
+                                                         ARPaymentNumber = a.ARPaymentCheque.Payment.PaymentNo,
+                                                         Bank = a.ARPaymentCheque.BankId,
+                                                         SearchFields = a.SearchFields,
 
                                                      });
             return query;
@@ -46,7 +52,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
         private IQueryable<BankDepositLine> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<BankDepositLine> iQueryable, int tenant)
         {
-            throw new NotImplementedException();
+            return iQueryable;
         }
         private IQueryable<BankDepositLine> ApplyBusinessUnitFilters(QueryOperations queryOperations, IQueryable<BankDepositLine> iQueryable, int tenant)
         {
