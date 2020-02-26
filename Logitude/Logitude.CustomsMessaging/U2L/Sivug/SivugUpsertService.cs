@@ -566,6 +566,18 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                     }
                     else if(this._INVOICE.QUE_TYPE == "SYS")
                     {
+                        if (int.TryParse(this._INVOICE.INVOICELINENO, out int1))
+                        {
+                            if (lineToSequence == null) lineToSequence = new List<LineToSequenceNumeric>();
+                            var lineToSequenceNumeric = new LineToSequenceNumeric();
+                            lineToSequenceNumeric.line = int1;
+                            lineToSequenceNumeric.sequenceNumeric = _MyDeclarationPM.SupplierInvoices.Where(si => si.UnfInvoiceCounterKey == this._INVOICE.SI_COUNTER).FirstOrDefault().SequenceNumeric.Value;
+                            lineToSequence.Add(lineToSequenceNumeric);
+                            if (this._MySupplierInvoicePM.SequenceNumeric != int1)
+                            {
+                                this._MySupplierInvoicePM.SequenceNumeric = int1;
+                            }
+                        }
                         this._MySupplierInvoicePM.ChangeSetOp = ChangeSetOperation.Update;
                         UpdateClassificationCodeOnly(this._INVOICE);
                         return;
@@ -728,11 +740,18 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                         .FirstOrDefault();
                     if (SupplierInvoiceItemPM != null)
                     {
-                        SupplierInvoiceItemPM.ChangeSetOp = ChangeSetOperation.Update;
                         if (invoiceItem.CLASSIFICATIONCODE != SupplierInvoiceItemPM.ClassificationCode) SupplierInvoiceItemPM.ClassificationCode = invoiceItem.CLASSIFICATIONCODE;
                         if (invoiceItem.TRADEAGREEMENTCODE != SupplierInvoiceItemPM.TradeAgreementCode)
                         {
-                            SupplierInvoiceItemPM.TradeAgreementCode = invoiceItem.TRADEAGREEMENTCODE;
+                            if ((String.IsNullOrWhiteSpace(invoiceItem.TRADEAGREEMENTCODE) || invoiceItem.TRADEAGREEMENTCODE == "1") && SupplierInvoiceItemPM.TradeAgreementCode != null)
+                            {
+                                SupplierInvoiceItemPM.TradeAgreementCode = null;
+                                SupplierInvoiceItemPM.ChangeSetOp = ChangeSetOperation.Update;
+                            }
+                            else if (!String.IsNullOrWhiteSpace(invoiceItem.TRADEAGREEMENTCODE))
+                            {
+                                SupplierInvoiceItemPM.TradeAgreementCode = TranslateTradeAgreementCode(invoiceItem.TRADEAGREEMENTCODE);
+                            }
                         }
                     }
                 }
@@ -810,7 +829,7 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                 //SupplierInvoiceItemPM.TradeAgreementCode = invoiceItem.TRADEAGREEMENTCODE;
                 if (!String.IsNullOrWhiteSpace(invoiceItem.TRADEAGREEMENTCODE))
                 {
-                    SupplierInvoiceItemPM.TradeAgreementCode = invoiceItem.TRADEAGREEMENTCODE;
+                    SupplierInvoiceItemPM.TradeAgreementCode = TranslateTradeAgreementCode(invoiceItem.TRADEAGREEMENTCODE);
                 }
                 // moran 18.3.15 - Task 11540 <--
                 if (invoiceItem.QUANTITY != null && !String.IsNullOrWhiteSpace(invoiceItem.QUANTITY))
@@ -1290,6 +1309,33 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
             }
             AppendLogLine("amitalMeasurmentUnit = " + amitalMeasurmentUnit + " Translated to " + myMeasurmentUnit.Code);
             return myMeasurmentUnit.Code;
+        }
+
+        private string TranslateTradeAgreementCode(string tradeAgreementCode)
+        {
+
+            if (String.IsNullOrWhiteSpace(tradeAgreementCode))
+            {
+                AppendLogLine("tradeAgreementCode is null");
+                return null;
+            }
+            var tradeAgreement = new TradeAgreementRepository(ResolvedTenant());
+            var myTradeAgreement = tradeAgreement.GetSingle(tradeAgreementCode);
+            if (myTradeAgreement == null)
+            {
+                string TradeAgreementCode = "";
+                TradeAgreementCode = GetTranslationL2P("IIGC", "CTBTARIFF", tradeAgreementCode);
+
+                if (!string.IsNullOrWhiteSpace(TradeAgreementCode)) return TradeAgreementCode;
+            }
+            else
+            {
+                return myTradeAgreement.Code;
+            }
+
+            AppendLogLine("tradeAgreementCode = " + tradeAgreementCode + " could not translate to Logitude Id");
+            return null;
+
         }
 
         internal class LineToSequenceNumeric
