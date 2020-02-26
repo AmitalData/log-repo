@@ -160,7 +160,6 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.Field10 = entityPM.Field10 != null ? entityPM.Field10.Value : null;
             entity.DebitAccount = entityPM.DebitAccount;
             entity.TransferTries = entityPM.TransferTries;
-            //entity.TransferError = entityPM.TransferError;
             entity.IsTransferStarted = entityPM.IsTransferStarted;
             entity.TransferStatusCode = entityPM.TransferStatusCode;
             entity.AccountingExternalCode = entityPM.AccountingExternalCode;
@@ -200,6 +199,7 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
                 }
             }
 
+            entityPM.TransferError = transferError;
             entity.TransferError = transferError;
 
             //Full Accounting 
