@@ -767,6 +767,9 @@ s             b                   a
         public string BankCode { get; private set; }
         public string BranchNumber { get; private set; }
         public string AccountNumber { get; private set; }
+        public string ShortBankAccount { get; private set; }
+        public bool IsForeignCurrency { get; private set; }
+        public string CurrencyCodeISO { get; private set; }
         public int PageNo { get; private set; }
 
         public decimal OpenBalance { get; set; }
@@ -798,6 +801,10 @@ s             b                   a
                 rec.BranchNumber = rawLine.Substring(7 - 1, 4).Trim();
 
                 rec.AccountNumber = rawLine.Substring(11 - 1, 16).Trim();
+                rec.ShortBankAccount = rawLine.Substring(27 - 1, 18).Trim();
+                rec.IsForeignCurrency = (rawLine.Substring(45 - 1, 1).Trim()=="1");
+                rec.CurrencyCodeISO = rawLine.Substring(46 - 1, 4).Trim() ;
+
                 rec.PageNo = int.Parse(rawLine.Substring(50 - 1, 8));
 
                 string OpenBalanceSign = rawLine.Substring(58 - 1, 1);
