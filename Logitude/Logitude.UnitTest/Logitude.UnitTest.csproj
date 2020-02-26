@@ -191,6 +191,10 @@
     <Folder Include="bin\Debug\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Accounting\UniTests\InterestReport\glaccountPeriods.csv" />
+    <None Include="Accounting\UniTests\InterestReport\interestPeriods.csv" />
+    <None Include="Accounting\UniTests\InterestReport\interesttransactions.csv" />
+    <None Include="Accounting\UniTests\InterestReport\interestTypes.csv" />
     <None Include="App.config" />
     <None Include="Fakes\Logitude.Accounting.BL.fakes" />
     <None Include="Fakes\Logitude.Accounting.Data.fakes" />

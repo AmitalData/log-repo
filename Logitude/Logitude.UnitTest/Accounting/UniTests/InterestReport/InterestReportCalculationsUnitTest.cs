@@ -33,7 +33,11 @@ namespace Logitude.UnitTest.Accounting.UniTests.InterestReport
                 InterestCalculationDate = new DateTime(2020, 2, 1),
                 GLAccountInterestCreditLimit=500,
             };
-
+            IInterestReportCalculationPreparations interestReportCalculationPreparations = new InterestReportCalculationFromCSVPreparations(@"Accounting\UniTests\InterestReport\");
+            
+            List<InterestTransactionPM> interestTransactionPMs = new List<InterestTransactionPM>();
+            List<GLAccountInterestPeriodPM> gLAccountInterestPeriodPMs = new List<GLAccountInterestPeriodPM>();
+            List<InterestBasesPeriodPM> interestBasesPeriodPMs = interestReportCalculationPreparations.GetAllInterestBasesPeriodPMs(1);
             GLAccountInterestPeriodPM glaccountInterestPeriodPM = new GLAccountInterestPeriodPM()
             {
                 CreditInterestRateBaseId = "CreditBaseId",
@@ -41,26 +45,19 @@ namespace Logitude.UnitTest.Accounting.UniTests.InterestReport
                 ExceptionalInterestRateBaseId = "ExceptionalBaseId",
             };
 
-             var interestReportCalculationPreparations = A.Fake<InterestReportCalculationPreparations>(option => option.CallsBaseMethods());
-            A.CallTo(() => interestReportCalculationPreparations.GetInterestReportPM(A<string>.Ignored, 1)).Returns(interestReportPM);
-            A.CallTo(() => interestReportCalculationPreparations.GetGLAccountInterestPeriodPMWithinStartInterestDate(interestReportPM, A<DateTime>.Ignored)).Returns(glaccountInterestPeriodPM);
-            A.CallTo(() => interestReportCalculationPreparations.CalculateInterestBasesTypePercentage(glaccountInterestPeriodPM.StandardInterestRateBaseId, A<DateTime>.Ignored, A<int>.Ignored)).Returns(3);
-            A.CallTo(() => interestReportCalculationPreparations.CalculateInterestBasesTypePercentage(glaccountInterestPeriodPM.ExceptionalInterestRateBaseId, A<DateTime>.Ignored, A<int>.Ignored)).Returns(5);
-            A.CallTo(() => interestReportCalculationPreparations.CalculateInterestBasesTypePercentage(glaccountInterestPeriodPM.CreditInterestRateBaseId, A<DateTime>.Ignored, A<int>.Ignored)).Returns(2);
-            A.CallTo(() => interestReportCalculationPreparations.GetInterestTransactionsGroupedByDate(A<List<InterestTransactionPM>>.Ignored)).Returns(GetInterestTransactionsGroupedByDates());
-            A.CallTo(() => interestReportCalculationPreparations.GetInterestTransactionsForGlAccountAndInterestValueDate(A<string>.Ignored, A<DateTime>.Ignored, 1)).Returns(null);
-
+           
             InterestReportArgs interestReportArgs = new InterestReportArgs()
             {
                 InterestReportId = "1-1",
                 Tenant = 1,
-                CalculationPreparations = interestReportCalculationPreparations,
+               
             };
 
-            InterestReportDataCalculations interestReportDataCalculations = new InterestReportDataCalculations(interestReportArgs);
-            interestReportDataCalculations.GetInterestReportAndInterestTransactionsForCalculations();
-            List<InterestReportLinesByDatePM> interestReportLinesByDatePMs = interestReportDataCalculations.CreateInterestReportLinesByDate();
-
+            InterestReportLinesByDateCreationService interestReportLinesByDateCreationService = new InterestReportLinesByDateCreationService();
+            InterestReportLinesByDateCreationParams interestReportLinesByDateCreationParams = new InterestReportLinesByDateCreationParams(interestReportPM, 
+                interestTransactionPMs, gLAccountInterestPeriodPMs, interestBasesPeriodPMs);
+            List<InterestReportLinesByDatePM> interestReportLinesByDatePMs = interestReportLinesByDateCreationService.CreateInterestReportLinesByDate(interestReportLinesByDateCreationParams);
+           
             decimal lastAccumulatedAmount = interestReportLinesByDatePMs.LastOrDefault().AccumulatedAmount;
             Dictionary<string, decimal> expectedStandardInterestAmountsForGroups = new Dictionary<string, decimal>();
             expectedStandardInterestAmountsForGroups.Add("Group1", 400);
