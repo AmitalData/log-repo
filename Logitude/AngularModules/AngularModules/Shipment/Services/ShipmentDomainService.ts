@@ -13,6 +13,9 @@ import { AppTool } from '../../Infrastructure/Tools';
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
+//import { defer } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
+
 @Injectable()
 
 export class ShipmentDomainService {
@@ -25,7 +28,7 @@ export class ShipmentDomainService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ShipmentDomain';
     }
 
-    GetShipmentsCounts(myDirectionId: string, myTransportModeId: string) {
+    GetShipmentsCounts_Old(myDirectionId: string, myTransportModeId: string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         
@@ -52,6 +55,45 @@ export class ShipmentDomainService {
             }).catch(ServiceHelper.HandleServiceError);
         });
     }
+
+    GetShipmentsCounts(myDirectionId: string, myTransportModeId: string) {
+
+        const httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Token': ServiceHelper.GetLoggedUserToken()
+            })
+        };
+
+        var url = this._apiUrl + '/GetShipmentsCounts?myDirectionId=' + myDirectionId + '&myTransportModeId=' + myTransportModeId;
+
+        return Observable.defer(() => {
+            return this._httpClient.get(url, httpOptions).pipe(
+
+                // map operator inside pipe
+                map(response => {
+                    var myJsonResult = response;
+
+                    var myResult = new ShipmentsSummary();
+
+                    if (myJsonResult) {
+                        var jsonListKeys = Object.keys(myJsonResult);
+                        for (var key in jsonListKeys) {
+                            var property = jsonListKeys[key];
+                            myResult[property] = myJsonResult[property];
+                        }
+                    }
+
+                    var serviceResponse = new ServiceResponse();
+                    serviceResponse.Result = myResult;
+                    return serviceResponse;
+                }),
+
+                // catchErrro operator inside pipe
+                catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+
     CheckHousesOpenAmounts(masterId) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
