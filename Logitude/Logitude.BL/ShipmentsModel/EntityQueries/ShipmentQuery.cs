@@ -11585,6 +11585,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                NotInvoicedReceivablesAmount = f.NotInvoicedReceivablesAmount,
                                CreatedByPartner = f.CreatedByPartner,
                                FirstARInvoiceApprovalDate = f.FirstARInvoiceApprovalDate,
+                               MainCarriageFinalDestinationATA = f.MainCarriageFinalDestinationATA,
+                               MainCarriageFinalDestinationETA = f.MainCarriageFinalDestinationETA,
                            };
             return myResult;
         }
