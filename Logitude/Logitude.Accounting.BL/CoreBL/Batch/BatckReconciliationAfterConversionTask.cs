@@ -27,7 +27,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             {
 
                 
-                using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(10)))
+                using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(600)))
                 {
 
 
