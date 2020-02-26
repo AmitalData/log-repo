@@ -44,7 +44,7 @@
 	left join dw_Contacts accountManagerUser on dw_Customers.AccountManagerUserId=accountManagerUser.Id
 	inner join dw_Contacts salesmanUser on dw_Partners.SalesmanUserId=salesmanUser.Id
 	left join dw_Ranks  on dw_Customers.RankId=dw_Ranks.Id
-
+    left join dw_LeadSources  on dw_Customers.LeadSourceId =dw_LeadSources.Id
 	left join dw_Regions  on dw_Customers.RegionId=dw_Regions.Id
 	left join dw_CustomerSizes  on dw_Customers.CustomerSizeId=dw_CustomerSizes.Id
 	left join dw_Industries  on dw_Customers.IndustryId=dw_Industries.Id

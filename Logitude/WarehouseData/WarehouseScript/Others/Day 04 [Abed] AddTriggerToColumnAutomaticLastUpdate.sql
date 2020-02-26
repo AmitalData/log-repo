@@ -300,3 +300,11 @@ IF not EXISTS (SELECT * FROM sys.triggers WHERE object_id = OBJECT_ID(N'Trigger_
          EXEC (@SQLShipmentComputedFields);
  end
 
+     --LeadSources
+ IF not EXISTS (SELECT * FROM sys.triggers WHERE object_id = OBJECT_ID(N'Trigger_AutomaticLastUpdateDateLoadSoucess'))
+ Begin
+ declare @SQLLeadSources  as varchar(8000)
+         SET @SQLLeadSources ='CREATE TRIGGER Trigger_AutomaticLastUpdateDateLoadSoucess ON LeadSources AFTER UPDATE  AS  BEGIN UPDATE LeadSources SET AutomaticLastUpdateDate = GETDATE() WHERE Id IN (SELECT DISTINCT Id FROM Inserted)END;'
+         EXEC (@SQLLeadSources);
+ end
+
