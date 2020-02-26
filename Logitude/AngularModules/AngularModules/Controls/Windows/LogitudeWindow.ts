@@ -11,6 +11,7 @@ export class LogitudeWindow {
     public CustomTitleIcon: string = null;
     public WindowIndex: number = null;
     public IsOverWindow: boolean = false;
+    public IsOverEditComponentWindow: boolean = false;
     public IsSameWindowSize: boolean = false;
     public IsShowCloseButton: boolean = false;
     public IsFillScreen: boolean = false;
@@ -60,11 +61,6 @@ export class LogitudeWindow {
                 }
             }
 
-
-            if (this.CurrentSession.CurrentWindow) {
-                this.IsOverWindow = true;
-            }
-
             if (this.IsOverAll) {
                 viewContainerRefLocation = SessionLocator.ApplicationLocation;
             }
@@ -84,13 +80,19 @@ export class LogitudeWindow {
 
                     this.WindowIndex = this.CurrentSession.GetNewWindowIndex();
 
-                    if (this.CurrentSession.CurrentWindow != null) {
-                        if (this.CurrentSession.CurrentWindow.IsEditComponent == false) {
-                            this.IsOverWindow = true;
 
-                            if (this.CurrentSession.CurrentWindow.Width == this.Width && this.CurrentSession.CurrentWindow.Height == this.Height) {
-                                this.IsSameWindowSize = true;
-                            }
+                    if (this.CurrentSession.CurrentWindow != null) {
+
+                        if (this.CurrentSession.CurrentWindow.IsEditComponent == true) {
+                            this.IsOverEditComponentWindow = true;
+                        }
+
+                        else {
+                            this.IsOverWindow = true;
+                        }
+
+                        if (this.CurrentSession.CurrentWindow.Width == this.Width && this.CurrentSession.CurrentWindow.Height == this.Height) {
+                            this.IsSameWindowSize = true;
                         }
                     }
 
@@ -124,7 +126,14 @@ export class LogitudeWindow {
                 this.WindowIndex = this.CurrentSession.GetNewWindowIndex();
 
                 if (this.CurrentSession.CurrentWindow != null) {
-                    this.IsOverWindow = true;
+
+                    if (this.CurrentSession.CurrentWindow.IsEditComponent == true) {
+                        this.IsOverEditComponentWindow = true;
+                    }
+
+                    else {
+                        this.IsOverWindow = true;
+                    }
 
                     if (this.CurrentSession.CurrentWindow.Width == this.Width && this.CurrentSession.CurrentWindow.Height == this.Height) {
                         this.IsSameWindowSize = true;
@@ -414,9 +423,16 @@ export class LogitudeWindowTemplateComponent implements AfterViewInit {
             //     isOverEditComponent = false;
 
 
+            if (this.IsEditComponent && this.logWindow.IsOverEditComponentWindow) {
+                // Task 64019
+            }
+
+            else if (this.IsEditComponent && this.logWindow.IsOverWindow && isOverEditComponent) {
+            // Task 64019
+            }
 
             //change window position according to editcomponent location
-            if (isOverEditComponent || (isOverEditComponent && this.logWindow.IsOverWindow)) {
+            else if (isOverEditComponent || (isOverEditComponent && this.logWindow.IsOverWindow)) {
 
                 //get window location from edit component
                 var editComponentCelId = this.CurrentSession.CurrentEditComponent.EditComponentCellId;
