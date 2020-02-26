@@ -327,6 +327,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     {
                         houseShipment.MasterShipmentDataId = entityPM.Id;
                         houseShipment.ComputedShipmentNumber = entityPM.ShipmentNumber;
+                        houseShipment.AgentComputed = houseShipment.AgentId == null ? entityPM.AgentId : houseShipment.AgentId;
+
                         entityRepository.Update(houseShipment);
                         entityRepository.SubmitChanges();
 
@@ -6212,6 +6214,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             {
                 houseShipment.MasterShipmentDataId = itemPM.MasterShipmentDataId;
                 houseShipment.ComputedShipmentNumber = itemPM.ShipmentNumber;
+                houseShipment.AgentComputed = houseShipment.AgentId == null ? entityPM.AgentId : houseShipment.AgentId;
                 entityRepository.Update(houseShipment);
                 entityRepository.SubmitChanges();
 
@@ -6232,6 +6235,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 houseShipment.MasterShipmentDataId = null;
                 houseShipment.ComputedShipmentNumber = null;
                 houseShipment.OperationalDate = houseShipment.CreateDateTime;
+                houseShipment.AgentComputed = houseShipment.AgentId;
                 entityRepository.Update(houseShipment);
                 entityRepository.SubmitChanges();
 
