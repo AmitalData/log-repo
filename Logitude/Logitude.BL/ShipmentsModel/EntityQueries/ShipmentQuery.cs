@@ -3355,6 +3355,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.IncotermId = shipment.IncotermId;
             shipmentPM.ShipmentTypeId = shipment.ShipmentTypeId;
             shipmentPM.IsCancelled = shipment.IsCancelled;
+            shipmentPM.FirstARInvoiceApprovalDate = shipment.FirstARInvoiceApprovalDate;
+            shipmentPM.ActualFinalArrivalDate = shipment.ActualFinalArrivalDate;
+            shipmentPM.EstimatedFinalArrivalDate = shipment.EstimatedFinalArrivalDate;
             if (masterData != null)
             {
                 shipmentPM.MainCarriageFinalDestinationETA = masterData.MainCarriageFinalDestinationETA;
