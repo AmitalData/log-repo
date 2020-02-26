@@ -53,8 +53,6 @@ namespace Logitude.Customs.BL.CloseTables
                                                
                     MainInterfaceCode="5117",
                 },
-                                  
-    
                 new SincroTestCaseDetail()
                 {
                     Code = "190Sincro",
@@ -94,6 +92,46 @@ namespace Logitude.Customs.BL.CloseTables
                     Param1= @"{ ""checkId"":""""}",
                     Param2= @"{ }",
                     MainInterfaceCode="196",
+                },
+                new SincroTestCaseDetail()
+                {
+                    Code = "2470Sincro",
+                    Name = "מסר התרת ",
+                    IsDCA = true,
+                    Entity="Declaration",
+                    Param1= @"{}",
+                    Param2= @"{}",
+                    MainInterfaceCode="2470",
+                },
+                new SincroTestCaseDetail()
+                {
+                    Code = "3050",
+                    Name = "הודעה לסוכן על הוראת תשלום",
+                    IsDCA = true,
+                    Entity="Declaration",
+                    Param1= @"{}",
+                    Param2= @"{}",
+                    MainInterfaceCode="3050",
+                },
+                   new SincroTestCaseDetail()
+                {
+                    Code = "8211Sincro",
+                    Name = "מסר פתיחת בטוחה",
+                    IsDCA = true,
+                    Entity="Declaration",
+                    Param1= @"{}",
+                    Param2= @"{}",
+                    MainInterfaceCode="8211",
+                },
+                   new SincroTestCaseDetail()
+                {
+                    Code = "3052",
+                    Name = " תשלום הוראה ",
+                    IsDCA = true,
+                    Entity="Declaration",
+                    Param1= @"{}",
+                    Param2= @"{}",
+                    MainInterfaceCode="3052",
                 }
 
 

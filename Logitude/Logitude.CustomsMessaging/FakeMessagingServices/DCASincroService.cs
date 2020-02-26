@@ -16,6 +16,8 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
             var mySincroTestCaseDetails = new SincroTestCaseDetails();
             var sincroTestCaseDetail =mySincroTestCaseDetails.GetAllSincroTestCaseDetails()
                 .First(r => r.Code == requestParamsData.TestCase.Code);
+            requestParamsData.InterfaceTypeCode = requestParamsData.TestCase.Code;
+            requestParamsData.MainInterfaceCode = requestParamsData.TestCase.Code;
             var messagingService =MessagingServiceFactoryHelper.GetMessagingService(sincroTestCaseDetail.MainInterfaceCode, "FAKFAKE");
             string result=messagingService.CreateFakeDCA(requestParamsData);
             return result;

@@ -36,7 +36,7 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
             DeclarationDMExtensionsCustomsValueComponent _customsValueComponent = new DeclarationDMExtensionsCustomsValueComponent();
             DeclarationDutyTaxFee[] taxFree = new DeclarationDutyTaxFee[2];
             Declaration declaration = request.Declaration;
-
+            declaration.GoodsShipment[0].GovernmentAgencyGoodsItem = AddGovernmentAgencyGoodsItem(declaration.GoodsShipment[0].GovernmentAgencyGoodsItem);
             _customsValueComponent.TotalDealValueAmountNIS = new TotalDealValueAmountNISType() { Value = 99 };
             _customsValueComponent.CifValueNIS = new CifValueNISType() { Value = 99 };
             _customsValueComponent.TaxAssessedAmount = new DutyTaxFeeAssessed() { Value = 99 };
@@ -54,7 +54,7 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
             };
             taxFree[0].DMExtensions.CalculatedTax = new DeclarationDutyTaxFeeDMExtensionsCalculatedTax
             {
-                Amount = new AmountAmountType() { Value = 29 },
+                Amount = new AmountAmountType() { Value = 99 },
                 DeferedTaxAmount = new deferedTaxAmountType() { Value = 0 }
             };
             taxFree[1] = new DeclarationDutyTaxFee
@@ -114,6 +114,37 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
             _ResponseHeader.ErrorDescription = "";
             _ResponseHeader.ErrorCode = "None";
            
+        }
+        public DeclarationGoodsShipmentGovernmentAgencyGoodsItem[] AddGovernmentAgencyGoodsItem(DeclarationGoodsShipmentGovernmentAgencyGoodsItem[] _governmentAgencyGoodsItem)
+        {
+            foreach (DeclarationGoodsShipmentGovernmentAgencyGoodsItem item in _governmentAgencyGoodsItem)
+            {
+                DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityDutyTaxFee[] taxFree = new DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityDutyTaxFee[1];
+                taxFree[0] = new DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityDutyTaxFee();
+                taxFree[0].AdValoremTaxBaseAmount = new DutyTaxFeeAdValoremTaxBaseAmountType
+                {
+                    currencyID = ISO3AlphaCurrencyCodeContentType.ILS,
+                    Value=99
+                };
+               taxFree[0].TypeCode = new DutyTaxFeeTypeCodeType
+                {
+                    Value = "15",
+                };
+                taxFree[0].TaxRate = 9;
+                taxFree[0].DMExtensions = new DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityDutyTaxFeeDMExtensions
+                {
+                    CalculatedTax = new DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityDutyTaxFeeDMExtensionsCalculatedTax
+                    {
+                        Amount = new AmountAmountType() { Value = 99 },
+                        DeferedTaxAmount = new deferedTaxAmountType() { Value = 0 },
+                        AlternateRate = new AlternateRateType() { Value = 0 },
+                        TotalBtlCoverageNIS = new totalBtlCoverageNISType() { Value = 0 }
+                    }
+                };
+                item.Commodity.DutyTaxFee = taxFree;
+
+            }
+            return _governmentAgencyGoodsItem;
         }
         public void AddConstraints()
         {
