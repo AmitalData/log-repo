@@ -226,6 +226,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new CurrencyTypeMap());
 	
+            modelBuilder.Configurations.Add(new CurrencyTypeTenantMap());
+	
             modelBuilder.Configurations.Add(new CustomBankMap());
 	
             modelBuilder.Configurations.Add(new CustomBanksCardMap());
@@ -1592,6 +1594,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<CurrencyType> CurrencyTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CurrencyTypeTenant> CurrencyTypeTenants 
 	 {
 	      get; set;
 	 

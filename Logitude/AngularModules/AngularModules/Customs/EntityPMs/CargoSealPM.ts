@@ -87,6 +87,11 @@ export class CargoSealPM {
     public set UpdateTypeName(newValue: string) { if (this.updateTypeName != newValue) { this.updateTypeName = newValue; this.MarkAsDirty("UpdateTypeName"); } }
        
 	 
+    private id: string;
+    public get Id() { return this.id; }
+    public set Id(newValue: string) { if (this.id != newValue) { this.id = newValue; this.MarkAsDirty("Id"); } }
+       
+	 
 
     public OldEntityPM: CargoSealPM;
 	

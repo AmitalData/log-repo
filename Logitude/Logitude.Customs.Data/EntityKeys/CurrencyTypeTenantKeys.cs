@@ -10,7 +10,7 @@ using Simplog.Server.Infrastructure;
   
 namespace Logitude.Customs.Data.EntityKeys
 {
-   public partial class CargoSealKeys : EntityKeyFields
+   public partial class CurrencyTypeTenantKeys : EntityKeyFields
    {
    	  public string Id  { get; set; }
 	  
@@ -25,7 +25,7 @@ namespace Logitude.Customs.Data.EntityKeys
 
       public override string GetEntityPMName()
       {
-          return "CargoSealPM";
+          return "CurrencyTypeTenantPM";
       }
 	 
    }

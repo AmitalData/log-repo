@@ -10,26 +10,22 @@ using System.Runtime.Serialization;
 namespace Logitude.Customs.Data.EntityLists
 {
    [DataContract]
-   public partial class CurrencyTypeList
+   public partial class CurrencyTypeTenantList
    {
    
        [Key]
        [DataMember]
+       public string Id  { get; set; }
+       [DataMember]
+       public int Tenant  { get; set; }
+       [DataMember]
+       public DateTime UpdateDate  { get; set; }
+       [DataMember]
+       public string UpdatedByUserId  { get; set; }
+       [DataMember]
        public string Code  { get; set; }
        [DataMember]
-       public string EnglishName  { get; set; }
-       [DataMember]
-       public string LocalName  { get; set; }
-       [DataMember]
-       public string SearchFields  { get; set; }
-       [DataMember]
-       public bool Inactive  { get; set; }
-       [DataMember]
        public bool TenantInactive  { get; set; }
-       [DataMember]
-       public bool MehesInactive  { get; set; }
-       [DataMember]
-       public string CodeSorted  { get; set; }
    }
 
 }

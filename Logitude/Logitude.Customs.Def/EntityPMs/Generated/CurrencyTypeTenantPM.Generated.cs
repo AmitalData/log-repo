@@ -16,12 +16,104 @@ namespace Logitude.Customs.Def.EntityPMs
 {
    [CustomValidation(typeof(CustomsClassLevelValidator), "ValidateClass")]
    [DataContract]
-   public partial class CurrencyTypePM : EntityPM
+   public partial class CurrencyTypeTenantPM : EntityPM
    {
-   	  private string code ;
+   	  private string id ;
 	  
        [Key]
 	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Id  
+	   {
+	    
+	     get
+		{
+		   return id;
+		 }
+		 set
+		 {
+		   if(id != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Id",OldValue=id,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   id=value;
+		   }
+			
+		 }
+	   }
+	  private int tenant ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int Tenant  
+	   {
+	    
+	     get
+		{
+		   return tenant;
+		 }
+		 set
+		 {
+		   if(tenant != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Tenant",OldValue=tenant,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   tenant=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime updateDate ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime UpdateDate  
+	   {
+	    
+	     get
+		{
+		   return updateDate;
+		 }
+		 set
+		 {
+		   if(updateDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UpdateDate",OldValue=updateDate,NewValue=value,PropertyType="DateTime"};
+		    NotifyPropertyChanged(values);
+		   updateDate=value;
+		   }
+			
+		 }
+	   }
+	  private string updatedByUserId ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string UpdatedByUserId  
+	   {
+	    
+	     get
+		{
+		   return updatedByUserId;
+		 }
+		 set
+		 {
+		   if(updatedByUserId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UpdatedByUserId",OldValue=updatedByUserId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   updatedByUserId=value;
+		   }
+			
+		 }
+	   }
+	  private string code ;
+	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -39,98 +131,6 @@ namespace Logitude.Customs.Def.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Code",OldValue=code,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   code=value;
-		   }
-			
-		 }
-	   }
-	  private string englishName ;
-	  	  
-       
-	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string EnglishName  
-	   {
-	    
-	     get
-		{
-		   return englishName;
-		 }
-		 set
-		 {
-		   if(englishName != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="EnglishName",OldValue=englishName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   englishName=value;
-		   }
-			
-		 }
-	   }
-	  private string localName ;
-	  	  
-       
-	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string LocalName  
-	   {
-	    
-	     get
-		{
-		   return localName;
-		 }
-		 set
-		 {
-		   if(localName != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LocalName",OldValue=localName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   localName=value;
-		   }
-			
-		 }
-	   }
-	  private string searchFields ;
-	  	  
-       
-	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string SearchFields  
-	   {
-	    
-	     get
-		{
-		   return searchFields;
-		 }
-		 set
-		 {
-		   if(searchFields != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SearchFields",OldValue=searchFields,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   searchFields=value;
-		   }
-			
-		 }
-	   }
-	  private bool inactive ;
-	  	  
-       
-	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool Inactive  
-	   {
-	    
-	     get
-		{
-		   return inactive;
-		 }
-		 set
-		 {
-		   if(inactive != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Inactive",OldValue=inactive,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   inactive=value;
 		   }
 			
 		 }
@@ -154,29 +154,6 @@ namespace Logitude.Customs.Def.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TenantInactive",OldValue=tenantInactive,NewValue=value,PropertyType="bool"};
 		    NotifyPropertyChanged(values);
 		   tenantInactive=value;
-		   }
-			
-		 }
-	   }
-	  private bool mehesInactive ;
-	  	  
-       
-	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool MehesInactive  
-	   {
-	    
-	     get
-		{
-		   return mehesInactive;
-		 }
-		 set
-		 {
-		   if(mehesInactive != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="MehesInactive",OldValue=mehesInactive,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   mehesInactive=value;
 		   }
 			
 		 }

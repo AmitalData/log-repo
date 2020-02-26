@@ -12,68 +12,68 @@ using Simplog.Server.Infrastructure;
 
 namespace Logitude.Customs.Data.Repsitories
 {
-   public partial class CargoSealRepository:IRepository<CargoSeal>
+   public partial class CurrencyTypeTenantRepository:IRepository<CurrencyTypeTenant>
    {
    
         private ICustomContext currentContext;
-        public CargoSealRepository(int tenant)
+        public CurrencyTypeTenantRepository(int tenant)
         {
             currentContext = CustomContext.GetContext(tenant);
         }
 
-        public CargoSealRepository(ICustomContext context)
+        public CurrencyTypeTenantRepository(ICustomContext context)
         {
             currentContext = context;
         }
 
 		 
 		
-		public  CargoSeal GetSingle(string id, int tenant)
+		public  CurrencyTypeTenant GetSingle(string id, int tenant)
         {
-            return (from a in context.CargoSeals
+            return (from a in context.CurrencyTypeTenants
                     where a.Id == id && a.Tenant == tenant
                     select a).FirstOrDefault();
         }
 
-        public IQueryable<CargoSeal> GetAll(int tenant)
+        public IQueryable<CurrencyTypeTenant> GetAll(int tenant)
         {
-            return from a in context.CargoSeals  
+            return from a in context.CurrencyTypeTenants  
                    where a.Tenant == tenant
                    select a;
         }
 				 
-        public CargoSeal GetSingle(EntityKeyFields entityKeys)
+        public CurrencyTypeTenant GetSingle(EntityKeyFields entityKeys)
         {
-            CargoSealKeys keys = entityKeys as CargoSealKeys;
-            return (from a in context.CargoSeals
+            CurrencyTypeTenantKeys keys = entityKeys as CurrencyTypeTenantKeys;
+            return (from a in context.CurrencyTypeTenants
                     where a.Id == keys.Id
                     select a).FirstOrDefault();
         }
 		         
         partial void onAdd();//Partial Methods Definition in Generated
-        public void Add(CargoSeal entity)
+        public void Add(CurrencyTypeTenant entity)
         {
             onAdd();
-            context.CargoSeals.Add(entity);
+            context.CurrencyTypeTenants.Add(entity);
         }
 
-        public void Remove(CargoSeal entity)
+        public void Remove(CurrencyTypeTenant entity)
         {
-            context.CargoSeals.Attach(entity);
-            context.CargoSeals.Remove(entity);
+            context.CurrencyTypeTenants.Attach(entity);
+            context.CurrencyTypeTenants.Remove(entity);
         }
 
         partial void onUpdate();//Partial Methods Definition in Generated
-        public void Update(CargoSeal entity)
+        public void Update(CurrencyTypeTenant entity)
         {
             onUpdate();
-            context.CargoSeals.Attach(entity);
+            context.CurrencyTypeTenants.Attach(entity);
             context.SetAsModified(entity);
         }
 
-        public List<CargoSeal> All()
+        public List<CurrencyTypeTenant> All()
         {
-            return context.CargoSeals.ToList();
+            return context.CurrencyTypeTenants.ToList();
         }
 
         private ICustomContext context

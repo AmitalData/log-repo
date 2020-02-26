@@ -327,14 +327,14 @@
 
                                                             <!-- Remarks -->
                                                             <log-column [header]="'Customs.CargoSeal.F.Remarks' | TextCodeTranslationPipe"
-                                                                        [binding]="'Remarks'" [width]="'150'" [Alignment]="'right'"  [Editable]="true" >
+                                                                        [binding]="'Remarks'" [width]="'150'" [Alignment]="'right'" [Editable]="true">
                                                                 <log-cell-template template="let item" #logcelltemplate>
-                                                                    <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode"  style="text-align:right">
+                                                                    <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right">
                                                                         <span>{{item.Remarks}}</span>
                                                                     </div>
-                                                                    <div *ngIf="logcelltemplate.IsEditMode" style="height: 100%; width: 100%;"  >
+                                                                    <div *ngIf="logcelltemplate.IsEditMode" style="height: 100%; width: 100%;">
                                                                         <LogTextBox [ObjectFieldName]="'Remarks'" [InputType]="'ntext'" [DataContext]="item"
-                                                                                    [ObjectTableName]="'Customs.SealType'" [HideColumns]="true" 
+                                                                                    [ObjectTableName]="'Customs.SealType'" [HideColumns]="true"
                                                                                     [IsMultiline]="true"></LogTextBox>
                                                                     </div>
                                                                 </log-cell-template>
@@ -363,53 +363,55 @@
                             </tr>
 
                             <!-- ResponseMessage -->
-                            <tr class="FormFieldRow" *ngIf="IsResponseMessageVisibility">
-                                <td colspan="12" style="width: 500px; height:50px">
-                                    <table>
-                                        <tr class="FormFieldRow">
-                                            <td style="width: 500px;">
-                                                <div style="width: 100%; height:22px; text-align:right">
-                                                    <div>
-                                                        <span>{{'Customs.Claim.TH.CustomAnswer' | TextCodeTranslationPipe}}</span>
-                                                    </div>
-                                                </div>
-                                            </td>
 
-                                            <td><div></div></td>
-                                        </tr>
-
-                                        <tr class="FormFieldRow">
-                                            <td style="width: 500px;">
-                                                <div class="MediaFill">
-                                                    <textarea class="NotesTextArea"
-                                                              [(ngModel)]="ResponseMessage"
-                                                              [readonly]="false"
-                                                              style="background: #FFFADC !important;"></textarea>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </td>
-                            </tr>
                         </table>
                     </td>
                 <tr> <td><div></div></td> </tr>
             </table>
+            <table style="width: 650px; height:50px">
+                <tr class="FormFieldRow" *ngIf="IsResponseMessageVisibility">
+                    <td colspan="12" style="width: 650px; height:50px">
+                        <table >
+                            <!--<tr class="FormFieldRow">
+                                <td style="width: 150px;">
+                                    <div style="width: 100%; height:22px; text-align:right">
+                                        <div>
+                                            <span>{{'Customs.Claim.TH.CustomAnswer' | TextCodeTranslationPipe}}</span>
+                                        </div>
+                                    </div>
+                                </td>
 
+                                <td><div></div></td>
+                            </tr>-->
+
+                            <tr class="FormFieldRow">
+                                <td style="width: 500px;">
+                                    <div class="MediaFill">
+                                        <textarea class="NotesTextArea"
+                                                  [(ngModel)]="ResponseMessage"
+                                                  [readonly]="false"
+                                                  style="background: #FFFADC !important;"></textarea>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
         </div>
 
         <!-- Response -->
         <div class="class-response-content" style="width: 500px;height: 50px;">
-            <table style="width: 500px;height: 50px;padding-top: 10px;">
+            <table style="width: 500px;height:70px;padding-top: 10px;">
 
-                <tr style="height: 46px;">
+                <tr style="height: 70px;">
                     <td>
                         <table>
                             <tr class="FormFieldRow">
-                                <td style="width: 130px;">
+                                <!--<td style="width: 300px;">
                                     <LogLabel [ObjectFieldName]="'ResponseMessage'" [DataContext]="DataContext" [TextCode]="'Customs.Claim.TH.CustomAnswer'"></LogLabel>
-                                </td>
-                                <td style="width: 130px;">
+                                </td>-->
+                                <td style="width: 300px;">
                                     <LogTextBox [ObjectFieldName]="'ResponseMessage'" [DataContext]="DataContext"  
 > </LogTextBox>
                                 </td>

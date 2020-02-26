@@ -14,7 +14,7 @@ import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
 
-export class CurrencyTypePM {
+export class CurrencyTypeTenantPM {
 
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
@@ -24,29 +24,29 @@ export class CurrencyTypePM {
       }
  	 
     
+    private id: string;
+    public get Id() { return this.id; }
+    public set Id(newValue: string) { if (this.id != newValue) { this.id = newValue; this.MarkAsDirty("Id"); } }
+       
+	 
+    private tenant: number;
+    public get Tenant() { return this.tenant; }
+    public set Tenant(newValue: number) { if (this.tenant != newValue) { this.tenant = newValue; this.MarkAsDirty("Tenant"); } }
+       
+	 
+    private updateDate: Date;
+    public get UpdateDate() { return this.updateDate; }
+    public set UpdateDate(newValue: Date) { if (this.updateDate != newValue) { this.updateDate = newValue; this.MarkAsDirty("UpdateDate"); } }
+       
+	 
+    private updatedByUserId: string;
+    public get UpdatedByUserId() { return this.updatedByUserId; }
+    public set UpdatedByUserId(newValue: string) { if (this.updatedByUserId != newValue) { this.updatedByUserId = newValue; this.MarkAsDirty("UpdatedByUserId"); } }
+       
+	 
     private code: string;
     public get Code() { return this.code; }
     public set Code(newValue: string) { if (this.code != newValue) { this.code = newValue; this.MarkAsDirty("Code"); } }
-       
-	 
-    private englishName: string;
-    public get EnglishName() { return this.englishName; }
-    public set EnglishName(newValue: string) { if (this.englishName != newValue) { this.englishName = newValue; this.MarkAsDirty("EnglishName"); } }
-       
-	 
-    private localName: string;
-    public get LocalName() { return this.localName; }
-    public set LocalName(newValue: string) { if (this.localName != newValue) { this.localName = newValue; this.MarkAsDirty("LocalName"); } }
-       
-	 
-    private searchFields: string;
-    public get SearchFields() { return this.searchFields; }
-    public set SearchFields(newValue: string) { if (this.searchFields != newValue) { this.searchFields = newValue; this.MarkAsDirty("SearchFields"); } }
-       
-	 
-    private inactive: boolean;
-    public get Inactive() { return this.inactive; }
-    public set Inactive(newValue: boolean) { if (this.inactive != newValue) { this.inactive = newValue; this.MarkAsDirty("Inactive"); } }
        
 	 
     private tenantInactive: boolean;
@@ -54,13 +54,8 @@ export class CurrencyTypePM {
     public set TenantInactive(newValue: boolean) { if (this.tenantInactive != newValue) { this.tenantInactive = newValue; this.MarkAsDirty("TenantInactive"); } }
        
 	 
-    private mehesInactive: boolean;
-    public get MehesInactive() { return this.mehesInactive; }
-    public set MehesInactive(newValue: boolean) { if (this.mehesInactive != newValue) { this.mehesInactive = newValue; this.MarkAsDirty("MehesInactive"); } }
-       
-	 
 
-    public OldEntityPM: CurrencyTypePM;
+    public OldEntityPM: CurrencyTypeTenantPM;
 		
     public IsDirty: boolean;
     MarkAsDirty(propertyName:string = null) {
@@ -68,12 +63,12 @@ export class CurrencyTypePM {
 		  	
         if (propertyName != null) {
             this.PropertyChanged.emit(new PropertyChangedArgs(propertyName,this));
-            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Customs.CurrencyType");
+            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Customs.CurrencyTypeTenant");
            
         }
     }
 
-    private MyClone: CurrencyTypePM;
+    private MyClone: CurrencyTypeTenantPM;
 
     public CloneMe() {
         ServiceHelper.CloneEntityPM(this);

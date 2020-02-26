@@ -47,7 +47,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 { 
 
     
-    public partial class CargoSealViewsController : ApiController
+    public partial class CurrencyTypeTenantViewsController : ApiController
     {
 	  
        
@@ -60,11 +60,11 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
-                CargoSealListQueryService cargoSealQuery = new CargoSealListQueryService(MyContext);
-                CargoSealList cargoSealList = cargoSealQuery.GetSingle(id);
+                CurrencyTypeTenantListQueryService currencyTypeTenantQuery = new CurrencyTypeTenantListQueryService(MyContext);
+                CurrencyTypeTenantList currencyTypeTenantList = currencyTypeTenantQuery.GetSingle(id);
  				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 				           
-                return Request.CreateResponse(HttpStatusCode.OK,  cargoSealList);
+                return Request.CreateResponse(HttpStatusCode.OK,  currencyTypeTenantList);
             }
             catch (Exception ex)
             {
@@ -82,8 +82,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
-                CargoSealListQueryService cargoSealQuery = new CargoSealListQueryService(MyContext);
-                List<CargoSealList> result = cargoSealQuery.GetList(authToken.Tenant);
+                CurrencyTypeTenantListQueryService currencyTypeTenantQuery = new CurrencyTypeTenantListQueryService(MyContext);
+                List<CurrencyTypeTenantList> result = currencyTypeTenantQuery.GetList(authToken.Tenant);
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 
                 return Request.CreateResponse(HttpStatusCode.OK, result);
@@ -108,17 +108,17 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
                 QueryOperations queryOperations = new QueryOperations()
                 {
-                    ObjectTableName = "Customs.CargoSeal",
+                    ObjectTableName = "Customs.CurrencyTypeTenant",
                     PageIndex = filters.PageIndex,
                     PageSize = filters.PageSize,
-                    QuerySection = "Customs.CargoSeals",
+                    QuerySection = "Customs.CurrencyTypeTenants",
                     SortByColumnName = filters.SortBy,
                     SortDirectin = filters.SortDirection,
 					GetAll = filters.GetAll, 
                 };
 
 				
-				List<ObjectField> CargoSealObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Customs.CargoSeal",tenant);
+				List<ObjectField> CurrencyTypeTenantObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Customs.CurrencyTypeTenant",tenant);
                 List<PropertyInfo> filterProperties = filters.GetType().GetProperties().ToList();
                 for (int i = 1; i <= 10; i++)
                 {
@@ -141,7 +141,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                             //}
 						//}
                         //ToDo: Get object field by name and set the remained filter properties
-						ObjectField field = CargoSealObjectFields.FirstOrDefault(f => f.FieldName == filterName);
+						ObjectField field = CurrencyTypeTenantObjectFields.FirstOrDefault(f => f.FieldName == filterName);
                        if (field != null)
                         {
                             string valuestring1 = filterValue1 != null ? filterValue1.ToString() : null;
@@ -169,7 +169,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
                     foreach (QueryFilterItem filter in filters_list)
                     {
-                        ObjectField field = CargoSealObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
+                        ObjectField field = CurrencyTypeTenantObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
                         if (field != null)
                         {
 
@@ -192,14 +192,14 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 }
 
                 ICustomContext MyContext = CustomContext.GetContext(tenant);
-				CargoSealListQueryService cargoSealQuery = new CargoSealListQueryService(MyContext);
+				CurrencyTypeTenantListQueryService currencyTypeTenantQuery = new CurrencyTypeTenantListQueryService(MyContext);
 
-                List<CargoSealList> entityLists = cargoSealQuery.GetList(queryOperations, tenant);
+                List<CurrencyTypeTenantList> entityLists = currencyTypeTenantQuery.GetList(queryOperations, tenant);
 				
 				ServiceResponse response = new ServiceResponse();
                 if (filters.GetCount)
                 {
-                    int count = cargoSealQuery.GetListCount(queryOperations, tenant);
+                    int count = currencyTypeTenantQuery.GetListCount(queryOperations, tenant);
                     response.Count = count;
                 }
 
