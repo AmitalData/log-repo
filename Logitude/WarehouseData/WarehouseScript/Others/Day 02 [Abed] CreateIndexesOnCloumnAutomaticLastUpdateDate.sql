@@ -235,3 +235,12 @@ ON [dbo].[Industries]([AutomaticLastUpdateDate])
     CREATE NONCLUSTERED INDEX [IX_ShipmentComputedFields_AutomaticLastUpdateDate]
 ON [dbo].[ShipmentComputedFields]([AutomaticLastUpdateDate])
   end   
+
+
+
+  IF not EXISTS (SELECT *  FROM sys.indexes  WHERE name='IX_LeadSources_AutomaticLastUpdateDate' 
+    AND object_id = OBJECT_ID('[dbo].[LeadSources]'))
+  begin
+    CREATE NONCLUSTERED INDEX [IX_LoadSouces_AutomaticLastUpdateDate]
+ON [dbo].[LeadSources]([AutomaticLastUpdateDate])
+  end   

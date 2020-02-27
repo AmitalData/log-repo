@@ -86,10 +86,11 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 decimal? VatAmount = 0;
                 decimal? InvoiceAmount = 0;
-              
+                string transmitStatus;
                 foreach (TaxReportData a in TaxReportJournalData)
                 {
                     string vatNumber = null;
+                    transmitStatus = "1";
                     var exist = reportLinesList.Where(d => d.JournalId == a.Id).Any();
                     if (!exist)
                     {
@@ -97,7 +98,10 @@ namespace Logitude.Accounting.BL.CoreBL
                         ARInvoice invoice = invoices.Where(d => d.Id == a.AccountingEntityId).FirstOrDefault();
                         if (invoice != null)
                         {
-                            VatAmount = invoice.TotalVAT != null ? invoice.TotalVAT : 0;
+                           if(invoice.InvoiceDate.Value.Month != taxReport.TaxReportMonth.Month) {
+                            transmitStatus = "0";
+                            }
+                           VatAmount = invoice.TotalVAT != null ? invoice.TotalVAT : 0;
                             InvoiceAmount = invoice.TotalAmountForTaxReport != null ? invoice.TotalAmountForTaxReport : 0;
                             if (invoice.InvoiceNumber.Length == 9)
                             {
@@ -112,8 +116,8 @@ namespace Logitude.Accounting.BL.CoreBL
                             {
                                 vatNumber = invoice.VatNumber;
                             }
-                          
-                            TaxReportLinePM line = new TaxReportLinePM()
+                      
+                        TaxReportLinePM line = new TaxReportLinePM()
                             {
                                 VatNumber = vatNumber,
                                 Reference = outputreference,
@@ -124,13 +128,13 @@ namespace Logitude.Accounting.BL.CoreBL
                                 VatAmount = Math.Round(VatAmount.Value, MidpointRounding.AwayFromZero),
                                 VatableInvoiceAmount = Math.Round(InvoiceAmount.Value, MidpointRounding.AwayFromZero),
                                 IsManuallyChanged = false,
-                                TransmitStatusCode = "1",
+                                TransmitStatusCode = transmitStatus ,
                                 TaxReportId = taxReport.Id,
                                 ChangeSetOp = ChangeSetOperation.Insert,
                                 LastUpdateDateTime = DateTime.Now,
                                 UpdatedByUserId = taxReport.UpdatedByUserId,
                                 Tenant = tenant,
-
+                                TaxReportDate=taxReport.TaxReportMonth
 
                             };
                             Simplog.Data.CommonDataModel.EntityPOCOs.Card card = cards.Where(d => d.Id == invoice.BillToId).FirstOrDefault();
@@ -264,7 +268,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     UpdatedByUserId = taxReport.UpdatedByUserId,
                     Tenant = tenant,
                     TransmitStatusCode = transmitStatusCode,
-
+                    TaxReportDate = taxReport.TaxReportMonth
 
                 };
 
@@ -484,11 +488,12 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 };
 
-
+               
                 IInfrastructureContext MyContext = InfrastructureContext.GetContext(tenant);
                 BatchTaskExecutionUpdateService bteUpdateService = new BatchTaskExecutionUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
                 bteUpdateService.Update(taskExe, true);
 
+               
                 // 2- Send to queue
                 IQueueService queueservice = new DbQueueService();
                 queueservice.InitializeQueue("batchtaskexecutionqueue", 0);
@@ -511,6 +516,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 //get tax report
                 TaxReportQueryService reportQS = new TaxReportQueryService(tenant);
                 TaxReportPM taxReport = reportQS.GetSingle(taxReportId, false, false);
+             
                 IAccountingContext MyContext = AccountingContext.GetContext(tenant);
 
                 //DECLARATIONS
@@ -670,6 +676,8 @@ namespace Logitude.Accounting.BL.CoreBL
                 return docOut;
             }
         }
+
+     
         public static void CalculateReportTotals(TaxReportPM taxReportPM, List<TaxReportLinePM> lines)
         {
             if (lines.Count > 0)

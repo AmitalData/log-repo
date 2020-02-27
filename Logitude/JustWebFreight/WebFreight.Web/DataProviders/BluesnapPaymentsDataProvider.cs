@@ -16,7 +16,7 @@ namespace WebFreight.Web.DataProviders
 
     public class BlusnapTransactionsList
     {
-        public int Tenant { get; set; }
+        public int? Tenant { get; set; }
         public string TenantName { get; set; }
         public string ShopperId { get; set; }
         public double? AmountToPay { get; set; }

@@ -1605,7 +1605,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     if (FieldIsEmpty(entityPM.DebitAccount))
                     {
                         isReady = false;
-                        myError = "Debit Account is missing";
+                        myError = "Bill to Debit Account is missing";
                     }
 
                     if (isExternal)

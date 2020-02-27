@@ -540,7 +540,7 @@
                                                                         </tr>
 
                                                                         <!-- Fields -->
-                                                                        <tr style="height: 35px;">
+                                                                        <tr style="height: 35px;" *ngIf="IsSingleMultiPackage">
                                                                             <td>
                                                                                 <table>
                                                                                     <tr>
@@ -697,9 +697,9 @@
 
                                                                                                                                 <div class="SimpleGridViewBody">
                                                                                                                                     <table>
-                                                                                                                                        <tr class="SimpleGridViewRow" *ngFor="let item of PackagesList">
+                                                                                                                                        <tr [ngStyle]="{background: item.Background}" class="SimpleGridViewRow" *ngFor="let item of PackagesList">
                                                                                                                                             <td class="GridViewCell" style="width: 210px; min-width: 210px; max-width: 210px;">
-                                                                                                                                                {{item.PackageName}}
+                                                                                                                                                {{item.PackageNameDisplay}}
                                                                                                                                             </td>
 
                                                                                                                                             <td class="GridViewCell" style="width: 120px; min-width: 120px; max-width: 120px; text-align: right;">
@@ -721,8 +721,8 @@
                                                                                                                                             <!-- [disabled]="!IsEditable" -->
                                                                                                                                             <td class="CellTools">
                                                                                                                                                 <span class="CellSeparator"></span>
-                                                                                                                                                <IconButton [IsEnabled]="IsMultiPackage" [Name]="'Edit'" [IsSmall]="true" [Left]="3" (click)="EditPackage(item)"></IconButton>
-                                                                                                                                                <IconButton [IsEnabled]="IsMultiPackage" [Name]="'Delete'" [IsSmall]="true" [Left]="3" (click)="DeletePackage(item)"></IconButton>
+                                                                                                                                                <IconButton [IsEnabled]="IsMultiPackage || item.IsMainPackage" [Name]="'Edit'" [IsSmall]="true" [Left]="3" (click)="EditPackage(item)"></IconButton>
+                                                                                                                                                <IconButton [IsEnabled]="IsMultiPackage && !item.IsMainPackage" [Name]="'Delete'" [IsSmall]="true" [Left]="3" (click)="DeletePackage(item)"></IconButton>
                                                                                                                                             </td>
                                                                                                                                         </tr>
 
