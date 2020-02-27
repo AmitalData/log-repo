@@ -41,7 +41,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             {
                 throw new Exception(TextCodesTranslator.TranslateText("InterestReport.O.Customerisnotconnected", entityPM.Tenant, showLocals));
             }
-            interestReport = interestReportRepository.GetSingleByGraterInterestCalculationDate(entityPM.InterestCalculationDate, entityPM.Tenant);
+            interestReport = interestReportRepository.GetSingleByGraterInterestCalculationDate(entityPM.CustomerId,entityPM.InterestCalculationDate, entityPM.Tenant);
             if (interestReport != null)
             {
                 throw new Exception(TextCodesTranslator.TranslateText("InterestReport.O.Customeralreadyhasarecent", entityPM.Tenant, showLocals) + " " + interestReport.ReportNumber);
