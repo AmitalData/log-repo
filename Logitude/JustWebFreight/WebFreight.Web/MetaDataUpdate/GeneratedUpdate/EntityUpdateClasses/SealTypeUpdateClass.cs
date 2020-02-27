@@ -113,7 +113,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ClientModuleName =  "Customs",
 			      				    ServerModuleName =  "Customs",
 			      				    NoTS =  false,
-			      				    NoDefaultFeatures =  false,
 			      				    HasMenuButtons =  false,
 			      				    AllowedForComputingPartners =  false,
 			      				    Code1 =  "1e60",
@@ -122,7 +121,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
-			      				    IsTabsHidden =  false,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
@@ -193,7 +191,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsSpellCheckedHelpLocalDefaultText =  false,
 					  						IsSpellCheckedShortLocalDefaultText =  false,
 					  						IsSpellCheckedListLocalDefaultText =  false,
-					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -262,7 +259,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsSpellCheckedHelpLocalDefaultText =  false,
 					  						IsSpellCheckedShortLocalDefaultText =  false,
 					  						IsSpellCheckedListLocalDefaultText =  false,
-					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -314,10 +310,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "EnglishName",
 					  						DefaultText =  "English Name",
-					  						FullLocalDefaultText =  "שם םנגלית",
+					  						FullLocalDefaultText =  "שם אנגלית",
 					  						ListFieldLable =  "EnglishNameListLable",
 					  						ListLableDefaultText =  "English Name",
-					  						ListLocalDefaultText =  "שם םנגלית",
+					  						ListLocalDefaultText =  "שם אנגלית",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -331,7 +327,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsSpellCheckedHelpLocalDefaultText =  false,
 					  						IsSpellCheckedShortLocalDefaultText =  false,
 					  						IsSpellCheckedListLocalDefaultText =  false,
-					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -398,7 +393,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsSpellCheckedHelpLocalDefaultText =  false,
 					  						IsSpellCheckedShortLocalDefaultText =  false,
 					  						IsSpellCheckedListLocalDefaultText =  false,
-					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -450,10 +444,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Inactive",
 					  						DefaultText =  "Inactive",
-					  						FullLocalDefaultText =  "לם פּעיל",
+					  						FullLocalDefaultText =  "לא פּעיל",
 					  						ListFieldLable =  "InactiveListLable",
 					  						ListLableDefaultText =  "Inactive",
-					  						ListLocalDefaultText =  "לם פּעיל",
+					  						ListLocalDefaultText =  "לא פּעיל",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -467,7 +461,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsSpellCheckedHelpLocalDefaultText =  false,
 					  						IsSpellCheckedShortLocalDefaultText =  false,
 					  						IsSpellCheckedListLocalDefaultText =  false,
-					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
