@@ -1864,7 +1864,9 @@
     <Compile Include="PatchDistribution\Patches\P19R03_0012_SealUpdateReasonType.cs" />
     <Compile Include="PatchDistribution\Patches\P19R03_0013_CargoSealIdentifier.cs" />
     <Compile Include="PatchDistribution\Patches\P19R03_0009_AmendmentType.cs" />
+    <Compile Include="PatchDistribution\Patches\P19R03_0017_CargoSealID.cs" />
     <Compile Include="PatchDistribution\Patches\P19R03_0016_CurrencyTypeTenant.cs" />
+    <Compile Include="PatchDistribution\Patches\P19R03_0018_SealBAndAddOn.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="EntityUpdateServices\ClientUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ConsignmentUpdateService.cs" />

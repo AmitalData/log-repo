@@ -18,15 +18,13 @@ namespace Logitude.Customs.Data.EntityPOCOs
     {
 	 string dbms;
 
-        [Key]
-        [ForeignKey("CargoSealIdentifier")]
+           [ForeignKey("CargoSealIdentifier")]
         [Column("CargoSealIdentifierId" ,Order = 1)]
 	    public string CargoSealIdentifierId { get; set; }
 	      
         public virtual CargoSealIdentifier CargoSealIdentifier { get; set; }
         [Column("Tenant")]
 	    public int Tenant { get; set; }
-     [Key]
         [Column("SealNumber" ,Order = 2)]
 	    public string SealNumber { get; set; }
         [Column("Remarks")]
@@ -51,6 +49,9 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string UpdateTypeCode { get; set; }
 	      
         public virtual AmendmentType AmendmentType { get; set; }
+     [Key]
+        [Column("Id")]
+	    public string Id { get; set; }
     }
 }
 	 
