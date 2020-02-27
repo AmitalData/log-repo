@@ -141,7 +141,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 
         //#endregion
 
-        this.GetData();
+         this.GetData();
 
         // this.UIProperties.SetEnabled("AmountToReconcile","LedgerTransaction",!this.IsGridReadOnly);
 
@@ -185,7 +185,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
                     this.IsDisplayOnly = !createdJournal.IsLedgerCreated;
                     if (!this.IsDisplayOnly) {
                         this.entityArgs.EditComponent.ReloadEntityPM();
-                        // this.GetData();
+                         this.GetData();
                     }
                 }
                 else
@@ -509,7 +509,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
                     this.SetUIProperties();
-                    this.GetData();
+                    // this.GetData();
                 }
             });
         }
