@@ -1244,6 +1244,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             return (!string.IsNullOrEmpty(CurrentTenant.PrivateLabelId));
         }
 
+
         private bool IsImporterTenantHasExportFeatureForExportShipments(int ImporterTenant, ShipmentPM entityPM)
         {
             if ((entityPM.DirectionId.ToUpper() == "E" || entityPM.DirectionId.ToUpper() == "R") && !FeatureToggleHelper.HasFeatureToggle("LEX", ImporterTenant, entityPM.Tenant))
