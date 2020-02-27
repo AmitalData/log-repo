@@ -154,8 +154,8 @@ export class CargoSealItemComponent extends BaseComponent {
 
     constructor(public entityPM: CargoSealIdentifierPM) {
         super();
-        if (entityPM != null && entityPM.CargoSeals != null) {
-            var cargoSealPM: CargoSealPM = entityPM.CargoSeals[0];
+  if (entityPM != null && entityPM.CargoSeals != null) {
+            var cargoSealPM: CargoSealPM =entityPM.CargoSeals[0];
             this.SealNumber = cargoSealPM.SealNumber;
             this.SealCompletenessStateCode = cargoSealPM.SealCompletenessStateCode;
             this.SealCompletenessStateName = cargoSealPM.SealCompletenessStateName;
@@ -164,9 +164,11 @@ export class CargoSealItemComponent extends BaseComponent {
             this.UpdateReasonCode = cargoSealPM.UpdateReasonCode;
             this.UpdateReasonName = cargoSealPM.UpdateReasonName;
             this.Status = entityPM.Status;
-            this.StatusName = entityPM.StatusName;
+            this.StatusName =entityPM.StatusName;
         }
     }
+
+ 
 
     public get CargoRowNumber() { return this.entityPM.CargoRowNumber; }
     public set CargoRowNumber(newValue: string) { this.entityPM.CargoRowNumber = newValue; }
