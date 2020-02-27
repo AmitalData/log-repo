@@ -316,13 +316,13 @@ namespace Logitude.CustomsMessaging.RequestServices
 
             foreach (var customsDocumentPM in customsDocumentPMList)
             {
-                if (!string.IsNullOrWhiteSpace(customsDocumentPM.CustomsDocId))  
+                if (!string.IsNullOrWhiteSpace(customsDocumentPM.CustomsDocId))
                 {
                     var attachment = new Attachment();
                     attachment.externalAttachmentID = customsDocumentPM.ExternalAttachmentId;
                     attachment.IsAttachment = "false";
-                    attachment.keywords = "test";
-                    attachment.fileName = "test";
+                    attachment.keywords = customsDocumentPM.Name;
+                    attachment.fileName = customsDocumentPM.Name;
 
                     attachment.documentType = customsDocumentPM.DocumentTypeCode;
                     attachments.Add(attachment);
