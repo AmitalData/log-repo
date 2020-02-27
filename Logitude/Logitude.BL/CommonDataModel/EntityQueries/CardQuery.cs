@@ -1964,7 +1964,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                         EnglishName = a.EnglishName,
                                         Code = a.Code,
                                         PartnerTypeName = a.PartnerType!=null ? a.PartnerType.Name: "",
-                                        
+                                        Notes = a.Notes
+
                                     }).ToList();
             return Cards;
         }
