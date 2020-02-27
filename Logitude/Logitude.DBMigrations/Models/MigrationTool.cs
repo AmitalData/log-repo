@@ -62,8 +62,10 @@ namespace Logitude.DBMigrations.Models
 
                             CreateDXMLMigrationHashesTable();
 
-                            SaveDXMLHashesOnDB(dxmlFiles);
+                            //SaveDXMLHashesOnDB(dxmlFiles);
                         }
+
+                        SaveDXMLHashesOnDB(dxmlFiles);
                     }
                     else
                     {
