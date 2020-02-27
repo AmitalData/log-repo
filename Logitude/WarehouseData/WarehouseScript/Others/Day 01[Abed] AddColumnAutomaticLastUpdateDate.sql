@@ -305,6 +305,13 @@ IF not EXISTS(SELECT 1 FROM sys.columns
 
 
 
+ --LeadSources
+IF not EXISTS(SELECT 1 FROM sys.columns 
+          WHERE Name = N'AutomaticLastUpdateDate'
+          AND Object_ID = Object_ID(N'LeadSources'))
+		  Begin
+		   ALTER TABLE LeadSources ADD  AutomaticLastUpdateDate datetime NULL DEFAULT GETDATE(); 
+		  End
 
  --____________________________________ Fact Charge_____________________________________
 
@@ -388,4 +395,3 @@ IF not EXISTS(SELECT 1 FROM sys.columns
 --		   ALTER TABLE ChargesGroups ADD  AutomaticLastUpdateDate datetime NULL DEFAULT GETDATE(); 
 --		  End
 
-		  

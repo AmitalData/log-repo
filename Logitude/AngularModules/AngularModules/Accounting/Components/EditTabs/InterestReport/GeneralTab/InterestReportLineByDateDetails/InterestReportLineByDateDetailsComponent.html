@@ -7,11 +7,45 @@
         bottom: 0;
         margin: auto;
     }
+
+    .tab-footer {
+        background: #f7f7f7;
+        height: 85px;
+        border-radius: 7px;
+        border-bottom-left-radius: unset;
+        margin-right: -1px;
+        padding: 7px 10px;
+        -webkit-box-shadow: 0px -3px 4px -1px rgba(0,0,0,0.31);
+        -moz-box-shadow: 0px -3px 4px -1px rgba(0,0,0,0.31);
+        box-shadow: 0px -3px 4px -1px rgba(0,0,0,0.31);
+    }
+
+    .footer-title {
+        color: #1692ef;
+        font-size: 15px;
+    }
+
+    .footer-summery::before, .footer-summery::after {
+        clear: both;
+    }
+
+    .footer-summery {
+        /*padding-left: 150px;*/
+    }
+
+    .footer-cell {
+        float: left;
+        padding: 5px;
+        margin: 0px 10px;
+        width: 150px;
+        text-align: center;
+        overflow: auto;
+    }
 </style>
 
 <div class="TabHolder">
     <table>
-        <tr>
+        <tr style="height: 79%;">
             <td>
                 <logitude-edit-grid GridWidth="100%" [HeaderHeight]="25" GridHeight="100%" [ItemSource]="InterestTransactions" [UseVirtuallization]="true">
 
@@ -70,62 +104,32 @@
                 <label *ngIf="!ReportIsLoading && InterestTransactions && InterestTransactions.Collection && InterestTransactions.Collection.length==0" class="CenterCenter" style="text-align:center;font-size:18px;color:gray">
                     {{'General.O.NoDataFound' | TextCodeTranslationPipe}}
                 </label>
-             </td>
+            </td>
         </tr>
-
-
-           <tr style="height: 1px;">
-        <td>
-            <TabSummary [Height]="90">
-                <table>
-                    <tr>
-                        <td>
-                            <table>
-                                <tr style="height: 1px;">
-                                    <td class="TabSummaryTitle">
-                                        {{'InterestTransaction.O.TotalLocalAmount' | TextCodeTranslationPipe}}
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td>
-                                        <table>
-                                            <tr>
-                                                <td   style="text-indent: 10px; width: 1px;">
-                                                    <div [style.text-align]="isRTL ? 'right' : 'left'" class="TabSummaryValue">{{TotalLocalAmount| NumbersPipe:'N2'}}</div>
-                                                    <div class="TabSummaryLabel">
-                                                        {{'InterestTransaction.F.LocalAmount' | TextCodeTranslationPipe}}
-                                                    </div>
-                                                </td>
-
-                                                <td>
-                                                    <div></div>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-
-                        <td colspan="4" style="vertical-align: bottom">
-                            <table style="height: 22px;">
-                                <tr>
-                                    <td>
-                                        <div></div>
-                                    </td>
-                                    <td style="width: 57px;">
-                                        <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-
-                    </tr>
-                </table>
-            </TabSummary>
-        </td>
-    </tr>
-     
+        <tr><td><div></div></td></tr>
     </table>
 </div>
+
+<!-- Footer -->
+<div style="position: absolute; left: -15px; bottom: -10px; right: -15px;">
+    <div class="tab-footer">
+        <div class="footer-title">
+            {{'InterestTransaction.O.TotalLocalAmount' | TextCodeTranslationPipe}}
+        </div>
+        <div class="footer-summery">
+            <div class="footer-cell" [class.border-left]="isRTL" [style.text-align]="isRTL ? 'right' : 'left'" [style.float]="isRTL ? 'right' : 'left'">
+                <div style="font-size: 15px; color: #008c7a; font-weight: bold;">{{TotalLocalAmount | NumbersPipe:'N2'}}</div>
+                <div style="font-size: 13px; color: #6f6f6f;"> {{'InterestTransaction.F.LocalAmount' | TextCodeTranslationPipe}}</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div style="position: absolute; left: 0px; bottom: 0px; right: 0px;">
+        <div [style.float]="isRTL ? 'left' : 'right'" style="height: 22px;vertical-align:bottom">
+            <button style="width:57px" class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
+        </div>
+</div>
+
+
