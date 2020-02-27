@@ -1869,7 +1869,7 @@ export class CourierWorksheetComponent extends BaseComponent
             .subscribe(response => {
                 this.IsMamanEnabled = false;
                 if (!response.HasError) {// reEdit this default !!!
-                    if (response.Result != null) {
+                    if (response.Result != null && response.Result.DefaultValue != null) {
                         if (response.Result.DefaultValue.includes("ILMMN")) {
                             this.IsMamanEnabled = true;
                         }
@@ -1877,6 +1877,8 @@ export class CourierWorksheetComponent extends BaseComponent
                             this.IsILOVLEnabled = true;
                         }
                         this._CourierWorksheetSharedDataService.WebAPICourierGWMessageECTHRDataMaman = response.Result.DefaultValue;
+                    } else {
+                        console.error("CGO_CUST_MAMAN DefaultValue  is missing !!!")
                     }
                 }
             });
