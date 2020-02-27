@@ -15,15 +15,17 @@ namespace Logitude.IntegrationTest.Shipment
     {
         double OpenAmountInLocal;
         double OpenAmpuntInProfit;
+       
 
         [TestMethod]
         public async Task PostShipment()
         {
-            ShipmentPM entityPM = CreateShipment();
+            ShipmentPM entityPM = CreateShipmentAirExport();
             HttpResponseMessage response = await RestClientService.PostAsync(entityPM, "shipment");
             ShipmentPM shipmentPM = RestClientService.ParseResponse<ShipmentPM>(response);
             ShipmentVariables.ShipmentId = shipmentPM.Id;
-            //Assert.AreEqual(entityPM.Id, shipmentPM.Id);
+            await GetShipment(ShipmentVariables.ShipmentId);
+            
         }
 
         [TestMethod]
@@ -31,7 +33,7 @@ namespace Logitude.IntegrationTest.Shipment
         {
             HttpResponseMessage response = await RestClientService.GetAsync("Shipment/GetSingle?id=" + ShipmentVariables.ShipmentId);
             ShipmentPM shipment = RestClientService.ParseResponse<ShipmentPM>(response);
-
+            Assert.IsTrue(response.StatusCode.ToString()=="OK");
             return shipment;
         }
 
@@ -57,7 +59,7 @@ namespace Logitude.IntegrationTest.Shipment
         }
 
 
-        private ShipmentPM CreateShipment()
+        private ShipmentPM CreateShipmentAirExport()
         {
             ShipmentPM shipmentPM = new ShipmentPM();
             shipmentPM.Tenant = IntegrationTestLoginParameters.Tenant;
