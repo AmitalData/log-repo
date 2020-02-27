@@ -55,7 +55,7 @@ namespace Logitude.Customs.BL.CloseTables
                 },
                 new SincroTestCaseDetail()
                 {
-                    Code = "190Sincro",
+                    Code = "190",
                     Name = "בדיקות פיזיות	",
                     IsDCA = true,
                     Entity="Declaration",
@@ -85,7 +85,7 @@ namespace Logitude.Customs.BL.CloseTables
                 },
                 new SincroTestCaseDetail()
                 {
-                    Code = "196Sincro",
+                    Code = "196",
                     Name = "סיום בדיקה פיזית ",
                     IsDCA = true,
                     Entity="Declaration",
@@ -95,7 +95,7 @@ namespace Logitude.Customs.BL.CloseTables
                 },
                 new SincroTestCaseDetail()
                 {
-                    Code = "2470Sincro",
+                    Code = "2470",
                     Name = "מסר התרת ",
                     IsDCA = true,
                     Entity="Declaration",
@@ -109,13 +109,13 @@ namespace Logitude.Customs.BL.CloseTables
                     Name = "הודעה לסוכן על הוראת תשלום",
                     IsDCA = true,
                     Entity="Declaration",
-                    Param1= @"{}",
+                    Param1= @"{""paymentStatus"":""5""}",
                     Param2= @"{}",
                     MainInterfaceCode="3050",
                 },
                    new SincroTestCaseDetail()
                 {
-                    Code = "8211Sincro",
+                    Code = "8211",
                     Name = "מסר פתיחת בטוחה",
                     IsDCA = true,
                     Entity="Declaration",

@@ -36,10 +36,14 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
         {
             DeclarationQueryService declarationQueryService = new DeclarationQueryService(requestParamsData.Tenant);
             DeclarationPM _dec = declarationQueryService.GetSingle(requestParamsData.AppicationId, false, false);
+            DeclarationPM _decParent=new DeclarationPM();
+            if( _dec.AmendmentOriginalDeclartation!= null && _dec.DeclarationNumber!= null)
+               _decParent = declarationQueryService.GetSingle(requestParamsData.AppicationId, false, false);
+
             _collateralRequestDetails = new CollateralRequestDetails[1];
             _collateralRequestDetails[0] = new CollateralRequestDetails
             {
-                collateralRequestNumber = 1,
+                collateralRequestNumber = 6,
                 collateralValidityDate = DateTime.Now.AddDays(200),
                 requestValidityDate = DateTime.Now.AddYears(2),
                 collateralRequestStatus = 2,
@@ -54,11 +58,15 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
             };
             _collateralRequestDetails[0].CollateralConditioning = _collateralConditioning;
             ConnectedEntity[] _relatedEntity = new ConnectedEntity[1];
+
+            var dec_number = _decParent.DeclarationNumber!=null ? _decParent.DeclarationNumber : _dec.DeclarationNumber;
             _relatedEntity[0] = new ConnectedEntity
             {
-                entityIdKey1 = _dec.DeclarationNumber,
+                entityIdKey1 = dec_number,
                 entityType=11185
             };
+
+
             _collateralRequestDetails[0].RelatedEntity = _relatedEntity;
             _collateralRequestDetails[0].Worker = new Worker
             {

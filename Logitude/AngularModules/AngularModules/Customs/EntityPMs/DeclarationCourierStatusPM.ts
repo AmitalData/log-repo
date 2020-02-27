@@ -333,8 +333,8 @@ export class DeclarationCourierStatusPM {
     public get LastMileStatusName() { return this.lastMileStatusName; }
     public set LastMileStatusName(newValue: string) { if (this.lastMileStatusName != newValue) { this.lastMileStatusName = newValue; this.MarkAsDirty("LastMileStatusName"); } }
        
-
-     private sortedImporterCode: string;
+	 
+    private sortedImporterCode: string;
     public get SortedImporterCode() { return this.sortedImporterCode; }
     public set SortedImporterCode(newValue: string) { if (this.sortedImporterCode != newValue) { this.sortedImporterCode = newValue; this.MarkAsDirty("SortedImporterCode"); } }
        
@@ -352,7 +352,6 @@ export class DeclarationCourierStatusPM {
     private sortedCourierDeclarationStatus: string;
     public get SortedCourierDeclarationStatus() { return this.sortedCourierDeclarationStatus; }
     public set SortedCourierDeclarationStatus(newValue: string) { if (this.sortedCourierDeclarationStatus != newValue) { this.sortedCourierDeclarationStatus = newValue; this.MarkAsDirty("SortedCourierDeclarationStatus"); } }
-       
        
 	 
 
@@ -379,4 +378,4 @@ export class DeclarationCourierStatusPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

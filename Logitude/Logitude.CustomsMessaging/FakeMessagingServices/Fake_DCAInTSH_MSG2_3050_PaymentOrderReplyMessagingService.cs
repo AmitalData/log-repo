@@ -1,6 +1,7 @@
 ﻿using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.Def.EntityPMs;
 using Logitude.CustomsMessaging.Common.RequestParams;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,10 +15,16 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
     {
         private ResponseContentHeader _responseContentHeader;
         private PaymentOrderReply _paymentOrderReply;
+        private int paymentStatus;
         internal TSH_MSG2_PaymentOrderReply GetFakeCustomsResponse(GenericRequestParams requestParamsData)
         {
+            dynamic data = JObject.Parse(requestParamsData.TestCase.Param1);
+
+            paymentStatus = data.paymentStatus;
+
             SetRequestContentHeader();
             SetPaymentOrderReply(requestParamsData);
+
             TSH_MSG2_PaymentOrderReply fake = new TSH_MSG2_PaymentOrderReply
             {
                 PaymentOrderReply = _paymentOrderReply,
@@ -34,17 +41,21 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
         }
         public void SetPaymentOrderReply(GenericRequestParams requestParamsData)
         {
-            _paymentOrderReply = new PaymentOrderReply();
+             _paymentOrderReply = new PaymentOrderReply();
             DeclarationQueryService declarationQueryService = new DeclarationQueryService(requestParamsData.Tenant);
             ConsignmentQueryService consignmentQueryService = new ConsignmentQueryService(requestParamsData.Tenant);
             DeclarationPM _dec = declarationQueryService.GetSingle(requestParamsData.AppicationId, false, false);
+    
+
+            
             ConsignmentPM _con = consignmentQueryService.GetSingle(_dec.Id, 1, false, false);
             _paymentOrderReply.PaymentDetails = new PaymentDetails();
-            _paymentOrderReply.PaymentDetails.paymentID = Convert.ToInt32(_dec.DeclarationNumber.Substring(_dec.DeclarationNumber.Length-4)); // Or Use counter?\
-            _paymentOrderReply.paymentStatus = 1;
+            //_paymentOrderReply.PaymentDetails.paymentID = Convert.ToInt32(_dec.DeclarationNumber.Substring(_dec.DeclarationNumber.Length-4)); // Or Use counter?\
+            _paymentOrderReply.PaymentDetails.paymentID = Convert.ToInt32(DateTime.Now.Ticks.ToString().Substring(10, 7));
             _paymentOrderReply.customsHouse = 2;
             _paymentOrderReply.paymentProcess = 2;
             _paymentOrderReply.paymentOrderType = 1;
+            _paymentOrderReply.paymentStatus = 1;
             _paymentOrderReply.ConnectedEntity = new ConnectedEntity
             {
                 entityType = 1055,
