@@ -29,6 +29,14 @@ namespace Logitude.Accounting.Data.Repositories
             return interestReport;
         }
 
+        public InterestReport GetSingleByGraterInterestCalculationDate(DateTime InterestCalculationDate, int tenant)
+        {
+            InterestReport interestReport = (from a in context.InterestReports
+                                             where a.Tenant == tenant && a.InterestCalculationDate > InterestCalculationDate && (a.InterestReportStatusCode == "2" || a.InterestReportStatusCode == "4")
+                                             select a).FirstOrDefault();
+            return interestReport;
+        }
+
         public decimal GetClosedBalanceOfLastInvoicedOrClosedWithoutInvoiceInterestReport(int tenant)
         {
             decimal? closedBalance = (from a in context.InterestReports
