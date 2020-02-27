@@ -173,7 +173,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             apinvoicePM.SetApproved = true;
                             apinvoicePM.SetReTransfer = false;
                             apinvoicePM.SetCancelApproval = false;
-
+                            apinvoicePM.CreatedFromAPI = true;
                             if (apinvoicePM.TransferStatusCode == null)
                                 apinvoicePM.TransferStatusCode = "NR";
 
@@ -312,20 +312,9 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 line.ChargeTypeGLAccountId = charge.PayableDebitGLAcountId;
             }
 
-            CheckAmountInLocalCurrency(apinvoice, apinvoicePM);
+          
         }
-        private void CheckAmountInLocalCurrency(APInvoice apinvoice,  APInvoicePM apinvoicePM)
-        {
-            double? totalAmountInLocalCurrency =apinvoice.InvoiceLines.Sum(d => d.LocalCurrencyAmount);
-            totalAmountInLocalCurrency = Math.Round((double)totalAmountInLocalCurrency, 2);
-            var roundedAmountInLocalCurrency = Math.Round((double)apinvoice.AmountInLocalCurrency, 2);
-            if (totalAmountInLocalCurrency != roundedAmountInLocalCurrency)
-            {
-                throw new Exception("wrong Amount in local currency! ");
-            }
-
-
-        }
+      
 
         private TenantPM GetTenantPM(int tenant)
         {
