@@ -22,7 +22,7 @@ namespace Logitude.IntegrationTest.Shipment.Tests
             ShipmentReceivablePM ShipmentReceivable = new ShipmentReceivablePM();
 
             ShipmentReceivable.CreatedByUserId = IntegrationTestLoginParameters.LoginUserId;
-            ShipmentReceivable.CreateDate = TenantServerConfigration.GetCurrentDateTime(IntegrationTestLoginParameters.Tenant);
+            //ShipmentReceivable.CreateDate = TenantServerConfigration.GetCurrentDateTime(IntegrationTestLoginParameters.Tenant);
             ShipmentReceivable.ChargesTypeId = ShipmentVariables.ChargeTypeAFTId;
             ShipmentReceivable.MeasurementId = ShipmentVariables.MeasurmentGRWTId;
             ShipmentReceivable.CurrencyId = ShipmentVariables.CurrencyEURId;
