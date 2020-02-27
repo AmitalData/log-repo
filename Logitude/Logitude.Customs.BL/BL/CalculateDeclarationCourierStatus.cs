@@ -364,7 +364,6 @@ namespace Logitude.Customs.BL.BL
                 }
             }
 
-
             List<CustomDocumentTypePM> CustomDocumentTypePMList = docTypeQuery.GetMandatoryCustomDocumentTypesForCourier(declarationPM.Tenant);
             if (CustomDocumentTypePMList != null)
             {
@@ -377,27 +376,6 @@ namespace Logitude.Customs.BL.BL
                     }
                 }
             }
-
-
-            string CargoTypeCode = null;
-            if (declarationPM.Consignments != null && declarationPM.Consignments.Count() > 0)
-            {
-                CargoTypeCode = declarationPM.Consignments[0].CargoTypeCode;
-            }
-            var myCustomsDocumentsDefinitionQueryService = new CustomsDocumentsDefinitionQueryService(declarationPM.Tenant);
-            List<CustomsDocumentsDefinitionPM> listCustomsDocumentsDefinition = myCustomsDocumentsDefinitionQueryService.GetCustomsDocumentsDefinitionsForDeclaration(CargoTypeCode, declarationPM.ProcedureCurrentCode, declarationPM.TransportModeId, 1);
-            if (listCustomsDocumentsDefinition != null || listCustomsDocumentsDefinition.Count() > 0)
-            {
-                foreach (CustomsDocumentsDefinitionPM customsDocumentsDefinitionPMItem in listCustomsDocumentsDefinition)
-                {
-                    CustomsDocumentsTicketPM customsDocumentsTicketPM = customsDocumentsTicketPMList.Where(d => d.DocumentTypeCode == customsDocumentsDefinitionPMItem.DocumentTypeCode).FirstOrDefault();
-                    if (customsDocumentsTicketPM == null)
-                    {
-                        return true;
-                    }
-                }
-            }
-
 
             return false;
         }    
