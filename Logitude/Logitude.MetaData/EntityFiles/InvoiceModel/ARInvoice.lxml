@@ -362,7 +362,7 @@
     FieldsDataType="&quot;Double&quot;"
     MinLength="0"
     MaxLength="0"
-    IsRequired="false"
+    IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
@@ -435,7 +435,7 @@
     FieldsDataType="&quot;Double&quot;"
     MinLength="0"
     MaxLength="0"
-    IsRequired="false"
+    IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
@@ -4257,7 +4257,7 @@
     FieldsDataType="&quot;DateTime&quot;"
     MinLength="0"
     MaxLength="1"
-    IsRequired="false"
+    IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
@@ -15305,7 +15305,6 @@
         IndexOrder="0" />
     </QueryFilters>
   </Query>
-  
   <Screen
     Name="&quot;Header Screen&quot;"
     ObjectTableName="&quot;ARInvoice&quot;"

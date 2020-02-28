@@ -31,12 +31,12 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.Tenant).HasColumnName("Tenant");
             this.Property(t => t.ChargesTypeId).HasColumnName("ChargesTypeId");
             this.Property(t => t.ForiegnCurrencyId).HasColumnName("ForiegnCurrencyId");
-            this.Property(t => t.ForiegnCurrencyAmount).HasColumnName("ForiegnCurrencyAmount");
-            this.Property(t => t.LocalCurrencyAmount).HasColumnName("LocalCurrencyAmount");
-            this.Property(t => t.InvoiceCurrencyAmount).HasColumnName("InvoiceCurrencyAmount");            
+            this.Property(t => t.ForiegnCurrencyAmount).HasColumnName("ForiegnCurrencyAmount").IsRequired();
+            this.Property(t => t.LocalCurrencyAmount).HasColumnName("LocalCurrencyAmount").IsRequired();
+            this.Property(t => t.InvoiceCurrencyAmount).HasColumnName("InvoiceCurrencyAmount").IsRequired();
             this.Property(t => t.VatTypeId).HasColumnName("VatTypeId");
             this.Property(t => t.ARInvoiceId).HasColumnName("ARInvoiceId");
-            this.Property(t => t.ForiegnExchangeRate).HasColumnName("ForiegnExchangeRate");
+            this.Property(t => t.ForiegnExchangeRate).HasColumnName("ForiegnExchangeRate").IsRequired();
             this.Property(t => t.LineNumber).HasColumnName("LineNumber");
             this.Property(t => t.ReceivableId).HasColumnName("ReceivableId");
             this.Property(t => t.UnitPrice).HasColumnName("UnitPrice");
@@ -44,7 +44,7 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.MeasurementId).HasColumnName("MeasurementId");
             this.Property(t => t.IsExchangeRateFixed).HasColumnName("IsExchangeRateFixed");           
             this.Property(t => t.EntityId).HasColumnName("EntityId");
-            this.Property(t => t.ProfitCurrencyAmount).HasColumnName("ProfitCurrencyAmount");
+            this.Property(t => t.ProfitCurrencyAmount).HasColumnName("ProfitCurrencyAmount").IsRequired();
             this.Property(t => t.VatPercentage).HasColumnName("VatPercentage");
             this.Property(t => t.ExchangeRateDate).HasColumnName("ExchangeRateDate");
             this.Property(t => t.CreditAccount).HasColumnName("CreditAccount");

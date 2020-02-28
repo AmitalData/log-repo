@@ -221,7 +221,7 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.Property(t => t.QuoteCustomerTypeCode).HasColumnName("QuoteCustomerTypeCode");
             this.Property(t => t.CustomerName).HasColumnName("CustomerName");
             this.Property(t => t.SaleCurrencyId).HasColumnName("SaleCurrencyId");
-            this.Property(t => t.ExchangeRate).HasColumnName("ExchangeRate");
+            this.Property(t => t.ExchangeRate).HasColumnName("ExchangeRate").IsRequired();
             this.Property(t => t.ShipperName).HasColumnName("ShipperName");
             this.Property(t => t.ConsigneeName).HasColumnName("ConsigneeName");
             this.Property(t => t.PickUpAddress).HasColumnName("PickUpAddress");
