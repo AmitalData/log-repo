@@ -612,24 +612,25 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         this.SetUIProperties_ExchangeRate();
     }
     SetUIProperties_ExchangeRate() {
-        var isEnabled: boolean = false;
+        var isEnabled: boolean = true;
 
-        if (this.IsScreenEnabled) {
-            if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "ARPaymentEditExchangeRate")) {
-                if (this.EntityPM.PaymentInvoices.length > 0) {
-                    isEnabled = false;
-                }
-                else {
-                    isEnabled = true;
-                }
+        if (!this.IsScreenEnabled) {
+            isEnabled = false;
+        //    if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "ARPaymentEditExchangeRate")) {
+        //        if (this.EntityPM.PaymentInvoices.length > 0) {
+        //            isEnabled = false;
+        //        }
+        //        else {
+        //            isEnabled = true;
+        //        }
 
-                if (this.PaymentCurrencyId == SessionLocator.TenantPM.CurrencyId) {
-                    isEnabled = false;
-                }
-                else {
-                    isEnabled = true;
-                }
-            }
+        //        if (this.PaymentCurrencyId == SessionLocator.TenantPM.CurrencyId) {
+        //            isEnabled = false;
+        //        }
+        //        else {
+        //            isEnabled = true;
+        //        }
+        //    }
         }
 
         this.UIProperties.SetEnabled("PaymentCurrencyExchangeRate", this.ObjectTableName, isEnabled);
