@@ -1461,6 +1461,12 @@ namespace Logitude.DatabaseMigration.LogitudeModel
         #endregion
 
         #region Shipment Context
+        public IDbSet<ShipmentComputedFields> ShipmentComputedFields
+        {
+            get;
+            set;
+        }
+        
         public IDbSet<Shipment> Shipments
         {
             get;
@@ -1863,6 +1869,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
         #endregion
 
         #region Quotes Context
+        public IDbSet<QuoteClosingReason> QuoteClosingReasons { get; set; }
         public IDbSet<Quote> Quotes { get; set; }
         public IDbSet<QuoteCharge> QuoteCharges { get; set; }
         public IDbSet<QuotePriceSteps> QuotePriceSteps { get; set; }
@@ -4763,6 +4770,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new QuoteChargeMap());
             modelBuilder.Configurations.Add(new QuoteCustomerTypeMap());
             modelBuilder.Configurations.Add(new QuotePriceStepMap());
+            modelBuilder.Configurations.Add(new QuoteClosingReasonMap());
             modelBuilder.Configurations.Add(new QuoteMap());
             modelBuilder.Configurations.Add(new QuoteTypeMap());
             modelBuilder.Configurations.Add(new RankMap());
@@ -4798,6 +4806,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new ShipmentReceivableMap());
             modelBuilder.Configurations.Add(new ShipmentReceivableStatuMap());
             modelBuilder.Configurations.Add(new ShipmentMap());
+            modelBuilder.Configurations.Add(new ShipmentComputedFieldsMap());
             modelBuilder.Configurations.Add(new ShipmentTypeMap());
             modelBuilder.Configurations.Add(new ShippingAgentMap());
             modelBuilder.Configurations.Add(new ShippingLineMap());

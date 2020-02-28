@@ -74,7 +74,7 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.Property(t => t.CostTotalAmount).HasColumnName("CostTotalAmount");
             this.Property(t => t.CostTotalAmountLocal).HasColumnName("CostTotalAmountLocal");
             this.Property(t => t.SaleIsFixedRate).HasColumnName("SaleIsFixedRate");
-            this.Property(t => t.CostExchangeRate).HasColumnName("CostExchangeRate");
+            this.Property(t => t.CostExchangeRate).HasColumnName("CostExchangeRate").IsRequired();
             this.Property(t => t.CostIsFixedRate).HasColumnName("CostIsFixedRate");
             this.Property(t => t.CostCurrencyId).HasColumnName("CostCurrencyId");
             this.Property(t => t.CostMaxAmount).HasColumnName("CostMaxAmount");
