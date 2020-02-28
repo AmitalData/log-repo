@@ -7,6 +7,7 @@ using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.Security;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
+using Logitude.Server.Tools.Helpers;
 
 namespace Logitude.BL.InvoiceModel.Tools.DataMapping
 {
@@ -170,6 +171,9 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.PrepaidCollectId = entityPM.PrepaidCollectId;
             entity.ContainerTypeId = entityPM.ContainerTypeId;
             entity.Quantity = entityPM.Quantity;
+            double? LocalAmountWithVatRecognized = entityPM.VatRecognizedPercentage == null ? entityPM.LocalCurrencyAmount : (MethodHelper.Round((entityPM.LocalCurrencyAmount + ((entityPM.VatPercentage / 100) * ((1 - entityPM.VatRecognizedPercentage) * entityPM.LocalCurrencyAmount))), 2));
+            entityPM.ForiegnAmountWithRecognizedVat = LocalAmountWithVatRecognized != null ? LocalAmountWithVatRecognized / entityPM.ForiegnExchangeRate: LocalAmountWithVatRecognized;
+
             //ForeignCurrencyAmount = localCurrencyAmount/ForeignExchangeRate;
         }
 
