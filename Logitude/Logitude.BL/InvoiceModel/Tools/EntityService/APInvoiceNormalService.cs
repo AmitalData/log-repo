@@ -1705,9 +1705,20 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             ExternalTAXItemId = item.ExternalTAXItemId,
                             // VatRecognizedPercentage = item.VatRecognizedPercentage,
                         };
+                        //InvoiceCurrencyVatableAmount= LocalVatableAmount/InvoiceCurrencyExchangeRate
+                        FullAccountingSettingPM accountingSettings = getFullAccountingSettings(entityPM.Tenant);
+                        if (accountingSettings.AccountingActivated)
+                        {
+                            record.LocalVATAmount = MethodHelper.Roundd((record.LocalVatableAmount * record.VatPercent / 100), 2);
+                            record.LocalAmountWithVatRecognized = (double)(record.VatType.RecognizedPercentage != null ? (((decimal)record.VatType.RecognizedPercentage / 100) * (decimal)record.LocalVATAmount) : (decimal)record.LocalVATAmount);
 
-                        record.LocalVATAmount = MethodHelper.Roundd((record.LocalVatableAmount * record.VatPercent / 100), 2);
-                        record.InvoiceCurrencyVATAmount = MethodHelper.Roundd((record.InvoiceCurrencyVatableAmount * record.VatPercent / 100), 2);
+                            record.InvoiceCurrencyVATAmount = MethodHelper.Roundd(((record.LocalAmountWithVatRecognized / entityPM.InvoiceCurrencyExchangeRate) * record.VatPercent / 100), 2);
+                        }
+                        else
+                        {
+                            record.LocalVATAmount = MethodHelper.Roundd((record.LocalVatableAmount * record.VatPercent / 100), 2);
+                            record.InvoiceCurrencyVATAmount = MethodHelper.Roundd((record.InvoiceCurrencyVatableAmount * record.VatPercent / 100), 2);
+                        }
                         record.ProfitCurrencyVATAmount = MethodHelper.Roundd((record.ProfitVatableAmount * record.VatPercent / 100), 2);
                         invoiceTotalVatRepository.Add(record);
 
