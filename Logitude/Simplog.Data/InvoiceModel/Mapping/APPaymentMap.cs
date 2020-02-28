@@ -244,7 +244,7 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.HasRequired(t => t.PaymentMethod)
                 .WithMany()
                 .HasForeignKey(d => d.PaymentMethodId);
-            this.HasOptional(t => t.AccountingPaymentMethod)
+            this.HasRequired(t => t.AccountingPaymentMethod)
                .WithMany()
                .HasForeignKey(d => d.AccountingPaymentMethodId);
             this.HasRequired(t => t.Status)
