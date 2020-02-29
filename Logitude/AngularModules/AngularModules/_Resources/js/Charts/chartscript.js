@@ -244,7 +244,7 @@ function ResetItemFunnel() {
 
     }
     var direction = "left";
-    function makeAmBarChart(name, graphs, dataprovider, max, legendFlag, LegendDiv, minimum, stacked, IsRtl) {
+    function makeAmBarChart(name, graphs, dataprovider, max, legendFlag, LegendDiv, minimum, stacked, IsRtl, title) {
         var RTL = "left";
         if (IsRtl == "right")
             RTL = IsRtl;
@@ -296,15 +296,14 @@ function ResetItemFunnel() {
             },
             "borderAlpha": 0,
             "trendLines": [],
-            "graphs": graphs
-         ,
+            "graphs": graphs,
             "guides": [],
             "valueAxes": [
             {
                 "position": RTL,
                 //"rtl": true,
                 "id": "ValueAxis-1",
-                "title": "",
+                "title": title,
                 "labelFunction": function (item, content) {
 
                     var html = "";
@@ -373,15 +372,13 @@ function ResetItemFunnel() {
           },
           "borderAlpha": 0,
           "trendLines": [],
-          "graphs": graphs
-       ,
+          "graphs": graphs,
           "guides": [],
           "valueAxes": [
           {
               "id": "ValueAxis-1",
-              "title": "",
+              "title": title,
               "labelFunction": function (item, content) {
-
                   var html = "";
                   html += customNumberFormat(item);
                   return html;

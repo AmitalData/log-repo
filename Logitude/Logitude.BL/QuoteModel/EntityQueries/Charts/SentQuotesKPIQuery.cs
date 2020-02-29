@@ -67,7 +67,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries.Charts
                                     select new ChartingDataClass()
                                     {
                                         StringProperty = g.Key.StringProperty,
-                                        DoubleProperty = MethodHelper.Round(g.Key.DoubleProperty,3).Value, 
+                                        DoubleProperty = MethodHelper.Round(g.Key.DoubleProperty,2).Value, 
                                         IntegerProperty = (int) g.Key.DoubleProperty,
                                     }).ToList();
 

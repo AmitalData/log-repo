@@ -36,9 +36,14 @@ namespace Logitude.BL.QuoteModel.EntityQueries.Charts
                  && !d.IsCancelled
                  select d);
 
-            if(args.ChartCode != "QCV")
+            if(args.ChartCode != "QCV" && args.ChartCode != "KPI")
             {
                 dataSourceQuery = dataSourceQuery.Where(d => !d.IsClosed);
+            }
+
+            if (args.ChartCode == "KPI")
+            {
+                dataSourceQuery = dataSourceQuery.Where(d => d.IsClosed == true);
             }
 
             QuoteBusinessUnitFilter filter = new QuoteBusinessUnitFilter(tenant);
