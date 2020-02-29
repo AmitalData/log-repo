@@ -1,4 +1,4 @@
-﻿
+
 <table>
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td>
@@ -48,7 +48,7 @@
                                             [DataContext]="DataContext"
                                             [LookUpTableName]="'VatType'"
                                             [HideMaintenanceIcon]="true"
-                                            [HideAddLink]="true">
+                                            [HideAddLink]="true"  [DependencyFilter2Value]="false">
                                     </LogLov>
                                 </td>
                             </tr>
