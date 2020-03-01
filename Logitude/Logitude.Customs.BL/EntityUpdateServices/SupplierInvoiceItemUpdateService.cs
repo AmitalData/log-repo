@@ -144,7 +144,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             string logData = "";
             if (entityPM.ClassificationCode != entityPOCO.ClassificationCode)
             {
-                logData = $"entityPM.ClassificationCode(New value)={entityPM.ClassificationCode},entityPOCO.ClassificationCode(Old value)={entityPOCO.ClassificationCode}"; 
+                var loggedUser = AuthenticationUtil.ResolveUserIdentityName(entityPM.Tenant);
+                logData = $"entityPM.ClassificationCode(New value)={entityPM.ClassificationCode},entityPOCO.ClassificationCode(Old value)={entityPOCO.ClassificationCode}, User name={loggedUser}"; 
                 LogitudeSettings.HandleLogMe("ClassificationCode changed " + logData, false, "SupplierInvoiceItemUpdate.ClassificationCode", stopLogAt);                
             }
             base.OnUpdating(entityPM, entityPOCO);
