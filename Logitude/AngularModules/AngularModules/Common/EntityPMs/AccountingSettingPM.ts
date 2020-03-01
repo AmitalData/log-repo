@@ -265,6 +265,11 @@ export class AccountingSettingPM {
     public set AllowManualARPaymentNumber(newValue: boolean) { if (this.allowManualARPaymentNumber != newValue) { this.allowManualARPaymentNumber = newValue; this.MarkAsDirty("AllowManualARPaymentNumber"); } }
        
 	 
+    private allowRegionalTaxManagement: boolean;
+    public get AllowRegionalTaxManagement() { return this.allowRegionalTaxManagement; }
+    public set AllowRegionalTaxManagement(newValue: boolean) { if (this.allowRegionalTaxManagement != newValue) { this.allowRegionalTaxManagement = newValue; this.MarkAsDirty("AllowRegionalTaxManagement"); } }
+       
+	 
 
     public OldEntityPM: AccountingSettingPM;
 		

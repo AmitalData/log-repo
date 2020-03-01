@@ -432,7 +432,12 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
 
 
-
+        public Card GetCardWithPrimaryContactById(string id , int tenant)
+        {
+          return   (from a in context.Cards.Include("PrimaryContact")
+                    where a.Id == id && a.Tenant == tenant
+                      select a).FirstOrDefault();
+        }
 
 
 

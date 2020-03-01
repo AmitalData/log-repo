@@ -35,9 +35,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-
-  Code="&quot;2da9&quot;"
-
+  Code="&quot;8987&quot;"
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -6289,6 +6287,15 @@
       FeatureTypeCode="&quot;MENU&quot;"
       FeatureTextCodeCode="&quot;General.Features.QPDB&quot;"
       FeatureDefaultText="&quot;Quotes Performance Dashboard&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;REGIONALTAX&quot;"
+      FeatureTypeCode="&quot;OTH&quot;"
+      FeatureTextCodeCode="&quot;General.Features.REGIONALTAX&quot;"
+      FeatureDefaultText="&quot;Regional Tax&quot;"
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"
