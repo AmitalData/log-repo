@@ -8,8 +8,6 @@ import { AppTool } from '../../../Infrastructure/Tools';
 import { EntityListService } from '../../../Infrastructure/Services/EntityListService';
 import { ReportGroupList } from '../../EntityLists/ReportGroupList';
 import { ReportList } from '../../EntityLists/ReportList';
-import { QueryFilterItem } from '../Filters/QueryFilterItem';
-import { List } from '../../../Infrastructure/DataContracts/Dashboard/List';
 import { SchedulerDetails, ReportSchedulerDetails } from '../../../Infrastructure/DataContracts/SchedulerDetails';
 
 @Component({
@@ -28,17 +26,18 @@ export class TaskReportSchedulerComponent implements OnInit {
     public ReportList: ReportList;
     filterAgrs: ApiQueryFilters;
     SchedulerType: string = "Report";
-    EditReportSchedulerEventAlreadyExist: boolean = false;
+    IsEditReportSchedulerEventAlreadyExist: boolean = false;
     @Output() TasksHistoryCustomColumnsReady = new EventEmitter();
     @Output() TasksCustomColumnsReady = new EventEmitter();
     @Output() MenuHeaderchangeevent = new EventEmitter();
     @Output() MenuHeaderchangeeventTasks = new EventEmitter();
 
     constructor(private _entityListService: EntityListService) {
+
         this.CurrentSession.SessionEvent.subscribe(($event: any) => {
-            if ($event && $event.Name == "EditReportScheduler") {
-                if (!this.EditReportSchedulerEventAlreadyExist) {
-                    this.EditReportSchedulerEventAlreadyExist = true;
+            if ($event && $event.Name == "IsEditReportScheduler") {
+                if (!this.IsEditReportSchedulerEventAlreadyExist) {
+                    this.IsEditReportSchedulerEventAlreadyExist = true;
                     this.EditTaskClicked($event.DataContext);
                 }
             }
@@ -48,8 +47,6 @@ export class TaskReportSchedulerComponent implements OnInit {
     ngOnInit() {
         this.RefreshButtonClicked();
     }
-
-
 
     SetWindowArgs(windowArgs) {
         this.ReportGroupList = windowArgs.ReportGroupList;
@@ -90,7 +87,7 @@ export class TaskReportSchedulerComponent implements OnInit {
         logWindow.WindowArgs = windowArgs;
         logWindow.Show('./Report/Components/Scheduler/AddEditReportSchedulerComponent');
         logWindow.WindowClosed.subscribe(closed => {
-            this.EditReportSchedulerEventAlreadyExist = false;
+            this.IsEditReportSchedulerEventAlreadyExist = false;
         });
     }
 
@@ -104,24 +101,12 @@ export class TaskReportSchedulerComponent implements OnInit {
         logWindow.DataContext = DataContext;
         logWindow.WindowArgs = windowArgs;
         logWindow.Title = "Report Scheduler Details";
-        logWindow.Width = 900;
         logWindow.Height = 820;
+        logWindow.Width = 900;
         logWindow.Show('./Report/Components/Scheduler/AddEditReportSchedulerComponent');
         logWindow.WindowClosed.subscribe(closed => {
-            this.EditReportSchedulerEventAlreadyExist = false;
+            this.IsEditReportSchedulerEventAlreadyExist = false;
         });
-    }
-
-    public RefreshTasksSchedular(entityPM: TasksSchedulerPM) {
-        var index = this.loadedDataList.indexOf(entityPM);
-        if (index > -1) {
-            this.loadedDataList[index] = entityPM;
-        }
-        else {
-            this.loadedDataList.push(entityPM);
-        }
-
-        this.BuildItemsSource();
     }
 
     BuildItemsSource() {
@@ -132,7 +117,6 @@ export class TaskReportSchedulerComponent implements OnInit {
             this.FixedItemsSource.push(new TaskReportSchedulerItemClass(item, this));
         });
         if (this.filterTypeCode) {
-
             if (this.filterTypeCode == "AL") {
                 this.ItemsSource = this.FixedItemsSource;
             }
@@ -146,18 +130,12 @@ export class TaskReportSchedulerComponent implements OnInit {
         else {
             this.ItemsSource = this.FixedItemsSource.filter(a => a.InActive == false);
         }
-
-
         this.CurrentSession.StopBusyIndicator();
     }
 
     RefreshButtonClicked() {
         this.LoadTaskSchedulers();
         this.LoadTaskHistories();
-    }
-
-    CloseButtonClicked() {
-        this.EditReportSchedulerEventAlreadyExist = true;
     }
 
     BuildTasksColumns() {
@@ -293,7 +271,6 @@ export class TaskReportSchedulerComponent implements OnInit {
     };
 
     getTasksHistoryRows(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
-
         filters = new ApiQueryFilters();
         if (!sortingCol) {
             sortingCol = "StartDateTimeUTC";
@@ -353,6 +330,7 @@ export class TaskReportSchedulerComponent implements OnInit {
             filters.AdditionalFilters = filters.AdditionalFilters.filter(a => a.FieldName != "Type");
         }
         filters.addAdditionalFilter("Type", this.SchedulerType, null, null, "Equals", true, false, false, "String");
+        //filters.addAdditionalFilter("EntityId", this.ReportList.Id, null, null, "Equals", true, false, false, "String");
         filters.GetCount = getCount;
         filters.PageIndex = skip;
         filters.PageSize = take;
@@ -463,12 +441,10 @@ export class TaskReportSchedulerItemClass extends BaseComponent {
 
     get StartDateTime() { return this.EntityPM.StartDateTime; }
     set StartDateTime(newValue: Date) {
-
         if (this.EntityPM.StartDateTime != newValue) {
             this.EntityPM.StartDateTime = newValue;
             this.newValueinDateFormat = new Date(newValue);
             this.EntityPM.StartDateTimeUTC = new Date(this.newValueinDateFormat.getUTCFullYear(), this.newValueinDateFormat.getUTCMonth(), this.newValueinDateFormat.getUTCDate(), this.newValueinDateFormat.getUTCHours(), this.newValueinDateFormat.getUTCMinutes(), this.newValueinDateFormat.getUTCSeconds(), this.newValueinDateFormat.getUTCMilliseconds());
-
         }
     }
 

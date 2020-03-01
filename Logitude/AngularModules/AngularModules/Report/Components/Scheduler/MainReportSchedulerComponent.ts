@@ -81,7 +81,6 @@ export class MainReportSchedulerComponent implements OnInit {
                                 this.PageChild_RETASK.SetWindowArgs({ ReportGroupList: this.ReportGroupList, ReportList: this.ReportList });
                             });
                     }
-
                     break;
                 }
             }
@@ -89,7 +88,7 @@ export class MainReportSchedulerComponent implements OnInit {
     }
 
     CloseButtonClicked() {
-        this.PageChild_RETASK.CloseButtonClicked();
+        this.PageChild_RETASK.IsEditReportSchedulerEventAlreadyExist = false; //To avoid multiple events of edit report schedule.
         this.CurrentSession.CloseCurrentWindow();
     }
 }
