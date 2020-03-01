@@ -907,27 +907,24 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
 
             });
         });
-
-
-
-
-
-
     }
+
     private CancelShipment() {
-
-
         this.currentActionName = "CancelShipment";
 
         if (this.EntityPM.ShipmentReceivables.filter(p => p.ARInvoiceId != null)[0]) {
             var messageWindow: MessageWindow = new MessageWindow();
             messageWindow.Title = "Cancelling Shipment";
             messageWindow.Show("This shipment can't be canceled because it has one or more invoices. all invoices must be disconnect to cancel this shipment");
+        }
 
+        else if (this.EntityPM.TransportModeId == "A" && this.EntityPM.DirectionId == "E" && !AppTool.IsNullOrEmpty(this.EntityPM.Master)) {
+            var messageWindow: MessageWindow = new MessageWindow();
+            messageWindow.Title = "Cancelling Shipment";
+            messageWindow.Show("Can't cancel shipments that have a MAWB number, please remove it");
         }
 
         else if (this.EntityPM.BookingId != null && this.EntityPM.BookingId != "") {
-
             var confirmWindow: ConfirmWindow = new ConfirmWindow();
             confirmWindow.Title = "Cancel Shipment";
             confirmWindow.Width = 400;
@@ -935,25 +932,22 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
             confirmWindow.YesButtonText = "Yes";
             confirmWindow.NoButtonText = "No";
 
-
             confirmWindow.WindowClosed.subscribe((event: any) => {
                 if (confirmWindow.Yes) {
-
-                    // console.log("Yes");
                     this.ConfirmCanceling();
-
                 }
 
                 else if (confirmWindow.No) {
-                    // console.log("No");
+
                 }
 
                 this.ResetButtonClicked();
-
             });
-
         }
-        else this.ConfirmCanceling();
+
+        else {
+            this.ConfirmCanceling();
+        }
 
     }
     private ResetButtonClicked() {
