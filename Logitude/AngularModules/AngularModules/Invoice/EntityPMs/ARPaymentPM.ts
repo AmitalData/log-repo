@@ -594,6 +594,11 @@ export class ARPaymentPM {
     public set IsPaymentNumberManuallySet(newValue: boolean) { if (this.isPaymentNumberManuallySet != newValue) { this.isPaymentNumberManuallySet = newValue; this.MarkAsDirty("IsPaymentNumberManuallySet"); } }
        
 	 
+    private gLAccountCurrencyCode: string;
+    public get GLAccountCurrencyCode() { return this.gLAccountCurrencyCode; }
+    public set GLAccountCurrencyCode(newValue: string) { if (this.gLAccountCurrencyCode != newValue) { this.gLAccountCurrencyCode = newValue; this.MarkAsDirty("GLAccountCurrencyCode"); } }
+       
+	 
 
     public OldEntityPM: ARPaymentPM;
 		

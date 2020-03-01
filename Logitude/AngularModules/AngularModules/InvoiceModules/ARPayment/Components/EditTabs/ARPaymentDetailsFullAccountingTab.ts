@@ -42,8 +42,9 @@ import { ObservableCollection } from '../../../../Infrastructure/Utilities/Obser
 import { AccountingPaymentMethodList } from '../../../../Invoice/EntityLists/AccountingPaymentMethodList';
 import { AccountingPaymentMethodListService } from '../../../../Invoice/Services/StandardLists/AccountingPaymentMethodListService';
 import { GLAccountPMService } from '../../../../Accounting/Services/StandardPMs/GLAccountPMService';
-import { GLAccountPM } from '../../../../Accounting/EntityPMs/GLAccountPM';
+import { GLAccountList } from '../../../../Accounting/EntityLists/GLAccountList';
 import { LineModel } from '../../../../Accounting/Components/Others/ReconcileComponent';
+import { GLAccountPM } from '../../../../Accounting/EntityPMs/GLAccountPM';
 
 @Component({
     moduleId: module.id,
@@ -75,6 +76,8 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
     public ARPaymentChequeStatusColor = "black";
     BankFieldsVisibile: boolean;
     isMultipleCheques: boolean = false;
+    public Currency: string = TextCodeTranslator.Translate("Accounting.O.ARP.InvoiceAmount");
+
     get TextStore(){
         return TextStore;
     }
@@ -96,6 +99,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 
 
         this.EntityPM = entityArgs.EntityPM;
+        this.SetInvoiceAmountCurrencyHeader();
         if (this.EntityPM.ARPaymentChequeReplicas.length > 1) {
             this.isMultipleCheques = true;
         }
@@ -146,7 +150,15 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         // this.UIProperties.SetEnabled("AmountToReconcile","LedgerTransaction",!this.IsGridReadOnly);
 
     }
-
+    SetInvoiceAmountCurrencyHeader() {
+        if (this.EntityPM)
+            if (this.EntityPM.GLAccountRecoMethodCode == "0") {
+                this.Currency = this.Currency+" {" + SessionLocator.TenantPM.CurrencyCode + "}";
+            }
+            else {
+                this.Currency = this.Currency + " {" + this.EntityPM.GLAccountCurrencyCode + "}";
+            }
+    }
     ngOnInit() {
         this.LoadPaymentMethods();
 
@@ -248,6 +260,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 
                 if (glaccount) {
                     this.EntityPM.GLAccountId = glaccount.Id;
+                   
                     console.log("GLAccount reloaded: " + this.EntityPM.GLAccountId);
                     this.GetData();
                 }
@@ -999,7 +1012,8 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
                                         var myGLAccountPMService = new GLAccountPMService();
                                         myGLAccountPMService.get(list.GLAccountId).subscribe((myResponse: ServiceResponse) => {
                                             if (!myResponse.HasError) {
-                                                var glaccount: GLAccountPM = myResponse.Result;
+                                               var glaccount: GLAccountPM = myResponse.Result;
+                                              
                                                 if (glaccount != null && !glaccount.IsMultiCurrency) {
                                                     this.PaymentCurrencyId = glaccount.CurrencyId;
                                                 }
@@ -1092,7 +1106,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
             }
 
             this.SetUIProperties_ExchangeRate();
-
+            this.GetData();
             this.ItemsSource.Collection.forEach(item => {
                 item.SetUIProperties();
                 item.InitExchangeRate();

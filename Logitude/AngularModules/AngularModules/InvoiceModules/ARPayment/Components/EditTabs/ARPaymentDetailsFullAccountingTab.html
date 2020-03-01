@@ -677,7 +677,7 @@
 
                                     <!-- InvoiceAmount -->
                                     <log-column [width]="'110'"
-                                                [header]="'Accounting.O.ARP.InvoiceAmount' | TextCodeTranslationPipe"
+                                                [header]="'Accounting.O.ARP.InvoiceAmount' | TextCodeTranslationPipe"{{Currency}}
                                                 [Alignment]="'right'">
                                         <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1">
                                             <div style="width: 100%;padding: 0 3px; text-align: right;direction: ltr;"
