@@ -13,8 +13,8 @@ namespace Logitude.IntegrationTest.Shipment
     [TestClass]
     public class ShipmentsTests
     {
-        double OpenAmountInLocal;
-        double OpenAmpuntInProfit;
+       // double OpenAmountInLocal;
+        //double OpenAmpuntInProfit;
        
 
         [TestMethod]
@@ -37,7 +37,7 @@ namespace Logitude.IntegrationTest.Shipment
             return shipment;
         }
 
-        public void EvaluateOpenReceivablesAmount(ShipmentReceivablePM[] receivables)
+      /*  public void EvaluateOpenReceivablesAmount(ShipmentReceivablePM[] receivables)
         {
             OpenAmountInLocal = 0;
             OpenAmpuntInProfit = 0;
@@ -56,7 +56,7 @@ namespace Logitude.IntegrationTest.Shipment
                 OpenAmountInLocal += item.OpenAmountInLocalCurrency != null ? (double) item.OpenAmountInLocalCurrency : 0;
                 OpenAmpuntInProfit += item.OpenAmountInProfitCurrency != null ? (double) item.OpenAmountInProfitCurrency : 0;
             }
-        }
+        }*/
 
 
         private ShipmentPM CreateShipmentAirExport()
@@ -92,7 +92,7 @@ namespace Logitude.IntegrationTest.Shipment
             shipmentPM.ValueOfGoodsCurrencyId = ShipmentVariables.CurrencyEURId;
             shipmentPM.AccountManagerUserId = CorePreparationVariables.UserId;
             shipmentPM.NewConcurrencyGUID = Guid.NewGuid().ToString();
-            shipmentPM.PackagesQuantity = 5;
+            /*shipmentPM.PackagesQuantity = 5;
             shipmentPM.GrossWeight = 100;
             shipmentPM.ChargeableWeight = 100;
             shipmentPM.NumberOfPackages = 5;
@@ -100,7 +100,7 @@ namespace Logitude.IntegrationTest.Shipment
             shipmentPM.ShipmentReceivables = IntegrationShipmentReceivable.ShipmentReceivables();
             shipmentPM.ShipmentPayables = IntegrationShipmentPayable.ShipmentPayables();
             shipmentPM.ShipmentPickUps = IntegrationShipmentPickUps.ShipmentPickUps();
-            shipmentPM.ShipmentDeliveries = IntegrationShipmentDeliveries.shipmentDelivey();
+            shipmentPM.ShipmentDeliveries = IntegrationShipmentDeliveries.shipmentDelivey();*/
 
             return shipmentPM;
         }
