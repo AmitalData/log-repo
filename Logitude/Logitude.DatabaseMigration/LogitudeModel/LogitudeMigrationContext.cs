@@ -76,6 +76,12 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             return context;
         }
 
+        public IDbSet<LogBoxTenantSetting> LogBoxTenantSettings
+        {
+            get;
+            set;
+        }
+        
         #region Common Context
         public IDbSet<CustomerOpenFilesAmount> CustomerOpenFilesAmounts { get; set; }
         
@@ -4607,6 +4613,8 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             //Commesioin percentage
             modelBuilder.Entity<SupplierInvoice>().Property(x => x.VendorComissionPercentage).HasPrecision(7, 4);
             modelBuilder.Entity<VendorCommission>().Property(x => x.CommisionPercentage).HasPrecision(7, 4);
+
+            modelBuilder.Configurations.Add(new LogBoxTenantSettingMap());
 
             modelBuilder.Configurations.Add(new AccountingSystemMap());
             modelBuilder.Configurations.Add(new AccountingSettingMap());
