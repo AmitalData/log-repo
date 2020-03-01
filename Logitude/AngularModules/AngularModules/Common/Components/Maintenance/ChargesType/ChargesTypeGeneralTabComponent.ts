@@ -24,7 +24,6 @@ export class ChargesTypeGeneralTabComponent extends BaseComponent implements OnI
     public EntityPM: ChargesTypePM;
     public DisplaySATSettings: boolean = false;
     public DisplayRegoinalTax: boolean = false;
-    private accountingSettings: AccountingSettingPM = new AccountingSettingPM();
     private CurrentSession = SessionLocator.SelectedSession;
 
     constructor(public entityArgs: EntityArgs) {
@@ -48,9 +47,7 @@ export class ChargesTypeGeneralTabComponent extends BaseComponent implements OnI
         accountingSettingPMService.get(SessionLocator.AccountingSettingPM.Id).subscribe((myResult: ServiceResponse) => {
             this.CurrentSession.StopBusyIndicator();
             if (!myResult.HasError) {
-                this.accountingSettings = myResult.Result;
-                //
-                this.DisplayRegoinalTax = this.accountingSettings.AllowVoidAPI;
+                this.DisplayRegoinalTax = myResult.Result.AllowRegionalTaxManagement;
             }
         });
     }
