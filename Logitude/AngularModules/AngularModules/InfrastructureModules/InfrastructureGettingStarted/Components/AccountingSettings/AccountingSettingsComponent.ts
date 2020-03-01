@@ -119,8 +119,8 @@ export class AccountingSettingsComponent extends BaseComponent {
             this.UIProperties.SetEnabled("EnableMultiPercentageVATTypes", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("NotifyPastDateOnInvoiceEdit", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("RegistryDateTypeCode", this.ObjectTableName, false);
-            this.UIProperties.SetEnabled("AllowManualARPaymentNumber", this.ObjectTableName, false);            
-        }
+            this.UIProperties.SetEnabled("AllowManualARPaymentNumber", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("AllowRegionalTaxManagement", this.ObjectTableName, false);        }
 
         else {
             this.UIProperties.SetEnabled("IsARInvoiceChronologicalDates", this.ObjectTableName, !this.AllowManualInvoiceNumber);
@@ -231,6 +231,13 @@ export class AccountingSettingsComponent extends BaseComponent {
         }
     }
 
+    get AllowRegionalTaxManagement() { return this.EntityPM.AllowRegionalTaxManagement; }
+    set AllowRegionalTaxManagement(value: boolean) {
+        if (this.EntityPM.AllowRegionalTaxManagement != value) {
+            this.EntityPM.AllowRegionalTaxManagement = value;
+        }
+    }
+    
     get IsARInvoiceChronologicalDates() { return this.EntityPM.IsARInvoiceChronologicalDates; }
     set IsARInvoiceChronologicalDates(value: boolean) {
         if (this.EntityPM.IsARInvoiceChronologicalDates != value) {
