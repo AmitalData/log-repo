@@ -132,9 +132,29 @@ namespace Logitude.Customs.BL.CloseTables
                     Param1= @"{}",
                     Param2= @"{}",
                     MainInterfaceCode="3052",
+                },
+                   new SincroTestCaseDetail()
+                {
+                    Code = "5110",
+                    Name = "יידוע על קבלת פיקדון ופתיחת תיק פיקדון",
+                    IsDCA = true,
+                    Entity="Declaration",
+                    Param1= @"{""numeral"":""1""}",
+                    Param2= @"{}",
+                    MainInterfaceCode="5110",
+                },
+                   new SincroTestCaseDetail()
+                {
+                    Code = "2030",
+                    Name = " דרישה לתשלום פיקדון",
+                    IsDCA = true,
+                    Entity="Declaration",
+                    Param1= @"{""numeral"":""1""}",
+                    Param2= @"{}",
+                    MainInterfaceCode="2030",
                 }
 
-
+        
             };
             return all;
 
