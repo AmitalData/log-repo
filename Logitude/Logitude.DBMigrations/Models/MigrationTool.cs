@@ -60,12 +60,8 @@ namespace Logitude.DBMigrations.Models
                         {
                             ExecuteScript(generatedScript);
 
-                            CreateDXMLMigrationHashesTable();
-
-                            //SaveDXMLHashesOnDB(dxmlFiles);
+                            SaveDXMLHashesOnDB(dxmlFiles);
                         }
-
-                        SaveDXMLHashesOnDB(dxmlFiles);
                     }
                     else
                     {
@@ -974,163 +970,87 @@ namespace Logitude.DBMigrations.Models
             return dxmlTablesDefinitions;
         }
 
-        private void CreateDXMLMigrationHashesTable()
+        private void GetDXMLHashesFromDB()
         {
             string connectionString = GetConnectionString("Main");
 
             if (DatabaseType.ToLower() == "oracle")
             {
-                string queryString = "DECLARE TableCount NUMBER; " +
-                    "BEGIN " +
-                    "SELECT COUNT(*) INTO TableCount FROM USER_TABLES WHERE TABLE_NAME = 'DXMLMIGRATIONHASHES'; " +
-                    "IF (TableCount = 0) " +
-                    "THEN " +
-                    "EXECUTE IMMEDIATE 'CREATE TABLE \"DXMLMIGRATIONHASHES\"( " +
-                    "\"DXMLFILENAME\" VARCHAR2(500 CHAR) NOT NULL, " +
-                    "\"HASHSTRING\" NCLOB NOT NULL, " +
-                    "PRIMARY KEY(\"DXMLFILENAME\"))'; " +
-                    "END IF; " +
-                    "END;";
+                string queryString = "SELECT * FROM \"DXMLMIGRATIONHASHES\"";
 
-                OracleConnection oracleConnection = new OracleConnection(connectionString);
+                List<DXMLHash> dxmlHashes = new List<DXMLHash>();
+
+                OracleDataReader reader = null;
+                OracleConnection connection = new OracleConnection(connectionString);
+                OracleCommand command = new OracleCommand(queryString, connection);
 
                 try
                 {
-                    oracleConnection.Open();
-                    OracleCommand oracleCommand = new OracleCommand();
-                    oracleCommand.Connection = oracleConnection;
-                    oracleCommand.CommandText = queryString;
-                    oracleCommand.ExecuteNonQuery();
-                    oracleConnection.Close();
+                    connection.Open();
+                    reader = command.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        DXMLHash dxmlHash = new DXMLHash
+                        {
+                            FileName = reader["DXMLFILENAME"].ToString(),
+                            HashString = reader["HASHSTRING"].ToString()
+                        };
+                        dxmlHashes.Add(dxmlHash);
+                    }
+
+                    reader.Close();
+                    connection.Close();
                 }
-                catch (Exception exception)
+                catch (Exception)
                 {
-                    oracleConnection.Close();
-                    ExitTool("Error: " + exception.Message);
+                    if (reader != null)
+                    {
+                        reader.Close();
+                    }
+                    connection.Close();
                 }
+
+                DXMLHashes = dxmlHashes;
             }
             else
             {
-                string queryString = "EXEC('IF (OBJECT_ID(''[dbo].[DXMLMigrationHashes]'', ''U'') IS NULL) " +
-                                     "BEGIN " +
-                                     "CREATE TABLE [dbo].[DXMLMigrationHashes]( " +
-                                     "[DxmlFileName] VARCHAR(500) NOT NULL, " +
-                                     "[HashString] NVARCHAR(MAX) NOT NULL, " +
-                                     "PRIMARY KEY([DxmlFileName]) " +
-                                     ") " +
-                                     "END');";
+                string queryString = "SELECT * FROM [dbo].[DXMLMigrationHashes]";
 
-                SqlConnection sqlConnection = new SqlConnection(connectionString);
+                List<DXMLHash> dxmlHashes = new List<DXMLHash>();
+
+                SqlDataReader reader = null;
+                SqlConnection connection = new SqlConnection(connectionString);
+                SqlCommand command = new SqlCommand(queryString, connection);
 
                 try
                 {
-                    sqlConnection.Open();
-                    SqlCommand sqlCommand = new SqlCommand();
-                    sqlCommand.Connection = sqlConnection;
-                    sqlCommand.CommandText = queryString;
-                    sqlCommand.ExecuteNonQuery();
-                    sqlConnection.Close();
-                }
-                catch (Exception exception)
-                {
-                    sqlConnection.Close();
-                    ExitTool("Error: " + exception.Message);
-                }
-            }
-        }
+                    connection.Open();
+                    reader = command.ExecuteReader();
 
-        private void GetDXMLHashesFromDB()
-        {
-            string connectionString = GetConnectionString("Main");
-
-            if (IsTableInDB("DXMLMigrationHashes"))
-            {
-                if (DatabaseType.ToLower() == "oracle")
-                {
-                    string queryString = "SELECT * FROM \"DXMLMIGRATIONHASHES\"";
-
-                    List<DXMLHash> dxmlHashes = new List<DXMLHash>();
-
-                    OracleDataReader reader = null;
-                    OracleConnection connection = new OracleConnection(connectionString);
-                    OracleCommand command = new OracleCommand(queryString, connection);
-
-                    try
+                    while (reader.Read())
                     {
-                        connection.Open();
-                        reader = command.ExecuteReader();
-
-                        while (reader.Read())
+                        DXMLHash dxmlHash = new DXMLHash
                         {
-                            DXMLHash dxmlHash = new DXMLHash
-                            {
-                                FileName = reader["DXMLFILENAME"].ToString(),
-                                HashString = reader["HASHSTRING"].ToString()
-                            };
-                            dxmlHashes.Add(dxmlHash);
-                        }
+                            FileName = reader["DxmlFileName"].ToString(),
+                            HashString = reader["HashString"].ToString()
+                        };
+                        dxmlHashes.Add(dxmlHash);
+                    }
 
+                    reader.Close();
+                    connection.Close();
+                }
+                catch (Exception)
+                {
+                    if (reader != null)
+                    {
                         reader.Close();
-                        connection.Close();
                     }
-                    catch (Exception exception)
-                    {
-                        if (reader != null)
-                        {
-                            reader.Close();
-                        }
-                        connection.Close();
-
-                        ExitTool("Error: " + exception.Message);
-                    }
-
-                    DXMLHashes = dxmlHashes;
+                    connection.Close();
                 }
-                else
-                {
-                    string queryString = "SELECT * FROM [dbo].[DXMLMigrationHashes]";
 
-                    List<DXMLHash> dxmlHashes = new List<DXMLHash>();
-
-                    SqlDataReader reader = null;
-                    SqlConnection connection = new SqlConnection(connectionString);
-                    SqlCommand command = new SqlCommand(queryString, connection);
-
-                    try
-                    {
-                        connection.Open();
-                        reader = command.ExecuteReader();
-
-                        while (reader.Read())
-                        {
-                            DXMLHash dxmlHash = new DXMLHash
-                            {
-                                FileName = reader["DxmlFileName"].ToString(),
-                                HashString = reader["HashString"].ToString()
-                            };
-                            dxmlHashes.Add(dxmlHash);
-                        }
-
-                        reader.Close();
-                        connection.Close();
-                    }
-                    catch (Exception exception)
-                    {
-                        if (reader != null)
-                        {
-                            reader.Close();
-                        }
-                        connection.Close();
-
-                        ExitTool("Error: " + exception.Message);
-                    }
-
-                    DXMLHashes = dxmlHashes;
-                }
-            }
-            else
-            {
-                DXMLHashes = new List<DXMLHash>();
+                DXMLHashes = dxmlHashes;
             }
         }
 
@@ -1138,7 +1058,7 @@ namespace Logitude.DBMigrations.Models
         {
             string connectionString = GetConnectionString("Main");
 
-            foreach(var dxmlFile in dxmlFiles)
+            foreach (var dxmlFile in dxmlFiles)
             {
                 bool saveDxmlHash = true;
 
@@ -1218,84 +1138,6 @@ namespace Logitude.DBMigrations.Models
                         }
                     }
                 }
-            }
-        }
-
-        private bool IsTableInDB(string tableName)
-        {
-            string connectionString = GetConnectionString("Main");
-
-            if (DatabaseType.ToLower() == "oracle")
-            {
-                string queryString = "SELECT * FROM USER_TABLES WHERE TABLE_NAME = '" + tableName.ToUpper() + "'";
-
-                bool tableExists = false;
-
-                OracleDataReader reader = null;
-                OracleConnection connection = new OracleConnection(connectionString);
-                OracleCommand command = new OracleCommand(queryString, connection);
-
-                try
-                {
-                    connection.Open();
-                    reader = command.ExecuteReader();
-
-                    if (reader.HasRows)
-                    {
-                        tableExists = true;
-                    }
-
-                    reader.Close();
-                    connection.Close();
-                }
-                catch (Exception exception)
-                {
-                    if (reader != null)
-                    {
-                        reader.Close();
-                    }
-                    connection.Close();
-
-                    ExitTool("Error: " + exception.Message);
-                }
-
-                return tableExists;
-            }
-            else
-            {
-                string queryString = "SELECT * FROM SYSOBJECTS WHERE name='" + tableName + "' AND xtype='U'";
-
-                bool tableExists = false;
-
-                SqlDataReader reader = null;
-                SqlConnection connection = new SqlConnection(connectionString);
-                SqlCommand command = new SqlCommand(queryString, connection);
-
-                try
-                {
-                    connection.Open();
-                    reader = command.ExecuteReader();
-
-                    if (reader.HasRows)
-                    {
-                        tableExists = true;
-                    }
-
-                    reader.Close();
-                    connection.Close();
-                }
-                catch (Exception exception)
-                {
-                    if (reader != null)
-                    {
-                        reader.Close();
-                    }
-                    connection.Close();
-
-                    ExitTool("Error: " + exception.Message);
-                }
-
-                return tableExists;
             }
         }
 
