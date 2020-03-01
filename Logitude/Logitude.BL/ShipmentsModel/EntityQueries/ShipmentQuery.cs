@@ -11934,8 +11934,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     ARInvoices = f.ARInvoices,
                     NotInvoicedReceivablesAmount = f.NotInvoicedReceivablesAmount,
                     FirstARInvoiceApprovalDate = f.FirstARInvoiceApprovalDate,
-
                     CreatedByPartner= f.CreatedByPartner,
+                    MainCarriageFinalDestinationATA = f.MainCarriageFinalDestinationATA,
+                    MainCarriageFinalDestinationETA = f.MainCarriageFinalDestinationETA,
                 };
 
                 List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Shipment", tenant).ToList();
