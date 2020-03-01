@@ -80,16 +80,16 @@
 	with ShipmentPayablesReceivables as(select ShipmentId,ChargesTypeId,EntityType,InvoiceNumber,InvoiceCurrencyId,InvoiceCurrencyExchangeRate  ,AmountInInvoiceCurrency,  OpenPayablesinLocal , OpenPayablesinProfit , AccountedPayablesinLocal , AccountedPayablesinProfit , InvoiceLineId , ReceivablesTotalAmount , ReceivablesTotalAmountLocal from(
 		
 		select dw_ShipmentPayables.ShipmentId ,dw_ShipmentPayables.ChargesTypeId, 'Payables' as EntityType , dw_APInvoices.InvoiceNumber,dw_APInvoices.InvoiceCurrencyId,dw_APInvoices.InvoiceCurrencyExchangeRate ,  dw_APInvoices.AmountInInvoiceCurrency, dw_ShipmentPayables.OpenAmountInLocalCurrency as OpenPayablesinLocal ,dw_ShipmentPayables.OpenAmountInProfitCurrency as OpenPayablesinProfit , AccountedAmountInLocalCurrency as AccountedPayablesinLocal ,AccountedAmountInProfitCurrency as AccountedPayablesinProfit , '' as  InvoiceLineId , 0 as ReceivablesTotalAmount ,0 as ReceivablesTotalAmountLocal  from dw_shipments 
-        inner JOIN dw_ShipmentPayables  ON dw_shipments.Id = dw_ShipmentPayables.ShipmentId
-        inner JOIN dw_APInvoiceLines  ON dw_ShipmentPayables.Id = dw_APInvoiceLines.EntityPayableId
-        inner JOIN dw_APInvoices  ON dw_APInvoiceLines.APInvoiceId = dw_APInvoices.Id
+        left JOIN dw_ShipmentPayables  ON dw_shipments.Id = dw_ShipmentPayables.ShipmentId
+        left JOIN dw_APInvoiceLines  ON dw_ShipmentPayables.Id = dw_APInvoiceLines.EntityPayableId
+        left JOIN dw_APInvoices  ON dw_APInvoiceLines.APInvoiceId = dw_APInvoices.Id
 		where dw_Shipments.IsCancelled = 0 and dw_Shipments.ShipmentLevelCode in ('H','D') 
 		union
 
       select dw_ShipmentReceivables.ShipmentId ,dw_ShipmentReceivables.ChargesTypeId ,'Receivables' as EntityType , dw_ARInvoices.InvoiceNumber,dw_ARInvoices.InvoiceCurrencyId,dw_ARInvoices.InvoiceCurrencyExchangeRate ,dw_ARInvoices.AmountInInvoiceCurrency ,0 as OpenPayablesinLocal  , 0 as OpenPayablesinProfit,  0 as AccountedPayablesinLocal ,0 as AccountedPayablesinProfit, dw_ShipmentReceivables.ARInvoiceLineId as InvoiceLineId , dw_ShipmentReceivables.TotalAmount as ReceivablesTotalAmount ,dw_ShipmentReceivables.TotalAmountLocal as ReceivablesTotalAmountLocal   from dw_shipments 
-        inner JOIN dw_ShipmentReceivables  ON dw_shipments.Id = dw_ShipmentReceivables.ShipmentId
-        inner JOIN dw_ARInvoiceLines  ON dw_ShipmentReceivables.Id = dw_ARInvoiceLines.ReceivableId
-        inner JOIN dw_ARInvoices  ON dw_ARInvoiceLines.ARInvoiceId = dw_ARInvoices.Id
+        left JOIN dw_ShipmentReceivables  ON dw_shipments.Id = dw_ShipmentReceivables.ShipmentId
+        left JOIN dw_ARInvoiceLines  ON dw_ShipmentReceivables.Id = dw_ARInvoiceLines.ReceivableId
+        left JOIN dw_ARInvoices  ON dw_ARInvoiceLines.ARInvoiceId = dw_ARInvoices.Id
 		where dw_Shipments.IsCancelled = 0 and dw_Shipments.ShipmentLevelCode in ('H','D') 
 
 )tt
@@ -98,7 +98,7 @@
 
 	SELECT  dw_Shipments.Id, SourceTenant.[Tenant Number], ParentTenant.[Tenant Number] ,  DIM_Directions.Name, TransportModes.Name ,DIM_Levels.Name,  DIM_Types.Name , DIM_Departments.Id_Number ,DIM_Branches.Id_Number , dw_Shipments.ShipmentNumber,dw_Shipments.House,dw_ShipmentMasterDatas.Master , agentPartners.Id_Number,customerPartners.Id_Number 
 	,SalesmanUser.Id_Number, AccountManagerUser.Id_Number,DIM_ShipmentStatuses.Id_Number ,mainCarriageToPort.Id_Number , fromPort.Id_Number, toPort.Id_Number , dw_Shipments.CreateDateTime
-	,dw_Shipments.AgentReference1, dw_Shipments.AgentReference2,dw_Shipments.CustomerReference1,dw_Shipments.CustomerReference2, createdByUser.Id_Number,mainCarriageCarrierPartners.Id_Number,dw_Shipments.FirstOperationalCloseDate,DIM_SpecialServicesTypes.Id_Number,	dw_ShipmentMasterDatas.MasterShipmentNumber,
+	,dw_Shipments.AgentReference1, dw_Shipments.AgentReference2,dw_Shipments.CustomerReference1,dw_Shipments.CustomerReference2, createdByUser.Id_Number,mainCarriageCarrierPartners.Id_Number,dw_Shipments.FirstOperationalCloseDate,DIM_SpecialServicesTypes.Id_Number,	dw_ShipmentMasterDatas.MasterShipmentNumber,dw_ShipmentMasterDatas.AirlinePrefix,
 	 dw_Shipments.DirectionId ,dw_Shipments.TransportModeId ,dw_Shipments.Tenant,dw_Shipments.MasterShipmentDataId
 	 ,DIM_ChargesTypes.Id_Number, ShipmentPayablesReceivables.EntityType, ShipmentPayablesReceivables.InvoiceNumber,InvoiceCurrency.Id_Number , ShipmentPayablesReceivables.InvoiceCurrencyExchangeRate
 	 ,ShipmentPayablesReceivables.OpenPayablesinLocal , ShipmentPayablesReceivables.OpenPayablesinProfit ,ShipmentPayablesReceivables.AccountedPayablesinLocal,ShipmentPayablesReceivables.AccountedPayablesinProfit
@@ -136,7 +136,7 @@
 
 	OPEN ShipmentsChargesCursor FETCH NEXT FROM ShipmentsChargesCursor    INTO   @Id ,@SourceTenant, @ParentTenant ,@Direction , @TransportMode, @DirectHouse , @Type , @Department , @Branch , @ShipmentNumber , @House , @Master , @Agent, @Customer 
 	, @Salesman ,@AccountManager , @Status , @MainCarriageToPort, @MainCarriageFromPort ,@ToPort ,@CreateDate, @AgentReference1,@AgentReference2,@CustomerReference1,@CustomerReference2 ,@CreatedBy , 
-	@Carrier, @FirstOperationalCloseDate,@SpecialServices,@MasterShipmentNumber, @DirectionId,@TransportModeId , @Tenant,@MasterDataId
+	@Carrier, @FirstOperationalCloseDate,@SpecialServices,@MasterShipmentNumber,@AirlinePrefix, @DirectionId,@TransportModeId , @Tenant,@MasterDataId
     ,@ChargesType,@ShipmentPayablesReceivablesType, @InvoiceNumber,@InvoiceCurrency,@InvoiceCurrencyExchangeRate
 	,@OpenPayablesinLocal,@OpenPayablesinProfit,@AccountedPayablesinLocal,@AccountedPayablesinProfit
 	,@ReceivablesTotalAmount , @ReceivablesTotalAmountLocal, @ReceivablesInvoiceLineId,@VATamountinInvoiceCurrency
@@ -266,7 +266,7 @@ END CATCH
 	
 	FETCH NEXT FROM ShipmentsChargesCursor    INTO   @Id ,@SourceTenant, @ParentTenant ,@Direction , @TransportMode, @DirectHouse , @Type , @Department , @Branch , @ShipmentNumber , @House , @Master , @Agent, @Customer 
 	, @Salesman ,@AccountManager , @Status , @MainCarriageToPort, @MainCarriageFromPort ,@ToPort ,@CreateDate, @AgentReference1,@AgentReference2,@CustomerReference1,@CustomerReference2 ,@CreatedBy , 
-	@Carrier, @FirstOperationalCloseDate,@SpecialServices,@MasterShipmentNumber, @DirectionId,@TransportModeId , @Tenant,@MasterDataId
+	@Carrier, @FirstOperationalCloseDate,@SpecialServices,@MasterShipmentNumber,@AirlinePrefix,  @DirectionId,@TransportModeId , @Tenant,@MasterDataId
     ,@ChargesType,@ShipmentPayablesReceivablesType, @InvoiceNumber,@InvoiceCurrency,@InvoiceCurrencyExchangeRate
 	,@OpenPayablesinLocal,@OpenPayablesinProfit,@AccountedPayablesinLocal,@AccountedPayablesinProfit
 	,@ReceivablesTotalAmount , @ReceivablesTotalAmountLocal, @ReceivablesInvoiceLineId,@VATamountinInvoiceCurrency
