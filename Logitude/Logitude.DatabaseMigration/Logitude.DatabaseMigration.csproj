@@ -2059,6 +2059,10 @@
     <Compile Include="Migrations\202002120951340_MoveConstraint_JounralLine_ActionIdFK.Designer.cs">
       <DependentUpon>202002120951340_MoveConstraint_JounralLine_ActionIdFK.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202003011636020_addAllowRegionalTaxColumn.cs" />
+    <Compile Include="Migrations\202003011636020_addAllowRegionalTaxColumn.Designer.cs">
+      <DependentUpon>202003011636020_addAllowRegionalTaxColumn.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\202002041333119_InterestTransactionMigration.cs" />
     <Compile Include="Migrations\202002041333119_InterestTransactionMigration.Designer.cs">
@@ -3719,6 +3723,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202002120951340_MoveConstraint_JounralLine_ActionIdFK.resx">
       <DependentUpon>202002120951340_MoveConstraint_JounralLine_ActionIdFK.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003011636020_addAllowRegionalTaxColumn.resx">
+      <DependentUpon>202003011636020_addAllowRegionalTaxColumn.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

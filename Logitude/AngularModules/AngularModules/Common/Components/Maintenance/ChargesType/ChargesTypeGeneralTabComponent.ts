@@ -8,6 +8,9 @@ import {InfraSettings} from '../../../../Infrastructure/Utilities/InfraSettings'
 import {ChargesGroupListService} from '../../../../Infrastructure/Services/StandardLists/ChargesGroupListService';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
+import { AccountingSettingPM } from '../../../EntityPMs/AccountingSettingPM';
+import { AccountingSettingPMService } from '../../../Services/StandardPMs/AccountingSettingPMService';
+
 
 @Component({
     selector: 'ChargesTypeGeneralTabComponent',
@@ -20,6 +23,10 @@ export class ChargesTypeGeneralTabComponent extends BaseComponent implements OnI
     public ObjectTableName: string = "ChargesType";
     public EntityPM: ChargesTypePM;
     public DisplaySATSettings: boolean = false;
+    public DisplayRegoinalTax: boolean = false;
+    private accountingSettings: AccountingSettingPM = new AccountingSettingPM();
+    private CurrentSession = SessionLocator.SelectedSession;
+
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = this.entityArgs.EntityPM;
@@ -32,7 +39,20 @@ export class ChargesTypeGeneralTabComponent extends BaseComponent implements OnI
         if (this.EntityPM != null) {
             this.SetUIProperties();
             this.CheckWarnings();
+            this.GetAccountingSettings();
         }
+    }
+
+    GetAccountingSettings() {
+        var accountingSettingPMService = new AccountingSettingPMService();
+        accountingSettingPMService.get(SessionLocator.AccountingSettingPM.Id).subscribe((myResult: ServiceResponse) => {
+            this.CurrentSession.StopBusyIndicator();
+            if (!myResult.HasError) {
+                this.accountingSettings = myResult.Result;
+                //
+                this.DisplayRegoinalTax = this.accountingSettings.AllowVoidAPI;
+            }
+        });
     }
 
     public CustomsFieldsIsVisible: boolean = false;
@@ -84,7 +104,7 @@ export class ChargesTypeGeneralTabComponent extends BaseComponent implements OnI
         this.UIProperties.SetEnabled("IATACodeId", this.ObjectTableName, awbFieldsEnabled);
         this.UIProperties.SetEnabled("AWBPrintDescription", this.ObjectTableName, awbFieldsEnabled);
         this.UIProperties.SetEnabled("SATExternalId", this.ObjectTableName, fieldsEnabled);
-
+        this.UIProperties.SetEnabled("ApplyRegionalTax", this.ObjectTableName, fieldsEnabled);
         //if (this.IsBackToBack) {
         //    this.UIProperties.SetEnabled("IsReceivable", this.ObjectTableName, false);
         //}
@@ -360,4 +380,12 @@ export class ChargesTypeGeneralTabComponent extends BaseComponent implements OnI
             this.EntityPM.IsDomestic = newValue;
         }
     }
+
+    get ApplyRegionalTax() { return this.EntityPM.ApplyRegionalTax; }
+    set ApplyRegionalTax(newValue: boolean) {
+        if (this.EntityPM.ApplyRegionalTax != newValue) {
+            this.EntityPM.ApplyRegionalTax = newValue;
+        }
+    }
+
 }
