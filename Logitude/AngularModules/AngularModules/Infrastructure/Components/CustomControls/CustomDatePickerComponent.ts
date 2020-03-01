@@ -151,6 +151,9 @@ export class CustomDatePickerComponent extends BaseComponent implements OnInit {
         if (this.ObjectField.IsRequiered == true) {
             this.NoDateVisibile = false;
         }
+        if (this.ObjectField.FieldName == "CreateDateTime") {
+            this.NoDateVisibile = false;
+        }
     }
 
     mousedown() {
