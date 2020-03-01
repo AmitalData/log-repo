@@ -159,6 +159,21 @@
                                         </td>
                                     </tr>
 
+                                    <!-- AllowRegionalTaxManagement -->
+                                    <tr class="FormFieldRow" *ngIf="IsEnableRegionalTaxManagementVisible">
+                                        <td>
+                                            <LogLabel [ObjectFieldName]="'AllowRegionalTaxManagement'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                        </td>
+
+                                        <td>
+                                            <LogCheckBox [ObjectFieldName]="'AllowRegionalTaxManagement'" [Checked]="DataContext.AllowRegionalTaxManagement" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                        </td>
+
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+
                                     <tr>
                                         <td colspan="3">
                                             <div></div>
