@@ -33,7 +33,7 @@ export class SendVehicleComponent {
     ForcePersonalSign: boolean;
     Option: string;
     ResponseData: ClientSearchResponseData;
-    _VehicleExtendedPMService: VehicleExtendedPMService = new VehicleExtendedPMService();ehicleExtendedPMService: VehicleExtendedPMService = new VehicleExtendedPMService();
+    _VehicleExtendedPMService: VehicleExtendedPMService = new VehicleExtendedPMService();
     //------------------------------------------------------//
 
     SaveCompletedEvent: any;
@@ -84,7 +84,8 @@ export class SendVehicleComponent {
     }
 
     private reloadEvent: any;
-    public SaveEntityChanges(customSendOptionsArgs, isDelete: boolean) {
+    public SaveEntityChanges(customSendOptionsArgs, entityPM: VehiclePM, isDelete: boolean) {
+        this.EntityPM = entityPM;
         this.EntityPM.Tenant = SessionLocator.Tenant;
         this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
         //this.ValidationErrorsList = [];
@@ -192,7 +193,7 @@ export class SendVehicleComponent {
                 this.FillValidationErrors();
                 return;
             }
-            this.SaveEntityChanges(customSendOptionsArgs, false);
+            this.SaveEntityChanges(customSendOptionsArgs, this.EntityPM, false);
         });
     }
  
