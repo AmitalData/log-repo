@@ -213,7 +213,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         ((int)MyJournalActionTypeEnum.DebitCreditAndVatdeduction).ToString(),
         };
             var qJLCredit =
-                qJournalLineByAcountingDate.Where(rec => crditList.Contains(rec.JournalActionType.Code))
+                qJournalLineByAcountingDate.Where(rec => crditList.Contains(rec.ActionCode/*rec.JournalActionType.Code*/))
 
                 .Select(rec => new JournalLineLedgerDTO()
                 {
@@ -236,7 +236,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         ((int)MyJournalActionTypeEnum.DebitAndCredit).ToString(),
         };
             var qJLDebit =
-                 qJournalLineByAcountingDate.Where(rec => debitList.Contains(rec.JournalActionType.Code))
+                 qJournalLineByAcountingDate.Where(rec => debitList.Contains(rec.ActionCode /*rec.JournalActionType.Code*/))
                  .Select(rec => new JournalLineLedgerDTO()
                  {
                      CHANGE_TYPE = "",
@@ -257,7 +257,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
             var qJLDebitVat =
                 (from jl in
-                     qJournalLineByAcountingDate.Where(rec => rec.JournalActionType.Code == ((int)MyJournalActionTypeEnum.DebitCreditAndVatdeduction).ToString())
+                     qJournalLineByAcountingDate.Where(rec => rec.ActionCode /*rec.JournalActionType.Code*/ == ((int)MyJournalActionTypeEnum.DebitCreditAndVatdeduction).ToString())
                  from vl in
                      (from v in percentagesQueryOrderDescByFromDate.OrderByDescending(r => r.FromDate)
                       where v.FromDate <= jl.DocumentDate
@@ -294,7 +294,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             var qJLVat =
                 (
                 from jl in
-                    qJournalLineByAcountingDate.Where(rec => rec.JournalActionType.Code == ((int)MyJournalActionTypeEnum.DebitCreditAndVatdeduction).ToString())
+                    qJournalLineByAcountingDate.Where(rec => rec.ActionCode /*rec.JournalActionType.Code*/ == ((int)MyJournalActionTypeEnum.DebitCreditAndVatdeduction).ToString())
                 from vl in
                     (from v in percentagesQueryOrderDescByFromDate.OrderByDescending(r => r.FromDate)
                      where v.FromDate <= jl.DocumentDate
