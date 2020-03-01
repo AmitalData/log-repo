@@ -13,18 +13,19 @@ namespace Logitude.IntegrationTest.Shipment
     [TestClass]
     public class ShipmentsTests
     {
-       // double OpenAmountInLocal;
+        // double OpenAmountInLocal;
         //double OpenAmpuntInProfit;
-       
+        ShipmentPM entityPM;
 
         [TestMethod]
         public async Task PostShipment()
         {
-            ShipmentPM entityPM = CreateShipmentAirExport();
+            entityPM = CreateShipmentAirExport();
             HttpResponseMessage response = await RestClientService.PostAsync(entityPM, "shipment");
             ShipmentPM shipmentPM = RestClientService.ParseResponse<ShipmentPM>(response);
             ShipmentVariables.ShipmentId = shipmentPM.Id;
             await GetShipment(ShipmentVariables.ShipmentId);
+            await PutShipment(ShipmentVariables.ShipmentId);
             
         }
 
@@ -37,26 +38,34 @@ namespace Logitude.IntegrationTest.Shipment
             return shipment;
         }
 
-      /*  public void EvaluateOpenReceivablesAmount(ShipmentReceivablePM[] receivables)
+        public async Task PutShipment(string id)
         {
-            OpenAmountInLocal = 0;
-            OpenAmpuntInProfit = 0;
-            foreach(ShipmentReceivablePM item in receivables)
-            {
-                OpenAmountInLocal += item.TotalAmountLocal != null ? (double) item.TotalAmountLocal : 0;
-                OpenAmpuntInProfit += item.AmountInProfitCurrency != null ? (double) item.AmountInProfitCurrency : 0;
-            }
+            entityPM = UpdateShipmentAirExport(id);
+            HttpResponseMessage response = await RestClientService.PutAsync(entityPM, "shipment");
+            ShipmentPM shipment = RestClientService.ParseResponse<ShipmentPM>(response);
+            await GetShipment(ShipmentVariables.ShipmentId);
         }
-        public void EvaluateOpenPayablesAmount(ShipmentPayablePM[] payables)
-        {
-            OpenAmountInLocal = 0;
-            OpenAmpuntInProfit = 0;
-            foreach (ShipmentPayablePM item in payables)
-            {
-                OpenAmountInLocal += item.OpenAmountInLocalCurrency != null ? (double) item.OpenAmountInLocalCurrency : 0;
-                OpenAmpuntInProfit += item.OpenAmountInProfitCurrency != null ? (double) item.OpenAmountInProfitCurrency : 0;
-            }
-        }*/
+
+        /*  public void EvaluateOpenReceivablesAmount(ShipmentReceivablePM[] receivables)
+          {
+              OpenAmountInLocal = 0;
+              OpenAmpuntInProfit = 0;
+              foreach(ShipmentReceivablePM item in receivables)
+              {
+                  OpenAmountInLocal += item.TotalAmountLocal != null ? (double) item.TotalAmountLocal : 0;
+                  OpenAmpuntInProfit += item.AmountInProfitCurrency != null ? (double) item.AmountInProfitCurrency : 0;
+              }
+          }
+          public void EvaluateOpenPayablesAmount(ShipmentPayablePM[] payables)
+          {
+              OpenAmountInLocal = 0;
+              OpenAmpuntInProfit = 0;
+              foreach (ShipmentPayablePM item in payables)
+              {
+                  OpenAmountInLocal += item.OpenAmountInLocalCurrency != null ? (double) item.OpenAmountInLocalCurrency : 0;
+                  OpenAmpuntInProfit += item.OpenAmountInProfitCurrency != null ? (double) item.OpenAmountInProfitCurrency : 0;
+              }
+          }*/
 
 
         private ShipmentPM CreateShipmentAirExport()
@@ -92,18 +101,29 @@ namespace Logitude.IntegrationTest.Shipment
             shipmentPM.ValueOfGoodsCurrencyId = ShipmentVariables.CurrencyEURId;
             shipmentPM.AccountManagerUserId = CorePreparationVariables.UserId;
             shipmentPM.NewConcurrencyGUID = Guid.NewGuid().ToString();
-            /*shipmentPM.PackagesQuantity = 5;
+            shipmentPM.PackagesQuantity = 5;
             shipmentPM.GrossWeight = 100;
             shipmentPM.ChargeableWeight = 100;
             shipmentPM.NumberOfPackages = 5;
-            shipmentPM.ShipmentPackages = IntegrationShipmentPackages.ShipmentPackages();
-            shipmentPM.ShipmentReceivables = IntegrationShipmentReceivable.ShipmentReceivables();
-            shipmentPM.ShipmentPayables = IntegrationShipmentPayable.ShipmentPayables();
-            shipmentPM.ShipmentPickUps = IntegrationShipmentPickUps.ShipmentPickUps();
-            shipmentPM.ShipmentDeliveries = IntegrationShipmentDeliveries.shipmentDelivey();*/
+
 
             return shipmentPM;
         }
-        
+
+        private ShipmentPM UpdateShipmentAirExport(string id)
+        {
+           ShipmentPM shipmentPM = new ShipmentPM();
+           CreateShipmentAirExport();
+            shipmentPM.Id = id;
+           shipmentPM.ShipmentPackages = IntegrationShipmentPackages.ShipmentPackages();
+           shipmentPM.ShipmentReceivables = IntegrationShipmentReceivable.ShipmentReceivables();
+           shipmentPM.ShipmentPayables = IntegrationShipmentPayable.ShipmentPayables();
+           shipmentPM.ShipmentPickUps = IntegrationShipmentPickUps.ShipmentPickUps();
+           shipmentPM.ShipmentDeliveries = IntegrationShipmentDeliveries.shipmentDelivey();
+            return shipmentPM;
+        }
+
+
+
     }
 }

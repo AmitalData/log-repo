@@ -29,5 +29,6 @@ namespace Logitude.IntegrationTest.Shipment.Tests
             //shipmentPackageItem.VolumetricWeight = 0.104;
             return shipmentPackageItem;
         }
+
     }
 }
