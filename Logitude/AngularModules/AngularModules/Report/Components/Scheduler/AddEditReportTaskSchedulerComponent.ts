@@ -32,6 +32,7 @@ export class AddEditReportTaskSchedulerComponent  {
     SetDataContext(DataContext: TaskReportSchedulerItemClass) {
         this.DataContext = DataContext["DataContext"];
         this.EntityPM = DataContext["DataContext"].EntityPM;
+        this.EntityPM.EntityId = this.DataContext.fatherComponent.ReportList.Id;
         this.EntityPM.Type = "Report";
         this.EntityPM.ProcedureCode = "Report";
 

@@ -19,8 +19,14 @@ export class AddEditReportSchedulerComponent implements OnInit {
     public IsNextButtonClicked: boolean = false;
     public ReportGroupList: ReportGroupList;
     public ReportList: ReportList;
+    IsPreviwReport: boolean = false;
     reportsTemplateListExtendedService: ReportsTemplateListExtendedService;
     constructor() {
+        this.CurrentSession.SessionEvent.subscribe($event => {
+            if ($event == "RunReportEvent") {
+                this.IsPreviwReport = true;
+            }
+        });
         this.reportsTemplateListExtendedService = new ReportsTemplateListExtendedService();
     }
 
@@ -130,7 +136,6 @@ export class AddEditReportSchedulerComponent implements OnInit {
 
     NextButtonClicked() {
         if (this.PageChild_RETASK.NextButtonClicked()) {
-            //this.CurrentSession.ResizeCurrentWindow(1400,252,null);
             this.IsNextButtonClicked = true;
             this.SetSelectedItem("PRREP");
         }
@@ -145,7 +150,8 @@ export class AddEditReportSchedulerComponent implements OnInit {
 
     BackButtonClicked() {
         this.IsNextButtonClicked = false;
-        //this.CurrentSession.ResizeCurrentWindow(900, null, 510);
+        this.IsPreviwReport = false;
+        this.CurrentSession.ResizeCurrentWindow(900);
         this.SetSelectedItem("RETASK");
     }
 

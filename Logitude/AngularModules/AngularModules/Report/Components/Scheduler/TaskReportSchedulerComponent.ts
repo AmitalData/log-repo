@@ -330,7 +330,7 @@ export class TaskReportSchedulerComponent implements OnInit {
             filters.AdditionalFilters = filters.AdditionalFilters.filter(a => a.FieldName != "Type");
         }
         filters.addAdditionalFilter("Type", this.SchedulerType, null, null, "Equals", true, false, false, "String");
-        //filters.addAdditionalFilter("EntityId", this.ReportList.Id, null, null, "Equals", true, false, false, "String");
+        filters.addAdditionalFilter("EntityId", this.ReportList.Id, null, null, "Equals", true, false, false, "String");
         filters.GetCount = getCount;
         filters.PageIndex = skip;
         filters.PageSize = take;

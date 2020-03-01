@@ -168,7 +168,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
                     cmpRef.instance.RunReportEvent.subscribe(s => {
                         if (s) {
                             if (this.IsSchedulerReport) {
-                                //this.CurrentSession.ResizeCurrentWindow(1400, 252, null);
+                                this.CurrentSession.ResizeCurrentWindow(1400);
                             }
                             this.GenerateReport(s, false);
                         }
