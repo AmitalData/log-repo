@@ -728,7 +728,8 @@ function ResetItemFunnel() {
             "marginTop": 10,
             "dataProvider": chartData,
             "minorGridAlpha": 0,
-            "minorGridEnabled":false,
+            "minorGridEnabled": false,
+            "autoResize": false,
             "valueAxes": [{
                 "id": "v1",
                 "axisAlpha": 0.1,
@@ -736,13 +737,16 @@ function ResetItemFunnel() {
                 "minorGridEnabled": false,
             }],
             "graphs": graphs,
+
             "legend": {
                 "divId": LegendDiv,
                 "showEntries": legendFlag,
                 "enabled": legendFlag,
                 "labelText": "[[title]]",
                 "valueWidth": 0,
-                "useGraphSettings": true
+                "useGraphSettings": true,
+                "spacing": 5,
+                "markerType": "circle"
 
             },
             "chartCursor": {
