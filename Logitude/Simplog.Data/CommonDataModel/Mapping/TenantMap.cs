@@ -218,6 +218,8 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.HasOptional(t => t.VatFormatCountry).WithMany().HasForeignKey(d => d.VatFormatCountryId);
             this.HasOptional(t => t.TemperatureUnit).WithMany().HasForeignKey(d => d.TemperatureUnitCode);
             this.HasOptional(t => t.NumberFormat).WithMany().HasForeignKey(d => d.NumberFormatCode);
+            this.HasOptional(t => t.WeightUnit).WithMany().HasForeignKey(d => d.ChargeableWeightUnitCode);
+
 
         }
     }
