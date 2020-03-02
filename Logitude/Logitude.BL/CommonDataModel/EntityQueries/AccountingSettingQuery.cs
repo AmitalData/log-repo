@@ -78,6 +78,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                RefreshToken=a.RefreshToken,
                                                QBOOAuth=a.QBOOAuth,
                                                AllowManualARPaymentNumber = a.AllowManualARPaymentNumber,
+                                               AllowRegionalTaxManagement = a.AllowRegionalTaxManagement,
                                            }).FirstOrDefault();
 
             return account;
@@ -133,6 +134,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                RefreshToken = a.RefreshToken,
                                                QBOOAuth = a.QBOOAuth,
                                                AllowManualARPaymentNumber = a.AllowManualARPaymentNumber,
+                                               AllowRegionalTaxManagement = a.AllowRegionalTaxManagement,
                                            }).FirstOrDefault();
 
             if (account != null)
@@ -202,6 +204,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        RefreshToken = a.RefreshToken,
                                        QBOOAuth = a.QBOOAuth,
                                        AllowManualARPaymentNumber = a.AllowManualARPaymentNumber,
+                                       AllowRegionalTaxManagement = a.AllowRegionalTaxManagement,
                                    });
 
                     foreach (var c in systems)
@@ -272,6 +275,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               RefreshToken = a.RefreshToken,
                               QBOOAuth = a.QBOOAuth,
                               AllowManualARPaymentNumber = a.AllowManualARPaymentNumber,
+                              AllowRegionalTaxManagement = a.AllowRegionalTaxManagement,
                           }).FirstOrDefault();
             }
 
@@ -328,6 +332,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                             RefreshToken = a.RefreshToken,
                                                             QBOOAuth = a.QBOOAuth,
                                                             AllowManualARPaymentNumber = a.AllowManualARPaymentNumber,
+                                                            AllowRegionalTaxManagement = a.AllowRegionalTaxManagement,
                                                         });
 
             return accounts;
@@ -382,6 +387,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                            RefreshToken = a.RefreshToken,
                                                            QBOOAuth = a.QBOOAuth,
                                                            AllowManualARPaymentNumber = a.AllowManualARPaymentNumber,
+                                                           AllowRegionalTaxManagement = a.AllowRegionalTaxManagement,
                                                        };
             return result;
         }

@@ -417,6 +417,12 @@ namespace Logitude.DBMigrations.Models
                 ColumnsMigrations.Add(dropPrimaryKeyMigration);
             }
 
+            if (!currentTableColumn.Constraints.Nullable)
+            {
+                ColumnMigration setNullableMigration = GetColumnMigration(MigrationTypes.SETNULLABLE, currentTableColumn, dxmlTableColumn);
+                ColumnsMigrations.Add(setNullableMigration);
+            }
+
             ColumnMigration dropMigration = GetColumnMigration(MigrationTypes.DROP, currentTableColumn, dxmlTableColumn);
             ColumnsMigrations.Add(dropMigration);
 
