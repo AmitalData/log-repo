@@ -87,6 +87,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                           IsExport = a.IsExport, 
                           ReceivablesDefaultCurrencyId = a.ReceivablesDefaultCurrencyId, 
                           PayablesDefaultCurrencyId = a.PayablesDefaultCurrencyId,
+                          ApplyRegionalTax = a.ApplyRegionalTax,
                       }).FirstOrDefault();
 
             ChargeTypeAccountingQuery chargeTypeAccountingQuery = new ChargeTypeAccountingQuery(tenant);
@@ -154,6 +155,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                         IsExport = a.IsExport,
                                         ReceivablesDefaultCurrencyId = a.ReceivablesDefaultCurrencyId,
                                         PayablesDefaultCurrencyId = a.PayablesDefaultCurrencyId,
+                                        ApplyRegionalTax = a.ApplyRegionalTax,
                                     }).FirstOrDefault();
 
             ChargeTypeAccountingQuery chargeTypeAccountingQuery = new ChargeTypeAccountingQuery(tenant);
@@ -228,6 +230,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   IsExport = a.IsExport,
                                   ReceivablesDefaultCurrencyId = a.ReceivablesDefaultCurrencyId,
                                   PayablesDefaultCurrencyId = a.PayablesDefaultCurrencyId,
+                                  ApplyRegionalTax = a.ApplyRegionalTax,
                               }).FirstOrDefault();
 
                     ChargeTypeAccountingQuery chargeTypeAccountingQuery = new ChargeTypeAccountingQuery(tenant);
@@ -310,6 +313,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               IsExport = a.IsExport,
                               ReceivablesDefaultCurrencyId = a.ReceivablesDefaultCurrencyId,
                               PayablesDefaultCurrencyId = a.PayablesDefaultCurrencyId,
+                              ApplyRegionalTax = a.ApplyRegionalTax,
                           }).FirstOrDefault();
 
 
@@ -378,6 +382,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                     IsExport = a.IsExport,
                                                     ReceivablesDefaultCurrencyId = a.ReceivablesDefaultCurrencyId,
                                                     PayablesDefaultCurrencyId = a.PayablesDefaultCurrencyId,
+                                                    ApplyRegionalTax = a.ApplyRegionalTax,
                                                 };
             return charges;
         }
@@ -443,6 +448,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                              IsExport = a.IsExport,
                              ReceivablesDefaultCurrencyId = a.ReceivablesDefaultCurrencyId,
                              PayablesDefaultCurrencyId = a.PayablesDefaultCurrencyId,
+                             ApplyRegionalTax = a.ApplyRegionalTax,
                          }).AsQueryable();
 
             IQueryable<ChargesTypePM> query2 = null;
@@ -531,6 +537,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                      IsExport = f.IsExport,
                                                      ReceivablesDefaultCurrencyId = f.ReceivablesDefaultCurrencyId,
                                                      PayablesDefaultCurrencyId = f.PayablesDefaultCurrencyId,
+                                                     ApplyRegionalTax = f.ApplyRegionalTax,
                                                  };
             return result;
         }
@@ -592,6 +599,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                    IsExport = f.IsExport,
                                                    ReceivablesDefaultCurrencyId = f.ReceivablesDefaultCurrencyId,
                                                    PayablesDefaultCurrencyId = f.PayablesDefaultCurrencyId,
+                                                   ApplyRegionalTax = f.ApplyRegionalTax,
                                                }).FirstOrDefault();
 
             return chargesTypeList;
@@ -657,6 +665,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                              IsExport = f.IsExport,
                              ReceivablesDefaultCurrencyId = f.ReceivablesDefaultCurrencyId,
                              PayablesDefaultCurrencyId = f.PayablesDefaultCurrencyId,
+                             ApplyRegionalTax = f.ApplyRegionalTax,
                          }).OrderBy(d=>d.Code).Skip(skip).Take(take);
 
 

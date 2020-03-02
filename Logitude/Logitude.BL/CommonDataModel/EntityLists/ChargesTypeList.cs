@@ -76,5 +76,6 @@ namespace Logitude.BL.CommonDataModel.EntityLists
 
         public string ReceivablesDefaultCurrencyId { get; set; }
         public string PayablesDefaultCurrencyId { get; set; }
+        public bool ApplyRegionalTax { get; set; }
     }
 }
