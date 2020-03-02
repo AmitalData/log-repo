@@ -1,4 +1,4 @@
-import {Component, OnDestroy} from '@angular/core';
+import { Component, OnDestroy, OnInit} from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {VatTypePM} from '../../../EntityPMs/VatTypePM';
@@ -10,7 +10,6 @@ import {EntityArgs} from  '../../../../Infrastructure/DataContracts/EntityArgs';
 import {AppTool, DateTool} from '../../../../Infrastructure/Tools';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import {CommonDomainService} from '../../../Services/CommonDomainService';
-import {AccountingSettingPM} from '../../../EntityPMs/AccountingSettingPM';
 
 @Component({
     moduleId: module.id,
@@ -26,10 +25,10 @@ export class VatTypeGeneralTabComponent extends BaseComponent implements OnDestr
     private CurrentSession = SessionLocator.SelectedSession;
     IsAccountingActivated: boolean = false;
     public IsMultiPercentageEnabled = true;
+    public IsRegionalTaxActivated = false; 
 
     constructor(public args: EntityArgs) {
         super();
-
         this.EntityPM = args.EntityPM;
         if (SessionLocator.TenantPM.AccountingActivated) {
             this.IsAccountingActivated = true;
@@ -39,14 +38,18 @@ export class VatTypeGeneralTabComponent extends BaseComponent implements OnDestr
             this.NewEntityPercentageDate = DateTool.GetCurrentDateAsUtc();
           //  this.EntityPM.RecognizedPercentage = 100;
         }
-
         else{
             this.IsNewEntity = false;
             this.Listen();
         }
-
+        if (SessionLocator.AccountingSettingPM.AllowRegionalTaxManagement) {
+            this.IsRegionalTaxActivated = true; 
+        }
         this.SetUIProperties();
         this.LoadMultiPercentages();
+    }
+
+    ngOnInit() {
     }
 
     private SaveCompletedEvent: any = null;
