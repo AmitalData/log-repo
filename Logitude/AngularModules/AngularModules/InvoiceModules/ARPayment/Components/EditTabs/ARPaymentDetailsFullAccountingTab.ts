@@ -101,7 +101,8 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 
 
         this.EntityPM = entityArgs.EntityPM;
-        this.SetOpenAmountCurrencyHeader();
+        this.SetAmountCurrencyCode();
+         
         this.SetPaymentAmount();
         if (this.EntityPM.ARPaymentChequeReplicas.length > 1) {
             this.isMultipleCheques = true;
@@ -154,15 +155,21 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         // this.UIProperties.SetEnabled("AmountToReconcile","LedgerTransaction",!this.IsGridReadOnly);
 
     }
-    SetOpenAmountCurrencyHeader() {
+    SetAmountCurrencyCode() {
         if (this.EntityPM)
             if (this.EntityPM.GLAccountRecoMethodCode == "0") {
                 this.OpenAmountCurrency = this.OpenAmountCurrency+" (" + SessionLocator.TenantPM.CurrencyCode + ")";
-            }
+                this.ReconcileAmountCurrency =  " (" + SessionLocator.TenantPM.CurrencyCode + ")";
+
+     }
             else {
                 this.OpenAmountCurrency = this.OpenAmountCurrency + " (" + this.EntityPM.GLAccountCurrencyCode + ")";
-            }
+                this.ReconcileAmountCurrency =" (" + this.EntityPM.GLAccountCurrencyCode + ")";
+
+   }
     }
+    ReconcileAmountCurrency: string;
+  
     ngOnInit() {
         this.LoadPaymentMethods();
 
@@ -274,7 +281,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
                     this.EntityPM.GLAccountId = glaccount.Id;
                     this.EntityPM.GLAccountRecoMethodCode = glaccount.ReconcileMethodCode;
                     this.EntityPM.GLAccountCurrencyCode = glaccount.CurrencyCode;
-                    this.SetOpenAmountCurrencyHeader();
+                    this.SetAmountCurrencyCode();
                     this.SetPaymentAmount();
                     console.log("GLAccount reloaded: " + this.EntityPM.GLAccountId);
                     this.GetData();
@@ -386,7 +393,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         });
     }
 
-
+   AdjustedAmount: number=0;
     CalculateTotals() {
 
         // Reconciliation amount
@@ -400,7 +407,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         });
         this.amount2reconcileTotal = _linesAmount2reco;
         this.paymentReconciledAmountTotal = _linespaymentReconciledAmount;
-
+        this.AdjustedAmount = this.paymentReconciledAmountTotal == 0 ? this.amount2reconcileTotal : this.paymentReconciledAmountTotal + this.amount2reconcileTotal;
         if(this.EntityPM.InvoicesLedgerTransactions.length == 0){
             // this.EntityPM.OpenAmount = this.originalPaymentOpenAmount;
             this.EntityPM.IsDirty = false;
@@ -518,7 +525,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
                     this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
                     this.SetUIProperties();
-                    this.GetData();
+                   // this.GetData();
 
                     this.checkLedgerCreated();
                 }
@@ -1030,7 +1037,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
                                                var glaccount: GLAccountPM = myResponse.Result;
                                                 this.EntityPM.GLAccountRecoMethodCode = glaccount.ReconcileMethodCode;
                                                 this.EntityPM.GLAccountCurrencyCode = glaccount.CurrencyCode;
-                                                this.SetOpenAmountCurrencyHeader();
+                                                this.SetAmountCurrencyCode();
                                                 this.SetPaymentAmount();
                                                 if (glaccount != null && !glaccount.IsMultiCurrency) {
                                                     this.PaymentCurrencyId = glaccount.CurrencyId;

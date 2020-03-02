@@ -844,10 +844,83 @@
         <td>
             <TabSummary [Height]="90">
                 <table>
-                    <tr>
+                    <tr style=" width:100%">
                         <td>
                             <table>
-                                <tr style="height: 20px;">
+                                <tr>
+
+                                    <td>
+                                        <table>
+                                            <tr style="height: 20px;">
+                                                <td text-start class="BlueTitle">
+                                                    {{'Accounting.O.ARP.PaymentAmount' | TextCodeTranslationPipe}}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="vertical-align: middle;"class="arp-footer">
+                                                    <div float-start class="amount-div">
+                                                        <div class="amount">{{PaymentCurrencySign}} {{paymentAmountTotal | NumbersPipe:'N2'}}    </div>
+
+                                                    </div>
+                                                    
+                                                </td>
+                                            </tr>
+
+
+                                        </table>
+
+
+                                    </td><td style="width:20px"><div class="VerticalLine"></div></td>
+                                    <td>
+                                        <table>
+                                            <tr text-start class="BlueTitle">
+                                                reconcile data{{ReconcileAmountCurrency}}</tr>
+                                            <tr>
+                                                <td style="vertical-align: middle;" class="arp-footer">
+                                                    <div float-start class="amount-div">
+                                                        <div class="amount">{{PaymenyAmount | NumbersPipe:'N2'
+                                                }}</div>
+                                                <div class="label">Payment amount</div>
+
+                                                </div>
+
+
+
+                                                <div float-start class="seperator">
+                                                    <div>-</div>
+                                                </div>
+
+                                                <div float-start class="amount-div">
+                                                    <div class="amount">{{AdjustedAmount | NumbersPipe:'N2'}}</div>
+                                                    <div class="label">{{'Accounting.O.ARP.ReconciledAmount' | TextCodeTranslationPipe}}</div>
+
+                                                </div>
+
+
+
+
+                                                <div float-start class="seperator">
+                                                    <div>=</div>
+                                                </div>
+
+
+                                                <div float-start class="amount-div">
+                                                    <div class="amount">{{paymentAmountTotal - paymentReconciledAmountTotal - amount2reconcileTotal | NumbersPipe:'N2'}}</div>
+                                                    <div class="label">
+                                                        {{'ARPayment.F.OpenAmount' | TextCodeTranslationPipe}}
+                                                        ({{PaymentCurrencyCode}})
+                                                    </div>
+                                                </div>
+
+</td></tr>
+                                        </table>
+                                    </td>
+                                    <td></td>
+
+                                </tr>
+
+
+                                <!--<tr style="height: 20px;">
                                     <td text-start colspan="2" class="BlueTitle">
                                         {{'Accounting.O.ARP.PaymentAmount' | TextCodeTranslationPipe}}
                                     </td>
@@ -875,7 +948,7 @@
                                         </div>
 
                                         <div float-start class="amount-div">
-                                            <div class="amount">{{(paymentReconciledAmountTotal - amount2reconcileTotal)*-1 | NumbersPipe:'N2'}}</div>
+                                            <div class="amount">{{AdjustedAmount | NumbersPipe:'N2'}}</div>
                                             <div class="label">{{'Accounting.O.ARP.ReconciledAmount' | TextCodeTranslationPipe}}</div>
 
                                         </div>
@@ -902,7 +975,7 @@
                                         <div></div>
                                     </td>
 
-                                </tr>
+                                </tr>-->
                             </table>
                         </td>
 
