@@ -43,9 +43,11 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                 && a.EntityId == entityId
                 && a.ObjectTableId == objectTable.Id
                 );
-            if (temp != null)
+            ReconcileExternalPage MyPoco = temp.FirstOrDefault();
+            if (MyPoco!=null)
+            //if (temp != null)
             {
-                ReconcileExternalPage MyPoco = temp.FirstOrDefault();
+                //ReconcileExternalPage MyPoco = temp.FirstOrDefault();
                 ReconcileExternalPageKeys keys = new ReconcileExternalPageKeys();
                 keys.Id = MyPoco.Id;
                 myPM = GetEntityPM(MyPoco, true, keys);

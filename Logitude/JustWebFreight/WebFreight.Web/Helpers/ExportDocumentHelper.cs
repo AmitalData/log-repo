@@ -1175,7 +1175,7 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                     {
                         theT1 = System.DateTime.Now.Ticks;
                         CrossDockEntryDataProviderHelper crossDockEntryDataProviderHelper = new CrossDockEntryDataProviderHelper();
-                        byte[] byteArray = crossDockEntryDataProviderHelper.LoadDataToCrossDockEntryDataProvider(entityId, tenant);
+                        byte[] byteArray = crossDockEntryDataProviderHelper.LoadDataToCrossDockEntryDataProvider(entityId, tenant, userId);
 
                         MemoryStream memorystream = new MemoryStream(byteArray);
                         XmlSerializer serializer = new XmlSerializer(typeof(CrossDockEntryDataProvider));

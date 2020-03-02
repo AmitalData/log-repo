@@ -70,7 +70,7 @@ namespace WarehouseData.Helper
                     var dataTable = new DataTable();
                     dataTable.Load(reader);
                     var columns = dataTable.Rows.Cast<DataRow>().Select(r => (string)r[table.KeyName].ToString()).ToList();
-                    generalDataWarehouseService.DeleteRowsFromDataWarehouse(new DeleteRowsArgs() { TableName = "Fact_" + table.DBTableName, KeyName = table.KeyName, IdsList = columns, ConnectionString = connectionString });
+                    generalDataWarehouseService.DeleteRowsFromDataWarehouse(new DeleteRowsArgs() { TableName = table.DWObjectTableCode, KeyName = table.KeyName, IdsList = columns, ConnectionString = connectionString });
                 }
                 reader.Close();
             }

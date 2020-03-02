@@ -100,7 +100,6 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.MasterNumber = entityPM.MasterNumber;
             entity.CreditAccount = entityPM.CreditAccount;
             entity.TransferTries = entityPM.TransferTries;
-            //entity.TransferError = entityPM.TransferError;
             entity.IsTransferStarted = entityPM.IsTransferStarted;
             entity.TransferStatusCode = entityPM.TransferStatusCode;
             entity.AccountingExternalCode = entityPM.AccountingExternalCode;
@@ -131,6 +130,7 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
                 }
             }
 
+            entityPM.TransferError = transferError;
             entity.TransferError = transferError;
 
             entityPM.SetVoided = false;

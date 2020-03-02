@@ -35,6 +35,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             poco.ExternalTAXItemId = entityPM.ExternalTAXItemId;
             poco.IsMultiPercentage = entityPM.IsMultiPercentage;
             poco.RecognizedPercentage = entityPM.RecognizedPercentage;
+            poco.IsRegionalTax = entityPM.IsRegionalTax;
         }
     }
 }

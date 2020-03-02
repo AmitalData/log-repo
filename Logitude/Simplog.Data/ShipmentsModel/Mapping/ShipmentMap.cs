@@ -204,7 +204,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ColoaderReference1).HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.MoveTypeId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.AMSBL).HasMaxLength(17).IsUnicode(true);
-            this.Property(t => t.SecurityKey).HasMaxLength(40);
+            this.Property(t => t.SecurityKey).HasMaxLength(40).IsUnicode(false);
             this.Property(t => t.AccountNumber).HasMaxLength(14).IsUnicode(false);
             this.Property(t => t.DeliveryOrder).HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.FreightLocationId).HasMaxLength(15).IsUnicode(false);
@@ -479,7 +479,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.CancelledDate).HasColumnName("CancelledDate");
             this.Property(t => t.UpdatedByUserId).HasColumnName("UpdatedByUserId");
             this.Property(t => t.LastUpdateDate).HasColumnName("LastUpdateDate");
-            this.Property(t => t.OpenReceivablesInLocalCurrency).HasColumnName("OpenReceivablesInLocalCurrency");          
+            this.Property(t => t.OpenReceivablesInLocalCurrency).HasColumnName("OpenReceivablesInLocalCurrency").IsRequired();          
             this.Property(t => t.ProfitInLocalCurrency).HasColumnName("ProfitInLocalCurrency");
             this.Property(t => t.PreCarriageCarrierId).HasColumnName("PreCarriageCarrierId");
             this.Property(t => t.OnCarriageCarrierId).HasColumnName("OnCarriageCarrierId");
@@ -716,7 +716,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")
             {
-                this.Property(t => t.AccountedReceivablesInLocalCurrency).HasColumnName("AccountedReceivablesInLocal");
+                this.Property(t => t.AccountedReceivablesInLocalCurrency).HasColumnName("AccountedReceivablesInLocal").IsRequired();
                 this.Property(t => t.OpenReceivablesInProfitCurrency).HasColumnName("OpenReceivablesInProfit");
                 this.Property(t => t.AccountedReceivablesInProfitCurrency).HasColumnName("AccountedReceivablesInProfit");
                 this.Property(t => t.AccountedPayablesInLocalCurrency).HasColumnName("AccountedPayablesInLocal");

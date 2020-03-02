@@ -59,6 +59,7 @@
     <Compile Include="Models\DXMLView.cs" />
     <Compile Include="Models\ExecutedSxmlFile.cs" />
     <Compile Include="Models\ExecuteSxmlFileResult.cs" />
+    <Compile Include="Models\IncludedModules.cs" />
     <Compile Include="Models\IndexDefinition.cs" />
     <Compile Include="Models\MigrationTool.cs" />
     <Compile Include="Models\TriggerDefinition.cs" />

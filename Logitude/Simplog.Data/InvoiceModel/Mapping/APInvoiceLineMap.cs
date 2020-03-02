@@ -16,7 +16,7 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.Notes).HasMaxLength(250).IsUnicode(true);
             this.Property(t => t.EntityId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.EntityPayableId).HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.ForiegnCurrencyId).IsRequired().HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.ForiegnCurrencyId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.DebitAccount).HasMaxLength(40).IsUnicode(false);
             this.Property(t => t.Description).IsRequired().HasMaxLength(250).IsUnicode(true);
             this.Property(t => t.LocalDescription).HasMaxLength(250).IsUnicode(true);
@@ -30,9 +30,9 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.LineNumber).HasColumnName("LineNumber");
             this.Property(t => t.Tenant).HasColumnName("Tenant");
             this.Property(t => t.ChargesTypeId).HasColumnName("ChargesTypeId");
-            this.Property(t => t.InvoiceCurrencyAmount).HasColumnName("InvoiceCurrencyAmount");
-            this.Property(t => t.LocalCurrencyAmount).HasColumnName("LocalCurrencyAmount");
-            this.Property(t => t.ProfitCurrencyAmount).HasColumnName("ProfitCurrencyAmount");
+            this.Property(t => t.InvoiceCurrencyAmount).HasColumnName("InvoiceCurrencyAmount").IsRequired();
+            this.Property(t => t.LocalCurrencyAmount).HasColumnName("LocalCurrencyAmount").IsRequired();
+            this.Property(t => t.ProfitCurrencyAmount).HasColumnName("ProfitCurrencyAmount").IsRequired();
             this.Property(t => t.VatTypeId).HasColumnName("VatTypeId");
             this.Property(t => t.Notes).HasColumnName("Notes");
             this.Property(t => t.EntityId).HasColumnName("EntityId");

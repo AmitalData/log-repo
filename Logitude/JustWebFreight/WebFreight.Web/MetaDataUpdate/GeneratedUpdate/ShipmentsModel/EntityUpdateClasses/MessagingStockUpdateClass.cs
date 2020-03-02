@@ -145,7 +145,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						ObjectTableName =  "MessagingStock",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
-					  						MaxLength =  0,
+					  						MaxLength =  1000,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,

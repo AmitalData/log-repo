@@ -23,7 +23,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.LineNumber).HasColumnName("LineNumber");
             this.Property(t => t.Tenant).HasColumnName("Tenant");
             this.Property(t => t.Description).HasColumnName("Description");
-            this.Property(t => t.Quantity).HasColumnName("Quantity");
+            this.Property(t => t.Quantity).HasColumnName("Quantity").IsRequired();
             this.Property(t => t.GoodsValue).HasColumnName("GoodsValue");
 
             this.HasRequired(t => t.ShipmentPackage).WithMany().HasForeignKey(d => d.PackageId);

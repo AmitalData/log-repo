@@ -206,10 +206,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                :
                                                ((f.FromPort != null && f.FromPort.Country != null ? f.FromPort.Country.Code : "")),
 
-                                               FromPortCountry = (f.TransportModeId == "I" && f.DirectionId == "D") ?
-                                               ((f.FromPartnerAddress != null && f.FromPartnerAddress.Country != null ? f.FromPartnerAddress.Country.EnglishName : ""))
-                                               :
-                                               ((f.FromPort != null && f.FromPort.Country != null ? f.FromPort.Country.EnglishName : "")),
+                                               FromPortCountry = f.FromPort != null && f.FromPort.Country != null ? f.FromPort.Country.EnglishName : "",
 
                                                ToPort = (f.TransportModeId == "I" && f.DirectionId == "D") ?
                                                (f.ToPartnerAddress != null ? f.ToPartnerAddress.City : "")
@@ -221,10 +218,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                :
                                                ((f.ToPort != null && f.ToPort.Country != null ? f.ToPort.Country.Code : "")),
 
-                                               ToPortCountry = (f.TransportModeId == "I" && f.DirectionId == "D") ?
-                                               ((f.ToPartnerAddress != null && f.ToPartnerAddress.Country != null ? f.ToPartnerAddress.Country.EnglishName : ""))
-                                               :
-                                               ((f.ToPort != null && f.ToPort.Country != null ? f.ToPort.Country.EnglishName : "")),
+                                               ToPortCountry = f.ToPort != null && f.ToPort.Country != null ? f.ToPort.Country.EnglishName : "",
 
                                                Routing = (f.TransportModeId == "I" && f.DirectionId == "D") ?
                                                ((f.FromPartnerAddress == null ? "" : f.FromPartnerAddress.City) + " > " + (f.ToPartnerAddress == null ? "" : f.ToPartnerAddress.City))
@@ -434,10 +428,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                         :
                         ((f.FromPort != null && f.FromPort.Country != null ? f.FromPort.Country.Code : "")),
 
-                        FromPortCountry = (f.TransportModeId == "I" && f.DirectionId == "D") ?
-                        ((f.FromPartnerAddress != null && f.FromPartnerAddress.Country != null ? f.FromPartnerAddress.Country.EnglishName : ""))
-                        :
-                        ((f.FromPort != null && f.FromPort.Country != null ? f.FromPort.Country.EnglishName : "")),
+                        FromPortCountry = f.FromPort != null && f.FromPort.Country != null ? f.FromPort.Country.EnglishName : "",
 
                         ToPort = (f.TransportModeId == "I" && f.DirectionId == "D") ?
                         (f.ToPartnerAddress != null ? f.ToPartnerAddress.City : "")
@@ -449,10 +440,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                         :
                         ((f.ToPort != null && f.ToPort.Country != null ? f.ToPort.Country.Code : "")),
 
-                        ToPortCountry = (f.TransportModeId == "I" && f.DirectionId == "D") ?
-                        ((f.ToPartnerAddress != null && f.ToPartnerAddress.Country != null ? f.ToPartnerAddress.Country.EnglishName : ""))
-                        :
-                        ((f.ToPort != null && f.ToPort.Country != null ? f.ToPort.Country.EnglishName : "")),
+                        ToPortCountry = f.ToPort != null && f.ToPort.Country != null ? f.ToPort.Country.EnglishName : "",
 
                         Routing = (f.TransportModeId == "I" && f.DirectionId == "D") ?
                         ((f.FromPartnerAddress == null ? "" : f.FromPartnerAddress.City) + " > " + (f.ToPartnerAddress == null ? "" : f.ToPartnerAddress.City))

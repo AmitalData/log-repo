@@ -250,6 +250,7 @@ namespace Logitude.Accounting.BL.CoreBL
                             {
                                 UpdateInExternalReconcileProgressToFalse();
                             }
+                            UpdateJournalWithExternalReconcileNumber(myCreateAutoExternalReconcileWhileStreamingService);
                         }
                     }
 
@@ -320,6 +321,40 @@ namespace Logitude.Accounting.BL.CoreBL
             }
         }
 
+        private void UpdateJournalWithExternalReconcileNumber(CreateAutoExternalReconcileWhileStreamingService myCreateAutoExternalReconcileWhileStreamingService)
+        {
+            if (
+                                        this._JournalPM.AccountingEntityCode == "12"// - Reconciliation
+                                        ///OnCreate There is A fill ?!?!?  --- && String.IsNullOrWhiteSpace(this._JournalPM.AccountingEntityId)
+                                        &&
+                                        String.IsNullOrWhiteSpace(this._JournalPM.AccountingEntityReference)
+                                        &&
+                                        this._JournalPM.JournalExternalReconciles.Count > 0
+                                        &&
+                                        myCreateAutoExternalReconcileWhileStreamingService.ExternalReconciliationList.Count == 1
+
+                                        )
+            {
+                var myExternalReconciliation = myCreateAutoExternalReconcileWhileStreamingService.ExternalReconciliationList.First();
+
+                var myJournalUpdateService = new JournalUpdateService(this._AccountingContext, new Dictionary<string, IContext>(), this._JournalPM.Tenant);
+
+                //var myJournalRepository = //new JournalRepository(this._AccountingContext);
+                myJournalUpdateService.
+            //.GetJournalRepositoryPriv();
+            //myJournalRepository.
+            UpdateWhileStreaming(this._JournalPM.Tenant, this._JournalPM.Id,
+                (poco) =>
+                {
+                    this._JournalPM.AccountingEntityId = myExternalReconciliation.Id;
+                    this._JournalPM.AccountingEntityReference = myExternalReconciliation.ReconciliationNumber.ToString();
+
+                    poco.AccountingEntityReference = myExternalReconciliation.ReconciliationNumber.ToString();
+                    poco.AccountingEntityId = myExternalReconciliation.Id;
+                });
+
+            }
+        }
         private void UpdateJournalWithReconcileNumber(ICreateAutoReconcileWhileStreamingService myCreateAutoReconcileWhileStreamingService)
         {
             if (

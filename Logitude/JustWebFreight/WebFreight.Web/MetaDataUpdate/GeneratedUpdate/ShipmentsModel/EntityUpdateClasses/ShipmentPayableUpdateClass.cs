@@ -115,7 +115,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Shipment Payable",
-			      				    Code =  "8df8",
+			      				    Code =  "ce27",
 			      				    Name =  "ShipmentPayable",
 			      				    GenerateDomainService =  false,
 			      				    NoTS =  false,

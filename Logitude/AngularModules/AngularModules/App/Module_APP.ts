@@ -1,12 +1,13 @@
 import { NgModule, SystemJsNgModuleLoader } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 import { provideRoutes } from '@angular/router';
 import { AppComponent } from './AppComponent';
 
 
 @NgModule({
-    imports: [BrowserModule, HttpModule],
+    imports: [BrowserModule, HttpModule, HttpClientModule],
     declarations: [AppComponent],
 
     providers: [
