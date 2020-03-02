@@ -594,7 +594,6 @@ export class ARPaymentPM {
     public set IsPaymentNumberManuallySet(newValue: boolean) { if (this.isPaymentNumberManuallySet != newValue) { this.isPaymentNumberManuallySet = newValue; this.MarkAsDirty("IsPaymentNumberManuallySet"); } }
        
 	 
-
     private field1: CustomFieldClass;
     public get Field1() {if(!this.field1){ this.field1 = new CustomFieldClass(null, "Field1", "ARPayment");} return this.field1; }
     public set Field1(newValue: CustomFieldClass) {  this.field1 = newValue; this.MarkAsDirty("Field1");  }
@@ -643,7 +642,8 @@ export class ARPaymentPM {
     private field10: CustomFieldClass;
     public get Field10() {if(!this.field10){ this.field10 = new CustomFieldClass(null, "Field10", "ARPayment");} return this.field10; }
     public set Field10(newValue: CustomFieldClass) {  this.field10 = newValue; this.MarkAsDirty("Field10");  }
-
+       
+	 
     private gLAccountCurrencyCode: string;
     public get GLAccountCurrencyCode() { return this.gLAccountCurrencyCode; }
     public set GLAccountCurrencyCode(newValue: string) { if (this.gLAccountCurrencyCode != newValue) { this.gLAccountCurrencyCode = newValue; this.MarkAsDirty("GLAccountCurrencyCode"); } }
@@ -652,7 +652,6 @@ export class ARPaymentPM {
     private paymentCurrencySign: string;
     public get PaymentCurrencySign() { return this.paymentCurrencySign; }
     public set PaymentCurrencySign(newValue: string) { if (this.paymentCurrencySign != newValue) { this.paymentCurrencySign = newValue; this.MarkAsDirty("PaymentCurrencySign"); } }
-
        
 	 
 
@@ -679,4 +678,4 @@ export class ARPaymentPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

@@ -874,13 +874,14 @@
                                     <td>
                                         <table>
                                             <tr text-start class="BlueTitle">
-                                                reconcile data{{ReconcileAmountCurrency}}</tr>
+                                                {{'ARPayment.O.ReconcileData' | TextCodeTranslationPipe}}{{ReconcileAmountCurrency}}
+                                            </tr>
                                             <tr>
                                                 <td style="vertical-align: middle;" class="arp-footer">
                                                     <div float-start class="amount-div">
                                                         <div class="amount">{{PaymenyAmount | NumbersPipe:'N2'
                                                 }}</div>
-                                                <div class="label">Payment amount</div>
+                                                        <div class="label"> {{'Accounting.O.ARP.PaymentAmount' | TextCodeTranslationPipe}}</div>
 
                                                 </div>
 
