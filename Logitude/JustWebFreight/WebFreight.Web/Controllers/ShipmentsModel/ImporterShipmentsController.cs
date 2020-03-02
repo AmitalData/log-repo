@@ -900,6 +900,14 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                 entityPM.ApproveDateTime = entityAM.ApproveDateTime;
             }
 
+            if (entityAM.IsOperationalClosed == false && entityAM.CustomsClearanceDate != null && entityAM.StatusCode.ToLower() == "ccd" && entityPM.IsRequestedDocuments)
+            {
+                entityPM.IsShipmentComputedFieldChange = true;
+                entityPM.IsRequestedDocuments = false;
+                entityPM.RequestedDocumentsCount = 0;
+
+            }
+
             entityPM.IsImporterApprovalRequired = entityAM.IsImporterApprovalRequired;
             
             if (currentTenant.AutoArchiveOnInvoice == true && entityAM.OriginalStatusCode == "INPR" && entityAM.CustomsClearanceDate != null && entityPM.IsOperationalClosed == false)
