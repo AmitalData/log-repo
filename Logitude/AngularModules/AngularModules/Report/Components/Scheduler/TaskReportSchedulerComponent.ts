@@ -27,10 +27,9 @@ export class TaskReportSchedulerComponent implements OnInit {
     filterAgrs: ApiQueryFilters;
     SchedulerType: string = "Report";
     IsEditReportSchedulerEventAlreadyExist: boolean = false;
-    @Output() TasksHistoryCustomColumnsReady = new EventEmitter();
     @Output() TasksCustomColumnsReady = new EventEmitter();
-    @Output() MenuHeaderchangeevent = new EventEmitter();
     @Output() MenuHeaderchangeeventTasks = new EventEmitter();
+    @Output() SelectedRowChanged = new EventEmitter();
 
     constructor(private _entityListService: EntityListService) {
 
@@ -53,18 +52,10 @@ export class TaskReportSchedulerComponent implements OnInit {
         this.ReportList = windowArgs.ReportList;
     }
 
-    public IsHistoryGridVsisible = false;
     public SelectedRow: any;
     onRowSelected(item: any) {
         this.SelectedRow = item.rowData;
-
-        if (item == null) {
-            this.IsHistoryGridVsisible = false;
-        }
-
-        else {
-            this.LoadTaskHistories();
-        }
+        this.SelectedRowChanged.emit(this.SelectedRow);
     }
 
     NewTaskClicked() {
@@ -135,7 +126,6 @@ export class TaskReportSchedulerComponent implements OnInit {
 
     RefreshButtonClicked() {
         this.LoadTaskSchedulers();
-        this.LoadTaskHistories();
     }
 
     BuildTasksColumns() {
@@ -197,68 +187,6 @@ export class TaskReportSchedulerComponent implements OnInit {
         this.TasksCustomColumnsReady.emit(this.Taskscolumns);
     }
 
-    BuildTasksHistoryColumns() {
-        this.TasksHistoryColumns = [];
-        this.TasksHistoryColumns.push({
-            FieldName: "StartDateTime",
-            DataTypeCode: 'String',
-            Display: 'Start Date',
-            Styles: { width: '200px' },
-            HtmlListComponentName: 'ReportSchedulerDateListTemplate',
-            HtmlListComponentUrl: '../Report/Components/Scheduler/ListTemplates/ReportSchedulerDateListTemplate',
-            IsCustomTemplate: true,
-            ServerSideSortable: true,
-            SortByName: "StartDateTime"
-        });
-
-        this.TasksHistoryColumns.push({
-            FieldName: "EndDateTime",
-            DataTypeCode: 'String',
-            Display: 'End Date',
-            Styles: { width: '200px' },
-            HtmlListComponentName: 'ReportSchedulerDateListTemplate',
-            HtmlListComponentUrl: '../Report/Components/Scheduler/ListTemplates/ReportSchedulerDateListTemplate',
-            IsCustomTemplate: true,
-            ServerSideSortable: true,
-            SortByName: "EndDateTime"
-        });
-        
-        this.TasksHistoryColumns.push({
-            FieldName: "Duration",
-            DataTypeCode: 'String',
-            Display: 'Duration',
-            Styles: { width: '100px' },
-            HtmlListComponentName: 'ReportSchedulerDateListTemplate',
-            HtmlListComponentUrl: '../Report/Components/Scheduler/ListTemplates/ReportSchedulerDateListTemplate',
-            IsCustomTemplate: true,
-            ServerSideSortable: false
-        });
-
-        this.TasksHistoryColumns.push({
-            FieldName: "Status",
-            DataTypeCode: 'String',
-            Display: 'Status',
-            Styles: { width: '90px' },
-            HtmlListComponentName: 'ReportSchedulerDateListTemplate',
-            HtmlListComponentUrl: '../Report/Components/Scheduler/ListTemplates/ReportSchedulerDateListTemplate',
-            IsCustomTemplate: true,
-            ServerSideSortable: false
-        });
-
-        this.TasksHistoryCustomColumnsReady.emit(this.TasksHistoryColumns);
-    }
-
-    TasksHistoryDataSource = {
-        pageSize: 20,
-        rowCount: null,
-
-        getRows: (skip: number, take: number, sortingCol: string, sortingDir: string, getCount: boolean, searchFields?: string, filters: ApiQueryFilters = null) => {
-            var tempo = this.getTasksHistoryRows(skip, take, sortingCol, sortingDir, getCount, searchFields, filters);
-
-            return tempo;
-        },
-    };
-
     TasksDataSource = {
         pageSize: 20,
         rowCount: null,
@@ -269,39 +197,6 @@ export class TaskReportSchedulerComponent implements OnInit {
             return tempo;
         },
     };
-
-    getTasksHistoryRows(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
-        filters = new ApiQueryFilters();
-        if (!sortingCol) {
-            sortingCol = "StartDateTimeUTC";
-            sortingDir = "descending";
-        }
-        if (!this.SelectedRow) {
-            filters.addAdditionalFilter("TaskId", "0-0", null, null, "Equals", false, false, false, "String");
-
-        }
-        else {
-            if (!AppTool.IsNullOrEmpty(this.SelectedRow.Id)) {
-                if (filters.AdditionalFilters.filter(a => a.FieldName == "TaskId").length > 0) {
-                    filters.AdditionalFilters = filters.AdditionalFilters.filter(a => a.FieldName != "TaskId");
-                }
-                filters.addAdditionalFilter("TaskId", this.SelectedRow.Id, null, null, "Equals", false, false, false, "String");
-            }
-        }
-
-        filters.GetCount = getCount;
-        filters.PageIndex = skip;
-        filters.PageSize = take;
-        if (sortingCol) {
-            filters.SortBy = sortingCol;
-        }
-        if (sortingDir) {
-            filters.SortDirection = sortingDir;
-        }
-        filters.Tenant = SessionLocator.Tenant;
-
-        return this._entityListService.getByFilters("TaskSchedulerHistory", filters);
-    }
 
     getTasksRows(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
 
@@ -365,22 +260,6 @@ export class TaskReportSchedulerComponent implements OnInit {
         this.filterAgrs.addAdditionalFilter("Type", this.SchedulerType, null, null, "Equals", true, false, false, "String");
 
         this.MenuHeaderchangeeventTasks.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
-    }
-
-    private LoadTaskHistories() {
-        this.IsHistoryGridVsisible = true;
-        this.BuildTasksHistoryColumns();
-
-        this.filterAgrs = new ApiQueryFilters();
-        if (!this.SelectedRow) {
-            return;
-        }
-
-        if (!AppTool.IsNullOrEmpty(this.SelectedRow.Id)) {
-            this.filterAgrs.addAdditionalFilter("TaskId", this.SelectedRow.Id, null, null, "Contains", true, false, false, "String");
-        }
-
-        this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
     }
 
     private filterTypeCode: string = "AC";
