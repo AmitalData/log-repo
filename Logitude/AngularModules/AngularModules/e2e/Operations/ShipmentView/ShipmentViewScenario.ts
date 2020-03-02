@@ -27,7 +27,7 @@ public CreatNewView(){
 
 }
 
-/*public EditNewView(){
+public EditNewView(){
     this.ShipmentView.EditNewView();
 
 
@@ -38,6 +38,6 @@ public DeleteNewView(){
     this.ShipmentView.DeleteNewView();
 
 
-}*/
+}
 
 }
