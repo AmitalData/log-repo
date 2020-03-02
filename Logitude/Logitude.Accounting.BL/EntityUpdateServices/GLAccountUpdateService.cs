@@ -890,7 +890,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             }
 
             var gLAccountInterestPeriodUpdateService = new GLAccountInterestPeriodUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
-            gLAccountInterestPeriodUpdateService.UpdateMulti(entityPM.GLAccountInterestPeriods, entityPM.DeletedGLAccountInterestPeriods, entityPM, true);
+            InterestPeriodUpdate(entityPM.GLAccountInterestPeriods, entityPM.DeletedGLAccountInterestPeriods, Tenant);
 
             if (entityPM.ChangeSetOp == ChangeSetOperation.Update && entityPM.GLAccountWithholdingTaxes.Count > 0)
             {
@@ -2115,6 +2115,21 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 ChangeSetOp = ChangeSetOperation.Insert
 
             }, false);
+        }
+
+        private void InterestPeriodUpdate(List<GLAccountInterestPeriodPM> GLAccountInterestPeriods, List<GLAccountInterestPeriodPM> DeletedGLAccountInterestPeriods, int Tenant)
+        {
+            var myGLAccountInterestPeriodUpdateService = new GLAccountInterestPeriodUpdateService(this.MainContext, new Dictionary<string, IContext>(), Tenant);
+            foreach (GLAccountInterestPeriodPM DeletedgLAccountInterestPeriodPM in DeletedGLAccountInterestPeriods)
+            {
+                myGLAccountInterestPeriodUpdateService.Update(DeletedgLAccountInterestPeriodPM, false);
+            }
+
+            foreach (GLAccountInterestPeriodPM gLAccountInterestPeriodPM in GLAccountInterestPeriods)
+            {
+                myGLAccountInterestPeriodUpdateService.Update(gLAccountInterestPeriodPM, false);
+            }
+
         }
 
         private static string GetLoggedContactId(GLAccountPM entityPM)
