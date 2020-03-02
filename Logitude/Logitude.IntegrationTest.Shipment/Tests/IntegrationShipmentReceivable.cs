@@ -1,6 +1,7 @@
 ﻿using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.IntegrationTest.Core.Login;
 using Simplog.Data.Helpers;
+using Simplog.Server.Infrastructure;
 using System.Collections.Generic;
 
 namespace Logitude.IntegrationTest.Shipment.Tests
@@ -32,6 +33,7 @@ namespace Logitude.IntegrationTest.Shipment.Tests
             ShipmentReceivable.Rate = 1;
             ShipmentReceivable.Quantity = 3;
             ShipmentReceivable.UnitPrice = 4;
+            ShipmentReceivable.ChangeSetOp = ChangeSetOperation.Insert;
             ShipmentReceivable.TotalAmount = ShipmentReceivable.Quantity * ShipmentReceivable.UnitPrice;
             ShipmentReceivable.TotalAmountLocal = ShipmentReceivable.TotalAmount * ShipmentReceivable.Rate;
             ShipmentReceivable.AmountInProfitCurrency = ShipmentReceivable.TotalAmountLocal / ShipmentReceivable.ProfitCurrencyExchangeRate;

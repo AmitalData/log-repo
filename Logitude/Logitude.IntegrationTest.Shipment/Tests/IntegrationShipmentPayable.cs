@@ -1,4 +1,5 @@
 ﻿using Logitude.BL.ShipmentsModel.EntityPMs;
+using Simplog.Server.Infrastructure;
 using System.Collections.Generic;
 
 namespace Logitude.IntegrationTest.Shipment.Tests
@@ -31,6 +32,7 @@ namespace Logitude.IntegrationTest.Shipment.Tests
             ShipmentPayable.Rate = 1;
             ShipmentPayable.Quantity = 5;
             ShipmentPayable.UnitPrice = 2;
+            ShipmentPayable.ChangeSetOp = ChangeSetOperation.Insert;
             ShipmentPayable.OpenAmount = ShipmentPayable.Quantity * ShipmentPayable.UnitPrice;
             ShipmentPayable.OpenAmountInLocalCurrency = ShipmentPayable.OpenAmount * ShipmentPayable.Rate;
             ShipmentPayable.OpenAmountInProfitCurrency = ShipmentPayable.OpenAmountInLocalCurrency / ShipmentPayable.ProfitCurrencyExchangeRate;

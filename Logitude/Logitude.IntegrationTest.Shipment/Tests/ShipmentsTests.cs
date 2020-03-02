@@ -26,7 +26,7 @@ namespace Logitude.IntegrationTest.Shipment
             ShipmentPM shipmentPM = RestClientService.ParseResponse<ShipmentPM>(response);
             ShipmentVariables.ShipmentId = shipmentPM.Id;
             await GetShipment(ShipmentVariables.ShipmentId);
-            await PutShipment(ShipmentVariables.ShipmentId, shipmentPM);
+            await PutShipment();
             
         }
 
@@ -38,10 +38,10 @@ namespace Logitude.IntegrationTest.Shipment
             Assert.IsTrue(response.StatusCode.ToString()=="OK");
             return shipment;
         }
-
-        public async Task PutShipment(string id, ShipmentPM shipmentPM)
+        
+        public async Task PutShipment()
         {
-            entityPM = UpdateShipmentAirExport(id, shipmentPM);
+            UpdateShipmentAirExport();
             HttpResponseMessage response = await RestClientService.PutAsync(entityPM, "shipment");
             ShipmentPM shipment = RestClientService.ParseResponse<ShipmentPM>(response);
             await GetShipment(ShipmentVariables.ShipmentId);
@@ -112,19 +112,19 @@ namespace Logitude.IntegrationTest.Shipment
             return shipmentPM;
         }
 
-        private ShipmentPM UpdateShipmentAirExport(string id, ShipmentPM shipmentPM)
+        private void UpdateShipmentAirExport()
         {
            
           // CreateShipmentAirExport();
-           shipmentPM.Id = id;
-           shipmentPM.ConcurrencyGUID= ShipmentVariables.ConcurrencyGUID;
-           shipmentPM.NewConcurrencyGUID = ShipmentVariables.ConcurrencyGUID;
-           shipmentPM.ShipmentPackages = IntegrationShipmentPackages.ShipmentPackages();
-           shipmentPM.ShipmentReceivables = IntegrationShipmentReceivable.ShipmentReceivables();
-           shipmentPM.ShipmentPayables = IntegrationShipmentPayable.ShipmentPayables();
-           shipmentPM.ShipmentPickUps = IntegrationShipmentPickUps.ShipmentPickUps();
-           shipmentPM.ShipmentDeliveries = IntegrationShipmentDeliveries.shipmentDelivey();
-           return shipmentPM;
+           entityPM.Id = ShipmentVariables.ShipmentId;
+           entityPM.ConcurrencyGUID= ShipmentVariables.ConcurrencyGUID;
+           entityPM.NewConcurrencyGUID = ShipmentVariables.ConcurrencyGUID;
+           entityPM.ShipmentPackages = IntegrationShipmentPackages.ShipmentPackages();
+           entityPM.ShipmentReceivables = IntegrationShipmentReceivable.ShipmentReceivables();
+           entityPM.ShipmentPayables = IntegrationShipmentPayable.ShipmentPayables();
+           entityPM.ShipmentPickUps = IntegrationShipmentPickUps.ShipmentPickUps();
+           entityPM.ShipmentDeliveries = IntegrationShipmentDeliveries.shipmentDelivey();
+  
         }
 
 

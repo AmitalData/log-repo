@@ -1,4 +1,5 @@
 ﻿using Logitude.BL.ShipmentsModel.EntityPMs;
+using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +27,7 @@ namespace Logitude.IntegrationTest.Shipment.Tests
             shipmentPackageItem.Width = width;
             shipmentPackageItem.Height = height;
             shipmentPackageItem.Weight = weight;
+            shipmentPackageItem.ChangeSetOp = ChangeSetOperation.Insert;
             //shipmentPackageItem.VolumetricWeight = 0.104;
             return shipmentPackageItem;
         }
