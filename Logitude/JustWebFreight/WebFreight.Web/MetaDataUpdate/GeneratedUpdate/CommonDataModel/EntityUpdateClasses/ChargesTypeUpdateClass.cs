@@ -3314,6 +3314,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "ApplyRegionalTax",
+					  						OldFieldName =  "ApplyRegionalTax",
 					  						ObjectTableName =  "ChargesType",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -3334,6 +3335,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "ApplyRegionalTax",
 					  						ListPropertyPath =  "ApplyRegionalTax",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -3351,9 +3353,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ApplyRegionalTax",
-					  						DefaultText =  "Apply Regoinal Tax",
+					  						DefaultText =  "Apply Regional Tax",
 					  						ListFieldLable =  "ApplyRegionalTaxListLable",
-					  						ListLableDefaultText =  "Apply Regoinal Tax",
+					  						ListLableDefaultText =  "Apply Regional Tax",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
