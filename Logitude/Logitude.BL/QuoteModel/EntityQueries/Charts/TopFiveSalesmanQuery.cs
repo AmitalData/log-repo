@@ -25,7 +25,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries.Charts
             this.tenant = tenant;
             this.chartData = new ChartData();
 
-            iQueryable = (from d in iQueryableQuotes
+            iQueryable = (from d in iQueryableQuotes 
                                where d.QuoteTypeCode == "A"
                                && d.EstimateProfit != null
                                && d.EstimateProfit != 0
@@ -87,7 +87,15 @@ namespace Logitude.BL.QuoteModel.EntityQueries.Charts
             if (chartData.Keys.Count > 0)
             {
                 UserQuery userQuery = new UserQuery();
-                chartData.Users = userQuery.GetUsersListFromIdList(chartData.Keys, tenant);                
+                chartData.Users = userQuery.GetUsersListFromIdList(chartData.Keys, tenant);
+
+                if (chartData.Users.Count == 0)
+                {
+                    foreach (string item in chartData.Keys)
+                    {
+                        chartData.Users.Add(item, item);
+                    }
+                }
             }
         }
         private void BuildChartData()
