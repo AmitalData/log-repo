@@ -24,7 +24,6 @@ export class ChargesTypeGeneralTabComponent extends BaseComponent implements OnI
     public EntityPM: ChargesTypePM;
     public DisplaySATSettings: boolean = false;
     public DisplayRegoinalTax: boolean = false;
-    private CurrentSession = SessionLocator.SelectedSession;
 
     constructor(public entityArgs: EntityArgs) {
         super();
@@ -32,26 +31,18 @@ export class ChargesTypeGeneralTabComponent extends BaseComponent implements OnI
         if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33") {
             this.DisplaySATSettings = true;
         }
+        if (SessionLocator.AccountingSettingPM.AllowRegionalTaxManagement) {
+            this.DisplayRegoinalTax = true;
+        }
     }
 
     ngOnInit() {
         if (this.EntityPM != null) {
             this.SetUIProperties();
             this.CheckWarnings();
-            this.GetAccountingSettings();
         }
     }
-
-    GetAccountingSettings() {
-        var accountingSettingPMService = new AccountingSettingPMService();
-        accountingSettingPMService.get(SessionLocator.AccountingSettingPM.Id).subscribe((myResult: ServiceResponse) => {
-            this.CurrentSession.StopBusyIndicator();
-            if (!myResult.HasError) {
-                this.DisplayRegoinalTax = myResult.Result.AllowRegionalTaxManagement;
-            }
-        });
-    }
-
+    
     public CustomsFieldsIsVisible: boolean = false;
     private SetUIProperties() {
         var fieldsEnabled = true;  
