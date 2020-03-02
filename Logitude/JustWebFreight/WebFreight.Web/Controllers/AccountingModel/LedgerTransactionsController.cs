@@ -465,7 +465,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
 
         [HttpGet]
-        public HttpResponseMessage GetTransactionsForARPayment(string arpaymentId, string billToGLAccountId)
+        public HttpResponseMessage GetTransactionsForARPayment(string arpaymentId, string billToGLAccountId, string paymentCurrencyId)
         {
             try
             {
@@ -481,14 +481,14 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
                 var accountingContext = AccountingContext.GetContext(tenant);
                 LedgerTransactionQueryService query = new LedgerTransactionQueryService(accountingContext);
-
+                string accountId =  GetGLAccountIdForReconciledTransactions(billToGLAccountId, tenant, paymentCurrencyId);
                 // get reconciled transactions
                 List<LedgerTransactionPM> reconciledTransactions = new List<LedgerTransactionPM>();
-                if (arpaymentId != null) reconciledTransactions = query.GetReconciledInvoicesTransactionsForARPayment(arpaymentId,billToGLAccountId, tenant);
+                if (arpaymentId != null) reconciledTransactions = query.GetReconciledInvoicesTransactionsForARPayment(arpaymentId, accountId, tenant);
 
                 // get full opened & partailly reconciled transactions
                 List<LedgerTransactionPM> openedTransactions 
-                    = query.GetOpenInvoicesTransactionsForAccount(billToGLAccountId, arpaymentId, tenant);
+                    = query.GetOpenInvoicesTransactionsForAccount(accountId, arpaymentId, tenant);
 
                 // concat two list
                 IEnumerable<LedgerTransactionPM> finalTransactionsList
@@ -512,6 +512,26 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
 
+        }
+        private string GetGLAccountIdForReconciledTransactions(string glAccountId, int tenant, string paymentCurrencyId)
+        {
+            GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(tenant);
+            GLAccountPM gLAccount = gLAccountQueryService.GetSinglePM(glAccountId, tenant);
+            if (gLAccount != null)
+            {
+                if (gLAccount.IsMultiCurrency.Value)
+                {
+                    GLAccountCurrencyQueryService gLAccountCurrencyQuery = new GLAccountCurrencyQueryService(tenant);
+                    GLAccountCurrencyPM gLAccountCurrency = gLAccountCurrencyQuery.GetEntityByCurrencyAndGLAccountId(gLAccount.Id, paymentCurrencyId, tenant);
+                    if (gLAccountCurrency != null)
+                    {
+                        return gLAccountCurrency.GLAccountId;
+                    }
+                    else return gLAccount.Id;    
+                }
+
+            }
+            return null;
         }
 
 

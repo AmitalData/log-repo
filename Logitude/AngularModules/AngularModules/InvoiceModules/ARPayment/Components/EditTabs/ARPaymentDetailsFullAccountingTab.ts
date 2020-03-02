@@ -42,8 +42,9 @@ import { ObservableCollection } from '../../../../Infrastructure/Utilities/Obser
 import { AccountingPaymentMethodList } from '../../../../Invoice/EntityLists/AccountingPaymentMethodList';
 import { AccountingPaymentMethodListService } from '../../../../Invoice/Services/StandardLists/AccountingPaymentMethodListService';
 import { GLAccountPMService } from '../../../../Accounting/Services/StandardPMs/GLAccountPMService';
-import { GLAccountPM } from '../../../../Accounting/EntityPMs/GLAccountPM';
+import { GLAccountList } from '../../../../Accounting/EntityLists/GLAccountList';
 import { LineModel } from '../../../../Accounting/Components/Others/ReconcileComponent';
+import { GLAccountPM } from '../../../../Accounting/EntityPMs/GLAccountPM';
 
 @Component({
     moduleId: module.id,
@@ -75,6 +76,9 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
     public ARPaymentChequeStatusColor = "black";
     BankFieldsVisibile: boolean;
     isMultipleCheques: boolean = false;
+    public OpenAmountCurrency: string = TextCodeTranslator.Translate("LedgerTransaction.F.OpenAmount");
+    public InvoiceAmountCurrency: string = TextCodeTranslator.Translate("Accounting.O.ARP.InvoiceAmount") + " (" + SessionLocator.TenantPM.CurrencyCode + ")";
+    public PaymenyAmount: number;
     get TextStore(){
         return TextStore;
     }
@@ -84,6 +88,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
     _JournalExtendedPMService: JournalExtendedPMService = new JournalExtendedPMService();
     private _glaService: GLAccountListService = new GLAccountListService();
     private CurrentSession = SessionLocator.SelectedSession;
+    public PaymentCurrencySign: string;
     constructor(private entityArgs: EntityArgs, private _entityResourceService: EntityResourceService) {
         super();
         console.log("[FULL ACCOUNING ARPayment]");
@@ -96,12 +101,16 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 
 
         this.EntityPM = entityArgs.EntityPM;
+        this.SetAmountCurrencyCode();
+         
+        this.SetPaymentAmount();
         if (this.EntityPM.ARPaymentChequeReplicas.length > 1) {
             this.isMultipleCheques = true;
         }
         this.isFullAccounting = SessionLocator.TenantPM.AccountingActivated;
         this.originalPaymentOpenAmount = this.EntityPM.OpenAmount;
         this.paymentAmountTotal = this.EntityPM.AmountInPaymentCurrency;
+        this.PaymentCurrencySign = this.EntityPM.PaymentCurrencySign;
         this.TransactionsList = new ObservableCollection([]);
 
         //#region old
@@ -146,7 +155,21 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         // this.UIProperties.SetEnabled("AmountToReconcile","LedgerTransaction",!this.IsGridReadOnly);
 
     }
+    SetAmountCurrencyCode() {
+        if (this.EntityPM)
+            if (this.EntityPM.GLAccountRecoMethodCode == "0") {
+                this.OpenAmountCurrency = this.OpenAmountCurrency+" (" + SessionLocator.TenantPM.CurrencyCode + ")";
+                this.ReconcileAmountCurrency =  " (" + SessionLocator.TenantPM.CurrencyCode + ")";
 
+     }
+            else {
+                this.OpenAmountCurrency = this.OpenAmountCurrency + " (" + this.EntityPM.GLAccountCurrencyCode + ")";
+                this.ReconcileAmountCurrency =" (" + this.EntityPM.GLAccountCurrencyCode + ")";
+
+   }
+    }
+    ReconcileAmountCurrency: string;
+  
     ngOnInit() {
         this.LoadPaymentMethods();
 
@@ -238,7 +261,15 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 
 
     _loading: boolean = false;
-
+    SetPaymentAmount() {
+        if (this.EntityPM)
+            if (this.EntityPM.GLAccountRecoMethodCode == "0") {
+                this.PaymenyAmount = this.EntityPM.AmountInLocalCurrency;
+            }
+            else {
+                this.PaymenyAmount = this.EntityPM.AmountInPaymentCurrency;
+            }
+    }
     ReloadGLAccount() {
         //1- get glaccount
         this.fetchBillToCard().then(res => {
@@ -248,6 +279,10 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 
                 if (glaccount) {
                     this.EntityPM.GLAccountId = glaccount.Id;
+                    this.EntityPM.GLAccountRecoMethodCode = glaccount.ReconcileMethodCode;
+                    this.EntityPM.GLAccountCurrencyCode = glaccount.CurrencyCode;
+                    this.SetAmountCurrencyCode();
+                    this.SetPaymentAmount();
                     console.log("GLAccount reloaded: " + this.EntityPM.GLAccountId);
                     this.GetData();
                 }
@@ -268,7 +303,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
             // setTimeout(() => {
 
 
-                this._LedgerTransactionExtendedListService.getTransactionsForARPayment(this.EntityPM.Id, this.EntityPM.GLAccountId).subscribe(myResult => {
+            this._LedgerTransactionExtendedListService.getTransactionsForARPayment(this.EntityPM.Id, this.EntityPM.GLAccountId, this.EntityPM.PaymentCurrencyId).subscribe(myResult => {
                     this._loading = false;
 
                     var mm: ServiceResponse = myResult;
@@ -358,7 +393,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         });
     }
 
-
+   AdjustedAmount: number=0;
     CalculateTotals() {
 
         // Reconciliation amount
@@ -372,7 +407,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         });
         this.amount2reconcileTotal = _linesAmount2reco;
         this.paymentReconciledAmountTotal = _linespaymentReconciledAmount;
-
+        this.AdjustedAmount = this.paymentReconciledAmountTotal == 0 ? this.amount2reconcileTotal : this.paymentReconciledAmountTotal + this.amount2reconcileTotal;
         if(this.EntityPM.InvoicesLedgerTransactions.length == 0){
             // this.EntityPM.OpenAmount = this.originalPaymentOpenAmount;
             this.EntityPM.IsDirty = false;
@@ -490,7 +525,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
                     this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
                     this.SetUIProperties();
-                    this.GetData();
+                   // this.GetData();
 
                     this.checkLedgerCreated();
                 }
@@ -999,7 +1034,11 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
                                         var myGLAccountPMService = new GLAccountPMService();
                                         myGLAccountPMService.get(list.GLAccountId).subscribe((myResponse: ServiceResponse) => {
                                             if (!myResponse.HasError) {
-                                                var glaccount: GLAccountPM = myResponse.Result;
+                                               var glaccount: GLAccountPM = myResponse.Result;
+                                                this.EntityPM.GLAccountRecoMethodCode = glaccount.ReconcileMethodCode;
+                                                this.EntityPM.GLAccountCurrencyCode = glaccount.CurrencyCode;
+                                                this.SetAmountCurrencyCode();
+                                                this.SetPaymentAmount();
                                                 if (glaccount != null && !glaccount.IsMultiCurrency) {
                                                     this.PaymentCurrencyId = glaccount.CurrencyId;
                                                 }
@@ -1092,7 +1131,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
             }
 
             this.SetUIProperties_ExchangeRate();
-
+            this.GetData();
             this.ItemsSource.Collection.forEach(item => {
                 item.SetUIProperties();
                 item.InitExchangeRate();
@@ -1872,7 +1911,7 @@ export class TransactionLineModel extends BaseComponent {
     public ObjectTableName = "LedgerTransaction";
     public isRTL: boolean = false;
     isLineValid: boolean = true;
-
+    public InvoiceCurrency: string;
 
     constructor(
         private ledgerTransaction: LedgerTransactionPM,
@@ -1882,7 +1921,7 @@ export class TransactionLineModel extends BaseComponent {
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         this.EntityPM = this.parent.EntityPM;
         this.LedgerTransactionPM = ledgerTransaction;
-
+        this.InvoiceCurrency = this.LedgerTransactionPM.CurrencyCode;
         this.originalOpenAmount = this.OpenAmount;
 
         this.CalculateFields();
@@ -1895,6 +1934,7 @@ export class TransactionLineModel extends BaseComponent {
         this.IconCode = AccountingEntityHelper.getEntityIcon(this.LedgerTransactionPM.SourceTypeCode);
 
         this.OriginalAmount = this.CalculateOriginalAmount();
+        this.OriginalInvoiceAmount = this.SetOriginalInvoiceAmount();
         this.OriginalAmountCurrency = this.CalculatOriginalCurruncy();
         this.Status = this.GetStatus();
 
@@ -1913,8 +1953,13 @@ export class TransactionLineModel extends BaseComponent {
     public set OriginalAmount(v: number) {
         this._OriginalAmount = v;
     }
-
-
+    private originalInvoiceAmount: number;
+    public get OriginalInvoiceAmount(): number {
+        return this.originalInvoiceAmount;
+    }
+    public set OriginalInvoiceAmount(value: number) {
+        this.originalInvoiceAmount = value;
+    }
     private _OriginalAmountCurrency: string;
     public get OriginalAmountCurrency(): string {
         return this._OriginalAmountCurrency;
@@ -2129,29 +2174,45 @@ export class TransactionLineModel extends BaseComponent {
 
     CalculateOriginalAmount() {
         var transaction = this.LedgerTransactionPM;
-
-        if (!AppTool.IsNullOrEmpty(this.parent.EntityPM.GLAccountRecoMethodCode)) {
-
-            if (this.parent.EntityPM.GLAccountRecoMethodCode == "0") { // 0-local currency
-
-                if (transaction['LocalAmountCredit'] == 0) {
-                    return transaction['LocalAmountDebit'];
-                } else {
-                    return -1 * transaction['LocalAmountCredit'];
-                }
-
-            } else if (this.parent.EntityPM.GLAccountRecoMethodCode == "1") { // 1-foreign currency
-
-                if (transaction['ForeignAmountCredit'] == 0) {
-                    return transaction['ForeignAmountDebit'];
-                } else {
-                    return -1 * transaction['ForeignAmountCredit'];
-                }
-
-            }
-
+        if (transaction['LocalAmountCredit'] == 0) {
+            return transaction['LocalAmountDebit'];
+        } else {
+            return -1 * transaction['LocalAmountCredit'];
         }
+        //if (!AppTool.IsNullOrEmpty(this.parent.EntityPM.GLAccountRecoMethodCode)) {
+
+        //    if (this.parent.EntityPM.GLAccountRecoMethodCode == "0") { // 0-local currency
+
+        //        if (transaction['LocalAmountCredit'] == 0) {
+        //            return transaction['LocalAmountDebit'];
+        //        } else {
+        //            return -1 * transaction['LocalAmountCredit'];
+        //        }
+
+        //    } else if (this.parent.EntityPM.GLAccountRecoMethodCode == "1") { // 1-foreign currency
+
+        //        if (transaction['ForeignAmountCredit'] == 0) {
+        //            return transaction['ForeignAmountDebit'];
+        //        } else {
+        //            return -1 * transaction['ForeignAmountCredit'];
+        //        }
+
+        //    }
+
+        //}
     }
+    SetOriginalInvoiceAmount() {
+        var transaction = this.LedgerTransactionPM;
+        if (transaction['ForeignAmountCredit'] == 0) {
+            return transaction['ForeignAmountDebit'];
+        } else {
+            return -1 * transaction['ForeignAmountCredit'];
+        }
+
+
+    }
+
+
     CalculatOriginalCurruncy() {
         //
         // [i] copied from list template
