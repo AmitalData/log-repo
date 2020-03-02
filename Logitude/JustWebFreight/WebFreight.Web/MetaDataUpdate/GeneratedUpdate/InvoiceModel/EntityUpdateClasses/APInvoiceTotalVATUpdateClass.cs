@@ -115,7 +115,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "A/P Invoice Total VAT",
-			      				    Code =  "90e7",
+			      				    Code =  "8dbd",
 			      				    Name =  "APInvoiceTotalVAT",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Invoice",

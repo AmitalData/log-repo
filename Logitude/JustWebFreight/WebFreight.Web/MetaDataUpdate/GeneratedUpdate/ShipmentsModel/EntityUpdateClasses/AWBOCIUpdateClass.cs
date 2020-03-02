@@ -115,7 +115,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "AWB OCI",
-			      				    Code =  "a28e",
+			      				    Code =  "42bb",
 			      				    Name =  "AWBOCI",
 			      				    GenerateDomainService =  false,
 			      				    NoTS =  false,

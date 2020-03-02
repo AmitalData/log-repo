@@ -47,6 +47,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         VatTypeId = resultItem.VatTypeId,
                         FromDate = resultItem.FromDate,
                         Percentage = resultItem.Percentage,
+                      
                        
                     });
                 }
@@ -83,6 +84,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                 ExternalTAXItemId = a.ExternalTAXItemId,
                                 IsMultiPercentage = a.IsMultiPercentage,
                                 RecognizedPercentage = a.RecognizedPercentage,
+                                IsRegionalTax = a.IsRegionalTax,
                            }).FirstOrDefault();
 
             if (entityPM != null)
@@ -125,6 +127,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                ExternalTAXItemId = a.ExternalTAXItemId,
                                IsMultiPercentage = a.IsMultiPercentage,
                                RecognizedPercentage= a.RecognizedPercentage,
+                               IsRegionalTax= a.IsRegionalTax,
 
                            }).FirstOrDefault();
 
@@ -168,7 +171,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                  ExternalTAXItemId = a.ExternalTAXItemId,
                                                  IsMultiPercentage = a.IsMultiPercentage,
                                                  RecognizedPercentage= a.RecognizedPercentage,
-
+                                                 IsRegionalTax = a.IsRegionalTax,
                                              };
             return vatTypes;
         }
@@ -193,7 +196,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                     PayablesExternalId = f.PayablesExternalId,
                                                     ExternalTAXItemId = f.ExternalTAXItemId,
                                                     IsMultiPercentage = f.IsMultiPercentage,
-                                                    RecognizedPercentage= f.RecognizedPercentage
+                                                    RecognizedPercentage= f.RecognizedPercentage,
+                                                    IsRegionalTax = f.IsRegionalTax,
                                                 });
 
             //IQueryable<VatTypeList> myResult = (from f in iQueryable

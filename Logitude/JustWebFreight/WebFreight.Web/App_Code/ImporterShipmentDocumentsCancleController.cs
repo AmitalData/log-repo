@@ -119,7 +119,7 @@ namespace WebFreight.Web.App_Code
                             DocumentsFilingService documentsFilingService = new DocumentsFilingService(objectContext, DocumentFilingPM.Tenant);
                             documentsFilingService.Update(DocumentFilingPM, null, User.Id);
                             msg = "Document deleted successfully " + DateTime.Now;
-                            APILogsUtility.UpdateAPILogStatus(LogPM.Id, LogPM.Tenant, "D", 1, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(DocumentFilingPM), null, null, "");
+                            APILogsUtility.UpdateAPILogStatus(LogPM.Id, LogPM.Tenant, "D", 1, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(DocumentFilingPM), DocumentFilingPM.Id, null, "");
 
                         }
                         return Request.CreateResponse(HttpStatusCode.OK, "Ok");
