@@ -2099,6 +2099,10 @@
     <Compile Include="Migrations\202003011349456_AddLogBoxTenantSettingsToContext_Maheera.Designer.cs">
       <DependentUpon>202003011349456_AddLogBoxTenantSettingsToContext_Maheera.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202002290301444_AddIsRegionalTaxToVatTypeTable_Maheera.cs" />
+    <Compile Include="Migrations\202002290301444_AddIsRegionalTaxToVatTypeTable_Maheera.Designer.cs">
+      <DependentUpon>202002290301444_AddIsRegionalTaxToVatTypeTable_Maheera.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\202002041333119_InterestTransactionMigration.cs" />
     <Compile Include="Migrations\202002041333119_InterestTransactionMigration.Designer.cs">
@@ -3789,6 +3793,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202003011349456_AddLogBoxTenantSettingsToContext_Maheera.resx">
       <DependentUpon>202003011349456_AddLogBoxTenantSettingsToContext_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002290301444_AddIsRegionalTaxToVatTypeTable_Maheera.resx">
+      <DependentUpon>202002290301444_AddIsRegionalTaxToVatTypeTable_Maheera.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

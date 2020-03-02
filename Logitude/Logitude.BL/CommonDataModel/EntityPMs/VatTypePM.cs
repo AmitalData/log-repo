@@ -101,5 +101,8 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
             set { vatTypeGroups = value; }
         }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public bool IsRegionalTax { get; set; }
     }
 }

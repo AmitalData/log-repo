@@ -25,6 +25,8 @@ export class VatTypeGeneralTabComponent extends BaseComponent implements OnDestr
     public ItemsSource: MultiPercentageItem[] = [];
     private CurrentSession = SessionLocator.SelectedSession;
     IsAccountingActivated: boolean = false;
+    public IsMultiPercentageEnabled = true;
+
     constructor(public args: EntityArgs) {
         super();
 
@@ -109,6 +111,8 @@ export class VatTypeGeneralTabComponent extends BaseComponent implements OnDestr
             else {
                 isPercentagesAreaVisible = false;
             }
+
+            this.UIProperties.SetEnabled("IsRegionalTax", this.ObjectTableName, false);
         }
 
         this.IsPercentagesAreaVisible = isPercentagesAreaVisible;
@@ -223,6 +227,26 @@ export class VatTypeGeneralTabComponent extends BaseComponent implements OnDestr
         if (this.EntityPM.IsMultiPercentage != value) {
             this.EntityPM.IsMultiPercentage = value;
             this.SetUIProperties();
+        }
+    }
+
+    get IsRegionalTax() { return this.EntityPM.IsRegionalTax; }
+    set IsRegionalTax(value: boolean) {
+        if (this.EntityPM.IsRegionalTax != value) {
+            this.EntityPM.IsRegionalTax = value;
+            this.UpdateMultiPercentage();
+        }
+    }
+
+    UpdateMultiPercentage() {
+        if (this.IsRegionalTax) {
+            this.IsMultiPercentage = false;
+            this.IsMultiPercentageEnabled = false;
+            this.UIProperties.SetEnabled("IsMultiPercentage", this.ObjectTableName, false);
+        }
+        else {
+            this.IsMultiPercentageEnabled = true;
+            this.UIProperties.SetEnabled("IsMultiPercentage", this.ObjectTableName, true);
         }
     }
 }
