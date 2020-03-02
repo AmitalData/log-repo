@@ -74,7 +74,7 @@
                     </tr>
 
                     <!-- IsRegionalTax -->
-                    <tr class="FormFieldRow">
+                    <tr class="FormFieldRow" *ngIf="IsRegionalTaxActivated">
                         <td>
                             <LogLabel [ObjectFieldName]="'IsRegionalTax'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                         </td>
