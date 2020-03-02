@@ -75,10 +75,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 throw new ApplicationException(TextCodesTranslator.TranslateText("BankDeposit.O.DepositAmountmustbelessthanCashbook", 0, showLocal));
             }
         }
-        private static CashBookPM GetCashbookById(int tenant, string x)
+        private static CashBookPM GetCashbookById(int tenant, string id)
         {
             CashBookQueryService cashBookQueryService = new CashBookQueryService(tenant);
-            CashBookPM cashBook = cashBookQueryService.GetSingle(x, true, false);
+            CashBookPM cashBook = cashBookQueryService.GetSingle(id, false, false);
             return cashBook;
         }
         private static void CopyDepositIdToLines(BankDepositPM entityPM)

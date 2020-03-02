@@ -44,10 +44,12 @@ namespace Logitude.Accounting.BL.CoreBL.BankDeposit
         public JournalPM CreateAndSubmit()
         {
             journal = InitJournal();
-        
-            CreateCreditLinesForCashbook();
 
-            CreateDebitLinesForBank();
+            List<ARPaymentChequePM> cheques = GetDepositCheques();
+
+            CreateCreditLinesForCashbook(cheques);
+
+            CreateDebitLinesForBank(cheques);
 
             SubmitJournal();
 
@@ -93,7 +95,7 @@ namespace Logitude.Accounting.BL.CoreBL.BankDeposit
         private CashBookPM GetCashbookById(string id)
         {
             CashBookQueryService cashBookQueryService = new CashBookQueryService(Tenant);
-            CashBookPM cashBook = cashBookQueryService.GetSingle(id, true, false);
+            CashBookPM cashBook = cashBookQueryService.GetSingle(id, false, false);
             return cashBook;
         }
 
@@ -120,9 +122,8 @@ namespace Logitude.Accounting.BL.CoreBL.BankDeposit
 
             return newJournal;
         }
-        private void CreateCreditLinesForCashbook()
+        private void CreateCreditLinesForCashbook(List<ARPaymentChequePM> cheques)
         {
-            List<ARPaymentChequePM> cheques = GetDepositCheques();
 
             if (DepositPM.IsCashDeposit)
             {
@@ -132,9 +133,18 @@ namespace Logitude.Accounting.BL.CoreBL.BankDeposit
             else
             {
                 int lineNumber = 0;
+
+                List<string> chequesIds = DepositPM.BankDepositLines.Select(d => d.ARPaymentChequeId).ToList();
+
+                List<CashBookLinePM> cashBookLinesPMs = GetCashbookLinesByChequesIds(chequesIds);
+
+                List<ARPaymentChequePM> chequesToUpdate = new List<ARPaymentChequePM>(); 
+
                 foreach (BankDepositLinePM depositLine in DepositPM.BankDepositLines)
                 {
-                    DepositCashbookLine(depositLine);
+                    CashBookLinePM cashBookLinePM = cashBookLinesPMs.FirstOrDefault(d=>d.ARPChequeId == depositLine.ARPaymentChequeId);
+
+                    DepositCashbookLine(cashBookLinePM);
 
                     ARPaymentChequePM cheque = cheques.FirstOrDefault(d => d.Id == depositLine.ARPaymentChequeId);
 
@@ -142,17 +152,22 @@ namespace Logitude.Accounting.BL.CoreBL.BankDeposit
                     journal.JournalLines.Add(newCreditJournalLine);
 
                     UpdateChequeStatus(cheque);
-                    SubmitCheque(cheque);
+
+                    chequesToUpdate.Add(cheque);
+                    //SubmitCheque(cheque);
 
                     UpdateBankDepositLineStatus(depositLine, cheque);
                 }
+
+                SubmitCheques(chequesToUpdate);
+
             }
         }
 
-        private void CreateDebitLinesForBank()
+        private void CreateDebitLinesForBank(List<ARPaymentChequePM> cheques)
         {
             int lineNumber = journal.JournalLines.Max(d => d.Line);
-            List<ARPaymentChequePM> cheques = GetDepositCheques();
+
 
             if (DepositPM.IsCashDeposit)
             {
@@ -161,6 +176,8 @@ namespace Logitude.Accounting.BL.CoreBL.BankDeposit
             }
             else
             {
+                List<ARPaymentChequePM> chequesToUpdate = new List<ARPaymentChequePM>();
+
                 foreach (BankDepositLinePM depositLine in DepositPM.BankDepositLines)
                 {
                     ARPaymentChequePM cheque = cheques.FirstOrDefault(d => d.Id == depositLine.ARPaymentChequeId);
@@ -169,8 +186,12 @@ namespace Logitude.Accounting.BL.CoreBL.BankDeposit
                     journal.JournalLines.Add(chequeDebitLine);
 
                     UpdateChequeStatus(cheque);
-                    SubmitCheque(cheque);
+
+                    chequesToUpdate.Add(cheque);
+                    //SubmitCheque(cheque);
                 }
+                SubmitCheques(chequesToUpdate);
+
             }
         }
 
@@ -192,7 +213,13 @@ namespace Logitude.Accounting.BL.CoreBL.BankDeposit
         {
             IAccountingContext MyContext = AccountingContext.GetContext(Tenant);
             var myChequeUpdateService = new ARPaymentChequeUpdateService(MyContext, new Dictionary<string, IContext>(), Tenant);
-            myChequeUpdateService.Update(cheque, true);
+            myChequeUpdateService.Update(cheque, false);
+        }
+        private void SubmitCheques(List<ARPaymentChequePM> cheques)
+        {
+            IAccountingContext MyContext = AccountingContext.GetContext(Tenant);
+            var myChequeUpdateService = new ARPaymentChequeUpdateService(MyContext, new Dictionary<string, IContext>(), Tenant);
+            myChequeUpdateService.UpdateMulti(cheques, new List<ARPaymentChequePM>(), new ARPaymentChequePM() , false);
         }
 
         private ARPaymentChequePM GetARPaymentChequeById(string id)
@@ -207,17 +234,43 @@ namespace Logitude.Accounting.BL.CoreBL.BankDeposit
             List<ARPaymentChequePM> cheque = arpChequeQueryService.GetChequesByIds(ids, Tenant);
             return cheque;
         }
-        private void DepositCashbookLine(BankDepositLinePM item)
+        private void DepositCashbookLine(CashBookLinePM cashBookLinePM)
         {
-            CashBookLinePM cashBookLine = CashbookPM.CashBookLines.Where(d => d.ARPChequeId == item.ARPaymentChequeId).FirstOrDefault();
-            if (CashbookPM != null)
-            {
-                if (cashBookLine != null)
-                {
-                    cashBookLine.IsDeposited = true;
-                    cashBookLine.ChangeSetOp = ChangeSetOperation.Update;
-                }
-            }
+            cashBookLinePM.IsDeposited = true;
+
+            SubmitCashbookLine(cashBookLinePM);
+
+            //CashBookLinePM cashBookLine = CashbookPM.CashBookLines.Where(d => d.ARPChequeId == depositLine.ARPaymentChequeId).FirstOrDefault();
+            //if (CashbookPM != null)
+            //{
+            //    if (cashBookLine != null)
+            //    {
+            //        cashBookLine.IsDeposited = true;
+            //        cashBookLine.ChangeSetOp = ChangeSetOperation.Update;
+            //    }
+            //}
+
+        }
+
+        private void SubmitCashbookLine(CashBookLinePM cashBookLinePM)
+        {
+            IAccountingContext MyContext = AccountingContext.GetContext(Tenant);
+            CashBookLineUpdateService cashBookLineUpdateService = new CashBookLineUpdateService(MyContext, new Dictionary<string, IContext>(), Tenant);
+            cashBookLinePM.ChangeSetOp = ChangeSetOperation.Update;
+            cashBookLineUpdateService.Update(cashBookLinePM, true);
+        }
+
+        private CashBookLinePM GetCashbookLineConnectedToDepositLine(BankDepositLinePM depositLine)
+        {
+            CashBookLineQueryService cashBookLineQueryService = new CashBookLineQueryService(Tenant);
+            CashBookLinePM cashBookLinePM = cashBookLineQueryService.GetSingle(CashbookPM.Id, depositLine.ARPaymentChequeId, false, false);
+            return cashBookLinePM;
+        }
+        private List<CashBookLinePM> GetCashbookLinesByChequesIds(List<string> chequeIds)
+        {
+            CashBookLineQueryService cashBookLineQueryService = new CashBookLineQueryService(Tenant);
+            List<CashBookLinePM> cashBookLines = cashBookLineQueryService.GetLinesByChequesIds(chequeIds, CashbookPM.Id, Tenant);
+            return cashBookLines;
         }
 
         private JournalLinePM CreateLineForCheque(ref int LineNumber,BankDepositLinePM depositLine, ARPaymentChequePM cheque)
