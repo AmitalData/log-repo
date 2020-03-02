@@ -88,6 +88,6 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         [ForeignKey("PayablesDefaultCurrencyId")]
         public virtual Currency PayablesDefaultCurrency { get; set; }
         public string PayablesDefaultCurrencyId { get; set; }
-
+        public bool ApplyRegionalTax { get; set; }
     }
 }

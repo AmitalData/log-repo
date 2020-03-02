@@ -585,7 +585,7 @@ export class MaintenanceComponent {
             var item = new MenusTablePM();
             item.CategoryTypeCode = "OTH";
             item.Icon = "List"
-            item.Code = "MTPS";
+            //item.Code = "MTPS";
             item.ObjectTableName = "Price Steps";
             item.TextCode = "General.MC.Others.PriceSteps";
             item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "PriceStep")[0].Id

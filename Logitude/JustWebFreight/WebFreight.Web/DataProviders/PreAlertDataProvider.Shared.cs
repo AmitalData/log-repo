@@ -52,6 +52,7 @@ namespace WebFreight.Web.DataProviders
         public string GeneralDescriptionOfGoods { get; set; }
         public string Transshipment1Vessel { get; set; }
         public string Transshipment1CarrierNumber { get; set; }
+        public string Transshipment1CarrierName { get; set; }
         public string Transshipment1ToPortName { get; set; }
         public string Transshipment1ToPortCode { get; set; }
         public string Transshipment1ETA { get; set; }
@@ -234,6 +235,7 @@ namespace WebFreight.Web.DataProviders
         public string ProjectNumber { get; set; }
         public string BookingConfirmationNumber { get; set; }
         public string Salesman { get; set; }
+        public string SpecialServicesType { get; set; }
     }
 
     public class Packages
@@ -251,6 +253,7 @@ namespace WebFreight.Web.DataProviders
         public string Reference2 { get; set; }
         public string Reference3 { get; set; }
         public string CommodityNumber { get; set; }
+      
     }
 
     public class PreAlertManifestDetails

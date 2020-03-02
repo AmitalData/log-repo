@@ -211,7 +211,12 @@ export class VatTypePM {
         }
     }
 	    //public VatTypeGroups: Array<VATTypesGroupPMPM>= [];
- 
+     private isRegionalTax: boolean;
+    public get IsRegionalTax() { return this.isRegionalTax; }
+    public set IsRegionalTax(newValue: boolean) { if (this.isRegionalTax != newValue) { this.isRegionalTax = newValue; this.MarkAsDirty("IsRegionalTax"); } }
+       
+	 
+
     public OldEntityPM: VatTypePM;
 		
     public IsDirty: boolean;

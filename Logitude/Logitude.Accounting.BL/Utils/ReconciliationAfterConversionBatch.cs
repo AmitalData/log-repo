@@ -55,8 +55,8 @@ namespace Logitude.Accounting.BL.Utils
             BatchTaskExecutionPM batchTaskExecutionPM = reconciliationAfterConversionArg.BatchTask;
             BatchTaskExecutionUpdateService batchTaskExecutionUpdateService = null;
             if (batchTaskExecutionPM != null)
-            {
-                batchTaskExecutionUpdateService = GetBatchTaskUpdateServiceInstance(tenant);
+            { 
+                batchTaskExecutionUpdateService = GetBatchTaskUpdateServiceInstance(tenant); 
             }
 
             long fromExt_long = Convert.ToInt64(fromExtNum);
@@ -136,12 +136,12 @@ namespace Logitude.Accounting.BL.Utils
             {
                 batchTaskExecutionPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
                 if (batchTaskExecutionUpdateService != null)
-                {
-                    batchTaskExecutionUpdateService.Update(batchTaskExecutionPM, true);
+                { 
+                    batchTaskExecutionUpdateService.Update(batchTaskExecutionPM, true); 
                 }
             }
-            else
-            {
+            else 
+            { 
                 if (!String.IsNullOrEmpty(returnedMessage))
                 {
                     throw new Exception(returnedMessage);
@@ -210,11 +210,11 @@ namespace Logitude.Accounting.BL.Utils
                             _current = recoGroup._Ref.ToString();
                             ReconcileOneRef(recoGroup._LineGroup, gLAccountId, ledgerTransactionQueryService);
                             _counter++;
-                            //      if (_counter%100 == 0)
-                            //      {
-                            scope.Complete();
-                            //      }
-                        }
+                                //      if (_counter%100 == 0)
+                                //      {
+                                scope.Complete();
+                                //      }
+                            }
 
                         madeList.Add(recoGroup._Ref);
                     }
@@ -316,38 +316,38 @@ namespace Logitude.Accounting.BL.Utils
             else
             {
                 rv = true;
-                //Decimal sum = 0m;
-                //sum = journalLineRecoList.Sum(line => line._valueToMatch);
-                //if (sum != 0m)
-                //{
-                //    _WrongSumToMatch.Add(groupKey);
-                //    rv = false;
-                //}
+                Decimal sum = 0m;
+                sum = journalLineRecoList.Sum(line => line._valueToMatch);
+                if (sum != 0m)
+                {
+                    _WrongSumToMatch.Add(groupKey);
+                    rv = false;
+                }
             }
             return rv;
         }
 
         private void ReconcileOneRef(List<JournalLineReco> journalLineRecoList, string gLAccountId, LedgerTransactionQueryService ledgerTransactionQueryService)
         {
-            //           using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(5)))
-            //           {
-            try
-            {
-                List<LedgerTransaction> ledger = GetLedger(journalLineRecoList);
-                List<LedgerTransactionPM> ledgerPMs = ledger.Select(poco => ledgerTransactionQueryService.GetEntityPM(poco)).ToList();
-                CreateReconciliationService createReconciliationService = new CreateReconciliationService();
-                ReconciliationPM reconciliationPM = createReconciliationService.GetReconciliation(ledgerPMs);
-                reconciliationPM.CreatedByReconciliationAfterConversion = true;
-                CreateReconciliationService service = new CreateReconciliationService();
-                RecoCallback recoCallback = service.CreateReconciliation(reconciliationPM);
-                //                   scope.Complete();
-            }
-            catch (Exception e)
-            {
-                //scope.Dispose();
-                throw new Exception("ReconciliationAfterConversionBatch failed while performing ReconcileOneRef ", e);
-            }
-            //           }
+ //           using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(5)))
+ //           {
+                try
+                {
+                    List<LedgerTransaction> ledger = GetLedger(journalLineRecoList);
+                    List<LedgerTransactionPM> ledgerPMs = ledger.Select(poco => ledgerTransactionQueryService.GetEntityPM(poco)).ToList();
+                    CreateReconciliationService createReconciliationService = new CreateReconciliationService();
+                    ReconciliationPM reconciliationPM = createReconciliationService.GetReconciliation(ledgerPMs);
+                    reconciliationPM.CreatedByReconciliationAfterConversion = true;
+                    CreateReconciliationService service = new CreateReconciliationService();
+                    RecoCallback recoCallback = service.CreateReconciliation(reconciliationPM);
+ //                   scope.Complete();
+                }
+                catch (Exception e)
+                {
+                    //scope.Dispose();
+                    throw new Exception("ReconciliationAfterConversionBatch failed while performing ReconcileOneRef ", e);
+                }
+ //           }
         }
 
         private class ReconciableGroup
@@ -374,13 +374,15 @@ namespace Logitude.Accounting.BL.Utils
                 this._valueToMatch = 0m;
                 if (journalLine.ActionCode == "1")
                 {
- //                   this._valueToMatch = journalLine.LocalAmount + (journalLine.ExternalOpenAmount ?? 0m); // because in credit lines the ExternalOpenAmount is negative 
-                    this._valueToMatch = -(journalLine.LocalAmount + (journalLine.ExternalOpenAmount ?? 0m)); // because in credit lines the ExternalOpenAmount is negative 
+                    //                   this._valueToMatch = journalLine.LocalAmount + (journalLine.ExternalOpenAmount ?? 0m); // because in credit lines the ExternalOpenAmount is negative 
+                    // this._valueToMatch = -(journalLine.LocalAmount + (journalLine.ExternalOpenAmount ?? 0m)); // because in credit lines the ExternalOpenAmount is negative 
+                    this._valueToMatch = ledgerTransaction.OpenAmount; ///+ (journalLine.ExternalOpenAmount ?? 0m)); // because in credit lines the ExternalOpenAmount is negative 
                 }
                 else if (journalLine.ActionCode == "2")
                 {
-                    //                   this._valueToMatch = -(journalLine.LocalAmount - (journalLine.ExternalOpenAmount ?? 0m));
-                    this._valueToMatch = journalLine.LocalAmount - (journalLine.ExternalOpenAmount ?? 0m);
+ //                   this._valueToMatch = -(journalLine.LocalAmount - (journalLine.ExternalOpenAmount ?? 0m));
+           //         this._valueToMatch = journalLine.LocalAmount - (journalLine.ExternalOpenAmount ?? 0m);
+                    this._valueToMatch = ledgerTransaction.OpenAmount; //+ (journalLine.ExternalOpenAmount ?? 0m); // because in credit lines the ExternalOpenAmount is negative 
                 }
                 this._oneLineLedger = ledgerTransaction; // ledgerTransactionQueryService.GetByJournalLineIdAndLine(journalLine.JournalId, journalLine.Line, journalLine.Tenant);
                 this._oneLineLedger.AmountToReconcile = _valueToMatch;

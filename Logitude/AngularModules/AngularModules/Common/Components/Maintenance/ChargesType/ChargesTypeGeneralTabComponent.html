@@ -113,8 +113,7 @@
                                                     <LogLov [ObjectFieldName]="'VatTypeId'"
                                                             [ObjectTableName]="ObjectTableName"
                                                             [DataContext]="DataContext"
-                                                            [LookUpTableName]="'VatType'"
-                                                            >
+                                                            [LookUpTableName]="'VatType'"  [DependencyFilter2Value]="false">
                                                     </LogLov>
                                                 </td>
                                             </tr>
@@ -160,8 +159,7 @@
                                                                         [ObjectTableName]="ObjectTableName"
                                                                         [DataContext]="DataContext"
                                                                         [SelectedValue]="ReceivablesDefaultCurrencyId"
-                                                                        [LookUpTableName]="'Currency'"
-                                                                        >
+                                                                        [LookUpTableName]="'Currency'">
                                                                 </LogLov>
                                                             </td>
                                                         </tr>
@@ -208,14 +206,14 @@
                                             </tr>
 
                                             <!--<tr class="FormFieldRow">
-                                                <td>
-                                                    <LogLabel [ObjectFieldName]="'IsBackToBack'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                </td>
+        <td>
+            <LogLabel [ObjectFieldName]="'IsBackToBack'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+        </td>
 
-                                                <td>
-                                                    <LogCheckBox [ObjectFieldName]="'IsBackToBack'"[Value]="IsBackToBack"  [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
-                                                </td>
-                                            </tr>-->
+        <td>
+            <LogCheckBox [ObjectFieldName]="'IsBackToBack'"[Value]="IsBackToBack"  [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+        </td>
+    </tr>-->
 
 
                                             <tr class="FormFieldRow">
@@ -235,6 +233,16 @@
 
                                                 <td>
                                                     <LogCheckBox [ObjectFieldName]="'InActive'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="FormFieldRow" *ngIf="DisplayRegoinalTax">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'ApplyRegionalTax'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogCheckBox [ObjectFieldName]="'ApplyRegionalTax'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
                                                 </td>
                                             </tr>
 

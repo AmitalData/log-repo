@@ -623,7 +623,6 @@
     <TypeScriptCompile Include="CRM\Components\Workspaces\QuoteDashboardTabComponent\QuotesConversionComponent.ts" />
     <TypeScriptCompile Include="CRM\Components\Workspaces\QuoteDashboardTabComponent\SentQuotesKPIComponent.ts" />
     <TypeScriptCompile Include="CRM\Components\Workspaces\QuoteDashboardTabComponent\TopFiveSalesmanProfitComponent.ts" />
-    <TypeScriptCompile Include="CRM\Components\Workspaces\QuoteDashboardTabComponent\TopFiveSalesmanProfitComponentOld.ts" />
     <TypeScriptCompile Include="CRM\EntityLists\OccasionContactList.ts" />
     <TypeScriptCompile Include="CRM\EntityLists\OccasionInviteeList.ts" />
     <TypeScriptCompile Include="CRM\EntityLists\OccasionList.ts" />

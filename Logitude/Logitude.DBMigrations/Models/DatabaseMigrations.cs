@@ -417,6 +417,12 @@ namespace Logitude.DBMigrations.Models
                 ColumnsMigrations.Add(dropPrimaryKeyMigration);
             }
 
+            if (!currentTableColumn.Constraints.Nullable)
+            {
+                ColumnMigration setNullableMigration = GetColumnMigration(MigrationTypes.SETNULLABLE, currentTableColumn, dxmlTableColumn);
+                ColumnsMigrations.Add(setNullableMigration);
+            }
+
             ColumnMigration dropMigration = GetColumnMigration(MigrationTypes.DROP, currentTableColumn, dxmlTableColumn);
             ColumnsMigrations.Add(dropMigration);
 
@@ -669,7 +675,7 @@ namespace Logitude.DBMigrations.Models
                 }
                 else
                 {
-                    if (name.ToLower().StartsWith("drop_") || name.ToLower().StartsWith("pk_") || name.ToLower().StartsWith("ix_") || name.ToLower().StartsWith("uq_"))
+                    if (name.ToLower().StartsWith("drop_") || name.ToLower().StartsWith("pk_") || name.ToLower().StartsWith("ix_") || name.ToLower().StartsWith("uq_") || name.ToLower().StartsWith("fk_"))
                     {
                         return name.Substring(0, maxLength);
                     }

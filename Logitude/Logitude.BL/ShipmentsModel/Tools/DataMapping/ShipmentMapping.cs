@@ -1562,6 +1562,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                     entityMasterData.AdditionalHandlingInfoEdited = entityPM.AdditionalHandlingInfoEdited;
                     entityMasterData.InterlineId = entityPM.InterlineId;
                     ComputeDepartureArrivalDates(entityMasterData, entityPM);
+                    ComputeMainCarriageFinalDestinationDates(entityMasterData, entityPM);
 
                     entityPM.OriginMainCarriageFromPortId = entityMasterData.MainCarriageFromPortId;
                     entityPM.OriginFinalDestinationPortId = entityMasterData.MainCarriageFinalDestinationPortId;
@@ -1575,7 +1576,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             {
                 entityPM.DepartureArrivalFromDate = entityPM.MainCarriageATD;
             }
-
+            
             DateTime? to_ETA = entityPM.MainCarriageETA;
             DateTime? to_ATA = entityPM.MainCarriageATA;
 
@@ -1617,9 +1618,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                     to_ATA = entityPM.Transshipment3ATA;
                 }
             }
-
-            entityPM.MainCarriageFinalDestinationETA = to_ETA;
-            entityPM.MainCarriageFinalDestinationATA = to_ATA;
+            
             entityPM.DepartureArrivalToDate = to_ETA;
             if (to_ATA != null)
             {
@@ -1636,9 +1635,42 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
 
             entityMasterData.DepartureArrivalFromDate = entityPM.DepartureArrivalFromDate;
             entityMasterData.DepartureArrivalToDate = entityPM.DepartureArrivalToDate;
+        }
+        private static void ComputeMainCarriageFinalDestinationDates(ShipmentMasterData entityMasterData, ShipmentPM entityPM)
+        {
+            DateTime? to_ETA = null;
+            DateTime? to_ATA = null;
+
+            if (entityPM.Transshipment3ToPortId != null)
+            {
+                to_ETA = entityPM.Transshipment3ETA;
+                to_ATA = entityPM.Transshipment3ATA;
+            }
+
+            else if (entityPM.Transshipment2ToPortId != null)
+            {
+                to_ETA = entityPM.Transshipment2ETA;
+                to_ATA = entityPM.Transshipment2ATA;
+            }
+
+            else if (entityPM.Transshipment1ToPortId != null)
+            {
+                to_ETA = entityPM.Transshipment1ETA;
+                to_ATA = entityPM.Transshipment1ATA;
+            }
+
+            else
+            {
+                to_ETA = entityPM.MainCarriageETA;
+                to_ATA = entityPM.MainCarriageATA;
+            }
+
+            entityPM.MainCarriageFinalDestinationETA = to_ETA;
+            entityPM.MainCarriageFinalDestinationATA = to_ATA;
             entityMasterData.MainCarriageFinalDestinationETA = entityPM.MainCarriageFinalDestinationETA;
             entityMasterData.MainCarriageFinalDestinationATA = entityPM.MainCarriageFinalDestinationATA;
         }
+
         private static void MapRoutings(ShipmentPM entityPM, Shipment entityPoco, bool isNewEntity)
         {
             entityPoco.PreCarriageFromPortId = entityPM.PreCarriageFromPortId;

@@ -2381,6 +2381,11 @@
     <Compile Include="Helpers\BluesnapExecutionService.cs" />
     <Compile Include="Helpers\DataProviderHelpers\AutomationTestReportDataProvider.cs" />
     <Compile Include="Helpers\DataProviderHelpers\CrossDockEntryLabelDataProviderHelper.cs" />
+
+    <Compile Include="Helpers\DataProviderHelpers\CrossDockEntryShipmentService.cs" />
+
+    <Compile Include="Helpers\DataProviderHelpers\CrossDockReleaseShipmentService.cs" />
+
     <Compile Include="Helpers\DataProviderHelpers\ShipmentsEventsListDataProvider.cs" />
     <Compile Include="Helpers\DWQueryBuilderHelper.cs" />
     <Compile Include="Helpers\AgentSharedManifestHelper.cs" />
