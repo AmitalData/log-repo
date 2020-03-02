@@ -416,7 +416,9 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                     if (SelectedLine != null)
                     {
                         minprice = SelectedLine.MinPrice;
+                        tariffsSummary.LineId = SelectedLine.Id;
                     }
+
                     if (item.PriceIndex != 0)
                     {
                         if ((item.Price * (decimal)weight) < minprice)
@@ -575,6 +577,7 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                                                     SurchargeItem.CurrencyId = CurrentSurcharge.CurrencyId;
                                                     SurchargeItem.TariffNumber = CurrentSurcharge.TariffNumber;
                                                     SurchargeItem.VersionId = ChargesfilteredLines.Version + "";
+                                                    SurchargeItem.LineId = ChargesfilteredLines.Id;
                                                     SurchargeItem.SellerId = CurrentSurcharge.SellerId;
                                                     SurchargeItem.SellerName= sellerName;
                                                     SurchargeItem.MinPrice = minPriceSurcharge;

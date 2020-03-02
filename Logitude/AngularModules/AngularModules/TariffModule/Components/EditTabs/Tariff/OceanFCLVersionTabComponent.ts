@@ -55,9 +55,11 @@ export class OceanFCLVersionTabComponent extends BaseComponent implements OnDest
     }
 
     public AllPackageTypes: PackageTypeList[];
+    public LineIdFromPriceCheck: string;
     Intialize(args: any) {
         this.CurrentVersion = args['CurrentVersion'];
         this.SelectedVersionNumber = args['SelectedVersionNumber'];        
+        this.LineIdFromPriceCheck = args['LineIdFromPriceCheck'];
 
         var iPackageTypeListService = new PackageTypeListService();
 
