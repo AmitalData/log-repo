@@ -754,6 +754,7 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
                         var currency = response.Result;
                         if (currency != null) {
                             this.newARPaymentPM.PaymentCurrencyCode = currency.Code;
+                            this.newARPaymentPM.PaymentCurrencySign = currency.Sign;
                         }
                     }
                 }
@@ -767,6 +768,7 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
                         var list = response.Result;
                         if (list != null && list.length > 0) {
                             this.newARPaymentPM.PaymentCurrencyCode = list.Code;
+                            this.newARPaymentPM.PaymentCurrencySign = list.Sign;
                         }
                     }
                 }
@@ -1029,6 +1031,7 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
                     .then((res:any) => {
                         this.newARPaymentPM.GLAccountId = res.Id;
                         this.newARPaymentPM.GLAccountRecoMethodCode = res.ReconcileMethodCode;
+                        this.newARPaymentPM.GLAccountCurrencyCode = res.CurrencyCode;
                         this.RunEditWindow();
                     }, err => {
                         this.ValidationErrorsList = ['Somthing wrong! no gl account found for this bill to account'];

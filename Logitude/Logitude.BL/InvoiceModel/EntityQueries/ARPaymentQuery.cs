@@ -121,6 +121,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                        BranchName = a.Branch == null ? null : a.Branch.EnglishName,
                                        CreatedByPartner = a.CreatedByPartner,
                                        IsPaymentNumberManuallySet = a.IsPaymentNumberManuallySet,
+                                       PaymentCurrencySign= a.PaymentCurrency.Sign,
                                    }).FirstOrDefault();
 
 

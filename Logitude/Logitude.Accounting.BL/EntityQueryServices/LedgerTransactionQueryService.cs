@@ -738,7 +738,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                     OppositeAccountId = _transaction.OppositeAccountId,
                     SearchFields = _transaction.SearchFields,
                     JournalNumber = _journal.JournalNumber,
-                    //CurrencyCode = _transaction.CurrencyId,
+                    CurrencyCode = _transaction.Currency.Code,
                     //Source = _transaction.Source,
                     //SourceType = _journal.accounting,
                     OpenAmountCurrencyId = _transaction.OpenAmountCurrencyId,

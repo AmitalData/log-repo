@@ -599,6 +599,11 @@ export class ARPaymentPM {
     public set GLAccountCurrencyCode(newValue: string) { if (this.gLAccountCurrencyCode != newValue) { this.gLAccountCurrencyCode = newValue; this.MarkAsDirty("GLAccountCurrencyCode"); } }
        
 	 
+    private paymentCurrencySign: string;
+    public get PaymentCurrencySign() { return this.paymentCurrencySign; }
+    public set PaymentCurrencySign(newValue: string) { if (this.paymentCurrencySign != newValue) { this.paymentCurrencySign = newValue; this.MarkAsDirty("PaymentCurrencySign"); } }
+       
+	 
 
     public OldEntityPM: ARPaymentPM;
 		

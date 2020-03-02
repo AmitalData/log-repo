@@ -201,5 +201,6 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
 
         public bool IsPaymentNumberManuallySet { get; set; }
         public string GLAccountCurrencyCode { get; set; }
+        public string PaymentCurrencySign { get; set; }
     }
 }
