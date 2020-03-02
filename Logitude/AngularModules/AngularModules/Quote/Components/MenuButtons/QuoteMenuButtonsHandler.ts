@@ -881,22 +881,35 @@ export class QuoteMenuButtonsHandler {
     private RunQuotationScreen() {
         this.isLCL = QuoteUtilities.IsLCLQuote(this.EntityPM);
         this.CheckUpdateQuantities();
-        if (this.EntityPM && this.EntityPM.IsDirty) {
-            this.Validate();
-            if (this.isValid) {
-                this.IsRunQuotation = true;
-                this.entityArgs.EditComponent.SaveChanges();
-            }
+        if (this.IsUpdateQuantitiesVisible) {
+            var messageWindow = new MessageWindow();
+            messageWindow.Width = 400;
+            messageWindow.Height = 150;
+            messageWindow.Title = "Message";
+            messageWindow.Show(this.UpdateQuantitiesMessage);
+            messageWindow.WindowClosed.subscribe(s => {
+                this.isButtonClicked = false;
+            });
         } else {
-            this.OpenQuotationWindow();
+            if (this.EntityPM && this.EntityPM.IsDirty) {
+                this.Validate();
+                if (this.isValid) {
+                    this.IsRunQuotation = true;
+                    this.entityArgs.EditComponent.SaveChanges();
+                }
+            } else {
+                this.OpenQuotationWindow(); 
+            }
         }
+        
 
     }
 
     public UpdateQuantitiesMessage: string;
-    public IsUpdateQuantitiesVisible: boolean = false;
+    public IsUpdateQuantitiesVisible: boolean;
     CheckUpdateQuantities() {
         var updateMessage = null;
+        this.IsUpdateQuantitiesVisible = false;
         if (this.isLCL) {
             if (this.EntityPM.QuoteCharges.filter(d => d.SaleUnitPrice != null || d.CostUnitPrice != null).length > 0) {
 
