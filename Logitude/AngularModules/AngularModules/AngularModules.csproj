@@ -1160,6 +1160,7 @@
     <Content Include="InvoiceModules\ARPayment\Components\EditTabs\EditMultiCurrency.html" />
     <Content Include="InvoiceModules\ARPayment\Components\NewEntity\ARPaymentTransferTemplate.html" />
     <Content Include="InvoiceModules\ARPayment\Components\NewEntity\NewARPaymentComponent.html" />
+    <Content Include="InvoiceModules\ARPayment\Components\Other\CancelARPaymentComponent.html" />
     <Content Include="InvoiceModules\InvoiceStocks\Components\ARInvoiceStockInputTemplate.html" />
     <Content Include="InvoiceModules\InvoiceStocks\Components\EditTabs\ARInvoiceStockGeneralTabComponent.html" />
     <Content Include="InvoiceModules\InvoiceStocks\Components\ManageStocksComponent.html" />
@@ -2061,6 +2062,7 @@
     <TypeScriptCompile Include="InvoiceModules\ARPayment\Components\EditTabs\EditMultiCurrency.ts" />
     <TypeScriptCompile Include="InvoiceModules\ARPayment\Components\NewEntity\ARPaymentTransferTemplate.ts" />
     <TypeScriptCompile Include="InvoiceModules\ARPayment\Components\NewEntity\NewARPaymentComponent.ts" />
+    <TypeScriptCompile Include="InvoiceModules\ARPayment\Components\Other\CancelARPaymentComponent.ts" />
     <TypeScriptCompile Include="InvoiceModules\ARPayment\ModuleARPayment.ts" />
     <TypeScriptCompile Include="InvoiceModules\ARPayment\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="InvoiceModules\InvoiceStocks\Components\ARInvoiceStockInputTemplate.ts" />

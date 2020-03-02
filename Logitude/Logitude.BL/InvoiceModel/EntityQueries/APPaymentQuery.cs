@@ -111,7 +111,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                        AccountingCancelationDate = a.AccountingCancelationDate,
                                        CancelationNotes = a.CancelationNotes,
                                        DontIncludeInDeductionReport = a.DontIncludeInDeductionReport,
-
+                                       
 
                                    }).FirstOrDefault();
 

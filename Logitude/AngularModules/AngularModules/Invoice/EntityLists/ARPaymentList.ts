@@ -74,6 +74,8 @@ export class ARPaymentList {
 		TransmissionError: string;
 		BankAccountLiteId: string;
 		BankAccountName: string;
+		AccountingCancelationDate: Date;
+		CancelationNotes: string;
 		MetodoPagoCode: string;
 		TipoCadenaPago: string;
 		CertPago: string;

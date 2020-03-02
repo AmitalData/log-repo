@@ -107,6 +107,16 @@ export class ARPaymentPM {
     public set AmountInProfitCurrency(newValue: number) { if (this.amountInProfitCurrency != newValue) { this.amountInProfitCurrency = newValue; this.MarkAsDirty("AmountInProfitCurrency"); } }
        
 	 
+    private accountingCancelationDate: Date;
+    public get AccountingCancelationDate() { return this.accountingCancelationDate; }
+    public set AccountingCancelationDate(newValue: Date) { if (this.accountingCancelationDate != newValue) { this.accountingCancelationDate = newValue; this.MarkAsDirty("AccountingCancelationDate"); } }
+       
+	 
+    private cancelationNotes: string;
+    public get CancelationNotes() { return this.cancelationNotes; }
+    public set CancelationNotes(newValue: string) { if (this.cancelationNotes != newValue) { this.cancelationNotes = newValue; this.MarkAsDirty("CancelationNotes"); } }
+       
+	 
     private branchId: string;
     public get BranchId() { return this.branchId; }
     public set BranchId(newValue: string) { if (this.branchId != newValue) { this.branchId = newValue; this.MarkAsDirty("BranchId"); } }
