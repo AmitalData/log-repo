@@ -316,13 +316,13 @@ namespace Logitude.Accounting.BL.Utils
             else
             {
                 rv = true;
-                //Decimal sum = 0m;
-                //sum = journalLineRecoList.Sum(line => line._valueToMatch);
-                //if (sum != 0m)
-                //{
-                //    _WrongSumToMatch.Add(groupKey);
-                //    rv = false;
-                //}
+                Decimal sum = 0m;
+                sum = journalLineRecoList.Sum(line => line._valueToMatch);
+                if (sum != 0m)
+                {
+                    _WrongSumToMatch.Add(groupKey);
+                    rv = false;
+                }
             }
             return rv;
         }
@@ -374,13 +374,15 @@ namespace Logitude.Accounting.BL.Utils
                 this._valueToMatch = 0m;
                 if (journalLine.ActionCode == "1")
                 {
- //                   this._valueToMatch = journalLine.LocalAmount + (journalLine.ExternalOpenAmount ?? 0m); // because in credit lines the ExternalOpenAmount is negative 
-                    this._valueToMatch = -(journalLine.LocalAmount + (journalLine.ExternalOpenAmount ?? 0m)); // because in credit lines the ExternalOpenAmount is negative 
+                    //                   this._valueToMatch = journalLine.LocalAmount + (journalLine.ExternalOpenAmount ?? 0m); // because in credit lines the ExternalOpenAmount is negative 
+                    // this._valueToMatch = -(journalLine.LocalAmount + (journalLine.ExternalOpenAmount ?? 0m)); // because in credit lines the ExternalOpenAmount is negative 
+                    this._valueToMatch = ledgerTransaction.OpenAmount; ///+ (journalLine.ExternalOpenAmount ?? 0m)); // because in credit lines the ExternalOpenAmount is negative 
                 }
                 else if (journalLine.ActionCode == "2")
                 {
  //                   this._valueToMatch = -(journalLine.LocalAmount - (journalLine.ExternalOpenAmount ?? 0m));
-                    this._valueToMatch = journalLine.LocalAmount - (journalLine.ExternalOpenAmount ?? 0m);
+           //         this._valueToMatch = journalLine.LocalAmount - (journalLine.ExternalOpenAmount ?? 0m);
+                    this._valueToMatch = ledgerTransaction.OpenAmount; //+ (journalLine.ExternalOpenAmount ?? 0m); // because in credit lines the ExternalOpenAmount is negative 
                 }
                 this._oneLineLedger = ledgerTransaction; // ledgerTransactionQueryService.GetByJournalLineIdAndLine(journalLine.JournalId, journalLine.Line, journalLine.Tenant);
                 this._oneLineLedger.AmountToReconcile = _valueToMatch;
