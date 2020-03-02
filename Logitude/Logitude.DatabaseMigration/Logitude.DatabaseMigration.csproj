@@ -2107,7 +2107,10 @@
     <Compile Include="Migrations\202003011636020_addAllowRegionalTaxColumn.Designer.cs">
       <DependentUpon>202003011636020_addAllowRegionalTaxColumn.cs</DependentUpon>
     </Compile>
-    
+    <Compile Include="Migrations\202003021354117_Mutaz_ShouldntBeExecuted.cs" />
+    <Compile Include="Migrations\202003021354117_Mutaz_ShouldntBeExecuted.Designer.cs">
+      <DependentUpon>202003021354117_Mutaz_ShouldntBeExecuted.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\202002041333119_InterestTransactionMigration.cs" />
     <Compile Include="Migrations\202002041333119_InterestTransactionMigration.Designer.cs">
@@ -3804,6 +3807,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202003011636020_addAllowRegionalTaxColumn.resx">
       <DependentUpon>202003011636020_addAllowRegionalTaxColumn.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003021354117_Mutaz_ShouldntBeExecuted.resx">
+      <DependentUpon>202003021354117_Mutaz_ShouldntBeExecuted.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
