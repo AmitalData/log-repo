@@ -1639,7 +1639,7 @@ namespace WebFreight.Web.ReportsWebServices
                     AddressId = pickUpDeliveryItem.FromAddressId,
                     PortId = pickUpDeliveryItem.FromPortId,
                     AddressCountryId = pickUpDeliveryItem.FromAddressCountryId,
-                    AddressCity = pickUpDeliveryItem.FromAddressId,
+                    AddressCity = pickUpDeliveryItem.FromAddressCity,
                     AddressZipCode = pickUpDeliveryItem.FromAddressZipCode
                 };
             }
@@ -1652,7 +1652,7 @@ namespace WebFreight.Web.ReportsWebServices
                     AddressId = pickUpDeliveryItem.ToAddressId,
                     PortId = pickUpDeliveryItem.ToPortId,
                     AddressCountryId = pickUpDeliveryItem.ToAddressCountryId,
-                    AddressCity = pickUpDeliveryItem.ToAddressId,
+                    AddressCity = pickUpDeliveryItem.ToAddressCity,
                     AddressZipCode = pickUpDeliveryItem.ToAddressZipCode
                 };
             }

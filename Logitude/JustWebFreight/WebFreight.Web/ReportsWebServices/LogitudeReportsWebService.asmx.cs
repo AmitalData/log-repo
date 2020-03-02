@@ -413,7 +413,6 @@ namespace WebFreight.Web.ReportsWebServices
                                                              {
                                                                  a.MainCarriageCarrierId,
                                                                  a.MainCarriageCarrierName,
-                                                                 a.VolumeInCBM
                                                              } into gr
                                                              orderby gr.Key.MainCarriageCarrierName
                                                              select new ShippingLineStatisticsDataProvider.ShippingLineStatisticsReport()
@@ -425,7 +424,7 @@ namespace WebFreight.Web.ReportsWebServices
                                                                  LCLWeight = gr.Where(t => t.ShipmentType.Contains("LCL")).Sum(t => t.GrossWeightInKG),
                                                                  TEU = gr.Sum(t => t.TEU),
                                                                  PercentageFromTotalShipment = ((double)gr.Count() / (double)dataProvider.TotalShipments),
-                                                                 VolumeInCBM = gr.Key.VolumeInCBM
+                                                                 VolumeInCBM = gr.Where(t => t.ShipmentType.Contains("LCL")).Sum(t => t.VolumeInCBM),
                                                              }).ToList();
             #endregion
 
