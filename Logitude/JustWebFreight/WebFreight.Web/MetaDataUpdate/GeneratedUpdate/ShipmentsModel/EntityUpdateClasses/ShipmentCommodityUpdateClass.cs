@@ -75,7 +75,8 @@ using Logitude.TariffModule.BL.CLoseTable;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpdateClasses
 {
    public class ShipmentCommodityUpdateClass
-   {  
+   {  		
+		public const string HashString = "b4e91fc15903e61e1c5c4399c9f692ee";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -118,6 +119,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    HasMenuButtons =  false,
 			      				    CustomFieldsCount =  0,
 			      				    SearchFields =  "ShipmentCommodity,ShipmentCommodities,,Id,",
+			      				    HashString =  "b4e91fc15903e61e1c5c4399c9f692ee",
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}

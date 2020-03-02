@@ -711,17 +711,23 @@ namespace WebFreight.Web.MetaDataUpdate
 
         private static void UpdateShipmentAndMasterModules(IWebFreightContext context)
         {
+            MetaDataUpdateClass updateClass = new MetaDataUpdateClass();
+            //updateClass.LoadObjectsTenantZero(context);
+
             ShipmentsModelUpdateClass shipmentModelUpdateClass = new ShipmentsModelUpdateClass();
-            shipmentModelUpdateClass.LoadObjectsTenantZero(context);
+            shipmentModelUpdateClass.LoadObjectTablesMetadata(context);
 
-            MasterModelUpdateClass masterModelUpdateClass = new MasterModelUpdateClass();
-            masterModelUpdateClass.LoadObjectsTenantZero(context);
+           
+            updateClass.LoadObjectTableRulesANDFieldsValidations();
+           
+            //MasterModelUpdateClass masterModelUpdateClass = new MasterModelUpdateClass();
+            //masterModelUpdateClass.LoadObjectTablesMetadata(context);
 
-            if (EntityChangeHelper.IsShowLogBoxAutomationFields())
-            {
-                MetaDataUpdateClass updateClass = new MetaDataUpdateClass();
-                updateClass.UpdateShipmentLogboxAuomationObjectFields(context);
-            }
+            //if (EntityChangeHelper.IsShowLogBoxAutomationFields())
+            //{
+            //    MetaDataUpdateClass updateClass = new MetaDataUpdateClass();
+            //    updateClass.UpdateShipmentLogboxAuomationObjectFields(context);
+            //}
         }
 
         private static void UpdateAccountingModule(IWebFreightContext context)

@@ -40,7 +40,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.DownloadToExcelFeatureCode).HasMaxLength(120).IsUnicode(false);
             this.Property(t => t.DescriptionTextCodeCode).HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.NewButtonTextCodeCode).HasMaxLength(100).IsUnicode(false);
-
+            this.Property(t => t.HashString).IsUnicode(true).IsMaxLength();
 
             //this.Property(t => t.FilterMenuComponentPath).HasMaxLength(250).IsUnicode(false);
             //this.Property(t => t.ShortTitleComponentPath).HasMaxLength(250).IsUnicode(false);
@@ -113,6 +113,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.IsTabsHidden).HasColumnName("IsTabsHidden");
             this.Property(t => t.DescriptionTextCodeCode).HasColumnName("DescriptionTextCodeCode");
             this.Property(t => t.NewButtonTextCodeCode).HasColumnName("NewButtonTextCodeCode");
+            this.Property(t => t.HashString).HasColumnName("HashString");
 
             // Relationships
             this.HasOptional(t => t.DescriptionTextCode).WithMany().HasForeignKey(d => d.DescriptionTextCodeId);

@@ -75,7 +75,8 @@ using Logitude.TariffModule.BL.CLoseTable;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpdateClasses
 {
    public class ShipmentUpdateClass
-   {  
+   {  		
+		public const string HashString = "eeb22206c7e573bab35f2def6ace34ba";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -122,6 +123,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    Name =  "Queries",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Shipment",
+			      				    ServerModuleName =  "ShipmentModel",
 			      				    NewWizardComponentPath =  "./Shipment/Components/NewEntity/NewShipmentComponent",
 			      				    NoTS =  true,
 			      				    HasMenuButtons =  true,
@@ -132,6 +134,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    IsLookUp =  false,
 			      				    IsTabsHidden =  false,
 			      				    SearchFields =  "Shipment,Shipments,Simplog.ShipmentLib.NewShipmentCommand,Id,",
+			      				    HashString =  "eeb22206c7e573bab35f2def6ace34ba",
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
@@ -6047,6 +6050,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DefaultText =  "Shipper",
 					  						ListFieldLable =  "ShipperNameListLable",
 					  						ListLableDefaultText =  "Shipper",
+					  						ListLocalDefaultText =  "Shipper",
 					  						ShortFieldLable =  "ShipperName",
 					  						ShortFieldLableDefaultText =  "Name",
 					  						IsMaxLength =  false,
@@ -7505,6 +7509,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DefaultText =  "Notes",
 					  						ListFieldLable =  "NotesListLable",
 					  						ListLableDefaultText =  "Notes",
+					  						ListLocalDefaultText =  "Notes",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
