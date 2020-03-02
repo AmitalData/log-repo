@@ -1,6 +1,7 @@
 ﻿using Logitude.BL.DataContracts;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Data.QuoteModel.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries.Charts
             List<ChartingDataClass> quoteChartListResult = new List<ChartingDataClass>();
             List<ChartingDataClass> quoteChartist_Labels = new List<ChartingDataClass>();
 
+            
             dataSourceQuery  = dataSourceQuery.Where(a => a.SentDate != null && a.RequestDate != null);
             var quoteList = (from a in dataSourceQuery
                              select new

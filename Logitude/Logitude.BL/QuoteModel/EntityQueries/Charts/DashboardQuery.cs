@@ -43,7 +43,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries.Charts
 
             if (args.ChartCode == "KPI")
             {
-                dataSourceQuery = dataSourceQuery.Where(d => d.IsClosed == true);
+                dataSourceQuery = this.FilterByAcceptedStage();
             }
 
             QuoteBusinessUnitFilter filter = new QuoteBusinessUnitFilter(tenant);
@@ -59,7 +59,18 @@ namespace Logitude.BL.QuoteModel.EntityQueries.Charts
 
             return dataSourceQuery;
         }
-        
+
+        private IQueryable<Quote> FilterByAcceptedStage()
+        {
+            QuoteStageRepository stageRepository = new QuoteStageRepository(this.tenant);
+            var myStage = stageRepository.GetSingleQuoteStageByCode("QTAC", this.tenant);
+
+            if (myStage != null) {
+                dataSourceQuery = dataSourceQuery.Where(d => d.StageId == myStage.Id);
+            }
+            return dataSourceQuery;
+        }
+
         private void FilterCreateDate(DateTime? fromDate, DateTime? toDate)
         {
             if (fromDate != null && toDate != null)

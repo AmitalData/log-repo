@@ -9,6 +9,9 @@ import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQue
 import { ListComponentArgs } from '../../../../Infrastructure/Args';
 import { ServiceHelper } from '../../../../Infrastructure/Utilities/ServiceHelper';
 import { FormatTool } from '../../../../Infrastructure/Tools';
+import { QuoteStageListService } from '../../../../Quote/Services/StandardLists/QuoteStageListService';
+import { QuoteStageList } from '../../../../Quote/EntityLists/QuoteStageList';
+
 declare var makeAmBarChart, BarClick, ResetItem: any;
 
 @Component({
@@ -27,6 +30,7 @@ export class SentQuotesKPIComponent implements OnInit {
     private dashboardService: DashboardService;
     public SentQuotesKPIData: Array<ChartingDataClass>;
     public NoQuotesData = false;
+    private acceptedSatgeId: string;
 
     constructor(private _entityResourceService: EntityResourceService) {
         this.SetChartId();
@@ -62,6 +66,20 @@ export class SentQuotesKPIComponent implements OnInit {
             this.FillDashboardArgs();
             this.LoadDashboardData();
         });
+
+        this.GetQuoteSatges();
+    }
+
+    GetQuoteSatges() {
+        var myQuoteStageListService = new QuoteStageListService();
+        myQuoteStageListService.getAllFromCache().subscribe((resp: any) => {
+            if (!resp.HasError) {
+                var stages : QuoteStageList[] = resp.Result;
+
+                this.acceptedSatgeId = stages.filter(d => d.Code == "QTAC")[0].Id;
+            }
+        });
+
     }
 
     FillDashboardArgs() {
@@ -202,6 +220,7 @@ export class SentQuotesKPIComponent implements OnInit {
             filterAgrs.addAdditionalFilter("SentQuotesKPIChartFilter", ServiceHelper.GetDateString(this.Wizard.FromDate), ServiceHelper.GetDateString(this.Wizard.ToDate) + ";" + item.dataContext.category + "",null , "Equals", true, false, false, "String");
             filterAgrs.addAdditionalFilter("IsCancelled", false, null, null, "Equals", false, false, false, "boolean");
             filterAgrs.addAdditionalFilter("IsClosed", true, null, null, "Equals", false, false, false, "boolean");
+            filterAgrs.addAdditionalFilter("StageId", this.acceptedSatgeId, null, null, "Equals", false, false, false, "String");
 
             var listArgs = new ListComponentArgs();
             listArgs.Filters = filterAgrs;
