@@ -16,6 +16,7 @@ namespace Logitude.DBMigrations.Models
         private readonly string DatabaseType = ConfigurationManager.AppSettings["DatabseType"];
         private readonly string[] Arguments;
         private readonly string ScriptSemicolonCode = "|(;)|";
+        private readonly RunSettings RunSettings;
 
         private string MissingIndexesWarnings = "";
         private List<TableDefinition> DXMLTablesDefinitions;
@@ -23,18 +24,17 @@ namespace Logitude.DBMigrations.Models
         private List<ExecutedSxmlFile> ExecutedSxmlFiles;
         private IncludedModules IncludedModules;
 
-        public MigrationTool(string[] args)
+        public MigrationTool(string[] arguments, RunSettings runSettings)
         {
-            Arguments = args;
+            Arguments = arguments;
+            RunSettings = runSettings;
         }
 
         public void RunTool()
         {
-            if (IsArgumentProvided("-root"))// || true)
+            if (IsArgumentProvided("-root") || RunSettings.DebugMode)
             {
-                string root = GetRoot();
-
-                //root = @"D:\TestDXMLFilesWithUniqueConstraints";
+                string root = !RunSettings.DebugMode ? GetRoot() : RunSettings.Root;
 
                 if (!String.IsNullOrEmpty(root))
                 {
@@ -46,22 +46,25 @@ namespace Logitude.DBMigrations.Models
                     string[] dxmlFiles = GetDXMLFilesFromRoot(root);
                     string[] sxmlFiles = GetSXMLFilesFromRoot(root);
 
-                    ValidateDXMLFiles(dxmlFiles);
-                    ValidateSXMLFiles(sxmlFiles);
+                    if(!(RunSettings.DebugMode && !RunSettings.ValidateFiles))
+                    {
+                        ValidateDXMLFiles(dxmlFiles);
+                        ValidateSXMLFiles(sxmlFiles);
+                    }
 
-                    string[] toolDxmlFilesNames = GetToolDxmlFilesNames();
-                    string[] toolDxmlFiles = dxmlFiles?.Where(d => toolDxmlFilesNames.Contains(d.ToLower())).ToArray();
-                    string[] migrationDxmlFiles = dxmlFiles?.Where(d => !toolDxmlFilesNames.Contains(d.ToLower())).ToArray();
+                    PrepareRequiredData();
 
-                    GetIncludedModulesFromDB();
-                    GetDXMLHashesFromDB();
-                    GetExecutedSXMLFilesFromDB();
+                    List<string> toolDxmlFilesNames = GetToolDxmlFilesNames();
+                    string[] toolDxmlFiles = dxmlFiles?.Where(d => toolDxmlFilesNames.Contains(Path.GetFileName(d).ToLower())).ToArray();
+                    string[] migrationDxmlFiles = dxmlFiles?.Where(d => !toolDxmlFilesNames.Contains(Path.GetFileName(d).ToLower())).ToArray();
+
+                    bool isExecuteArgumentProvided = IsArgumentProvided("-exe") || (RunSettings.DebugMode && RunSettings.ExecuteScripts);
 
                     if (toolDxmlFiles != null)
                     {
                         toolTablesScript = GenerateScriptsFromDXMLFiles(toolDxmlFiles);
 
-                        if (IsArgumentProvided("-exe"))
+                        if (isExecuteArgumentProvided)
                         {
                             ExecuteScript(toolTablesScript);
 
@@ -73,7 +76,7 @@ namespace Logitude.DBMigrations.Models
                     {
                         preGeneralScript = GetGeneralScripts(sxmlFiles, true);
 
-                        if (IsArgumentProvided("-exe"))
+                        if (isExecuteArgumentProvided)
                         {
                             ExecuteGeneralScripts(sxmlFiles, true);
                         }
@@ -83,7 +86,7 @@ namespace Logitude.DBMigrations.Models
                     {
                         migrationsScript = GenerateScriptsFromDXMLFiles(migrationDxmlFiles);
 
-                        if (IsArgumentProvided("-exe"))
+                        if (isExecuteArgumentProvided)
                         {
                             ExecuteScript(migrationsScript);
 
@@ -95,42 +98,13 @@ namespace Logitude.DBMigrations.Models
                     {
                         postGeneralScript = GetGeneralScripts(sxmlFiles, false);
 
-                        if (IsArgumentProvided("-exe"))
+                        if (isExecuteArgumentProvided)
                         {
                             ExecuteGeneralScripts(sxmlFiles, false);
                         }
                     }
 
-                    GeneratedScript scriptsToSave = new GeneratedScript();
-
-                    if (toolTablesScript != null)
-                    {
-                        scriptsToSave.GlobalScript += toolTablesScript.GlobalScript;
-                        scriptsToSave.MainScript += toolTablesScript.MainScript;
-                        scriptsToSave.SystemLogsScript += toolTablesScript.SystemLogsScript;
-                    }
-
-                    if (preGeneralScript != null)
-                    {
-                        scriptsToSave.GlobalScript += preGeneralScript.GlobalScript;
-                        scriptsToSave.MainScript += preGeneralScript.MainScript;
-                        scriptsToSave.SystemLogsScript += preGeneralScript.SystemLogsScript;
-                    }
-
-                    if (migrationsScript != null)
-                    {
-                        scriptsToSave.GlobalScript += migrationsScript.GlobalScript;
-                        scriptsToSave.MainScript += migrationsScript.MainScript;
-                        scriptsToSave.SystemLogsScript += migrationsScript.SystemLogsScript;
-                    }
-
-                    if(postGeneralScript != null)
-                    {
-                        scriptsToSave.GlobalScript += postGeneralScript.GlobalScript;
-                        scriptsToSave.MainScript += postGeneralScript.MainScript;
-                        scriptsToSave.SystemLogsScript += postGeneralScript.SystemLogsScript;
-                    }
-
+                    GeneratedScript scriptsToSave = GetScriptsToSave(toolTablesScript, preGeneralScript, migrationsScript, postGeneralScript);
                     SaveScript(scriptsToSave);
 
                     PrintMissingIndexesWarnings();
@@ -146,6 +120,50 @@ namespace Logitude.DBMigrations.Models
             }
         }
 
+        private void PrepareRequiredData()
+        {
+            Console.WriteLine("Preparing Required Data ...");
+
+            GetIncludedModulesFromDB();
+            GetDXMLHashesFromDB();
+            GetExecutedSXMLFilesFromDB();
+        }
+
+        private GeneratedScript GetScriptsToSave(GeneratedScript toolTablesScript, GeneratedScript preGeneralScript, GeneratedScript migrationsScript, GeneratedScript postGeneralScript)
+        {
+            GeneratedScript scriptsToSave = new GeneratedScript();
+
+            if (toolTablesScript != null)
+            {
+                scriptsToSave.GlobalScript += toolTablesScript.GlobalScript;
+                scriptsToSave.MainScript += toolTablesScript.MainScript;
+                scriptsToSave.SystemLogsScript += toolTablesScript.SystemLogsScript;
+            }
+
+            if (preGeneralScript != null)
+            {
+                scriptsToSave.GlobalScript += preGeneralScript.GlobalScript;
+                scriptsToSave.MainScript += preGeneralScript.MainScript;
+                scriptsToSave.SystemLogsScript += preGeneralScript.SystemLogsScript;
+            }
+
+            if (migrationsScript != null)
+            {
+                scriptsToSave.GlobalScript += migrationsScript.GlobalScript;
+                scriptsToSave.MainScript += migrationsScript.MainScript;
+                scriptsToSave.SystemLogsScript += migrationsScript.SystemLogsScript;
+            }
+
+            if (postGeneralScript != null)
+            {
+                scriptsToSave.GlobalScript += postGeneralScript.GlobalScript;
+                scriptsToSave.MainScript += postGeneralScript.MainScript;
+                scriptsToSave.SystemLogsScript += postGeneralScript.SystemLogsScript;
+            }
+
+            return scriptsToSave;
+        }
+
         private string[] GetDXMLFilesFromRoot(string root)
         {
             Console.WriteLine("Reading DXML Files From Root ...");
@@ -157,8 +175,11 @@ namespace Logitude.DBMigrations.Models
 
                 if (dxmlFiles.Length > 0)
                 {
+                    if(RunSettings.DebugMode && !String.IsNullOrEmpty(RunSettings.SpecificDxmlFile))
+                    {
+                        return dxmlFiles.Where(d => d.ToLower().Contains(@"\" + RunSettings.SpecificDxmlFile.ToLower())).ToArray();
+                    }
                     return SortDXMLFiles(dxmlFiles);
-                    //return dxmlFiles.Where(d => d.ToLower().Contains(@"DBMigrationsHistory.dxml".ToLower())).ToArray();
                 }
                 else
                 {
@@ -182,6 +203,10 @@ namespace Logitude.DBMigrations.Models
 
                 if (sxmlFiles.Length > 0)
                 {
+                    if (RunSettings.DebugMode && !String.IsNullOrEmpty(RunSettings.SpecificSxmlFile))
+                    {
+                        return sxmlFiles.Where(s => s.ToLower().Contains(@"\" + RunSettings.SpecificSxmlFile.ToLower())).ToArray();
+                    }
                     return sxmlFiles;
                 }
                 else
@@ -442,6 +467,33 @@ namespace Logitude.DBMigrations.Models
             }
         }
 
+        private void ValidateSXMLFiles(string[] sxmlFiles)
+        {
+            if (sxmlFiles != null)
+            {
+                Console.WriteLine("Validating SXML Files ...");
+
+                string error = null;
+
+                List<string> duplicatedSxmlFiles = sxmlFiles.Select(s => Path.GetFileName(s)).ToList().GroupBy(s => s).SelectMany(g => g.Skip(1)).ToList();
+
+                if (duplicatedSxmlFiles.Any())
+                {
+                    error = "Error: Duplicate SXML Files:\n";
+                    foreach (var sxmlFile in sxmlFiles.Where(s => s.Contains(@"\" + duplicatedSxmlFiles.First())).ToList())
+                    {
+                        error += sxmlFile + "\n";
+                    }
+                    error = error.TrimEnd('\n');
+                }
+
+                if (error != null)
+                {
+                    ExitTool(error);
+                }
+            }
+        }
+
         private void PrintMissingIndexesWarnings()
         {
             if (!String.IsNullOrEmpty(MissingIndexesWarnings))
@@ -624,7 +676,7 @@ namespace Logitude.DBMigrations.Models
             List<DXMLView> dxmlViews = new List<DXMLView>();
             List<DXMLProcedure> dxmlProcedures = new List<DXMLProcedure>();
             List<DXMLTrigger> dxmlTriggers = new List<DXMLTrigger>();
-            bool checkDxmlHash = !IsArgumentProvided("-ignorehash");
+            bool checkDxmlHash = !RunSettings.DebugMode ? !IsArgumentProvided("-ignorehash") : !RunSettings.IgnoreHash;
 
             foreach (var dxmlFile in dxmlFiles)
             {
@@ -1511,8 +1563,6 @@ namespace Logitude.DBMigrations.Models
 
         private void GetExecutedSXMLFilesFromDB()
         {
-            Console.WriteLine("Reading Executed SXML Files From DB ...");
-
             List<ExecutedSxmlFile> executedSxmlFiles = new List<ExecutedSxmlFile>();
 
             string[] dbTypes = new string[] { "Global", "Main", "SystemLogs" };
@@ -1598,31 +1648,6 @@ namespace Logitude.DBMigrations.Models
             }
 
             ExecutedSxmlFiles = executedSxmlFiles;
-        }
-
-        private void ValidateSXMLFiles(string[] sxmlFiles)
-        {
-            if(sxmlFiles != null)
-            {
-                string error = null;
-
-                List<string> duplicatedSxmlFiles = sxmlFiles.Select(s => Path.GetFileName(s)).ToList().GroupBy(s => s).SelectMany(g => g.Skip(1)).ToList();
-
-                if (duplicatedSxmlFiles.Any())
-                {
-                    error = "Error: Duplicate SXML Files:\n";
-                    foreach (var sxmlFile in sxmlFiles.Where(s => s.Contains(@"\" + duplicatedSxmlFiles.First())).ToList())
-                    {
-                        error += sxmlFile + "\n";
-                    }
-                    error = error.TrimEnd('\n');
-                }
-
-                if (error != null)
-                {
-                    ExitTool(error);
-                }
-            }
         }
 
         private ExecuteSxmlFileResult ShouldExecuteSxmlFile(string sxmlFileName, ScriptDefinition scriptDefinition)
@@ -1716,7 +1741,7 @@ namespace Logitude.DBMigrations.Models
                     {
                         includedModules = new IncludedModules
                         {
-                            Include = (bool)reader["INCLUDE"],
+                            Include = (Convert.ToInt32(reader["INCLUDE"].ToString())) == 1,
                             Modules = !String.IsNullOrEmpty(reader["MODULES"].ToString()) ? reader["MODULES"].ToString().ToLower().Split(',').ToList() : new List<string>()
                         };
                     }
@@ -1804,14 +1829,14 @@ namespace Logitude.DBMigrations.Models
             }
         }
 
-        private string[] GetToolDxmlFilesNames()
+        private List<string> GetToolDxmlFilesNames()
         {
-            string[] toolDxmlFilesNames = new string[]
+            List<string> toolDxmlFilesNames = new List<string>
             {
-                @"\DBMigrationsHistory.dxml".ToLower(),
-                @"\DBScriptsHistory.dxml".ToLower(),
-                @"\DXMLMigrationHashes.dxml".ToLower(),
-                @"\DBMigrationModules.dxml".ToLower()
+                "DBMigrationsHistory.dxml".ToLower(),
+                "DBScriptsHistory.dxml".ToLower(),
+                "DXMLMigrationHashes.dxml".ToLower(),
+                "DBMigrationModules.dxml".ToLower()
             };
 
             return toolDxmlFilesNames;
