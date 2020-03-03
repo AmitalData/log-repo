@@ -213,7 +213,7 @@ export class CargoSealItemComponent extends BaseComponent {
     public get Status() { return this._Status; }
     public set Status(newValue: string) { this._Status = newValue; }
 
-
+ 
     public SetLocalName(entity, fieldName) {
         if (!AppTool.IsNullOrEmpty(entity)) {
             this[fieldName] = entity.LocalName;

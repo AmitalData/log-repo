@@ -120,39 +120,7 @@ export class CargoSealsQueryComponent
         this.UIProperties.SetEnabled("CustomFileNo", null, false);
         this.UIProperties.SetEnabled("StatusName", this.ObjectTableName, false);
         this.InitScreen(menuArg.CargoSealIdentifierID);
-        //this._CargoSealIdentifierPMService.get(menuArg.CargoSealIdentifierID).subscribe(response => {
-        //    var result = response.Result;
-        //    if (!AppTool.IsNullOrEmpty(result)) {
-        //        this.CurrentEntity = result;
-        //        this._IsNew = false;
-        //        this.CargoRowNumber = this.CurrentEntity.CargoRowNumber;
-        //        this.DeclarationId = this.CurrentEntity.DeclarationId;
-        //        this.ContainerNumber = this.CurrentEntity.ContainerNumber;
-        //        this.UpdateDate = this.CurrentEntity.UpdateDate;
-        //        this.ImporterNumber = this.CurrentEntity.ImporterId; //?
-        //        this.CargoIdentifierTypeCode = this.CurrentEntity.CargoIdentifierTypeCode;
-        //        this.CargoIdentifierKey1 = this.CurrentEntity.CargoIdentifierKey1;
-        //        this.CargoIdentifierKey2 = this.CurrentEntity.CargoIdentifierKey2;
-        //        this.CargoIdentifierKey3 = this.CurrentEntity.CargoIdentifierKey3;
-        //        this.StatusName = this.CurrentEntity.StatusName;
-        //        if (this.CurrentEntity.CargoSeals != null) {
-        //            this.CurrentEntity.CargoSeals.forEach((item: CargoSealPM) => {
-        //                this.CargoSealObslist.Insert(new CargoSealComponent(item));
-        //            });
-        //        }
-        //        //if (this.CurrentEntity.Status == "1") {
-        //        //    this.IsDisplayOnly = true;
-        //        //    this.SetScreenEnabled();
-        //        //}
-
-        //        if (this.CurrentEntity.Status != "1" && !AppTool.IsNullOrEmpty( this.CustomFileNo)) {
-        //            this.SetFieldsEnabled(false);
-        //        }
-        //    }
-        //     if (this.CustomFileNo != null && (this.CurrentEntity==null|| this.CurrentEntity.Status== null))
-        //        this.CustomFileNoTextChanged(this.CustomFileNo);
-          
-        //});
+ 
 
     }
 
@@ -180,6 +148,14 @@ export class CargoSealsQueryComponent
                 this.CargoSealObslist.Clear();
                 if (this.CurrentEntity.CargoSeals != null) {
                     this.CurrentEntity.CargoSeals.forEach((item: CargoSealPM) => {
+                        debugger;
+                        if (item.UpdateTypeCode == '2') {
+                            item.CanToAdd = true;
+                        }
+                        else {
+                            item.CanToAdd = false;
+
+                        }
                         this.CargoSealObslist.Insert(new CargoSealComponent(item));
                     });
                 }
@@ -648,7 +624,8 @@ export class CargoSealsQueryComponent
 
     AddCargoSealCommand() {
         var newCargoSealPM = new CargoSealPM(this.EntityPM);
-        this.CargoSealObslist.Insert(new CargoSealComponent(newCargoSealPM));
+        newCargoSealPM.CanToAdd = false;
+          this.CargoSealObslist.Insert(new CargoSealComponent(newCargoSealPM));
     }
 
     DeleteCargoSealCommand(item) {
@@ -720,11 +697,16 @@ export class CargoSealComponent extends BaseComponent {
     public get UpdateTypeName() { return this.entityPM.UpdateTypeName; }
     public set UpdateTypeName(newValue: string) { this.entityPM.UpdateTypeName = newValue; }
 
-    public SetLocalName(entity, fieldName) {
+    public get CanToAdd() { return this.entityPM.CanToAdd; }
+    public set CanToAdd(newValue: boolean) { this.entityPM.CanToAdd = newValue; }
+
+
+     public SetLocalName(entity, fieldName) {
         if (!AppTool.IsNullOrEmpty(entity)) {
             this[fieldName] = entity.LocalName;
         } else {
             this[fieldName] = null;
         }
-    }
+
+     }
 }

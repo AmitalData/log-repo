@@ -307,10 +307,10 @@
                                                             <log-column [header]="'Customs.CargoSeal.F.UpdateTypeCode' | TextCodeTranslationPipe"
                                                                         [width]="'100'" [Alignment]="'right'" [binding]="'UpdateTypeCode'">
                                                                 <log-cell-template template="let item" #logcelltemplate>
-                                                                    <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                    <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode || item.CanToAdd!=false">
                                                                         <span>{{item.UpdateTypeName}}</span>
                                                                     </div>
-                                                                    <div *ngIf="logcelltemplate.IsEditMode">
+                                                                    <div *ngIf="logcelltemplate.IsEditMode &&   item.CanToAdd==false">
                                                                         <!--<select class="LogLovContainer LogLOVControl LogLovInputDiv" style="width: 200px; cursor:pointer;" #selectControl (change)="item.SetLocalName($event,'UpdateTypeName')">
                                                                             <option *ngFor="let c of AmendmentTypes" [value]="c.Id" [selected]="c.Id==item.UpdateTypeCode">{{c.LocalName}}</option>
                                                                         </select>-->
