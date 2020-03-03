@@ -60,6 +60,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string VendorName  { get; set; }
        [DataMember]
        public string DeclarationStatusTypeName  { get; set; }
+       [DataMember]
+       public string DeclarationOfficeName  { get; set; }
    }
 
 }

@@ -21,16 +21,16 @@ namespace Logitude.Customs.Data.EntityListQueryServices
     {
 	    private IQueryable<DeclarationReferantDataList> GetIqueryableList(IQueryable<DeclarationReferantData> iQueryable)
         {
-		IQueryable<DeclarationReferantDataList> query = (from a in iQueryable
-                                            select new DeclarationReferantDataList()
+		IQueryable<DeclarationReferantDataList> query = (from a in iQueryable.Include("CustomsVendor")
+                                                         join d in context.Declarations.Include("CustomerCard").Include("DeclarationOffice")
+                                                         on a.DeclarationId equals d.Id
+                                                         select new DeclarationReferantDataList()
 											{
                      
 					                          DeclarationId = a.DeclarationId,
 					
 					                          OrderNumber = a.OrderNumber,
-					
-					                          ArrivalDate = a.ArrivalDate,
-					
+										
 					                          EstimatedArrivalDate = a.EstimatedArrivalDate,
 					
 					                          Weight = a.Weight,
@@ -55,7 +55,19 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 					
 					                          PreClassification = a.PreClassification,
 					
-		                    	            });
+                                              CustomFileNo= d.CustomFileNo, 
+
+                                              CustomerName= d.CustomerCard.LocalName,
+
+                                              TransportModeId= d.TransportModeId,
+
+                                              DeclarationOfficeName = d.DeclarationOffice.LocalName,
+
+                                              VendorName= a.CustomsVendor.VendorName ,
+                                               ArrivalDate =DateTime.MinValue != a.ArrivalDate?a.ArrivalDate:a.EstimatedArrivalDate,
+
+
+                                                         });
             return query;
 		}
 
