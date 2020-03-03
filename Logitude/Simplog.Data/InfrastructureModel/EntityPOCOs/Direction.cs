@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -12,11 +13,12 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public string Id { get; set; }
         public string Name { get; set; }
         public string SearchFields { get; set; }
+        public DateTime? AutomaticLastUpdateDate { get; set; }
 
-       // public List<Shipment> Shipments { get; set; }       
+        // public List<Shipment> Shipments { get; set; }       
 
         ////[Include]
         ////[Association("DirectionQuote", "Id", "DirectionId")]
-      //  public List<Quote> Quotes { get; set; }
+        //  public List<Quote> Quotes { get; set; }
     }
 }

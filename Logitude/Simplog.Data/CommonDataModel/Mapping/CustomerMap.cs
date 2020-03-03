@@ -119,6 +119,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.ActivatedByUserId).HasColumnName("ActivatedByUserId");
             this.Property(t => t.SetAsInactiveByUserId).HasColumnName("SetAsInactiveByUserId");
             this.Property(t => t.ActivationRequestedByUserId).HasColumnName("ActivationRequestedByUserId");
+            this.Property(t => t.AutomaticLastUpdateDate).HasColumnName("AutomaticLastUpdateDate"); 
 
             // Relationships
             this.HasOptional(t => t.BillToCard).WithMany().HasForeignKey(d => d.BillToId);

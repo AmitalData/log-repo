@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -24,5 +25,6 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public bool AddedManually { get; set; }
         public string SearchFields { get; set; }
         public string AccountingExternalCode { get; set; }
+        public DateTime? AutomaticLastUpdateDate { get; set; }
     }
 }

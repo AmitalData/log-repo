@@ -179,5 +179,6 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public LogBoxTenantSetting LogBoxTenantSetting { get; set; }
         public bool HideFCLAllIn { get; set; }
         public bool AllowCustomersInAgentsLOV { get; set; }
+        public DateTime? AutomaticLastUpdateDate { get; set; }
     }
 }

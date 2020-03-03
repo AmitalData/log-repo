@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -29,7 +30,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public bool  InActive { get; set; }
         public bool IsLocalLanguage { get; set; }
         public string SearchFields { get; set; }
-
+        public DateTime? AutomaticLastUpdateDate { get; set; }
         public string ExternalId { get; set; }
 
         [ForeignKey("AddressTypeId")]

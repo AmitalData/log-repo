@@ -37,7 +37,7 @@ namespace Logitude.Social.Data.EntityPOCOs
         [Column("IsCancelled")]
 	    public bool IsCancelled { get; set; }
         [Column("CancelledDate")]
-	    public bool? CancelledDate { get; set; }
+	    public DateTime? CancelledDate { get; set; }
     }
 }
 	 

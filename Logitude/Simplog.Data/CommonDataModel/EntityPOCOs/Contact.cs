@@ -39,6 +39,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public bool DontShowLocalLabels { get; set; }
         public string ComputedKey { get; set; }
         public string CompanyName { get; set; }
+        public DateTime? AutomaticLastUpdateDate { get; set; }
 
         public virtual ContactLastLogin ContactLastLogin { get; set; }
 

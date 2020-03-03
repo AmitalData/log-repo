@@ -42,7 +42,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.IsPaymentRequired).IsRequired();
             this.Property(t => t.DeclarationWCOXml).IsMaxLength();
             this.Property(t => t.UserIdNumberXMLData).IsMaxLength();
-            this.Property(t => t.UserIdNumber).HasMaxLength(35);
+            this.Property(t => t.UserIdNumber).IsMaxLength().IsUnicode(true);
 
             // Table & Column Mappings
             this.ToTable("ShipmentAdditionalCloudDatas");
