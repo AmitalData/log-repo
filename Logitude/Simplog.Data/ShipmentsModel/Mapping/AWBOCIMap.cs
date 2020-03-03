@@ -29,7 +29,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.AWBInformationCode).HasColumnName("AWBInformationCode");
             this.Property(t => t.SupplementaryCustomsInfo).HasColumnName("SupplementaryCustomsInfo");
 
-            this.HasOptional(t => t.Shipment).WithMany().HasForeignKey(d => d.ShipmentId);
+            this.HasRequired(t => t.Shipment).WithMany().HasForeignKey(d => d.ShipmentId);
             this.HasOptional(t => t.Country).WithMany().HasForeignKey(d => d.CountryId);
             this.HasOptional(t => t.AWBCustomsInformation).WithMany().HasForeignKey(d => d.AWBCustomsInformationCode);
             this.HasOptional(t => t.AWBInformation).WithMany().HasForeignKey(d => d.AWBInformationCode);

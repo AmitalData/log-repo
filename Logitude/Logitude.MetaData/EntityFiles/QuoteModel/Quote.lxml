@@ -4291,7 +4291,7 @@
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
-    CanFilter="false"
+    CanFilter="true"
     DisplayOnly="false"
     SystemRequired="false"
     ObjectFieldNotRequired="false"
@@ -4371,7 +4371,7 @@
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
-    CanFilter="false"
+    CanFilter="true"
     DisplayOnly="false"
     SystemRequired="false"
     ObjectFieldNotRequired="false"
@@ -28358,6 +28358,11 @@
       Code="&quot;Quote.S.CostTotalAmount&quot;"
       DefaultText="&quot;Cost&quot;"
       TextCodeTypeCode="&quot;S&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Quote.F.PackageTypeQuantity.Short&quot;"
+      DefaultText="&quot;Quantity&quot;"
+      TextCodeTypeCode="&quot;F&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>

@@ -117,7 +117,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Partner Type",
-			      				    Code =  "7eba",
+			      				    Code =  "1438",
 			      				    Name =  "PartnerType",
 			      				    CloseTableCode =  "Id",
 			      				    CloseTableName =  "Name",

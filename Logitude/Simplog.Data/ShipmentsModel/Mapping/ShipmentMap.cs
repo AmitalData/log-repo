@@ -712,6 +712,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.OrderChargeableWeightEdited).HasColumnName("OrderChargeableWeightEdited");
             this.Property(t => t.NotInvoicedReceivablesAmount).HasColumnName("NotInvoicedReceivablesAmount");
             this.Property(t => t.FirstARInvoiceApprovalDate).HasColumnName("FirstARInvoiceApprovalDate");
+            this.Property(t => t.AutomaticLastUpdateDate).HasColumnName("AutomaticLastUpdateDate"); 
 
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")

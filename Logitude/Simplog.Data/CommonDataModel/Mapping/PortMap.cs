@@ -125,6 +125,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.StateId).HasColumnName("StateId");
             this.Property(t => t.CombinedCode).HasColumnName("CombinedCode");
             this.Property(t => t.StateName).HasColumnName("StateName");
+            this.Property(t => t.AutomaticLastUpdateDate).HasColumnName("AutomaticLastUpdateDate"); 
 
             // Relationships
             this.HasRequired(t => t.Country)

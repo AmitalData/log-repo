@@ -8616,6 +8616,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "TotalNumberOfUsers",
+					  						OldFieldName =  "TotalNumberOfUsers",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -8635,6 +8636,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "TotalNumberOfUsers",
 					  						ListPropertyPath =  "TotalNumberOfUsers",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -8674,6 +8676,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "TotalFreeUsers",
+					  						OldFieldName =  "TotalFreeUsers",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -8693,6 +8696,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "TotalFreeUsers",
 					  						ListPropertyPath =  "TotalFreeUsers",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -8730,6 +8734,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "AveragePrice",
+					  						OldFieldName =  "AveragePrice",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
@@ -8749,6 +8754,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "AveragePrice",
 					  						ListPropertyPath =  "AveragePrice",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -8788,6 +8794,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "TotalPaymentamount",
+					  						OldFieldName =  "TotalPaymentamount",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
@@ -8807,6 +8814,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "TotalPaymentamount",
 					  						ListPropertyPath =  "TotalPaymentamount",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,

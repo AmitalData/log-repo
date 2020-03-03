@@ -1,4 +1,4 @@
-﻿import {ShipmentPM} from '../EntityPMs/ShipmentPM';
+import {ShipmentPM} from '../EntityPMs/ShipmentPM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {AppTool, DateTool} from '../../Infrastructure/Tools';
 import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
@@ -25,7 +25,7 @@ export class ShipmentPMInitService {
             entityPM.VolumeUnitCode = SessionLocator.TenantPM.VolumeUnitCode;
             entityPM.DimensionsUnitCode = SessionLocator.TenantPM.DimensionsUnitCode;
             entityPM.GrossWeightUnitCode = SessionLocator.TenantPM.GrossWeightUnitCode;
-            entityPM.ChargeableWeightUnitCode = SessionLocator.TenantPM.ChargeableWeightUnitCode;
+            //entityPM.ChargeableWeightUnitCode = SessionLocator.TenantPM.ChargeableWeightUnitCode;
             entityPM.CreatedByUserId = SessionLocator.LoggedUserId;
             entityPM.BranchId = SessionLocator.LoggedUserPM.BranchId;
             entityPM.DepartmentId = SessionLocator.LoggedUserPM.DepartmentId;

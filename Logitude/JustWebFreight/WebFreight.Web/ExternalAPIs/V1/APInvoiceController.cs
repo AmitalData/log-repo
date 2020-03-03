@@ -173,7 +173,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             apinvoicePM.SetApproved = true;
                             apinvoicePM.SetReTransfer = false;
                             apinvoicePM.SetCancelApproval = false;
-
+                            apinvoicePM.CreatedFromAPI = true;
                             if (apinvoicePM.TransferStatusCode == null)
                                 apinvoicePM.TransferStatusCode = "NR";
 
@@ -311,7 +311,10 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
                 line.ChargeTypeGLAccountId = charge.PayableDebitGLAcountId;
             }
+
+          
         }
+      
 
         private TenantPM GetTenantPM(int tenant)
         {

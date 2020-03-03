@@ -27,19 +27,10 @@ export class MonthlyConversionFilterComponent extends BaseComponent   {
     public OpportunityTypeId: string;
     public BusinessUnitId: string;
     public OwnerId: string;
-    public IsByCreateDate: boolean = true;
-    public IsStageDate: boolean = false;
-    public IsCreateDate: boolean = true;
-    public SelectedProdustsItem: any;
-    public IsCreateDateId: string = "IsCreateDateId_";
-    public IsStageDateId: string = "IsStageDateId";
-    public ShipmentTypeRadio: string = "ShipmentTypeRadio_";
+    public SelectedProdustsItem: any;   
     private reportDoaminService: ReportsDomainService;
     public ResellerId: string = null;
-    IsStageDateClicked() {
-        this.IsByCreateDate = false;
-    }
-
+    
     fillcombo(arr: any) {
         this.FilterdAdditionalService = [];
         arr.forEach((i) => {
@@ -53,10 +44,7 @@ export class MonthlyConversionFilterComponent extends BaseComponent   {
         });
         this.FilterdAdditionalService.sort((a, b) => { return (a.Name === b.Name) ? 0 : (a.Name < b.Name) ? -1 : 1 });        
     }
-
-    IsCreateDateClicked() {
-        this.IsByCreateDate = true;        
-    }
+    
     public TenantPM: TenantPM;
     queryFilterItems: QueryFilterItem[];
     public CustomerId = null;
@@ -71,10 +59,7 @@ export class MonthlyConversionFilterComponent extends BaseComponent   {
     public IsCRMTenant: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
-        super();
-        this.IsStageDateId = this.IsStageDateId+this.CurrentSession.GetNewId(this.IsStageDateId);
-        this.IsCreateDateId = this.IsCreateDateId + this.CurrentSession.GetNewId(this.IsCreateDateId);
-        this.ShipmentTypeRadio = this.ShipmentTypeRadio + this.CurrentSession.GetNewId(this.ShipmentTypeRadio);
+        super();        
         this.reportDoaminService = new ReportsDomainService();
 
         if (SessionLocator.Tenant == 341) {
@@ -177,13 +162,6 @@ export class MonthlyConversionFilterComponent extends BaseComponent   {
             this.queryFilterItem.DisplayInList = false;
             this.queryFilterItem.FieldName = "CountryId";
             this.queryFilterItem.FieldValue = this.CountryId;
-            this.queryFilterItem.Operator = "Equals";
-            this.queryFilterItems.push(this.queryFilterItem);
-
-            this.queryFilterItem = new QueryFilterItem();
-            this.queryFilterItem.DisplayInList = false;
-            this.queryFilterItem.FieldName = "IsByCreateDate";
-            this.queryFilterItem.FieldValue = this.IsByCreateDate;
             this.queryFilterItem.Operator = "Equals";
             this.queryFilterItems.push(this.queryFilterItem);
             

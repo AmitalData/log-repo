@@ -194,7 +194,7 @@ namespace WebFreight.Web.App_Code
                             DocumentsFilingService documentsFilingService = new DocumentsFilingService(objectContext, NewEntityPM.Tenant);
                             documentsFilingService.SetChangeSet(NewEntityPM.DocumentsFilingMetaDataValues);
                             documentsFilingService.Create(NewEntityPM, null, null, true);
-                            APILogsUtility.UpdateAPILogStatus(LogPM.Id, LogPM.Tenant, "D", 1, DateTime.Now, DateTime.UtcNow, "Insert Document To Forwarder Tenant Done Successfully " + DateTime.Now, null, null, null, "");
+                            APILogsUtility.UpdateAPILogStatus(LogPM.Id, LogPM.Tenant, "D", 1, DateTime.Now, DateTime.UtcNow, "Insert Document To Forwarder Tenant Done Successfully " + DateTime.Now, null, NewEntityPM.Id, null, "");
 
                             return Request.CreateResponse(HttpStatusCode.OK, NewEntityPM.Id);
                         }
