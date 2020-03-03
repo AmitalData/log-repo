@@ -394,6 +394,7 @@ namespace Simplog.Data.ShipmentModel.Mapping
             this.Property(t => t.ARInvoices).HasMaxLength(1000).IsUnicode(false);
             this.Property(t => t.ReleasingAgentId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.ReleasingAgentName).HasMaxLength(60).IsUnicode(false);
+            this.Property(t => t.SLAC).HasMaxLength(5).IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("ShipmentDataView");
@@ -879,6 +880,7 @@ namespace Simplog.Data.ShipmentModel.Mapping
             this.Property(t => t.ReleasingAgentName).HasColumnName("ReleasingAgentName");
             this.Property(t => t.NotInvoicedReceivablesAmount).HasColumnName("NotInvoicedReceivablesAmount");
             this.Property(t => t.FirstARInvoiceApprovalDate).HasColumnName("FirstARInvoiceApprovalDate");
+            this.Property(t => t.SLAC).HasColumnName("SLAC");
         }
     }
 }

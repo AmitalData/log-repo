@@ -810,6 +810,7 @@ namespace WebFreight.Web.ReportsWebServices
                                                        select pa).FirstOrDefault();
 
                             packageDetail.DescriptionOfGoods = !string.IsNullOrEmpty(package.Description) ? package.Description : "";
+                            
                             if (!string.IsNullOrEmpty(package.Harmonize))
                             {
                                 if (!string.IsNullOrEmpty(packageDetail.DescriptionOfGoods))
@@ -1056,6 +1057,16 @@ namespace WebFreight.Web.ReportsWebServices
                     StringBuilder strGoods = new StringBuilder();
                     List<ShipmentPackagePM> shipmentPackagesList = packagesQuery.GetShipmentPackages(shipmentView.Id, shipmentView.ShipmentNumber, tenant);
                     strGoods.Append(shipmentView.DescriptionOfGoods != null ? shipmentView.DescriptionOfGoods : "");
+
+                    if (!string.IsNullOrEmpty(shipmentView.SLAC))
+                    {
+                        if (!string.IsNullOrEmpty(strGoods.ToString()))
+                        {
+                            strGoods.Append(Environment.NewLine);
+                        }
+
+                        strGoods.Append("SLAC: " + shipmentView.SLAC);
+                    }
 
                     if (shipmentView.ShipmentTypeName == "FCL" || shipmentView.ShipmentTypeName == "LCL")
                     {
@@ -1418,12 +1429,22 @@ namespace WebFreight.Web.ReportsWebServices
             StringBuilder strGoods = new StringBuilder();
             strGoods.Append(master.DescriptionOfGoods != null ? master.DescriptionOfGoods : "");
 
+            if (!string.IsNullOrEmpty(master.SLAC))
+            {
+                if (!string.IsNullOrEmpty(strGoods.ToString()))
+                {
+                    strGoods.Append(Environment.NewLine);
+                }
+
+                strGoods.Append("SLAC: " + master.SLAC);
+            }
+
             if (master.ShipmentTypeName == "FCL" || master.ShipmentTypeName == "LCL")
             {
                 strGoods.Append(Environment.NewLine);
                 strGoods.Append(master.ShipmentTypeName);
                 strGoods.Append(Environment.NewLine);
-
+                
                 for (int i = 0; i < shipmentPackagesList.Count; i++)
                 {
                     strGoods.Append(shipmentPackagesList[i].ContainerNumber != null ? "CNT " + shipmentPackagesList[i].ContainerNumber : "");
