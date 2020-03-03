@@ -155,6 +155,8 @@
     <Compile Include="FakeMessagingServices\Fake_DCAInDF_NG_2470_MSG16001_ReleaseGoodsMessagingService.cs" />
     <Compile Include="FakeMessagingServices\Fake_DCAInTSH_MSG2_3050_PaymentOrderReplyMessagingService.cs" />
     <Compile Include="FakeMessagingServices\Fake_ImportDeclaration_Response.cs" />
+    <Compile Include="FakeMessagingServices\FakeDCA_MSG2030_DepositRequestCreatedInfoMessagingServices.cs" />
+    <Compile Include="FakeMessagingServices\Fake_DCA_NG_5110_DepositRequestFulfillednfoMsgMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInDE_NG_5108_DecisionMessageMessagingService.cs" />
     <Compile Include="Dca\DCAMoveIncomeFileToDirService.cs" />
     <Compile Include="Dca\DCARenameIncomeFileService.cs" />

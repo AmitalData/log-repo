@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using System.Xml.Linq;
 
 namespace Logitude.Server.Tools.Helpers
@@ -113,6 +114,17 @@ new XComment(rem),
                 return (hash_data_in[key].ToString());
             }
             return ("");
+        }
+        public static string GetHtmlDecodeValue(ref Dictionary<string, string> hash_data_in, string key)
+        {
+            var result = GetValue(ref hash_data_in, key);
+            if (!string.IsNullOrEmpty(result))
+            {
+                result = HttpUtility.HtmlDecode(result);
+                
+            }
+            return result;
+
         }
 
 

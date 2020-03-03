@@ -20,17 +20,19 @@
                         <IconButton [Name]="'Refresh'" (click)="RefreshButtonClicked()"></IconButton>
                     </td>
 
-                    <td style="width: 15px; vertical-align:middle;">
+                    <td>
                         <div></div>
                     </td>
 
                     <td style="width: 45px; vertical-align:middle; font-size:11px; color : #6E7172;">{{'Accounting.General.O.Search' | TextCodeTranslationPipe}}:</td>
 
                     <td style="width: 300px;">
-                        <SearchBox [Watermark]="'Customs.CourierMaster.O.Flight' | TextCodeTranslationPipe" [ObjectTableName]="'Customs.CourierMaster'" [IsQuickSearch]="true" (ItemClicked)="EditCourierMaster($event)"></SearchBox>
+                        <!--<SearchBox [Watermark]="'Customs.CourierMaster.O.Flight' | TextCodeTranslationPipe" [ObjectTableName]="'Customs.CourierMaster'" (ItemClicked)="EditCourierMaster($event)"></SearchBox>-->
+                        <SearchTextBox [ObjectTableName]="'Customs.CourierMaster'" (SearchTextChangeEvent)="onSearchTextChangeEvent($event)" [SearchText]="SearchFilter" [PlaceHolder]="'ש.מר./ש.מ.פ/קוד ח.תעופה'"></SearchTextBox>
+
                     </td>
 
-                    <td>
+                    <td style="width: 15px; vertical-align:middle;">
                         <div></div>
                     </td>
 
