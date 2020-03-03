@@ -90,8 +90,7 @@ export class DeclarationCargoSealTabComponent extends BaseComponent implements O
     }
 
     private LoadCargoSealsList() {
-        debugger;
-        this.CargoSealObslist = new ObservableCollection([]);
+         this.CargoSealObslist = new ObservableCollection([]);
 
         this._DeclarationWebService.GetDeclarationCargoSealLists(this.EntityPM.Id, this.EntityPM.Tenant)
             .subscribe((myResponse: ServiceResponse) => {
