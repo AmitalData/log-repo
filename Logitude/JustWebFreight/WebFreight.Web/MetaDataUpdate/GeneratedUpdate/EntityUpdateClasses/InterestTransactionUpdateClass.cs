@@ -116,9 +116,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Interest Transactions",
-
 			      				    Code =  "4f86",
-
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Accounting",
@@ -425,11 +423,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "InterestEntityTypeCode",
-
 					  						DefaultText =  "Entity Type & Number",
 					  						FullLocalDefaultText =  "סוג ישות & מספר",
-
-
 					  						ListFieldLable =  "InterestEntityTypeCodeListLable",
 					  						ListLableDefaultText =  "Interest Entity Type Code",
 					  						IsMaxLength =  false,
@@ -792,7 +787,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "InterestValueDate",
 					  						DefaultText =  "Interest Invoice Value Date",
-					  						FullLocalDefaultText =  "תםריך ריבית מהחשבונית",
+					  						FullLocalDefaultText =  "תאריך ריבית מהחשבונית",
 					  						ListFieldLable =  "InterestValueDateListLable",
 					  						ListLableDefaultText =  "Interest Value Date ",
 					  						IsMaxLength =  false,
@@ -913,7 +908,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsClosed",
 					  						DefaultText =  "Is Closed",
-					  						FullLocalDefaultText =  "הםם סגור",
+					  						FullLocalDefaultText =  "האם סגור",
 					  						ListFieldLable =  "IsClosedListLable",
 					  						ListLableDefaultText =  "Is Closed",
 					  						IsMaxLength =  false,
