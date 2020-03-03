@@ -1024,9 +1024,10 @@ namespace Logitude.BL.Helpers
                         HtmlTemplate.Append("</tr>");
                     }
 
-
-                    AppendPerContainerTotalBySaleCurrency(quotePM, setting, HtmlTemplate, totalPerContainersTableDesign, totalPerContainersTableLines, totals);
-
+                    if (setting.TotalPerContainersCurrencyType != "MULTIPLE")
+                    {
+                        AppendPerContainerTotalBySaleCurrency(quotePM, setting, HtmlTemplate, totalPerContainersTableDesign, totalPerContainersTableLines, totals);
+                    }
                     if (setting.TotalPerContainersCurrencyType == "MULTIPLE")
                     {
                         HtmlTemplate.Append("<tr style= 'height:auto; width:auto;vertical-align:central'>");
