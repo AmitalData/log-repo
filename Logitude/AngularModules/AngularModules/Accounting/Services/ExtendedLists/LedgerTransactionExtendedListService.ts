@@ -1,3 +1,4 @@
+import { HttpHeaders ,HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Http, Headers} from '@angular/http';
 import {Observable}     from 'rxjs/Rx';
@@ -6,16 +7,18 @@ import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResp
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {LedgerTransactionList} from '../../EntityLists/LedgerTransactionList';
-
+import {catchError,map } from 'rxjs/operators'
 @Injectable()
 
 export class LedgerTransactionExtendedListService {
     private _http: Http
+    private httpClient: HttpClient
     private _apiUrl: string;
     private _reconciliationUrl: string;
 
     constructor() {
         this._http = ServiceHelper.Http;
+        this.httpClient=ServiceHelper.HttpClient
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/LedgerTransactions';
         this._reconciliationUrl = ServiceHelper.GetLogitudeURL() + 'api/ReconciliationOp';
     }
@@ -122,25 +125,44 @@ export class LedgerTransactionExtendedListService {
             urlparameters = urlparameters.concat("&AdditionalFilters=").concat(addtionalFiltersValues);
         }
 
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
+        // var authHeader = new Headers();
+        // authHeader.append('Token', SessionInfo.Token);
         var callUrl = this._apiUrl.concat(urlparameters);//
 
+        const httpOptions={
+            headers:new HttpHeaders({
+                'Content-Type':'application/json',
+                'Token':ServiceHelper.GetLoggedUserToken()
+            })
+        };
 
-        return Observable.defer(() => {
-            return this._http.get(callUrl, {
-                headers: authHeader
-            }).map(response => {
 
-                var serviceResponse: ServiceResponse;
-                serviceResponse = response.json();
-
-                //console.log("serviceResponse: ", serviceResponse);
-
-                //serviceResponse.Result = _mappedListsArray;
-                return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+        return Observable.defer(()=>{
+            return this.httpClient.get(callUrl,httpOptions).pipe(
+                map(response=>{
+                    var jsonResult=response;
+                    const serviceResponse:ServiceResponse =new ServiceResponse();
+                    serviceResponse.Result=response;
+                    return serviceResponse;
+                }),
+                catchError(ServiceHelper.HandleServiceError)
+            );
         });
+
+        // return Observable.defer(() => {
+        //     return this._http.get(callUrl, {
+        //         headers: authHeader
+        //     }).map(response => {
+
+        //         var serviceResponse: ServiceResponse;
+        //         serviceResponse = response.json();
+
+        //         //console.log("serviceResponse: ", serviceResponse);
+
+        //         //serviceResponse.Result = _mappedListsArray;
+        //         return serviceResponse;
+        //     }).catch(ServiceHelper.HandleServiceError);
+        // });
     }
 
     getOpenReconciliationsByFilter(accountId: string, filters: ApiQueryFilters) {
