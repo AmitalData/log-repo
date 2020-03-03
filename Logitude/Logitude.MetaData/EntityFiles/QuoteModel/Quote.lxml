@@ -28286,6 +28286,11 @@
       DefaultText="&quot;Cost&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Quote.F.PackageTypeQuantity.Short&quot;"
+      DefaultText="&quot;Quantity&quot;"
+      TextCodeTypeCode="&quot;F&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
