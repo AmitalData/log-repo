@@ -185,10 +185,10 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.HasOptional(t => t.RecurringPeriod).WithMany().HasForeignKey(d => d.RecurringPeriodCode);
             this.HasOptional(t => t.PaymentCurrency).WithMany().HasForeignKey(d => d.PaymentCurrencyCode);
             this.HasOptional(t => t.BluesnapContract).WithMany().HasForeignKey(d => d.BluesnapContractId);
-            this.HasOptional(t => t.BluesnapContract).WithMany().HasForeignKey(d => d.BluesnapCRMContractId);
-            this.HasOptional(t => t.BluesnapContract).WithMany().HasForeignKey(d => d.BluesnapEAWBContractId);
-            this.HasOptional(t => t.BluesnapContract).WithMany().HasForeignKey(d => d.BluesnapEAWBSContractId);
-            this.HasOptional(t => t.BluesnapContract).WithMany().HasForeignKey(d => d.BluesnapInttraStockContractId);            
+            this.HasOptional(t => t.BluesnapContractCRM).WithMany().HasForeignKey(d => d.BluesnapCRMContractId);
+            this.HasOptional(t => t.BluesnapContractEAWB).WithMany().HasForeignKey(d => d.BluesnapEAWBContractId);
+            this.HasOptional(t => t.BluesnapContractEAWBS).WithMany().HasForeignKey(d => d.BluesnapEAWBSContractId);
+            this.HasOptional(t => t.BluesnapInttraStockContract).WithMany().HasForeignKey(d => d.BluesnapInttraStockContractId);            
             this.HasOptional(t => t.AWBMessagesCCSType).WithMany().HasForeignKey(d => d.AWBMessagesCCSTypeCode);
             this.HasOptional(t => t.TenantType).WithMany().HasForeignKey(d => d.TenantTypeCode);
 
