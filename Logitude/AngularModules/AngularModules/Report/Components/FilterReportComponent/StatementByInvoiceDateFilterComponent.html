@@ -78,8 +78,8 @@
 
         <tr>
             <td>
-                <table style="height:60px;width:550px;">
-                    <tr style="height:25px">
+                <table ng-style="{'height' : (ValidationErrorsList != null && ValidationErrorsList.length) > 0?'30px':'60px' }" style="width:550px;">
+                    <tr style="height:25px" *ngIf="ValidationErrorsList != null && ValidationErrorsList.length == 0">
                         <td style="width:5px;"><div style="width:5px;"></div></td>
                         <td colspan="10"><div style="color:#1B90CB;font-size:14px;">Filter By:</div></td>
                     </tr>
