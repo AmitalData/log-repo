@@ -8261,6 +8261,7 @@
   <field
     Id="&quot;bf4ee9f3-ad70-4ed1-b482-056e4ec20bdd&quot;"
     FieldName="&quot;VoidedByJournalNumber&quot;"
+    OldFieldName="&quot;VoidedByJournalNumber&quot;"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -8284,6 +8285,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;VoidedByJournalNumber&quot;"
     ListPropertyPath="&quot;VoidedByJournalNumber&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -9693,6 +9695,34 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false" />
+      <DCField
+        DCFieldName="&quot;CancelationNotes&quot;"
+        FieldName="&quot;CancelationNotes&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;nText&quot;"
+        IsNullable="false"
+        IsSpecialField="false"
+        IsCustomType="false"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false" />
+      <DCField
+        DCFieldName="&quot;AccountingCancelationDate&quot;"
+        FieldName="&quot;AccountingCancelationDate&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;DateTime&quot;"
+        IsNullable="true"
+        IsSpecialField="false"
+        IsCustomType="false"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false" />
     </DataContract>
   </DataContracts>
   <AdditionalTextCodes>
@@ -9969,6 +9999,12 @@
       Code="&quot;ARPayment.O.CancelAPPayment&quot;"
       DefaultText="&quot;Cancel ARPayment&quot;"
       LocalDefaultText="&quot;ביטול קבלות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARPayment.O.VoidByJournal&quot;"
+      DefaultText="&quot;Void by journal number&quot;"
+      LocalDefaultText="&quot;בוטל ע”י פקודת יומן &quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

@@ -5765,6 +5765,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   {
 					 
 					 						FieldName =  "VoidedByJournalNumber",
+					  						OldFieldName =  "VoidedByJournalNumber",
 					  						ObjectTableName =  "ARPayment",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -5784,6 +5785,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "VoidedByJournalNumber",
 					  						ListPropertyPath =  "VoidedByJournalNumber",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -6657,6 +6659,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
  		   TextCode ARPaymentTextCode_ARPAymentOCancellationDateValidation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPAyment.O.CancellationDateValidation", DefaultText = "Cancellation date cannot be before ARpayment date",LocalDefaultText = @"תאריך הביטול לא יכול להיות קודם לתאריך הקבלה", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ARPaymentTextCode_ARPaymentOCancelAPPayment = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.O.CancelAPPayment", DefaultText = "Cancel ARPayment",LocalDefaultText = @"ביטול קבלות", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARPaymentTextCode_ARPaymentOVoidByJournal = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.O.VoidByJournal", DefaultText = "Void by journal number",LocalDefaultText = @"בוטל ע”י פקודת יומן ", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

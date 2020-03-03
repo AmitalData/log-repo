@@ -76,6 +76,7 @@ export class ARPaymentList {
 		BankAccountName: string;
 		AccountingCancelationDate: Date;
 		CancelationNotes: string;
+		VoidedByJournalNumber: string;
 		MetodoPagoCode: string;
 		TipoCadenaPago: string;
 		CertPago: string;
@@ -99,6 +100,5 @@ export class ARPaymentList {
 		Field8: string;
 		Field9: string;
 		Field10: string;
-        VoidedByJournalNumber: string;
-
+	
 }

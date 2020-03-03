@@ -66,10 +66,7 @@ export class ARPaymentPM {
     public get PrintDate() { return this.printDate; }
     public set PrintDate(newValue: Date) { if (this.printDate != newValue) { this.printDate = newValue; this.MarkAsDirty("PrintDate"); } }
        
-    private voidedByJournalNumber: string;
-    public get VoidedByJournalNumber() { return this.voidedByJournalNumber; }
-    public set VoidedByJournalNumber(newValue: string) { if (this.voidedByJournalNumber != newValue) { this.voidedByJournalNumber = newValue; this.MarkAsDirty("VoidedByJournalNumber"); } }
-
+	 
     private printByUserId: string;
     public get PrintByUserId() { return this.printByUserId; }
     public set PrintByUserId(newValue: string) { if (this.printByUserId != newValue) { this.printByUserId = newValue; this.MarkAsDirty("PrintByUserId"); } }
@@ -118,6 +115,11 @@ export class ARPaymentPM {
     private cancelationNotes: string;
     public get CancelationNotes() { return this.cancelationNotes; }
     public set CancelationNotes(newValue: string) { if (this.cancelationNotes != newValue) { this.cancelationNotes = newValue; this.MarkAsDirty("CancelationNotes"); } }
+       
+	 
+    private voidedByJournalNumber: string;
+    public get VoidedByJournalNumber() { return this.voidedByJournalNumber; }
+    public set VoidedByJournalNumber(newValue: string) { if (this.voidedByJournalNumber != newValue) { this.voidedByJournalNumber = newValue; this.MarkAsDirty("VoidedByJournalNumber"); } }
        
 	 
     private branchId: string;

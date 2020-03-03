@@ -79,6 +79,7 @@ export class CancelARPaymentComponent extends BaseComponent implements OnInit {
                 this.UIProperties.SetValidity("AccountingCancelationDate", this.ObjectTableName, false, TextCodeTranslator.Translate("ARPAyment.O.CancellationDateValidation"));
             }
             if (value != null) {
+                this.UIProperties.SetRequired("AccountingCancelationDate", this.ObjectTableName, false);
                 this.CheckClosedMonth(value);
             }
         }
