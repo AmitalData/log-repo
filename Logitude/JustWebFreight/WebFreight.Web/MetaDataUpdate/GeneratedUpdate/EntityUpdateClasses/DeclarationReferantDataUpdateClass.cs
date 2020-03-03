@@ -105,7 +105,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "רפרנט",
 			      				    DefaultText =  "Declaration Referant Data",
-			      				    Code =  "c040",
+			      				    Code =  "5277",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -274,7 +274,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsChecked =  true,
 					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.DeclarationReferantData",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "LookUp",
+					  						LookUpTableName =  "Customs.CustomsVendor",
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
@@ -287,7 +288,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
-					  						Operator =  "StartsWith",
+					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -565,7 +566,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  1,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
@@ -603,7 +604,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						HasTemplate =  false,
+					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						IsSpellCheckedFullFieldLable =  false,
 					  						IsSpellCheckedHelpLocalDefaultText =  false,
@@ -672,7 +673,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						HasTemplate =  false,
+					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						IsSpellCheckedFullFieldLable =  false,
 					  						IsSpellCheckedHelpLocalDefaultText =  false,
@@ -703,7 +704,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  1,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
@@ -741,7 +742,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						HasTemplate =  false,
+					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						IsSpellCheckedFullFieldLable =  false,
 					  						IsSpellCheckedHelpLocalDefaultText =  false,
@@ -879,7 +880,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						HasTemplate =  false,
+					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						IsSpellCheckedFullFieldLable =  false,
 					  						IsSpellCheckedHelpLocalDefaultText =  false,
@@ -947,7 +948,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						HasTemplate =  false,
+					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						IsSpellCheckedFullFieldLable =  false,
 					  						IsSpellCheckedHelpLocalDefaultText =  false,
@@ -1219,7 +1220,413 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						HasTemplate =  true,
+					  						IsCustom =  false,
+					  						IsSpellCheckedFullFieldLable =  false,
+					  						IsSpellCheckedHelpLocalDefaultText =  false,
+					  						IsSpellCheckedShortLocalDefaultText =  false,
+					  						IsSpellCheckedListLocalDefaultText =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "CustomFileNo",
+					  						OldFieldName =  "CustomFileNo",
+					  						IsNew =  true,
+					  						IsChecked =  true,
+					  						IsDeleted =  false,
+					  						ObjectTableName =  "Customs.DeclarationReferantData",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  12,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  12,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						Operator =  "StartsWith",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "CustomFileNo",
+					  						ListPropertyPath =  "CustomFileNo",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.Declaration",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "CustomFileNo",
+					  						DefaultText =  "Custom File No",
+					  						ListFieldLable =  "CustomFileNoListLable",
+					  						ListLableDefaultText =  "Custom File No",
+					  						ListLocalDefaultText =  "תיק עמילות",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						IsSpellCheckedFullFieldLable =  false,
+					  						IsSpellCheckedHelpLocalDefaultText =  false,
+					  						IsSpellCheckedShortLocalDefaultText =  false,
+					  						IsSpellCheckedListLocalDefaultText =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "CustomerName",
+					  						OldFieldName =  "CustomerName",
+					  						IsNew =  true,
+					  						IsChecked =  true,
+					  						IsDeleted =  false,
+					  						ObjectTableName =  "Customs.DeclarationReferantData",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  60,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  60,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						Operator =  "StartsWith",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "CustomerName",
+					  						ListPropertyPath =  "CustomerName",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.Declaration",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "CustomerName",
+					  						DefaultText =  "Customer Name",
+					  						ListFieldLable =  "CustomerNameListLable",
+					  						ListLableDefaultText =  "Customer Name",
+					  						ListLocalDefaultText =  "שם לקוח",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						IsSpellCheckedFullFieldLable =  false,
+					  						IsSpellCheckedHelpLocalDefaultText =  false,
+					  						IsSpellCheckedShortLocalDefaultText =  false,
+					  						IsSpellCheckedListLocalDefaultText =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "TransportModeId",
+					  						OldFieldName =  "TransportModeId",
+					  						IsNew =  true,
+					  						IsChecked =  true,
+					  						IsDeleted =  false,
+					  						ObjectTableName =  "Customs.DeclarationReferantData",
+					  						FieldsDataType =  "LookUp",
+					  						LookUpTableName =  "Customs.CustomsTransportMode",
+					  						MinLength =  0,
+					  						MaxLength =  17,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  17,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "TransportModeId",
+					  						ListPropertyPath =  "TransportModeId",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.Declaration",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "TransportModeId",
+					  						DefaultText =  "Transport Mode ",
+					  						ListFieldLable =  "TransportModeIdListLable",
+					  						ListLableDefaultText =  "Transport Mode ",
+					  						ListLocalDefaultText =  "סוג הובלה",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						HasTemplate =  true,
+					  						IsCustom =  false,
+					  						IsSpellCheckedFullFieldLable =  false,
+					  						IsSpellCheckedHelpLocalDefaultText =  false,
+					  						IsSpellCheckedShortLocalDefaultText =  false,
+					  						IsSpellCheckedListLocalDefaultText =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "DeclarationOfficeCode",
+					  						OldFieldName =  "DeclarationOfficeCode",
+					  						IsNew =  true,
+					  						IsChecked =  true,
+					  						IsDeleted =  false,
+					  						ObjectTableName =  "Customs.DeclarationReferantData",
+					  						FieldsDataType =  "LookUp",
+					  						LookUpTableName =  "Customs.CustomsHouseType",
+					  						MinLength =  0,
+					  						MaxLength =  17,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  17,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "DeclarationOfficeCode",
+					  						ListPropertyPath =  "DeclarationOfficeCode",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.Declaration",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "DeclarationOfficeCode",
+					  						DefaultText =  "Declaration Office",
+					  						ListFieldLable =  "DeclarationOfficeCodeListLable",
+					  						ListLableDefaultText =  "Declaration Office",
+					  						ListLocalDefaultText =  "בית מכס",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						IsSpellCheckedFullFieldLable =  false,
+					  						IsSpellCheckedHelpLocalDefaultText =  false,
+					  						IsSpellCheckedShortLocalDefaultText =  false,
+					  						IsSpellCheckedListLocalDefaultText =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "VendorName",
+					  						IsNew =  true,
+					  						IsChecked =  true,
+					  						IsDeleted =  false,
+					  						ObjectTableName =  "Customs.DeclarationReferantData",
+					  						FieldsDataType =  "nText",
+					  						MinLength =  0,
+					  						MaxLength =  55,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  55,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						Operator =  "StartsWith",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "VendorName",
+					  						ListPropertyPath =  "VendorName",
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "DeclarationReferantData",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "VendorName",
+					  						DefaultText =  "Vendor Name",
+					  						ListFieldLable =  "VendorNameListLable",
+					  						ListLableDefaultText =  "Vendor Name",
+					  						ListLocalDefaultText =  "שם ספק",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						IsSpellCheckedFullFieldLable =  false,
+					  						IsSpellCheckedHelpLocalDefaultText =  false,
+					  						IsSpellCheckedShortLocalDefaultText =  false,
+					  						IsSpellCheckedListLocalDefaultText =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "DeclarationStatusTypeName",
+					  						IsNew =  true,
+					  						IsChecked =  true,
+					  						IsDeleted =  false,
+					  						ObjectTableName =  "Customs.DeclarationReferantData",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  100,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  100,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						Operator =  "StartsWith",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "DeclarationStatusTypeName",
+					  						ListPropertyPath =  "DeclarationStatusTypeName",
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "DeclarationReferantData",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "DeclarationStatusTypeName",
+					  						DefaultText =  "Declaration Status Type",
+					  						ListFieldLable =  "DeclarationStatusTypeNameListLable",
+					  						ListLableDefaultText =  "Declaration Status Type Name",
+					  						ListLocalDefaultText =  "סטטוס הצהרה",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						IsSpellCheckedFullFieldLable =  false,
 					  						IsSpellCheckedHelpLocalDefaultText =  false,
@@ -1232,7 +1639,57 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
-	    {  	   
+	    {  
+	        FeatureRepository featureRepository = new FeatureRepository(0); 
+            List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+	        QueryGroup DeclarationReferantDataQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "5277", Name = " Query Group" }, queryGroupRepository);
+	        queryGroupRepository.SubmitChanges();
+
+	        ObjectTable DeclarationReferantDataObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.DeclarationReferantData" && d.Tenant == 0).FirstOrDefault();
+	        List<ObjectField> DeclarationReferantDataObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.DeclarationReferantData").ToList();   
+
+			   TextCode DeclarationReferantDataTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DeclarationReferantData.Q.DERE", DefaultText = "Files In Process",LocalDefaultText = "תיקים בטיפול", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature DeclarationReferantDataFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DeclarationReferantData.Q.DERE", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationReferantData.Features.DERE", NameTextCodeDefaultText = "DERE", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+
+	        TextCodeRepository.SubmitChanges();
+	        FeaturesRepository.SubmitChanges();    
+	      
+
+			  Query DEREQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DeclarationReferantDataTextCode_0.Id, Code = "DERE",  QueryGroupCode = "5277", IndexOrder = 0, Tenant = 0, ObjectTableId = DeclarationReferantDataObjectTable.Id, QuerySection = "Customs.DeclarationReferantData", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = DeclarationReferantDataFeature_0.Id, DefaultSortName = "ArrivalDate", DefaultSortDirection = "Desending" }, queriesRepository, tenantQueries);
+	
+			 QueryColumn DEREQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DEREQuery.Id, IndexOrder = 0, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "CustomFileNo" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn DEREQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DEREQuery.Id, IndexOrder = 1, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "CustomerName" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn DEREQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DEREQuery.Id, IndexOrder = 2, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "OrderNumber" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn DEREQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DEREQuery.Id, IndexOrder = 3, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 50 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn DEREQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DEREQuery.Id, IndexOrder = 4, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "DeclarationOfficeCode" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn DEREQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DEREQuery.Id, IndexOrder = 5, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "VendorName" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn DEREQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DEREQuery.Id, IndexOrder = 6, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "ArrivalDate" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn DEREQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DEREQuery.Id, IndexOrder = 7, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "Weight" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn DEREQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DEREQuery.Id, IndexOrder = 8, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "DeclarationStatusTypeName" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn DEREQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DEREQuery.Id, IndexOrder = 9, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "PreClassification" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 50 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn DEREQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DEREQuery.Id, IndexOrder = 10, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "ClassificationStatus" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 50 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn DEREQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DEREQuery.Id, IndexOrder = 11, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "ControllerStatus" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 50 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn DEREQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DEREQuery.Id, IndexOrder = 12, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "CollectionOfMoneyStatus" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 50 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn DEREQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DEREQuery.Id, IndexOrder = 13, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "FollowUpDate" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn DEREQueryColumn_14 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DEREQuery.Id, IndexOrder = 14, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "IsExceptional" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 50 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn DEREQueryColumn_15 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DEREQuery.Id, IndexOrder = 15, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "WithPaper" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 50 }, queryColumnsRepository, tenantQueryColumns);
+	   
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)

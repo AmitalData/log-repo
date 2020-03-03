@@ -823,7 +823,6 @@
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationCargoSplit\ModuleCustomsDeclarationCargoSplit.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationCargoSplit\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationCargoSplit\Components\Controller\DeclarationCargoSplitController.ts" />
-
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationSupplierInvoice\Components\SupplierInvoices\UpdateCountryOfOriginComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationSupplierInvoice\Components\SupplierInvoices\UpdateProcessCodeComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\CargoSeal\DeclarationCargoSealTabComponent.ts" />
@@ -1008,6 +1007,7 @@
     <TypeScriptCompile Include="Customs\Services\StandardLists\DecisionTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\DeclarationMamanSpecialActionListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\DeclarationPendingListService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardLists\DeclarationReferantDataListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\DeficitDecisionListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\GatepassRequestListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\GatepassReturnCodeListService.ts" />
