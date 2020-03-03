@@ -1,4 +1,8 @@
-﻿using Simplog.Data.Helpers;
+﻿using Logitude.CRM.Data;
+using Logitude.CRM.Data.EntityPOCOs;
+using Logitude.CRM.Data.Repsitories;
+using Logitude.Server.Tools.Helpers;
+using Simplog.Data.Helpers;
 using Simplog.Server.Infrastructure.DataContracts;
 using System;
 using System.Collections.Generic;
@@ -16,14 +20,13 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.CRM
 
         private DateTime fromDate;
         private DateTime toDate;
-        private bool isByCreateDate = true;
         private string opportunityTypeCode = null;
         private string countryId = null;
         private string ownerId = null;
         private string businessUnitId = null;
         private string leadSources = null;
         private string resellerId = null;
-
+        private List<string> myLeadSourcesList = new List<string>();
         public MonthlyConversionManager(byte[] xmlFilters, int tenant)
         {
             this.tenant = tenant;
@@ -31,8 +34,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.CRM
             MemoryStream memoryStream = new MemoryStream(xmlFilters);
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(QueryOperations));
             QueryOperations queryOperations = (QueryOperations)xmlSerializer.Deserialize(memoryStream);
-
-            QueryFilterItem filterItem_IsByCreateDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "IsByCreateDate").FirstOrDefault();
+            
             QueryFilterItem filterItem_FromDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "FromDate").FirstOrDefault();
             QueryFilterItem filterItem_ToDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ToDate").FirstOrDefault();
             QueryFilterItem filterItem_DataType = queryOperations.QueryFilterItems.Where(d => d.FieldName == "DataType").FirstOrDefault();
@@ -46,14 +48,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.CRM
             fromDate = todayDate;
             toDate = todayDate;
             
-            if (filterItem_IsByCreateDate != null)
-            {
-                if (filterItem_IsByCreateDate.FieldValue != null)
-                {
-                    isByCreateDate = (bool)filterItem_IsByCreateDate.FieldValue;
-                }
-            }
-
             if (filterItem_FromDate != null)
             {
                 DateTime.TryParse(filterItem_FromDate.FieldValue.ToString(), out fromDate);
@@ -103,20 +97,14 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.CRM
                     leadSources = filterItem_LeadSources.FieldValue.ToString();
                 }
             }
-
-            List<string> myLeadSourcesList = new List<string>();
+            
             if (!string.IsNullOrEmpty(leadSources))
             {
                 leadSources = leadSources.Replace(" ", "");
 
                 if (leadSources.ToLower() == "all")
                 {
-                    //LeadSourceRepository leadSourceRepository = new LeadSourceRepository(tenant);
-                    //IQueryable<LeadSource> iQueryable = leadSourceRepository.GetLeadSources(tenant).Where(d => !d.InActive);
-                    //if (iQueryable.Count() > 0)
-                    //{
-                    //    myLeadSourcesList = iQueryable.Select(s => s.Id).ToList();
-                    //}
+
                 }
 
                 else
@@ -126,8 +114,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.CRM
                     myLeadSourcesList = myLeadSources.ToList();
                 }
             }
-
-            
+                        
             if (filterItem_Reseller != null)
             {
                 if (filterItem_Reseller.FieldValue != null)
@@ -156,14 +143,344 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.CRM
         private OpportunityMonthlyConversionDataProvider LoadDataProvider()
         {
             OpportunityMonthlyConversionDataProvider myDataProvider = new OpportunityMonthlyConversionDataProvider();
+            myDataProvider.MonthlyDataList = new List<MonthItemClass>();
+
+            #region Get Base Data
+            ICRMContext myCRMCotnext = CRMContext.GetContext(tenant);
+            StageRepository stageRepository = new StageRepository(myCRMCotnext);
+            OpportunityRepository opportunityRepository = new OpportunityRepository(myCRMCotnext);
+            OpportunityStageRepository opportunityStageRepository = new OpportunityStageRepository(myCRMCotnext);
+
+            IQueryable<OpportunityStage> iQueryable_OpportunityStages = opportunityStageRepository.GetAll(tenant);
+
+            IQueryable<Opportunity> iQueryable_Opportunities =
+                (from a in opportunityRepository.GetAllForReport(tenant)
+                 where a.IsCancelled == false
+                 && System.Data.Entity.DbFunctions.TruncateTime(a.CreateDate) >= fromDate
+                 && System.Data.Entity.DbFunctions.TruncateTime(a.CreateDate) < toDate
+                 select a);
+
+            if (!string.IsNullOrEmpty(opportunityTypeCode))
+            {
+                iQueryable_Opportunities = iQueryable_Opportunities.Where(d => d.OpportunityTypeId == opportunityTypeCode);
+            }
+
+            if (!string.IsNullOrEmpty(countryId))
+            {
+                iQueryable_Opportunities = iQueryable_Opportunities.Where(d => d.Customer.CountryId == countryId);
+            }
+
+            if (!string.IsNullOrEmpty(ownerId))
+            {
+                iQueryable_Opportunities = iQueryable_Opportunities.Where(d => d.OwnerId == ownerId);
+            }
+
+            if (!string.IsNullOrEmpty(resellerId))
+            {
+                iQueryable_Opportunities = iQueryable_Opportunities.Where(d => d.Customer.Customer != null && d.Customer.Customer.Field2 == resellerId);
+            }
+
+            if (!string.IsNullOrEmpty(businessUnitId))
+            {
+                iQueryable_Opportunities = iQueryable_Opportunities.Where(d => d.BusinessUnitId == businessUnitId);
+            }
+
+            if (myLeadSourcesList.Count() > 0)
+            {
+                iQueryable_Opportunities = iQueryable_Opportunities.Where(d => myLeadSourcesList.Contains(d.LeadSourceId));
+            }
+
+            IQueryable<Stage> allStages = stageRepository.GetAll(tenant).Where(d => !d.InActive);
+            IQueryable<Stage> allStages_WithProbability = allStages.Where(d => d.Probability != 0);
+            IQueryable<Stage> allStages_ZeroProbability = allStages.Where(d => d.Probability == 0);
+
+            //Qualification Stage
+            string myQuaStageId = null;
+            string myQuaStageName = null;
+            Stage myQuaStage = allStages_WithProbability.Where(d => d.Code == "QUA").FirstOrDefault();
+            if (myQuaStage != null)
+            {
+                myQuaStageId = myQuaStage.Id;
+                myQuaStageName = myQuaStage.Name;
+                allStages_WithProbability = allStages_WithProbability.Where(d => d.Id != myQuaStageId);
+            }
+
+            // Closed Won Stage
+            string myCloseWonStageId = null;
+            string myCloseWonStageName = null;
+            Stage myCloseWonStage = allStages_WithProbability.Where(d => d.Code == "CWN").FirstOrDefault();
+            if (myCloseWonStage != null)
+            {
+                myCloseWonStageId = myCloseWonStage.Id;
+                myCloseWonStageName = myCloseWonStage.Name;
+                allStages_WithProbability = allStages_WithProbability.Where(d => d.Id != myCloseWonStageId);
+            }
+
+            // Closed Lost Stage
+            string myCloseLostStageId = null;
+            string myCloseLostStageName = null;
+            Stage myCloseLostStage = allStages_ZeroProbability.Where(d => d.Code == "CLS").FirstOrDefault();
+            if (myCloseLostStage != null)
+            {
+                myCloseLostStageId = myCloseLostStage.Id;
+                myCloseLostStageName = myCloseLostStage.Name;
+                allStages_ZeroProbability = allStages_ZeroProbability.Where(d => d.Id != myCloseLostStageId);
+            }
+
+            // First Stage
+            string myFirstStageId = null;
+            string myFirstStageName = null;
+            allStages_WithProbability = allStages_WithProbability.OrderBy(o => o.Probability);
+            Stage myFirstStage = allStages_WithProbability.FirstOrDefault();
+            if (myFirstStage != null)
+            {
+                myFirstStageId = myFirstStage.Id;
+                myFirstStageName = myFirstStage.Name;
+                allStages_WithProbability = allStages_WithProbability.Where(d => d.Id != myFirstStageId);
+            }
+            #endregion
+
+            int index = 0;
+
+            DateTime myDate1 = fromDate;
+            int myMonthItemIndex = 0;
+            int numberOfMonths = 0;
+
+            while (myDate1 < toDate)
+            {
+                numberOfMonths++;
+
+                #region
+                index = 0;
+
+                IQueryable<Opportunity> iQueryable_Monthly =
+                    (from f in iQueryable_Opportunities
+                     where f.CreateDate.Value.Year == myDate1.Year
+                     && f.CreateDate.Value.Month == myDate1.Month
+                     select f);
+
+                #region First Stage
+                int myLeadCount = iQueryable_Monthly.Count();
+
+                myDataProvider.MonthlyDataList.Add(new MonthItemClass()
+                {
+                    Id = myMonthItemIndex++,
+                    Date = myDate1,
+                    DateString = myDate1.Month + "." + myDate1.Year,
+                    StageName = myFirstStageName,
+                    OpportunitiesCount = myLeadCount,
+                    RowIndex = index++,
+                });
+                #endregion
+
+                #region QUA Stage
+                int myQuasCount = (from a in iQueryable_Monthly
+                                   join b in iQueryable_OpportunityStages
+                                   on a.Id equals b.OpportunityId
+                                   where b.FromStageId == myQuaStageId
+                                   select a).Distinct().Count();
+
+                myDataProvider.MonthlyDataList.Add(new MonthItemClass()
+                {
+                    Id = myMonthItemIndex++,
+                    Date = myDate1,
+                    DateString = myDate1.Month + "." + myDate1.Year,
+                    StageName = myQuaStageName,
+                    OpportunitiesCount = myQuasCount,
+                    RowIndex = index++,
+                    Percentage = myLeadCount == 0 ? 0 : (myQuasCount * 100 / myLeadCount),
+                    PercentageString = myLeadCount == 0 ? "" : (myQuasCount * 100 / myLeadCount) + "%"
+                });
+                #endregion
+                
+                #region Loop stages Probability != 0
+                foreach (Stage myStage in allStages_WithProbability.OrderBy(o => o.Probability))
+                {
+                    IQueryable<Opportunity> iQueryable_ByStage =
+                        (from a in iQueryable_Monthly
+                         join b in iQueryable_OpportunityStages
+                         on a.Id equals b.OpportunityId
+                         where b.ToStageId == myStage.Id
+                         select a).Distinct();
+                    
+                    int myCount = iQueryable_ByStage.Count();
+                    
+                    myDataProvider.MonthlyDataList.Add(new MonthItemClass()
+                    {
+                        Id = myMonthItemIndex++,
+                        Date = myDate1,
+                        DateString = myDate1.Month + "." + myDate1.Year,
+                        StageName = myStage.Name,
+                        OpportunitiesCount = myCount,
+                        RowIndex = index++,
+                        Percentage = myLeadCount == 0 ? 0 : (myCount * 100 / myLeadCount),
+                        PercentageString = myLeadCount == 0 ? "" : (myCount * 100 / myLeadCount) + "%"
+                    });
+                }
+                #endregion
+
+                #region Closed Won Stage
+                int myWonsCount = iQueryable_Monthly.Where(d => d.Stage.Id == myCloseWonStageId).Count();
+
+                myDataProvider.MonthlyDataList.Add(new MonthItemClass()
+                {
+                    Id = myMonthItemIndex++,
+                    Date = myDate1,
+                    DateString = myDate1.Month + "." + myDate1.Year,
+                    StageName = myCloseWonStageName,
+                    OpportunitiesCount = myWonsCount,
+                    RowIndex = index++,
+                    Percentage = myLeadCount == 0 ? 0 : (myWonsCount * 100 / myLeadCount),
+                    PercentageString = myLeadCount == 0 ? "" : (myWonsCount * 100 / myLeadCount) + "%"
+                });
+                #endregion
+
+                #region Sort
+                this.CorrectListValues(myDataProvider.MonthlyDataList, myDate1);
+                #endregion
+                
+                #region Closed Lost Stage
+                int myLostCount = iQueryable_Monthly.Where(d => d.Stage.Id == myCloseLostStageId).Count();
+
+                myDataProvider.MonthlyDataList.Add(new MonthItemClass()
+                {
+                    Id = myMonthItemIndex++,
+                    Date = myDate1,
+                    DateString = myDate1.Month + "." + myDate1.Year,
+                    StageName = myCloseLostStageName,
+                    OpportunitiesCount = myLostCount,
+                    RowIndex = index++,
+                    Percentage = myLeadCount == 0 ? 0 : (myLostCount * 100 / myLeadCount),
+                    PercentageString = myLeadCount == 0 ? "" : (myLostCount * 100 / myLeadCount) + "%"
+                });
+                #endregion
+
+                #region Loop stages Probability == 0
+                foreach (Stage myStage in allStages_ZeroProbability.OrderBy(o => o.Name))
+                {
+                    IQueryable<Opportunity> iQueryable_ByStage =
+                        (from a in iQueryable_Monthly
+                         join b in iQueryable_OpportunityStages
+                         on a.Id equals b.OpportunityId
+                         where b.ToStageId == myStage.Id
+                         select a).Distinct();
+
+                    int myCount = iQueryable_ByStage.Count();
+
+                    myDataProvider.MonthlyDataList.Add(new MonthItemClass()
+                    {
+                        Id = myMonthItemIndex++,
+                        Date = myDate1,
+                        DateString = myDate1.Month + "." + myDate1.Year,
+                        StageName = myStage.Name,
+                        OpportunitiesCount = myCount,
+                        RowIndex = index++,
+                        Percentage = myLeadCount == 0 ? 0 : (myCount * 100 / myLeadCount),
+                        PercentageString = myLeadCount == 0 ? "" : (myCount * 100 / myLeadCount) + "%"
+                    });
+                }
+                #endregion
+
+                myDate1 = myDate1.AddMonths(1);
+                #endregion
+            }
+
+            #region Average
+
+            myDataProvider.MonthlyDataList.Add(new MonthItemClass()
+            {
+                Id = myMonthItemIndex++,
+                Date = myDate1,
+                DateString = "Average",
+                StageName = myFirstStageName,
+                OpportunitiesCount = MethodHelper.Round(myDataProvider.MonthlyDataList.Where(d => d.StageName == myFirstStageName).Sum(s => s.OpportunitiesCount) / numberOfMonths, 2),
+                RowIndex = myDataProvider.MonthlyDataList.Where(d => d.StageName == myFirstStageName).FirstOrDefault().RowIndex,
+            });
+
+            myDataProvider.MonthlyDataList.Add(new MonthItemClass()
+            {
+                Id = myMonthItemIndex++,
+                Date = myDate1,
+                DateString = "Average",
+                StageName = myQuaStageName,
+                OpportunitiesCount = MethodHelper.Round(myDataProvider.MonthlyDataList.Where(d => d.StageName == myQuaStageName).Sum(s => s.OpportunitiesCount) / numberOfMonths, 2),
+                RowIndex = myDataProvider.MonthlyDataList.Where(d => d.StageName == myQuaStageName).FirstOrDefault().RowIndex,
+            });
+
+            foreach (Stage myStage in allStages_WithProbability.OrderBy(o => o.Probability))
+            {
+                myDataProvider.MonthlyDataList.Add(new MonthItemClass()
+                {
+                    Id = myMonthItemIndex++,
+                    Date = myDate1,
+                    DateString = "Average",
+                    StageName = myStage.Name,
+                    OpportunitiesCount = MethodHelper.Round(myDataProvider.MonthlyDataList.Where(d => d.StageName == myStage.Name).Sum(s => s.OpportunitiesCount) / numberOfMonths, 2),
+                    RowIndex = myDataProvider.MonthlyDataList.Where(d => d.StageName == myStage.Name).FirstOrDefault().RowIndex,
+                });
+            }
+
+            myDataProvider.MonthlyDataList.Add(new MonthItemClass()
+            {
+                Id = myMonthItemIndex++,
+                Date = myDate1,
+                DateString = "Average",
+                StageName = myCloseWonStageName,
+                OpportunitiesCount = MethodHelper.Round(myDataProvider.MonthlyDataList.Where(d => d.StageName == myCloseWonStageName).Sum(s => s.OpportunitiesCount) / numberOfMonths, 2),
+                RowIndex = myDataProvider.MonthlyDataList.Where(d => d.StageName == myCloseWonStageName).FirstOrDefault().RowIndex,
+            });
+
+            myDataProvider.MonthlyDataList.Add(new MonthItemClass()
+            {
+                Id = myMonthItemIndex++,
+                Date = myDate1,
+                DateString = "Average",
+                StageName = myCloseLostStageName,
+                OpportunitiesCount = MethodHelper.Round(myDataProvider.MonthlyDataList.Where(d => d.StageName == myCloseLostStageName).Sum(s => s.OpportunitiesCount) / numberOfMonths, 2),
+                RowIndex = myDataProvider.MonthlyDataList.Where(d => d.StageName == myCloseLostStageName).FirstOrDefault().RowIndex,
+            });
+
+            foreach (Stage myStage in allStages_ZeroProbability.OrderBy(o => o.Name))
+            {
+                myDataProvider.MonthlyDataList.Add(new MonthItemClass()
+                {
+                    Id = myMonthItemIndex++,
+                    Date = myDate1,
+                    DateString = "Average",
+                    StageName = myStage.Name,
+                    OpportunitiesCount = MethodHelper.Round(myDataProvider.MonthlyDataList.Where(d => d.StageName == myStage.Name).Sum(s => s.OpportunitiesCount) / numberOfMonths, 2),
+                    RowIndex = myDataProvider.MonthlyDataList.Where(d => d.StageName == myStage.Name).FirstOrDefault().RowIndex,
+                });
+            }
+
+            #endregion
             
-
-
-
-
-
-
             return myDataProvider;
+        }
+
+        private void CorrectListValues(List<MonthItemClass> monthlyDataList, DateTime myDate)
+        {
+            var expectedOrder = monthlyDataList.Where(d => d.Date == myDate).OrderByDescending(d => d.OpportunitiesCount).Select(s => s.OpportunitiesCount).ToList();
+            bool isOrdered = monthlyDataList.Where(d => d.Date == myDate).Select(s => s.OpportunitiesCount).SequenceEqual(expectedOrder);
+            while (!isOrdered)
+            {
+                for (int i = 0; i < monthlyDataList.Count; i++)
+                {
+                    if (i > 0)
+                    {
+                        if (monthlyDataList[i - 1] != null)
+                        {
+                            if (monthlyDataList[i - 1].OpportunitiesCount < monthlyDataList[i].OpportunitiesCount)
+                            {
+                                monthlyDataList[i - 1].OpportunitiesCount = monthlyDataList[i].OpportunitiesCount;
+                            }
+                        }
+                    }
+                }
+
+                expectedOrder = monthlyDataList.Where(d => d.Date == myDate).OrderByDescending(d => d.OpportunitiesCount).Select(s => s.OpportunitiesCount).ToList();
+                isOrdered = monthlyDataList.Where(d => d.Date == myDate).Select(s => s.OpportunitiesCount).SequenceEqual(expectedOrder);
+            }
         }
     }
 }
