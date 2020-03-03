@@ -28,6 +28,7 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public double? AmountInProfitCurrency { get; set; }
         public DateTime? AccountingCancelationDate { get; set; }
         public string CancelationNotes { get; set; }
+        public string VoidedByJournalNumber { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string BranchId { get; set; }

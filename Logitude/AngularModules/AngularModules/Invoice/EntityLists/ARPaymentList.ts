@@ -99,5 +99,6 @@ export class ARPaymentList {
 		Field8: string;
 		Field9: string;
 		Field10: string;
-	
+        VoidedByJournalNumber: string;
+
 }

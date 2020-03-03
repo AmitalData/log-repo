@@ -402,7 +402,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             // DropBox
             this.CreateARInvoiceMessage(setApproved);
 
-
+            theEntityPm.VoidedByJournalNumber = entityPM.VoidedByJournalNumber;
             paymentRepository.Update(newPayment);
             paymentRepository.SubmitChanges();
 
@@ -421,7 +421,11 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.BuildEntitiesNumbers();
         }
 
-
+        private JournalPM GetApprovedJournalByAccountingEntityId(ARPaymentPM aRPaymentPM)
+        {
+            IJournalQueryServiceExt journalQuery = ContainerAccessor.Container.Resolve(typeof(IJournalQueryServiceExt), "JournalQueryServiceExt", new ParameterOverride("", 1)) as IJournalQueryServiceExt;
+            return journalQuery.GetApprovedJournalByAccountingEntityId(aRPaymentPM.Id, "3", aRPaymentPM.Tenant);
+        }
 
         private void ValidateHigherStatus()
         {
@@ -1714,7 +1718,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                     cashBook.ChangeSetOp = ChangeSetOperation.Update;
                                     cashBookUpdate.Update(cashBook);
                                     CreateVoidedARPaymentEvent("ARPayment Cancel");
-                                    CancelJournal();
+                                    CancelJournal(entityPm);
                                 }
                             }
                         }
@@ -1753,14 +1757,14 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                     cashBook.ChangeSetOp = ChangeSetOperation.Update;
                                     cashBookUpdate.Update(cashBook);
                                     CreateVoidedARPaymentEvent("ARPayment Cancel");
-                                    CancelJournal();
+                                    CancelJournal(entityPm);
                                 }
                             }
                         }
                         else if (entityPm.AccountingPaymentMethodCode == "BT")
                         {
                             CreateVoidedARPaymentEvent("ARPayment Cancel");
-                            CancelJournal();
+                            CancelJournal(entityPm);
                         }
                     }
                 }
@@ -1820,7 +1824,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 Notes = note,
             });
         }
-        private void CancelJournal()
+        private void CancelJournal(ARPaymentPM entityPm)
         {
 
             IJournalQueryServiceExt journalQuery = ContainerAccessor.Container.Resolve(typeof(IJournalQueryServiceExt), "JournalQueryServiceExt", new ParameterOverride("", 1)) as IJournalQueryServiceExt;
@@ -1843,9 +1847,14 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 journalUpdate.Update(journalPM, new StornoOverrideM()
                 {
                     AccountingEntityCode = "3",
+                    LineNotes = entityPM.CancelationNotes,
                     AccountingEntityId = entityPM.Id,
                     AccountingEntityReference = entityPM.PaymentNo
                 });
+                JournalPM voidedByJournal = GetApprovedJournalByAccountingEntityId(entityPm);
+
+                entityPM.VoidedByJournalNumber = voidedByJournal != null ? voidedByJournal.JournalNumber : null;
+
             }
         }
 
