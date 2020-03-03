@@ -1703,6 +1703,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     {
                         tariffLine.FromPortId = fromPort.Id;
                         tariffLine.FromPortCode = fromPort.Code;
+                        tariffLine.FromPortCombinedCode = fromPort.CombinedCode;
                         tariffLine.FromPortName = fromPort.EnglishName;
                     }
 
@@ -1724,6 +1725,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     {
                         tariffLine.ToPortId = toPort.Id;
                         tariffLine.ToPortCode = toPort.Code;
+                        tariffLine.ToPortCombinedCode = toPort.CombinedCode;
                         tariffLine.ToPortName = toPort.EnglishName;
                     }
 
@@ -2800,7 +2802,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 }
                 else if (this.TariffType == "OLC" || this.TariffType == "OFC")
                 {
-                    myPort = this.portRepository.GetOceanPortByCode(tenant, code, true);
+                    myPort = this.portRepository.GetSinglePortIdByCombinedCode(code, tenant);
                 }
 
                 if (myPort == null)
@@ -2812,7 +2814,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     }
                     else if (this.TariffType == "OLC" || this.TariffType == "OFC")
                     {
-                        portZero = this.portRepository.GetOceanPortByCode(0, code, true);
+                        portZero = this.portRepository.GetSinglePortIdByCombinedCode(code, 0);
                     }
                     if (portZero != null)
                     {
@@ -3580,9 +3582,11 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
     {
         public string FromPortId { get; set; }
         public string FromPortCode { get; set; }
+        public string FromPortCombinedCode { get; set; }
         public string FromPortName { get; set; }
         public string ToPortId { get; set; }
         public string ToPortCode { get; set; }
+        public string ToPortCombinedCode { get; set; }
         public string ToPortName { get; set; }
         public decimal? MinPrice { get; set; }
         public decimal? Step1Price { get; set; }

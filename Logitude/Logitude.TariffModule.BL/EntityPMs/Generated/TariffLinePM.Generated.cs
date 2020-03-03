@@ -1757,7 +1757,53 @@ namespace Logitude.TariffModule.BL.EntityPMs
               }
              set {  deletedContainersPrices = value; }
 	    }
-	     }
+	  	  private string originPortCombinedCode ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string OriginPortCombinedCode  
+	   {
+	    
+	     get
+		{
+		   return originPortCombinedCode;
+		 }
+		 set
+		 {
+		   if(originPortCombinedCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OriginPortCombinedCode",OldValue=originPortCombinedCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   originPortCombinedCode=value;
+		   }
+			
+		 }
+	   }
+	  private string destinationPortCombinedCode ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DestinationPortCombinedCode  
+	   {
+	    
+	     get
+		{
+		   return destinationPortCombinedCode;
+		 }
+		 set
+		 {
+		   if(destinationPortCombinedCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DestinationPortCombinedCode",OldValue=destinationPortCombinedCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   destinationPortCombinedCode=value;
+		   }
+			
+		 }
+	   }
+   }
    
 }
 	 
