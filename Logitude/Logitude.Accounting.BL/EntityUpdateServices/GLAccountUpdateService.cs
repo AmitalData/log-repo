@@ -400,8 +400,9 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
             ContactPM contact = GetLoggedContact(entityPM.Tenant);
             bool showLocals = !contact.DontShowLocal;
-            if (entityPM.GLAccountInterestPeriods.GroupBy(x => x.PeriodStartDate).Any(g => g.Count() > 1))
+            if (entityPM.GLAccountInterestPeriods.Where(s => s.ChangeSetOp != ChangeSetOperation.Delete).GroupBy(x => x.PeriodStartDate).Any(g => g.Count() > 1))
             {
+
                 throw new Exception(TextCodesTranslator.TranslateText("GLAccount.O.LineDateExist", entityPM.Tenant, showLocals));
 
             }
@@ -587,7 +588,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
             FillForeignFields(entityPM);
             FillSearchFields(entityPM);
-          
+
 
         }
         private TenantPM GetTenantPM(int tenantId)
@@ -599,7 +600,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         {
 
             TenantPM tenantPM = GetTenantPM(glaccounPM.Tenant);
-            if  (tenantPM.IsHybrid && glaccounPM.AccountTypeCode != "4" && glaccounPM.AccountTypeCode != "5" && glaccounPM.IsControlAccount==false)
+            if (tenantPM.IsHybrid && glaccounPM.AccountTypeCode != "4" && glaccounPM.AccountTypeCode != "5" && glaccounPM.IsControlAccount == false)
 
             {
                 FillGLAccountCurrencyCode(glaccounPM);
@@ -662,7 +663,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
             List<Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Card> cards = new List<Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Card>();
 
-        
+
 
             if (gLAccount.PartnerTypeId != null)
             {
@@ -890,7 +891,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             }
 
             var gLAccountInterestPeriodUpdateService = new GLAccountInterestPeriodUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
-            InterestPeriodUpdate(entityPM.GLAccountInterestPeriods, entityPM.DeletedGLAccountInterestPeriods, Tenant);
+            InterestPeriodUpdate(entityPM.GLAccountInterestPeriods.Where(s => s.ChangeSetOp != ChangeSetOperation.Delete).ToList(), entityPM.GLAccountInterestPeriods.Where(s => s.ChangeSetOp == ChangeSetOperation.Delete).ToList(), Tenant);
 
             if (entityPM.ChangeSetOp == ChangeSetOperation.Update && entityPM.GLAccountWithholdingTaxes.Count > 0)
             {
@@ -2122,7 +2123,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             var myGLAccountInterestPeriodUpdateService = new GLAccountInterestPeriodUpdateService(this.MainContext, new Dictionary<string, IContext>(), Tenant);
             foreach (GLAccountInterestPeriodPM DeletedgLAccountInterestPeriodPM in DeletedGLAccountInterestPeriods)
             {
-                myGLAccountInterestPeriodUpdateService.Update(DeletedgLAccountInterestPeriodPM, false);
+                myGLAccountInterestPeriodUpdateService.Update(DeletedgLAccountInterestPeriodPM, true);
             }
 
             foreach (GLAccountInterestPeriodPM gLAccountInterestPeriodPM in GLAccountInterestPeriods)
