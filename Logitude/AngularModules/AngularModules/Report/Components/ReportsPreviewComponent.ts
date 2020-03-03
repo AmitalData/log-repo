@@ -167,6 +167,9 @@ export class ReportsPreviewComponent implements AfterViewInit {
                 if (cmpRef.instance['RunReportEvent']) {
                     cmpRef.instance.RunReportEvent.subscribe(s => {
                         if (s) {
+                            if (this.IsSchedulerReport) {
+                                //this.CurrentSession.ResizeCurrentWindow(1050);
+                            }
                             this.GenerateReport(s, false);
                         }
                     });
@@ -185,7 +188,8 @@ export class ReportsPreviewComponent implements AfterViewInit {
             if (Component && filtersArea) {
                 this.StimulsoftArg = new StimulsoftArg();
                 if (this.IsSchedulerReport) {
-                    this.FilterConrolHeight = 50;
+                    this.FilterConrolHeight = window.innerHeight / 20;
+                    //this.FilterConrolHeight = 50;
                     this.StimulsoftArg.IsSchedulerReport = true;
                 }
                 else {
@@ -234,7 +238,8 @@ export class ReportsPreviewComponent implements AfterViewInit {
             width = 1024;
         }
         if (this.IsSchedulerReport) {
-            height = 700;
+            height = window.innerHeight - (window.innerHeight/3.8);
+            //height = 700;
         }
 
         width = width - 20;

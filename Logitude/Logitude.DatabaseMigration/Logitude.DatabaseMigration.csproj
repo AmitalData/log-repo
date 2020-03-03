@@ -2115,6 +2115,10 @@
     <Compile Include="Migrations\202003031036124_ModifyForiegnCurrencyRequiredKey_Maheera.Designer.cs">
       <DependentUpon>202003031036124_ModifyForiegnCurrencyRequiredKey_Maheera.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202003011111044_WesamAddEntityIdToTasksSchedulerTable.cs" />
+    <Compile Include="Migrations\202003011111044_WesamAddEntityIdToTasksSchedulerTable.Designer.cs">
+      <DependentUpon>202003011111044_WesamAddEntityIdToTasksSchedulerTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\202003030904524_WesamDBMigrationFixes.cs" />
     <Compile Include="Migrations\202003030904524_WesamDBMigrationFixes.Designer.cs">
@@ -3824,6 +3828,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202003030904524_WesamDBMigrationFixes.resx">
       <DependentUpon>202003030904524_WesamDBMigrationFixes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003011111044_WesamAddEntityIdToTasksSchedulerTable.resx">
+      <DependentUpon>202003011111044_WesamAddEntityIdToTasksSchedulerTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

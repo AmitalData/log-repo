@@ -6,8 +6,6 @@ import { ReportGroupList } from '../../EntityLists/ReportGroupList';
 import { ReportList } from '../../EntityLists/ReportList';
 import { ReportsTemplateListExtendedService } from '../../../Common/Services/ExtendedLists/ReportsTemplateListExtendedService';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
-import { QueryFilterItem } from '../Filters/QueryFilterItem';
-import { List } from '../../../Infrastructure/DataContracts/Dashboard/List';
 @Component({
     moduleId: module.id,
     templateUrl: './AddEditReportSchedulerComponent.html',
@@ -21,8 +19,14 @@ export class AddEditReportSchedulerComponent implements OnInit {
     public IsNextButtonClicked: boolean = false;
     public ReportGroupList: ReportGroupList;
     public ReportList: ReportList;
+    IsPreviwReport: boolean = false;
     reportsTemplateListExtendedService: ReportsTemplateListExtendedService;
     constructor() {
+        this.CurrentSession.SessionEvent.subscribe($event => {
+            if ($event == "RunReportEvent") {
+                this.IsPreviwReport = true;
+            }
+        });
         this.reportsTemplateListExtendedService = new ReportsTemplateListExtendedService();
     }
 
@@ -56,6 +60,15 @@ export class AddEditReportSchedulerComponent implements OnInit {
         this.RunComponent();
     }
 
+    ReportTemplates: any = [];
+    LoadReportTemplate(reportList: ReportList) {
+        this.reportsTemplateListExtendedService.getReportsTemplateListsByReportId(reportList.Id, "R").subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                this.ReportTemplates = myResponse.Result;
+            }
+        });
+    }
+
     RunComponent() {
         if (this.AllLocations) {
             if (this.AllLocations.toArray().length == 0) {
@@ -71,16 +84,6 @@ export class AddEditReportSchedulerComponent implements OnInit {
 
     SetSelectedItem(tabCode: string) {
         this.SelectedTabCode = tabCode;
-
-    }
-
-    ReportTemplates:any = [];
-    LoadReportTemplate(reportList: ReportList) {
-        this.reportsTemplateListExtendedService.getReportsTemplateListsByReportId(reportList.Id, "R").subscribe((myResponse: ServiceResponse) => {
-            if (!myResponse.HasError) {
-                this.ReportTemplates = myResponse.Result;
-            }
-        });
     }
 
     private selectedTabCode: string;
@@ -114,15 +117,21 @@ export class AddEditReportSchedulerComponent implements OnInit {
                         SessionLocator.DynamicLoader.Load('./Report/Components/ReportsPreviewComponent', myLocation.viewContainerRef)
                             .then(cmpRef => {
                                 this.PageChild_PRREP = cmpRef.instance;
-                                this.PageChild_PRREP.SetReportFilterItems(this.PageChild_RETASK.EntityPM.SchedulerDetailsData.ReportDetails.ReportFilterItems);
-                                this.PageChild_PRREP.SetReportTemplate(this.PageChild_RETASK.EntityPM.SchedulerDetailsData.ReportDetails.ReportTemplateId);
-                                this.PageChild_PRREP.ReportsPreview(this.ReportGroupList, this.ReportList, this.ReportTemplates);
+                                this.SetReportDetails();
                             });
                     }
                     break;
                 }
             }
         }
+    }
+
+    SetReportDetails() {
+        var reportTemplateId = this.PageChild_RETASK.GetReportTemplateId();
+        var reportFilterItems = this.PageChild_RETASK.GetReportFilterItems();
+        this.PageChild_PRREP.SetReportFilterItems(reportFilterItems);
+        this.PageChild_PRREP.SetReportTemplate(reportTemplateId);
+        this.PageChild_PRREP.ReportsPreview(this.ReportGroupList, this.ReportList, this.ReportTemplates);
     }
 
     NextButtonClicked() {
@@ -133,14 +142,16 @@ export class AddEditReportSchedulerComponent implements OnInit {
     }
 
     SaveButtonClicked() {
-        var reportFilterItems: Array<QueryFilterItem> = this.PageChild_PRREP.GetReportFilterItems();
-        var reportTemplateId: string = this.PageChild_PRREP.GetReportTemplate();
+        var reportFilterItems = this.PageChild_PRREP.GetReportFilterItems();
+        var reportTemplateId = this.PageChild_PRREP.GetReportTemplate();
         this.PageChild_RETASK.SaveButtonClicked(reportFilterItems, reportTemplateId);
         this.CurrentSession.CloseCurrentWindow();
     }
 
     BackButtonClicked() {
         this.IsNextButtonClicked = false;
+        this.IsPreviwReport = false;
+        //this.CurrentSession.ResizeCurrentWindow(900);
         this.SetSelectedItem("RETASK");
     }
 
