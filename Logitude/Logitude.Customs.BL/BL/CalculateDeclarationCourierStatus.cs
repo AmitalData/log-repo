@@ -343,7 +343,7 @@ namespace Logitude.Customs.BL.BL
             }
         }
 
-        private Boolean IsDocumentMissing(DeclarationCourierStatusPM myDeclarationCourierStatusPM)
+        public Boolean IsDocumentMissing(DeclarationCourierStatusPM myDeclarationCourierStatusPM)
         {
             var customContext = CustomContext.GetContext(myDeclarationCourierStatusPM.Tenant);
             CustomsDocumentsTicketQueryService myCustomsDocumentsTicketQueryService = new CustomsDocumentsTicketQueryService(customContext);
