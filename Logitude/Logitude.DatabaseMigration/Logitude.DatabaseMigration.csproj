@@ -2116,6 +2116,11 @@
       <DependentUpon>202003031036124_ModifyForiegnCurrencyRequiredKey_Maheera.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Migrations\202003030904524_WesamDBMigrationFixes.cs" />
+    <Compile Include="Migrations\202003030904524_WesamDBMigrationFixes.Designer.cs">
+      <DependentUpon>202003030904524_WesamDBMigrationFixes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\202002041333119_InterestTransactionMigration.cs" />
     <Compile Include="Migrations\202002041333119_InterestTransactionMigration.Designer.cs">
       <DependentUpon>202002041333119_InterestTransactionMigration.cs</DependentUpon>
@@ -3817,6 +3822,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202003031036124_ModifyForiegnCurrencyRequiredKey_Maheera.resx">
       <DependentUpon>202003031036124_ModifyForiegnCurrencyRequiredKey_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003030904524_WesamDBMigrationFixes.resx">
+      <DependentUpon>202003030904524_WesamDBMigrationFixes.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

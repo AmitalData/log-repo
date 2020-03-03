@@ -674,6 +674,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public DateTime? ISFDate { get; set; }
         public string ITNumber { get; set; }
         public DateTime? ITDate { get; set; }
+        public DateTime? AutomaticLastUpdateDate { get; set; }
 
         public string ENSNumber { get; set; }
         public DateTime? ENSDate { get; set; }
