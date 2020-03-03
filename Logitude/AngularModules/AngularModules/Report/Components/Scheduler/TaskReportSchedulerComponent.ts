@@ -72,7 +72,7 @@ export class TaskReportSchedulerComponent implements OnInit {
 
         var logWindow = new LogitudeWindow();
         logWindow.Height = 820;
-        logWindow.Width = 900;
+        logWindow.Width = 1060;
         logWindow.Title = "Report Scheduler Details";
         logWindow.DataContext = new TaskReportSchedulerItemClass(newItem, this, true);
         logWindow.WindowArgs = windowArgs;
@@ -93,7 +93,7 @@ export class TaskReportSchedulerComponent implements OnInit {
         logWindow.WindowArgs = windowArgs;
         logWindow.Title = "Report Scheduler Details";
         logWindow.Height = 820;
-        logWindow.Width = 900;
+        logWindow.Width = 1060;
         logWindow.Show('./Report/Components/Scheduler/AddEditReportSchedulerComponent');
         logWindow.WindowClosed.subscribe(closed => {
             this.IsEditReportSchedulerEventAlreadyExist = false;

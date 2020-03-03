@@ -88,7 +88,7 @@ export class MainReportSchedulerComponent implements OnInit {
     }
 
     CloseButtonClicked() {
-        this.PageChild_RETASK.IsEditReportSchedulerEventAlreadyExist = false; //To avoid multiple events of edit report schedule.
+        this.PageChild_RETASK.IsEditReportSchedulerEventAlreadyExist = true; //To avoid multiple events of edit report schedule.
         this.CurrentSession.CloseCurrentWindow();
     }
 }
