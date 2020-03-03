@@ -204,7 +204,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.HasOptional(t => t.ProfitCurrency).WithMany().HasForeignKey(d => d.ProfitCurrencyId);
             this.HasOptional(t => t.QuoteSaleCurrency).WithMany().HasForeignKey(d => d.QuoteSaleCurrencyId);
             this.HasOptional(t => t.DimensionsUnit).WithMany().HasForeignKey(d => d.DimensionsUnitCode);
-            this.HasRequired(t => t.PasswordPolicy).WithMany().HasForeignKey(d => d.PasswordPolicyCode);
+            this.HasOptional(t => t.PasswordPolicy).WithMany().HasForeignKey(d => d.PasswordPolicyCode);
             this.HasOptional(t => t.PaymentTerm).WithMany().HasForeignKey(d => d.PaymentTermId);
             this.HasRequired(t => t.ExportFreightPrepaidCollect).WithMany().HasForeignKey(d => d.ExportFreightPrepaidCollectId).WillCascadeOnDelete(false);
             this.HasOptional(t => t.VolumeUnit).WithMany(t => t.Tenants).HasForeignKey(d => d.VolumeUnitCode);

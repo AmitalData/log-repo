@@ -7,12 +7,12 @@ namespace Simplog.Global.Data.Migrations
     {
         public override void Up()
         {
-            AlterColumn("dbo.Settings", "StorageAccountKey", c => c.String(nullable: false));
+            AlterColumn("dbo.TenantManagements", "CountryName", c => c.String(maxLength: 120, unicode: false));
+            AlterColumn("dbo.Settings", "StorageAccountKey", c => c.String(nullable: false, maxLength: 1000, unicode: false));
         }
         
         public override void Down()
         {
-            AlterColumn("dbo.Settings", "StorageAccountKey", c => c.String());
         }
     }
 }

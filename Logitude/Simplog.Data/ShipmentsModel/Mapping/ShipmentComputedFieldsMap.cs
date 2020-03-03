@@ -16,7 +16,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.MissingDocumentsCount);
             this.Property(t => t.MissingDocumentsNames).IsMaxLength();
             this.Property(t => t.IsDigitalSignRequired).IsRequired();
-            this.Property(t => t.ImporterDepositionRequestDetails).IsMaxLength().IsUnicode(true);
+            this.Property(t => t.ImporterDepositionRequestDetails).HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.FirstPickupATD).IsOptional();
             this.Property(t => t.FirstPickupATA).IsOptional();
             this.Property(t => t.FinalDeliveryETD).IsOptional();

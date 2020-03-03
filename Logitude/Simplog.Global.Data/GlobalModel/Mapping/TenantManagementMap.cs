@@ -54,7 +54,7 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.BluesnapOneTimeContractQTY).IsOptional();
             this.Property(t => t.BluesnapInttraStockContractQTY).IsOptional();
             this.Property(t => t.SupportDomain).HasMaxLength(100).IsUnicode(false);
-            this.Property(t => t.CountryName).IsMaxLength().IsUnicode(true); 
+            this.Property(t => t.CountryName).HasMaxLength(120).IsUnicode(false); 
 
             this.ToTable("TenantManagements");
             this.Property(t => t.Id).HasColumnName("Id");

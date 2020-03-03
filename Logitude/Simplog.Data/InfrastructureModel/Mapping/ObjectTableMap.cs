@@ -32,7 +32,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.HasCustomValidator);
             this.Property(t => t.UpdateKey).HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.AllowedForComputingPartners);
-            this.Property(t => t.CodeField).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.CodeField).HasMaxLength(60).IsUnicode(false);
             this.Property(t => t.NameField).HasMaxLength(60).IsUnicode(false);
             this.Property(t => t.ClientModuleName).HasMaxLength(60).IsUnicode(false);
             this.Property(t => t.ServerModuleName).HasMaxLength(60).IsUnicode(false);
@@ -40,7 +40,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.DownloadToExcelFeatureCode).HasMaxLength(120).IsUnicode(false);
             this.Property(t => t.DescriptionTextCodeCode).HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.NewButtonTextCodeCode).HasMaxLength(100).IsUnicode(false);
-            this.Property(t => t.SplitComponentPath).HasMaxLength(250).IsUnicode(true);
+            this.Property(t => t.SplitComponentPath).IsMaxLength().IsUnicode(true);
 
 
             //this.Property(t => t.FilterMenuComponentPath).HasMaxLength(250).IsUnicode(false);
