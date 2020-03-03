@@ -14,7 +14,7 @@ namespace Logitude.DBMigrations.Models
             DXMLTables = dxmlTables;
             DXMLFileName = dxmlFileName;
         }
-        
+
         protected override TableDefinition GetCurrentTableDefinitionFromDB()
         {
             string dxmlTableOldNames = DXMLTable.OldNames;
@@ -265,7 +265,7 @@ namespace Logitude.DBMigrations.Models
                                  "WHERE CON.CONSTRAINT_TYPE = 'U' AND CON.TABLE_NAME = :tableName";
 
             List<UniqueConstraintDefinition> uniqueConstraints = new List<UniqueConstraintDefinition>();
-            
+
             OracleDataReader reader = null;
             OracleConnection connection = new OracleConnection(ConnectionString);
             OracleCommand command = new OracleCommand(queryString, connection);
@@ -341,7 +341,7 @@ namespace Logitude.DBMigrations.Models
             }
             else
             {
-                if(DXMLTable.Columns.Where(c => c.Constraints.PrimaryKey).Any())
+                if (DXMLTable.Columns.Where(c => c.Constraints.PrimaryKey).Any())
                 {
                     columnScript += ",";
                 }
@@ -673,7 +673,7 @@ namespace Logitude.DBMigrations.Models
 
             string tableName = FormatNameLength(TableMigrations.DxmlTableName, TableMigrations.DxmlTableShortName).ToUpper();
 
-            bool IsAlterTypeInMigrationsList = TableMigrations.ColumnsMigrations.Where(m => m.MigrationType == MigrationTypes.ALTERTYPE).Any();
+            bool IsAlterTypeInMigrationsList = TableMigrations.ColumnsMigrations.Where(m => m.MigrationType == MigrationTypes.ALTERTYPE && m.CurrentColumn.Name == columnMigration.CurrentColumn.Name).Any();
             alterSizeScript += "-- Change Size From " + columnMigration.CurrentColumn.Size + " To " + columnMigration.NewColumn.Size + " For Column " + columnMigration.CurrentColumn.Name.ToUpper() + "\n";
             alterSizeScript += "ALTER TABLE " + "\"" + tableName + "\"" + " ";
             alterSizeScript += "MODIFY " + "\"" + columnMigration.CurrentColumn.Name.ToUpper() + "\"" + " ";
@@ -728,14 +728,14 @@ namespace Logitude.DBMigrations.Models
 
             return dropPrimaryKeyWithHistoryScript;
         }
-        
+
         protected override string GetSetNullableScript(ColumnMigration columnMigration)
         {
             string tableName = FormatNameLength(TableMigrations.DxmlTableName, TableMigrations.DxmlTableShortName).ToUpper();
 
-            bool isAlterTypeInMigrationsList = TableMigrations.ColumnsMigrations.Where(m => m.MigrationType == MigrationTypes.ALTERTYPE).Any();
-            bool isAlterSizeInMigrationsList = TableMigrations.ColumnsMigrations.Where(m => m.MigrationType == MigrationTypes.ALTERSIZE).Any();
-            bool isAlterPrecisionAndScaleInMigrationsList = TableMigrations.ColumnsMigrations.Where(m => m.MigrationType == MigrationTypes.ALTERPRECISIONANDSCALE).Any();
+            bool isAlterTypeInMigrationsList = TableMigrations.ColumnsMigrations.Where(m => m.MigrationType == MigrationTypes.ALTERTYPE && m.CurrentColumn.Name == columnMigration.CurrentColumn.Name).Any();
+            bool isAlterSizeInMigrationsList = TableMigrations.ColumnsMigrations.Where(m => m.MigrationType == MigrationTypes.ALTERSIZE && m.CurrentColumn.Name == columnMigration.CurrentColumn.Name).Any();
+            bool isAlterPrecisionAndScaleInMigrationsList = TableMigrations.ColumnsMigrations.Where(m => m.MigrationType == MigrationTypes.ALTERPRECISIONANDSCALE && m.CurrentColumn.Name == columnMigration.CurrentColumn.Name).Any();
             string setNullableScript = "-- Set Nullable For Column " + columnMigration.CurrentColumn.Name.ToUpper() + "\n";
             setNullableScript += "ALTER TABLE " + "\"" + tableName + "\"" + " ";
             setNullableScript += "MODIFY " + "\"" + columnMigration.CurrentColumn.Name.ToUpper() + "\"" + " ";
@@ -752,9 +752,9 @@ namespace Logitude.DBMigrations.Models
         {
             string tableName = FormatNameLength(TableMigrations.DxmlTableName, TableMigrations.DxmlTableShortName).ToUpper();
 
-            bool isAlterTypeInMigrationsList = TableMigrations.ColumnsMigrations.Where(m => m.MigrationType == MigrationTypes.ALTERTYPE).Any();
-            bool isAlterSizeInMigrationsList = TableMigrations.ColumnsMigrations.Where(m => m.MigrationType == MigrationTypes.ALTERSIZE).Any();
-            bool isAlterPrecisionAndScaleInMigrationsList = TableMigrations.ColumnsMigrations.Where(m => m.MigrationType == MigrationTypes.ALTERPRECISIONANDSCALE).Any();
+            bool isAlterTypeInMigrationsList = TableMigrations.ColumnsMigrations.Where(m => m.MigrationType == MigrationTypes.ALTERTYPE && m.CurrentColumn.Name == columnMigration.CurrentColumn.Name).Any();
+            bool isAlterSizeInMigrationsList = TableMigrations.ColumnsMigrations.Where(m => m.MigrationType == MigrationTypes.ALTERSIZE && m.CurrentColumn.Name == columnMigration.CurrentColumn.Name).Any();
+            bool isAlterPrecisionAndScaleInMigrationsList = TableMigrations.ColumnsMigrations.Where(m => m.MigrationType == MigrationTypes.ALTERPRECISIONANDSCALE && m.CurrentColumn.Name == columnMigration.CurrentColumn.Name).Any();
             string unsetNullableScript = "-- Unset Nullable For Column " + columnMigration.CurrentColumn.Name.ToUpper() + "\n";
             unsetNullableScript += "ALTER TABLE " + "\"" + tableName + "\"" + " ";
             unsetNullableScript += "MODIFY " + "\"" + columnMigration.CurrentColumn.Name.ToUpper() + "\"" + " ";
@@ -824,7 +824,7 @@ namespace Logitude.DBMigrations.Models
             dropPrimaryKeyScript += "DECLARE ConstraintCount NUMBER; BEGIN SELECT COUNT(*) INTO ConstraintCount FROM USER_CONSTRAINTS WHERE CONSTRAINT_NAME = '" + primaryKeyConstraintName + "'; IF (ConstraintCount <> 0) THEN EXECUTE IMMEDIATE 'ALTER TABLE \"" + tableName + "\" DROP CONSTRAINT \"" + primaryKeyConstraintName + "\"'; END IF; END;";
             return dropRelationsScript + dropPrimaryKeyScript + "\n\n" + GetInsertScriptForMigrationsHistory("Drop Primary Key Constraint", tableName, null, dropPrimaryKeyScript);
         }
-        
+
         protected override string GetAddPrimaryKeyConstraintScript(string primaryKeyConstraintName)
         {
             string tableName = FormatNameLength(TableMigrations.DxmlTableName, TableMigrations.DxmlTableShortName).ToUpper();
@@ -840,7 +840,7 @@ namespace Logitude.DBMigrations.Models
             string referencedTable = FormatNameLength(relation.ReferencedTable, DXMLTables.Where(t => t.Name.ToLower() == relation.ReferencedTable).First().ShortName).ToUpper();
             string foreignKeyColumns = relation.ForeignKeyColumn.Contains(",") ? string.Join(",", relation.ForeignKeyColumn.Split(',').Select(c => "\"" + FormatNameLength(c, DXMLTable.Columns.Where(fc => fc.Name == c).First().ShortName).ToUpper() + "\"").ToArray()) : "\"" + FormatNameLength(relation.ForeignKeyColumn, DXMLTable.Columns.Where(c => c.Name == relation.ForeignKeyColumn).First().ShortName).ToUpper() + "\"";
             string referencedColumns = relation.ReferencedColumn.Contains(",") ? string.Join(",", relation.ReferencedColumn.Split(',').Select(c => "\"" + FormatNameLength(c, DXMLTables.Where(t => t.Name.ToLower() == relation.ReferencedTable).First().Columns.Where(rc => rc.Name.ToLower() == c).First().ShortName).ToUpper() + "\"").ToArray()) : "\"" + FormatNameLength(relation.ReferencedColumn, DXMLTables.Where(t => t.Name.ToLower() == relation.ReferencedTable).First().Columns.Where(c => c.Name.ToLower() == relation.ReferencedColumn).First().ShortName).ToUpper() + "\"";
-            string foreignKeyConstraintName = FormatNameLength("FK_" + parentTable + "_" + (!foreignKeyColumns.Contains(",") ? foreignKeyColumns : string.Join("_", foreignKeyColumns.Split(',').ToArray())).Replace("\"", String.Empty), null).ToUpper();
+            string foreignKeyConstraintName = FormatNameLength("FK_" + parentTable + "_" + referencedTable + "_" + (!foreignKeyColumns.Contains(",") ? foreignKeyColumns : string.Join("_", foreignKeyColumns.Split(',').ToArray())).Replace("\"", String.Empty), null).ToUpper();
             string createRelationScript = "-- Add Foreign Key Constraint For Column " + foreignKeyColumns.Replace("\"", String.Empty) + " In Table " + parentTable + " As Reference To Column " + referencedColumns.Replace("\"", String.Empty) + " In Table " + referencedTable + "\n";
             createRelationScript += "ALTER TABLE " + "\"" + parentTable + "\"" + " ADD CONSTRAINT \"" + foreignKeyConstraintName + "\" FOREIGN KEY(" + foreignKeyColumns + ") REFERENCES " + "\"" + referencedTable + "\"" + "(" + referencedColumns + ")";
             createRelationScript += ";\n\n";

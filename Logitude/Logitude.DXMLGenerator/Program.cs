@@ -13,31 +13,35 @@ namespace Logitude.DXMLGenerator
     {
         static void Main(string[] args)
         {
-            //////Delete all DXML files of type table before begin generating
-            Console.WriteLine("Deleting All DXML Files Of Type Table ...\n");
-            int deletedDxmlFilesCount = 0;
-            string root = ConfigurationManager.AppSettings["Root"];
-            string dxmlFilesRoot = Path.Combine(root);
-            string[] dxmlFiles = Directory.GetFiles(dxmlFilesRoot, "*.dxml", SearchOption.AllDirectories);
+            Console.Write("Do You Want To Delete All DXML Files Of Type Table Before Begin Generating New? y/n\n");
+            string userInput = Console.ReadLine();
 
-            foreach(var dxmlFile in dxmlFiles)
+            if (userInput.ToLower() == "y")
             {
-                string dxmlFileName = Path.GetFileName(dxmlFile);
+                Console.WriteLine("Deleting All DXML Files Of Type Table ...\n");
+                int deletedDxmlFilesCount = 0;
+                string root = ConfigurationManager.AppSettings["Root"];
+                string dxmlFilesRoot = Path.Combine(root);
+                string[] dxmlFiles = Directory.GetFiles(dxmlFilesRoot, "*.dxml", SearchOption.AllDirectories);
 
-                if (dxmlFileName.ToLower() != "DBMigrationsHistory.dxml".ToLower() && dxmlFileName.ToLower() != "DBScriptsHistory.dxml".ToLower())
+                foreach (var dxmlFile in dxmlFiles)
                 {
-                    string xmlString = File.ReadAllText(dxmlFile);
-                    if (xmlString.EndsWith("</Table>"))
+                    string dxmlFileName = Path.GetFileName(dxmlFile);
+
+                    if (dxmlFileName.ToLower() != "DBMigrationsHistory.dxml".ToLower() && dxmlFileName.ToLower() != "DBScriptsHistory.dxml".ToLower() && dxmlFileName.ToLower() != "DXMLMigrationHashes.dxml".ToLower() && dxmlFileName.ToLower() != "DBMigrationModules.dxml".ToLower())
                     {
-                        File.Delete(dxmlFile);
-                        deletedDxmlFilesCount++;
+                        string xmlString = File.ReadAllText(dxmlFile);
+                        if (xmlString.EndsWith("</Table>"))
+                        {
+                            File.Delete(dxmlFile);
+                            deletedDxmlFilesCount++;
+                        }
                     }
                 }
+
+                Console.WriteLine(deletedDxmlFilesCount + " DXML Files Of Type Table Deleted Successfully\n");
             }
 
-            Console.WriteLine(deletedDxmlFilesCount + " DXML Files Of Type Table Deleted Successfully\n");
-            //////
-            
 
             string globalConnectionString = ConfigurationManager.AppSettings["GlobalConnectionString"];
             string mainConnectionString = ConfigurationManager.AppSettings["MainConnectionString"];
