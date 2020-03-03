@@ -831,10 +831,13 @@ export class AppTool {
 
         return result;
     }
-    public static GetChargeableWeightUnitCode(myTransportModeId: string, myShipmentTypeId: string) {
-        var myResult: string = this.TenantPM.ChargeableWeightUnitCode;
+    public static GetChargeableWeightUnitCode(myTransportModeId: string) {
+        var myResult: string;
 
-        if ((myTransportModeId == "O" && myShipmentTypeId == "LCLD") || (myTransportModeId == "I" && myShipmentTypeId == "LTL")) {
+        if (myTransportModeId == "A") {
+            myResult = this.TenantPM.ChargeableWeightUnitCode;
+        }
+        else if (myTransportModeId == "O" || myTransportModeId == "I") {
             myResult = this.TenantPM.WeightMeasurementUnitCode;
         }
 
