@@ -575,7 +575,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, OnDes
         var myDimensionsUnitCode = this.TenantPM.DimensionsUnitCode;
         var myVolumeUnitCode = this.TenantPM.VolumeUnitCode;
         var myGrossWeightUnitCode = this.TenantPM.GrossWeightUnitCode;
-        var myChargeableWeightUnitCode = AppTool.GetChargeableWeightUnitCode(this.TransportModeId, this.ShipmentTypeId);
+        var myChargeableWeightUnitCode = AppTool.GetChargeableWeightUnitCode(this.TransportModeId);
 
         if (this.DirectionId == "D") {
             if (!AppTool.IsNullOrEmpty(this.TenantPM.CountryCode)) {
@@ -627,9 +627,9 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, OnDes
                 this.EntityPM.GrossWeightUnitCode = myGrossWeightUnitCode;
             }
 
-            if (AppTool.IsNullOrEmpty(this.EntityPM.ChargeableWeightUnitCode)) {
-                this.EntityPM.ChargeableWeightUnitCode = myChargeableWeightUnitCode;
-            }
+
+            this.EntityPM.ChargeableWeightUnitCode = myChargeableWeightUnitCode;
+            
             //this.EntityPM.VolumeUnitCode = myVolumeUnitCode;
             //this.EntityPM.DimensionsUnitCode = myDimensionsUnitCode;
             //this.EntityPM.GrossWeightUnitCode = myGrossWeightUnitCode;
