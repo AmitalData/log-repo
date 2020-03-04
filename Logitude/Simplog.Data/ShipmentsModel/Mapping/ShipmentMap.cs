@@ -315,6 +315,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.Origin).HasMaxLength(150).IsUnicode(false);
             this.Property(t => t.ARInvoices).HasMaxLength(1000).IsUnicode(false);
             this.Property(t => t.ComputedShipmentNumber).HasMaxLength(100).IsUnicode(false);
+            this.Property(t => t.SLAC).HasMaxLength(5).IsUnicode(false);
 
             //    .HasColumnAnnotation(
             //IndexAnnotation.AnnotationName,
@@ -713,6 +714,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.NotInvoicedReceivablesAmount).HasColumnName("NotInvoicedReceivablesAmount");
             this.Property(t => t.FirstARInvoiceApprovalDate).HasColumnName("FirstARInvoiceApprovalDate");
             this.Property(t => t.AutomaticLastUpdateDate).HasColumnName("AutomaticLastUpdateDate"); 
+            this.Property(t => t.SLAC).HasColumnName("SLAC");
 
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")

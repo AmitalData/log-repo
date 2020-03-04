@@ -2449,5 +2449,8 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string WarehouseReleasesIds { get; set; }
         public int? WarehouseStorageFreeDays { get; set; }
         public bool IsDeclarationApprovalRequest { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string SLAC { get; set; }
     }
 }
