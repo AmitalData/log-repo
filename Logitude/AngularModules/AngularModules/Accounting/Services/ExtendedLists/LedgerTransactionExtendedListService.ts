@@ -7,12 +7,19 @@ import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResp
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {LedgerTransactionList} from '../../EntityLists/LedgerTransactionList';
-import {catchError,map } from 'rxjs/operators'
-@Injectable()
+import { catchError, map } from 'rxjs/operators';
+ 
+const httpOptions = {
+    headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Token': ServiceHelper.GetLoggedUserToken()
+    })
+};
 
+@Injectable()
 export class LedgerTransactionExtendedListService {
-    private _http: Http
-    private httpClient: HttpClient
+    private _http: Http;
+    private httpClient: HttpClient;
     private _apiUrl: string;
     private _reconciliationUrl: string;
 
@@ -128,27 +135,16 @@ export class LedgerTransactionExtendedListService {
         // var authHeader = new Headers();
         // authHeader.append('Token', SessionInfo.Token);
         var callUrl = this._apiUrl.concat(urlparameters);//
-
-        const httpOptions={
-            headers:new HttpHeaders({
-                'Content-Type':'application/json',
-                'Token':ServiceHelper.GetLoggedUserToken()
-            })
-        };
-
-
-        return Observable.defer(()=>{
-            return this.httpClient.get(callUrl,httpOptions).pipe(
-                map(response=>{
-                    var jsonResult=response;
-                    const serviceResponse:ServiceResponse =new ServiceResponse();
-                    serviceResponse.Result=response;
-                    return serviceResponse;
-                }),
-                catchError(ServiceHelper.HandleServiceError)
-            );
-        });
-
+        var serviceResponse: ServiceResponse = new ServiceResponse();
+        //return Observable.defer(()=>{
+        return this.httpClient.get(callUrl, httpOptions).pipe(
+            map(response => {
+                serviceResponse.Result = response;
+                return serviceResponse;
+            }),
+            catchError(ServiceHelper.HandleServiceError));
+        
+        //});
         // return Observable.defer(() => {
         //     return this._http.get(callUrl, {
         //         headers: authHeader

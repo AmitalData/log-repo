@@ -543,15 +543,13 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
 
         this.MenuHeaderchangeevent.emit({ Filters: filters, IgnoreFilter: false });
 
-        this.ledgerTransactionListExtendedService.getBalanceByFilters(filters).subscribe(myResult => {
+        this.ledgerTransactionListExtendedService.getBalanceByFilters(filters).subscribe((myResponse: ServiceResponse) => {
                         //console.log("Response: ", myResult);
-                        if (myResult == null) {
-                        }
-                        else {
-                            var myResponse: ServiceResponse = myResult;
-                            if (!myResponse.HasError) {
-                                this.LTBSummery = myResult.Result;
-
+                        //if (myResult == null) {
+                        //}
+                        //else {
+                             if (!myResponse.HasError) {
+                                 this.LTBSummery = myResponse.Result.Result;
                                 // if (this.EntityPM.IsMultiCurrency) {
                                     var text = " &nbsp;";
 
@@ -570,9 +568,9 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
                                     this.OpenAmountHint = text;
                                 // }
 
-                                console.log("Result: ", myResult.Result);
+                                console.log("Result: ", myResponse.Result);
                             }
-                        }
+                        //}
                     });
 
     }
