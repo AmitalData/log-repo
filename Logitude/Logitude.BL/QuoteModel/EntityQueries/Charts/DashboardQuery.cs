@@ -36,7 +36,6 @@ namespace Logitude.BL.QuoteModel.EntityQueries.Charts
                  && !d.IsCancelled
                  select d);
 
-            if(args.ChartCode != "QCV" && args.ChartCode != "KPI")
             switch (args.ChartCode)
             {
                 case "TFS":
@@ -52,7 +51,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries.Charts
                     }
             }
 
-            if(args.ChartCode != "QCV" && args.ChartCode != "TFS")
+            if(args.ChartCode != "QCV" && args.ChartCode != "KPI" && args.ChartCode != "TFS")
             {
                 dataSourceQuery = dataSourceQuery.Where(d => !d.IsClosed);
             }
