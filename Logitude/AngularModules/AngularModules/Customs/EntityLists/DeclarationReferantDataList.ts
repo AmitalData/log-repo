@@ -32,6 +32,7 @@ export class DeclarationReferantDataList {
 	VendorName: string;
 	DeclarationStatusTypeName: string;
 	DeclarationOfficeName: string;
+	DeclarationStatusTypeCode: string;
 	
 }
  
