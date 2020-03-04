@@ -50,6 +50,7 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
     public IsEditExchangeRateVisible: boolean = false;
     public CurrentSession = SessionLocator.SelectedSession;
     IsRouteRate: boolean = false;
+    public IsPriceCheckVisible: boolean = false;
 
     constructor(private entityArgs: EntityArgs) {
         super();
@@ -67,6 +68,10 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
         
         if (this.EntityPM.TransportModeId == "A" && FeatureLocator.HasFeaturePermession(this.ObjectTableName, "TARIFFS")) {
             this.DisplayTariffs = true;
+        }
+
+        if (FeatureLocator.HasFeaturePermession("Quote", "QuotePriceCheck")) {
+            this.IsPriceCheckVisible = true;
         }
 
         this.InitializeServices();
