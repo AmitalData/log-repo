@@ -755,7 +755,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
 
             else
             {
-                this.Property(t => t.AccountedReceivablesInLocalCurrency).HasColumnName("AccountedReceivablesInLocalCurrency");
+                this.Property(t => t.AccountedReceivablesInLocalCurrency).HasColumnName("AccountedReceivablesInLocalCurrency").IsRequired();
                 this.Property(t => t.OpenReceivablesInProfitCurrency).HasColumnName("OpenReceivablesInProfitCurrency");
                 this.Property(t => t.AccountedReceivablesInProfitCurrency).HasColumnName("AccountedReceivablesInProfitCurrency");
                 this.Property(t => t.AccountedPayablesInLocalCurrency).HasColumnName("AccountedPayablesInLocalCurrency");
