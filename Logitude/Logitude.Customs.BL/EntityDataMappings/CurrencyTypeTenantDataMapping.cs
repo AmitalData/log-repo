@@ -19,14 +19,34 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
         public void CustomPMToPOCO(CurrencyTypeTenantPM entityPM, CurrencyTypeTenant entityPOCO)
         {
-            //throw new NotImplementedException();
+            
+            if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert)
+            {
+                this.CustomMappedPOCOProperties.Add(POCOPropertyNames.UpdateDate);
+                this.CustomMappedPOCOProperties.Add(POCOPropertyNames.UpdatedByUserId);
+                this.CustomMappedPOCOProperties.Add(POCOPropertyNames.Id);
+                this.CustomMappedPOCOProperties.Add(POCOPropertyNames.Tenant);
+                this.CustomMappedPOCOProperties.Add(POCOPropertyNames.Code);
+
+
+                entityPOCO.UpdateDate = entityPM.UpdateDate;
+                entityPOCO.UpdatedByUserId = entityPM.UpdatedByUserId;
+                entityPOCO.Id = entityPM.Id;
+                entityPOCO.Tenant = entityPM.Tenant;
+                entityPOCO.Code = entityPM.Code;
+            }
+
         }
 
         public void CustomPOCOToPM(CurrencyTypeTenantPM entityPM, CurrencyTypeTenant entityPOCO)
         {
             //throw new NotImplementedException();
+
+
+            
+
         }
-   }
+    }
 
 
 }
