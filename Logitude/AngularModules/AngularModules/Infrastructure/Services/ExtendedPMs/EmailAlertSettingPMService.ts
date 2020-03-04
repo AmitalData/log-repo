@@ -6,13 +6,6 @@ import { EmailAlertSettingPM } from '../../EntityPMs/EmailAlertSettingPM';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
 
-const httpOptions = {
-    headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Token': ServiceHelper.GetLoggedUserToken()
-    }),
-};
-
 @Injectable()
 export class EmailAlertSettingPMService {
     private httpClient: HttpClient;
@@ -24,10 +17,17 @@ export class EmailAlertSettingPMService {
     }
 
     getAllEmailAlerts(tenant: number): Observable<ServiceResponse> {
-        var url = this.apiUrl + '/GetEmailAlertSettingsByTenant?' + 'tenant=' + tenant;
+        const httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Token': ServiceHelper.GetLoggedUserToken()
+            })
+        };
 
+        var url = this.apiUrl + '/GetEmailAlertSettingsByTenant?' + 'tenant=' + tenant;
         var serviceResponse: ServiceResponse;
         serviceResponse = new ServiceResponse();
+
         return this.httpClient.get(url, httpOptions).pipe(
             map(response => {
 
@@ -43,7 +43,7 @@ export class EmailAlertSettingPMService {
             headers: new HttpHeaders({
                 'Content-Type': 'application/json',
                 'Token': ServiceHelper.GetLoggedUserToken()
-            }),
+            })
         };
 
         var url = this.apiUrl + "?tenant=" + tenant;

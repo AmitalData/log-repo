@@ -9,13 +9,6 @@ import { HttpClient, HttpHeaders, HttpEvent, HttpResponse } from '@angular/commo
 import { map, catchError, tap } from 'rxjs/operators';
 import { PerformanceLogger } from '../../Utilities/PerformanceLogger';
 
-const httpOptions = {
-    headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Token': ServiceHelper.GetLoggedUserToken()
-    }),
-};
-
 @Injectable()
 export class SchedulerExtendedPMService {
     private httpClient: HttpClient;
@@ -27,6 +20,13 @@ export class SchedulerExtendedPMService {
     }
 
     GetSchedulerHistoryLogs(HistoryId: string): Observable<ServiceResponse> {
+        const httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Token': ServiceHelper.GetLoggedUserToken()
+            })
+        };
+
         var url = this.apiUrl + '/GetSchedulerHistoryLogs?' + 'historyId=' + HistoryId;
 
         return this.httpClient.get(url, httpOptions).pipe(
@@ -41,6 +41,13 @@ export class SchedulerExtendedPMService {
     }
 
     GetSchedulerDetailsById(schedulerId: string): Observable<ServiceResponse> {
+        const httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Token': ServiceHelper.GetLoggedUserToken()
+            })
+        };
+
         var url = this.apiUrl + '/GetSchedulerDetailsById?' + 'schedulerId=' + schedulerId;
 
         return this.httpClient.get(url, httpOptions).pipe(
@@ -55,6 +62,11 @@ export class SchedulerExtendedPMService {
     }
 
     insert(entityPM: TasksSchedulerPM): Observable<ServiceResponse> {
+        const headers: HttpHeaders = new HttpHeaders({
+            'Content-Type': 'application/json',
+            'Token': ServiceHelper.GetLoggedUserToken()
+        });
+
         var callTime = new Date();
         var url = this.apiUrl;
         var validator: ClassLevelValidator;
@@ -62,7 +74,6 @@ export class SchedulerExtendedPMService {
         var errorsArray = validator.Validate("TasksScheduler", entityPM);
         var serviceResponse: ServiceResponse;
         serviceResponse = new ServiceResponse();
-        const headers = httpOptions.headers;
 
         if (errorsArray.length == 0) {
             return this.httpClient.post(url, entityPM, { headers, observe: 'response' }).pipe(
@@ -88,6 +99,11 @@ export class SchedulerExtendedPMService {
     }
 
     update(entityPM: TasksSchedulerPM): Observable<ServiceResponse> {
+        const headers: HttpHeaders = new HttpHeaders({
+            'Content-Type': 'application/json',
+            'Token': ServiceHelper.GetLoggedUserToken()
+        });
+
         var callTime = new Date();
         var url = this.apiUrl;
         var validator: ClassLevelValidator;
@@ -95,7 +111,6 @@ export class SchedulerExtendedPMService {
         var errorsArray = validator.Validate("TasksScheduler", entityPM);
         var serviceResponse: ServiceResponse;
         serviceResponse = new ServiceResponse();
-        const headers = httpOptions.headers;
 
         if (errorsArray.length == 0) {
             return this.httpClient.put(url, entityPM, { headers, observe: 'response'}).pipe(
