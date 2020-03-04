@@ -39,7 +39,7 @@
   HasDynamicHeader="false"
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
-  DefaultText="&quot;Charge Group&quot;"
+  DefaultText="&quot;Charges Group&quot;"
   Code="&quot;CARG&quot;"
   Name="&quot;ChargesGroups&quot;"
   GenerateDomainService="false"

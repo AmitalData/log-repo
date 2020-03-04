@@ -88,7 +88,7 @@ export class PayablesComponent extends BaseComponent {
         this.ReceivableText = TextCodeTranslator.Translate('Shipment.S.Receivables.Receivable');       
         this.QuantityText = TextCodeTranslator.Translate("ShipmentReceivable.F.Quantity");
         this.UnitPriceText = TextCodeTranslator.Translate("ShipmentReceivable.F.UnitPrice");
-        this.AmountText = TextCodeTranslator.Translate("ShipmentReceivable.F.Amount.Short");
+        this.AmountText = TextCodeTranslator.Translate("ShipmentReceivable.F.TotalAmount.Short");
         this.AmountLocalText = TextCodeTranslator.Translate("Shipment.O.Receivables.AmountLocal").replace("%LocalCurrencyCode", SessionLocator.LocalCurrencyCode);
     }
 

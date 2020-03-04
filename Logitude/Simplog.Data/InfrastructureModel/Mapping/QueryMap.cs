@@ -11,6 +11,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.HasKey(t => t.Id);
             this.Property(t => t.Id).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.Code).IsRequired().HasMaxLength(30).IsUnicode(false);
+            this.Property(t => t.UniqueCode).IsRequired().HasMaxLength(200).IsUnicode(false);
             this.Property(t => t.UserId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.ObjectTableId).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.OriginalQueryId).HasMaxLength(15).IsUnicode(false);
@@ -28,13 +29,18 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.FeatureUniqeCode)
                 .HasMaxLength(120)
                 .IsUnicode(false);
+            this.Property(t => t.OriginalQueryCode).HasMaxLength(200).IsUnicode(false);
+
             // Table & Column Mappings
             this.ToTable("Queries");
             this.Property(t => t.Id).HasColumnName("Id");
             this.Property(t => t.Tenant).HasColumnName("Tenant");
             this.Property(t => t.Code).HasColumnName("Code");
+            this.Property(t => t.UniqueCode).HasColumnName("UniqueCode");
             this.Property(t => t.UserId).HasColumnName("UserId");
             this.Property(t => t.ObjectTableId).HasColumnName("ObjectTableId");
+            this.Property(t => t.OriginalQueryCode).HasColumnName("OriginalQueryCode");
+
             this.Property(t => t.SystemLevel).HasColumnName("SystemLevel");
             this.Property(t => t.TenantLevel).HasColumnName("TenantLevel");
             this.Property(t => t.OriginalQueryId).HasColumnName("OriginalQueryId");

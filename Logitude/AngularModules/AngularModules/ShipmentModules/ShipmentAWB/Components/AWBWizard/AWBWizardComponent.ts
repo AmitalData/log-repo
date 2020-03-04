@@ -2403,14 +2403,23 @@ export class AWBWizardComponent {
     CancelShipmentClicked() {
         var confirmMsg: string;
 
-        if (!AppTool.IsNullOrEmpty(this.EntityPM.BookingId)) {
-            confirmMsg = "Cancelling this shipment will disconnect it from the Booking , are you sure you want to cancel?";
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.Master)) {
+            var messageWindow: MessageWindow = new MessageWindow();
+            messageWindow.Title = "Cancelling Shipment";
+            messageWindow.Show("Can't cancel shipments that have a MAWB number, please remove it");
         }
 
+        else if (!AppTool.IsNullOrEmpty(this.EntityPM.BookingId)) {
+            confirmMsg = "Cancelling this shipment will disconnect it from the Booking , are you sure you want to cancel?";
+            this.ConfirmCanceling(confirmMsg);
+        }
+        
         else {
             confirmMsg = "Are you sure you want to cancel this Shipment?";
+            this.ConfirmCanceling(confirmMsg);
         }
-
+    }
+    ConfirmCanceling(confirmMsg: string) {
         var confirmWindow = new ConfirmWindow();
 
         confirmWindow.Show(confirmMsg);
@@ -2440,6 +2449,7 @@ export class AWBWizardComponent {
             }
         });
     }
+
     ReactivateShipmentClicked() {
         this.InitFlags();
         this.isReactivateShipmentButtonClicked = true;

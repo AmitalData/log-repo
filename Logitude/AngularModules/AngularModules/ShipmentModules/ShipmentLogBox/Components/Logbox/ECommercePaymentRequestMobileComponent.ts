@@ -28,7 +28,7 @@ import { DocumentsFilingExtendedPMService } from '../../../../Common/Services/Ex
 import { GroupByPipe } from '../../../../Infrastructure/Pipes/GroupByPipe';
 import { ImageLibraryService } from '../../../../Common/Services/Others/ImageLibraryService';
 import { ServiceHelper } from '../../../../Infrastructure/Utilities/ServiceHelper';
-import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
+//import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 import { DocumentTypeMetaDataExtendedService } from '../../../../Common/Services/ExtendedPMs/DocumentTypeMetaDataExtendedService'
 import { ServiceLocator } from '../../../../Infrastructure/Locators/ServiceLocator';
 import { CommonDomainService } from '../../../../Common/Services/CommonDomainService';
@@ -44,7 +44,7 @@ import { DownloadManager } from '../../../../Infrastructure/Utilities/DownloadMa
 export class ECommercePaymentRequestMobileComponent extends BaseComponent implements OnInit, AfterViewInit {
 
     DataContext: ECommercePaymentRequestMobileComponent = this;
-    private messageWindow: MessageWindow = new MessageWindow();
+    //private messageWindow: MessageWindow = new MessageWindow();
     EntityPm: ShipmentPM = new ShipmentPM();
     AdditionalData: any = {
         RequestPaymentData: {}, PaymentData: {}
@@ -305,7 +305,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
 
         //if (myResult.Result) { 
         //var securityId = myResult.Result.SecurityId;
-        DownloadManager.DownloadPage(null, this.TermsOfUseDocumentId);
+        DownloadManager.DownloadExternalPage(null, this.Tenant, this.TermsOfUseDocumentId);
         //  }
         //});
 

@@ -5,7 +5,7 @@ import { PortList } from '../../../../Common/EntityLists/PortList';
 import { VersionTabComponent } from './VersionTabComponent';
 import { SurchargeVersionTabComponent } from './SurchargeVersionTabComponent';
 import { OceanFCLVersionTabComponent } from './OceanFCLVersionTabComponent';
-import { CurrencyPM } from '../../../../Common/EntityPMs/CurrencyPM';
+import { CurrencyList } from '../../../../Common/EntityLists/CurrencyList';
 
 export class AirCostTariffLineData extends BaseComponent {
     public EntityPM: TariffLinePM;
@@ -13,13 +13,31 @@ export class AirCostTariffLineData extends BaseComponent {
     private ObjectTableName = "TariffLine";
     public IsNewEntity: boolean = false;
     public IsEditEnabled: boolean = false;
-    public ComparedEntity: TariffLinePM;
+    public ComparedEntity: TariffLinePM;    
     constructor(entity: TariffLinePM, public FatherComponent: VersionTabComponent, isNew: boolean = false) {
         super();
         this.EntityPM = entity;
         this.IsNewEntity = isNew;
         this.IsEditEnabled = FatherComponent.IsDraftVersion;
         this.SetUIProperties();
+        this.SetCellColorsForPriceCheck();        
+    }
+    
+    public CellColor: string = "transparent";
+    private SetCellColorsForPriceCheck() {
+        if (!AppTool.IsNullOrEmpty(this.FatherComponent.LineIdFromPriceCheck) && this.FatherComponent.LineIdFromPriceCheck == this.EntityPM.Id) {
+            this.CellColor = "#FFFBDA";
+        }
+
+        else {
+            if (this.IsEditEnabled) {
+                this.CellColor = "transparent";                
+            }
+
+            else {
+                this.CellColor = "rgba(230, 231, 232, 0.5)";
+            }
+        }
     }
 
     public MinPriceComparingPrice: number;
@@ -780,8 +798,26 @@ export class AirSurchargeTariffLineData extends BaseComponent {
         this.initialIndex = entity.Index;
         this.IsEditEnabled = FatherComponent.IsDraftVersion;
         this.SetUIProperties();
+        this.SetCellColorsForPriceCheck();
     }
-    
+
+    public CellColor: string = "transparent";
+    private SetCellColorsForPriceCheck() {
+        if (!AppTool.IsNullOrEmpty(this.FatherComponent.LineIdFromPriceCheck) && this.FatherComponent.LineIdFromPriceCheck == this.EntityPM.Id) {
+            this.CellColor = "#FFFBDA";
+        }
+
+        else {
+            if (this.IsEditEnabled) {
+                this.CellColor = "transparent";
+            }
+
+            else {
+                this.CellColor = "rgba(230, 231, 232, 0.5)";
+            }
+        }
+    }
+
     private CheckIfLineHasError() {
         if (this.ErrorText != 'Line is a duplicate') {
             var error: boolean = false;
@@ -1320,9 +1356,9 @@ export class AirSurchargeTariffLineData extends BaseComponent {
         }
     }
     
-    currency: CurrencyPM;
+    currency: CurrencyList;
     get Currency() { return this.currency; }
-    set Currency(value: CurrencyPM) {
+    set Currency(value: CurrencyList) {
         if (this.currency != value) {
             this.currency = value;
         }
@@ -1916,6 +1952,24 @@ export class OceanFCLFreightTariffLineData extends BaseComponent {
         this.IsNewEntity = isNew;
         this.IsEditEnabled = FatherComponent.IsDraftVersion;
         this.SetUIProperties();
+        this.SetCellColorsForPriceCheck();
+    }
+
+    public CellColor: string = "transparent";
+    private SetCellColorsForPriceCheck() {
+        if (!AppTool.IsNullOrEmpty(this.FatherComponent.LineIdFromPriceCheck) && this.FatherComponent.LineIdFromPriceCheck == this.EntityPM.Id) {
+            this.CellColor = "#FFFBDA";
+        }
+
+        else {
+            if (this.IsEditEnabled) {
+                this.CellColor = "transparent";
+            }
+
+            else {
+                this.CellColor = "rgba(230, 231, 232, 0.5)";
+            }
+        }
     }
 
     public Container1ComparingPrice: number;

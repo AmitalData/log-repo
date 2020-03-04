@@ -550,68 +550,87 @@ export class ReceivablesTabComponent extends BaseComponent implements OnInit, On
         });
         logWindow.Show('./CommonModules/CommonOthers/Components/UpdateCurrencyRate/UpdateCurrencyRateComponent');
     }
+
     OnProfitExchangeRateChanged() {
+
+        var hasChanges: boolean = false;
+
         this.EntityPM.ShipmentReceivables.forEach(item => {
-            item.ProfitCurrencyExchangeRate = this.ProfitExchangeRate;
+            if (AppTool.IsNullOrEmpty(item.ARInvoiceId) && AppTool.IsNullOrEmpty(item.ShipmentReceivableParentId)) {
 
-            if (item.CurrencyId == this.ProfitCurrencyId) {
-                item.AmountInProfitCurrency = item.TotalAmount;
-            }
+                hasChanges = true;
 
-            else {
-                var profitAmount = item.TotalAmountLocal / item.ProfitCurrencyExchangeRate;
-                item.AmountInProfitCurrency = AppTool.Round(profitAmount, 2);
+                item.ProfitCurrencyExchangeRate = this.ProfitExchangeRate;
+
+                if (item.CurrencyId == this.ProfitCurrencyId) {
+                    item.AmountInProfitCurrency = item.TotalAmount;
+                }
+
+                else {
+                    var profitAmount = item.TotalAmountLocal / item.ProfitCurrencyExchangeRate;
+                    item.AmountInProfitCurrency = AppTool.Round(profitAmount, 2);
+                }
             }
         });
 
         this.EntityPM.ShipmentPayables.forEach(item => {
-            item.ProfitCurrencyExchangeRate = this.ProfitExchangeRate;
+            if (AppTool.IsNullOrEmpty(item.ShipmentPayableParentId)) {
+                if (item.ShipmentPayableLineStatusCode == "EMPT" || item.ShipmentPayableLineStatusCode == "OAMT") {
 
-            if (item.CurrencyId == this.ProfitCurrencyId) {
-                item.ExpectedAmountInProfitCurrency = item.ExpectedAmount;
-            }
+                    hasChanges = true;
 
-            else {
-                var profitAmount = item.ExpectedAmountLocal / item.ProfitCurrencyExchangeRate;
-                item.ExpectedAmountInProfitCurrency = AppTool.Round(profitAmount, 2);
-            }
+                    item.ProfitCurrencyExchangeRate = this.ProfitExchangeRate;
 
-            // Other Amounts
-            if (item.ShipmentPayableLineStatusCode == "EMPT" || item.ShipmentPayableLineStatusCode == "OAMT") {
-                item.CorrectionAmount = 0;
-                item.AccountedAmount = 0;
-                item.AccountedAmountInLocalCurrency = 0;
-                item.AccountedAmountInProfitCurrency = 0;
-
-                if (item.OpenAmount != item.ExpectedAmount) {
-                    item.OpenAmount = item.ExpectedAmount;
-                    item.OpenAmountInLocalCurrency = item.OpenAmount * item.Rate;
-                    item.OpenAmountInProfitCurrency = item.OpenAmountInLocalCurrency / item.ProfitCurrencyExchangeRate;
-
-                    var expe = item.ExpectedAmount == null ? 0 : item.ExpectedAmount;
-                    var acct = item.AccountedAmount == null ? 0 : item.AccountedAmount;
-                    var open = item.OpenAmount == null ? 0 : item.OpenAmount;
-                    var correction = expe - acct - open;
-
-                    item.CorrectionAmount = AppTool.Round(correction, 2);
-                    item.CorrectionByUserId = SessionLocator.LoggedUserId;
-                    item.CorrectionDate = DateTool.GetCurrentDateAsUtc();
-
-                    if (!AppTool.IsNullOrEmpty(item.CorrectionByUserId)) {
-                        ShipmentTool.SetPayableLineStatus(item);
+                    if (item.CurrencyId == this.ProfitCurrencyId) {
+                        item.ExpectedAmountInProfitCurrency = item.ExpectedAmount;
                     }
-                }
 
-                else {
-                    item.OpenAmountInLocalCurrency = item.OpenAmount * item.Rate;
-                    item.OpenAmountInProfitCurrency = item.OpenAmountInLocalCurrency / item.ProfitCurrencyExchangeRate;
+                    else {
+                        var profitAmount = item.ExpectedAmountLocal / item.ProfitCurrencyExchangeRate;
+                        item.ExpectedAmountInProfitCurrency = AppTool.Round(profitAmount, 2);
+                    }
+
+                    // Other Amounts
+                    if (item.ShipmentPayableLineStatusCode == "EMPT" || item.ShipmentPayableLineStatusCode == "OAMT") {
+                        item.CorrectionAmount = 0;
+                        item.AccountedAmount = 0;
+                        item.AccountedAmountInLocalCurrency = 0;
+                        item.AccountedAmountInProfitCurrency = 0;
+
+                        if (item.OpenAmount != item.ExpectedAmount) {
+                            item.OpenAmount = item.ExpectedAmount;
+                            item.OpenAmountInLocalCurrency = item.OpenAmount * item.Rate;
+                            item.OpenAmountInProfitCurrency = item.OpenAmountInLocalCurrency / item.ProfitCurrencyExchangeRate;
+
+                            var expe = item.ExpectedAmount == null ? 0 : item.ExpectedAmount;
+                            var acct = item.AccountedAmount == null ? 0 : item.AccountedAmount;
+                            var open = item.OpenAmount == null ? 0 : item.OpenAmount;
+                            var correction = expe - acct - open;
+
+                            item.CorrectionAmount = AppTool.Round(correction, 2);
+                            item.CorrectionByUserId = SessionLocator.LoggedUserId;
+                            item.CorrectionDate = DateTool.GetCurrentDateAsUtc();
+
+                            if (!AppTool.IsNullOrEmpty(item.CorrectionByUserId)) {
+                                ShipmentTool.SetPayableLineStatus(item);
+                            }
+                        }
+
+                        else {
+                            item.OpenAmountInLocalCurrency = item.OpenAmount * item.Rate;
+                            item.OpenAmountInProfitCurrency = item.OpenAmountInLocalCurrency / item.ProfitCurrencyExchangeRate;
+                        }
+                    }
                 }
             }
         });
 
-        this.ComputeShipmentFields();
-        this.BuildItemsSource();
+        if (hasChanges) {
+            this.ComputeShipmentFields();
+            this.BuildItemsSource();
+        }
     }
+
     ShowProfitClicked() {
         var logWindow = new LogitudeWindow();
         logWindow.Width = 750;
@@ -1227,6 +1246,13 @@ export class ReceivablesTabComponent extends BaseComponent implements OnInit, On
 
             activeLines.forEach(item => {
                 switch (item.MeasurementCode) {
+                    case "SCGW": {
+                        if (item.Quantity != this.EntityPM.GrossWeightPerStorageDays) {
+                            isDifferentOrders = true;
+                        }
+                        break;
+                    }
+
                     case "CWKG": {
                         if (item.Quantity != this.EntityPM.ChargeableWeightInKG) {
                             isDifferentOrders = true;
@@ -1761,7 +1787,12 @@ export class ShipmentReceivableItem extends BaseComponent {
                                     this.IsByContainerType = true;
                                     this.BuildByContainersItemsSource();
                                     break;
-                                }                                
+                                }
+                                    
+                                case "SCGW": {
+                                    this.Quantity = this.ShipmentPM.GrossWeightPerStorageDays;
+                                    break;
+                                }
 
                                 default: {
                                     var myGrouped: ByPckageType[] = ShipmentTool.GetByPckageTypeGrouped(this.ShipmentPM);
@@ -2380,6 +2411,12 @@ export class ShipmentReceivableItem extends BaseComponent {
                                 break;
                             }
 
+                            case "SCGW": {
+                                unitPrice = this.UnitPrice;
+                                quantity = item.GrossWeightPerStorageDays;
+                                break;
+                            }
+
                             default: {
                                 if (this.fatherComponent.IsFCLEntity) {
                                     var list: PackageTypeList = AllPackageTypes.filter(f => f.MeasurementId == this.MeasurementId)[0];
@@ -2493,6 +2530,9 @@ export class ShipmentReceivableItem extends BaseComponent {
             case "BCNT": {
                 break;
             }
+            case "SCGW": {
+                result = this.ShipmentPM.GrossWeightPerStorageDays; break; 
+            }
 
             default: {
                 if (!AppTool.IsNullOrEmpty(this.MeasurementId)) {
@@ -2556,6 +2596,7 @@ export class InsideReceivableViewModel {
     get ChargeableWeightInKG() { return this.ShipmentPM.ChargeableWeightInKG; }
     get GrossWeightInKG() { return this.ShipmentPM.GrossWeightInKG; }
     get VolumeInCBM() { return this.ShipmentPM.VolumeInCBM; }
+    get GrossWeightPerStorageDays() { return this.ShipmentPM.GrossWeightPerStorageDays; }
 
     // Receivable Properties
     get ShipmentId() { return this.EntityPM.ShipmentId; }
@@ -2615,6 +2656,14 @@ export class InsideReceivableViewModel {
         var myQuantity = null;
 
         switch (this.MeasurementCode) {
+            case "SCGW": {
+                if (this.ShipmentPM) {
+                    myQuantity = this.ShipmentPM.GrossWeightPerStorageDays;
+                }
+
+                break;
+            }
+
             case "CWKG": {
                 if (this.ShipmentPM) {
                     myQuantity = this.ShipmentPM.ChargeableWeightInKG;

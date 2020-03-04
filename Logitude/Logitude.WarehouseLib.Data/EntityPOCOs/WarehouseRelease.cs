@@ -156,6 +156,8 @@ namespace Logitude.WarehouseLib.Data.EntityPOCOs
 	    public string ToAddressCountryId { get; set; }
 	      
         public virtual Country ToAddressCountry { get; set; }
+        [Column("IsUsed")]
+	    public bool IsUsed { get; set; }
     }
 }
 	 

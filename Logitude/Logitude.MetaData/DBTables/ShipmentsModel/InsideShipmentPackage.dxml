@@ -1,87 +1,203 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Table Name="InsideShipmentPackages" Schema="dbo" DBType="Main">
-  <Column Name="Id" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="InsideShipmentPackages"
+  Schema="dbo"
+  DBType="Main">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="ShipmentPackageId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
+  <Column
+    Name="ShipmentPackageId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="PackageTypeId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="PackageTypeId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Quantity" Type="int">
-    <Constraints Nullable="true" />
+  <Column
+    Name="Quantity"
+    Type="int">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Width" Type="float">
-    <Constraints Nullable="true" />
+  <Column
+    Name="Width"
+    Type="float">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Height" Type="float">
-    <Constraints Nullable="true" />
+  <Column
+    Name="Height"
+    Type="float">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Length" Type="float">
-    <Constraints Nullable="true" />
+  <Column
+    Name="Length"
+    Type="float">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Weight" Type="float">
-    <Constraints Nullable="true" />
+  <Column
+    Name="Weight"
+    Type="float">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Description" Type="varchar" Size="2000">
-    <Constraints Nullable="true" />
+  <Column
+    Name="Description"
+    Type="varchar"
+    Size="2000">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Volume" Type="float">
-    <Constraints Nullable="true" />
+  <Column
+    Name="Volume"
+    Type="float">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="OriginalShipmentPackageId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="OriginalShipmentPackageId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="OriginalInsideShipmentPackageId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="OriginalInsideShipmentPackageId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="VolumetricWeight" Type="float">
-    <Constraints Nullable="true" />
+  <Column
+    Name="VolumetricWeight"
+    Type="float">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Reference1" Type="varchar" Size="2000">
-    <Constraints Nullable="true" />
+  <Column
+    Name="Reference1"
+    Type="varchar"
+    Size="2000">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Reference2" Type="varchar" Size="2000">
-    <Constraints Nullable="true" />
+  <Column
+    Name="Reference2"
+    Type="varchar"
+    Size="2000">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Reference3" Type="varchar" Size="2000">
-    <Constraints Nullable="true" />
+  <Column
+    Name="Reference3"
+    Type="varchar"
+    Size="2000">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Reference4" Type="varchar" Size="2000">
-    <Constraints Nullable="true" />
+  <Column
+    Name="Reference4"
+    Type="varchar"
+    Size="2000">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="CommodityNumber" Type="varchar" Size="20">
-    <Constraints Nullable="true" />
+  <Column
+    Name="CommodityNumber"
+    Type="varchar"
+    Size="20">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="CommodityName" Type="varchar" Size="250">
-    <Constraints Nullable="true" />
+  <Column
+    Name="CommodityName"
+    Type="varchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Make" Type="varchar" Size="100">
-    <Constraints Nullable="true" />
+  <Column
+    Name="Make"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Model" Type="varchar" Size="100">
-    <Constraints Nullable="true" />
+  <Column
+    Name="Model"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Year" Type="varchar" Size="100">
-    <Constraints Nullable="true" />
+  <Column
+    Name="Year"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Color" Type="varchar" Size="100">
-    <Constraints Nullable="true" />
+  <Column
+    Name="Color"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="ChassisNumber" Type="varchar" Size="100">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ChassisNumber"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="RegistrationNumber" Type="varchar" Size="100">
-    <Constraints Nullable="true" />
+  <Column
+    Name="RegistrationNumber"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="CountryId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="CountryId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Relation ForeignKeyColumn="ShipmentPackageId" ReferencedTable="ShipmentPackages" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="PackageTypeId" ReferencedTable="PackageTypes" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="CountryId" ReferencedTable="Countries" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ShipmentPackageId"
+    ReferencedTable="ShipmentPackages"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="PackageTypeId"
+    ReferencedTable="PackageTypes"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="CountryId"
+    ReferencedTable="Countries"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
 </Table>

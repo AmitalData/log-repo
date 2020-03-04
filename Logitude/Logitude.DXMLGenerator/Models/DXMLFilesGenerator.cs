@@ -15,19 +15,29 @@ namespace Logitude.DXMLGenerator.Models
     {
         private readonly string Root = ConfigurationManager.AppSettings["Root"];
 
-        private string ConnectionString;
-        private string ErrorsFileName;
+        private readonly string ConnectionString;
+        private readonly string ErrorsFileName;
+        private readonly bool IncludeCustoms;
+
         private List<string> ExcludedTables;
         private List<string> ExcludedTablesNames;
         private int GeneratedDXMLFilesCounter = 0;
         private int GeneratedPathsCounter = 0;
         private string ErrorsData = "";
 
-        public DXMLFilesGenerator(string connectionString, string errorsFileName)
+        private List<ColumnDefaultValue> ColumnsDefaultValues;
+        private List<Index> Indexes;
+        private List<UniqueConstraint> UniqueConstraints;
+
+        public DXMLFilesGenerator(string connectionString, string errorsFileName, bool includeCustoms)
         {
             ConnectionString = connectionString;
             ErrorsFileName = errorsFileName;
+            IncludeCustoms = includeCustoms;
             BuildExcludedTablesList();
+            ReadColumnsDefaultValues();
+            ReadIndexes();
+            ReadUniqueConstraints();
         }
 
         public void GenerateDXMLFiles()
@@ -73,7 +83,9 @@ namespace Logitude.DXMLGenerator.Models
 
         private List<DBTable> GetTablesFromDB()
         {
-            string queryString = @"SELECT TABLE_CATALOG, TABLE_SCHEMA, TABLE_NAME FROM INFORMATION_SCHEMA.TABLES";
+            string queryCondition = IncludeCustoms ? null : " WHERE TABLE_SCHEMA = 'dbo'";
+
+            string queryString = @"SELECT TABLE_CATALOG, TABLE_SCHEMA, TABLE_NAME FROM INFORMATION_SCHEMA.TABLES" + queryCondition;
 
             SqlDataReader reader = null;
             SqlConnection connection = new SqlConnection(ConnectionString);
@@ -167,6 +179,7 @@ namespace Logitude.DXMLGenerator.Models
                             Size = !String.IsNullOrEmpty(reader["Size"].ToString()) ? Convert.ToInt32(reader["Size"].ToString()) : 0,
                             Precision = !String.IsNullOrEmpty(reader["Precision"].ToString()) ? Convert.ToInt32(reader["Precision"].ToString()) : 0,
                             Scale = !String.IsNullOrEmpty(reader["Scale"].ToString()) ? Convert.ToInt32(reader["Scale"].ToString()) : 0,
+                            DefaultValue = GetColumnDefinitionDefaultValue(table.Name, reader["ColumnName"].ToString(), (reader["Nullable"].ToString() == "YES"), GetColumnDefinitionDataType(reader["DataType"].ToString())),
                             Constraints = new ConstraintsDefinition
                             {
                                 Nullable = (reader["Nullable"].ToString() == "YES")
@@ -193,13 +206,35 @@ namespace Logitude.DXMLGenerator.Models
                 reader.Close();
                 connection.Close();
 
+                List<string> tableColumnsNames = columnsDefinitions.Select(c => c.Name).ToList();
+
+                string tableDBType = GetDatabaseType(table.DBName);
+                List<RelationDefinition> tableRelations = GetTableRelations(table.Name);
+                List<IndexDefinition> tableIndexes = GetTableIndexes(table.Name).Where(i => !tableRelations.Select(r => r.ForeignKeyColumn).Contains(i.Columns)).ToList();
+
+                List<IndexDefinition> indexesWithWrongColumns = tableIndexes
+                    .Where(i => (!tableColumnsNames.Contains(i.Columns) && !i.Columns.Contains(",")) || (i.Columns.Split(',')
+                    .Where(cc => tableColumnsNames.All(c => c != cc)).Any() && i.Columns.Contains(","))).ToList();
+
+                List<IndexDefinition> indexesWithWrongInclude = tableIndexes
+                    .Where(i => (i.Include != null && !tableColumnsNames.Contains(i.Include) && !i.Include.Contains(",")) || (i.Include != null && i.Include.Split(',')
+                    .Where(cc => tableColumnsNames.All(c => c != cc)).Any() && i.Include.Contains(","))).ToList();
+
+                List<IndexDefinition> wrongIndexes = indexesWithWrongColumns.Concat(indexesWithWrongInclude).ToList();
+
+                tableIndexes = tableIndexes.Where(i => !wrongIndexes.Select(ii => ii.Columns).Contains(i.Columns)).ToList();
+
+                List<UniqueConstraintDefinition> tableUniqueConstraints = GetTableUniqueConstraints(table.Name);
+
                 tableDefinition = new TableDefinition
                 {
                     Name = table.Name,
                     Schema = table.Schema,
-                    DBType = GetDatabaseType(table.DBName),
+                    DBType = tableDBType,
                     Columns = columnsDefinitions,
-                    Relations = GetTableRelations(table.Name)
+                    Relations = tableRelations,
+                    Indexes = tableIndexes,
+                    UniqueConstraints = tableUniqueConstraints
                 };
             }
             catch (Exception)
@@ -289,13 +324,23 @@ namespace Logitude.DXMLGenerator.Models
                 try
                 {
                     string path = GetPathForDXMLFile(tableDefinition.Name, true);
+
                     if (!String.IsNullOrEmpty(path))
                     {
+                        string dxmlModule = GetModuleNameForDXMLFile(path);
+                        tableDefinition.Module = dxmlModule;
+
                         XmlSerializerNamespaces emptyNamespace = new XmlSerializerNamespaces(new[] { XmlQualifiedName.Empty });
                         XmlSerializer xmlSerializer = new XmlSerializer(typeof(TableDefinition));
-                        TextWriter textWriter = new StreamWriter(path);
-                        xmlSerializer.Serialize(textWriter, tableDefinition, emptyNamespace);
-                        textWriter.Close();
+                        FileStream fileStream = new FileStream(path, FileMode.OpenOrCreate, FileAccess.Write);
+                        XmlWriterSettings xmlWriterSettings = new XmlWriterSettings() { Indent = true, NewLineOnAttributes = true, OmitXmlDeclaration = false, WriteEndDocumentOnClose = false };
+                        XmlWriter xmlWriter = XmlWriter.Create(fileStream, xmlWriterSettings);
+
+                        xmlSerializer.Serialize(xmlWriter, tableDefinition, emptyNamespace);
+                        xmlWriter.Close();
+                        xmlWriter.Dispose();
+                        fileStream.Close();
+
                         GeneratedDXMLFilesCounter++;
                     }
                     else
@@ -481,7 +526,7 @@ namespace Logitude.DXMLGenerator.Models
             try
             {
                 string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
-                string filePath = Path.Combine(projectDirectory, @"ExcludedTablesMap.txt");
+                string filePath = Path.Combine(projectDirectory, @"Data\ExcludedTablesMap.txt");
                 List<string> excludedTablesList = File.ReadLines(filePath).ToList();
                 if (excludedTablesList.Count() > 0)
                 {
@@ -548,6 +593,147 @@ namespace Logitude.DXMLGenerator.Models
             return processedRelations;
         }
 
+        private string GetColumnDefinitionDefaultValue(string tableName, string columnName, bool nullable, string type)//////
+        {
+            if (nullable)
+            {
+                return null;
+            }
+
+            if(!nullable && type == "bit")
+            {
+                return null;
+            }
+
+            ColumnDefaultValue columnDefaultValue = ColumnsDefaultValues.Where(c => c.TableName == tableName && c.ColumnName == columnName).FirstOrDefault();
+
+            if(columnDefaultValue != null)
+            {
+                return columnDefaultValue.DefaultValue;
+            }
+
+            return null;
+        }
+
+        private void ReadColumnsDefaultValues()
+        {
+            Console.WriteLine("Reading Default Values ...");
+
+            string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+            string filePath = Path.Combine(projectDirectory, @"Data\DefaultValues.csv");
+
+            List<ColumnDefaultValue> columnsDefaultValues = File.ReadAllLines(filePath).Select(l => new ColumnDefaultValue
+            {
+                TableName = l.Split(',')[0],
+                ColumnName = l.Split(',')[1],
+                DefaultValue = FormatDefaultValue(l.Split(',')[2])
+            }).ToList();
+
+            ColumnsDefaultValues = columnsDefaultValues;
+        }
+
+        private string FormatDefaultValue(string defaultValue)
+        {
+            if (String.IsNullOrEmpty(defaultValue))
+            {
+                return null;
+            }
+            if (defaultValue.ToLower().Contains("getdate()"))
+            {
+                return "CurrentDate";
+            }
+            if (defaultValue.Contains("'"))
+            {
+                return "'" + defaultValue.Split('\'')[1] + "'";
+            }
+
+            return defaultValue.Replace("(", String.Empty).Replace(")", String.Empty);
+        }
+
+        private void ReadIndexes()
+        {
+            Console.WriteLine("Reading Indexes ...");
+
+            string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+            string filePath = Path.Combine(projectDirectory, @"Data\Indexes.csv");
+            
+            List<Index> indexes = File.ReadAllLines(filePath).Select(l => new Index
+            {
+                TableName = l.Split(',')[0],
+                Columns = l.Split(',')[1].Replace("; ", ","),
+                IncludedColumns = (String.IsNullOrEmpty(l.Split(',')[2]) || l.Split(',')[2] == "NULL") ? null : l.Split(',')[2].Replace("; ", ",")
+            }).ToList();
+
+            List<Index> processedIndexes = new List<Index>();
+
+            foreach(var index in indexes)
+            {
+                if(!processedIndexes.Where(i => i.TableName.ToLower() == index.TableName.ToLower() && i.Columns.ToLower() == index.Columns.ToLower()).Any())
+                {
+                    processedIndexes.Add(index);
+                }
+            }
+
+            Indexes = processedIndexes;
+        }
+
+        private void ReadUniqueConstraints()
+        {
+            Console.WriteLine("Reading Unique Constraints ...");
+
+            string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+            string filePath = Path.Combine(projectDirectory, @"Data\UniqueConstraints.csv");
+
+            List<UniqueConstraint> uniqueConstraints = File.ReadAllLines(filePath).Select(l => new UniqueConstraint
+            {
+                TableName = l.Split(',')[0],
+                Columns = l.Split(',')[1].Replace("; ", ",")
+            }).ToList();
+
+            List<UniqueConstraint> processedUniqueConstraints = new List<UniqueConstraint>();
+
+            foreach (var uniqueConstraint in uniqueConstraints)
+            {
+                if (!processedUniqueConstraints.Where(u => u.TableName.ToLower() == uniqueConstraint.TableName.ToLower() && u.Columns.ToLower() == uniqueConstraint.Columns.ToLower()).Any())
+                {
+                    processedUniqueConstraints.Add(uniqueConstraint);
+                }
+            }
+
+            UniqueConstraints = processedUniqueConstraints;
+        }
+        
+        private List<IndexDefinition> GetTableIndexes(string tableName)
+        {
+            if(Indexes.Where(i => i.TableName.ToLower() == tableName.ToLower()).Any())
+            {
+                List<IndexDefinition> indexDefinitions = Indexes.Where(i => i.TableName.ToLower() == tableName.ToLower()).Select(i => new IndexDefinition
+                {
+                    Columns = i.Columns,
+                    Include = i.IncludedColumns
+                }).ToList();
+
+                return indexDefinitions;
+            }
+
+            return new List<IndexDefinition>();
+        }
+        
+        private List<UniqueConstraintDefinition> GetTableUniqueConstraints(string tableName)
+        {
+            if (UniqueConstraints.Where(u => u.TableName.ToLower() == tableName.ToLower()).Any())
+            {
+                List<UniqueConstraintDefinition> uniqueConstraintDefinitions = UniqueConstraints.Where(u => u.TableName.ToLower() == tableName.ToLower()).Select(u => new UniqueConstraintDefinition
+                {
+                    Columns = u.Columns
+                }).ToList();
+
+                return uniqueConstraintDefinitions;
+            }
+
+            return new List<UniqueConstraintDefinition>();
+        }
+
         private void ExportErrorsData()
         {
             string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
@@ -557,6 +743,78 @@ namespace Logitude.DXMLGenerator.Models
             if (!String.IsNullOrEmpty(ErrorsData))
             {
                 Console.WriteLine("\n" + "Errors Are Exported To /Errors/" + ErrorsFileName + "\n");
+            }
+        }
+
+        private string GetModuleNameForDXMLFile(string dxmlFilePath)
+        {
+            if (dxmlFilePath.ToLower().Contains("Logitude.Accounting.MetaData".ToLower()))
+            {
+                return "Accounting";
+            }
+            else if (dxmlFilePath.ToLower().Contains("Logitude.BookingLib.MetaData".ToLower()))
+            {
+                return "Booking";
+            }
+            else if (dxmlFilePath.ToLower().Contains("Logitude.CRM.MetaData".ToLower()))
+            {
+                return "CRM";
+            }
+            else if (dxmlFilePath.ToLower().Contains("Logitude.Customs.MetaData".ToLower()))
+            {
+                return "Customs";
+            }
+            else if (dxmlFilePath.ToLower().Contains("Logitude.Social.MetaData".ToLower()))
+            {
+                return "Social";
+            }
+            else if (dxmlFilePath.ToLower().Contains("Logitude.TariffModule.MetaData".ToLower()))
+            {
+                return "Tariff";
+            }
+            else if (dxmlFilePath.ToLower().Contains("Logitude.TimeManagement.MetaData".ToLower()))
+            {
+                return "TimeManagement";
+            }
+            else if (dxmlFilePath.ToLower().Contains("Logitude.WarehouseLib.MetaData".ToLower()))
+            {
+                return "Warehouse";
+            }
+            else if (dxmlFilePath.ToLower().Contains("Logitude.Infrastructure.MetaData".ToLower()))
+            {
+                return "Infrastructure";
+            }
+            else if (dxmlFilePath.ToLower().Contains("Logitude.MetaData".ToLower()) && dxmlFilePath.ToLower().Contains("CommonDataModel".ToLower()))
+            {
+                return "Common";
+            }
+            else if (dxmlFilePath.ToLower().Contains("Logitude.MetaData".ToLower()) && dxmlFilePath.ToLower().Contains("GlobalModel".ToLower()))
+            {
+                return "Global";
+            }
+            else if (dxmlFilePath.ToLower().Contains("Logitude.MetaData".ToLower()) && dxmlFilePath.ToLower().Contains("InfrastructureModel".ToLower()))
+            {
+                return "BusinessInfrastructure";
+            }
+            else if (dxmlFilePath.ToLower().Contains("Logitude.MetaData".ToLower()) && dxmlFilePath.ToLower().Contains("InvoiceModel".ToLower()))
+            {
+                return "Invoice";
+            }
+            else if (dxmlFilePath.ToLower().Contains("Logitude.MetaData".ToLower()) && dxmlFilePath.ToLower().Contains("QuoteModel".ToLower()))
+            {
+                return "Quote";
+            }
+            else if (dxmlFilePath.ToLower().Contains("Logitude.MetaData".ToLower()) && dxmlFilePath.ToLower().Contains("ShipmentsModel".ToLower()))
+            {
+                return "Shipment";
+            }
+            else if (dxmlFilePath.ToLower().Contains("Logitude.MetaData".ToLower()) && dxmlFilePath.ToLower().Contains("SystemLogsModel".ToLower()))
+            {
+                return "SystemLogs";
+            }
+            else
+            {
+                return null;
             }
         }
     }

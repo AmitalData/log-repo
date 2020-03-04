@@ -95,14 +95,11 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     else if (transactionPM.SourceTypeCode == "9") // 9- Payment Cheque
                     {
                         PaymentChequePM chequePM = paymentChequeQuery.GetSingle(transactionPM.SourceId, false, false);
-                        if (chequePM != null)
-                        {
-                            chequePM.PaymentChequeStatusCode = "3"; // 3- Redeemed
-                            chequePM.ChangeSetOp = ChangeSetOperation.Update;
-                            PaymentChequeUpdateService paymentChequeUpdateService = new PaymentChequeUpdateService(MainContext, AdditionalContexts, entityPM.Tenant);
-                            paymentChequeUpdateService.Update(chequePM, true);
-                        }
-
+                       
+                    }
+                    else if(transactionPM.SourceTypeCode == "5") {
+                        List<PaymentChequePM> paymentCheques = paymentChequeQuery.GetPaymentChequesByPaymentId(transactionPM.SourceId, transactionPM.Tenant);
+                        UpdatePaymentChequeStatus(paymentCheques[0]);
                     }
                     transactionService.Update(transactionPM, false);
                 }
@@ -127,7 +124,17 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             aRPaymentChequeUpdateService.Update(aRPaymentCheque, true);
             
         }
+        private void UpdatePaymentChequeStatus(PaymentChequePM chequePM)
+        {
+            if (chequePM != null)
+            {
+                chequePM.PaymentChequeStatusCode = "3"; // 3- Redeemed
+                chequePM.ChangeSetOp = ChangeSetOperation.Update;
+                PaymentChequeUpdateService paymentChequeUpdateService = new PaymentChequeUpdateService(MainContext, AdditionalContexts, chequePM.Tenant);
+                paymentChequeUpdateService.Update(chequePM, true);
+            }
 
+        }
         protected override void OnUpdating(ExternalReconciliationPM entityPM, ExternalReconciliation entityPOCO)
         {
 
@@ -154,7 +161,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 {
                     if (transactionPM.SourceTypeCode == "9") // 9- Payment Cheque
                     {
-                        PaymentChequePM chequePM = paymentChequeQuery.GetSingle(transactionPM.SourceId, false, false);
+                        PaymentChequePM chequePM = paymentChequeQuery.GetSingle(transactionPM.SourceId, true, false);
                         chequePM.PaymentChequeStatusCode = "2"; // 2- Approved
                         chequePM.ChangeSetOp = ChangeSetOperation.Update;
                         PaymentChequeUpdateService paymentChequeUpdateService = new PaymentChequeUpdateService(MainContext, AdditionalContexts, entityPM.Tenant);

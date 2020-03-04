@@ -561,6 +561,7 @@
     <Compile Include="InfrastructureModel\EntityPOCOs\DWQuery .cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\DWQueryColumn.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\DWQueryFilter.cs" />
+    <Compile Include="InfrastructureModel\EntityPOCOs\RuleUpdateHistory.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\SchedulerProcedure.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\SharedUserQuery.cs" />
     <Compile Include="InfrastructureModel\Mapping\DWObjectFieldCategoriesMap.cs" />
@@ -570,6 +571,7 @@
     <Compile Include="InfrastructureModel\Mapping\DWQueryColumnMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\DWQueryFilterMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\DWSubQueryMap.cs" />
+    <Compile Include="InfrastructureModel\Mapping\RuleUpdateHistoryMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\SchedulerProcedureMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\SharedUserQueryMap.cs" />
     <Compile Include="InfrastructureModel\Repositories\DWObjectFieldCategoriesRepository.cs" />
@@ -581,6 +583,7 @@
     <Compile Include="InfrastructureModel\Repositories\DWCategoriesRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\DWSubQueryRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\DWQueryRepository.cs" />
+    <Compile Include="InfrastructureModel\Repositories\RuleUpdateHistoryRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\SchedulerProcedureRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\SharedUserQueryRepository.cs" />
     <Compile Include="InvoiceModel\EntityPOCOs\ARInvoiceStock.cs" />

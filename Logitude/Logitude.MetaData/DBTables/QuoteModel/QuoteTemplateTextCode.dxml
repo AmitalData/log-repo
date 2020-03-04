@@ -1,31 +1,76 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Table Name="QuoteTemplateTextCodes" Schema="dbo" DBType="Main">
-  <Column Name="Id" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="QuoteTemplateTextCodes"
+  Schema="dbo"
+  DBType="Main">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="TextCode" Type="varchar" Size="100">
-    <Constraints Nullable="false" />
+  <Column
+    Name="TextCode"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="EnglishName" Type="varchar" Size="100">
-    <Constraints Nullable="false" />
+  <Column
+    Name="EnglishName"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="LocalName" Type="nvarchar" Size="100">
-    <Constraints Nullable="false" />
+  <Column
+    Name="LocalName"
+    Type="nvarchar"
+    Size="100">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="QuoteTemplateId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
+  <Column
+    Name="QuoteTemplateId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="Area" Type="varchar" Size="20">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Area"
+    Type="varchar"
+    Size="20">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="OriginalEnglishName" Type="varchar" Size="100">
-    <Constraints Nullable="false" />
+  <Column
+    Name="OriginalEnglishName"
+    Type="varchar"
+    Size="100"
+    DefaultValue="''">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="OriginalLocalName" Type="nvarchar" Size="100">
-    <Constraints Nullable="false" />
+  <Column
+    Name="OriginalLocalName"
+    Type="nvarchar"
+    Size="100"
+    DefaultValue="''">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Relation ForeignKeyColumn="QuoteTemplateId" ReferencedTable="QuoteTemplates" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="QuoteTemplateId"
+    ReferencedTable="QuoteTemplates"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
 </Table>

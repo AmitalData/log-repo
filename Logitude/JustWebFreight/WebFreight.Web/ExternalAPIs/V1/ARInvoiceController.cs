@@ -92,22 +92,13 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         ARInvoicePM entityPM = mappingService.ARInvoiceDataMappingAndValidatin(entity, entity.Tenant);
                         mappingService.SetInvoiceLinesEntityId(entityPM, entity.Tenant);
                         mappingService.ValidateAccountingExternalEntityId(entity);
+                        mappingService.SetBillToGLAccountId(entityPM);
                         entityPM.IsExternalEntity = true;
                         entityPM.IsExternalAPI = true;
                         entityPM.Tenant = entity.Tenant;
                         entityPM.IsGeneralInvoice = true;
-                        if (entity.IsDraft)
-                        {
-                            entityPM.SetApproved = false;
-                        }
-                        else entityPM.SetApproved = true;
-
-
-                        if(entityPM.StatusCode == "AD")
-                        {
-                            entityPM.SetApproved = true;
-                        }
-
+                        entityPM = SetARInvoiceStatusBooleans(entity, entityPM );
+                   
                         #region Computing Invoice Lines Fields
                         ICommonDataContext CommonContext = CommonDataContext.GetContext(tenant);
                         Tenant MyTenant = (from d in CommonContext.Tenants where d.Id == tenant select d).FirstOrDefault();
@@ -237,6 +228,26 @@ namespace WebFreight.Web.ExternalAPIs.V1
             }
         }
 
+        private ARInvoicePM SetARInvoiceStatusBooleans(ARInvoice invoice,ARInvoicePM invoicePM)
+        {
+            if (invoice.IsDraft)
+            {
+                invoicePM.SetApproved = false;
+            }
+            else invoicePM.SetApproved = true;
+
+            if (invoicePM.StatusCode == "AD")
+            {
+                invoicePM.SetApproved = true;
+            }
+            else if(invoice.Status.Code == "AC")
+            {
+                invoicePM.IsAutoCredit = true;
+            }
+            return invoicePM;
+        }
+
+
         public HttpResponseMessage Put(ARInvoice entity)
         {
             ARInvoice oldEntity = entity;
@@ -261,7 +272,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         IInvoiceContext MyContext = InvoiceContext.GetContext(tenant);
                         ARInvoiceQueryService mappingService = new ARInvoiceQueryService(tenant);
                         ARInvoicePM entityPM = mappingService.ARInvoiceDataMappingAndValidatin(entity, tenant);
-                      //  mappingService.UpdateCreditInvoice(entityPM, tenant);
+                        mappingService.SetBillToGLAccountId(entityPM);
+                        //  mappingService.UpdateCreditInvoice(entityPM, tenant);
                         entityPM.IsExternalAPI = true;
                         entityPM.IsExternalEntity = true;
                         if (!string.IsNullOrEmpty(entity.ComputingPartnerCode))

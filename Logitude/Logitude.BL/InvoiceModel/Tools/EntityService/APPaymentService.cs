@@ -184,7 +184,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             paymentCheque.PayToGLAccountId = VendorGLAccount != null ? VendorGLAccount.Id : null;
             if (payment.PaymentChequeCreationPayToName == null)
             {
-                paymentCheque.PayToName = VendorGLAccount != null ? (VendorGLAccount.LocalName != null ? VendorGLAccount.LocalName : VendorGLAccount.EnglishName) : null;
+                paymentCheque.PayToName = VendorGLAccount != null ? (VendorGLAccount.NameForPrintingCheques != null? VendorGLAccount.NameForPrintingCheques:  ( VendorGLAccount.LocalName != null ? VendorGLAccount.LocalName : VendorGLAccount.EnglishName)) : null;
             }
             else { paymentCheque.PayToName = payment.PaymentChequeCreationPayToName; }
             paymentCheque.BankAccountId = payment.BankAccountId;

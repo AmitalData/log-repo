@@ -88,8 +88,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
                 token = token.Replace(" ", "+");
             }
 
-            if (HttpContext.Current != null)
-            {
+          
                 string entityName = "Token" + token;
                 if (CacheManager.CacheWrapper.Get(entityName) != null)
                 {
@@ -107,14 +106,8 @@ namespace Simplog.Data.CommonDataModel.Repositories
                     }
                     return entity;
                 }
-            }
-            else
-            {
-                ICommonDataContext context = CommonDataContext.GetContext(0);
-                return (from a in context.AuthenticationTokens
-                        where a.Token == token
-                        select a).FirstOrDefault();
-            }
+            
+      
         }
 
 

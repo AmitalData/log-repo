@@ -116,7 +116,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "OBL Type",
-			      				    Code =  "a0d1",
+			      				    Code =  "0005",
 			      				    Name =  "OBLType",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "Name",
@@ -404,15 +404,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-
-		   		   //--------------> Additional TextCodes <--------------\\
-
- 		   ObjectTable OBLTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "OBLType" && d.Tenant == 0).FirstOrDefault(); 
-
- 		   TextCode OBLTypeTextCode_OBLType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "OBLType", DefaultText = "OBL Type",LocalDefaultText = null, ObjectTableId = OBLTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
-   
+	    {     
 	    
 }
 

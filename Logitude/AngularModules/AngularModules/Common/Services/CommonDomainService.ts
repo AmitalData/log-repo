@@ -1387,6 +1387,9 @@ export class CustomApiQueryFilters {
     }
 
     public queryId: string;
+    public queryCode: string;
+    public uniqueCode: string;
+
     //public tenant: number;
     public userid: string;
     public ObjectTableName: string;

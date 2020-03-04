@@ -135,8 +135,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             if (entityPOCO.CreatedByUserId != null)
             {
                 ContactPM contact = GetLoggedContact(entityPOCO.Tenant);
-                ContactRepository contactRepository = new ContactRepository(entityPOCO.Tenant);
-                Contact userContact = contactRepository.GetSingleContact(entityPOCO.CreatedByUserId, entityPOCO.Tenant);
+                Contact userContact = GetCreatedByUserContactPM(entityPOCO.CreatedByUserId, entityPOCO.Tenant);
+
                 contact = contact ?? new Logitude.BL.CommonDataModel.EntityPMs.ContactPM();
                 if (userContact != null)
                 {
@@ -160,7 +160,16 @@ namespace Logitude.Accounting.BL.EntityDataMappings
         }
 
 
-
+        private Contact GetCreatedByUserContactPM(string id,int tenant)
+        {
+            ContactRepository contactRepository = new ContactRepository(tenant);
+            Contact userContact = contactRepository.GetSingleContactByIdAndTenant(id, tenant, true);
+            if (userContact == null)
+            {
+                userContact = contactRepository.GetSingleContactByIdAndTenant(id, 0, true);
+            }
+            return userContact;
+        }
         private static void BuildSearchFields(JournalPM entityPM, Journal poco, bool isNewEntity)
         {
             string result = "";

@@ -1,54 +1,128 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Table Name="ReportsTemplates" Schema="dbo" DBType="Main">
-  <Column Name="Id" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="ReportsTemplates"
+  Schema="dbo"
+  DBType="Main">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="ReportId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
+  <Column
+    Name="ReportId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="Description" Type="nvarchar" Size="250">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Description"
+    Type="nvarchar"
+    Size="250">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="CreateDate" Type="datetime">
-    <Constraints Nullable="false" />
+  <Column
+    Name="CreateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="UpdateDate" Type="datetime">
-    <Constraints Nullable="false" />
+  <Column
+    Name="UpdateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="UpdatedByUserId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
+  <Column
+    Name="UpdatedByUserId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="CreatedByUserId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
+  <Column
+    Name="CreatedByUserId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="CurrentVersion" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="CurrentVersion"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="IsSystem" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="IsSystem"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="InActive" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="InActive"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="TemplateType" Type="varchar" Size="1">
-    <Constraints Nullable="true" />
+  <Column
+    Name="TemplateType"
+    Type="varchar"
+    Size="1">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="From" Type="nvarchar" Size="500">
-    <Constraints Nullable="true" />
+  <Column
+    Name="From"
+    Type="nvarchar"
+    Size="500">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="ReplyTo" Type="nvarchar" Size="500">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ReplyTo"
+    Type="nvarchar"
+    Size="500">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="CC" Type="nvarchar" Size="4000">
-    <Constraints Nullable="true" />
+  <Column
+    Name="CC"
+    Type="nvarchar"
+    Size="4000">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Subject" Type="nvarchar" Size="500">
-    <Constraints Nullable="true" />
+  <Column
+    Name="Subject"
+    Type="nvarchar"
+    Size="500">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Relation ForeignKeyColumn="ReportId" ReferencedTable="Reports" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="UpdatedByUserId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="CreatedByUserId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ReportId"
+    ReferencedTable="Reports"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="UpdatedByUserId"
+    ReferencedTable="Users"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="CreatedByUserId"
+    ReferencedTable="Users"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
 </Table>

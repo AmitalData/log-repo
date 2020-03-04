@@ -1,4 +1,5 @@
 ﻿using Logitude.Accounting.BL.CoreBL;
+using Logitude.Accounting.BL.CoreBL.InterestReport;
 using Logitude.Accounting.BL.CoreBL.ReverseEngineer;
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.BL.EntityUpdateServices;
@@ -22,15 +23,26 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
 {
     public class BatchInterestReportService : BatchTaskExecutionsService
     {
+        private InterestReportDataCalculations interestReportDataCalculation;
         public BatchInterestReportService(BatchTaskExecutionPM batchTaskExecution) : base(batchTaskExecution)
         {
-
+            
         }
 
         public override void RunCode()
         {
-       
+            InterestReportArgs interestReportArgs = GetInterestReportArgs();
+            interestReportDataCalculation = new InterestReportDataCalculations(interestReportArgs);
+            interestReportDataCalculation.StartCalculations();
+        }
 
+        private InterestReportArgs GetInterestReportArgs()
+        {
+            string xmlParameters = BatchTaskExecution.PrametersXml;
+            System.IO.StringReader stringReader = new System.IO.StringReader(xmlParameters);
+            XmlSerializer serializer = new XmlSerializer(typeof(InterestReportArgs));
+            InterestReportArgs interestReportArgs = serializer.Deserialize(stringReader) as InterestReportArgs;
+            return interestReportArgs;
         }
 
 

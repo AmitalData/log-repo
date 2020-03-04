@@ -3309,6 +3309,67 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "ApplyRegionalTax",
+					  						OldFieldName =  "ApplyRegionalTax",
+					  						ObjectTableName =  "ChargesType",
+					  						FieldsDataType =  "Boolean",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "ApplyRegionalTax",
+					  						ListPropertyPath =  "ApplyRegionalTax",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "ChargesType",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "ApplyRegionalTax",
+					  						DefaultText =  "Apply Regional Tax",
+					  						ListFieldLable =  "ApplyRegionalTaxListLable",
+					  						ListLableDefaultText =  "Apply Regional Tax",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
@@ -3330,21 +3391,21 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query ChargestypesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ChargesTypeTextCode_0.Id, NameTextCodeCode = ChargesTypeTextCode_0.Code, Code = "Charges types",  QueryGroupCode = "CHTP", IndexOrder = 0, Tenant = 0, ObjectTableId = ChargesTypeObjectTable.Id, QuerySection = "ChargesType", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ChargesTypeFeature_0.Id,FeatureUniqeCode= ChargesTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query ChargestypesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ChargesTypeTextCode_0.Id, NameTextCodeCode = ChargesTypeTextCode_0.Code, ObjectTableName = "ChargesType", Code = "Charges types",  QueryGroupCode = "CHTP", IndexOrder = 0, Tenant = 0, ObjectTableId = ChargesTypeObjectTable.Id, QuerySection = "ChargesType", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ChargesTypeFeature_0.Id,FeatureUniqeCode= ChargesTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn ChargestypesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ChargestypesQuery.Id, IndexOrder = 0, ObjectFieldId = ChargesTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == ChargesTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ChargesTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == ChargesTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ChargestypesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ChargestypesQuery.Id,QueryCode = ChargestypesQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = ChargesTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == ChargesTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ChargesTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == ChargesTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ChargestypesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ChargestypesQuery.Id, IndexOrder = 1, ObjectFieldId = ChargesTypeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == ChargesTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ChargesTypeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == ChargesTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ChargestypesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ChargestypesQuery.Id,QueryCode = ChargestypesQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = ChargesTypeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == ChargesTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ChargesTypeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == ChargesTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ChargestypesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ChargestypesQuery.Id, IndexOrder = 2, ObjectFieldId = ChargesTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == ChargesTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ChargesTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == ChargesTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ChargestypesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ChargestypesQuery.Id,QueryCode = ChargestypesQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = ChargesTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == ChargesTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ChargesTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == ChargesTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ChargestypesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ChargestypesQuery.Id, IndexOrder = 3, ObjectFieldId = ChargesTypeObjectFields.Where(d => d.FieldName == "MeasurementCode" && d.ObjectTableId == ChargesTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ChargesTypeObjectFields.Where(d => d.FieldName == "MeasurementCode" && d.ObjectTableId == ChargesTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ChargestypesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ChargestypesQuery.Id,QueryCode = ChargestypesQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = ChargesTypeObjectFields.Where(d => d.FieldName == "MeasurementCode" && d.ObjectTableId == ChargesTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ChargesTypeObjectFields.Where(d => d.FieldName == "MeasurementCode" && d.ObjectTableId == ChargesTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ChargestypesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ChargestypesQuery.Id, IndexOrder = 4, ObjectFieldId = ChargesTypeObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == ChargesTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ChargesTypeObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == ChargesTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ChargestypesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ChargestypesQuery.Id,QueryCode = ChargestypesQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = ChargesTypeObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == ChargesTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ChargesTypeObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == ChargesTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ChargestypesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ChargestypesQuery.Id, IndexOrder = 5, ObjectFieldId = ChargesTypeObjectFields.Where(d => d.FieldName == "AddedManually" && d.ObjectTableId == ChargesTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ChargesTypeObjectFields.Where(d => d.FieldName == "AddedManually" && d.ObjectTableId == ChargesTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ChargestypesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ChargestypesQuery.Id,QueryCode = ChargestypesQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = ChargesTypeObjectFields.Where(d => d.FieldName == "AddedManually" && d.ObjectTableId == ChargesTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ChargesTypeObjectFields.Where(d => d.FieldName == "AddedManually" && d.ObjectTableId == ChargesTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ChargestypesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ChargestypesQuery.Id, IndexOrder = 6, ObjectFieldId = ChargesTypeObjectFields.Where(d => d.FieldName == "ViewOrder" && d.ObjectTableId == ChargesTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ChargesTypeObjectFields.Where(d => d.FieldName == "ViewOrder" && d.ObjectTableId == ChargesTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ChargestypesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ChargestypesQuery.Id,QueryCode = ChargestypesQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = ChargesTypeObjectFields.Where(d => d.FieldName == "ViewOrder" && d.ObjectTableId == ChargesTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ChargesTypeObjectFields.Where(d => d.FieldName == "ViewOrder" && d.ObjectTableId == ChargesTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 	   
 	    }
 
@@ -3368,6 +3429,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 		    ChargesTypeObjectTable.HeaderScreenCode = ChargesTypeHeaderScreenScreen0.Code;
 
 	   		  
+	      
+
+	         Screen ChargesTypeGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ChargesType.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = ChargesTypeObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = false }, screensRepository, tenantScreens);
+        
 
 	    }
 

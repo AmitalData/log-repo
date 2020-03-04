@@ -1,4 +1,4 @@
-﻿var item;
+var item;
 var barChart;
 var itemLine;
 var PieItem;
@@ -244,7 +244,7 @@ function ResetItemFunnel() {
 
     }
     var direction = "left";
-    function makeAmBarChart(name, graphs, dataprovider, max, legendFlag, LegendDiv, minimum, stacked, IsRtl) {
+    function makeAmBarChart(name, graphs, dataprovider, max, legendFlag, LegendDiv, minimum, stacked, IsRtl, title) {
         var RTL = "left";
         if (IsRtl == "right")
             RTL = IsRtl;
@@ -296,15 +296,14 @@ function ResetItemFunnel() {
             },
             "borderAlpha": 0,
             "trendLines": [],
-            "graphs": graphs
-         ,
+            "graphs": graphs,
             "guides": [],
             "valueAxes": [
             {
                 "position": RTL,
                 //"rtl": true,
                 "id": "ValueAxis-1",
-                "title": "",
+                "title": title,
                 "labelFunction": function (item, content) {
 
                     var html = "";
@@ -373,15 +372,13 @@ function ResetItemFunnel() {
           },
           "borderAlpha": 0,
           "trendLines": [],
-          "graphs": graphs
-       ,
+          "graphs": graphs,
           "guides": [],
           "valueAxes": [
           {
               "id": "ValueAxis-1",
-              "title": "",
+              "title": title,
               "labelFunction": function (item, content) {
-
                   var html = "";
                   html += customNumberFormat(item);
                   return html;
@@ -715,7 +712,7 @@ function ResetItemFunnel() {
     }
 
 
-    function makeAMLineChartMultiple(name, chartData, alpha, graphs, legendFlag,LegendDiv) {
+    function makeAMLineChartMultiple(name, chartData, alpha, graphs, legendFlag,LegendDiv, title) {
 
 
         var chart = AmCharts.makeChart(name, {
@@ -728,7 +725,8 @@ function ResetItemFunnel() {
             "marginTop": 10,
             "dataProvider": chartData,
             "minorGridAlpha": 0,
-            "minorGridEnabled":false,
+            "minorGridEnabled": false,
+            "autoResize": false,
             "valueAxes": [{
                 "id": "v1",
                 "axisAlpha": 0.1,
@@ -736,13 +734,16 @@ function ResetItemFunnel() {
                 "minorGridEnabled": false,
             }],
             "graphs": graphs,
+
             "legend": {
                 "divId": LegendDiv,
                 "showEntries": legendFlag,
                 "enabled": legendFlag,
                 "labelText": "[[title]]",
                 "valueWidth": 0,
-                "useGraphSettings": true
+                "useGraphSettings": true,
+                "spacing": 5,
+                "markerType": "circle"
 
             },
             "chartCursor": {
@@ -760,12 +761,12 @@ function ResetItemFunnel() {
             "valueAxes": [
            {
                "minorGridEnabled": false,
-               "title": "[Hours]",
+                    "title": title,
            }],
-
             "export": {
                 "enabled": false
-            }
+            },
+            
         });
 
 

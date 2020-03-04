@@ -1,20 +1,51 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Table Name="QuoteTemplateSectionModifications" Schema="dbo" DBType="Main">
-  <Column Name="Id" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="QuoteTemplateSectionModifications"
+  Schema="dbo"
+  DBType="Main">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="QuoteTemplateSectionId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
+  <Column
+    Name="QuoteTemplateSectionId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="QuoteId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
+  <Column
+    Name="QuoteId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="SectionDocId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="SectionDocId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Relation ForeignKeyColumn="QuoteTemplateSectionId" ReferencedTable="QuoteTemplateSections" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="SectionDocId" ReferencedTable="Documents" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="QuoteTemplateSectionId"
+    ReferencedTable="QuoteTemplateSections"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="SectionDocId"
+    ReferencedTable="Documents"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
 </Table>

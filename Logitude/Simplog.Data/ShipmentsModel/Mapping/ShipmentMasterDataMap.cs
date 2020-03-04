@@ -163,6 +163,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.DocumentsClosingDate).HasColumnName("DocumentsClosingDate");
             this.Property(t => t.OBLTypeCode).HasColumnName("OBLTypeCode");
             this.Property(t => t.CutoffDate).HasColumnName("CutoffDate");
+            this.Property(t => t.AutomaticLastUpdateDate).HasColumnName("AutomaticLastUpdateDate"); 
             //#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")

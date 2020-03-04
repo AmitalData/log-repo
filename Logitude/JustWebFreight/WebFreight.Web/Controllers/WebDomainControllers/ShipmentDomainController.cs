@@ -1217,6 +1217,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                                       BranchName = f.BranchName,
                                                       CustomerName = f.CustomerName,
                                                       GrossWeightInKG = f.GrossWeightInKG,
+                                                      GrossWeightPerStorageDays= f.GrossWeightPerStorageDays,
                                                       ShipmentLevelCode = f.ShipmentLevelCode,
                                                       ShipmentLevelName = f.ShipmentLevelName,
                                                       VolumetricWeight = f.VolumetricWeight,
@@ -2484,24 +2485,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                                      select a.ShipmentId).ToList();
 
                     ShipmentRepository shipmentRepository = new ShipmentRepository(myContext);
-                    List<ShipmentDataView> shipments = shipmentRepository.GetShipmentsFromIdList(shipmentsIdsList, tenant);
-
-                    switch (entityPoco.CustomsTransferTypeCode)
-                    {
-                        case "AMAS":
-                            {
-                                shipments = shipments.Where(d => d.TransportModeId == "A").ToList();
-                                break;
-                            }
-
-                        case "AMOS":
-                            {
-                                shipments = shipments.Where(d => d.TransportModeId == "A").ToList();
-                                break;
-
-                            }
-                    }
-
+                    List<ShipmentDataView> shipments = shipmentRepository.GetShipmentsFromIdList(shipmentsIdsList, tenant);                    
                     CustomsTransferService customsTransferService = new CustomsTransferService(shipments, entityPoco.FileName, entityPoco.CustomsTransferTypeCode, tenant);
                     customsTransferService.Transfer();
                 }

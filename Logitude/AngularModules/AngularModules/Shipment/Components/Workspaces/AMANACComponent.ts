@@ -5,6 +5,7 @@ import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceRe
 import { ShipmentDomainService } from '../../../Shipment/Services/ShipmentDomainService';
 import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { ListComponentArgs } from '../../../Infrastructure/Args';
+import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
 
 @Component({
     moduleId: module.id,
@@ -14,6 +15,7 @@ import { ListComponentArgs } from '../../../Infrastructure/Args';
 export class AMANACComponent implements OnInit {
     private CurrentSession = SessionLocator.SelectedSession;
     private shipmentDomainService: ShipmentDomainService;
+    private _entityResourceService: EntityResourceService = new EntityResourceService();
     constructor() {
         this.shipmentDomainService = new ShipmentDomainService();
         this.LoadDataCount();
@@ -86,19 +88,20 @@ export class AMANACComponent implements OnInit {
         listArgs.QueryCode = "ShipmentsTransferHistory";
         listArgs.ObjectTableName = "CustomsTransferHeader";
         listArgs.BackButtonTitle = "Operations";
-        listArgs.DisplayTitle = "Transfer History";
 
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
-            .then(cmpRef => {
-                this.CurrentSession.AddMenuReference(cmpRef);
+        this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
+                .then(cmpRef => {
+                    this.CurrentSession.AddMenuReference(cmpRef);
 
-                cmpRef.instance.ComponentRef = cmpRef;
-                cmpRef.instance.Run(listArgs);
+                    cmpRef.instance.ComponentRef = cmpRef;
+                    cmpRef.instance.Run(listArgs);
 
-                cmpRef.instance.BackCompleted.subscribe(($event: any) => {
-                    this.LoadDataCount();
+                    cmpRef.instance.BackCompleted.subscribe(($event: any) => {
+                        this.LoadDataCount();
+                    });
                 });
-            });
+        });
     }
 }  
 

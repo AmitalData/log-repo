@@ -23,9 +23,6 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.Property(t => t.Notes).HasMaxLength(500).IsUnicode(true);
             this.Property(t => t.DescriptionOfGoods).HasMaxLength(512).IsUnicode(false);
          
-
-
-
             //#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")
@@ -139,7 +136,8 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.Property(t => t.Field18).HasMaxLength(250).IsUnicode(true);
             this.Property(t => t.Field19).HasMaxLength(250).IsUnicode(true);
             this.Property(t => t.Field20).HasMaxLength(250).IsUnicode(true);
-
+            this.Property(t => t.CountryForStatisticsId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.ProfitCurrencyId).HasMaxLength(15).IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("Quotes");
@@ -223,7 +221,7 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.Property(t => t.QuoteCustomerTypeCode).HasColumnName("QuoteCustomerTypeCode");
             this.Property(t => t.CustomerName).HasColumnName("CustomerName");
             this.Property(t => t.SaleCurrencyId).HasColumnName("SaleCurrencyId");
-            this.Property(t => t.ExchangeRate).HasColumnName("ExchangeRate");
+            this.Property(t => t.ExchangeRate).HasColumnName("ExchangeRate").IsRequired();
             this.Property(t => t.ShipperName).HasColumnName("ShipperName");
             this.Property(t => t.ConsigneeName).HasColumnName("ConsigneeName");
             this.Property(t => t.PickUpAddress).HasColumnName("PickUpAddress");
@@ -314,7 +312,12 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.Property(t => t.Field18).HasColumnName("Field18");
             this.Property(t => t.Field19).HasColumnName("Field19");
             this.Property(t => t.Field20).HasColumnName("Field20");
-
+            this.Property(t => t.CountryForStatisticsId).HasColumnName("CountryForStatisticsId");
+            this.Property(t => t.RequestDate).HasColumnName("RequestDate");
+            this.Property(t => t.EstimatedProfitInLocal).HasColumnName("EstimatedProfitInLocal");
+            this.Property(t => t.EstimatedProfitInProfit).HasColumnName("EstimatedProfitInProfit");
+            this.Property(t => t.ProfitCurrencyId).HasColumnName("ProfitCurrencyId");
+            this.Property(t => t.ProfitExchangeRate).HasColumnName("ProfitExchangeRate");
 
             // Relationships
             this.HasOptional(t => t.FromPartnerAddress).WithMany().HasForeignKey(d => d.FromPartnerAddressId);
@@ -368,8 +371,8 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.HasOptional(t => t.NotifyContact).WithMany().HasForeignKey(d => d.NotifyContactId);
 
             this.HasOptional(t => t.QuoteHTMLDocument).WithMany().HasForeignKey(d => d.QuoteHTMLDocumentId);
-            
-
+            this.HasOptional(t => t.CountryForStatistics).WithMany().HasForeignKey(d => d.CountryForStatisticsId);
+            this.HasOptional(t => t.ProfitCurrency).WithMany().HasForeignKey(d => d.ProfitCurrencyId);
         }
     }
 }

@@ -135,7 +135,7 @@ namespace Logitude.CRM.Data.EntityListQueryServices
                                                      QuoteNumber= a.QuoteNumber,
                                                      SLAId = a.SLAId,
                                                      EntityNumber = a.ShipmentNumber != null ? a.ShipmentNumber: a.QuoteNumber,
-
+                                                     LastCorrespondence = a.LastCorrespondence,
                                             });
             return query;
 		}

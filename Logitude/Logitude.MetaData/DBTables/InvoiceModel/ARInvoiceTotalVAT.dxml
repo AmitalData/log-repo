@@ -1,44 +1,100 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Table Name="ARInvoiceTotalVATs" Schema="dbo" DBType="Main">
-  <Column Name="Id" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="ARInvoiceTotalVATs"
+  Schema="dbo"
+  DBType="Main">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="VatTypeId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
+  <Column
+    Name="VatTypeId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="InvoiceCurrencyVATAmount" Type="float">
-    <Constraints Nullable="true" />
+  <Column
+    Name="InvoiceCurrencyVATAmount"
+    Type="float">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="LocalVATAmount" Type="float">
-    <Constraints Nullable="true" />
+  <Column
+    Name="LocalVATAmount"
+    Type="float">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="InvoiceCurrencyVatableAmount" Type="float">
-    <Constraints Nullable="true" />
+  <Column
+    Name="InvoiceCurrencyVatableAmount"
+    Type="float">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="LocalVatableAmount" Type="float">
-    <Constraints Nullable="true" />
+  <Column
+    Name="LocalVatableAmount"
+    Type="float">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="VatPercent" Type="float">
-    <Constraints Nullable="true" />
+  <Column
+    Name="VatPercent"
+    Type="float">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="ARInvoiceId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
+  <Column
+    Name="ARInvoiceId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="ProfitCurrencyVATAmount" Type="float">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ProfitCurrencyVATAmount"
+    Type="float">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="ProfitVatableAmount" Type="float">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ProfitVatableAmount"
+    Type="float">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="ExternalVATCard" Type="varchar" Size="25">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ExternalVATCard"
+    Type="varchar"
+    Size="25">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="ExternalTAXItemId" Type="varchar" Size="25">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ExternalTAXItemId"
+    Type="varchar"
+    Size="25">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Relation ForeignKeyColumn="VatTypeId" ReferencedTable="VatTypes" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="ARInvoiceId" ReferencedTable="ARInvoices" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="VatTypeId"
+    ReferencedTable="VatTypes"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ARInvoiceId"
+    ReferencedTable="ARInvoices"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
 </Table>

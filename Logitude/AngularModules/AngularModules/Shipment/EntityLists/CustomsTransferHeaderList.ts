@@ -18,5 +18,6 @@ export class CustomsTransferHeaderList {
 		Notes: string;
 		CreatedByUserName: string;
 		CustomsTransferTypeName: string;
+		ShipmentNumber: string;
 	
 }

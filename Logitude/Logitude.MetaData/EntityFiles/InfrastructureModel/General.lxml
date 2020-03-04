@@ -35,7 +35,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;c1bb&quot;"
+  Code="&quot;8987&quot;"
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -98,11 +98,6 @@
   <Records />
   <DataContracts />
   <AdditionalTextCodes>
-    <TextCode
-      Code="&quot;General&quot;"
-      DefaultText="&quot;General&quot;"
-      TextCodeTypeCode="&quot;T&quot;"
-      IsSpellChecked="true" />
     <TextCode
       Code="&quot;General.M.FieldWarning&quot;"
       DefaultText="&quot;%FieldName Field is not filled&quot;"
@@ -4454,6 +4449,28 @@
       LocalDefaultText="&quot;חובה להזין לפחות רשומה אחת של תקופת ריבית&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.O.UsedSpace&quot;"
+      DefaultText="&quot;Used Space&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.MH.ContainersFU&quot;"
+      DefaultText="&quot;ContainersFU&quot;"
+      TextCodeTypeCode="&quot;MH&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.General.FromDateMustBeLTT&quot;"
+      DefaultText="&quot;From date&quot; field must be less than or equal to &quot;To date&quot; field  &quot;"
+      LocalDefaultText="&quot;מ-תאריך חייב להיות קטן או שווה לשדה  עד תאריך &quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.General.O.ToDateMustBeGTF&quot;"
+      DefaultText="&quot;To date&quot;  field must be greater than or equal to &quot;From date&quot; field&quot;"
+      LocalDefaultText="&quot;עד תאריך חייב להיות גדול או שווה לשדה מ-תאריך&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
@@ -6216,6 +6233,69 @@
       FeatureTypeCode="&quot;AREA&quot;"
       FeatureTextCodeCode="&quot;General.Features.ACCOUNTINGTRANSFER&quot;"
       FeatureDefaultText="&quot;Accounting Transfer&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;JOURNALMENU&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      FeatureTextCodeCode="&quot;General.Features.JOURNALMENU&quot;"
+      FeatureDefaultText="&quot;Journal&quot;"
+      IsPackagable="true"
+      IsOld="true"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;VENDORGLACCOUNTSMENU&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      FeatureTextCodeCode="&quot;General.Features.VENDORGLACCOUNTSMENU&quot;"
+      FeatureDefaultText="&quot;Vendor Accounts&quot;"
+      IsPackagable="true"
+      IsOld="true"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;CLIENTGLACCOUNTSMENU&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      FeatureTextCodeCode="&quot;General.Features.CLIENTGLACCOUNTSMENU&quot;"
+      FeatureDefaultText="&quot;Client Accounts&quot;"
+      IsPackagable="true"
+      IsOld="true"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;GLACCOUNTSMENU&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      FeatureTextCodeCode="&quot;General.Features.GLACCOUNTSMENU&quot;"
+      FeatureDefaultText="&quot;General Ledger Accounts&quot;"
+      IsPackagable="true"
+      IsOld="true"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;JOURNALACTIONTYPESMENU&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      FeatureTextCodeCode="&quot;General.Features.JOURNALACTIONTYPESMENU&quot;"
+      FeatureDefaultText="&quot;Journal Action Types&quot;"
+      IsPackagable="true"
+      IsOld="true"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;QPDB&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      FeatureTextCodeCode="&quot;General.Features.QPDB&quot;"
+      FeatureDefaultText="&quot;Quotes Performance Dashboard&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;REGIONALTAX&quot;"
+      FeatureTypeCode="&quot;OTH&quot;"
+      FeatureTextCodeCode="&quot;General.Features.REGIONALTAX&quot;"
+      FeatureDefaultText="&quot;Regional Tax&quot;"
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"

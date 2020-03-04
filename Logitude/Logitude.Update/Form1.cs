@@ -190,7 +190,8 @@ namespace Logitude.Update
             globalStopwatch = null;
             generalLabel = null;
             timer1.Start();
-
+            if (name == "UpdateTenantZeroNew")
+                UpdateRules();
             if (name == "accounting" || name == "UpdateTenantZeroNew")
                 UpdateZipFiles();
 
@@ -487,6 +488,21 @@ User/Pass",
             //    reference = Reference;
             //    referenceGroup = "0000";
             //}
+
+            double value = 45.49;
+         //   value = Math.Round(value, 1, MidpointRounding.AwayFromZero);
+            value = Math.Round(value * 2,  MidpointRounding.AwayFromZero) / 2;
+            value = Math.Round(value , 1) ;
+
+            value = 45.5;
+            value = Math.Round(value, 1, MidpointRounding.AwayFromZero);
+            value = 45.97;
+            value = Math.Round(value, 1, MidpointRounding.AwayFromZero);
+            value = 45.49;
+            value = Math.Round(value, 2, MidpointRounding.AwayFromZero);
+            value = 45.49;
+            value = Math.Round(value*2, 2, MidpointRounding.AwayFromZero);
+
 
         }
 
@@ -1918,13 +1934,13 @@ User/Pass",
             new CopyData().Show();
         }
 
-        private void ConvertXmalTemplateToHtmlButton_Click(object sender, EventArgs e)
-        {
+        //private void ConvertXmalTemplateToHtmlButton_Click(object sender, EventArgs e)
+        //{
 
-            Thread thread = new Thread(() => UpdateModule(0, "converttemplatefromxmaltohtml", ConvertXmalTemplateLable));
-            thread.IsBackground = true;
-            thread.Start();
-        }
+        //    Thread thread = new Thread(() => UpdateModule(0, "converttemplatefromxmaltohtml", ConvertXmalTemplateLable));
+        //    thread.IsBackground = true;
+        //    thread.Start();
+        //}
 
         private void WarehouseButton_Click(object sender, EventArgs e)
         {
@@ -4110,6 +4126,20 @@ User/Pass",
                 }
                 ticketRepository.SubmitChanges();
             }
+        }
+
+        private void UpdateAutomationMetadataButton_Click(object sender, EventArgs e)
+        {
+            Thread thread = new Thread(() => UpdateModule(0, "updateautomationmetadata", ConvertXmalTemplateLable));
+            thread.IsBackground = true;
+            thread.Start();
+        }
+
+        private void btnCallOldUpdate_Click(object sender, EventArgs e)
+        {
+            Thread thread = new Thread(() => UpdateModule(0, "nonegeneratedcode", lblUShipment));
+            thread.IsBackground = true;
+            thread.Start();
         }
     }
 

@@ -1,12 +1,28 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Table Name="TemplateFormats" Schema="dbo" DBType="Main">
-  <Column Name="Code" Type="varchar" Size="4">
-    <Constraints PrimaryKey="true" Nullable="false" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="TemplateFormats"
+  Schema="dbo"
+  DBType="Main">
+  <Column
+    Name="Code"
+    Type="varchar"
+    Size="4">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="Name" Type="varchar" Size="40">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Name"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="SearchFields" Type="nvarchar" Size="1000">
-    <Constraints Nullable="true" />
+  <Column
+    Name="SearchFields"
+    Type="nvarchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
   </Column>
 </Table>

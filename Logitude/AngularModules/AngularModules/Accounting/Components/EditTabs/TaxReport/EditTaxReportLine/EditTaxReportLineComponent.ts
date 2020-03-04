@@ -110,7 +110,13 @@ export class EditTaxReportLineComponent extends BaseComponent {
 
     SetUIProperties() {
         if (this.TaxReportLinePM.OutputOrInput == "O") {
-            this.UIProperties.SetEnabled("TransmitStatusCode", this.ObjectTableName, false);
+            if (this.TaxReportLinePM.StatusCode == "7") {
+                this.UIProperties.SetEnabled("TransmitStatusCode", this.ObjectTableName, true);
+            }
+            else {
+                this.UIProperties.SetEnabled("TransmitStatusCode", this.ObjectTableName, false);
+            }
+           
             this.UIProperties.SetEnabled("Reference", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("ReferecneGroup", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("ReferenceDate", this.ObjectTableName, false);

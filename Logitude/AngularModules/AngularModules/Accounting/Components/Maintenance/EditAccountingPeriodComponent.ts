@@ -137,6 +137,8 @@ export class EditAccountingPeriodComponent extends BaseComponent {
                 // begin: invoice row logic
                 if (this.EntityPM.PeriodTypeCode == "2") { //2-invoice
                     if (this.OpenMonth+1 > this.accountingPeriod.OpenMonth) {
+                        this.ValidationErrorsList = [];
+                        this.ValidationErrorsList.push(TextCodeTranslator.Translate("AccountingPeriod.O.CantOpenInvoiceMonth"));
                         return;
                     }
                 }
@@ -199,14 +201,6 @@ export class EditAccountingPeriodComponent extends BaseComponent {
 
         if (!AppTool.IsNullOrEmpty(this.ClosedMonth)) {
 
-            // begin: invoice row logic
-            if (this.EntityPM.PeriodTypeCode == "2") { //2-invoice
-                if (this.ClosedMonth+1 < this.accountingPeriod.ClosedMonth) {
-                    return;
-                }
-            }
-            //end
-
             if (this.ClosedMonth == 12)
                 return;
 
@@ -246,7 +240,20 @@ export class EditAccountingPeriodComponent extends BaseComponent {
         // }
 
 
+
+
+
         if(this.ClosedMonth){
+
+            if (this.EntityPM.PeriodTypeCode == "2") { //2-invoice
+                if (this.ClosedMonth == this.accountingPeriod.ClosedMonth) {
+                    this.ValidationErrorsList = [];
+                    this.ValidationErrorsList.push("Cannot open an invoice's closed month which is less than accounting period's closed month.");
+                    // this.ValidationErrorsList.push(TextCodeTranslator.Translate("AccountingPeriod.O.CantCancelOpenMonth"));
+                    return;
+                }
+            }
+
 
             if(this.ClosedMonth == 1)
                 this.ClosedMonth = null

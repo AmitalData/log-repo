@@ -126,7 +126,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    NewWizardComponentPath =  "./CommonModules/CommonAgent/Components/NewEntity/NewAgentComponent",
 			      				    NoTS =  false,
 			      				    HasMenuButtons =  true,
-			      				    AllowedForComputingPartners =  true,
+			      				    AllowedForComputingPartners =  false,
 			      				    CustomFieldsCount =  0,
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
@@ -3274,6 +3274,123 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "StateName",
+					  						OldFieldName =  "StateName",
+					  						ObjectTableName =  "Agent",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  40,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  40,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "StateName",
+					  						ListPropertyPath =  "StateName",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Agent",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "StateName",
+					  						DefaultText =  "State",
+					  						ListFieldLable =  "StateNameListLable",
+					  						ListLableDefaultText =  "State",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "StorageFreeDays",
+					  						OldFieldName =  "StorageFreeDays",
+					  						ObjectTableName =  "Agent",
+					  						FieldsDataType =  "Integer",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "StorageFreeDays",
+					  						ListPropertyPath =  "StorageFreeDays",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "StorageFreeDays",
+					  						DefaultText =  "Storage Free Days",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
@@ -3299,41 +3416,41 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AgentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AgentTextCode_0.Id, NameTextCodeCode = AgentTextCode_0.Code, Code = "Agents",  QueryGroupCode = "AGNT", IndexOrder = 0, Tenant = 0, ObjectTableId = AgentObjectTable.Id, QuerySection = "Agent", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = AgentFeature_0.Id,FeatureUniqeCode= AgentFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query AgentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AgentTextCode_0.Id, NameTextCodeCode = AgentTextCode_0.Code, ObjectTableName = "Agent", Code = "Agents",  QueryGroupCode = "AGNT", IndexOrder = 0, Tenant = 0, ObjectTableId = AgentObjectTable.Id, QuerySection = "Agent", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = AgentFeature_0.Id,FeatureUniqeCode= AgentFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn AgentsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AgentsQuery.Id, IndexOrder = 0, ObjectFieldId = AgentObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == AgentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AgentObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == AgentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AgentsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AgentsQuery.Id,QueryCode = AgentsQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = AgentObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == AgentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AgentObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == AgentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AgentsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AgentsQuery.Id, IndexOrder = 1, ObjectFieldId = AgentObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == AgentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AgentObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == AgentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AgentsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AgentsQuery.Id,QueryCode = AgentsQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = AgentObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == AgentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AgentObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == AgentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AgentsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AgentsQuery.Id, IndexOrder = 2, ObjectFieldId = AgentObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == AgentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AgentObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == AgentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AgentsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AgentsQuery.Id,QueryCode = AgentsQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = AgentObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == AgentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AgentObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == AgentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AgentsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AgentsQuery.Id, IndexOrder = 3, ObjectFieldId = AgentObjectFields.Where(d => d.FieldName == "VatNumber" && d.ObjectTableId == AgentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AgentObjectFields.Where(d => d.FieldName == "VatNumber" && d.ObjectTableId == AgentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AgentsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AgentsQuery.Id,QueryCode = AgentsQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = AgentObjectFields.Where(d => d.FieldName == "VatNumber" && d.ObjectTableId == AgentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AgentObjectFields.Where(d => d.FieldName == "VatNumber" && d.ObjectTableId == AgentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AgentsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AgentsQuery.Id, IndexOrder = 4, ObjectFieldId = AgentObjectFields.Where(d => d.FieldName == "ReceivablesAccountingCard" && d.ObjectTableId == AgentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AgentObjectFields.Where(d => d.FieldName == "ReceivablesAccountingCard" && d.ObjectTableId == AgentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AgentsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AgentsQuery.Id,QueryCode = AgentsQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = AgentObjectFields.Where(d => d.FieldName == "ReceivablesAccountingCard" && d.ObjectTableId == AgentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AgentObjectFields.Where(d => d.FieldName == "ReceivablesAccountingCard" && d.ObjectTableId == AgentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AgentsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AgentsQuery.Id, IndexOrder = 5, ObjectFieldId = AgentObjectFields.Where(d => d.FieldName == "PaymentTermEnglishName" && d.ObjectTableId == AgentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AgentObjectFields.Where(d => d.FieldName == "PaymentTermEnglishName" && d.ObjectTableId == AgentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AgentsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AgentsQuery.Id,QueryCode = AgentsQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = AgentObjectFields.Where(d => d.FieldName == "PaymentTermEnglishName" && d.ObjectTableId == AgentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AgentObjectFields.Where(d => d.FieldName == "PaymentTermEnglishName" && d.ObjectTableId == AgentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AgentsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AgentsQuery.Id, IndexOrder = 6, ObjectFieldId = AgentObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == AgentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AgentObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == AgentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AgentsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AgentsQuery.Id,QueryCode = AgentsQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = AgentObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == AgentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AgentObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == AgentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AgentsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AgentsQuery.Id, IndexOrder = 7, ObjectFieldId = AgentObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == AgentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AgentObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == AgentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AgentsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AgentsQuery.Id,QueryCode = AgentsQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = AgentObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == AgentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AgentObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == AgentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
   
 	      
 
-			  Query SharedLogisticsAgentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AgentTextCode_1.Id, NameTextCodeCode = AgentTextCode_1.Code, Code = "Shared Logistics Agents",  QueryGroupCode = "AGNT", IndexOrder = 1, Tenant = 0, ObjectTableId = AgentObjectTable.Id, QuerySection = "Agent", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = AgentFeature_1.Id,FeatureUniqeCode= AgentFeature_1.FeatureUniqeCode, DefaultSortName = "SharedLogisticsInvitationStatusName", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query SharedLogisticsAgentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AgentTextCode_1.Id, NameTextCodeCode = AgentTextCode_1.Code, ObjectTableName = "Agent", Code = "Shared Logistics Agents",  QueryGroupCode = "AGNT", IndexOrder = 1, Tenant = 0, ObjectTableId = AgentObjectTable.Id, QuerySection = "Agent", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = AgentFeature_1.Id,FeatureUniqeCode= AgentFeature_1.FeatureUniqeCode, DefaultSortName = "SharedLogisticsInvitationStatusName", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn SharedLogisticsAgentsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SharedLogisticsAgentsQuery.Id, IndexOrder = 0, ObjectFieldId = AgentObjectFields.Where(d => d.FieldName == "SharedLogisticsInvitationStatusName" && d.ObjectTableId == AgentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AgentObjectFields.Where(d => d.FieldName == "SharedLogisticsInvitationStatusName" && d.ObjectTableId == AgentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn SharedLogisticsAgentsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SharedLogisticsAgentsQuery.Id,QueryCode = SharedLogisticsAgentsQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = AgentObjectFields.Where(d => d.FieldName == "SharedLogisticsInvitationStatusName" && d.ObjectTableId == AgentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AgentObjectFields.Where(d => d.FieldName == "SharedLogisticsInvitationStatusName" && d.ObjectTableId == AgentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn SharedLogisticsAgentsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SharedLogisticsAgentsQuery.Id, IndexOrder = 1, ObjectFieldId = AgentObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == AgentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AgentObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == AgentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn SharedLogisticsAgentsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SharedLogisticsAgentsQuery.Id,QueryCode = SharedLogisticsAgentsQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = AgentObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == AgentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AgentObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == AgentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn SharedLogisticsAgentsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SharedLogisticsAgentsQuery.Id, IndexOrder = 2, ObjectFieldId = AgentObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == AgentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AgentObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == AgentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn SharedLogisticsAgentsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SharedLogisticsAgentsQuery.Id,QueryCode = SharedLogisticsAgentsQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = AgentObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == AgentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AgentObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == AgentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn SharedLogisticsAgentsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SharedLogisticsAgentsQuery.Id, IndexOrder = 3, ObjectFieldId = AgentObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == AgentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AgentObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == AgentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn SharedLogisticsAgentsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SharedLogisticsAgentsQuery.Id,QueryCode = SharedLogisticsAgentsQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = AgentObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == AgentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AgentObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == AgentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn SharedLogisticsAgentsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SharedLogisticsAgentsQuery.Id, IndexOrder = 4, ObjectFieldId = AgentObjectFields.Where(d => d.FieldName == "ReceivablesAccountingCard" && d.ObjectTableId == AgentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AgentObjectFields.Where(d => d.FieldName == "ReceivablesAccountingCard" && d.ObjectTableId == AgentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn SharedLogisticsAgentsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SharedLogisticsAgentsQuery.Id,QueryCode = SharedLogisticsAgentsQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = AgentObjectFields.Where(d => d.FieldName == "ReceivablesAccountingCard" && d.ObjectTableId == AgentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AgentObjectFields.Where(d => d.FieldName == "ReceivablesAccountingCard" && d.ObjectTableId == AgentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn SharedLogisticsAgentsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SharedLogisticsAgentsQuery.Id, IndexOrder = 5, ObjectFieldId = AgentObjectFields.Where(d => d.FieldName == "LastLoginDate" && d.ObjectTableId == AgentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AgentObjectFields.Where(d => d.FieldName == "LastLoginDate" && d.ObjectTableId == AgentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn SharedLogisticsAgentsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SharedLogisticsAgentsQuery.Id,QueryCode = SharedLogisticsAgentsQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = AgentObjectFields.Where(d => d.FieldName == "LastLoginDate" && d.ObjectTableId == AgentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AgentObjectFields.Where(d => d.FieldName == "LastLoginDate" && d.ObjectTableId == AgentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter SharedLogisticsAgentsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = AgentObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == AgentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AgentObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == AgentObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "false",PredefinedValue2 = null, QueryId = SharedLogisticsAgentsQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter SharedLogisticsAgentsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = AgentObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == AgentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AgentObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == AgentObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "false",PredefinedValue2 = null, QueryId = SharedLogisticsAgentsQuery.Id,QueryCode = SharedLogisticsAgentsQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
 	   
 	    }
@@ -3400,6 +3517,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
          
             ScreenField AgentAgentBillingTabScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 4, ObjectFieldId = AgentObjectFields.Where(d => d.FieldName == "IBANNumber").FirstOrDefault().Id, ScreenId = AgentBillingTabScreenScreen2.Id,ScreenCode = AgentBillingTabScreenScreen2.Code, ObjectFieldCode = AgentObjectFields.Where(d => d.FieldName == "IBANNumber").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
+	      
+
+	         Screen AgentAdditionalFieldsScreen3 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Agent.AdditionalFields", Name = "Additional Fields", ObjectTableId = AgentObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = false }, screensRepository, tenantScreens);
+        
 
 	    }
 

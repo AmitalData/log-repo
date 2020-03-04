@@ -116,7 +116,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Due Type",
-			      				    Code =  "e066",
+			      				    Code =  "dd8a",
 			      				    Name =  "DueType",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "Name",
@@ -404,15 +404,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-
-		   		   //--------------> Additional TextCodes <--------------\\
-
- 		   ObjectTable DueTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "DueType" && d.Tenant == 0).FirstOrDefault(); 
-
- 		   TextCode DueTypeTextCode_DueType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DueType", DefaultText = "Due Type",LocalDefaultText = null, ObjectTableId = DueTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
-   
+	    {     
 	    
 }
 

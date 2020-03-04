@@ -1,28 +1,67 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Table Name="TenantAdditionalDatas" Schema="dbo" DBType="Main">
-  <Column Name="Id" Type="int">
-    <Constraints PrimaryKey="true" Nullable="false" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="TenantAdditionalDatas"
+  Schema="dbo"
+  DBType="Main">
+  <Column
+    Name="Id"
+    Type="int">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Tenant"
+    Type="int"
+    DefaultValue="0">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="DropBoxAccessToken" Type="nvarchar" Size="-1">
-    <Constraints Nullable="true" />
+  <Column
+    Name="DropBoxAccessToken"
+    Type="varchar"
+    Size="350">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="DropBoxState" Type="nvarchar" Size="-1">
-    <Constraints Nullable="true" />
+  <Column
+    Name="DropBoxState"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="DropBoxUID" Type="nvarchar" Size="-1">
-    <Constraints Nullable="true" />
+  <Column
+    Name="DropBoxUID"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="DropBoxUEmail" Type="nvarchar" Size="-1">
-    <Constraints Nullable="true" />
+  <Column
+    Name="DropBoxUEmail"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="PaymentGatewayPartnerCode" Type="nvarchar" Size="128">
-    <Constraints Nullable="true" />
+  <Column
+    Name="PaymentGatewayPartnerCode"
+    Type="nvarchar"
+    Size="128">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="PaymentGatewayConnectionString" Type="nvarchar" Size="-1">
-    <Constraints Nullable="true" />
+  <Column
+    Name="PaymentGatewayConnectionString"
+    Type="varchar"
+    Size="400">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Relation ForeignKeyColumn="PaymentGatewayPartnerCode" ReferencedTable="PaymentGatewayPartners" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="PaymentGatewayPartnerCode"
+    ReferencedTable="PaymentGatewayPartners"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
 </Table>

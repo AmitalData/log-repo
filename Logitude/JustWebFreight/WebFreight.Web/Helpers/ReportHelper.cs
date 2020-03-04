@@ -20,6 +20,8 @@ using Stimulsoft.Report.Dictionary;
 using Stimulsoft.Report.Export;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -32,6 +34,8 @@ using WebFreight.Web.DataProviders;
 using WebFreight.Web.Helpers.DataProviderHelpers;
 using WebFreight.Web.ReportsWebServices;
 using WebFreight.Web.ReportsWebServices.LogitudeReports;
+using WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap;
+using WebFreight.Web.ReportsWebServices.LogitudeReports.CRM;
 using WebFreight.Web.ReportsWebServices.LogitudeReports.Operational;
 using WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement;
 using WebFreight.Web.ShipmentPackageModel;
@@ -94,6 +98,8 @@ namespace WebFreight.Web.Helpers
                                     InActive = report.InActive,
                                     ReportGroupId = report.ReportGroupId,
                                     FeatureId = report.FeatureId,
+                                    FeatureUniqeCode = report.FeatureUniqeCode,
+                                    AvailableForScheduling = report.AvailableForScheduling,
                                 };
                                 reportRepository.Add(newReport);
                                 myReports.Add(newReport);
@@ -225,6 +231,37 @@ namespace WebFreight.Web.Helpers
             }
 
         }
+
+   
+       private bool IsUsingFileStreamAndTiffImage(int tenant)
+        {
+            return (tenant == 1526 || tenant == 1) ? true : false;
+        }
+
+        public string GetSpecificPageFromStimulReportAsBase64(ReportFliter reportFliter)
+        {
+            string url = "";
+            string extension = "mdc"; //IsUsingFileStreamAndTiffImage(reportFliter.tenant) ? "tiff" : "mdc";
+            IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
+            BlobFileInfo fileInfo = GetNewBlobFileInfo(reportFliter.ReportKey + "@" + reportFliter.ReportName, extension, reportFliter.tenant);
+            byte[] result = storageservice.Read(fileInfo);
+            if (result != null)
+            {
+               // if (IsUsingFileStreamAndTiffImage(reportFliter.tenant)) url = GetSpecificPageFromTiffImageAsBase64(reportFliter, result);
+               // else
+               // {
+                    StiReport stiReport = new StiReport();
+                    stiReport.LoadDocument(result);
+                    url = ExportStimulaImage(stiReport, reportFliter);
+               // }
+            }
+            return url;
+        }
+
+
+
+
+
 
         public string AddReportTemplate(string reportId, string description, string userId, string documentId, int tenant, ReportsTemplateRepository reportsTemplateRepository, ReportsTemplatesVersionRepository reportsTemplatesVersionRepository, List<ReportsTemplate> reportsTemplates, bool isSystem, string templateType)
         {
@@ -1376,6 +1413,16 @@ namespace WebFreight.Web.Helpers
                         break;
                     }
 
+                case "BSPR":
+                    {
+                        XmlSerializer serializer = new XmlSerializer(typeof(BluesnapPaymentsDataProvider));
+                        BluesnapPaymentsDataProvider reportDataProvider = (BluesnapPaymentsDataProvider)serializer.Deserialize(memorystream);
+                        reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
+                        CurrentBusinessObject = new StiBusinessObject() { Category = "BluesnapPayments", Name = "BluesnapPaymentsDataProvider", BusinessObjectValue = reportDataProvider };
+                        urlImage = SetStiViewer(reportFliter, CurrentBusinessObject, template, null);
+                        break;
+                    }
+
 
                 case "RCRF":
                     { 
@@ -1444,24 +1491,14 @@ namespace WebFreight.Web.Helpers
 
             #region Write Report To Storage
 
-            MemoryStream stream = new MemoryStream();
-            report.SaveDocument(stream);
-            if (stream != null)
+            if (IsUsingFileStreamAndTiffImage(reportFliter.tenant))
             {
-                byte[] reportData = stream.ToArray();
-                if (reportData != null)
-                {
-                    if (string.IsNullOrEmpty(reportFliter.ReportKey) || !reportFliter.ReportsRunUsingWR)
-                    {
-                        reportFliter.ReportKey = Guid.NewGuid().ToString();
-                    }
 
-                    BlobFileInfo fileInfo = GetNewBlobFileInfo(reportFliter.ReportKey + "@" + reportFliter.ReportName, reportFliter.tenant);
-                    fileInfo.FileSize = reportData.Length;
-
-                    IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
-                    storageservice.Write(reportData, fileInfo);
-                }
+                SaveStimulReportUsingFileStream(reportFliter, report);
+            }
+            else
+            {
+                SaveReportMdcFileOnStorgeUsingMemoryStream(reportFliter, report);
             }
 
             #endregion
@@ -1476,15 +1513,99 @@ namespace WebFreight.Web.Helpers
         }
 
 
-        private BlobFileInfo GetNewBlobFileInfo(string fileName, int tenant)
+        private void SaveStimulReportUsingFileStream(ReportFliter reportFliter, StiReport report)
+        {
+            try
+            {
+                SaveStimulReportToMdcUsingFileStream(reportFliter, report);//mdc
+               // SaveStimulReportToTiffImageUsingFileStream(reportFliter, report);//tiff
+
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "SaveStimulReportUsingFileStream", null, null);
+                SaveReportMdcFileOnStorgeUsingMemoryStream(reportFliter, report);
+            }
+        }
+
+
+        private void SaveStimulReportToMdcUsingFileStream(ReportFliter reportFliter, StiReport report)
+        {
+            string tempFilePath = Path.Combine(Path.GetTempPath(), reportFliter.ReportKey + ".mdc");
+            var fileStream = new FileStream(tempFilePath, FileMode.Create, FileAccess.Write);
+            report.SaveDocument(fileStream);
+            fileStream.Close();
+            ReadFileFromStreamFileAndSaveOnStorgeByChunks(tempFilePath, reportFliter, "mdc");
+        }
+
+        private void SaveStimulReportToTiffImageUsingFileStream(ReportFliter reportFliter, StiReport report)
+        {
+            string tempFilePath = Path.Combine(Path.GetTempPath(), reportFliter.ReportKey + ".tiff");
+            var fileStream = new FileStream(tempFilePath, FileMode.Create, FileAccess.Write);
+            report.ExportDocument(StiExportFormat.ImageTiff, fileStream, new StiTiffExportSettings() { PageRange = StiPagesRange.All});
+            fileStream.Close();
+            ReadFileFromStreamFileAndSaveOnStorgeByChunks(tempFilePath, reportFliter, "tiff");
+        }
+
+        private void ReadFileFromStreamFileAndSaveOnStorgeByChunks(string tempFilePath, ReportFliter reportFliter, string extension)
+        {
+            BlobFileInfo fileInfo = GetNewBlobFileInfo(reportFliter.ReportKey + "@" + reportFliter.ReportName, extension, reportFliter.tenant);
+            IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
+            List<string> blockIdsList = new List<string>();
+            int bufferNumber = 0;
+            const int chunkSize = 1000000; // 1 MB
+            long sendSize = 0;
+            using (FileStream fileStream = new FileStream(tempFilePath, FileMode.Open, FileAccess.Read))
+            {
+                int bytesRead;
+                fileInfo.FileSize = fileStream.Length;
+                var buffer = new byte[chunkSize];
+                while ((bytesRead = fileStream.Read(buffer, 0, buffer.Length)) > 0)
+                {
+                    sendSize += buffer.Length;
+                    var blockId = Convert.ToBase64String(Guid.NewGuid().ToByteArray());
+                    blockIdsList.Add(blockId);
+                    storageservice.WriteBlock(buffer, sendSize, blockIdsList.ToArray(), bufferNumber, fileInfo);
+                    bufferNumber += 1;
+                }
+                fileStream.Close();
+            }
+            File.Delete(tempFilePath);
+        }
+
+
+
+        private void SaveReportMdcFileOnStorgeUsingMemoryStream(ReportFliter reportFliter, StiReport report)
+        {
+            MemoryStream stream = new MemoryStream();
+            report.SaveDocument(stream);
+            if (stream != null)
+            {
+                byte[] reportData = stream.ToArray();
+                if (reportData != null)
+                {
+                    if (string.IsNullOrEmpty(reportFliter.ReportKey) || !reportFliter.ReportsRunUsingWR)
+                    {
+                        reportFliter.ReportKey = Guid.NewGuid().ToString();
+                    }
+
+                    BlobFileInfo fileInfo = GetNewBlobFileInfo(reportFliter.ReportKey + "@" + reportFliter.ReportName, "mdc",reportFliter.tenant);
+                    fileInfo.FileSize = reportData.Length;
+
+                    IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
+                    storageservice.Write(reportData, fileInfo);
+                }
+            }
+        }
+
+        private BlobFileInfo GetNewBlobFileInfo(string fileName,  string extension ,int tenant)
         {
             BlobFileInfo fileInfo = new BlobFileInfo()
             {
                 FileName = fileName,
                 FolderName = "others",
-                Extension = "mdc",
                 Tenant = tenant,
-
+                Extension = extension,
             };
             return fileInfo;
         }
@@ -1669,7 +1790,8 @@ namespace WebFreight.Web.Helpers
 
                 case "MCOR":
                     {
-                        dataProvider = logitudeReportsWebService.LoadOpportunityMonthlyConversionData(filters, reportFliter.tenant);
+                        MonthlyConversionManager myDataManager = new MonthlyConversionManager(filters, reportFliter.tenant);
+                        dataProvider = myDataManager.GetData();
                         break;
                     }
 
@@ -1911,6 +2033,12 @@ namespace WebFreight.Web.Helpers
                         break;
                     }
 
+                case "BSPR":
+                    {
+                        BluesnapPaymentsReportManager myDataManager = new BluesnapPaymentsReportManager(filters, reportFliter.tenant);
+                        dataProvider = myDataManager.GetData();
+                        break;
+                    }
                     #endregion
             }
             return dataProvider;
@@ -1976,9 +2104,25 @@ namespace WebFreight.Web.Helpers
             else return false;
         }
 
+
+        public string GetSpecificPageFromTiffImageAsBase64(ReportFliter reportFliter, byte[] data)
+        {
+            string url = string.Empty;
+            if (data != null)
+            {
+                System.Drawing.Bitmap bitmapReport = (Bitmap)Image.FromStream(new MemoryStream(data));
+                reportFliter.PageCount= bitmapReport.GetFrameCount(FrameDimension.Page);
+                bitmapReport.SelectActiveFrame(FrameDimension.Page, reportFliter.NumberOfPage - 1);
+                MemoryStream byteStream = new MemoryStream();
+                bitmapReport.Save(byteStream, ImageFormat.Jpeg);
+                byte[] imagebyte = byteStream.ToArray();
+                url = "data:image/jpg;base64," + System.Convert.ToBase64String(imagebyte, 0, imagebyte.Length);
+            }
+            return url;
+        }
         #endregion
 
-       #region UpdateReport
+        #region UpdateReport
 
         public void UpdateReports(int tenant)
         {
@@ -2021,7 +2165,9 @@ namespace WebFreight.Web.Helpers
                             InActive = report.InActive,
                             ReportGroupId = report.ReportGroupId,
                             FeatureId = report.FeatureId,
-                            LocalName = report.LocalName
+                            LocalName = report.LocalName,
+                            FeatureUniqeCode = report.FeatureUniqeCode,
+                            AvailableForScheduling = report.AvailableForScheduling,
                         };
                         reportRepository.Add(newReport);
                         myReports.Add(newReport);

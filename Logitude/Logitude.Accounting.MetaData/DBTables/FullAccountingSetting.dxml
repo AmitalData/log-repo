@@ -1,102 +1,284 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Table Name="FullAccountingSettings" Schema="dbo" DBType="Main">
-  <Column Name="Id" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="FullAccountingSettings"
+  Schema="dbo"
+  DBType="Main">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="DeductionFileNumber" Type="varchar" Size="30">
-    <Constraints Nullable="true" />
+  <Column
+    Name="DeductionFileNumber"
+    Type="varchar"
+    Size="30">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="ConsolidationVAT" Type="varchar" Size="30">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ConsolidationVAT"
+    Type="varchar"
+    Size="30">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="DefaultVATTypeId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="DefaultVATTypeId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="VATInputsGLAccountId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="VATInputsGLAccountId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="AutomaticReconcileMethodId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="AutomaticReconcileMethodId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="ExchangeRateDiffGLAccountId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ExchangeRateDiffGLAccountId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="RevenueExpenseGLAccountId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="RevenueExpenseGLAccountId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="VATOutputGLAccountId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="VATOutputGLAccountId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="CustomerControlAccountId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="CustomerControlAccountId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="VendorControlAccountId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="VendorControlAccountId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="FileControlAccountId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="FileControlAccountId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="OceanExportJobControlAccountId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="OceanExportJobControlAccountId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="AirExportJobControlAccountId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="AirExportJobControlAccountId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="OceanImportJobControlAccountId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="OceanImportJobControlAccountId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="AirImportJobControlAccountId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="AirImportJobControlAccountId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="ExternalReconciliationDefault" Type="varchar" Size="3">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ExternalReconciliationDefault"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="TaxWithholdingGLAccountId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="TaxWithholdingGLAccountId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="DefaultTaxWithholdPercentage" Type="decimal" Precision="16" Scale="2">
-    <Constraints Nullable="true" />
+  <Column
+    Name="DefaultTaxWithholdPercentage"
+    Type="decimal"
+    Precision="16"
+    Scale="2">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="CustomsGLAccountId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="CustomsGLAccountId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="DefaultDifferencesGLAccountId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="DefaultDifferencesGLAccountId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="DefaultExternalDiffGLAccountId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="DefaultExternalDiffGLAccountId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="SoftwareVersion" Type="varchar" Size="100">
-    <Constraints Nullable="true" />
+  <Column
+    Name="SoftwareVersion"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="IsPaymentChequesActivated" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="IsPaymentChequesActivated"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="GLAccounterCounterLength" Type="int">
-    <Constraints Nullable="true" />
+  <Column
+    Name="GLAccounterCounterLength"
+    Type="int">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="PaymentChequesLogoId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="PaymentChequesLogoId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Relation ForeignKeyColumn="DefaultVATTypeId" ReferencedTable="VatTypes" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="VATInputsGLAccountId" ReferencedTable="GLAccounts" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="AutomaticReconcileMethodId" ReferencedTable="AutomaticReconcileMethods" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="ExchangeRateDiffGLAccountId" ReferencedTable="GLAccounts" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="RevenueExpenseGLAccountId" ReferencedTable="GLAccounts" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="VATOutputGLAccountId" ReferencedTable="GLAccounts" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="CustomerControlAccountId" ReferencedTable="GLAccounts" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="VendorControlAccountId" ReferencedTable="GLAccounts" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="FileControlAccountId" ReferencedTable="GLAccounts" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="OceanExportJobControlAccountId" ReferencedTable="GLAccounts" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="AirExportJobControlAccountId" ReferencedTable="GLAccounts" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="OceanImportJobControlAccountId" ReferencedTable="GLAccounts" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="AirImportJobControlAccountId" ReferencedTable="GLAccounts" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="ExternalReconciliationDefault" ReferencedTable="AutomaticExternalRconcilMthods" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="TaxWithholdingGLAccountId" ReferencedTable="GLAccounts" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="CustomsGLAccountId" ReferencedTable="GLAccounts" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="DefaultDifferencesGLAccountId" ReferencedTable="GLAccounts" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="DefaultExternalDiffGLAccountId" ReferencedTable="GLAccounts" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="DefaultVATTypeId"
+    ReferencedTable="VatTypes"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="VATInputsGLAccountId"
+    ReferencedTable="GLAccounts"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="AutomaticReconcileMethodId"
+    ReferencedTable="AutomaticReconcileMethods"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ExchangeRateDiffGLAccountId"
+    ReferencedTable="GLAccounts"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="RevenueExpenseGLAccountId"
+    ReferencedTable="GLAccounts"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="VATOutputGLAccountId"
+    ReferencedTable="GLAccounts"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="CustomerControlAccountId"
+    ReferencedTable="GLAccounts"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="VendorControlAccountId"
+    ReferencedTable="GLAccounts"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="FileControlAccountId"
+    ReferencedTable="GLAccounts"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="OceanExportJobControlAccountId"
+    ReferencedTable="GLAccounts"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="AirExportJobControlAccountId"
+    ReferencedTable="GLAccounts"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="OceanImportJobControlAccountId"
+    ReferencedTable="GLAccounts"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="AirImportJobControlAccountId"
+    ReferencedTable="GLAccounts"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ExternalReconciliationDefault"
+    ReferencedTable="AutomaticExternalRconcilMthods"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="TaxWithholdingGLAccountId"
+    ReferencedTable="GLAccounts"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="CustomsGLAccountId"
+    ReferencedTable="GLAccounts"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="DefaultDifferencesGLAccountId"
+    ReferencedTable="GLAccounts"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="DefaultExternalDiffGLAccountId"
+    ReferencedTable="GLAccounts"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
 </Table>

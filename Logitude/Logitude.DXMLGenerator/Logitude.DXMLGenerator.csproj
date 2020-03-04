@@ -46,20 +46,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\ColumnDefaultValue.cs" />
     <Compile Include="Models\ColumnDefinition.cs" />
     <Compile Include="Models\ConstraintsDefinition.cs" />
     <Compile Include="Models\DBTable.cs" />
     <Compile Include="Models\DXMLFilesGenerator.cs" />
+    <Compile Include="Models\Index.cs" />
+    <Compile Include="Models\IndexDefinition.cs" />
     <Compile Include="Models\RelationDefinition.cs" />
     <Compile Include="Models\TableDefinition.cs" />
+    <Compile Include="Models\UniqueConstraint.cs" />
+    <Compile Include="Models\UniqueConstraintDefinition.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Data\DefaultValues.csv" />
+    <None Include="Data\UniqueConstraints.csv" />
+    <None Include="Data\Indexes.csv" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ExcludedTablesMap.txt" />
+    <Content Include="Data\ExcludedTablesMap.txt" />
     <Content Include="Errors\GlobalErrors.txt" />
     <Content Include="Errors\MainErrors.txt" />
     <Content Include="Errors\SystemLogsErrors.txt" />

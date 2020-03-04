@@ -1,210 +1,489 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Table Name="Settings" Schema="dbo" DBType="Global">
-  <Column Name="Id" Type="varchar" Size="40">
-    <Constraints PrimaryKey="true" Nullable="false" />
-  </Column>
-  <Column Name="LogitudeURL" Type="varchar" Size="1000">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="ChampURL" Type="varchar" Size="1000">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="ChampTestAPIURL" Type="varchar" Size="1000">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="ChampTestAPIPassword" Type="varchar" Size="40">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="ChampProdAPIURL" Type="varchar" Size="1000">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="ChampProdAPIPassword" Type="varchar" Size="40">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="DeploymentStage" Type="varchar" Size="20">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="ChampEnv" Type="varchar" Size="20">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="CustomerCareIP" Type="varchar" Size="100">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="TotangoServiceId" Type="varchar" Size="20">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="UsingAzure" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="StorageAccountName" Type="varchar" Size="100">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="StorageAccountKey" Type="nvarchar" Size="-1">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="IsLogEnabled" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="StorageType" Type="varchar" Size="60">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="LogitudeCRMTenantNumber" Type="int">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="IOSSharedAppMinimumVersion" Type="float">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="AndroidSharedAppMinimumVersion" Type="float">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="AutoSignupEmail" Type="varchar" Size="70">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="AutoSignupPassword" Type="varchar" Size="40">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="ForceHttps" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="CheckConnectionURL" Type="varchar" Size="1000">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="WorkEnvironment" Type="varchar" Size="20">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="LogoCode" Type="varchar" Size="5">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="EnableHybridQueue" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="GLSHKURL" Type="varchar" Size="1000">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="GLSHKEnv" Type="varchar" Size="20">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="NotificationHubName" Type="varchar" Size="100">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="NotificationHubConnectionString" Type="varchar" Size="600">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="CustomerTenantsURL" Type="varchar" Size="600">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="ForwarderTenantsURL" Type="varchar" Size="600">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="DomainName" Type="varchar" Size="100">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="ProductName" Type="varchar" Size="100">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="EmailAlertSignature" Type="varchar" Size="100">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="QueueServiceMode" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="StorageServiceMode" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="IsUpgradingChamp" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="HtmlVersion" Type="varchar" Size="10">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="QBOConsumerKey" Type="varchar" Size="100">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="QBOAppToken" Type="varchar" Size="100">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="QBOConsumerSecretKey" Type="varchar" Size="100">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="AndroidAppLink" Type="varchar" Size="1000">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="IOSAppLink" Type="varchar" Size="1000">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="AndroidPodAppMinimumVersion" Type="float">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="IOSPodAppMinimumVersion" Type="float">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="MinimumOutlookVersion" Type="varchar" Size="10">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="SameUserLoginEnabled" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="DropboxAppKey" Type="varchar" Size="50">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="DropboxAppSecret" Type="varchar" Size="50">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="ABMProductId" Type="varchar" Size="25">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="LayoutDirection" Type="varchar" Size="3">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="AzureFolderName" Type="varchar" Size="100">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="SignAppVersion" Type="varchar" Size="10">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="DocumentFilingEmailDomain" Type="varchar" Size="1000">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="System2RedirectFraction" Type="int">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="ReportsRunUsingWR" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="SMSServiceUserId" Type="varchar" Size="40">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="SMSServiceAuthToken" Type="varchar" Size="40">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="SMSServicePhoneNumber" Type="varchar" Size="40">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="INTTRAProdFTPHost" Type="varchar" Size="100">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="INTTRATestFTPHost" Type="varchar" Size="100">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="OceanInsightsToken" Type="varchar" Size="200">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="EmailSendingQuota" Type="int">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="ReleaseNotesURL" Type="varchar" Size="600">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="CPUIntensiveWebServicesURL" Type="varchar" Size="1000">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="QBOOAuthDefault" Type="int">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="QBOClientID" Type="varchar" Size="100">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="QBOClientSecret" Type="varchar" Size="100">
-    <Constraints Nullable="true" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="Settings"
+  Schema="dbo"
+  DBType="Global">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="LogitudeURL"
+    Type="varchar"
+    Size="1000">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ChampURL"
+    Type="varchar"
+    Size="1000">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ChampTestAPIURL"
+    Type="varchar"
+    Size="1000"
+    DefaultValue="''">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ChampTestAPIPassword"
+    Type="varchar"
+    Size="40"
+    DefaultValue="''">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ChampProdAPIURL"
+    Type="varchar"
+    Size="1000"
+    DefaultValue="''">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ChampProdAPIPassword"
+    Type="varchar"
+    Size="40"
+    DefaultValue="''">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="DeploymentStage"
+    Type="varchar"
+    Size="20">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ChampEnv"
+    Type="varchar"
+    Size="20">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="CustomerCareIP"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="TotangoServiceId"
+    Type="varchar"
+    Size="20">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="UsingAzure"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="StorageAccountName"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="StorageAccountKey"
+    Type="nvarchar"
+    Size="-1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="IsLogEnabled"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="StorageType"
+    Type="varchar"
+    Size="60">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="LogitudeCRMTenantNumber"
+    Type="int"
+    DefaultValue="341">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IOSSharedAppMinimumVersion"
+    Type="float"
+    DefaultValue="1">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="AndroidSharedAppMinimumVersion"
+    Type="float"
+    DefaultValue="0">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="AutoSignupEmail"
+    Type="varchar"
+    Size="70"
+    DefaultValue="'AutoSignup@logitudeworld.com'">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="AutoSignupPassword"
+    Type="varchar"
+    Size="40"
+    DefaultValue="'$Gen)(8761'">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ForceHttps"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="CheckConnectionURL"
+    Type="varchar"
+    Size="1000">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="WorkEnvironment"
+    Type="varchar"
+    Size="20">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="LogoCode"
+    Type="varchar"
+    Size="5">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="EnableHybridQueue"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="GLSHKURL"
+    Type="varchar"
+    Size="1000">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="GLSHKEnv"
+    Type="varchar"
+    Size="20">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="NotificationHubName"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="NotificationHubConnectionString"
+    Type="varchar"
+    Size="600">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CustomerTenantsURL"
+    Type="varchar"
+    Size="600">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ForwarderTenantsURL"
+    Type="varchar"
+    Size="600">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="DomainName"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ProductName"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="EmailAlertSignature"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="QueueServiceMode"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="StorageServiceMode"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="IsUpgradingChamp"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="HtmlVersion"
+    Type="varchar"
+    Size="10">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="QBOConsumerKey"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="QBOAppToken"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="QBOConsumerSecretKey"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="AndroidAppLink"
+    Type="varchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="IOSAppLink"
+    Type="varchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="AndroidPodAppMinimumVersion"
+    Type="float"
+    DefaultValue="0">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IOSPodAppMinimumVersion"
+    Type="float"
+    DefaultValue="0">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="MinimumOutlookVersion"
+    Type="varchar"
+    Size="10">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="SameUserLoginEnabled"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="DropboxAppKey"
+    Type="varchar"
+    Size="50">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="DropboxAppSecret"
+    Type="varchar"
+    Size="50">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ABMProductId"
+    Type="varchar"
+    Size="25">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="LayoutDirection"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="AzureFolderName"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="SignAppVersion"
+    Type="varchar"
+    Size="10">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="DocumentFilingEmailDomain"
+    Type="varchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="System2RedirectFraction"
+    Type="int"
+    DefaultValue="0">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ReportsRunUsingWR"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="SMSServiceUserId"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="SMSServiceAuthToken"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="SMSServicePhoneNumber"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="INTTRAProdFTPHost"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="INTTRATestFTPHost"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="OceanInsightsToken"
+    Type="varchar"
+    Size="200">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="EmailSendingQuota"
+    Type="int"
+    DefaultValue="0">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ReleaseNotesURL"
+    Type="varchar"
+    Size="600">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CPUIntensiveWebServicesURL"
+    Type="varchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="QBOOAuthDefault"
+    Type="int"
+    DefaultValue="0">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="QBOClientID"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="QBOClientSecret"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
   </Column>
 </Table>

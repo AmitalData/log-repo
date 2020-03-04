@@ -37,7 +37,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;INTTRA Booking Transmission Status&quot;"
-  Code="&quot;2396&quot;"
+  Code="&quot;6958&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -59,7 +59,8 @@
   CustomFieldsCount="0"
   DisableSearchBox="false"
   HasDocuments="false"
-  IsLookUp="false">
+  IsLookUp="false"
+  IsTabsHidden="false">
   <field
     Id="&quot;339e11aa-5220-43b0-9dd7-e615d491d361&quot;"
     FieldName="&quot;Code&quot;"
@@ -123,6 +124,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -193,6 +195,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -263,6 +266,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -270,6 +274,15 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+  <Screen
+    Name="&quot;INTTRABookingTransStatusHeaderScreen&quot;"
+    ObjectTableName="&quot;INTTRABookingTransStatus&quot;"
+    IsReadOnly="true"
+    IsHeaderScreen="true"
+    NumberOfColumns="2"
+    NumberOfRows="1">
+    <ScreenFields />
+  </Screen>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
@@ -339,6 +352,14 @@
       Name="&quot;Cancellation Request Rejected&quot;"
       Code="&quot;CRR&quot;"
       SearchFields="&quot;CRR,Cancellation Request Rejected&quot;" />
+    <Record
+      Name="&quot;Accepted by INTTRA &quot;"
+      Code="&quot;ACI&quot;"
+      SearchFields="&quot;ACI,Accepted by INTTRA &quot;" />
+    <Record
+      Name="&quot;Rejected by INTTRA&quot;"
+      Code="&quot;RBI&quot;"
+      SearchFields="&quot;RBI,Rejected by INTTRA&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

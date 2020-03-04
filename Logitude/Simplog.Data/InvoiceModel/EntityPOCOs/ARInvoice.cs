@@ -203,6 +203,7 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
         public string ConcurrencyGUID { get; set; }
 
         public string CreatedByPartner { get; set; }
+        public string BillToGLAccountId{ get; set; }
 
     }
 }

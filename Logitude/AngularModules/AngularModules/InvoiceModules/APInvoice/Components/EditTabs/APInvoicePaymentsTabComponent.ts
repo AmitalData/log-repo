@@ -138,7 +138,7 @@ export class APInvoicePaymentsTabComponent implements OnDestroy {
 
                 var filters = new ApiQueryFilters();
                 filters.PageIndex = 0;
-                filters.PageSize = 200;
+                filters.PageSize = 300;
 
                 filters.Filter1Name = "VendorId";
                 filters.Filter1Value = this.EntityPM.VendorId;

@@ -47,30 +47,13 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             List<ObjectField> currentTenantObjectFields = new List<ObjectField>();
             List<ObjectField> zeroTenantObjectFields = new List<ObjectField>();
 
-            bool isWRCacheALLOWED = false;
-
-            var iAppSettings = System.Configuration.ConfigurationManager.AppSettings;
-            if (iAppSettings != null)
-            {
-                if (iAppSettings["WRCacheALLOWED"] != null)
-                {
-                    string iValueText = iAppSettings["WRCacheALLOWED"] + "";
-                    if (!string.IsNullOrEmpty(iValueText))
-                    {
-                        if (iValueText.ToLower() == "true")
-                        {
-                            isWRCacheALLOWED = true;
-                        }
-                    }
-                }
-            }
+        
 
             #region Current Tenant Fields
 
             if (tenant != 0)
             {
-                if (HttpContext.Current != null || isWRCacheALLOWED)
-                {
+               
                     if (CacheManager.CacheWrapper.Get(tenantListName) == null)
                     {
 
@@ -92,21 +75,8 @@ namespace Simplog.Data.InfrastructureModel.Repositories
                     {
                         currentTenantObjectFields = (List<ObjectField>)CacheManager.CacheWrapper.Get(tenantListName);
                     }
-                }
-                else
-                {
-
-                    using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-                    {
-                        IWebFreightContext context = WebFreightContext.GetContext(tenant);
-                        currentTenantObjectFields = (from a in context.ObjectFields.Include("ObjectTable_LookUpTable").Include("FullNameTextCode").Include("ShortNameTextCode").Include("ListTextCode").Include("HelpTextCode").Include("ObjectTable")
-                                                     where (a.Tenant == tenant) && a.ObjectTable.Name == objectTableName && a.InActive == false
-                                                     select a).ToList();
-
-                        scope.Complete();
-                    }
-
-                }
+                
+           
             }
 
 
@@ -114,8 +84,7 @@ namespace Simplog.Data.InfrastructureModel.Repositories
 
             #region Tenant Zero Fields
 
-            if (HttpContext.Current != null || isWRCacheALLOWED)
-            {
+          
                 if (CacheManager.CacheWrapper.Get(zerolistName) == null)
                 {
 
@@ -137,21 +106,8 @@ namespace Simplog.Data.InfrastructureModel.Repositories
                 {
                     zeroTenantObjectFields = (List<ObjectField>)CacheManager.CacheWrapper.Get(zerolistName);
                 }
-            }
-            else
-            {
-
-                using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-                {
-                    IWebFreightContext context = WebFreightContext.GetContext(0);
-                    zeroTenantObjectFields = (from a in context.ObjectFields.Include("ObjectTable_LookUpTable").Include("FullNameTextCode").Include("ShortNameTextCode").Include("ListTextCode").Include("HelpTextCode").Include("ObjectTable")
-                                              where (a.Tenant == 0) && a.ObjectTable.Name == objectTableName && a.InActive == false
-                                              select a).ToList();
-
-                    scope.Complete();
-                }
-
-            }
+            
+       
             #endregion
 
 
@@ -195,30 +151,13 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             List<ObjectField> currentTenantObjectFields = new List<ObjectField>();
             List<ObjectField> zeroTenantObjectFields = new List<ObjectField>();
 
-            bool isWRCacheALLOWED = false;
-
-            var iAppSettings = System.Configuration.ConfigurationManager.AppSettings;
-            if (iAppSettings != null)
-            {
-                if (iAppSettings["WRCacheALLOWED"] != null)
-                {
-                    string iValueText = iAppSettings["WRCacheALLOWED"] + "";
-                    if (!string.IsNullOrEmpty(iValueText))
-                    {
-                        if (iValueText.ToLower() == "true")
-                        {
-                            isWRCacheALLOWED = true;
-                        }
-                    }
-                }
-            }
+           
 
             #region Current Tenant Fields
 
             if (tenant != 0)
             {
-                if (HttpContext.Current != null || isWRCacheALLOWED)
-                {
+               
                     if (CacheManager.CacheWrapper.Get(tenantListName) == null)
                     {
 
@@ -238,22 +177,8 @@ namespace Simplog.Data.InfrastructureModel.Repositories
                     {
                         currentTenantObjectFields = (List<ObjectField>)CacheManager.CacheWrapper.Get(tenantListName);
                     }
-                }
-                else
-                {
-
-                    using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-                    {
-
-                        currentTenantObjectFields = (from a in context.ObjectFields.Include("ObjectTable_LookUpTable").Include("FullNameTextCode").Include("ShortNameTextCode").Include("ListTextCode").Include("HelpTextCode").Include("ObjectTable")
-                                                     where (a.Tenant == tenant) && a.ObjectTableId == objectTableId && a.InActive == false && (a.AllowedinAutomationConditions == true || a.DisplayInAutomationAsEnitity == true || a.AutomationEmailRecipient == true || a.IsCustom || a.FieldName == "DescriptionOfGoods" || a.FieldName == "MainCarriageFinalDestinationETA" || a.FieldName == "MainCarriageFinalDestinationATA" || a.FieldName == "MainCarriageETD" || a.FieldName == "MainCarriageATD")
-                                                     select a).ToList();
-                        currentTenantObjectFields = currentTenantObjectFields.Concat(GetEntityAutomationObjectFields(tenant, currentTenantObjectFields)).ToList();
-
-                        scope.Complete();
-                    }
-
-                }
+                
+        
             }
 
 
@@ -261,8 +186,7 @@ namespace Simplog.Data.InfrastructureModel.Repositories
 
             #region Tenant Zero Fields
 
-            if (HttpContext.Current != null || isWRCacheALLOWED)
-            {
+          
                 if (CacheManager.CacheWrapper.Get(zerolistName) == null)
                 {
 
@@ -284,22 +208,8 @@ namespace Simplog.Data.InfrastructureModel.Repositories
                 {
                     zeroTenantObjectFields = (List<ObjectField>)CacheManager.CacheWrapper.Get(zerolistName);
                 }
-            }
-            else
-            {
-
-                using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-                {
-
-                    zeroTenantObjectFields = (from a in context.ObjectFields.Include("ObjectTable_LookUpTable").Include("FullNameTextCode").Include("ShortNameTextCode").Include("ListTextCode").Include("HelpTextCode").Include("ObjectTable")
-                                              where (a.Tenant == 0) && a.ObjectTableId == objectTableId && a.InActive == false && (a.AllowedinAutomationConditions == true || a.DisplayInAutomationAsEnitity == true || a.AutomationEmailRecipient == true || a.IsCustom || a.FieldName == "DescriptionOfGoods" || a.FieldName == "MainCarriageFinalDestinationETA" || a.FieldName == "MainCarriageFinalDestinationATA" || a.FieldName == "MainCarriageETD" || a.FieldName == "MainCarriageATD")
-                                              select a).ToList();
-                    zeroTenantObjectFields = zeroTenantObjectFields.Concat(GetEntityAutomationObjectFields(0, zeroTenantObjectFields)).ToList();
-
-                    scope.Complete();
-                }
-
-            }
+            
+   
             #endregion
 
 
@@ -334,26 +244,10 @@ namespace Simplog.Data.InfrastructureModel.Repositories
         {
             string objectFieldsListName = objectTableName.ToLower() + "customobjectfields" + tenant;
 
-            bool isWRCacheALLOWED = false;
 
-            var iAppSettings = System.Configuration.ConfigurationManager.AppSettings;
-            if (iAppSettings != null)
-            {
-                if (iAppSettings["WRCacheALLOWED"] != null)
-                {
-                    string iValueText = iAppSettings["WRCacheALLOWED"] + "";
-                    if (!string.IsNullOrEmpty(iValueText))
-                    {
-                        if (iValueText.ToLower() == "true")
-                        {
-                            isWRCacheALLOWED = true;
-                        }
-                    }
-                }
-            }
+          
             List<ObjectField> objectfields = new List<ObjectField>();
-            if (HttpContext.Current != null || isWRCacheALLOWED)
-            {
+          
                 if (CacheManager.CacheWrapper.Get(objectFieldsListName) == null)
                 {
                     IWebFreightContext context = WebFreightContext.GetContext(tenant);
@@ -367,14 +261,8 @@ namespace Simplog.Data.InfrastructureModel.Repositories
                 {
                     objectfields = (List<ObjectField>)CacheManager.CacheWrapper.Get(objectFieldsListName);
                 }
-            }
-            else
-            {
-                IWebFreightContext context = WebFreightContext.GetContext(tenant);
-                objectfields = (from a in context.ObjectFields.Include("ObjectTable_LookUpTable").Include("FullNameTextCode").Include("ShortNameTextCode").Include("ListTextCode").Include("HelpTextCode").Include("ObjectTable")
-                                where a.Tenant == tenant && a.ObjectTable.Name == objectTableName && a.IsCustom == true && a.InActive == false
-                                select a).ToList();
-            }
+            
+   
 
             return objectfields;
         }

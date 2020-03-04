@@ -197,6 +197,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -254,6 +255,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -315,6 +317,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -372,6 +375,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -431,6 +435,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -492,6 +497,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -553,6 +559,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -614,6 +621,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -675,6 +683,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -736,6 +745,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -793,6 +803,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -820,13 +831,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query InterestBasesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = InterestBasesTypeTextCode_0.Id, NameTextCodeCode = InterestBasesTypeTextCode_0.Code, Code = "Interest Bases",  QueryGroupCode = "a37b", IndexOrder = 0, Tenant = 0, ObjectTableId = InterestBasesTypeObjectTable.Id, QuerySection = "InterestBasesType", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = InterestBasesTypeFeature_0.Id,FeatureUniqeCode= InterestBasesTypeFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query InterestBasesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = InterestBasesTypeTextCode_0.Id, NameTextCodeCode = InterestBasesTypeTextCode_0.Code, ObjectTableName = "InterestBasesType", Code = "Interest Bases",  QueryGroupCode = "a37b", IndexOrder = 0, Tenant = 0, ObjectTableId = InterestBasesTypeObjectTable.Id, QuerySection = "InterestBasesType", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = InterestBasesTypeFeature_0.Id,FeatureUniqeCode= InterestBasesTypeFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn InterestBasesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InterestBasesQuery.Id, IndexOrder = 0, ObjectFieldId = InterestBasesTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == InterestBasesTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = InterestBasesTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == InterestBasesTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InterestBasesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InterestBasesQuery.Id,QueryCode = InterestBasesQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = InterestBasesTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == InterestBasesTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = InterestBasesTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == InterestBasesTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn InterestBasesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InterestBasesQuery.Id, IndexOrder = 1, ObjectFieldId = InterestBasesTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == InterestBasesTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = InterestBasesTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == InterestBasesTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InterestBasesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InterestBasesQuery.Id,QueryCode = InterestBasesQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = InterestBasesTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == InterestBasesTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = InterestBasesTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == InterestBasesTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn InterestBasesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InterestBasesQuery.Id, IndexOrder = 2, ObjectFieldId = InterestBasesTypeObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == InterestBasesTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = InterestBasesTypeObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == InterestBasesTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InterestBasesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InterestBasesQuery.Id,QueryCode = InterestBasesQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = InterestBasesTypeObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == InterestBasesTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = InterestBasesTypeObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == InterestBasesTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 	   
 	    }
 
@@ -1036,7 +1047,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable InterestBasesTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "InterestBasesType" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode InterestBasesTypeTextCode_AccountingGeneralONewInterestBases = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.NewInterestBases", DefaultText = "New Interest Bases",LocalDefaultText = @"חדש  בסיס ריבית", ObjectTableId = InterestBasesTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
 	    
 }
 

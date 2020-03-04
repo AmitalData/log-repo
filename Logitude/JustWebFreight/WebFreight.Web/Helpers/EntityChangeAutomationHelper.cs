@@ -98,7 +98,7 @@ namespace WebFreight.Web.Helpers
 
                     foreach (c field in ChangesFields)
                     {
-                        ObjectField objectField = objectFieldLists.Where(d => d.Id == field.f).FirstOrDefault();
+                        ObjectField objectField = objectFieldLists.Where(d => d.FieldCode== field.f).FirstOrDefault();
 
                         if (objectField != null && objectField.FieldName != "UpdateDate")
                         {

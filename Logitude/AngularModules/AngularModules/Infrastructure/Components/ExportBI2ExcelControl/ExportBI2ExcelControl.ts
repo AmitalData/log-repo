@@ -39,11 +39,14 @@ export class ExportBI2ExcelControl {
     tenant: number;
     queryName: string;
     queryId: string;
+    queryCode: string;
     reportId: string;
     userid: string;
     BIReportXMLData: BIReportXMLData = null;
     SetWindowArgs(args: any) {
         this.queryId = args.queryId;
+        this.queryCode = args.queryCode;
+
         this.reportId = args.reportId;
         this.queryName = args.reportName;
         this.BIReportXMLData = args.BIReportXMLData;

@@ -1,52 +1,120 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Table Name="BankAccountLites" Schema="dbo" DBType="Main">
-  <Column Name="Id" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="BankAccountLites"
+  Schema="dbo"
+  DBType="Main">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="CreateDate" Type="datetime">
-    <Constraints Nullable="false" />
+  <Column
+    Name="CreateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="UpdateDate" Type="datetime">
-    <Constraints Nullable="false" />
+  <Column
+    Name="UpdateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="LocalName" Type="nvarchar" Size="30">
-    <Constraints Nullable="true" />
+  <Column
+    Name="LocalName"
+    Type="nvarchar"
+    Size="30">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="EnglishName" Type="varchar" Size="30">
-    <Constraints Nullable="true" />
+  <Column
+    Name="EnglishName"
+    Type="varchar"
+    Size="30">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="BranchNumber" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="BranchNumber"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="AccountNumber" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
+  <Column
+    Name="AccountNumber"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="IBAN" Type="varchar" Size="40">
-    <Constraints Nullable="true" />
+  <Column
+    Name="IBAN"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="SwiftCode" Type="varchar" Size="30">
-    <Constraints Nullable="true" />
+  <Column
+    Name="SwiftCode"
+    Type="varchar"
+    Size="30">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="BankCode" Type="varchar" Size="10">
-    <Constraints Nullable="false" />
+  <Column
+    Name="BankCode"
+    Type="varchar"
+    Size="10">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="CurrencyId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
+  <Column
+    Name="CurrencyId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="BranchAddress" Type="nvarchar" Size="60">
-    <Constraints Nullable="true" />
+  <Column
+    Name="BranchAddress"
+    Type="nvarchar"
+    Size="60">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Inactive" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Inactive"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="SearchFields" Type="nvarchar" Size="-1">
-    <Constraints Nullable="true" />
+  <Column
+    Name="SearchFields"
+    Type="nvarchar"
+    Size="-1">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="VatNumber" Type="varchar" Size="20">
-    <Constraints Nullable="true" />
+  <Column
+    Name="VatNumber"
+    Type="varchar"
+    Size="20">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Relation ForeignKeyColumn="CurrencyId" ReferencedTable="Currencies" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="CurrencyId"
+    ReferencedTable="Currencies"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
 </Table>

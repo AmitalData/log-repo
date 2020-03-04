@@ -36,7 +36,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Registry Date Type&quot;"
-  Code="&quot;7fb2&quot;"
+  Code="&quot;80f9&quot;"
   Name="&quot;RegistryDateType&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -330,12 +330,6 @@
       Name="&quot;None&quot;" />
   </Records>
   <DataContracts />
-  <AdditionalTextCodes>
-    <TextCode
-      Code="&quot;RegistryDateType&quot;"
-      DefaultText="&quot;Registry Date Type&quot;"
-      TextCodeTypeCode="&quot;T&quot;"
-      IsSpellChecked="false" />
-  </AdditionalTextCodes>
+  <AdditionalTextCodes />
   <AdditionalFeatures />
 </entity>

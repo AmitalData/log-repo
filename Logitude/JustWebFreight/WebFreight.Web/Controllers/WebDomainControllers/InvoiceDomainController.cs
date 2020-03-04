@@ -358,7 +358,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 }
 
                 DateTime? accountingDate = DateHelper.GetDate(accountingDateString);
-                ARInvoiceValidator.ValidateFullAccounting(tenant, billTo, currency, accountingDate, true);
+                ARInvoicePM invoice = new ARInvoicePM() {Tenant = tenant ,BillToId = billTo,InvoiceCurrencyId = currency,InvoiceDate= accountingDate }; 
+                ARInvoiceValidator.ValidateFullAccounting(invoice, true);
 
                 return Request.CreateResponse(HttpStatusCode.OK, "");
             }
@@ -417,6 +418,26 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 string warningMessage= APInvoiceValidator.ValidateFullAccountingInvoiceDate(invoiceDate, tenant, loggedUserEmail);
                 return Request.CreateResponse(HttpStatusCode.OK, warningMessage);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+
+        public HttpResponseMessage GetValidateInvoiceNumber(string invoiceNumber)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                string loggedUserEmail = authToken.Email;
+                int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+               APInvoiceValidator.CheckInvoiceNumberFormat(invoiceNumber, tenant);
+                return Request.CreateResponse(HttpStatusCode.OK, "");
             }
 
             catch (Exception ex)

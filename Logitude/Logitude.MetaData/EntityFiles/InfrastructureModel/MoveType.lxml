@@ -1162,6 +1162,12 @@
         IsCompositKey="false" />
     </DataContract>
   </DataContracts>
-  <AdditionalTextCodes />
+  <AdditionalTextCodes>
+    <TextCode
+      Code="&quot;MoveType.O.TableDescription&quot;"
+      DefaultText="&quot;Define the move types for shipments by Air, Ocean or Land transportation.&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+  </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

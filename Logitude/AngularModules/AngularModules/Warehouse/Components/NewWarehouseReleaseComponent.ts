@@ -72,7 +72,10 @@ export class NewWarehouseReleaseComponent extends BaseComponent implements OnIni
     DimensionsLabel: string;
     ChargeableWeightLabel: string;
     DataContext: any = this;
+    IsFilterByShipmentId: boolean = true;
     private CurrentSession = SessionLocator.SelectedSession;
+    public FromPortId: string;
+    public ToPortId: string;
     constructor(public _warehouseReleasePMExtendedService: WarehouseReleasePMExtendedService, private warehouseEntryPackagePMExtendedService: WarehouseEntryPackagePMExtendedService) {
         super();
         this.GetNewInstance();
@@ -126,6 +129,7 @@ export class NewWarehouseReleaseComponent extends BaseComponent implements OnIni
     }
     IsLCLEntity: boolean = true;
 
+    WarehouseEntryId: string = "";
     Start(args: any) {
 
         this.ShipmentPM = args.ShipmentPM;
@@ -137,12 +141,14 @@ export class NewWarehouseReleaseComponent extends BaseComponent implements OnIni
 
     }
     IsLoadWarehouse: boolean = false;
+    FromType: string;;
     SetValue(args: any) {
-        if (this.warehouseReleasePM) {
+        this.FromType = args.FromType;
 
+        if (this.warehouseReleasePM) {
             if (this.ShipmentPM) {
                 this.UIProperties.SetEnabled("ShipmentId", "WarehouseRelease", false);
-
+                this.IsFilterByShipmentId = false;
                 if (this.ShipmentPM.ShipmentLevelCode == "D") this.warehouseReleasePM.CustomerId = this.ShipmentPM.CustomerId;
                 this.warehouseReleasePM.ShipmentId = this.ShipmentPM.Id;
                 this.warehouseReleasePM.ShipmentNumber = this.ShipmentPM.ShipmentNumber;
@@ -153,11 +159,27 @@ export class NewWarehouseReleaseComponent extends BaseComponent implements OnIni
                 this.warehouseReleasePM.ShipmentTypeId = this.ShipmentPM.ShipmentTypeId;
                 this.warehouseReleasePM.DirectionId = this.ShipmentPM.DirectionId;
                 this.warehouseReleasePM.ConnectedTo = args.ConnectedTo;
+            } else {
+                this.warehouseReleasePM.ShipmentId = args.ShipmentId;
+                this.warehouseReleasePM.ConnectedTo = args.ConnectedTo;
             }
 
 
-
+            if (this.warehouseReleasePM.ShipmentId) {
+                this.UIProperties.SetEnabled("ShipmentId", "WarehouseRelease", false);
+            }
+            
+            this.WarehouseEntryId = args.WarehouseEntryId;
+            this.FromPortId = args.FromPortId;
+            this.ToPortId = args.ToPortId;
+            this.warehouseReleasePM.CustomerId = args.CustomerId ? args.CustomerId : this.warehouseReleasePM.CustomerId;
             this.ConnectedTo = this.warehouseReleasePM.ConnectedTo;
+
+
+            if (this.FromType == "WarehouseEntry") {
+                this.warehouseReleasePM.UIProperties.SetEnabled("CustomerId", "WarehouseRelease", false);
+                this.warehouseReleasePM.UIProperties.SetEnabled("WarehouseId", "WarehouseRelease", false);
+            }
 
 
             this.IsLCLEntity = AppTool.IsLCLEntity(this.warehouseReleasePM.TransportModeId, this.warehouseReleasePM.ShipmentTypeId);
@@ -225,14 +247,26 @@ export class NewWarehouseReleaseComponent extends BaseComponent implements OnIni
 
     ShipmentValueChange(shipment: any) {
         this.warehouseReleasePM.ShipmentNumber = null;
-        if (this.ShipmentPM) {
-            this.warehouseReleasePM.ShipmentNumber = this.ShipmentPM.ShipmentNumber;
+        if (shipment) {
+            if (this.ShipmentPM) {
+                if (this.ShipmentPM.ShipmentNumber != shipment.ShipmentNumber) {
+                    this.ShipmentPM = shipment;
+                    this.warehouseReleasePackagesDetailsComponent.SetPortData();
+                }
+
+            } else {
+
+                this.ShipmentPM = shipment;
+                this.warehouseReleasePackagesDetailsComponent.SetPortData();
+            }
         }
 
-        this.ShipmentPM = shipment;
-        if (this.warehouseReleasePackagesDetailsComponent) {
-            this.warehouseReleasePackagesDetailsComponent.SetPortData();
+        if (this.ShipmentPM) {
+            this.warehouseReleasePM.ShipmentNumber = shipment.ShipmentNumber;
         }
+
+
+
     }
 
 
@@ -318,19 +352,19 @@ export class NewWarehouseReleaseComponent extends BaseComponent implements OnIni
     //}
 
 
-    get ToPortId() {
-        var toportid: string = null;
-        if (this.warehouseReleasePM) toportid = this.warehouseReleasePM.ToPortId;
-        return toportid;
-    }
-    set ToPortId(value: string) {
-        if (this.warehouseReleasePM != null) {
-            if (value != this.warehouseReleasePM.ToPortId) {
-                this.warehouseReleasePM.ToPortId = value;
-                // this.OnActualReleaseDateDatePickerChange(value);
-            }
-        }
-    }
+    //get ToPortId() {
+    //    var toportid: string = null;
+    //    if (this.warehouseReleasePM) toportid = this.warehouseReleasePM.ToPortId;
+    //    return toportid;
+    //}
+    //set ToPortId(value: string) {
+    //    if (this.warehouseReleasePM != null) {
+    //        if (value != this.warehouseReleasePM.ToPortId) {
+    //            this.warehouseReleasePM.ToPortId = value;
+    //            // this.OnActualReleaseDateDatePickerChange(value);
+    //        }
+    //    }
+    //}
 
     get ActualReleaseDate() {
         var actualReleaseDate: Date = null;
@@ -430,7 +464,7 @@ export class NewWarehouseReleaseComponent extends BaseComponent implements OnIni
         if (warehouseEntryPackagesDetailsComponenttLocation != null) {
             SessionLocator.DynamicLoader.Load('./Warehouse/Components/WarehouseReleasePackagesDetailsComponent', warehouseEntryPackagesDetailsComponenttLocation.viewContainerRef)
                 .then(cmpRef => {
-                    var windowArgs: any = { WarehouseReleasePM: this.warehouseReleasePM, ViewModelTrigger: this, ShipmentPM: this.ShipmentPM };
+                    var windowArgs: any = { WarehouseReleasePM: this.warehouseReleasePM, ViewModelTrigger: this, ShipmentPM: this.ShipmentPM, WarehouseEntryId: this.WarehouseEntryId, IsFilterByShipmentId: this.IsFilterByShipmentId };
                     cmpRef.instance.SetWindowArgs(windowArgs);
                     this.warehouseReleasePackagesDetailsComponent = cmpRef.instance;
                 });

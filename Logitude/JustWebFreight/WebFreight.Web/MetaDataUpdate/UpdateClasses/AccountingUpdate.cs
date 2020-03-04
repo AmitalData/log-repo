@@ -1387,9 +1387,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CashBook.TH.ManageDepo", DefaultText = "Manage Depo.", LocalDefaultText = "ניהול הפקדות", ObjectTableId = CashBookTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, textCodeRepository, textcodes);
             #endregion
 
-            #region BankDeposit
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankDeposit.TH.Details", DefaultText = "Details", LocalDefaultText = "פרטים", ObjectTableId = CashBookTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, textCodeRepository, textcodes);
-            #endregion
+            //#region BankDeposit
+            //AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankDeposit.TH.Details", DefaultText = "Details", LocalDefaultText = "פרטים", ObjectTableId = CashBookTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, textCodeRepository, textcodes);
+            //#endregion
 
             #region Revaluation
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Revaluation.TH.Events", DefaultText = "Events", LocalDefaultText = "אירועים", ObjectTableId = RevaluationTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, textCodeRepository, textcodes);

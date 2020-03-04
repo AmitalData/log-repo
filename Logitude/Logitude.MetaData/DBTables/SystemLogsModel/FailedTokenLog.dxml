@@ -1,18 +1,43 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Table Name="FailedTokenLogs" Schema="dbo" DBType="SystemLogs">
-  <Column Name="Id" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="FailedTokenLogs"
+  Schema="dbo"
+  DBType="SystemLogs">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="IP" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="IP"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Browser" Type="varchar" Size="40">
-    <Constraints Nullable="true" />
+  <Column
+    Name="Browser"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Token" Type="varchar" Size="100">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Token"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="GMTDateTime" Type="datetime">
-    <Constraints Nullable="true" />
+  <Column
+    Name="GMTDateTime"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
   </Column>
+  <Index
+    Columns="GMTDateTime" />
 </Table>

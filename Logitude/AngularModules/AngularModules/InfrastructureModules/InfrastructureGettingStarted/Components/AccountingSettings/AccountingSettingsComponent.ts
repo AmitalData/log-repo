@@ -119,7 +119,8 @@ export class AccountingSettingsComponent extends BaseComponent {
             this.UIProperties.SetEnabled("EnableMultiPercentageVATTypes", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("NotifyPastDateOnInvoiceEdit", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("RegistryDateTypeCode", this.ObjectTableName, false);
-        }
+            this.UIProperties.SetEnabled("AllowManualARPaymentNumber", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("AllowRegionalTaxManagement", this.ObjectTableName, false);        }
 
         else {
             this.UIProperties.SetEnabled("IsARInvoiceChronologicalDates", this.ObjectTableName, !this.AllowManualInvoiceNumber);
@@ -142,15 +143,17 @@ export class AccountingSettingsComponent extends BaseComponent {
 
 
             if (SessionLocator.TenantPM.CountryCode == "IL" && SessionLocator.LoggedUserPM.IsCustomerCare == false) {
-                this.UIProperties.SetEnabled("AllowVoidARI", this.ObjectTableName, false)
-                this.UIProperties.SetEnabled("AllowVoidARP", this.ObjectTableName, false)
-                this.UIProperties.SetEnabled("IsVatNumberMandatoryInAR", this.ObjectTableName, false)
-                this.UIProperties.SetEnabled("AllowManualInvoiceNumber", this.ObjectTableName, false)
-                this.UIProperties.SetEnabled("IsARInvoiceChronologicalDates", this.ObjectTableName, false)
-                this.UIProperties.SetEnabled("IsARPaymentChronologicalDates", this.ObjectTableName, false)
-                this.UIProperties.SetEnabled("AllowVoidAPI", this.ObjectTableName, false)
-                this.UIProperties.SetEnabled("AllowVoidAPP", this.ObjectTableName, false)
-                this.UIProperties.SetEnabled("IsVatNumberMandatoryInAP", this.ObjectTableName, false)
+                this.UIProperties.SetEnabled("AllowVoidARI", this.ObjectTableName, false);
+                this.UIProperties.SetEnabled("AllowVoidARP", this.ObjectTableName, false);
+                this.UIProperties.SetEnabled("IsVatNumberMandatoryInAR", this.ObjectTableName, false);
+                this.UIProperties.SetEnabled("AllowManualInvoiceNumber", this.ObjectTableName, false);
+                this.UIProperties.SetEnabled("IsARInvoiceChronologicalDates", this.ObjectTableName, false);
+                this.UIProperties.SetEnabled("IsARPaymentChronologicalDates", this.ObjectTableName, false);
+                this.UIProperties.SetEnabled("AllowVoidAPI", this.ObjectTableName, false);
+                this.UIProperties.SetEnabled("AllowVoidAPP", this.ObjectTableName, false);
+                this.UIProperties.SetEnabled("IsVatNumberMandatoryInAP", this.ObjectTableName, false);
+                this.UIProperties.SetEnabled("AllowManualARPaymentNumber", this.ObjectTableName, false);
+                
             }
         }
 
@@ -221,6 +224,20 @@ export class AccountingSettingsComponent extends BaseComponent {
         }
     }
 
+    get AllowManualARPaymentNumber() { return this.EntityPM.AllowManualARPaymentNumber; }
+    set AllowManualARPaymentNumber(value: boolean) {
+        if (this.EntityPM.AllowManualARPaymentNumber != value) {
+            this.EntityPM.AllowManualARPaymentNumber = value;
+        }
+    }
+
+    get AllowRegionalTaxManagement() { return this.EntityPM.AllowRegionalTaxManagement; }
+    set AllowRegionalTaxManagement(value: boolean) {
+        if (this.EntityPM.AllowRegionalTaxManagement != value) {
+            this.EntityPM.AllowRegionalTaxManagement = value;
+        }
+    }
+    
     get IsARInvoiceChronologicalDates() { return this.EntityPM.IsARInvoiceChronologicalDates; }
     set IsARInvoiceChronologicalDates(value: boolean) {
         if (this.EntityPM.IsARInvoiceChronologicalDates != value) {

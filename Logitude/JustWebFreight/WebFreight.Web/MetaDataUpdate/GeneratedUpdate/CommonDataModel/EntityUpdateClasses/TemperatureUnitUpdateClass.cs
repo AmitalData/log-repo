@@ -116,7 +116,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Temperature Unit",
-			      				    Code =  "b814",
+			      				    Code =  "589a",
 			      				    Name =  "TemperatureUnit",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "Name",
@@ -404,15 +404,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-
-		   		   //--------------> Additional TextCodes <--------------\\
-
- 		   ObjectTable TemperatureUnitObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TemperatureUnit" && d.Tenant == 0).FirstOrDefault(); 
-
- 		   TextCode TemperatureUnitTextCode_TemperatureUnit = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TemperatureUnit", DefaultText = "Temperature Unit",LocalDefaultText = null, ObjectTableId = TemperatureUnitObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
-   
+	    {     
 	    
 }
 

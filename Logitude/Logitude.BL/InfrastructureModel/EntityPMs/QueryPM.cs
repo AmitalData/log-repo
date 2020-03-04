@@ -11,11 +11,14 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public string Id { get; set; }
         public int Tenant { get; set; }
         public string Code { get; set; }
+        public string UniqueCode { get; set; }
         public string UserId { get; set; }
         public string ObjectTableId { get; set; }
         public bool SystemLevel { get; set; }
         public bool TenantLevel { get; set; }
         public string OriginalQueryId { get; set; }
+        public string OriginalQueryCode { get; set; }
+
         public string QuerySection { get; set; }
         public int IndexOrder { get; set; }
         public bool DisplayCount { get; set; }

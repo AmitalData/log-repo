@@ -358,6 +358,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                       PrimaryContactPhone = a.PrimaryContactPhone,
                                                       CAAT = a.CAAT,
                                                       CBSA = a.CBSA,
+                                                      StateName = a.Card.StateName,
                                                   };
             return result;
         }

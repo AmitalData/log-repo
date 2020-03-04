@@ -82,8 +82,6 @@ namespace Simplog.Data.CommonDataModel.Mapping
                 .IsUnicode(false);
 
 
-            
-
             // Table & Column Mappings
             this.ToTable("Addresses");
             this.Property(t => t.Tenant).HasColumnName("Tenant");
@@ -105,6 +103,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.IsLocalLanguage).HasColumnName("IsLocalLanguage");
             this.Property(t => t.SearchFields).HasColumnName("SearchFields");
             this.Property(t => t.ExternalId).HasColumnName("ExternalId");
+            this.Property(t => t.AutomaticLastUpdateDate).HasColumnName("AutomaticLastUpdateDate");
 
             // Relationships
             this.HasOptional(t => t.Card)

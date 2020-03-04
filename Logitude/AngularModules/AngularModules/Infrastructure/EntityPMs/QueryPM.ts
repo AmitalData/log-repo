@@ -26,7 +26,11 @@ export class QueryPM {
     private code: string;
     public get Code() { return this.code; }
     public set Code(newValue: string) { this.code = newValue; }
-       	 
+
+    private uniqueCode: string;
+    public get UniqueCode() { return this.uniqueCode; }
+    public set UniqueCode(newValue: string) { this.uniqueCode = newValue; }
+
     private objectTableId: string;
     public get ObjectTableId() { return this.objectTableId; }
     public set ObjectTableId(newValue: string) { this.objectTableId = newValue; }
@@ -42,7 +46,11 @@ export class QueryPM {
     private originalQueryId: string;
     public get OriginalQueryId() { return this.originalQueryId; }
     public set OriginalQueryId(newValue: string) { this.originalQueryId = newValue; }
-       	 
+
+    private originalQueryCode: string;
+    public get OriginalQueryCode() { return this.originalQueryCode; }
+    public set OriginalQueryCode(newValue: string) { this.originalQueryCode = newValue; }
+
     private querySection: string;
     public get QuerySection() { return this.querySection; }
     public set QuerySection(newValue: string) { this.querySection = newValue; }

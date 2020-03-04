@@ -153,31 +153,15 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             if (!string.IsNullOrEmpty(id))
             {
 
-                bool isWRCacheALLOWED = false;
 
-                var iAppSettings = System.Configuration.ConfigurationManager.AppSettings;
-                if (iAppSettings != null)
-                {
-                    if (iAppSettings["WRCacheALLOWED"] != null)
-                    {
-                        string iValueText = iAppSettings["WRCacheALLOWED"]+"";
-                        if (!string.IsNullOrEmpty(iValueText))
-                        {
-                            if (iValueText.ToLower() == "true")
-                            {
-                                isWRCacheALLOWED = true;
-                            }
-                        }
-                    }
-                }
+                
 
                         string entityName = "PortPM" + id + tenant;
                 PortPM entity;
 
                 if (getFromCache)
                 {
-                    if (HttpContext.Current != null || isWRCacheALLOWED)
-                    {
+                  
                         if (CacheManager.CacheWrapper.Get(entityName) == null)
                         {
                             PortRepository myRepository = new PortRepository(tenant);
@@ -232,52 +216,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         {
                             entity = (PortPM)CacheManager.CacheWrapper.Get(entityName);
                         }
-                    }
+                    
 
-                    else
-                    {
-                        PortRepository myRepository = new PortRepository(tenant);
-
-                        entity = (from a in myRepository.context.Ports.Include("Country").Include("State")
-                                  where a.Tenant == tenant && a.Id == id
-                                  select new PortPM()
-                                  {
-                                      AddedManually = a.AddedManually,
-                                      Code = a.Code,
-                                      CountryId = a.CountryId,
-                                      EnglishName = a.EnglishName,
-                                      Field1 = a.Field1,
-                                      Field2 = a.Field2,
-                                      Field3 = a.Field3,
-                                      Field4 = a.Field4,
-                                      Field5 = a.Field5,
-                                      Field6 = a.Field6,
-                                      Field7 = a.Field7,
-                                      Field8 = a.Field8,
-                                      Field9 = a.Field9,
-                                      Field10 = a.Field10,
-                                      Id = a.Id,
-                                      InActive = a.InActive,
-                                      IsAir = a.IsAir,
-                                      IsInland = a.IsInland,
-                                      IsOcean = a.IsOcean,
-                                      Latitude = a.Latitude,
-                                      LocalName = a.LocalName,
-                                      Longtitude = a.Longtitude,
-                                      Notes = a.Notes,
-                                      Tenant = a.Tenant,
-                                      CountryName = a.Country.EnglishName,
-                                      CountryCode = a.Country.Code,
-                                      ComputedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
-                                      SearchFields = a.SearchFields,
-                                      CountryEC = a.Country.EC,
-                                      StateId = a.StateId,
-                                      StateCode = a.State == null ? null : a.State.Code,
-                                      CombinedCode = a.CombinedCode,
-                                      StateName = a.StateName,
-                                      CountryIsNorthAmerica = a.Country.IsNorthAmerica,
-                                  }).FirstOrDefault();
-                    }
+                   
                 }
 
                 else

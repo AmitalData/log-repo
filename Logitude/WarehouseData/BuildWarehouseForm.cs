@@ -36,97 +36,37 @@ namespace WarehouseData
         }
 
 
-        delegate void SetControlValueCallback(string propName, object propValue, string tableName = null, string typeTable = null);
-        private void SetControlPropertyValue(string propName, object propValue, string tableName = null, string typeTable = null)
+        delegate void SetControlValueCallback(string propName, object propValue, TableClass table = null, string typeTable = null);
+        private void SetControlPropertyValue(string propName, object propValue,TableClass table = null, string typeTable = "DW")
         {
+          
             Control oControl = null;
-            switch (tableName)
+            if (table!=null)
             {
-                case "Shipments":
-                    if (typeTable == "Fact") oControl = FactShipmentsLabel;
-                    else oControl = DWShipmentLable;
-
-                    break;
-                case "Cards":
-                    if (typeTable == "DIM") oControl = DimPartnersLabel;
-                    else oControl = DWPartnersLabel;
-
-                    break;
-
-                case "ShipmentMasterDatas":
-                    oControl = DWShipmentMasterDatasLable;
-                    break;
+                string lableName = (table.HasFactTable ? table.DWObjectTableCode.Replace("_", "") : (typeTable + table.DBTableName)) + "Label";
+                oControl = this.Controls.OfType<Control>().Where(l => l.Name.ToLower().Contains((lableName).ToLower())).FirstOrDefault();
 
 
-                case "Users":
-                    if (typeTable == "DIM") oControl = DimUsersLabel;
-                    else oControl = DWUserLabel;
-                    break;
-
-
-                case "Contacts":
-                    oControl = DWContactsLabel;
-                    break;
-
-                case "Customers":
-                    oControl = DWCustomersLabel;
-                    break;
-                case "Ports":
-                    oControl = DWPortsLabel;
-                    if (typeTable == "DIM") oControl = DimPortsLabel;
-                    break;
-
-                case "Tenants":
-                    if (typeTable == "DIM") oControl = DimTenantLabel;
-                    else oControl = DWTenantLabel;
-
-
-                    break;
-
-                case "Incoterms":
-                    if (typeTable == "DIM") oControl = DimIncotermLabel;
-                    else oControl = DWIcontermLabel;
-
-
-                    break;
-
-                case "Currencies":
-                    if (typeTable == "DIM") oControl = DimCurrencyLabel;
-                    else oControl = DWCurrencyLabel;
-
-
-                    break;
-
-                case "Departments":
-
-                    if (typeTable == "DIM") oControl = DimDepartmentLabel;
-                    else oControl = DWDepartmentLabel;
-
-                    break;
-                case "ShipmentComputedFields":
-
-                    oControl = DWShipmentComputedFieldLabel;
-                    break;
-
-                default:
-                    oControl = BuildWarehouseData;
-                    break;
             }
+            else oControl = BuildWarehouseData;
+            if (oControl != null)
+            {
 
-            if (oControl.InvokeRequired)
-            {
-                SetControlValueCallback d = new SetControlValueCallback(SetControlPropertyValue);
-                oControl.Invoke(d, new object[] { propName, propValue, tableName, typeTable });
-            }
-            else
-            {
-                Type t = oControl.GetType();
-                PropertyInfo[] props = t.GetProperties();
-                foreach (PropertyInfo p in props)
+                if (oControl.InvokeRequired)
                 {
-                    if (p.Name.ToUpper() == propName.ToUpper())
+                    SetControlValueCallback d = new SetControlValueCallback(SetControlPropertyValue);
+                    oControl.Invoke(d, new object[] { propName, propValue, table, typeTable });
+                }
+                else
+                {
+                    Type t = oControl.GetType();
+                    PropertyInfo[] props = t.GetProperties();
+                    foreach (PropertyInfo p in props)
                     {
-                        p.SetValue(oControl, propValue, null);
+                        if (p.Name.ToUpper() == propName.ToUpper())
+                        {
+                            p.SetValue(oControl, propValue, null);
+                        }
                     }
                 }
             }
@@ -159,38 +99,35 @@ namespace WarehouseData
                             MessageBox.Show("connection not valid");
                             return; 
                         }
-         
-                        WarehouseHelper warehouseHelper = new WarehouseHelper();
-                        string sourceConnectionString = warehouseHelper.BuildConnectionString(sourceConnectionArray[0], sourceConnectionArray[1], sourceConnectionArray[2], sourceConnectionArray[3]);
-                        string destinationConnectionString = warehouseHelper.BuildConnectionString(destinationConnectionArray[0], destinationConnectionArray[1], destinationConnectionArray[2], destinationConnectionArray[3]);
+
+                        MainDataWarehouseService mainDataWarehouseService = new MainDataWarehouseService();
+                        string sourceConnectionString = mainDataWarehouseService.BuildConnectionString(sourceConnectionArray[0], sourceConnectionArray[1], sourceConnectionArray[2], sourceConnectionArray[3]);
+                        string destinationConnectionString = mainDataWarehouseService.BuildConnectionString(destinationConnectionArray[0], destinationConnectionArray[1], destinationConnectionArray[2], destinationConnectionArray[3]);
 
                         string stepName = "";
                         try
                         {
                             SetControlPropertyValue("ForeColor", Color.Black);
                             SetControlPropertyValue("Text", "Starting...");
-
+           
                             Stopwatch stopWatch = new Stopwatch();
                             stopWatch.Start();
 
-                            warehouseHelper.CreateWaterMarksTable("WaterMarks",sourceConnectionString);
+                            mainDataWarehouseService.CreateWaterMarksTable("WaterMarks",sourceConnectionString);
 
-                            List<TableClass> tableNameLists = warehouseHelper.FillTable();
-
-                            warehouseHelper.BuildWarehouseObjectField( tableNameLists, sourceConnectionString);
-                            warehouseHelper.BuildDWObjectFieldDB(tableNameLists, sourceConnectionString);
+                            List<TableClass> tableNameLists = mainDataWarehouseService.BulidDataWarehouseTableLists(sourceConnectionString);
                             
                             foreach (TableClass table in tableNameLists)
                             {
                                 if (table.DispayInScreen)
                                 {
-                                    SetControlPropertyValue("ForeColor", Color.Black, table.DBTableName);
-                                    SetControlPropertyValue("Text", "", table.DBTableName);
+                                    SetControlPropertyValue("ForeColor", Color.Black, table);
+                                    SetControlPropertyValue("Text", "", table);
 
-                                    SetControlPropertyValue("ForeColor", Color.Black, table.DBTableName, "DIM");
-                                    SetControlPropertyValue("Text", "", table.DBTableName, "DIM");
-                                    SetControlPropertyValue("ForeColor", Color.Black, table.DBTableName, "Fact");
-                                    SetControlPropertyValue("Text", "", table.DBTableName, "Fact");
+                                    SetControlPropertyValue("ForeColor", Color.Black, table, "DIM");
+                                    SetControlPropertyValue("Text", "", table, "DIM");
+                                    SetControlPropertyValue("ForeColor", Color.Black, table, "Fact");
+                                    SetControlPropertyValue("Text", "", table, "Fact");
 
                                 }
                             }
@@ -198,38 +135,28 @@ namespace WarehouseData
 
                             #region Create and Build  DW Table
 
-                            foreach (TableClass table in tableNameLists)
+                            foreach (TableClass table in tableNameLists.Where(d=>!d.HasFactTable))
                             {
-                                    stepName = table.DBTableName;
+                                
+                                stepName = table.DBTableName;
 
                                     Stopwatch stopWatchDWTable = null;
                                     if (table.DispayInScreen)
                                     {
                                         stopWatchDWTable = new Stopwatch();
                                         stopWatchDWTable.Start();
-                                        SetControlPropertyValue("Text", "Copying...", table.DBTableName);
+                                        SetControlPropertyValue("Text", "Copying...", table);
                                     }
 
-                                warehouseHelper.InitializationDWTable(table, sourceConnectionString, destinationConnectionString);
-                                warehouseHelper.CreateIndex(table, table.KeyName, destinationConnectionString);
+              
+                                mainDataWarehouseService.BuildDWDataBase(sourceConnectionString, destinationConnectionString, table, TotalCountLabel);
 
-                                if (table.TableName != "WaterMark")
-                                {
-                                    warehouseHelper.CreateIndex(table, "AutomaticLastUpdateDate", destinationConnectionString);
-                                    if (table.HasConstraint) warehouseHelper.AddConstraint(table, destinationConnectionString);
-                                    if (table.HasNotSpecifiedValue) warehouseHelper.InSertNotSpecifiedValueToDW(table, destinationConnectionString);
-                                }
-
-                                else warehouseHelper.CreateIndex(table, "LastUpdateDate", destinationConnectionString);
-                                warehouseHelper.CopyDataBase(TotalCountLable,table, sourceConnectionString, destinationConnectionString);
-
-                                warehouseHelper.UpdateAutomaticLastUpdate(table, sourceConnectionString, destinationConnectionString);
                                 if (table.DispayInScreen)
                                 {
                                     stopWatchDWTable.Stop();
                                     TimeSpan stopWatchDWTableTs = stopWatchDWTable.Elapsed;
-                                    SetControlPropertyValue("ForeColor", Color.Green, table.DBTableName);
-                                    SetControlPropertyValue("Text", "Done in ( " + stopWatchDWTableTs.ToString(@"hh\:mm\:ss") + " )", table.DBTableName);
+                                    SetControlPropertyValue("ForeColor", Color.Green, table);
+                                    SetControlPropertyValue("Text", "Done in ( " + stopWatchDWTableTs.ToString(@"hh\:mm\:ss") + " )", table);
                                 }
 
 
@@ -241,37 +168,35 @@ namespace WarehouseData
                             #region Create and Build Dimensions Table
 
 
-                              stepName = "BuildDateDimensionsTable";
-                            warehouseHelper.ExecuteScript("BuildWarehouse", destinationConnectionString, "BuildDateDimensionsTable");
+                             stepName = "BuildDateDimensionsTable";
+                            mainDataWarehouseService.ExecuteScript("BuildWarehouse",  "BuildDateDimensionsTable", destinationConnectionString);
                             stepName = "RunOtherScripte";
-                            warehouseHelper.RunOtherScripte(destinationConnectionString);
-               
+                            mainDataWarehouseService.RunAdditionalScripte(destinationConnectionString, tableNameLists);
 
 
-
+     
                             foreach (TableClass table in tableNameLists.Where(d => d.HasDimensionTable).ToList())
                             {
                                     Stopwatch stopWatchDimensionsTable = null;
-
+                             
                                     if (table.DispayInScreen)
                                     {
                                         stopWatchDimensionsTable = new Stopwatch();
                                         stopWatchDimensionsTable.Start();
-                                        SetControlPropertyValue("Text", "Building ...", table.DBTableName, "DIM");
-                                        SetControlPropertyValue("ForeColor", Color.Black, table.DBTableName, "DIM");
+                                        SetControlPropertyValue("Text", "Building ...", table, "DIM");
+                                        SetControlPropertyValue("ForeColor", Color.Black, table, "DIM");
                                     }
 
                                     stepName = table.BuildScriptName;
-                                   
-                                    warehouseHelper.BuildAndExecuteDataWarehouseScript("BuildWarehouse", destinationConnectionString , table);
-
+     
+                                mainDataWarehouseService.BuildDimensionTable(destinationConnectionString, table);
 
                                     if (table.DispayInScreen)
                                     {
                                         stopWatchDimensionsTable.Stop();
                                         TimeSpan stopWatchDimensionsTableTs = stopWatchDimensionsTable.Elapsed;
-                                        SetControlPropertyValue("Text", "Done in ( " + stopWatchDimensionsTableTs.ToString(@"hh\:mm\:ss") + " )", table.DBTableName, "DIM");
-                                        SetControlPropertyValue("ForeColor", Color.Green, table.DBTableName, "DIM");
+                                        SetControlPropertyValue("Text", "Done in ( " + stopWatchDimensionsTableTs.ToString(@"hh\:mm\:ss") + " )", table, "DIM");
+                                        SetControlPropertyValue("ForeColor", Color.Green, table, "DIM");
 
                                     }
                                 
@@ -286,26 +211,24 @@ namespace WarehouseData
 
                                     Stopwatch stopWatchDFactTable = new Stopwatch();
                                     stopWatchDFactTable.Start();
-                                    if (table.TableName == "Shipment")
-                                    {
-                                        SetControlPropertyValue("ForeColor", Color.Black, table.DBTableName, "Fact");
-                                        SetControlPropertyValue("Text", "Building...", table.DBTableName, "Fact");
-                                    }
-                                    warehouseHelper.BuildAndExecuteDataWarehouseScript("BuildWarehouse", destinationConnectionString , table);
-                          
-                                    if (table.TableName == "Shipment")
-                                    {
-                                        stopWatchDFactTable.Stop();
-                                        TimeSpan stopWatchDFactTableTs = stopWatchDFactTable.Elapsed;
-                                        SetControlPropertyValue("ForeColor", Color.Green, table.DBTableName, "Fact");
-                                        SetControlPropertyValue("Text", "Done in ( " + stopWatchDFactTableTs.ToString(@"hh\:mm\:ss") + " )", table.DBTableName, "Fact");
 
-                                    }
-                                
+                                    SetControlPropertyValue("ForeColor", Color.Black, table, "Fact");
+                                    SetControlPropertyValue("Text", "Building...", table, "Fact");
+
+                                mainDataWarehouseService.BuildFactTable(destinationConnectionString, table);
+
+                                stopWatchDFactTable.Stop();
+                                TimeSpan stopWatchDFactTableTs = stopWatchDFactTable.Elapsed;
+                                SetControlPropertyValue("ForeColor", Color.Green, table, "Fact");
+                                SetControlPropertyValue("Text", "Done in ( " + stopWatchDFactTableTs.ToString(@"hh\:mm\:ss") + " )", table, "Fact");
+
                             }
 
                             #endregion
 
+
+
+                            mainDataWarehouseService.FinishBuildingDataWarehouse(destinationConnectionString, tableNameLists);
                             stopWatch.Stop();
                             TimeSpan ts = stopWatch.Elapsed;
                             SetControlPropertyValue("Text", "Done in ( " + ts.ToString(@"hh\:mm\:ss") + " )");
@@ -315,7 +238,7 @@ namespace WarehouseData
 
 
 
-                            foreach (TableClass table in tableNameLists.Where(d => d.DispayInScreen))
+                            foreach (TableClass table in tableNameLists.Where(d => d.DispayInScreen && !d.HasFactTable))
                             {
                                 stepName = "DW table count";
                                 GetCount(table, "DW", destinationConnectionString);
@@ -326,8 +249,14 @@ namespace WarehouseData
                                 GetCount(table, "DIM", destinationConnectionString);
                             }
 
-                            stepName = "Fact table count";
-                            GetCount(tableNameLists.Where(d => d.DBTableName == "Shipments").FirstOrDefault(), "Fact", destinationConnectionString);
+                            foreach (TableClass table in tableNameLists.Where(d => d.HasFactTable).ToList())
+                            {
+                                stepName = table.DWObjectTableCode + " table count";
+                                GetCount(table, "Fact", destinationConnectionString);
+                            }
+
+
+      
 
                             #endregion
 
@@ -387,20 +316,12 @@ namespace WarehouseData
 
         private void GetCount(TableClass table , string typeTable , string connectionString)
         {
+
+
             string name = "";
             if (typeTable == "DW") name = table.Dw_TableName;
-            else if (typeTable == "DIM")
-            {
-                if (table.DBTableName == "Cards") name = "DIM_Partners";
-                else if (table.DBTableName == "ShipmentLevels") name = "DIM_Levels";
-                else if (table.DBTableName == "ShipmentTypes") name = "DIM_Types";
-                else if (table.DBTableName == "EntityStatus") name = "DIM_ShipmentStatuses";
-                
-                else name = ("DIM_" + table.DBTableName);
-            }
-            else name = "Fact_" + table.DBTableName;
-
-   
+            else name = table.DWObjectTableCode;
+  
             using (SqlConnection sourceConnection =
                        new SqlConnection(connectionString))
             {
@@ -414,98 +335,33 @@ namespace WarehouseData
                 {
                     long countStart = System.Convert.ToInt32(
                         commandRowCount.ExecuteScalar());
-
-                    switch (table.DBTableName)
-                    {
-                        case "Shipments":
-                            if (typeTable == "Fact") SetControlPropertyValue("Text", FactShipmentsLabel.Text + "     (" + countStart + ")", table.DBTableName, "Fact");
-                            else  SetControlPropertyValue("Text", DWShipmentLable.Text + "     (" + countStart + ")", table.DBTableName);  ;
-
-                            break;
-                        case "Cards":
-          
-                            if (typeTable == "DIM") SetControlPropertyValue("Text", DimPartnersLabel.Text + "     (" + countStart + ")", table.DBTableName, "DIM");
-                            else  SetControlPropertyValue("Text", DWPartnersLabel.Text + "     (" + countStart + ")", table.DBTableName) ;
-
-                            break;
-
-                        case "ShipmentMasterDatas":
-                  
-                            SetControlPropertyValue("Text", DWShipmentMasterDatasLable.Text + "     (" + countStart + ")", table.DBTableName);
-                            break;
-
-
-                        case "Users":
-                  
-                            if (typeTable == "DIM") SetControlPropertyValue("Text", DimUsersLabel.Text + "     (" + countStart + ")", table.DBTableName, "DIM");
-                            else SetControlPropertyValue("Text", DWUserLabel.Text + "     (" + countStart + ")", table.DBTableName);
-
-                            break;
-
-
-                        case "Contacts":
-           
-                            SetControlPropertyValue("Text", DWContactsLabel.Text + "     (" + countStart + ")", table.DBTableName);
-                            break;
-
-                        case "Customers":
-                     
-                            SetControlPropertyValue("Text", DWCustomersLabel.Text + "     (" + countStart + ")", table.DBTableName);
-                            break;
-                        case "Ports":
-
-                            if (typeTable == "DIM") SetControlPropertyValue("Text", DimPortsLabel.Text + "     (" + countStart + ")", table.DBTableName, "DIM");
-                            else SetControlPropertyValue("Text", DWPortsLabel.Text + "     (" + countStart + ")", table.DBTableName);
-
-                            break;
-
-                        case "Tenants":
-
-                            if (typeTable == "DIM") SetControlPropertyValue("Text", DimTenantLabel.Text + "     (" + countStart + ")", table.DBTableName, "DIM");
-                            else SetControlPropertyValue("Text", DWTenantLabel.Text + "     (" + countStart + ")", table.DBTableName);
-
-                            break;
-                        case "Departments":
-
-                            if (typeTable == "DIM") SetControlPropertyValue("Text", DimDepartmentLabel.Text + "     (" + countStart + ")", table.DBTableName, "DIM");
-                            else SetControlPropertyValue("Text", DWDepartmentLabel.Text + "     (" + countStart + ")", table.DBTableName);
-
-                            break;
-                        case "Incoterms":
-
-                            if (typeTable == "DIM") SetControlPropertyValue("Text", DimIncotermLabel.Text + "     (" + countStart + ")", table.DBTableName, "DIM");
-                            else SetControlPropertyValue("Text", DWIcontermLabel.Text + "     (" + countStart + ")", table.DBTableName);
-
-                            break;
-
-                        case "Currencies":
-
-                            if (typeTable == "DIM") SetControlPropertyValue("Text", DimCurrencyLabel.Text + "     (" + countStart + ")", table.DBTableName, "DIM");
-                            else SetControlPropertyValue("Text", DWCurrencyLabel.Text + "     (" + countStart + ")", table.DBTableName);
-
-                            break;
-                
-                        case "ShipmentComputedFields":
-                            SetControlPropertyValue("Text", DWShipmentComputedFieldLabel.Text + "     (" + countStart + ")", table.DBTableName);
-               
-                            break;
-
-
-                    }
+                    DisplayCountValueToScreen(table, typeTable, countStart);
                 }
                 catch (Exception ex)
                 {
 
                     MessageBox.Show(ex.Message);
                 }
-
-
-
-
             }
 
         }
 
+        private void DisplayCountValueToScreen(TableClass table, string typeTable, long count)
+        {
+
+            if (table.HasFactTable)
+            {
+
+            }
+            string lableName = (table.HasFactTable ? table.DWObjectTableCode.Replace("_", ""): (typeTable + table.DBTableName))  +"Label";
+            var labelEntity = this.Controls.OfType<Label>().Where(l => l.Name.ToLower().Contains((lableName).ToLower())).FirstOrDefault();
+            if(labelEntity != null)
+            {
+                SetControlPropertyValue("Text", labelEntity.Text + "     (" + count + ")", table, typeTable);
+            }
+        }
+
+ 
     }
 
 

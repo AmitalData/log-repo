@@ -115,7 +115,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Email Alert Settings",
-			      				    Code =  "21cc",
+			      				    Code =  "d7b6",
 			      				    Name =  "EmailAlertSetting",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Infrastructure",
@@ -532,7 +532,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable EmailAlertSettingObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "EmailAlertSetting" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode EmailAlertSettingTextCode_EmailAlertSettingOTableDescription = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "EmailAlertSetting.O.TableDescription", DefaultText = "Define the e-mail notifications that will be sent automatically based on different triggers.",LocalDefaultText = null, ObjectTableId = EmailAlertSettingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
 	    
 }
 

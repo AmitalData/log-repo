@@ -694,6 +694,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.ShipmentCustomerTypeCode = shipment.ShipmentCustomerTypeCode;
             shipmentPM.ConsigneeAddressOneTime = shipment.ConsigneeAddressOneTime;
             shipmentPM.ShipperAddressOneTime = shipment.ShipperAddressOneTime;
+            shipmentPM.WarehouseStorageFreeDays = shipment.WarehouseStorageFreeDays;
 
             CardRepository cardRepository = new CardRepository(myCommonContext);
 
@@ -1269,6 +1270,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.Field40 = new CustomFieldClass("Field40", "Shipment", shipment.Field40);
 
             shipmentPM.GrossWeightInKG = shipment.GrossWeightInKG;
+            shipmentPM.GrossWeightPerStorageDays = shipment.GrossWeightPerStorageDays;
             shipmentPM.GrossWeight = shipment.GrossWeight;
             shipmentPM.ChargeableWeight = shipment.ChargeableWeight;
             shipmentPM.Notes = shipment.Notes;
@@ -1468,6 +1470,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 }
             }
 
+            shipmentPM.FirstARInvoiceApprovalDate = shipment.FirstARInvoiceApprovalDate;
             shipmentPM.RegistryDate = shipment.RegistryDate;
             shipmentPM.IsAssembly = shipment.IsAssembly;
             shipmentPM.LocalCustomsTransmissionsStatusCode = shipment.LocalCustomsTransmissionsStatusCode;
@@ -3008,6 +3011,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.DirectionId = shipment.DirectionId;
             shipmentPM.AccountManagerUserId = shipment.AccountManagerUserId;
             shipmentPM.GrossWeightInKG = shipment.GrossWeightInKG;
+            shipmentPM.GrossWeightPerStorageDays = shipment.GrossWeightPerStorageDays;
+
             shipmentPM.GrossWeight = shipment.GrossWeight;
             shipmentPM.ChargeableWeight = shipment.ChargeableWeight;
             shipmentPM.GrossWeightPerTon = shipment.GrossWeightPerTon;
@@ -3351,6 +3356,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.IncotermId = shipment.IncotermId;
             shipmentPM.ShipmentTypeId = shipment.ShipmentTypeId;
             shipmentPM.IsCancelled = shipment.IsCancelled;
+            shipmentPM.FirstARInvoiceApprovalDate = shipment.FirstARInvoiceApprovalDate;
+            shipmentPM.ActualFinalArrivalDate = shipment.ActualFinalArrivalDate;
+            shipmentPM.EstimatedFinalArrivalDate = shipment.EstimatedFinalArrivalDate;
             if (masterData != null)
             {
                 shipmentPM.MainCarriageFinalDestinationETA = masterData.MainCarriageFinalDestinationETA;
@@ -3870,6 +3878,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                         FromPortCountry = m.MainCarriageFromPort.Country.Code,
                                                         FromPortName = m.MainCarriageFromPort.EnglishName,
                                                         GrossWeightInKG = s.GrossWeightInKG,
+                                                        GrossWeightPerStorageDays = s.GrossWeightPerStorageDays,
                                                         GrossWeightPerTon = s.GrossWeightPerTon,
                                                         GrossWeightEdited = s.GrossWeightEdited,
                                                         HAWBDate = s.HAWBDate,
@@ -4453,6 +4462,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                         FromPortCountry = m.MainCarriageFromPort.Country.Code,
                                                         FromPortName = m.MainCarriageFromPort.EnglishName,
                                                         GrossWeightInKG = s.GrossWeightInKG,
+                                                        GrossWeightPerStorageDays = s.GrossWeightPerStorageDays,
                                                         GrossWeightPerTon = s.GrossWeightPerTon,
                                                         GrossWeightEdited = s.GrossWeightEdited,
                                                         HAWBDate = s.HAWBDate,
@@ -4740,6 +4750,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                           ToPortName = a.MainCarriageToPortName,
                                                           TransportModeName = a.TransportModeName,
                                                           GrossWeightInKG = a.GrossWeightInKG,
+                                                          GrossWeightPerStorageDays = a.GrossWeightPerStorageDays,
                                                           GrossWeightPerTon = a.GrossWeightPerTon,
                                                           ChargeableWeightInKG = a.ChargeableWeightInKG,
                                                           ProfitInProfitCurrency = a.ProfitInProfitCurrency,
@@ -4809,6 +4820,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                                ToPortName = m.MainCarriageToPort.EnglishName,
                                                                TransportModeName = s.TransportMode.Name,
                                                                GrossWeightInKG = s.GrossWeightInKG,
+                                                               GrossWeightPerStorageDays = s.GrossWeightPerStorageDays,
                                                                GrossWeightPerTon = s.GrossWeightPerTon,
                                                                ChargeableWeightInKG = s.ChargeableWeightInKG,
                                                                ProfitInProfitCurrency = s.ProfitInProfitCurrency,
@@ -10885,6 +10897,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          FromPortCountry = m.MainCarriageFromPort.Country.Code,
                                                          FromPortName = m.MainCarriageFromPort.EnglishName,
                                                          GrossWeightInKG = s.GrossWeightInKG,
+                                                         GrossWeightPerStorageDays = s.GrossWeightPerStorageDays,
                                                          GrossWeightPerTon = s.GrossWeightPerTon,
                                                          House = s.House,
                                                          Id = s.Id,
@@ -11362,6 +11375,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                MoveTypeName = f.MoveTypeName,
                                CustomerName = f.CustomerName,
                                GrossWeightInKG = f.GrossWeightInKG,
+                               GrossWeightPerStorageDays = f.GrossWeightPerStorageDays,
                                GrossWeightPerTon = f.GrossWeightPerTon,
                                ShipmentLevelCode = f.ShipmentLevelCode,
                                ShipmentLevelName = f.ShipmentLevelName,
@@ -11575,6 +11589,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                NotInvoicedReceivablesAmount = f.NotInvoicedReceivablesAmount,
                                CreatedByPartner = f.CreatedByPartner,
                                FirstARInvoiceApprovalDate = f.FirstARInvoiceApprovalDate,
+                               MainCarriageFinalDestinationATA = f.MainCarriageFinalDestinationATA,
+                               MainCarriageFinalDestinationETA = f.MainCarriageFinalDestinationETA,
                            };
             return myResult;
         }
@@ -11712,6 +11728,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     MoveTypeName = f.MoveTypeName,
                     CustomerName = f.CustomerName,
                     GrossWeightInKG = f.GrossWeightInKG,
+                    GrossWeightPerStorageDays = f.GrossWeightPerStorageDays,
                     GrossWeightPerTon = f.GrossWeightPerTon,
                     ShipmentLevelCode = f.ShipmentLevelCode,
                     ShipmentLevelName = f.ShipmentLevelName,
@@ -11921,8 +11938,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     ARInvoices = f.ARInvoices,
                     NotInvoicedReceivablesAmount = f.NotInvoicedReceivablesAmount,
                     FirstARInvoiceApprovalDate = f.FirstARInvoiceApprovalDate,
-
                     CreatedByPartner= f.CreatedByPartner,
+                    MainCarriageFinalDestinationATA = f.MainCarriageFinalDestinationATA,
+                    MainCarriageFinalDestinationETA = f.MainCarriageFinalDestinationETA,
                 };
 
                 List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Shipment", tenant).ToList();
@@ -12052,6 +12070,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     MoveTypeName = f.MoveTypeName,
                     CustomerName = f.CustomerName,
                     GrossWeightInKG = f.GrossWeightInKG,
+                    GrossWeightPerStorageDays = f.GrossWeightPerStorageDays,
                     GrossWeightPerTon = f.GrossWeightPerTon,
                     ShipmentLevelCode = f.ShipmentLevelCode,
                     ShipmentLevelName = f.ShipmentLevelName,
@@ -12386,6 +12405,11 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         shipmentPM.SendUpdatesToAgentEnabled = CLoudData.SendUpdatesToAgentEnabled;
                         shipmentPM.DocsSentToAgent = CLoudData.DocsSentToAgent;
                         shipmentPM.ApprovedBy = CLoudData.ApprovedByUserName;
+                        shipmentPM.UserIdNumberXMLData = CLoudData.UserIdNumberXMLData;
+                        shipmentPM.UserIdNumberUpdateDate = CLoudData.UserIdNumberUpdateDate;
+                        shipmentPM.IsUserIDNumberRequired = CLoudData.IsUserIDNumberRequired;
+                        shipmentPM.UserIdNumber = CLoudData.UserIdNumber;
+
                     }
                     return shipmentPM;
                 }
@@ -12538,6 +12562,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          FromPortCountry = m.MainCarriageFromPort.Country.Code,
                                                          FromPortName = m.MainCarriageFromPort.EnglishName,
                                                          GrossWeightInKG = s.GrossWeightInKG,
+                                                         GrossWeightPerStorageDays = s.GrossWeightPerStorageDays,
                                                          GrossWeightPerTon = s.GrossWeightPerTon,
                                                          House = s.House,
                                                          Id = s.Id,

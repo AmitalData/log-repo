@@ -114,7 +114,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Queue Message More Details",
-			      				    Code =  "fe64",
+			      				    Code =  "d6ba",
 			      				    Name =  "QueueMessageMoreDetails",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Infrastructure",

@@ -119,6 +119,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			      				    Code =  "LLQG",
 			      				    Name =  "Logitude Leads",
 			      				    GenerateDomainService =  false,
+			      				    ClientModuleName =  "Infrastructure",
 			      				    NoTS =  false,
 			      				    HasMenuButtons =  false,
 			      				    AllowedForComputingPartners =  false,
@@ -135,6 +136,69 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
 	    {
 	         
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "SearchFields",
+					  						OldFieldName =  "SearchFields",
+					  						ObjectTableName =  "LogitudeLead",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  1000,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						Operator =  "Contains",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "SearchFields",
+					  						ListPropertyPath =  "SearchFields",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "LogitudeLead",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "SearchFields",
+					  						DefaultText =  "SearchFields",
+					  						FullLocalDefaultText =  "SearchFields",
+					  						ListFieldLable =  "SearchFieldsListLable",
+					  						ListLableDefaultText =  "SearchFields",
+					  						ListLocalDefaultText =  "SearchFields",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
@@ -1840,35 +1904,35 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllLogitudeLeadsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = LogitudeLeadTextCode_0.Id, NameTextCodeCode = LogitudeLeadTextCode_0.Code, Code = " All Logitude Leads",  QueryGroupCode = "LLQG", IndexOrder = 0, Tenant = 0, ObjectTableId = LogitudeLeadObjectTable.Id, QuerySection = "LogitudeLead", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = LogitudeLeadFeature_0.Id,FeatureUniqeCode= LogitudeLeadFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllLogitudeLeadsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = LogitudeLeadTextCode_0.Id, NameTextCodeCode = LogitudeLeadTextCode_0.Code, ObjectTableName = "LogitudeLead", Code = " All Logitude Leads",  QueryGroupCode = "LLQG", IndexOrder = 0, Tenant = 0, ObjectTableId = LogitudeLeadObjectTable.Id, QuerySection = "LogitudeLead", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = LogitudeLeadFeature_0.Id,FeatureUniqeCode= LogitudeLeadFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn AllLogitudeLeadsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeLeadsQuery.Id, IndexOrder = 0, ObjectFieldId = LogitudeLeadObjectFields.Where(d => d.FieldName == "ContactName" && d.ObjectTableId == LogitudeLeadObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = LogitudeLeadObjectFields.Where(d => d.FieldName == "ContactName" && d.ObjectTableId == LogitudeLeadObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllLogitudeLeadsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeLeadsQuery.Id,QueryCode = AllLogitudeLeadsQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = LogitudeLeadObjectFields.Where(d => d.FieldName == "ContactName" && d.ObjectTableId == LogitudeLeadObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = LogitudeLeadObjectFields.Where(d => d.FieldName == "ContactName" && d.ObjectTableId == LogitudeLeadObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllLogitudeLeadsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeLeadsQuery.Id, IndexOrder = 1, ObjectFieldId = LogitudeLeadObjectFields.Where(d => d.FieldName == "PhoneNumber" && d.ObjectTableId == LogitudeLeadObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = LogitudeLeadObjectFields.Where(d => d.FieldName == "PhoneNumber" && d.ObjectTableId == LogitudeLeadObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllLogitudeLeadsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeLeadsQuery.Id,QueryCode = AllLogitudeLeadsQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = LogitudeLeadObjectFields.Where(d => d.FieldName == "PhoneNumber" && d.ObjectTableId == LogitudeLeadObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = LogitudeLeadObjectFields.Where(d => d.FieldName == "PhoneNumber" && d.ObjectTableId == LogitudeLeadObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllLogitudeLeadsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeLeadsQuery.Id, IndexOrder = 2, ObjectFieldId = LogitudeLeadObjectFields.Where(d => d.FieldName == "CompanyName" && d.ObjectTableId == LogitudeLeadObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = LogitudeLeadObjectFields.Where(d => d.FieldName == "CompanyName" && d.ObjectTableId == LogitudeLeadObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllLogitudeLeadsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeLeadsQuery.Id,QueryCode = AllLogitudeLeadsQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = LogitudeLeadObjectFields.Where(d => d.FieldName == "CompanyName" && d.ObjectTableId == LogitudeLeadObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = LogitudeLeadObjectFields.Where(d => d.FieldName == "CompanyName" && d.ObjectTableId == LogitudeLeadObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllLogitudeLeadsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeLeadsQuery.Id, IndexOrder = 3, ObjectFieldId = LogitudeLeadObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == LogitudeLeadObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = LogitudeLeadObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == LogitudeLeadObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllLogitudeLeadsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeLeadsQuery.Id,QueryCode = AllLogitudeLeadsQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = LogitudeLeadObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == LogitudeLeadObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = LogitudeLeadObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == LogitudeLeadObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllLogitudeLeadsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeLeadsQuery.Id, IndexOrder = 4, ObjectFieldId = LogitudeLeadObjectFields.Where(d => d.FieldName == "NumberOfBranches" && d.ObjectTableId == LogitudeLeadObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = LogitudeLeadObjectFields.Where(d => d.FieldName == "NumberOfBranches" && d.ObjectTableId == LogitudeLeadObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllLogitudeLeadsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeLeadsQuery.Id,QueryCode = AllLogitudeLeadsQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = LogitudeLeadObjectFields.Where(d => d.FieldName == "NumberOfBranches" && d.ObjectTableId == LogitudeLeadObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = LogitudeLeadObjectFields.Where(d => d.FieldName == "NumberOfBranches" && d.ObjectTableId == LogitudeLeadObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllLogitudeLeadsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeLeadsQuery.Id, IndexOrder = 5, ObjectFieldId = LogitudeLeadObjectFields.Where(d => d.FieldName == "Email" && d.ObjectTableId == LogitudeLeadObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = LogitudeLeadObjectFields.Where(d => d.FieldName == "Email" && d.ObjectTableId == LogitudeLeadObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllLogitudeLeadsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeLeadsQuery.Id,QueryCode = AllLogitudeLeadsQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = LogitudeLeadObjectFields.Where(d => d.FieldName == "Email" && d.ObjectTableId == LogitudeLeadObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = LogitudeLeadObjectFields.Where(d => d.FieldName == "Email" && d.ObjectTableId == LogitudeLeadObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllLogitudeLeadsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeLeadsQuery.Id, IndexOrder = 6, ObjectFieldId = LogitudeLeadObjectFields.Where(d => d.FieldName == "NumberOfUsers" && d.ObjectTableId == LogitudeLeadObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = LogitudeLeadObjectFields.Where(d => d.FieldName == "NumberOfUsers" && d.ObjectTableId == LogitudeLeadObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllLogitudeLeadsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeLeadsQuery.Id,QueryCode = AllLogitudeLeadsQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = LogitudeLeadObjectFields.Where(d => d.FieldName == "NumberOfUsers" && d.ObjectTableId == LogitudeLeadObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = LogitudeLeadObjectFields.Where(d => d.FieldName == "NumberOfUsers" && d.ObjectTableId == LogitudeLeadObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllLogitudeLeadsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeLeadsQuery.Id, IndexOrder = 7, ObjectFieldId = LogitudeLeadObjectFields.Where(d => d.FieldName == "Comments" && d.ObjectTableId == LogitudeLeadObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = LogitudeLeadObjectFields.Where(d => d.FieldName == "Comments" && d.ObjectTableId == LogitudeLeadObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllLogitudeLeadsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeLeadsQuery.Id,QueryCode = AllLogitudeLeadsQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = LogitudeLeadObjectFields.Where(d => d.FieldName == "Comments" && d.ObjectTableId == LogitudeLeadObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = LogitudeLeadObjectFields.Where(d => d.FieldName == "Comments" && d.ObjectTableId == LogitudeLeadObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllLogitudeLeadsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeLeadsQuery.Id, IndexOrder = 8, ObjectFieldId = LogitudeLeadObjectFields.Where(d => d.FieldName == "RequestType" && d.ObjectTableId == LogitudeLeadObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = LogitudeLeadObjectFields.Where(d => d.FieldName == "RequestType" && d.ObjectTableId == LogitudeLeadObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllLogitudeLeadsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeLeadsQuery.Id,QueryCode = AllLogitudeLeadsQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = LogitudeLeadObjectFields.Where(d => d.FieldName == "RequestType" && d.ObjectTableId == LogitudeLeadObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = LogitudeLeadObjectFields.Where(d => d.FieldName == "RequestType" && d.ObjectTableId == LogitudeLeadObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllLogitudeLeadsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeLeadsQuery.Id, IndexOrder = 9, ObjectFieldId = LogitudeLeadObjectFields.Where(d => d.FieldName == "IsEmailVerified" && d.ObjectTableId == LogitudeLeadObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = LogitudeLeadObjectFields.Where(d => d.FieldName == "IsEmailVerified" && d.ObjectTableId == LogitudeLeadObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllLogitudeLeadsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeLeadsQuery.Id,QueryCode = AllLogitudeLeadsQuery.UniqueCode, IndexOrder = 9, ObjectFieldId = LogitudeLeadObjectFields.Where(d => d.FieldName == "IsEmailVerified" && d.ObjectTableId == LogitudeLeadObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = LogitudeLeadObjectFields.Where(d => d.FieldName == "IsEmailVerified" && d.ObjectTableId == LogitudeLeadObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllLogitudeLeadsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeLeadsQuery.Id, IndexOrder = 10, ObjectFieldId = LogitudeLeadObjectFields.Where(d => d.FieldName == "LastUpdateDate" && d.ObjectTableId == LogitudeLeadObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = LogitudeLeadObjectFields.Where(d => d.FieldName == "LastUpdateDate" && d.ObjectTableId == LogitudeLeadObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllLogitudeLeadsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeLeadsQuery.Id,QueryCode = AllLogitudeLeadsQuery.UniqueCode, IndexOrder = 10, ObjectFieldId = LogitudeLeadObjectFields.Where(d => d.FieldName == "LastUpdateDate" && d.ObjectTableId == LogitudeLeadObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = LogitudeLeadObjectFields.Where(d => d.FieldName == "LastUpdateDate" && d.ObjectTableId == LogitudeLeadObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllLogitudeLeadsQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeLeadsQuery.Id, IndexOrder = 11, ObjectFieldId = LogitudeLeadObjectFields.Where(d => d.FieldName == "IsSentToCustomer" && d.ObjectTableId == LogitudeLeadObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = LogitudeLeadObjectFields.Where(d => d.FieldName == "IsSentToCustomer" && d.ObjectTableId == LogitudeLeadObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllLogitudeLeadsQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeLeadsQuery.Id,QueryCode = AllLogitudeLeadsQuery.UniqueCode, IndexOrder = 11, ObjectFieldId = LogitudeLeadObjectFields.Where(d => d.FieldName == "IsSentToCustomer" && d.ObjectTableId == LogitudeLeadObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = LogitudeLeadObjectFields.Where(d => d.FieldName == "IsSentToCustomer" && d.ObjectTableId == LogitudeLeadObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllLogitudeLeadsQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeLeadsQuery.Id, IndexOrder = 12, ObjectFieldId = LogitudeLeadObjectFields.Where(d => d.FieldName == "StatusCode" && d.ObjectTableId == LogitudeLeadObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = LogitudeLeadObjectFields.Where(d => d.FieldName == "StatusCode" && d.ObjectTableId == LogitudeLeadObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllLogitudeLeadsQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeLeadsQuery.Id,QueryCode = AllLogitudeLeadsQuery.UniqueCode, IndexOrder = 12, ObjectFieldId = LogitudeLeadObjectFields.Where(d => d.FieldName == "StatusCode" && d.ObjectTableId == LogitudeLeadObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = LogitudeLeadObjectFields.Where(d => d.FieldName == "StatusCode" && d.ObjectTableId == LogitudeLeadObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllLogitudeLeadsQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeLeadsQuery.Id, IndexOrder = 13, ObjectFieldId = LogitudeLeadObjectFields.Where(d => d.FieldName == "Country" && d.ObjectTableId == LogitudeLeadObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = LogitudeLeadObjectFields.Where(d => d.FieldName == "Country" && d.ObjectTableId == LogitudeLeadObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllLogitudeLeadsQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeLeadsQuery.Id,QueryCode = AllLogitudeLeadsQuery.UniqueCode, IndexOrder = 13, ObjectFieldId = LogitudeLeadObjectFields.Where(d => d.FieldName == "Country" && d.ObjectTableId == LogitudeLeadObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = LogitudeLeadObjectFields.Where(d => d.FieldName == "Country" && d.ObjectTableId == LogitudeLeadObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
 	   
 	    }
 

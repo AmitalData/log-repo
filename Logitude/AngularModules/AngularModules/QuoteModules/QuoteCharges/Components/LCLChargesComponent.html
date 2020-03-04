@@ -59,28 +59,28 @@
                                 <logitude-edit-grid GridWidth="100%" [HeaderHeight]="35" GridHeight="100%" [ItemSource]="ItemsSource" (SelectedItemChanged)="OnRowSelected($event)" [SelectedRow]="SelectedRow">
 
                                     <!-- Charges Type -->
-                                    <log-column [width]="'150'" [header]="'QuoteCharge.CH.ChargesTypeId' | TextCodeTranslationPipe">
+                                    <log-column [width]="'150'" [header]="'QuoteCharge.CH.ChargesTypeIdListLable' | TextCodeTranslationPipe">
                                         <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
                                             {{item.ChargesTypeCodeName}}
                                         </log-cell-template>
                                     </log-column>
 
                                     <!-- Vendor -->
-                                    <log-column [width]="'150'" [header]="'QuoteCharge.CH.VendorId' | TextCodeTranslationPipe">
+                                    <log-column [width]="'150'" [header]="'QuoteCharge.CH.VendorIdListLable' | TextCodeTranslationPipe">
                                         <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
                                             {{item.VendorName}}
                                         </log-cell-template>
                                     </log-column>
 
                                     <!-- Measurement Code -->
-                                    <log-column [width]="'50'" [header]="'QuoteCharge.CH.CostMeasurementId' | TextCodeTranslationPipe" [Alignment]="'center'">
+                                    <log-column [width]="'50'" [header]="'QuoteCharge.CH.CostMeasurementIdListLable' | TextCodeTranslationPipe" [Alignment]="'center'">
                                         <log-cell-template template="let item" #logcelltemplate [Alignment]="'center'" [IsEnabled]="false">
                                             {{item.CostMeasurementCode}}
                                         </log-cell-template>
                                     </log-column>
 
                                     <!-- Currency Code -->
-                                    <log-column [width]="'40'" [header]="'QuoteCharge.CH.SaleCurrencyId' | TextCodeTranslationPipe" [Alignment]="'center'">
+                                    <log-column [width]="'40'" [header]="'QuoteCharge.CH.SaleCurrencyIdListLable' | TextCodeTranslationPipe" [Alignment]="'center'">
                                         <log-cell-template template="let item" #logcelltemplate [Alignment]="'center'" [IsEnabled]="false">
                                             {{item.CostCurrencyCode}}
                                         </log-cell-template>
@@ -131,8 +131,8 @@
                                             <div *ngIf="logcelltemplate.IsDisplayMode" class="MediaFillAbsolute">
                                                 <table>
                                                     <tr>
-                                                        <td style="width:16px;" *ngIf="item.IsChargeBySteps">
-                                                            <img style="width: 16px; height: 16px; float: left;" src="./Images/Icons/PriceBreak.png" title="Price Breaks" />
+                                                        <td style="width:16px;" *ngIf="item.HasCostPriceBreaks">
+                                                            <img style="width: 16px; height: 16px; float: left;" src="./Images/Icons/PriceBreak.png" [title]="item.CostPriceBreaksTooltip" />
                                                         </td>
 
                                                         <td>
@@ -157,57 +157,7 @@
                                         </log-cell-template>
                                     </log-column>
 
-                                    <!-- Cost Min Amount -->
-                                    <!--<log-column [width]="'100'">
-                                        <log-header-template template="let item">
-                                            <div class="GridHeaderCellTemplate">
-                                                <table>
-                                                    <tr>
-                                                        <td style="text-align: center;">
-                                                            <div style="font-size:11px;">{{CostMinAmountHeader[0]}}</div>
-                                                            <div style="font-size:11px;">{{CostMinAmountHeader[1]}}</div>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </div>
-                                        </log-header-template>
-
-                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEnabled_CostMinAmount">
-                                            <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: right;">
-                                                {{item.CostMinAmount | NumbersPipe:'N3'}}
-                                            </div>
-
-                                            <div *ngIf="logcelltemplate.IsEditMode">
-                                                <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'CostMinAmount'" [Text]="item.CostMinAmount" [DataContext]="item" [ObjectTableName]="item.ObjectTableName" [HideColumns]="true"></LogTextBox>
-                                            </div>
-                                        </log-cell-template>
-                                    </log-column>-->
-
-                                    <!-- Cost Max Amount -->
-                                    <!--<log-column [width]="'100'">
-                                        <log-header-template template="let item">
-                                            <div class="GridHeaderCellTemplate">
-                                                <table>
-                                                    <tr>
-                                                        <td style="text-align: center;">
-                                                            <div style="font-size:11px;">{{CostMaxAmountHeader[0]}}</div>
-                                                            <div style="font-size:11px;">{{CostMaxAmountHeader[1]}}</div>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </div>
-                                        </log-header-template>
-
-                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEnabled_CostMinAmount">
-                                            <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: right;">
-                                                {{item.CostMaxAmount | NumbersPipe:'N3'}}
-                                            </div>
-
-                                            <div *ngIf="logcelltemplate.IsEditMode">
-                                                <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'CostMaxAmount'" [Text]="item.CostMaxAmount" [DataContext]="item" [ObjectTableName]="item.ObjectTableName" [HideColumns]="true"></LogTextBox>
-                                            </div>
-                                        </log-cell-template>
-                                    </log-column>-->
+  
 
                                     <!-- Cost Amount -->
                                     <log-column [width]="'100'" *ngIf="IsAdhoc">
@@ -294,8 +244,8 @@
                                             <div *ngIf="logcelltemplate.IsDisplayMode" class="MediaFillAbsolute">
                                                 <table>
                                                     <tr>
-                                                        <td style="width:16px;" *ngIf="item.IsChargeBySteps">
-                                                            <img style="width: 16px; height: 16px; float: left;" src="./Images/Icons/PriceBreak.png" title="Price Breaks" />
+                                                        <td style="width:16px;" *ngIf="item.HasSalePriceBreaks">
+                                                            <img style="width: 16px; height: 16px; float: left;" src="./Images/Icons/PriceBreak.png" [title]="item.SalePriceBreaksTooltip" />
                                                         </td>
 
                                                         <td *ngIf="item.CellMarkupText && item.CostMeasurementId == item.SaleMeasurementId" style="width: 1px; color:#1B90CB; font-size:10px; font-style:italic; padding-left:5px;">
@@ -453,7 +403,7 @@
                                             <div class="GridHeaderCellTemplate">
                                                 <table>
                                                     <tr>
-                                                        <td>{{'QuoteCharge.CH.IsAllIn' | TextCodeTranslationPipe}}</td>
+                                                        <td>{{'QuoteCharge.CH.IsAllINListLable' | TextCodeTranslationPipe}}</td>
 
                                                         <td style="width:14px;">
                                                             <HelpIcon [IconSize]="14" [Header]="'QuoteCharge.F.IsAllIN' | TextCodeTranslationPipe" [Text]="'QuoteCharge.IsAllINHelpText' | TextCodeTranslationPipe"></HelpIcon>
@@ -590,7 +540,7 @@
                                                                         </tr>
 
                                                                         <tr style="height:22px;">
-                                                                            <td class="Label">{{'Quote.F.CostTotalAmount.Short' | TextCodeTranslationPipe}}:</td>
+                                                                            <td class="Label">{{'Quote.F.CostTotalAmountInLocalCurrency.Short' | TextCodeTranslationPipe}}:</td>
 
                                                                             <td>
                                                                                 <div></div>
@@ -606,7 +556,7 @@
                                                                         </tr>
 
                                                                         <tr style="height:22px;">
-                                                                            <td class="Label">{{'Quote.F.SaleTotalAmount.Short' | TextCodeTranslationPipe}}:</td>
+                                                                            <td class="Label">{{'Quote.O.Charges.Sale' | TextCodeTranslationPipe}}:</td>
 
                                                                             <td>
                                                                                 <div></div>
@@ -879,7 +829,7 @@
                                     </td>
                                 </tr>
 
-                                <tr style="height:25px;">
+                                <tr style="height:25px;" *ngIf="!IsRouteRate">
                                     <td>
                                         <LogLabel [ObjectFieldName]="'IsFixedPrice'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                     </td>

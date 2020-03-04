@@ -36,7 +36,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;OBL Type&quot;"
-  Code="&quot;a0d1&quot;"
+  Code="&quot;0005&quot;"
   Name="&quot;OBLType&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -330,12 +330,6 @@
       Name="&quot;OBL Required&quot;" />
   </Records>
   <DataContracts />
-  <AdditionalTextCodes>
-    <TextCode
-      Code="&quot;OBLType&quot;"
-      DefaultText="&quot;OBL Type&quot;"
-      TextCodeTypeCode="&quot;T&quot;"
-      IsSpellChecked="false" />
-  </AdditionalTextCodes>
+  <AdditionalTextCodes />
   <AdditionalFeatures />
 </entity>

@@ -78,7 +78,8 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
             }
 
             WarehouseEntryPackageQueryService warehouseEntryPackageQueryService = new WarehouseEntryPackageQueryService(tenant);
-            List<WarehouseEntryPackageItem> result = warehouseEntryPackageQueryService.GetWarehouseEntryPackageItemForInventoryReport(null, null,null, tenant, entityId);
+
+            List<WarehouseEntryPackageItem> result = warehouseEntryPackageQueryService.GetWarehouseEntryPackageItemForInventoryReport(new WarehouseEntryPackageArgs() { Tenant = tenant , ShipmentId = entityId});
 
             List<ShipmentInventoryDataProvider.InventoryGroup> finalResults = (from a in result
                                                                        group a by new { a.WarehouseName, a.WarehouseId, }

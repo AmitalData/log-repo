@@ -65,6 +65,7 @@
     <Compile Include="CloseTables\DetailsClassesGenerated\WarehouseReleaseStatusDetails.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\WarehouseEntryStatusStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\WarehouseReleaseStatusStruct.Generated.cs" />
+    <Compile Include="DataContracts\WarehouseEntryPackageArgs.cs" />
     <Compile Include="DataContracts\WarehouseEntryPackageItem.cs" />
     <Compile Include="EntityDataMappings\Generated\WarehouseEntryDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\WarehouseEntryPackageDataMapping.Generated.cs" />

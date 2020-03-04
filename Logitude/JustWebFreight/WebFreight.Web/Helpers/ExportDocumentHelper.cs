@@ -50,6 +50,7 @@ using Simplog.Global.Data.GlobalModel;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Logitude.BL.GlobalModel.EntityQueries;
 using Logitude.Server.Tools.Helpers;
+using WebFreight.Web.AccountingModel.Reports.Interest;
 
 namespace WebFreight.Web.Helpers
 {
@@ -510,6 +511,16 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
 
                     break;
 
+                case "ITDT":
+                    {
+                        InterestPrintService service = new InterestPrintService();
+                        InterestDataProvider InterestReportDP = service.LoadDataProvider(entityId, tenant);
+                        theT2 = System.DateTime.Now.Ticks;
+                        StiBusinessObject currentBusinessObject = new StiBusinessObject() { Category = "ITDT", Name = "InterestDataProvider", BusinessObjectValue = InterestReportDP };
+                        report = LoadandRender(defaulttemplate, currentBusinessObject, tenant);
+
+                    }
+                    break;
                 case "JRPR":
                     {
                         JournalPrintService service = new JournalPrintService();
@@ -654,6 +665,8 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                 case "CRCCB":
                 case "DESCH":
                 case "WESL":
+                case "SHCO":
+                case "ABOCO":
                     {
                         theT1 = System.DateTime.Now.Ticks;
                         ShippingDeclarationWebService shippingDeclarationWebService = new ShippingDeclarationWebService();
@@ -941,6 +954,7 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
 
                 case "OMBC":
                 case "785O":
+                case "INMA":
                     {
                         theT1 = System.DateTime.Now.Ticks;
                         ManifestWebService cmrwebService = new ManifestWebService();
@@ -1161,7 +1175,7 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                     {
                         theT1 = System.DateTime.Now.Ticks;
                         CrossDockEntryDataProviderHelper crossDockEntryDataProviderHelper = new CrossDockEntryDataProviderHelper();
-                        byte[] byteArray = crossDockEntryDataProviderHelper.LoadDataToCrossDockEntryDataProvider(entityId, tenant);
+                        byte[] byteArray = crossDockEntryDataProviderHelper.LoadDataToCrossDockEntryDataProvider(entityId, tenant, userId);
 
                         MemoryStream memorystream = new MemoryStream(byteArray);
                         XmlSerializer serializer = new XmlSerializer(typeof(CrossDockEntryDataProvider));
@@ -1251,7 +1265,19 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
 
                         report = LoadandRender(defaulttemplate, currentBusinessObject, tenant);
                         break;
-                    }                    
+                    }
+
+                case "WELB":
+                    {
+                        CrossDockEntryLabelDataProviderHelper crossDockEntryLabelDataProviderHelper = new CrossDockEntryLabelDataProviderHelper();
+                        byte[] byteArray = crossDockEntryLabelDataProviderHelper.LoadCrossDockEntryLabelDataProvider(entityId, tenant);
+                        MemoryStream memorystream = new MemoryStream(byteArray);
+                        XmlSerializer serializer = new XmlSerializer(typeof(List<CrossDockEntryDataProvider>));
+                        List<CrossDockEntryDataProvider> crossDockEntryDataProviderLists = (List<CrossDockEntryDataProvider>)serializer.Deserialize(memorystream);
+                        StiBusinessObject currentBusinessObject = new StiBusinessObject() { Category = "Cross Docks Entry Labels", Name = "CrossDockEntryDataProvider", BusinessObjectValue = crossDockEntryDataProviderLists };
+                        report = LoadandRender(defaulttemplate, currentBusinessObject, tenant);
+                    }
+                    break;
             }
 
             return report;

@@ -3085,6 +3085,66 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "StateName",
+					  						OldFieldName =  "StateName",
+					  						ObjectTableName =  "ShippingLine",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  40,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  40,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "StateName",
+					  						ListPropertyPath =  "StateName",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "ShippingLine",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "StateName",
+					  						DefaultText =  "State",
+					  						ListFieldLable =  "StateNameListLable",
+					  						ListLableDefaultText =  "State",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
@@ -3106,27 +3166,27 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query ShippinglinesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShippingLineTextCode_0.Id, NameTextCodeCode = ShippingLineTextCode_0.Code, Code = "Shipping lines",  QueryGroupCode = "SHLN", IndexOrder = 0, Tenant = 0, ObjectTableId = ShippingLineObjectTable.Id, QuerySection = "ShippingLine", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShippingLineFeature_0.Id,FeatureUniqeCode= ShippingLineFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query ShippinglinesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShippingLineTextCode_0.Id, NameTextCodeCode = ShippingLineTextCode_0.Code, ObjectTableName = "ShippingLine", Code = "Shipping lines",  QueryGroupCode = "SHLN", IndexOrder = 0, Tenant = 0, ObjectTableId = ShippingLineObjectTable.Id, QuerySection = "ShippingLine", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShippingLineFeature_0.Id,FeatureUniqeCode= ShippingLineFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn ShippinglinesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShippinglinesQuery.Id, IndexOrder = 0, ObjectFieldId = ShippingLineObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == ShippingLineObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ShippingLineObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == ShippingLineObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ShippinglinesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShippinglinesQuery.Id,QueryCode = ShippinglinesQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = ShippingLineObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == ShippingLineObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ShippingLineObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == ShippingLineObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ShippinglinesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShippinglinesQuery.Id, IndexOrder = 1, ObjectFieldId = ShippingLineObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == ShippingLineObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ShippingLineObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == ShippingLineObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ShippinglinesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShippinglinesQuery.Id,QueryCode = ShippinglinesQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = ShippingLineObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == ShippingLineObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ShippingLineObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == ShippingLineObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ShippinglinesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShippinglinesQuery.Id, IndexOrder = 2, ObjectFieldId = ShippingLineObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == ShippingLineObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ShippingLineObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == ShippingLineObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ShippinglinesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShippinglinesQuery.Id,QueryCode = ShippinglinesQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = ShippingLineObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == ShippingLineObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ShippingLineObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == ShippingLineObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ShippinglinesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShippinglinesQuery.Id, IndexOrder = 3, ObjectFieldId = ShippingLineObjectFields.Where(d => d.FieldName == "ShippingAgentEnglishName" && d.ObjectTableId == ShippingLineObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ShippingLineObjectFields.Where(d => d.FieldName == "ShippingAgentEnglishName" && d.ObjectTableId == ShippingLineObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ShippinglinesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShippinglinesQuery.Id,QueryCode = ShippinglinesQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = ShippingLineObjectFields.Where(d => d.FieldName == "ShippingAgentEnglishName" && d.ObjectTableId == ShippingLineObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ShippingLineObjectFields.Where(d => d.FieldName == "ShippingAgentEnglishName" && d.ObjectTableId == ShippingLineObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ShippinglinesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShippinglinesQuery.Id, IndexOrder = 4, ObjectFieldId = ShippingLineObjectFields.Where(d => d.FieldName == "ReceivablesAccountingCard" && d.ObjectTableId == ShippingLineObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ShippingLineObjectFields.Where(d => d.FieldName == "ReceivablesAccountingCard" && d.ObjectTableId == ShippingLineObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ShippinglinesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShippinglinesQuery.Id,QueryCode = ShippinglinesQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = ShippingLineObjectFields.Where(d => d.FieldName == "ReceivablesAccountingCard" && d.ObjectTableId == ShippingLineObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ShippingLineObjectFields.Where(d => d.FieldName == "ReceivablesAccountingCard" && d.ObjectTableId == ShippingLineObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ShippinglinesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShippinglinesQuery.Id, IndexOrder = 5, ObjectFieldId = ShippingLineObjectFields.Where(d => d.FieldName == "AddedManually" && d.ObjectTableId == ShippingLineObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ShippingLineObjectFields.Where(d => d.FieldName == "AddedManually" && d.ObjectTableId == ShippingLineObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ShippinglinesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShippinglinesQuery.Id,QueryCode = ShippinglinesQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = ShippingLineObjectFields.Where(d => d.FieldName == "AddedManually" && d.ObjectTableId == ShippingLineObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ShippingLineObjectFields.Where(d => d.FieldName == "AddedManually" && d.ObjectTableId == ShippingLineObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ShippinglinesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShippinglinesQuery.Id, IndexOrder = 6, ObjectFieldId = ShippingLineObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == ShippingLineObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ShippingLineObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == ShippingLineObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ShippinglinesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShippinglinesQuery.Id,QueryCode = ShippinglinesQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = ShippingLineObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == ShippingLineObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ShippingLineObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == ShippingLineObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ShippinglinesQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShippinglinesQuery.Id, IndexOrder = 7, ObjectFieldId = ShippingLineObjectFields.Where(d => d.FieldName == "OurCreditNumber" && d.ObjectTableId == ShippingLineObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ShippingLineObjectFields.Where(d => d.FieldName == "OurCreditNumber" && d.ObjectTableId == ShippingLineObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ShippinglinesQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShippinglinesQuery.Id,QueryCode = ShippinglinesQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = ShippingLineObjectFields.Where(d => d.FieldName == "OurCreditNumber" && d.ObjectTableId == ShippingLineObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ShippingLineObjectFields.Where(d => d.FieldName == "OurCreditNumber" && d.ObjectTableId == ShippingLineObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ShippinglinesQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShippinglinesQuery.Id, IndexOrder = 8, ObjectFieldId = ShippingLineObjectFields.Where(d => d.FieldName == "VatNumber" && d.ObjectTableId == ShippingLineObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ShippingLineObjectFields.Where(d => d.FieldName == "VatNumber" && d.ObjectTableId == ShippingLineObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ShippinglinesQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShippinglinesQuery.Id,QueryCode = ShippinglinesQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = ShippingLineObjectFields.Where(d => d.FieldName == "VatNumber" && d.ObjectTableId == ShippingLineObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ShippingLineObjectFields.Where(d => d.FieldName == "VatNumber" && d.ObjectTableId == ShippingLineObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ShippinglinesQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShippinglinesQuery.Id, IndexOrder = 9, ObjectFieldId = ShippingLineObjectFields.Where(d => d.FieldName == "Remark" && d.ObjectTableId == ShippingLineObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ShippingLineObjectFields.Where(d => d.FieldName == "Remark" && d.ObjectTableId == ShippingLineObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ShippinglinesQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShippinglinesQuery.Id,QueryCode = ShippinglinesQuery.UniqueCode, IndexOrder = 9, ObjectFieldId = ShippingLineObjectFields.Where(d => d.FieldName == "Remark" && d.ObjectTableId == ShippingLineObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ShippingLineObjectFields.Where(d => d.FieldName == "Remark" && d.ObjectTableId == ShippingLineObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 	   
 	    }
 
@@ -3239,7 +3299,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
  
                  
 			   TextCode ShippingLineAreasTextCode_TH6 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShippingLine.TH.Areas", DefaultText = "Areas",LocalDefaultText = null, ObjectTableId = ShippingLineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature ShippingLineAreasFeature_TH6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ShippingLine.Tab.Areas", ObjectTableId = ShippingLineObjectTable.Id, Tenant = 0, NameTextCodeCode = "ShippingLineFeatures.SLAR", NameTextCodeDefaultText = "Areas", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature ShippingLineAreasFeature_TH6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ShippingLine.Tab.Areas", ObjectTableId = ShippingLineObjectTable.Id, Tenant = 0, NameTextCodeCode = "ShippingLineFeatures.SLAR", NameTextCodeDefaultText = "Areas", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
  
                  
 			   TextCode ShippingLineDocsInTextCode_TH7 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShippingLine.TH.DocsIn", DefaultText = "Docs In",LocalDefaultText = null, ObjectTableId = ShippingLineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
@@ -3355,7 +3415,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    {  
 		   FeatureRepository featureRepository = new FeatureRepository(0); 
 		   //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
-		   ObjectTable ShippingLineObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ShippingLine" && d.Tenant == 0).FirstOrDefault(); 			   Feature ShippingLineFeature_MB00 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Disconnect", ObjectTableId = ShippingLineObjectTable.Id, Tenant = 0, NameTextCodeCode = "ShippingLine.Features.DisconnectGLAccount", NameTextCodeDefaultText = "Disconnect GLAccount", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+		   ObjectTable ShippingLineObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ShippingLine" && d.Tenant == 0).FirstOrDefault(); 			   Feature ShippingLineFeature_MB00 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Disconnect", ObjectTableId = ShippingLineObjectTable.Id, Tenant = 0, NameTextCodeCode = "ShippingLine.Features.DisconnectGLAccount", NameTextCodeDefaultText = "Disconnect GLAccount", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
               
 
 		   TextCodeRepository.SubmitChanges();
@@ -3406,15 +3466,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-
-		   		   //--------------> Additional TextCodes <--------------\\
-
- 		   ObjectTable ShippingLineObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ShippingLine" && d.Tenant == 0).FirstOrDefault(); 
-
- 		   TextCode ShippingLineTextCode_ShippingLineTipGeneral = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShippingLine.Tip.General", DefaultText = " - Shipping lines are listed  in this pane(%L) - To add a new shipping line to your company press the 'new' button(%L)- To import a shipping line to your company press the 'add' button(%L)  ",LocalDefaultText = null, ObjectTableId = ShippingLineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TIP", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
-   
+	    {     
 	    
 }
 

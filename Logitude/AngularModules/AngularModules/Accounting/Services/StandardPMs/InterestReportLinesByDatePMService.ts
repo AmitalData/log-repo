@@ -180,7 +180,7 @@ export class InterestReportLinesByDatePMService {
          
         if (!entityPM) {
             
-            entityPM = new InterestReportLinesByDatePM();
+            entityPM = new InterestReportLinesByDatePM(null);
         }
 
 		var customFields: Array<string> = [];
@@ -245,7 +245,7 @@ export class InterestReportLinesByDatePMService {
 
 	  public GetNewEntityPM() {		 
 		    var entityPM: InterestReportLinesByDatePM;
-			entityPM = new InterestReportLinesByDatePM();
+          entityPM = new InterestReportLinesByDatePM(null);
 			entityPM.Tenant = InfraSettings.TenantPM.Id;
 			return entityPM;
     }

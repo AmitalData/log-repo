@@ -1,23 +1,58 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Table Name="CustomerAdditionalServices" Schema="dbo" DBType="Main">
-  <Column Name="CustomerId" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="CustomerAdditionalServices"
+  Schema="dbo"
+  DBType="Main">
+  <Column
+    Name="CustomerId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="AdditionalServiceId" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
+  <Column
+    Name="AdditionalServiceId"
+    Type="varchar"
+    Size="15"
+    DefaultValue="''">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="Potential" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Potential"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="Notes" Type="nvarchar" Size="500">
-    <Constraints Nullable="true" />
+  <Column
+    Name="Notes"
+    Type="nvarchar"
+    Size="500">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="NotesRightToLeft" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="NotesRightToLeft"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Relation ForeignKeyColumn="CustomerId" ReferencedTable="Customers" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="AdditionalServiceId" ReferencedTable="AdditionalServices" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="CustomerId"
+    ReferencedTable="Customers"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="AdditionalServiceId"
+    ReferencedTable="AdditionalServices"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
 </Table>

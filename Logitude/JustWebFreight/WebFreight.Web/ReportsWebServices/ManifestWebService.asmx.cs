@@ -40,6 +40,10 @@ namespace WebFreight.Web.ReportsWebServices
     // [System.Web.Script.Services.ScriptService]
     public class ManifestWebService : System.Web.Services.WebService
     {
+        ShipmentPM master;
+        ShipmentPackageQuery packagesQuery;
+        int tenant;
+
         [WebMethod]
         public byte[] GetManifestData(string masterId, int tenant)
         {
@@ -85,12 +89,12 @@ namespace WebFreight.Web.ReportsWebServices
             ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
             ShipmentRepository shipmentRepository = new ShipmentRepository(shipmentsContext);
             ShipmentQuery shipmentQuery = new ShipmentQuery(shipmentRepository);
-            ShipmentPM master = shipmentQuery.GetSinglePM(masterId, tenant);
+            master = shipmentQuery.GetSinglePM(masterId, tenant);
             PortRepository portRepository = new PortRepository(tenant);
             CustomFieldResolver customFieldResolver = new CustomFieldResolver();
             ShipmentAssemblyRepository shipmentAssemblyRepository = new ShipmentAssemblyRepository(shipmentsContext);
             ShipmentAssemblyQuery shipmentAssemblyQuery = new ShipmentAssemblyQuery(shipmentAssemblyRepository);
-
+            this.tenant = tenant;
             if (master != null)
             {
                 CardQuery cardQuery = new CardQuery(tenant);
@@ -98,7 +102,7 @@ namespace WebFreight.Web.ReportsWebServices
                 AddressRepository addressRepository = new AddressRepository(tenant);
                 DocumentTypeCustomFieldRepository documentTypeCustomFieldsRepository = new DocumentTypeCustomFieldRepository(tenant);
                 FormCustomFieldRepository formCustomFieldRepository = new FormCustomFieldRepository(tenant);
-                ShipmentPackageQuery packagesQuery = new ShipmentPackageQuery(tenant);
+                packagesQuery = new ShipmentPackageQuery(tenant);
                 IncotermQuery incotermQuery = new IncotermQuery(tenant);
                 WebServiceHelper myServiceHelper = new WebServiceHelper(tenant);
                 CustomerQuery customerQuery = new CustomerQuery(tenant);
@@ -117,6 +121,9 @@ namespace WebFreight.Web.ReportsWebServices
                 manifestDataProvider.OpenPayablesInProfitCurrency = master.OpenPayablesInProfitCurrency;
                 manifestDataProvider.DocumentsClosingDate = master.DocumentsClosingDate;
                 manifestDataProvider.AWBHandlingInformation = master.AWBHandlingInformation;
+                manifestDataProvider.FreightPC = master.FreightPrepaidCollectId;
+                manifestDataProvider.DescriptionOfGoods = BuildDescriptionOfGoods();
+                manifestDataProvider.ChargeableWeight = master.ChargeableWeight != null ? master.ChargeableWeight != 0 ? (String.Format("{0:#,0.00}", master.ChargeableWeight) + " " + (master.ChargeableWeightUnitCode != null ? master.ChargeableWeightUnitCode : "")) : "" : "";
 
                 if (master.BranchId != null)
                 {
@@ -1403,6 +1410,32 @@ namespace WebFreight.Web.ReportsWebServices
 
             return manifestDataProvider;
             #endregion
+        }
+
+        private string BuildDescriptionOfGoods()
+        {
+            List<ShipmentPackagePM> shipmentPackagesList = GetPackagesList();
+            StringBuilder strGoods = new StringBuilder();
+            strGoods.Append(master.DescriptionOfGoods != null ? master.DescriptionOfGoods : "");
+
+            if (master.ShipmentTypeName == "FCL" || master.ShipmentTypeName == "LCL")
+            {
+                strGoods.Append(Environment.NewLine);
+                strGoods.Append(master.ShipmentTypeName);
+                strGoods.Append(Environment.NewLine);
+
+                for (int i = 0; i < shipmentPackagesList.Count; i++)
+                {
+                    strGoods.Append(shipmentPackagesList[i].ContainerNumber != null ? "CNT " + shipmentPackagesList[i].ContainerNumber : "");
+                    strGoods.Append(Environment.NewLine);
+                }
+            }
+            return strGoods.ToString();
+        }
+
+        private List<ShipmentPackagePM> GetPackagesList()
+        {
+            return packagesQuery.GetShipmentPackages(master.Id, master.ShipmentNumber, tenant);
         }
 
         private void GetOtherCharges(string shipmentId, int tenant, ref double totalPrepaidString, ref double totalCollectString) //test

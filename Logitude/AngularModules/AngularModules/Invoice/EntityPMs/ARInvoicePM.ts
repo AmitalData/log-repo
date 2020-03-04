@@ -1027,6 +1027,11 @@ export class ARInvoicePM {
     public set CreatedByPartner(newValue: string) { if (this.createdByPartner != newValue) { this.createdByPartner = newValue; this.MarkAsDirty("CreatedByPartner"); } }
        
 	 
+    private billToGLAccountId: string;
+    public get BillToGLAccountId() { return this.billToGLAccountId; }
+    public set BillToGLAccountId(newValue: string) { if (this.billToGLAccountId != newValue) { this.billToGLAccountId = newValue; this.MarkAsDirty("BillToGLAccountId"); } }
+       
+	 
 
     public OldEntityPM: ARInvoicePM;
 		

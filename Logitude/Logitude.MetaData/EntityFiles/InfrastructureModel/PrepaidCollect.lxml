@@ -38,7 +38,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Prepaid Collect&quot;"
-  Code="&quot;3d84&quot;"
+  Code="&quot;4d08&quot;"
   Name="&quot;PrepaidCollect&quot;"
   CloseTableCode="&quot;Id&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -447,6 +447,12 @@
         IsCompositKey="false" />
     </DataContract>
   </DataContracts>
-  <AdditionalTextCodes />
+  <AdditionalTextCodes>
+    <TextCode
+      Code="&quot;PrepaidCollect.H.PrepaidCollectHelpText&quot;"
+      DefaultText="&quot;Default payment method for freight and other charges, in direct and consolidation (Master) shipments, for export and import. P-Prepaid: by sender at origin. C-Collect: by receiver at destination.&quot;"
+      TextCodeTypeCode="&quot;H&quot;"
+      IsSpellChecked="false" />
+  </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

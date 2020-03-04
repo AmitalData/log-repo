@@ -3,10 +3,8 @@ import {BaseComponent} from '../../../../../Infrastructure/Components/LogitudeCo
 import {EntityArgs} from '../../../../../Infrastructure/DataContracts/EntityArgs';
 import {TicketPM} from '../../../../../CRM/EntityPMs/TicketPM';
 import {TicketMainTabComponent} from '../MainTab/TicketMainTabComponent';
-import {TextCodeTranslationPipe} from '../../../../../Controls/Pipes/TextCodeTranslationPipe';
 import {UserList} from '../../../../../Common/EntityLists/UserList';
 import {UserListService} from '../../../../../Common/Services/StandardLists/UserListService';
-import {CardList} from '../../../../../Common/EntityLists/CardList';
 import {CardListService} from '../../../../../Common/Services/StandardLists/CardListService';
 import {TicketClassificationList} from '../../../../../CRM/EntityLists/TicketClassificationList';
 import {TicketClassificationListService} from '../../../../../CRM/Services/StandardLists/TicketClassificationListService';
@@ -18,17 +16,16 @@ import {CRMDomainService} from '../../../../../CRM/Services/CRMDomainService';
 import {LogitudeWindow} from '../../../../../Controls/Windows/LogitudeWindow';
 import {ShipmentList} from '../../../../../Shipment/EntityLists/ShipmentList';
 import {CRMTool} from '../../../../../CRM/Tools';
-import {FeatureLocator} from '../../../../../Infrastructure/Utilities/FeatureLocator';
 import {TicketSeverityList} from '../../../../../CRM/EntityLists/TicketSeverityList';
 import {TicketSeverityListService} from '../../../../../CRM/Services/StandardLists/TicketSeverityListService';
 import {ContactList} from '../../../../../Common/EntityLists/ContactList';
 import {ContactListService} from '../../../../../Common/Services/StandardLists/ContactListService';
-import {ContactInputTemplateArgs} from '../../../../../CommonModules/CommonPartners/Components/Templates/ContactInputTemplate';
 import {TextCodeTranslator} from '../../../../../Infrastructure/Utilities/TextCodeTranslator'; 
 import {ContactItemClass} from '../../../../../CommonModules/CommonPartners/Components/EditTabs/ContactsTabComponent';
 import {ContactPMService} from '../../../../../Common/Services/StandardPMs/ContactPMService';
 import {CachedDataManager} from '../../../../../Infrastructure/Utilities/CachedDataManager';
-import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService';
+import { EntityResourceService } from '../../../../../Infrastructure/Services/EntityResourceService';
+import { NewQuoteComponentArgs } from '../../../../../Quote/Args';
 declare var window: any;
 
 @Component({
@@ -599,6 +596,10 @@ export class DetailsTabComponent extends BaseComponent implements AfterViewInit 
         var windowTitle = "New Quote";
         this._entityResourceService.getEntityResourceByTableName("Quote", 0).subscribe(response => {
             var logWindow = new LogitudeWindow();
+            var args = new NewQuoteComponentArgs();
+            args.IsCreatedFromTicket = true;
+            args.TicketCreateDate = this.EntityPM.CreateDate;
+            logWindow.WindowArgs = args;
             logWindow.Width = 960;
             logWindow.Height = 570;
             logWindow.Title = windowTitle;

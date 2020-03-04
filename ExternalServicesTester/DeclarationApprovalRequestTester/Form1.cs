@@ -1,4 +1,5 @@
 ﻿using DeclarationApprovalRequestTester.AccountingPartnerServiceReference;
+using DeclarationApprovalRequestTester.UserIDNumberRequestServiceReference;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -43,6 +44,44 @@ namespace DeclarationApprovalRequestTester
             {
                 SendAccountingPartner();
             }
+            else if (tabControl1.SelectedTab.Name == "tabUserIDNumberRequest")
+            {
+                if (string.IsNullOrEmpty(txtTenant.Text) || string.IsNullOrEmpty(txtForwarderShipmentNumber.Text))
+                {
+                    MessageBox.Show("Enter Tenant # and Forwarder Shipment #");
+                    return;
+                }
+                UserIdNumberRequestPM myPM = new UserIdNumberRequestPM();
+                int Tenant = 0;//
+                int.TryParse(txtTenant.Text, out Tenant);
+                myPM.Tenant = Tenant;
+                myPM.ForwarderShipmentNumber = txtForwarderShipmentNumber.Text;
+                myPM.CustomerAddress = txtCustomerAddress.Text;
+                myPM.CustomerName = txtCustomerName.Text;
+                myPM.DeclarationNumber = txtDeclarationNumber.Text;
+                myPM.Hawb = txtHawb.Text;
+                myPM.GoodsDescritpion = txtGoodsDescritpion.Text;
+                myPM.Master = txtMaster.Text;
+                myPM.Quantity = txtQuantity.Text;
+                myPM.SenderDetails = txtSenderDetails.Text;
+                myPM.ShipmentValueInNIS = txtShipmentValueInNIS.Text;
+                myPM.Weight = txtWeight.Text;
+                UserIDNumberRequestServiceReference.UserIDNumberRequestWcfServiceClient MyUserIdNumberRequestClient = new UserIDNumberRequestServiceReference.UserIDNumberRequestWcfServiceClient();
+                using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)MyUserIdNumberRequestClient.InnerChannel))
+                {
+                    System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", Token);
+                    var response = MyUserIdNumberRequestClient.RequestUserIDNumber(myPM);
+                    //var response = MyAccountingPartnerClient.Upsert(AccountingPartnerPM, false);
+                    if (response.HasError)
+                    {
+                        MessageBox.Show(response.ErrorMessage, "Error");
+                    }
+                    else
+                    {
+                        MessageBox.Show("UserIdNumber Requested ", "Sucssess");
+                    }
+                }
+            }
 
         }
 
@@ -79,7 +118,7 @@ namespace DeclarationApprovalRequestTester
             string DeclarationXmlData = txtDeclarationXmlData.Text;
             DeclarationApprovalRequestServiceReference.DeclarationApprovalRequestPM DeclarationApprovalRequestPM = new DeclarationApprovalRequestServiceReference.DeclarationApprovalRequestPM();
             DeclarationApprovalRequestPM.Tenant = Tenant;
-            DeclarationApprovalRequestPM.ForwarderShipmentNumber = ShipmentNumber;
+            DeclarationApprovalRequestPM.ShipmentNumber = ShipmentNumber;
             DeclarationApprovalRequestPM.DeclarationXmlData = DeclarationXmlData;
 
             DeclarationApprovalRequestServiceReference.DeclarationApprovalRequestWcfServiceClient MyDeclarationApprovalClient = new DeclarationApprovalRequestServiceReference.DeclarationApprovalRequestWcfServiceClient();

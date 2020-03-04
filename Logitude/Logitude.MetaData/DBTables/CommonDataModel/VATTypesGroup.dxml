@@ -1,14 +1,38 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Table Name="VATTypesGroups" Schema="dbo" DBType="Main">
-  <Column Name="GroupVATTypeId" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="VATTypesGroups"
+  Schema="dbo"
+  DBType="Main">
+  <Column
+    Name="GroupVATTypeId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="SingleVATTypeId" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
+  <Column
+    Name="SingleVATTypeId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Relation ForeignKeyColumn="GroupVATTypeId" ReferencedTable="VatTypes" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="SingleVATTypeId" ReferencedTable="VatTypes" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="GroupVATTypeId"
+    ReferencedTable="VatTypes"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="SingleVATTypeId"
+    ReferencedTable="VatTypes"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
 </Table>

@@ -1,0 +1,152 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="InterestReportLinesByDates"
+  Schema="dbo"
+  DBType="Main">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="InterestReportId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="FromDate"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ToDate"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="TotalInterestDays"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="TotalAmount"
+    Type="decimal"
+    Precision="18"
+    Scale="2">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="AccumulatedAmount"
+    Type="decimal"
+    Precision="18"
+    Scale="2">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="StandardInterestPercentage"
+    Type="decimal"
+    Precision="4"
+    Scale="2">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ExceptionalInterestPercentage"
+    Type="decimal"
+    Precision="4"
+    Scale="2">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="CreditInterestPercentage"
+    Type="decimal"
+    Precision="4"
+    Scale="2">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="StandardInterestAmount"
+    Type="decimal"
+    Precision="18"
+    Scale="2">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ExceptionalInterestAmount"
+    Type="decimal"
+    Precision="18"
+    Scale="2">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="CreditInterestAmount"
+    Type="decimal"
+    Precision="18"
+    Scale="2">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="CalculatedStandInterestAmount"
+    Type="decimal"
+    Precision="20"
+    Scale="4">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="CalculatedExcepInterestAmount"
+    Type="decimal"
+    Precision="20"
+    Scale="4">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="CalculatedCreditInterestAmount"
+    Type="decimal"
+    Precision="20"
+    Scale="4">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="CalculationDetails"
+    Type="nvarchar"
+    Size="256">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="LineNumber"
+    Type="int"
+    DefaultValue="0">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Relation
+    ForeignKeyColumn="InterestReportId"
+    ReferencedTable="InterestReports"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+</Table>

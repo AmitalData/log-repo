@@ -205,7 +205,7 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
 
         logWindow.WindowArgs = windowArgs;
         logWindow.Width = 620;
-        logWindow.Height = 400;
+        logWindow.Height = 450;
         logWindow.Title = TextCodeTranslator.Translate("QuoteTemplate.S.General"); 
         logWindow.Show("./QuoteModules/QuoteTemplates/Components/QuoteTemplateGeneralSetting");
 
@@ -1010,6 +1010,7 @@ export class QuoteTemplateSectionViewModel {
 
         else if (sectionTypeCode == "PB") {
             textCode = "QuoteTemplate.B.PageBreak";
+            textCodeToolTip = null;//To avoid alert missing textcode
         }
 
         this.DisplayName = TextCodeTranslator.Translate(textCode);

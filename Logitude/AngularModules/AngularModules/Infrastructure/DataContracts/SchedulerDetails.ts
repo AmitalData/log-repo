@@ -1,12 +1,14 @@
 
 
 import {Injectable} from '@angular/core';
+import { QueryFilterItem } from '../../Report/Components/Filters/QueryFilterItem';
 
 @Injectable()
 
 export class SchedulerDetails {
 
     public FTPDetails: FTPSchedulerDetails;
+    public ReportDetails: ReportSchedulerDetails;
 
 }
 
@@ -25,4 +27,9 @@ export class FTPSchedulerDetails {
 
 }
 
+export class ReportSchedulerDetails {
+    public Recepients: string;
+    public ReportTemplateId: string;
+    public ReportFilterItems: Array<QueryFilterItem>;
+}
 

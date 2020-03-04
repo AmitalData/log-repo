@@ -1,16 +1,42 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Table Name="CustomerAccountManagerByProducts" Schema="dbo" DBType="Main">
-  <Column Name="ProductTypeCode" Type="varchar" Size="2">
-    <Constraints PrimaryKey="true" Nullable="false" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="CustomerAccountManagerByProducts"
+  Schema="dbo"
+  DBType="Main">
+  <Column
+    Name="ProductTypeCode"
+    Type="varchar"
+    Size="2">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="CustomerId" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
+  <Column
+    Name="CustomerId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="AccountManagerId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="AccountManagerId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Relation ForeignKeyColumn="AccountManagerId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="AccountManagerId"
+    ReferencedTable="Users"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Index
+    Columns="Tenant,CustomerId" />
 </Table>

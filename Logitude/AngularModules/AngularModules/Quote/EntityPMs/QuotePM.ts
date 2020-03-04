@@ -1273,6 +1273,11 @@ export class QuotePM {
     public set Field20(newValue: CustomFieldClass) {  this.field20 = newValue; this.MarkAsDirty("Field20");  }
        
 	 
+    private countryForStatisticsId: string;
+    public get CountryForStatisticsId() { return this.countryForStatisticsId; }
+    public set CountryForStatisticsId(newValue: string) { if (this.countryForStatisticsId != newValue) { this.countryForStatisticsId = newValue; this.MarkAsDirty("CountryForStatisticsId"); } }
+       
+	 
      
 	private quoteCharges: QuoteChargePM[];
     get  QuoteCharges() {
@@ -1543,7 +1548,42 @@ export class QuotePM {
         }
     }
 	    //public TotalVATs: Array<QuoteTotalVATPMPM>= [];
- 
+     private requestDate: Date;
+    public get RequestDate() { return this.requestDate; }
+    public set RequestDate(newValue: Date) { if (this.requestDate != newValue) { this.requestDate = newValue; this.MarkAsDirty("RequestDate"); } }
+       
+	 
+    private isCreatedFromTicket: boolean;
+    public get IsCreatedFromTicket() { return this.isCreatedFromTicket; }
+    public set IsCreatedFromTicket(newValue: boolean) { if (this.isCreatedFromTicket != newValue) { this.isCreatedFromTicket = newValue; this.MarkAsDirty("IsCreatedFromTicket"); } }
+       
+	 
+    private ticketCreateDate: Date;
+    public get TicketCreateDate() { return this.ticketCreateDate; }
+    public set TicketCreateDate(newValue: Date) { if (this.ticketCreateDate != newValue) { this.ticketCreateDate = newValue; this.MarkAsDirty("TicketCreateDate"); } }
+       
+	 
+    private estimatedProfitInLocal: number;
+    public get EstimatedProfitInLocal() { return this.estimatedProfitInLocal; }
+    public set EstimatedProfitInLocal(newValue: number) { if (this.estimatedProfitInLocal != newValue) { this.estimatedProfitInLocal = newValue; this.MarkAsDirty("EstimatedProfitInLocal"); } }
+       
+	 
+    private estimatedProfitInProfit: number;
+    public get EstimatedProfitInProfit() { return this.estimatedProfitInProfit; }
+    public set EstimatedProfitInProfit(newValue: number) { if (this.estimatedProfitInProfit != newValue) { this.estimatedProfitInProfit = newValue; this.MarkAsDirty("EstimatedProfitInProfit"); } }
+       
+	 
+    private profitCurrencyId: string;
+    public get ProfitCurrencyId() { return this.profitCurrencyId; }
+    public set ProfitCurrencyId(newValue: string) { if (this.profitCurrencyId != newValue) { this.profitCurrencyId = newValue; this.MarkAsDirty("ProfitCurrencyId"); } }
+       
+	 
+    private profitExchangeRate: number;
+    public get ProfitExchangeRate() { return this.profitExchangeRate; }
+    public set ProfitExchangeRate(newValue: number) { if (this.profitExchangeRate != newValue) { this.profitExchangeRate = newValue; this.MarkAsDirty("ProfitExchangeRate"); } }
+       
+	 
+
     public OldEntityPM: QuotePM;
 		
     public IsDirty: boolean;

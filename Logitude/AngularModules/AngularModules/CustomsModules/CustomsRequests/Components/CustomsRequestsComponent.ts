@@ -175,7 +175,7 @@ export class CustomsRequestsComponent implements OnInit {
 
         SelectedQuery = allQueries.filter(f => ((f.UserId == SessionLocator.LoggedUserId && f.Tenant == SessionLocator.Tenant) || f.Tenant == 0))[0];
 
-        listArgs.QueryCode = SelectedQuery.Code;
+        listArgs.QueryCode = SelectedQuery.UniqueCode;
         listArgs.ObjectTableName = objectTablePM.Name;
        
         listArgs.BackButtonTitle = TextCodeTranslator.Translate("Customs.General.O.Customs"); // Customs Request--> General.MH.Customs | Customs-->Customs.General.O.Customs
@@ -194,7 +194,7 @@ export class CustomsRequestsComponent implements OnInit {
         var SelectedQuery = null;
 
         // Get Query
-        var allQueries: any[] = window.Queries.filter(x => x.Code === queryCode).sort((a, b) => { return a.IndexOrder - b.IndexOrder });
+        var allQueries: any[] = window.Queries.filter(x => x.UniqueCode === queryCode).sort((a, b) => { return a.IndexOrder - b.IndexOrder });
         if (allQueries.length == 0) {
             console.log("[!] No Queries found for " + queryCode);
             return;
@@ -208,7 +208,7 @@ export class CustomsRequestsComponent implements OnInit {
             return;
         }
 
-        listArgs.QueryCode = SelectedQuery.Code;
+        listArgs.QueryCode = SelectedQuery.UniqueCode;
         listArgs.ObjectTableName = objectTablePM.Name;
 
         listArgs.BackButtonTitle = TextCodeTranslator.Translate("General.MH.Customs"); // Customs Request

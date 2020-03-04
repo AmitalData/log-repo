@@ -86,6 +86,7 @@
     <Compile Include="CloseTables\EnumGenerated\TariffSurchargesUpdateMethodStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\TariffTypeStruct.Generated.cs" />
     <Compile Include="DataContracts\SurchargeSummary.cs" />
+    <Compile Include="DataContracts\TariffSearchArgs.cs" />
     <Compile Include="DataContracts\TariffSearchSummary.cs" />
     <Compile Include="DataContracts\TariffsSummary.cs" />
     <Compile Include="EntityDataMappings\Generated\TariffDataMapping.Generated.cs" />
@@ -126,6 +127,7 @@
     <Compile Include="EntityQueryServices\Generated\TariffVersionAllInChargeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\TariffVersionQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\TariffLineQueryService.cs" />
+    <Compile Include="EntityQueryServices\TariffLinesContainersPriceQueryService.cs" />
     <Compile Include="EntityQueryServices\TariffQueryService.cs" />
     <Compile Include="EntityQueryServices\TariffSurchargesUpdateQueryService.cs" />
     <Compile Include="EntityQueryServices\TariffVersionQueryService.cs" />
@@ -138,6 +140,7 @@
     <Compile Include="EntityUpdateServices\Generated\TariffUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\TariffVersionAllInChargeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\TariffVersionUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\TariffLinesContainersPriceUpdateService.cs" />
     <Compile Include="EntityUpdateServices\TariffLineUpdateService.cs" />
     <Compile Include="EntityUpdateServices\TariffSurchargesUpdateUpdateService.cs" />
     <Compile Include="EntityUpdateServices\TariffUpdateService.cs" />

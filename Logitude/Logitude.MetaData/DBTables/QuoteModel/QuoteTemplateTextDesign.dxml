@@ -1,33 +1,73 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Table Name="QuoteTemplateTextDesigns" Schema="dbo" DBType="Main">
-  <Column Name="Id" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="QuoteTemplateTextDesigns"
+  Schema="dbo"
+  DBType="Main">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="FontSize" Type="float">
-    <Constraints Nullable="false" />
+  <Column
+    Name="FontSize"
+    Type="float">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="TextColor" Type="varchar" Size="10">
-    <Constraints Nullable="true" />
+  <Column
+    Name="TextColor"
+    Type="varchar"
+    Size="10">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="FontFamily" Type="varchar" Size="100">
-    <Constraints Nullable="true" />
+  <Column
+    Name="FontFamily"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="BackgroundColor" Type="varchar" Size="10">
-    <Constraints Nullable="true" />
+  <Column
+    Name="BackgroundColor"
+    Type="varchar"
+    Size="10">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="FontWeight" Type="varchar" Size="40">
-    <Constraints Nullable="true" />
+  <Column
+    Name="FontWeight"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Italic" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Italic"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="UnDerLine" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="UnDerLine"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="Alignment" Type="varchar" Size="10">
-    <Constraints Nullable="true" />
+  <Column
+    Name="Alignment"
+    Type="varchar"
+    Size="10">
+    <Constraints
+      Nullable="true" />
   </Column>
 </Table>

@@ -1141,10 +1141,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             return objectfields;
         }
 
-        public List<ObjectFieldPM> GetAdvanceFilteredObjectFields(int tenant, string queryId, int currenttenant)
+        public List<ObjectFieldPM> GetAdvanceFilteredObjectFields(int tenant, string queryCode, int currenttenant)
         {
             List<ObjectFieldPM> objectFields = (from q in repository.context.AdvancedQueryFilters.Include("ObjectField").Include("ObjectField.ObjectTable_LookUpTable").Include("ObjectField.FullNameTextCode").Include("ObjectField.ShortNameTextCode").Include("ObjectField.FullNameTextCode").Include("ObjectField.ShortNameTextCode").Include("ObjectField.HelpTextCode").Include("ObjectField.ListTextCode").Include("ObjectField.ObjectTable_MultiTable")
-                                                where q.Tenant == tenant && q.Query.Id == queryId
+                                                where q.Tenant == tenant && q.Query.UniqueCode == queryCode
                                                 select q).Select(a => new ObjectFieldPM()
                                                 {
                                                     IsMaxLength = a.ObjectField.IsMaxLength,
@@ -2545,6 +2545,20 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             }
 
             return objectField;
+        }
+
+
+
+        public List<ObjectFieldList> GetObjectFieldsForAutomations()
+        {
+            return (from a in repository.context.ObjectFields.Include("ObjectTable_LookUpTable").Include("FullNameTextCode").Include("ShortNameTextCode").Include("ListTextCode").Include("HelpTextCode").Include("ObjectTable").Include("ObjectTable_MultiTable")
+                    where  (a.AllowedinAutomationConditions == true || a.DisplayInAutomationAsEnitity == true || a.AutomationEmailRecipient == true || a.IsCustom || a.FieldName == "DescriptionOfGoods" || a.FieldName == "MainCarriageFinalDestinationETA" || a.FieldName == "MainCarriageFinalDestinationATA" || a.FieldName == "MainCarriageETD" || a.FieldName == "MainCarriageATD")
+                    select new ObjectFieldList()
+                    {
+                        Id = a.Id,
+                        Tenant = a.Tenant,
+                        FieldCode = a.FieldCode,
+                    }).ToList();
         }
 
 

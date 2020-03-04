@@ -35,6 +35,7 @@ namespace WebFreight.Web.MetaDataUpdate
             CreateMaintenanceTablesRules(TenantObjectTableRule, TenantObjectTableRuleFields, TenantObjectFieldValidations, TenantRuleConditionFields);
             CreateTestRules(TenantObjectTableRule, TenantObjectTableRuleFields, TenantObjectFieldValidations);
             CreateAccountingRules(TenantObjectTableRule, TenantObjectTableRuleFields, TenantObjectFieldValidations, TenantRuleConditionFields);
+            CreatelosingReasonRules(TenantObjectTableRule, TenantObjectTableRuleFields, TenantObjectFieldValidations, TenantRuleConditionFields);
         }
 
         private void CreateTestRules(Dictionary<string, ObjectTableRule> TenantObjectTableRule, Dictionary<string, ObjectTableRuleField> TenantObjectTableRuleFields, List<ObjectFieldValidation> TenantObjectFieldValidations)
@@ -1116,12 +1117,12 @@ namespace WebFreight.Web.MetaDataUpdate
             RuleConditionField ShipmentLevelCode_MOPAED = AddObjectTableRules.AddRuleConditionField(new RuleConditionFieldDetails() { ObjectFieldId = ShipmentLevelCode.Id, ObjectFieldCode = ShipmentLevelCode.FieldCode, ObjectTableRuleId = Master_OpClosed_Req_AE_D.Id, Operator = "Equals", Value = "D", Tenant = 0 }, RuleConditionFieldRepository, TenantRuleConditionFields);
 
 
-            ObjectTableRuleField Carrier_Field_AED = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = MainCarriageCarrierId.Id, ObjectFieldCode = MainCarriageCarrierId.FieldCode, ObjectTableRuleId = Master_OpClosed_Req_AE_D.Id, SystemLevel = true, Tenant = 0, RuleNotificationTypeCode = "ERR" }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
+            ObjectTableRuleField Carrier_Field_AED = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = MainCarriageCarrierId.Id, ObjectFieldCode = MainCarriageCarrierId.FieldCode, ObjectTableRuleId = Master_OpClosed_Req_AE_D.Id, SystemLevel = true, Tenant = 0, RuleNotificationTypeCode = "WAR" }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
             ObjectTableRuleField Master_Field_AED = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = MAWBOBL.Id, ObjectFieldCode = MAWBOBL.FieldCode, ObjectTableRuleId = Master_OpClosed_Req_AE_D.Id, SystemLevel = true, Tenant = 0, RuleNotificationTypeCode = "ERR" }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
             ObjectTableRuleField ATD_Field_AED = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = MainCarriageATD.Id, ObjectFieldCode = MainCarriageATD.FieldCode, ObjectTableRuleId = Master_OpClosed_Req_AE_D.Id, SystemLevel = true, Tenant = 0, RuleNotificationTypeCode = "ERR" }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
             ObjectTableRuleField FreightPP_Field_AED = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = FreightPrepaidCollectId.Id, ObjectFieldCode = FreightPrepaidCollectId.FieldCode, ObjectTableRuleId = Master_OpClosed_Req_AE_D.Id, SystemLevel = true, Tenant = 0, RuleNotificationTypeCode = "ERR" }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
             ObjectTableRuleField OtherPP_Field_AED = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = OtherPrepaidCollectId.Id, ObjectFieldCode = OtherPrepaidCollectId.FieldCode, ObjectTableRuleId = Master_OpClosed_Req_AE_D.Id, SystemLevel = true, Tenant = 0, RuleNotificationTypeCode = "ERR" }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
-            ObjectTableRuleField CarrierNo_Field_AED = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = MainCarriageCarrierNumber.Id, ObjectFieldCode = MainCarriageCarrierNumber.FieldCode, ObjectTableRuleId = Master_OpClosed_Req_AE_D.Id, SystemLevel = true, Tenant = 0, RuleNotificationTypeCode = "ERR" }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
+            ObjectTableRuleField CarrierNo_Field_AED = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = MainCarriageCarrierNumber.Id, ObjectFieldCode = MainCarriageCarrierNumber.FieldCode, ObjectTableRuleId = Master_OpClosed_Req_AE_D.Id, SystemLevel = true, Tenant = 0, RuleNotificationTypeCode = "WAR" }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
             #endregion
 
             #region Master_OpClosed_Req_OE
@@ -1300,7 +1301,7 @@ namespace WebFreight.Web.MetaDataUpdate
             ObjectTableRuleField ATA_Field_OID = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = MainCarriageATA.Id, ObjectFieldCode = MainCarriageATA.FieldCode, ObjectTableRuleId = Master_OpClosed_Req_OID.Id, SystemLevel = true, Tenant = 0, RuleNotificationTypeCode = "ERR" }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
             ObjectTableRuleField FreightPP_Field_OID = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = FreightPrepaidCollectId.Id, ObjectFieldCode = FreightPrepaidCollectId.FieldCode, ObjectTableRuleId = Master_OpClosed_Req_OID.Id, SystemLevel = true, Tenant = 0, RuleNotificationTypeCode = "ERR" }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
             ObjectTableRuleField OtherPP_Field_OID = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = OtherPrepaidCollectId.Id, ObjectFieldCode = OtherPrepaidCollectId.FieldCode, ObjectTableRuleId = Master_OpClosed_Req_OID.Id, SystemLevel = true, Tenant = 0, RuleNotificationTypeCode = "ERR" }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
-            ObjectTableRuleField Vessel__Field_OID = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = MainCarriageVesselId.Id, ObjectFieldCode = MainCarriageVesselId.FieldCode, ObjectTableRuleId = Master_OpClosed_Req_OID.Id, SystemLevel = true, Tenant = 0, RuleNotificationTypeCode = "ERR" }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
+            ObjectTableRuleField Vessel__Field_OID = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = MainCarriageVesselId.Id, ObjectFieldCode = MainCarriageVesselId.FieldCode, ObjectTableRuleId = Master_OpClosed_Req_OID.Id, SystemLevel = true, Tenant = 0, RuleNotificationTypeCode = "WAR" }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
             
             #endregion
 
@@ -1990,6 +1991,36 @@ namespace WebFreight.Web.MetaDataUpdate
 
 
             #endregion
+
+            ObjectContext.SaveChanges();
+        }
+
+        private void CreatelosingReasonRules(Dictionary<string, ObjectTableRule> TenantObjectTableRule, Dictionary<string, ObjectTableRuleField> TenantObjectTableRuleFields, List<ObjectFieldValidation> TenantObjectFieldValidations, Dictionary<string, RuleConditionField> TenantRuleConditionFields)
+        {
+            ObjectTable closingReasonTable = ObjectContext.ObjectTables.Where(f => f.Name == "OpportunityClosingReason" && f.Tenant == 0).FirstOrDefault();
+
+            ObjectField addedManuallyField = ObjectContext.ObjectFields.Where(d => d.FieldName == "AddedManually" && d.ObjectTableId == closingReasonTable.Id).FirstOrDefault();
+            ObjectField closingReasonNameField = ObjectContext.ObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == closingReasonTable.Id).FirstOrDefault();
+            ObjectField closingReasonLocalNameField = ObjectContext.ObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == closingReasonTable.Id).FirstOrDefault();
+
+            ObjectTableRule blockNamesRule = AddObjectTableRules.AddObjectTableRule(new ObjectTableRuleDetails()
+            {
+                RuleCode = "Closing_BlockNames",
+                Name = "Block Closing Reason Names",
+                ObjectTableId = closingReasonTable.Id,
+                Tenant = 0,
+                RuleTypeCode = "BLCK",
+                SystemLevel = true,
+                ActiveForNew = false,
+                ActiveForUpdate = true,
+                TriggerTypeCode = "COND",
+                RuleNotificationTypeCode = "ERR",
+            }, ObjectTableRuleRepository, TenantObjectTableRule);
+
+            RuleConditionField IsBlocked_CondField = AddObjectTableRules.AddRuleConditionField(new RuleConditionFieldDetails() { ObjectFieldId = addedManuallyField.Id, ObjectFieldCode = addedManuallyField.FieldCode, ObjectTableRuleId = blockNamesRule.Id, Operator = "Equals", Value = "False", Tenant = blockNamesRule.Tenant }, RuleConditionFieldRepository, TenantRuleConditionFields);
+
+            ObjectTableRuleField ClosingReasonNameRuleField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = closingReasonNameField.Id, ObjectFieldCode = closingReasonNameField.FieldCode, ObjectTableRuleId = blockNamesRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
+            ObjectTableRuleField ClosingReasonLocalNameRuleField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = closingReasonLocalNameField.Id, ObjectFieldCode = closingReasonLocalNameField.FieldCode, ObjectTableRuleId = blockNamesRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
 
             ObjectContext.SaveChanges();
         }

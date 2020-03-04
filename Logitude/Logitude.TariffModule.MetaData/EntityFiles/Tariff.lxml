@@ -5175,8 +5175,8 @@
     EnableFullscreenTextBox="false" />
   <Query
     Code="&quot;Air Freight Cost Tariffs&quot;"
-    TextCode="&quot;Air&quot;"
-    LocalTextCode="&quot;Air&quot;"
+    TextCode="&quot;Air Frieght Cost&quot;"
+    LocalTextCode="&quot;Air Frieght Cost&quot;"
     QueryGroupCode="&quot;d341&quot;"
     IndexOrder="0"
     ObjectTableName="&quot;Tariff&quot;"
@@ -5251,8 +5251,8 @@
   </Query>
   <Query
     Code="&quot;Air Surcharges Cost Tariffs&quot;"
-    TextCode="&quot;Air&quot;"
-    LocalTextCode="&quot;Air&quot;"
+    TextCode="&quot;Air Surcharges Cost&quot;"
+    LocalTextCode="&quot;Air Surcharges Cost&quot;"
     QueryGroupCode="&quot;d341&quot;"
     IndexOrder="1"
     ObjectTableName="&quot;Tariff&quot;"
@@ -5317,8 +5317,8 @@
   </Query>
   <Query
     Code="&quot;Ocean.LCL.Surcharges.Cost&quot;"
-    TextCode="&quot;Ocean LCL&quot;"
-    LocalTextCode="&quot;Ocean LCL&quot;"
+    TextCode="&quot;Ocean LCL Surcharges Cost&quot;"
+    LocalTextCode="&quot;Ocean LCL Surcharges Cost&quot;"
     QueryGroupCode="&quot;d341&quot;"
     IndexOrder="2"
     ObjectTableName="&quot;Tariff&quot;"
@@ -5383,8 +5383,8 @@
   </Query>
   <Query
     Code="&quot;Ocean LCL Freight Cost&quot;"
-    TextCode="&quot;Ocean LCL&quot;"
-    LocalTextCode="&quot;Ocean LCL&quot;"
+    TextCode="&quot;Ocean LCL Freight Cost&quot;"
+    LocalTextCode="&quot;Ocean LCL Freight Cost&quot;"
     QueryGroupCode="&quot;d341&quot;"
     IndexOrder="3"
     ObjectTableName="&quot;Tariff&quot;"
@@ -5449,8 +5449,8 @@
   </Query>
   <Query
     Code="&quot;Ocean FCL Freight Cost&quot;"
-    TextCode="&quot;Ocean FCL&quot;"
-    LocalTextCode="&quot;Ocean FCL&quot;"
+    TextCode="&quot;Ocean FCL Freight Cost&quot;"
+    LocalTextCode="&quot;Ocean FCL Freight Cost&quot;"
     QueryGroupCode="&quot;d341&quot;"
     IndexOrder="4"
     ObjectTableName="&quot;Tariff&quot;"
@@ -5515,8 +5515,8 @@
   </Query>
   <Query
     Code="&quot;Ocean FCL Surcharges Cost&quot;"
-    TextCode="&quot;Ocean FCL&quot;"
-    LocalTextCode="&quot;Ocean FCL&quot;"
+    TextCode="&quot;Ocean FCL Surcharges Cost&quot;"
+    LocalTextCode="&quot;Ocean FCL Surcharges Cost&quot;"
     QueryGroupCode="&quot;d341&quot;"
     IndexOrder="5"
     ObjectTableName="&quot;Tariff&quot;"

@@ -91,7 +91,16 @@
                                 </tr>
 
                                 <tr *ngIf="ObjectTableName == 'WarehouseEntry'" class="TabTitleRow">
-                                    <td>Cross Docks Releases</td>
+                               
+                                    <td>
+                                        <table>
+                                            <tr>
+                                                <td style="width:100%">Cross Docks Releases</td>
+                                                <td style="width:100px"><button  class="Button" (click)="NewWarehouseReleaseButtonClicked()">New Cross Dock Release</button></td>
+                                                <td style="width:10px"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
                                 </tr>
                                 <!--Releases-->
                                 <tr *ngIf="ObjectTableName == 'WarehouseEntry'"  style="max-height:250px;">

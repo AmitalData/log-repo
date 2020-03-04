@@ -57,8 +57,6 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             {
                 string entityName = "ObjectTable" + name + tenant;
 
-                if (HttpContext.Current != null)
-                {
                     if (CacheManager.CacheWrapper.Get(entityName) == null)
                     {
                         entity = context.ObjectTables.Where(d => d.Name == name && (d.Tenant == tenant || d.Tenant == 0)).FirstOrDefault();
@@ -77,12 +75,9 @@ namespace Simplog.Data.InfrastructureModel.Repositories
                         entity = (ObjectTable)CacheManager.CacheWrapper.Get(entityName);
 
                     }
-                }
+                
 
-                else
-                {
-                    entity = context.ObjectTables.Where(d => d.Name == name && (d.Tenant == tenant || d.Tenant == 0)).FirstOrDefault();
-                }
+              
             }
 
             else
@@ -99,8 +94,7 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             ObjectTable entity;
             if (getFromCache)
             {
-                if (HttpContext.Current != null)
-                {
+               
                     if (CacheManager.CacheWrapper.Get(entityName) == null)
                     {
                         entity = context.ObjectTables.Where(d => d.Id == id && (d.Tenant == tenant || d.Tenant == 0)).FirstOrDefault();
@@ -116,11 +110,8 @@ namespace Simplog.Data.InfrastructureModel.Repositories
                     {
                         entity = (ObjectTable)CacheManager.CacheWrapper.Get(entityName);
                     }
-                }
-                else
-                {
-                    entity = context.ObjectTables.Where(d => d.Id == id && (d.Tenant == tenant || d.Tenant == 0)).FirstOrDefault();
-                }
+                
+            
             }
             else
             {
@@ -268,30 +259,13 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             List<ObjectTable> currentTenantTables = new List<ObjectTable>();
             List<ObjectTable> zeroTenantTables = new List<ObjectTable>();
 
-            bool isWRCacheALLOWED = false;
-
-            var iAppSettings = System.Configuration.ConfigurationManager.AppSettings;
-            if (iAppSettings != null)
-            {
-                if (iAppSettings["WRCacheALLOWED"] != null)
-                {
-                    string iValueText = iAppSettings["WRCacheALLOWED"] + "";
-                    if (!string.IsNullOrEmpty(iValueText))
-                    {
-                        if (iValueText.ToLower() == "true")
-                        {
-                            isWRCacheALLOWED = true;
-                        }
-                    }
-                }
-            }
+          
 
 
 
             if (tenant != 0)
             {
-                if (HttpContext.Current != null || isWRCacheALLOWED)
-                {
+               
                     if (CacheManager.CacheWrapper.Get(tenantListName) == null)
                     {
                         using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -309,22 +283,11 @@ namespace Simplog.Data.InfrastructureModel.Repositories
                     {
                         currentTenantTables = (List<ObjectTable>)CacheManager.CacheWrapper.Get(tenantListName);
                     }
-                }
-                else
-                {
-                    using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-                    {
-                        IWebFreightContext context = WebFreightContext.GetContext(tenant);
-                        currentTenantTables = (from a in context.ObjectTables//.Include("HeaderScreen").Include("DescriptionTextCode").Include("NewButtonTextCode")
-                                               where (a.Tenant == tenant && a.InActive == false)
-                                             select a).ToList();
-                        scope.Complete();
-                    }
-                }
+                
+       
             }
 
-            if (HttpContext.Current != null || isWRCacheALLOWED)
-            {
+           
                 if (CacheManager.CacheWrapper.Get(listName) == null)
                 {
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -344,21 +307,8 @@ namespace Simplog.Data.InfrastructureModel.Repositories
                 {
                     zeroTenantTables = (List<ObjectTable>)CacheManager.CacheWrapper.Get(listName);
                 }
-            }
-            else
-            {
-                using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-                {
-                    IWebFreightContext context = WebFreightContext.GetContext(0);
-                    zeroTenantTables = (from a in context.ObjectTables//.Include("HeaderScreen").Include("DescriptionTextCode").Include("NewButtonTextCode")
-                                        where (a.Tenant == 0 && a.InActive == false)
-                                        select  a).ToList();
-
-
-                    scope.Complete();
-                }
-
-            }
+            
+   
             zeroTenantTables = zeroTenantTables == null ? new List<ObjectTable>() : zeroTenantTables;
             currentTenantTables = currentTenantTables == null ? new List<ObjectTable>() : currentTenantTables;
 

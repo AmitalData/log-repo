@@ -319,7 +319,12 @@ export class ShipmentPM {
     public get GrossWeightInKG() { return this.grossWeightInKG; }
     public set GrossWeightInKG(newValue: number) { if (this.grossWeightInKG != newValue) { this.grossWeightInKG = newValue; this.MarkAsDirty("GrossWeightInKG"); } }
        
-	 
+
+    private grossWeightPerStorageDays: number;
+    public get GrossWeightPerStorageDays() { return this.grossWeightPerStorageDays; }
+    public set GrossWeightPerStorageDays(newValue: number) { if (this.grossWeightPerStorageDays != newValue) { this.grossWeightPerStorageDays = newValue; this.MarkAsDirty("GrossWeightPerStorageDays"); } }
+
+
     private chargeableWeight: number;
     public get ChargeableWeight() { return this.chargeableWeight; }
     public set ChargeableWeight(newValue: number) { if (this.chargeableWeight != newValue) { this.chargeableWeight = newValue; this.MarkAsDirty("ChargeableWeight"); } }
@@ -604,7 +609,7 @@ export class ShipmentPM {
     public set Field25(newValue: CustomFieldClass) { this.field25 = newValue; this.MarkAsDirty("Field25"); }
 
     private field26: CustomFieldClass;
-    public get Field26() { if (!this.field26) { this.field26 = new CustomFieldClass(null, "Field26", "Shipment"); } return this.field6; }
+    public get Field26() { if (!this.field26) { this.field26 = new CustomFieldClass(null, "Field26", "Shipment"); } return this.field26; }
     public set Field26(newValue: CustomFieldClass) { this.field26 = newValue; this.MarkAsDirty("Field26"); }
 
     private field27: CustomFieldClass;
@@ -4130,6 +4135,15 @@ export class ShipmentPM {
         }
     }
 
+    private warehouseStorageFreeDays: number;
+    public get WarehouseStorageFreeDays() { return this.warehouseStorageFreeDays; }
+    public set WarehouseStorageFreeDays(newValue: number) {
+        if (this.warehouseStorageFreeDays != newValue) {
+            this.warehouseStorageFreeDays = newValue;
+            this.MarkAsDirty("WarehouseStorageFreeDays");
+        }
+    }
+
     private shipperNotExporterReference: string;
     public get ShipperNotExporterReference() { return this.shipperNotExporterReference; }
     public set ShipperNotExporterReference(newValue: string) {
@@ -4554,6 +4568,17 @@ export class ShipmentPM {
             this.MarkAsDirty("TR3_ToPortId_Original");
         }
     }
+   
+ 
+    private storageDays: number;
+    public get StorageDays() { return this.storageDays; }
+    public set StorageDays(newValue: number) { if (this.storageDays != newValue) { this.storageDays = newValue; this.MarkAsDirty("StorageDays"); } }
+
+
+    private warehouseReleasesIds: string;
+    public get WarehouseReleasesIds() { return this.warehouseReleasesIds; }
+    public set WarehouseReleasesIds(newValue: string) { if (this.warehouseReleasesIds != newValue) { this.warehouseReleasesIds = newValue; this.MarkAsDirty("WarehouseReleasesIds"); } }
+
 
     public OldEntityPM: ShipmentPM;
 

@@ -421,14 +421,7 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public CustomFieldClass Field20 { get; set; }
 
-
-
-
-
-
-
-
-
+        public string CountryForStatisticsId { get; set; }
 
         private List<QuoteChargePM> quoteCharges;
         [Include]
@@ -667,5 +660,15 @@ namespace Logitude.BL.QuoteModel.EntityPMs
                 }
             }
         }
+
+
+        public DateTime? RequestDate { get; set; }
+
+        public bool IsCreatedFromTicket { get; set; }
+        public DateTime? TicketCreateDate { get; set; }
+        public double? EstimatedProfitInLocal { get; set; }
+        public double? EstimatedProfitInProfit { get; set; }
+        public string ProfitCurrencyId { get; set; }
+        public double? ProfitExchangeRate { get; set; }
     }
 }

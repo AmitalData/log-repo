@@ -25,6 +25,8 @@ import { SharedUserQueryPM } from '../../../EntityPMs/SharedUserQueryPM';
 import { QueryPM } from '../../../EntityPMs/QueryPM';
 import { ServiceResponse } from '../../../DataContracts/ServiceResponse';
 import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
+import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
+
 
 @Component({
     moduleId: module.id,
@@ -101,33 +103,46 @@ export class QueryListComponent implements OnInit, AfterViewInit {
 
         this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
     }
-
+    private _entityResourceService: EntityResourceService = new EntityResourceService();
     ngOnInit() {
-        if (this.SelectedItem != null) {
-            this.SetDisplayText();
-        }
+        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe(response => {
+            if (this.SelectedItem != null) {
+                this.SetDisplayText();
+            }
 
-        var xx = this.DropdownId;
-        var temp = this.ignorePublicClicked;
+            var xx = this.DropdownId;
+            var temp = this.ignorePublicClicked;
 
-        this.onSelectedQueryChangeEvent.subscribe((res) => {
-            this.ItemClicked(res, true);
-            this.ComputeListHeight(this.ItemsSource.length + this.UserItemSource.length);
-        });
+            this.onSelectedQueryChangeEvent.subscribe((res) => {
+                this.ItemClicked(res, true);
+                this.ComputeListHeight(this.ItemsSource.length + this.UserItemSource.length);
+            });
 
-        this.FillUserItemSource_Share();
+            this.FillUserItemSource_Share();
 
-        this.QueryListSourceChanged.subscribe((res) => {
-            this.UserItemSource = res;
-        });        
+            this.QueryListSourceChanged.subscribe((res) => {
+                this.UserItemSource = res;
+            });        
+        }); 
     }
 
     private FillUserItemSource_Share() {
         this.NotSharedUserItemSource = [];
         this.SharedUserItemSource = [];
 
-        this.NotSharedUserItemSource = this.UserItemSource.filter(d => AppTool.IsNullOrEmpty(d.SharedByUserId));
-        this.SharedUserItemSource = this.UserItemSource.filter(d => !AppTool.IsNullOrEmpty(d.SharedByUserId));
+        for (let i = 0; i < this.UserItemSource.length; i++) {
+            if (!AppTool.IsNullOrEmpty(this.UserItemSource[i])) {
+                if (AppTool.IsNullOrEmpty(this.UserItemSource[i].SharedByUserId)) {
+                    this.NotSharedUserItemSource.push(this.UserItemSource[i]);
+                }
+                else {
+                    this.SharedUserItemSource.push(this.UserItemSource[i]);
+                }
+            }
+        }
+
+        //this.NotSharedUserItemSource = this.UserItemSource.filter(d => AppTool.IsNullOrEmpty(d.SharedByUserId));
+        //this.SharedUserItemSource = this.UserItemSource.filter(d => !AppTool.IsNullOrEmpty(d.SharedByUserId));
     }
 
     ngAfterViewInit() {
@@ -206,8 +221,8 @@ export class QueryListComponent implements OnInit, AfterViewInit {
                 this.SetDisplayText();
                 var filters = new ApiQueryFilters();
                 
-                if (window.PreDefinedFilters.filter(d => d.QueryId == clickedItem.Id) != null) {
-                    var predefinedFilters = window.PreDefinedFilters.filter(d => d.QueryId == clickedItem.Id);
+                if (window.PreDefinedFilters.filter(d => d.QueryCode == clickedItem.UniqueCode) != null) {
+                    var predefinedFilters = window.PreDefinedFilters.filter(d => d.QueryCode == clickedItem.UniqueCode);
                     predefinedFilters.forEach((filter, key) => {
                         var filterOperator = (!AppTool.IsNullOrEmpty(filter.Operator)) ? filter.Operator : filter.ObjectFieldOperator;
                         var value1 = filter.PredefinedValue;
@@ -277,7 +292,7 @@ export class QueryListComponent implements OnInit, AfterViewInit {
                     filters.SortDirection = clickedItem.DefaultSortDirection;
                 }
                 
-                this.itemSelectedEvent.emit({ QueryId: clickedItem.Id, Filters: filters, Title: TextCodeTranslator.Translate(clickedItem.NameTextCodeCode) });
+                this.itemSelectedEvent.emit({ QueryCode: clickedItem.UniqueCode, Filters: filters, Title: TextCodeTranslator.Translate(clickedItem.NameTextCodeCode) });
             }
         }
 
@@ -307,6 +322,7 @@ export class QueryListComponent implements OnInit, AfterViewInit {
         this.ignoreMouseDown = false;
 
         var windowArgs: any = {};
+        windowArgs.queryCode = this.SelectedItem.UniqueCode;
         windowArgs.queryId = this.SelectedItem.Id;
         windowArgs.currentObjectTable = this.ObjectTableName;
         windowArgs.IsNew = true;
@@ -320,9 +336,9 @@ export class QueryListComponent implements OnInit, AfterViewInit {
         logitudeWindow.Show('./Infrastructure/Components/NewViewComponent/NewViewComponent');
         logitudeWindow.WindowClosed.subscribe(($event: any) => {
             var ObjectTable = window.ObjectTables.filter(x => x.Name === this.ObjectTableName)[0];
-            //if ($event != this.SelectedItem.Id) {
+            if ($event != this.SelectedItem.UniqueCode) {
                 CachedDataManager.RefreshTenantTextCodes().subscribe(response => {
-                    var Query = window.Queries.filter(a => a.ObjectTableId === ObjectTable.Id && a.Id == $event)[0];
+                    var Query = window.Queries.filter(a => a.ObjectTableId === ObjectTable.Id && a.UniqueCode == $event)[0];
                     this.UserItemSource.push(Query);
                     this.ComputeListHeight(this.ItemsSource.length + this.UserItemSource.length);
                     this.SelectedItem = Query;
@@ -331,9 +347,12 @@ export class QueryListComponent implements OnInit, AfterViewInit {
                     this.QueriesChangedEvent.emit(Query);
                     this.NewViewClosedEvent.emit("");
                 });
-            //}
+            }
         });
     }
+   
+
+
 
     IgnoreMouseDown() {
         if (this.newViewClicked == true) {
@@ -352,16 +371,16 @@ export class QueryListComponent implements OnInit, AfterViewInit {
             if (confirmWindow.Yes) {
                 this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
 
-                var query = window.Queries.filter(q => q.Id == Item.Id)[0];
+                var query = window.Queries.filter(q => q.UniqueCode == Item.UniqueCode)[0];
                 var myService: QueriesPMService = new QueriesPMService();
                 myService.setServiceArgs(this.serviceArgs);
 
                 myService.delete(query, SessionInfo.LoggedUserId).subscribe(myResult => {
                     this.CurrentSession.StopBusyIndicator();
-                    window.Queries = window.Queries.filter(a => a.Id != query.Id);
+                    window.Queries = window.Queries.filter(a => a.UniqueCode != query.UniqueCode);
                     var ObjectTable = window.ObjectTables.filter(x => x.Name === this.ObjectTableName)[0];
                     var Query = window.Queries.filter(a => a.ObjectTableId === ObjectTable.Id && a.IndexOrder == 0)[0];
-                    this.UserItemSource = this.UserItemSource.filter(a => a.Id != query.Id);
+                    this.UserItemSource = this.UserItemSource.filter(a => a.UniqueCode != query.UniqueCode);
                     this.ComputeListHeight(this.ItemsSource.length + this.UserItemSource.length);
                     this.FillUserItemSource_Share();
                     this.QueriesChangedEvent.emit(Query);
@@ -442,6 +461,7 @@ export class QueryListComponent implements OnInit, AfterViewInit {
         this.ignoreMouseDown = false;
         var windowArgs: any = {};
         windowArgs.queryId = Item.Id;
+        windowArgs.queryCode = Item.UniqueCode;
         windowArgs.pubSubAdvanceQueryFiltersService = this.pubSubAdvanceQueryFiltersService;
         windowArgs.currentObjectTable = this.ObjectTableName;
         windowArgs.IsNew = false;
@@ -454,10 +474,10 @@ export class QueryListComponent implements OnInit, AfterViewInit {
         logitudeWindow.Show('./Infrastructure/Components/NewViewComponent/NewViewComponent');
         logitudeWindow.WindowClosed.subscribe(($event: any) => {
             var ObjectTable = window.ObjectTables.filter(x => x.Name === this.ObjectTableName)[0];
-            var Query = window.Queries.filter(a => a.ObjectTableId === ObjectTable.Id && a.Id == $event)[0];
+            var Query = window.Queries.filter(a => a.ObjectTableId === ObjectTable.Id && a.UniqueCode == $event)[0];
 
             if (!Query) {
-                Query = window.Queries.filter(a => a.ObjectTableId === ObjectTable.Id && a.IndexOrder == 0 && a.Id != $event)[0];
+                Query = window.Queries.filter(a => a.ObjectTableId === ObjectTable.Id && a.IndexOrder == 0 && a.UniqueCode != $event)[0];
             }
 
             this.SetDisplayText();

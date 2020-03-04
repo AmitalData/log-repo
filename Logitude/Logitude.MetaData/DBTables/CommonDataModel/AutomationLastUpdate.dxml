@@ -1,15 +1,33 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Table Name="AutomationLastUpdates" Schema="dbo" DBType="Main">
-  <Column Name="Tenant" Type="int">
-    <Constraints PrimaryKey="true" Nullable="false" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="AutomationLastUpdates"
+  Schema="dbo"
+  DBType="Main">
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="ObjectTableId" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
+  <Column
+    Name="ObjectTableId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="LastUpdateDate" Type="datetime">
-    <Constraints Nullable="false" />
+  <Column
+    Name="LastUpdateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="HasAutomation" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="HasAutomation"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
 </Table>

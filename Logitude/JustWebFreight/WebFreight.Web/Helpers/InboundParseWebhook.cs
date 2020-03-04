@@ -240,14 +240,6 @@ namespace WebFreight.Web.Helpers
 
                                 #endregion
 
-                                if (IsFirstTicket)
-                                {
-                                    User myUser = userRepository.GetSingleUser(contact.Id, Tenant, false);
-                                    if (myUser != null)
-                                    {
-                                        myTicket.InternalUsers = this.AppendEmails(myTicket.InternalUsers, contact.Email);
-                                    }
-                                }
                             }
 
                             #endregion
@@ -299,7 +291,7 @@ namespace WebFreight.Web.Helpers
                             //if the internal user forward a message to the system, add him as the contact and to the notify internal 
                             if (IsFirstTicket && userRepository.DoesUserExist(emailDetails.Sender, Tenant))
                             {
-                                emailLine.InternalUsers = this.AppendEmails(emailLine.InternalUsers, emailDetails.Sender);
+                                //emailLine.InternalUsers = this.AppendEmails(emailLine.InternalUsers, emailDetails.Sender);
                             }
 
                             repository.Add(emailLine);
@@ -325,11 +317,11 @@ namespace WebFreight.Web.Helpers
                             CheckLineCcInternalUsers(CorrespondenceLine, null);
 
                             //if the internal user forward a message to the system, add him as the contact and to the notify internal 
-                            if (IsFirstTicket && userRepository.DoesUserExist(emailDetails.Sender, Tenant))
-                            {
-                                CorrespondenceLine.IsInternal = false;
-                                CorrespondenceLine.InternalUsers = this.AppendEmails(CorrespondenceLine.InternalUsers, emailDetails.Sender);
-                            }
+                            //if (IsFirstTicket && userRepository.DoesUserExist(emailDetails.Sender, Tenant))
+                            //{
+                            //    CorrespondenceLine.IsInternal = false;
+                            //    CorrespondenceLine.InternalUsers = this.AppendEmails(CorrespondenceLine.InternalUsers, emailDetails.Sender);
+                            //}
 
                             correspondenceRep.Add(CorrespondenceLine);
 
@@ -727,15 +719,18 @@ namespace WebFreight.Web.Helpers
                     }
 
                     strippedText = string.Join("\n", newText.ToArray());
-
                     strippedTextFinal = strippedText.TrimEnd();
-                    //File.WriteAllText(@"C:\Log\strippedFinal.txt", strippedTextFinal);
                 }
 
                 else
                 {
                     strippedTextFinal = TruncateLongString(body, 4000);
                 }
+            }
+
+            if (string.IsNullOrWhiteSpace(strippedTextFinal) || string.IsNullOrEmpty(strippedTextFinal))
+            {
+                strippedTextFinal = "Empty Body";
             }
 
             return strippedTextFinal;

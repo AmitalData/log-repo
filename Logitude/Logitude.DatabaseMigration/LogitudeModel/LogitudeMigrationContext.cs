@@ -76,6 +76,12 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             return context;
         }
 
+        public IDbSet<LogBoxTenantSetting> LogBoxTenantSettings
+        {
+            get;
+            set;
+        }
+        
         #region Common Context
         public IDbSet<CustomerOpenFilesAmount> CustomerOpenFilesAmounts { get; set; }
         
@@ -1461,7 +1467,18 @@ namespace Logitude.DatabaseMigration.LogitudeModel
         #endregion
 
         #region Shipment Context
+        public IDbSet<ShipmentComputedFields> ShipmentComputedFields
+        {
+            get;
+            set;
+        }
+        
         public IDbSet<Shipment> Shipments
+        {
+            get;
+            set;
+        }
+        public IDbSet<ShipmentAdditionalCloudData> ShipmentAdditionalCloudDatas
         {
             get;
             set;
@@ -1863,6 +1880,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
         #endregion
 
         #region Quotes Context
+        public IDbSet<QuoteClosingReason> QuoteClosingReasons { get; set; }
         public IDbSet<Quote> Quotes { get; set; }
         public IDbSet<QuoteCharge> QuoteCharges { get; set; }
         public IDbSet<QuotePriceSteps> QuotePriceSteps { get; set; }
@@ -3697,6 +3715,13 @@ namespace Logitude.DatabaseMigration.LogitudeModel
 
 
         #region Infrastructure Generated
+
+        public IDbSet<RuleUpdateHistory> RuleUpdateHistories
+        {
+            get;
+            set;
+
+        }
         public IDbSet<Toggle> Toggles
         {
             get;
@@ -3804,6 +3829,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            modelBuilder.Configurations.Add(new RuleUpdateHistoryMap());
             #region Social
             modelBuilder.Configurations.Add(new ConversationHeaderMap());
             modelBuilder.Configurations.Add(new ConversationHeaderMessageMap());
@@ -4692,6 +4718,8 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Entity<SupplierInvoice>().Property(x => x.VendorComissionPercentage).HasPrecision(7, 4);
             modelBuilder.Entity<VendorCommission>().Property(x => x.CommisionPercentage).HasPrecision(7, 4);
 
+            modelBuilder.Configurations.Add(new LogBoxTenantSettingMap());
+
             modelBuilder.Configurations.Add(new AccountingSystemMap());
             modelBuilder.Configurations.Add(new AccountingSettingMap());
             modelBuilder.Configurations.Add(new Accounts1Map());
@@ -4854,6 +4882,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new QuoteChargeMap());
             modelBuilder.Configurations.Add(new QuoteCustomerTypeMap());
             modelBuilder.Configurations.Add(new QuotePriceStepMap());
+            modelBuilder.Configurations.Add(new QuoteClosingReasonMap());
             modelBuilder.Configurations.Add(new QuoteMap());
             modelBuilder.Configurations.Add(new QuoteTypeMap());
             modelBuilder.Configurations.Add(new RankMap());
@@ -4889,6 +4918,8 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new ShipmentReceivableMap());
             modelBuilder.Configurations.Add(new ShipmentReceivableStatuMap());
             modelBuilder.Configurations.Add(new ShipmentMap());
+            modelBuilder.Configurations.Add(new ShipmentComputedFieldsMap());
+            modelBuilder.Configurations.Add(new ShipmentAdditionalCloudDataMap());
             modelBuilder.Configurations.Add(new ShipmentTypeMap());
             modelBuilder.Configurations.Add(new ShippingAgentMap());
             modelBuilder.Configurations.Add(new ShippingLineMap());
@@ -5009,6 +5040,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new InboundEmailLinesMap());
             modelBuilder.Configurations.Add(new QueueDefinitionMap());
             modelBuilder.Configurations.Add(new QueueMessageMap());
+            modelBuilder.Configurations.Add(new QueueMessageMoreDetailsMap());
             modelBuilder.Configurations.Add(new BusinessHoursHolidayMap());
             modelBuilder.Configurations.Add(new BusinessHourMap());
             modelBuilder.Configurations.Add(new APILogsDataMap());

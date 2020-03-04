@@ -82,6 +82,7 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.ARInvoiceStockId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.CreatedByPartner).HasMaxLength(25).IsUnicode(false);
             this.Property(t => t.DocumentFilingId).HasMaxLength(40).IsUnicode(false);
+            this.Property(t => t.BillToGLAccountId).HasMaxLength(15).IsUnicode(false);
             // Table & Column Mappings
             this.ToTable("ARInvoices");
             this.Property(t => t.Id).HasColumnName("Id");
@@ -90,26 +91,26 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.BillToId).HasColumnName("BillToId");
             this.Property(t => t.BillToAddressId).HasColumnName("BillToAddressId");
             this.Property(t => t.VatNumber).HasColumnName("VatNumber");
-            this.Property(t => t.InvoiceDate).HasColumnName("InvoiceDate");
+            this.Property(t => t.InvoiceDate).HasColumnName("InvoiceDate").IsRequired();
             this.Property(t => t.PrintByUserId).HasColumnName("PrintByUserId");
             this.Property(t => t.IssuedByUserId).HasColumnName("IssuedByUserId");
             this.Property(t => t.InvoiceCurrencyId).HasColumnName("InvoiceCurrencyId");
             this.Property(t => t.LocalCurrencyId).HasColumnName("LocalCurrencyId");
-            this.Property(t => t.InvoiceCurrencyExchangeRate).HasColumnName("InvoiceCurrencyExchangeRate");
-            this.Property(t => t.SubTotalInLocalCurrency).HasColumnName("SubTotalInLocalCurrency");
-            this.Property(t => t.SubTotalInInvoiceCurrency).HasColumnName("SubTotalInInvoiceCurrency");
-            this.Property(t => t.AmountInLocalCurrency).HasColumnName("AmountInLocalCurrency");
-            this.Property(t => t.AmountInInvoiceCurrency).HasColumnName("AmountInInvoiceCurrency");
+            this.Property(t => t.InvoiceCurrencyExchangeRate).HasColumnName("InvoiceCurrencyExchangeRate").IsRequired();
+            this.Property(t => t.SubTotalInLocalCurrency).HasColumnName("SubTotalInLocalCurrency").IsRequired();
+            this.Property(t => t.SubTotalInInvoiceCurrency).HasColumnName("SubTotalInInvoiceCurrency").IsRequired();
+            this.Property(t => t.AmountInLocalCurrency).HasColumnName("AmountInLocalCurrency").IsRequired();
+            this.Property(t => t.AmountInInvoiceCurrency).HasColumnName("AmountInInvoiceCurrency").IsRequired();
             this.Property(t => t.StatusCode).HasColumnName("StatusCode");
             this.Property(t => t.IsAutoCredit).HasColumnName("IsAutoCredit");
             this.Property(t => t.IsCancelled).HasColumnName("IsCancelled");
             this.Property(t => t.CancelledByARInvoiceId).HasColumnName("CancelledByARInvoiceId");
             this.Property(t => t.InternalNotes).HasColumnName("InternalNotes");
             this.Property(t => t.PrintNotes).HasColumnName("PrintNotes");
-            this.Property(t => t.DueDate).HasColumnName("DueDate");
+            this.Property(t => t.DueDate).HasColumnName("DueDate").IsRequired();
             this.Property(t => t.PrintDate).HasColumnName("PrintDate");
             this.Property(t => t.ARInvoiceTypeCode).HasColumnName("ARInvoiceTypeCode");
-            this.Property(t => t.CreateDate).HasColumnName("CreateDate");
+            this.Property(t => t.CreateDate).HasColumnName("CreateDate").IsRequired();
             this.Property(t => t.CreatedByUserId).HasColumnName("CreatedByUserId");
             this.Property(t => t.PaymentTermId).HasColumnName("PaymentTermId");
             this.Property(t => t.PrepaidCollectId).HasColumnName("PrepaidCollectId");
@@ -119,19 +120,19 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.ExchangeRateDate).HasColumnName("ExchangeRateDate");
             this.Property(t => t.SearchFields).HasColumnName("SearchFields");
             this.Property(t => t.MainEntityReference).HasColumnName("MainEntityReference");
-            this.Property(t => t.AmountDue).HasColumnName("AmountDue");
+            this.Property(t => t.AmountDue).HasColumnName("AmountDue").IsRequired();
             this.Property(t => t.MainEntityId).HasColumnName("MainEntityId");
             this.Property(t => t.CustomerRef).HasColumnName("CustomerRef");
             this.Property(t => t.HouseNumber).HasColumnName("HouseNumber");
             this.Property(t => t.MasterNumber).HasColumnName("MasterNumber");
             this.Property(t => t.IsClosed).HasColumnName("IsClosed");
             this.Property(t => t.ProfitCurrencyId).HasColumnName("ProfitCurrencyId");
-            this.Property(t => t.ProfitCurrencyExchangeRate).HasColumnName("ProfitCurrencyExchangeRate");
-            this.Property(t => t.AmountInProfitCurrency).HasColumnName("AmountInProfitCurrency");
+            this.Property(t => t.ProfitCurrencyExchangeRate).HasColumnName("ProfitCurrencyExchangeRate").IsRequired();
+            this.Property(t => t.AmountInProfitCurrency).HasColumnName("AmountInProfitCurrency").IsRequired();
             this.Property(t => t.ExpectedPaymentDate).HasColumnName("ExpectedPaymentDate");
             this.Property(t => t.AmountDueInLocalCurrency).HasColumnName("AmountDueInLocalCurrency");
             this.Property(t => t.AmountDueInProfitCurrency).HasColumnName("AmountDueInProfitCurrency");
-            this.Property(t => t.UpdateDate).HasColumnName("UpdateDate");
+            this.Property(t => t.UpdateDate).HasColumnName("UpdateDate").IsRequired();
             this.Property(t => t.UpdatedByUserId).HasColumnName("UpdatedByUserId");
             this.Property(t => t.BranchId).HasColumnName("BranchId");
             this.Property(t => t.IsPrinted).HasColumnName("IsPrinted");
@@ -187,6 +188,7 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.IsInvoiceNumberFromStock).HasColumnName("IsInvoiceNumberFromStock");
             this.Property(t => t.CreatedByPartner).HasColumnName("CreatedByPartner");
             this.Property(t => t.DocumentFilingId).HasColumnName("DocumentFilingId");
+            this.Property(t => t.BillToGLAccountId).HasColumnName("BillToGLAccountId");
             
 
             // Relationships

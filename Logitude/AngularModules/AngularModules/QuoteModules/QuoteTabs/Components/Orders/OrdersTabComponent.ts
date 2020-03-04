@@ -61,7 +61,7 @@ export class OrdersTabComponent extends BaseComponent implements OnInit, OnDestr
         }
 
         else {
-            this.ChargeableWeightUnitCodeLabel = TextCodeTranslator.Translate("Quote.F.WtMsrUnitCode.Short");
+            this.ChargeableWeightUnitCodeLabel = TextCodeTranslator.Translate("Quote.F.ChargeableWeightUnitCode.Short");
         }
     }
 

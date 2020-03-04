@@ -1,5 +1,10 @@
 import { ReportComponent } from './Components/Workspaces/ReportComponent';
 import { MainReportsWorkspace } from './Components/Workspaces/MainReportsWorkspace';
+import { MainReportSchedulerComponent } from './Components/Scheduler/MainReportSchedulerComponent';
+import { TaskReportSchedulerComponent } from './Components/Scheduler/TaskReportSchedulerComponent';
+import { AddEditReportTaskSchedulerComponent } from './Components/Scheduler/AddEditReportTaskSchedulerComponent';
+import { AddEditReportSchedulerComponent } from './Components/Scheduler/AddEditReportSchedulerComponent';
+import { ReportSchedulerDateListTemplate } from './Components/Scheduler/ListTemplates/ReportSchedulerDateListTemplate';
 import { BIReportComponent } from './Components/Workspaces/BIReportComponent';
 import { BIFolderReportComponent } from './Components/Workspaces/BIFolderReportComponent';
 import {ReportTemplateComponent} from './Components/ReportTemplateComponent';
@@ -70,6 +75,7 @@ import {ParentVsChildTenantsComponent} from './Components/FilterReportComponent/
 import {UsersByTenantReportFilterComponent} from './Components/FiltersComponent/CRM/UsersByTenantReportFilterComponent';
 import {LicenseManagementFilterComponent} from './Components/FiltersComponent/Operational/LicenseManagementFilterComponent';
 import { VehiclesFilterComponent } from './Components/FiltersComponent/Operational/VehiclesFilterComponent';
+import { BluesnapPaymentsReportFilterComponent } from './Components/FiltersComponent/CRM/BluesnapPaymentsReportFilterComponent';
 
 // Time Sheet
 import {EmployeeTimeSheetFilterComponent} from './Components/FilterReportComponent/EmployeeTimeSheetFilterComponent';
@@ -86,6 +92,11 @@ import { VDKFilterComponent } from './Components/FilterReportComponent/VDKFilter
 export const Components =
     [
         MainReportsWorkspace,
+        MainReportSchedulerComponent,
+        TaskReportSchedulerComponent,
+        AddEditReportTaskSchedulerComponent,
+        AddEditReportSchedulerComponent,
+        ReportSchedulerDateListTemplate,
         ReportComponent,
         BIReportComponent,
         BIFolderReportComponent,
@@ -151,6 +162,7 @@ export const Components =
         ShipperReturnsReportFilterComponent,
         FlightBookingsManifestFilterComponent,
         RacingQuotesComponent,
+        BluesnapPaymentsReportFilterComponent
     ];
 
 export class ModuleDeclarations {
@@ -160,6 +172,11 @@ export class ModuleDeclarations {
 
         switch (name) {
             case "MainReportsWorkspace": { myResult = MainReportsWorkspace; break; }
+            case "MainReportSchedulerComponent": { myResult = MainReportSchedulerComponent; break; }
+            case "TaskReportSchedulerComponent": { myResult = TaskReportSchedulerComponent; break; }
+            case "AddEditReportTaskSchedulerComponent": { myResult = AddEditReportTaskSchedulerComponent; break; }
+            case "AddEditReportSchedulerComponent": { myResult = AddEditReportSchedulerComponent; break; }
+            case "ReportSchedulerDateListTemplate": { myResult = ReportSchedulerDateListTemplate; break; }
             case "ReportComponent": { myResult = ReportComponent; break; }
             case "BIReportComponent": { myResult = BIReportComponent; break; }
             case "BIFolderReportComponent": { myResult = BIFolderReportComponent; break; }
@@ -225,7 +242,7 @@ export class ModuleDeclarations {
             case "ShipperReturnsReportFilterComponent": { myResult = ShipperReturnsReportFilterComponent; break; }
             case "FlightBookingsManifestFilterComponent": { myResult = FlightBookingsManifestFilterComponent; break; }
             case "RacingQuotesComponent": { myResult = RacingQuotesComponent; break; }
-                
+            case "BluesnapPaymentsReportFilterComponent": { myResult = BluesnapPaymentsReportFilterComponent; break; }
         }
 
         return myResult;

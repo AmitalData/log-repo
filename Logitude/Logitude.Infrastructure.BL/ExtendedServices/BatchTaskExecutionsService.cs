@@ -34,7 +34,7 @@ namespace Logitude.Infrastructure.BL.ExtendedServices
                 this.RunCode();
 
                 // status will change to Done and update the done date time.
-                this.ChangeStatus("D");
+                this.ChangeStatus("D");                
             }
             catch (Exception ex)
             {

@@ -85,7 +85,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         LastRunEndTimeUTC = a.LastRunEndTimeUTC,
                         AverageRunTime = a.AverageRunTime, 
                         Duration = a.AverageRunTime,
-
+                        EntityId = a.EntityId
 
                     }).FirstOrDefault();
         }
@@ -131,7 +131,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         LastRunEndTime = a.LastRunEndTime,
                         LastRunEndTimeUTC = a.LastRunEndTimeUTC,
                         AverageRunTime = a.AverageRunTime,
-                        Duration = a.AverageRunTime
+                        Duration = a.AverageRunTime,
+                        EntityId = a.EntityId
                     }).FirstOrDefault();
         }
 
@@ -178,6 +179,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         AverageRunTime = a.AverageRunTime,
                         Duration = a.AverageRunTime,
                         SchedulerDetailsXML = a.SchedulerDetailsXML,
+                        EntityId = a.EntityId
                     }).ToList();
         }
 
@@ -223,6 +225,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                              AverageRunTime = a.AverageRunTime,
                              Duration = a.AverageRunTime,
                              SchedulerDetailsXML = a.SchedulerDetailsXML,
+                             EntityId = a.EntityId
                          }).ToList().OrderByDescending(x => x.CreateDateTime);
 
             //foreach (var Task in Tasks)
@@ -336,7 +339,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                         Retries = a.Retries,
                                                         LastRunEndTime = a.LastRunEndTime,
                                                         LastRunEndTimeUTC = a.LastRunEndTimeUTC,
-                                                        AverageRunTime = a.AverageRunTime
+                                                        AverageRunTime = a.AverageRunTime,
+                                                        EntityId = a.EntityId
                                                     };
             return result;
         }
@@ -383,6 +387,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         LastRunEndTimeUTC = a.LastRunEndTimeUTC,
                         AverageRunTime = a.AverageRunTime,
                         Duration = a.AverageRunTime,
+                        EntityId = a.EntityId
                     }).FirstOrDefault();
         }
 
@@ -428,6 +433,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         AverageRunTime = a.AverageRunTime,
                         Duration = a.AverageRunTime,
                         SchedulerDetailsXML = a.SchedulerDetailsXML,
+                        EntityId = a.EntityId
 
                     }).ToList();
         }

@@ -1,22 +1,53 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Table Name="DecCargoSplitCargoIdentifiers" Schema="Customs" DBType="Main">
-  <Column Name="DeclarationCargoSplitId" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="DecCargoSplitCargoIdentifiers"
+  Schema="Customs"
+  DBType="Main">
+  <Column
+    Name="DeclarationCargoSplitId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="LineNumber" Type="int">
-    <Constraints PrimaryKey="true" Nullable="false" />
+  <Column
+    Name="LineNumber"
+    Type="int">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="CargoIdentifierKey1" Type="varchar" Size="35">
-    <Constraints Nullable="true" />
+  <Column
+    Name="CargoIdentifierKey1"
+    Type="varchar"
+    Size="35">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="CargoIdentifierKey2" Type="varchar" Size="35">
-    <Constraints Nullable="true" />
+  <Column
+    Name="CargoIdentifierKey2"
+    Type="varchar"
+    Size="35">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="CargoIdentifierKey3" Type="varchar" Size="35">
-    <Constraints Nullable="true" />
+  <Column
+    Name="CargoIdentifierKey3"
+    Type="varchar"
+    Size="35">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Relation ForeignKeyColumn="DeclarationCargoSplitId" ReferencedTable="DeclarationCargoSplits" ReferencedColumn="Id" ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="DeclarationCargoSplitId"
+    ReferencedTable="DeclarationCargoSplits"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="Customs" />
 </Table>

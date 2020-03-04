@@ -250,6 +250,9 @@ export class QuoteUtilities {
 
         entityPM.MainCarriageCarrierId = copiedEntityPM.MainCarriageCarrierId;
         entityPM.TransitTime = copiedEntityPM.TransitTime;
+        entityPM.ProfitCurrencyId = copiedEntityPM.ProfitCurrencyId;
+        entityPM.ProfitExchangeRate = copiedEntityPM.ProfitExchangeRate;
+       
     }
     public static CopyQuotePackages(entityPM: QuotePM, copiedEntityPM: QuotePM) {
         copiedEntityPM.QuotePackages.forEach(item => {

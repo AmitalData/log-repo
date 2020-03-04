@@ -144,6 +144,68 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
+					 						FieldName =  "SearchFields",
+					  						OldFieldName =  "SearchFields",
+					  						ObjectTableName =  "HybridPartner",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "SearchFields",
+					  						ListPropertyPath =  "SearchFields",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "HybridPartner",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "SearchFields",
+					  						DefaultText =  "SearchFields",
+					  						FullLocalDefaultText =  "SearchFields",
+					  						ListFieldLable =  "SearchFieldsListLable",
+					  						ListLableDefaultText =  "SearchFields",
+					  						ListLocalDefaultText =  "SearchFields",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
 					 						FieldName =  "Tenant",
 					  						OldFieldName =  "Tenant",
 					  						ObjectTableName =  "HybridPartner",
@@ -546,13 +608,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query HybridPartnersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = HybridPartnerTextCode_0.Id, NameTextCodeCode = HybridPartnerTextCode_0.Code, Code = "HybridPartners",  QueryGroupCode = "CTHP", IndexOrder = 0, Tenant = 0, ObjectTableId = HybridPartnerObjectTable.Id, QuerySection = "HybridPartner", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = HybridPartnerFeature_0.Id,FeatureUniqeCode= HybridPartnerFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query HybridPartnersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = HybridPartnerTextCode_0.Id, NameTextCodeCode = HybridPartnerTextCode_0.Code, ObjectTableName = "HybridPartner", Code = "HybridPartners",  QueryGroupCode = "CTHP", IndexOrder = 0, Tenant = 0, ObjectTableId = HybridPartnerObjectTable.Id, QuerySection = "HybridPartner", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = HybridPartnerFeature_0.Id,FeatureUniqeCode= HybridPartnerFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn HybridPartnersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = HybridPartnersQuery.Id, IndexOrder = 0, ObjectFieldId = HybridPartnerObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == HybridPartnerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = HybridPartnerObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == HybridPartnerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn HybridPartnersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = HybridPartnersQuery.Id,QueryCode = HybridPartnersQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = HybridPartnerObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == HybridPartnerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = HybridPartnerObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == HybridPartnerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn HybridPartnersQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = HybridPartnersQuery.Id, IndexOrder = 1, ObjectFieldId = HybridPartnerObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == HybridPartnerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = HybridPartnerObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == HybridPartnerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn HybridPartnersQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = HybridPartnersQuery.Id,QueryCode = HybridPartnersQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = HybridPartnerObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == HybridPartnerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = HybridPartnerObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == HybridPartnerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn HybridPartnersQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = HybridPartnersQuery.Id, IndexOrder = 2, ObjectFieldId = HybridPartnerObjectFields.Where(d => d.FieldName == "PartnerTenant" && d.ObjectTableId == HybridPartnerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = HybridPartnerObjectFields.Where(d => d.FieldName == "PartnerTenant" && d.ObjectTableId == HybridPartnerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn HybridPartnersQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = HybridPartnersQuery.Id,QueryCode = HybridPartnersQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = HybridPartnerObjectFields.Where(d => d.FieldName == "PartnerTenant" && d.ObjectTableId == HybridPartnerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = HybridPartnerObjectFields.Where(d => d.FieldName == "PartnerTenant" && d.ObjectTableId == HybridPartnerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 	   
 	    }
 

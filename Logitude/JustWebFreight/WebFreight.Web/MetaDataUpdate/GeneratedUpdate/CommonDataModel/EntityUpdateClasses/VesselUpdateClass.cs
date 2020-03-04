@@ -196,6 +196,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Code",
@@ -260,6 +261,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "EnglishName",
@@ -324,6 +326,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "LocalName",
@@ -386,6 +389,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "ComputedLocalName",
@@ -450,6 +454,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "AddedManually",
@@ -514,6 +519,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "InActive",
@@ -579,6 +585,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Notes",
@@ -642,6 +649,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -705,6 +713,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "IMOCode",
@@ -768,6 +777,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "CountryId",
@@ -830,6 +840,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "CountryName",
@@ -894,6 +905,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "CountryCode",
@@ -922,19 +934,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query VesselsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = VesselTextCode_0.Id, NameTextCodeCode = VesselTextCode_0.Code, Code = "Vessels",  QueryGroupCode = "VSSL", IndexOrder = 0, Tenant = 0, ObjectTableId = VesselObjectTable.Id, QuerySection = "Vessel", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = VesselFeature_0.Id,FeatureUniqeCode= VesselFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query VesselsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = VesselTextCode_0.Id, NameTextCodeCode = VesselTextCode_0.Code, ObjectTableName = "Vessel", Code = "Vessels",  QueryGroupCode = "VSSL", IndexOrder = 0, Tenant = 0, ObjectTableId = VesselObjectTable.Id, QuerySection = "Vessel", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = VesselFeature_0.Id,FeatureUniqeCode= VesselFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn VesselsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VesselsQuery.Id, IndexOrder = 0, ObjectFieldId = VesselObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == VesselObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = VesselObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == VesselObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn VesselsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VesselsQuery.Id,QueryCode = VesselsQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = VesselObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == VesselObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = VesselObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == VesselObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn VesselsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VesselsQuery.Id, IndexOrder = 1, ObjectFieldId = VesselObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == VesselObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = VesselObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == VesselObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn VesselsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VesselsQuery.Id,QueryCode = VesselsQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = VesselObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == VesselObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = VesselObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == VesselObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn VesselsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VesselsQuery.Id, IndexOrder = 2, ObjectFieldId = VesselObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == VesselObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = VesselObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == VesselObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn VesselsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VesselsQuery.Id,QueryCode = VesselsQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = VesselObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == VesselObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = VesselObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == VesselObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn VesselsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VesselsQuery.Id, IndexOrder = 3, ObjectFieldId = VesselObjectFields.Where(d => d.FieldName == "AddedManually" && d.ObjectTableId == VesselObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = VesselObjectFields.Where(d => d.FieldName == "AddedManually" && d.ObjectTableId == VesselObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn VesselsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VesselsQuery.Id,QueryCode = VesselsQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = VesselObjectFields.Where(d => d.FieldName == "AddedManually" && d.ObjectTableId == VesselObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = VesselObjectFields.Where(d => d.FieldName == "AddedManually" && d.ObjectTableId == VesselObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn VesselsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VesselsQuery.Id, IndexOrder = 4, ObjectFieldId = VesselObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == VesselObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = VesselObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == VesselObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn VesselsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VesselsQuery.Id,QueryCode = VesselsQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = VesselObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == VesselObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = VesselObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == VesselObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn VesselsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VesselsQuery.Id, IndexOrder = 5, ObjectFieldId = VesselObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == VesselObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = VesselObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == VesselObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn VesselsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VesselsQuery.Id,QueryCode = VesselsQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = VesselObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == VesselObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = VesselObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == VesselObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 	   
 	    }
 
@@ -958,6 +970,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 		    VesselObjectTable.HeaderScreenCode = VesselHeaderScreenScreen0.Code;
 
 	   		  
+	      
+
+	         Screen VesselGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Vessel.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = VesselObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = false }, screensRepository, tenantScreens);
+        
 
 	    }
 

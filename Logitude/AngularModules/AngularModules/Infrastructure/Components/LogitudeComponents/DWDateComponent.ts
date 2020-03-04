@@ -258,12 +258,18 @@ export class DWDateComponent extends BaseComponent {
         }
 
         ConvertDateToString(value: any) {
-            var date = new Date(value);
-            var year = date.getUTCFullYear();
-            var month = date.getUTCMonth() + 1;
-            var day = date.getUTCDate() + 1;
-            var dateString = month + "/" + day + "/" + year;
-            return new Date(dateString);
+            var result = new Date();
+            if (value) {
+                var date = new Date(value);
+                result.setUTCFullYear(date.getUTCFullYear());
+                result.setUTCMonth(date.getUTCMonth());
+                result.setUTCDate(date.getUTCDate());
+                result.setUTCHours(date.getUTCHours());
+                result.setUTCMinutes(date.getUTCMinutes());
+                result.setUTCSeconds(date.getUTCSeconds());
+            }
+
+            return result;
         }
         GetDateFormats(myFormats: any) {
             var result = "";

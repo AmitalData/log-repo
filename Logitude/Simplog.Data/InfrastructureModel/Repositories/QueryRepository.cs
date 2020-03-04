@@ -26,11 +26,18 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             webFreightContext = WebFreightContext.GetContext(tenant);
         }
 
-        public Query GetSingleQuery(string id)
+        public Query GetSingleQuery(string Id)
         {
             return (from a in context.Queries.Include("ObjectTable")
-                   where a.Id == id
-                   select a).FirstOrDefault();
+                   where a.Id == Id
+                    select a).FirstOrDefault();
+        }
+
+        public Query GetSingleQueryByUniqueCode(string UniqueCode)
+        {
+            return (from a in context.Queries.Include("ObjectTable")
+                    where a.UniqueCode == UniqueCode
+                    select a).FirstOrDefault();
         }
 
         public Query GetSingleQueryByCode(string code,int tenant)
@@ -48,10 +55,10 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             return queries.OrderBy(d => d.IndexOrder);
         }
 
-        public IQueryable<Query> GetQueriesByOrigionalQueryTenant(string origionalQueryId,int tenant)
+        public IQueryable<Query> GetQueriesByOrigionalQueryTenant(string origionalQueryCode,int tenant)
         {
             IQueryable<Query> queries = from a in webFreightContext.Queries
-                                        where a.Tenant == tenant && a.OriginalQueryId == origionalQueryId
+                                        where a.Tenant == tenant && a.OriginalQueryCode == origionalQueryCode
                                         select a;
             return queries.OrderBy(d => d.IndexOrder);
         }

@@ -194,6 +194,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "LocalName",
@@ -256,6 +257,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "ComputedLocalName",
@@ -319,6 +321,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "GlobalZoneId",
@@ -383,6 +386,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "GlobalZoneName",
@@ -447,6 +451,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "AddedManually",
@@ -511,6 +516,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "InActive",
@@ -575,6 +581,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "EC",
@@ -640,6 +647,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Notes",
@@ -702,6 +710,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "HasStates",
@@ -764,6 +773,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "IsStateRequired",
@@ -828,6 +838,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "HasCitiesList",
@@ -891,6 +902,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -954,6 +966,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Code",
@@ -1018,6 +1031,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "EnglishName",
@@ -1079,6 +1093,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1106,17 +1121,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query CountriesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CountryTextCode_0.Id, NameTextCodeCode = CountryTextCode_0.Code, Code = "Countries",  QueryGroupCode = "COUT", IndexOrder = 0, Tenant = 0, ObjectTableId = CountryObjectTable.Id, QuerySection = "Country", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CountryFeature_0.Id,FeatureUniqeCode= CountryFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query CountriesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CountryTextCode_0.Id, NameTextCodeCode = CountryTextCode_0.Code, ObjectTableName = "Country", Code = "Countries",  QueryGroupCode = "COUT", IndexOrder = 0, Tenant = 0, ObjectTableId = CountryObjectTable.Id, QuerySection = "Country", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CountryFeature_0.Id,FeatureUniqeCode= CountryFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn CountriesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CountriesQuery.Id, IndexOrder = 0, ObjectFieldId = CountryObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == CountryObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CountryObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == CountryObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CountriesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CountriesQuery.Id,QueryCode = CountriesQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = CountryObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == CountryObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CountryObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == CountryObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn CountriesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CountriesQuery.Id, IndexOrder = 1, ObjectFieldId = CountryObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == CountryObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CountryObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == CountryObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CountriesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CountriesQuery.Id,QueryCode = CountriesQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = CountryObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == CountryObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CountryObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == CountryObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn CountriesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CountriesQuery.Id, IndexOrder = 2, ObjectFieldId = CountryObjectFields.Where(d => d.FieldName == "AddedManually" && d.ObjectTableId == CountryObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CountryObjectFields.Where(d => d.FieldName == "AddedManually" && d.ObjectTableId == CountryObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CountriesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CountriesQuery.Id,QueryCode = CountriesQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = CountryObjectFields.Where(d => d.FieldName == "AddedManually" && d.ObjectTableId == CountryObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CountryObjectFields.Where(d => d.FieldName == "AddedManually" && d.ObjectTableId == CountryObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn CountriesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CountriesQuery.Id, IndexOrder = 3, ObjectFieldId = CountryObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == CountryObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CountryObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == CountryObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CountriesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CountriesQuery.Id,QueryCode = CountriesQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = CountryObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == CountryObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CountryObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == CountryObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn CountriesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CountriesQuery.Id, IndexOrder = 4, ObjectFieldId = CountryObjectFields.Where(d => d.FieldName == "GlobalZoneName" && d.ObjectTableId == CountryObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CountryObjectFields.Where(d => d.FieldName == "GlobalZoneName" && d.ObjectTableId == CountryObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CountriesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CountriesQuery.Id,QueryCode = CountriesQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = CountryObjectFields.Where(d => d.FieldName == "GlobalZoneName" && d.ObjectTableId == CountryObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CountryObjectFields.Where(d => d.FieldName == "GlobalZoneName" && d.ObjectTableId == CountryObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 	   
 	    }
 

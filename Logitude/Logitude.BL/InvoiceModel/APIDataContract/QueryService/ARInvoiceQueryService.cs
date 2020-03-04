@@ -1,11 +1,15 @@
-﻿using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
+﻿using Logitude.Accounting.Def.EntityQueryServicesExt;
+using Logitude.BL.CommonDataModel.APIDataContract;
+using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.BL.InvoiceModel.APIDataContract.ApiV1;
 using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.BL.InvoiceModel.Tools.EntityService;
 using Logitude.BL.ShipmentsModel.APIDataContract.ApiV1;
 using Logitude.BL.ShipmentsModel.EntityQueries;
+using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
+using Microsoft.Practices.Unity;
 using Simplog.Data.InvoiceModel.Repositories;
 using System;
 using System.Collections.Generic;
@@ -29,6 +33,24 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                 {
                     item.EntityId = shipmentId;
                     
+                }
+            }
+        }
+
+        public void SetBillToGLAccountId(ARInvoicePM entity)
+        {
+            if (entity.BillToGLAccountId != null)
+            {
+                IGLAccountQueryServiceExt glAccountQuery = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountQueryServiceExt;
+                Logitude.Accounting.Def.EntityPMs.GLAccountPM gLAccount = glAccountQuery.GetGLAccountByInternalNumber(entity.BillToGLAccountId, entity.Tenant);
+                if (gLAccount != null)
+                {
+
+                    entity.BillToGLAccountId = gLAccount.Id;
+                }
+                else
+                {
+                    throw new Exception("GLAccount with internal number " + entity.BillToGLAccountId + "does not exist");
                 }
             }
         }
@@ -313,7 +335,10 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                 temp.Tenant = MyEntity.Tenant;
                 temp.IsDraft = MyEntity.IsDraft;
                 temp.ExternalAccountingEntityId = MyEntity.ExternalAccountingEntityId;
-            
+                if(MyEntity.BillToGLAccountId != null)
+                temp.BillToGLAccount = GetGLAccountNumberById(MyEntity.BillToGLAccountId, MyEntity.Tenant);
+
+
                 return temp;
             }
             catch (Exception ex)
@@ -342,7 +367,17 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
             }
         }
 
-     
+        public string GetGLAccountNumberById(string id, int tenant )
+        {
+            IGLAccountQueryServiceExt glAccountQuery = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountQueryServiceExt;
+            Logitude.Accounting.Def.EntityPMs.GLAccountPM gLAccount = glAccountQuery.GetSingleGLAccountPM(id,tenant);
+            if (gLAccount != null)
+            {
+                return gLAccount.DisplayNumber;
+
+            }
+            else return null;
+        }
 
         public ARInvoice ARInvoiceCustomDataMapping(string Id, int Tenant)
         {

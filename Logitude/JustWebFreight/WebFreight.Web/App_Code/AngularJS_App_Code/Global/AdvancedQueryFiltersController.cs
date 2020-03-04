@@ -68,7 +68,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Global
 
         }
 
-        public HttpResponseMessage GetAdvancedQueryFiltersByTenantAndQuery(int tenant, string loggedcontactid, string queryId)
+        public HttpResponseMessage GetAdvancedQueryFiltersByTenantAndQuery(int tenant, string loggedcontactid, string queryCode)
         {
             try
             {
@@ -77,7 +77,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Global
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
                 AdvancedQueryFilterQuery advancedQueryFilterQuery = new AdvancedQueryFilterQuery(tenant);
-                var result = advancedQueryFilterQuery.GetAdvancedQueryFilterPMsByTenantAndUserAndQuery(tenant, loggedcontactid, queryId);
+                var result = advancedQueryFilterQuery.GetAdvancedQueryFilterPMsByTenantAndUserAndQuery(tenant, loggedcontactid, queryCode);
 
                 return Request.CreateResponse(HttpStatusCode.OK, result);
 
@@ -89,7 +89,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Global
 
         }
 
-        public HttpResponseMessage GetAdvancedQueryFiltersByTenantuserobjecttablequery(int tenant,string objecttableCode,string queryid, string loggedcontactid)
+        public HttpResponseMessage GetAdvancedQueryFiltersByTenantuserobjecttablequery(int tenant,string objecttableCode,string queryCode, string loggedcontactid)
         {
             try
             {
@@ -102,7 +102,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Global
                 AdvancedQueryFilterPM filter = null;
                 if (result != null)
                 {
-                    filter = result.Where(a => a.ObjectFieldCode == objecttableCode && a.QueryId == queryid).FirstOrDefault();
+                    filter = result.Where(a => a.ObjectFieldCode == objecttableCode && a.QueryCode == queryCode).FirstOrDefault();
                 }
 
                 return Request.CreateResponse(HttpStatusCode.OK, filter);

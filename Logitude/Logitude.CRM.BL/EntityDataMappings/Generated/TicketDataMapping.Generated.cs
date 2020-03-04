@@ -86,7 +86,8 @@ namespace Logitude.CRM.BL.EntityDataMappings
 	         QuoteNumber, 
 	         SLAId, 
 	         EntityType, 
-	         SupportMailboxId,
+	         SupportMailboxId, 
+	         LastCorrespondence,
 	      }
 
 
@@ -199,7 +200,8 @@ namespace Logitude.CRM.BL.EntityDataMappings
 	         SLAId, 
 	         EntityType, 
 	         EntityNumber, 
-	         SupportMailboxId,
+	         SupportMailboxId, 
+	         LastCorrespondence,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -526,6 +528,11 @@ namespace Logitude.CRM.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SupportMailboxId))
             {
 				entityPOCO.SupportMailboxId = entityPM.SupportMailboxId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastCorrespondence))
+            {
+				entityPOCO.LastCorrespondence = entityPM.LastCorrespondence;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -859,6 +866,11 @@ namespace Logitude.CRM.BL.EntityDataMappings
 					entityPM.SupportMailboxId = entityPOCO.SupportMailboxId;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LastCorrespondence))
+            {
+					entityPM.LastCorrespondence = entityPOCO.LastCorrespondence;
+            }
+
 		}
 
 		public void PMToOldPM(TicketPM entityPM, TicketPM oldEntityPM)
@@ -1185,6 +1197,11 @@ namespace Logitude.CRM.BL.EntityDataMappings
                 oldEntityPM.SupportMailboxId = entityPM.SupportMailboxId;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastCorrespondence))
+            {
+                oldEntityPM.LastCorrespondence = entityPM.LastCorrespondence;
+            }
+			
 		}
 
 	    public void EncodeBase64NVARCHARFields(TicketPM entityPM)
@@ -1217,6 +1234,10 @@ namespace Logitude.CRM.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.ClosureDescription)) //T4 find type == nText 
             {
                 entityPM.ClosureDescription = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.ClosureDescription));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.LastCorrespondence)) //T4 find type == nText 
+            {
+                entityPM.LastCorrespondence = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.LastCorrespondence));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

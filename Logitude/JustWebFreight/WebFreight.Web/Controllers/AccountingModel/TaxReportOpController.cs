@@ -25,6 +25,7 @@ using WebFreight.Web.DataContracts;
 using Logitude.Accounting.Data.EntityLists;
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.BL.DataContract;
+using Logitude.BL.CommonDataModel.EntityQueries;
 
 namespace WebFreight.Web.Controllers.AccountingModel
 {
@@ -63,8 +64,9 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.CheckContactFeature("TaxReport", "NEW", authToken.Tenant);
-                int tenant = authToken.Tenant;
-
+                int tenant = authToken.Tenant;               
+                CheckWithoutTransmitLines(authToken,entityPM);
+                
                 BatchTaskExecutionPM btePM = TaxReportService.CreatePNCFileInBatch(entityPM.Id, tenant);
 
 
@@ -257,6 +259,37 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
 
+        }
+
+        private void CheckWithoutTransmitLines(AuthenticationToken authToken,TaxReportPM taxreport)
+        {
+            bool IsWithoutTransmitLineExist = CheckIfWithoutTransmitLineExist(taxreport.Id, taxreport.Tenant);
+            ContactPM loggedContact = GetLoggedContact(authToken.Email, taxreport.Tenant);
+            bool showlocal = !loggedContact.DontShowLocal;
+            if (IsWithoutTransmitLineExist)
+            {
+                throw new Exception(TextCodesTranslator.TranslateText("TaxReport.O.CantApprove", taxreport.Tenant, showlocal));
+            }
+        }
+
+        private  bool CheckIfWithoutTransmitLineExist(string taxReportId, int tenant)
+        {
+            TaxReportQueryService taxReportQuery = new TaxReportQueryService(tenant);
+            return taxReportQuery.CheckIfThereIsLineWithoutTransmit(taxReportId, tenant);
+
+        }
+        private ContactPM GetLoggedContact(string loggedUserEmail, int tenant)
+        {
+
+            ContactQuery contactQuery = new ContactQuery(tenant);
+            ContactPM loggedContactPM = contactQuery.GetContactByNameAndTenant(loggedUserEmail, tenant, true);
+            if (loggedContactPM == null)
+            {
+                loggedContactPM = contactQuery.GetContactByEmailOnly(loggedUserEmail, tenant);
+            }
+
+
+            return loggedContactPM;
         }
 
 

@@ -299,7 +299,7 @@
                         </tr>
 
                         <!-- Air Surcharges Cost-->
-                        <tr *ngIf="TariffType == 'ASC' || TariffType == 'OSC' || TariffType == 'OFS'" style="height:1px;">
+                        <tr *ngIf="TariffType == 'ASC' || TariffType == 'OSC'" style="height:1px;">
                             <td colspan="3">
                                 <table>
                                     <!-- Surcharge1Price -->
@@ -639,7 +639,84 @@
                             </td>
                         </tr>
 
-                        <tr>
+                        <!--Ocean FCL Surchage Cost-->
+                        <tr style="height:10px;" *ngIf="TariffType == 'OFS'">
+                            <td>
+                                <div></div>
+                            </td>
+                        </tr>
+
+                        <tr *ngIf="TariffType == 'OFS'">
+                            <td colspan="3">
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <div class="MediaFill">
+                                                <div class="SimpleGridView">
+                                                    <div class="SimpleGridViewHeader">
+                                                        <table>
+                                                            <tr>
+                                                                <td style="width: 100px; min-width: 100px; max-width: 100px; text-align:center;"></td>
+                                                                <td style="width: 100px; min-width: 100px; max-width: 100px; text-align:center;" *ngIf="DataContext.FatherComponent.Container1Visibility">{{DataContext.FatherComponent.Container1Label}}</td>
+                                                                <td style="width: 100px; min-width: 100px; max-width: 100px; text-align:center;" *ngIf="DataContext.FatherComponent.Container2Visibility">{{DataContext.FatherComponent.Container2Label}}</td>
+                                                                <td style="width: 100px; min-width: 100px; max-width: 100px; text-align:center;" *ngIf="DataContext.FatherComponent.Container3Visibility">{{DataContext.FatherComponent.Container3Label}}</td>
+                                                                <td style="width: 100px; min-width: 100px; max-width: 100px; text-align:center;" *ngIf="DataContext.FatherComponent.Container4Visibility">{{DataContext.FatherComponent.Container4Label}}</td>
+                                                                <td style="width: 100px; min-width: 100px; max-width: 100px; text-align:center;" *ngIf="DataContext.FatherComponent.Container5Visibility">{{DataContext.FatherComponent.Container5Label}}</td>
+                                                                <td class="LastChild">
+                                                                    <div></div>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+
+                                                    <div class="SimpleGridViewBody">
+                                                        <table>
+                                                            <tr class="SimpleGridViewRow" *ngFor="let item of DataContext.ContainerPricesItemsSource">
+                                                                <td class="GridViewCell" style="width: 100px; min-width: 100px; max-width: 100px; color:#6E7172">
+                                                                    {{item.ChargeLabel}}
+                                                                </td>
+
+                                                                <td class="CellStretched" style="width: 100px; min-width: 100px; max-width: 100px;" *ngIf="DataContext.FatherComponent.Container1Visibility">
+                                                                    <LogTextBox [ObjectFieldName]="'Price1'" [Text]="item.Price1" [ObjectTableName]="item.ObjectTableName" [DataContext]="item" [HideColumns]="true"></LogTextBox>
+                                                                </td>
+
+                                                                <td class="CellStretched" style="width: 100px; min-width: 100px; max-width: 100px;" *ngIf="DataContext.FatherComponent.Container2Visibility">
+                                                                    <LogTextBox [ObjectFieldName]="'Price2'" [Text]="item.Price2" [ObjectTableName]="item.ObjectTableName" [DataContext]="item" [HideColumns]="true"></LogTextBox>
+                                                                </td>
+
+                                                                <td class="CellStretched" style="width: 100px; min-width: 100px; max-width: 100px;" *ngIf="DataContext.FatherComponent.Container3Visibility">
+                                                                    <LogTextBox [ObjectFieldName]="'Price3'" [Text]="item.Price3" [ObjectTableName]="item.ObjectTableName" [DataContext]="item" [HideColumns]="true"></LogTextBox>
+                                                                </td>
+
+                                                                <td class="CellStretched" style="width: 100px; min-width: 100px; max-width: 100px;" *ngIf="DataContext.FatherComponent.Container4Visibility">
+                                                                    <LogTextBox [ObjectFieldName]="'Price4'" [Text]="item.Price4" [ObjectTableName]="item.ObjectTableName" [DataContext]="item" [HideColumns]="true"></LogTextBox>
+                                                                </td>
+
+                                                                <td class="CellStretched" style="width: 100px; min-width: 100px; max-width: 100px;" *ngIf="DataContext.FatherComponent.Container5Visibility">
+                                                                    <LogTextBox [ObjectFieldName]="'Price5'" [Text]="item.Price5" [ObjectTableName]="item.ObjectTableName" [DataContext]="item" [HideColumns]="true"></LogTextBox>
+                                                                </td>
+
+                                                                <td class="CellStretched">
+                                                                    <div></div>
+                                                                </td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <td colspan="7">
+                                                                    <div></div>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+
+                        <tr *ngIf="TariffType != 'OFS'">
                             <td colspan="3">
                                 <div></div>
                             </td>

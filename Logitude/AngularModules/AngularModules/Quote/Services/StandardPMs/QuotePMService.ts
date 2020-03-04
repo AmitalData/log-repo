@@ -1,5 +1,3 @@
-//file not found! child composition QuoteSalesTotal
-//file not found! child composition QuoteVATsTotal
 //file not found! child composition QuoteFollowUp
 //file not found! child composition QuoteDocumentVersion
 //------------------------------------------------------------------------------
@@ -212,7 +210,7 @@ export class QuotePMService {
         }
 
 		var customFields: Array<string> = [];
-        for (var i = 1; i < 21; i++) {
+        for (var i = 1; i < 11; i++) {
             customFields.push("Field" + i);
         }
             var jsonPMKeys = Object.keys(jsonPM);

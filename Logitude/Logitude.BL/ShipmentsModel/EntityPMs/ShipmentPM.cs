@@ -2172,6 +2172,10 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public double? GrossWeightPerTon { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        [DataMember]
+        public double? GrossWeightPerStorageDays { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public DateTime? FirstOperationalCloseDate { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
@@ -2437,5 +2441,13 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string TR1_ToPortId_Original { get; set; }
         public string BookingConfNumber_Original { get; set; }
         public string MAN_CarrierNumber_Original { get; set; }
+
+        public bool IsUserIDNumberRequired { get; set; }
+        public DateTime? UserIdNumberUpdateDate { get; set; }
+        public string UserIdNumberXMLData { get; set; }
+        public string UserIdNumber { get; set; }
+        public string WarehouseReleasesIds { get; set; }
+        public int? WarehouseStorageFreeDays { get; set; }
+        public bool IsDeclarationApprovalRequest { get; set; }
     }
 }

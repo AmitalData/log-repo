@@ -122,6 +122,9 @@ namespace WebFreight.Web.DataProviders
         public int NumberOfHBLs { get; set; }
         public string TenantVATNumber { get; set; }
         public string AgentVATNumber { get; set; }
+        public string FreightPC { get; set; }
+        public string DescriptionOfGoods { get; set; }
+        public string ChargeableWeight { get; set; }
         #endregion
 
 
@@ -229,7 +232,6 @@ namespace WebFreight.Web.DataProviders
         public double? ValueOfGoods { get; set; }
         public string ValueOfGoodsCurrency { get; set; }
         public string ShipperRefernce1 { get; set; }
-
         public List<ShipmentAssemblyLine> Assemblies { get; set; }
     }
 

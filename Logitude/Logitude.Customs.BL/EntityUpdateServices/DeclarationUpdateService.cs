@@ -93,7 +93,7 @@ using System.Diagnostics;
                     PackageMeasureQualifierCode = "2",
                     Tenant = entityPM.Tenant,
                     LineNumber = 1,
-
+                    PackageQuantity = 33,
                     ChangeSetOp = ChangeSetOperation.Insert,
                 };
 

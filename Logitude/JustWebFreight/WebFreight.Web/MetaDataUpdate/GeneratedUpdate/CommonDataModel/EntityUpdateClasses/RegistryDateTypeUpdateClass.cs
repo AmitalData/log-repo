@@ -116,7 +116,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Registry Date Type",
-			      				    Code =  "7fb2",
+			      				    Code =  "80f9",
 			      				    Name =  "RegistryDateType",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "Name",
@@ -404,15 +404,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-
-		   		   //--------------> Additional TextCodes <--------------\\
-
- 		   ObjectTable RegistryDateTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "RegistryDateType" && d.Tenant == 0).FirstOrDefault(); 
-
- 		   TextCode RegistryDateTypeTextCode_RegistryDateType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "RegistryDateType", DefaultText = "Registry Date Type",LocalDefaultText = null, ObjectTableId = RegistryDateTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
-   
+	    {     
 	    
 }
 

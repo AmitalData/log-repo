@@ -103,7 +103,7 @@ export class TariffWorkspaceComponent implements OnInit {
                             break;
                         }
                     }
-                    this.CurrentSession.ChangeSessionHeader({ Text: TextCodeTranslator.Translate("General.MH.Tariff")});
+                    this.CurrentSession.ChangeSessionHeader({ Text: TextCodeTranslator.Translate("General.MH.TariffModule")});
                 }
             }
         }

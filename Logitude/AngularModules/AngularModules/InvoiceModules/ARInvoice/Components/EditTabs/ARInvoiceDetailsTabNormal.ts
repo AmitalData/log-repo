@@ -185,14 +185,14 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
     public VATColumnWidth: number = 100;
     public RateColumnWidth: number = 100;
     SetGridColumns() {
-        this.LocalAmountHeader = TextCodeTranslator.Translate("ARInvoiceLine.CH.LocalCurrencyAmount").replace("%LocalCurrencyCode", this.LocalCurrencyCode);
+        this.LocalAmountHeader = TextCodeTranslator.Translate("ARInvoiceLine.CH.LocalCurrencyAmountListLable").replace("%LocalCurrencyCode", this.LocalCurrencyCode);
 
         var invoiceAmountHeader = null;
         var isInvoiceAmountHeaderVisible = false;
         if (!AppTool.IsNullOrEmpty(this.InvoiceCurrencyId)) {
             if (this.InvoiceCurrencyId != this.LocalCurrencyId) {
                 isInvoiceAmountHeaderVisible = true;
-                invoiceAmountHeader = TextCodeTranslator.Translate("ARInvoiceLine.CH.AmountInvoice").replace("%InvoiceCurrencyCode", this.InvoiceCurrencyCode);
+                invoiceAmountHeader = TextCodeTranslator.Translate("ARInvoiceLine.CH.ForiegnCurrencyAmountListLable").replace("%ForiegnCurrencyCode", this.InvoiceCurrencyCode);
             }
         }
 

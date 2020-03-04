@@ -34,21 +34,23 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                  Tenant = a.Tenant,
                  UserId = a.UserId,                 
                  QueryId = a.QueryId,
+                 QueryCode = a.QueryCode
              }).FirstOrDefault();
             
             return result;
         }
 
-        public IQueryable<SharedUserQueryPM> GetSharedUserQueriesForQuery(string queryId, int tenant)
+        public IQueryable<SharedUserQueryPM> GetSharedUserQueriesForQuery(string queryCode, int tenant)
         {
             IQueryable<SharedUserQueryPM> result = (from d in repository.context.SharedUserQueries
-                                                         where d.QueryId == queryId && d.Tenant == tenant
+                                                         where d.QueryCode == queryCode && d.Tenant == tenant
                                                          select new SharedUserQueryPM()
                                                          {
                                                              Id = d.Id,
                                                              Tenant = d.Tenant,
                                                              UserId = d.UserId,
                                                              QueryId = d.QueryId,
+                                                             QueryCode = d.QueryCode
                                                          });
 
             return result;
@@ -64,6 +66,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                         Tenant = d.Tenant,
                                                         UserId = d.UserId,
                                                         QueryId = d.QueryId,
+                                                        QueryCode = d.QueryCode
                                                     });
 
             return result;

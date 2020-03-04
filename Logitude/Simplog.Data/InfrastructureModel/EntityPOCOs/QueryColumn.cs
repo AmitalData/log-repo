@@ -11,6 +11,7 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public string Id { get; set; }
         public int Tenant { get; set; }
         public string QueryId { get; set; }
+        public string QueryCode { get; set; }
         public string ObjectFieldId { get; set; }
         public int IndexOrder { get; set; }
         public double ColumnWidth { get; set; }

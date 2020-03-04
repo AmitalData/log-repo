@@ -43,8 +43,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 if (CacheManager.CacheWrapper.Get(entityName) == null)
                 {
                     entity = (from a in repository.context.Users.Include("Branch").Include("Contact").Include("Department").Include("Freelancer").Include("ProductType")
-                              where a.Tenant == tenant
-                              && a.Id == id
+                              where (a.Tenant == tenant || a.Tenant == 0)
+                              && a.Id == id 
                               select new UserPM()
                               {
                                   BranchId = a.BranchId,
@@ -131,7 +131,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             else
             {
                 entity = (from a in repository.context.Users.Include("Contact").Include("Freelancer")
-                          where a.Tenant == tenant
+                          where (a.Tenant == tenant || a.Tenant == 0)
                           && a.Id == id
                           select new UserPM()
                           {
@@ -1680,6 +1680,27 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                          select a.Id).ToList();
 
             return usersIds;
+        }
+
+        public Dictionary<string, string> GetUsersListFromIdList(List<string> ids, int tenant)
+        {
+            Dictionary<string, string> salesmanNames = new Dictionary<string, string>();
+
+            var users = (from a in repository.context.Users.Include("Contact")
+                         where a.Tenant == tenant
+                         && ids.Contains(a.Id)
+                         select new UserPM()
+                         {
+                             Id = a.Id,
+                             EnglishName = a.Contact.EnglishName,
+                         }).ToList();
+
+            foreach (UserPM item in users)
+            {
+                salesmanNames.Add(item.Id, item.EnglishName);
+            }
+
+            return salesmanNames;
         }
     }
 }

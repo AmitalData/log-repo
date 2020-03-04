@@ -409,15 +409,12 @@ namespace WebFreight.Web.ReportsWebServices
             dataProvider.TotalTEU = shipments.Sum(d => d.TEU);
 
             dataProvider.ShippingLineStatisticsReportList = (from a in shipments
-
                                                              group a by new
                                                              {
                                                                  a.MainCarriageCarrierId,
                                                                  a.MainCarriageCarrierName,
                                                              } into gr
-
                                                              orderby gr.Key.MainCarriageCarrierName
-
                                                              select new ShippingLineStatisticsDataProvider.ShippingLineStatisticsReport()
                                                              {
                                                                  Carrier = gr.Key.MainCarriageCarrierName == null ? "(No Carrier Specified)" : gr.Key.MainCarriageCarrierName,
@@ -427,6 +424,7 @@ namespace WebFreight.Web.ReportsWebServices
                                                                  LCLWeight = gr.Where(t => t.ShipmentType.Contains("LCL")).Sum(t => t.GrossWeightInKG),
                                                                  TEU = gr.Sum(t => t.TEU),
                                                                  PercentageFromTotalShipment = ((double)gr.Count() / (double)dataProvider.TotalShipments),
+                                                                 VolumeInCBM = gr.Where(t => t.ShipmentType.Contains("LCL")).Sum(t => t.VolumeInCBM),
                                                              }).ToList();
             #endregion
 
@@ -7134,7 +7132,7 @@ namespace WebFreight.Web.ReportsWebServices
                 {
                     StatisticsByAgentReport record = new StatisticsByAgentReport();
 
-                    record.AgentId = shipment.AgentId;
+                    record.AgentId = shipment.AgentComputed;
                     record.AgentName = shipment.AgentName;
 
                     record.TransportMode = shipment.TransportModeName;
@@ -7790,6 +7788,8 @@ namespace WebFreight.Web.ReportsWebServices
                         string ref2 = "";
                         string ref3 = "";
                         string ref4 = "";
+                        string packagesNotes = "";
+                        string packagesQuantity = "";
 
                         foreach (ShipmentPackage package in packages)
                         {
@@ -7846,6 +7846,24 @@ namespace WebFreight.Web.ReportsWebServices
 
                                 ref4 = ref4 + package.Reference4;
                             }
+
+                            if (!string.IsNullOrEmpty(package.Notes))
+                            {
+                                if (!string.IsNullOrEmpty(packagesNotes))
+                                {
+                                    packagesNotes = packagesNotes + Environment.NewLine;
+                                }
+                                packagesNotes = packagesNotes + package.Notes;
+                            }
+
+                            if (package.Quantity != null)
+                            {
+                                if (!string.IsNullOrEmpty(packagesQuantity))
+                                {
+                                    packagesQuantity = packagesQuantity + Environment.NewLine;
+                                }
+                                packagesQuantity = packagesQuantity + package.Quantity.ToString();
+                            }
                         }
 
                         flightBookingRecord.Dimensions = dim;
@@ -7853,6 +7871,8 @@ namespace WebFreight.Web.ReportsWebServices
                         flightBookingRecord.PackagesRef2 = ref2;
                         flightBookingRecord.PackagesRef3 = ref3;
                         flightBookingRecord.PackagesRef4 = ref4;
+                        flightBookingRecord.PackagesQuantity = packagesQuantity;
+                        flightBookingRecord.PackagesNotes = packagesNotes;
                     }
 
                     totalData.FlightBookingRecordList.Add(flightBookingRecord);
@@ -8183,6 +8203,7 @@ namespace WebFreight.Web.ReportsWebServices
                                  FinalDestinationPortCode = myShipment.MainCarriageFinalDestinationPortCode,
                                  TransportMode = myShipment.TransportModeName,
                                  ValueOfGoods = myShipment.ValueOfGoods,
+                                 FlightNumber = myShipment.MainCarriageCarrierCode + myShipment.MainCarriageCarrierNumber,
 
                                  ChargeTypeId = myItem.ChargesTypeId,
                                  ChargeTypeCode = myItem.ChargesType == null ? null : myItem.ChargesType.Code,
@@ -8223,6 +8244,7 @@ namespace WebFreight.Web.ReportsWebServices
                                  FinalDestinationPortCode = myShipment.MainCarriageFinalDestinationPortCode,
                                  TransportMode = myShipment.TransportModeName,
                                  ValueOfGoods = myShipment.ValueOfGoods,
+                                 FlightNumber = myShipment.MainCarriageCarrierCode + myShipment.MainCarriageCarrierNumber,
 
                                  ChargeTypeId = myItem.ChargesTypeId,
                                  ChargeTypeCode = myItem.ChargesType == null ? null : myItem.ChargesType.Code,
@@ -8259,7 +8281,8 @@ namespace WebFreight.Web.ReportsWebServices
                                 d.MainCarriagePortCode,
                                 d.FinalDestinationPortCode,
                                 d.TransportMode,
-                                d.ValueOfGoods
+                                d.ValueOfGoods,
+                                d.FlightNumber,
                             })
 
                             .Select(s => new ShipmentsReceivablesPayablesList()
@@ -8287,6 +8310,7 @@ namespace WebFreight.Web.ReportsWebServices
                                 FinalDestinationPortCode = s.Key.FinalDestinationPortCode,
                                 TransportMode = s.Key.TransportMode,
                                 ValueOfGoods = s.Key.ValueOfGoods,
+                                FlightNumber = s.Key.FlightNumber,
                                 ChargeTypeId = s.Key.ChargeTypeId,
                                 ChargeTypeCode = s.Key.ChargeTypeCode,
                                 ChargeTypeName = s.Key.ChargeTypeName,
@@ -8390,6 +8414,7 @@ namespace WebFreight.Web.ReportsWebServices
                                         FinalDestinationPortCode = a.FinalDestinationPortCode,
                                         TransportMode = a.TransportMode,
                                         ValueOfGoods = a.ValueOfGoods,
+                                        FlightNumber = a.FlightNumber,
                                         Receivables_OPEN = 0,
                                         Receivables_ACCT = 0,
                                         Payables_OPEN = myPayables_OPEN,
@@ -8493,6 +8518,7 @@ namespace WebFreight.Web.ReportsWebServices
                                         FinalDestinationPortCode = a.FinalDestinationPortCode,
                                         TransportMode = a.TransportMode,
                                         ValueOfGoods = a.ValueOfGoods,
+                                        FlightNumber = a.FlightNumber,
                                         Receivables_OPEN = myReceivables_OPEN,
                                         Receivables_ACCT = myReceivables_ACCT,
                                         Payables_OPEN = 0,
@@ -8570,6 +8596,7 @@ namespace WebFreight.Web.ReportsWebServices
                     record.Destination = a.FinalDestinationPortCode;
                     record.TransportMode = a.TransportMode;
                     record.ValueOfGoods = a.ValueOfGoods;
+                    record.FlightNumber = a.FlightNumber;
 
                     totalData.ShipmentAnalysisRecordList.Add(record);
                 }
@@ -9848,9 +9875,12 @@ namespace WebFreight.Web.ReportsWebServices
         {
             InventoryDataProvider dataProvider = new InventoryDataProvider();
             #region Report Filters
-            string customerId = "";
-            string warehouseId = "";
-            string shipperConsigneeId = "";
+            string customerId = string.Empty;
+            string warehouseId = string.Empty;
+            string shipperConsigneeId = string.Empty;
+            int DaysInWarehouseValue =0;
+            string DaysInWarehouseOperatorFilterValue = string.Empty;
+
             MemoryStream memorystream = new MemoryStream(xmlFilters);
             XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
             QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
@@ -9868,10 +9898,16 @@ namespace WebFreight.Web.ReportsWebServices
             queryFilterItem = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ShipperConsigneeId").FirstOrDefault();
             if (queryFilterItem != null && queryFilterItem.FieldValue != null) shipperConsigneeId = queryFilterItem.FieldValue.ToString();
 
-
+            //DaysInWarehouseValue
+            queryFilterItem = queryOperations.QueryFilterItems.Where(d => d.FieldName == "DaysInWarehouse").FirstOrDefault();
+            if (queryFilterItem != null)
+            {
+                if (queryFilterItem.FieldValue != null) DaysInWarehouseValue = queryFilterItem.FieldValue != null && !string.IsNullOrEmpty(queryFilterItem.FieldValue.ToString()) ? Int32.Parse(queryFilterItem.FieldValue.ToString()) : 0;
+                DaysInWarehouseOperatorFilterValue = queryFilterItem.Operator;
+            }
 
             WarehouseEntryPackageQueryService warehouseEntryPackageQueryService = new WarehouseEntryPackageQueryService(tenant);
-            List<WarehouseEntryPackageItem> result = warehouseEntryPackageQueryService.GetWarehouseEntryPackageItemForInventoryReport(customerId, warehouseId, shipperConsigneeId, tenant);
+            List<WarehouseEntryPackageItem> result = warehouseEntryPackageQueryService.GetWarehouseEntryPackageItemForInventoryReport(new WarehouseEntryPackageArgs() { CustomerId = customerId , WarehouseId = warehouseId  ,ShipperConsigneesId = shipperConsigneeId  , Tenant = tenant ,DaysInWarehouseOperatorFilterValue = DaysInWarehouseOperatorFilterValue, DaysInWarehouseValue = DaysInWarehouseValue });
             dataProvider.WarehouseEntryPackageList = result;
             dataProvider.PartnerName = string.IsNullOrEmpty(customerId) ? "All" : "";
             dataProvider.Warehouse = string.IsNullOrEmpty(warehouseId) ? "All" : "";
@@ -10754,314 +10790,9 @@ namespace WebFreight.Web.ReportsWebServices
 
         public LedgerTransactionsDataProvider GetLedgerTransactionsDataProvider(byte[] xmlFilters, int tenant)
         {
-            // constants
-            const int PAGE_SIZE = 1000*20;
-            const int PAGE_RECORD_START_INDEX = 0;
-          // const string ACCOUNT_TYPE_CODE = "2";
+            LedgerTransactionReportLoader transactionReportLoader = new LedgerTransactionReportLoader(tenant);
 
-            // declarations
-            LedgerTransactionsDataProvider transactionsDataProvider = new LedgerTransactionsDataProvider();
-
-            //totalData.AgingPeriods = new List<AgingPeriod>();
-
-            // GET logged contact, RTL
-            ContactPM contact = GetLoggedContact(tenant);
-            bool showLocals = !contact.DontShowLocal;
-
-            #region Report Filters
-
-            // Deserialize
-            MemoryStream memorystream = new MemoryStream(xmlFilters);
-            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
-            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
-            QueryFilterItem filterItem_FromDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "FromDate").FirstOrDefault();
-            QueryFilterItem filterItem_ToDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ToDate").FirstOrDefault();
-            QueryFilterItem filterItem_GLAccountId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "GLAccountId").FirstOrDefault();
-            QueryFilterItem filterItem_AccountTypeCode = queryOperations.QueryFilterItems.Where(d => d.FieldName == "AccountTypeCode").FirstOrDefault();
-            QueryFilterItem filterItem_ChartOfAccountsId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ChartOfAccountId").FirstOrDefault();
-            QueryFilterItem filterItem_CurrencyId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CurrencyId").FirstOrDefault();
-            QueryFilterItem filterItem_IsReconciled = queryOperations.QueryFilterItems.Where(d => d.FieldName == "IsReconciled").FirstOrDefault();
-            QueryFilterItem filterItem_IncludeChildAccounts = queryOperations.QueryFilterItems.Where(d => d.FieldName == "IncludeChildAccounts").FirstOrDefault();
-            QueryFilterItem filterItem_SearchFields = queryOperations.QueryFilterItems.Where(d => d.FieldName == "SearchFields").FirstOrDefault();
-            QueryFilterItem filterItem_DateTypeCode = queryOperations.QueryFilterItems.Where(d => d.FieldName == "DateTypeCode").FirstOrDefault();
-            //QueryFilterItem filterItem_CategoryIndex = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CategoryIndex").FirstOrDefault();
-            //QueryFilterItem filterItem_CategoryValue = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CategoryValue").FirstOrDefault();
-
-
-            // Get filter values 
-            DateTime fromDate_filter = GetQueryFilterItemValue<DateTime>(filterItem_FromDate);
-            DateTime toDate_filter = GetQueryFilterItemValue<DateTime>(filterItem_ToDate);
-            string glAccountId = GetQueryFilterItemValue<string>(filterItem_GLAccountId);
-            string accountTypeCode = GetQueryFilterItemValue<string>(filterItem_AccountTypeCode);
-            string chartOfAccountsId = GetQueryFilterItemValue<string>(filterItem_ChartOfAccountsId);
-            string currencyId = GetQueryFilterItemValue<string>(filterItem_CurrencyId);
-            bool? isReconciled = (bool?)filterItem_IsReconciled.FieldValue == null? null : (bool?)filterItem_IsReconciled.FieldValue;
-            bool includeChildAccounts = GetQueryFilterItemValue<bool>(filterItem_IncludeChildAccounts);
-            string searchFields = GetQueryFilterItemValue<string>(filterItem_SearchFields);
-            string _dateTypeCode = GetQueryFilterItemValue<string>(filterItem_DateTypeCode);
-
-
-
-            DateTime fromDate = new DateTime(fromDate_filter.Year, fromDate_filter.Month, fromDate_filter.Day, 0, 0, 0);
-            DateTime toDate = new DateTime(toDate_filter.Year, toDate_filter.Month, toDate_filter.Day, 23, 59, 59);
-
-            #endregion
-
-            #region Base Data Filtered
-
-            //category filters
-            string category1Id = null;
-            string category2Id = null;
-            string category3Id = null;
-            string category4Id = null;
-            string category5Id = null;
-            //if (!string.IsNullOrEmpty(categoryIndex))
-            //{
-            //    switch (categoryIndex)
-            //    {
-            //        case "Category1": { category1Id = categoryValue; break; }
-            //        case "Category2": { category2Id = categoryValue; break; }
-            //        case "Category3": { category3Id = categoryValue; break; }
-            //        case "Category4": { category4Id = categoryValue; break; }
-            //        case "Category5": { category5Id = categoryValue; break; }
-            //    }
-            //}
-
-            // Load Transaction
-            IAccountingContext accountingContext = AccountingContext.GetContext(tenant);
-            LedgerTransactionCardIndexFilter myLedgerTransactionCardIndexFilter = new LedgerTransactionCardIndexFilter()
-            {
-                Tenant = tenant,
-                GLAccountId = glAccountId,
-                CurrencyId = currencyId,
-                From = fromDate,
-                To = toDate,
-                PageSize = PAGE_SIZE,
-                PageStartAtRecordIndex = PAGE_RECORD_START_INDEX,
-                IsReconciled = isReconciled,
-                IncludeChildAccounts = includeChildAccounts,
-                Category1Id = category1Id,
-                Category2Id = category2Id,
-                Category3Id = category3Id,
-                Category4Id = category4Id,
-                Category5Id = category5Id,
-                AccountTypeCode = accountTypeCode, //ACCOUNT_TYPE_CODE,
-                ChartOfAccountsId = chartOfAccountsId, 
-                SearchFields = searchFields,
-                DateTypeCode = _dateTypeCode,
-                //CallBack = xxxx,
-            };
-            var ledgerTransactionCardIndexService = new LedgerTransactionCardIndexService(accountingContext, myLedgerTransactionCardIndexFilter);
-            ledgerTransactionCardIndexService.Run();
-            List<LedgerTransactionList> transactions = ledgerTransactionCardIndexService.Response.MyLedgerTransactionList;
-
-            // Load Balance
-            LedgerTransactionBalanceFilter LTBFilter = new LedgerTransactionBalanceFilter();
-            LTBFilter.PageSize = PAGE_SIZE;
-            LTBFilter.PageStartAtRecordIndex = PAGE_RECORD_START_INDEX;
-            LTBFilter.Tenant = tenant;
-            LTBFilter.CurrencyId = currencyId;
-            LTBFilter.SearchFields = searchFields;
-            LTBFilter.GLAccountId = glAccountId;
-            LTBFilter.From = fromDate;
-            LTBFilter.To = toDate;
-            LTBFilter.IncludeChildAccounts = includeChildAccounts;
-
-            LTBFilter.IncludeRelatedCurrenciesAccount = false; // should pass it
-
-            LTBFilter.DateTypeCode = _dateTypeCode;
-
-            var ledgerTransactionBalanceService = new LedgerTransactionBalanceService(accountingContext, LTBFilter);
-            ledgerTransactionBalanceService.Run();
-
-            var balanceCallBack = new LedgerTransactionBalanceFilterCallBack()
-            {
-                //EndBalanceForeign = ledgerTransactionBalanceService.Response.EndBalanceForeign,
-                EndBalanceForeignList = ledgerTransactionBalanceService.Response.EndBalanceForeignList,
-                EndBalanceLocal = ledgerTransactionBalanceService.Response.EndBalanceLocal,
-                Have1CurrencyIdInPeriod = ledgerTransactionBalanceService.Response.Have1CurrencyIdInPeriod,
-                MaxCreateAt = ledgerTransactionBalanceService.Response.MaxCreateAt,
-
-                //StartBalanceForeign = ledgerTransactionBalanceService.Response.StartBalanceForeign,
-                StartBalanceForeignList = ledgerTransactionBalanceService.Response.StartBalanceForeignList,
-                StartBalanceLocal = ledgerTransactionBalanceService.Response.StartBalanceLocal,
-                TotalRowCount = ledgerTransactionBalanceService.Response.TotalRowCount,
-                YearTransferLedgerTransactionIds = ledgerTransactionBalanceService.Response.YearTransferLedgerTransactionIds,
-                SuppressCumulativeDueMultiCurrencyInPeriod = ledgerTransactionBalanceService.Response.SuppressCumulativeDueMultiCurrencyInPeriod
-
-            };
-
-            #endregion
-
-            #region Fill Report Data
-
-            transactionsDataProvider.FromDate = fromDate;
-            transactionsDataProvider.ToDate = toDate;
-
-            // Fill glaccount fields
-            GLAccountQueryService glaQueryService = new GLAccountQueryService(accountingContext);
-            GLAccountPM glaccountPM;
-
-            if (!string.IsNullOrEmpty(glAccountId))
-            {
-                glaccountPM = glaQueryService.GetSingle(glAccountId, false, false);
-                transactionsDataProvider.AccountNumber = glaccountPM.DisplayNumber;
-                transactionsDataProvider.AccountEnglishName = glaccountPM.EnglishName;
-                transactionsDataProvider.AccountLocalName = glaccountPM.LocalName;
-                transactionsDataProvider.IsAccountMulticurrency = (bool)glaccountPM.IsMultiCurrency;
-                transactionsDataProvider.AccountCurrencySign = glaccountPM.CurrencySign;
-                transactionsDataProvider.AccountCurrencyCode = glaccountPM.CurrencyCode;
-                transactionsDataProvider.AccountReconcileMethod = glaccountPM.ReconcileMethodCode;
-            }
-            else
-            {
-                throw new ApplicationException("No GLAccount!!");
-            }
-
-            // Fill tenant currency
-            TenantQuery tenantQuery = new TenantQuery(tenant);
-            TenantPM tenantPM = tenantQuery.GetSinglePM(tenant);
-            if(tenantPM != null)
-            {
-                transactionsDataProvider.TenantCurrencyCode = tenantPM.CurrencyCode;
-                transactionsDataProvider.TenantCurrencySign = tenantPM.CurrencySign;
-            }
-
-            // Fill printed by user
-            ContactRepository contactRepo = new ContactRepository(tenant);
-            transactionsDataProvider.PrintedByUser = showLocals ? contact.LocalName : contact.EnglishName;
-            transactionsDataProvider.PrintDate = TenantServerConfigration.GetCurrentDateTime(tenant);
-
-            // Fill Balance
-            if (glaccountPM.IsMultiCurrency == true)
-            {
-                // fetch foreign fields of currency
-
-
-                //open
-                transactionsDataProvider.LocalOpenBalanceList = new List<GLAccountBalanceList>();
-                if (balanceCallBack.StartBalanceForeignList.Count == 0)
-                {
-                    transactionsDataProvider.LocalOpenBalanceList.Add(new GLAccountBalanceList()
-                    {
-                        BalanceForeign = 0,
-                        BalanceLocal = 0,
-                        CurrencyId = "",
-                        LocalCurrencySign = "",
-                        ForeignCurrencySign = ""
-                    });
-                }
-                
-                foreach (var item in balanceCallBack.StartBalanceForeignList)
-                {
-                    // get currency
-                    CurrencyRepository currencyRepo = new CurrencyRepository(tenant);
-                    Currency currency = currencyRepo.GetSingleCurrency(item.CurrencyId, tenant);
-
-                    transactionsDataProvider.LocalOpenBalanceList.Add(new GLAccountBalanceList()
-                    {
-                        BalanceForeign = item.BalanceForeign,
-                        BalanceLocal = item.BalanceLocal,
-                        CurrencyId = item.CurrencyId,
-                        LocalCurrencySign = tenantPM.CurrencySign,
-                        ForeignCurrencySign = currency.Sign
-                    });
-                }
-
-                //closed
-                transactionsDataProvider.LocalClosedBalanceList = new List<GLAccountBalanceList>();
-                if (balanceCallBack.EndBalanceForeignList.Count == 0)
-                {
-                    transactionsDataProvider.LocalClosedBalanceList.Add(new GLAccountBalanceList()
-                    {
-                        BalanceForeign = 0,
-                        BalanceLocal = 0,
-                        CurrencyId = "",
-                        LocalCurrencySign = "",
-                        ForeignCurrencySign = ""
-                    });
-                }
-                
-                foreach (var item in balanceCallBack.EndBalanceForeignList)
-                {
-                    // get currency
-                    CurrencyRepository currencyRepo = new CurrencyRepository(tenant);
-                    Currency currency = currencyRepo.GetSingleCurrency(item.CurrencyId, tenant);
-
-                    transactionsDataProvider.LocalClosedBalanceList.Add(new GLAccountBalanceList()
-                    {
-                        BalanceForeign = item.BalanceForeign,
-                        BalanceLocal = item.BalanceLocal,
-                        CurrencyId = item.CurrencyId,
-                        LocalCurrencySign = tenantPM.CurrencySign,
-                        ForeignCurrencySign = currency.Sign
-                    });
-                }
-            }
-            else
-            {
-                transactionsDataProvider.LocalOpenBalance = (decimal) balanceCallBack.StartBalanceLocal;
-                transactionsDataProvider.LocalClosedBalance = (decimal)balanceCallBack.EndBalanceLocal;
-            }
-
-
-            // Fill transactions
-            transactionsDataProvider.Transactions = new List<ReportLedgerTransaction>();
-            foreach (LedgerTransactionList transaction in transactions)
-            {
-                ReportLedgerTransaction reportTransaction = new ReportLedgerTransaction
-                {
-                    Id = transaction.Id,
-                    Tenant = transaction.Tenant,
-                    JournalId = transaction.JournalId,
-                    JournalLineNumber = transaction.JournalLineNumber,
-                    CreateDate = transaction.CreateDate,
-                    ControlAccountId = transaction.ControlAccountId,
-                    AccountId = transaction.AccountId,
-                    AccountingDate = transaction.AccountingDate,
-                    DocumentDate = transaction.DocumentDate,
-                    DueDate = transaction.DueDate,
-                    LocalAmountDebit = transaction.LocalAmountDebit,
-                    LocalAmountCredit = transaction.LocalAmountCredit,
-                    CurrencyId = transaction.CurrencyId,
-                    ForeignAmountDebit = transaction.ForeignAmountDebit,
-                    ForeignAmountCredit = transaction.ForeignAmountCredit,
-                    ExchangeRate = transaction.ExchangeRate,
-                    Reference1 = transaction.Reference1,
-                    Reference2 = transaction.Reference2,
-                    Reference3 = transaction.Reference3,
-                    OpenAmount = transaction.OpenAmount,
-                    OppositeAccountId = transaction.OppositeAccountId,
-                    SearchFields = transaction.SearchFields,
-                    OpenAmountCurrencyId = transaction.OpenAmountCurrencyId,
-                    Notes = transaction.Notes,
-                    AmountToReconcile = transaction.AmountToReconcile,
-                    Mark = transaction.Mark,
-                    IsReconciled = transaction.IsReconciled,
-                    IsExternalReconcile = transaction.IsExternalReconcile,
-                    InReconcileProgress = transaction.InReconcileProgress,
-                    ReconcileRemarks = transaction.ReconcileRemarks,
-                    CurrencyCode = transaction.CurrencyCode,
-                    CurrencySign = transaction.CurrencySign,
-                    OpenAmountCurrencyCode = transaction.OpenAmountCurrencyCode,
-                    OpenAmountCurrencySign = transaction.OpenAmountCurrencySign,
-
-                    Source = transaction.Source,
-                    JournalNumber = transaction.JournalNumber,
-                    GLAccountRecoMethodCode = glaccountPM.ReconcileMethodCode,
-                    TenantCurrencySign = tenantPM.CurrencySign,
-
-                    CumulativeForeignAmount = transaction.CumulativeForeignAmount,
-                    CumulativeLocalAmount = transaction.CumulativeLocalAmount,
-
-                };
-
-                transactionsDataProvider.Transactions.Add(reportTransaction);
-            }
-
-            #endregion
-
-            return transactionsDataProvider;
+            return transactionReportLoader.LoadFromXML(xmlFilters);
         }
 
         T GetQueryFilterItemValue<T>(QueryFilterItem filterItem)
@@ -11449,6 +11180,8 @@ namespace WebFreight.Web.ReportsWebServices
             QueryFilterItem filterItem_tODate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CreateDate").FirstOrDefault();
             QueryFilterItem filterItem_level = queryOperations.QueryFilterItems.Where(d => d.FieldName == "Level").FirstOrDefault();
             QueryFilterItem filterItem_card = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CardFilter").FirstOrDefault();
+            QueryFilterItem filterItem_fromDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "FromDate").FirstOrDefault();
+
             //ToDate
             DateTime? toDate = null;
             if (filterItem_tODate != null)
@@ -11458,7 +11191,15 @@ namespace WebFreight.Web.ReportsWebServices
                     toDate = (DateTime)filterItem_tODate.FieldValue;
                 }
             }
-
+            //FromDate
+            DateTime? fromDate = null;
+            if (filterItem_fromDate != null)
+            {
+                if (filterItem_fromDate.FieldValue != null)
+                {
+                   fromDate = (DateTime)filterItem_fromDate.FieldValue;
+                }
+            }
             //Level
             string level = null;
             if (filterItem_level != null)
@@ -11488,6 +11229,7 @@ namespace WebFreight.Web.ReportsWebServices
                 Tenant = tenant,
                 //  MyRevenueExpenseReportLevel = ReportLevel.,
                 ToDate = (DateTime)toDate,
+                FromDate =(DateTime) fromDate
             };
 
             switch (level)
@@ -11531,6 +11273,7 @@ namespace WebFreight.Web.ReportsWebServices
 
             }
             totalData.ForDate = toDate;
+            totalData.FromDate = fromDate;
             List<RevenueExpenseReportM> result = null;
             List<string> GLAccountParents = new List<string>();
 

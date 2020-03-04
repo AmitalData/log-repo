@@ -501,16 +501,20 @@ namespace Logitude.Accounting.BL.CoreBL
                 journalLine.LocalAmount = -journalLine.LocalAmount;
                 journalLine.ForeignAmount = -journalLine.ForeignAmount;
             }
+            int actionCode = 0;
             switch (journalActionTypeEnum)
             {
-                
                 case MyJournalActionTypeEnum.Credit:
                     journalLine.ActionTypeCodeEnum = MyJournalActionTypeEnum.Credit;
+                    actionCode = (int)MyJournalActionTypeEnum.Credit;
+                    journalLine.ActionCode = actionCode.ToString();
                     journalLine.CreditAccountId = myCurrencySum.AccountId; //
                     journalLine.DebitAccountId= RevenueExpenseGLAccountId; //
                     break;
                 case MyJournalActionTypeEnum.Debit:
                     journalLine.ActionTypeCodeEnum = MyJournalActionTypeEnum.Debit;
+                    actionCode = (int)MyJournalActionTypeEnum.Debit;
+                    journalLine.ActionCode = actionCode.ToString();
                     journalLine.DebitAccountId = myCurrencySum.AccountId; //
                     journalLine.CreditAccountId = RevenueExpenseGLAccountId; //
                     break;

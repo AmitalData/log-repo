@@ -39,7 +39,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ShipmentPackageId).HasColumnName("ShipmentPackageId");
             this.Property(t => t.PackageTypeId).HasColumnName("PackageTypeId");
             this.Property(t => t.Tenant).HasColumnName("Tenant");
-            this.Property(t => t.Quantity).HasColumnName("Quantity");
+            this.Property(t => t.Quantity).HasColumnName("Quantity").IsRequired();
             this.Property(t => t.Height).HasColumnName("Height");
             this.Property(t => t.Width).HasColumnName("Width");
             this.Property(t => t.Length).HasColumnName("Length");

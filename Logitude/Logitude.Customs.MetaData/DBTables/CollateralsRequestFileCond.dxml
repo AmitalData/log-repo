@@ -1,20 +1,53 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Table Name="CollateralsRequestFileConds" Schema="Customs" DBType="Main">
-  <Column Name="CustomsCollateralId" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="CollateralsRequestFileConds"
+  Schema="Customs"
+  DBType="Main">
+  <Column
+    Name="CustomsCollateralId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="ConditionCode" Type="varchar" Size="2">
-    <Constraints PrimaryKey="true" Nullable="false" />
+  <Column
+    Name="ConditionCode"
+    Type="varchar"
+    Size="2">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="LineNumber" Type="int">
-    <Constraints PrimaryKey="true" Nullable="false" />
+  <Column
+    Name="LineNumber"
+    Type="int">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="RequestedAmount" Type="decimal" Precision="18" Scale="2">
-    <Constraints Nullable="true" />
+  <Column
+    Name="RequestedAmount"
+    Type="decimal"
+    Precision="18"
+    Scale="2">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Relation ForeignKeyColumn="CustomsCollateralId,LineNumber" ReferencedTable="CustomsCollateralsAnswers" ReferencedColumn="CustomsCollateralId,LineNumber" ReferencedTableSchema="Customs" />
-  <Relation ForeignKeyColumn="ConditionCode" ReferencedTable="ReturnConditions" ReferencedColumn="Code" ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="CustomsCollateralId,LineNumber"
+    ReferencedTable="CustomsCollateralsAnswers"
+    ReferencedColumn="CustomsCollateralId,LineNumber"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="ConditionCode"
+    ReferencedTable="ReturnConditions"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
 </Table>

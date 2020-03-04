@@ -274,11 +274,15 @@ export class AccountingWorkspaceComponent {
                         case "Interest": {
                             if (this.Page_Interest == null) {
                                 this._entityResourceService.getEntityResourceByTableName("InterestBasesType", 0).subscribe((response: any) => {
+                                    this._entityResourceService.getEntityResourceByTableName("InterestReportLinesByDate", 0).subscribe((response: any) => {
+                                        this._entityResourceService.getEntityResourceByTableName("InterestTransaction", 0).subscribe((response: any) => {
                                     SessionLocator.DynamicLoader.Load("./Accounting/Components/Workspaces/Interest/InterestPageComponent", myLocation.viewContainerRef)
                                         .then(cmpRef => {
                                             this.Page_Interest = cmpRef.instance;
                                             this.Page_Interest.InitComponent();
+                                                });
                                         });
+                                    });
                                 });
                             }
                             break;

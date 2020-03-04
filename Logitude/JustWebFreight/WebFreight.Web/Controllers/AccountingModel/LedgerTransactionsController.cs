@@ -5,6 +5,7 @@ using Logitude.Accounting.Data.EntityListQueryServices;
 using Logitude.Accounting.Data.EntityLists;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Def.EntityPMs;
+using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
@@ -32,6 +33,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
         {
             try
             {
+                string logKey = PerformanceLogger.LogCurrentTime();
                 int tenant = AuthinticateTenant();
 
                 LedgerTransactionBalanceFilter LTBFilter = CreateLTBFilter(filters, tenant);
@@ -50,6 +52,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
                 response.Result = ledgerTransactionBalanceService.Response.MyLedgerTransactionList;
                 response.TookMS= ledgerTransactionBalanceService.Response.TookMS;
+                PerformanceLogger.AddServerExecutionTimeHeader(logKey);
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
 
                 return reponseMessage;

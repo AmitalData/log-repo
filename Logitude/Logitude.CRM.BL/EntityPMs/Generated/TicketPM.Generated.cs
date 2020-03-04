@@ -2544,6 +2544,29 @@ namespace Logitude.CRM.BL.EntityPMs
 			
 		 }
 	   }
+	  private string lastCorrespondence ;
+	  	  
+       
+	   [CustomValidation(typeof(CRMValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string LastCorrespondence  
+	   {
+	    
+	     get
+		{
+		   return lastCorrespondence;
+		 }
+		 set
+		 {
+		   if(lastCorrespondence != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LastCorrespondence",OldValue=lastCorrespondence,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   lastCorrespondence=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

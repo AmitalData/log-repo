@@ -130,10 +130,10 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
                         if (apinvoice.IsGeneralInvoice)
                         {
-                            if(!string.IsNullOrEmpty(apinvoice.EntityType) || !string.IsNullOrEmpty(apinvoice.EntityReference))
-                            {
-                                throw new ApplicationException("A General invoice can't be connected to Entity");
-                            }
+                            //if(!string.IsNullOrEmpty(apinvoice.EntityType) || !string.IsNullOrEmpty(apinvoice.EntityReference))
+                            //{
+                            //    throw new ApplicationException("A General invoice can't be connected to Entity");
+                            //}
                         }
 
                         else
@@ -173,7 +173,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             apinvoicePM.SetApproved = true;
                             apinvoicePM.SetReTransfer = false;
                             apinvoicePM.SetCancelApproval = false;
-
+                            apinvoicePM.CreatedFromAPI = true;
                             if (apinvoicePM.TransferStatusCode == null)
                                 apinvoicePM.TransferStatusCode = "NR";
 
@@ -185,7 +185,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             apinvoicePM = apinvoiceQuery.APInvoiceCustomDataMappingAndValidating(apinvoice, tenant, computingPartnerCode);
                             apinvoicePM.CreatedFromAPI = true;
                         }
-
+                       
                         if (!string.IsNullOrEmpty(apinvoice.ComputingPartnerCode))
                         {
                             ComputingPartnerQuery computingPartnerQuery = new ComputingPartnerQuery(tenant);
@@ -289,7 +289,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 line.VatRecognizedPercentage = vatType.RecognizedPercentage/100;
 
                 // LocalCurrencyAmount,ForiegnCurrencyAmount
-                double? valueInLocal = line.InvoiceCurrencyAmount * apinvoice.InvoiceCurrencyExchangeRate;
+                double? valueInLocal = line.LocalCurrencyAmount == null ? ( line.InvoiceCurrencyAmount * apinvoice.InvoiceCurrencyExchangeRate) : line.LocalCurrencyAmount;
                 line.LocalCurrencyAmount = valueInLocal.Value;
                 line.ForiegnCurrencyAmount = valueInLocal / line.ForiegnExchangeRate;
 
@@ -311,7 +311,10 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
                 line.ChargeTypeGLAccountId = charge.PayableDebitGLAcountId;
             }
+
+          
         }
+      
 
         private TenantPM GetTenantPM(int tenant)
         {

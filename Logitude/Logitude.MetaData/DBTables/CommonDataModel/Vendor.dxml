@@ -1,19 +1,46 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Table Name="Vendors" Schema="dbo" DBType="Main">
-  <Column Name="Id" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="Vendors"
+  Schema="dbo"
+  DBType="Main">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="PrimaryContactName" Type="varchar" Size="60">
-    <Constraints Nullable="true" />
+  <Column
+    Name="PrimaryContactName"
+    Type="varchar"
+    Size="60">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="PrimaryContactEmail" Type="varchar" Size="70">
-    <Constraints Nullable="true" />
+  <Column
+    Name="PrimaryContactEmail"
+    Type="varchar"
+    Size="70">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="PrimaryContactPhone" Type="varchar" Size="25">
-    <Constraints Nullable="true" />
+  <Column
+    Name="PrimaryContactPhone"
+    Type="varchar"
+    Size="25">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Relation ForeignKeyColumn="Id" ReferencedTable="Cards" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="Id"
+    ReferencedTable="Cards"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
 </Table>

@@ -135,6 +135,11 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
             entityPOCO.TotalPrice = entityPM.TotalPrice;
             entityPOCO.SupportDomain = entityPM.SupportDomain;
 
+            entityPOCO.TotalNumberOfUsers = entityPM.TotalNumberOfUsers;
+            entityPOCO.TotalFreeUsers = entityPM.TotalFreeUsers;
+            entityPOCO.AveragePrice = entityPM.AveragePrice;
+            entityPOCO.TotalPaymentamount = entityPM.TotalPaymentamount;
+
             string packageName = null;
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {

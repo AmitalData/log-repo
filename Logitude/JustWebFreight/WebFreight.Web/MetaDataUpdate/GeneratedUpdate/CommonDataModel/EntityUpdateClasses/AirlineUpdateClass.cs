@@ -5252,6 +5252,66 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "StateName",
+					  						OldFieldName =  "StateName",
+					  						ObjectTableName =  "Airline",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  40,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  40,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "StateName",
+					  						ListPropertyPath =  "StateName",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Airline",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "StateName",
+					  						DefaultText =  "State",
+					  						ListFieldLable =  "StateNameListLable",
+					  						ListLableDefaultText =  "State",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
@@ -5273,31 +5333,31 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AirlinesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AirlineTextCode_0.Id, NameTextCodeCode = AirlineTextCode_0.Code, Code = "Airlines",  QueryGroupCode = "ARLN", IndexOrder = 0, Tenant = 0, ObjectTableId = AirlineObjectTable.Id, QuerySection = "Airline", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = AirlineFeature_0.Id,FeatureUniqeCode= AirlineFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AirlinesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AirlineTextCode_0.Id, NameTextCodeCode = AirlineTextCode_0.Code, ObjectTableName = "Airline", Code = "Airlines",  QueryGroupCode = "ARLN", IndexOrder = 0, Tenant = 0, ObjectTableId = AirlineObjectTable.Id, QuerySection = "Airline", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = AirlineFeature_0.Id,FeatureUniqeCode= AirlineFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn AirlinesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirlinesQuery.Id, IndexOrder = 0, ObjectFieldId = AirlineObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == AirlineObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AirlineObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == AirlineObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AirlinesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirlinesQuery.Id,QueryCode = AirlinesQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = AirlineObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == AirlineObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AirlineObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == AirlineObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AirlinesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirlinesQuery.Id, IndexOrder = 1, ObjectFieldId = AirlineObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == AirlineObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AirlineObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == AirlineObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AirlinesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirlinesQuery.Id,QueryCode = AirlinesQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = AirlineObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == AirlineObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AirlineObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == AirlineObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AirlinesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirlinesQuery.Id, IndexOrder = 2, ObjectFieldId = AirlineObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == AirlineObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AirlineObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == AirlineObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AirlinesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirlinesQuery.Id,QueryCode = AirlinesQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = AirlineObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == AirlineObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AirlineObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == AirlineObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AirlinesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirlinesQuery.Id, IndexOrder = 3, ObjectFieldId = AirlineObjectFields.Where(d => d.FieldName == "Prefix" && d.ObjectTableId == AirlineObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AirlineObjectFields.Where(d => d.FieldName == "Prefix" && d.ObjectTableId == AirlineObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AirlinesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirlinesQuery.Id,QueryCode = AirlinesQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = AirlineObjectFields.Where(d => d.FieldName == "Prefix" && d.ObjectTableId == AirlineObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AirlineObjectFields.Where(d => d.FieldName == "Prefix" && d.ObjectTableId == AirlineObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AirlinesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirlinesQuery.Id, IndexOrder = 4, ObjectFieldId = AirlineObjectFields.Where(d => d.FieldName == "ICAO" && d.ObjectTableId == AirlineObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AirlineObjectFields.Where(d => d.FieldName == "ICAO" && d.ObjectTableId == AirlineObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AirlinesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirlinesQuery.Id,QueryCode = AirlinesQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = AirlineObjectFields.Where(d => d.FieldName == "ICAO" && d.ObjectTableId == AirlineObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AirlineObjectFields.Where(d => d.FieldName == "ICAO" && d.ObjectTableId == AirlineObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AirlinesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirlinesQuery.Id, IndexOrder = 5, ObjectFieldId = AirlineObjectFields.Where(d => d.FieldName == "ReceivablesAccountingCard" && d.ObjectTableId == AirlineObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AirlineObjectFields.Where(d => d.FieldName == "ReceivablesAccountingCard" && d.ObjectTableId == AirlineObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AirlinesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirlinesQuery.Id,QueryCode = AirlinesQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = AirlineObjectFields.Where(d => d.FieldName == "ReceivablesAccountingCard" && d.ObjectTableId == AirlineObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AirlineObjectFields.Where(d => d.FieldName == "ReceivablesAccountingCard" && d.ObjectTableId == AirlineObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AirlinesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirlinesQuery.Id, IndexOrder = 6, ObjectFieldId = AirlineObjectFields.Where(d => d.FieldName == "AddedManually" && d.ObjectTableId == AirlineObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AirlineObjectFields.Where(d => d.FieldName == "AddedManually" && d.ObjectTableId == AirlineObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AirlinesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirlinesQuery.Id,QueryCode = AirlinesQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = AirlineObjectFields.Where(d => d.FieldName == "AddedManually" && d.ObjectTableId == AirlineObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AirlineObjectFields.Where(d => d.FieldName == "AddedManually" && d.ObjectTableId == AirlineObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AirlinesQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirlinesQuery.Id, IndexOrder = 7, ObjectFieldId = AirlineObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == AirlineObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AirlineObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == AirlineObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AirlinesQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirlinesQuery.Id,QueryCode = AirlinesQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = AirlineObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == AirlineObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AirlineObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == AirlineObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AirlinesQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirlinesQuery.Id, IndexOrder = 8, ObjectFieldId = AirlineObjectFields.Where(d => d.FieldName == "AWBAccount" && d.ObjectTableId == AirlineObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AirlineObjectFields.Where(d => d.FieldName == "AWBAccount" && d.ObjectTableId == AirlineObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AirlinesQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirlinesQuery.Id,QueryCode = AirlinesQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = AirlineObjectFields.Where(d => d.FieldName == "AWBAccount" && d.ObjectTableId == AirlineObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AirlineObjectFields.Where(d => d.FieldName == "AWBAccount" && d.ObjectTableId == AirlineObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AirlinesQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirlinesQuery.Id, IndexOrder = 9, ObjectFieldId = AirlineObjectFields.Where(d => d.FieldName == "VatNumber" && d.ObjectTableId == AirlineObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AirlineObjectFields.Where(d => d.FieldName == "VatNumber" && d.ObjectTableId == AirlineObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AirlinesQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirlinesQuery.Id,QueryCode = AirlinesQuery.UniqueCode, IndexOrder = 9, ObjectFieldId = AirlineObjectFields.Where(d => d.FieldName == "VatNumber" && d.ObjectTableId == AirlineObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AirlineObjectFields.Where(d => d.FieldName == "VatNumber" && d.ObjectTableId == AirlineObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AirlinesQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirlinesQuery.Id, IndexOrder = 10, ObjectFieldId = AirlineObjectFields.Where(d => d.FieldName == "Remark" && d.ObjectTableId == AirlineObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AirlineObjectFields.Where(d => d.FieldName == "Remark" && d.ObjectTableId == AirlineObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AirlinesQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirlinesQuery.Id,QueryCode = AirlinesQuery.UniqueCode, IndexOrder = 10, ObjectFieldId = AirlineObjectFields.Where(d => d.FieldName == "Remark" && d.ObjectTableId == AirlineObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AirlineObjectFields.Where(d => d.FieldName == "Remark" && d.ObjectTableId == AirlineObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AirlinesQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirlinesQuery.Id, IndexOrder = 11, ObjectFieldId = AirlineObjectFields.Where(d => d.FieldName == "CheckDigit" && d.ObjectTableId == AirlineObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AirlineObjectFields.Where(d => d.FieldName == "CheckDigit" && d.ObjectTableId == AirlineObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AirlinesQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirlinesQuery.Id,QueryCode = AirlinesQuery.UniqueCode, IndexOrder = 11, ObjectFieldId = AirlineObjectFields.Where(d => d.FieldName == "CheckDigit" && d.ObjectTableId == AirlineObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AirlineObjectFields.Where(d => d.FieldName == "CheckDigit" && d.ObjectTableId == AirlineObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 	   
 	    }
 
@@ -5414,7 +5474,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
  
                  
 			   TextCode AirlineAreasTextCode_TH6 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Airline.TH.Areas", DefaultText = "Areas",LocalDefaultText = "Areas", ObjectTableId = AirlineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature AirlineAreasFeature_TH6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Airline.Tab.Areas", ObjectTableId = AirlineObjectTable.Id, Tenant = 0, NameTextCodeCode = "AirlineFeatures.ALAR", NameTextCodeDefaultText = "Areas", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature AirlineAreasFeature_TH6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Airline.Tab.Areas", ObjectTableId = AirlineObjectTable.Id, Tenant = 0, NameTextCodeCode = "AirlineFeatures.ALAR", NameTextCodeDefaultText = "Areas", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
  
                  
 			   TextCode AirlineSurchargeTariffTextCode_TH7 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Airline.TH.SurchargeTariff", DefaultText = "Surcharge Tariff",LocalDefaultText = null, ObjectTableId = AirlineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
@@ -5634,7 +5694,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    {  
 		   FeatureRepository featureRepository = new FeatureRepository(0); 
 		   //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
-		   ObjectTable AirlineObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Airline" && d.Tenant == 0).FirstOrDefault(); 			   Feature AirlineFeature_MB00 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Disconnect", ObjectTableId = AirlineObjectTable.Id, Tenant = 0, NameTextCodeCode = "Airline.Features.DisconnectGLAccount", NameTextCodeDefaultText = "Disconnect GLAccount", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+		   ObjectTable AirlineObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Airline" && d.Tenant == 0).FirstOrDefault(); 			   Feature AirlineFeature_MB00 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Disconnect", ObjectTableId = AirlineObjectTable.Id, Tenant = 0, NameTextCodeCode = "Airline.Features.DisconnectGLAccount", NameTextCodeDefaultText = "Disconnect GLAccount", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
               
 
 		   TextCodeRepository.SubmitChanges();
@@ -5685,15 +5745,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-
-		   		   //--------------> Additional TextCodes <--------------\\
-
- 		   ObjectTable AirlineObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Airline" && d.Tenant == 0).FirstOrDefault(); 
-
- 		   TextCode AirlineTextCode_AirlineTipGeneral = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Airline.Tip.General", DefaultText = " - Airlines are listed  in this pane(%L) - To add a new Airline to your company press the 'new' button(%L)- To import an Airline to your company press the 'add' button(%L)",LocalDefaultText = null, ObjectTableId = AirlineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TIP", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
-   
+	    {     
 	    
 }
 

@@ -33,6 +33,9 @@ export class UpdateSurchargesComponent extends BaseComponent {
     public ToTariffAreaDropButton: string = "ToTariffAreaDropButton";
     public FromSearchAreaId: string = "FromSearchAreaId";
     public ToSearchAreaId: string = "ToSearchAreaId";
+    public TypeCode: string;
+    public FatherComponent: any;
+    public ContainerPricesItemsSource: ContainerPriceClass[];
     constructor() {
         super();
         this.FromTariffAreaDropButton += this.CurrentSession.GetNewId("FromTariffAreaDropButton_1");
@@ -44,8 +47,12 @@ export class UpdateSurchargesComponent extends BaseComponent {
     
     SetWindowArgs(arg: UpdateTariffArgs) {
         this.EntityPM = arg.Version;
+        this.TypeCode = arg.TypeCode;
+        this.FatherComponent = arg.FatherComponent;
+
         this.FillLogs();
         this.FillTariffCharges(arg.TariffCharges);
+        this.FillTariffContainerPrices(arg.TariffCharges);
         this.LoadCarrierAreas(arg.CarrierId);
     }
 
@@ -123,6 +130,20 @@ export class UpdateSurchargesComponent extends BaseComponent {
                 var itemTogleButton: CarrierAreaClass = new CarrierAreaClass(i, this);
                 this.ToCarrierAreas.push(itemTogleButton);
             });
+        }
+    }
+
+    FillTariffContainerPrices(myList: CodeNameClass[]) {
+        this.ContainerPricesItemsSource = [];
+
+        if (this.TypeCode == "OFS") {
+            for (var i = 1; i <= 10; i++) {
+                var charge: CodeNameClass = myList.filter(d => d.Code == this.FatherComponent.EntityPM['Surcharge' + i + 'Id'])[0];
+
+                if (charge != null) {
+                    this.ContainerPricesItemsSource.push(new ContainerPriceClass(charge, this.FatherComponent));
+                }
+            }
         }
     }
 
@@ -330,13 +351,29 @@ export class UpdateSurchargesComponent extends BaseComponent {
             errors.push("Start date is required");
         }
 
-        if (this.TariffChargesObsList.filter(d => d.IsChargeChecked).length == 0) {
-            errors.push("No surcharges updated");
+        if (this.TypeCode == "OFS") {
+            if (this.ContainerPricesItemsSource.filter(d => d.IsChargeChecked).length == 0) {
+                errors.push("No surcharges updated");
+            }
+
+            else {
+                if (this.ContainerPricesItemsSource.filter(d => d.IsChargeChecked &&
+                    AppTool.IsNullOrZero(d.Price1) && AppTool.IsNullOrZero(d.Price2) && AppTool.IsNullOrZero(d.Price3) && AppTool.IsNullOrZero(d.Price4) && AppTool.IsNullOrZero(d.Price5)
+                ).length > 0) {
+                    errors.push("No surcharges updated");
+                }
+            }
         }
 
         else {
-            if (this.TariffChargesObsList.filter(d => d.IsChargeChecked && AppTool.IsNullOrZero(d.NewPrice)).length > 0) {
+            if (this.TariffChargesObsList.filter(d => d.IsChargeChecked).length == 0) {
                 errors.push("No surcharges updated");
+            }
+
+            else {
+                if (this.TariffChargesObsList.filter(d => d.IsChargeChecked && AppTool.IsNullOrZero(d.NewPrice)).length > 0) {
+                    errors.push("No surcharges updated");
+                }
             }
         }
 
@@ -358,9 +395,17 @@ export class UpdateSurchargesComponent extends BaseComponent {
                 args.To.push(item.Indication + "," + item.Id + "," + item.Code);
             });
 
-            this.TariffChargesObsList.filter(d => d.IsChargeChecked).forEach(item => {
-                args.Surcharge.push(item.ChargeId + "," + item.NewPrice + "," + item.NewMinPrice + "," + item.Index + "," + item.ChargeCode);
-            });
+            if (this.TypeCode == "OFS") {
+                this.ContainerPricesItemsSource.filter(d => d.IsChargeChecked).forEach(item => {
+                    args.Surcharge.push(item.ChargeId + "," + item.ChargeCode + "," + item.Price1 + "," + item.Price2 + "," + item.Price3 + "," + item.Price4 + "," + item.Price5);
+                });
+            }
+
+            else {
+                this.TariffChargesObsList.filter(d => d.IsChargeChecked).forEach(item => {
+                    args.Surcharge.push(item.ChargeId + "," + item.NewPrice + "," + item.NewMinPrice + "," + item.Index + "," + item.ChargeCode);
+                });
+            }
 
             var myService: TariffDomainService = new TariffDomainService();
             myService.PostUpdateSurcharge(args).subscribe((response: ServiceResponse) => {
@@ -548,4 +593,101 @@ export class TariffSurchargesUpdateItem {
     public get Surcharges() { return this.EntityPM.Surcharges; }
     public get UpdateMethodCode() { return this.EntityPM.UpdateMethodCode; }
     public get UpdateMethodName() { return this.EntityPM.UpdateMethodName; }
+}
+
+export class ContainerPriceClass extends BaseComponent {
+    public ChargeLabel: string;
+    public ChargeId: string;
+    public ChargeCode: string;
+    public DataContext: ContainerPriceClass = this;
+    constructor(charge: CodeNameClass, public mainComponent: any) {
+        super();
+        this.ChargeLabel = charge.DisplyText;
+        this.ChargeId = charge.Code;
+        this.ChargeCode = charge.Name;
+        this.SetUIProperties();
+    }
+
+    SetUIProperties() {
+        this.SetUIProperties_Price(1);
+        this.SetUIProperties_Price(2);
+        this.SetUIProperties_Price(3);
+        this.SetUIProperties_Price(4);
+        this.SetUIProperties_Price(5);        
+    }
+    private SetUIProperties_Price(index: number) {        
+        this.UIProperties.SetEnabled(("Price" + index), null, this.IsChargeChecked);
+    }
+    
+    private isChargeChecked: boolean;
+    get IsChargeChecked() {
+        return this.isChargeChecked;
+    }
+    set IsChargeChecked(value: boolean) {
+        if (this.isChargeChecked != value) {
+            this.isChargeChecked = value;
+
+            this.SetUIProperties();
+        }
+    }
+
+    private price1: number;
+    get Price1() {
+        return this.price1;
+    }
+    set Price1(value: number) {
+        if (this.price1 != value) {
+            this.price1 = value;
+
+            this.SetUIProperties_Price(1);
+        }
+    }
+
+    private price2: number;
+    get Price2() {
+        return this.price2;
+    }
+    set Price2(value: number) {
+        if (this.price2 != value) {
+            this.price2 = value;
+
+            this.SetUIProperties_Price(2);
+        }
+    }
+
+    private price3: number;
+    get Price3() {
+        return this.price3;
+    }
+    set Price3(value: number) {
+        if (this.price3 != value) {
+            this.price3 = value;
+
+            this.SetUIProperties_Price(3);
+        }
+    }
+
+    private price4: number;
+    get Price4() {
+        return this.price4;
+    }
+    set Price4(value: number) {
+        if (this.price4 != value) {
+            this.price4 = value;
+
+            this.SetUIProperties_Price(4);
+        }
+    }
+
+    private price5: number;
+    get Price5() {
+        return this.price5;
+    }
+    set Price5(value: number) {
+        if (this.price5 != value) {
+            this.price5 = value;
+
+            this.SetUIProperties_Price(5);
+        }
+    }
 }
