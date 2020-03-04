@@ -367,12 +367,12 @@
                                             <div></div>
                                         </td>-->
                                         <td>
-                                            <LogLabel [ObjectFieldName]="'AutomaticPayment'" [ObjectTableName]="ObjectTableName"
+                                            <LogLabel  *ngIf ="IsAutomaticPayment"  [ObjectFieldName]="'AutomaticPayment'" [ObjectTableName]="ObjectTableName"
                                                       [DataContext]="DataContext"></LogLabel>
                                         </td>
                                         <td>
                                             <!-- *ngIf ="IsAutomaticPayment"-->
-                                            <CheckBox [IsChecked]="AutomaticPayment" (change)="OnCheckedAutomaticPayment($event)" [IsEnabled]="!IsDisplayOnly || !DisplayAutomaticPayment"></CheckBox>
+                                            <CheckBox *ngIf ="IsAutomaticPayment" [IsChecked]="AutomaticPayment" (change)="OnCheckedAutomaticPayment($event)" [IsEnabled]="!IsDisplayOnly || !DisplayAutomaticPayment"></CheckBox>
                                         </td>
                                         <td colspan="4"><div></div></td>
                                         <!-- FuturePaymentDateTime -->

@@ -99,6 +99,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
     DisplayAutomaticPayment: boolean= true;
     ClientBankListLogUntilDateyyyyMMdd = "20180820.ClientBankListLogUntilDateyyyyMMdd";
     _CourierWorksheet: DeclarationCourierStatusList;
+    IsAutomaticPayment: boolean;
     constructor() {
         super();
         this.PaymentMethodsList = new ObservableCollection([]);
@@ -108,8 +109,18 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
         this._ErrorLogPMFileLoggerService = new ErrorLogPMFileLoggerService();
         this._ErrorLogPMFileLoggerService.get(this.ClientBankListLogUntilDateyyyyMMdd)
             .subscribe(response => {
-
                 this._2LogBankList = response.Result.IsLogInOn;
+
+                this._CustomsSettingExtendedListService.GetDefault("ISRAEL", "CGG_AVA_AUTOPAY", "NON", "NON", SessionLocator.Tenant).subscribe((response: ServiceResponse) => {
+                     let obj = response.Result;
+                    if (obj) {
+                        let DefaultValue = obj['DefaultValue'];
+                        if (!AppTool.IsNullOrEmpty(DefaultValue) && DefaultValue=="Y") {
+                            this.IsAutomaticPayment = true;
+
+                        }
+                    }
+                });
             });
     }
 
