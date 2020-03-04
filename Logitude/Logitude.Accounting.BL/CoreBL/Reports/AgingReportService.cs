@@ -1202,18 +1202,18 @@ Period	Acc	Currency	Total
 
 
         //ccountCardlist?accountCardlist.CreditLimitAmount:0>>entityList.CreditLimitAmount = entityPOCO.Customer.CreditLimitAmount;
-        public double CreditLimitAmount  { get; set; }
+        public double? CreditLimitAmount { get; set; }
 
         //this.creditStatusAmount = (this.accountCardlist.CreditLimitAmount ? this.accountCardlist.CreditLimitAmount : 0) - this.accountTotal;
-        public decimal CreditStatusAmount { get; set; }
+        public decimal? CreditStatusAmount { get; set; }
         //this.accountCardlist.OpenShipments? this.accountCardlist.OpenShipments:0 
-        public decimal TotalOpenShipments { get; set; }
+        public decimal? TotalOpenShipments { get; set; }
         //+   (this.GLAccountMoreData.TotFutureOpenChequesInLocalCur ? this.GLAccountMoreData.TotFutureOpenChequesInLocalCur : 0)
-        public decimal TotalFutureOpenCheques { get; set; }
+        public decimal? TotalFutureOpenCheques { get; set; }
         //+   (this.GLAccountMoreData.TotalOpenChequesInLocalCur ? this.GLAccountMoreData.TotalOpenChequesInLocalCur : 0)
-        public decimal TotalOpenCheques { get; set; }
-        public double CreditStatusAmount_AsIs { get;  set; }
-        public decimal BalanceInLocalCurrency { get;  set; }
+        public decimal? TotalOpenCheques { get; set; }
+        public double? CreditStatusAmount_AsIs { get; set; }
+        public decimal? BalanceInLocalCurrency { get;  set; }
     }
 
     public class AgingReportParam
