@@ -29,19 +29,19 @@
       <QueryColumn QueryCode="&quot;DERE&quot;" IndexOrder="0" ObjectFieldName="&quot;CustomFileNo&quot;" ColumnWidth="100" />
       <QueryColumn QueryCode="&quot;DERE&quot;" IndexOrder="1" ObjectFieldName="&quot;CustomerName&quot;" ColumnWidth="130" />
       <QueryColumn QueryCode="&quot;DERE&quot;" IndexOrder="2" ObjectFieldName="&quot;OrderNumber&quot;" ColumnWidth="100" />
-      <QueryColumn QueryCode="&quot;DERE&quot;" IndexOrder="3" ObjectFieldName="&quot;TransportModeId&quot;" ColumnWidth="50" />
-      <QueryColumn QueryCode="&quot;DERE&quot;" IndexOrder="4" ObjectFieldName="&quot;DeclarationOfficeCode&quot;" ColumnWidth="100" />
+      <QueryColumn QueryCode="&quot;DERE&quot;" IndexOrder="3" ObjectFieldName="&quot;TransportModeId&quot;" ColumnWidth="100" />
+      <QueryColumn QueryCode="&quot;DERE&quot;" IndexOrder="4" ObjectFieldName="&quot;DeclarationOfficeName&quot;" ColumnWidth="100" />
       <QueryColumn QueryCode="&quot;DERE&quot;" IndexOrder="5" ObjectFieldName="&quot;VendorName&quot;" ColumnWidth="130" />
       <QueryColumn QueryCode="&quot;DERE&quot;" IndexOrder="6" ObjectFieldName="&quot;ArrivalDate&quot;" ColumnWidth="100" />
       <QueryColumn QueryCode="&quot;DERE&quot;" IndexOrder="7" ObjectFieldName="&quot;Weight&quot;" ColumnWidth="100" />
       <QueryColumn QueryCode="&quot;DERE&quot;" IndexOrder="8" ObjectFieldName="&quot;DeclarationStatusTypeName&quot;" ColumnWidth="100" />
-      <QueryColumn QueryCode="&quot;DERE&quot;" IndexOrder="9" ObjectFieldName="&quot;PreClassification&quot;" ColumnWidth="50" />
-      <QueryColumn QueryCode="&quot;DERE&quot;" IndexOrder="10" ObjectFieldName="&quot;ClassificationStatus&quot;" ColumnWidth="50" />
-      <QueryColumn QueryCode="&quot;DERE&quot;" IndexOrder="11" ObjectFieldName="&quot;ControllerStatus&quot;" ColumnWidth="50" />
-      <QueryColumn QueryCode="&quot;DERE&quot;" IndexOrder="12" ObjectFieldName="&quot;CollectionOfMoneyStatus&quot;" ColumnWidth="50" />
+      <QueryColumn QueryCode="&quot;DERE&quot;" IndexOrder="9" ObjectFieldName="&quot;PreClassification&quot;" ColumnWidth="100" />
+      <QueryColumn QueryCode="&quot;DERE&quot;" IndexOrder="10" ObjectFieldName="&quot;ClassificationStatus&quot;" ColumnWidth="100" />
+      <QueryColumn QueryCode="&quot;DERE&quot;" IndexOrder="11" ObjectFieldName="&quot;ControllerStatus&quot;" ColumnWidth="100" />
+      <QueryColumn QueryCode="&quot;DERE&quot;" IndexOrder="12" ObjectFieldName="&quot;CollectionOfMoneyStatus&quot;" ColumnWidth="100" />
       <QueryColumn QueryCode="&quot;DERE&quot;" IndexOrder="13" ObjectFieldName="&quot;FollowUpDate&quot;" ColumnWidth="100" />
-      <QueryColumn QueryCode="&quot;DERE&quot;" IndexOrder="14" ObjectFieldName="&quot;IsExceptional&quot;" ColumnWidth="50" />
-      <QueryColumn QueryCode="&quot;DERE&quot;" IndexOrder="15" ObjectFieldName="&quot;WithPaper&quot;" ColumnWidth="50" />
+      <QueryColumn QueryCode="&quot;DERE&quot;" IndexOrder="14" ObjectFieldName="&quot;IsExceptional&quot;" ColumnWidth="100" />
+      <QueryColumn QueryCode="&quot;DERE&quot;" IndexOrder="15" ObjectFieldName="&quot;WithPaper&quot;" ColumnWidth="100" />
     </QueryColumns>
     <QueryFilters />
   </Query>
