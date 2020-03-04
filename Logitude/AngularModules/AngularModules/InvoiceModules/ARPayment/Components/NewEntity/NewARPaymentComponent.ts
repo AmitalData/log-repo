@@ -223,11 +223,21 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
                 }
             }
         }
+       else if (SessionLocator.TenantPM.AccountingActivated) {
+            if (this.PaymentCurrencyId) {
+                if (this.PaymentCurrencyId != this.TenantPM.CurrencyId) {
 
-        this.RateIsEnabled = isRateEnabled;
-        if (this.accountingActivated) {
-            this.RateIsEnabled = true;
-        }
+                    this.RateIsEnabled = true;
+                }
+                else {
+                    this.RateIsEnabled = false;
+
+                }
+                }
+            }
+
+        
+     
         this.UIProperties.SetEnabled("PaymentCurrencyExchangeRate", this.ObjectTableName, this.RateIsEnabled);
         this.SetUIProperties_Payment();
     }
