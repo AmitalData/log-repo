@@ -15,8 +15,6 @@ import { TariffSettingPM } from '../../../TariffModule/EntityPMs/TariffSettingPM
 import { TariffDomainService } from '../../../TariffModule/Services/TariffDomainService';
 import { PackageTypeList } from '../../../Common/EntityLists/PackageTypeList';
 import { PackageTypeListService } from '../../../Common/Services/StandardLists/PackageTypeListService';
-import { MeasurementListService } from '../../../Common/Services/StandardLists/MeasurementListService';
-import { MeasurementList } from '../../../Common/EntityLists/MeasurementList';
 import { CommonDomainService } from '../../../Common/Services/CommonDomainService';
 
 @Component({
@@ -37,7 +35,6 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit{
     public ChargeTypesQueryFilters: ApiQueryFilters;
     private chargesTypePMService: ChargesTypeListService;
     private packageTypePMService: PackageTypeListService;
-    private measurementPMService: MeasurementListService;
     private IdProps: string[] = [];
     private UOMProps: string[] = [];
     private ContainerTypesProperties: string[] = [];
@@ -90,11 +87,12 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit{
             this.VisibileSurchargesArea = false; 
             this.TariffCurrencyTextCode = "Tariff.F.CurrencyId";
         }
+
         if (this.EntityPM.TypeCode == "OFS") {
             this.VisibleContainerTypeAreaInOFS = true;
             this.HasAContainerTypeUOM = false;
-            this.measurementPMService = new MeasurementListService();
         }
+        
         this.BuildQueryFilters();
         this.SetUIProperties();
     }
@@ -829,17 +827,49 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit{
         myDomainService.GetTenantTariffSetting().subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 var entity: TariffSettingPM = myResponse.Result;
-                if (entity!= null && (this.EntityPM.TypeCode == "AFC" || this.EntityPM.TypeCode == "OLC")) {
-                    if (this.EntityPM.TypeCode == "AFC") {
-                        this.PriceSteps = entity.AirDefaultSteps;
+                if (entity != null) {
+                    if (this.EntityPM.TypeCode == "AFC" || this.EntityPM.TypeCode == "OLC") {
+                        if (this.EntityPM.TypeCode == "AFC") {
+                            this.PriceSteps = entity.AirDefaultSteps;
+                        }
+                        else {
+                            this.PriceSteps = entity.LCLDefaultSteps;
+                        }
+
+                        this.PriceStepsText = this.GetPriceSteps(this.PriceSteps);
                     }
-                    else {
-                        this.PriceSteps = entity.LCLDefaultSteps;
+
+                    if (this.EntityPM.TypeCode == "OFS" || this.EntityPM.TypeCode == "OFC") {
+                        this.GetDefaultContainers(entity);
                     }
-                    this.PriceStepsText = this.GetPriceSteps(this.PriceSteps);
                 }
             }
         });
+    }
+
+    private GetDefaultContainers(setting: TariffSettingPM) {
+        if (!AppTool.IsNullOrEmpty(setting.ContainerDefaults)) {
+            var containersArray: string[] = setting.ContainerDefaults.split(',');
+
+            if (containersArray.length > 0) {
+                var index: number = 1;
+                
+                this.packageTypePMService.getAllFromCache().subscribe((myResponse: ServiceResponse) => {
+                    if (!myResponse.HasError) {
+                        var allPackageTypes: PackageTypeList[] = myResponse.Result;
+
+                        containersArray.forEach(item => {
+                            var packageType: PackageTypeList = allPackageTypes.filter(d => d.Code == item)[0];
+                            if (packageType != null) {
+                                this['ContainerType' + index + 'Id'] = packageType.Id;
+                            }
+
+                            index++;
+                        });
+                    }
+                });
+            }
+        }
     }
 
     EditPriceSteps() {

@@ -31,6 +31,8 @@ namespace Logitude.TariffModule.Data.EntityPOCOs
 	    public string AirDefaultStepsId { get; set; }
         [Column("LCLDefaultStepsId")]
 	    public string LCLDefaultStepsId { get; set; }
+        [Column("ContainerDefaults")]
+	    public string ContainerDefaults { get; set; }
     }
 }
 	 
