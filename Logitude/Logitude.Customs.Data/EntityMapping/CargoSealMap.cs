@@ -21,7 +21,7 @@ namespace Logitude.Customs.Data.EntityMapping
         { 
 			  this.ToTable("CargoSeals", "Customs");
 		
-		    this.HasKey(t => new { t.CargoSealIdentifierId, t.SealNumber });
+		    this.HasKey(t => new { t.Id });
 	 
             this.Property(t => t.CargoSealIdentifierId).HasColumnName("CargoSealIdentifierId").IsRequired().HasMaxLength(15).IsUnicode(false);
 
@@ -38,6 +38,8 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.UpdateReasonCode).HasColumnName("UpdateReasonCode").IsRequired().HasMaxLength(3).IsUnicode(false);
 
             this.Property(t => t.UpdateTypeCode).HasColumnName("UpdateTypeCode").IsRequired().HasMaxLength(2).IsUnicode(false);
+
+            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(15).IsUnicode(false);
         }
     }
 }

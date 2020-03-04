@@ -17,48 +17,48 @@ using Logitude.Customs.Data;
 using Simplog.Server.Infrastructure;
 namespace Logitude.Customs.BL.EntityQueryServices
 { 
-   public partial class CargoSealQueryService: EntityQueryService<CargoSeal,CargoSealKeys,CargoSealPM,CargoSealIdentifierPM,CargoSealIdentifierKeys>
+   public partial class CurrencyTypeTenantQueryService: EntityQueryService<CurrencyTypeTenant,CurrencyTypeTenantKeys,CurrencyTypeTenantPM,object,CurrencyTypeTenantKeys>
    {
    
-        CargoSealRepository repository;
+        CurrencyTypeTenantRepository repository;
 		ICustomContext  context;
-        public CargoSealQueryService(int tenant)
+        public CurrencyTypeTenantQueryService(int tenant)
         {
 		    context = CustomContext.GetContext(tenant);
             MainContext = context;
-            repository = new CargoSealRepository(context);
+            repository = new CurrencyTypeTenantRepository(context);
             Repository = repository;
-            mapping = new CargoSealDataMapping();
+            mapping = new CurrencyTypeTenantDataMapping();
         }
 
-        public CargoSealQueryService(CargoSealRepository repository)
+        public CurrencyTypeTenantQueryService(CurrencyTypeTenantRepository repository)
         {
             this.repository = repository;
             Repository = repository;
-            mapping = new CargoSealDataMapping();
+            mapping = new CurrencyTypeTenantDataMapping();
         }
 
-        public CargoSealQueryService(ICustomContext context)
+        public CurrencyTypeTenantQueryService(ICustomContext context)
         {
-            this.repository = new CargoSealRepository(context);
+            this.repository = new CurrencyTypeTenantRepository(context);
             this.context = context;
 
             MainContext = context;
             Repository = repository;
-            mapping = new CargoSealDataMapping();
+            mapping = new CurrencyTypeTenantDataMapping();
         }
 		 
-		public  CargoSealPM GetSingle(string id,bool getComposition, bool getFromCache)
+		public  CurrencyTypeTenantPM GetSingle(string id,bool getComposition, bool getFromCache)
         {
-             EntityKeys = new CargoSealKeys(){ Id = id };
+             EntityKeys = new CurrencyTypeTenantKeys(){ Id = id };
 
 			 return base.GetSingle(EntityKeys, getComposition, getFromCache);
         }
 
        
-	    protected override EntityKeyFields GetKeys(CargoSeal entityPOCO)
+	    protected override EntityKeyFields GetKeys(CurrencyTypeTenant entityPOCO)
         {
-            CargoSealKeys entityKeys = new CargoSealKeys() { Id = entityPOCO.Id,  };
+            CurrencyTypeTenantKeys entityKeys = new CurrencyTypeTenantKeys() { Id = entityPOCO.Id,  };
             return entityKeys;
         }
      

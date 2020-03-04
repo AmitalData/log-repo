@@ -17,20 +17,20 @@ using Logitude.Customs.Data.EntityLists;
 namespace Logitude.Customs.Data.EntityListQueryServices
 { 
 
-    public partial class CargoSealListQueryService
+    public partial class CurrencyTypeTenantListQueryService
     {
          private ICustomContext context;
-        public CargoSealListQueryService(ICustomContext context)
+        public CurrencyTypeTenantListQueryService(ICustomContext context)
         {
             this.context = context;
         }
 
-        public List<CargoSealList> GetList(QueryOperations queryOperations, int tenant)
+        public List<CurrencyTypeTenantList> GetList(QueryOperations queryOperations, int tenant)
         {
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
 
-            IQueryable<CargoSeal> iQueryable = (from a in context.CargoSeals
+            IQueryable<CurrencyTypeTenant> iQueryable = (from a in context.CurrencyTypeTenants
                                               
                    where a.Tenant == tenant select a);
             			iQueryable = ApplyCustomFilters(queryOperations, iQueryable,tenant);
@@ -40,20 +40,20 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             QueryOperations listQueryOperation = new QueryOperations();
             listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
 
-            iQueryable = filter.GetFilteredQuery<CargoSeal>(nonListQueryOperation, iQueryable);
+            iQueryable = filter.GetFilteredQuery<CurrencyTypeTenant>(nonListQueryOperation, iQueryable);
 
             int skippedPorts = queryOperations.PageIndex;
 
-            IQueryable<CargoSealList> query2 = GetIqueryableList(iQueryable);
+            IQueryable<CurrencyTypeTenantList> query2 = GetIqueryableList(iQueryable);
            
-            query2 = filter.GetFilteredQuery<CargoSealList>(listQueryOperation, query2);
+            query2 = filter.GetFilteredQuery<CurrencyTypeTenantList>(listQueryOperation, query2);
 
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
-                PropertyInfo propInfo = typeof(CargoSealList).GetProperty(queryOperations.SortByColumnName);
-                List<ObjectField> CargoSealObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Customs.CargoSeal",tenant).ToList();
+                PropertyInfo propInfo = typeof(CurrencyTypeTenantList).GetProperty(queryOperations.SortByColumnName);
+                List<ObjectField> CurrencyTypeTenantObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Customs.CurrencyTypeTenant",tenant).ToList();
 
-                ObjectField objectField = (from a in CargoSealObjectFields
+                ObjectField objectField = (from a in CurrencyTypeTenantObjectFields
                                            where a.FieldName == queryOperations.SortByColumnName
                                            select a).FirstOrDefault();
 
@@ -61,7 +61,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                 {
 				 if (objectField.IsCustom)
                     {
-                        query2 = sortClass.GetSorterQuery<CargoSealList, string>(queryOperations, query2);
+                        query2 = sortClass.GetSorterQuery<CurrencyTypeTenantList, string>(queryOperations, query2);
                     }
                     else
                     {
@@ -70,41 +70,41 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                          case "ntext":
                         case "text":
                             {
-                                query2 = sortClass.GetSorterQuery<CargoSealList, string>(queryOperations, query2);
+                                query2 = sortClass.GetSorterQuery<CurrencyTypeTenantList, string>(queryOperations, query2);
                                 break;
                             }
 						case "sigdouble":
 						case "double":
                             {
-                                query2 = sortClass.GetSorterQuery<CargoSealList, double>(queryOperations, query2);
+                                query2 = sortClass.GetSorterQuery<CurrencyTypeTenantList, double>(queryOperations, query2);
                                 break;
                             }
 						case "date":
                         case "datetime":
                             {
-                                query2 = sortClass.GetSorterQuery<CargoSealList, DateTime>(queryOperations, query2);
+                                query2 = sortClass.GetSorterQuery<CurrencyTypeTenantList, DateTime>(queryOperations, query2);
                                 break;
                             }
 						case "unsinteger":
                         case "integer":
                             {
-                                query2 = sortClass.GetSorterQuery<CargoSealList, int>(queryOperations, query2);
+                                query2 = sortClass.GetSorterQuery<CurrencyTypeTenantList, int>(queryOperations, query2);
                                 break;
                             }
                         case "boolean":
                             {
-                                query2 = sortClass.GetSorterQuery<CargoSealList, bool>(queryOperations, query2);
+                                query2 = sortClass.GetSorterQuery<CurrencyTypeTenantList, bool>(queryOperations, query2);
                                 break;
                             }
 						case "unsdecimal":
 						case "decimal":
                             {
-                                query2 = sortClass.GetSorterQuery<CargoSealList, decimal>(queryOperations, query2);
+                                query2 = sortClass.GetSorterQuery<CurrencyTypeTenantList, decimal>(queryOperations, query2);
                                 break;
                             }
                         default:
                             {
-                                query2 = query2.OrderBy(d => d.CargoSealIdentifierId);
+                                query2 = query2.OrderBy(d => d.Id);
                                 break;
                             }
                     }
@@ -113,7 +113,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             }
 		    else
             {
-                query2 = query2.OrderBy(d => d.CargoSealIdentifierId);
+                query2 = query2.OrderBy(d => d.Id);
             }
 			if(!queryOperations.GetAll)
 			{
@@ -125,21 +125,21 @@ namespace Logitude.Customs.Data.EntityListQueryServices
     
         }
 
-         public List<CargoSealList> GetList(int tenant)
+         public List<CurrencyTypeTenantList> GetList(int tenant)
          {
              return GetList(new QueryOperations() { QueryFilterItems=new List<QueryFilterItem>(),PageIndex = 0,GetAll = true},tenant);
          }
 
-        public CargoSealList GetSingle(string id)
+        public CurrencyTypeTenantList GetSingle(string id)
         {
-            IQueryable<CargoSeal> CargoSealQuery = (from a in context.CargoSeals
+            IQueryable<CurrencyTypeTenant> CurrencyTypeTenantQuery = (from a in context.CurrencyTypeTenants
                                                        where a.Id == id
                                                        select a);
 
              
-            IQueryable<CargoSealList> CargoSealListQuery = GetIqueryableList( CargoSealQuery);
-            CargoSealList CargoSealList = CargoSealListQuery.FirstOrDefault();
-            return CargoSealList;
+            IQueryable<CurrencyTypeTenantList> CurrencyTypeTenantListQuery = GetIqueryableList( CurrencyTypeTenantQuery);
+            CurrencyTypeTenantList CurrencyTypeTenantList = CurrencyTypeTenantListQuery.FirstOrDefault();
+            return CurrencyTypeTenantList;
            
         }
 
@@ -148,7 +148,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
 
-            IQueryable<CargoSeal> iQueryable = (from a in context.CargoSeals 
+            IQueryable<CurrencyTypeTenant> iQueryable = (from a in context.CurrencyTypeTenants 
                    where a.Tenant == tenant select a);
 
 			  			iQueryable = ApplyCustomFilters(queryOperations, iQueryable,tenant);
@@ -158,11 +158,11 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             QueryOperations listQueryOperation = new QueryOperations();
             listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
             
-			iQueryable = filter.GetFilteredQuery<CargoSeal>(nonListQueryOperation, iQueryable);
+			iQueryable = filter.GetFilteredQuery<CurrencyTypeTenant>(nonListQueryOperation, iQueryable);
 
-            IQueryable<CargoSealList> query2 = GetIqueryableList(iQueryable);
+            IQueryable<CurrencyTypeTenantList> query2 = GetIqueryableList(iQueryable);
 
-            query2 = filter.GetFilteredQuery<CargoSealList>(listQueryOperation, query2);
+            query2 = filter.GetFilteredQuery<CurrencyTypeTenantList>(listQueryOperation, query2);
             int count = query2.Count();
             return count;
         }
