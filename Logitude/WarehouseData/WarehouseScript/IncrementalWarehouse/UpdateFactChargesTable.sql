@@ -225,7 +225,11 @@
 
 			end 
 				
-
+				
+				if(@InvoiceCurrency is null)
+				begin 
+				set @InvoiceCurrency = 1;
+				end
 
 
 
