@@ -83,7 +83,9 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         public IQueryable<JournalLineLedgerTransactionAccDTO>
             GetQJournalLinesByExternalNo_NotReconciled(int tenant)
         {
-            IQueryable<JournalLine> q1 = (from jline in this.repository.GetAll(tenant)
+            IQueryable<JournalLine> q1 = (from jline in this.repository.GetAll(tenant).Where(rec => rec.ExternalReconcileNumber != null && rec.ExternalReconcileNumber != ""
+                         && rec.ExternalReconcileNumber != "0"
+                         && rec.ExternalReconcileNumber != "0.00" && rec.ExternalReconcileNumber != "000000000000000" && rec.ExternalReconcileNumber != "99999999")
                      join journals in (context as AccountingContext).Journals.Where(r => r.Tenant == tenant && r.ExternalNo != null)
                      on jline.JournalId equals journals.Id
                      select jline);
@@ -104,6 +106,33 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return q;
         }
 
+
+        public IQueryable<JournalLineLedgerTransactionAccDTO>
+            GetQJournalLinesByExternalNoGLAcc_NotReconciled(int tenant, string gLAccountId)
+        {
+            IQueryable<JournalLine> q1 = (from jline in this.repository.GetAll(tenant).Where(rec => rec.ExternalReconcileNumber != null && rec.ExternalReconcileNumber != ""
+                         && rec.ExternalReconcileNumber != "0"
+                         && rec.ExternalReconcileNumber != "0.00" && rec.ExternalReconcileNumber != "000000000000000" && rec.ExternalReconcileNumber != "99999999"
+                         && (rec.ActionCode == "1" && rec.CreditAccountId == gLAccountId || rec.ActionCode != "1" && rec.DebitAccountId == gLAccountId))
+                                          join journals in (context as AccountingContext).Journals.Where(r => r.Tenant == tenant && r.ExternalNo != null)
+                                          on jline.JournalId equals journals.Id
+                                          select jline);
+
+            IQueryable<JournalLineLedgerTransactionAccDTO> q = (from jl in q1
+                         .Where(rec => rec.ExternalReconcileNumber != null)
+                                                                join trans in (context as AccountingContext).LedgerTransactions.Where(r => r.Tenant == tenant && r.IsReconciled == false)
+                                                                on new { jl.JournalId, jl.Line }
+                                                                equals new { trans.JournalId, Line = trans.JournalLineNumber }
+                                                                into joinT
+                                                                from joinr in joinT
+                                                                select new JournalLineLedgerTransactionAccDTO
+                                                                {
+                                                                    JournalLine = jl,
+                                                                    LedgerTransaction = joinr,
+                                                                    AccId = jl.ActionCode == "1" ? jl.CreditAccountId : jl.DebitAccountId,
+                                                                });
+            return q;
+        }
 
 
         public IQueryable<JournalLineLedgerDTO> GetJournalLineAsLedgerTransaction(DateTime fromTruncateTime, DateTime toTruncateTime, int tenant

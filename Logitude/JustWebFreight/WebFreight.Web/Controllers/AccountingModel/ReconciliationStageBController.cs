@@ -112,6 +112,54 @@ namespace WebFreight.Web.Controllers.AccountingModel
             }
         }
 
+        public HttpResponseMessage GetReconciliationStageBNoBatchGLAcc(int tenant, string gLAccountId, int noBatch)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+
+                bool batchIt = true;
+                if (noBatch == 1) batchIt = false;
+                if (batchIt)
+                {
+                    var accountingContext = AccountingContext.GetContext(tenant);
+
+                    var myBatchReconciliationStageBTask = new BatchReconciliationStageBTask(null);
+                    string subj = $"Reconciliation Stage B";
+                    var batchTaskId = myBatchReconciliationStageBTask.CreateQBatchTaskExecution<ReconciliationStageBArg>(
+                        new ReconciliationStageBArg()
+                        {
+                            Tenant = tenant,
+                            GLAccountId = gLAccountId,
+                        }, tenant, subj, false);
+
+
+                    var res1 = new { Success = true, Message = $"Send to Batch Task {batchTaskId}" };
+                    return Request.CreateResponse(HttpStatusCode.Accepted, res1);
+                }
+                else
+                {
+                    ReconciliationStageBBatch reconciliationStageBBatch = new ReconciliationStageBBatch();
+                    ReconciliationStageBArg reconciliationStageBArg = new ReconciliationStageBArg()
+                    {
+                        Tenant = tenant,
+                        GLAccountId = gLAccountId,
+                    };
+                    reconciliationStageBBatch.RunReconciliationStageB(reconciliationStageBArg);
+                    string responseText = reconciliationStageBBatch.ResponseText();
+                    HttpStatusCode StatusCode = reconciliationStageBBatch.StatusCode();
+                    var res1 = new { Success = true, Message = responseText };
+
+                    return Request.CreateResponse(StatusCode, res1);
+
+                }
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
 
     }
 }
