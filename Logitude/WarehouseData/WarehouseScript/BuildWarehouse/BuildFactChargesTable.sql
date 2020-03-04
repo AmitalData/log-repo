@@ -119,7 +119,7 @@
     inner JOIN NewDIM_SpecialServicesTypes   ON dw_Shipments.SpecialServicesTypeId = NewDIM_SpecialServicesTypes.Id
     inner JOIN ShipmentPayablesReceivables ON dw_Shipments.Id = ShipmentPayablesReceivables.ShipmentId
     inner JOIN NewDIM_ChargesTypes  ON ShipmentPayablesReceivables.ChargesTypeId = NewDIM_ChargesTypes.Id
-    inner JOIN NewDIM_Currencies InvoiceCurrency ON ShipmentPayablesReceivables.InvoiceCurrencyId = InvoiceCurrency.Id
+    left JOIN NewDIM_Currencies InvoiceCurrency ON ShipmentPayablesReceivables.InvoiceCurrencyId = InvoiceCurrency.Id
 	where dw_Shipments.IsCancelled = 0 and dw_Shipments.ShipmentLevelCode in ('H','D') 
 
 	OPEN ShipmentsChargesCursor FETCH NEXT FROM ShipmentsChargesCursor    INTO   @ShipmentId ,@SourceTenant, @ParentTenant ,@Direction , @TransportMode, @DirectHouse , @Type , @Department , @Branch , @ShipmentNumber , @House , @Master , @Agent, @Customer 

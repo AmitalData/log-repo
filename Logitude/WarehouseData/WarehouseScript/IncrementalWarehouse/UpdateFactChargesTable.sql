@@ -134,7 +134,7 @@
     inner JOIN DIM_SpecialServicesTypes   ON dw_Shipments.SpecialServicesTypeId = DIM_SpecialServicesTypes.Id
     inner JOIN ShipmentPayablesReceivables ON dw_Shipments.Id = ShipmentPayablesReceivables.ShipmentId
     inner JOIN DIM_ChargesTypes  ON ShipmentPayablesReceivables.ChargesTypeId = DIM_ChargesTypes.Id
-    inner JOIN DIM_Currencies InvoiceCurrency ON ShipmentPayablesReceivables.InvoiceCurrencyId = InvoiceCurrency.Id
+    left JOIN DIM_Currencies InvoiceCurrency ON ShipmentPayablesReceivables.InvoiceCurrencyId = InvoiceCurrency.Id
 	where dw_Shipments.AutomaticLastUpdateDate > @LastUpdateDate and dw_Shipments.ShipmentLevelCode in ('H','D')
 
 
