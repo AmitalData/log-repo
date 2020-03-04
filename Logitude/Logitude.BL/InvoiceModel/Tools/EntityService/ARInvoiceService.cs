@@ -2202,6 +2202,27 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                     }
                                 }
 
+                                if (item.IsRegionalTax)
+                                {
+                                    newItem.LocalCurrencyAmount = item.LocalCurrencyAmount + newItem.LocalCurrencyAmount * (entityPM.RegionalTaxPercentage / 100);
+                                    newItem.InvoiceCurrencyAmount = item.InvoiceCurrencyAmount + item.InvoiceCurrencyAmount * (entityPM.RegionalTaxPercentage / 100);
+                                    newItem.ProfitCurrencyAmount = item.ProfitCurrencyAmount + item.ProfitCurrencyAmount * (entityPM.RegionalTaxPercentage / 100);
+
+                                    InvoiceTotalsClass newRegionalTaxItem = new InvoiceTotalsClass()
+                                    {
+                                        Id = item.VatTypeId,
+                                        VatTypeId = item.VatTypeId,
+                                        VatTypePercentage = entityPM.RegionalTaxPercentage,
+                                        LocalCurrencyAmount = item.LocalCurrencyAmount,
+                                        InvoiceCurrencyAmount = item.InvoiceCurrencyAmount,
+                                        ProfitCurrencyAmount = item.ProfitCurrencyAmount,
+                                        ExternalVatCard = newItem.ExternalVatCard,
+                                        ExternalTAXItemId = newItem.ExternalTAXItemId,
+                                    };
+
+                                    group_Source.Add(newRegionalTaxItem);
+                                }
+
                                 group_Source.Add(newItem);
                             }
 

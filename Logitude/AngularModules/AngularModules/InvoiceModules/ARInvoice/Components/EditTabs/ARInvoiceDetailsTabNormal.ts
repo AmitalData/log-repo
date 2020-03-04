@@ -94,6 +94,24 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
         }
 
         this.BuildInvoiceNumberFilters();
+        this.SetRegionalTaxVisibility();
+    }
+
+    public IsRegionalTaxVisible: boolean = false;
+    private SetRegionalTaxVisibility() {
+        var isVisible: boolean = false;
+
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.RegionalTaxId)) {
+            isVisible = true;
+        }
+
+        else if (FeatureLocator.HasFeaturePermession("General", "REGIONALTAX")) {
+            if (SessionLocator.AccountingSettingPM.AllowRegionalTaxManagement) {
+                isVisible = true;
+            }
+        }
+
+        this.IsRegionalTaxVisible = isVisible;
     }
 
     public IsFixMeButtonVisible: boolean = false;
@@ -265,6 +283,7 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
         this.UIProperties.SetEnabled("VatNumber", this.ObjectTableName, isEditingEnabled);
         this.UIProperties.SetEnabled("InvoiceDate", this.ObjectTableName, isInvoiceDateEnabled);
         this.UIProperties.SetEnabled("VatTypeId", this.ObjectTableName, isEditingEnabled);
+        this.UIProperties.SetEnabled("RegionalTaxId", this.ObjectTableName, isEditingEnabled);
 
         // Generated General Tab
         if (this.EntityPM != null) {
@@ -1277,7 +1296,26 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
                         myQroupItem.InvoiceCurrencyAmount = item.InvoiceCurrencyAmount;
                         myQroupItem.ProfitCurrencyAmount = item.ProfitCurrencyAmount;
                         myQroupItem.ExternalVatCard = SessionLocator.AccountingSettingPM.ReceivableVATCard;
-                        myQroupItem.ExternalTAXItemId = lineVatType.ExternalTAXItemId;
+                        myQroupItem.ExternalTAXItemId = lineVatType.ExternalTAXItemId;                        
+
+                        if (item.IsRegionalTax) {
+
+                            myQroupItem.LocalCurrencyAmount = item.LocalCurrencyAmount + item.LocalCurrencyAmount * (this.RegionalTaxPercentage / 100);
+                            myQroupItem.InvoiceCurrencyAmount = item.InvoiceCurrencyAmount + item.InvoiceCurrencyAmount * (this.RegionalTaxPercentage / 100);
+                            myQroupItem.ProfitCurrencyAmount = item.ProfitCurrencyAmount + item.ProfitCurrencyAmount * (this.RegionalTaxPercentage / 100);
+
+                            var regionalTaxItem = new InvoiceTotalsClass();
+                            regionalTaxItem.Id = lineVatType.Id;
+                            regionalTaxItem.VatTypeId = lineVatType.Id;
+                            regionalTaxItem.VatTypePercentage = this.RegionalTaxPercentage;
+                            regionalTaxItem.LocalCurrencyAmount = item.LocalCurrencyAmount;
+                            regionalTaxItem.InvoiceCurrencyAmount = item.InvoiceCurrencyAmount;
+                            regionalTaxItem.ProfitCurrencyAmount = item.ProfitCurrencyAmount;
+                            regionalTaxItem.ExternalVatCard = SessionLocator.AccountingSettingPM.ReceivableVATCard;
+                            regionalTaxItem.ExternalTAXItemId = lineVatType.ExternalTAXItemId;
+                            group_Source.push(regionalTaxItem);
+                        }
+
                         group_Source.push(myQroupItem);
                     }
 
@@ -1639,6 +1677,43 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
         this.IsInvoiceNumberComboBoxEnabled = false;
         this.CurrentSession.CurrentEditComponent.SaveChanges(msg);
     }
+
+    // RegionalTaxId
+    get RegionalTaxId() { return this.EntityPM.RegionalTaxId; }
+    set RegionalTaxId(newValue: string) {
+        if (this.EntityPM.RegionalTaxId != newValue) {
+            this.EntityPM.RegionalTaxId = newValue;
+            
+            if (AppTool.IsNullOrEmpty(newValue)) {
+                this.RegionalTaxPercentage = null;
+            }
+
+            else {
+                this.RegionalTaxPercentage = this.GetVatTypePercentage(newValue);
+            }
+        }
+    }
+
+    get RegionalTaxPercentage() {
+
+        var output: number = 0;
+
+        if (this.EntityPM.RegionalTaxPercentage) {
+            output = this.EntityPM.RegionalTaxPercentage;
+        }
+
+        return output;
+    }
+    set RegionalTaxPercentage(newValue: number) {
+        if (this.EntityPM.RegionalTaxPercentage != newValue) {
+            this.EntityPM.RegionalTaxPercentage = AppTool.Round(newValue, 2);
+            this.ComputeTotals();
+
+            //this.ItemsSource.filter(f => f.IsRegionalTax == true).forEach(item => {
+                
+            //});
+        }
+    }
 }
 export class ARInvoiceLineItem extends BaseComponent {
     public EntityPM: ARInvoiceLinePM = null;
@@ -1675,21 +1750,16 @@ export class ARInvoiceLineItem extends BaseComponent {
         this.UIProperties.SetEnabled("ForiegnCurrencyAmount", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("LocalCurrencyAmount", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("InvoiceCurrencyAmount", this.ObjectTableName, false);
-
-        this.UIProperties.SetVisibility("InvoiceCurrencyAmount", this.ObjectTableName, false);
-
-        if (this.fatherComponent.InvoiceCurrencyId != this.LocalCurrencyId) {
-            this.UIProperties.SetVisibility("InvoiceCurrencyAmount", this.ObjectTableName, true);
-        }
-
         this.UIProperties.SetEnabled("Description", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("LocalDescription", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("Quantity", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("UnitPrice", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("Notes", this.ObjectTableName, this.IsEditingEnabled);
+        this.UIProperties.SetEnabled("IsRegionalTax", this.ObjectTableName, this.IsEditingEnabled);
 
         this.SetUIProperties_Rate();
         this.SetUIProperties_VAT();
+        this.InvoiceCurrencyAmountVisibility();
     }
     SetUIProperties_Rate() {
         var isFieldEnabled = false;
@@ -1730,6 +1800,21 @@ export class ARInvoiceLineItem extends BaseComponent {
         }
 
         this.UIProperties.SetRequired("VatPercentage", this.ObjectTableName, isVatPercentageRequired);
+    }
+
+
+    public IsInvoiceCurrencyAmountVisible: boolean = false;
+    private InvoiceCurrencyAmountVisibility() {
+
+        var isVisible: boolean = false;
+
+        if (this.fatherComponent.InvoiceCurrencyId != this.LocalCurrencyId) {
+            isVisible = true;
+        }
+
+
+        this.IsInvoiceCurrencyAmountVisible = isVisible;
+        this.UIProperties.SetVisibility("InvoiceCurrencyAmount", this.ObjectTableName, isVisible);
     }
 
     public CellBackground: string;
@@ -2270,5 +2355,13 @@ export class ARInvoiceLineItem extends BaseComponent {
         }
 
         this.fatherComponent.ComputeTotals();
+    }
+
+    get IsRegionalTax() { return this.EntityPM.IsRegionalTax; }
+    set IsRegionalTax(newValue: boolean) {
+        if (this.EntityPM.IsRegionalTax != newValue) {
+            this.EntityPM.IsRegionalTax = newValue;
+            this.ReCalculateTotals();
+        }
     }
 }
