@@ -29,14 +29,20 @@ namespace WarehouseData.Helper
         #region Rename Data Warehouse Tables
         public string RenameAllDataWarehouseTables(List<TableClass> tables)
         {
-            string result = string.Empty;
-            foreach (TableClass table in tables.Where(d=>d.HasDimensionTable || d.HasFactTable))
+            StringBuilder resultBuilder = new StringBuilder();
+            foreach (TableClass table in tables.Where(d=>d.HasFactTable))
             {
-                result += RenameDataWarehouseTable(table);
-                result += RenameDataWarehouseConstraint(table);
+                resultBuilder.Append(RenameDataWarehouseTable(table));
+                resultBuilder.Append(RenameDataWarehouseConstraint(table));
             }
 
-            return result;
+            foreach (TableClass table in tables.Where(d => d.HasDimensionTable))
+            {
+                resultBuilder.Append(RenameDataWarehouseTable(table));
+                resultBuilder.Append(RenameDataWarehouseConstraint(table));
+            }
+
+            return resultBuilder.ToString();
         }
         private string RenameDataWarehouseTable(TableClass table)
         {
@@ -81,30 +87,27 @@ namespace WarehouseData.Helper
    
         public string AddRelationsBetweenFactAndDimensionTables(List<TableClass> tableLists)
         {
-            string result = string.Empty;
 
+            StringBuilder resultBuilder = new StringBuilder();
             foreach (TableClass table in tableLists.Where(d => d.HasFactTable))
             {
-                string sql = "IF OBJECT_ID ('" + table.DWObjectTableCode + "', 'U')  IS NOT NULL \r\n begin \r\n";
-
+                StringBuilder sqlStringBuilder = new StringBuilder();
+                sqlStringBuilder.Append("IF OBJECT_ID ('" + table.DWObjectTableCode + "', 'U')  IS NOT NULL \r\n begin \r\n");
                 foreach (DWObjectFieldDB objectFieldDB in table.DWObjectFieldDBLists.Where(d => !string.IsNullOrWhiteSpace(d.DimensionTableCode) && d.DimensionTableCode != "DIM_Dates"))
                 {
                     TableClass dimensionTable = tableLists.Where(d => d.DWObjectTableCode == objectFieldDB.DimensionTableCode).FirstOrDefault();
-
                     string field = objectFieldDB.FieldName.Replace("[", "").Replace("]", "");
 
                     if (dimensionTable != null)
                     {
                         string dimensionTableKey = GetTablePrimaryKey(dimensionTable);
-                        sql += (" ALTER TABLE " + table.DWObjectTableCode + " ADD CONSTRAINT FK_" + table.DWObjectTableCode + "_" + objectFieldDB.DimensionTableCode + "_" + field.Replace(" ", "") + " FOREIGN KEY ([" + field + "]) REFERENCES " + objectFieldDB.DimensionTableCode + "([" + dimensionTableKey + "])\r\n");
+                        sqlStringBuilder.Append((" ALTER TABLE " + table.DWObjectTableCode + " ADD CONSTRAINT FK_" + table.DWObjectTableCode + "_" + objectFieldDB.DimensionTableCode + "_" + field.Replace(" ", "") + " FOREIGN KEY ([" + field + "]) REFERENCES " + objectFieldDB.DimensionTableCode + "([" + dimensionTableKey + "])\r\n"));
                     }
                 }
-                sql += (" CREATE NONCLUSTERED INDEX [IX_" + table.DWObjectTableCode + "_Id" + "] ON [dbo].[" + table.DWObjectTableCode + "]([Id]) \r\n end");
-
-
+                sqlStringBuilder.Append(("\r\n end \r\n"));
+                resultBuilder.Append(sqlStringBuilder.ToString());
             }
-
-            return result;
+            return resultBuilder.ToString();
         }
 
 

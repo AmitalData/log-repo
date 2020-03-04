@@ -103,7 +103,6 @@ namespace WarehouseData
                         MainDataWarehouseService mainDataWarehouseService = new MainDataWarehouseService();
                         string sourceConnectionString = mainDataWarehouseService.BuildConnectionString(sourceConnectionArray[0], sourceConnectionArray[1], sourceConnectionArray[2], sourceConnectionArray[3]);
                         string destinationConnectionString = mainDataWarehouseService.BuildConnectionString(destinationConnectionArray[0], destinationConnectionArray[1], destinationConnectionArray[2], destinationConnectionArray[3]);
-
                         string stepName = "";
                         try
                         {
@@ -137,7 +136,6 @@ namespace WarehouseData
 
                             foreach (TableClass table in tableNameLists.Where(d=>!d.HasFactTable))
                             {
-                                
                                 stepName = table.DBTableName;
 
                                     Stopwatch stopWatchDWTable = null;
@@ -177,7 +175,7 @@ namespace WarehouseData
      
                             foreach (TableClass table in tableNameLists.Where(d => d.HasDimensionTable).ToList())
                             {
-                                    Stopwatch stopWatchDimensionsTable = null;
+                                Stopwatch stopWatchDimensionsTable = null;
                              
                                     if (table.DispayInScreen)
                                     {
@@ -206,8 +204,7 @@ namespace WarehouseData
                             #region  Create and Build Fact Table
                             foreach (TableClass table in tableNameLists.Where(d => d.HasFactTable).ToList())
                             {
-                               
-                                    stepName = table.BuildScriptName;
+                                stepName = table.BuildScriptName;
 
                                     Stopwatch stopWatchDFactTable = new Stopwatch();
                                     stopWatchDFactTable.Start();
