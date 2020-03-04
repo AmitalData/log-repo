@@ -536,7 +536,13 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
             editWindow.Title = "Price Check";
             editWindow.Height = 770;
             editWindow.Width = 1500;
-            editWindow.ShowEditComponent(item.TariffId, "Tariff", item.VersionId);
+
+            var code = item.VersionId;
+            if (!AppTool.IsNullOrEmpty(item.LineId)) {
+                code = code + "," + item.LineId;
+            }
+
+            editWindow.ShowEditComponent(item.TariffId, "Tariff", code);
         }
     }
 
@@ -548,7 +554,13 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
             editWindow.Title = "Price Check";
             editWindow.Height = 770;
             editWindow.Width = 1500;
-            editWindow.ShowEditComponent(surcharge.TariffId, "Tariff", surcharge.VersionId);
+
+            var code = surcharge.VersionId;
+            if (!AppTool.IsNullOrEmpty(surcharge.LineId)) {
+                code = code + "," + surcharge.LineId;
+            }
+
+            editWindow.ShowEditComponent(surcharge.TariffId, "Tariff", code);
         }
     }
 

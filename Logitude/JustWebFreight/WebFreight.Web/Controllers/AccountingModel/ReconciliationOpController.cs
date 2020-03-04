@@ -291,23 +291,23 @@ tenant);
 
 
                 LedgerTransactionListQueryService transactionQuery = new LedgerTransactionListQueryService(AccountingContext.GetContext(tenant));
+                List<LedgerTransactionList> openReconciliation = transactionQuery.GetOpenLedgerTransactions(queryOperations, gLAccountId, TransferGlAccountId, tenant);
+                int transactionsCount = transactionQuery.GetOpenLedgerTransactionsCount(queryOperations, gLAccountId, TransferGlAccountId, tenant);
 
-                GenericCallBack callback = transactionQuery.GetReconciliationFilterCallBack(queryOperations, gLAccountId, tenant, false);
-                GenericCallBack callback_transfer = transactionQuery.GetExternalReconciliationFilterCallBack(queryOperations, TransferGlAccountId, tenant);
+                //GenericCallBack callback = transactionQuery.GetReconciliationFilterCallBack(queryOperations, gLAccountId, tenant, false);
+                //GenericCallBack callback_transfer = transactionQuery.GetExternalReconciliationFilterCallBack(queryOperations, TransferGlAccountId, tenant);
 
-                List<LedgerTransactionList> openReconciliation = transactionQuery.GetReconciliationFilterList(queryOperations, callback, gLAccountId, tenant);
-                List<LedgerTransactionList> openReconciliation_transfer = transactionQuery.GetReconciliationFilterListForTransferGLAccount(queryOperations, callback_transfer, TransferGlAccountId, tenant);
 
-                openReconciliation = openReconciliation.Concat(openReconciliation_transfer).ToList();
+                //List<LedgerTransactionList> openReconciliation = transactionQuery.GetReconciliationFilterList(queryOperations, callback, gLAccountId, tenant);
+                //List<LedgerTransactionList> openReconciliation_transfer = transactionQuery.GetReconciliationFilterListForTransferGLAccount(queryOperations, callback_transfer, TransferGlAccountId, tenant);
+
+                //openReconciliation = openReconciliation.Concat(openReconciliation_transfer).ToList();
 
                 //openReconciliation = openReconciliation.OrderByDescending(d => d.DocumentDate).ToList();
 
                 ServiceResponse response = new ServiceResponse();
                 if (filters.GetCount)
-                {
-                    int count = callback.TotalRecord + callback_transfer.TotalRecord;
-                    response.Count = count;
-                }
+                    response.Count = transactionsCount;
 
                 response.Result = openReconciliation;
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);

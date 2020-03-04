@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -89,6 +90,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string StateId { get; set; }
         public string StateName { get; set; }
         public string CombinedCode { get; set; }
+        public DateTime? AutomaticLastUpdateDate { get; set; }
 
         [ForeignKey("StateId")]
         public virtual State State { get; set; }

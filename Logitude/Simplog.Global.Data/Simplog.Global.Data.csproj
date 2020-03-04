@@ -409,6 +409,10 @@
     <Compile Include="Migrations\202002250701051_WesamAddSearchFieldsToWebHookKeysTable.Designer.cs">
       <DependentUpon>202002250701051_WesamAddSearchFieldsToWebHookKeysTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202003031004593_WesamGlobalDBMigrationFixes.cs" />
+    <Compile Include="Migrations\202003031004593_WesamGlobalDBMigrationFixes.Designer.cs">
+      <DependentUpon>202003031004593_WesamGlobalDBMigrationFixes.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="packages.config" />
@@ -568,6 +572,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202002250701051_WesamAddSearchFieldsToWebHookKeysTable.resx">
       <DependentUpon>202002250701051_WesamAddSearchFieldsToWebHookKeysTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003031004593_WesamGlobalDBMigrationFixes.resx">
+      <DependentUpon>202003031004593_WesamGlobalDBMigrationFixes.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

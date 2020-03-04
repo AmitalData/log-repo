@@ -1248,7 +1248,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         private bool IsPrivateLabelTenant(int tenant)
         {
             TenantQuery TenantQuery = new TenantQuery(entityPM.Tenant);
-            TenantPM CurrentTenant = TenantQuery.GetSinglePM(entityPM.Tenant);
+            TenantPM CurrentTenant = TenantQuery.GetSingleTenantPM(entityPM.Tenant,false);
             return (!string.IsNullOrEmpty(CurrentTenant.PrivateLabelId));
         }
 

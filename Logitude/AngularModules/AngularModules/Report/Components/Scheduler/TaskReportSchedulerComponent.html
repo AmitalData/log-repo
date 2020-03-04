@@ -66,20 +66,7 @@
      <!-- History -->
     <tr style="height:35%;">
         <td>
-            <table *ngIf="IsHistoryGridVsisible">
-                <tr>
-                    <td>
-                        <div class="MediaFill">
-                            <div style="background-color:white;border-radius: 0 0 0 7px;">
-                                <logitude-grid GridWidth="100%" GridHeight="100%" [ObjectTable]="'TaskSchedulerHistory'" [IgnoreRowHoverVisibilityQueryName]="true" [ShowArrow]="true" [dataSource]="TasksHistoryDataSource" [MenuHeaderchangeevent]="MenuHeaderchangeevent"
-                                               [columns]="TasksHistoryColumns" [autoLoad]="true" [CustomColumnsReady]="TasksHistoryCustomColumnsReady" [IsCustomTemplate]="true">
-                                </logitude-grid>
-                            </div>
-
-                        </div>
-                    </td>
-                </tr>
-            </table>
+            <Scheduler-History [SelectedRowChanged]="SelectedRowChanged"></Scheduler-History>
         </td>
     </tr>
 

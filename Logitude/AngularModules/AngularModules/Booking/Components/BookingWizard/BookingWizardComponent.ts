@@ -1935,22 +1935,30 @@ export class BookingWizardComponent implements AfterViewInit {
         }
     }
     CancelBookingClicked() {
-        var confirmMsg = "Are you sure you want to cancel this Booking?";
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.Master)) {
+            var messageWindow: MessageWindow = new MessageWindow();
+            messageWindow.Title = "Cancelling Shipment";
+            messageWindow.Show("Can't cancel bookings that have a MAWB number, please remove it");
+        }
 
-        var confirmWindow = new ConfirmWindow();
+        else {
+            var confirmMsg = "Are you sure you want to cancel this Booking?";
 
-        confirmWindow.Show(confirmMsg);
-        confirmWindow.WindowClosed.subscribe((event: any) => {
-            if (confirmWindow.Yes) {
-                var isValid: boolean = this.ValidateBooking();
+            var confirmWindow = new ConfirmWindow();
 
-                if (isValid) {
-                    this.InitFlags();
-                    this.isCancelBookingButtonClicked = true;
-                    this.Save();  
+            confirmWindow.Show(confirmMsg);
+            confirmWindow.WindowClosed.subscribe((event: any) => {
+                if (confirmWindow.Yes) {
+                    var isValid: boolean = this.ValidateBooking();
+
+                    if (isValid) {
+                        this.InitFlags();
+                        this.isCancelBookingButtonClicked = true;
+                        this.Save();
+                    }
                 }
-            }
-        });
+            });
+        }
     }
     ReactivateBookingClicked() {
         this.InitFlags();

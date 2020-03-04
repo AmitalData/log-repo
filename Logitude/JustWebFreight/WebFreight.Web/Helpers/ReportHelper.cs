@@ -35,6 +35,7 @@ using WebFreight.Web.Helpers.DataProviderHelpers;
 using WebFreight.Web.ReportsWebServices;
 using WebFreight.Web.ReportsWebServices.LogitudeReports;
 using WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap;
+using WebFreight.Web.ReportsWebServices.LogitudeReports.CRM;
 using WebFreight.Web.ReportsWebServices.LogitudeReports.Operational;
 using WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement;
 using WebFreight.Web.ShipmentPackageModel;
@@ -1789,7 +1790,8 @@ namespace WebFreight.Web.Helpers
 
                 case "MCOR":
                     {
-                        dataProvider = logitudeReportsWebService.LoadOpportunityMonthlyConversionData(filters, reportFliter.tenant);
+                        MonthlyConversionManager myDataManager = new MonthlyConversionManager(filters, reportFliter.tenant);
+                        dataProvider = myDataManager.GetData();
                         break;
                     }
 

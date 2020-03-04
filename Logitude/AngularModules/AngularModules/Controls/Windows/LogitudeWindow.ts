@@ -160,6 +160,18 @@ export class LogitudeWindow {
         this.WindowClosed.emit(emit);
     }
 
+    public Resize(width: number) {
+        var currentWindowWidth = parseInt(this.InstanceComponent.Width.split('p')[0]);
+        var currentWindowLeft = parseInt(this.InstanceComponent.Left.split('p')[0]);
+        if (currentWindowWidth > width) {
+            this.InstanceComponent.Left = (currentWindowLeft*2) + "px";
+        }
+        else if(currentWindowWidth < width){
+            this.InstanceComponent.Left = (currentWindowLeft/2) + "px";
+        }
+        this.InstanceComponent.Width = width + "px";
+    }
+
     public DestroyWindow() {
         //if (this.ComponentRef != null) {
         //    this.ComponentRef.destroy();

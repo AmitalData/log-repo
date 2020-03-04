@@ -55,7 +55,7 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.HasRequired(t => t.APInvoice).WithMany().HasForeignKey(d => d.APInvoiceId);
             this.HasRequired(t => t.ChargesType).WithMany().HasForeignKey(d => d.ChargesTypeId);
             this.HasRequired(t => t.VatType).WithMany().HasForeignKey(d => d.VatTypeId);
-            this.HasRequired(t => t.Currency).WithMany().HasForeignKey(d => d.ForiegnCurrencyId);
+            this.HasOptional(t => t.Currency).WithMany().HasForeignKey(d => d.ForiegnCurrencyId);
             this.HasOptional(t => t.PrepaidCollect).WithMany().HasForeignKey(d => d.PrepaidCollectId);
             this.HasOptional(t => t.ContainerType).WithMany().HasForeignKey(d => d.ContainerTypeId);
         }
