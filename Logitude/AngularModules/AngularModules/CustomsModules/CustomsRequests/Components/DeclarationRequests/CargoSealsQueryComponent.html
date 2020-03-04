@@ -306,8 +306,8 @@
                                                             <!-- UpdateTypeCode -->
                                                             <log-column [header]="'Customs.CargoSeal.F.UpdateTypeCode' | TextCodeTranslationPipe"
                                                                         [width]="'100'" [Alignment]="'right'" [binding]="'UpdateTypeCode'">
-                                                                <log-cell-template template="let item" #logcelltemplate>
-                                                                    <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode || item.CanToAdd!=false">
+                                                                <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="item.CanToAdd!=false">
+                                                                    <div  class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode || item.CanToAdd!=false">
                                                                         <span>{{item.UpdateTypeName}}</span>
                                                                     </div>
                                                                     <div *ngIf="logcelltemplate.IsEditMode &&   item.CanToAdd==false">
