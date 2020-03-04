@@ -615,14 +615,18 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         var isEnabled: boolean = false;
 
         if (this.IsScreenEnabled) {
-            if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "ARPaymentEditExchangeRate")) {
-                if (this.EntityPM.PaymentInvoices.length > 0) {
-                    isEnabled = false;
+            
+           
+            if (!this.isFullAccounting) {
+                if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "ARPaymentEditExchangeRate")) {
+                    if (this.EntityPM.PaymentInvoices.length > 0) {
+                        isEnabled = false;
+                    }
+                    else {
+                        isEnabled = true;
+                    }
                 }
-                else {
-                    isEnabled = true;
-                }
-
+            }
                 if (this.PaymentCurrencyId == SessionLocator.TenantPM.CurrencyId) {
                     isEnabled = false;
                 }
@@ -630,7 +634,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
                     isEnabled = true;
                 }
             }
-        }
+        
 
         this.UIProperties.SetEnabled("PaymentCurrencyExchangeRate", this.ObjectTableName, isEnabled);
         this.UIProperties.SetEnabled("ExchangeRateDate", this.ObjectTableName, isEnabled);
