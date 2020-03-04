@@ -172,7 +172,9 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
             this.UIProperties.SetEnabled("BillToId", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("BillToAddressId", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("PaymentCurrencyId", this.ObjectTableName, false);
-            this.UIProperties.SetEnabled("PaymentCurrencyExchangeRate", this.ObjectTableName, false);
+            if (!this.accountingActivated) {
+                this.UIProperties.SetEnabled("PaymentCurrencyExchangeRate", this.ObjectTableName, false);
+            }
         }
     }
 
@@ -221,9 +223,22 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
                 }
             }
         }
+       else if (SessionLocator.TenantPM.AccountingActivated) {
+            if (this.PaymentCurrencyId) {
+                if (this.PaymentCurrencyId != this.TenantPM.CurrencyId) {
 
-        this.RateIsEnabled = isRateEnabled;
-        this.UIProperties.SetEnabled("PaymentCurrencyExchangeRate", this.ObjectTableName, isRateEnabled);
+                    this.RateIsEnabled = true;
+                }
+                else {
+                    this.RateIsEnabled = false;
+
+                }
+                }
+            }
+
+        
+     
+        this.UIProperties.SetEnabled("PaymentCurrencyExchangeRate", this.ObjectTableName, this.RateIsEnabled);
         this.SetUIProperties_Payment();
     }
 
