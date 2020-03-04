@@ -13,37 +13,39 @@ namespace Logitude.IntegrationTest.Shipment
     [TestClass]
     public class ShipmentsTests
     {
-        // double OpenAmountInLocal;
-        //double OpenAmpuntInProfit;
-        ShipmentPM entityPM;
-        ShipmentPM shipmentPM = new ShipmentPM();
 
+        ShipmentPM shipmentPM = new ShipmentPM();
         [TestMethod]
-        public async Task PostShipment()
+        public async Task TestDirectExportAirShipment()
         {
-            entityPM = CreateShipmentAirExport();
-            HttpResponseMessage response = await RestClientService.PostAsync(entityPM, "shipment");
-            ShipmentPM shipmentPM = RestClientService.ParseResponse<ShipmentPM>(response);
-            ShipmentVariables.ShipmentId = shipmentPM.Id;
-            await GetShipment(ShipmentVariables.ShipmentId);
-            await PutShipment();
-            
+            await PostShipment("D", "E", "A");
+            shipmentPM = await GetShipment(ShipmentVariables.ShipmentId);
+            //ShipmentPM entityPM= UpdateShipmentAirExport(shipmentPM);
+            int quantity = 5;
+            int unitPrice = 5;
+
+            await TestReceivables(shipmentPM, quantity, unitPrice);
+
         }
 
-        [TestMethod]
-        public async Task<ShipmentPM> GetShipment(string id)
+        public async Task<ShipmentPM> GetShipment(string shipmentId)
         {
-            HttpResponseMessage response = await RestClientService.GetAsync("Shipment/GetSingle?id=" + ShipmentVariables.ShipmentId);
+            HttpResponseMessage response = await RestClientService.GetAsync("Shipment/GetSingle?id=" + shipmentId);
             ShipmentPM shipment = RestClientService.ParseResponse<ShipmentPM>(response);
-            Assert.IsTrue(response.StatusCode.ToString()=="OK");
+            Assert.IsTrue(response.StatusCode.ToString() == "OK");
             return shipment;
         }
-        
-        public async Task PutShipment()
+        public async Task PostShipment(string shipmentLevelCode, string directionId, string transportModeId)
         {
-            UpdateShipmentAirExport();
-            HttpResponseMessage response = await RestClientService.PutAsync(entityPM, "shipment");
-            ShipmentPM shipment = RestClientService.ParseResponse<ShipmentPM>(response);
+            shipmentPM = CreateShipmentPM(shipmentLevelCode, directionId, transportModeId);
+            HttpResponseMessage response = await RestClientService.PostAsync(shipmentPM, "shipment");
+            shipmentPM = RestClientService.ParseResponse<ShipmentPM>(response);
+            ShipmentVariables.ShipmentId = shipmentPM.Id;
+        }
+        public async Task PutShipment(ShipmentPM shipmentPM)
+        {
+            HttpResponseMessage response = await RestClientService.PutAsync(shipmentPM, "shipment");
+            shipmentPM = RestClientService.ParseResponse<ShipmentPM>(response);
             await GetShipment(ShipmentVariables.ShipmentId);
         }
 
@@ -68,10 +70,9 @@ namespace Logitude.IntegrationTest.Shipment
               }
           }*/
 
-
-        private ShipmentPM CreateShipmentAirExport()
+        private ShipmentPM CreateShipmentPM(string shipmentLevelCode, string directionId, string transportModeId)
         {
-            
+
             shipmentPM.Tenant = IntegrationTestLoginParameters.Tenant;
             shipmentPM.CreatedByUserId = IntegrationTestLoginParameters.LoginUserId;
             shipmentPM.BranchId = CorePreparationVariables.BranchId;
@@ -81,12 +82,13 @@ namespace Logitude.IntegrationTest.Shipment
             shipmentPM.DimensionsUnitCode = CorePreparationVariables.TenantPM.DimensionsUnitCode;
             shipmentPM.GrossWeightUnitCode = CorePreparationVariables.TenantPM.GrossWeightUnitCode;
             shipmentPM.ChargeableWeightUnitCode = CorePreparationVariables.TenantPM.ChargeableWeightUnitCode;
-            shipmentPM.DirectionId = "E";
-            shipmentPM.TransportModeId = "A";
+            shipmentPM.ShipmentLevelCode = shipmentLevelCode;
+            shipmentPM.DirectionId = directionId;
+            shipmentPM.TransportModeId = transportModeId;
             //shipmentPM.MainCarriageTransportModeId = "";
             shipmentPM.FreightPrepaidCollectId = "C";
             shipmentPM.OtherPrepaidCollectId = "C";
-            shipmentPM.ShipmentLevelCode = "D";
+
             shipmentPM.CreatedByUserId = CorePreparationVariables.UserId;
             shipmentPM.UpdatedByUserId = CorePreparationVariables.UserId;
             shipmentPM.CustomerId = ShipmentVariables.ShipperExport1;
@@ -97,36 +99,49 @@ namespace Logitude.IntegrationTest.Shipment
             shipmentPM.ToPortId = ShipmentVariables.PortJFKId;
             shipmentPM.MainCarriageFromPortId = ShipmentVariables.PortLHRId; ;
             shipmentPM.MainCarriageToPortId = ShipmentVariables.PortJFKId;
-            shipmentPM.OriginMainCarriageFromPortId= ShipmentVariables.PortLHRId;
+            shipmentPM.OriginMainCarriageFromPortId = ShipmentVariables.PortLHRId;
             shipmentPM.AWBCurrencyId = ShipmentVariables.CurrencyEURId;
             shipmentPM.ValueOfGoodsCurrencyId = ShipmentVariables.CurrencyEURId;
             shipmentPM.AccountManagerUserId = CorePreparationVariables.UserId;
-            
+
             ShipmentVariables.ConcurrencyGUID = shipmentPM.NewConcurrencyGUID = Guid.NewGuid().ToString();
-            shipmentPM.PackagesQuantity = 5;
-            shipmentPM.GrossWeight = 100;
-            shipmentPM.ChargeableWeight = 100;
-            shipmentPM.NumberOfPackages = 5;
+            //shipmentPM.PackagesQuantity = 5;
+            //shipmentPM.GrossWeight = 100;
+            //shipmentPM.ChargeableWeight = 100;
+            //shipmentPM.NumberOfPackages = 5;
 
 
             return shipmentPM;
         }
-
-        private void UpdateShipmentAirExport()
+        private ShipmentPM UpdateShipmentAirExport(ShipmentPM entityPM)
         {
-           
-          // CreateShipmentAirExport();
-           entityPM.Id = ShipmentVariables.ShipmentId;
-           entityPM.ConcurrencyGUID= ShipmentVariables.ConcurrencyGUID;
-           entityPM.NewConcurrencyGUID = ShipmentVariables.ConcurrencyGUID;
-           entityPM.ShipmentPackages = IntegrationShipmentPackages.ShipmentPackages();
-           entityPM.ShipmentReceivables = IntegrationShipmentReceivable.ShipmentReceivables();
-           entityPM.ShipmentPayables = IntegrationShipmentPayable.ShipmentPayables();
-           entityPM.ShipmentPickUps = IntegrationShipmentPickUps.ShipmentPickUps();
-           entityPM.ShipmentDeliveries = IntegrationShipmentDeliveries.shipmentDelivey();
-  
+            entityPM.ConcurrencyGUID = ShipmentVariables.ConcurrencyGUID;
+            entityPM.NewConcurrencyGUID = ShipmentVariables.ConcurrencyGUID;
+            entityPM.ShipmentPackages = IntegrationShipmentPackages.ShipmentPackages();
+            entityPM.ShipmentReceivables = IntegrationShipmentReceivable.ShipmentReceivables();
+            entityPM.ShipmentPayables = IntegrationShipmentPayable.ShipmentPayables();
+            entityPM.ShipmentPickUps = IntegrationShipmentPickUps.ShipmentPickUps();
+            entityPM.ShipmentDeliveries = IntegrationShipmentDeliveries.shipmentDelivey();
+            return entityPM;
         }
+        private async Task TestReceivables(ShipmentPM shipmentPM, int quantity, int unitPrice)
+        {
+            ShipmentPM entityPM = UpdateReceivables(shipmentPM, quantity, unitPrice);
+            await PutShipment(entityPM);
+            shipmentPM = await GetShipment(ShipmentVariables.ShipmentNumber);
+            if (shipmentPM.ShipmentReceivables[0].TotalAmountLocal == 25)
+            {
+                if (shipmentPM.OpenReceivablesInLocalCurrency == 50)
+                {
 
+                }
+            }
+        }
+        private ShipmentPM UpdateReceivables(ShipmentPM shipmentPM, int quantity, int unitPrice)
+        {
+            shipmentPM.ShipmentReceivables = IntegrationShipmentReceivable.ShipmentReceivables(quantity, unitPrice);
+            return shipmentPM;
+        }
 
 
     }
