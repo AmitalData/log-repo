@@ -86,7 +86,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries.Charts
 
             if (chartData.Keys.Count > 0)
             {
-                UserQuery userQuery = new UserQuery();
+                UserQuery userQuery = new UserQuery(tenant);
                 chartData.Users = userQuery.GetUsersListFromIdList(chartData.Keys, tenant);
 
                 if (chartData.Users.Count == 0)
