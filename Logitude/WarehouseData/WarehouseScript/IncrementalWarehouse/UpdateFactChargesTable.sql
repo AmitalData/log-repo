@@ -14,7 +14,7 @@
 
 
 
-   declare @Id as varchar(15)
+   declare @ShipmentId as varchar(15)
    declare @SourceTenant as int
    declare @ParentTenant as int
    declare @Direction as varchar(40)
@@ -40,21 +40,22 @@
    declare @DirectionId as varchar(1)
    declare @TransportModeId as varchar(1)
    declare @ToPort as int
-   declare @CreateDate as datetime
+   declare @ShipmentCreateDate as datetime
 
    declare @AgentReference1 as varchar(50)
    declare @AgentReference2 as varchar(50)
    declare @CustomerReference1 as varchar(50)
    declare @CustomerReference2 as varchar(50)
-   declare @CreatedBy  as int
+   declare @ShipmentCreatedBy  as int
    declare @Carrier  as int
    declare @FirstOperationalCloseDate as datetime
    declare @SpecialServices as int
    declare @MasterShipmentNumber as varchar(20)
 
+  
 
-
-
+      declare @PayableId as varchar(15)
+   declare @ReceivableId as varchar(15)
 
    declare @ChargesType as int
    declare @OpenPayablesinLocal as float
@@ -77,24 +78,26 @@
 	DECLARE ShipmentsChargesCursor CURSOR READ_ONLY
 	FOR
 
-	with ShipmentPayablesReceivables as(select ShipmentId,ChargesTypeId,EntityType,InvoiceNumber,InvoiceCurrencyId,InvoiceCurrencyExchangeRate  ,AmountInInvoiceCurrency,  OpenPayablesinLocal , OpenPayablesinProfit , AccountedPayablesinLocal , AccountedPayablesinProfit , InvoiceLineId , ReceivablesTotalAmount , ReceivablesTotalAmountLocal from(
+	with ShipmentPayablesReceivables as(select ShipmentId,ChargesTypeId,EntityType,InvoiceNumber,InvoiceCurrencyId,InvoiceCurrencyExchangeRate  ,AmountInInvoiceCurrency,  OpenPayablesinLocal , OpenPayablesinProfit , AccountedPayablesinLocal , AccountedPayablesinProfit , InvoiceLineId , ReceivablesTotalAmount , ReceivablesTotalAmountLocal ,PayableId,ReceivableId  from(
 		
-		select dw_ShipmentPayables.ShipmentId ,dw_ShipmentPayables.ChargesTypeId, 'Payables' as EntityType , dw_APInvoices.InvoiceNumber,dw_APInvoices.InvoiceCurrencyId,dw_APInvoices.InvoiceCurrencyExchangeRate ,  dw_APInvoices.AmountInInvoiceCurrency, dw_ShipmentPayables.OpenAmountInLocalCurrency as OpenPayablesinLocal ,dw_ShipmentPayables.OpenAmountInProfitCurrency as OpenPayablesinProfit , AccountedAmountInLocalCurrency as AccountedPayablesinLocal ,AccountedAmountInProfitCurrency as AccountedPayablesinProfit , '' as  InvoiceLineId , 0 as ReceivablesTotalAmount ,0 as ReceivablesTotalAmountLocal  from dw_shipments 
+		select dw_ShipmentPayables.ShipmentId ,dw_ShipmentPayables.ChargesTypeId, 'Payables' as EntityType , dw_APInvoices.InvoiceNumber,dw_APInvoices.InvoiceCurrencyId,dw_APInvoices.InvoiceCurrencyExchangeRate ,  dw_APInvoices.AmountInInvoiceCurrency, dw_ShipmentPayables.OpenAmountInLocalCurrency as OpenPayablesinLocal ,dw_ShipmentPayables.OpenAmountInProfitCurrency as OpenPayablesinProfit , AccountedAmountInLocalCurrency as AccountedPayablesinLocal ,AccountedAmountInProfitCurrency as AccountedPayablesinProfit , '' as  InvoiceLineId , 0 as ReceivablesTotalAmount ,0 as ReceivablesTotalAmountLocal , dw_ShipmentPayables.Id as PayableId, null as ReceivableId   from dw_shipments 
         left JOIN dw_ShipmentPayables  ON dw_shipments.Id = dw_ShipmentPayables.ShipmentId
         left JOIN dw_APInvoiceLines  ON dw_ShipmentPayables.Id = dw_APInvoiceLines.EntityPayableId
         left JOIN dw_APInvoices  ON dw_APInvoiceLines.APInvoiceId = dw_APInvoices.Id
-		where dw_Shipments.IsCancelled = 0 and dw_Shipments.ShipmentLevelCode in ('H','D') 
+	    where dw_Shipments.AutomaticLastUpdateDate > @LastUpdateDate and dw_Shipments.ShipmentLevelCode in ('H','D')
 		union
 
-      select dw_ShipmentReceivables.ShipmentId ,dw_ShipmentReceivables.ChargesTypeId ,'Receivables' as EntityType , dw_ARInvoices.InvoiceNumber,dw_ARInvoices.InvoiceCurrencyId,dw_ARInvoices.InvoiceCurrencyExchangeRate ,dw_ARInvoices.AmountInInvoiceCurrency ,0 as OpenPayablesinLocal  , 0 as OpenPayablesinProfit,  0 as AccountedPayablesinLocal ,0 as AccountedPayablesinProfit, dw_ShipmentReceivables.ARInvoiceLineId as InvoiceLineId , dw_ShipmentReceivables.TotalAmount as ReceivablesTotalAmount ,dw_ShipmentReceivables.TotalAmountLocal as ReceivablesTotalAmountLocal   from dw_shipments 
+      select dw_ShipmentReceivables.ShipmentId ,dw_ShipmentReceivables.ChargesTypeId ,'Receivables' as EntityType , dw_ARInvoices.InvoiceNumber,dw_ARInvoices.InvoiceCurrencyId,dw_ARInvoices.InvoiceCurrencyExchangeRate ,dw_ARInvoices.AmountInInvoiceCurrency ,0 as OpenPayablesinLocal  , 0 as OpenPayablesinProfit,  0 as AccountedPayablesinLocal ,0 as AccountedPayablesinProfit, dw_ShipmentReceivables.ARInvoiceLineId as InvoiceLineId , dw_ShipmentReceivables.TotalAmount as ReceivablesTotalAmount ,dw_ShipmentReceivables.TotalAmountLocal as ReceivablesTotalAmountLocal ,null as PayableId  , dw_ShipmentReceivables.Id as ReceivableId  from dw_shipments 
         left JOIN dw_ShipmentReceivables  ON dw_shipments.Id = dw_ShipmentReceivables.ShipmentId
         left JOIN dw_ARInvoiceLines  ON dw_ShipmentReceivables.Id = dw_ARInvoiceLines.ReceivableId
         left JOIN dw_ARInvoices  ON dw_ARInvoiceLines.ARInvoiceId = dw_ARInvoices.Id
-		where dw_Shipments.IsCancelled = 0 and dw_Shipments.ShipmentLevelCode in ('H','D') 
+      where dw_Shipments.AutomaticLastUpdateDate > @LastUpdateDate and dw_Shipments.ShipmentLevelCode in ('H','D')
 
 )tt
 
 )
+
+
 
 	SELECT  dw_Shipments.Id, SourceTenant.[Tenant Number], ParentTenant.[Tenant Number] ,  DIM_Directions.Name, TransportModes.Name ,DIM_Levels.Name,  DIM_Types.Name , DIM_Departments.Id_Number ,DIM_Branches.Id_Number , dw_Shipments.ShipmentNumber,dw_Shipments.House,dw_ShipmentMasterDatas.Master , agentPartners.Id_Number,customerPartners.Id_Number 
 	,SalesmanUser.Id_Number, AccountManagerUser.Id_Number,DIM_ShipmentStatuses.Id_Number ,mainCarriageToPort.Id_Number , fromPort.Id_Number, toPort.Id_Number , dw_Shipments.CreateDateTime
@@ -102,7 +105,7 @@
 	 dw_Shipments.DirectionId ,dw_Shipments.TransportModeId ,dw_Shipments.Tenant,dw_Shipments.MasterShipmentDataId
 	 ,DIM_ChargesTypes.Id_Number, ShipmentPayablesReceivables.EntityType, ShipmentPayablesReceivables.InvoiceNumber,InvoiceCurrency.Id_Number , ShipmentPayablesReceivables.InvoiceCurrencyExchangeRate
 	 ,ShipmentPayablesReceivables.OpenPayablesinLocal , ShipmentPayablesReceivables.OpenPayablesinProfit ,ShipmentPayablesReceivables.AccountedPayablesinLocal,ShipmentPayablesReceivables.AccountedPayablesinProfit
-	 ,ShipmentPayablesReceivables.ReceivablesTotalAmount,  ShipmentPayablesReceivables.ReceivablesTotalAmountLocal,  ShipmentPayablesReceivables.InvoiceLineId , ShipmentPayablesReceivables.AmountInInvoiceCurrency
+	 ,ShipmentPayablesReceivables.ReceivablesTotalAmount,  ShipmentPayablesReceivables.ReceivablesTotalAmountLocal,  ShipmentPayablesReceivables.InvoiceLineId , ShipmentPayablesReceivables.AmountInInvoiceCurrency,ShipmentPayablesReceivables.PayableId,ShipmentPayablesReceivables.ReceivableId
 	
 	
 	From dw_Shipments
@@ -132,14 +135,16 @@
     inner JOIN ShipmentPayablesReceivables ON dw_Shipments.Id = ShipmentPayablesReceivables.ShipmentId
     inner JOIN DIM_ChargesTypes  ON ShipmentPayablesReceivables.ChargesTypeId = DIM_ChargesTypes.Id
     inner JOIN DIM_Currencies InvoiceCurrency ON ShipmentPayablesReceivables.InvoiceCurrencyId = InvoiceCurrency.Id
-	where dw_Shipments.IsCancelled = 0 and dw_Shipments.ShipmentLevelCode in ('H','D') 
+	where dw_Shipments.AutomaticLastUpdateDate > @LastUpdateDate and dw_Shipments.ShipmentLevelCode in ('H','D')
 
-	OPEN ShipmentsChargesCursor FETCH NEXT FROM ShipmentsChargesCursor    INTO   @Id ,@SourceTenant, @ParentTenant ,@Direction , @TransportMode, @DirectHouse , @Type , @Department , @Branch , @ShipmentNumber , @House , @Master , @Agent, @Customer 
-	, @Salesman ,@AccountManager , @Status , @MainCarriageToPort, @MainCarriageFromPort ,@ToPort ,@CreateDate, @AgentReference1,@AgentReference2,@CustomerReference1,@CustomerReference2 ,@CreatedBy , 
+
+
+	OPEN ShipmentsChargesCursor FETCH NEXT FROM ShipmentsChargesCursor    INTO   @ShipmentId ,@SourceTenant, @ParentTenant ,@Direction , @TransportMode, @DirectHouse , @Type , @Department , @Branch , @ShipmentNumber , @House , @Master , @Agent, @Customer 
+	, @Salesman ,@AccountManager , @Status , @MainCarriageToPort, @MainCarriageFromPort ,@ToPort ,@ShipmentCreateDate, @AgentReference1,@AgentReference2,@CustomerReference1,@CustomerReference2 ,@ShipmentCreatedBy , 
 	@Carrier, @FirstOperationalCloseDate,@SpecialServices,@MasterShipmentNumber,@AirlinePrefix, @DirectionId,@TransportModeId , @Tenant,@MasterDataId
     ,@ChargesType,@ShipmentPayablesReceivablesType, @InvoiceNumber,@InvoiceCurrency,@InvoiceCurrencyExchangeRate
 	,@OpenPayablesinLocal,@OpenPayablesinProfit,@AccountedPayablesinLocal,@AccountedPayablesinProfit
-	,@ReceivablesTotalAmount , @ReceivablesTotalAmountLocal, @ReceivablesInvoiceLineId,@VATamountinInvoiceCurrency
+	,@ReceivablesTotalAmount , @ReceivablesTotalAmountLocal, @ReceivablesInvoiceLineId,@VATamountinInvoiceCurrency, @PayableId,@ReceivableId
 	
 	
 
@@ -150,12 +155,11 @@
 
 	declare @OpenReceivablesinLocal as float =0
    declare @AccountedReceivablesinLocal as float =0
-    declare @OpenReceivablesinProfit as float =0
+   declare @OpenReceivablesinProfit as float =0
    declare @AccountedReceivablesinProfit as float =0
-    declare @IsOpenReceivable as bit = 0
+   declare @IsOpenReceivable as bit = 0
    declare @IsOpenPayable as bit = 0
-   declare @IsAccountedPayable as bit = 0
-   declare @IsAccountedReceivable as bit = 0
+
 
 	--------------Long Master Number------------------
 	 if(@TransportModeId = 'A' and @Master is not null and @AirlinePrefix is not null)
@@ -183,14 +187,8 @@
 		 End
 
 
-		 set @IsAccountedReceivable = 0;
-		 set @IsOpenReceivable = 0;
-		 set @IsOpenPayable = 0;
-		 set @IsAccountedPayable = 0;
 
-
-
-		  --Receivables
+		   --Receivables
 		   if(@ShipmentPayablesReceivablesType = 'Receivables')
 		BEGIN
 
@@ -198,78 +196,70 @@
 				  if(@ReceivablesInvoiceLineId is not null)
 				
 				  BEGIN
-					set @AccountedReceivablesinProfit  = @ReceivablesTotalAmount;
+					set @AccountedReceivablesinProfit  =@ReceivablesTotalAmount;
 					set @AccountedReceivablesinLocal  = @ReceivablesTotalAmountLocal;
-				    set @OpenReceivablesinProfit  = 0;
-					set @OpenReceivablesinLocal  = 0;
-					 set @IsOpenReceivable  =0;
-					set  @IsAccountedReceivable = 1;
-
-
 				  End
 				  else 
 				  
 				  BEGIN
-					set @AccountedReceivablesinProfit  = 0;
-					set @AccountedReceivablesinLocal  = 0;
 				    set @OpenReceivablesinProfit  = @ReceivablesTotalAmount;
 					set @OpenReceivablesinLocal  =@ReceivablesTotalAmountLocal;
-					set @IsOpenReceivable  =1;
-					set  @IsAccountedReceivable = 0;
+
+		
+				   if((@OpenReceivablesinLocal !=0  and @OpenReceivablesinLocal is not null) or (@OpenReceivablesinProfit !=0  and @OpenReceivablesinProfit is not null))
+				   begin   set @IsOpenReceivable = 1; end
 				  End
+
+
+
 
 		 End
 		 
 
 		 --Payable
 		    else 
-
-
 			 begin
 
 		 		  if((@OpenPayablesinLocal !=0  and @OpenPayablesinLocal is not null) or (@OpenPayablesinProfit !=0  and @OpenPayablesinProfit is not null))
 				  begin   set @IsOpenPayable = 1; end
-				 
-				  if((@AccountedPayablesinLocal !=0  and @AccountedPayablesinLocal is not null) or (@AccountedPayablesinProfit !=0  and @AccountedPayablesinProfit is not null))
-				  begin   set @IsAccountedPayable = 1; end
 
-				  end
-
+			end 
+				
 
 
 
 
 	 BEGIN TRY  
-	 print @Id
-      insert into Fact_Charges ([Id],[Source Tenant],[Parent Tenant],[Direction],[Transport Mode],[DirectHouse],[Type],[Department],[Branch],[Shipment Number],[House],[Master],[Agent],[Customer]
-	  ,[Salesman],[Account Manager],[Status],[MainCarriage From Port],[MainCarriage To Port],[Create Date],  [Create Date Time] , [Agent Ref1],[Agent Ref2],[Customer Ref1],[Customer Ref2] , [Created By]
+
+      insert into Fact_Charges ([Shipment Id],[Source Tenant],[Parent Tenant],[Direction],[Transport Mode],[DirectHouse],[Type],[Department],[Branch],[Shipment Number],[House],[Master],[Agent],[Customer]
+	  ,[Salesman],[Account Manager],[Status],[MainCarriage From Port],[MainCarriage To Port],[Shipment Create Date],  [Shipment Create Date Time] , [Agent Ref1],[Agent Ref2],[Customer Ref1],[Customer Ref2] , [Shipment Created By]
 	  ,[Carrier] , [First Operational Close Date],     [Special Services] , [Master Shipment Number] 
-	  ,[Charges Type],[Invoice Number] ,[Invoice Currency] , [Invoice Exchange Rate] ,[Open Payables in Local],[Open Payables in Profit] , [Accounted Payables in Local],[Accounted Payables in Profit],[Open Receivables in Local] ,[Open Receivables in Profit],[Accounted Receivables in Local],[Accounted Receivables in Profit], [Is Open Receivable],[Is Open Payable],[Is Accounted Receivable],[Is Accounted Payable],[VAT amount in Invoice Currency]) 
+	  ,[Charges Type],[Invoice Number] ,[Invoice Currency] , [Invoice Exchange Rate] ,[Open Payables in Local],[Open Payables in Profit] , [Accounted Payables in Local],[Accounted Payables in Profit],[Open Receivables in Local] ,[Open Receivables in Profit],[Accounted Receivables in Local],[Accounted Receivables in Profit], [Is Open Receivable],[Is Open Payable],[VAT amount in Invoice Currency],[Payable Id],[Receivable Id]) 
 
 	
-      values(@Id, @SourceTenant,@ParentTenant,@Direction,@TransportMode, @DirectHouse, @Type , @Department ,@Branch , @ShipmentNumber , @House ,@Master ,  @Agent,@Customer,
-	  @Salesman , @AccountManager ,    @Status, @MainCarriageFromPort ,@MainCarriageToPort , dbo.GetDateFormateAsNumber(@CreateDate) ,@CreateDate  ,@AgentReference1, @AgentReference2,@CustomerReference1, @CustomerReference2, @CreatedBy,
+      values(@ShipmentId, @SourceTenant,@ParentTenant,@Direction,@TransportMode, @DirectHouse, @Type , @Department ,@Branch , @ShipmentNumber , @House ,@Master ,  @Agent,@Customer,
+	  @Salesman , @AccountManager ,    @Status, @MainCarriageFromPort ,@MainCarriageToPort , dbo.GetDateFormateAsNumber(@ShipmentCreateDate) ,@ShipmentCreateDate  ,@AgentReference1, @AgentReference2,@CustomerReference1, @CustomerReference2, @ShipmentCreatedBy,
       @Carrier ,   dbo.GetDateFormateAsNumber(@FirstOperationalCloseDate), @SpecialServices , @MasterShipmentNumber,
-     @ChargesType ,  @InvoiceNumber ,@InvoiceCurrency ,@InvoiceCurrencyExchangeRate ,   @OpenPayablesinLocal,@OpenPayablesinProfit,@AccountedPayablesinLocal , @AccountedPayablesinProfit, @OpenReceivablesinLocal,@OpenReceivablesinProfit,@AccountedReceivablesinLocal,@AccountedPayablesinProfit, @IsOpenReceivable,@IsOpenPayable,@IsAccountedReceivable, @IsAccountedPayable, @VATamountinInvoiceCurrency )
+     @ChargesType ,  @InvoiceNumber ,@InvoiceCurrency ,@InvoiceCurrencyExchangeRate ,   @OpenPayablesinLocal,@OpenPayablesinProfit,@AccountedPayablesinLocal , @AccountedPayablesinProfit, @OpenReceivablesinLocal,@OpenReceivablesinProfit,@AccountedReceivablesinLocal,@AccountedPayablesinProfit, @IsOpenReceivable,@IsOpenPayable, @VATamountinInvoiceCurrency , @PayableId,@ReceivableId)
 
 	END TRY 
 BEGIN CATCH  
 
   declare @Exception as varchar(4000)
   set @Exception = (SELECT   ERROR_MESSAGE() AS ErrorMessage);  
-  set @Exception = @Exception + ' (ShipmentId: ' + @Id +') '+ ' (Tenant: ' + CAST(@Tenant as varchar(100)) + ' )'
+  set @Exception = @Exception + ' (ShipmentId: ' + @ShipmentId +') '+ ' (Tenant: ' + CAST(@Tenant as varchar(100)) + ' )'
   RAISERROR(@Exception, 16, 3);
 
 RETURN;
 END CATCH  
 
 	
-	FETCH NEXT FROM ShipmentsChargesCursor    INTO   @Id ,@SourceTenant, @ParentTenant ,@Direction , @TransportMode, @DirectHouse , @Type , @Department , @Branch , @ShipmentNumber , @House , @Master , @Agent, @Customer 
-	, @Salesman ,@AccountManager , @Status , @MainCarriageToPort, @MainCarriageFromPort ,@ToPort ,@CreateDate, @AgentReference1,@AgentReference2,@CustomerReference1,@CustomerReference2 ,@CreatedBy , 
+	FETCH NEXT FROM ShipmentsChargesCursor    INTO   @ShipmentId ,@SourceTenant, @ParentTenant ,@Direction , @TransportMode, @DirectHouse , @Type , @Department , @Branch , @ShipmentNumber , @House , @Master , @Agent, @Customer 
+	, @Salesman ,@AccountManager , @Status , @MainCarriageToPort, @MainCarriageFromPort ,@ToPort ,@ShipmentCreateDate, @AgentReference1,@AgentReference2,@CustomerReference1,@CustomerReference2 ,@ShipmentCreatedBy , 
 	@Carrier, @FirstOperationalCloseDate,@SpecialServices,@MasterShipmentNumber,@AirlinePrefix,  @DirectionId,@TransportModeId , @Tenant,@MasterDataId
     ,@ChargesType,@ShipmentPayablesReceivablesType, @InvoiceNumber,@InvoiceCurrency,@InvoiceCurrencyExchangeRate
 	,@OpenPayablesinLocal,@OpenPayablesinProfit,@AccountedPayablesinLocal,@AccountedPayablesinProfit
-	,@ReceivablesTotalAmount , @ReceivablesTotalAmountLocal, @ReceivablesInvoiceLineId,@VATamountinInvoiceCurrency
+	,@ReceivablesTotalAmount , @ReceivablesTotalAmountLocal, @ReceivablesInvoiceLineId,@VATamountinInvoiceCurrency, @PayableId,@ReceivableId
 		End
 	CLOSE ShipmentsChargesCursor
 	DEALLOCATE ShipmentsChargesCursor
