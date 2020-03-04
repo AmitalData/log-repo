@@ -10,13 +10,17 @@ import { HttpClient, HttpHeaders, HttpEvent, HttpResponse } from '@angular/commo
 import { map, catchError, tap } from 'rxjs/operators';
 import { PerformanceLogger } from '../../Utilities/PerformanceLogger';
 import { Body } from '@angular/http/src/body';
+import { SessionInfo } from '../../Utilities/SessionInfo';
+import { Http, Headers} from '@angular/http';
 
 @Injectable()
 
 export class SchedulerExtendedPMService {
+    private http: Http;
     private httpClient: HttpClient;
     private apiUrl: string;
     constructor() {
+        this.http = ServiceHelper.Http;
         this.httpClient = ServiceHelper.HttpClient;
         this.apiUrl = ServiceHelper.GetLogitudeURL() + 'api/SchedulerExtended';
     }
@@ -44,24 +48,22 @@ export class SchedulerExtendedPMService {
     }
 
     GetSchedulerDetailsById(schedulerId: string) {
-        const httpOptions = {
-            headers: new HttpHeaders({
-                'Content-Type': 'application/json',
-                'Token': ServiceHelper.GetLoggedUserToken()
-            })
-        };
-
-        var url = this.apiUrl + '/GetSchedulerDetailsById?' + 'schedulerId=' + schedulerId;
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+        var callTime = new Date();
         return Observable.defer(() => {
-            return this.httpClient.get(url, httpOptions).pipe(
-                map(response => {
-                    var serviceResponse: ServiceResponse;
-                    serviceResponse = new ServiceResponse();
-                    serviceResponse.Result = response;
+            return this.http.get(this.apiUrl + '/GetSchedulerDetailsById?' + 'schedulerId=' + schedulerId, {
+                headers: authHeader
+            }).map(response => {
+                var result = response.json();
 
-                    return serviceResponse;
-                }),
-                catchError(ServiceHelper.HandleServiceError));
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = result;
+
+                return serviceResponse;
+
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 
