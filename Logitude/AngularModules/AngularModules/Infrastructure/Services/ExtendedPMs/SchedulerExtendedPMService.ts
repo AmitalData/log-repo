@@ -1,230 +1,147 @@
 
 import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
 import {Observable}     from 'rxjs/Rx';
 import {ServiceResponse} from '../../DataContracts/ServiceResponse';
 import {ClassLevelValidator} from '../../Validators/ClassLevelValidator';
-import {Guid} from '../../Utilities/Guid';
 import {InfraSettings} from '../../Utilities/InfraSettings';
 import {ServiceHelper} from '../../Utilities/ServiceHelper';
-import {SessionInfo} from '../../Utilities/SessionInfo';
-import {PerformanceLogger} from '../../Utilities/PerformanceLogger';
-import {CustomFieldClass} from '../../DataContracts/CustomFieldClass'
-
 import {TasksSchedulerPM} from '../../EntityPMs/TasksSchedulerPM';
-
+import { HttpClient, HttpHeaders, HttpEvent, HttpResponse } from '@angular/common/http';
+import { map, catchError, tap } from 'rxjs/operators';
+import { PerformanceLogger } from '../../Utilities/PerformanceLogger';
+import { Body } from '@angular/http/src/body';
 
 @Injectable()
 
 export class SchedulerExtendedPMService {
-    private _http: Http;
-    private _apiUrl: string;
+    private httpClient: HttpClient;
+    private apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.Http;
-        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/SchedulerExtended';
+        this.httpClient = ServiceHelper.HttpClient;
+        this.apiUrl = ServiceHelper.GetLogitudeURL() + 'api/SchedulerExtended';
     }
 
     GetSchedulerHistoryLogs(HistoryId: string) {
+        const httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Token': ServiceHelper.GetLoggedUserToken()
+            })
+        };
 
-
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
-        var callTime = new Date();
+        var url = this.apiUrl + '/GetSchedulerHistoryLogs?' + 'historyId=' + HistoryId;
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetSchedulerHistoryLogs?' + 'historyId=' + HistoryId, {
-                headers: authHeader
-            }).map(response => {
-                var result = response.json();
+            return this.httpClient.get(url, httpOptions).pipe(
+                map(response => {
+                    var serviceResponse: ServiceResponse;
+                    serviceResponse = new ServiceResponse();
+                    serviceResponse.Result = response;
 
-                var serviceResponse: ServiceResponse;
-                serviceResponse = new ServiceResponse();
-                serviceResponse.Result = result;
-
-                return serviceResponse;
-
-            }).catch(ServiceHelper.HandleServiceError);
+                    return serviceResponse;
+                }),
+                catchError(ServiceHelper.HandleServiceError));
         });
     }
 
     GetSchedulerDetailsById(schedulerId: string) {
+        const httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Token': ServiceHelper.GetLoggedUserToken()
+            })
+        };
 
-
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
-        var callTime = new Date();
+        var url = this.apiUrl + '/GetSchedulerDetailsById?' + 'schedulerId=' + schedulerId;
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetSchedulerDetailsById?' + 'schedulerId=' + schedulerId, {
-                headers: authHeader
-            }).map(response => {
-                var result = response.json();
+            return this.httpClient.get(url, httpOptions).pipe(
+                map(response => {
+                    var serviceResponse: ServiceResponse;
+                    serviceResponse = new ServiceResponse();
+                    serviceResponse.Result = response;
 
-                var serviceResponse: ServiceResponse;
-                serviceResponse = new ServiceResponse();
-                serviceResponse.Result = result;
-
-                return serviceResponse;
-
-            }).catch(ServiceHelper.HandleServiceError);
+                    return serviceResponse;
+                }),
+                catchError(ServiceHelper.HandleServiceError));
         });
     }
 
   	 insert(entityPM: TasksSchedulerPM) {
+             const headers: HttpHeaders = new HttpHeaders({
+                 'Content-Type': 'application/json',
+                 'Token': ServiceHelper.GetLoggedUserToken(),
+             });
 
-        var callTime = new Date();
-        return Observable.defer(() => {
+             var callTime = new Date();
+             var url = this.apiUrl;
+             return Observable.defer(() => {
+                 var validator: ClassLevelValidator;
+                 validator = new ClassLevelValidator();
+                 var errorsArray = validator.Validate("TasksScheduler", entityPM);
+                 var serviceResponse: ServiceResponse;
+                 serviceResponse = new ServiceResponse();
 
-            var authHeader = new Headers();
-            authHeader.append('Token', SessionInfo.Token);
-            authHeader.append('Content-Type', 'application/json');
+                 if (errorsArray.length == 0) {
+                     return this.httpClient.post(url, entityPM, {headers, observe:'response'}).pipe(
+                         tap((event: HttpEvent<any>) => {
+                             if (event instanceof HttpResponse) {
+                                 var servertime = event.headers.get('ServerExecutionTime');
+                                 PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "TasksScheduler", "SaveChanges", "");
+                             }
+                         }),
+                         map(response => {
+                             serviceResponse.Result = response;
 
-            var validator: ClassLevelValidator;
+                             return serviceResponse;
+                         }),
+                         catchError(ServiceHelper.HandleServiceError));
+                 }
+                 else {
+                     serviceResponse.HasError = true;
+                     serviceResponse.ErrorsArray = errorsArray;
 
-            validator = new ClassLevelValidator();
+                     return Observable.of(serviceResponse);
 
-            var errorsArray = validator.Validate("TasksScheduler", entityPM);
-
-
-            var serviceResponse: ServiceResponse;
-            serviceResponse = new ServiceResponse();
-            if (errorsArray.length == 0) {
-                var mappedEntity: TasksSchedulerPM;
-               mappedEntity = this.MapJsonToEntityPM(entityPM, false);
-
-                return this._http.post(this._apiUrl, JSON.stringify(mappedEntity),
-                    { headers: authHeader }).map((response) => {
-
-                        var pm = response.json();
-                        if (pm) {
-                            var mappedResult: TasksSchedulerPM;
-                            mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
-                            serviceResponse.Result = mappedResult;
-                        }
-
-
-                        var servertime = response.headers.get('ServerExecutionTime');
-                        PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "TasksScheduler", "SaveChanges", "");
-
-
-                        return serviceResponse;
-
-                    }).catch(ServiceHelper.HandleServiceError);
-            }
-            else {
-
-                serviceResponse.HasError = true;
-                serviceResponse.ErrorsArray = errorsArray;
-
-                return Observable.of(serviceResponse);
-
-            }
-        }
-
-        );
+                 }
+             });
     }
 
     update(entityPM: TasksSchedulerPM) {
+        const headers: HttpHeaders = new HttpHeaders({
+            'Content-Type': 'application/json',
+            'Token': ServiceHelper.GetLoggedUserToken(),
+        });
 
         var callTime = new Date();
+        var url = this.apiUrl;
         return Observable.defer(() => {
-
-            var authHeader = new Headers();
-            authHeader.append('Token', SessionInfo.Token);
-            authHeader.append('Content-Type', 'application/json');
-
             var validator: ClassLevelValidator;
-
             validator = new ClassLevelValidator();
-
             var errorsArray = validator.Validate("TasksScheduler", entityPM);
-
-
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
+
             if (errorsArray.length == 0) {
-                var mappedEntity: TasksSchedulerPM;
-                mappedEntity = this.MapJsonToEntityPM(entityPM, false);
-
-                return this._http.put(this._apiUrl, JSON.stringify(mappedEntity),
-                    { headers: authHeader }).map((response) => {
-
-
-                        var pm = response.json();
-                        if (pm) {
-                            var mappedResult: TasksSchedulerPM;
-                            mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
-                            serviceResponse.Result = mappedResult;
+                return this.httpClient.put(url, entityPM, { headers, observe: 'response'}).pipe(
+                    tap((event: HttpEvent<any>) => {
+                        if (event instanceof HttpResponse) {
+                            var servertime = event.headers.get('ServerExecutionTime');
+                            PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "TasksScheduler", "SaveChanges", "");
                         }
-
-                        var servertime = response.headers.get('ServerExecutionTime');
-                        PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "TasksScheduler", "SaveChanges", "");
-
+                    }),
+                    map(response => {
+                        serviceResponse.Result = response;
                         return serviceResponse;
-
-                    }).catch(ServiceHelper.HandleServiceError);
+                    }),
+                    catchError(ServiceHelper.HandleServiceError));
             }
             else {
-
                 serviceResponse.HasError = true;
                 serviceResponse.ErrorsArray = errorsArray;
 
                 return Observable.of(serviceResponse);
-
             }
-        }
-
-        );
-
+        });
     }
-
-
-    MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: TasksSchedulerPM = null) {
-
-
-        if (!entityPM) {
-
-            entityPM = new TasksSchedulerPM();
-        }
-
-        var customFields: Array<string> = [];
-        for (var i = 1; i < 11; i++) {
-            customFields.push("Field" + i);
-        }
-        var jsonPMKeys = Object.keys(jsonPM);
-
-        for (var key in jsonPMKeys) {
-            if (jsonPMKeys[key] === "UIProperties" || jsonPMKeys[key] === "PropertyChanged") {
-
-                continue;
-            }
-            var property = jsonPMKeys[key];
-
-            if (customFields.indexOf(property) > -1) {
-                if (jsonPM[property]) {
-                    var customFieldClass: CustomFieldClass = new CustomFieldClass(jsonPM[property].Value, jsonPM[property].FieldName, jsonPM[property].TableName);
-                    entityPM[property] = customFieldClass;
-                }
-            }
-            else {
-                entityPM[property] = jsonPM[property];
-            }
-
-        }
-
-
-
-
-        if (mapParent) {
-            entityPM.OldEntityPM = this.clone(entityPM);
-
-        }
-        else {
-
-            entityPM.OldEntityPM = null;
-        }
-        entityPM.IsDirty = false;
-        return entityPM;
-    }
-
 
     public clone(jsonPM: any) {
         var entityPM: any;
