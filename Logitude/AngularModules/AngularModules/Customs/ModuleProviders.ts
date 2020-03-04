@@ -582,7 +582,7 @@ export class ModuleProviders {
             case "SealUpdateReasonTypeListService": { myResult = new SealUpdateReasonTypeListService(); break; }
             case "AmendmentTypeListService": { myResult = new AmendmentTypeListService(); break; }
             case "SealCompletenesListService": { myResult = new SealCompletenesListService(); break; }
-
+          
             //#endregion                
 
             //#region StandardPMs
