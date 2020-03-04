@@ -1,4 +1,3 @@
-
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { ServiceHelper } from '../../Utilities/ServiceHelper';
@@ -7,40 +6,39 @@ import { EmailAlertSettingPM } from '../../EntityPMs/EmailAlertSettingPM';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
 
-
 @Injectable()
 export class EmailAlertSettingPMService {
     private httpClient: HttpClient;
     private apiUrl: string;
+
     constructor() {
         this.httpClient = ServiceHelper.HttpClient;
         this.apiUrl = ServiceHelper.GetLogitudeURL() + 'api/EmailAlertSetting';
     }
 
-    getAllEmailAlerts(tenant: number) {
+    getAllEmailAlerts(tenant: number): Observable<ServiceResponse> {
         const httpOptions = {
             headers: new HttpHeaders({
                 'Content-Type': 'application/json',
                 'Token': ServiceHelper.GetLoggedUserToken()
             })
         };
-        var url = this.apiUrl + '/GetEmailAlertSettingsByTenant?' + 'tenant=' + tenant;
 
+        var url = this.apiUrl + '/GetEmailAlertSettingsByTenant?' + 'tenant=' + tenant;
         var serviceResponse: ServiceResponse;
         serviceResponse = new ServiceResponse();
-        return Observable.defer(() => {
-            return this.httpClient.get(url, httpOptions).pipe(
-                map(response => {
 
-                    serviceResponse.Result = response;
+        return this.httpClient.get(url, httpOptions).pipe(
+            map(response => {
 
-                    return serviceResponse;
-                }),
-                catchError(ServiceHelper.HandleServiceError));
-        });
+                serviceResponse.Result = response;
+
+                return serviceResponse;
+            }),
+            catchError(ServiceHelper.HandleServiceError));
     }
 
-    updateAllAlerts(allAlerts: EmailAlertSettingPM[], tenant: number) {
+    updateAllAlerts(allAlerts: EmailAlertSettingPM[], tenant: number): Observable<ServiceResponse> {
         const httpOptions = {
             headers: new HttpHeaders({
                 'Content-Type': 'application/json',
@@ -52,29 +50,27 @@ export class EmailAlertSettingPMService {
         var serviceResponse: ServiceResponse;
         serviceResponse = new ServiceResponse();
 
-        return Observable.defer(() => {
-            var env: EmailAlertSettingsEnvelope = new EmailAlertSettingsEnvelope();
-            env.EmailAlerts = [];
-            env.EmailAlerts = allAlerts;
-            var postString: string;
-            postString = JSON.stringify(env);
-            console.log(postString);
+        var env: EmailAlertSettingsEnvelope = new EmailAlertSettingsEnvelope();
+        env.EmailAlerts = [];
+        env.EmailAlerts = allAlerts;
+        var postString: string;
+        postString = JSON.stringify(env);
+        console.log(postString);
 
-            return this.httpClient.put(url, postString, httpOptions).pipe(
-                map(response => {
-                    serviceResponse.Result = response;
+        return this.httpClient.put(url, postString, httpOptions).pipe(
+            map(response => {
+                serviceResponse.Result = response;
 
-                    return serviceResponse;
-                }),
-                catchError(ServiceHelper.HandleServiceError));
-        });
+                return serviceResponse;
+            }),
+            catchError(ServiceHelper.HandleServiceError));
     }
 
     public clone(jsonPM: any) {
         var entityPM: any;
         entityPM = {};
-
         var jsonPMKeys = Object.keys(jsonPM);
+
         for (var key in jsonPMKeys) {
             if ((jsonPMKeys[key] === "entityParentPM") || jsonPMKeys[key] === "UIProperties" || jsonPMKeys[key] === "OldEntityPM") {
                 continue;
@@ -83,7 +79,6 @@ export class EmailAlertSettingPMService {
             var property = jsonPMKeys[key];
             entityPM[property] = jsonPM[property];
         }
-
         return entityPM;
     }
 
