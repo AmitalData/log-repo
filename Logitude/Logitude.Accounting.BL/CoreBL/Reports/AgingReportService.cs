@@ -411,18 +411,19 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                               ).ToList();
 
                 // Adding accounts names
-                List<string> accountsIds = qTotalByMonthAcc.Select(d => d.AccountId).ToList();
+                List<string> accountsIds = reportList.Select(d => d.AccountId).Distinct().ToList();
 
                 GLAccountListQueryService accountQS = new GLAccountListQueryService(_AccountingContext);
                 
                 IQueryable<GLAccountList> accountsList = accountQS.GetByIds(accountsIds,_Param.Tenant);
                 IQueryable<PeriodMExtended> periodMExtendeds =
-                    (from a in accountsList
+                    (from acc in accountsList
                      join moredata in _AccountingContext.GLAccountMoreDatas.Where(r => r.Tenant == _Param.Tenant)
-                     on a.Id equals moredata.AccountId
+                     on acc.Id equals moredata.AccountId into moredataJoinT
+                     from moredata in moredataJoinT.DefaultIfEmpty()
 
                      join card in _AccountingContext.Cards.Where(r => r.Tenant == _Param.Tenant)
-                      on a.Id equals card.GLAccountId into cardJoinT
+                      on acc.Id equals card.GLAccountId into cardJoinT
                      from card in cardJoinT.DefaultIfEmpty()
 
                      join cust in _AccountingContext.Customers.Where(r => r.Tenant == _Param.Tenant)
@@ -435,8 +436,8 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
                      select new PeriodMExtended()
                      {
-                         AccountId = a.Id,
-                         AccountDisplayNumber = a.DisplayNumber,
+                         AccountId = acc.Id,
+                         AccountDisplayNumber = acc.DisplayNumber,
                          AccountTermName = card.PaymentTerm.EnglishName,
 
                          CreditLimitAmount =
@@ -463,7 +464,16 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                  );
 
                 ///var list1=periodMExtendeds.ToList();
+                bool checkIt = false;
+                if (checkIt)
+                {
+                    var A = reportList.GroupBy(r=>r.AccountId).Count();
+                    var b = periodMExtendeds.GroupBy(r => r.AccountId).Count();
+                    if (A != b)
+                    {
 
+                    }
+                }
 
                 List<PeriodMExtended> namedPeriods = (from line in reportList
                                                           //join account in accountsList on line.AccountId equals account.Id
