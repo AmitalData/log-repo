@@ -159,7 +159,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                     }
                 }
                
-                return Request.CreateResponse(HttpStatusCode.OK, new List<string>() { });
+                return Request.CreateResponse(HttpStatusCode.OK, Shipment.CustomerReference1);
 
             }
             catch (Exception ex)
