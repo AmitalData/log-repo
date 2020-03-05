@@ -51,9 +51,9 @@ export class ContainerDefaultsComponent extends BaseComponent {
                 var index: number = 1;
 
                 containersArray.forEach(item => {
-                    var packageType: PackageTypeList = this.allPackageTypes.filter(d => d.Code == item)[0];
+                    var packageType: PackageTypeList = this.allPackageTypes.filter(d => d.Code == item.trim())[0];
                     if (packageType != null) {
-                        this['containerType' + index  + 'Id'] = packageType.Id;
+                        this['ContainerType' + index  + 'Id'] = packageType.Id;
                     }
 
                     index++;
@@ -123,9 +123,15 @@ export class ContainerDefaultsComponent extends BaseComponent {
     private containerType4Code: string;
     private containerType5Code: string;
     private GetContainerTypeCode(id: string, index: number) {
-        var containerType: PackageTypeList = this.allPackageTypes.filter(d => d.Id == id)[0];
-        if (containerType != null) {
-            this['containerType' + index + 'Code'] = containerType.Code;
+        if (AppTool.IsNullOrEmpty(id)) {
+            this['containerType' + index + 'Code'] = null;
+        }
+
+        else {
+            var containerType: PackageTypeList = this.allPackageTypes.filter(d => d.Id == id)[0];
+            if (containerType != null) {
+                this['containerType' + index + 'Code'] = containerType.Code;
+            }
         }
     }
 
@@ -138,7 +144,8 @@ export class ContainerDefaultsComponent extends BaseComponent {
     OkButtonClicked() {
         this.ValidationErrorsList = [];
 
-        if (AppTool.IsNullOrEmpty(this.ContainerType1Id)) {
+        if (AppTool.IsNullOrEmpty(this.ContainerType1Id) && AppTool.IsNullOrEmpty(this.ContainerType2Id) && AppTool.IsNullOrEmpty(this.ContainerType3Id)
+            && AppTool.IsNullOrEmpty(this.ContainerType4Id) && AppTool.IsNullOrEmpty(this.ContainerType5Id)) {
             this.ValidationErrorsList.push("Please select at least one container type");
         }
 
@@ -148,19 +155,19 @@ export class ContainerDefaultsComponent extends BaseComponent {
             var containers: string = this.containerType1Code;
 
             if (!AppTool.IsNullOrEmpty(this.containerType2Code)) {
-                containers = containers + "," + this.containerType2Code;
+                containers = containers + ", " + this.containerType2Code;
             }
 
             if (!AppTool.IsNullOrEmpty(this.containerType3Code)) {
-                containers = containers + "," + this.containerType3Code;
+                containers = containers + ", " + this.containerType3Code;
             }
 
             if (!AppTool.IsNullOrEmpty(this.containerType4Code)) {
-                containers = containers + "," + this.containerType4Code;
+                containers = containers + ", " + this.containerType4Code;
             }
 
             if (!AppTool.IsNullOrEmpty(this.containerType5Code)) {
-                containers = containers + "," + this.containerType5Code;
+                containers = containers + ", " + this.containerType5Code;
             }
 
             this.EntityPM.ContainerDefaults = containers;
