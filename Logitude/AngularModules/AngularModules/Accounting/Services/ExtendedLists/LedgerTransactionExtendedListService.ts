@@ -34,25 +34,31 @@ export class LedgerTransactionExtendedListService {
 
         var urlparameters = '/GetFirstLedgerTransaction?AccountId=' + AccountId;
 
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
+        //var authHeader = new Headers();
+        //authHeader.append('Token', SessionInfo.Token);
         var callUrl = this._apiUrl.concat(urlparameters);//
-
-
-        return Observable.defer(() => {
-            return this._http.get(callUrl, {
-                headers: authHeader
-            }).map(response => {
-
+        return this.httpClient.get(callUrl, httpOptions).pipe(
+            map(response => {
                 var serviceResponse: ServiceResponse = new ServiceResponse();
-                serviceResponse.Result = response.json();
-
-                //console.log("serviceResponse: ", serviceResponse);
-
-                //serviceResponse.Result = _mappedListsArray;
+                serviceResponse.Result = response;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
-        });
+            }),
+            catchError(ServiceHelper.HandleServiceError));
+
+        //return Observable.defer(() => {
+        //    return this._http.get(callUrl, {
+        //        headers: authHeader
+        //    }).map(response => {
+
+        //        var serviceResponse: ServiceResponse = new ServiceResponse();
+        //        serviceResponse.Result = response.json();
+
+        //        //console.log("serviceResponse: ", serviceResponse);
+
+        //        //serviceResponse.Result = _mappedListsArray;
+        //        return serviceResponse;
+        //    }).catch(ServiceHelper.HandleServiceError);
+        //});
     }
 
     getByFilters(filters: ApiQueryFilters) {
@@ -83,25 +89,28 @@ export class LedgerTransactionExtendedListService {
             urlparameters = urlparameters.concat("&AdditionalFilters=").concat(addtionalFiltersValues);
         }
 
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
+        //var authHeader = new Headers();
+        //authHeader.append('Token', SessionInfo.Token);
         var callUrl = this._apiUrl.concat(urlparameters);//
 
-
-        return Observable.defer(() => {
-            return this._http.get(callUrl, {
-                headers: authHeader
-            }).map(response => {
-
-                var serviceResponse: ServiceResponse;
-                serviceResponse = response.json();
-
-                //console.log("serviceResponse: ", serviceResponse);
-
-                //serviceResponse.Result = _mappedListsArray;
+        return this.httpClient.get(callUrl, httpOptions).pipe(
+            map(response => {
+                var serviceResponse: ServiceResponse = new ServiceResponse();
+                serviceResponse.Result = response;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
-        });
+            }),
+            catchError(ServiceHelper.HandleServiceError));
+
+        //return Observable.defer(() => {
+        //    return this._http.get(callUrl, {
+        //        headers: authHeader
+        //    }).map(response => {
+
+        //        var serviceResponse: ServiceResponse;
+        //        serviceResponse = response.json();
+        //        return serviceResponse;
+        //    }).catch(ServiceHelper.HandleServiceError);
+        //});
     }
 
     getBalanceByFilters(filters: ApiQueryFilters) {
@@ -135,16 +144,14 @@ export class LedgerTransactionExtendedListService {
         // var authHeader = new Headers();
         // authHeader.append('Token', SessionInfo.Token);
         var callUrl = this._apiUrl.concat(urlparameters);//
-        var serviceResponse: ServiceResponse = new ServiceResponse();
-        //return Observable.defer(()=>{
-        return this.httpClient.get(callUrl, httpOptions).pipe(
-            map(response => {
-                serviceResponse.Result = response;
-                return serviceResponse;
+         return this.httpClient.get(callUrl, httpOptions).pipe(
+             map(response => {
+                 var serviceResponse: ServiceResponse = new ServiceResponse();
+                 serviceResponse.Result = response;
+                 return serviceResponse;
             }),
             catchError(ServiceHelper.HandleServiceError));
-        
-        //});
+       
         // return Observable.defer(() => {
         //     return this._http.get(callUrl, {
         //         headers: authHeader
@@ -162,8 +169,8 @@ export class LedgerTransactionExtendedListService {
     }
 
     getOpenReconciliationsByFilter(accountId: string, filters: ApiQueryFilters) {
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
+        //var authHeader = new Headers();
+        //authHeader.append('Token', SessionInfo.Token);
 
         var url = this._reconciliationUrl + "/GetOpenReconciliationsByFilters";
 
@@ -200,27 +207,33 @@ export class LedgerTransactionExtendedListService {
 
 
         var callUrl = url.concat(urlparameters);
-
-        return Observable.defer(() => {
-            return this._http.get(callUrl, {
-                headers: authHeader
-            }).map(response => {
-
-                var serviceResponse: ServiceResponse;
-                //serviceResponse.CallTime = callTime;
-                serviceResponse = response.json();
-                console.log("serviceResponse: ", serviceResponse);
-
+        return this.httpClient.get(callUrl, httpOptions).pipe(
+            map(response => {
+                var serviceResponse: ServiceResponse = new ServiceResponse();
+                serviceResponse.Result = response;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
-        });
+            }),
+            catchError(ServiceHelper.HandleServiceError));
+        //return Observable.defer(() => {
+        //    return this._http.get(callUrl, {
+        //        headers: authHeader
+        //    }).map(response => {
+
+        //        var serviceResponse: ServiceResponse;
+        //        //serviceResponse.CallTime = callTime;
+        //        serviceResponse = response.json();
+        //        console.log("serviceResponse: ", serviceResponse);
+
+        //        return serviceResponse;
+        //    }).catch(ServiceHelper.HandleServiceError);
+        //});
     }
 
 
     // External Reconciliations
     getReconciliationsByFilter(accountId: string, filters: ApiQueryFilters) {
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
+        //var authHeader = new Headers();
+        //authHeader.append('Token', SessionInfo.Token);
 
         var url = this._reconciliationUrl + "/GetReconciliationsByFilter";
 
@@ -230,19 +243,25 @@ export class LedgerTransactionExtendedListService {
         urlparameters = this.parseFiltersToURL(filters, urlparameters);
 
         var callUrl = url.concat(urlparameters);
-
-        return Observable.defer(() => {
-            return this._http.get(callUrl, {
-                headers: authHeader
-            }).map(response => {
-
-                var serviceResponse: ServiceResponse;
-                serviceResponse = response.json();
-                console.log("serviceResponse: ", serviceResponse);
-
+        return this.httpClient.get(callUrl, httpOptions).pipe(
+            map(response => {
+                var serviceResponse: ServiceResponse = new ServiceResponse();
+                serviceResponse.Result = response;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
-        });
+            }),
+            catchError(ServiceHelper.HandleServiceError));
+        //return Observable.defer(() => {
+        //    return this._http.get(callUrl, {
+        //        headers: authHeader
+        //    }).map(response => {
+
+        //        var serviceResponse: ServiceResponse;
+        //        serviceResponse = response.json();
+        //        console.log("serviceResponse: ", serviceResponse);
+
+        //        return serviceResponse;
+        //    }).catch(ServiceHelper.HandleServiceError);
+        //});
     }
 
     private parseFiltersToURL(filters: ApiQueryFilters, urlparameters: string) {
@@ -270,8 +289,8 @@ export class LedgerTransactionExtendedListService {
     }
 
     getAutomaticReconcileByFilter(method1: string, method2: string, method3: string, accountId: string, filters: ApiQueryFilters) {
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
+        //var authHeader = new Headers();
+        //authHeader.append('Token', SessionInfo.Token);
 
         var url = this._reconciliationUrl + "/GetAutomaticReconcileByFilter";
 
@@ -312,35 +331,41 @@ export class LedgerTransactionExtendedListService {
 
 
         var callUrl = url.concat(urlparameters);
-
-        return Observable.defer(() => {
-            return this._http.get(callUrl, {
-                headers: authHeader
-            }).map(response => {
-
-                var serviceResponse: ServiceResponse;
-                serviceResponse = response.json();
-                var _mappedListsArray: Array<LedgerTransactionList> = [];
-                if (serviceResponse.Result) {
-                    for (var key in serviceResponse.Result) {
-
-                        var entity: LedgerTransactionList;
-                        entity = this.MapJsonToEntityList(serviceResponse.Result[key]);
-                        _mappedListsArray.push(entity);
-
-                    }
-                }
-
-                serviceResponse.Result = _mappedListsArray;
+        return this.httpClient.get(callUrl, httpOptions).pipe(
+            map(response => {
+                var serviceResponse: ServiceResponse = new ServiceResponse();
+                serviceResponse.Result = response;
                 return serviceResponse;
+            }),
+            catchError(ServiceHelper.HandleServiceError));
+        //return Observable.defer(() => {
+        //    return this._http.get(callUrl, {
+        //        headers: authHeader
+        //    }).map(response => {
 
-            }).catch(ServiceHelper.HandleServiceError);
-        });
+        //        var serviceResponse: ServiceResponse;
+        //        serviceResponse = response.json();
+        //        var _mappedListsArray: Array<LedgerTransactionList> = [];
+        //        if (serviceResponse.Result) {
+        //            for (var key in serviceResponse.Result) {
+
+        //                var entity: LedgerTransactionList;
+        //                entity = this.MapJsonToEntityList(serviceResponse.Result[key]);
+        //                _mappedListsArray.push(entity);
+
+        //            }
+        //        }
+
+        //        serviceResponse.Result = _mappedListsArray;
+        //        return serviceResponse;
+
+        //    }).catch(ServiceHelper.HandleServiceError);
+        //});
     }
 
     getLedgerTransactionsByIds(Ids: string[]) {
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
+        //var authHeader = new Headers();
+        //authHeader.append('Token', SessionInfo.Token);
 
         var params: string = "";
         for (var id of Ids) {
@@ -348,77 +373,104 @@ export class LedgerTransactionExtendedListService {
         }
 
         var url = this._apiUrl + '/getLedgerTransactionsByIds?' + params;
-        return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var allLists = response.json();
-
-                var serviceResponse = new ServiceResponse();
-                serviceResponse.Result = allLists;
+        return this.httpClient.get(url, httpOptions).pipe(
+            map(response => {
+                var serviceResponse: ServiceResponse = new ServiceResponse();
+                serviceResponse.Result = response;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
-        });
+            }),
+            catchError(ServiceHelper.HandleServiceError));
+        //return Observable.defer(() => {
+        //    return this._http.get(url, { headers: authHeader }).map(response => {
+        //        var allLists = response.json();
+
+        //        var serviceResponse = new ServiceResponse();
+        //        serviceResponse.Result = allLists;
+        //        return serviceResponse;
+        //    }).catch(ServiceHelper.HandleServiceError);
+        //});
     }
 
     getLast10TransactionsForAccount(accountId: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
+        //var authHeader = new Headers();
+        //authHeader.append('Token', SessionInfo.Token);
 
 
         var url = this._apiUrl + '/GetLast10TransactionsForAccount?AccountId=' + accountId;
-        return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var allLists = response.json();
-
-                var serviceResponse = new ServiceResponse();
-                serviceResponse.Result = allLists;
+        return this.httpClient.get(url, httpOptions).pipe(
+            map(response => {
+                var serviceResponse: ServiceResponse = new ServiceResponse();
+                serviceResponse.Result = response;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
-        });
+            }),
+            catchError(ServiceHelper.HandleServiceError));
+        //return Observable.defer(() => {
+        //    return this._http.get(url, { headers: authHeader }).map(response => {
+        //        var allLists = response.json();
+
+        //        var serviceResponse = new ServiceResponse();
+        //        serviceResponse.Result = allLists;
+        //        return serviceResponse;
+        //    }).catch(ServiceHelper.HandleServiceError);
+        //});
     }
 
     getTransactionsForARPayment(arpaymentId:string, billToGLAccountId:string) {
 
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
+        //var authHeader = new Headers();
+        //authHeader.append('Token', SessionInfo.Token);
 
 
         var url = this._apiUrl + '/GetTransactionsForARPayment?arpaymentId=' + arpaymentId
         + '&billToGLAccountId=' + billToGLAccountId;
 
-        return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var allLists = response.json();
-
-                var serviceResponse = new ServiceResponse();
-                serviceResponse.Result = allLists;
+        return this.httpClient.get(url, httpOptions).pipe(
+            map(response => {
+                var serviceResponse: ServiceResponse = new ServiceResponse();
+                serviceResponse.Result = response;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
-        });
+            }),
+            catchError(ServiceHelper.HandleServiceError));
+        //return Observable.defer(() => {
+        //    return this._http.get(url, { headers: authHeader }).map(response => {
+        //        var allLists = response.json();
+
+        //        var serviceResponse = new ServiceResponse();
+        //        serviceResponse.Result = allLists;
+        //        return serviceResponse;
+        //    }).catch(ServiceHelper.HandleServiceError);
+        //});
     }
 
     GetTransactionsCurrencies(AccountId:string) {
 
         var urlparameters = '/GetTransactionsCurrencies?AccountId=' + AccountId;
 
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
+        //var authHeader = new Headers();
+        //authHeader.append('Token', SessionInfo.Token);
         var callUrl = this._apiUrl.concat(urlparameters);//
-
-
-        return Observable.defer(() => {
-            return this._http.get(callUrl, {
-                headers: authHeader
-            }).map(response => {
-
+        return this.httpClient.get(callUrl, httpOptions).pipe(
+            map(response => {
                 var serviceResponse: ServiceResponse = new ServiceResponse();
-                serviceResponse.Result = response.json();
-
-                //console.log("serviceResponse: ", serviceResponse);
-
-                //serviceResponse.Result = _mappedListsArray;
+                serviceResponse.Result = response;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
-        });
+            }),
+            catchError(ServiceHelper.HandleServiceError));
+
+        //return Observable.defer(() => {
+        //    return this._http.get(callUrl, {
+        //        headers: authHeader
+        //    }).map(response => {
+
+        //        var serviceResponse: ServiceResponse = new ServiceResponse();
+        //        serviceResponse.Result = response.json();
+
+        //        //console.log("serviceResponse: ", serviceResponse);
+
+        //        //serviceResponse.Result = _mappedListsArray;
+        //        return serviceResponse;
+        //    }).catch(ServiceHelper.HandleServiceError);
+        //});
     }
 
 

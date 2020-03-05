@@ -176,7 +176,7 @@ export class ExternalRecoDetailsTabComponent extends BaseComponent implements On
 
         // 2- get ledger transactions lines
         if (transactionsLinesIds.length > 0) {
-            this.ledgerTransactionExtendedListService.getLedgerTransactionsByIds(transactionsLinesIds).subscribe((myResult) => {
+            this.ledgerTransactionExtendedListService.getLedgerTransactionsByIds(transactionsLinesIds).subscribe((myResult: ServiceResponse) => {
                 var result = myResult.Result;
                 var list = result.Result;
 

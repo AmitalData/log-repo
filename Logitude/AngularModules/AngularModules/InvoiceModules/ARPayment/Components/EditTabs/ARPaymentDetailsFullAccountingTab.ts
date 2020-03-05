@@ -268,7 +268,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
             // setTimeout(() => {
 
 
-                this._LedgerTransactionExtendedListService.getTransactionsForARPayment(this.EntityPM.Id, this.EntityPM.GLAccountId).subscribe(myResult => {
+            this._LedgerTransactionExtendedListService.getTransactionsForARPayment(this.EntityPM.Id, this.EntityPM.GLAccountId).subscribe((myResult: ServiceResponse)=> {
                     this._loading = false;
 
                     var mm: ServiceResponse = myResult;

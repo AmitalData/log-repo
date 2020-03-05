@@ -67,6 +67,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
         {
             try
             {
+                throw new Exception("Ha Ha Ha Ha Ha Ha Ha");
                 int tenant = AuthinticateTenant();
 
                 var accountingContext = AccountingContext.GetContext(tenant);

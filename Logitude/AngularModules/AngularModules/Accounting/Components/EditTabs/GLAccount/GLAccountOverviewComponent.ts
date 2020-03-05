@@ -463,7 +463,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
     }
 
     GetLastTransactions() {
-        this._LedgerTransactionExtendedListService.getLast10TransactionsForAccount(this.AccountPM.Id).subscribe(myResult => {
+        this._LedgerTransactionExtendedListService.getLast10TransactionsForAccount(this.AccountPM.Id).subscribe((myResult: ServiceResponse) => {
 
             var mm: ServiceResponse = myResult;
             if (!mm.HasError)
