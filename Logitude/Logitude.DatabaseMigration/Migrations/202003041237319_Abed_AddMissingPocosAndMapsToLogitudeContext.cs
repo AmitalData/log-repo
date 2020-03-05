@@ -2,7 +2,7 @@ namespace Logitude.DatabaseMigration.Migrations
 {
     using System;
     using System.Data.Entity.Migrations;
-    
+
     public partial class Abed_AddMissingPocosAndMapsToLogitudeContext : DbMigration
     {
         public override void Up()
@@ -47,7 +47,12 @@ namespace Logitude.DatabaseMigration.Migrations
             DropPrimaryKey("dbo.GeneralLocks", "PK_dbo.GeneralLocks");
             DropPrimaryKey("dbo.HybridTenantStates", "PK_dbo.HybridTenantStates");
             DropPrimaryKey("dbo.HybridTenantThresholds", "PK_dbo.HybridTenantThresholds");
-            DropPrimaryKey("dbo.ReportGroups", "PK__ReportGr__3214EC07702996C1");
+            //DropPrimaryKey("dbo.ReportGroups", "PK__ReportGr__3214EC07702996C1");
+            Sql("DECLARE @SQL nvarchar(1000) " +
+                "declare @PkName varchar(50) " +
+                "set @PkName = (select CONSTRAINT_NAME from INFORMATION_SCHEMA.CONSTRAINT_TABLE_USAGE where TABLE_NAME = 'ReportGroups' and CONSTRAINT_NAME Like 'PK%') " +
+                "SET @SQL = 'ALTER TABLE [dbo].[ReportGroups] DROP CONSTRAINT [' + @PkName + ']' " +
+                "EXEC(@SQL)");
             DropPrimaryKey("dbo.UserPermittedBranches", "PK_UserPermittedBranches");
             DropPrimaryKey("dbo.UserPermittedProducts", "PK_dbo.UserPermittedProducts");
             //AddColumn("dbo.Cards", "AutomaticLastUpdateDate", c => c.DateTime());
@@ -205,7 +210,7 @@ namespace Logitude.DatabaseMigration.Migrations
             AddForeignKey("dbo.EventTypes", "EventTypeCategoryCode", "dbo.EventTypeCategories", "Code");
             AddForeignKey("dbo.Reports", "ReportGroupId", "dbo.ReportGroups", "Id");
         }
-        
+
         public override void Down()
         {
             DropForeignKey("dbo.Reports", "ReportGroupId", "dbo.ReportGroups");
