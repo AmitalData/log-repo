@@ -64,8 +64,8 @@ namespace Logitude.Accounting.BL.CoreBL.BankDeposit
         {
             CashbookPM = GetCashbookById(DepositPM.CashBookId);
             BankAccount = GetBankAccountByNumber(DepositPM.BankAccountNumber);
-            BankGLAccount = GetGLAccountById(BankAccount.GLAccountId);
-            BankDeferedGLAccount = GetGLAccountById(BankAccount.DeferredGLAccountId);
+            BankGLAccount = GetGLAccountById(BankAccount.GLAccountId, true);
+            BankDeferedGLAccount = GetGLAccountById(BankAccount.DeferredGLAccountId, true);
             CashbookGLAccount = GetGLAccountById(CashbookPM.AccountId, true);
         }
 
@@ -95,7 +95,7 @@ namespace Logitude.Accounting.BL.CoreBL.BankDeposit
         private CashBookPM GetCashbookById(string id)
         {
             CashBookQueryService cashBookQueryService = new CashBookQueryService(Tenant);
-            CashBookPM cashBook = cashBookQueryService.GetSingle(id, false, false);
+            CashBookPM cashBook = cashBookQueryService.GetSingle(id, false, true);
             return cashBook;
         }
 
