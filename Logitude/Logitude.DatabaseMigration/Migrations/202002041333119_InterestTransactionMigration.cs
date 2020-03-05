@@ -7,8 +7,8 @@ namespace Logitude.DatabaseMigration.Migrations
     {
         public override void Up()
         {
-            Sql("ALTER TABLE InterestTransactions drop  CONSTRAINT[UQ_InterestEntityTypeCode_EntityId_Tenant_OriginalEntityLineNumber]");
-            Sql("ALTER TABLE InterestTransactions add  CONSTRAINT[UQ_InterestEntityTypeCode_EntityId_Tenant_OriginalEntityLineNumber_GLAccountId] UNIQUE NONCLUSTERED([Tenant] ASC, [InterestEntityTypeCode] ASC, [EntityId] ASC, [OriginalEntityLineNumber] ASC, [GLAccountId] ASC)");
+          //  Sql("ALTER TABLE InterestTransactions drop  CONSTRAINT[UQ_InterestEntityTypeCode_EntityId_Tenant_OriginalEntityLineNumber]");
+        //    Sql("ALTER TABLE InterestTransactions add  CONSTRAINT[UQ_InterestEntityTypeCode_EntityId_Tenant_OriginalEntityLineNumber_GLAccountId] UNIQUE NONCLUSTERED([Tenant] ASC, [InterestEntityTypeCode] ASC, [EntityId] ASC, [OriginalEntityLineNumber] ASC, [GLAccountId] ASC)");
 
         }
 
