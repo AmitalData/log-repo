@@ -237,8 +237,6 @@
                                                                                                                 <input [disabled]="!ShowPricesTable" [(ngModel)]="ShowChargeNoteColumn" class="LeftCenter" style="text-align:center" [attr.id]="ShowChargeNoteColumnKey" type="checkbox" />
                                                                                                                 <label style="color:black" class="LeftCenter" [attr.for]="ShowChargeNoteColumnKey">{{'QuoteTemplate.S.ShowChargeNote' | TextCodeTranslationPipe}}</label>
                                                                                                             </div>
-
-                                                                                                         
                                                                                                         </td>
 
                                                                                                     </tr>
@@ -251,8 +249,6 @@
                                                                                                                 <input [disabled]="!ShowPricesTable" [(ngModel)]="ShowSaleMaxMinAmountColumn" class="LeftCenter" style="text-align:center" [attr.id]="ShowSaleMaxMinAmountColumnKey" type="checkbox" />
                                                                                                                 <label style="color:black" class="LeftCenter" [attr.for]="ShowSaleMaxMinAmountColumnKey">{{'QuoteTemplate.S.ShowSaleMinMax' | TextCodeTranslationPipe}} </label>
                                                                                                             </div>
-
-
                                                                                                         </td>
 
                                                                                                     </tr>
@@ -265,11 +261,34 @@
                                                                                                                 <input [disabled]="!ShowPricesTable" [(ngModel)]="ShowIncludedCharges" class="LeftCenter" style="text-align:center" [attr.id]="ShowIncludedChargesKey" type="checkbox" />
                                                                                                                 <label style="color:black" class="LeftCenter" [attr.for]="ShowIncludedChargesKey">{{'QuoteTemplate.S.ShowIncludedCharges' | TextCodeTranslationPipe}} </label>
                                                                                                             </div>
-
-
                                                                                                         </td>
 
                                                                                                     </tr>
+
+                                                                                                    <tr style="height:22px">
+                                                                                                        <td style="width:8px"></td>
+                                                                                                        <td>
+                                                                                                            <div class="CheckBox">
+                                                                                                                <input [disabled]="!ShowPricesTable" [(ngModel)]="ShowVATTypeColumn" class="LeftCenter" style="text-align:center" [attr.id]="ShowVATTypeColumnKey" type="checkbox" />
+                                                                                                                <label style="color:black" class="LeftCenter" [attr.for]="ShowVATTypeColumnKey">{{'QuoteTemplate.S.ShowVATType' | TextCodeTranslationPipe}}</label>
+                                                                                                            </div>
+                                                                                                        </td>
+
+                                                                                                    </tr>
+
+
+                                                                                                    <tr style="height:22px">
+                                                                                                        <td style="width:8px"></td>
+                                                                                                        <td>
+                                                                                                            <div class="CheckBox">
+                                                                                                                <input [disabled]="!ShowPricesTable" [(ngModel)]="ShowVATPercentageColumn" class="LeftCenter" style="text-align:center" [attr.id]="ShowVATPercentageColumnKey" type="checkbox" />
+                                                                                                                <label style="color:black" class="LeftCenter" [attr.for]="ShowVATPercentageColumnKey">{{'QuoteTemplate.S.ShowVATPercentage' | TextCodeTranslationPipe}}</label>
+                                                                                                            </div>
+                                                                                                        </td>
+
+                                                                                                    </tr>
+
+
 
 
                                                                                                 </table>
