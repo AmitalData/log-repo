@@ -1868,6 +1868,7 @@
     <Compile Include="PatchDistribution\Patches\P19R03_0018_SealBAndAddOn.cs" />
     <Compile Include="PatchDistribution\Patches\P19R03_0019_SealB2Pioneers.cs" />
     <Compile Include="PatchDistribution\Patches\P19R03_0020_isCourierManadatory.cs" />
+    <Compile Include="PatchDistribution\Patches\P19R03_0021_TenantNone.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="EntityUpdateServices\ClientUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ConsignmentUpdateService.cs" />
