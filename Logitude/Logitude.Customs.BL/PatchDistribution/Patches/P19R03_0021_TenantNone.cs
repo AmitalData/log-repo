@@ -30,7 +30,7 @@ namespace Logitude.Customs.BL.PatchDistribution.Patches
 
 
             this.AddUpSqlScript(
-@"ALTER TABLE TENANTS add CHECKDIGITCONTROLALGORITHMCODE NVARCHAR2(128) DEFAULT 'NONE' '");
+@"ALTER TABLE TENANTS add CHECKDIGITCONTROLALGORITHMCODE NVARCHAR2(128) DEFAULT 'NONE' ");
         }
     }
 }
