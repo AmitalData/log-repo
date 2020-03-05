@@ -33,6 +33,7 @@ export class DeclarationReferantDataList {
 	DeclarationStatusTypeName: string;
 	DeclarationOfficeName: string;
 	DeclarationStatusTypeCode: string;
+	ATAOrETA: string;
 	
 }
  

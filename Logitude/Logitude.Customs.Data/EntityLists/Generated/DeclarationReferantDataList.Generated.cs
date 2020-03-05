@@ -64,6 +64,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string DeclarationOfficeName  { get; set; }
        [DataMember]
        public string DeclarationStatusTypeCode  { get; set; }
+       [DataMember]
+       public string ATAOrETA  { get; set; }
    }
 
 }
