@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Simplog.Data.CommonDataModel.Mapping
 {
-    public class NumberFormatMap : EntityTypeConfiguration<WarehouseType>
+    public class NumberFormatMap : EntityTypeConfiguration<NumberFormat>
     {
         public NumberFormatMap()
         {

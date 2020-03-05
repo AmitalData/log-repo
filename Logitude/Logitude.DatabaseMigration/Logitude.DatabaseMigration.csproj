@@ -2125,6 +2125,27 @@
       <DependentUpon>202002240830018_AddSLACFieldToShipment_Samar.cs</DependentUpon>
     </Compile>
 
+    <Compile Include="Migrations\202003041237319_Abed_AddMissingPocosAndMapsToLogitudeContext.cs" />
+    <Compile Include="Migrations\202003041237319_Abed_AddMissingPocosAndMapsToLogitudeContext.Designer.cs">
+      <DependentUpon>202003041237319_Abed_AddMissingPocosAndMapsToLogitudeContext.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003050626593_Abed_FixReportGroupId.cs" />
+    <Compile Include="Migrations\202003050626593_Abed_FixReportGroupId.Designer.cs">
+      <DependentUpon>202003050626593_Abed_FixReportGroupId.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003050739232_Abed_AddPaymentGatewayPartnerToLogitudeContext_PocoAndMap.cs" />
+    <Compile Include="Migrations\202003050739232_Abed_AddPaymentGatewayPartnerToLogitudeContext_PocoAndMap.Designer.cs">
+      <DependentUpon>202003050739232_Abed_AddPaymentGatewayPartnerToLogitudeContext_PocoAndMap.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003050852569_Abed_AddMissingPocosAndMapsToLogitudeContext_2.cs" />
+    <Compile Include="Migrations\202003050852569_Abed_AddMissingPocosAndMapsToLogitudeContext_2.Designer.cs">
+      <DependentUpon>202003050852569_Abed_AddMissingPocosAndMapsToLogitudeContext_2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003051017301_Abed_FixNameLengthInUsoCFDI.cs" />
+    <Compile Include="Migrations\202003051017301_Abed_FixNameLengthInUsoCFDI.Designer.cs">
+      <DependentUpon>202003051017301_Abed_FixNameLengthInUsoCFDI.cs</DependentUpon>
+    </Compile>
+
     <Compile Include="Migrations\202002161208343_UserLayoutDirectionMigration.cs" />
     <Compile Include="Migrations\202002161208343_UserLayoutDirectionMigration.Designer.cs">
       <DependentUpon>202002161208343_UserLayoutDirectionMigration.cs</DependentUpon>
@@ -3851,8 +3872,26 @@
       <DependentUpon>202002240830018_AddSLACFieldToShipment_Samar.cs</DependentUpon>
     </EmbeddedResource>
 
+
     <EmbeddedResource Include="Migrations\202002161208343_UserLayoutDirectionMigration.resx">
       <DependentUpon>202002161208343_UserLayoutDirectionMigration.cs</DependentUpon>
+    </EmbeddedResource>
+
+
+    <EmbeddedResource Include="Migrations\202003041237319_Abed_AddMissingPocosAndMapsToLogitudeContext.resx">
+      <DependentUpon>202003041237319_Abed_AddMissingPocosAndMapsToLogitudeContext.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003050626593_Abed_FixReportGroupId.resx">
+      <DependentUpon>202003050626593_Abed_FixReportGroupId.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003050739232_Abed_AddPaymentGatewayPartnerToLogitudeContext_PocoAndMap.resx">
+      <DependentUpon>202003050739232_Abed_AddPaymentGatewayPartnerToLogitudeContext_PocoAndMap.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003050852569_Abed_AddMissingPocosAndMapsToLogitudeContext_2.resx">
+      <DependentUpon>202003050852569_Abed_AddMissingPocosAndMapsToLogitudeContext_2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003051017301_Abed_FixNameLengthInUsoCFDI.resx">
+      <DependentUpon>202003051017301_Abed_FixNameLengthInUsoCFDI.cs</DependentUpon>
     </EmbeddedResource>
 
   </ItemGroup>
