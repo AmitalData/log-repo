@@ -118,7 +118,7 @@ namespace Logitude.IntegrationTest.Shipment
             entityPM.ConcurrencyGUID = ShipmentVariables.ConcurrencyGUID;
             entityPM.NewConcurrencyGUID = ShipmentVariables.ConcurrencyGUID;
             entityPM.ShipmentPackages = IntegrationShipmentPackages.ShipmentPackages();
-            entityPM.ShipmentReceivables = IntegrationShipmentReceivable.ShipmentReceivables();
+            //entityPM.ShipmentReceivables = IntegrationShipmentReceivable.ShipmentReceivables();
             entityPM.ShipmentPayables = IntegrationShipmentPayable.ShipmentPayables();
             entityPM.ShipmentPickUps = IntegrationShipmentPickUps.ShipmentPickUps();
             entityPM.ShipmentDeliveries = IntegrationShipmentDeliveries.shipmentDelivey();
