@@ -12,4 +12,5 @@ export class SendUnCorrectDocumentsRequestParams extends GenericRequestParams {
     public SelectedTotalInvoiceValue: string;
     public SelectedFastIndividualProcessValue: string;
     public SelectedCustomStatusValue: string;
+    public IsCreateNewDocumentVersion: boolean;
 }

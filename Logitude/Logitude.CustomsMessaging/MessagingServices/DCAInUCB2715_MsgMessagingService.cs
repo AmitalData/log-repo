@@ -106,7 +106,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 SelectedTotalInvoiceValue = mySendUnCorrectDocumentsRequestParams.SelectedTotalInvoiceValue,
                 SelectedFastIndividualProcessValue = mySendUnCorrectDocumentsRequestParams.SelectedFastIndividualProcessValue,
                 SelectedCustomStatusValue = mySendUnCorrectDocumentsRequestParams.SelectedCustomStatusValue,
-
+                IsCreateNewDocumentVersion = mySendUnCorrectDocumentsRequestParams.IsCreateNewDocumentVersion,
                 tenant = tenant,
                 MyMoreParams = "",
                 ResponseContentHeader = new DefaultResponseContentHeader()
@@ -214,6 +214,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
         public string SelectedTotalInvoiceValue { get; set; }
         public string SelectedFastIndividualProcessValue { get; set; }
         public string SelectedCustomStatusValue { get; set; }
+        public bool IsCreateNewDocumentVersion { get; set; }
 
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
     }
