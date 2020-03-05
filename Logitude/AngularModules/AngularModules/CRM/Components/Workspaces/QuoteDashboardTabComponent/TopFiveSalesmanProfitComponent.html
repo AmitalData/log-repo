@@ -1,7 +1,7 @@
 <table>
     <tr>
         <td>
-            <div class="MediaFill" style="min-width: 450px;">
+            <div class="MediaFill">
                 <ScrollViewer [Small]="true">
                     <SectionBox>
                         <SectionHead>
@@ -40,10 +40,12 @@
                                                     </td>
                                                 </tr>
 
-                                                <tr style="height:60px !important;">
+                                                <tr style="height:70px !important;">
                                                     <td>
                                                         <div class="MediaFill">
-                                                            <div [attr.id]="LegendDiv" class="MediaFill"></div>
+                                                            <ScrollViewer>
+                                                                <div [attr.id]="LegendDiv"></div>
+                                                            </ScrollViewer>                                                            
                                                         </div>                                                        
                                                     </td>
                                                 </tr>
