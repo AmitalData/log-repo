@@ -250,6 +250,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.CRM
             {
                 numberOfMonths++;
 
+                List<MonthItemClass> closeWonAndUpList = new List<MonthItemClass>();
                 #region
                 index = 0;
 
@@ -262,7 +263,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.CRM
                 #region First Stage
                 int myLeadCount = iQueryable_Monthly.Count();
 
-                myDataProvider.MonthlyDataList.Add(new MonthItemClass()
+                closeWonAndUpList.Add(new MonthItemClass()
                 {
                     Id = myMonthItemIndex++,
                     Date = myDate1,
@@ -280,7 +281,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.CRM
                                    where b.FromStageId == myQuaStageId
                                    select a).Distinct().Count();
 
-                myDataProvider.MonthlyDataList.Add(new MonthItemClass()
+                closeWonAndUpList.Add(new MonthItemClass()
                 {
                     Id = myMonthItemIndex++,
                     Date = myDate1,
@@ -304,8 +305,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.CRM
                          select a).Distinct();
                     
                     int myCount = iQueryable_ByStage.Count();
-                    
-                    myDataProvider.MonthlyDataList.Add(new MonthItemClass()
+
+                    closeWonAndUpList.Add(new MonthItemClass()
                     {
                         Id = myMonthItemIndex++,
                         Date = myDate1,
@@ -322,7 +323,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.CRM
                 #region Closed Won Stage
                 int myWonsCount = iQueryable_Monthly.Where(d => d.Stage.Id == myCloseWonStageId).Count();
 
-                myDataProvider.MonthlyDataList.Add(new MonthItemClass()
+                closeWonAndUpList.Add(new MonthItemClass()
                 {
                     Id = myMonthItemIndex++,
                     Date = myDate1,
@@ -336,9 +337,14 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.CRM
                 #endregion
 
                 #region Sort
-                this.CorrectListValues(myDataProvider.MonthlyDataList, myDate1);
+                this.CorrectListValues(closeWonAndUpList);
                 #endregion
-                
+
+                foreach(MonthItemClass item in closeWonAndUpList)
+                {
+                    myDataProvider.MonthlyDataList.Add(item);
+                }
+
                 #region Closed Lost Stage
                 int myLostCount = iQueryable_Monthly.Where(d => d.Stage.Id == myCloseLostStageId).Count();
 
@@ -458,17 +464,17 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.CRM
             return myDataProvider;
         }
 
-        private void CorrectListValues(List<MonthItemClass> monthlyDataList, DateTime myDate)
+        private void CorrectListValues(List<MonthItemClass> monthlyDataList)
         {
-            var expectedOrder = monthlyDataList.Where(d => d.Date == myDate).OrderByDescending(d => d.OpportunitiesCount).Select(s => s.OpportunitiesCount).ToList();
-            bool isOrdered = monthlyDataList.Where(d => d.Date == myDate).Select(s => s.OpportunitiesCount).SequenceEqual(expectedOrder);
+            var expectedOrder = monthlyDataList.OrderByDescending(d => d.OpportunitiesCount).Select(s => s.OpportunitiesCount).ToList();
+            bool isOrdered = monthlyDataList.Select(s => s.OpportunitiesCount).SequenceEqual(expectedOrder);
             while (!isOrdered)
             {
                 for (int i = 0; i < monthlyDataList.Count; i++)
                 {
                     if (i > 0)
                     {
-                        if (monthlyDataList[i - 1] != null)
+                        if (monthlyDataList[i - 1] != null && monthlyDataList[i - 1].OpportunitiesCount != null && monthlyDataList[i - 1].OpportunitiesCount != 0)
                         {
                             if (monthlyDataList[i - 1].OpportunitiesCount < monthlyDataList[i].OpportunitiesCount)
                             {
@@ -478,8 +484,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.CRM
                     }
                 }
 
-                expectedOrder = monthlyDataList.Where(d => d.Date == myDate).OrderByDescending(d => d.OpportunitiesCount).Select(s => s.OpportunitiesCount).ToList();
-                isOrdered = monthlyDataList.Where(d => d.Date == myDate).Select(s => s.OpportunitiesCount).SequenceEqual(expectedOrder);
+                expectedOrder = monthlyDataList.OrderByDescending(d => d.OpportunitiesCount).Select(s => s.OpportunitiesCount).ToList();
+                isOrdered = monthlyDataList.Select(s => s.OpportunitiesCount).SequenceEqual(expectedOrder);
             }
         }
     }
