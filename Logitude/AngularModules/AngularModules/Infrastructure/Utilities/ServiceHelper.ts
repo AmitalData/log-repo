@@ -1,8 +1,7 @@
 
 import {ServiceResponse} from '../DataContracts/ServiceResponse';
 import { Http, Headers, Response } from '@angular/http';
- 
-
+import { HttpClient, HttpResponse, HttpEvent, HttpErrorResponse } from '@angular/common/http';
 import {Observable} from 'rxjs/Rx';
 import {AppTool, DateTool} from '../Tools';
 import {MessageWindow} from '../../Controls/Windows/MessageWindow';
@@ -99,7 +98,7 @@ export class ServiceHelper {
             }
         }
         else if (error instanceof HttpErrorResponse)  {
-            this.HttpClientHandleServiceError(error);
+            ServiceHelper.HttpClientHandleServiceError(error);
         }
         else {
 
