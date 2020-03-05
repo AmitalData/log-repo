@@ -233,6 +233,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.OrderGrossWeightEdited = entityPM.OrderGrossWeightEdited;
             entityPoco.OrderChargeableWeightEdited = entityPM.OrderChargeableWeightEdited;
             entityPoco.CASSCode = entityPM.CASSCode;
+            entityPoco.SLAC = entityPM.SLAC;
             entityPoco.OrderGrossWeight = entityPM.OrderGrossWeight;
             entityPoco.BookingVolume = entityPM.BookingVolume;
             entityPoco.OrderVolumetricWeight = entityPM.OrderVolumetricWeight;
@@ -428,7 +429,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.To = entityPM.To;
             entityPoco.Origin = entityPM.Origin;
             entityPoco.ComputedShipmentNumber = entityPM.ComputedShipmentNumber;
-            entityPoco.FirstARInvoiceApprovalDate = entityPM.FirstARInvoiceApprovalDate;
 
             //entityPoco.ContainersNumbers = entityPM.ContainersNumbers;
             //entityPoco.FirstPickupLocation = entityPM.FirstPickupLocation;
@@ -440,7 +440,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             //entityPoco.FinalArrivalDate = entityPM.FinalArrivalDate;
             //entityPoco.EstimatedFinalArrivalDate = entityPM.EstimatedFinalArrivalDate;
             //entityPoco.ActualFinalArrivalDate = entityPM.ActualFinalArrivalDate;
-
+            //entityPoco.FirstARInvoiceApprovalDate = entityPM.FirstARInvoiceApprovalDate;
+            
             BuildSearchField(entityPM, entityPoco, entityMasterData, myPackagesList);
             if (!LBcurrentTenant.IsDocumentsArchive)
             {
@@ -2499,6 +2500,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             AddFieldChangedProperties(changeTrackingPM, "MainCarriageFinalDestinationATA", changeTrackingPM.MainCarriageFinalDestinationATA, pm.MainCarriageFinalDestinationATA, "DateTime?", notifyPropertyChangeValuesList);
             AddFieldChangedProperties(changeTrackingPM, "CutoffDate", changeTrackingPM.CutoffDate, pm.CutoffDate, "DateTime?", notifyPropertyChangeValuesList);
             AddFieldChangedProperties(changeTrackingPM, "IsCancelled", changeTrackingPM.IsCancelled, pm.IsCancelled, "bool", notifyPropertyChangeValuesList);
+            AddFieldChangedProperties(changeTrackingPM, "FirstARInvoiceApprovalDate", changeTrackingPM.FirstARInvoiceApprovalDate, pm.FirstARInvoiceApprovalDate, "DateTime?", notifyPropertyChangeValuesList);
+            AddFieldChangedProperties(changeTrackingPM, "ActualFinalArrivalDate", changeTrackingPM.ActualFinalArrivalDate, pm.ActualFinalArrivalDate, "DateTime?", notifyPropertyChangeValuesList);
+            AddFieldChangedProperties(changeTrackingPM, "EstimatedFinalArrivalDate", changeTrackingPM.EstimatedFinalArrivalDate, pm.EstimatedFinalArrivalDate, "DateTime?", notifyPropertyChangeValuesList);
 
 
             AddCustomFieldChangedProperties(changeTrackingPM, changeTrackingPM.Field1, pm.Field1, "Field1", notifyPropertyChangeValuesList);
@@ -2607,6 +2611,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             shipmentPM.CustomerContactId = houseShipment.CustomerContactId;
             shipmentPM.AgentContactId = houseShipment.AgentContactId;
             shipmentPM.IsCancelled = houseShipment.IsCancelled;
+            shipmentPM.FirstARInvoiceApprovalDate = houseShipment.FirstARInvoiceApprovalDate;
+            shipmentPM.ActualFinalArrivalDate = houseShipment.ActualFinalArrivalDate;
+            shipmentPM.EstimatedFinalArrivalDate = houseShipment.EstimatedFinalArrivalDate;
             if (EntityChangeHelper.IsShowLogBoxAutomationFields())
             {
                 shipmentPM.IsDepositionRequired = houseShipment.IsDepositionRequired;

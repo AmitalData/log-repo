@@ -133,8 +133,10 @@ export class AWBPackagesTabComponent extends BaseComponent {
         this.UIProperties.SetEnabled("AWBCommodityItemNumber", this.ObjectTableName, isFieldEnabled);
         this.UIProperties.SetEnabled("IsDangerous", this.ObjectTableName, isFieldEnabled);
         this.UIProperties.SetEnabled("DescriptionOfGoods", this.ObjectTableName, isFieldEnabled);
+        this.UIProperties.SetEnabled("SLAC", this.ObjectTableName, isFieldEnabled);
         this.UIProperties.SetVisibility("AWBCommodityItemNumber", this.ObjectTableName, isFieldVisible);
         this.UIProperties.SetVisibility("DescriptionOfGoods", this.ObjectTableName, isFieldVisible);
+        this.UIProperties.SetVisibility("SLAC", this.ObjectTableName, isFieldVisible);
 
         this.ItemsSource.forEach(item => {
             item.SetUIProperties();
@@ -469,6 +471,13 @@ export class AWBPackagesTabComponent extends BaseComponent {
             this.EntityPM.DescriptionOfGoods = newValue;
             this.Validate();
             this.FireWizardEvent();
+        }
+    }
+
+    get SLAC() { return this.EntityPM.SLAC; }
+    set SLAC(newValue: string) {
+        if (this.EntityPM.SLAC != newValue) {
+            this.EntityPM.SLAC = newValue;
         }
     }
 

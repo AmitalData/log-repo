@@ -44,6 +44,14 @@ namespace Logitude.Accounting.BL
                 Code = "3", 
                 SearchFields = "3,Cancelled,בוטל", 
 			});
+			 
+            all.Add(new InterestReportStatuseDetails()
+            {    
+                Code = "4", 
+                EnglishName = "Closed without Invoice", 
+                LocalName = "נסגר ללא חשבונית", 
+                SearchFields = "4,Closed without Invoice,נסגר ללא חשבונית", 
+			});
 			
             return all;
        }

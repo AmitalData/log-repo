@@ -39,7 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Interest Report Statuse&quot;"
-  Code="&quot;9ccc&quot;"
+  Code="&quot;1bb2&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;EnglishName&quot;"
@@ -405,6 +405,11 @@
       EnglishName="&quot;Cancelled&quot;"
       Code="&quot;3&quot;"
       SearchFields="&quot;3,Cancelled,בוטל&quot;" />
+    <Record
+      Code="&quot;4&quot;"
+      EnglishName="&quot;Closed without Invoice&quot;"
+      LocalName="&quot;נסגר ללא חשבונית&quot;"
+      SearchFields="&quot;4,Closed without Invoice,נסגר ללא חשבונית&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

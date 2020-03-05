@@ -860,7 +860,7 @@
     ObjectTableName="&quot;LogitudeMessagesTransmissionLog&quot;"
     FieldsDataType="&quot;Text&quot;"
     DataTypeCode="&quot;Text&quot;"
-    MaxLength="60"
+    MaxLength="70"
     IsRequiered="false"
     IsCustom="false"
     MinLength="0"

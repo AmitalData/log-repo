@@ -694,6 +694,7 @@
 
             var defaultParam = new Object();
             defaultParam.Tenant = 1;
+            defaultParam.GLAccountId = "1-clear2get_all";
 
             if (!_ResponseToken) {
                 getToken();
@@ -711,8 +712,14 @@
             var objToCheck1 = JSON.parse(myJson);
 
             var myUrl;
-            myUrl = _ReconciliationStageBUrl + "?tenant=" + objToCheck1.Tenant + "&noBatch=1";
-
+            if (objToCheck1.GLAccountId == "")
+            {
+                myUrl = _ReconciliationStageBUrl + "?tenant=" + objToCheck1.Tenant + "&noBatch=1";
+            }
+            else
+            {
+                 myUrl = _ReconciliationStageBUrl + "?tenant=" + objToCheck1.Tenant + "&gLAccountId=" + objToCheck1.GLAccountId + "&noBatch=1";
+           }
             //alert(myUrl);
 
 

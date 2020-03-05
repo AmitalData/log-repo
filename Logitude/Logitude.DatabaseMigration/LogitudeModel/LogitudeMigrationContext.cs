@@ -1478,6 +1478,11 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             get;
             set;
         }
+        public IDbSet<ShipmentAdditionalCloudData> ShipmentAdditionalCloudDatas
+        {
+            get;
+            set;
+        }
         public IDbSet<ShipmentType> ShipmentTypes
         {
             get;
@@ -4815,6 +4820,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new ShipmentReceivableStatuMap());
             modelBuilder.Configurations.Add(new ShipmentMap());
             modelBuilder.Configurations.Add(new ShipmentComputedFieldsMap());
+            modelBuilder.Configurations.Add(new ShipmentAdditionalCloudDataMap());
             modelBuilder.Configurations.Add(new ShipmentTypeMap());
             modelBuilder.Configurations.Add(new ShippingAgentMap());
             modelBuilder.Configurations.Add(new ShippingLineMap());
@@ -4935,6 +4941,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new InboundEmailLinesMap());
             modelBuilder.Configurations.Add(new QueueDefinitionMap());
             modelBuilder.Configurations.Add(new QueueMessageMap());
+            modelBuilder.Configurations.Add(new QueueMessageMoreDetailsMap());
             modelBuilder.Configurations.Add(new BusinessHoursHolidayMap());
             modelBuilder.Configurations.Add(new BusinessHourMap());
             modelBuilder.Configurations.Add(new APILogsDataMap());

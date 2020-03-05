@@ -60,6 +60,7 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
     public AllChargesTypes: ChargesTypeList[];
     public AllMeasurements: MeasurementList[];
     public AllPackageTypes: PackageTypeList[];
+    public LineIdFromPriceCheck: string;
     Intialize(args: any) {
         this.TariffsLinesSource = new ObservableCollection([]);
         this.TariffDomainService = new TariffDomainService();
@@ -67,6 +68,7 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
 
         this.CurrentVersion = args['CurrentVersion'];
         this.SelectedVersionNumber = args['SelectedVersionNumber'];
+        this.LineIdFromPriceCheck = args['LineIdFromPriceCheck'];
 
         if (this.CurrentVersion != null) {
             this.IsDraftVersion = this.CurrentVersion.IsDraft;
@@ -798,6 +800,7 @@ export class OceanFCLSurchargeTariffLineData extends BaseComponent {
         this.IsEditEnabled = FatherComponent.IsDraftVersion;
 
         this.SetUIProperties();
+        this.SetCellColorsForPriceCheck();
 
         if (!isDeleted) {
             this.LoadCompareContainerPrices();
@@ -805,6 +808,23 @@ export class OceanFCLSurchargeTariffLineData extends BaseComponent {
 
         this.BuildContainerPricesItemsSource();
         this.ComputeSurchargePricesValues();
+    }
+
+    public CellColor: string = "transparent";
+    private SetCellColorsForPriceCheck() {
+        if (!AppTool.IsNullOrEmpty(this.FatherComponent.LineIdFromPriceCheck) && this.FatherComponent.LineIdFromPriceCheck == this.EntityPM.Id) {
+            this.CellColor = "#FFFBDA";
+        }
+
+        else {
+            if (this.IsEditEnabled) {
+                this.CellColor = "transparent";
+            }
+
+            else {
+                this.CellColor = "rgba(230, 231, 232, 0.5)";
+            }
+        }
     }
 
     private CheckIfLineHasError() {

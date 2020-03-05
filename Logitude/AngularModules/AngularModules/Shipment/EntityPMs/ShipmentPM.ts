@@ -4579,6 +4579,9 @@ export class ShipmentPM {
     public get WarehouseReleasesIds() { return this.warehouseReleasesIds; }
     public set WarehouseReleasesIds(newValue: string) { if (this.warehouseReleasesIds != newValue) { this.warehouseReleasesIds = newValue; this.MarkAsDirty("WarehouseReleasesIds"); } }
 
+    private sLAC: string;
+    public get SLAC() { return this.sLAC; }
+    public set SLAC(newValue: string) { if (this.sLAC != newValue) { this.sLAC = newValue; this.MarkAsDirty("SLAC"); } }
 
     public OldEntityPM: ShipmentPM;
 

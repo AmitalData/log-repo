@@ -338,6 +338,7 @@
     <Content Include="InfrastructureModules\InfrastructureBatchService\Components\TaskScheduler\SchedulerTemplates\ChooseProcedureCodeComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureBatchService\Components\TaskScheduler\SchedulerTemplates\FTBSchedulerTemplateComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureBatchService\Components\TaskScheduler\SchedulerTemplates\TaskSchedulerTemplateComponent.html" />
+    <Content Include="InfrastructureModules\InfrastructureBatchService\Components\TaskScheduler\TaskSchedulerHistoryComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureBIReport\Components\EditTabs\BIReportGeneralTabComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureBIReport\Components\ListTemplates\BIReportListTemplate.html" />
     <Content Include="InfrastructureModules\InfrastructureBIReport\Components\NewEntity\AgGridColumnsOperations.html" />
@@ -623,7 +624,6 @@
     <TypeScriptCompile Include="CRM\Components\Workspaces\QuoteDashboardTabComponent\QuotesConversionComponent.ts" />
     <TypeScriptCompile Include="CRM\Components\Workspaces\QuoteDashboardTabComponent\SentQuotesKPIComponent.ts" />
     <TypeScriptCompile Include="CRM\Components\Workspaces\QuoteDashboardTabComponent\TopFiveSalesmanProfitComponent.ts" />
-    <TypeScriptCompile Include="CRM\Components\Workspaces\QuoteDashboardTabComponent\TopFiveSalesmanProfitComponentOld.ts" />
     <TypeScriptCompile Include="CRM\EntityLists\OccasionContactList.ts" />
     <TypeScriptCompile Include="CRM\EntityLists\OccasionInviteeList.ts" />
     <TypeScriptCompile Include="CRM\EntityLists\OccasionList.ts" />
@@ -973,6 +973,7 @@
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBatchService\Components\TaskScheduler\SchedulerTemplates\ChooseProcedureCodeComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBatchService\Components\TaskScheduler\SchedulerTemplates\FTBSchedulerTemplateComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBatchService\Components\TaskScheduler\SchedulerTemplates\TaskSchedulerTemplateComponent.ts" />
+    <TypeScriptCompile Include="InfrastructureModules\InfrastructureBatchService\Components\TaskScheduler\TaskSchedulerHistoryComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBIReport\Components\EditTabs\BIReportGeneralTabComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBIReport\Components\ListTemplates\BIReportListTemplate.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBIReport\Components\NewEntity\AgGridColumnsOperations.ts" />

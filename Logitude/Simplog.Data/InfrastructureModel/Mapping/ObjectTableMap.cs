@@ -40,6 +40,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.DownloadToExcelFeatureCode).HasMaxLength(120).IsUnicode(false);
             this.Property(t => t.DescriptionTextCodeCode).HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.NewButtonTextCodeCode).HasMaxLength(100).IsUnicode(false);
+            this.Property(t => t.SplitComponentPath).IsMaxLength().IsUnicode(true);
 
 
             //this.Property(t => t.FilterMenuComponentPath).HasMaxLength(250).IsUnicode(false);
@@ -106,8 +107,8 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.EntityResourceLastUpdate).HasColumnName("EntityResourceLastUpdate");
             this.Property(t => t.DownloadToExcelFeatureCode).HasColumnName("DownloadToExcelFeatureCode");
             this.Property(t => t.AllowedForComputingPartners).HasColumnName("AllowedForComputingPartners");
-            this.Property(t => t.CodeField).HasColumnName("CodeField").HasMaxLength(15);            
-            this.Property(t => t.SplitComponentPath).HasColumnName("SplitComponentPath").HasMaxLength(250);
+            this.Property(t => t.CodeField).HasColumnName("CodeField");            
+            this.Property(t => t.SplitComponentPath).HasColumnName("SplitComponentPath");
             this.Property(t => t.DisableSearchBox).HasColumnName("DisableSearchBox");
             this.Property(t => t.AllowedInQueues).HasColumnName("AllowedInQueues");
             this.Property(t => t.IsTabsHidden).HasColumnName("IsTabsHidden");

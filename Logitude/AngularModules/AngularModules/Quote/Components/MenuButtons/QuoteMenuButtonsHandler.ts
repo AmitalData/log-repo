@@ -879,8 +879,10 @@ export class QuoteMenuButtonsHandler {
 
     private IsRunQuotation: boolean = false;
     private RunQuotationScreen() {
-        this.isLCL = QuoteUtilities.IsLCLQuote(this.EntityPM);
-        this.CheckUpdateQuantities();
+        if (this.EntityPM.QuoteTypeCode == "A") {
+            this.isLCL = QuoteUtilities.IsLCLQuote(this.EntityPM);
+            this.CheckUpdateQuantities();
+        }
         if (this.IsUpdateQuantitiesVisible) {
             var messageWindow = new MessageWindow();
             messageWindow.Width = 400;
@@ -906,7 +908,7 @@ export class QuoteMenuButtonsHandler {
     }
 
     public UpdateQuantitiesMessage: string;
-    public IsUpdateQuantitiesVisible: boolean;
+    public IsUpdateQuantitiesVisible: boolean = false;
     CheckUpdateQuantities() {
         var updateMessage = null;
         this.IsUpdateQuantitiesVisible = false;

@@ -47,19 +47,19 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
     public SelectedVersionNumber: number;
     public OriginDependencyFilterValue: string = "A";
     public DestinationDependencyFilterValue = "A";
-
+    public LineIdFromPriceCheck: string;
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
         this.Listen();
     }
-
+    
     Intialize(args: any) {
         this.CurrentVersion = args['CurrentVersion'];
         this.SelectedVersionNumber = args['SelectedVersionNumber'];
+        this.LineIdFromPriceCheck = args['LineIdFromPriceCheck'];
         this.LoadVersions();
-        this.SetOriginDependencyFilterValue();
-
+        this.SetOriginDependencyFilterValue();        
     }
 
     SetOriginDependencyFilterValue() {

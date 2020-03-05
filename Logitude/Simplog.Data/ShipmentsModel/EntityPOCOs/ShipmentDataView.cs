@@ -739,5 +739,6 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string CreatedByPartner { get; set; }
 
         public DateTime? FirstARInvoiceApprovalDate { get; set; }
+        public string SLAC { get; set; }
     }
 }

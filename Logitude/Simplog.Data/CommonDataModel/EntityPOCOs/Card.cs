@@ -136,6 +136,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string CreatedByPartner { get; set; }
 
         public int? StorageFreeDays { get; set; }
+        public DateTime? AutomaticLastUpdateDate { get; set; }
 
 
     }

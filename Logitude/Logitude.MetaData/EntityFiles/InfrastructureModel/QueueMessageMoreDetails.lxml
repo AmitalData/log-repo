@@ -34,7 +34,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Queue Message More Details&quot;"
-  Code="&quot;fe64&quot;"
+  Code="&quot;d6ba&quot;"
   Name="&quot;QueueMessageMoreDetails&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Infrastructure&quot;"
