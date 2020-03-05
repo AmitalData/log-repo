@@ -39,8 +39,12 @@
                                     </td>
 
 
-                                    <td style="width: 1px; padding-left: 5px;" *ngIf="IsPriceCheckVisible">
+                                    <td style="width: 1px;" *ngIf="IsPriceCheckVisible">
                                         <button id="{{'PriceCheck' | IdGeneratorPipe}}" class="Button" (click)="PriceCheck()">{{'Quote.Features.QuotePriceCheck' | TextCodeTranslationPipe}}</button>
+                                    </td>
+
+                                    <td style="width: 5px;" *ngIf="IsPriceCheckVisible">
+                                        <div></div>
                                     </td>
 
                                     <td style="width: 1px;">

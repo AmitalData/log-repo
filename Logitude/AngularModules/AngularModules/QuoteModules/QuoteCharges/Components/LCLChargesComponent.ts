@@ -29,6 +29,7 @@ import {VatTypePercentagePM} from '../../../Common/EntityPMs/VatTypePercentagePM
 import {VATTypesGroupPM} from '../../../Common/EntityPMs/VATTypesGroupPM';
 import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
 import { DecimalFormatter } from '../../../Infrastructure/Utilities/DecimalFormatter';
+import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
 
 @Component({
     selector: 'LCLChargesComponent',
@@ -51,6 +52,8 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
     public CurrentSession = SessionLocator.SelectedSession;
     IsRouteRate: boolean = false;
     public IsPriceCheckVisible: boolean = false;
+    private entityResourceService: EntityResourceService = new EntityResourceService();;
+    public ComponentRef: any;
 
     constructor(private entityArgs: EntityArgs) {
         super();
@@ -70,10 +73,8 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
             this.DisplayTariffs = true;
         }
 
-        if (FeatureLocator.HasFeaturePermession("Quote", "QuotePriceCheck")) {
-            this.IsPriceCheckVisible = true;
-        }
-
+        this.IsPriceCheckVisible = QuoteUtilities.IsPriceCheckVisible(this.EntityPM);
+        
         this.InitializeServices();
         this.LoadRequiredData();
         this.SetLabels();
@@ -441,6 +442,55 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
         }
 
         return myResult;
+    }
+    PriceCheck() {
+        this.entityResourceService.getEntityResourceByTableName("TariffLine").subscribe((res1: any) => {
+            var betweenDate: Date = DateTool.GetCurrentDateAsUtc();
+
+            if (this.EntityPM.DirectionId == "I") {
+                betweenDate = this.EntityPM.ETA;
+            }
+            else  {
+                betweenDate = this.EntityPM.ETD;
+            }
+
+            var tariffType = "";
+            if (this.EntityPM.TransportModeId == "A") {
+                tariffType = "AFC";
+            }
+            else if (this.EntityPM.ShipmentTypeId == "LCL" || this.EntityPM.ShipmentTypeId == "LCLD") {
+                tariffType = "OLC";
+            }
+
+            var WindowArgs: any =
+            {
+                BetweenDate: betweenDate,
+                FromPort: this.EntityPM.FromPortId,
+                ToPort: this.EntityPM.ToPortId,
+                GrossWeight: this.EntityPM.GrossWeight,
+                ChargeableWeight: this.EntityPM.ChargeableWeight,
+                Volume: this.EntityPM.Volume,
+                ChargeableWeightUnit: this.EntityPM.ChargeableWeightUnitCode,
+                GrossWeightUnit: this.EntityPM.GrossWeightUnitCode,
+                VolumeUnit: this.EntityPM.VolumeUnitCode,
+                QuotePM: this.EntityPM,
+                FatherComponent: this,
+                TariffType: tariffType
+            };
+            var logWindow = new LogitudeWindow();
+            logWindow.IsFillScreenHeight = true;
+            logWindow.Width = 1200;
+            logWindow.Title = "Price Check";
+            logWindow.ComponentLoaded.subscribe(cmpRef => {
+                this.ComponentRef = cmpRef;
+                if (WindowArgs != null) {
+                    if (this.ComponentRef['SetWindowArgs']) {
+                        this.ComponentRef.SetWindowArgs(WindowArgs);
+                    }
+                }
+            });
+            logWindow.Show("./TariffModule/Components/Workspaces/TariffSearchAirFreightPricesComponent");
+        });
     }
 
     // Profit

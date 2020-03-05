@@ -31,6 +31,7 @@ import {VatTypePercentagePM} from '../../../Common/EntityPMs/VatTypePercentagePM
 import {VATTypesGroupPM} from '../../../Common/EntityPMs/VATTypesGroupPM';
 import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
 import { DecimalFormatter } from '../../../Infrastructure/Utilities/DecimalFormatter';
+import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
 
 @Component({
     selector: 'FCLChargesComponent',
@@ -52,6 +53,9 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
     public AllInMatchText: string;
     IsShowTotalPerContainer: boolean = false;
     IsRouteRate: boolean = false;
+    public IsPriceCheckVisible: boolean = false;
+    private entityResourceService: EntityResourceService = new EntityResourceService();;
+    public ComponentRef: any;
 
     private CurrentSession = SessionLocator.SelectedSession;
     public HideFCLAllIn: boolean = false;
@@ -71,7 +75,9 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
             this.IsShowTotalPerContainer = true;
         }
 
-     
+
+        this.IsPriceCheckVisible = QuoteUtilities.IsPriceCheckVisible(this.EntityPM);
+
         this.InitializeServices();
         this.LoadRequiredData();
         this.SetLabels();

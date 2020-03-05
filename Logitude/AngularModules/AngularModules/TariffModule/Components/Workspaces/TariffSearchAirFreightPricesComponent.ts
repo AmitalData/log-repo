@@ -10,6 +10,7 @@ import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { CurrencyList } from '../../../Common/EntityLists/CurrencyList';
 import { CurrencyListService } from '../../../Common/Services/StandardLists/CurrencyListService';
 import { ShipmentPM } from '../../../Shipment/EntityPMs/ShipmentPM';
+import { QuotePM } from '../../../Quote/EntityPMs/QuotePM';
 import { ShipmentPayablePM } from '../../../Shipment/EntityPMs/ShipmentPayablePM';
 import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
@@ -35,6 +36,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
     public AvailableTariffs: Array<TariffSearchSummary> = [];
     public IsGeneratePayablesVisible: boolean = false;
     private ShipmentPM: ShipmentPM;
+    private QuotePM: QuotePM;
     private FatherComponent: any;
     private myChargesTypeListService: ChargesTypeListService;
     private dimenstionShipment: ShipmentPM;
@@ -91,10 +93,14 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
     SetWindowArgs(args: any) {
         if (args != null) {
             var isAutorun = false; 
-            if (args['ShipmentPM']) {
-                this.ShipmentPM = args['ShipmentPM'];
+            if (args['ShipmentPM'] || args['QuotePM']) {
                 this.IsGeneratePayablesVisible = true;
                 isAutorun = true;
+                if (args['ShipmentPM']) {
+                    this.ShipmentPM = args['ShipmentPM'];
+                } else {
+                    this.QuotePM = args['QuotePM'];
+                }
             }
             if (args['FatherComponent']) {
                 this.FatherComponent = args['FatherComponent'];
@@ -731,7 +737,6 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
             }
         });
     }
-
     ValidateExistConnectedTariff(item: TariffSearchSummary) {
         var isValid = true;
         var existsPayableOnAirFreight: ShipmentPayablePM = this.ShipmentPM.ShipmentPayables.filter(d => d.TariffId != null && d.TariffId != item.TariffId && d.ChargesTypeId == item.ChargeTypeId)[0];
@@ -750,7 +755,6 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
         }
         return isValid;
     }
-
     ValidateTariffClosedLines() {
         var isValid = true;
         var closedPayablesLine: ShipmentPayablePM = this.ShipmentPM.ShipmentPayables.filter(d => d.AccountedAmount != null && d.AccountedAmount != 0)[0];
@@ -761,7 +765,6 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
         }
         return isValid;
     }
-
     GetQuantity(measurementCode): any {
         var myQuantity: number = null;
         switch (measurementCode) {
@@ -781,6 +784,8 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
         }
         return myQuantity;
     }
+
+
 
 }
 
