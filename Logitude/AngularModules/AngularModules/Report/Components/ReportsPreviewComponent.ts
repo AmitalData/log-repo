@@ -151,6 +151,11 @@ export class ReportsPreviewComponent implements AfterViewInit {
             }
         }
     }
+
+    ValidateSelectedFilters() {
+        return this.ReportFilterConmponent.ValidateSelectedFilters();
+    }
+
     LoadReportFilterComponent() {
 
         SessionLocator.DynamicLoader.Load(this.Report.FilterHtmlComponentUrl, this.viewContainerRef)
@@ -160,12 +165,12 @@ export class ReportsPreviewComponent implements AfterViewInit {
                     this.ReportFilterConmponent.SetQueryFilterItems(this.QueryFilterItems);
                 }
 
-                if (cmpRef.instance['InitializeComponent']) {
-                    cmpRef.instance.InitializeComponent(this);
+                if (this.ReportFilterConmponent['InitializeComponent']) {
+                    this.ReportFilterConmponent.InitializeComponent(this);
                 }
 
-                if (cmpRef.instance['RunReportEvent']) {
-                    cmpRef.instance.RunReportEvent.subscribe(s => {
+                if (this.ReportFilterConmponent['RunReportEvent']) {
+                    this.ReportFilterConmponent.RunReportEvent.subscribe(s => {
                         if (s) {
                             if (this.IsSchedulerReport) {
                                 //this.CurrentSession.ResizeCurrentWindow(1050);

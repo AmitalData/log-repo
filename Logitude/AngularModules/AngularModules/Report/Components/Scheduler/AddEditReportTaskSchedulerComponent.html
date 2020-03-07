@@ -193,6 +193,20 @@
                                                                                 </td>
                                                                             </tr>
 
+                                                                            <tr *ngIf="DataContext.TriggerType == 'D'" class="FormFieldRow">
+                                                                                <td>
+                                                                                    <LogLabel [ObjectFieldName]="'RepeatInMinutes'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                                </td>
+
+                                                                                <td>
+                                                                                    <LogTextBox [ObjectFieldName]="'RepeatInMinutes'" [Text]="DataContext.RepeatInMinutes" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                                </td>
+
+                                                                                <td>
+                                                                                    <div></div>
+                                                                                </td>
+                                                                            </tr>
+
                                                                             <tr style="height:1px;" *ngIf="DataContext.TriggerType == 'W'">
                                                                                 <td>
                                                                                     <LogLabel [NoObjectField]="true" [ObjectFieldName]="'Days'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'Days'"></LogLabel>

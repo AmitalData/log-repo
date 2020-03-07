@@ -280,5 +280,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
           
             return result;
         }
+    
+        public string GetReportCodeById(string id, int tenant)
+        {
+            return repository.GetReportCodeById(id, tenant);
+        }
     }
 }
