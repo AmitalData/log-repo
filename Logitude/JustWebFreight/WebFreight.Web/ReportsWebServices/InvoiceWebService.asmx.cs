@@ -1696,7 +1696,8 @@ namespace WebFreight.Web.ReportsWebServices
                                      a.MeasurementId,
                                      a.VatTypeId,
                                      a.Notes,
-                                     a.IsExpense
+                                     a.IsExpense,
+                                     a.IsRegionalTax,
                                  } into gr
                                  select new
                                  {
@@ -1709,6 +1710,7 @@ namespace WebFreight.Web.ReportsWebServices
                                      MeasurementId = gr.Key.MeasurementId,
                                      VatTypeId = gr.Key.VatTypeId,
                                      IsExpense = gr.Key.IsExpense,
+                                     IsRegionalTax = gr.Key.IsRegionalTax,
                                      LocalAmount = gr.Sum(d => (d.LocalCurrencyAmount != null ? d.LocalCurrencyAmount.Value : 0)),
                                      InvoiceAmount = gr.Sum(d => (d.InvoiceCurrencyAmount != null ? d.InvoiceCurrencyAmount.Value : 0)),
                                      ForeignAmount = gr.Sum(d => (d.ForiegnCurrencyAmount != null ? d.ForiegnCurrencyAmount.Value : 0)),
@@ -1729,6 +1731,7 @@ namespace WebFreight.Web.ReportsWebServices
                         reportinvoiceline.LocalDescription = invoiceline.LocalDescription != null ? invoiceline.LocalDescription : "";
                         reportinvoiceline.DescriptionAndNotes = reportinvoiceline.Description + Environment.NewLine + reportinvoiceline.Notes;
                         reportinvoiceline.IsExpense = invoiceline.IsExpense;
+                        reportinvoiceline.IsRegionalTax = invoiceline.IsRegionalTax;
                         reportinvoiceline.CalculatedUnitPrice = Math.Round(invoiceline.InvoiceAmount / invoiceline.Quantity, 2);
 
                         double? lineAmount_Foreign = invoiceline.ForeignAmount;
@@ -1907,6 +1910,7 @@ namespace WebFreight.Web.ReportsWebServices
                         reportinvoiceline.DescriptionAndNotes = reportinvoiceline.Description + Environment.NewLine + reportinvoiceline.Notes;
                         reportinvoiceline.IsExpense = invoiceline.IsExpense;
                         reportinvoiceline.CalculatedUnitPrice = Math.Round((invoiceline.InvoiceCurrencyAmount / invoiceline.Quantity).Value, 2);
+                        reportinvoiceline.IsRegionalTax = invoiceline.IsRegionalTax;
 
                         double? line_UnitPrice = invoiceline.UnitPrice;
                         double? lineAmount_Local = invoiceline.LocalCurrencyAmount;
@@ -2861,7 +2865,8 @@ namespace WebFreight.Web.ReportsWebServices
                                      a.MeasurementId,
                                      a.VatTypeId,
                                      a.Notes,
-                                     a.IsExpense
+                                     a.IsExpense,
+                                     a.IsRegionalTax
                                  } into gr
                                  select new
                                  {
@@ -2874,6 +2879,7 @@ namespace WebFreight.Web.ReportsWebServices
                                      VatTypeId = gr.Key.VatTypeId,
                                      Notes = gr.Key.Notes,
                                      IsExpense = gr.Key.IsExpense,
+                                     IsRegionalTax = gr.Key.IsRegionalTax,
                                      LocalAmount = gr.Sum(d => (d.LocalCurrencyAmount != null ? d.LocalCurrencyAmount.Value : 0)),
                                      InvoiceAmount = gr.Sum(d => (d.InvoiceCurrencyAmount != null ? d.InvoiceCurrencyAmount.Value : 0)),
                                      ForeignAmount = gr.Sum(d => (d.ForiegnCurrencyAmount != null ? d.ForiegnCurrencyAmount.Value : 0)),
@@ -2894,6 +2900,7 @@ namespace WebFreight.Web.ReportsWebServices
                         reportinvoiceline.DescriptionAndNotes = reportinvoiceline.Description + Environment.NewLine + reportinvoiceline.Notes;
                         reportinvoiceline.IsExpense = invoiceline.IsExpense;
                         reportinvoiceline.CalculatedUnitPrice = Math.Round(invoiceline.InvoiceAmount / invoiceline.Quantity, 2);
+                        reportinvoiceline.IsRegionalTax = invoiceline.IsRegionalTax;
 
                         double? lineAmount_Foreign = invoiceline.ForeignAmount;
                         double? lineAmount_Invoice = invoiceline.InvoiceAmount;
@@ -3044,6 +3051,7 @@ namespace WebFreight.Web.ReportsWebServices
                         reportinvoiceline.DescriptionAndNotes = reportinvoiceline.Description + Environment.NewLine + reportinvoiceline.Notes;
                         reportinvoiceline.IsExpense = invoiceline.IsExpense;
                         reportinvoiceline.CalculatedUnitPrice = Math.Round((invoiceline.InvoiceCurrencyAmount / invoiceline.Quantity).Value, 2);
+                        reportinvoiceline.IsRegionalTax = invoiceline.IsRegionalTax;
 
                         double? line_UnitPrice = invoiceline.UnitPrice;
                         double? lineAmount_Foreign = invoiceline.ForiegnCurrencyAmount;
