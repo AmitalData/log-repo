@@ -30,7 +30,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         UNCode, 
 	         DangerousGoodsPackingReqCode, 
 	         FlashpointTemperature, 
-	         StorageTemperature,
+	         StorageTemperature, 
+	         ClassificationFourDigit,
 	      }
 
 
@@ -46,7 +47,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         UNName, 
 	         DangerousGoodsPackingReqCode, 
 	         FlashpointTemperature, 
-	         StorageTemperature,
+	         StorageTemperature, 
+	         ClassificationFourDigit,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -78,6 +80,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.StorageTemperature))
             {
 				entityPOCO.StorageTemperature = entityPM.StorageTemperature;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ClassificationFourDigit))
+            {
+				entityPOCO.ClassificationFourDigit = entityPM.ClassificationFourDigit;
 			}
 			}
 
@@ -129,6 +136,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.StorageTemperature = entityPOCO.StorageTemperature;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ClassificationFourDigit))
+            {
+					entityPM.ClassificationFourDigit = entityPOCO.ClassificationFourDigit;
+            }
+
 		}
 
 		public void PMToOldPM(ConsignmentPackDangerPM entityPM, ConsignmentPackDangerPM oldEntityPM)
@@ -160,6 +172,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 oldEntityPM.StorageTemperature = entityPM.StorageTemperature;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ClassificationFourDigit))
+            {
+                oldEntityPM.ClassificationFourDigit = entityPM.ClassificationFourDigit;
+            }
+			
 		}
 
 	    public void EncodeBase64NVARCHARFields(ConsignmentPackDangerPM entityPM)
@@ -168,6 +185,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
             {
                 return;
 
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.ClassificationFourDigit)) //T4 find type == nText 
+            {
+                entityPM.ClassificationFourDigit = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.ClassificationFourDigit));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}
