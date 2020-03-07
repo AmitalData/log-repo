@@ -343,13 +343,13 @@
                                                             </log-column>
 
                                                             <!-- Delete Button-->
-                                                            <!--<log-column [width]="'70'" [Alignment]="'right'">
+                                                            <log-column [width]="'70'" [Alignment]="'right'" >
                                                                 <log-cell-template template="let item" [TabIndex]="-1" [IgnoreMods]="true">
-                                                                    <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="DeleteCargoSealCommand(item)"
+                                                                    <IconButton [Name]="'Delete'" [IsSmall]="true" *ngIf="!item.Id" (click)="DeleteCargoSealCommand(item)"
                                                                                 style="display: block; float: right; margin-right:3px; margin-top:2px;"></IconButton>
 
                                                                 </log-cell-template>
-                                                            </log-column>-->
+                                                            </log-column>
 
                                                         </logitude-edit-grid>
                                                     </div>
