@@ -2123,6 +2123,14 @@
     <Compile Include="Migrations\202002240830018_AddSLACFieldToShipment_Samar.Designer.cs">
       <DependentUpon>202002240830018_AddSLACFieldToShipment_Samar.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202003070922448_AddIsCostAllInFieldToQuoteChargesTable_Maheera.cs" />
+    <Compile Include="Migrations\202003070922448_AddIsCostAllInFieldToQuoteChargesTable_Maheera.Designer.cs">
+      <DependentUpon>202003070922448_AddIsCostAllInFieldToQuoteChargesTable_Maheera.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003071003036_AddTariffFieldsToQuoteCharge_Maheera.cs" />
+    <Compile Include="Migrations\202003071003036_AddTariffFieldsToQuoteCharge_Maheera.Designer.cs">
+      <DependentUpon>202003071003036_AddTariffFieldsToQuoteCharge_Maheera.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\202003030904524_WesamDBMigrationFixes.cs" />
     <Compile Include="Migrations\202003030904524_WesamDBMigrationFixes.Designer.cs">
@@ -3838,6 +3846,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202002240830018_AddSLACFieldToShipment_Samar.resx">
       <DependentUpon>202002240830018_AddSLACFieldToShipment_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003070922448_AddIsCostAllInFieldToQuoteChargesTable_Maheera.resx">
+      <DependentUpon>202003070922448_AddIsCostAllInFieldToQuoteChargesTable_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003071003036_AddTariffFieldsToQuoteCharge_Maheera.resx">
+      <DependentUpon>202003071003036_AddTariffFieldsToQuoteCharge_Maheera.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

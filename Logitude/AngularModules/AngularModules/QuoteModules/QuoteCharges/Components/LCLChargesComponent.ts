@@ -492,6 +492,16 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
             logWindow.Show("./TariffModule/Components/Workspaces/TariffSearchAirFreightPricesComponent");
         });
     }
+    EditTariffClicked(item: QuoteChargeItem) {
+        if (item != null) {
+            var editWindow = new LogitudeWindow();
+            editWindow.ShowHeaderButtons = true;
+            editWindow.Title = "Price Check";
+            editWindow.Height = 770;
+            editWindow.Width = 1500;
+            editWindow.ShowEditComponent(item.TariffId, "Tariff", item.TariffVersion + "");
+        }
+    }
 
     // Profit
     InitializeProfit() {
@@ -2030,6 +2040,34 @@ export class QuoteChargeItem extends BaseComponent {
     set CostIsFixedRate(value: boolean) {
         if (this.EntityPM.CostIsFixedRate != value) {
             this.EntityPM.CostIsFixedRate = value;
+        }
+    }
+
+    get IsCostAllIn() { return this.EntityPM.IsCostAllIn; }
+    set IsCostAllIn(value: boolean) {
+        if (this.EntityPM.IsCostAllIn != value) {
+            this.EntityPM.IsCostAllIn = value;
+        }
+    }
+
+    get TariffNumber() { return this.EntityPM.TariffNumber; }
+    set TariffNumber(value: string) {
+        if (value != this.EntityPM.TariffNumber) {
+            this.EntityPM.TariffNumber = value;
+        }
+    }
+    get TariffId() {
+        return this.EntityPM.TariffId;
+    }
+    set TariffId(value: string) {
+        if (value != this.EntityPM.TariffId) {
+            this.EntityPM.TariffId = value;
+        }
+    }
+    get TariffVersion() { return this.EntityPM.TariffVersion; }
+    set TariffVersion(value: number) {
+        if (value != this.EntityPM.TariffVersion) {
+            this.EntityPM.TariffVersion = value;
         }
     }
 
