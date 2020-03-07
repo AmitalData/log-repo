@@ -564,7 +564,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                     new DeclarationConsignmentConsignmentItemCommodityClassification {
                        ID = new ClassificationIdentificationIDType { Value =! string.IsNullOrEmpty(consignmentPackDangerPM.ClassificationFourDigit) ? consignmentPackDangerPM.ClassificationFourDigit:"" },
 
-                       IdentificationTypeCode = new ClassificationIdentificationTypeCodeType { Value = "SH" }
+                       IdentificationTypeCode = new ClassificationIdentificationTypeCodeType { Value = "HS" }
 
                    }
                    }
