@@ -76,7 +76,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
     public ARPaymentChequeStatusColor = "black";
     BankFieldsVisibile: boolean;
     isMultipleCheques: boolean = false;
-    public OpenAmountCurrency: string = TextCodeTranslator.Translate("LedgerTransaction.F.OpenAmount");
+    public OpenAmountCurrency: string;
     public InvoiceAmountCurrency: string = TextCodeTranslator.Translate("Accounting.O.ARP.InvoiceAmount") + " (" + SessionLocator.TenantPM.CurrencyCode + ")";
     public PaymenyAmount: number;
     get TextStore(){
@@ -158,12 +158,12 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
     SetAmountCurrencyCode() {
         if (this.EntityPM)
             if (this.EntityPM.GLAccountRecoMethodCode == "0") {
-                this.OpenAmountCurrency = this.OpenAmountCurrency+" (" + SessionLocator.TenantPM.CurrencyCode + ")";
+                this.OpenAmountCurrency = TextCodeTranslator.Translate("LedgerTransaction.F.OpenAmount")+" (" + SessionLocator.TenantPM.CurrencyCode + ")";
                 this.ReconcileAmountCurrency =  " (" + SessionLocator.TenantPM.CurrencyCode + ")";
 
      }
             else {
-                this.OpenAmountCurrency = this.OpenAmountCurrency + " (" + this.EntityPM.GLAccountCurrencyCode + ")";
+                this.OpenAmountCurrency = TextCodeTranslator.Translate("LedgerTransaction.F.OpenAmount")+ " (" + this.EntityPM.GLAccountCurrencyCode + ")";
                 this.ReconcileAmountCurrency =" (" + this.EntityPM.GLAccountCurrencyCode + ")";
 
    }
@@ -1125,6 +1125,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
                         var list: CurrencyList = myResponse.Result;
                         if (list) {
                             this.PaymentCurrencyCode = list.Code;
+                            this.PaymentCurrencySign = list.Sign;
                         }
                     }
                 });
@@ -2159,8 +2160,14 @@ export class TransactionLineModel extends BaseComponent {
 
     GetStatus() {
         var __s = "";
+        var invoiceAmount: number;
+        if (this.parent.EntityPM.GLAccountRecoMethodCode == "0") {
 
-        if (this.OriginalInvoiceAmount == this.originalOpenAmount)
+            invoiceAmount = this.OriginalAmount;
+        }
+        else { invoiceAmount = this.OriginalInvoiceAmount;}
+
+        if (AppTool.Round(invoiceAmount,2) ==AppTool.Round( this.originalOpenAmount,2))
             __s = TextStore.open;
         else if (0 == this.originalOpenAmount)
             __s = TextStore.Closed;
@@ -2171,7 +2178,14 @@ export class TransactionLineModel extends BaseComponent {
     }
     GetStatusColor() {
         var _color = 'black';
-        if (this.OriginalAmount == this.originalOpenAmount)
+        var invoiceAmount: number;
+        if (this.parent.EntityPM.GLAccountRecoMethodCode == "0") {
+
+            invoiceAmount = this.OriginalAmount;
+        }
+        else { invoiceAmount = this.OriginalInvoiceAmount; }
+
+        if (invoiceAmount == this.originalOpenAmount)
             _color = 'green';
         else if (0 == this.originalOpenAmount)
             _color = 'black';
@@ -2220,9 +2234,10 @@ export class TransactionLineModel extends BaseComponent {
 
     }
      CalculateOpenAmount() {
-        if (this.parent.EntityPM.GLAccountRecoMethodCode == "0") {
+         if (this.parent.EntityPM.GLAccountRecoMethodCode == "0" && this.parent.EntityPM.GLAccountCurrencyCode=="Multi") {
+            
             return this.OpenAmount * this.parent.PaymentCurrencyExchangeRate;
-
+            
         } else { return this.OpenAmount; }
     }
     
