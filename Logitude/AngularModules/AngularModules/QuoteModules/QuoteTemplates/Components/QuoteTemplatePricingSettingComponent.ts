@@ -64,7 +64,7 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
     @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
     private CurrentSession = SessionLocator.SelectedSession;
     ShowTotalPerContinerLink: boolean = false;
-    private ShowVATDetails :boolean = true;
+    private ShowVATDetails :boolean = false;
 
 
     constructor() {
@@ -111,6 +111,10 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
             if (this.IsRoutingRates) {
                 this.QuoteTemplateTextCodePMList = this.QuoteTemplateTextCodePMList.filter(d => d.TextCode != "UNITSPACKAGES" && d.TextCode != "TOTALAMOUNTS");
             }
+            if (!this.ShowVATDetails) {
+                this.QuoteTemplateTextCodePMList = this.QuoteTemplateTextCodePMList.filter(d => d.TextCode != "VATTYPEPACKAGES" && d.TextCode != "VATTYPECONTAINERS" && d.TextCode != "VATPERCENTAGEPACKAGES" && d.TextCode != "VATPERCENTAGECONTAINERS");
+            }
+
 
             this.AllQuoteTemplateTextCodePMList = args.QuoteTemplateTextCodePMList;
 

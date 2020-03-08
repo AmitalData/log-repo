@@ -265,24 +265,23 @@
 
                                                                                                     </tr>
 
-                                                                                                    <tr style="height:22px">
+                                                                                                    <tr *ngIf="ShowVATDetails" style="height:22px">
                                                                                                         <td style="width:8px"></td>
                                                                                                         <td>
                                                                                                             <div class="CheckBox">
-                                                                                                                <input [disabled]="!ShowPricesTable" [(ngModel)]="ShowVATTypeColumn" class="LeftCenter" style="text-align:center" [attr.id]="ShowVATTypeColumnKey" type="checkbox" />
-                                                                                                                <label style="color:black" class="LeftCenter" [attr.for]="ShowVATTypeColumnKey">{{'QuoteTemplate.S.ShowVATType' | TextCodeTranslationPipe}}</label>
+                                                                                                                <input [disabled]="!ShowPricesTable" [(ngModel)]="ShowVATType" class="LeftCenter" style="text-align:center" [attr.id]="ShowVATTypeKey" type="checkbox" />
+                                                                                                                <label style="color:black" class="LeftCenter" [attr.for]="ShowVATTypeKey">{{'QuoteTemplate.S.ShowVATType' | TextCodeTranslationPipe}}</label>
                                                                                                             </div>
                                                                                                         </td>
-
                                                                                                     </tr>
 
 
-                                                                                                    <tr style="height:22px">
+                                                                                                    <tr *ngIf="ShowVATDetails" style="height:22px">
                                                                                                         <td style="width:8px"></td>
                                                                                                         <td>
                                                                                                             <div class="CheckBox">
-                                                                                                                <input [disabled]="!ShowPricesTable" [(ngModel)]="ShowVATPercentageColumn" class="LeftCenter" style="text-align:center" [attr.id]="ShowVATPercentageColumnKey" type="checkbox" />
-                                                                                                                <label style="color:black" class="LeftCenter" [attr.for]="ShowVATPercentageColumnKey">{{'QuoteTemplate.S.ShowVATPercentage' | TextCodeTranslationPipe}}</label>
+                                                                                                                <input [disabled]="!ShowPricesTable" [(ngModel)]="ShowVATPercentage" class="LeftCenter" style="text-align:center" [attr.id]="ShowVATPercentageKey" type="checkbox" />
+                                                                                                                <label style="color:black" class="LeftCenter" [attr.for]="ShowVATPercentageKey">{{'QuoteTemplate.S.ShowVATPercentage' | TextCodeTranslationPipe}}</label>
                                                                                                             </div>
                                                                                                         </td>
 

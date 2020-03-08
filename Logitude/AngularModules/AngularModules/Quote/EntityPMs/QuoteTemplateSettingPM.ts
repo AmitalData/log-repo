@@ -889,29 +889,27 @@ export class QuoteTemplateSettingPM {
     public get ShowIncludedChargesPerContainers() { return this.showIncludedChargesPerContainers; }
     public set ShowIncludedChargesPerContainers(newValue: boolean) { if (this.showIncludedChargesPerContainers != newValue) { this.showIncludedChargesPerContainers = newValue; this.MarkAsDirty("ShowIncludedChargesPerContainers"); } }
        
-
-    private showVATPercentagePackages: boolean;
-    public get ShowVATPercentagePackages() { return this.showVATPercentagePackages; }
-    public set ShowVATPercentagePackages(newValue: boolean) { if (this.showVATPercentagePackages != newValue) { this.showVATPercentagePackages = newValue; this.MarkAsDirty("ShowVATPercentagePackages"); } }
-
-
-    private showVATPercentageContainers: boolean;
-    public get ShowVATPercentageContainers() { return this.showVATPercentageContainers; }
-    public set ShowVATPercentageContainers(newValue: boolean) { if (this.showVATPercentageContainers != newValue) { this.showVATPercentageContainers = newValue; this.MarkAsDirty("ShowVATPercentageContainers"); } }
-
-
+	 
     private showVATTypePackages: boolean;
     public get ShowVATTypePackages() { return this.showVATTypePackages; }
     public set ShowVATTypePackages(newValue: boolean) { if (this.showVATTypePackages != newValue) { this.showVATTypePackages = newValue; this.MarkAsDirty("ShowVATTypePackages"); } }
-
-
+       
+	 
     private showVATTypeContainers: boolean;
     public get ShowVATTypeContainers() { return this.showVATTypeContainers; }
     public set ShowVATTypeContainers(newValue: boolean) { if (this.showVATTypeContainers != newValue) { this.showVATTypeContainers = newValue; this.MarkAsDirty("ShowVATTypeContainers"); } }
-
-
-
-
+       
+	 
+    private showVATPercentagePackages: boolean;
+    public get ShowVATPercentagePackages() { return this.showVATPercentagePackages; }
+    public set ShowVATPercentagePackages(newValue: boolean) { if (this.showVATPercentagePackages != newValue) { this.showVATPercentagePackages = newValue; this.MarkAsDirty("ShowVATPercentagePackages"); } }
+       
+	 
+    private showVATPercentageContainers: boolean;
+    public get ShowVATPercentageContainers() { return this.showVATPercentageContainers; }
+    public set ShowVATPercentageContainers(newValue: boolean) { if (this.showVATPercentageContainers != newValue) { this.showVATPercentageContainers = newValue; this.MarkAsDirty("ShowVATPercentageContainers"); } }
+       
+	 
 
     public OldEntityPM: QuoteTemplateSettingPM;
 		
