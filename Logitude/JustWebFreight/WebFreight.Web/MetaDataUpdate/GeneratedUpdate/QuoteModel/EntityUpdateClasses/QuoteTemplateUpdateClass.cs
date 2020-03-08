@@ -1707,6 +1707,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 
  		   TextCode QuoteTemplateTextCode_QuoteTemplateSDesignAreaFreeText = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.DesignAreaFreeText", DefaultText = "Design Area Free Text",LocalDefaultText = null, ObjectTableId = QuoteTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
+ 		   TextCode QuoteTemplateTextCode_QuoteTemplateSShowVATType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.ShowVATType", DefaultText = "Show VAT Type",LocalDefaultText = @"Show VAT Type", ObjectTableId = QuoteTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTemplateTextCode_QuoteTemplateSShowVATPercentage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.ShowVATPercentage", DefaultText = "Show VAT Percentage",LocalDefaultText = null, ObjectTableId = QuoteTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
    
 	    
 }

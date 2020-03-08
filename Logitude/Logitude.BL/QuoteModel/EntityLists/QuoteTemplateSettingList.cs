@@ -290,7 +290,10 @@ namespace Logitude.BL.QuoteModel.EntityLists
         public bool ShowIncludedChargesContainers { get; set; }
 
 
-
+        public bool ShowVATTypePackages { get; set; }
+        public bool ShowVATTypeContainers { get; set; }
+        public bool ShowVATPercentagePackages { get; set; }
+        public bool ShowVATPercentageContainers { get; set; }
     }
 
 }
