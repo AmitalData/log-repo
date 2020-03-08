@@ -2051,7 +2051,6 @@
     <Compile Include="Migrations\202001301242182_addShipmentNumberColumnInTransferHistory.Designer.cs">
       <DependentUpon>202001301242182_addShipmentNumberColumnInTransferHistory.cs</DependentUpon>
     </Compile>
-
     <Compile Include="Migrations\202002130847310_Mutaz_Add_CustomerFiled_To_InterestReport.cs" />
     <Compile Include="Migrations\202002130847310_Mutaz_Add_CustomerFiled_To_InterestReport.Designer.cs">
       <DependentUpon>202002130847310_Mutaz_Add_CustomerFiled_To_InterestReport.cs</DependentUpon>
@@ -2124,7 +2123,6 @@
     <Compile Include="Migrations\202002240830018_AddSLACFieldToShipment_Samar.Designer.cs">
       <DependentUpon>202002240830018_AddSLACFieldToShipment_Samar.cs</DependentUpon>
     </Compile>
-
     <Compile Include="Migrations\202003041237319_Abed_AddMissingPocosAndMapsToLogitudeContext.cs" />
     <Compile Include="Migrations\202003041237319_Abed_AddMissingPocosAndMapsToLogitudeContext.Designer.cs">
       <DependentUpon>202003041237319_Abed_AddMissingPocosAndMapsToLogitudeContext.cs</DependentUpon>
@@ -2145,7 +2143,6 @@
     <Compile Include="Migrations\202003051017301_Abed_FixNameLengthInUsoCFDI.Designer.cs">
       <DependentUpon>202003051017301_Abed_FixNameLengthInUsoCFDI.cs</DependentUpon>
     </Compile>
-
     <Compile Include="Migrations\202002161208343_UserLayoutDirectionMigration.cs" />
     <Compile Include="Migrations\202002161208343_UserLayoutDirectionMigration.Designer.cs">
       <DependentUpon>202002161208343_UserLayoutDirectionMigration.cs</DependentUpon>
@@ -2154,13 +2151,15 @@
     <Compile Include="Migrations\202003031135036_AddContainerDefaultsToTariffSettings_Samar.Designer.cs">
       <DependentUpon>202003031135036_AddContainerDefaultsToTariffSettings_Samar.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202003080719024_Abed_AddCourierCustomStatusToLogitudeContext_PocoAndMap.cs" />
+    <Compile Include="Migrations\202003080719024_Abed_AddCourierCustomStatusToLogitudeContext_PocoAndMap.Designer.cs">
+      <DependentUpon>202003080719024_Abed_AddCourierCustomStatusToLogitudeContext_PocoAndMap.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-
     <Compile Include="Migrations\202003030904524_WesamDBMigrationFixes.cs" />
     <Compile Include="Migrations\202003030904524_WesamDBMigrationFixes.Designer.cs">
       <DependentUpon>202003030904524_WesamDBMigrationFixes.cs</DependentUpon>
     </Compile>
-
     <Compile Include="Migrations\202002041333119_InterestTransactionMigration.cs" />
     <Compile Include="Migrations\202002041333119_InterestTransactionMigration.Designer.cs">
       <DependentUpon>202002041333119_InterestTransactionMigration.cs</DependentUpon>
@@ -3815,7 +3814,6 @@
     <EmbeddedResource Include="Migrations\202001301242182_addShipmentNumberColumnInTransferHistory.resx">
       <DependentUpon>202001301242182_addShipmentNumberColumnInTransferHistory.cs</DependentUpon>
     </EmbeddedResource>
-
     <EmbeddedResource Include="Migrations\202002130847310_Mutaz_Add_CustomerFiled_To_InterestReport.resx">
       <DependentUpon>202002130847310_Mutaz_Add_CustomerFiled_To_InterestReport.cs</DependentUpon>
     </EmbeddedResource>
@@ -3873,13 +3871,9 @@
     <EmbeddedResource Include="Migrations\202002240830018_AddSLACFieldToShipment_Samar.resx">
       <DependentUpon>202002240830018_AddSLACFieldToShipment_Samar.cs</DependentUpon>
     </EmbeddedResource>
-
-
     <EmbeddedResource Include="Migrations\202002161208343_UserLayoutDirectionMigration.resx">
       <DependentUpon>202002161208343_UserLayoutDirectionMigration.cs</DependentUpon>
     </EmbeddedResource>
-
-
     <EmbeddedResource Include="Migrations\202003041237319_Abed_AddMissingPocosAndMapsToLogitudeContext.resx">
       <DependentUpon>202003041237319_Abed_AddMissingPocosAndMapsToLogitudeContext.cs</DependentUpon>
     </EmbeddedResource>
@@ -3897,6 +3891,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202003031135036_AddContainerDefaultsToTariffSettings_Samar.resx">
       <DependentUpon>202003031135036_AddContainerDefaultsToTariffSettings_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003080719024_Abed_AddCourierCustomStatusToLogitudeContext_PocoAndMap.resx">
+      <DependentUpon>202003080719024_Abed_AddCourierCustomStatusToLogitudeContext_PocoAndMap.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

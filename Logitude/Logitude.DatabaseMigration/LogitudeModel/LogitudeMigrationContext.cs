@@ -112,6 +112,12 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             set;
         }
 
+        public IDbSet<CourierCustomStatus> CourierCustomStatuses
+        {
+            get;
+            set;
+        }
+
         #region Common Context
         public IDbSet<CustomerOpenFilesAmount> CustomerOpenFilesAmounts { get; set; }
         
@@ -5116,6 +5122,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new DocumentTypeCustomsDataMap());
             modelBuilder.Configurations.Add(new DocumentStatusMap());
             modelBuilder.Configurations.Add(new DecisionTypeMap());
+            modelBuilder.Configurations.Add(new CourierCustomStatusMap());
             #endregion
 
             base.OnModelCreating(modelBuilder);
