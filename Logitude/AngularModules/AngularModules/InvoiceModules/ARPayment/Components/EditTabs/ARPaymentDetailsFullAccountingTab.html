@@ -694,7 +694,7 @@
                                                 [Alignment]="isRTL ? 'right' : 'left'">
                                         <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1"
                                                            [Alignment]="'right'">
-                                            {{item.OpenAmount | NumbersPipe:'N2'}}
+                                            {{item.CalculatedOpenAmount | NumbersPipe:'N2'}}
                                         </log-cell-template>
                                     </log-column>
                                     <!--OreginalInvoiceAmount -->

@@ -1922,7 +1922,6 @@ export class TransactionLineModel extends BaseComponent {
         this.EntityPM = this.parent.EntityPM;
         this.LedgerTransactionPM = ledgerTransaction;
         this.InvoiceCurrency = this.LedgerTransactionPM.CurrencyCode;
-        this.originalOpenAmount = this.OpenAmount;
 
         this.CalculateFields();
 
@@ -1937,6 +1936,8 @@ export class TransactionLineModel extends BaseComponent {
         this.OriginalInvoiceAmount = this.SetOriginalInvoiceAmount();
         this.OriginalAmountCurrency = this.CalculatOriginalCurruncy();
         this.Status = this.GetStatus();
+        this.CalculatedOpenAmount = this.CalculateOpenAmount();
+        this.originalOpenAmount = this.CalculatedOpenAmount;
 
         this.RecociliationNumbers = this.getRecoLinkList();
     }
@@ -1944,8 +1945,11 @@ export class TransactionLineModel extends BaseComponent {
 
     public IconCode: string;
     public ReconciliationNumber: string;
-
-
+    calculatedOpenAmount: number;
+    public get CalculatedOpenAmount(): number { return this.calculatedOpenAmount; }
+    public set CalculatedOpenAmount(value: number) {
+        this.calculatedOpenAmount = value;
+    }
     private _OriginalAmount: number;
     public get OriginalAmount(): number {
         return this._OriginalAmount;
@@ -2113,7 +2117,11 @@ export class TransactionLineModel extends BaseComponent {
         //set amount
         if (this.AmountToReconcile >= 0 && this.AmountToReconcile <= this.originalOpenAmount) {
             this.OpenAmount = this.originalOpenAmount - this.AmountToReconcile;
+            this.CalculatedOpenAmount = this.originalOpenAmount - this.AmountToReconcile;
+
         } else {
+            this.CalculatedOpenAmount = this.originalOpenAmount;
+
             this.OpenAmount = this.originalOpenAmount;
         }
     }
@@ -2211,7 +2219,11 @@ export class TransactionLineModel extends BaseComponent {
 
 
     }
-
+     CalculateOpenAmount() {
+        if (this.parent.EntityPM.GLAccountRecoMethodCode == "0") {
+           return this.OpenAmount * this.parent.PaymentCurrencyExchangeRate;
+        } else { return this.OpenAmount; }
+    }
 
     CalculatOriginalCurruncy() {
         //
