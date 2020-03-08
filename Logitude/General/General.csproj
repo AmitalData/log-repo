@@ -1960,6 +1960,7 @@
     <Content Include="Usefull Scripts\Islam\duplicated user codes.sql" />
     <Content Include="Usefull Scripts\Islam\zombie Global contacts issue fix.sql" />
     <Content Include="Usefull Scripts\MetaData\2MetaDataScripts -Delete.sql" />
+    <Content Include="Usefull Scripts\MetaData\2MetaDataScripts-DeleteCustoms.sql" />
     <Content Include="Usefull Scripts\MetaData\3MetaDataScripts -AfterDelete.sql" />
     <Content Include="Usefull Scripts\MetaData\1MetaDataScripts -BeforeDelete.sql" />
     <Content Include="Usefull Scripts\Queries\01_Shipments.sql" />

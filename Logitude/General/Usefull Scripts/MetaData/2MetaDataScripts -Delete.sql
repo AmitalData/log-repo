@@ -15,15 +15,24 @@ delete from screens where tenant = 0 and (Code not like 'customs.%' or Code is n
 
 ----Queries
 delete from Queries where tenant = 0 and (Code not like 'customs.%' or Code is null) and userid is null and systemlevel = 1
+----customs queries
+delete from Queries where tenant = 0 and (Code like 'customs.%' or Code is null) and userid is null and systemlevel = 1
+
 
 ----TextCodes
 delete from MenuButtons where tenant = 0 and (LabelTextCodeCode not like 'customs.%' or LabelTextCodeCode is null)
 delete from ObjectTableTabs where tenant = 0 and (TabNameTextCodeCode not like 'customs.%' or TabNameTextCodeCode is null)
 delete from textcodes where tenant = 0 and (code not like 'customs.%' or code is null) and code not in (select NameTextCodeCode from queries where tenant=0 and userid is not null and SystemLevel=0 and NameTextCodeCode is not null)
 
+
+
 ----Features
 delete from Features where tenant = 0 and (NameTextCodeCode not like 'customs.%' or NameTextCodeCode is null)
+
+
+
 ----delete from MenusTables where tenant = 0 and (FeatureUniqeCode not like 'customs.%' or FeatureUniqeCode is null)
+
 
 delete from Screens where code='Customs.AccountingPartner.HeaderScreen'
 -------------
