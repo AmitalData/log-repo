@@ -1847,6 +1847,7 @@
     <Compile Include="Messaging\Maman\CourierGWMessageECSpclMamanResponseService.cs" />
     <Compile Include="Messaging\Maman\CourierGWMessageECTHRDataMamanResponseService.cs" />
     <Compile Include="Messaging\U2L\CellFile\CellFileUpsertService.cs" />
+    <Compile Include="Messaging\U2L\CommDecReferantData\CommDecReferantDataService.cs" />
     <Compile Include="Messaging\U2L\CommMasterCourier\CommMasterCourierService.cs" />
     <Compile Include="Messaging\U2L\CommDec\CommDecService.cs" />
     <Compile Include="Messaging\U2L\CourierStatus\CourierStatusService.cs" />
