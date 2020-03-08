@@ -576,7 +576,6 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
     }
 
     OkMethod(isSendToQueue: boolean) {
-        debugger;
          var errors = [];
         if (this.CustomsDocument) {
             Validator.TryValidateObject(this.CustomsDocument, "Customs.CustomsDocument", errors);

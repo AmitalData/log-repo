@@ -546,12 +546,21 @@
     <Content Include="Images\Icons\plus.png" />
     <Content Include="Images\Icons\round-add-button.png" />
     <Content Include="Images\Icons\Share.png" />
+    <Content Include="Images\in_progress%401x.png" />
+    <Content Include="Images\in_progress%402x.png" />
+    <Content Include="Images\Manual_process%402x.png" />
     <Content Include="Images\Menu\Deposition.png" />
     <Content Include="Images\Menu\Deposition.Selected.png" />
     <Content Include="Images\Menu\Documents.png" />
     <Content Include="Images\Menu\Documents.Selected.png" />
     <Content Include="Images\Menu\Shared.png" />
     <Content Include="Images\numberIcon.png" />
+    <Content Include="Images\process_failed%401x.png" />
+    <Content Include="Images\process_failed%402x.png" />
+    <Content Include="Images\process_failed_button%402x.png" />
+    <Content Include="Images\Successful_process%401x.png" />
+    <Content Include="Images\Successful_process%402x.png" />
+    <Content Include="Images\Successful_process+remark_button%402x.png" />
     <Content Include="Images\train.png" />
     <Content Include="Images\truck.png" />
     <Content Include="InfrastructureModules\InfrastructureBatchService\Components\TaskScheduler\MainSchedulerComponent.html" />
@@ -937,6 +946,7 @@
     <TypeScriptCompile Include="Customs\EntityLists\DecisionTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\DeclarationMamanSpecialActionList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\DeclarationPendingList.ts" />
+    <TypeScriptCompile Include="Customs\EntityLists\DeclarationReferantDataList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\DeficitDecisionList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\GatepassRequestList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\GatepassReturnCodeList.ts" />
@@ -972,6 +982,7 @@
     <TypeScriptCompile Include="Customs\EntityPMs\DecisionTypePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\DeclarationMamanSpecialActionPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\DeclarationPendingPM.ts" />
+    <TypeScriptCompile Include="Customs\EntityPMs\DeclarationReferantDataPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\DeficitDecisionPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\Extended\DeclarationRemarks.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\GatepassRequestPM.ts" />
@@ -1011,6 +1022,7 @@
     <TypeScriptCompile Include="Customs\Services\StandardLists\DecisionTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\DeclarationMamanSpecialActionListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\DeclarationPendingListService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardLists\DeclarationReferantDataListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\DeficitDecisionListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\GatepassRequestListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\GatepassReturnCodeListService.ts" />
@@ -1035,6 +1047,7 @@
     <TypeScriptCompile Include="Customs\Services\StandardPMs\CustomsPartnerFtpPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\DeclarationMamanSpecialActionPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\DeclarationPendingPMService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardPMs\DeclarationReferantDataPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\GatepassRequestPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\PendingByKeywordPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\WebServices\DeclarationCourierStatusWebService.ts" />

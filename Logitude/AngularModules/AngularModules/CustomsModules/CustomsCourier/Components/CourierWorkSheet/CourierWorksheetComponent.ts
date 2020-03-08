@@ -1591,8 +1591,7 @@ export class CourierWorksheetComponent extends BaseComponent
     }
 
     SelectedCustomStatusValueClick(value: string) {
-        debugger;
-        this._SelectedCustomStatusValue = value;
+         this._SelectedCustomStatusValue = value;
         if (this._SelectedBOLValue == "A" && this._SelectedTotalInvoiceValue == "A" && this._SelectedStatusValue == "A" && this._SelectedAvailableValue == "A" && this._SelectedFastIndividualProcessValue == 'A' && this._SelectedCustomStatusValue == 'A') {
             this.IsFiltered = false;
         }
