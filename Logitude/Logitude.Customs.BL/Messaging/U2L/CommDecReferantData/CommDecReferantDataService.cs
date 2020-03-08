@@ -36,6 +36,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDecReferantData
         private LogitudeDeclarationReferantData _LogitudeDeclarationReferantData;
         private DeclarationReferantDataPM _DeclarationReferantDataPM;
         private ICustomContext _context;
+        private DeclarationPM _MyDeclarationPM;
 
         private AmitalContext amitalContext;
 
@@ -107,8 +108,27 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDecReferantData
                 /// Exist
                 if (_DeclarationReferantDataPM == null)
                 {
+                    var myDecQueryService = new DeclarationQueryService(_context);
+                    this._MyDeclarationPM = myDecQueryService.GetSingle(_LogitudeDeclarationReferantData.Id, true, false);
+                    if (this._MyDeclarationPM != null)
+                    {
+                        DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(dbContext, new Dictionary<string, IContext>(), ResolvedTenant());
+                        if (!declarationUpdateService.CheckIfUpdatingAllowed(this._MyDeclarationPM))
+                        {
+                            AppendLogLine("Updating Not Allowed For Declaration " + this._MyDeclarationPM.CustomFileNo + Environment.NewLine + Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.ToString(1000));
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.BusinessError;
+                        MyGenericResponseObj.Message = "No Declaration for Id " + _LogitudeDeclarationReferantData.Id;
+                        AppendLogLine(MyGenericResponseObj.Message);
+                        return;
+                    }
                     this._DeclarationReferantDataPM = new Def.EntityPMs.DeclarationReferantDataPM();
                     this._DeclarationReferantDataPM.ChangeSetOp = ChangeSetOperation.Insert;
+                    this._DeclarationReferantDataPM.DeclarationId = this._MyDeclarationPM.Id;
                 }
                 else
                 {
@@ -128,6 +148,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDecReferantData
                 if (!string.IsNullOrWhiteSpace(_LogitudeDeclarationReferantData.FollowUpStatus))_DeclarationReferantDataPM.IsClosedForFollowUp = _LogitudeDeclarationReferantData.FollowUpStatus;
 
                 _DeclarationReferantDataPM.PreClassification = _LogitudeDeclarationReferantData.PreClassification;
+                if (_DeclarationReferantDataPM.Tenant < 1) _DeclarationReferantDataPM.Tenant = ResolvedTenant();
 
                 myDeclarationReferantDataUpdateService.Update(this._DeclarationReferantDataPM, true);
 
