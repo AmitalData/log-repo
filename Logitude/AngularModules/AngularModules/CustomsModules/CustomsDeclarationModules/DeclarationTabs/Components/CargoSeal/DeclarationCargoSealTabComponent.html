@@ -55,6 +55,7 @@
                                                 [binding]="'ContainerNumber'" [width]="'120'" [Alignment]="'right'">
                                         <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
                                             <div style="text-align:right">
+
                                                 <span>{{item.ContainerNumber}}</span>
                                             </div>
                                         </log-cell-template>
@@ -63,8 +64,8 @@
                                     <!-- SealNumber -->
                                     <log-column [header]="'Customs.CargoSeal.F.SealNumber' | TextCodeTranslationPipe"
                                                 [binding]="'SealNumber'" [width]="'100'" [Alignment]="'right'">
-                                        <log-cell-template template="let item" #logcelltemplate>
-                                            <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                        <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
+                                            <div style="text-align:right">
                                                 <span>{{item.SealNumber}}</span>
                                             </div>
                                         </log-cell-template>
@@ -73,8 +74,8 @@
                                     <!-- SealTypeCode -->
                                     <log-column [header]="'Customs.CargoSeal.F.SealTypeCode' | TextCodeTranslationPipe"
                                                 [width]="'100'" [Alignment]="'right'" [binding]="'SealTypeCode'">
-                                        <log-cell-template template="let item" #logcelltemplate>
-                                            <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                        <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
+                                            <div style="text-align:right">
                                                 <span>{{item.SealTypeName}}</span>
                                             </div>
                                         </log-cell-template>
@@ -83,8 +84,8 @@
                                     <!-- UpdateReasonCode -->
                                     <log-column [header]="'Customs.CargoSeal.F.UpdateReasonCode' | TextCodeTranslationPipe"
                                                 [width]="'100'" [Alignment]="'right'" [binding]="'UpdateReasonCode'">
-                                        <log-cell-template template="let item" #logcelltemplate>
-                                            <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                        <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
+                                            <div style="text-align:right">
                                                 <span>{{item.UpdateReasonName}}</span>
                                             </div>
                                         </log-cell-template>
@@ -93,8 +94,8 @@
                                     <!-- SealCompletenessStateCode -->
                                     <log-column [header]="'Customs.CargoSeal.F.SealCompletenessStateCode' | TextCodeTranslationPipe"
                                                 [width]="'100'" [Alignment]="'right'" [binding]="'SealCompletenessStateCode'">
-                                        <log-cell-template template="let item" #logcelltemplate>
-                                            <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                        <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
+                                            <div style="text-align:right">
                                                 <span>{{item.SealCompletenessStateName}}</span>
                                             </div>
                                         </log-cell-template>
@@ -103,8 +104,8 @@
 
                                     <log-column [header]="'סטטוס בקשה'"
                                                 [width]="'100'" [Alignment]="'right'" [binding]="'Status'">
-                                        <log-cell-template template="let item" #logcelltemplate>
-                                            <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                        <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
+                                            <div style="text-align:right">
                                                 <span>{{item.StatusName}}</span>
                                             </div>
                                         </log-cell-template>
