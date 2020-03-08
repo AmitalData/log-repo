@@ -524,6 +524,10 @@
     <Compile Include="Migrations\202003071834188_AddClassificationFourDigitField.Designer.cs">
       <DependentUpon>202003071834188_AddClassificationFourDigitField.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202003081316083_AddedSearchFieldReferant.cs" />
+    <Compile Include="Migrations\202003081316083_AddedSearchFieldReferant.Designer.cs">
+      <DependentUpon>202003081316083_AddedSearchFieldReferant.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -907,6 +911,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202003071834188_AddClassificationFourDigitField.resx">
       <DependentUpon>202003071834188_AddClassificationFourDigitField.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003081316083_AddedSearchFieldReferant.resx">
+      <DependentUpon>202003081316083_AddedSearchFieldReferant.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\logitude.oracledatabasemigration.dll.licenses" />
   </ItemGroup>

@@ -109,6 +109,11 @@ export class DeclarationReferantDataPM {
     public set PreClassification(newValue: string) { if (this.preClassification != newValue) { this.preClassification = newValue; this.MarkAsDirty("PreClassification"); } }
        
 	 
+    private searchFields: string;
+    public get SearchFields() { return this.searchFields; }
+    public set SearchFields(newValue: string) { if (this.searchFields != newValue) { this.searchFields = newValue; this.MarkAsDirty("SearchFields"); } }
+       
+	 
 
     public OldEntityPM: DeclarationReferantDataPM;
 		

@@ -1493,6 +1493,8 @@ export class ListComponent implements OnInit, AfterViewInit {
                     //case "Customs.InternationalSite":
                         selectedEntityId = $event.rowData.Code;
                         break;
+                    case "Customs.DeclarationReferantData":
+                        selectedEntityId = $event.rowData.DeclarationId;
                     default:
 
                         break;
@@ -2011,6 +2013,27 @@ export class ListComponent implements OnInit, AfterViewInit {
                                     this.isEditControlOpened = false;
                                     this.OnBackFromEdit(selectedEntityId, $event)
                                 });
+                            });
+                    }
+                    else if (this.ObjectTableName =="Customs.DeclarationReferantData")
+                    {
+                        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+                            .then(cmpRef => {
+                                var label = TextCodeTranslator.Translate(this.SelectedQuery.NameTextCodeCode);
+                                cmpRef.instance.ComponentRef = cmpRef;
+                                cmpRef.instance.Run({
+                                    EntityId: selectedEntityId,///$event.rowData.Id
+                                    ObjectTableName: "Customs.Declaration",
+                                    BackButtonLabel: label
+                                });
+                                cmpRef.instance.BackCompleted.subscribe(($event1: any) => {
+                                    this.isEditControlOpened = false;
+                                    this.OnBackFromEdit(selectedEntityId, $event)
+                                });
+                                //  if (SessionLocator.LoggedUserPM.Email == "mohammad@fnarsoft.com") {
+                                this.DestroyMe = true;
+                                //}
+
                             });
                     }
 

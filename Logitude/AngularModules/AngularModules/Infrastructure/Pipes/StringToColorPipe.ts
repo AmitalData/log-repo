@@ -12,8 +12,7 @@ export class StringToColorPipe {
         if (!AppTool.IsNullOrEmpty(input)) {
 
             var value = input + "";
-
-            if (!AppTool.IsNullOrEmpty(Parameter)) {
+             if (!AppTool.IsNullOrEmpty(Parameter)) {
                 myResult = this.ApplyParameterPipe(value, Parameter);                
             }
 
@@ -83,6 +82,8 @@ export class StringToColorPipe {
             case "Sent":
             case "Transferred":
             case "In Progress":
+            case "Arrival_referant":
+
                 {
                     color = "#27AAE1";
                     break;
@@ -198,9 +199,13 @@ export class StringToColorPipe {
             myResult = this.ApplyCustomerStatusCodePipe(value);
         }
 
+        if (Parameter == "ArrivalDate") {
+            myResult = this.ApplyArrivalDatePipe(value);
+        }
+
         else if (Parameter == "TicketSeverityCode") {
             myResult = this.ApplyTicketSeverityCodePipe(value);
-        }
+         }
 
         else if (Parameter == "QuoteRatingCode") {
             myResult = this.ApplyQuoteRatingCodePipe(value);
@@ -267,7 +272,12 @@ export class StringToColorPipe {
 
         return myResult;
     }
-    
+    private ApplyArrivalDatePipe(value: string) {
+        var myResult: string = "Blue";
+        if (value != 'ATA')
+        myResult = "Black";
+        return myResult;
+    }
     private ApplyCustomerStatusCodePipe(value: string) {
         var myResult: string = "#282E30";
 
@@ -376,6 +386,9 @@ export class StringToColorPipe {
 
         return myResult;
     }
+
+
+
     private ApplyTicketSeverityCodePipe(value: string) {
         var myResult: string = "#282E30";
 
