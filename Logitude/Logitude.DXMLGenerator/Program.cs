@@ -28,7 +28,7 @@ namespace Logitude.DXMLGenerator
                 {
                     string dxmlFileName = Path.GetFileName(dxmlFile);
 
-                    if (dxmlFileName.ToLower() != "DBMigrationsHistory.dxml".ToLower() && dxmlFileName.ToLower() != "DBScriptsHistory.dxml".ToLower() && dxmlFileName.ToLower() != "DXMLMigrationHashes.dxml".ToLower() && dxmlFileName.ToLower() != "DBMigrationModules.dxml".ToLower())
+                    if (dxmlFileName.ToLower() != "DBMigrationsHistory.dxml".ToLower() && dxmlFileName.ToLower() != "DBScriptsHistory.dxml".ToLower() && dxmlFileName.ToLower() != "DXMLMigrationHashes.dxml".ToLower() && dxmlFileName.ToLower() != "DBMigrationSettings.dxml".ToLower())
                     {
                         string xmlString = File.ReadAllText(dxmlFile);
                         if (xmlString.EndsWith("</Table>"))
