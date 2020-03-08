@@ -51,14 +51,15 @@ namespace Logitude.BL.QuoteModel.EntityQueries.Charts
                     }
             }
 
-            if(args.ChartCode != "QCV" && args.ChartCode != "KPI" && args.ChartCode != "TFS")
+            if(args.ChartCode != "QCV" && args.ChartCode != "TFS") //&& args.ChartCode != "KPI"
             {
                 dataSourceQuery = dataSourceQuery.Where(d => !d.IsClosed);
             }
 
             if (args.ChartCode == "KPI")
             {
-                dataSourceQuery = this.FilterByAcceptedStage();
+                dataSourceQuery = dataSourceQuery.Where(a => a.SentDate != null && a.RequestDate != null);
+                //dataSourceQuery = this.FilterByAcceptedStage();
             }
 
             QuoteBusinessUnitFilter filter = new QuoteBusinessUnitFilter(tenant);
