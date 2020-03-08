@@ -63,6 +63,8 @@ namespace WarehouseDataViews
                 {
                     if (dimensionTableCode != "DIM_Dates")
                     {
+                        if (fieldCode == "[Notify 1]") fieldCode = "[Notify One]";
+                        else if (fieldCode == "[Notify 2]") fieldCode = "[Notify Two]";
                         warehouseViewsService.DropView(fieldCode, destinationConnectionString);
                         warehouseViewsService.CreateView(fieldCode, dimensionTableCode, destinationConnectionString);
                     }
