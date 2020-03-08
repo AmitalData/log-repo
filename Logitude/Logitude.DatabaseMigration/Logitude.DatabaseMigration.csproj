@@ -2150,7 +2150,10 @@
     <Compile Include="Migrations\202002161208343_UserLayoutDirectionMigration.Designer.cs">
       <DependentUpon>202002161208343_UserLayoutDirectionMigration.cs</DependentUpon>
     </Compile>
-
+    <Compile Include="Migrations\202003031135036_AddContainerDefaultsToTariffSettings_Samar.cs" />
+    <Compile Include="Migrations\202003031135036_AddContainerDefaultsToTariffSettings_Samar.Designer.cs">
+      <DependentUpon>202003031135036_AddContainerDefaultsToTariffSettings_Samar.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
 
     <Compile Include="Migrations\202003030904524_WesamDBMigrationFixes.cs" />
@@ -3892,7 +3895,9 @@
     <EmbeddedResource Include="Migrations\202003051017301_Abed_FixNameLengthInUsoCFDI.resx">
       <DependentUpon>202003051017301_Abed_FixNameLengthInUsoCFDI.cs</DependentUpon>
     </EmbeddedResource>
-
+    <EmbeddedResource Include="Migrations\202003031135036_AddContainerDefaultsToTariffSettings_Samar.resx">
+      <DependentUpon>202003031135036_AddContainerDefaultsToTariffSettings_Samar.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Logitude.Accounting.Data\Logitude.Accounting.Data.csproj">

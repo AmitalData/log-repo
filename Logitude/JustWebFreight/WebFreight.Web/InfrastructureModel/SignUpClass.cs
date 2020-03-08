@@ -991,6 +991,7 @@ namespace WebFreight.Web.InfrastructureModel
                     Id = IdCounter.GetNumber("TariffSetting", theTenant).ToString(),
                     Tenant = theTenant,
                     DefaultPriceSteps = zeroEntity.DefaultPriceSteps,
+                    ContainerDefaults = "20GP, 40GP, 20HC",
                 };
 
                 iRepository.Add(settings);
