@@ -28,6 +28,7 @@ export class FTPSchedulerDetails {
 }
 
 export class ReportSchedulerDetails {
+    public CreatedByUserId: string;
     public Recepients: string;
     public ReportTemplateId: string;
     public ReportFilterItems: Array<QueryFilterItem>;

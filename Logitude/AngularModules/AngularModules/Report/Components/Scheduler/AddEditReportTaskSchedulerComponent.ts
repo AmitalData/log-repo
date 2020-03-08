@@ -34,7 +34,7 @@ export class AddEditReportTaskSchedulerComponent  {
         this.EntityPM = DataContext["DataContext"].EntityPM;
         this.EntityPM.EntityId = this.DataContext.fatherComponent.ReportList.Id;
         this.EntityPM.Type = "Report";
-        this.EntityPM.ProcedureCode = "Report";
+        this.EntityPM.ProcedureCode = "ReportSchedulerTask";
 
         this.BuildSchedulerDetailsData();
         this.Clone();
@@ -241,6 +241,7 @@ export class AddEditReportTaskSchedulerComponent  {
         this.DataContext.SchedulerDetails.ReportDetails.ReportFilterItems = reportFilterItems;
         this.DataContext.SchedulerDetails.ReportDetails.ReportTemplateId = reportTemplateId;
         this.DataContext.SchedulerDetails.ReportDetails.Recepients = this.Recepients;
+        this.DataContext.SchedulerDetails.ReportDetails.CreatedByUserId = SessionLocator.LoggedUserId;
     }
 
     GetReportFilterItems() {
@@ -258,6 +259,7 @@ export class AddEditReportTaskSchedulerComponent  {
         this.myCloner.AddField('Description');
         this.myCloner.AddField('InActive');
         this.myCloner.AddField('StartDateTime');
+        this.myCloner.AddField('RepeatInMinutes');
         this.myCloner.AddField('MonthlyDay');
         this.myCloner.AddField('Satarday');
         this.myCloner.AddField('Sunday');

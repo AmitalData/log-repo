@@ -142,10 +142,12 @@ export class AddEditReportSchedulerComponent implements OnInit {
     }
 
     SaveButtonClicked() {
-        var reportFilterItems = this.PageChild_PRREP.GetReportFilterItems();
-        var reportTemplateId = this.PageChild_PRREP.GetReportTemplate();
-        this.PageChild_RETASK.SaveButtonClicked(reportFilterItems, reportTemplateId);
-        this.CurrentSession.CloseCurrentWindow();
+        if (this.PageChild_PRREP.ValidateSelectedFilters()) {
+            var reportFilterItems = this.PageChild_PRREP.GetReportFilterItems();
+            var reportTemplateId = this.PageChild_PRREP.GetReportTemplate();
+            this.PageChild_RETASK.SaveButtonClicked(reportFilterItems, reportTemplateId);
+            this.CurrentSession.CloseCurrentWindow();
+        }
     }
 
     BackButtonClicked() {

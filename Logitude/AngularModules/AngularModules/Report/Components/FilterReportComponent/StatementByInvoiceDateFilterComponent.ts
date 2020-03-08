@@ -63,13 +63,18 @@ export class StatementByInvoiceDateFilterComponent extends BaseComponent   {
             }
         }
     }
-    
-    RunReport() {
+
+    ValidateSelectedFilters() {
         this.ValidationErrorsList = [];
         if (AppTool.IsNullOrEmpty(this.CustomerId)) {
             this.ValidationErrorsList.push("Please select a partner");
+            return false;
         }
-        else {
+        return true;
+    }
+    
+    RunReport() {
+        if (this.ValidateSelectedFilters()) {
             var queryFilterItems: Array<QueryFilterItem> = this.GetQueryFilterItems();
             var reportFliter: ReportFliter;
 
