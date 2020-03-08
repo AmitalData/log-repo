@@ -2005,6 +2005,10 @@ namespace MeatadataGeneratorTool
                 tableElement.SetAttribute("Schema", table.DxmlDatabaseSchemaCode);
                 tableElement.SetAttribute("DBType", table.DxmlDatabaseTypeCode);
 
+                if (!string.IsNullOrEmpty(table.ClientModuleName))
+                {
+                    tableElement.SetAttribute("Module", table.ClientModuleName);
+                }
 
                 foreach (ObjectFieldsViewModel field in table.ObsList.Where(f => f.IsDBField))
                 {
