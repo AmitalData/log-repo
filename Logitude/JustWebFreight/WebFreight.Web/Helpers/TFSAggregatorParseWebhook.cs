@@ -58,7 +58,7 @@ namespace WebFreight.Web.Helpers
         private void DOJOB(int wi)
         {
             string accountUri = "https://logitudeteam.visualstudio.com";
-            var personalAccessToken = "xbekti46cnnxsz3selcaazf7lx5ypsm774cwd35wtbj2bswz6xha";
+            var personalAccessToken = GetPersonalKey(); 
             int workItemId = wi;
             VssConnection connection = new VssConnection(new Uri(String.Format(accountUri)), new VssBasicCredential("logitudo@live.com", personalAccessToken));
             WorkItemTrackingHttpClient witClient = connection.GetClient<WorkItemTrackingHttpClient>();
@@ -157,7 +157,7 @@ namespace WebFreight.Web.Helpers
         private WorkItem GetWorkItemById(int id)
         {
             string accountUri = "https://logitudeteam.visualstudio.com";
-            var personalAccessToken = "xbekti46cnnxsz3selcaazf7lx5ypsm774cwd35wtbj2bswz6xha";
+            var personalAccessToken = GetPersonalKey();
             VssConnection connection = new VssConnection(new Uri(String.Format(accountUri)), new VssBasicCredential("maram@logitudeworld.com", personalAccessToken));
             WorkItemTrackingHttpClient witClient = connection.GetClient<WorkItemTrackingHttpClient>();
             object projectNo = "";
@@ -180,8 +180,25 @@ namespace WebFreight.Web.Helpers
             }
         }
 
+        private string GetPersonalKey()
+        {
+            string personalAccessKey = "";
+            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+            {
+                SettingRepository settingRepository = new SettingRepository();
+                Setting setting = settingRepository.GetSingleSetting("1");
+                if (setting != null)
+                {
+                    personalAccessKey = setting.TMPersonalAccessToken;
+                }
 
-        
+                scope.Complete();
+            }
+
+            return personalAccessKey;
+        }
+
+
 
     }
 }

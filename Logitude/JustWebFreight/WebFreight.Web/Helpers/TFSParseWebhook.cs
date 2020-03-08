@@ -22,6 +22,10 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using Logitude.Server.Tools.QueueService;
+using Simplog.Global.Data.GlobalModel.Repositories;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using System.Transactions;
+using Simplog.Server.Infrastructure.Helpers;
 
 namespace WebFreight.Web.Helpers
 {
@@ -64,7 +68,7 @@ namespace WebFreight.Web.Helpers
         {
             // Create a connection to the account
             string accountUri = "https://logitudeteam.visualstudio.com";
-            var personalAccessToken = "xbekti46cnnxsz3selcaazf7lx5ypsm774cwd35wtbj2bswz6xha";
+            var personalAccessToken = this.GetPersonalKey(); 
             int workItemId = wi;
 
             // new VssOAuthAccessTokenCredential(personalAccessToken)
@@ -114,6 +118,24 @@ namespace WebFreight.Web.Helpers
                 }
             }
             return projectNo != null ? projectNo.ToString().Trim() : "";
+        }
+
+        private string GetPersonalKey()
+        {
+            string personalAccessKey = "";
+            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+            {
+                SettingRepository settingRepository = new SettingRepository();
+                Setting setting = settingRepository.GetSingleSetting("1");
+                if (setting != null)
+                {
+                    personalAccessKey = setting.TMPersonalAccessToken;
+                }
+
+                scope.Complete();
+            }
+
+            return personalAccessKey;
         }
 
         private void CheckComputingPartners()
