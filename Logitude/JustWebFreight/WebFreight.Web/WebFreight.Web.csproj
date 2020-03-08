@@ -1691,6 +1691,7 @@
     <Compile Include="Controllers\GlobalModel\Generated\PMControllers\BatchServicesDefinitionController.Generated.cs" />
     <Compile Include="Controllers\GlobalModel\Generated\PMControllers\BluesnapContractController.Generated.cs" />
     <Compile Include="Controllers\GlobalModel\Generated\PMControllers\WebhookKeysController.Generated.cs" />
+    <Compile Include="Controllers\InfrastructureModel\Extended\DWObjectTableExtendedController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\BIReportExtendedController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\BusinessRoleExtendedViewsController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\CacheLogController.cs" />
@@ -2381,11 +2382,8 @@
     <Compile Include="Helpers\BluesnapExecutionService.cs" />
     <Compile Include="Helpers\DataProviderHelpers\AutomationTestReportDataProvider.cs" />
     <Compile Include="Helpers\DataProviderHelpers\CrossDockEntryLabelDataProviderHelper.cs" />
-
     <Compile Include="Helpers\DataProviderHelpers\CrossDockEntryShipmentService.cs" />
-
     <Compile Include="Helpers\DataProviderHelpers\CrossDockReleaseShipmentService.cs" />
-
     <Compile Include="Helpers\DataProviderHelpers\ShipmentsEventsListDataProvider.cs" />
     <Compile Include="Helpers\DWQueryBuilderHelper.cs" />
     <Compile Include="Helpers\AgentSharedManifestHelper.cs" />

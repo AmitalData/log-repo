@@ -12,6 +12,7 @@ import { BIReportExtendedListService } from '../../../../Infrastructure/Services
 import { BIReportList } from '../../../../Infrastructure/EntityLists/BIReportList';
 import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
+import { DWObjectTableExtendedListService } from '../../../../Infrastructure/Services/ExtendedLists/DWObjectTableExtendedListService';
 
 @Component({
     moduleId: module.id,
@@ -26,7 +27,8 @@ export class NewBIReport extends BaseComponent {
     public ObjectTableName: string = "BIReport";
     public IsNewQuery = true;
     public BIReportExtendedPMService : BIReportExtendedPMService;
-    public BIReportExtendedListService : BIReportExtendedListService;
+    public BIReportExtendedListService: BIReportExtendedListService;
+    public DWObjectTableExtendedListService: DWObjectTableExtendedListService;
     private CurrentSession = SessionLocator.SelectedSession;
     private OriginalName: string = "";
     public IsCopy: boolean = false;
@@ -35,6 +37,8 @@ export class NewBIReport extends BaseComponent {
     public IsOneRowSelected: boolean = false;
     public HasCopyFeature: boolean = false;
     public CopyFromTitle: string;
+    public FactTables: string[] = [];
+    public SelectdFactTableName: string;
     private ComponentRef;
     @Output() BackCompleted: EventEmitter<boolean> = new EventEmitter<boolean>();
     @Output() TenantFieldChangeEvent = new EventEmitter();
@@ -45,6 +49,7 @@ export class NewBIReport extends BaseComponent {
         this.EntityPM.Tenant = SessionLocator.Tenant;
         this.BIReportExtendedPMService = new BIReportExtendedPMService();
         this.BIReportExtendedListService = new BIReportExtendedListService();
+        this.DWObjectTableExtendedListService = new DWObjectTableExtendedListService();
         var todayDate: Date = DateTool.GetCurrentDateAsUtc();
         this.EntityPM.CreateDate = todayDate;
         this.EntityPM.CreatedByUserId = SessionLocator.LoggedUserId;
@@ -53,6 +58,7 @@ export class NewBIReport extends BaseComponent {
         this.EntityPM.UpdatedByUserId = SessionLocator.LoggedUserId;
         this.EntityPM.LastRunByUserId = SessionLocator.LoggedUserId;
         this.EntityPM.TypeCode = "EXL";
+        this.FillFactTableNamesList();
         this.myService = new BIReportPMService();
         this.SetUIProperties();
         this.CheckTenantZero();
@@ -67,6 +73,7 @@ export class NewBIReport extends BaseComponent {
             this.OriginalName = args.Name;
             this.EntityPM.Description = args.Description;
             this.IsCopy = args.IsCopy;
+            this.EntityPM.FactTableName = args.FactTableName;
             this.BIReportsTenant = SessionLocator.Tenant;
             //this.ComponentRef = args.ComponentRef;
             //this.BackCompleted = args.BackCompleted;
@@ -93,6 +100,53 @@ export class NewBIReport extends BaseComponent {
 
         else {
             this.IsNewQuery = true;
+        }
+    }
+
+    FillFactTableNamesList() {
+        this.FactTables.push("");
+        this.SelectdFactTableName = "";
+        this.DWObjectTableExtendedListService.GetFactTablesNames().subscribe(response => {
+            var factTablesNames: string[] = response.Result;
+            factTablesNames.forEach((factTable: string) => {
+                switch (factTable) {
+                    case "Fact_Shipments":
+                        this.FactTables.push("Shipments");
+                        break;
+
+                    case "Fact_Charges":
+                        this.FactTables.push("Shipment Charges");
+                        break;
+                }
+            });
+            if (AppTool.IsNullOrEmpty(this.EntityPM.FactTableName)) {
+                this.FactTableSelectionChanged("");
+            }
+            else {
+                this.FactTableSelectionChanged(this.EntityPM.FactTableName);
+            }
+        });
+    }
+
+    FactTableSelectionChanged(selectControl: any) {
+        this.UIProperties.SetRequired("FactTableName", this.ObjectTableName, false);
+
+        switch (selectControl) {
+            case "":
+                this.FactTableName = "";
+                this.UIProperties.SetRequired("FactTableName", this.ObjectTableName, true);
+                break;
+            case "Shipments":
+            case "Fact_Shipments":
+                this.FactTableName = "Fact_Shipments";
+                this.SelectdFactTableName = "Shipments";
+                break;
+
+            case "Shipment Charges":
+            case "Fact_Charges":
+                this.FactTableName = "Fact_Charges";
+                this.SelectdFactTableName = "Shipment Charges";
+                break;
         }
     }
 
@@ -221,6 +275,13 @@ export class NewBIReport extends BaseComponent {
         }
     }
 
+    get FactTableName() { return this.EntityPM.FactTableName; }
+    set FactTableName(newValue: string) {
+        if (this.EntityPM.FactTableName != newValue) {
+            this.EntityPM.FactTableName = newValue;
+        }
+    }
+
     get BIReportFolderId() { return this.EntityPM.BIReportFolderId; }
     set BIReportFolderId(newValue: string) {
         if (this.EntityPM.BIReportFolderId != newValue) {
@@ -270,6 +331,11 @@ export class NewBIReport extends BaseComponent {
         if (AppTool.IsNullOrEmpty(this.EntityPM.Name)) {
             this.ValidationErrorsList.push("Name Field is Required");
             
+        }
+
+        if (AppTool.IsNullOrEmpty(this.EntityPM.FactTableName)) {
+            this.ValidationErrorsList.push("Fact Table Field is Required");
+
         }
 
         if (AppTool.IsNullOrEmpty(this.EntityPM.BIReportFolderId)) {
