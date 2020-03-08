@@ -48,6 +48,26 @@ namespace Logitude.Customs.Data.EntityLists
        public bool IsControllerRemarks  { get; set; }
        [DataMember]
        public string PreClassification  { get; set; }
+       [DataMember]
+       public string CustomFileNo  { get; set; }
+       [DataMember]
+       public string CustomerName  { get; set; }
+       [DataMember]
+       public string TransportModeId  { get; set; }
+       [DataMember]
+       public string DeclarationOfficeCode  { get; set; }
+       [DataMember]
+       public string VendorName  { get; set; }
+       [DataMember]
+       public string DeclarationStatusTypeName  { get; set; }
+       [DataMember]
+       public string DeclarationOfficeName  { get; set; }
+       [DataMember]
+       public string DeclarationStatusTypeCode  { get; set; }
+       [DataMember]
+       public string ATAOrETA  { get; set; }
+       [DataMember]
+       public string SearchFields  { get; set; }
    }
 
 }

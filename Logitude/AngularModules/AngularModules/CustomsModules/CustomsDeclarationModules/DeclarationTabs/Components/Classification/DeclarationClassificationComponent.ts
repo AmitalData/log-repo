@@ -64,7 +64,9 @@ export class DeclarationClassificationComponent extends BaseComponent implements
     public ShowStorageStatusMessage: boolean;
     private CurrentSession = SessionLocator.SelectedSession;
     IsDisplayMessage: boolean;
-    constructor(public entityArgs: EntityArgs, private cd: ChangeDetectorRef, private EntityResourceService: EntityResourceService, public declarationExtendedListService: DeclarationExtendedListService) {
+    constructor(public entityArgs: EntityArgs, private cd: ChangeDetectorRef, private EntityResourceService: EntityResourceService
+    //    , public declarationExtendedListService: DeclarationExtendedListService
+    ) {
         super();
         this.PreceduralFilterItems = new ApiQueryFilters();
         this.PreceduralFilterItems.addAdditionalFilter("IsImport", true, null, null, "Equals", false, false, false, "boolean");

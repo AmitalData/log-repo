@@ -56,6 +56,8 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.IsControllerRemarks).HasColumnName("IsControllerRemarks");
 
             this.Property(t => t.PreClassification).HasColumnName("PreClassification").HasMaxLength(1).IsUnicode(false);
+
+            this.Property(t => t.SearchFields).HasColumnName("SearchFields").HasMaxLength(1000).IsUnicode(true);
         }
     }
 }
