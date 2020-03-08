@@ -2,6 +2,6 @@ SELECT
       [Id_Number]  as [Key]
       ,[English Name]
       ,[Local Name]
-      ,[Code]  as [Special Services Code]
+      ,[Code]  
       ,[Source Tenant] as [Tenant]
   FROM [dbo].[DIM_SpecialServicesTypes]

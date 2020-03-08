@@ -1,5 +1,5 @@
 SELECT  [Id_Number]  as [Key]
-      ,[Code] as [Vessel Code]
+      ,[Code] 
       ,[English Name]
       ,[Local Name]
       ,[Notes]

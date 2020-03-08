@@ -59,7 +59,7 @@ namespace WarehouseDataViews
             {
                 string fieldCode=  row["Code"].ToString();
                 string dimensionTableCode = row["DimensionTableCode"].ToString();
-                if (!string.IsNullOrEmpty(fieldCode) && !string.IsNullOrEmpty(dimensionTableCode))
+                if (!string.IsNullOrEmpty(fieldCode) && fieldCode!="[Partner Tenant]" &&  !string.IsNullOrEmpty(dimensionTableCode))
                 {
                     if (dimensionTableCode != "DIM_Dates")
                     {

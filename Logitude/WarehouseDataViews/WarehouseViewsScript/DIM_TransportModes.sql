@@ -1,3 +1,3 @@
-SELECT  [Code] as [Transport Mode Code]
+SELECT  [Code]
       ,[Name] as [Key]
   FROM [dbo].[DIM_TransportModes]

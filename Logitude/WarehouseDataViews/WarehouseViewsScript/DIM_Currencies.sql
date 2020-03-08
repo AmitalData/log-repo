@@ -1,6 +1,6 @@
 
 SELECT [Id_Number]  as [Key]
-      ,[Code] as [Currency Code]
+      ,[Code] 
       ,[Name]
       ,[Local Name]
       ,[Currency Sign]

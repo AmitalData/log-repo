@@ -1,3 +1,3 @@
-SELECT [Code]  as [Direction Code]
+SELECT [Code]  
       ,[Name] as [Key]
   FROM [dbo].[DIM_Directions]

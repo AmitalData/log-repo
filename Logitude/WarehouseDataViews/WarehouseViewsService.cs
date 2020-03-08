@@ -71,17 +71,36 @@ namespace WarehouseDataViews
             }
         }
 
-        public void CreateView(string fieldCode, string dimensionTableCode, string connectionString)
+        public void CreateView(string fieldCode, string tableCode, string connectionString)
         {
             string viewName = GetViewName(fieldCode);
-            string scriptstring = ReadscriptFile(dimensionTableCode);
-            // [Key]
+            string scriptstring = ReadscriptFile(tableCode);
             scriptstring = scriptstring.Replace("[Key]", viewName+"key");
-
-        //string sqlstring = "if exists(select 1 from sys.views where name=' " + viewName + "' and type='v') begin drop view " + viewName + ";end";
+            scriptstring = scriptstring.Replace("[Code]", "[Code] as [" + viewName.Replace("View","") + " Code]");
+            if(tableCode == "Fact_Shipments") scriptstring = ConvertFieldsNameToCamelCase(scriptstring);
             string sqlstring = " CREATE VIEW "+ viewName + " AS  ";
             sqlstring += scriptstring;
             ExecuteSql(sqlstring,  connectionString);
+        }
+
+        private string ConvertFieldsNameToCamelCase(string scriptstring)
+        {
+            string result = scriptstring;
+            string[] sqlArray = result.Split(new string[] { "SELECT" }, StringSplitOptions.None);
+            sqlArray = sqlArray[1].Split(new string[] { "FROM" }, StringSplitOptions.None);
+            var allFields = sqlArray[0].Split(',');
+            foreach (string fieldName in allFields)
+            {
+                if (!string.IsNullOrEmpty(fieldName))
+                {
+                    if (!fieldName.Contains("Key") && !fieldName.Contains("Id_Number"))
+                    {
+                        string fieldNameCamelCase = fieldName + "as " + fieldName.Replace(" ", "");
+                        result = result.Replace(fieldName, fieldNameCamelCase);
+                    }
+                }
+            }
+            return result;
         }
 
         public void GrantView(string fieldCode,  string destinationConnectionString)

@@ -1,7 +1,7 @@
 
 SELECT [Id_Number]  as [Key]
       ,[Name]
-      ,[Code] as [Port Code]
+      ,[Code] 
       ,[Local Name]
       ,[UN Loc Code]
       ,[Country]

@@ -1,4 +1,4 @@
-SELECT [Id_Number]  as [Key]
+SELECT [Id_Number]  
       ,[Name]
       ,[Local Name]
       ,[Email]

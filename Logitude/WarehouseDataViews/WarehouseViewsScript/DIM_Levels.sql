@@ -1,3 +1,3 @@
-SELECT [Code] as [Shipment Level Code]
+SELECT [Code] 
       ,[Name]as [Key]
   FROM [dbo].[DIM_Levels]

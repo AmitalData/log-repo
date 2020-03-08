@@ -1,6 +1,6 @@
 SELECT [Id_Number]  as [Key]
       ,[Name]
       ,[Local Name]
-      ,[Code] as [Incoterm Code]
+      ,[Code]
       ,[Source Tenant] as [Tenant]
   FROM [dbo].[DIM_Incoterms]
