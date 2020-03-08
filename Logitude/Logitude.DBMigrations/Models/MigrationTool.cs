@@ -1722,7 +1722,7 @@ namespace Logitude.DBMigrations.Models
 
             if (DatabaseType.ToLower() == "oracle")
             {
-                string queryString = "SELECT * FROM \"DBMIGRATIONMODULES\"";
+                string queryString = "SELECT * FROM \"DBMIGRATIONSETTINGS\"";
 
                 OracleDataReader reader = null;
                 OracleConnection connection = new OracleConnection(connectionString);
@@ -1741,8 +1741,8 @@ namespace Logitude.DBMigrations.Models
                     {
                         includedModules = new IncludedModules
                         {
-                            Include = (Convert.ToInt32(reader["INCLUDE"].ToString())) == 1,
-                            Modules = !String.IsNullOrEmpty(reader["MODULES"].ToString()) ? reader["MODULES"].ToString().ToLower().Split(',').ToList() : new List<string>()
+                            Include = reader["MODE"].ToString().ToLower() == "include",
+                            Modules = reader["MODULESLIST"].ToString().ToLower().Split(',').ToList()
                         };
                     }
 
@@ -1762,7 +1762,7 @@ namespace Logitude.DBMigrations.Models
             }
             else
             {
-                string queryString = "SELECT * FROM [dbo].[DBMigrationModules]";
+                string queryString = "SELECT * FROM [dbo].[DBMigrationSettings]";
 
                 SqlDataReader reader = null;
                 SqlConnection connection = new SqlConnection(connectionString);
@@ -1781,8 +1781,8 @@ namespace Logitude.DBMigrations.Models
                     {
                         includedModules = new IncludedModules
                         {
-                            Include = (bool)reader["Include"],
-                            Modules = !String.IsNullOrEmpty(reader["Modules"].ToString()) ? reader["Modules"].ToString().ToLower().Split(',').ToList() : new List<string>()
+                            Include = reader["Mode"].ToString().ToLower() == "include",
+                            Modules = reader["ModulesList"].ToString().ToLower().Split(',').ToList()
                         };
                     }
 
@@ -1836,7 +1836,7 @@ namespace Logitude.DBMigrations.Models
                 "DBMigrationsHistory.dxml".ToLower(),
                 "DBScriptsHistory.dxml".ToLower(),
                 "DXMLMigrationHashes.dxml".ToLower(),
-                "DBMigrationModules.dxml".ToLower()
+                "DBMigrationSettings.dxml".ToLower()
             };
 
             return toolDxmlFilesNames;
