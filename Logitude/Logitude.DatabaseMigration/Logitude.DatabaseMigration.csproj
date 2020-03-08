@@ -2164,7 +2164,10 @@
     <Compile Include="Migrations\202003081420440_AddFactTableFieldToBIReportTable.Designer.cs">
       <DependentUpon>202003081420440_AddFactTableFieldToBIReportTable.cs</DependentUpon>
     </Compile>
-
+    <Compile Include="Migrations\202002271245498_Mutaz_Add_CancelationFields_To_Database.cs" />
+    <Compile Include="Migrations\202002271245498_Mutaz_Add_CancelationFields_To_Database.Designer.cs">
+      <DependentUpon>202002271245498_Mutaz_Add_CancelationFields_To_Database.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\202003030904524_WesamDBMigrationFixes.cs" />
     <Compile Include="Migrations\202003030904524_WesamDBMigrationFixes.Designer.cs">
@@ -3912,6 +3915,9 @@
 
     <EmbeddedResource Include="Migrations\202003081420440_AddFactTableFieldToBIReportTable.resx">
       <DependentUpon>202003081420440_AddFactTableFieldToBIReportTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002271245498_Mutaz_Add_CancelationFields_To_Database.resx">
+      <DependentUpon>202002271245498_Mutaz_Add_CancelationFields_To_Database.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

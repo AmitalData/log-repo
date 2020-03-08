@@ -121,6 +121,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                        BranchName = a.Branch == null ? null : a.Branch.EnglishName,
                                        CreatedByPartner = a.CreatedByPartner,
                                        IsPaymentNumberManuallySet = a.IsPaymentNumberManuallySet,
+                                       AccountingCancelationDate = a.AccountingCancelationDate,
+                                       CancelationNotes = a.CancelationNotes,
                                    }).FirstOrDefault();
 
 
@@ -133,14 +135,32 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             payment.ARPaymentChequeReplicas = GetARPaymentChequeReplicasByPaymentId(payment.Id, tenant);
             GetGLAccountFields(payment);
             payment =  SetJournalFields(payment);
+
             ARPaymentPM securedPM = new ARPaymentPM();
             SecuredMapping.GetMappedPM(payment, securedPM, "ARPayment", tenant);
             if (payment != null)
                 MapCustomFieldValues(securedPM);
+            if (payment.StatusCode == "VD")
+            {
+                JournalPM voidedByJournal = GetApprovedJournalByAccountingEntityId(payment);
+                if (voidedByJournal != null)
+                {
+                    payment.VoidedByJournalNumber = voidedByJournal.JournalNumber;
+                    securedPM.VoidedByJournalNumber = voidedByJournal.JournalNumber;
+                }
+            }
 
             return BranchPermitionsFilter.AddUserBranchRestrictionFilters(new QueryOperations(), securedPM, tenant);
         }
 
+
+        private JournalPM GetApprovedJournalByAccountingEntityId(ARPaymentPM aRPaymentPM)
+        {
+            IJournalQueryServiceExt journalQuery = ContainerAccessor.Container.Resolve(typeof(IJournalQueryServiceExt), "JournalQueryServiceExt", new ParameterOverride("", 1)) as IJournalQueryServiceExt;
+            return journalQuery.GetApprovedJournalByAccountingEntityId(aRPaymentPM.Id, "3", aRPaymentPM.Tenant);
+
+
+        }
         private void MapCustomFieldValues(ARPaymentPM payment)
         {
             if (payment != null)
@@ -192,7 +212,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
         private JournalPM GetJournalByPaymentId(string paymentId, int tenant)
         {
             IJournalQueryServiceExt journalQuery = ContainerAccessor.Container.Resolve(typeof(IJournalQueryServiceExt), "JournalQueryServiceExt", new ParameterOverride("", 1)) as IJournalQueryServiceExt;
-            JournalPM journal = journalQuery.GetJournalIdByAccountingEntityId(paymentId, tenant);
+            JournalPM journal = journalQuery.GetJournalByAccountingEntityIdAndCode(paymentId,"3",tenant);
             return journal;
 
 
@@ -318,6 +338,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                        BranchName = a.Branch == null ? null : a.Branch.EnglishName,
                                        CreatedByPartner = a.CreatedByPartner,
                                        IsPaymentNumberManuallySet = a.IsPaymentNumberManuallySet,
+                                       AccountingCancelationDate = a.AccountingCancelationDate,
+                                       CancelationNotes = a.CancelationNotes,
                                    }).FirstOrDefault();
             if (payment != null)
             {
@@ -460,6 +482,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                                    Field8 = entity.Field8,
                                                    Field9 = entity.Field9,
                                                    Field10 = entity.Field10,
+                                                   AccountingCancelationDate = entity.AccountingCancelationDate,
+                                                   CancelationNotes = entity.CancelationNotes,
                                                };
             return query2;
         }
@@ -556,6 +580,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                             Field8 = entity.Field8,
                             Field9 = entity.Field9,
                             Field10 = entity.Field10,
+                            AccountingCancelationDate = entity.AccountingCancelationDate,
+                            CancelationNotes = entity.CancelationNotes,
                         };
 
             return query;
@@ -653,6 +679,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                             Field8 = entity.Field8,
                             Field9 = entity.Field9,
                             Field10 = entity.Field10,
+                            AccountingCancelationDate = entity.AccountingCancelationDate,
+                            CancelationNotes = entity.CancelationNotes,
                         };
 
             return query;
@@ -736,6 +764,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                          Field8 = a.Field8,
                                          Field9 = a.Field9,
                                          Field10 = a.Field10,
+                                         AccountingCancelationDate = a.AccountingCancelationDate,
+                                         CancelationNotes = a.CancelationNotes,
                                      }).FirstOrDefault();
 
             return payment;

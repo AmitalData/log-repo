@@ -138,7 +138,9 @@ using Simplog.Data.InvoiceModel;
 				}
 
 							 
-				   temp.BankAccountNumber = MyEntityPM.BankAccountNumber;					
+				   temp.BankAccountNumber = MyEntityPM.BankAccountNumber;
+				   temp.CancelationNotes = MyEntityPM.CancelationNotes;
+				   temp.AccountingCancelationDate = MyEntityPM.AccountingCancelationDate;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -280,7 +282,9 @@ using Simplog.Data.InvoiceModel;
 					}
 
 								 
-					temp.BankAccountNumber = MyEntity.BankAccountNumber;					   
+					temp.BankAccountNumber = MyEntity.BankAccountNumber;
+					temp.CancelationNotes = MyEntity.CancelationNotes;
+					temp.AccountingCancelationDate = MyEntity.AccountingCancelationDate;					   
 					   return temp;
 		    }
             catch (Exception ex)
