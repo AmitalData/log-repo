@@ -1935,10 +1935,10 @@ export class TransactionLineModel extends BaseComponent {
         this.OriginalAmount = this.CalculateOriginalAmount();
         this.OriginalInvoiceAmount = this.SetOriginalInvoiceAmount();
         this.OriginalAmountCurrency = this.CalculatOriginalCurruncy();
-        this.Status = this.GetStatus();
+      
         this.CalculatedOpenAmount = this.CalculateOpenAmount();
         this.originalOpenAmount = this.CalculatedOpenAmount;
-
+        this.Status = this.GetStatus();
         this.RecociliationNumbers = this.getRecoLinkList();
     }
     //#region Properties
@@ -2160,7 +2160,7 @@ export class TransactionLineModel extends BaseComponent {
     GetStatus() {
         var __s = "";
 
-        if (this.OriginalAmount == this.originalOpenAmount)
+        if (this.OriginalInvoiceAmount == this.originalOpenAmount)
             __s = TextStore.open;
         else if (0 == this.originalOpenAmount)
             __s = TextStore.Closed;
@@ -2221,10 +2221,11 @@ export class TransactionLineModel extends BaseComponent {
     }
      CalculateOpenAmount() {
         if (this.parent.EntityPM.GLAccountRecoMethodCode == "0") {
-           return this.OpenAmount * this.parent.PaymentCurrencyExchangeRate;
+            return this.OpenAmount * this.parent.PaymentCurrencyExchangeRate;
+
         } else { return this.OpenAmount; }
     }
-
+    
     CalculatOriginalCurruncy() {
         //
         // [i] copied from list template
