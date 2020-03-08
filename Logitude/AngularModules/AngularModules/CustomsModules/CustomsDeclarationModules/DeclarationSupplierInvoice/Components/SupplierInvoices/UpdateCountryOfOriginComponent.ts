@@ -17,7 +17,6 @@ import { CustomsCountryPM } from '../../../../../Customs/EntityPMs/CustomsCountr
 
 export class UpdateCountryOfOriginComponent extends BaseComponent {
     DataContext: any = this;
-    debuggger;
     public ItemsSource: ObservableCollection;
     SupplierInvoicePM: SupplierInvoicePM;
     public ValidationErrorsList: string[] = [];

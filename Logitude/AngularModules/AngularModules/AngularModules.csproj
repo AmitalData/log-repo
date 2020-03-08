@@ -241,6 +241,7 @@
     <Content Include="CustomsModules\CustomsMaintenance\Components\DocumentTypeCustomsDataComponent.html" />
     <Content Include="CustomsModules\CustomsMaintenance\Components\GeneralLOVComponent.html" />
     <Content Include="CustomsModules\CustomsMaintenance\Components\InterfaceManagementComponent.html" />
+    <Content Include="CustomsModules\CustomsMaintenance\Components\DeclarationRemarksComponent.html" />
     <Content Include="CustomsModules\CustomsMaintenance\Components\LoadTestComponent.html" />
     <Content Include="CustomsModules\CustomsMaintenance\Components\RequiredFields\AddEditRequiredFieldsComponent.html" />
     <Content Include="CustomsModules\CustomsMaintenance\Components\RequiredFields\RequiredFieldsComponent.html" />
@@ -712,6 +713,7 @@
     <TypeScriptCompile Include="Common\EntityPMs\CustomsShipperPM.ts" />
     <TypeScriptCompile Include="Common\Services\ExtendedLists\CustomerDepositionListExtendedService.ts" />
     <TypeScriptCompile Include="Common\Services\ExtendedPMs\AutomationResultEmailRecipientExtendedService.ts" />
+    <TypeScriptCompile Include="Common\Services\ExtendedPMs\DeclarationRemarksService.ts" />
     <TypeScriptCompile Include="Common\Services\ExtendedPMs\PhysicalCheckExtendedPMService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardLists\CheckDigitControlAlgorithmListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardLists\CustomerDepositionListService.ts" />
@@ -823,7 +825,6 @@
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationCargoSplit\ModuleCustomsDeclarationCargoSplit.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationCargoSplit\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationCargoSplit\Components\Controller\DeclarationCargoSplitController.ts" />
-
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationSupplierInvoice\Components\SupplierInvoices\UpdateCountryOfOriginComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationSupplierInvoice\Components\SupplierInvoices\UpdateProcessCodeComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\CargoSeal\DeclarationCargoSealTabComponent.ts" />
@@ -868,6 +869,7 @@
     <TypeScriptCompile Include="CustomsModules\CustomsMaintenance\Components\DocumentTypeCustomsDataComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsMaintenance\Components\GeneralLOVComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsMaintenance\Components\InterfaceManagementComponent.ts" />
+    <TypeScriptCompile Include="CustomsModules\CustomsMaintenance\Components\DeclarationRemarksComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsMaintenance\Components\LoadTestComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsMaintenance\Components\RequiredFields\AddEditRequiredFieldsComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsMaintenance\Components\RequiredFields\RequiredFieldsComponent.ts" />
@@ -971,6 +973,7 @@
     <TypeScriptCompile Include="Customs\EntityPMs\DeclarationMamanSpecialActionPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\DeclarationPendingPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\DeficitDecisionPM.ts" />
+    <TypeScriptCompile Include="Customs\EntityPMs\Extended\DeclarationRemarks.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\GatepassRequestPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\GatepassReturnCodePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\HazardousSubstancePM.ts" />
