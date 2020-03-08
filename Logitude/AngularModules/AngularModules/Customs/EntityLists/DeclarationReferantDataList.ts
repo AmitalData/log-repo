@@ -34,6 +34,7 @@ export class DeclarationReferantDataList {
 	DeclarationOfficeName: string;
 	DeclarationStatusTypeCode: string;
 	ATAOrETA: string;
+	SearchFields: string;
 	
 }
  

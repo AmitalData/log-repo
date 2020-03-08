@@ -183,7 +183,7 @@
                 </div>
 
 
-                <div *ngIf="FieldName == 'ClassificationStatus'" style="position:relative;width:100%; height: 100%;">
+                <div *ngIf="FieldName == 'ClassificationStatus'" style="position:relative;width:100%; height: 100%;"  (click)="OpenRemarks()">
 
                     <div *ngIf="!IsHeaderScreenTemplate">
                         <div *ngIf="Entity['ClassificationStatus']=='V' && Entity['IsClassificationRemarks']==false">
@@ -206,7 +206,7 @@
                 </div>
 
 
-                <div *ngIf="FieldName == 'ControllerStatus'" style="position:relative;width:100%; height: 100%;">
+                <div *ngIf="FieldName == 'ControllerStatus'" style="position:relative;width:100%; height: 100%;" (click)="OpenRemarks()">
 
                     <div *ngIf="!IsHeaderScreenTemplate">
                         <div *ngIf="Entity['ControllerStatus']=='V' && Entity['IsControllerRemarks']==false">

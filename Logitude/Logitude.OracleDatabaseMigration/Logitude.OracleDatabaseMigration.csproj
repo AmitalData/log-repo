@@ -520,6 +520,10 @@
     <Compile Include="Migrations\202002250857069_CargoSealsAddIdField.Designer.cs">
       <DependentUpon>202002250857069_CargoSealsAddIdField.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202003081316083_AddedSearchFieldReferant.cs" />
+    <Compile Include="Migrations\202003081316083_AddedSearchFieldReferant.Designer.cs">
+      <DependentUpon>202003081316083_AddedSearchFieldReferant.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -900,6 +904,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202002250857069_CargoSealsAddIdField.resx">
       <DependentUpon>202002250857069_CargoSealsAddIdField.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003081316083_AddedSearchFieldReferant.resx">
+      <DependentUpon>202003081316083_AddedSearchFieldReferant.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\logitude.oracledatabasemigration.dll.licenses" />
   </ItemGroup>
