@@ -1,0 +1,8 @@
+SELECT  [Id_Number]  as [Key]
+      ,[Code] 
+      ,[English Name]
+      ,[Local Name]
+      ,[Notes]
+      ,[IMO Code]
+      ,[Source Tenant] as [Tenant]
+  FROM [dbo].[DIM_Vessels]
