@@ -51,7 +51,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries.Charts
                     }
             }
 
-            if(args.ChartCode != "QCV" && args.ChartCode != "TFS") //&& args.ChartCode != "KPI"
+            if(args.ChartCode != "QCV" && args.ChartCode != "TFS" && args.ChartCode != "KPI")
             {
                 dataSourceQuery = dataSourceQuery.Where(d => !d.IsClosed);
             }
