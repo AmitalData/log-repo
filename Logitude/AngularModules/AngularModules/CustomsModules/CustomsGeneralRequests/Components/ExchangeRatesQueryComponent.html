@@ -1,4 +1,4 @@
-﻿
+
 <div>
     <!-- ExchangeRatesQueryComponent  view  -->
     <custom-message-wrapper>
@@ -62,6 +62,21 @@
                     <td style="width: 200px; padding-right: 36px;"></td>
 
                     <td><div></div></td>
+                </tr>
+                <tr>
+                    <td colspan="6">
+                        <MultiSelectLOV>
+                            <div class="class-MultiSelectLOV-content">
+                                <LogLov [ObjectFieldName]="'CurrencyTypeCode'"
+                                        [ObjectTableName]="ObjectTableName"
+                                        [DataContext]="DataContext"
+                                        [HideColumns]="true"
+                                        [LookUpTableName]="'Customs.CurrencyType'"
+                                        [DisplayMemberPath]="'LocalName'">
+                                </LogLov>
+                            </div>
+                        </MultiSelectLOV>
+                    </td>
                 </tr>
                 <tr class="FormFieldRow" style="height:1px">
                     <td><div></div></td>    

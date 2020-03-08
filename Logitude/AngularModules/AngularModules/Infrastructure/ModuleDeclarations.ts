@@ -167,6 +167,7 @@ import {DocsInTabComponent} from './Components/Documents/DocsInTabComponent';
 import { BTEGeneralTabComponent } from './Components/Maintenance/BatchTaskExecution/BTEGeneralTabComponent';
 import { BTELogTabComponent } from './Components/Maintenance/BatchTaskExecution/BTELogTabComponent';
 import { BTEParameterTabComponent } from './Components/Maintenance/BatchTaskExecution/BTEParameterTabComponent/BTEParameterTabComponent';
+import { DropdownMenuComponent } from './Components/LogitudeComponents/DropdownMenuComponent';
 
 export const Directives =
     [
@@ -267,6 +268,8 @@ export const ControlsComponents =
         DocsOutTabComponent,
         DocsInTabComponent,
         LastSuccessfulLoginComponent,
+        DropdownMenuComponent,
+
     ];
 export const Components =
     [

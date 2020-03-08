@@ -823,7 +823,6 @@
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationCargoSplit\ModuleCustomsDeclarationCargoSplit.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationCargoSplit\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationCargoSplit\Components\Controller\DeclarationCargoSplitController.ts" />
-
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationSupplierInvoice\Components\SupplierInvoices\UpdateCountryOfOriginComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationSupplierInvoice\Components\SupplierInvoices\UpdateProcessCodeComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\CargoSeal\DeclarationCargoSealTabComponent.ts" />
@@ -1278,11 +1277,15 @@
     <TypeScriptCompile Include="InvoiceModules\APPayment\ModuleDeclarations.ts" />
     <Content Include="Infrastructure\Components\CustomControls\RatioBoxComponent.html" />
     <Content Include="Infrastructure\Components\ExportBI2ExcelControl\ExportBI2ExcelControl.html" />
+    <Content Include="Infrastructure\Components\LogitudeComponents\DropdownMenuComponent.html" />
     <Content Include="Infrastructure\Components\LogitudeComponents\DWDateComponent.html" />
     <Content Include="Infrastructure\Components\LogitudeComponents\DWLovComponent.html" />
     <TypeScriptCompile Include="Infrastructure\Helpers\DetectUserInActivity.ts" />
     <Content Include="Infrastructure\Components\LogitudeComponents\DWLogSearchWindowComponent.html" />
     <Content Include="Infrastructure\Components\LogitudeComponents\MultilineTextBoxWindow.html" />
+    <TypeScriptCompile Include="Infrastructure\Components\LogitudeComponents\DropdownMenuComponent.ts" />
+    <Content Include="Infrastructure\Components\LogitudeComponents\MultiSelectLOV.html" />
+    <TypeScriptCompile Include="Infrastructure\Components\LogitudeComponents\MultiSelectLOV.ts" />
     <Content Include="Infrastructure\Components\LogitudeComponents\TimeInput.html" />
     <Content Include="Infrastructure\Components\LogitudeCustomComponents\LastSuccessfulLoginComponent.html" />
     <Content Include="Infrastructure\Components\Maintenance\BatchTaskExecution\BTEGeneralTabComponent.html" />
