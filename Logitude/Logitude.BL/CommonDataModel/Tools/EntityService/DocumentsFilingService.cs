@@ -1205,8 +1205,10 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                             string xmlstring = LogitudeXmlSerializer.SerializeObjectToXmlString(mappedPM);
 
                             //54378
-                            string UseSend2UServer =ConfigurationManager.AppSettings["20190909.UseSend2UServer8302"]??"";
-                            if (!string.IsNullOrWhiteSpace(UseSend2UServer) && !string.IsNullOrWhiteSpace(this.MetaDataVersionValue))//DeclarationPrint
+                            //string UseSend2UServer =ConfigurationManager.AppSettings["20190909.UseSend2UServer8302"]??"";
+                            string SuppressUseSend2UServer8302 = ConfigurationManager.AppSettings["20200123.SuppressUseSend2UServer8302"] ?? "";
+                            if (string.IsNullOrWhiteSpace(SuppressUseSend2UServer8302)//!string.IsNullOrWhiteSpace(UseSend2UServer) 
+                                && !string.IsNullOrWhiteSpace(this.MetaDataVersionValue))//DeclarationPrint
                             {
                                 Send2UServer(mappedPM, loggedUserId, extDocPM.Id);
                             }
@@ -1408,7 +1410,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             if (string.IsNullOrEmpty(type) && !string.IsNullOrEmpty(code))
             {
                 var documentTypeMetaDataRepo = new DocumentsMetaDataTypeRepository(tenant);
-                DocumentsMetaDataType myDocumentsMetaDataType = documentTypeMetaDataRepo.GetSingleDocumentsMetaDataTypeByCode(code, tenant);
+                //                DocumentsMetaDataType myDocumentsMetaDataType = documentTypeMetaDataRepo.GetSingleDocumentsMetaDataTypeByCode(code, tenant);
+                DocumentsMetaDataType myDocumentsMetaDataType = documentTypeMetaDataRepo.GetSingleDocumentsMetaDataTypeByCustomsMetaDataCode(code, tenant);
                 if (myDocumentsMetaDataType != null) type = myDocumentsMetaDataType.Id;
             }
             

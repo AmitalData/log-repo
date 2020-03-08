@@ -119,7 +119,6 @@ export class CourierWorksheetComponent extends BaseComponent
     //constructor(public entityArgs: EntityArgs) {
     constructor(private _CourierWorksheetSharedDataService: CourierWorksheetSharedDataService, public entityArgs: EntityArgs, private EntityResourceService: EntityResourceService) {
         super();
-
         //this.entityPM = entityArgs.EntityPM;
         this._TabFilterList.push(new TabFilter("ALL", "כל הש.מ.ב ", null, null));
         this._TabFilterList.push(new TabFilter("DOC", "בעיות במסמכים ", null, null));
@@ -884,6 +883,8 @@ export class CourierWorksheetComponent extends BaseComponent
             IsCustomTemplate: true,
             HtmlListComponentName: 'CourierWorksheetListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
+            ServerSideSortable: true,
+            SortByName: 'CourierHawb'
         });
         //SortByName: 'CourierHawb'
 
@@ -893,7 +894,8 @@ export class CourierWorksheetComponent extends BaseComponent
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.ProcedureCurrentName"),
             Styles: { width: '122px' },
             IsCustomTemplate: true,
-            ServerSideSortable: false,
+            ServerSideSortable: true,
+            SortByName: 'ProcedureCurrentName'
         });
 
         this.columns.push({
@@ -904,7 +906,8 @@ export class CourierWorksheetComponent extends BaseComponent
             IsCustomTemplate: true,
             HtmlListComponentName: 'CourierWorksheetListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
-            ServerSideSortable: false,
+            ServerSideSortable: true,
+            SortByName: 'FastIndividualProcessCode'
         });
 
         this.columns.push({
@@ -913,7 +916,8 @@ export class CourierWorksheetComponent extends BaseComponent
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CustomerName"),
             Styles: { width: '200px' },
             IsCustomTemplate: true,
-            ServerSideSortable: false,
+            ServerSideSortable: true,
+            SortByName: 'ImporterName'
         });
 
         this.columns.push({
@@ -922,7 +926,8 @@ export class CourierWorksheetComponent extends BaseComponent
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.ImporterCode"),
             Styles: { width: '100px' },
             IsCustomTemplate: true,
-            ServerSideSortable: false,
+            ServerSideSortable: true,
+            SortByName: 'SortedImporterCode'
         });
 
         this.columns.push({
@@ -933,7 +938,8 @@ export class CourierWorksheetComponent extends BaseComponent
             IsCustomTemplate: true,
             HtmlListComponentName: 'CourierWorksheetListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
-            ServerSideSortable: false,
+            ServerSideSortable: true,
+            SortByName: 'SortedDocumentStatusCode'
         });
 
         this.columns.push({
@@ -944,7 +950,8 @@ export class CourierWorksheetComponent extends BaseComponent
             IsCustomTemplate: true,
             HtmlListComponentName: 'CourierWorksheetListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
-            ServerSideSortable: false,
+            ServerSideSortable: true,
+            SortByName: 'IsCourierMissingClassification'
         });
 
         this.columns.push({
@@ -955,7 +962,8 @@ export class CourierWorksheetComponent extends BaseComponent
             IsCustomTemplate: true,
             HtmlListComponentName: 'CourierWorksheetListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
-            ServerSideSortable: false,
+            ServerSideSortable: true,
+            SortByName: 'SortedCourierManifestStatus'
         });
 
         this.columns.push({
@@ -966,7 +974,8 @@ export class CourierWorksheetComponent extends BaseComponent
             IsCustomTemplate: true,
             HtmlListComponentName: 'CourierWorksheetListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
-            ServerSideSortable: false,
+            ServerSideSortable: true,
+            SortByName: 'SortedCourierDeclarationStatus'
         });
 
         this.columns.push({
@@ -977,7 +986,8 @@ export class CourierWorksheetComponent extends BaseComponent
             IsCustomTemplate: true,
             HtmlListComponentName: 'CourierWorksheetListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
-            ServerSideSortable: false,
+            ServerSideSortable: true,
+            SortByName: 'CourierPaymentStatusCode'
         });
 
         this.columns.push({
@@ -986,9 +996,10 @@ export class CourierWorksheetComponent extends BaseComponent
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CourierCustomStatusName"),
             Styles: { width: '75px' },
             IsCustomTemplate: true,
-            ServerSideSortable: false,
             HtmlListComponentName: 'CourierWorksheetListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
+            ServerSideSortable: true,
+            SortByName: 'CourierCustomStatusName'
         });
 
         this.columns.push({
@@ -997,9 +1008,10 @@ export class CourierWorksheetComponent extends BaseComponent
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.StorageSiteStatusCode"),
             Styles: { width: '98px' },
             IsCustomTemplate: true,
-            ServerSideSortable: false,
             HtmlListComponentName: 'CourierWorksheetListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
+            ServerSideSortable: true,
+            SortByName: 'StorageSiteStatusCode'
         });
 
         this.columns.push({
@@ -1008,9 +1020,10 @@ export class CourierWorksheetComponent extends BaseComponent
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.SpecialActionStatus"),
             Styles: { width: '55px' },
             IsCustomTemplate: true,
-            ServerSideSortable: false,
             HtmlListComponentName: 'CourierWorksheetListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
+            ServerSideSortable: true,
+            SortByName: 'SpecialActionStatus'
         });
 
         this.columns.push({
@@ -1019,7 +1032,8 @@ export class CourierWorksheetComponent extends BaseComponent
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.DeclarationStatusTypeName"),
             Styles: { width: '200px' },
             IsCustomTemplate: true,
-            ServerSideSortable: false,
+            ServerSideSortable: true,
+            SortByName: 'DeclarationStatusTypeName'
         });
 
         this.columns.push({
@@ -1028,9 +1042,10 @@ export class CourierWorksheetComponent extends BaseComponent
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CourierPendingReasonList"),
             Styles: { width: '105px' },
             IsCustomTemplate: true,
-            ServerSideSortable: false,
             HtmlListComponentName: 'CourierWorksheetListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
+            ServerSideSortable: true,
+            SortByName: 'CourierPendingReasonName'
         });
 
         this.columns.push({
@@ -1039,9 +1054,10 @@ export class CourierWorksheetComponent extends BaseComponent
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.LastMileStatusCode"),
             Styles: { width: '73px' },
             IsCustomTemplate: true,
-            ServerSideSortable: false,
             HtmlListComponentName: 'CourierWorksheetListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
+            ServerSideSortable: true,
+            SortByName: 'LastMileStatusCode'
         });
 
         this.columns.push({
@@ -1052,7 +1068,8 @@ export class CourierWorksheetComponent extends BaseComponent
             IsCustomTemplate: true,
             HtmlListComponentName: 'CourierWorksheetListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
-            ServerSideSortable: false,
+            ServerSideSortable: true,
+            SortByName: 'IsClosedForFollowUp'
         });
 
         this.columns.push({
@@ -1063,7 +1080,7 @@ export class CourierWorksheetComponent extends BaseComponent
             IsCustomTemplate: true,
             HtmlListComponentName: 'CourierWorksheetListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
-            ServerSideSortable: false,
+            ServerSideSortable: false
         });
         this.columns.push({
             FieldName: 'SendSplitButton',
@@ -1073,7 +1090,7 @@ export class CourierWorksheetComponent extends BaseComponent
             IsCustomTemplate: true,
             HtmlListComponentName: 'CourierWorksheetListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
-            ServerSideSortable: false,
+            ServerSideSortable: false
         });
     }
 
@@ -1096,7 +1113,6 @@ export class CourierWorksheetComponent extends BaseComponent
         if (filters == null) {
             filters = new ApiQueryFilters();
         }
-
         filters.PageSize = take;
         filters.PageIndex = skip;
         filters.GetAll = false;
@@ -1362,6 +1378,11 @@ export class CourierWorksheetComponent extends BaseComponent
                 filters.addAdditionalFilter("CourierCustomStatusCode", "2", null, null, "Equals", false, false, false, "string");
                 break;
             }
+            case "N": {
+                filters.addAdditionalFilter("CourierCustomStatusCode", "2", "1", null, "NotEqual", false, false, false, "string");
+ 
+                break;
+            }
         }
     }
 
@@ -1570,6 +1591,7 @@ export class CourierWorksheetComponent extends BaseComponent
     }
 
     SelectedCustomStatusValueClick(value: string) {
+        debugger;
         this._SelectedCustomStatusValue = value;
         if (this._SelectedBOLValue == "A" && this._SelectedTotalInvoiceValue == "A" && this._SelectedStatusValue == "A" && this._SelectedAvailableValue == "A" && this._SelectedFastIndividualProcessValue == 'A' && this._SelectedCustomStatusValue == 'A') {
             this.IsFiltered = false;
@@ -1847,7 +1869,7 @@ export class CourierWorksheetComponent extends BaseComponent
             .subscribe(response => {
                 this.IsMamanEnabled = false;
                 if (!response.HasError) {// reEdit this default !!!
-                    if (response.Result != null) {
+                    if (response.Result != null && response.Result.DefaultValue != null) {
                         if (response.Result.DefaultValue.includes("ILMMN")) {
                             this.IsMamanEnabled = true;
                         }
@@ -1855,6 +1877,8 @@ export class CourierWorksheetComponent extends BaseComponent
                             this.IsILOVLEnabled = true;
                         }
                         this._CourierWorksheetSharedDataService.WebAPICourierGWMessageECTHRDataMaman = response.Result.DefaultValue;
+                    } else {
+                        console.error("CGO_CUST_MAMAN DefaultValue  is missing !!!")
                     }
                 }
             });

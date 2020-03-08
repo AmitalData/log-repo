@@ -292,6 +292,7 @@ namespace Logitude.CustomsMessaging.RequestServices
 
              req.Response = new UnifreightIIG.Common.ImportDeclarationAmendmentServiceReference.Response();
             req.Response.Declaration =  Getdeclaration(_DeclarationPM , _DeclarationPMOrg);
+ 
             req.Response.FunctionalReferenceID = new ResponseFunctionalReferenceIDType { Value = string.IsNullOrEmpty(_DeclarationPM.AmendmentRequestNumber) ? GetNextAmendmentRequestNumber() : _DeclarationPM.AmendmentRequestNumber
         };
             req.Response.IssueDateTime = DataTypeConvertorUtil.Convert(DateTime.Now);
@@ -299,7 +300,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             req.Response.FunctionCode = new ResponseFunctionCodeType { Value = "1" };
             req.Attachments = GetAttachments();
             LogMessagingUtil.Instance.AppendLine("declaration build" + requestParams.AppicationId);
-             UpdateDeclaration(req.Response);
+             UpdateDeclaration(req.Response, requestParams.LoggingUserId);
             _context = null;
             return req;
         }
@@ -315,21 +316,23 @@ namespace Logitude.CustomsMessaging.RequestServices
 
             foreach (var customsDocumentPM in customsDocumentPMList)
             {
-                if (!string.IsNullOrWhiteSpace(customsDocumentPM.CustomsDocId))  
+                if (!string.IsNullOrWhiteSpace(customsDocumentPM.CustomsDocId))
                 {
                     var attachment = new Attachment();
-                    attachment.attachmentID = customsDocumentPM.ExternalAttachmentId;
-                    attachment.keywords = "test";
-                    attachment.fileName = "test";
+                    attachment.externalAttachmentID = customsDocumentPM.ExternalAttachmentId;
+                    attachment.IsAttachment = "false";
+                    attachment.keywords = customsDocumentPM.Name;
+                    attachment.fileName = customsDocumentPM.Name;
+
                     attachment.documentType = customsDocumentPM.DocumentTypeCode;
-                     attachments.Add(attachment);
+                    attachments.Add(attachment);
                 }
             }
             return attachments.ToArray();
 
         }
 
-        private void UpdateDeclaration(UnifreightIIG.Common.ImportDeclarationAmendmentServiceReference.Response response)
+        private void UpdateDeclaration(UnifreightIIG.Common.ImportDeclarationAmendmentServiceReference.Response response ,string LoggingUserId)
         {
             DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(_context, new Dictionary<string, IContext>(), _DeclarationPM.Tenant);
             _DeclarationPM.AmendmentissueDate = DateTime.Now;
@@ -351,10 +354,49 @@ namespace Logitude.CustomsMessaging.RequestServices
                 Tenant = _DeclarationPM.Tenant,
                 EventTypeCode = "DCH",
                 UserId = _userId,
-                EntityId = _DeclarationPM.Id,
+                EntityId = _DeclarationPMOrg.Id,
                 ObjectTableName = "Customs.Declaration",
                 Notes = null
             });
+
+
+            var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
+            {
+                Tenant = _DeclarationPM.Tenant,
+                objectTableName = "Customs.Declaration",
+                EventCode = "DCH",
+                notes =null,
+                CommunicationLoggingEntityReference = _DeclarationPM.DeclarationNumber,
+                EntityId = _DeclarationPMOrg.Id,
+                UserId = _userId,
+
+                CommunicationSubject = "FU Status DCH from logitude ",
+                MyFUStatus = new AmitalEventTracerModel.FUStatus()
+                {
+                    entname = "CFIFILEM",
+                    primary_number = _DeclarationPMOrg.CustomFileNo,
+                    status = "new",
+                    xml_status = "new",
+                    status_id = "DCH",
+                    status_DateTime = DateTime.Now,
+                    //status_place = "FRA",
+                    //status_save = "no_fail",
+                    comments = null,
+                }
+            };
+            AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel);
+
+            //var myUpdateEventContextTagModel = new EventContextTagModel()
+            //{
+            //    CallProccessID = EventContextTagModel.ProccessEnum.DF_NG_5117_ImportDeclerationAmendmentReplyResponseService,
+            //    EventCode = "DCH",
+            //    EventRemarks = "Declaration Changed By Customs",
+            //    FUStatusRemarks = "בוצע תיקון הצהרה" +  _DeclarationPMOrg.DeclarationNumber,
+            //};
+
+            //_DeclarationPMOrg.CurrentContextTag = myUpdateEventContextTagModel;
+            //declarationUpdateService.Update(_DeclarationPMOrg, true);
+
             declarationUpdateService.Update(_DeclarationPM, true);
         }
 
@@ -364,7 +406,7 @@ namespace Logitude.CustomsMessaging.RequestServices
 
           var declarations=  declarationQueryService.GetDeclarationAmendmentsById(_DeclarationPMOrg.Tenant, _DeclarationPMOrg.Id);
 
-          return (Convert.ToInt32( declarations.Max(x => x.RequestFileNumber) )+ 1).ToString();
+          return (Convert.ToInt32( declarations.Max(x => x.AmendmentRequestNumber) )+ 1).ToString();
          }
 
         private ResponseAdditionalInformation[] AdditionalInformation()

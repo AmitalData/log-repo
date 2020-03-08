@@ -213,11 +213,13 @@ namespace Logitude.Server.Tools
                 }
                 AfterUpdating(entityPM, EntityParentPM);
                 AddStepTrace("AfterUpdating");
+                UpdateCalculatedFields(entityPM, EntityParentPM, EntityPOCO);
+                AddStepTrace("UpdateCalculatedFields");
             }
             //scope.Complete();
         }
         
-
+        
         protected virtual void SubmitChanges()
         {
             try
@@ -261,7 +263,11 @@ namespace Logitude.Server.Tools
         {
 
         }
+        protected virtual void UpdateCalculatedFields(TEntityPM entityPM, TEntityParentPM entityParentPM, TEntityPOCO entityPOCO)
+        {
 
+        }
+        
         protected abstract EntityKeyFields GetKeys(TEntityPM entityPM);
 
         protected virtual void Trace(TEntityPM entityPM,TEntityPOCO entityPOCO,string changesXml)

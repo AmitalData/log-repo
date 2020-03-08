@@ -45,12 +45,20 @@ export class AutonomyKeywordComponent
     _KeywordtypeCodes: KeyValuePair[] = [];
     _SelectKeywordtypeCode_Key: string;
     Loaded: boolean = false;
+    FromList: boolean;
+    SelectedItemKeywordtypeCode: KeyValuePair;
     constructor(public entityArgs: EntityArgs ) {
         super();
-        
         this._KeywordtypeCodes.push(new KeyValuePair("1", "עיר"));
         this._KeywordtypeCodes.push(new KeyValuePair("2", "טלפון"));
         this.UIProperties.SetEnabled("KeywordsList", this.ObjectTableName, false);
+        if (entityArgs != null && entityArgs.EntityPM != null) {
+            this.EntityPM = entityArgs.EntityPM;
+            this.SelectedItemKeywordtypeCode = this._KeywordtypeCodes.filter(r => r.Key == this.EntityPM.KeywordtypeCode)[0];
+            this.FromList = true;
+            this.UIProperties.SetEnabled("KeywordsList", this.ObjectTableName, true);
+        }
+
         SessionLocator.SelectedSession.StartBusyIndicator("");
         this._EntityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe(response => {
             this.Loaded = true;

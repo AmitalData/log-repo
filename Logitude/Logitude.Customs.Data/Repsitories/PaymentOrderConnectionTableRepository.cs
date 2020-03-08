@@ -23,11 +23,11 @@ namespace Logitude.Customs.Data.Repsitories
                     select a).ToList();
         }
 
-        public List<PaymentOrderConnectionTable> GetPaymentOrderByConnectedEntity(string ConnectedEntityCode, string ConnectedEntityId, int tenant)
+        public List<PaymentOrderConnectionTable> GetPaymentOrderByConnectedEntity(string ConnectedEntityCode, List<string> ConnectedEntityIds, int tenant)
         {
 
             return (from a in context.PaymentOrderConnectionTables
-                    where a.ConnectedEntityCode == ConnectedEntityCode && a.ConnectedEntityId == ConnectedEntityId && a.Tenant == tenant
+                    where a.ConnectedEntityCode == ConnectedEntityCode && ConnectedEntityIds.Contains(a.ConnectedEntityId) && a.Tenant == tenant
                     select a).ToList();
         }
 

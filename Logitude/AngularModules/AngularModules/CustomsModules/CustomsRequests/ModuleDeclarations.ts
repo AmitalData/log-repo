@@ -1,4 +1,4 @@
-﻿import { CustomsRequestsComponent } from './Components/CustomsRequestsComponent';
+import { CustomsRequestsComponent } from './Components/CustomsRequestsComponent';
 import { DeclarationRestoreComponent } from './Components/DeclarationRequests/DeclarationRestoreComponent';
 import { DeclarationStatusComponent } from './Components/DeclarationRequests/DeclarationStatusComponent';
 import { GuaranteeCertificateComponent } from './Components/TapagRequests/GuaranteeCertificateComponent';
@@ -17,7 +17,7 @@ import { BlockListInWarehouseComponent } from './Components/DeclarationRequests/
 import { RequestDetailsComponent } from './Components/DeclarationRequests/RequestDetailsComponent';
 import { ReleaseGoodsComponent } from './Components/DeclarationRequests/ReleaseGoodsComponent'; 
 import { StorageEntranceComponent } from './Components/Courier/StorageEntranceComponent';
-
+import { CargoSealsQueryComponent } from './Components/DeclarationRequests/CargoSealsQueryComponent';
 
 
 
@@ -42,6 +42,7 @@ export const Components =
         BlockListInWarehouseComponent,
         RequestDetailsComponent,
         ReleaseGoodsComponent,
+        CargoSealsQueryComponent,
     ];
 
 export class ModuleDeclarations {
@@ -68,7 +69,8 @@ export class ModuleDeclarations {
             case "VehicleForGoodsItemComponent": { myResult = VehicleForGoodsItemComponent; break; }
             case "BlockListInWarehouseComponent": { myResult = BlockListInWarehouseComponent; break; }
             case "RequestDetailsComponent": { myResult = RequestDetailsComponent; break; }
-            case "ReleaseGoodsComponent": { myResult = ReleaseGoodsComponent; break; } 
+            case "ReleaseGoodsComponent": { myResult = ReleaseGoodsComponent; break; }
+            case "CargoSealsQueryComponent": { myResult = CargoSealsQueryComponent; break; } 
         }
 
         return myResult;

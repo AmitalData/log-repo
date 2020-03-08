@@ -244,24 +244,24 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 
           
-                if (customResponse.ResponseContentHeader.Exception == null)
-                {
-                    string text = null;
-                    if (String.IsNullOrWhiteSpace(customResponse.ResponseContentHeader.Remark))
-                    {
-                        text = "No Declaration details in the Response " + requestParams.AppicationId;
-                        this.MyResponseData.UserMessage = text;
-                        LogMessagingUtil.Instance.AppendLine(text);
-                    }
-                    else
-                    {
-                        text = "No Declaration details in the Response " + customResponse.ResponseContentHeader.Remark + requestParams.AppicationId;
-                        this.MyResponseData.UserMessage = text;
-                        LogMessagingUtil.Instance.AppendLine(text);
-                    }
-                    this.MyResponseData.ApplicationID = requestParams.AppicationId; //Yuval Chalup 28.05.2015 TASK-13252+13509
-                    return;
-                }
+                //if (customResponse.ResponseContentHeader.Exception == null)
+                //{
+                //    string text = null;
+                //    if (String.IsNullOrWhiteSpace(customResponse.ResponseContentHeader.Remark))
+                //    {
+                //        text = "No Declaration details in the Response " + requestParams.AppicationId;
+                //        this.MyResponseData.UserMessage = text;
+                //        LogMessagingUtil.Instance.AppendLine(text);
+                //    }
+                //    else
+                //    {
+                //        text = "No Declaration details in the Response " + customResponse.ResponseContentHeader.Remark + requestParams.AppicationId;
+                //        this.MyResponseData.UserMessage = text;
+                //        LogMessagingUtil.Instance.AppendLine(text);
+                //    }
+                //    this.MyResponseData.ApplicationID = requestParams.AppicationId; //Yuval Chalup 28.05.2015 TASK-13252+13509
+                //    return;
+                //}
    
             // if (customResponse != null)
             //{

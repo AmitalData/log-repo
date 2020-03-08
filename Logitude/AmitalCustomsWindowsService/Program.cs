@@ -18,6 +18,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Unifreight.Data.AmitalModel;
 using WebFreight.Web.CustomModel;
 using WebFreight.Web.Security;
 
@@ -42,6 +43,9 @@ namespace AmitalCustomsWindowsService
         [STAThread]
         static void Main()
         {
+
+
+            
             //ThreadPool.SetMinThreads(400, 400);
             ServiceBase[] ServicesToRun;
 
@@ -129,6 +133,7 @@ namespace AmitalCustomsWindowsService
             {
                 var assemblyUtil = new Logitude.Server.Tools.Helpers.AssemblyUtil();
                 prodInfo = assemblyUtil.GetProductInfo(typeof(Program).Assembly);
+                Logger.LogMe(prodInfo, false);
 
                 Action<bool, bool> BuildObjectTablesZipFilesDataAction = WebFreight.Web.MetaDataUpdate.TenantsUpdateClass.BuildObjectTablesZipFilesData;
                 CustomsWorkerRole.CustomsWorkerEntryPoint.StartStatic(false, BuildObjectTablesZipFilesDataAction, prodInfo, SecurityUtility.CheckContactFeature);

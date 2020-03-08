@@ -68,7 +68,7 @@
                     </td>
                     <td>
                         <!--[SelectedItem]="SelectedKeywordtypeCode"-->
-                        <ComboBox [ItemsSource]="_KeywordtypeCodes" [Binding]="'Value'" (SelectedItemChanged)="KeywordtypeCodeClicked($event.Key)"></ComboBox>
+                        <ComboBox [ItemsSource]="_KeywordtypeCodes"  [IsDisabled]="FromList" [SelectedItem]="SelectedItemKeywordtypeCode"  [Binding]="'Value'" (SelectedItemChanged)="KeywordtypeCodeClicked($event.Key)"></ComboBox>
                     </td>
                     <td></td>
                 </tr>

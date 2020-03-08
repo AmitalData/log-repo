@@ -68,7 +68,7 @@ export class DeclarationAmendmentComponent extends BaseComponent implements OnIn
             this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
                 this.EntityPM = this.entityArgs.EntityPM;
                 this.id = this.EntityPM.Id;
-                this.CanOpenNewAmendment = (this.EntityPM.PaymentDate != null);
+                this.CanOpenNewAmendment = (this.EntityPM.PaymentDate != null && this.EntityPM.AmendmentDontDisplayInList==false);
                 this.LoadDeclarationAmendmentsList();
                  this.BuildColumns();
 
@@ -133,7 +133,7 @@ export class DeclarationAmendmentComponent extends BaseComponent implements OnIn
         this.columns = [];
         this.columns.push({
 
-            FieldName: 'LineNumber',
+            FieldName: 'AmendmentNumber',
             DataTypeCode: 'String',//'Number',
             Display:"#",
             Styles: { width: '55px' },
@@ -154,7 +154,7 @@ export class DeclarationAmendmentComponent extends BaseComponent implements OnIn
 
         this.columns.push({
 
-            FieldName: 'VersionId',
+            FieldName: 'DeclarationVersionId',
             DataTypeCode: 'String',//'Number',
             Display: TextCodeTranslator.Translate("Customs.Declaration.F.VersionId"),
             Styles: { width: '120px' },
@@ -224,8 +224,7 @@ export class DeclarationAmendmentComponent extends BaseComponent implements OnIn
             myResponse.Result.forEach((item) => {
                 item.LineNumber = i;
                 i++;
-                debugger;
-                  if (item.AmendmentStatus == "1" || item.AmendmentStatus=="2" || item.AmendmentStatus == null)
+                   if (item.AmendmentStatus == "1" || item.AmendmentStatus=="2" || item.AmendmentStatus == null)
                  this.CanOpenNewAmendment = false;
                  this.amendmentObslist.Insert(item);
             });
@@ -234,15 +233,17 @@ export class DeclarationAmendmentComponent extends BaseComponent implements OnIn
     }
 
 
-    public OpenNewAmendment() {
+    public OpenNewAmendment(id, declarationNumber) {
 
+        if (id == null) id = this.EntityPM.Id;
+        if (declarationNumber == null) declarationNumber = this.EntityPM.DeclarationNumber;
 
         var searchParams: GenericRequestParams = new GenericRequestParams();
         searchParams.Tenant = SessionLocator.Tenant;
-        searchParams.AppicationId = this.EntityPM.Id;
+        searchParams.AppicationId = id;
         searchParams.LoggingEnabled = true;
-        searchParams.LoggingEntityId = this.EntityPM.Id;
-        searchParams.LoggingEntityReference = this.EntityPM.DeclarationNumber;
+        searchParams.LoggingEntityId = id;
+        searchParams.LoggingEntityReference = declarationNumber;
         searchParams.LoggingObjectTableId =  this.ObjectTableName;
         searchParams.LoggingUserId = SessionLocator.LoggedUserId;
         searchParams.RequestName = "Declaration Request";
@@ -264,7 +265,7 @@ export class DeclarationAmendmentComponent extends BaseComponent implements OnIn
                                 this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
                             }, 10);
                             this.CurrentSession.StopBusyIndicator();
-                          
+                            
                             this.openNewDeclaration(entity.Id);
 
                              }

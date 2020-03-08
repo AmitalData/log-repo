@@ -65,10 +65,10 @@ export class DeclarationDisplayOnlyChecks {
 
 
         //other declaration checks
-      var moreDetails =  declarationValidator.DeclarationViewDisplayOnlyChecks();
+     declarationValidator.DeclarationViewDisplayOnlyChecks();
         if (declarationValidator.ValidationErrorMessageCodes.length > 0) {
             return Observable.defer(() => {
-                var message = TextCodeTranslator.Translate(declarationValidator.ValidationErrorMessageCodes[0]) + moreDetails;
+                var message = TextCodeTranslator.Translate(declarationValidator.ValidationErrorMessageCodes[0]);
                 serviceResponse.Result = new DisplayOnlyCheckResult(true, message);
                 //for menu buttons
                 //this.timerToken = setTimeout(() => {
@@ -112,6 +112,23 @@ export class DeclarationDisplayOnlyChecks {
                 }
             });
         }
+
+
+        if (this.entityPM.AmendmentMessage != null && this.entityPM.AmendmentMessage != "") {
+            {
+                return Observable.defer(() => {
+
+                     var errorMessage: string = this.entityPM.AmendmentMessage;
+                    SessionLocator.SelectedSession.CurrentEditComponent.IsSaveBtnDisable = true;
+                    SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.MustRefresh = true;
+                    editComponentNeedsRefresh = SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.MustRefresh;
+                    SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.MustRefreshMessage = errorMessage;
+                    serviceResponse.Result = new DisplayOnlyCheckResult(this.entityPM.IsAmendmentDisplayOnly, errorMessage);
+                   // return serviceResponse;
+                    return Observable.of(serviceResponse);
+                });
+             }
+        } 
 
         // Request sheets in progress check
         var authHeader = new Headers();

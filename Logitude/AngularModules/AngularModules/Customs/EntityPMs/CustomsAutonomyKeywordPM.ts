@@ -44,6 +44,11 @@ export class CustomsAutonomyKeywordPM {
     public set KeywordsList(newValue: string) { if (this.keywordsList != newValue) { this.keywordsList = newValue; this.MarkAsDirty("KeywordsList"); } }
        
 	 
+    private keywordtypeLocalName: string;
+    public get KeywordtypeLocalName() { return this.keywordtypeLocalName; }
+    public set KeywordtypeLocalName(newValue: string) { if (this.keywordtypeLocalName != newValue) { this.keywordtypeLocalName = newValue; this.MarkAsDirty("KeywordtypeLocalName"); } }
+       
+	 
 
     public OldEntityPM: CustomsAutonomyKeywordPM;
 		

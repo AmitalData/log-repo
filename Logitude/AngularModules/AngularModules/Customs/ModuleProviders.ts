@@ -192,6 +192,7 @@ import { VendorTypeListService } from './Services/StandardLists/VendorTypeListSe
 import { AccumalationStateListService } from './Services/StandardLists/AccumalationStateListService';
 import { CouriersVatListService } from './Services/StandardLists/CouriersVatListService';
 import { CourierPendingReasonListService } from './Services/StandardLists/CourierPendingReasonListService';
+import { CustomsAutonomyKeywordListService } from './Services/StandardLists/CustomsAutonomyKeywordListService';
 import { StorageStatusListService } from './Services/StandardLists/StorageStatusListService';
 import { FreightPaymentMethodListService } from './Services/StandardLists/FreightPaymentMethodListService';
 import { CustomsDocumentsDefinitionListService } from './Services/StandardLists/CustomsDocumentsDefinitionListService';
@@ -222,7 +223,7 @@ import { HazardousSubstanceListService } from './Services/StandardLists/Hazardou
 import { SealCompletenesListService } from './Services/StandardLists/SealCompletenesListService';
 import { SealTypeListService } from './Services/StandardLists/SealTypeListService';
 import { AmendmentTypeListService } from './Services/StandardLists/AmendmentTypeListService';
-
+import { SealUpdateReasonTypeListService } from './Services/StandardLists/SealUpdateReasonTypeListService';
 
 
 //#endregion
@@ -348,6 +349,7 @@ import { VehicleEditComponentController } from './Controller/VehicleEditComponen
 import { VendorCommissionService } from './Services/WebServices/VendorCommissionService'
 import { ApprovedProfessionListService } from './Services/StandardLists/ApprovedProfessionListService'
 import { RequestTypeListService } from './Services/StandardLists/RequestTypeListService'
+import { CustomsAutonomyKeywordPMService } from './Services/StandardPMs/CustomsAutonomyKeywordPMService';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -546,6 +548,7 @@ export class ModuleProviders {
             case "AccumalationStateListService": { myResult = new AccumalationStateListService(); break; }
             case "CouriersVatListService": { myResult = new CouriersVatListService(); break; }
             case "CourierPendingReasonListService": { myResult = new CourierPendingReasonListService(); break; }
+            case "CustomsAutonomyKeywordListService": { myResult = new CustomsAutonomyKeywordListService(); break; }
             case "StorageStatusListService": { myResult = new StorageStatusListService(); break; }
             case "FreightPaymentMethodListService": { myResult = new FreightPaymentMethodListService(); break; }
             case "CustomsDocumentsDefinitionListService": { myResult = new CustomsDocumentsDefinitionListService(); break; }
@@ -579,6 +582,7 @@ export class ModuleProviders {
             case "SealCompletenesListService": { myResult = new SealCompletenesListService(); break; }
             case "SealTypeListService": { myResult = new SealTypeListService(); break; }
             case "AmendmentTypeListService": { myResult = new AmendmentTypeListService(); break; }
+            case "SealUpdateReasonTypeListService": { myResult = new SealUpdateReasonTypeListService(); break; }
              //#endregion                
 
             //#region StandardPMs
@@ -624,6 +628,7 @@ export class ModuleProviders {
             case "VendorCommissionPMService": { myResult = new VendorCommissionPMService(); break; }
             case "CouriersVatPMService": { myResult = new CouriersVatPMService(); break; }
             case "CourierPendingReasonPMService": { myResult = new CourierPendingReasonPMService(); break; }
+            case "CustomsAutonomyKeywordPMService": { myResult = new CustomsAutonomyKeywordPMService(); break; }
             case "CourierMasterPMService": { myResult = new CourierMasterPMService(); break; }
             case "CustomDocumentTypePMService": { myResult = new CustomDocumentTypePMService(); break; }
             case "UIMessagePMService": { myResult = new UIMessagePMService(); break; }

@@ -67,8 +67,19 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
     public get AmendmentRequestNumber() { return this.EntityPM ? this.EntityPM.AmendmentRequestNumber : null; }
     public set AmendmentRequestNumber(newValue: string) { this.EntityPM.AmendmentRequestNumber = newValue; }
 
-    public get AmendmentissueDate() { return this.EntityPM ? this.EntityPM.AmendmentissueDate : null; }
-    public set AmendmentissueDate(newValue: Date) { this.EntityPM.AmendmentissueDate = newValue; }
+    public get AmendmentissueDate() {
+
+        if (this.EntityPM != null) {
+            if (this.EntityPM.AmendmentissueDate != null) {
+                var myFormats = DateTool.GetDateFormats(this.EntityPM.AmendmentissueDate);
+                return myFormats.DateString + " " + myFormats.ShortTimeString;
+            }
+        }
+        return null;
+
+
+    }
+    public set AmendmentissueDate(newValue: string) {  }
 
 
     public get AmendmentDeficitInitiated() { return this.EntityPM ? this.EntityPM.AmendmentDeficitInitiated : null; }
@@ -95,53 +106,51 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
                     this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrder").subscribe(response => {
                         this.EntityPM = this.entityArgs.EntityPM;
                         this.ObjectTableName = this.entityArgs.ObjectTableName;
+                
                         this.Listen();
 
                         console.log("Declaration", this.EntityPM);
 
                         this.ReloadDeclarationCorrection();
+
+   
                         this.UIProperties.SetEnabled("AmendmentRequestNumber", this.ObjectTableName, false);
                         this.UIProperties.SetEnabled("AmendmentissueDate", this.ObjectTableName, false);
                         this.UIProperties.SetEnabled("VersionId", this.ObjectTableName, false);
                         this.DisplayOnlyCheck();
 
-                        //this.DisplayOnlyCheck();
-                    });
+                     });
                 });
             });
         });
-
-        ////Disable fields
-        //if (this.IsDisplayOnly) {
-        //    this.SetScreenFieldsEditability();
-        //}
+ 
 
     }
     DisplayOnlyCheck() {
 
          var declarationDisplayOnlyChecks: DeclarationDisplayOnlyChecks = new DeclarationDisplayOnlyChecks();
-        declarationDisplayOnlyChecks.DeclarationViewDisplayOnlyChecks(this.EntityPM).subscribe((response: any) => {
-            var displayOnlyCheckResult: DisplayOnlyCheckResult = response.Result;
-            this.IsDisplayOnly = displayOnlyCheckResult.IsDisplayOnly;
-            this.SetScreenFieldsEditability();
-
-            if (this.IsDisplayOnly) {
-                this.DisplayOnlyMessage = "לתצוגה בלבד - " + displayOnlyCheckResult.DisplayOnlyMessage;
+             if (this.EntityPM.AmendmentMessage != null && this.EntityPM.AmendmentMessage != "") {
+                {
+                     this.DisplayOnlyMessage = this.EntityPM.AmendmentMessage;
+                    if (this.EntityPM.IsAmendmentDisplayOnly) this.IsDisplayOnly = this.EntityPM.IsAmendmentDisplayOnly;
+                }
             }
-            else {
+             else {
                 if (!this.EntityPM.AmendmentDeficitInitiated) this.UIProperties.SetEnabled("AmendDeficitInitiatedReasTo", this.ObjectTableName, false);
 
-            }
-            DeclarationEventManager.DisplayModeChanged.emit(this.IsDisplayOnly);
-        });
+            }            this.SetScreenFieldsEditability();
 
+            DeclarationEventManager.DisplayModeChanged.emit(this.IsDisplayOnly);
+ 
     }
     SetScreenFieldsEditability() {
         this.UIProperties.SetEnabled("AmendmentRemarks", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("AmendDeficitInitiatedReasTo", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("AmendmentDeficitInitiated", this.ObjectTableName, !this.IsDisplayOnly);
+       
+        if ( !this.AmendmentDeficitInitiated)
+            this.UIProperties.SetEnabled("AmendDeficitInitiatedReasTo", this.ObjectTableName, false);
 
-        this.IsAmendmentDeficitInitiatedEnabled = !this.IsDisplayOnly;
 
     }
 

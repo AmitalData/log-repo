@@ -1297,7 +1297,122 @@ namespace Logitude.Customs.Def.EntityPMs
               }
              set {  deletedDeclarationPendings = value; }
 	    }
-	     }
+	  	  private string lastMileStatusName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string LastMileStatusName  
+	   {
+	    
+	     get
+		{
+		   return lastMileStatusName;
+		 }
+		 set
+		 {
+		   if(lastMileStatusName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LastMileStatusName",OldValue=lastMileStatusName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   lastMileStatusName=value;
+		   }
+			
+		 }
+	   }
+	  private string sortedImporterCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string SortedImporterCode  
+	   {
+	    
+	     get
+		{
+		   return sortedImporterCode;
+		 }
+		 set
+		 {
+		   if(sortedImporterCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SortedImporterCode",OldValue=sortedImporterCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   sortedImporterCode=value;
+		   }
+			
+		 }
+	   }
+	  private string sortedDocumentStatusCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string SortedDocumentStatusCode  
+	   {
+	    
+	     get
+		{
+		   return sortedDocumentStatusCode;
+		 }
+		 set
+		 {
+		   if(sortedDocumentStatusCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SortedDocumentStatusCode",OldValue=sortedDocumentStatusCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   sortedDocumentStatusCode=value;
+		   }
+			
+		 }
+	   }
+	  private string sortedCourierManifestStatus ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string SortedCourierManifestStatus  
+	   {
+	    
+	     get
+		{
+		   return sortedCourierManifestStatus;
+		 }
+		 set
+		 {
+		   if(sortedCourierManifestStatus != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SortedCourierManifestStatus",OldValue=sortedCourierManifestStatus,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   sortedCourierManifestStatus=value;
+		   }
+			
+		 }
+	   }
+	  private string sortedCourierDeclarationStatus ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string SortedCourierDeclarationStatus  
+	   {
+	    
+	     get
+		{
+		   return sortedCourierDeclarationStatus;
+		 }
+		 set
+		 {
+		   if(sortedCourierDeclarationStatus != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SortedCourierDeclarationStatus",OldValue=sortedCourierDeclarationStatus,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   sortedCourierDeclarationStatus=value;
+		   }
+			
+		 }
+	   }
+   }
    
 }
 	 

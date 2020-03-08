@@ -250,7 +250,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
         public void //JustDoIt(string DocumentsFilingId, int tenant)
             JustDoIt(object documentsFilingPM)
         {
-            DateTime stopLogAt = new DateTime(2020, 01, 01);
+            DateTime stopLogAt = new DateTime(2020, 06, 01);
             DeclarationPM declarationPM;
             Debug.WriteLine("CreateUD2LTService");
             string logData = "";
@@ -305,7 +305,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 }
                 else
                 {
-                    if (GetCustomsFileImportType(declarationPM) == "4")
+                    if (declarationPM.IsDiamondDeclaration)
                     {
                         //CGG_DEC_DOC_CLT
                         var amitalContext = AmitalContext.GetContext(tenant);

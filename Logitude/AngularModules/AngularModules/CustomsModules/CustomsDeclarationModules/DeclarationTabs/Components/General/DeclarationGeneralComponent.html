@@ -52,7 +52,7 @@
 
                                 </div>
                             </div>
-                            <div *ngIf="!IsDisplayOnly && ShowStorageStatusMessage" style="width: 100%;text-align:center">
+                            <div *ngIf="!IsDisplayOnly && (ShowStorageStatusMessage||IsDisplayMessage)" style="width: 100%;text-align:center">
                                 <div class="DisbleBox">
                                     {{DisplayOnlyMessage}}
                                 </div>

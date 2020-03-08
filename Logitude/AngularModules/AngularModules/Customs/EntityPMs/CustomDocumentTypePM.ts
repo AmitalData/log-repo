@@ -69,6 +69,11 @@ export class CustomDocumentTypePM {
     public set IsCourierManadatory(newValue: boolean) { if (this.isCourierManadatory != newValue) { this.isCourierManadatory = newValue; this.MarkAsDirty("IsCourierManadatory"); } }
        
 	 
+    private isDiamondManadatory: boolean;
+    public get IsDiamondManadatory() { return this.isDiamondManadatory; }
+    public set IsDiamondManadatory(newValue: boolean) { if (this.isDiamondManadatory != newValue) { this.isDiamondManadatory = newValue; this.MarkAsDirty("IsDiamondManadatory"); } }
+       
+	 
 
     public OldEntityPM: CustomDocumentTypePM;
 		

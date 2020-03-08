@@ -1,4 +1,4 @@
-﻿<style type="text/css">
+<style type="text/css">
     .container {
         text-align: right;
         height: 23px;
@@ -189,13 +189,13 @@
              [attr.id]="_CustomSendOptionsComponentMenuId"
              [ngStyle]="{'display': _DropdownDisplay  }"
              style="position: fixed;z-index: 1;background-color : aquamarine;">
-            <ul class="x-button-drop-menu" >
+            <ul class="x-button-drop-menu">
                 <li>
                     <span style="cursor:default;" *ngIf="CustomSendOptionsButtonCanForcePersonalSign">
                         <!---->
                         <table style="margin-right: -22px; cursor:default;">
                             <tr>
-                                <td style="width: 15px;" >
+                                <td style="width: 15px;">
                                     <input *ngIf="IsCheckBoxVisibile" class="x-button-checkbox" type="checkbox" [(ngModel)]="ForcePersonalSign" />
                                 </td>
                                 <td style="width: 2px;">
@@ -222,6 +222,10 @@
                 <li>
                     <span (click)="SendD()">כספת</span>
                 </li>
+                <li *ngIf="IsTestTenant && HaveTestCase">
+                    <span (click)="SendTestCase()">תרחיש</span>
+                </li>
+                
             </ul>
 
 

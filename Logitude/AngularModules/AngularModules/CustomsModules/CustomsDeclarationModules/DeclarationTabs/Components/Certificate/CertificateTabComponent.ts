@@ -36,10 +36,12 @@ import {ApiQueryFilters} from '../../../../../Infrastructure/DataContracts/ApiQu
 import {CertificateConnectedItem} from '../../../../../Customs/DataContract/CertificateConnectedItem';
 import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService';
 import {ConfirmationTypePM} from  '../../../../../Customs/EntityPMs/ConfirmationTypePM';
+import { DeclarationExtendedListService } from '../../../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
 
 @Component({
     moduleId: module.id,
     templateUrl: './CertificateTabComponent.html',
+    providers: [DeclarationExtendedListService]
 })
 
 export class CertificateTabComponent extends BaseComponent implements OnInit {
@@ -62,13 +64,14 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
     public ExcludedItems: ObservableCollection;
 
     SelectedItemsCountText: string;
-    SelectedItemsCount: number;;
+    SelectedItemsCount: number;IsDisplayMessage: boolean;
+;
     public IsVisible: boolean;
     showTemplate: boolean = false;
     CertificateTicketsList: CertificateTicketListItem[] = [];
     preventSelect: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor(public entityArgs: EntityArgs, public CD: ChangeDetectorRef, private EntityResourceService: EntityResourceService) {
+    constructor(public entityArgs: EntityArgs, public CD: ChangeDetectorRef, private EntityResourceService: EntityResourceService, public declarationExtendedListService: DeclarationExtendedListService) {
         super();
         this.SelectedItemsCount = 0;
         this.CurrentSession.SubscriptionAdd(
@@ -422,8 +425,15 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
     timerToken: any;
     DisplayOnlyCheck() {
         this.IsDisplayOnly = this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayMode;
+        if (this.DeclarationPM.AmendmentMessage != null && this.DeclarationPM.AmendmentMessage != "") {
+            {
+                this.DisplayOnlyMessage = this.DeclarationPM.AmendmentMessage;
+                if (this.DeclarationPM.IsAmendmentDisplayOnly) this.IsDisplayOnly = this.DeclarationPM.IsAmendmentDisplayOnly;
+                this.IsDisplayMessage = true;
+            }
+        }
 
-        if (this.IsDisplayOnly) {
+    else  if (this.IsDisplayOnly) {
             this.DisplayOnlyMessage = "לתצוגה בלבד - " + this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayModeMessage;
             //this.SetScreenFieldsEditability();
             this.timerToken = setTimeout(() => {
@@ -435,24 +445,33 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
             this.ShowStorageStatusMessage = true;
             this.DisplayOnlyMessage = "בקשת אחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.DeclarationPM.StorageStatusName;
         }
+       
         var declarationDisplayOnlyChecks: DeclarationDisplayOnlyChecks = new DeclarationDisplayOnlyChecks();
         declarationDisplayOnlyChecks.DeclarationViewDisplayOnlyChecks(this.DeclarationPM).subscribe((response: ServiceResponse) => {
             var displayOnlyCheckResult: DisplayOnlyCheckResult = response.Result;
             this.IsDisplayOnly = displayOnlyCheckResult.IsDisplayOnly;
-            if (this.IsDisplayOnly) {
+            if (this.DeclarationPM.AmendmentMessage != null && this.DeclarationPM.AmendmentMessage != "") {
+                {
+                    this.DisplayOnlyMessage = this.DeclarationPM.AmendmentMessage;
+                    if (this.DeclarationPM.IsAmendmentDisplayOnly) this.IsDisplayOnly = this.DeclarationPM.IsAmendmentDisplayOnly;
+                }
+            }
+
+            else if (this.IsDisplayOnly) {
                 this.DisplayOnlyMessage = "לתצוגה בלבד - " + displayOnlyCheckResult.DisplayOnlyMessage;
             }
             else if (this.DeclarationPM.StorageStatusCode) {
                 this.ShowStorageStatusMessage = true;
                 this.DisplayOnlyMessage = "בקשת אחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.DeclarationPM.StorageStatusName;
             }
+           
             this.timerToken = setTimeout(() => {
                 DeclarationEventManager.DisplayModeChanged.emit(this.IsDisplayOnly);
             }, 200);
         });
     }
 
-
+ 
     public columns: any[] = null;
 
     BuildColumns() {

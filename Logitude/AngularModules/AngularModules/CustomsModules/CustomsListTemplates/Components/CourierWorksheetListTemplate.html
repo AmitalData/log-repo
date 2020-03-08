@@ -203,6 +203,10 @@
                         </li>
                             -->
                         <li style="text-align: center; border-bottom: 1px solid #555;"></li>
+                        <li  (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); ShowFollowUpStatus();">
+                            <span>כניסה ל-F/U</span>
+                        </li>
+
 
                         <li *ngIf="IsWebAPICourierGWMessageECTHRDataMamanEnable === true && !IsReceivingDelayCertificate" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); SendMamanSpecialAction(_CourierWorksheet['DeclarationId'],'U','2');">
                             <span>הפקת תעודת עיכוב</span>
@@ -298,6 +302,6 @@
     </div>
 
     <div class="TextTrimming" *ngIf="fieldName == 'LastMileStatusCode' " style="text-align:right;">
-        <span data-toggle="tooltip" data-placement="bottom" title="{{_CourierWorksheet['LastMileStatusDate']}}">{{_CourierWorksheet.LastMileStatusCode}}</span>
+        <span data-toggle="tooltip" data-placement="bottom" title="{{_CourierWorksheet['LastMileStatusDate'] | DateTimePipe:'DT'}}">{{_CourierWorksheet.LastMileStatusName}}</span>
     </div>
 </div>

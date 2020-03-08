@@ -71,6 +71,12 @@ export class DeclarationCourierStatusList {
 	MasterEstimatedArrivalDate: Date;
 	MasterStorageSiteCode: string;
 	MasterHAWB: string;
+	LastMileStatusName: string;
+	CustomFileNo: string;
+	SortedImporterCode: string;
+	SortedDocumentStatusCode: string;
+	SortedCourierManifestStatus: string;
+	SortedCourierDeclarationStatus: string;
 	
 }
  

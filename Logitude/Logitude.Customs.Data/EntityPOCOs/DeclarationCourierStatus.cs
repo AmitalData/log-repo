@@ -72,6 +72,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string StorageSiteErrorText { get; set; }
         [Column("CourierPendingReasonList")]
 	    public string CourierPendingReasonList { get; set; }
+        [Column("LastMileStatusName")]
+	    public string LastMileStatusName { get; set; }
     }
 }
 	 

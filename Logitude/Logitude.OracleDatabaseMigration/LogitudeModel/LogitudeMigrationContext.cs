@@ -943,7 +943,11 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
         public IDbSet<SealCompletenes> SealCompletenes { get; set; }
 
         public IDbSet<SealType> SealType { get; set; }
+
+        public IDbSet<CargoSealIdentifier> CargoSealIdentifier { get; set; }
         #endregion
+
+        public IDbSet<CargoSeal> CargoSeal { get; set; }
 
         #region Webfreight Context
 
@@ -2139,6 +2143,11 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
         {
             get;
             set;
+
+        }
+        public IDbSet<CurrencyTypeTenant> CurrencyTypeTenants
+        {
+            get; set;
 
         }
 
@@ -3708,6 +3717,8 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
 
             modelBuilder.Configurations.Add(new CurrencyTypeMap());
 
+            modelBuilder.Configurations.Add(new CurrencyTypeTenantMap());
+
             modelBuilder.Configurations.Add(new CustomBankMap());
 
             modelBuilder.Configurations.Add(new CustomBanksCardMap());
@@ -3801,6 +3812,9 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new DeclarationPaymentProtestMap());
 
             modelBuilder.Configurations.Add(new DeclarationPendingMap());
+
+            modelBuilder.Configurations.Add(new DeclarationReferantDataMap());
+
 
             modelBuilder.Configurations.Add(new DeclarationStatusTypeMap());
 
@@ -4111,6 +4125,8 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new DeficitDecisionMap());
             modelBuilder.Configurations.Add(new SealCompletenesMap());
             modelBuilder.Configurations.Add(new SealTypeMap());
+            modelBuilder.Configurations.Add(new CargoSealIdentifierMap());
+            modelBuilder.Configurations.Add(new CargoSealMap());
 
             #endregion
 
@@ -4205,6 +4221,8 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
             modelBuilder.Entity<DeclarationPaymentProtest>().Property(x => x.GoodsItemLineNumber).HasPrecision(16, 5);
 
             modelBuilder.Entity<DeclarationPaymentProtest>().Property(x => x.AmountInDispute).HasPrecision(16, 2);
+
+            modelBuilder.Entity<DeclarationReferantData>().Property(x => x.Weight).HasPrecision(15, 3);
 
             modelBuilder.Entity<DeficitConnFileParagraphType>().Property(x => x.Amount).HasPrecision(16, 2);
 

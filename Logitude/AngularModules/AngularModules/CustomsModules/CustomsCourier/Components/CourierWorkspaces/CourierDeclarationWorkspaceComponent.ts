@@ -18,11 +18,6 @@ import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQue
 import { DeclarationCourierStatusListService } from '../../../../Customs/Services/StandardLists/DeclarationCourierStatusListService';
 import { EntityListService } from '../../../../Infrastructure/Services/EntityListService';
 import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
-import { DeclarationEditComponentController } from '../../../../Customs/Controller/DeclarationEditComponentController';
-import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
-import { CourierWorksheetSharedDataService } from '../../../../Customs/Services/DataChange/CourierWorksheetSharedDataService';
-import { DeclarationCourierStatusList } from '../../../../Customs/EntityLists/DeclarationCourierStatusList';
-import { CustomsRequestsSheetPM } from '../../../../Customs/EntityPMs/CustomsRequestsSheetPM';
 import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 import { DeclarationExtendedListService } from '../../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
 
@@ -66,6 +61,7 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
                     this.isScreenLoaded = true;
                     this.CurrentSession.StopBusyIndicator();
                     this.BuildColumns();
+                    this.RefreshList();
                 }
             });
         });
@@ -80,6 +76,7 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
 
     RefreshButtonClicked() {
         this.LoadAllScreenData();
+        this.RefreshList();
     }
 
     public LoadAllScreenData() {
@@ -111,7 +108,7 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
 
     LoadQueriesCounts() {
 
-        this.RefreshList();
+        //this.RefreshList();
         /*
         this._CourierMasterService.GetSummary().subscribe(myResult => {
             if (myResult != null) {
@@ -127,17 +124,22 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
         */
     }
 
-    EditCourierMaster(entity: any) {
-        if (entity != null) {
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
-                .then(cmpRef => {
-                    cmpRef.instance.ComponentRef = cmpRef;
-                    cmpRef.instance.Run({ EntityId: entity.Id, ObjectTableName: 'Customs.CourierMaster', BackButtonLabel: TextCodeTranslator.Translate("General.MH.CourierMaster") });
-                    cmpRef.instance.BackCompleted.subscribe(($event: any) => {
-                        this.RefreshButtonClicked();
-                    });
-                });
-        }
+    //EditCourierMaster(entity: any) {
+    //    if (entity != null) {
+    //        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+    //            .then(cmpRef => {
+    //                cmpRef.instance.ComponentRef = cmpRef;
+    //                cmpRef.instance.Run({ EntityId: entity.Id, ObjectTableName: 'Customs.CourierMaster', BackButtonLabel: TextCodeTranslator.Translate("General.MH.CourierMaster") });
+    //                cmpRef.instance.BackCompleted.subscribe(($event: any) => {
+    //                    this.RefreshButtonClicked();
+    //                });
+    //            });
+    //    }
+    //}
+    SearchFilter: string;
+    onSearchTextChangeEvent(text: string) {
+        this.SearchFilter = text;
+        this.RefreshList();
     }
 
     RunNewGLAccountWizard() {
@@ -291,6 +293,16 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
         this.columns = [];
 
         this.columns.push({
+            FieldName: 'IntegratorName',
+            DataTypeCode: 'String',
+            Display: TextCodeTranslator.Translate("Customs.CourierMaster.F.IntegratorName"),
+            Styles: { width: '150px' },
+            IsCustomTemplate: true,
+            //ServerSideSortable: true,
+            //SortByName: 'IntegratorName'
+        });
+
+        this.columns.push({
             FieldName: 'PrefixMAWB',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.CourierMaster.F.MAWB"),
@@ -412,6 +424,10 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
         }
         if (AppTool.IsNullOrEmpty(filters.SortDirection)) {
             filters.SortDirection = "Descending";
+        }
+
+        if (!AppTool.IsNullOrEmpty(this.SearchFilter)) {
+            filters.addAdditionalFilter("SearchFields", this.SearchFilter.toLowerCase(), null, null, "Contains", false, false, false, "string", false, true);
         }
     }
 

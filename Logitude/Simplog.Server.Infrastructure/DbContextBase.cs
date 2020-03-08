@@ -36,6 +36,10 @@ namespace Simplog.Server.Infrastructure
         FixedSizedQueue<string> _MyLogQueue = new FixedSizedQueue<string>(30);
         abstract public LogitudeDBSchema LogitudeDBSchema { get; }
 
+        public DbContextBase(DbConnection connection, DbCompiledModel model)
+: base(connection, model, contextOwnsConnection: false)
+        { }
+
         public DbContextBase()
             : base()
         {
@@ -642,7 +646,7 @@ Simplog.Server.Infrastructure.DbContextBaseUtil.ToLog =true;");
         }
     }
 
-    static class DbModelBuilderExt
+    public static class DbModelBuilderExt
     {
 
 
@@ -811,22 +815,22 @@ Simplog.Server.Infrastructure.DbContextBaseUtil.ToLog =true;");
             return oraCSB;
         }
 
-        public static string GetSchemaAMITAL_DB()
+        public static string GetSchemaAMITAL_DB(int tenantSeed=1)
         {
             Devart.Data.Oracle.OracleConnectionStringBuilder csb = null;
             if (true)
             {
-                const int DEFAULT_CUSTOMS_axiom_Tenant = 1;
+                //const int DEFAULT_CUSTOMS_axiom_Tenant = 1;
                 string dbConnectionInfo = "";
                 if (LogitudeSettings.GetLogitudeCustomsSettingsMInject != null)
                 {
-                    dbConnectionInfo = LogitudeSettings.GetLogitudeCustomsSettingsMInject(DEFAULT_CUSTOMS_axiom_Tenant).UnfConnectionString;
+                    dbConnectionInfo = LogitudeSettings.GetLogitudeCustomsSettingsMInject(tenantSeed).UnfConnectionString;
 
                 }
                 else
                 {
                     //using from filiing/OpenAccess service 
-                    dbConnectionInfo = LogitudeSettings.GetUnfDBConnectionInfoFromTenantInject(DEFAULT_CUSTOMS_axiom_Tenant);
+                    dbConnectionInfo = LogitudeSettings.GetUnfDBConnectionInfoFromTenantInject(tenantSeed);
                 }
                 csb = GetOracleConStrBuilder(dbConnectionInfo);
             }

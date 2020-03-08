@@ -13,7 +13,16 @@ namespace Logitude.Customs.BL.EntityQueryServices
     {
        public List<PaymentOrderConnectionTableList> GetPaymentOrderConnectionTable(string ConnectedEntityCode, string ConnectedEntityId, int tenant)
        {
-           System.Collections.Generic.List<PaymentOrderConnectionTable> connection = repository.GetPaymentOrderByConnectedEntity(ConnectedEntityCode,ConnectedEntityId, tenant);
+
+            DeclarationQueryService declarationQueryService = new DeclarationQueryService(tenant);
+
+            var declarationPMs = declarationQueryService.GetDeclarationAmendmentsById(tenant, ConnectedEntityId);
+
+            List<string> ConnectedEntityIds = new List<string>();
+            declarationPMs.ForEach(x => ConnectedEntityIds.Add(x.Id));
+            ConnectedEntityIds.Add(ConnectedEntityId);
+
+            System.Collections.Generic.List<PaymentOrderConnectionTable> connection = repository.GetPaymentOrderByConnectedEntity(ConnectedEntityCode,ConnectedEntityIds, tenant);
 
            List<PaymentOrderConnectionTableList> connections = new List<PaymentOrderConnectionTableList>();
            foreach (PaymentOrderConnectionTable item in connection)

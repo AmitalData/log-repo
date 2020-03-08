@@ -33,6 +33,7 @@ export class CourierDeclarationWorkspaceListTemplate {
     setVariables(courierMasterList: CourierMasterList, fieldName: string) {
         this._CourierMasterList = courierMasterList;
         this.fieldName = fieldName;
+        this.CD.detectChanges();
     }
 
     ShowCourierWorkSheet(event, courierMasterId: string, type: string) {

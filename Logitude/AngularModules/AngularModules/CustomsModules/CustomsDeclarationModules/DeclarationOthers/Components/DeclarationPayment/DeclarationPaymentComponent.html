@@ -252,7 +252,7 @@
                                 {{ErrorMessage}}
                             </div>
                         </div>
-                        <div *ngIf="!IsDisplayOnly && ShowStorageStatusMessage" style="float: right;display: inline-block;width: 665px;">
+                        <div *ngIf="!IsDisplayOnly && (ShowStorageStatusMessage||IsDisplayMessage)" style="float: right;display: inline-block;width: 665px;">
                             <div class="DisbleBox">
                                 {{ErrorMessage}}
                             </div>
@@ -262,6 +262,7 @@
                         <div style="float: left;display: inline-block;width: 110px;">
                             <custom-send-options [IsDisabled]="!SendButtonEnabled"
                                                  [AvoidDoubleClick]="true"
+                                                 [HaveTestCase]="'true'"
                                                  #MyCustomSendOptionsComponent
                                                  (SendButtonClicked)="SendButtonClicked($event)">
                             </custom-send-options>

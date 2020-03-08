@@ -964,7 +964,7 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
             SYSTBL_NG_9001_MSG_SystemTablesResponseTableData sealType = closedSystemTables.Where(d => d.id == "1272").FirstOrDefault();
             ObjectTable sealTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.SealType", 0, false);
             InsertClosedTableRecord(sealType, sealTypeObjectTable, customsClosedTables, customsClosedTableRepository);
-            addedClosedTables.Add(sealCompletenes);
+            addedClosedTables.Add(sealType);
 
             //SYSTBL_NG_9001_MSG_SystemTablesResponseTableData collateralAnswerStatusTable = closedSystemTables.Where(d => d.id == "1553").FirstOrDefault();
             //ObjectTable collateralAnswerStatusObjectTable = objectTableRepository.GetObjectTableByName("Customs.CollateralAnswerStatus", 0, false);

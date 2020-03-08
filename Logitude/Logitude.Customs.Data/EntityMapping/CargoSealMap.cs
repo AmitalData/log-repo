@@ -1,0 +1,46 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using System.Data.Entity.ModelConfiguration;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Data;
+ 
+namespace Logitude.Customs.Data.EntityMapping
+{
+ 
+    public class CargoSealMap : EntityTypeConfiguration<CargoSeal>
+    {
+	    string dbms;
+        public CargoSealMap()
+        { 
+			  this.ToTable("CargoSeals", "Customs");
+		
+		    this.HasKey(t => new { t.Id });
+	 
+            this.Property(t => t.CargoSealIdentifierId).HasColumnName("CargoSealIdentifierId").IsRequired().HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.Tenant).HasColumnName("Tenant").IsRequired();
+
+            this.Property(t => t.SealNumber).HasColumnName("SealNumber").IsRequired().HasMaxLength(35).IsUnicode(false);
+
+            this.Property(t => t.Remarks).HasColumnName("Remarks").HasMaxLength(512).IsUnicode(true);
+
+            this.Property(t => t.SealCompletenessStateCode).HasColumnName("SealCompletenessStateCode").IsRequired().HasMaxLength(2).IsUnicode(false);
+
+            this.Property(t => t.SealTypeCode).HasColumnName("SealTypeCode").IsRequired().HasMaxLength(3).IsUnicode(false);
+
+            this.Property(t => t.UpdateReasonCode).HasColumnName("UpdateReasonCode").IsRequired().HasMaxLength(3).IsUnicode(false);
+
+            this.Property(t => t.UpdateTypeCode).HasColumnName("UpdateTypeCode").IsRequired().HasMaxLength(2).IsUnicode(false);
+
+            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(15).IsUnicode(false);
+        }
+    }
+}
+	 

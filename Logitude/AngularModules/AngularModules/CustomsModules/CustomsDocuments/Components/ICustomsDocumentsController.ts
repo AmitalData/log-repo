@@ -16,7 +16,7 @@ export interface ICustomsDocumentsController{
     UpdateCustomsDocumentb4Send(customsDocument: CustomsDocumentPM);
     FillDefaultMetaData(customsDocumentsTicketViewModels: CustomsDocumentTicketViewModel[]);
     GetSecondChildVisibility();
-    ShowSelectionComponent(customsDocumentsTicket: CustomsDocumentsTicketPM, entityPM: any, customParam: boolean, isEntityDisplayOnly: boolean);
+    ShowSelectionComponent(customsDocumentsTicket: CustomsDocumentsTicketPM, entityPM: any, customParam: boolean, isEntityDisplayOnly: boolean , customParam2: boolean);
     SelectionCompleted: EventEmitter<any>;
     GetAddEditDocumentsEntitySpecialCondition();
     GetCustomsInterfaceSettingsDocumentTypes(entityPM: any);

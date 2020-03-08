@@ -158,7 +158,7 @@
                             </div>
                         </td>
                     </tr>
-                    <tr *ngIf="!IsDisplayOnly && ShowStorageStatusMessage" style="height: 28px;">
+                    <tr *ngIf="!IsDisplayOnly && (ShowStorageStatusMessage||IsDisplayMessage)" style="height: 28px;">
                         <td colspan="3">
                             <div style="width: 100%;text-align:center">
                                 <div class="DisbleBox">

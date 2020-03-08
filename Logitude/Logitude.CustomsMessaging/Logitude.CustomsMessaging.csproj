@@ -105,6 +105,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceModel.DomainServices.Server, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
@@ -116,7 +117,6 @@
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="Unifreight.Data, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -142,8 +142,21 @@
     <Compile Include="CustomsBook\CustomsItemDetailsHistoryImport.cs" />
     <Compile Include="CustomsBook\CustomsItemImport.cs" />
     <Compile Include="CustomsBook\PropertiesDetailsHistoryImport.cs" />
-    <Compile Include="FakeMessagingServices\Fake1DF_NG_2754_MSG10004_ImportDeclarationResponse.cs" />
-    <Compile Include="FakeMessagingServices\FakeResponseBase.cs" />
+    <Compile Include="FakeMessagingServices\DCASincroService.cs" />
+    <Compile Include="FakeMessagingServices\Fake_2754_MSG10004_ImportDeclarationResponse.cs" />
+    <Compile Include="FakeMessagingServices\Fake_2754_MSG10004_ImportDeclarationResponseWithConstraint.cs" />
+    <Compile Include="FakeMessagingServices\Fake_2754_MSG10004_SumbitPayment.cs" />
+    <Compile Include="FakeMessagingServices\Fake_5117_MSG14003_AmendmentReplyMsg.cs" />
+    <Compile Include="FakeMessagingServices\Fake_DCAInCH_NG_196_MSG7_CargoExitFromCheckSite.cs" />
+    <Compile Include="FakeMessagingServices\Fake_DCAInCH_NG_5117_MSG14003_Amendment_Service.cs" />
+    <Compile Include="FakeMessagingServices\Fake_DCAInCH_NG_190_MSG1_NoticeToClient_Service.cs" />
+    <Compile Include="FakeMessagingServices\Fake_8215_MSG23002_ConstraintApprovalDecision.cs" />
+    <Compile Include="FakeMessagingServices\Fake_DCAInDF_8211_CollateralRequestMsgMessagingServices.cs" />
+    <Compile Include="FakeMessagingServices\Fake_DCAInDF_NG_2470_MSG16001_ReleaseGoodsMessagingService.cs" />
+    <Compile Include="FakeMessagingServices\Fake_DCAInTSH_MSG2_3050_PaymentOrderReplyMessagingService.cs" />
+    <Compile Include="FakeMessagingServices\Fake_ImportDeclaration_Response.cs" />
+    <Compile Include="FakeMessagingServices\FakeDCA_MSG2030_DepositRequestCreatedInfoMessagingServices.cs" />
+    <Compile Include="FakeMessagingServices\Fake_DCA_NG_5110_DepositRequestFulfillednfoMsgMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInDE_NG_5108_DecisionMessageMessagingService.cs" />
     <Compile Include="Dca\DCAMoveIncomeFileToDirService.cs" />
     <Compile Include="Dca\DCARenameIncomeFileService.cs" />
@@ -199,9 +212,11 @@
     <Compile Include="MessagingServices\DCAInVAL_NG_8228_RequiredDocumentVerificationDecisionMassagingService.cs" />
     <Compile Include="MessagingServices\DF_9070_ExportDeclarationDataMessagingService.cs" />
     <Compile Include="MessagingServices\DF_MSG2892_ImportDeclarationAmendmentMessagingService.cs" />
+    <Compile Include="FakeMessagingServices\Fake_TSH_MSG6_AgentPaymentMessageService.cs" />
     <Compile Include="MessagingServices\GP_1030_GatepassRequestMessageMessagingService.cs" />
     <Compile Include="MessagingServices\MN_MSG8370_CargoSplitMessagingService.cs" />
     <Compile Include="MessagingServices\MN_NG_9022_CourierBOLQueryMessagingService.cs" />
+    <Compile Include="MessagingServices\SE_6001_SealUpdateMessagingService.cs" />
     <Compile Include="MessagingServices\ST_MSG05_StorageEntranceUnloadingMassagingService.cs" />
     <Compile Include="MessagingServices\TPG_NG_8244_ClaimFileFilterParamMessagingService.cs" />
     <Compile Include="MessagingServices\TPG_NG_8305_Web05_GuaranteeFileFilterParamMessagingService.cs" />
@@ -265,6 +280,7 @@
     <Compile Include="RequestServices\GP_1030_GatepassRequestMessageRequestService.cs" />
     <Compile Include="RequestServices\MN_MSG8370_CargoSplitRequestService.cs" />
     <Compile Include="RequestServices\MN_NG_9022_CourierBOLQueryRequestService.cs" />
+    <Compile Include="RequestServices\SE_6001_SealUpdateRequestService.cs" />
     <Compile Include="RequestServices\ST_MSG05_StorageEntranceUnloadingRequestService.cs" />
     <Compile Include="RequestServices\TPG_NG_8244_ClaimFileFilterParamRequestService.cs" />
     <Compile Include="RequestServices\TPG_NG_8305_Web05_GuaranteeFileFilterParamRequestService.cs" />
@@ -308,6 +324,7 @@
     <Compile Include="ResponseServices\GP_1035_GatepassFeedbackMessageResponseService.cs" />
     <Compile Include="ResponseServices\MN_MSG8374_CargoSplitResponseService.cs" />
     <Compile Include="ResponseServices\MN_NG_9023_CourierBOLFeedBackResponseService.cs" />
+    <Compile Include="ResponseServices\SE_6001_SealUpdateResponseService.cs" />
     <Compile Include="ResponseServices\ST_MSG05_StorageEntranceUnloadingResponseService.cs" />
     <Compile Include="ResponseServices\ST_NG_60_SpecialActivityExecutionReportResponseService.cs" />
     <Compile Include="ResponseServices\ST_NG_10_SpecialActivityResponseMessageResponseService.cs" />

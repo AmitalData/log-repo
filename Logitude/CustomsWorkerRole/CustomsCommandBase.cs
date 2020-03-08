@@ -331,13 +331,13 @@ namespace CustomsWorkerRole
                     return false;//
                 }
 
-                if (!ContainerAccessor.Container.IsRegistered<IMessagingServiceInterfaceType>(analyzeClass))
-                {
-                    //_CustomDbQueueService.SafeAbandon();
-                    ExceptionHandler.HandleException(null, DateTime.Now, 0, "", "WorkerRole", "CustomsMessagingSheetWR: ProcessMessage():!ContainerAccessor.Container.IsRegistered :analyzeClass=" + analyzeClass, null);
-                    //message.DeadLetter();
-                    return false;
-                }
+                //if (!ContainerAccessor.Container.IsRegistered<IMessagingServiceInterfaceType>(analyzeClass))
+                //{
+                //    //_CustomDbQueueService.SafeAbandon();
+                //    ExceptionHandler.HandleException(null, DateTime.Now, 0, "", "WorkerRole", "CustomsMessagingSheetWR: ProcessMessage():!ContainerAccessor.Container.IsRegistered :analyzeClass=" + analyzeClass, null);
+                //    //message.DeadLetter();
+                //    return false;
+                //}
                 //var tenant = message.GetProperty<int>(QueueExt.QueuePropertyNames.Tenant, -1);
                 int.TryParse(msgResponse.Properties["Tenant"].ToString(), out tenant);
                 if (tenant == -1)

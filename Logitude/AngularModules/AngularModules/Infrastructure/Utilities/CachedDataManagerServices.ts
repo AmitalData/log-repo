@@ -95,6 +95,10 @@ import { TariffTypeListService } from '../../TariffModule/Services/StandardLists
 import { OccasionStatusListService } from '../../CRM/Services/StandardLists/OccasionStatusListService';
 import { OccasionTypeListService } from '../../CRM/Services/StandardLists/OccasionTypeListService';
 import { AWBAdditionalHandlingInfoListService } from '../../Shipment/Services/StandardLists/AWBAdditionalHandlingInfoListService';
+import { SessionLocator } from './SessionLocator';
+import { ObjectsLocator } from '../Locators/ObjectsLocator';
+import { AppTool } from '../Tools';
+
 
 export class CachedDataManagerServices {
     public getAllFromCache(objectTableName: string, filters: ApiQueryFilters) {
@@ -203,7 +207,12 @@ export class CachedDataManagerServices {
             case "OccasionTypeListService": { myResult = new OccasionTypeListService(); break; }
             case "AWBAdditionalHandlingInfoListService": { myResult = new AWBAdditionalHandlingInfoListService(); break; }    
             default: {
-                alert(name + " is not declared in CachedDataManagerServices");
+
+                if (ObjectsLocator.GlobalSetting && ObjectsLocator.GlobalSetting.WorkEnvironment == "customs") {
+                    console.error(name + " is not declared in CachedDataManagerServices")
+                } else {
+                    alert(name + " is not declared in CachedDataManagerServices");
+                }
                 break;
             }
         }

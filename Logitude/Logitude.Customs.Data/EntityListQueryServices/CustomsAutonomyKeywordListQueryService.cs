@@ -15,31 +15,34 @@ using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.EntityLists;
 
 namespace Logitude.Customs.Data.EntityListQueryServices
-{ 
+{
 
-    public partial class CustomsAutonomyKeywordListQueryService
-    {
-	    private IQueryable<CustomsAutonomyKeywordList> GetIqueryableList(IQueryable<CustomsAutonomyKeyword> iQueryable)
-        {
-		IQueryable<CustomsAutonomyKeywordList> query = (from a in iQueryable
-                                            select new CustomsAutonomyKeywordList()
-											{
-                     
-					                          Id = a.Id,
-					
-					                          Tenant = a.Tenant,
-					
-					                          KeywordtypeCode = a.KeywordtypeCode,
-					
-		                    	            });
-            return query;
+	public partial class CustomsAutonomyKeywordListQueryService
+	{
+		private IQueryable<CustomsAutonomyKeywordList> GetIqueryableList(IQueryable<CustomsAutonomyKeyword> iQueryable)
+		{
+
+			IQueryable<CustomsAutonomyKeywordList> query = (from a in iQueryable
+															select new CustomsAutonomyKeywordList()
+															{
+
+																Id = a.Id,
+
+																Tenant = a.Tenant,
+
+																KeywordtypeCode = a.KeywordtypeCode,
+																KeywordsList = a.KeywordsList,
+																KeywordtypeLocalName = a.KeywordtypeCode == "1" ? "עיר" : "טלפון"
+
+															});
+			return query;
 		}
 
-		private IQueryable<CustomsAutonomyKeyword> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<CustomsAutonomyKeyword> iQueryable, int tenant)
-        {
-			throw new NotImplementedException();
+		private IQueryable<CustomsAutonomyKeyword> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<CustomsAutonomyKeyword> iQueryable, int tenant)
+		{
+			return iQueryable;
 		}
-			}
+	}
 
 
 }

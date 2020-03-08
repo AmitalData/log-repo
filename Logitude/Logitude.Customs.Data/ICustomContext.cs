@@ -34,6 +34,8 @@ namespace Logitude.Customs.Data
 		 IDbSet<Bank> Banks { get; }
 		 IDbSet<CargoIdentifireType> CargoIdentifireTypes { get; }
 		 IDbSet<CargoIdentityQualifier> CargoIdentityQualifiers { get; }
+		 IDbSet<CargoSeal> CargoSeals { get; }
+		 IDbSet<CargoSealIdentifier> CargoSealIdentifiers { get; }
 		 IDbSet<CargoSplitRequestStatus> CargoSplitRequestStatuses { get; }
 		 IDbSet<CargoStatus> CargoStatuses { get; }
 		 IDbSet<CertificateExemptionType> CertificateExemptionTypes { get; }
@@ -96,6 +98,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<CouriersVat> CouriersVats { get; }
 		 IDbSet<CourtInstance> CourtInstances { get; }
 		 IDbSet<CurrencyType> CurrencyTypes { get; }
+		 IDbSet<CurrencyTypeTenant> CurrencyTypeTenants { get; }
 		 IDbSet<CustomBank> CustomBanks { get; }
 		 IDbSet<CustomBanksCard> CustomBanksCards { get; }
 		 IDbSet<CustomDocumentType> CustomDocumentTypes { get; }
@@ -160,6 +163,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<DeclarationPaymentMethod> DeclarationPaymentMethods { get; }
 		 IDbSet<DeclarationPaymentProtest> DeclarationPaymentProtests { get; }
 		 IDbSet<DeclarationPending> DeclarationPendings { get; }
+		 IDbSet<DeclarationReferantData> DeclarationReferantDatas { get; }
 		 IDbSet<DeclarationStatementType> DeclarationStatementTypes { get; }
 		 IDbSet<DeclarationStatusType> DeclarationStatusTypes { get; }
 		 IDbSet<DeclarationTax> DeclarationTaxes { get; }

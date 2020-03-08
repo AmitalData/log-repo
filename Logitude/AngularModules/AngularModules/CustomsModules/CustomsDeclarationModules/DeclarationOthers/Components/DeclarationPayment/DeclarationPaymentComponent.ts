@@ -35,7 +35,7 @@ import { ObjectTablePM } from '../../../../../Infrastructure/EntityPMs/ObjectTab
 import { CustomFileCreditRequestParams } from '../../../../../Customs/DataContract/RequestParams/CustomFileCreditRequestParams';
 import { CustomFileCreditResponseData } from '../../../../../Customs/DataContract/ResponseData/CustomFileCreditResponseData';
 import { INF_MSG_GenericResponseData } from '../../../../../Customs/DataContract/ResponseData/INF_MSG_GenericResponseData';
-import { CustomSendOptionsArgs, SendRequestVIA } from '../../../../../Customs/DataContract/RequestParams/RequestParamsBase';
+import { CustomSendOptionsArgs, SendRequestVIA, TestCase } from '../../../../../Customs/DataContract/RequestParams/RequestParamsBase';
 import { CustomsRequiredFieldErrors } from '../../../../../Customs/DataContract/CustomsRequiredFieldErrors';
 import {CustomsRequiredFieldListService} from '../../../../../Customs/Services/StandardLists/CustomsRequiredFieldListService';
 
@@ -59,11 +59,13 @@ import {ErrorLogPM} from '../../../../../Infrastructure/EntityPMs/ErrorLogPM';
 import { DateTimeFormat } from '../../../../../Infrastructure/Utilities/DateTimeZone';
 import { DeclarationCourierStatusList } from '../../../../../Customs/EntityLists/DeclarationCourierStatusList';
 import { DeclarationCourierStatusListService } from '../../../../../Customs/Services/StandardLists/DeclarationCourierStatusListService';
+import { DeclarationExtendedListService } from '../../../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
 
 
 @Component({
     moduleId: module.id,
     templateUrl: './DeclarationPaymentComponent.html',
+    providers : [DeclarationExtendedListService]
 })
 
 export class DeclarationPaymentComponent extends BaseComponent implements OnInit {
@@ -97,7 +99,9 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
     _2LogBankList: boolean = false;
     ClientBankListLogUntilDateyyyyMMdd = "20180820.ClientBankListLogUntilDateyyyyMMdd";
     _CourierWorksheet: DeclarationCourierStatusList;
-    constructor() {
+    IsDisplayMessage: boolean;
+    _TestCase: TestCase;
+    constructor(public declarationExtendedListService: DeclarationExtendedListService) {
         super();
         this.PaymentMethodsList = new ObservableCollection([]);
         this.PaymentProtestsList = new ObservableCollection([]);
@@ -973,8 +977,15 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
 
         //get declaration display only
         declarationDisplayOnly = SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.InDisplayMode;
+        if (this.DeclarationPM.AmendmentMessage != null && this.DeclarationPM.AmendmentMessage != "") {
+            {
+                this.IsDisplayMessage = true;
+                this.ErrorMessage = this.DeclarationPM.AmendmentMessage;
+                if (this.DeclarationPM.IsAmendmentDisplayOnly) this.IsDisplayOnly = this.DeclarationPM.IsAmendmentDisplayOnly;
+            }
+        }
 
-        if (declarationDisplayOnly) {
+        else if (declarationDisplayOnly) {
             this.IsDisplayOnly = true;
             this.ErrorMessage = "לתצוגה בלבד - " + SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.InDisplayModeMessage;
 
@@ -992,6 +1003,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
 
 
         }
+     
 
         //if is not display only => its not payed , so fill sign data
         if (!this.IsDisplayOnly)
@@ -1012,7 +1024,16 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
             var displayOnlyCheckResult: DisplayOnlyCheckResult = response.Result;
 
             var declarationDisplayOnly2 = displayOnlyCheckResult.IsDisplayOnly ? true : false;
-            if (declarationDisplayOnly2) {
+            if (this.DeclarationPM.AmendmentMessage != null && this.DeclarationPM.AmendmentMessage != "") {
+                {
+                this.IsDisplayMessage = true;
+
+                    this.ErrorMessage = this.DeclarationPM.AmendmentMessage;
+                    if (this.DeclarationPM.IsAmendmentDisplayOnly) this.IsDisplayOnly = this.DeclarationPM.IsAmendmentDisplayOnly;
+                }
+            }
+
+           else if (declarationDisplayOnly2) {
                 this.IsDisplayOnly = true;
                 this.ErrorMessage = "לתצוגה בלבד - " + displayOnlyCheckResult.DisplayOnlyMessage;
 
@@ -1025,7 +1046,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                 this.ErrorMessage = "בקשת אחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.DeclarationPM.StorageStatusName;
                 this.IsDisplayOnly = false;
             }
-
+         
             //if is not display only => its not payed , so fill sign data
             if (!this.IsDisplayOnly)
                 this.FillSignData();
@@ -1050,6 +1071,9 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
 
 
     }
+
+
+ 
 
     SetScreenFieldsEditability() {
         var enabled = !this.IsDisplayOnly;
@@ -1305,6 +1329,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                     //myStoreViewUnifreightInstructionController.DisposeUnifreightMassaging();
 
                 });
+            SessionLocator.SelectedSession.StartBusyIndicator("");
             myStoreViewUnifreightInstructionController.SendRequestInstructionToUnifreightAsync("PAYHAND_STORE");
         }
         else {
@@ -1375,6 +1400,42 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
     Option: string;
     // Before send
     SendButtonClicked(event) {
+        if (event.TestCase) {
+
+            let windowArgs = { "SincroScreen": "SincroSendDeclarationPayment" };
+
+            var logWindow = new LogitudeWindow();
+            logWindow.Width = 600;
+            logWindow.Height = 400;
+            logWindow.Title = "תרחשי DeclarationPayment";
+            logWindow.ShowCloseButton = false;
+            logWindow.WindowArgs = windowArgs;
+
+            logWindow.ComponentLoaded.subscribe(comp => {
+                logWindow.WindowClosed.subscribe(res => {
+                    if (!AppTool.IsNullOrEmpty(res) && res == "Ok") {
+
+                        this._TestCase = new TestCase();
+                        this._TestCase.Code = comp._ScenarioCode;
+                        this._TestCase.Param1 = comp.Param1;
+                        this._TestCase.Param2 = comp.Param2;
+                        this.SendButtonClickedStart(event);
+
+                    }
+                });
+            });
+
+            logWindow.Show('./CustomsModules/CustomControls/Components/TestCase/SendDeclarationTastCaseComponent');
+            ///this.StopMyBusyIndicator();///this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
+
+            return;
+
+        }
+        this._TestCase = null;
+        this.SendButtonClickedStart(event);
+    }
+
+    SendButtonClickedStart(event) {
         if (this._CourierWorksheet != null && this._CourierWorksheet.CourierPendingReasonErrorPlace == "1" /*=="בתשלום"*/) {
             var myMessageWindow = new MessageWindow
             myMessageWindow.Show(/*"לא ניתן לבצע הגשת תשלום כאשר יש השהייה מסוג עצירת תשלום. "*/
@@ -1621,6 +1682,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
         params.Mode = "Check";
         params.RequestVIA = this.customSendOptions.RequestVIA;
         params.ForcePersonalSign = this.customSendOptions.ForcePersonalSign;
+        params.TestCase = this._TestCase;
         let splitRequest = true;
         if (splitRequest) {
             this.CheckCustomFileCreditThenSendPayment(params);
