@@ -524,7 +524,15 @@ namespace Logitude.Accounting.BL.CoreBL
                     break;
                 
             }
-            
+            if (string.IsNullOrWhiteSpace(journalLine.CreditAccountId))
+            {
+                journalLine.CreditAccountId = null;
+            }
+            if (string.IsNullOrWhiteSpace(journalLine.DebitAccountId))
+            {
+                journalLine.DebitAccountId = null;
+            }
+
             return journalLine;
         }
         /// <summary>
