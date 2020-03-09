@@ -21,12 +21,10 @@ namespace Logitude.IntegrationTest.Shipment
             await PostShipment("D", "E", "A");
             shipmentPM = await GetShipment(ShipmentVariables.ShipmentId);
             //ShipmentPM entityPM= UpdateShipmentAirExport(shipmentPM);
-          
             //await TestReceivables(shipmentPM, quantity, unitPrice);
-
         }
         [TestMethod]
-        private async Task TestReceivables()
+        public async Task TestReceivables()
         {
             int quantity = 5;
             int unitPrice = 5;
@@ -34,22 +32,16 @@ namespace Logitude.IntegrationTest.Shipment
             shipmentPM = await GetShipment(ShipmentVariables.ShipmentId);
             ShipmentPM entityPM = UpdateReceivables(shipmentPM, quantity, unitPrice);
             await PutShipment(entityPM);
-            shipmentPM = await GetShipment(ShipmentVariables.ShipmentNumber);
+            shipmentPM = await GetShipment(ShipmentVariables.ShipmentId);
             try
             {
-                Assert.AreEqual("50", shipmentPM.OpenReceivablesInLocalCurrency);
+                Assert.AreEqual(50, shipmentPM.OpenReceivablesInLocalCurrency);
+
             }
-            catch (Exception ex)
+            catch (Exception Ex)
             {
 
             }
-            //if (shipmentPM.ShipmentReceivables[0].TotalAmountLocal == 25)
-            //{
-            //    if (shipmentPM.OpenReceivablesInLocalCurrency == 50)
-            //    {
-
-            //    }
-            //}
         }
         public async Task<ShipmentPM> GetShipment(string shipmentId)
         {
@@ -147,13 +139,10 @@ namespace Logitude.IntegrationTest.Shipment
             entityPM.ShipmentDeliveries = IntegrationShipmentDeliveries.shipmentDelivey();
             return entityPM;
         }
-       
         private ShipmentPM UpdateReceivables(ShipmentPM shipmentPM, int quantity, int unitPrice)
         {
             shipmentPM.ShipmentReceivables = IntegrationShipmentReceivable.ShipmentReceivables(quantity, unitPrice);
             return shipmentPM;
         }
-
-
     }
 }
