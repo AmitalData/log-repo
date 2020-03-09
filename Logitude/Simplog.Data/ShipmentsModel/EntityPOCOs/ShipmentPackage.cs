@@ -82,6 +82,8 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public DateTime? OnCarriageETA { get; set; }
         public DateTime? OnCarriageATA { get; set; }
 
+        public string WarehouseReleaseNumber { get; set; }
+
         [ForeignKey("LastStatusCode")]
         public INTTRAStatus LastStatus { get; set; }
         public string LastStatusCode { get; set; }

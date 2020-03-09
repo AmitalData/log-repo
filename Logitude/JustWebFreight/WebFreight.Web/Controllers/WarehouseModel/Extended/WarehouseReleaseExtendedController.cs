@@ -86,7 +86,7 @@ namespace WebFreight.Web.Controllers.WarehouseModel.Extended
             }
         }
 
-        public HttpResponseMessage GetWarehouseReleaseByCstomerIdIdAndwarehouseId(string customerId, string warehouseId)
+        public HttpResponseMessage GetWarehouseReleaseByCustomerIdAndwarehouseId(string customerId, string warehouseId)
         {
             try
             {

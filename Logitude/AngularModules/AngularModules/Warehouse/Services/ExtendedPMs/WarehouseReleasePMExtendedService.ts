@@ -138,10 +138,10 @@ export class WarehouseReleasePMExtendedService {
     }
 
 
-    GetWarehouseReleaseByCstomerIdIdAndwarehouseId(customerId: string, warehouseId: string) {
+    GetWarehouseReleaseByCustomerIdAndwarehouseId(customerId: string, warehouseId: string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return this._http.get(this._apiUrl + '/GetWarehouseReleaseByCstomerIdIdAndwarehouseId?' + 'customerId=' + customerId + '&warehouseId=' + warehouseId, { headers: authHeader }).map(response => {
+        return this._http.get(this._apiUrl + '/GetWarehouseReleaseByCustomerIdAndwarehouseId?' + 'customerId=' + customerId + '&warehouseId=' + warehouseId, { headers: authHeader }).map(response => {
             var pmresponse: ServiceResponse;
             pmresponse = new ServiceResponse();
 
