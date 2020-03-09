@@ -27,7 +27,7 @@ namespace Logitude.Social.Data.EntityLists
        [DataMember]
        public bool IsCancelled  { get; set; }
        [DataMember]
-       public bool? CancelledDate  { get; set; }
+       public DateTime? CancelledDate  { get; set; }
    }
 
 }

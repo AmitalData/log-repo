@@ -315,8 +315,10 @@ namespace Logitude.UnitTest.Accounting.UniTests.Reconciliation
             List<string> transactionsId = reconciliationPM.ReconciliationLines.Where(d => d.TransactionId != null).Select(tt => tt.TransactionId).ToList();
 
             var ltList = new List<LedgerTransactionPM>() {
-                new LedgerTransactionPM() { Tenant = myTenant ,Id="t1"  , SourceTypeCode ="3", OriginalJournalId=null},
-                new LedgerTransactionPM() { Tenant = myTenant ,Id="t1"  , SourceTypeCode ="3",OriginalJournalId=null},
+                new LedgerTransactionPM() { Tenant = myTenant ,Id="t1"  , SourceTypeCode ="3", OriginalJournalId=null
+                ,SourceId ="SourceId1"},
+                new LedgerTransactionPM() { Tenant = myTenant ,Id="t1"  , SourceTypeCode ="3",OriginalJournalId=null
+                ,SourceId ="SourceId2"},
 
             };
 
@@ -411,8 +413,10 @@ namespace Logitude.UnitTest.Accounting.UniTests.Reconciliation
             List<string> transactionsId = reconciliationPM.ReconciliationLines.Where(d => d.TransactionId != null).Select(tt => tt.TransactionId).ToList();
 
             var ltList = new List<LedgerTransactionPM>() {
-                new LedgerTransactionPM() { Tenant = myTenant ,Id="t1"  , SourceTypeCode ="3", OriginalJournalId=null},
-                new LedgerTransactionPM() { Tenant = myTenant ,Id="t1"  , SourceTypeCode ="3",OriginalJournalId=null},
+                new LedgerTransactionPM() { Tenant = myTenant ,Id="t1"  , SourceTypeCode ="3", OriginalJournalId=null
+                ,SourceId="SourceId_1"},
+                new LedgerTransactionPM() { Tenant = myTenant ,Id="t1"  , SourceTypeCode ="3",OriginalJournalId=null
+                ,SourceId="SourceId_2"},
 
             };
 

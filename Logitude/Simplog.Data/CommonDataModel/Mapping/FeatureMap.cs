@@ -16,7 +16,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.ObjectTableId).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.NameTextCodeId).IsRequired().HasMaxLength(30).IsUnicode(false);
             //this.Property(t => t.Code).IsRequired().HasMaxLength(40).IsUnicode(false);
-            this.Property(t => t.Code).IsRequired().HasMaxLength(80).IsUnicode(false);
+            this.Property(t => t.Code).IsRequired().HasMaxLength(120).IsUnicode(false);
             this.Property(t => t.FeatureTypeCode).IsRequired().HasMaxLength(4).IsUnicode(false);
             this.Property(t => t.IsBusinessUnitEnabled).IsRequired();
             this.Property(t => t.IsOld).IsRequired();

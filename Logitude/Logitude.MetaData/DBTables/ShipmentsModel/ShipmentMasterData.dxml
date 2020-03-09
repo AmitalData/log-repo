@@ -808,7 +808,10 @@
     ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
   <Index
-    Columns="Tenant,Master,InterlineId" />
-  <Index
     Columns="Master,InterlineId" />
+  <Index
+    Columns="Tenant"
+    Include="MainCarriageATD,MainCarriageETD,MainCarriageCarrierNumber,MainCarriageCarrierId,DepartureArrivalFromDate,DepartureArrivalToDate" />
+  <Index
+    Columns="Master,AirlinePrefix" />
 </Table>

@@ -207,6 +207,11 @@ export class JournalLinePM {
     public set IsExternalReconcile(newValue: boolean) { if (this.isExternalReconcile != newValue) { this.isExternalReconcile = newValue; this.MarkAsDirty("IsExternalReconcile"); } }
        
 	 
+    private actionId: string;
+    public get ActionId() { return this.actionId; }
+    public set ActionId(newValue: string) { if (this.actionId != newValue) { this.actionId = newValue; this.MarkAsDirty("ActionId"); } }
+       
+	 
 
     public OldEntityPM: JournalLinePM;
 	

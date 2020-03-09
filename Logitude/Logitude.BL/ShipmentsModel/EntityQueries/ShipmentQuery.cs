@@ -1393,6 +1393,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.NextLegName = shipment.NextLeg != null ? shipment.NextLeg.Name : null;
             shipmentPM.ShipmentTypeViewField = (shipment.ShipmentType != null ? shipment.ShipmentType.Name : "") + " " + (shipment.ShipmentLevel != null ? shipment.ShipmentLevel.Name : "");
             shipmentPM.CASSCode = shipment.CASSCode;
+            shipmentPM.SLAC = shipment.SLAC;
             shipmentPM.NoFreightFile = shipment.NoFreightFile;
             shipmentPM.DeliveryOrder = shipment.DeliveryOrder;
             shipmentPM.FreightLocationId = shipment.FreightLocationId;
@@ -1470,6 +1471,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 }
             }
 
+            shipmentPM.FirstARInvoiceApprovalDate = shipment.FirstARInvoiceApprovalDate;
             shipmentPM.RegistryDate = shipment.RegistryDate;
             shipmentPM.IsAssembly = shipment.IsAssembly;
             shipmentPM.LocalCustomsTransmissionsStatusCode = shipment.LocalCustomsTransmissionsStatusCode;
@@ -3355,6 +3357,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.IncotermId = shipment.IncotermId;
             shipmentPM.ShipmentTypeId = shipment.ShipmentTypeId;
             shipmentPM.IsCancelled = shipment.IsCancelled;
+            shipmentPM.FirstARInvoiceApprovalDate = shipment.FirstARInvoiceApprovalDate;
+            shipmentPM.ActualFinalArrivalDate = shipment.ActualFinalArrivalDate;
+            shipmentPM.EstimatedFinalArrivalDate = shipment.EstimatedFinalArrivalDate;
             if (masterData != null)
             {
                 shipmentPM.MainCarriageFinalDestinationETA = masterData.MainCarriageFinalDestinationETA;
@@ -4117,6 +4122,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                         CustomClearancePointContactId = s.CustomClearancePointContactId,
                                                         CustomClearancePointReference1 = s.CustomClearancePointReference1,
                                                         CASSCode = s.CASSCode,
+                                                        SLAC = s.SLAC,
                                                         FreelancerId = s.FreelancerId,
                                                         FreelancerAddressId = s.FreelancerAddressId,
                                                         FreelancerContactId = s.FreelancerContactId,
@@ -10970,6 +10976,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          ActualFinalArrivalDate = s.ActualFinalArrivalDate,
                                                          AMSBL = s.AMSBL,
                                                          CASSCode = s.CASSCode,
+                                                         SLAC = s.SLAC,
                                                          FreelancerId = s.FreelancerId,
                                                          FreelancerAddressId = s.FreelancerAddressId,
                                                          FreelancerContactId = s.FreelancerContactId,
@@ -11585,6 +11592,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                NotInvoicedReceivablesAmount = f.NotInvoicedReceivablesAmount,
                                CreatedByPartner = f.CreatedByPartner,
                                FirstARInvoiceApprovalDate = f.FirstARInvoiceApprovalDate,
+                               MainCarriageFinalDestinationATA = f.MainCarriageFinalDestinationATA,
+                               MainCarriageFinalDestinationETA = f.MainCarriageFinalDestinationETA,
                            };
             return myResult;
         }
@@ -11932,8 +11941,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     ARInvoices = f.ARInvoices,
                     NotInvoicedReceivablesAmount = f.NotInvoicedReceivablesAmount,
                     FirstARInvoiceApprovalDate = f.FirstARInvoiceApprovalDate,
-
                     CreatedByPartner= f.CreatedByPartner,
+                    MainCarriageFinalDestinationATA = f.MainCarriageFinalDestinationATA,
+                    MainCarriageFinalDestinationETA = f.MainCarriageFinalDestinationETA,
                 };
 
                 List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Shipment", tenant).ToList();

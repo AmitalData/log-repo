@@ -177,6 +177,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                                 DefaultWarningPercentage = d.DefaultWarningPercentage,
                                                 AirDefaultStepsId = d.AirDefaultStepsId, 
                                                 LCLDefaultStepsId = d.LCLDefaultStepsId,
+                                                ContainerDefaults = d.ContainerDefaults,
                                             }).FirstOrDefault();
 
                 IInfrastructureContext iInfrastructureContext = InfrastructureContext.GetContext(entityPM.Tenant);

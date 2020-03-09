@@ -69,5 +69,6 @@
   <Index
     Columns="EntityId" />
   <Index
-    Columns="Tenant,UserId,ObjectTableId" />
+    Columns="ObjectTableId,Tenant,UserId"
+    Include="ActivityDate,EntityId" />
 </Table>

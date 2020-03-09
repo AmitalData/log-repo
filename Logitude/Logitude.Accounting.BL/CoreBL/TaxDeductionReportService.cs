@@ -181,7 +181,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     myStringBuilder.Append(' ', 13);
                 }
                 myStringBuilder.Append(a);
-                string totalInLocalCur = item.SumOfAmountInLocalCurrency.Value.ToString();
+                string totalInLocalCur =item.SumOfAmountInLocalCurrency!= null? item.SumOfAmountInLocalCurrency.Value.ToString():null;
                 if (totalInLocalCur != null)
                 {
                     if (totalInLocalCur.Length > 11) totalInLocalCur = totalInLocalCur.Substring(0, 11);
@@ -200,7 +200,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 //   myStringBuilder.Append("a" + item.SumOfTaxDeductionLocalAmount.Value.ToString().PadLeft(9, '0'));
                 myStringBuilder.Append(a);
-                string totalTaxInLocalCur = item.SumOfTaxDeductionLocalAmount.Value.ToString();
+                string totalTaxInLocalCur =item.SumOfTaxDeductionLocalAmount != null? item.SumOfTaxDeductionLocalAmount.Value.ToString():null;
                 if (totalTaxInLocalCur != null)
                 {
                     if (totalTaxInLocalCur.Length > 9) totalTaxInLocalCur = totalTaxInLocalCur.Substring(0, 9);

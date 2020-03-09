@@ -53,18 +53,24 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
             }
 
-
-
+            bool haveChange = false;
             var creditIVerifyGLAccountManager = GetIVerifyGLAccountManager();
             creditIVerifyGLAccountManager.Verify(this._MainContext, journalLinePM.Tenant, journalLinePM.CreditAccountId, journalLinePM.CreditAccountNumber, journalLinePM.CurrencyId);
-            bool haveChange = false;
+
             haveChange = (journalLinePM.CreditAccountId != creditIVerifyGLAccountManager.AccountId ||
                 journalLinePM.CreditControlAccountId != creditIVerifyGLAccountManager.ControlAccountId);
-            journalLinePM.CreditAccountId = creditIVerifyGLAccountManager.AccountId;
             journalLinePM.CreditControlAccountId = creditIVerifyGLAccountManager.ControlAccountId;
-
+            if (journalLinePM.ActionTypeCodeEnum == MyJournalActionTypeEnum.Credit ||
+                journalLinePM.ActionTypeCodeEnum == MyJournalActionTypeEnum.DebitAndCredit ||
+                journalLinePM.ActionTypeCodeEnum == MyJournalActionTypeEnum.DebitCreditAndVatdeduction
+                )
+            {
+                journalLinePM.CreditAccountId = creditIVerifyGLAccountManager.AccountId;
+            }
 
             FullAccountingSettingPM accountingSettings = getFullAccountingSettings(journalPM.Tenant);
+
+
 
             var debitIVerifyGLAccountManager = GetIVerifyGLAccountManager();
             debitIVerifyGLAccountManager.Verify(
@@ -74,11 +80,6 @@ namespace Logitude.Accounting.BL.CoreBL
                 journalLinePM.DebitAccountNumber,
                 journalLinePM.CurrencyId
                 );
-            if (!haveChange)
-            {
-                haveChange = (journalLinePM.DebitAccountId != debitIVerifyGLAccountManager.AccountId ||
-                    journalLinePM.DebitControlAccountId != debitIVerifyGLAccountManager.ControlAccountId);
-            }
 
             if (
                 //from mumps >>> CHANGE DEBIT
@@ -88,11 +89,22 @@ namespace Logitude.Accounting.BL.CoreBL
                 CreditAccountIsNotVATOutputGLAccountId(journalLinePM, accountingSettings)
                 )
             {
-                journalLinePM.DebitAccountId = debitIVerifyGLAccountManager.AccountId;
+                if (!haveChange)
+                {
+                    haveChange = (journalLinePM.DebitAccountId != debitIVerifyGLAccountManager.AccountId ||
+                        journalLinePM.DebitControlAccountId != debitIVerifyGLAccountManager.ControlAccountId);
+                }
+
                 journalLinePM.DebitControlAccountId = debitIVerifyGLAccountManager.ControlAccountId;
+                if (journalLinePM.ActionTypeCodeEnum == MyJournalActionTypeEnum.Debit ||
+    journalLinePM.ActionTypeCodeEnum == MyJournalActionTypeEnum.DebitAndCredit ||
+    journalLinePM.ActionTypeCodeEnum == MyJournalActionTypeEnum.DebitCreditAndVatdeduction
+    )
+                {
+                    journalLinePM.DebitAccountId = debitIVerifyGLAccountManager.AccountId;
+
+                }
             }
-
-
 
 
             if (haveChange && journalLinePM.ChangeSetOp == ChangeSetOperation.None)
@@ -113,7 +125,8 @@ namespace Logitude.Accounting.BL.CoreBL
                     JournalActionTypeListGetByCode(journalLinePM);
                 if (action != null)
                 {
-                    journalLinePM.ActionCode = action.Id;
+                    journalLinePM.ActionId = action.Id;
+                    journalLinePM.ActionCode = action.Code;
                     journalLinePM.ActionName = action.EnglishName;
                 }
             }
@@ -148,7 +161,7 @@ namespace Logitude.Accounting.BL.CoreBL
         public virtual FullAccountingSettingPM getFullAccountingSettings(int tenant)
         {
             bool fromCache = true;
-            FullAccountingSettingPM accountingSettings=null;
+            FullAccountingSettingPM accountingSettings = null;
             if (fromCache)
             {
                 accountingSettings = FullAccountingSettingQueryService.Get(tenant);
@@ -156,7 +169,7 @@ namespace Logitude.Accounting.BL.CoreBL
             }
 
 
-            
+
             FullAccountingSettingQueryService query = new FullAccountingSettingQueryService(tenant);
             accountingSettings = query.GetSingleFullAccountingSetting(tenant);
             return accountingSettings;
@@ -183,8 +196,8 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 return queryService.GetSingleCurrencyByCode(CurrencyCode, tenant);
             });
-            
-            
+
+
         }
 
 
@@ -327,7 +340,7 @@ namespace Logitude.Accounting.BL.CoreBL
         {
             var glQS = new GLAccountQueryService(this._MainContext);
             glQS.SetSuppressFetchOpenReconcilation(true);
-            
+
             var pm = glQS.GetSingle(accountId, false, true);
             return pm;
         }
@@ -342,7 +355,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 var pm = glQS.GetByInternalNumber(accountNumber, tenant)/*.SingleOrDefault()*/;
                 return pm;
             });
-            
+
         }
 
 

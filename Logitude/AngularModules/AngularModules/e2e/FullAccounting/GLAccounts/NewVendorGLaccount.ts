@@ -31,7 +31,7 @@ export class NewVendor {
         this.Helper.WaitBusyIndicator();
         this.Helper.WaitWindowClosed();
         this.Helper.WaitByIdAndFill('SearchFieldsId_0_0', Name);
-        this.Helper.ItemsPresent('ListDataLoaded');
+        this.Helper.WaitElementToBeDisplayedInTheList('.TextTrimming', Name);
         this.Helper.WaitByIdAndClick('row0col1');
 
     }

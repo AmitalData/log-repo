@@ -30,6 +30,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
         private IQueryable<BluesnapTransaction> iQueryable_BluesnapTransactions;
         IBlobService storageservice;
         DocumentRepository documentRepository;
+        private List<BlusnapTransactionsList> otherTenantsTransactions;
 
         public BluesnapPaymentsReportManager(byte[] xmlFilters, int tenant)
         {
@@ -112,14 +113,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
         {
             IGlobalContext globalObjectContext = GlobalContext.GetContext();
             ICommonDataContext iContext = CommonDataContext.GetContext(tenant);
-            IQueryable<TenantManagement> iQueryable_Tenantmanagements = globalObjectContext.TenantManagements;
+            IQueryable<TenantManagement> iQueryable_Tenantmanagements = globalObjectContext.TenantManagements.Where(a => a.IsRecurring == true && a.RecurringPeriodCode == "MO" && a.PaymentChannelCode == "PL");
             iQueryable_BluesnapTransactions = globalObjectContext.BluesnapTransactions;
-            iQueryable_BluesnapTransactions = iQueryable_BluesnapTransactions.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.CreateDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate) && System.Data.Entity.DbFunctions.TruncateTime(d.CreateDate) <= System.Data.Entity.DbFunctions.TruncateTime(toDate));
-
-            if (this.showAllRecurringTenants == true)
-            {
-                iQueryable_Tenantmanagements = iQueryable_Tenantmanagements.Where(a => a.IsRecurring == true && a.RecurringPeriodCode == "MO");
-            }
+            iQueryable_BluesnapTransactions = iQueryable_BluesnapTransactions.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.TransactionDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate) && System.Data.Entity.DbFunctions.TruncateTime(d.TransactionDate) <= System.Data.Entity.DbFunctions.TruncateTime(toDate));
 
             this.iQueryable_JoinTenantBluesnapTransaction = (from tenantmanagements in iQueryable_Tenantmanagements
                                                              select new TenantJoinBluesnapTransactionList()
@@ -137,60 +133,94 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
                                                                                      TransactionDate = a.TransactionDate,
                                                                                  }).ToList(),
                                                              });
-
-
-            this.iQueryable_JoinTenantBluesnapTransaction = this.iQueryable_JoinTenantBluesnapTransaction.Where(a => a.Transactions.Count > 0);
         }
 
         private void BuildReportData()
         {
-            var tenantTransactions = new List<BlusnapTransactionsList>();
-            foreach (var item in iQueryable_JoinTenantBluesnapTransaction)
+            this.iDataProvider.BlusnapTransactionsList = new List<BlusnapTransactionsList>();
+            this.BuildOthersTenantData();
+        }
+
+        private void BuildOthersTenantData()
+        {
+            otherTenantsTransactions = new List<BlusnapTransactionsList>();
+            var otherTenantTransactions_List = iQueryable_JoinTenantBluesnapTransaction.Where(a => a.Tenant != 0).ToList();
+            foreach (var item in otherTenantTransactions_List)
+            {
+                AddToBlueSnapTransactionList(item);
+            }
+            this.iDataProvider.BlusnapTransactionsList.AddRange(otherTenantsTransactions);
+            this.BuildTenantZeroData();
+        }
+
+        private void BuildTenantZeroData()
+        {
+            List<BlusnapTransactionsList> tenantZeroTransactions = new List<BlusnapTransactionsList>();
+            var tenantZeroTransactions_List = iQueryable_JoinTenantBluesnapTransaction.Where(a => a.Tenant == 0).ToList();
+            var tenantZeroList = (from tenant in tenantZeroTransactions_List
+                                  group tenant by tenant.ShopperId into g
+                                  select new
+                                  {
+                                      ShopperId = g.Key,
+                                      Transactions = g.SelectMany(x => x.Transactions).ToList(),
+                                  }).ToList();
+
+            foreach (var item in tenantZeroList)
             {
                 var itemRecord = new BlusnapTransactionsList();
-                itemRecord.Tenant = item.Tenant;
-                itemRecord.TenantName = item.TenantName;
+                itemRecord.Tenant = null;
+                itemRecord.TenantName = "";
                 itemRecord.ShopperId = item.ShopperId;
-                itemRecord.AmountToPay = item.AmountToPay;
                 itemRecord.TransactionCount = item.Transactions != null ? item.Transactions.Count() : 0;
-                double? totalPayments = 0;
-                foreach (var transaction in item.Transactions)
+                this.CalculateContractCountAndTotalPayments(itemRecord, item.Transactions);
+                itemRecord.Notes = "unmatched transaction";
+                tenantZeroTransactions.Add(itemRecord);
+            }
+            this.iDataProvider.BlusnapTransactionsList.AddRange(tenantZeroTransactions);
+        }
+
+        private void AddToBlueSnapTransactionList(TenantJoinBluesnapTransactionList item)
+        {
+            var itemRecord = new BlusnapTransactionsList();
+            itemRecord.Tenant = item.Tenant;
+            itemRecord.TenantName = item.TenantName;
+            itemRecord.ShopperId = item.ShopperId;
+            itemRecord.AmountToPay = item.AmountToPay;
+            itemRecord.TransactionCount = item.Transactions != null ? item.Transactions.Count() : 0;
+            this.CalculateContractCountAndTotalPayments(itemRecord, item.Transactions);
+            itemRecord.PaymentDifference = itemRecord.TotalPayments - itemRecord.AmountToPay;
+            itemRecord.Notes = itemRecord.PaymentDifference != 0 ? "payment missing " : "";
+            if (!this.showAllRecurringTenants && itemRecord.PaymentDifference != null && itemRecord.PaymentDifference != 0)
+            {
+                otherTenantsTransactions.Add(itemRecord);
+            }
+            if (this.showAllRecurringTenants)
+            {
+                otherTenantsTransactions.Add(itemRecord);
+            }
+        }
+
+        private void CalculateContractCountAndTotalPayments(BlusnapTransactionsList itemRecord, List<BluesnapTransactionItem> transactions)
+        {
+            double? totalPayments = 0;
+            List<string> Contracts = new List<string>();
+            foreach (var transaction in transactions)
+            {
+                var queryParameters = DeserializeDocumentBody(transaction.DocumentId, transaction.Tenant);
+                if (queryParameters != null && queryParameters.Count > 0)
                 {
-                    var queryParameters = DeserializeDocumentBody(transaction.DocumentId, transaction.Tenant);
-                    if (queryParameters != null && queryParameters.Count > 0)
+                    if (queryParameters.ContainsKey("contractId"))
                     {
-                        if (queryParameters.ContainsKey("promoteContractsNum"))
-                        {
-                            itemRecord.ContractCount = int.Parse(queryParameters["promoteContractsNum"]);
-                        }
-                        if (queryParameters.ContainsKey("invoiceAmountUSD"))
-                        {
-                            totalPayments += Double.Parse(queryParameters["invoiceAmountUSD"]);
-                        }
+                        Contracts.Add(queryParameters["contractId"]);
+                    }
+                    if (queryParameters.ContainsKey("invoiceAmountUSD"))
+                    {
+                        totalPayments += Double.Parse(queryParameters["invoiceAmountUSD"]);
                     }
                 }
-                itemRecord.TotalPayments = totalPayments;
-                itemRecord.PaymentDifference = itemRecord.TotalPayments - itemRecord.AmountToPay;
-
-                if(item.Tenant == 0)
-                {
-                    itemRecord.Notes = "unmatched transaction";
-                }
-                else
-                {
-                    itemRecord.Notes = itemRecord.PaymentDifference != 0 ? "payment missing " : "";
-                }
-
-                if(!this.showAllRecurringTenants &&  itemRecord.PaymentDifference != null && itemRecord.PaymentDifference != 0)
-                {
-                    tenantTransactions.Add(itemRecord);
-                }
-                if (this.showAllRecurringTenants)
-                {
-                    tenantTransactions.Add(itemRecord);
-                }
             }
-            this.iDataProvider.BlusnapTransactionsList = tenantTransactions;
+            itemRecord.ContractCount = new HashSet<string>(Contracts).Count();
+            itemRecord.TotalPayments = totalPayments;
         }
 
         private Dictionary<string, string> DeserializeDocumentBody(string documentId, int tenant)
@@ -208,7 +238,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
                     FileSize = document.FileSize,
                 };
 
-                byte[]  fileData = storageservice.Read(fileInfo);
+                byte[] fileData = storageservice.Read(fileInfo);
 
                 if (fileData != null)
                 {
@@ -233,6 +263,11 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
 
     public class TenantJoinBluesnapTransactionList
     {
+        public TenantJoinBluesnapTransactionList()
+        {
+            this.Transactions = new List<BluesnapTransactionItem>();
+        }
+
         public int Tenant { get; set; }
         public string TenantName { get; set; }
         public string ShopperId { get; set; }

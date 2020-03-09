@@ -4100,7 +4100,12 @@ User/Pass",
             thread.Start();
         }
 
-     
+        private void btnCallOldUpdate_Click(object sender, EventArgs e)
+        {
+            Thread thread = new Thread(() => UpdateModule(0, "nonegeneratedcode", lblUShipment));
+            thread.IsBackground = true;
+            thread.Start();
+        }
     }
 
     public class TenantMailBox

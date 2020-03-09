@@ -110,24 +110,23 @@
 
                                 <!-- Technology -->
                                 <!--<tr class="FormFieldRow">
-                                    <td>
-                                        <LogLabel [ObjectFieldName]="'Technology'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                    </td>
-                                    <td>
-                                        <table>
-                                            <tr>
-                                                <td>
-                                                    <ComboBox [IsDisabled]="!IsEditingEnabled" [ItemsSource]="TechnologyList" (SelectedItemChanged)="TechnologyValueChanged($event)" [SelectedItem]="SelectedTechnology" [Binding]="'Name'"></ComboBox>
-                                                </td>
+        <td>
+            <LogLabel [ObjectFieldName]="'Technology'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+        </td>
+        <td>
+            <table>
+                <tr>
+                    <td>
+                        <ComboBox [IsDisabled]="!IsEditingEnabled" [ItemsSource]="TechnologyList" (SelectedItemChanged)="TechnologyValueChanged($event)" [SelectedItem]="SelectedTechnology" [Binding]="'Name'"></ComboBox>
+                    </td>
 
-                                                <td style="width: 36px;">
-                                                    <div></div>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>-->
-
+                    <td style="width: 36px;">
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>-->
                                 <!-- Mobile -->
                                 <tr class="FormFieldRow">
                                     <td>
@@ -209,7 +208,29 @@
                                         <LogCheckBox [ObjectFieldName]="'AdditionalPackagesOnly'" [Checked]="AdditionalPackagesOnly" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
                                     </td>
                                 </tr>
+                                <!-- AdditionalPackagesOnly  -->
+                                <tr class="FormFieldRow">
+                                    <td colspan="2">
+                                        <table>
+                                            <tr>
+                                                <td style="width:170px">
+                                                    <LogLabel [ObjectFieldName]="'LayoutDirection'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+                                                <td style="width:180px">
+                                                    <ComboBox [ItemsSource]="LayoutDirections" [Binding]="'Name'" [SelectedItem]="SelectedDirection" (SelectedItemChanged)="SelectedDirection=$event"></ComboBox>
+                                                </td>
+                                               <td></td>
 
+                                            </tr>
+
+                                        </table>
+
+
+
+                                    </td>
+                                   
+                                </tr>
+                               
                                 <!-- Notes -->
                                 <tr style="height: 100px;">
                                     <td colspan="2">

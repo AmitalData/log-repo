@@ -64,6 +64,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
 
     public AllChargesTypes: ChargesTypeList[];
     public AllMeasurements: MeasurementList[];
+    public LineIdFromPriceCheck: string;
     Intialize(args: any) {
         this.TariffsLinesSource = new ObservableCollection([]);
         this.TariffDomainService = new TariffDomainService();
@@ -71,6 +72,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
 
         this.CurrentVersion = args['CurrentVersion'];
         this.SelectedVersionNumber = args['SelectedVersionNumber'];
+        this.LineIdFromPriceCheck = args['LineIdFromPriceCheck'];
 
         if (this.CurrentVersion != null) {
             this.IsDraftVersion = this.CurrentVersion.IsDraft;

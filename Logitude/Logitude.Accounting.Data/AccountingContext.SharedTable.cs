@@ -16,6 +16,7 @@ namespace Logitude.Accounting.Data
 
         public IDbSet<Card> Cards { get; set; }
         public IDbSet<Customer> Customers { get; set; }
+        public IDbSet<CustomerOpenFilesAmount> CustomerOpenFilesAmounts { get; set; }
         public IDbSet<Contact> Contacts { get; set; }
         public IDbSet<Tenant> Tenants { get; set; }
     }
@@ -25,7 +26,11 @@ namespace Logitude.Accounting.Data
 
         IDbSet<Card> Cards { get; set; }
         IDbSet<Customer> Customers { get; set; }
+        IDbSet<CustomerOpenFilesAmount> CustomerOpenFilesAmounts { get; set; }
         IDbSet<Tenant> Tenants { get; set; }
         IDbSet<Contact> Contacts { get; set; }
+
+        
+            
     }
 }

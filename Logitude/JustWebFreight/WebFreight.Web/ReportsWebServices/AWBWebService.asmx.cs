@@ -2264,6 +2264,12 @@ namespace WebFreight.Web.ReportsWebServices
                         }
 
                         commodityLine.DescriptionOfGoods = commodityLine.DescriptionOfGoods + Environment.NewLine;
+
+                        if(!string.IsNullOrEmpty(shipmentPM.SLAC))
+                        {
+                            commodityLine.DescriptionOfGoods = commodityLine.DescriptionOfGoods + "SLAC: " + shipmentPM.SLAC + Environment.NewLine;
+                        }
+
                         commodityLine.DescriptionOfGoods = commodityLine.DescriptionOfGoods + dimentions;
 
                         if(!string.IsNullOrEmpty(grossWeightUnitCode))
@@ -2389,6 +2395,16 @@ namespace WebFreight.Web.ReportsWebServices
 
                     string myDescriptionOfGoods = shipmentPM.DescriptionOfGoods == null ? "" : shipmentPM.DescriptionOfGoods;
                     awbDp.JustDescriptionofGoods = myDescriptionOfGoods;
+
+                    if (!string.IsNullOrEmpty(shipmentPM.SLAC))
+                    {
+                        if (!string.IsNullOrEmpty(myDescriptionOfGoods))
+                        {
+                            myDescriptionOfGoods += Environment.NewLine;
+                        }
+
+                        myDescriptionOfGoods += "SLAC: " + shipmentPM.SLAC;
+                    }
 
                     if (!string.IsNullOrEmpty(dimentions))
                     {

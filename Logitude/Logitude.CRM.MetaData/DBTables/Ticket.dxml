@@ -306,8 +306,7 @@
   </Column>
   <Column
     Name="OpenEscalation"
-    Type="int"
-    DefaultValue="0">
+    Type="int">
     <Constraints
       Nullable="false" />
   </Column>

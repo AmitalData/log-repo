@@ -2015,7 +2015,6 @@
     <Compile Include="Migrations\202002031310173_AddRequestDateToQuoteTable_Maheera.Designer.cs">
       <DependentUpon>202002031310173_AddRequestDateToQuoteTable_Maheera.cs</DependentUpon>
     </Compile>
-
     <Compile Include="Migrations\202002041504529_Mutaz_Fix_QueryOriginalCode.cs" />
     <Compile Include="Migrations\202002041504529_Mutaz_Fix_QueryOriginalCode.Designer.cs">
       <DependentUpon>202002041504529_Mutaz_Fix_QueryOriginalCode.cs</DependentUpon>
@@ -2052,14 +2051,132 @@
     <Compile Include="Migrations\202001301242182_addShipmentNumberColumnInTransferHistory.Designer.cs">
       <DependentUpon>202001301242182_addShipmentNumberColumnInTransferHistory.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Migrations\202002130847310_Mutaz_Add_CustomerFiled_To_InterestReport.cs" />
+    <Compile Include="Migrations\202002130847310_Mutaz_Add_CustomerFiled_To_InterestReport.Designer.cs">
+      <DependentUpon>202002130847310_Mutaz_Add_CustomerFiled_To_InterestReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202002130920422_Mutaz_Update_Field_CustomerId_In_InterestReport.cs" />
+    <Compile Include="Migrations\202002130920422_Mutaz_Update_Field_CustomerId_In_InterestReport.Designer.cs">
+      <DependentUpon>202002130920422_Mutaz_Update_Field_CustomerId_In_InterestReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202002130933146_Mutaz_Update_CustomerId_Required_In_InterestReport.cs" />
+    <Compile Include="Migrations\202002130933146_Mutaz_Update_CustomerId_Required_In_InterestReport.Designer.cs">
+      <DependentUpon>202002130933146_Mutaz_Update_CustomerId_Required_In_InterestReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202002160701461_ar_ap_payment_customfields.cs" />
+    <Compile Include="Migrations\202002160701461_ar_ap_payment_customfields.Designer.cs">
+      <DependentUpon>202002160701461_ar_ap_payment_customfields.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202002120919405_NewField_JournalLine_ActionId.cs" />
+    <Compile Include="Migrations\202002120919405_NewField_JournalLine_ActionId.Designer.cs">
+      <DependentUpon>202002120919405_NewField_JournalLine_ActionId.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202002120951340_MoveConstraint_JounralLine_ActionIdFK.cs" />
+    <Compile Include="Migrations\202002120951340_MoveConstraint_JounralLine_ActionIdFK.Designer.cs">
+      <DependentUpon>202002120951340_MoveConstraint_JounralLine_ActionIdFK.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202002201159283_Mutaz_Fix_Fill_CustomerId_In_InterestReport.cs" />
+    <Compile Include="Migrations\202002201159283_Mutaz_Fix_Fill_CustomerId_In_InterestReport.Designer.cs">
+      <DependentUpon>202002201159283_Mutaz_Fix_Fill_CustomerId_In_InterestReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202002131039026_WesamAddAvailableForSchedulingFieldToReportTable.cs" />
+    <Compile Include="Migrations\202002131039026_WesamAddAvailableForSchedulingFieldToReportTable.Designer.cs">
+      <DependentUpon>202002131039026_WesamAddAvailableForSchedulingFieldToReportTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202002241216153_Fix_EntityId_In_Journal.cs" />
+    <Compile Include="Migrations\202002241216153_Fix_EntityId_In_Journal.Designer.cs">
+      <DependentUpon>202002241216153_Fix_EntityId_In_Journal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202002281603550_DBMigrationsProjectFixes_Maheera.cs" />
+    <Compile Include="Migrations\202002281603550_DBMigrationsProjectFixes_Maheera.Designer.cs">
+      <DependentUpon>202002281603550_DBMigrationsProjectFixes_Maheera.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202002271110250_AddRegionalTaxColumn.cs" />
+    <Compile Include="Migrations\202002271110250_AddRegionalTaxColumn.Designer.cs">
+      <DependentUpon>202002271110250_AddRegionalTaxColumn.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003011349456_AddLogBoxTenantSettingsToContext_Maheera.cs" />
+    <Compile Include="Migrations\202003011349456_AddLogBoxTenantSettingsToContext_Maheera.Designer.cs">
+      <DependentUpon>202003011349456_AddLogBoxTenantSettingsToContext_Maheera.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202002290301444_AddIsRegionalTaxToVatTypeTable_Maheera.cs" />
+    <Compile Include="Migrations\202002290301444_AddIsRegionalTaxToVatTypeTable_Maheera.Designer.cs">
+      <DependentUpon>202002290301444_AddIsRegionalTaxToVatTypeTable_Maheera.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003021354117_Mutaz_ShouldntBeExecuted.cs" />
+    <Compile Include="Migrations\202003021354117_Mutaz_ShouldntBeExecuted.Designer.cs">
+      <DependentUpon>202003021354117_Mutaz_ShouldntBeExecuted.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003011636020_addAllowRegionalTaxColumn.cs" />
+    <Compile Include="Migrations\202003011636020_addAllowRegionalTaxColumn.Designer.cs">
+      <DependentUpon>202003011636020_addAllowRegionalTaxColumn.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003031036124_ModifyForiegnCurrencyRequiredKey_Maheera.cs" />
+    <Compile Include="Migrations\202003031036124_ModifyForiegnCurrencyRequiredKey_Maheera.Designer.cs">
+      <DependentUpon>202003031036124_ModifyForiegnCurrencyRequiredKey_Maheera.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003011111044_WesamAddEntityIdToTasksSchedulerTable.cs" />
+    <Compile Include="Migrations\202003011111044_WesamAddEntityIdToTasksSchedulerTable.Designer.cs">
+      <DependentUpon>202003011111044_WesamAddEntityIdToTasksSchedulerTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202002240830018_AddSLACFieldToShipment_Samar.cs" />
+    <Compile Include="Migrations\202002240830018_AddSLACFieldToShipment_Samar.Designer.cs">
+      <DependentUpon>202002240830018_AddSLACFieldToShipment_Samar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003041237319_Abed_AddMissingPocosAndMapsToLogitudeContext.cs" />
+    <Compile Include="Migrations\202003041237319_Abed_AddMissingPocosAndMapsToLogitudeContext.Designer.cs">
+      <DependentUpon>202003041237319_Abed_AddMissingPocosAndMapsToLogitudeContext.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003050626593_Abed_FixReportGroupId.cs" />
+    <Compile Include="Migrations\202003050626593_Abed_FixReportGroupId.Designer.cs">
+      <DependentUpon>202003050626593_Abed_FixReportGroupId.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003050739232_Abed_AddPaymentGatewayPartnerToLogitudeContext_PocoAndMap.cs" />
+    <Compile Include="Migrations\202003050739232_Abed_AddPaymentGatewayPartnerToLogitudeContext_PocoAndMap.Designer.cs">
+      <DependentUpon>202003050739232_Abed_AddPaymentGatewayPartnerToLogitudeContext_PocoAndMap.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003050852569_Abed_AddMissingPocosAndMapsToLogitudeContext_2.cs" />
+    <Compile Include="Migrations\202003050852569_Abed_AddMissingPocosAndMapsToLogitudeContext_2.Designer.cs">
+      <DependentUpon>202003050852569_Abed_AddMissingPocosAndMapsToLogitudeContext_2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003051017301_Abed_FixNameLengthInUsoCFDI.cs" />
+    <Compile Include="Migrations\202003051017301_Abed_FixNameLengthInUsoCFDI.Designer.cs">
+      <DependentUpon>202003051017301_Abed_FixNameLengthInUsoCFDI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202002161208343_UserLayoutDirectionMigration.cs" />
+    <Compile Include="Migrations\202002161208343_UserLayoutDirectionMigration.Designer.cs">
+      <DependentUpon>202002161208343_UserLayoutDirectionMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003031135036_AddContainerDefaultsToTariffSettings_Samar.cs" />
+    <Compile Include="Migrations\202003031135036_AddContainerDefaultsToTariffSettings_Samar.Designer.cs">
+      <DependentUpon>202003031135036_AddContainerDefaultsToTariffSettings_Samar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003080719024_Abed_AddCourierCustomStatusToLogitudeContext_PocoAndMap.cs" />
+    <Compile Include="Migrations\202003080719024_Abed_AddCourierCustomStatusToLogitudeContext_PocoAndMap.Designer.cs">
+      <DependentUpon>202003080719024_Abed_AddCourierCustomStatusToLogitudeContext_PocoAndMap.cs</DependentUpon>
+    </Compile>
 
+    <Compile Include="Migrations\202003050836063_AbedAddVATPercentageAndTypeOnQuoteTemplateSettings.cs" />
+    <Compile Include="Migrations\202003050836063_AbedAddVATPercentageAndTypeOnQuoteTemplateSettings.Designer.cs">
+      <DependentUpon>202003050836063_AbedAddVATPercentageAndTypeOnQuoteTemplateSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003081420440_AddFactTableFieldToBIReportTable.cs" />
+    <Compile Include="Migrations\202003081420440_AddFactTableFieldToBIReportTable.Designer.cs">
+      <DependentUpon>202003081420440_AddFactTableFieldToBIReportTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202002271245498_Mutaz_Add_CancelationFields_To_Database.cs" />
+    <Compile Include="Migrations\202002271245498_Mutaz_Add_CancelationFields_To_Database.Designer.cs">
+      <DependentUpon>202002271245498_Mutaz_Add_CancelationFields_To_Database.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Migrations\202003030904524_WesamDBMigrationFixes.cs" />
+    <Compile Include="Migrations\202003030904524_WesamDBMigrationFixes.Designer.cs">
+      <DependentUpon>202003030904524_WesamDBMigrationFixes.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\202002041333119_InterestTransactionMigration.cs" />
     <Compile Include="Migrations\202002041333119_InterestTransactionMigration.Designer.cs">
       <DependentUpon>202002041333119_InterestTransactionMigration.cs</DependentUpon>
     </Compile>
-
-   
     <Compile Include="Migrations\202001080842531_AbedAddCustomFieldToQuote.cs" />
     <Compile Include="Migrations\202001080842531_AbedAddCustomFieldToQuote.Designer.cs">
       <DependentUpon>202001080842531_AbedAddCustomFieldToQuote.cs</DependentUpon>
@@ -3677,7 +3794,6 @@
     <EmbeddedResource Include="Migrations\202002031310173_AddRequestDateToQuoteTable_Maheera.resx">
       <DependentUpon>202002031310173_AddRequestDateToQuoteTable_Maheera.cs</DependentUpon>
     </EmbeddedResource>
-
     <EmbeddedResource Include="Migrations\202002041504529_Mutaz_Fix_QueryOriginalCode.resx">
       <DependentUpon>202002041504529_Mutaz_Fix_QueryOriginalCode.cs</DependentUpon>
     </EmbeddedResource>
@@ -3710,6 +3826,98 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202001301242182_addShipmentNumberColumnInTransferHistory.resx">
       <DependentUpon>202001301242182_addShipmentNumberColumnInTransferHistory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002130847310_Mutaz_Add_CustomerFiled_To_InterestReport.resx">
+      <DependentUpon>202002130847310_Mutaz_Add_CustomerFiled_To_InterestReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002130920422_Mutaz_Update_Field_CustomerId_In_InterestReport.resx">
+      <DependentUpon>202002130920422_Mutaz_Update_Field_CustomerId_In_InterestReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002130933146_Mutaz_Update_CustomerId_Required_In_InterestReport.resx">
+      <DependentUpon>202002130933146_Mutaz_Update_CustomerId_Required_In_InterestReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002160701461_ar_ap_payment_customfields.resx">
+      <DependentUpon>202002160701461_ar_ap_payment_customfields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002120919405_NewField_JournalLine_ActionId.resx">
+      <DependentUpon>202002120919405_NewField_JournalLine_ActionId.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002120951340_MoveConstraint_JounralLine_ActionIdFK.resx">
+      <DependentUpon>202002120951340_MoveConstraint_JounralLine_ActionIdFK.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002201159283_Mutaz_Fix_Fill_CustomerId_In_InterestReport.resx">
+      <DependentUpon>202002201159283_Mutaz_Fix_Fill_CustomerId_In_InterestReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002131039026_WesamAddAvailableForSchedulingFieldToReportTable.resx">
+      <DependentUpon>202002131039026_WesamAddAvailableForSchedulingFieldToReportTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002241216153_Fix_EntityId_In_Journal.resx">
+      <DependentUpon>202002241216153_Fix_EntityId_In_Journal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002281603550_DBMigrationsProjectFixes_Maheera.resx">
+      <DependentUpon>202002281603550_DBMigrationsProjectFixes_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002271110250_AddRegionalTaxColumn.resx">
+      <DependentUpon>202002271110250_AddRegionalTaxColumn.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003011349456_AddLogBoxTenantSettingsToContext_Maheera.resx">
+      <DependentUpon>202003011349456_AddLogBoxTenantSettingsToContext_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002290301444_AddIsRegionalTaxToVatTypeTable_Maheera.resx">
+      <DependentUpon>202002290301444_AddIsRegionalTaxToVatTypeTable_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003011636020_addAllowRegionalTaxColumn.resx">
+      <DependentUpon>202003011636020_addAllowRegionalTaxColumn.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003021354117_Mutaz_ShouldntBeExecuted.resx">
+      <DependentUpon>202003021354117_Mutaz_ShouldntBeExecuted.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003031036124_ModifyForiegnCurrencyRequiredKey_Maheera.resx">
+      <DependentUpon>202003031036124_ModifyForiegnCurrencyRequiredKey_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003030904524_WesamDBMigrationFixes.resx">
+      <DependentUpon>202003030904524_WesamDBMigrationFixes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003011111044_WesamAddEntityIdToTasksSchedulerTable.resx">
+      <DependentUpon>202003011111044_WesamAddEntityIdToTasksSchedulerTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002240830018_AddSLACFieldToShipment_Samar.resx">
+      <DependentUpon>202002240830018_AddSLACFieldToShipment_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002161208343_UserLayoutDirectionMigration.resx">
+      <DependentUpon>202002161208343_UserLayoutDirectionMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003041237319_Abed_AddMissingPocosAndMapsToLogitudeContext.resx">
+      <DependentUpon>202003041237319_Abed_AddMissingPocosAndMapsToLogitudeContext.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003050626593_Abed_FixReportGroupId.resx">
+      <DependentUpon>202003050626593_Abed_FixReportGroupId.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003050739232_Abed_AddPaymentGatewayPartnerToLogitudeContext_PocoAndMap.resx">
+      <DependentUpon>202003050739232_Abed_AddPaymentGatewayPartnerToLogitudeContext_PocoAndMap.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003050852569_Abed_AddMissingPocosAndMapsToLogitudeContext_2.resx">
+      <DependentUpon>202003050852569_Abed_AddMissingPocosAndMapsToLogitudeContext_2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003051017301_Abed_FixNameLengthInUsoCFDI.resx">
+      <DependentUpon>202003051017301_Abed_FixNameLengthInUsoCFDI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003031135036_AddContainerDefaultsToTariffSettings_Samar.resx">
+      <DependentUpon>202003031135036_AddContainerDefaultsToTariffSettings_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003080719024_Abed_AddCourierCustomStatusToLogitudeContext_PocoAndMap.resx">
+      <DependentUpon>202003080719024_Abed_AddCourierCustomStatusToLogitudeContext_PocoAndMap.cs</DependentUpon>
+    </EmbeddedResource>
+
+    <EmbeddedResource Include="Migrations\202003050836063_AbedAddVATPercentageAndTypeOnQuoteTemplateSettings.resx">
+      <DependentUpon>202003050836063_AbedAddVATPercentageAndTypeOnQuoteTemplateSettings.cs</DependentUpon>
+    </EmbeddedResource>
+
+    <EmbeddedResource Include="Migrations\202003081420440_AddFactTableFieldToBIReportTable.resx">
+      <DependentUpon>202003081420440_AddFactTableFieldToBIReportTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002271245498_Mutaz_Add_CancelationFields_To_Database.resx">
+      <DependentUpon>202002271245498_Mutaz_Add_CancelationFields_To_Database.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -14,6 +14,12 @@ namespace Logitude.DBMigrations.Models
         [XmlAttribute()]
         public string DBType { get; set; }
 
+        [XmlAttribute()]
+        public string Module { get; set; }
+
+        [XmlAttribute()]
+        public bool Pre { get; set; }
+
         [XmlElement]
         public SqlScriptDefinition Sql { get; set; }
 

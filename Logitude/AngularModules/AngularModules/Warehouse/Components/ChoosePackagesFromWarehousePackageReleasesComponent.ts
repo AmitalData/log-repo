@@ -256,11 +256,13 @@ export class ChoosePackagesFromWarehousePackageReleasesComponent extends BaseCom
 
                     var warehouseReleasePMLists = this.GetWarehouseReleasePMLists("Connected to other Shipments");
                     if (this.WarehouseReleasePMLists && this.WarehouseReleasePMLists.length > 0) {
+                        this.IsShowMessageNoResult = false;
                         this.WarehouseReleaseGroupLists.push(new WarehouseReleaseGroup(warehouseReleasePMLists, "Connected to other Shipments", this));
                     }
                 }
             } else {
                 if (this.WarehouseReleaseGroupLists && this.WarehouseReleaseGroupLists.length > 0) {
+                    this.IsShowMessageNoResult = false;
                     this.WarehouseReleaseGroupLists = this.WarehouseReleaseGroupLists.filter(d => d.Title != "Connected to other Shipments");
                 }
             }

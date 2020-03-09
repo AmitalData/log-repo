@@ -122,9 +122,5 @@
   <Index
     Columns="Tenant,EntityId" />
   <Index
-    Columns="Tenant,LogDateTime" />
-  <Index
-    Columns="Tenant,ExternalId" />
-  <Index
     Columns="ObjectTableId,Tenant,EntityId" />
 </Table>

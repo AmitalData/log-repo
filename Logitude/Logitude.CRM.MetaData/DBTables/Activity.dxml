@@ -551,4 +551,10 @@
     ReferencedTable="Teams"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
+  <Index
+    Columns="Tenant,ActivityTypeCode,ShipmentId" />
+  <Index
+    Columns="DueDate" />
+  <Index
+    Columns="OwnerId,ActivityStatusCode" />
 </Table>

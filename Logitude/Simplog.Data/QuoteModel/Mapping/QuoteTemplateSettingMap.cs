@@ -1018,6 +1018,12 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.Property(t => t.ShowIncludedChargesContainers).HasColumnName("ShowIncludedChargesContainers");
 
 
+            this.Property(t => t.ShowVATTypePackages).HasColumnName("ShowVATTypePackages");
+            this.Property(t => t.ShowVATTypeContainers).HasColumnName("ShowVATTypeContainers");
+            this.Property(t => t.ShowVATPercentagePackages).HasColumnName("ShowVATPercentagePackages");
+            this.Property(t => t.ShowVATPercentageContainers).HasColumnName("ShowVATPercentageContainers");
+
+
             //#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")

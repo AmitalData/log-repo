@@ -132,7 +132,7 @@
 
                         <!--Error-->
                         <log-column [width]="'60'">
-                            <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
+                            <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
                                 <div style="height: 100%; width: 100%;">
                                     <table>
                                         <tr>
@@ -155,7 +155,7 @@
 
                         <!-- OriginPortId -->
                         <log-column [header]="'TariffLine.F.OriginPortId' | TextCodeTranslationPipe" [width]="'70'">
-                            <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEditEnabled">
+                            <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEditEnabled" [CellColor]="item.CellColor">
                                 <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
                                     <span [ngStyle]="{color: item.OriginPortColor}">{{item.OriginPortValue}}</span>
                                 </div>
@@ -178,7 +178,7 @@
 
                         <!-- DestinationPortId -->
                         <log-column [header]="'TariffLine.F.DestinationPortId' | TextCodeTranslationPipe" [width]="'70'">
-                            <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEditEnabled">
+                            <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEditEnabled" [CellColor]="item.CellColor">
                                 <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
                                     <span [ngStyle]="{color: item.DestinationPortColor}">{{item.DestinationPortValue}}</span>
                                 </div>
@@ -201,7 +201,7 @@
 
                         <!-- MinPrice -->
                         <log-column [header]="'TariffLine.F.MinPrice' | TextCodeTranslationPipe" [width]="'120'">
-                            <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEditEnabled">
+                            <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEditEnabled" [CellColor]="item.CellColor">
                                 <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                     <table>
                                         <tr>
@@ -228,7 +228,7 @@
 
                         <!-- Step1Price -->
                         <log-column *ngIf="Step1PriceVisibility" [Alignment]="'center'" [header]="Step1PriceLabel" [width]="'120'">
-                            <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEditEnabled">
+                            <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEditEnabled" [CellColor]="item.CellColor">
                                 <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                     <table>
                                         <tr>
@@ -256,7 +256,7 @@
 
                         <!-- Step2Price -->
                         <log-column *ngIf="Step2PriceVisibility" [Alignment]="'center'" [header]="Step2PriceLabel" [width]="'120'">
-                            <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEditEnabled">
+                            <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEditEnabled" [CellColor]="item.CellColor">
                                 <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                     <table>
                                         <tr>
@@ -284,7 +284,7 @@
 
                         <!-- Step3Price -->
                         <log-column *ngIf="Step3PriceVisibility" [Alignment]="'center'" [header]="Step3PriceLabel" [width]="'120'">
-                            <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEditEnabled">
+                            <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEditEnabled" [CellColor]="item.CellColor">
                                 <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                     <table>
                                         <tr>
@@ -312,7 +312,7 @@
 
                         <!-- Step4Price -->
                         <log-column *ngIf="Step4PriceVisibility" [Alignment]="'center'" [header]="Step4PriceLabel" [width]="'120'">
-                            <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEditEnabled">
+                            <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEditEnabled" [CellColor]="item.CellColor">
                                 <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                     <table>
                                         <tr>
@@ -339,7 +339,7 @@
 
                         <!-- Step5Price -->
                         <log-column *ngIf="Step5PriceVisibility" [Alignment]="'center'" [header]="Step5PriceLabel" [width]="'120'">
-                            <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEditEnabled">
+                            <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEditEnabled" [CellColor]="item.CellColor">
                                 <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                     <table>
                                         <tr>
@@ -366,7 +366,7 @@
 
                         <!-- Step6Price -->
                         <log-column *ngIf="Step6PriceVisibility" [Alignment]="'center'" [header]="Step6PriceLabel" [width]="'120'">
-                            <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEditEnabled">
+                            <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEditEnabled" [CellColor]="item.CellColor">
                                 <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                     <table>
                                         <tr>
@@ -393,7 +393,7 @@
 
                         <!-- Step7Price -->
                         <log-column *ngIf="Step7PriceVisibility" [Alignment]="'center'" [header]="Step7PriceLabel" [width]="'120'">
-                            <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEditEnabled">
+                            <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEditEnabled" [CellColor]="item.CellColor">
                                 <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                     <table>
                                         <tr>
@@ -421,7 +421,7 @@
 
                         <!-- Step8Price -->
                         <log-column *ngIf="Step8PriceVisibility" [Alignment]="'center'" [header]="Step8PriceLabel" [width]="'120'">
-                            <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEditEnabled">
+                            <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEditEnabled" [CellColor]="item.CellColor">
                                 <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                     <table>
                                         <tr>
@@ -448,7 +448,7 @@
 
                         <!-- Notes -->
                         <log-column [width]="'40'">
-                            <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
+                            <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
                                 <div style="height: 100%; width: 100%; left:5px;">
                                     <img class="CenterCenter" *ngIf="!item.Notes" src="./Images/Notes_notexists.png" style="display: block;" />
                                     <img class="CenterCenter" *ngIf="item.Notes" src="./Images/Notes_exists.png" style="display: block;" [title]="item.Notes" />

@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="CustomsCountries"
+  Schema="Customs"
+  DBType="Main">
+  <Column
+    Name="Code"
+    Type="varchar"
+    Size="2">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="TarriffCode"
+    Type="varchar"
+    Size="8">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="LocalName"
+    Type="nvarchar"
+    Size="60">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="EnglishName"
+    Type="varchar"
+    Size="60">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="SearchFields"
+    Type="nvarchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Inactive"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="MalamId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Relation
+    ForeignKeyColumn="TarriffCode"
+    ReferencedTable="TradeAgreements"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+</Table>

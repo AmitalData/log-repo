@@ -12,7 +12,7 @@ import { EntityListService } from '../../../../Infrastructure/Services/EntityLis
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { LogBoxDocumentsComponent } from './LogBoxDocumentsComponent';
 import { ShipmentDomainService, ImporterQueriesDataCounts } from '../../../../Shipment/Services/ShipmentDomainService';
-import { AppTool } from '../../../../Infrastructure/Tools';
+import { AppTool, DateTool } from '../../../../Infrastructure/Tools';
 import { CustomNumbersPipe } from '../../../../Infrastructure/Pipes/CustomNumbersPipe';
 import { ShipmentPM } from '../../../../Shipment/EntityPMs/ShipmentPM';
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
@@ -34,6 +34,7 @@ import { ServiceLocator } from '../../../../Infrastructure/Locators/ServiceLocat
 import { CommonDomainService } from '../../../../Common/Services/CommonDomainService';
 import { TenantPMService } from '../../../../Common/Services/StandardPMs/TenantPMService';
 import { DownloadManager } from '../../../../Infrastructure/Utilities/DownloadManager';
+
 
 
 @Component({
@@ -114,9 +115,14 @@ export class UserIdNumberMobileComponent extends BaseComponent implements OnInit
             if (entity.IsUserIDNumberRequired == false) {
                 var myMessage = "הפרטים נשמרו בהצלחה";
                 if (entity.UserIdNumberUpdateDate != null) {
-                    myMessage = myMessage + " " + entity.UserIdNumberUpdateDate;
+               
+                    var myDateParts = DateTool.GetDateParts(entity.UserIdNumberUpdateDate);
+                     
+                    var LocalDateString = myDateParts.DateObject.toLocaleDateString();
+                  
+                    myMessage = myMessage + " " + LocalDateString;
                 }
-                this.FinalMessage == myMessage;
+                this.FinalMessage = myMessage;
                 this.ShowFinalMessage = true;
 
             }

@@ -609,7 +609,7 @@ export class ShipmentPM {
     public set Field25(newValue: CustomFieldClass) { this.field25 = newValue; this.MarkAsDirty("Field25"); }
 
     private field26: CustomFieldClass;
-    public get Field26() { if (!this.field26) { this.field26 = new CustomFieldClass(null, "Field26", "Shipment"); } return this.field6; }
+    public get Field26() { if (!this.field26) { this.field26 = new CustomFieldClass(null, "Field26", "Shipment"); } return this.field26; }
     public set Field26(newValue: CustomFieldClass) { this.field26 = newValue; this.MarkAsDirty("Field26"); }
 
     private field27: CustomFieldClass;
@@ -4579,6 +4579,9 @@ export class ShipmentPM {
     public get WarehouseReleasesIds() { return this.warehouseReleasesIds; }
     public set WarehouseReleasesIds(newValue: string) { if (this.warehouseReleasesIds != newValue) { this.warehouseReleasesIds = newValue; this.MarkAsDirty("WarehouseReleasesIds"); } }
 
+    private sLAC: string;
+    public get SLAC() { return this.sLAC; }
+    public set SLAC(newValue: string) { if (this.sLAC != newValue) { this.sLAC = newValue; this.MarkAsDirty("SLAC"); } }
 
     public OldEntityPM: ShipmentPM;
 

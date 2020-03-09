@@ -101,9 +101,11 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
 
                             System.Type type1 = typeof(FTPSchedulerDetails);
                             System.Type type2 = "string".GetType();
-                            System.Type[] types = new System.Type[2];
+                            System.Type type3 = typeof(ReportSchedulerDetails);
+                            System.Type[] types = new System.Type[4];
                             types[0] = type1;
                             types[1] = type2;
+                            types[2] = type3;
 
                             entityPM.SchedulerDetailsXML = LogitudeXmlSerializer.SerializeObjectToElementString(entityPM.SchedulerDetailsData, types);
 
@@ -154,11 +156,14 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                         }
 
                         entityPM.SchedulerDetailsData.Tenant = entityPM.Tenant;
+
                         System.Type type1 = typeof(FTPSchedulerDetails);
                         System.Type type2 = "string".GetType();
-                        System.Type[] types = new System.Type[2];
+                        System.Type type3 = typeof(ReportSchedulerDetails);
+                        System.Type[] types = new System.Type[4];
                         types[0] = type1;
                         types[1] = type2;
+                        types[2] = type3;
 
                         entityPM.SchedulerDetailsXML = LogitudeXmlSerializer.SerializeObjectToElementString(entityPM.SchedulerDetailsData, types);
 

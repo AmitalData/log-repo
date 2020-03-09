@@ -14,6 +14,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
         public DWObjectFieldCategoriesMap()
         {
             this.HasKey(t => t.Id);
+            this.Property(t => t.Id).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.DWCategoryCode).IsRequired().HasMaxLength(50).IsUnicode(false); 
             this.Property(t => t.DWObjectFieldCode).IsRequired().HasMaxLength(50).IsUnicode(false);
            

@@ -54,6 +54,8 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public List<HouseContainerPackage> FCLDataList { get; set; }
 
         public ChangeSetOperation ChangeSetOp { get; set; }
+
+        public double? GrossWeightPerStorageDays { get; set; }
     }
 
     public class HouseContainerPackage

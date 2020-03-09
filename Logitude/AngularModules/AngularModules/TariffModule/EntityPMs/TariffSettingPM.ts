@@ -64,6 +64,11 @@ export class TariffSettingPM {
     public set LCLDefaultSteps(newValue: string) { if (this.lCLDefaultSteps != newValue) { this.lCLDefaultSteps = newValue; this.MarkAsDirty("LCLDefaultSteps"); } }
        
 	 
+    private containerDefaults: string;
+    public get ContainerDefaults() { return this.containerDefaults; }
+    public set ContainerDefaults(newValue: string) { if (this.containerDefaults != newValue) { this.containerDefaults = newValue; this.MarkAsDirty("ContainerDefaults"); } }
+       
+	 
 
     public OldEntityPM: TariffSettingPM;
 		

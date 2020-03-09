@@ -58,7 +58,7 @@ export class OpenShipmentsByCustomerFilterComponent extends BaseComponent implem
             this.ReportsPreview.GenerateReport(reportFliter, isloading);
 
             this.ReportsPreview.CleanPartnersObslist();
-            if (!AppTool.IsNullOrEmpty(this.CustomerId)) this.ReportsPreview.AddPartner("Partner", this.CustomerId);
+            if (!AppTool.IsNullOrEmpty(this.CustomerId)) this.ReportsPreview.AddPartner("Customer", this.CustomerId);
         }
     }
 }

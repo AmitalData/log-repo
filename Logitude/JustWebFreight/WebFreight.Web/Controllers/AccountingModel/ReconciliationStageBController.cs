@@ -8,6 +8,8 @@ using Logitude.Accounting.BL.Utils;
 using System.Net;
 using WebFreight.Web.Helpers;
 using System.Text.RegularExpressions;
+using Logitude.Accounting.Data;
+using Logitude.Accounting.BL.CoreBL.Batch;
 
 namespace WebFreight.Web.Controllers.AccountingModel
 {
@@ -25,14 +27,38 @@ namespace WebFreight.Web.Controllers.AccountingModel
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
 
-                ReconciliationStageBBatch reconciliationStageBBatch = new ReconciliationStageBBatch();
-                reconciliationStageBBatch.RunReconciliationStageB(tenant);
-                string responseText = reconciliationStageBBatch.ResponseText();
-                HttpStatusCode StatusCode = reconciliationStageBBatch.StatusCode();
-                var res1 = new { Success = true, Message = responseText };
+                bool batchIt = true;
+                if (batchIt)
+                {
+                    var accountingContext = AccountingContext.GetContext(tenant);
 
-                return Request.CreateResponse(StatusCode, res1);
+                    var myBatchReconciliationStageBTask = new BatchReconciliationStageBTask(null);
+                    string subj = $"Reconciliation Stage B";
+                    var batchTaskId = myBatchReconciliationStageBTask.CreateQBatchTaskExecution<ReconciliationStageBArg>(
+                        new ReconciliationStageBArg()
+                        {
+                            Tenant = tenant,
+                        }, tenant, subj, false);
 
+
+                    var res1 = new { Success = true, Message = $"Send to Batch Task {batchTaskId}" };
+                    return Request.CreateResponse(HttpStatusCode.Accepted, res1);
+                }
+                else
+                {
+                    ReconciliationStageBBatch reconciliationStageBBatch = new ReconciliationStageBBatch();
+                    ReconciliationStageBArg reconciliationStageBArg = new ReconciliationStageBArg()
+                    {
+                        Tenant = tenant,
+                    };
+                    reconciliationStageBBatch.RunReconciliationStageB(reconciliationStageBArg);
+                    string responseText = reconciliationStageBBatch.ResponseText();
+                    HttpStatusCode StatusCode = reconciliationStageBBatch.StatusCode();
+                    var res1 = new { Success = true, Message = responseText };
+
+                    return Request.CreateResponse(StatusCode, res1);
+
+                }
             }
             catch (Exception ex)
             {
@@ -40,7 +66,100 @@ namespace WebFreight.Web.Controllers.AccountingModel
             }
         }
 
-  
+        public HttpResponseMessage GetReconciliationStageBNoBatch(int tenant, int noBatch)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+
+                bool batchIt = true;
+                if (noBatch == 1) batchIt = false;
+                if (batchIt)
+                {
+                    var accountingContext = AccountingContext.GetContext(tenant);
+
+                    var myBatchReconciliationStageBTask = new BatchReconciliationStageBTask(null);
+                    string subj = $"Reconciliation Stage B";
+                    var batchTaskId = myBatchReconciliationStageBTask.CreateQBatchTaskExecution<ReconciliationStageBArg>(
+                        new ReconciliationStageBArg()
+                        {
+                            Tenant = tenant,
+                        }, tenant, subj, false);
+
+
+                    var res1 = new { Success = true, Message = $"Send to Batch Task {batchTaskId}" };
+                    return Request.CreateResponse(HttpStatusCode.Accepted, res1);
+                }
+                else
+                {
+                    ReconciliationStageBBatch reconciliationStageBBatch = new ReconciliationStageBBatch();
+                    ReconciliationStageBArg reconciliationStageBArg = new ReconciliationStageBArg()
+                    {
+                        Tenant = tenant,
+                    };
+                    reconciliationStageBBatch.RunReconciliationStageB(reconciliationStageBArg);
+                    string responseText = reconciliationStageBBatch.ResponseText();
+                    HttpStatusCode StatusCode = reconciliationStageBBatch.StatusCode();
+                    var res1 = new { Success = true, Message = responseText };
+
+                    return Request.CreateResponse(StatusCode, res1);
+
+                }
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public HttpResponseMessage GetReconciliationStageBNoBatchGLAcc(int tenant, string gLAccountId, int noBatch)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+
+                bool batchIt = true;
+                if (noBatch == 1) batchIt = false;
+                if (batchIt)
+                {
+                    var accountingContext = AccountingContext.GetContext(tenant);
+
+                    var myBatchReconciliationStageBTask = new BatchReconciliationStageBTask(null);
+                    string subj = $"Reconciliation Stage B";
+                    var batchTaskId = myBatchReconciliationStageBTask.CreateQBatchTaskExecution<ReconciliationStageBArg>(
+                        new ReconciliationStageBArg()
+                        {
+                            Tenant = tenant,
+                            GLAccountId = gLAccountId,
+                        }, tenant, subj, false);
+
+
+                    var res1 = new { Success = true, Message = $"Send to Batch Task {batchTaskId}" };
+                    return Request.CreateResponse(HttpStatusCode.Accepted, res1);
+                }
+                else
+                {
+                    ReconciliationStageBBatch reconciliationStageBBatch = new ReconciliationStageBBatch();
+                    ReconciliationStageBArg reconciliationStageBArg = new ReconciliationStageBArg()
+                    {
+                        Tenant = tenant,
+                        GLAccountId = gLAccountId,
+                    };
+                    reconciliationStageBBatch.RunReconciliationStageB(reconciliationStageBArg);
+                    string responseText = reconciliationStageBBatch.ResponseText();
+                    HttpStatusCode StatusCode = reconciliationStageBBatch.StatusCode();
+                    var res1 = new { Success = true, Message = responseText };
+
+                    return Request.CreateResponse(StatusCode, res1);
+
+                }
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
 
     }
 }

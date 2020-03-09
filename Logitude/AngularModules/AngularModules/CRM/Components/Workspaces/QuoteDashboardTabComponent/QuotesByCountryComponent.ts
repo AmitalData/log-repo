@@ -172,6 +172,8 @@ export class QuotesByCountryComponent implements OnInit {
         filterAgrs.addAdditionalFilter("ChartCreateDateFilter", ServiceHelper.GetDateString(this.Wizard.FromDate), ServiceHelper.GetDateString(this.Wizard.ToDate), null, "Equals", true, false, false, "String");
         filterAgrs.addAdditionalFilter("IsClosed", false, null, null, "Equals", true, false, false, "Boolean");
         filterAgrs.addAdditionalFilter("IsCancelled", false, null, null, "Equals", true, false, false, "Boolean");
+        filterAgrs.addAdditionalFilter("SalesmanUserId", this.dashboardArgs.OwnerId, null, null, "Equals", false, false, false, "String");
+        filterAgrs.addAdditionalFilter("BusinessUnitId", this.dashboardArgs.BusinessUnitId, null, null, "Equals", true, false, false, "string");
 
         var listArgs = new ListComponentArgs();
         listArgs.Filters = filterAgrs;

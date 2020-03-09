@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="CustomDocumentTypes"
+  Schema="Customs"
+  DBType="Main">
+  <Column
+    Name="Code"
+    Type="varchar"
+    Size="7">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="EnglishName"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="LocalName"
+    Type="nvarchar"
+    Size="120">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="SearchFields"
+    Type="nvarchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Inactive"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="PointerLevel"
+    Type="varchar"
+    Size="1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="AutoSetOriginalDocumentTrue"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Relation
+    ForeignKeyColumn="PointerLevel"
+    ReferencedTable="PointerLevels"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+</Table>
