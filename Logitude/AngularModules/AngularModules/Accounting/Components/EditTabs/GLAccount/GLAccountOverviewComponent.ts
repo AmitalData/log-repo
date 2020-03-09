@@ -468,7 +468,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
             var mm: ServiceResponse = myResult;
             if (!mm.HasError)
             {
-                this.lastTransactionsList = mm.Result.Result;
+                this.lastTransactionsList = mm.Result;
             }
             else
             {

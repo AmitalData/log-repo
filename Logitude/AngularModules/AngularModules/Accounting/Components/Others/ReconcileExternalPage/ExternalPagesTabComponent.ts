@@ -627,7 +627,7 @@ export class ExternalPagesTabComponent extends BaseComponent implements OnInit, 
         {
             if (serviceResponse.Result) {
                 var result = serviceResponse.Result;
-                var transaction = result.Result;
+                var transaction = result;
                 var openAmountCurrency = transaction ? transaction.OpenAmountCurrencySign : "";
                 this.showReconcileWindow(openAmountCurrency);
 

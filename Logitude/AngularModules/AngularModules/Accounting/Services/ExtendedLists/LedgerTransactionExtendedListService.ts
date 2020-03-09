@@ -38,9 +38,9 @@ export class LedgerTransactionExtendedListService {
         //authHeader.append('Token', SessionInfo.Token);
         var callUrl = this._apiUrl.concat(urlparameters);//
         return this.httpClient.get(callUrl, httpOptions).pipe(
-            map(response => {
+            map((response : ServiceResponse)=> {
                 var serviceResponse: ServiceResponse = new ServiceResponse();
-                serviceResponse.Result = response;
+                serviceResponse = response;
                 return serviceResponse;
             }),
             catchError(ServiceHelper.HandleServiceError));
@@ -145,9 +145,9 @@ export class LedgerTransactionExtendedListService {
         // authHeader.append('Token', SessionInfo.Token);
         var callUrl = this._apiUrl.concat(urlparameters);//
          return this.httpClient.get(callUrl, httpOptions).pipe(
-             map(response => {
+             map((response: ServiceResponse) => {
                  var serviceResponse: ServiceResponse = new ServiceResponse();
-                 serviceResponse.Result = response;
+                 serviceResponse = response;
                  return serviceResponse;
             }),
             catchError(ServiceHelper.HandleServiceError));
@@ -208,9 +208,9 @@ export class LedgerTransactionExtendedListService {
 
         var callUrl = url.concat(urlparameters);
         return this.httpClient.get(callUrl, httpOptions).pipe(
-            map(response => {
+            map((response: ServiceResponse) => {
                 var serviceResponse: ServiceResponse = new ServiceResponse();
-                serviceResponse.Result = response;
+                serviceResponse = response;
                 return serviceResponse;
             }),
             catchError(ServiceHelper.HandleServiceError));
@@ -244,9 +244,9 @@ export class LedgerTransactionExtendedListService {
 
         var callUrl = url.concat(urlparameters);
         return this.httpClient.get(callUrl, httpOptions).pipe(
-            map(response => {
+            map((response: ServiceResponse) => {
                 var serviceResponse: ServiceResponse = new ServiceResponse();
-                serviceResponse.Result = response;
+                serviceResponse = response;
                 return serviceResponse;
             }),
             catchError(ServiceHelper.HandleServiceError));
@@ -332,9 +332,9 @@ export class LedgerTransactionExtendedListService {
 
         var callUrl = url.concat(urlparameters);
         return this.httpClient.get(callUrl, httpOptions).pipe(
-            map(response => {
+            map((response: ServiceResponse) => {
                 var serviceResponse: ServiceResponse = new ServiceResponse();
-                serviceResponse.Result = response;
+                serviceResponse = response;
                 return serviceResponse;
             }),
             catchError(ServiceHelper.HandleServiceError));
@@ -374,9 +374,9 @@ export class LedgerTransactionExtendedListService {
 
         var url = this._apiUrl + '/getLedgerTransactionsByIds?' + params;
         return this.httpClient.get(url, httpOptions).pipe(
-            map(response => {
+            map((response: ServiceResponse) => {
                 var serviceResponse: ServiceResponse = new ServiceResponse();
-                serviceResponse.Result = response;
+                serviceResponse = response;
                 return serviceResponse;
             }),
             catchError(ServiceHelper.HandleServiceError));
@@ -398,9 +398,9 @@ export class LedgerTransactionExtendedListService {
 
         var url = this._apiUrl + '/GetLast10TransactionsForAccount?AccountId=' + accountId;
         return this.httpClient.get(url, httpOptions).pipe(
-            map(response => {
+            map((response: ServiceResponse) => {
                 var serviceResponse: ServiceResponse = new ServiceResponse();
-                serviceResponse.Result = response;
+                serviceResponse = response;
                 return serviceResponse;
             }),
             catchError(ServiceHelper.HandleServiceError));
@@ -425,9 +425,9 @@ export class LedgerTransactionExtendedListService {
         + '&billToGLAccountId=' + billToGLAccountId;
 
         return this.httpClient.get(url, httpOptions).pipe(
-            map(response => {
+            map((response: ServiceResponse) => {
                 var serviceResponse: ServiceResponse = new ServiceResponse();
-                serviceResponse.Result = response;
+                serviceResponse = response;
                 return serviceResponse;
             }),
             catchError(ServiceHelper.HandleServiceError));
@@ -450,9 +450,9 @@ export class LedgerTransactionExtendedListService {
         //authHeader.append('Token', SessionInfo.Token);
         var callUrl = this._apiUrl.concat(urlparameters);//
         return this.httpClient.get(callUrl, httpOptions).pipe(
-            map(response => {
+            map((response:ServiceResponse) => {
                 var serviceResponse: ServiceResponse = new ServiceResponse();
-                serviceResponse.Result = response;
+                serviceResponse = response;
                 return serviceResponse;
             }),
             catchError(ServiceHelper.HandleServiceError));

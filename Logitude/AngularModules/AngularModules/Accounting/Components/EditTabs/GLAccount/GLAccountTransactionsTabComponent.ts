@@ -549,7 +549,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
                         //}
                         //else {
                              if (!myResponse.HasError) {
-                                 this.LTBSummery = myResponse.Result.Result;
+                                 this.LTBSummery = myResponse.Result;
                                 // if (this.EntityPM.IsMultiCurrency) {
                                     var text = " &nbsp;";
 
@@ -605,7 +605,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
             if (serviceResponse.Result) {
                 var result = serviceResponse.Result;
                 console.log("[GetTransactionsCurrencies]", result);
-                var currenciesIds: string[] = result.Result;
+                var currenciesIds: string[] = result;
 
                 this.CurrencyFilters = new ApiQueryFilters();
                 this.CurrencyFilters.addAdditionalFilter("Id", currenciesIds.join(','), null, null, "InListExact", false, false, false, "string", false, true);

@@ -274,7 +274,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
                     var mm: ServiceResponse = myResult;
                     if (!mm.HasError) {
 
-                        var transactions = mm.Result.Result;
+                        var transactions = mm.Result;
                         var tempItemSource: any[] = [];
                         if (transactions != null) {
                             for (var i = 0; i < transactions.length; i++) {
