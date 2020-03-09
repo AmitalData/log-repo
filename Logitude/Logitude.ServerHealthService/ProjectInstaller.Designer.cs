@@ -40,6 +40,8 @@
             // serviceInstaller1
             // 
             this.serviceInstaller1.ServiceName = "LogitudeServerHealthService";
+            this.serviceInstaller1.DisplayName = "Logitude Server Health Service";
+            this.serviceInstaller1.Description = "Check server drives free space and send email notification when the free space be less than specific percentage of the total space.";
             // 
             // ProjectInstaller
             // 

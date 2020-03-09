@@ -14,6 +14,7 @@ namespace Logitude.ServerHealthService
     {
         protected Timer ServiceTimer = new Timer();
         protected int PercentageOfTotalDriveSpace;
+        protected long ServiceTimerIntervalInSeconds;
         protected string FromAddress;
         protected string ToAddresses;
         protected string SmtpClientHost;
@@ -31,7 +32,7 @@ namespace Logitude.ServerHealthService
             WriteToLogsFile("Service Is Started At " + GetCurrentDateTime(true));
             ReadConfigurations();
             ServiceTimer.Elapsed += new ElapsedEventHandler(OnElapsedTime);
-            ServiceTimer.Interval = 3600000;//1 hour
+            ServiceTimer.Interval = ServiceTimerIntervalInSeconds * 1000;
             ServiceTimer.Enabled = true;
         }
 
@@ -46,7 +47,7 @@ namespace Logitude.ServerHealthService
 
             foreach (DriveInfo drive in serverDrives)
             {
-                if (drive.IsReady == true)
+                if (drive.IsReady)
                 {
                     long driveTotalSize = drive.TotalSize;
                     long driveTotalFreeSpace = drive.TotalFreeSpace;
@@ -66,6 +67,7 @@ namespace Logitude.ServerHealthService
         protected void ReadConfigurations()
         {
             PercentageOfTotalDriveSpace = Convert.ToInt32(ConfigurationManager.AppSettings["PercentageOfTotalDriveSpace"]);
+            ServiceTimerIntervalInSeconds = Convert.ToInt64(ConfigurationManager.AppSettings["ServiceTimerIntervalInSeconds"]);
             FromAddress = ConfigurationManager.AppSettings["FromAddress"];
             ToAddresses = ConfigurationManager.AppSettings["ToAddresses"];
             SmtpClientHost = ConfigurationManager.AppSettings["SmtpClientHost"];
@@ -153,7 +155,7 @@ namespace Logitude.ServerHealthService
                 dateTimeFormat += " hh:mm tt";
             }
 
-            return DateTime.Now.Date.ToString(dateTimeFormat);
+            return DateTime.Now.ToString(dateTimeFormat);
         }
 
         protected double ConvertBytesToGigabytes(long bytes)
