@@ -1284,8 +1284,8 @@
     <Content Include="Infrastructure\Components\LogitudeComponents\DWLogSearchWindowComponent.html" />
     <Content Include="Infrastructure\Components\LogitudeComponents\MultilineTextBoxWindow.html" />
     <TypeScriptCompile Include="Infrastructure\Components\LogitudeComponents\DropdownMenuComponent.ts" />
-    <Content Include="Infrastructure\Components\LogitudeComponents\MultiSelectLOV.html" />
-    <TypeScriptCompile Include="Infrastructure\Components\LogitudeComponents\MultiSelectLOV.ts" />
+    <Content Include="Infrastructure\Components\LogitudeComponents\MultiSelectLOVComponent.html" />
+    <TypeScriptCompile Include="Infrastructure\Components\LogitudeComponents\MultiSelectLOVComponent.ts" />
     <Content Include="Infrastructure\Components\LogitudeComponents\TimeInput.html" />
     <Content Include="Infrastructure\Components\LogitudeCustomComponents\LastSuccessfulLoginComponent.html" />
     <Content Include="Infrastructure\Components\Maintenance\BatchTaskExecution\BTEGeneralTabComponent.html" />

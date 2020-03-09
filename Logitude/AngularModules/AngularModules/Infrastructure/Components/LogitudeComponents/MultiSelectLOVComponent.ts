@@ -8,7 +8,7 @@ import { AppTool } from '../../Tools';
     templateUrl: 'MultiSelectLOV.html',
 })
 
-export class MultiSelectLOV implements OnInit {
+export class MultiSelectLOVComponent implements OnInit {
     @Input()
     public IsDisabled: boolean
     @Output()
@@ -17,19 +17,25 @@ export class MultiSelectLOV implements OnInit {
     //private _CustomSendOptionsArgs: CustomSendOptionsArgs;
     public _DropdownDisplay: string = 'none';
     private _ElementRef: any;
-
     static MyId: number = 0;
     static LastDropdownMenuFilterId: number = 0;
     public _MultiSelectLOVId: string;
     public _MultiSelectLOVMenuId: string;
     MyDropdownMenuFilterId: number;
 
+    @Input()
+    public DataContext: any[]=[];
+    @Input()
+    public LOVListComponentPropName: string = null;
+    @Input()
+    public LOVLastChosenItemPropName: string = null;
+
     constructor(private _CD: ChangeDetectorRef, myElement: ElementRef) {
         this._ElementRef = myElement;
         ///this.DataContext = this; 
         //this._CustomSendOptionsArgs = new CustomSendOptionsArgs();
         //this._CustomSendOptionsArgs.ForcePersonalSign = false;
-        var curId = MultiSelectLOV.MyId++;
+        var curId = MultiSelectLOVComponent.MyId++;
         this.MyDropdownMenuFilterId = curId;
         this._MultiSelectLOVId = "MultiSelectLOV_" + curId;
         this._MultiSelectLOVMenuId = "MultiSelectLOVMenuId_" + curId;
@@ -96,7 +102,7 @@ export class MultiSelectLOV implements OnInit {
 
         //MouseEvent
 
-        MultiSelectLOV.LastDropdownMenuFilterId = this.MyDropdownMenuFilterId;
+        MultiSelectLOVComponent.LastDropdownMenuFilterId = this.MyDropdownMenuFilterId;
         if (this._DropdownDisplay == 'none') {
             var item = document.getElementById(this._MultiSelectLOVId);
             var itemRect = item.getBoundingClientRect();

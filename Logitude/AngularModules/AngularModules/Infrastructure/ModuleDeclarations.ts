@@ -269,6 +269,7 @@ export const ControlsComponents =
         DocsInTabComponent,
         LastSuccessfulLoginComponent,
         DropdownMenuComponent,
+        MultiSelectLOV,
 
     ];
 export const Components =

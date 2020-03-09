@@ -65,16 +65,9 @@
                 </tr>
                 <tr>
                     <td colspan="6">
-                        <MultiSelectLOV>
-                            <div class="class-MultiSelectLOV-content">
-                                <LogLov [ObjectFieldName]="'CurrencyTypeCode'"
-                                        [ObjectTableName]="ObjectTableName"
-                                        [DataContext]="DataContext"
-                                        [HideColumns]="true"
-                                        [LookUpTableName]="'Customs.CurrencyType'"
-                                        [DisplayMemberPath]="'LocalName'">
-                                </LogLov>
-                            </div>
+                        <MultiSelectLOV [DataContext]="DataContext"
+                                        [LOVListComponentPropertyName]="'LOVListCurrencys'"
+                                        [LOVLastChosenItemPropName]="'LOVLastChosenCurrency'" >
                         </MultiSelectLOV>
                     </td>
                 </tr>
