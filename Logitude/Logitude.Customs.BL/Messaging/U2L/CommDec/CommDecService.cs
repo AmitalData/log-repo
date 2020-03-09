@@ -121,15 +121,18 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
             {
                 var FormatedException = ExceptionFormatUtil.GetFormated(ex);
                 AppendLogLine("ProccessRequest():Exception " + FormatedException.ToString() + Environment.NewLine + "---------------------------------------------");
+                AppendLogLine("Declaration Upsert Error " + Environment.NewLine + Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.ToString(1000));
                 return;
             }
             catch (Exception e)
             {
                 AppendLogLine("ProccessRequest():Exception " + e.ToString() + Environment.NewLine + "---------------------------------------------");
+                AppendLogLine("Declaration Upsert Error " + Environment.NewLine + Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.ToString(1000));
                 return;
             }
             if(!String.IsNullOrWhiteSpace(MyGenericResponseObj.StatusType.ToString()) && MyGenericResponseObj.StatusType != GenericResponseObj.StatusEnum.Success)
             {
+                AppendLogLine("Declaration Upsert Error " + Environment.NewLine + Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.ToString(1000));
                 return;
             }
             //Delete Supplier Invoice
