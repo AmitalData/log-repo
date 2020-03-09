@@ -51,7 +51,9 @@
                                     <log-column [header]="'TariffLine.F.OriginPortId' | TextCodeTranslationPipe" [width]="'70'">
                                         <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
                                             <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
-                                                <span>{{item.OriginPortCode}}</span>
+                                                <span *ngIf="EntityPM.TypeCode == 'AFC'">{{item.OriginPortCode}}</span>
+                                                <span *ngIf="EntityPM.TypeCode == 'OLC'">{{item.OriginPortCombinedCode}}</span>
+
                                             </div>
                                         </log-cell-template>
                                     </log-column>
@@ -60,7 +62,8 @@
                                     <log-column [header]="'TariffLine.F.DestinationPortId' | TextCodeTranslationPipe" [width]="'70'">
                                         <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
                                             <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
-                                                <span>{{item.DestinationPortCode}}</span>
+                                                <span *ngIf="EntityPM.TypeCode == 'AFC'">{{item.DestinationPortCode}}</span>
+                                                <span *ngIf="EntityPM.TypeCode == 'OLC'">{{item.DestinationPortCombinedCode}}</span>
                                             </div>
                                         </log-cell-template>
                                     </log-column>
@@ -174,7 +177,8 @@
                                     <log-column [header]="'TariffLine.F.OriginPortId' | TextCodeTranslationPipe" [width]="'70'">
                                         <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
                                             <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
-                                                <span>{{item.OriginPortCode}}</span>
+                                                <span *ngIf="EntityPM.TypeCode == 'ASC'">{{item.OriginPortCode}}</span>
+                                                <span *ngIf="EntityPM.TypeCode == 'OSC'">{{item.OriginPortCombinedCode}}</span>
                                                 <div style="height: 100%; width: 100%;" *ngIf="item.IsFromAllOtherPorts">
                                                     <img src="./Images/Icons/A-icon.png" width="16" height="16" title="From All Other Ports" />
                                                 </div>
@@ -186,10 +190,11 @@
                                     <log-column [header]="'TariffLine.F.DestinationPortId' | TextCodeTranslationPipe" [width]="'70'">
                                         <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
                                             <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
-                                                <span>{{item.DestinationPortCode}}</span>
-                                                <div style="height: 100%; width: 100%;" *ngIf="item.IsToAllOtherPorts">
-                                                    <img src="./Images/Icons/A-icon.png" width="16" height="16" title="To All Other Ports" />
-                                                </div>
+                                                <span *ngIf="EntityPM.TypeCode == 'ASC'">{{item.DestinationPortCode}}</span>
+                                                <span *ngIf="EntityPM.TypeCode == 'OSC'">{{item.DestinationPortCombinedCode}}</span>
+                                                    <div style="height: 100%; width: 100%;" *ngIf="item.IsToAllOtherPorts">
+                                                        <img src="./Images/Icons/A-icon.png" width="16" height="16" title="To All Other Ports" />
+                                                    </div>
                                             </div>
                                         </log-cell-template>
                                     </log-column>
@@ -421,7 +426,7 @@
                                     <log-column [header]="'TariffLine.F.OriginPortId' | TextCodeTranslationPipe" [width]="'70'">
                                         <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
                                             <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
-                                                <span>{{item.OriginPortCode}}</span>
+                                                <span>{{item.OriginPortCombinedCode}}</span>
                                             </div>
                                         </log-cell-template>
                                     </log-column>
@@ -430,7 +435,7 @@
                                     <log-column [header]="'TariffLine.F.DestinationPortId' | TextCodeTranslationPipe" [width]="'70'">
                                         <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
                                             <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
-                                                <span>{{item.DestinationPortCode}}</span>
+                                                <span>{{item.DestinationPortCombinedCode}}</span>
                                             </div>
                                         </log-cell-template>
                                     </log-column>
@@ -509,7 +514,7 @@
                                     <log-column [header]="'TariffLine.F.OriginPortId' | TextCodeTranslationPipe" [width]="'70'">
                                         <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
                                             <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
-                                                <span>{{item.OriginPortCode}}</span>
+                                                <span>{{item.OriginPortCombinedCode}}</span>
                                                 <div style="height: 100%; width: 100%;" *ngIf="item.IsFromAllOtherPorts">
                                                     <img src="./Images/Icons/A-icon.png" width="16" height="16" title="From All Other Ports" />
                                                 </div>
@@ -521,7 +526,7 @@
                                     <log-column [header]="'TariffLine.F.DestinationPortId' | TextCodeTranslationPipe" [width]="'70'">
                                         <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
                                             <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
-                                                <span>{{item.DestinationPortCode}}</span>
+                                                <span>{{item.DestinationPortCombinedCode}}</span>
                                                 <div style="height: 100%; width: 100%;" *ngIf="item.IsToAllOtherPorts">
                                                     <img src="./Images/Icons/A-icon.png" width="16" height="16" title="To All Other Ports" />
                                                 </div>

@@ -413,9 +413,11 @@ export class SurchargeSummary {
 export class ExcelTariffLines {
     FromPortId: string;
     FromPortCode: string;
+    FromPortCombinedCode: string;
     FromPortName: string;
     ToPortId: string;
     ToPortCode: string;
+    ToPortCombinedCode: string;
     ToPortName: string;
     MinPrice: number;
     Step1Price: number;

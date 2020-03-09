@@ -62,6 +62,10 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
         }
     }
 
+    GetDisplayMemberPath() {
+        return this.IsAir ? "Code" : "CombinedCode";
+    }
+
     SetOriginDependencyFilterValue() {
         if (this.EntityPM.TypeCode == "OLC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFS") {
             this.OriginDependencyFilterValue = "O";
