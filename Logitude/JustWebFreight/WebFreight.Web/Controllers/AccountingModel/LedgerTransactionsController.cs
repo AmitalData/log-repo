@@ -67,7 +67,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
         {
             try
             {
-                int tenant = AuthinticateTenant();
+                 int tenant = AuthinticateTenant();
 
                 var accountingContext = AccountingContext.GetContext(tenant);
                 var _LedgerTransactionQueryService = new LedgerTransactionQueryService(tenant);
