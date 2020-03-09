@@ -94,9 +94,9 @@ export class LedgerTransactionExtendedListService {
         var callUrl = this._apiUrl.concat(urlparameters);//
 
         return this.httpClient.get(callUrl, httpOptions).pipe(
-            map(response => {
+            map((response: ServiceResponse) => {
                 var serviceResponse: ServiceResponse = new ServiceResponse();
-                serviceResponse.Result = response;
+                serviceResponse = response;
                 return serviceResponse;
             }),
             catchError(ServiceHelper.HandleServiceError));
