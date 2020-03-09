@@ -102,14 +102,14 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 
         this.EntityPM = entityArgs.EntityPM;
         this.SetAmountCurrencyCode();
-         
+        this.ComputeLocalAmount();
         this.SetPaymentAmount();
         if (this.EntityPM.ARPaymentChequeReplicas.length > 1) {
             this.isMultipleCheques = true;
         }
         this.isFullAccounting = SessionLocator.TenantPM.AccountingActivated;
         this.originalPaymentOpenAmount = this.EntityPM.OpenAmount;
-        this.paymentAmountTotal = this.PaymenyAmount;
+        this.paymentAmountTotal = this.EntityPM.AmountInPaymentCurrency;
         this.PaymentCurrencySign = this.EntityPM.PaymentCurrencySign;
         this.TransactionsList = new ObservableCollection([]);
 
@@ -282,6 +282,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
                     this.EntityPM.GLAccountRecoMethodCode = glaccount.ReconcileMethodCode;
                     this.EntityPM.GLAccountCurrencyCode = glaccount.CurrencyCode;
                     this.SetAmountCurrencyCode();
+                    this.ComputeLocalAmount();
                     this.SetPaymentAmount();
                     console.log("GLAccount reloaded: " + this.EntityPM.GLAccountId);
                     this.GetData();
@@ -1043,6 +1044,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
                                                 this.EntityPM.GLAccountRecoMethodCode = glaccount.ReconcileMethodCode;
                                                 this.EntityPM.GLAccountCurrencyCode = glaccount.CurrencyCode;
                                                 this.SetAmountCurrencyCode();
+                                                this.ComputeLocalAmount();
                                                 this.SetPaymentAmount();
                                                
                                                 if (glaccount != null && !glaccount.IsMultiCurrency) {
@@ -1164,6 +1166,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
                 this.EntityPM.PaymentCurrencyExchangeRate = AppTool.Round(value, 5);
                 this.GetRateIsEnabled();
                 this.ComputeLocalAmount();
+                this.SetPaymentAmount();
                 this.ComputeOpenAmountInLocalCurrency();
                 this.ItemsSource.Collection.forEach(item => {
                     item.InitExchangeRate();
@@ -1723,12 +1726,13 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         if (this.EntityPM.AmountInPaymentCurrency != value) {
             this.EntityPM.AmountInPaymentCurrency = AppTool.Round(value, 2);
             this.ComputeLocalAmount();
+            this.SetPaymentAmount();
             this.ComputeOpenAmount();
             this.ComputeOpenAmountInLocalCurrency();
             this.UpdateSummary();
 
             this.originalPaymentOpenAmount = this.EntityPM.AmountInPaymentCurrency;
-            this.paymentAmountTotal = this.PaymenyAmount;
+            this.paymentAmountTotal = this.EntityPM.AmountInPaymentCurrency;
 
             this.CalculateTotals();
 
@@ -2242,7 +2246,7 @@ export class TransactionLineModel extends BaseComponent {
      CalculateOpenAmount() {
          if (this.parent.EntityPM.GLAccountRecoMethodCode == "0" && this.parent.EntityPM.GLAccountCurrencyCode=="Multi") {
             
-            return this.OpenAmount * this.parent.PaymentCurrencyExchangeRate;
+            return this.OpenAmount //* this.parent.PaymentCurrencyExchangeRate;
             
         } else { return this.OpenAmount; }
     }
