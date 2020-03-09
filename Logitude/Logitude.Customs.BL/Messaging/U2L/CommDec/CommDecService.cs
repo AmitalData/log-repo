@@ -40,6 +40,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
         private ICustomContext _context;
         private LOGICUSTFILE _LOGICUSTFILE;
         private LogitudeCustomsFile _AmitalCustomsFile;
+        private DeclarationCourierStatusPM currentDeclarationCourierStatusPM;
 
         private AmitalContext amitalContext;
 
@@ -49,6 +50,8 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
         //private DeclarationPM _MyEntryDeclarationPM;
         private Stopwatch _Stopwatch;
         private bool _IsBuildItemsUnit = false;
+
+        public bool IsAutonomy = false;
 
         public CommDecService()
             : base(
@@ -388,6 +391,10 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
                 this._AmitalCustomsFile = _LOGICUSTFILE.LogitudeCustomsFile[0];
                 CalcIsAutonomy();
                 CalcProcedureCurrentCode();
+                if(this.IsAutonomy)
+                {
+                    UpdateDeclarationPending("901");
+                }
             }
 
             _MyDeclarationPM.CurrentContextTag = UpsertActionConst; // moran 28.7.16 - Task 22249
@@ -442,13 +449,57 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
             MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.Success;
         }
 
+        private void UpdateDeclarationPending(string declarationPendingCode)
+        {
+            if (currentDeclarationCourierStatusPM != null)
+            {
+                CourierPendingReasonQueryService myCourierPendingReasonQueryService = new CourierPendingReasonQueryService(_context);
+                CourierPendingReasonPM courierPendingReasonPM = myCourierPendingReasonQueryService.GetSingle(declarationPendingCode, false, false);
+                if (courierPendingReasonPM == null)
+                {
+                    LogMessagingUtil.Instance.AppendLine("לא קיים קוד Pending = " + declarationPendingCode + " בטבלת סיבות Pending");
+                    return;
+                }
+                LogMessagingUtil.Instance.AppendLine("Pending - " + declarationPendingCode);
+                DeclarationPendingPM _declarationPendingPM = null;
+                if (currentDeclarationCourierStatusPM.DeclarationPendings != null && currentDeclarationCourierStatusPM.DeclarationPendings.Count() > 0)
+                {
+                    _declarationPendingPM = currentDeclarationCourierStatusPM.DeclarationPendings.Where(r => r.DeclarationID == currentDeclarationCourierStatusPM.DeclarationId && r.CourierPendingReasonCode == declarationPendingCode).FirstOrDefault();
+                }
+                if (_declarationPendingPM == null)
+                {
+                    _declarationPendingPM = new DeclarationPendingPM();
+                    _declarationPendingPM.CourierPendingReasonCode = declarationPendingCode;
+                    _declarationPendingPM.Status = "A";
+                    _declarationPendingPM.ChangeSetOp = ChangeSetOperation.Insert;
+                    currentDeclarationCourierStatusPM.DeclarationPendings.Add(_declarationPendingPM);
+                }
+                else if (_declarationPendingPM.Status != "A")
+                {
+                    _declarationPendingPM.ChangeSetOp = ChangeSetOperation.Update;
+                    _declarationPendingPM.Status = "A";
+                }
+                if (_declarationPendingPM.ChangeSetOp != ChangeSetOperation.None)
+                {
+                    LogMessagingUtil.Instance.AppendLine("Set Courier Pending Reason Code To " + declarationPendingCode);
+                    if (currentDeclarationCourierStatusPM.ChangeSetOp != ChangeSetOperation.Update) currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                }
+            }
+        }
+
         private void CalcProcedureCurrentCode()
         {
-            if (this._LogitudeCommDecFile.IsAutonomy == "yes")
+            if (currentDeclarationCourierStatusPM == null)
+            {
+                DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(_context);
+                currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(_MyDeclarationPM.Id, true, false);
+            }
+
+            if (this.IsAutonomy == true)
             {
                 if (!String.IsNullOrWhiteSpace(this._MyDeclarationPM.ImporterCode) && this._MyDeclarationPM.ImporterCode.Substring(0, 1) == "5")
                 {
-                    if (this._MyDeclarationPM.TotalInvoiceAmountInUSD >= 1000)
+                    if (this.currentDeclarationCourierStatusPM != null && this.currentDeclarationCourierStatusPM.HighLowValue == "H")
                     {
                         this._MyDeclarationPM.ProcedureCurrentCode = "4000005";
                     }
@@ -459,7 +510,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
                 }
                 else
                 {
-                    if (this._MyDeclarationPM.TotalInvoiceAmountInUSD >= 1000)
+                    if (this.currentDeclarationCourierStatusPM != null && this.currentDeclarationCourierStatusPM.HighLowValue == "H")
                     {
                         this._MyDeclarationPM.ProcedureCurrentCode = "4000505";
                     }
@@ -473,7 +524,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
             {
                 if (!String.IsNullOrWhiteSpace(this._MyDeclarationPM.ImporterCode) && this._MyDeclarationPM.ImporterCode.Substring(0, 1) == "5")
                 {
-                    if (this._MyDeclarationPM.TotalInvoiceAmountInUSD >= 1000)
+                    if (this.currentDeclarationCourierStatusPM != null && this.currentDeclarationCourierStatusPM.HighLowValue == "H")
                     {
                         this._MyDeclarationPM.ProcedureCurrentCode = "4000001";
                     }
@@ -484,7 +535,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
                 }
                 else
                 {
-                    if (this._MyDeclarationPM.TotalInvoiceAmountInUSD >= 1000)
+                    if (this.currentDeclarationCourierStatusPM != null && this.currentDeclarationCourierStatusPM.HighLowValue == "H")
                     {
                         this._MyDeclarationPM.ProcedureCurrentCode = "4000501";
                     }
@@ -500,14 +551,14 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
         {
             if (String.IsNullOrWhiteSpace(this._LogitudeCommDecFile.IsAutonomy) && !String.IsNullOrWhiteSpace(this._MyDeclarationPM.ImporterCode) && this._MyDeclarationPM.ImporterCode.Substring(0,1) == "8")
             {
-                this._LogitudeCommDecFile.IsAutonomy = "yes";
+                this.IsAutonomy = true;
             }
             if (String.IsNullOrWhiteSpace(this._LogitudeCommDecFile.IsAutonomy) && String.IsNullOrWhiteSpace(this._MyDeclarationPM.ImporterCode))
             {
                 CustomsAutonomyKeywordQueryService customsAutonomyKeywordQueryService = new CustomsAutonomyKeywordQueryService(_context);
                 if(customsAutonomyKeywordQueryService.CheckIfsAutonomy(_AmitalCustomsFile.CasualImporterCity, _AmitalCustomsFile.CasualImportelTel.TrimStart(new Char[] { '0' }), ResolvedTenant()))
                 {
-                    this._LogitudeCommDecFile.IsAutonomy = "yes";
+                    this.IsAutonomy = true;
                 }
             }
         }
@@ -595,7 +646,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
                             string prevVal = null;
                             string currvVal = null;
                             DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(_context);
-                            DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(_MyDeclarationPM.Id, true, false);
+                            currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(_MyDeclarationPM.Id, true, false);
                             if (currentDeclarationCourierStatusPM != null)
                             {
                                 CalculateDeclarationCourierStatus calculateDeclarationCourierStatus = new CalculateDeclarationCourierStatus(_MyDeclarationPM, _MyDeclarationPM.Id, _MyDeclarationPM.Tenant);
