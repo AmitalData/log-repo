@@ -1494,7 +1494,7 @@
     SystemRequired="false"
     ObjectFieldNotRequired="false"
     SystemMaxLength="25"
-    DisplayInList="true"
+    DisplayInList="false"
     DataTemplateName="&quot;DaysFromLastShipmentDataTemplate&quot;"
     IsCustomFilter="false"
     Operator="&quot;Equals&quot;"
