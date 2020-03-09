@@ -2160,7 +2160,7 @@ export class TransactionLineModel extends BaseComponent {
     GetStatus() {
         var __s = "";
 
-        if (this.OriginalInvoiceAmount == this.originalOpenAmount)
+        if (AppTool.Round(this.OriginalAmount,2) ==AppTool.Round( this.originalOpenAmount,2))
             __s = TextStore.open;
         else if (0 == this.originalOpenAmount)
             __s = TextStore.Closed;
