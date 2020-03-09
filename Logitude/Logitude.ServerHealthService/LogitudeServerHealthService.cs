@@ -13,8 +13,13 @@ namespace Logitude.ServerHealthService
     public partial class LogitudeServerHealthService : ServiceBase
     {
         protected Timer ServiceTimer = new Timer();
-        protected int PercentageOfTotalSize = Convert.ToInt32(ConfigurationManager.AppSettings["PercentageOfTotalSize"]);
-        protected string EmailAddresses = ConfigurationManager.AppSettings["EmailAddresses"];
+        protected int PercentageOfTotalDriveSpace;
+        protected string FromAddress;
+        protected string ToAddresses;
+        protected string SmtpClientHost;
+        protected int SmtpClientPort;
+        protected string SmtpClientUsername;
+        protected string SmtpClientPassword;
 
         public LogitudeServerHealthService()
         {
@@ -23,7 +28,8 @@ namespace Logitude.ServerHealthService
 
         protected override void OnStart(string[] args)
         {
-            WriteToLogsFile("Service Is Started At " + DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+            WriteToLogsFile("Service Is Started At " + GetCurrentDateTime(true));
+            ReadConfigurations();
             ServiceTimer.Elapsed += new ElapsedEventHandler(OnElapsedTime);
             ServiceTimer.Interval = 3600000;//1 hour
             ServiceTimer.Enabled = true;
@@ -31,7 +37,7 @@ namespace Logitude.ServerHealthService
 
         protected override void OnStop()
         {
-            WriteToLogsFile("Service Is Stopped At " + DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+            WriteToLogsFile("Service Is Stopped At " + GetCurrentDateTime(true));
         }
 
         protected void OnElapsedTime(object source, ElapsedEventArgs e)
@@ -44,87 +50,116 @@ namespace Logitude.ServerHealthService
                 {
                     long driveTotalSize = drive.TotalSize;
                     long driveTotalFreeSpace = drive.TotalFreeSpace;
-                    double percentageOfTotal = ((double)PercentageOfTotalSize / 100) * driveTotalSize;
+                    double percentageOfTotal = ((double)PercentageOfTotalDriveSpace / 100) * driveTotalSize;
 
                     if (driveTotalFreeSpace < percentageOfTotal)
                     {
                         string driveName = drive.VolumeLabel + " (" + drive.Name.Replace(@"\", String.Empty) + ")";
                         string warningMessage = BuildWarningMessage(driveName, driveTotalSize, driveTotalFreeSpace);
-                        SendEmails(warningMessage);
+                        string subject = "Logitude Server Health Warning";
+                        SendEmails(subject, warningMessage);
                     }
                 }
             }
         }
 
+        protected void ReadConfigurations()
+        {
+            PercentageOfTotalDriveSpace = Convert.ToInt32(ConfigurationManager.AppSettings["PercentageOfTotalDriveSpace"]);
+            FromAddress = ConfigurationManager.AppSettings["FromAddress"];
+            ToAddresses = ConfigurationManager.AppSettings["ToAddresses"];
+            SmtpClientHost = ConfigurationManager.AppSettings["SmtpClientHost"];
+            SmtpClientPort = Convert.ToInt32(ConfigurationManager.AppSettings["SmtpClientPort"]);
+            SmtpClientUsername = ConfigurationManager.AppSettings["SmtpClientUsername"];
+            SmtpClientPassword = ConfigurationManager.AppSettings["SmtpClientPassword"];
+        }
+
         protected string BuildWarningMessage(string driveName, long driveTotalSize, long driveTotalFreeSpace)
         {
-            string warningMessage = "The Drive " + driveName + " Have Free Space Less Than " + PercentageOfTotalSize.ToString() + "% Of It's Total Space.\n";
-            warningMessage += "Total Space: " + driveTotalSize.ToString() + " Bytes.\n";
-            warningMessage += "Total Free Space: " + driveTotalFreeSpace.ToString() + " Bytes.\n";
+            string warningMessage = "The Drive " + driveName + " Have Free Space Less Than " + PercentageOfTotalDriveSpace.ToString() + "% Of It's Total Space.\n";
+            warningMessage += "Total Space: " + ConvertBytesToGigabytes(driveTotalSize).ToString() + " GB.\n";
+            warningMessage += "Total Free Space: " + ConvertBytesToGigabytes(driveTotalFreeSpace).ToString() + " GB.\n";
             warningMessage += "\n" + "From Logitude Server Health Service.";
 
             return warningMessage;
         }
 
-        protected void SendEmails(string message)
+        protected void SendEmails(string subject, string message)
         {
             try
             {
+                SmtpClient smtpClient = new SmtpClient(SmtpClientHost);
                 MailMessage mailMessage = new MailMessage();
-                SmtpClient smtpClient = new SmtpClient("smtp.sendgrid.net");
 
-                mailMessage.From = new MailAddress("fanar@logitudeworld.com");
-                if (EmailAddresses.Contains(","))
+                mailMessage.From = new MailAddress(FromAddress);
+                foreach (var emailAddress in ToAddresses.Split(',').ToList())
                 {
-                    foreach (var emailAddress in EmailAddresses.Split(',').ToList())
-                    {
-                        mailMessage.To.Add(emailAddress);
-                    }
-                }
-                else
-                {
-                    mailMessage.To.Add(EmailAddresses);
+                    mailMessage.To.Add(emailAddress);
                 }
                 mailMessage.BodyEncoding = Encoding.UTF8;
-                mailMessage.Subject = "Logitude Server Health Warning";
+                mailMessage.Subject = subject;
                 mailMessage.Body = message;
-                smtpClient.Port = 587;
-                smtpClient.Credentials = new NetworkCredential("LogitudeworldTestAccount", "!T1234567");
+                smtpClient.Port = SmtpClientPort;
+                smtpClient.Credentials = new NetworkCredential(SmtpClientUsername, SmtpClientPassword);
                 smtpClient.Send(mailMessage);
 
-                WriteToLogsFile("Warning Message Sent Successfully To " + EmailAddresses + " At " + DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+                WriteToLogsFile("Warning Message Sent Successfully To " + ToAddresses + " At " + GetCurrentDateTime(true));
             }
             catch (Exception exception)
             {
-                WriteToLogsFile("Error While Sending Warning Message At " + DateTime.Now.ToString("dd/MM/yyyy hh:mm tt") + " With Exception: " + exception.Message);
+                WriteToLogsFile("Error While Sending Warning Message At " + GetCurrentDateTime(true) + " With Exception: " + exception.Message);
             }
         }
 
         protected void WriteToLogsFile(string log)
         {
-            string logsFileDirectory = "C:" + "\\Logitude.ServerHealthService.Logs";
-
-            if (!Directory.Exists(logsFileDirectory))
+            try
             {
-                Directory.CreateDirectory(logsFileDirectory);
-            }
+                string logsFileDirectory = "C:" + "\\Logitude.ServerHealthService.Logs";
 
-            string logsFilePath = logsFileDirectory + "\\ServerHealthServiceLogs_" + DateTime.Now.Date.ToString("dd/MM/yyyy").Replace('/', '_') + ".txt";
-
-            if (!File.Exists(logsFilePath))
-            {
-                using (StreamWriter streamWriter = File.CreateText(logsFilePath))
+                if (!Directory.Exists(logsFileDirectory))
                 {
-                    streamWriter.WriteLine(log);
+                    Directory.CreateDirectory(logsFileDirectory);
+                }
+
+                string logsFilePath = logsFileDirectory + "\\ServerHealthServiceLogs_" + GetCurrentDateTime(false).Replace('/', '_') + ".txt";
+
+                if (!File.Exists(logsFilePath))
+                {
+                    using (StreamWriter streamWriter = File.CreateText(logsFilePath))
+                    {
+                        streamWriter.WriteLine(log);
+                    }
+                }
+                else
+                {
+                    using (StreamWriter streamWriter = File.AppendText(logsFilePath))
+                    {
+                        streamWriter.WriteLine(log);
+                    }
                 }
             }
-            else
+            catch (Exception)
             {
-                using (StreamWriter streamWriter = File.AppendText(logsFilePath))
-                {
-                    streamWriter.WriteLine(log);
-                }
+                //Error While Writing To Logs File
             }
+        }
+
+        protected string GetCurrentDateTime(bool withTime)
+        {
+            string dateTimeFormat = "dd/MM/yyyy";
+            if (withTime)
+            {
+                dateTimeFormat += " hh:mm tt";
+            }
+
+            return DateTime.Now.Date.ToString(dateTimeFormat);
+        }
+
+        protected double ConvertBytesToGigabytes(long bytes)
+        {
+            double gigabytes = bytes * 9.31 * Math.Pow(10, -10);
+            return gigabytes;
         }
     }
 }
