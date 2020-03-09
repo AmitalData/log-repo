@@ -106,6 +106,7 @@ export class SendVehicleComponent {
                 }
                 else {
                     this.EntityPM = myResponse.Result;
+
                     if (this.CurrentSession.CurrentEditComponent) {
                         this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                         this.reloadEvent = this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
@@ -136,11 +137,10 @@ export class SendVehicleComponent {
                                                 "שליחת מסר עדכון פרטי רכב", false)
                                             .then((res) => {
                                                 console.log(res);
-                                                //this.CancelButtonClicked();
+                                                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                                             }
                                             ).catch((err) => {
                                                 this.CurrentSession.CurrentEditComponent.ValidationErrorsList.push(err);
-                                                //this.CancelButtonClicked();
                                             });
 
                                         var myIIGGeneralMessagesService = new IIGGeneralMessagesService();
