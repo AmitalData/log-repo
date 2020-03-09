@@ -7,13 +7,41 @@ namespace Simplog.Global.Data.Migrations
     {
         public override void Up()
         {
-            DropForeignKey("dbo.BatchServicesDefinitionMods", "Code", "dbo.BatchServicesDefinitions");
-            DropIndex("dbo.BatchServicesDefinitionMods", new[] { "Code" });
+            Sql("declare @sql nvarchar(2000) " +
+                "declare @fkName varchar(500) " +
+                "set @fkName = (select f.name from sys.foreign_keys as f " +
+                "inner join sys.foreign_key_columns as fc on f.object_id = fc.constraint_object_id " +
+                "where f.parent_object_id = object_id('[dbo].[BatchServicesDefinitionMods]') and col_name(fc.parent_object_id, fc.parent_column_id) = 'Code') " +
+                "set @sql = 'alter table [dbo].[BatchServicesDefinitionMods] drop constraint [' + @fkName + ']' " +
+                "exec(@sql)");
+
+            Sql("declare @sql nvarchar(2000) " +
+                "declare @indexName varchar(500) " +
+                "set @indexName = (select i.name from sys.indexes as i " +
+                "inner join sys.index_columns as ic on i.object_id = ic.object_id AND i.index_id = ic.index_id " +
+                "where i.is_unique = 0 and i.object_id = object_id('[dbo].[BatchServicesDefinitionMods]') and col_name(i.object_id, ic.column_id) = 'Code') " +
+                "set @sql = 'drop index [' + @indexName + '] on [dbo].[BatchServicesDefinitionMods]' " +
+                "exec(@sql)");
+
+
             //DropColumn("dbo.TenantManagements", "BluesnapContractId");
             //RenameColumn(table: "dbo.TenantManagements", name: "BluesnapInttraStockContractId", newName: "BluesnapContractId");
             //RenameIndex(table: "dbo.TenantManagements", name: "IX_BluesnapInttraStockContractId", newName: "IX_BluesnapContractId");
-            DropPrimaryKey("dbo.BatchServicesDefinitionMods");
-            DropPrimaryKey("dbo.BatchServicesDefinitions");
+
+
+            Sql("declare @sql nvarchar(2000) " +
+                "declare @pkName varchar(500) " +
+                "set @pkName = (select constraint_name from information_schema.table_constraints where constraint_type = 'PRIMARY KEY' and table_schema = 'dbo' and table_name = 'BatchServicesDefinitionMods') " +
+                "set @sql = 'alter table [dbo].[BatchServicesDefinitionMods] drop constraint [' + @pkName + ']' " +
+                "exec(@sql)");
+
+            Sql("declare @sql nvarchar(2000) " +
+                "declare @pkName varchar(500) " +
+                "set @pkName = (select constraint_name from information_schema.table_constraints where constraint_type = 'PRIMARY KEY' and table_schema = 'dbo' and table_name = 'BatchServicesDefinitions') " +
+                "set @sql = 'alter table [dbo].[BatchServicesDefinitions] drop constraint [' + @pkName + ']' " +
+                "exec(@sql)");
+
+
             //AlterColumn("dbo.TenantManagements", "CountryName", c => c.String(maxLength: 120, unicode: false));
             AlterColumn("dbo.BatchServicesDefinitionMods", "Code", c => c.String(nullable: false, maxLength: 40, unicode: false));
             AlterColumn("dbo.BatchServicesDefinitions", "Code", c => c.String(nullable: false, maxLength: 40, unicode: false));
