@@ -409,10 +409,10 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
       
         this.amount2reconcileTotal = _linesAmount2reco;
         this.paymentReconciledAmountTotal = _linespaymentReconciledAmount;
-        if (this.EntityPM.GLAccountRecoMethodCode == "1") {
-            this.amount2reconcileTotal = _linesAmount2reco * this.EntityPM.PaymentCurrencyExchangeRate;
-            this.paymentReconciledAmountTotal = _linespaymentReconciledAmount * this.EntityPM.PaymentCurrencyExchangeRate;
-        }
+        //if (this.EntityPM.GLAccountRecoMethodCode == "1") {
+        //    this.amount2reconcileTotal = _linesAmount2reco * this.EntityPM.PaymentCurrencyExchangeRate;
+        //    this.paymentReconciledAmountTotal = _linespaymentReconciledAmount * this.EntityPM.PaymentCurrencyExchangeRate;
+        //}
         this.AdjustedAmount = this.paymentReconciledAmountTotal == 0 ? this.amount2reconcileTotal : this.paymentReconciledAmountTotal + this.amount2reconcileTotal;
         if(this.EntityPM.InvoicesLedgerTransactions.length == 0){
             // this.EntityPM.OpenAmount = this.originalPaymentOpenAmount;
