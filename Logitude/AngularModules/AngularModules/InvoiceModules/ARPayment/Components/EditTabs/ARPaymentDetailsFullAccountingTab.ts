@@ -109,7 +109,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         }
         this.isFullAccounting = SessionLocator.TenantPM.AccountingActivated;
         this.originalPaymentOpenAmount = this.EntityPM.OpenAmount;
-        this.paymentAmountTotal = this.EntityPM.AmountInPaymentCurrency;
+        this.paymentAmountTotal = this.PaymenyAmount;
         this.PaymentCurrencySign = this.EntityPM.PaymentCurrencySign;
         this.TransactionsList = new ObservableCollection([]);
 
@@ -405,8 +405,13 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
                 _linespaymentReconciledAmount += line.PaymentReconciledAmount;
             }
         });
+      
         this.amount2reconcileTotal = _linesAmount2reco;
         this.paymentReconciledAmountTotal = _linespaymentReconciledAmount;
+        if (this.EntityPM.GLAccountRecoMethodCode == "1") {
+            this.amount2reconcileTotal = _linesAmount2reco * this.EntityPM.PaymentCurrencyExchangeRate;
+            this.paymentReconciledAmountTotal = _linespaymentReconciledAmount * this.EntityPM.PaymentCurrencyExchangeRate;
+        }
         this.AdjustedAmount = this.paymentReconciledAmountTotal == 0 ? this.amount2reconcileTotal : this.paymentReconciledAmountTotal + this.amount2reconcileTotal;
         if(this.EntityPM.InvoicesLedgerTransactions.length == 0){
             // this.EntityPM.OpenAmount = this.originalPaymentOpenAmount;
@@ -1039,6 +1044,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
                                                 this.EntityPM.GLAccountCurrencyCode = glaccount.CurrencyCode;
                                                 this.SetAmountCurrencyCode();
                                                 this.SetPaymentAmount();
+                                               
                                                 if (glaccount != null && !glaccount.IsMultiCurrency) {
                                                     this.PaymentCurrencyId = glaccount.CurrencyId;
                                                 }
@@ -1722,7 +1728,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
             this.UpdateSummary();
 
             this.originalPaymentOpenAmount = this.EntityPM.AmountInPaymentCurrency;
-            this.paymentAmountTotal = this.EntityPM.AmountInPaymentCurrency;
+            this.paymentAmountTotal = this.PaymenyAmount;
 
             this.CalculateTotals();
 
