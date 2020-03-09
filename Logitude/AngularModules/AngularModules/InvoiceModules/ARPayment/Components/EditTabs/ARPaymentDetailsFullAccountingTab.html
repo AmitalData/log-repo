@@ -699,7 +699,7 @@
                                     </log-column>
                                     <!--OreginalInvoiceAmount -->
                                     <log-column [width]="'130'"
-                                                [header]="'OriginalInvoiceAmount'"
+                                                [header]="'ARPayment.O.OriginalInvoiceAmount' | TextCodeTranslationPipe"
                                                 [Alignment]="isRTL ? 'right' : 'left'">
                                         <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1"
                                                            [Alignment]="'right'">

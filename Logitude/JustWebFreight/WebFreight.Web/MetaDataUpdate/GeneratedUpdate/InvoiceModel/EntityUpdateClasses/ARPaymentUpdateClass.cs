@@ -6455,6 +6455,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
  		   TextCode ARPaymentTextCode_ARPaymentOReconcileData = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.O.ReconcileData", DefaultText = "Reconcile Data",LocalDefaultText = @"נתוני התאמה", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
+ 		   TextCode ARPaymentTextCode_ARPaymentOOriginalInvoiceAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.O.OriginalInvoiceAmount", DefaultText = "Original Invoice Amount",LocalDefaultText = @"סכום חשבונית מקורי", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
    
 	    
 }
