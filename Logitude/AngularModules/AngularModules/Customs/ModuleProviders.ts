@@ -224,6 +224,7 @@ import { SealCompletenesListService } from './Services/StandardLists/SealComplet
 import { SealTypeListService } from './Services/StandardLists/SealTypeListService';
 import { AmendmentTypeListService } from './Services/StandardLists/AmendmentTypeListService';
 import { SealUpdateReasonTypeListService } from './Services/StandardLists/SealUpdateReasonTypeListService';
+import { DeclarationReferantDataListService } from './Services/StandardLists/DeclarationReferantDataListService';
 
 
 //#endregion
@@ -583,6 +584,8 @@ export class ModuleProviders {
             case "SealTypeListService": { myResult = new SealTypeListService(); break; }
             case "AmendmentTypeListService": { myResult = new AmendmentTypeListService(); break; }
             case "SealUpdateReasonTypeListService": { myResult = new SealUpdateReasonTypeListService(); break; }
+            case "DeclarationReferantDataListService": { myResult = new DeclarationReferantDataListService(); break; }
+
              //#endregion                
 
             //#region StandardPMs

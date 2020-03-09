@@ -108,7 +108,7 @@ using System.Diagnostics;
             {
                 entityPM.AgentId = setting.CustomsAgentId.Length <= 9 ? setting.CustomsAgentId : null;
                 //if (!setting.IsConnectedToUniFreight)
-                if(!entityPM.IsConnectedToUnifreight)
+                if(!entityPM.IsConnectedToUnifreight && entityPM.IsAmendment!=true)
                 {                
 
                     if (string.IsNullOrEmpty(entityPM.CustomFileNo))
@@ -180,7 +180,10 @@ using System.Diagnostics;
 
 
         }
-
+        protected override void UpdateCalculatedFields(DeclarationPM entityPM, EntityPM entityParentPM, Declaration entityPOCO)
+        {
+            DeclarationDataMapping.UpdateCourierDeclarationFields(entityPM, entityPOCO);
+        }
         protected override void UpdateComposition(DeclarationPM entityPM)
         {
             ConsignmentUpdateService consignmentUpdateService = new ConsignmentUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
@@ -267,6 +270,19 @@ using System.Diagnostics;
                 {
                     UpdateUnifreight(entityPM);
                 }
+
+
+                if(entityPM.IsDiamondDeclaration)
+                {
+                    DeclarationQueryService declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
+
+                    entityPM.IsValidTicketsDiamond= declarationQueryService.IsValidTickets(entityPM);
+
+                    entityPM.IsMissMandatoryDiamond = declarationQueryService.IsMissingMandatoryFields(entityPM);
+
+                }
+
+
 
                 ConsignmentPM consignment = (from a in entityPM.Consignments select a).FirstOrDefault();
                 if (consignment != null) //itzik - due below crash 
@@ -495,6 +511,91 @@ using System.Diagnostics;
 
             }
         }
+
+        private bool DeclarationIsSigned(DeclarationPM entityPM)
+        {
+            return true;
+           // entityPM.IsSignedVersion
+        }
+
+        private bool SendDeclarationMandatoryFields(DeclarationPM declarationPM)
+        {
+            Boolean sendDeclarationMandatory = true;
+            CustomsRequiredFieldErrors errorsForDeclaration = CustomsRequiredFieldsValidator.GetRequiredFieldErrorsForDeclaration(declarationPM.Id, declarationPM.Tenant, declarationPM);
+            if (errorsForDeclaration != null && errorsForDeclaration.RequiredFields != null && errorsForDeclaration.RequiredFields.Count() > 0)
+            {
+                sendDeclarationMandatory = false;
+            }
+            return sendDeclarationMandatory;
+        }
+
+        private string DeclarationTicketsStatus(DeclarationPM declarationPM)
+        {
+            CustomsDocumentsTicketQueryService myCustomsDocumentsTicketQueryService = new CustomsDocumentsTicketQueryService(declarationPM.Tenant);
+            string ticketValidStatus = "C";
+
+            List<CustomsDocumentsTicketPM> customsDocumentsTicketPMList = myCustomsDocumentsTicketQueryService.GetCustomsDocumentsTicketPMsByEntityIdAndChilds(declarationPM.Id, "", "", "", declarationPM.Tenant, "Declaration").ToList();
+            if (customsDocumentsTicketPMList != null && customsDocumentsTicketPMList.Count() > 0)
+            {
+
+                var DocumentsFilingIdList = new List<string>();
+                foreach (var customsDocumentsTicketPM in customsDocumentsTicketPMList)
+                {
+                    if (!string.IsNullOrWhiteSpace(customsDocumentsTicketPM.DocumentsFilingId))
+                    {
+                        DocumentsFilingIdList.Add(customsDocumentsTicketPM.DocumentsFilingId);
+                    }
+                }
+                var customsDocumentPMList = new List<CustomsDocumentPM>();
+                if (DocumentsFilingIdList != null)
+                {
+                    var myCustomsDocumentQueryService = new CustomsDocumentQueryService(declarationPM.Tenant);
+                    customsDocumentPMList = myCustomsDocumentQueryService.GetCustomsDocumentList(DocumentsFilingIdList, declarationPM.Tenant);
+                }
+                if (customsDocumentPMList != null && customsDocumentPMList.Count() > 0)
+
+                {
+                    foreach (var customsDocumentPM in customsDocumentPMList)
+                    {
+                        if (customsDocumentPM.DocumentStatusCode != "1")
+                        {
+                            ticketValidStatus = "F";
+                            break;
+                        }
+                    }
+                }
+            }
+
+            if(IsDocumentMissing(declarationPM))
+            {
+                ticketValidStatus = "M";
+                
+            }
+
+
+            return ticketValidStatus;
+        }
+
+
+        private bool IsDocumentMissing(DeclarationPM myDeclarationPM)
+        {
+            var customContext = CustomContext.GetContext(myDeclarationPM.Tenant);
+            CustomsDocumentsTicketQueryService myCustomsDocumentsTicketQueryService = new CustomsDocumentsTicketQueryService(customContext);
+             CustomDocumentTypeQueryService docTypeQuery = new CustomDocumentTypeQueryService(customContext);
+
+            List<CustomDocumentTypePM> documentTypePMs = docTypeQuery.GetMandatoryCustomDocumentTypes(myDeclarationPM.Tenant);
+
+            foreach (var doc in documentTypePMs)
+            {
+                List<CustomsDocumentsTicketPM> customsDocumentsTicketPMList = myCustomsDocumentsTicketQueryService.GetCustomsDocumentsTicketPMsByEntityIdAndChilds(myDeclarationPM.Id, "", "", "", myDeclarationPM.Tenant, "Declaration").Where(r => r.DocumentTypeCode == doc.Code).ToList();
+                if (customsDocumentsTicketPMList == null || customsDocumentsTicketPMList.Count() < 1)
+                    return true;
+            }
+ 
+            return false;
+
+        }
+
         public bool CourierStorageSiteChanged { get; set; }
 
 

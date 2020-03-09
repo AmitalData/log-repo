@@ -3,6 +3,7 @@ import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {CourierMasterService} from '../../Services/Others/CourierMasterService';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
+import { DeclarationRemarksService } from '../../../Common/Services/ExtendedPMs/DeclarationRemarksService';
 
 @Component({
     moduleId: module.id,
@@ -24,7 +25,7 @@ export class FieldTemplateComponent {
     }
 
     public Run(args: any) {
-         this.Entity = args['Entity'];
+          this.Entity = args['Entity'];
         this.FieldName = args['FieldName'];
         this.ObjectTableName = args['ObjectTableName'];
         this.IsSpotLightTemplate = args['IsSpotLightTemplate'];
@@ -100,7 +101,38 @@ export class FieldTemplateComponent {
 
     }
 
-
+    OpenRemarks() {
+        var _declarationRemarksService: DeclarationRemarksService = new DeclarationRemarksService();
+        var windowArgs: any = {};
+        var logitudeWindow = new LogitudeWindow();
+        logitudeWindow.ShowHeaderButtons = true;
+        logitudeWindow.Height = 525;
+        logitudeWindow.Width = 750;
+        logitudeWindow.ShowCloseButton = true;
+        debugger;
+        if (this.Entity.IsClassificationRemarks) {
+            _declarationRemarksService.GetSVCOrSRVStatusList(this.Entity.Tenant, this.Entity.CustomFileNo)
+                .subscribe((response: any) => {
+                    windowArgs.EntityPM = response.Result;
+                    windowArgs.length = response.Result.length;
+                    logitudeWindow.Title = windowArgs.length + "  הערות מסווג  ";
+                    logitudeWindow.WindowArgs = windowArgs;
+                    logitudeWindow.Show('./CustomsModules/CustomsMaintenance/Components/DeclarationRemarksComponent');
+                });
+        }
+        else {
+            if (this.Entity.IsControllerRemarks) {
+                _declarationRemarksService.GetINCorINAtatusList(this.Entity.Tenant, this.Entity.CustomFileNo)
+                    .subscribe((response: any) => {
+                        windowArgs.EntityPM = response.Result;
+                        let counter = response.Result.length;
+                        logitudeWindow.Title = counter + "  הערות מבקר  ";
+                        logitudeWindow.WindowArgs = windowArgs;
+                        logitudeWindow.Show('./CustomsModules/CustomsMaintenance/Components/DeclarationRemarksComponent');
+                    });
+            }
+        }
+    }
 
     public EditEntity(objectTableName: string, entityId: string, windowTitle: string, defaultSelectedTabCode: string) {
 

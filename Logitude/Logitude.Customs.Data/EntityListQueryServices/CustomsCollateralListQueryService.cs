@@ -76,6 +76,22 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
         private IQueryable<CustomsCollateral> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<CustomsCollateral> iQueryable, int tenant)
         {
+            var filterDeclaration = queryOperations.QueryFilterItems.FirstOrDefault(x => x.FieldName == "DeclarationId");
+            if(filterDeclaration!=null)
+            {
+             string declarationId = filterDeclaration.FieldValue.ToString();
+                var declaration = context.Declarations.FirstOrDefault(x => x.Id == declarationId);
+            var declarations = context.Declarations.Where(x => x.AmendmentOriginalDeclartation == declarationId || x.Id== declaration.AmendmentOriginalDeclartation).ToList();
+
+ 
+                List<string> DeclarationsIds = new List<string>();
+            declarations.ForEach(x => DeclarationsIds.Add(x.Id));
+            DeclarationsIds.Add(declarationId);
+
+            iQueryable = iQueryable.Where(x => DeclarationsIds.Contains( x.DeclarationId));
+            }
+        
+
             // Freelancer filterting
             FreelancerCustomersUtil frlUtil = new FreelancerCustomersUtil(tenant);
             if (frlUtil.user.IsFreelancer)

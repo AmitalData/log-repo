@@ -8,8 +8,8 @@
   <Query Code="&quot;SealUpdateReasonQ&quot;" TextCode="&quot;Seal Update Reason Query&quot;" LocalTextCode="&quot;Seal Update Reason Query&quot;" QueryGroupCode="&quot;ba29&quot;" IndexOrder="0" ObjectTableName="&quot;Customs.SealUpdateReasonType&quot;" QuerySection="&quot;Customs.SealUpdateReasonType&quot;" SystemLevel="true" IsAddNewEntity="false" IsPackagable="true" DefaultSortName="&quot;Code&quot;" DefaultSortDirection="&quot;Ascending&quot;" IsSpellChecked="false">
     <QueryColumns>
       <QueryColumn QueryCode="&quot;SealUpdateReasonQ&quot;" IndexOrder="0" ObjectFieldName="&quot;Code&quot;" ColumnWidth="100" />
-      <QueryColumn QueryCode="&quot;SealUpdateReasonQ&quot;" IndexOrder="1" ObjectFieldName="&quot;LocalName&quot;" ColumnWidth="200" />
-      <QueryColumn QueryCode="&quot;SealUpdateReasonQ&quot;" IndexOrder="2" ObjectFieldName="&quot;EnglishName&quot;" ColumnWidth="200" />
+      <QueryColumn QueryCode="&quot;SealUpdateReasonQ&quot;" IndexOrder="1" ObjectFieldName="&quot;EnglishName&quot;" ColumnWidth="200" />
+      <QueryColumn QueryCode="&quot;SealUpdateReasonQ&quot;" IndexOrder="2" ObjectFieldName="&quot;LocalName&quot;" ColumnWidth="200" />
       <QueryColumn QueryCode="&quot;SealUpdateReasonQ&quot;" IndexOrder="3" ObjectFieldName="&quot;Inactive&quot;" ColumnWidth="100" />
     </QueryColumns>
     <QueryFilters />

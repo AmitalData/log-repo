@@ -276,6 +276,10 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSExport
 
         private string GetValue(object src, string propName)
         {
+            if (src.GetType().GetProperty(propName)==null)
+            {
+                return string.Empty;
+            }
             var val = src.GetType().GetProperty(propName).GetValue(src, null);
             val = val ?? string.Empty;
             return val.ToString();

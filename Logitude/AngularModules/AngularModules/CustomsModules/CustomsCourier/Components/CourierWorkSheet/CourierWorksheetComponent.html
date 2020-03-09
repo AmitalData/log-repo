@@ -570,16 +570,35 @@
                                                                         </td>
                                                                         <td style="width:1px"></td>
                                                                         <td style="width:200px">
-                                                                            <split-button (DefaultSplitButtonClicked)="SendUncorrectDocuments()"
+                                                                            <!--
+    <split-button (DefaultSplitButtonClicked)="SendUncorrectDocuments()"
+                  [IsDisabled]="!(_SelectedDOCValue == 'U') || IsDisplayOnly"
+                  [ButtonText]="'שדר מסמכים שגויים'"
+                  [AsRegularButton]="'true'"
+                  [MENUDivExtraTop]="24" [MENUDivExtraLeft]="110">
+
+        <div class="class-MENUSplitButton-content">
+            <div></div>
+        </div>
+    </split-button>
+        -->
+
+                                                                            <split-button (DefaultSplitButtonClicked)="SendUncorrectDocuments('X')"
                                                                                           [IsDisabled]="!(_SelectedDOCValue == 'U') || IsDisplayOnly"
                                                                                           [ButtonText]="'שדר מסמכים שגויים'"
-                                                                                          [AsRegularButton]="'true'"
                                                                                           [MENUDivExtraTop]="24" [MENUDivExtraLeft]="110">
 
                                                                                 <div class="class-MENUSplitButton-content">
-                                                                                    <div></div>
+                                                                                    <div>
+                                                                                        <ul class="x-button-drop-menu" style="width:145px;">
+                                                                                            <li>
+                                                                                                <span (click)="SendUncorrectDocuments('VX')">{{'צור גרסה ושדר שגויים' }} </span>
+                                                                                            </li>
+                                                                                        </ul>
+                                                                                    </div>
                                                                                 </div>
                                                                             </split-button>
+
                                                                         </td>
                                                                         <td></td>
                                                                         <td style="width: 500px;">
@@ -813,6 +832,10 @@
                                                                                 <tr class="FormFieldRow" style="height:22px">
                                                                                     <td style="width: 240px; height:20px">
                                                                                         <ul class="FiltersMenu" style="float:right; padding-right: 10px;">
+                                                                                            <li (click)="SelectedCustomStatusValueClick('N')" style="width:55px;" [class.SelectedFilter]="_SelectedCustomStatusValue === 'N'">
+                                                                                                {{'Customs.CourierMaster.CourierCustomStatus.NoValue' | TextCodeTranslationPipe }}
+                                                                                            </li>
+
                                                                                             <li (click)="SelectedCustomStatusValueClick('S')" style="width:55px;" [class.SelectedFilter]="_SelectedCustomStatusValue === 'S'">
                                                                                                 <!--Suspended-->
                                                                                                 {{'Customs.CourierMaster.CourierCustomStatus.Suspended' | TextCodeTranslationPipe }}

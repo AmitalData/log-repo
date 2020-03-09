@@ -262,6 +262,7 @@
                         <div style="float: left;display: inline-block;width: 110px;">
                             <custom-send-options [IsDisabled]="!SendButtonEnabled"
                                                  [AvoidDoubleClick]="true"
+                                                 [HaveTestCase]="'true'"
                                                  #MyCustomSendOptionsComponent
                                                  (SendButtonClicked)="SendButtonClicked($event)">
                             </custom-send-options>

@@ -541,14 +541,13 @@ namespace Logitude.CustomsMessaging.RequestServices
             }
 
             }
-      
 
  
+
             List<DeclarationConsignmentConsignmentItemCommodity> declarationConsignmentUnloadingLocationList = new List<DeclarationConsignmentConsignmentItemCommodity>();
             DeclarationConsignmentConsignmentItemCommodity declarationConsignmentUnloadingLocation = new DeclarationConsignmentConsignmentItemCommodity();
 
-            if (!string.IsNullOrWhiteSpace(consignmentPM.CargoDescription))
-            {
+           
                 if (consignmentPackDangerPM != null)
                 {
                     declarationConsignmentUnloadingLocation = new DeclarationConsignmentConsignmentItemCommodity()
@@ -560,6 +559,13 @@ namespace Logitude.CustomsMessaging.RequestServices
                        ID = new ClassificationIdentificationIDType { Value = consignmentPackDangerPM.UNCode },
                        
                        IdentificationTypeCode = new ClassificationIdentificationTypeCodeType { Value = "SSO" }
+                      
+                   },
+                    new DeclarationConsignmentConsignmentItemCommodityClassification {
+                       ID = new ClassificationIdentificationIDType { Value =! string.IsNullOrEmpty(consignmentPackDangerPM.ClassificationFourDigit) ? consignmentPackDangerPM.ClassificationFourDigit:"" },
+
+                       IdentificationTypeCode = new ClassificationIdentificationTypeCodeType { Value = "HS" }
+
                    }
                    }
                    ,
@@ -603,7 +609,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                     };
                 }
                 declarationConsignmentUnloadingLocationList.Add(declarationConsignmentUnloadingLocation);
-            }
+          
             declarationConsignmentConsignmentItem.Commodity = declarationConsignmentUnloadingLocationList.ToArray();
 
             decimal grossMassMeasure;

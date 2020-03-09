@@ -39,7 +39,7 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.IsCourierManadatory).HasColumnName("IsCourierManadatory");
 
-            this.Property(t => t.IsManadatory).HasColumnName("IsManadatory");
+            this.Property(t => t.IsDiamondManadatory).HasColumnName("IsDiamondManadatory");
         }
     }
 }

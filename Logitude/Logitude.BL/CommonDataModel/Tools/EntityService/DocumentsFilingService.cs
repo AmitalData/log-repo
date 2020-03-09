@@ -1401,7 +1401,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             if (string.IsNullOrEmpty(type) && !string.IsNullOrEmpty(code))
             {
                 var documentTypeMetaDataRepo = new DocumentsMetaDataTypeRepository(tenant);
-                DocumentsMetaDataType myDocumentsMetaDataType = documentTypeMetaDataRepo.GetSingleDocumentsMetaDataTypeByCode(code, tenant);
+                //                DocumentsMetaDataType myDocumentsMetaDataType = documentTypeMetaDataRepo.GetSingleDocumentsMetaDataTypeByCode(code, tenant);
+                DocumentsMetaDataType myDocumentsMetaDataType = documentTypeMetaDataRepo.GetSingleDocumentsMetaDataTypeByCustomsMetaDataCode(code, tenant);
                 if (myDocumentsMetaDataType != null) type = myDocumentsMetaDataType.Id;
             }
             

@@ -161,47 +161,5 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             }
         }
 
-        public HttpResponseMessage PostSendCargoSealsRequest(CargoSealsRequestParams requestParams)
-        {
-            try
-            {
-                DeclarationRestoreResponseData responseData = null;
-                //if (requestParams.TestCase != null && requestParams.TestCase.Type == "webservice" && requestParams.TestCase.Code != "Real Logic")
-                //{
-                //    responseData = new DeclarationRestoreResponseData();
-                //    switch (requestParams.TestCase.Code)
-                //    {
-                //        case "Send Succeeded":
-                //            {
-                //                responseData.HasException = false;
-                //                responseData.Succeeded = true;
-                //                responseData.UserMessage = null;
-
-                //                break;
-                //            }
-                //        case "Send Failed":
-                //            {
-                //                responseData.HasException = true;
-                //                responseData.Succeeded = false;
-                //                responseData.UserMessage = "this is a test fail exception for send declaration restore!";
-                //                break;
-                //            }
-                //    }
-                //}
-                //else
-                //{
-                //    // use messageing service
-                //    var messagingService = new DF_NG_8373_Web05_RetrieveImportDeclarationMessagingService();
-                //    responseData = messagingService.Send(requestParams);
-                //}
-
-                return Request.CreateResponse(HttpStatusCode.OK, responseData);
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
     }
 }

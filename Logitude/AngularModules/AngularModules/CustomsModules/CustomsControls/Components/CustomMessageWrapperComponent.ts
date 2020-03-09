@@ -61,8 +61,8 @@ export class CustomMessageWrapperComponent
     set CustomSendOptionsButtonIsDisable(newValue: boolean) {
         this.MyCustomSendOptionsComponent.IsDisabled= newValue;
     }
-    
-    
+
+    @Input()
     public  CustomRequestContentIsDisable: boolean;
     
     public  CustomResponseContentIsDisable: boolean;

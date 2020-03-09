@@ -227,25 +227,25 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private bool isManadatory ;
+	  private bool isDiamondManadatory ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public bool IsManadatory  
+       public bool IsDiamondManadatory  
 	   {
 	    
 	     get
 		{
-		   return isManadatory;
+		   return isDiamondManadatory;
 		 }
 		 set
 		 {
-		   if(isManadatory != value)
+		   if(isDiamondManadatory != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsManadatory",OldValue=isManadatory,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsDiamondManadatory",OldValue=isDiamondManadatory,NewValue=value,PropertyType="bool"};
 		    NotifyPropertyChanged(values);
-		   isManadatory=value;
+		   isDiamondManadatory=value;
 		   }
 			
 		 }

@@ -43,6 +43,8 @@ using System.Xml;
 using System.IO;
 using Logitude.CustomsMessaging.ResponseServices;
 
+
+
 namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 {
     public class DeclarationWebServiceController : ApiController
@@ -400,7 +402,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 string error="";
                 DF_NG_2754_MSG10004_ImportFixedDeclarationResponseService dF_NG_2754_MSG10004_ImportFixedDeclarationResponseService = new DF_NG_2754_MSG10004_ImportFixedDeclarationResponseService();
 
-                DeclarationPM declarationPM =    dF_NG_2754_MSG10004_ImportFixedDeclarationResponseService.MapResponseToDeclaration(request.Declaration, requestParams.Tenant, true , requestParams.AppicationId ,out error);
+                DeclarationPM declarationPM =    dF_NG_2754_MSG10004_ImportFixedDeclarationResponseService.MapResponseToDeclaration(request.Declaration, requestParams.Tenant, true , requestParams.AppicationId ,out error,user: requestParams.LoggingUserId);
 
                 XmlSerializer xsSubmit = new XmlSerializer(typeof(UnifreightIIG.Common.ImportDeclarationServiceReference.Declaration));
  
@@ -1670,6 +1672,8 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 submitRequestParams.LoggingObjectTableId = requestParamsCredit.LoggingObjectTableId;
                 submitRequestParams.LoggingObjectTableId2 = requestParamsCredit.LoggingObjectTableId2;
 
+                submitRequestParams.TestCase = requestParamsCredit.TestCase;
+
                 var messagingService = new
                     DF_NG_2755_MSG12001_SubmitDeclarationMessagingService();
                 INF_MSG_GenericResponseData submitResponseData = messagingService.Send(submitRequestParams);
@@ -1698,6 +1702,23 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 List<CustomsCollateralPM> customsCollateralList = queryService.GetDeclarationCollateralsList(declarationId, tenant);
 
                 return Request.CreateResponse(HttpStatusCode.OK, customsCollateralList);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public HttpResponseMessage GetDeclarationCargoSealLists(string declarationId, int tenant)
+        {
+            try
+            {
+                ICustomContext customContext = CustomContext.GetContext(tenant);
+                CargoSealIdentifierQueryService queryService = new CargoSealIdentifierQueryService(customContext);
+                List<CargoSealIdentifierPM> cargoSealIdentifierPMList = queryService.GetDeclarationCargoSealIdentifierList(declarationId, tenant);
+
+                return Request.CreateResponse(HttpStatusCode.OK, cargoSealIdentifierPMList);
             }
 
             catch (Exception ex)
@@ -1810,6 +1831,26 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
+        }
+
+        public HttpResponseMessage PostSendCargoSealsRequest(CargoSealsRequestParams requestParamsData)
+        {
+            try
+            {
+                INF_MSG_GenericResponseData responseData = null;
+
+                // use messageing service
+                var service = new SE_6001_SealUpdateMessagingService();
+                responseData = service.Send(requestParamsData);
+                return Request.CreateResponse(HttpStatusCode.OK, responseData);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+
         }
     }
     

@@ -19,6 +19,7 @@ import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLo
 
 import {CargoSealIdentifierPM} from '../../EntityPMs/CargoSealIdentifierPM';
 
+import {CargoSealPM} from '../../EntityPMs/CargoSealPM';
 
 @Injectable()
 
@@ -209,12 +210,22 @@ export class CargoSealIdentifierPMService {
                  
             }
 			
+               this.MapCargoSeals(entityPM, jsonPM, mapParent); // Call composition tables map methods
 			 
             
 
 		if (mapParent) {
                 entityPM.OldEntityPM = this.clone(entityPM);
-
+			   			   
+            entityPM.OldEntityPM.CargoSeals = [];
+            for (var item in entityPM.CargoSeals) {
+            var myCargoSealPM = entityPM.CargoSeals[item];
+            var newCargoSealPM: CargoSealPM = this.clone(myCargoSealPM);
+						
+							 
+            entityPM.OldEntityPM.CargoSeals.push(newCargoSealPM);
+            }
+			   
 		}
         else {
 
@@ -224,6 +235,96 @@ export class CargoSealIdentifierPMService {
         return entityPM;
     }
 
+    MapCargoSeals(entityPM: CargoSealIdentifierPM, jsonPM: any, mapParent: boolean = true) {
+
+        var oldCargoSeals: CargoSealPM[] = [];
+        if (entityPM.OldEntityPM && !mapParent) {
+            oldCargoSeals = entityPM.OldEntityPM.CargoSeals;
+        }
+
+        entityPM.CargoSeals = new Array<CargoSealPM>();
+        for (var item in jsonPM.CargoSeals) {
+            var jItem = jsonPM.CargoSeals[item];
+            if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
+                continue;
+            }
+            var newCargoSealPM: CargoSealPM;
+	  
+            if (mapParent) {
+                newCargoSealPM = new CargoSealPM(entityPM);
+            }
+            else
+            {
+                newCargoSealPM = new CargoSealPM(null);
+            }
+                
+            var pmKeysArray = Object.keys(jItem);
+            for (var pmKey in pmKeysArray) {
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+                    continue;
+                }
+                var pmProperty = pmKeysArray[pmKey];
+                newCargoSealPM[pmProperty] = jItem[pmProperty];
+            }
+           
+			 
+            if (mapParent) {
+                newCargoSealPM.UniqueKey = Guid.newGuid();
+                newCargoSealPM.ChangeSetOp = "None";
+                jItem.ChangeSetOp = "None";
+                newCargoSealPM.OldEntityPM = this.clone(newCargoSealPM);
+
+				
+            }
+            else {
+                if (newCargoSealPM.UniqueKey) {
+
+                    if (jItem.IsDirty)
+                        newCargoSealPM.ChangeSetOp = "Update";
+                }
+                else {
+                        newCargoSealPM.ChangeSetOp = "Insert";
+                }
+ 
+                newCargoSealPM.OldEntityPM = null;
+                newCargoSealPM.EntityParentPM = null;
+            }
+			
+			 newCargoSealPM.IsDirty = false;
+            entityPM.CargoSeals.push(newCargoSealPM);
+        }
+        if (oldCargoSeals) {
+            
+            for (var itemKey in oldCargoSeals) {
+                if (entityPM.CargoSeals.filter(p=> p.UniqueKey === oldCargoSeals[itemKey].UniqueKey).length === 0) {
+				
+                    if (oldCargoSeals[itemKey]) {
+                        //oldCargoSeals[itemKey].ChangeSetOp = "Delete";
+                        //entityPM.CargoSeals.push(oldCargoSeals[itemKey]);
+						var oldItemJson = oldCargoSeals[itemKey];
+                        var deletedPM: CargoSealPM = new CargoSealPM(null);
+                        var pmKeys = Object.keys(oldItemJson);
+                        for (var key in pmKeys) {
+
+                            if ((!mapParent && pmKeys[key] === "entityParentPM") || pmKeys[key] === "UIProperties" || pmKeys[key] === "OldEntityPM" || pmKeys[key] === "PropertyChanged") {
+                                continue;
+                            }
+
+                            var property = pmKeys[key];
+                            deletedPM[property] = oldItemJson[property];
+                        }
+
+                      
+                        deletedPM.IsDirty = false;
+                        deletedPM.ChangeSetOp = "Delete";
+                        
+                        deletedPM.OldEntityPM = null;
+                        entityPM.CargoSeals.push(deletedPM);
+                    }
+                }
+            }
+        }
+    }
 
 	  public clone(jsonPM: any) {
         var entityPM: any;

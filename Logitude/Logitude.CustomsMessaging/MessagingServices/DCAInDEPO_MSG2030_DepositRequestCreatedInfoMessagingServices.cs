@@ -1,5 +1,6 @@
 ﻿using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.CustomsMessaging.Common.ResponseData;
+using Logitude.CustomsMessaging.FakeMessagingServices;
 using Logitude.CustomsMessaging.RequestServices;
 using Logitude.CustomsMessaging.ResponseServices;
 using Simplog.Data.InfrastructureModel.Repositories;
@@ -29,7 +30,14 @@ namespace Logitude.CustomsMessaging.MessagingServices
         {
             get { return "2030"; }
         }
+        protected override DEPO_NG_2030_MSG1_DepositRequestCreatedInfoMsg GetFakeCustomsResponse(GenericRequestParams requestParamsData)
+        {
 
+            var MyFakeDCA_MSG2030_DepositRequestCreatedInfoMessagingServices = new FakeDCA_MSG2030_DepositRequestCreatedInfoMessagingServices();
+            return MyFakeDCA_MSG2030_DepositRequestCreatedInfoMessagingServices.GetFakeCustomsResponse(requestParamsData);
+
+
+        }
         protected override GenericRequestParams CreateDefaultRequestParamsFromCustomsResponse(DEPO_NG_2030_MSG1_DepositRequestCreatedInfoMsg customsResponse)
         {
             var tableName = "Customs.Deposit";

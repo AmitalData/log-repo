@@ -121,6 +121,7 @@
     <Compile Include="EntityKeys\CourierPaymentStatusKeys.cs" />
     <Compile Include="EntityKeys\CourierPendingReasonKeys.cs" />
     <Compile Include="EntityKeys\CourierStatusKeys.cs" />
+    <Compile Include="EntityKeys\CurrencyTypeTenantKeys.cs" />
     <Compile Include="EntityKeys\CustomsAirlineKeys.cs" />
     <Compile Include="EntityKeys\CustomsAutonomyKeywordKeys.cs" />
     <Compile Include="EntityKeys\CustomsDocumentsDefinitionKeys.cs" />
@@ -138,6 +139,7 @@
     <Compile Include="EntityKeys\DeclarationCourierStatusKeys.cs" />
     <Compile Include="EntityKeys\DeclarationMamanSpecialActionKeys.cs" />
     <Compile Include="EntityKeys\DeclarationPendingKeys.cs" />
+    <Compile Include="EntityKeys\DeclarationReferantDataKeys.cs" />
     <Compile Include="EntityKeys\DeficitDecisionKeys.cs" />
     <Compile Include="EntityKeys\DocumentTypeCustomsDataKeys.cs" />
     <Compile Include="EntityKeys\FreightPaymentMethodKeys.cs" />
@@ -190,6 +192,7 @@
     <Compile Include="EntityListQueryServices\CourierPaymentStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CourierPendingReasonListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CourierStatusListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\CurrencyTypeTenantListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CustomsAirlineListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CustomsAutonomyKeywordListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CustomsDocumentsDefinitionListQueryService.cs" />
@@ -207,6 +210,7 @@
     <Compile Include="EntityListQueryServices\DeclarationCourierStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DeclarationMamanSpecialActionListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DeclarationPendingListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\DeclarationReferantDataListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DeficitDecisionListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DocumentTypeCustomsDataListQueryService.cs" />
     <Compile Include="EntityListQueryServices\FreightPaymentMethodListQueryService.cs" />
@@ -236,6 +240,7 @@
     <Compile Include="EntityListQueryServices\Generated\CourierPaymentStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CourierPendingReasonListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CourierStatusListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\CurrencyTypeTenantListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CustomsAirlineListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CustomsAutonomyKeywordListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CustomsDocumentsDefinitionListQueryService.Generated.cs" />
@@ -253,6 +258,7 @@
     <Compile Include="EntityListQueryServices\Generated\DeclarationCourierStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DeclarationMamanSpecialActionListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DeclarationPendingListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\DeclarationReferantDataListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DeficitDecisionListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DocumentTypeCustomsDataListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\FreightPaymentMethodListQueryService.Generated.cs" />
@@ -328,6 +334,7 @@
     <Compile Include="EntityLists\Generated\CourierPaymentStatusList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CourierPendingReasonList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CourierStatusList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\CurrencyTypeTenantList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CustomsAirlineList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CustomsAutonomyKeywordList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CustomsDocumentsDefinitionList.Generated.cs" />
@@ -345,6 +352,7 @@
     <Compile Include="EntityLists\Generated\DeclarationCourierStatusList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DeclarationMamanSpecialActionList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DeclarationPendingList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\DeclarationReferantDataList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DeficitDecisionList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DocumentTypeCustomsDataList.Generated.cs" />
     <Compile Include="EntityLists\Generated\FreightPaymentMethodList.Generated.cs" />
@@ -398,6 +406,7 @@
     <Compile Include="EntityMapping\CourierPaymentStatusMap.cs" />
     <Compile Include="EntityMapping\CourierPendingReasonMap.cs" />
     <Compile Include="EntityMapping\CourierStatusMap.cs" />
+    <Compile Include="EntityMapping\CurrencyTypeTenantMap.cs" />
     <Compile Include="EntityMapping\CustomsAirlineMap.cs" />
     <Compile Include="EntityMapping\CustomsAutonomyKeywordMap.cs" />
     <Compile Include="EntityMapping\CustomsDocumentsDefinitionMap.cs" />
@@ -415,6 +424,7 @@
     <Compile Include="EntityMapping\DeclarationCourierStatusMap.cs" />
     <Compile Include="EntityMapping\DeclarationMamanSpecialActionMap.cs" />
     <Compile Include="EntityMapping\DeclarationPendingMap.cs" />
+    <Compile Include="EntityMapping\DeclarationReferantDataMap.cs" />
     <Compile Include="EntityMapping\DeficitDecisionMap.cs" />
     <Compile Include="EntityMapping\DocumentTypeCustomsDataMap.cs" />
     <Compile Include="EntityMapping\FreightPaymentMethodMap.cs" />
@@ -467,6 +477,7 @@
     <Compile Include="EntityPOCOs\CourierPaymentStatus.cs" />
     <Compile Include="EntityPOCOs\CourierPendingReason.cs" />
     <Compile Include="EntityPOCOs\CourierStatus.cs" />
+    <Compile Include="EntityPOCOs\CurrencyTypeTenant.cs" />
     <Compile Include="EntityPOCOs\CustomsAirline.cs" />
     <Compile Include="EntityPOCOs\CustomsAutonomyKeyword.cs" />
     <Compile Include="EntityPOCOs\CustomsDocumentsDefinition.cs" />
@@ -484,6 +495,7 @@
     <Compile Include="EntityPOCOs\DeclarationCourierStatus.cs" />
     <Compile Include="EntityPOCOs\DeclarationMamanSpecialAction.cs" />
     <Compile Include="EntityPOCOs\DeclarationPending.cs" />
+    <Compile Include="EntityPOCOs\DeclarationReferantData.cs" />
     <Compile Include="EntityPOCOs\DeficitDecision.cs" />
     <Compile Include="EntityPOCOs\DocumentTypeCustomsData.cs" />
     <Compile Include="EntityPOCOs\FreightPaymentMethod.cs" />
@@ -537,6 +549,7 @@
     <Compile Include="Repsitories\CourierPaymentStatusRepository.cs" />
     <Compile Include="Repsitories\CourierPendingReasonRepository.cs" />
     <Compile Include="Repsitories\CourierStatusRepository.cs" />
+    <Compile Include="Repsitories\CurrencyTypeTenantRepository.cs" />
     <Compile Include="Repsitories\CustomsAirlineRepository.cs" />
     <Compile Include="Repsitories\CustomsAutonomyKeywordRepository.cs" />
     <Compile Include="Repsitories\CustomsDocumentsDefinitionRepository.cs" />
@@ -554,6 +567,7 @@
     <Compile Include="Repsitories\DeclarationCourierStatusRepository.cs" />
     <Compile Include="Repsitories\DeclarationMamanSpecialActionRepository.cs" />
     <Compile Include="Repsitories\DeclarationPendingRepository.cs" />
+    <Compile Include="Repsitories\DeclarationReferantDataRepository.cs" />
     <Compile Include="Repsitories\DeficitDecisionRepository.cs" />
     <Compile Include="Repsitories\DocumentTypeCustomsDataRepository.cs" />
     <Compile Include="Repsitories\FreightPaymentMethodRepository.cs" />
@@ -583,6 +597,7 @@
     <Compile Include="Repsitories\Generated\CourierPaymentStatusRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CourierPendingReasonRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CourierStatusRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\CurrencyTypeTenantRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CustomsAirlineRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CustomsAutonomyKeywordRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CustomsDocumentsDefinitionRepository.Generated.cs" />
@@ -600,6 +615,7 @@
     <Compile Include="Repsitories\Generated\DeclarationCourierStatusRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DeclarationMamanSpecialActionRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DeclarationPendingRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\DeclarationReferantDataRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DeficitDecisionRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DocumentTypeCustomsDataRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\FreightPaymentMethodRepository.Generated.cs" />

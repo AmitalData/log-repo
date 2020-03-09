@@ -1514,6 +1514,86 @@ namespace Logitude.Customs.BL.EntityQueryServices
         }
 
 
+        public bool IsValidTickets(DeclarationPM declarationPM)
+        {
+            CustomsDocumentsTicketQueryService myCustomsDocumentsTicketQueryService = new CustomsDocumentsTicketQueryService(declarationPM.Tenant);
+            bool ticketValidStatus = true;
+
+            List<CustomsDocumentsTicketPM> customsDocumentsTicketPMList = myCustomsDocumentsTicketQueryService.GetCustomsDocumentsTicketPMsByEntityIdAndChilds(declarationPM.Id, "", "", "", declarationPM.Tenant, "Declaration").ToList();
+            if (customsDocumentsTicketPMList != null && customsDocumentsTicketPMList.Count() > 0)
+            {
+
+                var DocumentsFilingIdList = new List<string>();
+                foreach (var customsDocumentsTicketPM in customsDocumentsTicketPMList)
+                {
+                    if (!string.IsNullOrWhiteSpace(customsDocumentsTicketPM.DocumentsFilingId))
+                    {
+                        DocumentsFilingIdList.Add(customsDocumentsTicketPM.DocumentsFilingId);
+                    }
+                }
+                var customsDocumentPMList = new List<CustomsDocumentPM>();
+                if (DocumentsFilingIdList != null)
+                {
+                    var myCustomsDocumentQueryService = new CustomsDocumentQueryService(declarationPM.Tenant);
+                    customsDocumentPMList = myCustomsDocumentQueryService.GetCustomsDocumentList(DocumentsFilingIdList, declarationPM.Tenant);
+                }
+                if (customsDocumentPMList != null && customsDocumentPMList.Count() > 0)
+
+                {
+                    foreach (var customsDocumentPM in customsDocumentPMList)
+                    {
+                        if (customsDocumentPM.DocumentStatusCode != "1")
+                        {
+                            ticketValidStatus = false;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            if (IsDocumentMissing(declarationPM))
+            {
+                ticketValidStatus = false;
+
+            }
+
+
+            return ticketValidStatus;
+        }
+
+
+        public bool IsDocumentMissing(DeclarationPM myDeclarationPM)
+        {
+            var customContext = CustomContext.GetContext(myDeclarationPM.Tenant);
+            CustomsDocumentsTicketQueryService myCustomsDocumentsTicketQueryService = new CustomsDocumentsTicketQueryService(customContext);
+            CustomDocumentTypeQueryService docTypeQuery = new CustomDocumentTypeQueryService(customContext);
+
+            List<CustomDocumentTypePM> documentTypePMs = docTypeQuery.GetMandatoryCustomDocumentTypes(myDeclarationPM.Tenant);
+
+            foreach (var doc in documentTypePMs)
+            {
+                List<CustomsDocumentsTicketPM> customsDocumentsTicketPMList = myCustomsDocumentsTicketQueryService.GetCustomsDocumentsTicketPMsByEntityIdAndChilds(myDeclarationPM.Id, "", "", "", myDeclarationPM.Tenant, "Declaration").Where(r => r.DocumentTypeCode == doc.Code && r.DocumentsFilingId!=null).ToList();
+                if (customsDocumentsTicketPMList == null || customsDocumentsTicketPMList.Count() < 1)
+                    return true;
+            }
+
+            return false;
+
+        }
+
+
+        public bool IsMissingMandatoryFields(DeclarationPM declarationPM)
+        {
+            bool isMissingMandatoryFields = false;
+            CustomsRequiredFieldErrors errorsForDeclaration = CustomsRequiredFieldsValidator.GetRequiredFieldErrorsForDeclaration(declarationPM.Id, declarationPM.Tenant, declarationPM);
+            if (errorsForDeclaration != null && errorsForDeclaration.RequiredFields != null && errorsForDeclaration.RequiredFields.Count() > 0)
+            {
+                isMissingMandatoryFields = true;
+            }
+            return isMissingMandatoryFields;
+        }
+
+
         public List<CustomsDocumentsTicketPM> GetDeclarationMandatoryTicket(string declarationId, int tenant)
         {
 
@@ -1638,17 +1718,17 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return isFreight;
         }
 
-        public List<DeclarationList> GetDeclarationAmendmentsById(int tenant, string id)
+        public List<DeclarationList> GetDeclarationAmendmentsById(int tenant, string id, bool orderById = false)
         {
- 
-            List<Declaration> declarations = repository.GetDeclarationAmendmentsById(tenant , id);
+
+            List<Declaration> declarations = repository.GetDeclarationAmendmentsById(tenant, id);
             List<AmendmentStatusPM> amendmentStatusPMs = new List<AmendmentStatusPM>();
             AmendmentStatusRepository amendmentStatusRepository = new AmendmentStatusRepository(context);
             List<DeclarationList> declarationLists = new List<DeclarationList>();
             UserRepository userRepository = new UserRepository();
-             var amendmentStatuses=  amendmentStatusRepository.GetAll();
+            var amendmentStatuses = amendmentStatusRepository.GetAll();
             var users = userRepository.GetAll();
-
+            var i = 1;
             foreach (Declaration item in declarations)
             {
 
@@ -1659,17 +1739,30 @@ namespace Logitude.Customs.BL.EntityQueryServices
                     Tenant = item.Tenant,
                     AmendmentRequestNumber = item.AmendmentRequestNumber,
                     DeclarationVersionId = item.VersionId,
-                    AmendmentStatus=item.AmendmentStatus,
-                    AmendmentOriginalDeclartation =item.AmendmentOriginalDeclartation,
+                    AmendmentStatus = item.AmendmentStatus,
+                    AmendmentOriginalDeclartation = item.AmendmentOriginalDeclartation,
+                    AmendmentissueDate = item.AmendmentissueDate,
                 };
                 if (item.AmendmentCorrectedByUserId != null) declarationList.AmendmentCorrectedByUserName = users.FirstOrDefault(x => x.Id == item.AmendmentCorrectedByUserId).Code;
                 if (item.AmendmentStatus != null) declarationList.AmendmentStatusName = amendmentStatuses.FirstOrDefault(x => x.Code == item.AmendmentStatus).Name;
 
- 
                 declarationLists.Add(declarationList);
             }
+            if (orderById)
+            {
+                declarationLists = declarationLists.OrderBy(x => x.AmendmentRequestNumber).ToList();
+                declarationLists.ForEach(x => { x.AmendmentNumber = i; i++; });
 
-            return declarationLists;
+                return declarationLists.ToList();
+
+
+            }
+            declarationLists = declarationLists.OrderByDescending(x => x.AmendmentissueDate).ToList();
+
+            declarationLists.ForEach(x => { x.AmendmentNumber = i; i++; }) ;
+
+            return declarationLists.ToList();
+
         }
 
     }

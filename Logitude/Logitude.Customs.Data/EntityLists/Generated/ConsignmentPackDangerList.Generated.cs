@@ -40,6 +40,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string FlashpointTemperature  { get; set; }
        [DataMember]
        public string StorageTemperature  { get; set; }
+       [DataMember]
+       public string ClassificationFourDigit  { get; set; }
    }
 
 }

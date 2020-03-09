@@ -133,7 +133,7 @@ export class DeclarationAmendmentComponent extends BaseComponent implements OnIn
         this.columns = [];
         this.columns.push({
 
-            FieldName: 'LineNumber',
+            FieldName: 'AmendmentNumber',
             DataTypeCode: 'String',//'Number',
             Display:"#",
             Styles: { width: '55px' },
@@ -154,7 +154,7 @@ export class DeclarationAmendmentComponent extends BaseComponent implements OnIn
 
         this.columns.push({
 
-            FieldName: 'VersionId',
+            FieldName: 'DeclarationVersionId',
             DataTypeCode: 'String',//'Number',
             Display: TextCodeTranslator.Translate("Customs.Declaration.F.VersionId"),
             Styles: { width: '120px' },
@@ -233,15 +233,17 @@ export class DeclarationAmendmentComponent extends BaseComponent implements OnIn
     }
 
 
-    public OpenNewAmendment() {
+    public OpenNewAmendment(id, declarationNumber) {
 
+        if (id == null) id = this.EntityPM.Id;
+        if (declarationNumber == null) declarationNumber = this.EntityPM.DeclarationNumber;
 
         var searchParams: GenericRequestParams = new GenericRequestParams();
         searchParams.Tenant = SessionLocator.Tenant;
-        searchParams.AppicationId = this.EntityPM.Id;
+        searchParams.AppicationId = id;
         searchParams.LoggingEnabled = true;
-        searchParams.LoggingEntityId = this.EntityPM.Id;
-        searchParams.LoggingEntityReference = this.EntityPM.DeclarationNumber;
+        searchParams.LoggingEntityId = id;
+        searchParams.LoggingEntityReference = declarationNumber;
         searchParams.LoggingObjectTableId =  this.ObjectTableName;
         searchParams.LoggingUserId = SessionLocator.LoggedUserId;
         searchParams.RequestName = "Declaration Request";
@@ -263,7 +265,7 @@ export class DeclarationAmendmentComponent extends BaseComponent implements OnIn
                                 this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
                             }, 10);
                             this.CurrentSession.StopBusyIndicator();
-                          
+                            
                             this.openNewDeclaration(entity.Id);
 
                              }

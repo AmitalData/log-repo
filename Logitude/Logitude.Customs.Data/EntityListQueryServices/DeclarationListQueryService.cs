@@ -17,6 +17,7 @@ using Logitude.Customs.Data.Repsitories;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.Customs.Data.CustomFilters;
+using System.Web;
 
 namespace Logitude.Customs.Data.EntityListQueryServices
 { 
@@ -199,7 +200,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                     //CourierPendingReasonList = rec.myDeclarationCourierStatuses != null ? rec.myDeclarationCourierStatuses.CourierPendingReasonList : null,
                     MAWB = rec.CourierMaster != null ? rec.CourierMaster.MAWB : null,
                     IsCourierMissingClassification = rec.myDeclarationCourierStatuses != null ? rec.myDeclarationCourierStatuses.IsCourierMissingClassification : false,
-                    IsPendingNotNull = rec.myDeclarationCourierStatuses != null ? (rec.myDeclarationCourierStatuses.CourierPendingReasonList != null && rec.myDeclarationCourierStatuses.CourierPendingReasonList.Length > 1 ? true : false) : false,
+                    IsPendingNotNull = rec.myDeclarationCourierStatuses != null ? (rec.myDeclarationCourierStatuses.CourierPendingReasonList != null && rec.myDeclarationCourierStatuses.CourierPendingReasonList.Length > 0 ? true : false) : false,
                 }
                 );
 
@@ -230,7 +231,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                  select a
                  );
 
-
+            var qOriginalDeclarations = context.Declarations.Where(x =>  x.IsAmendment !=true);
+                                     
 
 
             bool test = false;
@@ -240,8 +242,20 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                 var s = q1stConsignments.ToList();
                 /*var pr = qCourierPendingReasonLocalName.ToList();*/
             }
+            int tenant = 1;
+            try
+            {
 
-            bool isCourierEnv = context.CustomsSettings.FirstOrDefault(r => r.Tenant == 1).CompanyType =="B" ;
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                tenant = authToken.Tenant;
+            }
+            catch (Exception)
+            {
+
+                // throw;
+            }
+            bool isCourierEnv = context.CustomsSettings.FirstOrDefault(r => r.Tenant == tenant).CompanyType =="B" ;
             if (!isCourierEnv)
             {
                 qMyJoin = (from rec in context.CourierDeclarations.Where(r => r.DeclarationId == "-1")
@@ -279,11 +293,17 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                  on a.Id equals recConsignment.DeclarationId into qjoinConsignments
                                                  from myJoinConsignment in qjoinConsignments.DefaultIfEmpty()
 
-                                                 /*
-                                                 join pr in qCourierPendingReasonLocalName
-                                                 on a.Id equals pr.DeclarationID into leftjoinCourierPendingReasonLocalName
-                                                 from mypr in leftjoinCourierPendingReasonLocalName.DefaultIfEmpty()
-                                                 */
+
+                                                 join recOriginalDeclarations in qOriginalDeclarations
+                                                 on a.AmendmentOriginalDeclartation equals recOriginalDeclarations.Id
+                                                 into originalDeclarations
+                                                 from myJoinOriginalDeclaration  in originalDeclarations.DefaultIfEmpty()
+
+                                                     /*
+                                                     join pr in qCourierPendingReasonLocalName
+                                                     on a.Id equals pr.DeclarationID into leftjoinCourierPendingReasonLocalName
+                                                     from mypr in leftjoinCourierPendingReasonLocalName.DefaultIfEmpty()
+                                                     */
 
                                                  select new DeclarationList()
                                                  {
@@ -399,7 +419,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      DepositionStatusCode = a.DepositionStatusCode,
                                                      //CustomsFileNo = qJoin != null ? (qJoin.FirstOrDefault().myDeclarations != null ? qJoin.FirstOrDefault().myDeclarations.CustomFileNo : null ) : null,
                                                      //CourierHAWB = qJoin != null ? (qJoin.FirstOrDefault().myDeclarations != null ? qJoin.FirstOrDefault().myDeclarations.CourierHAWB : null) : null,
-
+                                                     AmendmentDontDisplayInList =a.AmendmentDontDisplayInList,
 
 
 
@@ -420,6 +440,12 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
 
                                                      IsPaymentProtested = a.IsPaymentProtested,
+                                                     DeclarationNoAmendment= myJoinOriginalDeclaration.DeclarationNumber,
+                                                     CustomFileAmendment = myJoinOriginalDeclaration.CustomFileNo,
+                                                     AmendmentStatus= a.AmendmentStatus,
+                                                     AmendmentRequestNumber=a.AmendmentRequestNumber,
+                                                     AmendmentCorrectedByUserName = a.AmendmentCorrectedByUser != null ? a.AmendmentCorrectedByUser.Code :null,
+                                                     AmendmentissueDate = a.AmendmentissueDate
                                                  });
 
 

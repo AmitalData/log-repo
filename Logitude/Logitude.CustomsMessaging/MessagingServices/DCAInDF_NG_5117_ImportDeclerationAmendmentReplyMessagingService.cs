@@ -1,5 +1,6 @@
 ﻿using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.CustomsMessaging.Common.ResponseData;
+using Logitude.CustomsMessaging.FakeMessagingServices;
 using Logitude.CustomsMessaging.RequestServices;
 using Logitude.CustomsMessaging.ResponseServices;
 using Simplog.Data.InfrastructureModel.Repositories;
@@ -20,6 +21,16 @@ namespace Logitude.CustomsMessaging.MessagingServices
         DCAInCustomRequestService, DF_NG_5117_ImportDeclerationAmendmentReplyResponseService,
         DCAInRequestHeader>
     {
+
+
+         protected override DF_NG_5117_MSG14003_ImportDeclarationAmendmentReplyMsg GetFakeCustomsResponse(GenericRequestParams requestParamsData)
+        {
+
+            var myFake_DCAInCH_NG_190_MSG1_NoticeToClient_Service = new Fake_DCAInCH_NG_5117_MSG14003_Amendment_Service(requestParamsData);
+            return myFake_DCAInCH_NG_190_MSG1_NoticeToClient_Service.GetFakeCustomsResponse(requestParamsData);
+
+            
+        }
         protected override DF_NG_5117_MSG14003_ImportDeclarationAmendmentReplyMsg CallWS(DCAInCustomRequest customRequest, GenericRequestParams requestParams, out string exceptionMessage)
         {
             throw new NotImplementedException();

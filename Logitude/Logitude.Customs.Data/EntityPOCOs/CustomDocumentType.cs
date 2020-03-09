@@ -38,8 +38,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public bool AutoSetOriginalDocumentTrue { get; set; }
         [Column("IsCourierManadatory")]
 	    public bool IsCourierManadatory { get; set; }
-        [Column("IsManadatory")]
-	    public bool IsManadatory { get; set; }
+        [Column("IsDiamondManadatory")]
+	    public bool IsDiamondManadatory { get; set; }
     }
 }
 	 

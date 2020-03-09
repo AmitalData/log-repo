@@ -425,8 +425,15 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
     timerToken: any;
     DisplayOnlyCheck() {
         this.IsDisplayOnly = this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayMode;
+        if (this.DeclarationPM.AmendmentMessage != null && this.DeclarationPM.AmendmentMessage != "") {
+            {
+                this.DisplayOnlyMessage = this.DeclarationPM.AmendmentMessage;
+                if (this.DeclarationPM.IsAmendmentDisplayOnly) this.IsDisplayOnly = this.DeclarationPM.IsAmendmentDisplayOnly;
+                this.IsDisplayMessage = true;
+            }
+        }
 
-        if (this.IsDisplayOnly) {
+    else  if (this.IsDisplayOnly) {
             this.DisplayOnlyMessage = "לתצוגה בלבד - " + this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayModeMessage;
             //this.SetScreenFieldsEditability();
             this.timerToken = setTimeout(() => {
@@ -438,74 +445,33 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
             this.ShowStorageStatusMessage = true;
             this.DisplayOnlyMessage = "בקשת אחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.DeclarationPM.StorageStatusName;
         }
-        else {
-            this.InitDisplayOnlyMessage();
-        }
+       
         var declarationDisplayOnlyChecks: DeclarationDisplayOnlyChecks = new DeclarationDisplayOnlyChecks();
         declarationDisplayOnlyChecks.DeclarationViewDisplayOnlyChecks(this.DeclarationPM).subscribe((response: ServiceResponse) => {
             var displayOnlyCheckResult: DisplayOnlyCheckResult = response.Result;
             this.IsDisplayOnly = displayOnlyCheckResult.IsDisplayOnly;
-            if (this.IsDisplayOnly) {
+            if (this.DeclarationPM.AmendmentMessage != null && this.DeclarationPM.AmendmentMessage != "") {
+                {
+                    this.DisplayOnlyMessage = this.DeclarationPM.AmendmentMessage;
+                    if (this.DeclarationPM.IsAmendmentDisplayOnly) this.IsDisplayOnly = this.DeclarationPM.IsAmendmentDisplayOnly;
+                }
+            }
+
+            else if (this.IsDisplayOnly) {
                 this.DisplayOnlyMessage = "לתצוגה בלבד - " + displayOnlyCheckResult.DisplayOnlyMessage;
             }
             else if (this.DeclarationPM.StorageStatusCode) {
                 this.ShowStorageStatusMessage = true;
                 this.DisplayOnlyMessage = "בקשת אחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.DeclarationPM.StorageStatusName;
             }
-            else {
-                this.InitDisplayOnlyMessage();
-            }
+           
             this.timerToken = setTimeout(() => {
                 DeclarationEventManager.DisplayModeChanged.emit(this.IsDisplayOnly);
             }, 200);
         });
     }
 
-    InitDisplayOnlyMessage() {
-        if (this.DeclarationPM.IsAmendment && (this.DeclarationPM.AmendmentStatus == "2" || this.DeclarationPM.AmendmentStatus == null)) {
-            this.DisplayOnlyMessage = TextCodeTranslator.Translate("Customs.Declaration.O.IsAmendment") + ' ' + this.DeclarationPM.AmendmentStatusName;
-            this.IsDisplayMessage = true;
-        }
-        else if (this.DeclarationPM.IsAmendment == false) {
-            this.declarationExtendedListService.GetDeclarationAmendmentsById(this.DeclarationPM.Id).subscribe
-                (data => {
-                    if (data.Result == null || data.Result.length <= 0) return;
-
-                    data.Result = data.Result.sort((obj1, obj2) => {
-                        if (obj1.amendmentissueDate > obj2.amendmentissueDate) {
-                            return 1;
-                        }
-
-                        if (obj1.amendmentissueDate < obj2.amendmentissueDate) {
-                            return -1;
-                        }
-
-                        return 0;
-                    });
-
-                    var temp = false;
-
-                    data.Result.forEach((item) => {
-                        if ((temp == false )&& ( item.AmendmentStatus == "3" || item.AmendmentStatus == "1" || item.AmendmentStatus == "6" || item.AmendmentStatus == "4"|| item.AmendmentStatus == "2")) {
-                            {
-                            this.DisplayOnlyMessage = TextCodeTranslator.Translate("Customs.Declaration.O.ExistsAmendments") + ' ' + item.AmendmentStatusName;
-                                this.IsDisplayMessage = true;
-                                temp = true;
-
-                            }
-                        }
-
-                    });
-                
-
-                }
-
-
-                );
-
-        }
-    }
-
+ 
     public columns: any[] = null;
 
     BuildColumns() {

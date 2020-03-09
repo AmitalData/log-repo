@@ -1,0 +1,105 @@
+<style>
+    .DisbleBox {
+        display: inline-block;
+        border: 1px solid #ffd800;
+        border-radius: 5px;
+        background: #faf5c0;
+        padding: 3px 3px;
+        margin: 5px;
+        color: gray;
+        font-family: sans-serif;
+        word-wrap: break-word;
+        word-break: break-all;
+        white-space: normal;
+    }
+</style>
+
+<table *ngIf="Loaded">
+
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td colspan="4">
+            <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="false"></ValidationSummary>
+        </td>
+    </tr>
+
+
+    <!-- Filters Fields-->
+    <tr>
+        <td colspan="4" style="">
+
+            <table style="table-layout: fixed;">
+                <tr style="height: 10px;">
+                    <td style="width: 130px;"></td>
+                    <td style="width: 170px;"></td>
+                    <td></td>
+                </tr>
+
+
+                <tr class="FormFieldRow"> </tr>
+
+                <!-- KeywordtypeCode -->
+                <tr class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'KeywordtypeCode'" [ObjectTableName]="ObjectTableName" [Text]="'תרחיש'"
+                                  [DataContext]="DataContext">
+
+                        </LogLabel>
+                    </td>
+                    <td>
+
+                        <ComboBox [ItemsSource]="ScenarioCodes" [SelectedItem]="SelectedItemScenario" [Binding]="'Value'" (SelectedItemChanged)="ScenarioCodeClicked($event.Key)"></ComboBox>
+                    </td>
+                    <td></td>
+                </tr>
+
+                <!-- Param1 -->
+                <tr class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'Param1'" [ObjectTableName]="ObjectTableName" [Text]="'פרמטר 1'"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <LogTextBox [ObjectFieldName]="'Param1'" [ObjectTableName]="ObjectTableName" [Text]="Param1"
+                                    [DataContext]="DataContext" [HideColumns]="true" [InputType]="'nText'" [IsMultiline]="true"></LogTextBox>
+                    </td>
+
+                    <td></td>
+                </tr>
+
+                <!-- Param2 -->
+                <tr class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'Param2'" [ObjectTableName]="ObjectTableName" [Text]="'פרמטר 2'"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <LogTextBox [ObjectFieldName]="'Param2'" [ObjectTableName]="ObjectTableName" [Text]="Param2"
+                                    [DataContext]="DataContext" [HideColumns]="true" [InputType]="'nText'" [IsMultiline]="true"></LogTextBox>
+                    </td>
+
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <td></td>
+                </tr>
+
+            </table>
+
+        </td>
+    </tr>
+
+    <tr style="height: 40px;">
+        <td>
+            <div></div>
+        </td>
+        <td style="width: 57px;vertical-align: bottom;">
+            <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Close' |TextCodeTranslationPipe}}</button>
+        </td>
+        <td style="width: 10px;"><div></div></td>
+        <td style="width: 50px;vertical-align: bottom;">
+            <button class="RedButton" (click)="OkButtonClicked()">{{'General.B.Ok' |TextCodeTranslationPipe}}</button>
+        </td>
+    </tr>
+
+</table>

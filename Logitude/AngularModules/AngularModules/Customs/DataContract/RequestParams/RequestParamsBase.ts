@@ -1,4 +1,4 @@
-﻿import {Guid} from '../../../Infrastructure/Utilities/Guid';
+import {Guid} from '../../../Infrastructure/Utilities/Guid';
 
 export enum SendRequestVIA {
     Default,// from CustomsMessaging Library
@@ -50,11 +50,18 @@ export class RequestParamsBase {
     
 
     public ForcePersonalSign: boolean;
+    public TestCase: TestCase
+}
+export class TestCase {
+    public Code: string;
+    public Param1: string;
+    public Param2: string;
+    public string: string;
 }
 
 export class CustomSendOptionsArgs {
     public Option: string;
     public ForcePersonalSign: boolean;
     public RequestVIA: SendRequestVIA;
+    public TestCase: boolean= false;
 } 
-        

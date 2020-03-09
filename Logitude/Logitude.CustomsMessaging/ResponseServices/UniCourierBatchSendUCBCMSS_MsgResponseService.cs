@@ -52,15 +52,15 @@ namespace Logitude.CustomsMessaging.ResponseServices
             //listPM = qs.GetByMasterIDDeclarationCourierStatus(requestParams.Tenant, requestParams.AppicationId);
             if (customResponse.ServerSplitDeclarationsList == null || (customResponse.ServerSplitDeclarationsList != null && customResponse.ServerSplitDeclarationsList.Count == 0))
             {
-                LogMessagingUtil.Instance.AppendLine("Splitter to 100 - Create new CRS");
-                mess.AppendLine($"Splitter to 100 - Create new CRS master {requestParams.AppicationId} ");
+                LogMessagingUtil.Instance.AppendLine("Splitter to 50 - Create new CRS");
+                mess.AppendLine($"Splitter to 50 - Create new CRS master {requestParams.AppicationId} ");
 
 
                 var DeclarationIdList = qs.GetByMasterID_DeclarationIdList(requestParams.Tenant, requestParams.AppicationId);
-                DeclarationIdList.ChunkBy(100).ForEach(list100 =>
+                DeclarationIdList.ChunkBy(50).ForEach(list50 =>
                 {
-                    //CreateCRS(customResponse, requestParams,list100);
-                    customResponse.ServerSplitDeclarationsList = list100;
+                    //CreateCRS(customResponse, requestParams,list50);
+                    customResponse.ServerSplitDeclarationsList = list50;
                     customResponse.LoggingUserId = requestParams.LoggingUserId;
                     var myCRSUtil = new CRSUtil();
                     myCRSUtil
@@ -75,7 +75,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 return;
             }
 
-            LogMessagingUtil.Instance.AppendLine("Handle 100 DeclarationIdList");
+            LogMessagingUtil.Instance.AppendLine("Handle 50 DeclarationIdList");
 
             listPM = qs.GetByDeclarationIdList(requestParams.Tenant, customResponse.ServerSplitDeclarationsList);
 

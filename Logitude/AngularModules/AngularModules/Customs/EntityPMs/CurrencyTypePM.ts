@@ -49,6 +49,16 @@ export class CurrencyTypePM {
     public set Inactive(newValue: boolean) { if (this.inactive != newValue) { this.inactive = newValue; this.MarkAsDirty("Inactive"); } }
        
 	 
+    private tenantInactive: boolean;
+    public get TenantInactive() { return this.tenantInactive; }
+    public set TenantInactive(newValue: boolean) { if (this.tenantInactive != newValue) { this.tenantInactive = newValue; this.MarkAsDirty("TenantInactive"); } }
+       
+	 
+    private mehesInactive: boolean;
+    public get MehesInactive() { return this.mehesInactive; }
+    public set MehesInactive(newValue: boolean) { if (this.mehesInactive != newValue) { this.mehesInactive = newValue; this.MarkAsDirty("MehesInactive"); } }
+       
+	 
 
     public OldEntityPM: CurrencyTypePM;
 		

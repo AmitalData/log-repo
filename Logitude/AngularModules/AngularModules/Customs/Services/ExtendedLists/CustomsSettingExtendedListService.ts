@@ -1,4 +1,4 @@
-﻿import {Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Http, Headers} from '@angular/http';
 import {Observable}     from 'rxjs/Rx';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
@@ -9,9 +9,11 @@ import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {CustomsSettingList} from '../../EntityLists/CustomsSettingList';
+import { GenericRequestParams } from '../../DataContract/RequestParams/GenericRequestParams';
 
 
 export class CustomsSettingExtendedListService {
+   
 
     private _http: Http;
     private _apiUrl: string;
@@ -42,7 +44,47 @@ export class CustomsSettingExtendedListService {
             }).catch(ServiceHelper.HandleServiceError);
         });
     }
+    GetSincroOption(tenant: number, SincroScreen: string): any {
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
 
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetSincroOption/?SincroScreen=' + SincroScreen.toString() + '&tenant=' + tenant.toString() , { headers: authHeader })
+                .map(response => {
+                    var obj = response.json();
+
+
+                    var serviceResponse: ServiceResponse;
+                    serviceResponse = new ServiceResponse();
+                    serviceResponse.Result = obj;
+                    return serviceResponse;
+                }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
+    PostSincroOption(genericRequestParams: GenericRequestParams) {
+        return Observable.defer(() => {
+
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
+
+            var serviceResponse: ServiceResponse;
+            serviceResponse = new ServiceResponse();
+            var params = JSON.stringify(genericRequestParams);
+            return this._http.post(
+                this._apiUrl + '/PostSincroOption/',
+                JSON.stringify(genericRequestParams),
+                { headers: authHeader }).map((res) => {
+
+                    serviceResponse.Result = res.json();
+
+                    return serviceResponse;
+
+                }).catch(ServiceHelper.HandleServiceError);
+        }
+
+        );
+    }
 
     GetAmitalRestrictOwnerModel(getFromCache: boolean) {
 
