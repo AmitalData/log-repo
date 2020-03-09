@@ -276,195 +276,214 @@
 
                                     <!-- Icon -->
                                     <log-column [width]="'25'">
-                                        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1">
-                                            <img class="CenterCenter" [attr.title]="item.SatusTypeToolTip" *ngIf="item.EntityPM.ShipmentReceivableLineStatusCode == 'DRFT'" src="./Images/CellIcons/DRFT.png" />
-                                            <img class="CenterCenter" [attr.title]="item.SatusTypeToolTip" *ngIf="item.EntityPM.ShipmentReceivableLineStatusCode == 'ACCT'" src="./Images/CellIcons/ACCT.png" />
-                                        </log-cell-template>
+                                        <ng-template let-item>
+                                            <log-cell-template #logcelltemplate [TabIndex]="-1">
+                                                <img class="CenterCenter" [attr.title]="item.SatusTypeToolTip" *ngIf="item.EntityPM.ShipmentReceivableLineStatusCode == 'DRFT'" src="./Images/CellIcons/DRFT.png" />
+                                                <img class="CenterCenter" [attr.title]="item.SatusTypeToolTip" *ngIf="item.EntityPM.ShipmentReceivableLineStatusCode == 'ACCT'" src="./Images/CellIcons/ACCT.png" />
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- ChargesTypeName -->
                                     <log-column [width]="'150'" [header]="'Shipment.O.Receivables.ChargeType' | TextCodeTranslationPipe" [SortFieldName]="'ChargesTypeName'">
-                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
-                                            {{item.ChargesTypeName}}
-                                        </log-cell-template>
+                                        <ng-template let-item>
+                                            <log-cell-template #logcelltemplate [IsEnabled]="false">
+                                                {{item.ChargesTypeName}}
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- PrepaidCollectId -->
                                     <log-column [width]="'35'" [header]="'Shipment.O.Receivables.PC' | TextCodeTranslationPipe" [Alignment]="'center'" [SortFieldName]="'PrepaidCollectId'">
-                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false" [Alignment]="'center'">
-                                            {{item.PrepaidCollectId}}
-                                        </log-cell-template>
+                                        <ng-template let-item>
+                                            <log-cell-template #logcelltemplate [IsEnabled]="false" [Alignment]="'center'">
+                                                {{item.PrepaidCollectId}}
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- Quantity -->
                                     <log-column [width]="'90'" [header]="'Shipment.O.Receivables.Quantity' | TextCodeTranslationPipe" [SortFieldName]="'Quantity'">
-                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsQuantityEnabled">
+                                        <ng-template let-item>
+                                            <log-cell-template #logcelltemplate [IsEnabled]="item.IsQuantityEnabled">
+                                                <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: right;" class="TextTrimming" [attr.title]="item.Quantity | NumbersPipe:'N3'">
+                                                    {{item.Quantity | NumbersPipe:'N3'}}
+                                                </div>
 
-                                            <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: right;" class="TextTrimming" [attr.title]="item.Quantity | NumbersPipe:'N3'">
-                                                {{item.Quantity | NumbersPipe:'N3'}}
-                                            </div>
-
-                                            <div *ngIf="logcelltemplate.IsEditMode">
-                                                <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Quantity'" [Text]="item.Quantity" [DataContext]="item" [ObjectTableName]="item.ObjectTableName" [HideColumns]="true"></LogTextBox>
-                                            </div>
-                                        </log-cell-template>
+                                                <div *ngIf="logcelltemplate.IsEditMode">
+                                                    <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Quantity'" [Text]="item.Quantity" [DataContext]="item" [ObjectTableName]="item.ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- MeasurementCode -->
                                     <log-column [width]="'50'" [header]="'Shipment.O.Receivables.UOM' | TextCodeTranslationPipe" [Alignment]="'center'" [SortFieldName]="'MeasurementCode'">
-                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false" [Alignment]="'center'">
-                                            {{item.MeasurementCode}}
-                                        </log-cell-template>
+                                        <ng-template let-item>
+                                            <log-cell-template #logcelltemplate [IsEnabled]="false" [Alignment]="'center'">
+                                                {{item.MeasurementCode}}
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- CurrencyCode -->
                                     <log-column [width]="'50'" [header]="'ShipmentReceivable.CH.CurrencyIdListLable' | TextCodeTranslationPipe" [Alignment]="'center'" [SortFieldName]="'CurrencyCode'">
-                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false" [Alignment]="'center'">
-                                            {{item.CurrencyCode}}
-                                        </log-cell-template>
+                                        <ng-template let-item>
+                                            <log-cell-template #logcelltemplate [IsEnabled]="false" [Alignment]="'center'">
+                                                {{item.CurrencyCode}}
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- UnitPrice -->
                                     <log-column [width]="'90'" [Alignment]="'left'" [header]="'Shipment.O.Receivables.UnitPrice' | TextCodeTranslationPipe" [SortFieldName]="'UnitPrice'">
-                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsUnitPriceEnabled" [IsFilled]="true" [DisableColors]="item.UnitPrice < 0 ? true : false">
-
-                                            <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%;" [ngStyle]="{background: item.UnitPrice < 0 ? '#FCC1C1':'transparent'}">
-                                                <table>
-                                                    <tr>
-                                                        <td style="width: 18px; padding-right: 2px;" *ngIf="item.EntityPM.IsChargeBySteps">
-                                                            <img src="./Images/CellIcons/B-icon.png" style="display: block; margin: auto; width: 16px; height: 16px;" [attr.title]="'Shipment.M.Receivables.PricedueQuoteCharge' | TextCodeTranslationPipe" />
-                                                        </td>
-
-                                                        <td style="text-align: right;">
-                                                            {{item.UnitPrice | NumbersPipe:'N3'}}
-                                                        </td>
-
-                                                        <td *ngIf="item.MeasurementCode == 'PRVL' || item.MeasurementCode =='PRFR'" style="width:1px; padding-left: 2px;">
-                                                            %
-                                                        </td>
-
-                                                        <td style="width: 3px;">
-                                                            <div></div>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </div>
-
-                                            <div *ngIf="logcelltemplate.IsEditMode">
-                                                <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'UnitPrice'" [Text]="item.UnitPrice" [DataContext]="item" [ObjectTableName]="item.ObjectTableName" [HideColumns]="true"></LogTextBox>
-                                            </div>
-                                        </log-cell-template>
-                                    </log-column>
-
-                                    <!-- Amount -->
-                                    <log-column [width]="'115'" [header]="'Shipment.O.Receivables.Amount' | TextCodeTranslationPipe" [Alignment]="'center'" [SortFieldName]="'TotalAmount'">
-                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsTotalAmountEnabled">
-
-                                            <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: right;" class="TextTrimming" [attr.title]="item.UnitPrice | NumbersPipe:'N3'">
-                                                <table>
-                                                    <tr>
-
-                                                        <!-- MinMax From Quote Charge -->
-                                                        <td style="width: 18px; padding-right: 2px;" *ngIf="item.IsMinMaxFromQuoteIconVisible">
-                                                            <img src="./Images/CellIcons/M-icon.png" style="display: block; margin: auto; width: 16px; height: 16px;" [title]="item.MinMaxFromQuoteToolTip" />
-                                                        </td>
-
-                                                        <td style="width: 18px; padding-right: 2px;" *ngIf="item.IsFixedAmountIconVisible">
-                                                            <img src="./Images/CellIcons/F-icon.png" style="display: block; margin: auto; width: 16px; height: 16px;" [attr.title]="'Shipment.M.Receivables.ForeignAmountsetasFixed' | TextCodeTranslationPipe" />
-                                                        </td>
-
-                                                        <td style="text-align: right;">
-                                                            <span>{{item.TotalAmount | NumbersPipe:'N3'}}</span>
-                                                            <span style="margin-left: 2px;" *ngIf="item.TotalAmount != null">{{item.CurrencyCode}}</span>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </div>
-
-                                            <div *ngIf="logcelltemplate.IsEditMode">
-                                                <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'TotalAmount'" [Text]="item.TotalAmount" [DataContext]="item" [ObjectTableName]="item.ObjectTableName" [HideColumns]="true"></LogTextBox>
-                                            </div>
-                                        </log-cell-template>
-                                    </log-column>
-
-                                    <!-- Amount (Local) -->
-                                    <log-column [width]="'115'" [header]="AmountLocalColumnHeader" [Alignment]="'center'" [SortFieldName]="'TotalAmountLocal'">
-                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false" [Alignment]="'right'">
-                                            {{item.TotalAmountLocal | NumbersPipe:'N3'}}
-                                        </log-cell-template>
-                                    </log-column>
-
-                                    <!-- Invoice# (Local) -->
-                                    <log-column [width]="InvoiceColumnWidth" [header]="'Shipment.O.Receivables.InvoiceNo' | TextCodeTranslationPipe" [SortFieldName]="'InvoiceNumber'">
-                                        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1">
-                                            <Hyperlink (click)="ViewInvoiceClicked(item.ARInvoiceId)">{{item.InvoiceNumber}}</Hyperlink>
-                                            <span style="margin-left: 3px; font-size: 11px;" [ngStyle]="{color: item.InvoiceStatus | StringToColorPipe}">{{item.InvoiceStatus}}</span>
-                                        </log-cell-template>
-                                    </log-column>
-
-                                    <!-- Buttons -->
-                                    <log-column [width]="'100'">
-                                        <log-cell-template template="let item" [TabIndex]="-1">
-                                            <div style="width: 100%; height: 100%; position: relative;">
-                                                <div class="LeftCenter" style="height: 20px;">
+                                        <ng-template let-item>
+                                            <log-cell-template #logcelltemplate [IsEnabled]="item.IsUnitPriceEnabled" [IsFilled]="true" [DisableColors]="item.UnitPrice < 0 ? true : false">
+                                                <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%;" [ngStyle]="{background: item.UnitPrice < 0 ? '#FCC1C1':'transparent'}">
                                                     <table>
                                                         <tr>
-                                                            <td style="width: 4px;">
-                                                                <span class="CellSeparator"></span>
+                                                            <td style="width: 18px; padding-right: 2px;" *ngIf="item.EntityPM.IsChargeBySteps">
+                                                                <img src="./Images/CellIcons/B-icon.png" style="display: block; margin: auto; width: 16px; height: 16px;" [attr.title]="'Shipment.M.Receivables.PricedueQuoteCharge' | TextCodeTranslationPipe" />
                                                             </td>
 
-                                                            <td style="width: 16px;">
-                                                                <div class="MediaFill">
-                                                                    <div style="width: 16px; height: 16px;" class="CenterCenter">
-                                                                        <img *ngIf="!item.Notes" src="./Images/Notes_notexists.png" style="vertical-align: middle; display: block;" />
-                                                                        <CellTooltip *ngIf="item.Notes" [IconPath]="'./Images/Notes_exists.png'" [Head]="'ShipmentReceivable.F.Notes' | TextCodeTranslationPipe" [Body]="item.Notes"></CellTooltip>
-                                                                    </div>
-                                                                </div>
+                                                            <td style="text-align: right;">
+                                                                {{item.UnitPrice | NumbersPipe:'N3'}}
                                                             </td>
 
-                                                            <td style="width: 5px;">
+                                                            <td *ngIf="item.MeasurementCode == 'PRVL' || item.MeasurementCode =='PRFR'" style="width:1px; padding-left: 2px;">
+                                                                %
+                                                            </td>
+
+                                                            <td style="width: 3px;">
                                                                 <div></div>
-                                                            </td>
-
-                                                            <td style="width: 20px;" *ngIf="ShipmentLevelCode && ShipmentLevelCode != 'C'">
-                                                                <CellTooltip [IconPath]="'./Images/CellIcons/Info_Gray.png'" [Head]="'Shipment.O.Receivables.Summary' | TextCodeTranslationPipe">
-                                                                    <table>
-                                                                        <tr style="height: 1px; line-height: 20px;">
-                                                                            <td class="Label" style="width: 1px;">{{'Shipment.S.Receivables.Receivable' | TextCodeTranslationPipe}}:</td>
-                                                                            <td class="Value" style="width: 1px; padding-left: 5px; text-align: right; font-size: 16px;">{{item.ReceivableSummary | NumbersPipe:'N3'}}</td>
-                                                                            <td class="Label" style="padding-left: 5px;">({{item.LocalCurrencyCode}})</td>
-                                                                        </tr>
-
-                                                                        <tr style="height: 1px; line-height: 20px;">
-                                                                            <td class="Label" style="width: 1px;">{{'Shipment.S.Receivables.Payable' | TextCodeTranslationPipe}}:</td>
-                                                                            <td class="Value" style="width: 1px; padding-left: 5px; text-align: right; font-size: 16px;">{{item.PayableSummary | NumbersPipe:'N3'}}</td>
-                                                                            <td class="Label" style="padding-left: 5px;">({{item.LocalCurrencyCode}})</td>
-                                                                        </tr>
-
-                                                                        <tr style="height: 1px; line-height: 20px;">
-                                                                            <td class="Label" style="width: 1px;">{{'Shipment.S.Receivables.Profit' | TextCodeTranslationPipe}}:</td>
-                                                                            <td class="Value" style="width: 1px; padding-left: 5px; text-align: right; font-size: 16px;" [ngStyle]="{color: item.ProfitSummary | StringToColorPipe:'number'}">{{item.ProfitSummary | NumbersPipe:'N3'}}</td>
-                                                                            <td class="Label" style="padding-left: 5px;">({{item.LocalCurrencyCode}})</td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td colspan="3">
-                                                                                <div></div>
-                                                                            </td>
-                                                                        </tr>
-                                                                    </table>
-                                                                </CellTooltip>
-                                                            </td>
-
-                                                            <td>
-                                                                <span class="CellSeparator"></span>
-                                                                <IconButton [Name]="'Edit'" [IsSmall]="true" [Left]="3" (click)="EditReceivable(item)"></IconButton>
-                                                                <IconButton [Name]="'Delete'" [IsSmall]="true" [Left]="3" (click)="DeleteItem(item)" [IsEnabled]="item.IsEditingEnabled" *ngIf="!item.IsLineAttachted"></IconButton>
                                                             </td>
                                                         </tr>
                                                     </table>
                                                 </div>
-                                            </div>
-                                        </log-cell-template>
+
+                                                <div *ngIf="logcelltemplate.IsEditMode">
+                                                    <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'UnitPrice'" [Text]="item.UnitPrice" [DataContext]="item" [ObjectTableName]="item.ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
+                                    </log-column>
+
+                                    <!-- Amount -->
+                                    <log-column [width]="'115'" [header]="'Shipment.O.Receivables.Amount' | TextCodeTranslationPipe" [Alignment]="'center'" [SortFieldName]="'TotalAmount'">
+                                        <ng-template let-item>
+                                            <log-cell-template #logcelltemplate [IsEnabled]="item.IsTotalAmountEnabled">
+                                                <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: right;" class="TextTrimming" [attr.title]="item.UnitPrice | NumbersPipe:'N3'">
+                                                    <table>
+                                                        <tr>
+
+                                                            <!-- MinMax From Quote Charge -->
+                                                            <td style="width: 18px; padding-right: 2px;" *ngIf="item.IsMinMaxFromQuoteIconVisible">
+                                                                <img src="./Images/CellIcons/M-icon.png" style="display: block; margin: auto; width: 16px; height: 16px;" [title]="item.MinMaxFromQuoteToolTip" />
+                                                            </td>
+
+                                                            <td style="width: 18px; padding-right: 2px;" *ngIf="item.IsFixedAmountIconVisible">
+                                                                <img src="./Images/CellIcons/F-icon.png" style="display: block; margin: auto; width: 16px; height: 16px;" [attr.title]="'Shipment.M.Receivables.ForeignAmountsetasFixed' | TextCodeTranslationPipe" />
+                                                            </td>
+
+                                                            <td style="text-align: right;">
+                                                                <span>{{item.TotalAmount | NumbersPipe:'N3'}}</span>
+                                                                <span style="margin-left: 2px;" *ngIf="item.TotalAmount != null">{{item.CurrencyCode}}</span>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+
+                                                <div *ngIf="logcelltemplate.IsEditMode">
+                                                    <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'TotalAmount'" [Text]="item.TotalAmount" [DataContext]="item" [ObjectTableName]="item.ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
+                                    </log-column>
+
+                                    <!-- Amount (Local) -->
+                                    <log-column [width]="'115'" [header]="AmountLocalColumnHeader" [Alignment]="'center'" [SortFieldName]="'TotalAmountLocal'">
+                                        <ng-template let-item>
+                                            <log-cell-template #logcelltemplate [IsEnabled]="false" [Alignment]="'right'">
+                                                {{item.TotalAmountLocal | NumbersPipe:'N3'}}
+                                            </log-cell-template>
+                                        </ng-template>
+                                    </log-column>
+
+                                    <!-- Invoice# (Local) -->
+                                    <log-column [width]="InvoiceColumnWidth" [header]="'Shipment.O.Receivables.InvoiceNo' | TextCodeTranslationPipe" [SortFieldName]="'InvoiceNumber'">
+                                        <ng-template let-item>
+                                            <log-cell-template #logcelltemplate [TabIndex]="-1">
+                                                <Hyperlink (click)="ViewInvoiceClicked(item.ARInvoiceId)">{{item.InvoiceNumber}}</Hyperlink>
+                                                <span style="margin-left: 3px; font-size: 11px;" [ngStyle]="{color: item.InvoiceStatus | StringToColorPipe}">{{item.InvoiceStatus}}</span>
+                                            </log-cell-template>
+                                        </ng-template>
+                                    </log-column>
+
+                                    <!-- Buttons -->
+                                    <log-column [width]="'100'">
+                                        <ng-template let-item>
+                                            <log-cell-template [TabIndex]="-1">
+                                                <div style="width: 100%; height: 100%; position: relative;">
+                                                    <div class="LeftCenter" style="height: 20px;">
+                                                        <table>
+                                                            <tr>
+                                                                <td style="width: 4px;">
+                                                                    <span class="CellSeparator"></span>
+                                                                </td>
+
+                                                                <td style="width: 16px;">
+                                                                    <div class="MediaFill">
+                                                                        <div style="width: 16px; height: 16px;" class="CenterCenter">
+                                                                            <img *ngIf="!item.Notes" src="./Images/Notes_notexists.png" style="vertical-align: middle; display: block;" />
+                                                                            <CellTooltip *ngIf="item.Notes" [IconPath]="'./Images/Notes_exists.png'" [Head]="'ShipmentReceivable.F.Notes' | TextCodeTranslationPipe" [Body]="item.Notes"></CellTooltip>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+
+                                                                <td style="width: 5px;">
+                                                                    <div></div>
+                                                                </td>
+
+                                                                <td style="width: 20px;" *ngIf="ShipmentLevelCode && ShipmentLevelCode != 'C'">
+                                                                    <CellTooltip [IconPath]="'./Images/CellIcons/Info_Gray.png'" [Head]="'Shipment.O.Receivables.Summary' | TextCodeTranslationPipe">
+                                                                        <table>
+                                                                            <tr style="height: 1px; line-height: 20px;">
+                                                                                <td class="Label" style="width: 1px;">{{'Shipment.S.Receivables.Receivable' | TextCodeTranslationPipe}}:</td>
+                                                                                <td class="Value" style="width: 1px; padding-left: 5px; text-align: right; font-size: 16px;">{{item.ReceivableSummary | NumbersPipe:'N3'}}</td>
+                                                                                <td class="Label" style="padding-left: 5px;">({{item.LocalCurrencyCode}})</td>
+                                                                            </tr>
+
+                                                                            <tr style="height: 1px; line-height: 20px;">
+                                                                                <td class="Label" style="width: 1px;">{{'Shipment.S.Receivables.Payable' | TextCodeTranslationPipe}}:</td>
+                                                                                <td class="Value" style="width: 1px; padding-left: 5px; text-align: right; font-size: 16px;">{{item.PayableSummary | NumbersPipe:'N3'}}</td>
+                                                                                <td class="Label" style="padding-left: 5px;">({{item.LocalCurrencyCode}})</td>
+                                                                            </tr>
+
+                                                                            <tr style="height: 1px; line-height: 20px;">
+                                                                                <td class="Label" style="width: 1px;">{{'Shipment.S.Receivables.Profit' | TextCodeTranslationPipe}}:</td>
+                                                                                <td class="Value" style="width: 1px; padding-left: 5px; text-align: right; font-size: 16px;" [ngStyle]="{color: item.ProfitSummary | StringToColorPipe:'number'}">{{item.ProfitSummary | NumbersPipe:'N3'}}</td>
+                                                                                <td class="Label" style="padding-left: 5px;">({{item.LocalCurrencyCode}})</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td colspan="3">
+                                                                                    <div></div>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </CellTooltip>
+                                                                </td>
+
+                                                                <td>
+                                                                    <span class="CellSeparator"></span>
+                                                                    <IconButton [Name]="'Edit'" [IsSmall]="true" [Left]="3" (click)="EditReceivable(item)"></IconButton>
+                                                                    <IconButton [Name]="'Delete'" [IsSmall]="true" [Left]="3" (click)="DeleteItem(item)" [IsEnabled]="item.IsEditingEnabled" *ngIf="!item.IsLineAttachted"></IconButton>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                 </logitude-edit-grid>

@@ -253,20 +253,27 @@ export class ShipmentDomainService {
         });
     }
     GetMasterReceivables(entityId: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+       
+        const httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Token': ServiceHelper.GetLoggedUserToken()
+            })
+        };
 
         var url = this._apiUrl + '/GetMasterReceivables?entityId=' + entityId;
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
+            return this._httpClient.get(url, httpOptions).pipe(
+                map(response => {
 
-                var myJsonResult = response.json();
+                    var myJsonResult = response;
 
-                var serviceResponse = new ServiceResponse();
-                serviceResponse.Result = myJsonResult;
-                return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+                    var serviceResponse = new ServiceResponse();
+                    serviceResponse.Result = myJsonResult;
+                    return serviceResponse;
+                }),
+                catchError(ServiceHelper.HandleServiceError));
         });
     }
     GetInvoiceOpenAmountReceivables(invoiceTypeCode: string, entityId: string) {
