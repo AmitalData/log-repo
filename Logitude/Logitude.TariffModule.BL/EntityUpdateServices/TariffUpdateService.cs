@@ -181,8 +181,8 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                         tariffSurchageLog.UpdateMethodCode = "MA";
                         tariffSurchageLog.ChangeSetOp = ChangeSetOperation.Insert;
                         tariffSurchageLog.Tenant = item.Tenant;
-                        tariffSurchageLog.To = item.DestinationPortCode;
-                        tariffSurchageLog.From = item.OriginPortCode;
+                        tariffSurchageLog.To = tariff.TypeCode.StartsWith("A") ? item.DestinationPortCode : item.DestinationPortCombinedCode;
+                        tariffSurchageLog.From = tariff.TypeCode.StartsWith("A") ? item.OriginPortCode : item.OriginPortCombinedCode;
                         tariffSurchargeUpdateService.Update(tariffSurchageLog, true);
                     }
                 }
