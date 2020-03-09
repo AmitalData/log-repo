@@ -50,7 +50,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
             {
                 mess.AppendLine($"מפוצל כבר !!!");
                 listPoco = repo.GetDeclarationsByIds(customResponse.ServerSplitDeclarationsList, requestParams.Tenant);
-                Send2715WhereDocumentStatusCodeIs2(mess, context, /*myCustomsDocumentUpdateService,*/ listPoco);
+                bool isCreateNewDocumentVersion = customResponse.IsCreateNewDocumentVersion;
+                Send2715WhereDocumentStatusCodeIs2(mess, context, /*myCustomsDocumentUpdateService,*/ listPoco, isCreateNewDocumentVersion);
             }
             else
             {
@@ -103,7 +104,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         private static void Send2715WhereDocumentStatusCodeIs2(StringBuilder mess, ICustomContext context, 
             //CustomsDocumentUpdateService myCustomsDocumentUpdateService, 
-            List<DeclarationCourierStatus> listPoco)
+            List<DeclarationCourierStatus> listPoco, bool IsCreateNewDocumentVersion = false)
         {
             foreach (var itemPoco in listPoco)
             {
@@ -123,7 +124,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             {
                                 var context1 = CustomContext.GetContext(itemPoco.Tenant);//context each CRS TRANS
                                 var myCustomsDocumentUpdateService = new CustomsDocumentUpdateService(context1, new Dictionary<string, IContext>(), itemPoco.Tenant);
-
+                                if(IsCreateNewDocumentVersion)
+                                {
+                                    customsDocumentPMItem.DocumentVersion = customsDocumentPMItem.DocumentVersion + 1;
+                                    customsDocumentPMItem.DocumentStatusCode = null;
+                                    customsDocumentPMItem.CustomRecievedDate = null;
+                                    customsDocumentPMItem.CustomsDocId = null;
+                                    customsDocumentPMItem.ForceRemoveCustomsDocId = true;
+                                }
                                 customsDocumentPMItem.ChangeSetOp = ChangeSetOperation.Update;
                                 customsDocumentPMItem.IsSendToQueue = false;
                                 myCustomsDocumentUpdateService.AddPerfectCustomsDocumentMetaDataValues(customsDocumentPMItem);

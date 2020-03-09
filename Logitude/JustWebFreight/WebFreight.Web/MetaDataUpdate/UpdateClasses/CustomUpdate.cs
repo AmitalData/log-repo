@@ -7913,7 +7913,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
 
 
             #region All Declarations Query
-            Query CustomsDeclarationQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Customs.Declaration.Q.DeclarationQuery" && d.ObjectTableId == CustomsDeclarationObject.Id).FirstOrDefault().Id, Code = "Declarations", QueryGroupCode = CustomsDeclarationGroup.Code, IndexOrder = 3, Tenant = 0, ObjectTableId = CustomsDeclarationObject.Id, QuerySection = "Customs.Declaration", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = DeclarationFeature.Id, }, QueriesRepository, tenantQueries);
+            Query CustomsDeclarationQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Customs.Declaration.Q.DeclarationQuery" && d.ObjectTableId == CustomsDeclarationObject.Id).FirstOrDefault().Id, Code = "Declarations", QueryGroupCode = CustomsDeclarationGroup.Code, IndexOrder = 4, Tenant = 0, ObjectTableId = CustomsDeclarationObject.Id, QuerySection = "Customs.Declaration", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = DeclarationFeature.Id, }, QueriesRepository, tenantQueries);
 
             QueryColumn Declaration0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsDeclarationQuery.Id, IndexOrder = 0, ObjectFieldId = CustomsDeclarationFields.Where(d => d.FieldName == "TaxationDateTime" && d.ObjectTableId == CustomsDeclarationObject.Id).FirstOrDefault().Id, ColumnWidth = 110 }, QueryColumnsRepository, tenantQueryColumns);
             QueryColumn Declaration1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsDeclarationQuery.Id, IndexOrder = 1, ObjectFieldId = CustomsDeclarationFields.Where(d => d.FieldName == "CustomFileNo" && d.ObjectTableId == CustomsDeclarationObject.Id).FirstOrDefault().Id, ColumnWidth = 100 }, QueryColumnsRepository, tenantQueryColumns);
@@ -14932,6 +14932,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             Feature CustomsPartnerFtpFeature = tenantFeatures.Where(d => d.Code == "CPARTNERFTP" && d.FeatureTypeCode == "MENU").FirstOrDefault();
             Feature courierDeclarationFeature = tenantFeatures.Where(d => d.Code == "COURIERDECLARATION" && d.FeatureTypeCode == "MENU").FirstOrDefault();
             Feature customsDeclarationFeature = tenantFeatures.Where(d => d.Code == "CUSTOMSDECLARATION" && d.FeatureTypeCode == "MENU").FirstOrDefault();
+            Feature customsReferantFeature = tenantFeatures.Where(d => d.Code == "CUSTOMREFERANT" && d.FeatureTypeCode == "MENU").FirstOrDefault();
 
             #region Menus
 
@@ -14950,7 +14951,8 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "COMA", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 1, CategoryTypeCode = null, TextCode = "General.MH.CourierMaster", Icon = "CustomersPath", FeatureId = customCouriersMasterFeature.Id, ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.CourierMaster").FirstOrDefault().Id }, MenusTablesRepository, tenantMenusTables);
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "CDCS", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 12, CategoryTypeCode = null, TextCode = "General.MH.DeclarationCargoSplits", Icon = "CustomersPath", FeatureId = customsDeclarationCargoSplitFeature.Id, ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.DeclarationCargoSplit").FirstOrDefault().Id }, MenusTablesRepository, tenantMenusTables);
             AddMenusTables.AddMenusTable(new MenusTableDetails() { HtmlView = "./CustomsModules/CustomsCourier/Components/CourierWorkspaces/CourierDeclarationWorkspaceComponent", Code = "CODC", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 3, CategoryTypeCode = null, TextCode = "General.MH.Declarations", Icon = "CustomersPath", FeatureId = courierDeclarationFeature.Id, ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.Declaration").FirstOrDefault().Id }, MenusTablesRepository, tenantMenusTables);
-        
+            AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "REDC", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 14, CategoryTypeCode = null, TextCode = "General.MH.ReferantScreen", Icon = "CustomersPath", FeatureId = customsDeclarationFeature.Id, ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.DeclarationReferantData").FirstOrDefault().Id }, MenusTablesRepository, tenantMenusTables);
+
             #endregion
 
             #region Maintanance

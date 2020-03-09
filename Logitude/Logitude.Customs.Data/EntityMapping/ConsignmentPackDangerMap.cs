@@ -40,6 +40,8 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.FlashpointTemperature).HasColumnName("FlashpointTemperature").HasMaxLength(8).IsUnicode(false);
 
             this.Property(t => t.StorageTemperature).HasColumnName("StorageTemperature").HasMaxLength(20).IsUnicode(false);
+
+            this.Property(t => t.ClassificationFourDigit).HasColumnName("ClassificationFourDigit").HasMaxLength(4).IsUnicode(true);
         }
     }
 }

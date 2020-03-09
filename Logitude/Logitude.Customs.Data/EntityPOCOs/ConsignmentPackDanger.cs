@@ -51,6 +51,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string FlashpointTemperature { get; set; }
         [Column("StorageTemperature")]
 	    public string StorageTemperature { get; set; }
+        [Column("ClassificationFourDigit")]
+	    public string ClassificationFourDigit { get; set; }
     }
 }
 	 

@@ -56,6 +56,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public bool IsControllerRemarks { get; set; }
         [Column("PreClassification")]
 	    public string PreClassification { get; set; }
+        [Column("SearchFields")]
+	    public string SearchFields { get; set; }
     }
 }
 	 

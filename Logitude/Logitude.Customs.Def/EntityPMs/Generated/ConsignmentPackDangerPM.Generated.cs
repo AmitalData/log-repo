@@ -256,6 +256,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string classificationFourDigit ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ClassificationFourDigit  
+	   {
+	    
+	     get
+		{
+		   return classificationFourDigit;
+		 }
+		 set
+		 {
+		   if(classificationFourDigit != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ClassificationFourDigit",OldValue=classificationFourDigit,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   classificationFourDigit=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
