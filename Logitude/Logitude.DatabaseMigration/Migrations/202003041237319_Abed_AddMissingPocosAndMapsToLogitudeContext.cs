@@ -7,54 +7,322 @@ namespace Logitude.DatabaseMigration.Migrations
     {
         public override void Up()
         {
-            DropForeignKey("dbo.Tenants", "FK_dbo.Tenants_dbo.NumberFormats_NumberFormatCode");
-            DropForeignKey("dbo.AccountingTransferLines", "FK_AccountingTransferHeaderAccountingTransferLine");
-            DropForeignKey("dbo.AccountingTransferHeaders", "FK_AccountingTransferHeaderTransferType");
-            DropForeignKey("dbo.AWBOCIs", "FK_AWBOCIAWBCustomsInformation");
-            DropForeignKey("dbo.AWBOCIs", "FK_AWBOCIAWBInformation");
-            DropForeignKey("dbo.EventTypes", "FK_EventTypeCategoryEventType");
-            //DropForeignKey("dbo.Reports", "ReportGroupId", "dbo.ReportGroups");
-            DropIndex("dbo.Tenants", "IX_FK_PasswordPolicyTenant");
-            DropIndex("dbo.Tenants", "IX_NumberFormatCode");
-            DropIndex("dbo.AccountingTransferHeaders", "IX_FK_AccountingTransferHeaderTransferType");
-            DropIndex("dbo.AccountingTransferHeaders", "IX_FK_UserAccountingTransferHeader");
-            DropIndex("dbo.AccountingTransferLines", "IX_FK_AccountingTransferHeaderAccountingTransferLine");
-            //DropIndex("dbo.AWBOCIs", new[] { "ShipmentId" });
-            //DropIndex("dbo.AWBOCIs", new[] { "AWBCustomsInformationCode" });
-            //DropIndex("dbo.AWBOCIs", new[] { "AWBInformationCode" });
-            DropIndex("dbo.EventTypes", "IX_FK_EventTypeCategoryEventType");
-            DropIndex("dbo.ChargeTypeAccountings", "IX_FK_VatTypeChargeTypeAccounting");
-            DropIndex("dbo.ChargeTypeAccountings", "IX_FK_ChargeTypeChargeTypeAccounting");
-            DropIndex("dbo.ContactLoginLogs", "IX_FK_ContactLoginLogContact");
-            DropIndex("dbo.DWSubQueries", "IX_DWQueryId");
-            DropIndex("dbo.QueueMessageMoreDetails", "IX_QueueDefinitionCode");
-            //DropIndex("dbo.Reports", new[] { "ReportGroupId" });
-            DropIndex("dbo.UserPermittedBranches", "IX_FK_UserPermittedBranchUser");
-            DropIndex("dbo.UserPermittedBranches", "IX_FK_BranchUserPermittedBranch");
-            DropIndex("dbo.UserPermittedProducts", "IX_UserId");
-            DropIndex("dbo.UserPermittedProducts", "IX_ProductTypeCode");
-            DropPrimaryKey("dbo.NumberFormats", "PK_dbo.NumberFormats");
-            DropPrimaryKey("dbo.AccountingTransferHeaders", "PK_AccountingTransferHeaders");
-            DropPrimaryKey("dbo.AccountingTransferTypes", "PK_AccountingTransferTypes");
-            DropPrimaryKey("dbo.AccountingTransferLines", "PK_AccountingTransferLines");
-            DropPrimaryKey("dbo.AWBCustomsInformations", "PK_AWBCustomsInformations");
-            DropPrimaryKey("dbo.AWBInformations", "PK_AWBInformations");
-            DropPrimaryKey("dbo.AWBOCIs", "PK_AWBOCIs");
-            DropPrimaryKey("dbo.EventTypeCategories", "PK_EventTypeCategories");
-            DropPrimaryKey("dbo.ChargeTypeAccountings", "PK_ChargeTypeAccountings");
-            DropPrimaryKey("dbo.ContactLoginLogs", "PK_ContactLoginLogs");
-            DropPrimaryKey("dbo.DWSubQueries", "PK_dbo.DWSubQueries");
-            DropPrimaryKey("dbo.GeneralLocks", "PK_dbo.GeneralLocks");
-            DropPrimaryKey("dbo.HybridTenantStates", "PK_dbo.HybridTenantStates");
-            DropPrimaryKey("dbo.HybridTenantThresholds", "PK_dbo.HybridTenantThresholds");
-            //DropPrimaryKey("dbo.ReportGroups", "PK__ReportGr__3214EC07702996C1");
-            Sql("DECLARE @SQL nvarchar(1000) " +
-                "declare @PkName varchar(50) " +
-                "set @PkName = (select CONSTRAINT_NAME from INFORMATION_SCHEMA.CONSTRAINT_TABLE_USAGE where TABLE_NAME = 'ReportGroups' and CONSTRAINT_NAME Like 'PK%') " +
-                "SET @SQL = 'ALTER TABLE [dbo].[ReportGroups] DROP CONSTRAINT [' + @PkName + ']' " +
-                "EXEC(@SQL)");
-            DropPrimaryKey("dbo.UserPermittedBranches", "PK_UserPermittedBranches");
-            DropPrimaryKey("dbo.UserPermittedProducts", "PK_dbo.UserPermittedProducts");
+            Sql("declare @sql nvarchar(2000) " +
+                "declare @fkName varchar(500) " +
+                "set @fkName = (select f.name from sys.foreign_keys as f " +
+                "inner join sys.foreign_key_columns as fc on f.object_id = fc.constraint_object_id " +
+                "where f.parent_object_id = object_id('[dbo].[Tenants]') and col_name(fc.parent_object_id, fc.parent_column_id) = 'NumberFormatCode') " +
+                "set @sql = 'alter table [dbo].[Tenants] drop constraint [' + @fkName + ']' " +
+                "exec(@sql)");
+
+            Sql("declare @sql nvarchar(2000) " +
+                "declare @fkName varchar(500) " +
+                "set @fkName = (select f.name from sys.foreign_keys as f " +
+                "inner join sys.foreign_key_columns as fc on f.object_id = fc.constraint_object_id " +
+                "where f.parent_object_id = object_id('[dbo].[AccountingTransferLines]') and col_name(fc.parent_object_id, fc.parent_column_id) = 'AccountingTransferHeaderId') " +
+                "set @sql = 'alter table [dbo].[AccountingTransferLines] drop constraint [' + @fkName + ']' " +
+                "exec(@sql)");
+
+            Sql("declare @sql nvarchar(2000) " +
+                "declare @fkName varchar(500) " +
+                "set @fkName = (select f.name from sys.foreign_keys as f " +
+                "inner join sys.foreign_key_columns as fc on f.object_id = fc.constraint_object_id " +
+                "where f.parent_object_id = object_id('[dbo].[AccountingTransferHeaders]') and col_name(fc.parent_object_id, fc.parent_column_id) = 'AccountingTransferTypeCode') " +
+                "set @sql = 'alter table [dbo].[AccountingTransferHeaders] drop constraint [' + @fkName + ']' " +
+                "exec(@sql)");
+
+            Sql("declare @sql nvarchar(2000) " +
+                "declare @fkName varchar(500) " +
+                "set @fkName = (select f.name from sys.foreign_keys as f " +
+                "inner join sys.foreign_key_columns as fc on f.object_id = fc.constraint_object_id " +
+                "where f.parent_object_id = object_id('[dbo].[AWBOCIs]') and col_name(fc.parent_object_id, fc.parent_column_id) = 'AWBCustomsInformationCode') " +
+                "set @sql = 'alter table [dbo].[AWBOCIs] drop constraint [' + @fkName + ']' " +
+                "exec(@sql)");
+
+            Sql("declare @sql nvarchar(2000) " +
+                "declare @fkName varchar(500) " +
+                "set @fkName = (select f.name from sys.foreign_keys as f " +
+                "inner join sys.foreign_key_columns as fc on f.object_id = fc.constraint_object_id " +
+                "where f.parent_object_id = object_id('[dbo].[AWBOCIs]') and col_name(fc.parent_object_id, fc.parent_column_id) = 'AWBInformationCode') " +
+                "set @sql = 'alter table [dbo].[AWBOCIs] drop constraint [' + @fkName + ']' " +
+                "exec(@sql)");
+
+            Sql("declare @sql nvarchar(2000) " +
+                "declare @fkName varchar(500) " +
+                "set @fkName = (select f.name from sys.foreign_keys as f " +
+                "inner join sys.foreign_key_columns as fc on f.object_id = fc.constraint_object_id " +
+                "where f.parent_object_id = object_id('[dbo].[EventTypes]') and col_name(fc.parent_object_id, fc.parent_column_id) = 'EventTypeCategoryCode') " +
+                "set @sql = 'alter table [dbo].[EventTypes] drop constraint [' + @fkName + ']' " +
+                "exec(@sql)");
+
+            Sql("declare @sql nvarchar(2000) " +
+                "declare @fkName varchar(500) " +
+                "set @fkName = (select f.name from sys.foreign_keys as f " +
+                "inner join sys.foreign_key_columns as fc on f.object_id = fc.constraint_object_id " +
+                "where f.parent_object_id = object_id('[dbo].[Reports]') and col_name(fc.parent_object_id, fc.parent_column_id) = 'ReportGroupId') " +
+                "set @sql = 'alter table [dbo].[Reports] drop constraint [' + @fkName + ']' " +
+                "exec(@sql)");
+
+
+
+            Sql("declare @sql nvarchar(2000) " +
+                "declare @indexName varchar(500) " +
+                "set @indexName = (select i.name from sys.indexes as i " +
+                "inner join sys.index_columns as ic on i.object_id = ic.object_id AND i.index_id = ic.index_id " +
+                "where i.is_unique = 0 and i.object_id = object_id('[dbo].[Tenants]') and col_name(i.object_id, ic.column_id) = 'PasswordPolicyCode') " +
+                "set @sql = 'drop index [' + @indexName + '] on [dbo].[Tenants]' " +
+                "exec(@sql)");
+
+            Sql("declare @sql nvarchar(2000) " +
+                "declare @indexName varchar(500) " +
+                "set @indexName = (select i.name from sys.indexes as i " +
+                "inner join sys.index_columns as ic on i.object_id = ic.object_id AND i.index_id = ic.index_id " +
+                "where i.is_unique = 0 and i.object_id = object_id('[dbo].[Tenants]') and col_name(i.object_id, ic.column_id) = 'NumberFormatCode') " +
+                "set @sql = 'drop index [' + @indexName + '] on [dbo].[Tenants]' " +
+                "exec(@sql)");
+
+            Sql("declare @sql nvarchar(2000) " +
+                "declare @indexName varchar(500) " +
+                "set @indexName = (select i.name from sys.indexes as i " +
+                "inner join sys.index_columns as ic on i.object_id = ic.object_id AND i.index_id = ic.index_id " +
+                "where i.is_unique = 0 and i.object_id = object_id('[dbo].[AccountingTransferHeaders]') and col_name(i.object_id, ic.column_id) = 'AccountingTransferTypeCode') " +
+                "set @sql = 'drop index [' + @indexName + '] on [dbo].[AccountingTransferHeaders]' " +
+                "exec(@sql)");
+
+            Sql("declare @sql nvarchar(2000) " +
+                "declare @indexName varchar(500) " +
+                "set @indexName = (select i.name from sys.indexes as i " +
+                "inner join sys.index_columns as ic on i.object_id = ic.object_id AND i.index_id = ic.index_id " +
+                "where i.is_unique = 0 and i.object_id = object_id('[dbo].[AccountingTransferHeaders]') and col_name(i.object_id, ic.column_id) = 'UserId') " +
+                "set @sql = 'drop index [' + @indexName + '] on [dbo].[AccountingTransferHeaders]' " +
+                "exec(@sql)");
+
+            Sql("declare @sql nvarchar(2000) " +
+                "declare @indexName varchar(500) " +
+                "set @indexName = (select i.name from sys.indexes as i " +
+                "inner join sys.index_columns as ic on i.object_id = ic.object_id AND i.index_id = ic.index_id " +
+                "where i.is_unique = 0 and i.object_id = object_id('[dbo].[AccountingTransferLines]') and col_name(i.object_id, ic.column_id) = 'AccountingTransferHeaderId') " +
+                "set @sql = 'drop index [' + @indexName + '] on [dbo].[AccountingTransferLines]' " +
+                "exec(@sql)");
+
+            Sql("declare @sql nvarchar(2000) " +
+                "declare @indexName varchar(500) " +
+                "set @indexName = (select i.name from sys.indexes as i " +
+                "inner join sys.index_columns as ic on i.object_id = ic.object_id AND i.index_id = ic.index_id " +
+                "where i.is_unique = 0 and i.object_id = object_id('[dbo].[AWBOCIs]') and col_name(i.object_id, ic.column_id) = 'ShipmentId') " +
+                "set @sql = 'drop index [' + @indexName + '] on [dbo].[AWBOCIs]' " +
+                "exec(@sql)");
+
+            Sql("declare @sql nvarchar(2000) " +
+                "declare @indexName varchar(500) " +
+                "set @indexName = (select i.name from sys.indexes as i " +
+                "inner join sys.index_columns as ic on i.object_id = ic.object_id AND i.index_id = ic.index_id " +
+                "where i.is_unique = 0 and i.object_id = object_id('[dbo].[AWBOCIs]') and col_name(i.object_id, ic.column_id) = 'AWBCustomsInformationCode') " +
+                "set @sql = 'drop index [' + @indexName + '] on [dbo].[AWBOCIs]' " +
+                "exec(@sql)");
+
+            Sql("declare @sql nvarchar(2000) " +
+                "declare @indexName varchar(500) " +
+                "set @indexName = (select i.name from sys.indexes as i " +
+                "inner join sys.index_columns as ic on i.object_id = ic.object_id AND i.index_id = ic.index_id " +
+                "where i.is_unique = 0 and i.object_id = object_id('[dbo].[AWBOCIs]') and col_name(i.object_id, ic.column_id) = 'AWBInformationCode') " +
+                "set @sql = 'drop index [' + @indexName + '] on [dbo].[AWBOCIs]' " +
+                "exec(@sql)");
+
+            Sql("declare @sql nvarchar(2000) " +
+                "declare @indexName varchar(500) " +
+                "set @indexName = (select i.name from sys.indexes as i " +
+                "inner join sys.index_columns as ic on i.object_id = ic.object_id AND i.index_id = ic.index_id " +
+                "where i.is_unique = 0 and i.object_id = object_id('[dbo].[EventTypes]') and col_name(i.object_id, ic.column_id) = 'EventTypeCategoryCode') " +
+                "set @sql = 'drop index [' + @indexName + '] on [dbo].[EventTypes]' " +
+                "exec(@sql)");
+
+            Sql("declare @sql nvarchar(2000) " +
+                "declare @indexName varchar(500) " +
+                "set @indexName = (select i.name from sys.indexes as i " +
+                "inner join sys.index_columns as ic on i.object_id = ic.object_id AND i.index_id = ic.index_id " +
+                "where i.is_unique = 0 and i.object_id = object_id('[dbo].[ChargeTypeAccountings]') and col_name(i.object_id, ic.column_id) = 'VatTypeId') " +
+                "set @sql = 'drop index [' + @indexName + '] on [dbo].[ChargeTypeAccountings]' " +
+                "exec(@sql)");
+
+            Sql("declare @sql nvarchar(2000) " +
+                "declare @indexName varchar(500) " +
+                "set @indexName = (select i.name from sys.indexes as i " +
+                "inner join sys.index_columns as ic on i.object_id = ic.object_id AND i.index_id = ic.index_id " +
+                "where i.is_unique = 0 and i.object_id = object_id('[dbo].[ChargeTypeAccountings]') and col_name(i.object_id, ic.column_id) = 'ChargeTypeId') " +
+                "set @sql = 'drop index [' + @indexName + '] on [dbo].[ChargeTypeAccountings]' " +
+                "exec(@sql)");
+
+            Sql("declare @sql nvarchar(2000) " +
+                "declare @indexName varchar(500) " +
+                "set @indexName = (select i.name from sys.indexes as i " +
+                "inner join sys.index_columns as ic on i.object_id = ic.object_id AND i.index_id = ic.index_id " +
+                "where i.is_unique = 0 and i.object_id = object_id('[dbo].[ContactLoginLogs]') and col_name(i.object_id, ic.column_id) = 'ContactId') " +
+                "set @sql = 'drop index [' + @indexName + '] on [dbo].[ContactLoginLogs]' " +
+                "exec(@sql)");
+
+            Sql("declare @sql nvarchar(2000) " +
+                "declare @indexName varchar(500) " +
+                "set @indexName = (select i.name from sys.indexes as i " +
+                "inner join sys.index_columns as ic on i.object_id = ic.object_id AND i.index_id = ic.index_id " +
+                "where i.is_unique = 0 and i.object_id = object_id('[dbo].[DWSubQueries]') and col_name(i.object_id, ic.column_id) = 'DWQueryId') " +
+                "set @sql = 'drop index [' + @indexName + '] on [dbo].[DWSubQueries]' " +
+                "exec(@sql)");
+
+            Sql("declare @sql nvarchar(2000) " +
+                "declare @indexName varchar(500) " +
+                "set @indexName = (select i.name from sys.indexes as i " +
+                "inner join sys.index_columns as ic on i.object_id = ic.object_id AND i.index_id = ic.index_id " +
+                "where i.is_unique = 0 and i.object_id = object_id('[dbo].[QueueMessageMoreDetails]') and col_name(i.object_id, ic.column_id) = 'QueueDefinitionCode') " +
+                "set @sql = 'drop index [' + @indexName + '] on [dbo].[QueueMessageMoreDetails]' " +
+                "exec(@sql)");
+
+            Sql("declare @sql nvarchar(2000) " +
+                "declare @indexName varchar(500) " +
+                "set @indexName = (select i.name from sys.indexes as i " +
+                "inner join sys.index_columns as ic on i.object_id = ic.object_id AND i.index_id = ic.index_id " +
+                "where i.is_unique = 0 and i.object_id = object_id('[dbo].[Reports]') and col_name(i.object_id, ic.column_id) = 'ReportGroupId') " +
+                "set @sql = 'drop index [' + @indexName + '] on [dbo].[Reports]' " +
+                "exec(@sql)");
+
+            Sql("declare @sql nvarchar(2000) " +
+                "declare @indexName varchar(500) " +
+                "set @indexName = (select i.name from sys.indexes as i " +
+                "inner join sys.index_columns as ic on i.object_id = ic.object_id AND i.index_id = ic.index_id " +
+                "where i.is_unique = 0 and i.object_id = object_id('[dbo].[UserPermittedBranches]') and col_name(i.object_id, ic.column_id) = 'UserId') " +
+                "set @sql = 'drop index [' + @indexName + '] on [dbo].[UserPermittedBranches]' " +
+                "exec(@sql)");
+
+            Sql("declare @sql nvarchar(2000) " +
+                "declare @indexName varchar(500) " +
+                "set @indexName = (select i.name from sys.indexes as i " +
+                "inner join sys.index_columns as ic on i.object_id = ic.object_id AND i.index_id = ic.index_id " +
+                "where i.is_unique = 0 and i.object_id = object_id('[dbo].[UserPermittedBranches]') and col_name(i.object_id, ic.column_id) = 'BranchId') " +
+                "set @sql = 'drop index [' + @indexName + '] on [dbo].[UserPermittedBranches]' " +
+                "exec(@sql)");
+
+            Sql("declare @sql nvarchar(2000) " +
+                "declare @indexName varchar(500) " +
+                "set @indexName = (select i.name from sys.indexes as i " +
+                "inner join sys.index_columns as ic on i.object_id = ic.object_id AND i.index_id = ic.index_id " +
+                "where i.is_unique = 0 and i.object_id = object_id('[dbo].[UserPermittedProducts]') and col_name(i.object_id, ic.column_id) = 'UserId') " +
+                "set @sql = 'drop index [' + @indexName + '] on [dbo].[UserPermittedProducts]' " +
+                "exec(@sql)");
+
+            Sql("declare @sql nvarchar(2000) " +
+                "declare @indexName varchar(500) " +
+                "set @indexName = (select i.name from sys.indexes as i " +
+                "inner join sys.index_columns as ic on i.object_id = ic.object_id AND i.index_id = ic.index_id " +
+                "where i.is_unique = 0 and i.object_id = object_id('[dbo].[UserPermittedProducts]') and col_name(i.object_id, ic.column_id) = 'ProductTypeCode') " +
+                "set @sql = 'drop index [' + @indexName + '] on [dbo].[UserPermittedProducts]' " +
+                "exec(@sql)");
+
+
+
+            Sql("declare @sql nvarchar(2000) " +
+                "declare @pkName varchar(500) " +
+                "set @pkName = (select constraint_name from information_schema.table_constraints where constraint_type = 'PRIMARY KEY' and table_schema = 'dbo' and table_name = 'NumberFormats') " +
+                "set @sql = 'alter table [dbo].[NumberFormats] drop constraint [' + @pkName + ']' " +
+                "exec(@sql)");
+
+            Sql("declare @sql nvarchar(2000) " +
+                "declare @pkName varchar(500) " +
+                "set @pkName = (select constraint_name from information_schema.table_constraints where constraint_type = 'PRIMARY KEY' and table_schema = 'dbo' and table_name = 'AccountingTransferHeaders') " +
+                "set @sql = 'alter table [dbo].[AccountingTransferHeaders] drop constraint [' + @pkName + ']' " +
+                "exec(@sql)");
+
+            Sql("declare @sql nvarchar(2000) " +
+                "declare @pkName varchar(500) " +
+                "set @pkName = (select constraint_name from information_schema.table_constraints where constraint_type = 'PRIMARY KEY' and table_schema = 'dbo' and table_name = 'AccountingTransferTypes') " +
+                "set @sql = 'alter table [dbo].[AccountingTransferTypes] drop constraint [' + @pkName + ']' " +
+                "exec(@sql)");
+
+            Sql("declare @sql nvarchar(2000) " +
+                "declare @pkName varchar(500) " +
+                "set @pkName = (select constraint_name from information_schema.table_constraints where constraint_type = 'PRIMARY KEY' and table_schema = 'dbo' and table_name = 'AccountingTransferLines') " +
+                "set @sql = 'alter table [dbo].[AccountingTransferLines] drop constraint [' + @pkName + ']' " +
+                "exec(@sql)");
+
+            Sql("declare @sql nvarchar(2000) " +
+                "declare @pkName varchar(500) " +
+                "set @pkName = (select constraint_name from information_schema.table_constraints where constraint_type = 'PRIMARY KEY' and table_schema = 'dbo' and table_name = 'AWBCustomsInformations') " +
+                "set @sql = 'alter table [dbo].[AWBCustomsInformations] drop constraint [' + @pkName + ']' " +
+                "exec(@sql)");
+
+            Sql("declare @sql nvarchar(2000) " +
+                "declare @pkName varchar(500) " +
+                "set @pkName = (select constraint_name from information_schema.table_constraints where constraint_type = 'PRIMARY KEY' and table_schema = 'dbo' and table_name = 'AWBInformations') " +
+                "set @sql = 'alter table [dbo].[AWBInformations] drop constraint [' + @pkName + ']' " +
+                "exec(@sql)");
+
+            Sql("declare @sql nvarchar(2000) " +
+                "declare @pkName varchar(500) " +
+                "set @pkName = (select constraint_name from information_schema.table_constraints where constraint_type = 'PRIMARY KEY' and table_schema = 'dbo' and table_name = 'AWBOCIs') " +
+                "set @sql = 'alter table [dbo].[AWBOCIs] drop constraint [' + @pkName + ']' " +
+                "exec(@sql)");
+
+            Sql("declare @sql nvarchar(2000) " +
+                "declare @pkName varchar(500) " +
+                "set @pkName = (select constraint_name from information_schema.table_constraints where constraint_type = 'PRIMARY KEY' and table_schema = 'dbo' and table_name = 'EventTypeCategories') " +
+                "set @sql = 'alter table [dbo].[EventTypeCategories] drop constraint [' + @pkName + ']' " +
+                "exec(@sql)");
+
+            Sql("declare @sql nvarchar(2000) " +
+                "declare @pkName varchar(500) " +
+                "set @pkName = (select constraint_name from information_schema.table_constraints where constraint_type = 'PRIMARY KEY' and table_schema = 'dbo' and table_name = 'ChargeTypeAccountings') " +
+                "set @sql = 'alter table [dbo].[ChargeTypeAccountings] drop constraint [' + @pkName + ']' " +
+                "exec(@sql)");
+
+            Sql("declare @sql nvarchar(2000) " +
+                "declare @pkName varchar(500) " +
+                "set @pkName = (select constraint_name from information_schema.table_constraints where constraint_type = 'PRIMARY KEY' and table_schema = 'dbo' and table_name = 'ContactLoginLogs') " +
+                "set @sql = 'alter table [dbo].[ContactLoginLogs] drop constraint [' + @pkName + ']' " +
+                "exec(@sql)");
+
+            Sql("declare @sql nvarchar(2000) " +
+                "declare @pkName varchar(500) " +
+                "set @pkName = (select constraint_name from information_schema.table_constraints where constraint_type = 'PRIMARY KEY' and table_schema = 'dbo' and table_name = 'DWSubQueries') " +
+                "set @sql = 'alter table [dbo].[DWSubQueries] drop constraint [' + @pkName + ']' " +
+                "exec(@sql)");
+
+            Sql("declare @sql nvarchar(2000) " +
+                "declare @pkName varchar(500) " +
+                "set @pkName = (select constraint_name from information_schema.table_constraints where constraint_type = 'PRIMARY KEY' and table_schema = 'dbo' and table_name = 'GeneralLocks') " +
+                "set @sql = 'alter table [dbo].[GeneralLocks] drop constraint [' + @pkName + ']' " +
+                "exec(@sql)");
+
+            Sql("declare @sql nvarchar(2000) " +
+                "declare @pkName varchar(500) " +
+                "set @pkName = (select constraint_name from information_schema.table_constraints where constraint_type = 'PRIMARY KEY' and table_schema = 'dbo' and table_name = 'HybridTenantStates') " +
+                "set @sql = 'alter table [dbo].[HybridTenantStates] drop constraint [' + @pkName + ']' " +
+                "exec(@sql)");
+
+            Sql("declare @sql nvarchar(2000) " +
+                "declare @pkName varchar(500) " +
+                "set @pkName = (select constraint_name from information_schema.table_constraints where constraint_type = 'PRIMARY KEY' and table_schema = 'dbo' and table_name = 'HybridTenantThresholds') " +
+                "set @sql = 'alter table [dbo].[HybridTenantThresholds] drop constraint [' + @pkName + ']' " +
+                "exec(@sql)");
+
+            Sql("declare @sql nvarchar(2000) " +
+                "declare @pkName varchar(500) " +
+                "set @pkName = (select constraint_name from information_schema.table_constraints where constraint_type = 'PRIMARY KEY' and table_schema = 'dbo' and table_name = 'ReportGroups') " +
+                "set @sql = 'alter table [dbo].[ReportGroups] drop constraint [' + @pkName + ']' " +
+                "exec(@sql)");
+
+            Sql("declare @sql nvarchar(2000) " +
+                "declare @pkName varchar(500) " +
+                "set @pkName = (select constraint_name from information_schema.table_constraints where constraint_type = 'PRIMARY KEY' and table_schema = 'dbo' and table_name = 'UserPermittedBranches') " +
+                "set @sql = 'alter table [dbo].[UserPermittedBranches] drop constraint [' + @pkName + ']' " +
+                "exec(@sql)");
+
+            Sql("declare @sql nvarchar(2000) " +
+                "declare @pkName varchar(500) " +
+                "set @pkName = (select constraint_name from information_schema.table_constraints where constraint_type = 'PRIMARY KEY' and table_schema = 'dbo' and table_name = 'UserPermittedProducts') " +
+                "set @sql = 'alter table [dbo].[UserPermittedProducts] drop constraint [' + @pkName + ']' " +
+                "exec(@sql)");
+
+
+
             //AddColumn("dbo.Cards", "AutomaticLastUpdateDate", c => c.DateTime());
             //AddColumn("dbo.Users", "AutomaticLastUpdateDate", c => c.DateTime());
             //AddColumn("dbo.Branches", "AutomaticLastUpdateDate", c => c.DateTime());
@@ -85,14 +353,14 @@ namespace Logitude.DatabaseMigration.Migrations
             AlterColumn("dbo.NumberFormats", "Code", c => c.String(nullable: false, maxLength: 4, unicode: false));
             AlterColumn("dbo.NumberFormats", "Name", c => c.String(nullable: false, maxLength: 40, unicode: false));
             AlterColumn("dbo.NumberFormats", "SearchFields", c => c.String(maxLength: 1000));
-            //AlterColumn("dbo.AccountingTransferHeaders", "Id", c => c.String(nullable: false, maxLength: 15, unicode: false));
+            AlterColumn("dbo.AccountingTransferHeaders", "Id", c => c.String(nullable: false, maxLength: 15, unicode: false));//
             AlterColumn("dbo.AccountingTransferHeaders", "TransferNumber", c => c.String(nullable: false, maxLength: 20, unicode: false));
             AlterColumn("dbo.AccountingTransferHeaders", "FileName", c => c.String(nullable: false, maxLength: 40, unicode: false));
             AlterColumn("dbo.AccountingTransferHeaders", "AccountingTransferTypeCode", c => c.String(nullable: false, maxLength: 4, unicode: false));
             AlterColumn("dbo.AccountingTransferHeaders", "SearchFields", c => c.String(maxLength: 1000));
             AlterColumn("dbo.AccountingTransferHeaders", "UserId", c => c.String(nullable: false, maxLength: 15, unicode: false));
             AlterColumn("dbo.AccountingTransferHeaders", "Notes", c => c.String(maxLength: 250));
-            //AlterColumn("dbo.AccountingTransferTypes", "Code", c => c.String(nullable: false, maxLength: 4, unicode: false));
+            AlterColumn("dbo.AccountingTransferTypes", "Code", c => c.String(nullable: false, maxLength: 4, unicode: false));//
             AlterColumn("dbo.AccountingTransferTypes", "Name", c => c.String(nullable: false, maxLength: 40, unicode: false));
             AlterColumn("dbo.AccountingTransferTypes", "SearchFields", c => c.String(maxLength: 1000));
             AlterColumn("dbo.AccountingTransferLines", "Id", c => c.String(nullable: false, maxLength: 15, unicode: false));

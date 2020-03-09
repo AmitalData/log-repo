@@ -10,24 +10,143 @@ namespace Logitude.DatabaseMigration.Migrations
             RenameTable(name: "dbo.DocumentTypeCustomsDatas", newName: "DocumentTypeCustomsData");
             MoveTable(name: "dbo.DecisionTypes", newSchema: "Customs");
             MoveTable(name: "dbo.DocumentTypeCustomsData", newSchema: "Customs");
-            DropForeignKey("dbo.Customers", "CustomerSizeId", "dbo.CustomerSizes");
-            DropForeignKey("dbo.Cards", "UsoCFDICode", "dbo.UsoCFDIs");
-            DropForeignKey("dbo.ARInvoices", "UsoCFDICode", "dbo.UsoCFDIs");
-            DropForeignKey("dbo.DocumentsFilings", "StatusCode", "dbo.DocumentStatus");
-            DropForeignKey("Customs.ClaimsRelatedEntities", "DecisionCode", "dbo.DecisionTypes");
-            DropIndex("dbo.Cards", new[] { "UsoCFDICode" });
-            DropIndex("dbo.Customers", new[] { "CustomerSizeId" });
-            DropIndex("dbo.DocumentsFilings", new[] { "StatusCode" });
-            DropIndex("dbo.ARInvoices", new[] { "UsoCFDICode" });
-            DropIndex("Customs.ClaimsRelatedEntities", new[] { "DecisionCode" });
-            DropIndex("Customs.DocumentTypeCustomsData", new[] { "CustomsDoucumentTypeCode" });
-            DropPrimaryKey("dbo.CustomerSizes");
-            DropPrimaryKey("dbo.UsoCFDIs");
-            DropPrimaryKey("dbo.DocumentStatus");
-            DropPrimaryKey("dbo.CarrierAreasPorts");
-            DropPrimaryKey("Customs.DecisionTypes", "PK_dbo.DecisionTypes");
-            DropPrimaryKey("Customs.DocumentTypeCustomsData", "PK_dbo.DocumentTypeCustomsData");
-            DropPrimaryKey("dbo.DWObjectFieldCategories");
+
+            Sql("declare @sql nvarchar(2000) " +
+                "declare @fkName varchar(500) " +
+                "set @fkName = (select f.name from sys.foreign_keys as f " +
+                "inner join sys.foreign_key_columns as fc on f.object_id = fc.constraint_object_id " +
+                "where f.parent_object_id = object_id('[dbo].[Customers]') and col_name(fc.parent_object_id, fc.parent_column_id) = 'CustomerSizeId') " +
+                "set @sql = 'alter table [dbo].[Customers] drop constraint [' + @fkName + ']' " +
+                "exec(@sql)");
+
+            Sql("declare @sql nvarchar(2000) " +
+                "declare @fkName varchar(500) " +
+                "set @fkName = (select f.name from sys.foreign_keys as f " +
+                "inner join sys.foreign_key_columns as fc on f.object_id = fc.constraint_object_id " +
+                "where f.parent_object_id = object_id('[dbo].[Cards]') and col_name(fc.parent_object_id, fc.parent_column_id) = 'UsoCFDICode') " +
+                "set @sql = 'alter table [dbo].[Cards] drop constraint [' + @fkName + ']' " +
+                "exec(@sql)");
+
+            Sql("declare @sql nvarchar(2000) " +
+                "declare @fkName varchar(500) " +
+                "set @fkName = (select f.name from sys.foreign_keys as f " +
+                "inner join sys.foreign_key_columns as fc on f.object_id = fc.constraint_object_id " +
+                "where f.parent_object_id = object_id('[dbo].[ARInvoices]') and col_name(fc.parent_object_id, fc.parent_column_id) = 'UsoCFDICode') " +
+                "set @sql = 'alter table [dbo].[ARInvoices] drop constraint [' + @fkName + ']' " +
+                "exec(@sql)");
+
+            Sql("declare @sql nvarchar(2000) " +
+                "declare @fkName varchar(500) " +
+                "set @fkName = (select f.name from sys.foreign_keys as f " +
+                "inner join sys.foreign_key_columns as fc on f.object_id = fc.constraint_object_id " +
+                "where f.parent_object_id = object_id('[dbo].[DocumentsFilings]') and col_name(fc.parent_object_id, fc.parent_column_id) = 'StatusCode') " +
+                "set @sql = 'alter table [dbo].[DocumentsFilings] drop constraint [' + @fkName + ']' " +
+                "exec(@sql)");
+
+            Sql("declare @sql nvarchar(2000) " +
+                "declare @fkName varchar(500) " +
+                "set @fkName = (select f.name from sys.foreign_keys as f " +
+                "inner join sys.foreign_key_columns as fc on f.object_id = fc.constraint_object_id " +
+                "where f.parent_object_id = object_id('[Customs].[ClaimsRelatedEntities]') and col_name(fc.parent_object_id, fc.parent_column_id) = 'DecisionCode') " +
+                "set @sql = 'alter table [Customs].[ClaimsRelatedEntities] drop constraint [' + @fkName + ']' " +
+                "exec(@sql)");
+
+
+
+            Sql("declare @sql nvarchar(2000) " +
+                "declare @indexName varchar(500) " +
+                "set @indexName = (select i.name from sys.indexes as i " +
+                "inner join sys.index_columns as ic on i.object_id = ic.object_id AND i.index_id = ic.index_id " +
+                "where i.is_unique = 0 and i.object_id = object_id('[dbo].[Cards]') and col_name(i.object_id, ic.column_id) = 'UsoCFDICode') " +
+                "set @sql = 'drop index [' + @indexName + '] on [dbo].[Cards]' " +
+                "exec(@sql)");
+
+            Sql("declare @sql nvarchar(2000) " +
+                "declare @indexName varchar(500) " +
+                "set @indexName = (select i.name from sys.indexes as i " +
+                "inner join sys.index_columns as ic on i.object_id = ic.object_id AND i.index_id = ic.index_id " +
+                "where i.is_unique = 0 and i.object_id = object_id('[dbo].[Customers]') and col_name(i.object_id, ic.column_id) = 'CustomerSizeId') " +
+                "set @sql = 'drop index [' + @indexName + '] on [dbo].[Customers]' " +
+                "exec(@sql)");
+
+            Sql("declare @sql nvarchar(2000) " +
+                "declare @indexName varchar(500) " +
+                "set @indexName = (select i.name from sys.indexes as i " +
+                "inner join sys.index_columns as ic on i.object_id = ic.object_id AND i.index_id = ic.index_id " +
+                "where i.is_unique = 0 and i.object_id = object_id('[dbo].[DocumentsFilings]') and col_name(i.object_id, ic.column_id) = 'StatusCode') " +
+                "set @sql = 'drop index [' + @indexName + '] on [dbo].[DocumentsFilings]' " +
+                "exec(@sql)");
+
+            Sql("declare @sql nvarchar(2000) " +
+                "declare @indexName varchar(500) " +
+                "set @indexName = (select i.name from sys.indexes as i " +
+                "inner join sys.index_columns as ic on i.object_id = ic.object_id AND i.index_id = ic.index_id " +
+                "where i.is_unique = 0 and i.object_id = object_id('[dbo].[ARInvoices]') and col_name(i.object_id, ic.column_id) = 'UsoCFDICode') " +
+                "set @sql = 'drop index [' + @indexName + '] on [dbo].[ARInvoices]' " +
+                "exec(@sql)");
+
+            Sql("declare @sql nvarchar(2000) " +
+                "declare @indexName varchar(500) " +
+                "set @indexName = (select i.name from sys.indexes as i " +
+                "inner join sys.index_columns as ic on i.object_id = ic.object_id AND i.index_id = ic.index_id " +
+                "where i.is_unique = 0 and i.object_id = object_id('[Customs].[ClaimsRelatedEntities]') and col_name(i.object_id, ic.column_id) = 'DecisionCode') " +
+                "set @sql = 'drop index [' + @indexName + '] on [Customs].[ClaimsRelatedEntities]' " +
+                "exec(@sql)");
+
+            Sql("declare @sql nvarchar(2000) " +
+                "declare @indexName varchar(500) " +
+                "set @indexName = (select i.name from sys.indexes as i " +
+                "inner join sys.index_columns as ic on i.object_id = ic.object_id AND i.index_id = ic.index_id " +
+                "where i.is_unique = 0 and i.object_id = object_id('[Customs].[DocumentTypeCustomsData]') and col_name(i.object_id, ic.column_id) = 'CustomsDoucumentTypeCode') " +
+                "set @sql = 'drop index [' + @indexName + '] on [Customs].[DocumentTypeCustomsData]' " +
+                "exec(@sql)");
+
+
+
+            Sql("declare @sql nvarchar(2000) " +
+                "declare @pkName varchar(500) " +
+                "set @pkName = (select constraint_name from information_schema.table_constraints where constraint_type = 'PRIMARY KEY' and table_schema = 'dbo' and table_name = 'CustomerSizes') " +
+                "set @sql = 'alter table [dbo].[CustomerSizes] drop constraint [' + @pkName + ']' " +
+                "exec(@sql)");
+
+            Sql("declare @sql nvarchar(2000) " +
+                "declare @pkName varchar(500) " +
+                "set @pkName = (select constraint_name from information_schema.table_constraints where constraint_type = 'PRIMARY KEY' and table_schema = 'dbo' and table_name = 'UsoCFDIs') " +
+                "set @sql = 'alter table [dbo].[UsoCFDIs] drop constraint [' + @pkName + ']' " +
+                "exec(@sql)");
+
+            Sql("declare @sql nvarchar(2000) " +
+                "declare @pkName varchar(500) " +
+                "set @pkName = (select constraint_name from information_schema.table_constraints where constraint_type = 'PRIMARY KEY' and table_schema = 'dbo' and table_name = 'DocumentStatus') " +
+                "set @sql = 'alter table [dbo].[DocumentStatus] drop constraint [' + @pkName + ']' " +
+                "exec(@sql)");
+
+            Sql("declare @sql nvarchar(2000) " +
+                "declare @pkName varchar(500) " +
+                "set @pkName = (select constraint_name from information_schema.table_constraints where constraint_type = 'PRIMARY KEY' and table_schema = 'dbo' and table_name = 'CarrierAreasPorts') " +
+                "set @sql = 'alter table [dbo].[CarrierAreasPorts] drop constraint [' + @pkName + ']' " +
+                "exec(@sql)");
+
+            Sql("declare @sql nvarchar(2000) " +
+                "declare @pkName varchar(500) " +
+                "set @pkName = (select constraint_name from information_schema.table_constraints where constraint_type = 'PRIMARY KEY' and table_schema = 'Customs' and table_name = 'DecisionTypes') " +
+                "set @sql = 'alter table [Customs].[DecisionTypes] drop constraint [' + @pkName + ']' " +
+                "exec(@sql)");
+
+            Sql("declare @sql nvarchar(2000) " +
+                "declare @pkName varchar(500) " +
+                "set @pkName = (select constraint_name from information_schema.table_constraints where constraint_type = 'PRIMARY KEY' and table_schema = 'Customs' and table_name = 'DocumentTypeCustomsData') " +
+                "set @sql = 'alter table [Customs].[DocumentTypeCustomsData] drop constraint [' + @pkName + ']' " +
+                "exec(@sql)");
+
+            Sql("declare @sql nvarchar(2000) " +
+                "declare @pkName varchar(500) " +
+                "set @pkName = (select constraint_name from information_schema.table_constraints where constraint_type = 'PRIMARY KEY' and table_schema = 'dbo' and table_name = 'DWObjectFieldCategories') " +
+                "set @sql = 'alter table [dbo].[DWObjectFieldCategories] drop constraint [' + @pkName + ']' " +
+                "exec(@sql)");
+
+
+
             AlterColumn("dbo.Cards", "UsoCFDICode", c => c.String(maxLength: 3, unicode: false));
             AlterColumn("dbo.Customers", "CustomerSizeId", c => c.String(maxLength: 15, unicode: false));
             AlterColumn("dbo.CustomerSizes", "Id", c => c.String(nullable: false, maxLength: 15, unicode: false));
