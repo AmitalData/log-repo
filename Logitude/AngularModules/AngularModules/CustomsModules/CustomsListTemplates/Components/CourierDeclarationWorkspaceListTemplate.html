@@ -4,7 +4,7 @@
     </div>
 
     <div class="TextTrimming" *ngIf="fieldName == 'EstimatedArrivalDate'" style="text-align:center;">
-        <span>{{_CourierMasterList.EstimatedArrivalDate | DateTimePipe:'DT'}}</span>
+        <span [ngStyle]="{'color':colorDate}">{{_CourierMasterList.EstimatedArrivalDate | DateTimePipe:'DT'}}</span>
     </div>
 
     <div class="TextTrimming" *ngIf="fieldName == 'CalcClosedForFollowUp'" style="text-align:center;">

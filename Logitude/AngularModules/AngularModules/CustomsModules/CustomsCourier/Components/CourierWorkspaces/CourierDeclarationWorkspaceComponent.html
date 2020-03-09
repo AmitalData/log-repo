@@ -137,7 +137,7 @@
                                     <table>
                                         <tr class="SectionHeader">
                                             <td>
-                                                <label float-start style="margin-right: 10px;">{{ RecentGLAccountsCount }} {{'Customs.Declaration.Q.DeclarationWithoutReleaseQuery' | TextCodeTranslationPipe}}</label>
+                                                <label float-start style="margin-right: 10px;">{{ RecentGLAccountsCount }} {{'CourierMaster.Q.OPENCOURIERMASTERS' | TextCodeTranslationPipe}}</label>
                                             </td>
                                         </tr>
 
@@ -217,7 +217,8 @@
                                                                    [MenuHeaderchangeevent]="MenuHeaderchangeevent"
                                                                    [columns]="columns"
                                                                    [QueryChangeEvent]="onQueryChangeEvent"
-                                                                   [IsCustomTemplate]="true">
+                                                                   [IsCustomTemplate]="false"
+                                                                   [rowHeight]="40">
                                                     </logitude-grid>
                                                 </div>
                                             </td>

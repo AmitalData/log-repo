@@ -24,7 +24,7 @@ export class CourierDeclarationWorkspaceListTemplate {
     
     private _EntityResourceService: EntityResourceService = new EntityResourceService();
     private _CourierMasterPMService: CourierMasterPMService = new CourierMasterPMService();
-
+    public colorDate: string="Black";
 
     constructor(private CD: ChangeDetectorRef) {
         
@@ -33,6 +33,17 @@ export class CourierDeclarationWorkspaceListTemplate {
     setVariables(courierMasterList: CourierMasterList, fieldName: string) {
         this._CourierMasterList = courierMasterList;
         this.fieldName = fieldName;
+        var today = new Date();
+        today.setHours(0, 0, 0, 0);
+        var estimatedArrivalDate = new Date(this._CourierMasterList.EstimatedArrivalDate);//.setHours(0, 0, 0, 0);
+        estimatedArrivalDate.setHours(0, 0, 0, 0);
+        if (estimatedArrivalDate < today) {
+            this.colorDate = "Red";
+        }
+        else if (estimatedArrivalDate == today) {
+            this.colorDate = "Blue";
+        }
+      
         this.CD.detectChanges();
     }
 
