@@ -125,8 +125,6 @@ export class QuotesConversionComponent implements OnInit {
                 "category": this.XAxis[index],
                 "value1": element.data1,
                 "value2": element.data2,
-                "color": this.chartColrs["Color_" + element.groupedId],
-                //"opacity": element.data2 == 0 ? 1 : 0.2,
             };
             
             index++;
@@ -135,11 +133,11 @@ export class QuotesConversionComponent implements OnInit {
         Graphs =
             [{
                 "balloonText": FormatTool.FormatBigNumbersToExtension("[[value]]") + "",
-                //"alphaField": "opacity",
                 "fillAlphas": 0.2,
                 "lineAlpha": 1,
-                "fillColorsField": "color",
-                "lineColorField": "color",
+                "fillColors": "#FFFFFF",
+                "lineColor": "#487E9F",
+                "lineThickness": 1,
                 "type": "column",
                 "valueField": "value1",
                 "clustered": false,
@@ -149,8 +147,9 @@ export class QuotesConversionComponent implements OnInit {
                 "balloonText": FormatTool.FormatBigNumbersToExtension("[[value]]") + "",
                 "fillAlphas": 1,
                 "lineAlpha": 1,
-                "fillColorsField": "color",
-                "lineColorField": "color",
+                "fillColors": "#487E9F",
+                "lineColor": "#487E9F",
+                "lineThickness": 1,
                 "type": "column",
                 "valueField": "value2",
                 "clustered": false,
