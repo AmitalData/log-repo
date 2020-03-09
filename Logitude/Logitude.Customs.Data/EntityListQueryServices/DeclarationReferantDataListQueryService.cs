@@ -26,6 +26,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                              on a.DeclarationId equals d.Id
                                                              select new DeclarationReferantDataList()
                                                              {
+                                                                 Tenant=a.Tenant,
 
                                                                  DeclarationId = a.DeclarationId,
 
