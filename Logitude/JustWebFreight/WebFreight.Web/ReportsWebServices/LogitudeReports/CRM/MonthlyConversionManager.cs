@@ -466,27 +466,35 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.CRM
 
         private void CorrectListValues(List<MonthItemClass> monthlyDataList)
         {
-            var expectedOrder = monthlyDataList.OrderByDescending(d => d.OpportunitiesCount).Select(s => s.OpportunitiesCount).ToList();
-            bool isOrdered = monthlyDataList.Select(s => s.OpportunitiesCount).SequenceEqual(expectedOrder);
-            while (!isOrdered)
-            {
-                for (int i = 0; i < monthlyDataList.Count; i++)
-                {
-                    if (i > 0)
-                    {
-                        if (monthlyDataList[i - 1] != null && monthlyDataList[i - 1].OpportunitiesCount != null && monthlyDataList[i - 1].OpportunitiesCount != 0)
-                        {
-                            if (monthlyDataList[i - 1].OpportunitiesCount < monthlyDataList[i].OpportunitiesCount)
-                            {
-                                monthlyDataList[i - 1].OpportunitiesCount = monthlyDataList[i].OpportunitiesCount;
-                            }
-                        }
-                    }
-                }
+            List<MonthItemClass> monthlyDataList_ordered = monthlyDataList.OrderByDescending(d => d.OpportunitiesCount).ToList();
 
-                expectedOrder = monthlyDataList.OrderByDescending(d => d.OpportunitiesCount).Select(s => s.OpportunitiesCount).ToList();
-                isOrdered = monthlyDataList.Select(s => s.OpportunitiesCount).SequenceEqual(expectedOrder);
+            foreach(MonthItemClass item in monthlyDataList)
+            {
+                item.OpportunitiesCount = monthlyDataList_ordered.Where(d => d.Id == item.Id).FirstOrDefault().OpportunitiesCount;
             }
+
+
+            //var expectedOrder = monthlyDataList.OrderByDescending(d => d.OpportunitiesCount).Select(s => s.OpportunitiesCount).ToList();
+            //bool isOrdered = monthlyDataList.Select(s => s.OpportunitiesCount).SequenceEqual(expectedOrder);
+            //while (!isOrdered)
+            //{
+            //    for (int i = 0; i < monthlyDataList.Count; i++)
+            //    {
+            //        if (i > 0)
+            //        {
+            //            if (monthlyDataList[i - 1] != null && monthlyDataList[i - 1].OpportunitiesCount != null && monthlyDataList[i - 1].OpportunitiesCount != 0)
+            //            {
+            //                if (monthlyDataList[i - 1].OpportunitiesCount < monthlyDataList[i].OpportunitiesCount)
+            //                {
+            //                    monthlyDataList[i - 1].OpportunitiesCount = monthlyDataList[i].OpportunitiesCount;
+            //                }
+            //            }
+            //        }
+            //    }
+
+            //    expectedOrder = monthlyDataList.OrderByDescending(d => d.OpportunitiesCount).Select(s => s.OpportunitiesCount).ToList();
+            //    isOrdered = monthlyDataList.Select(s => s.OpportunitiesCount).SequenceEqual(expectedOrder);
+            //}
         }
     }
 }
