@@ -161,10 +161,13 @@ export class MultiSelectLOVComponent implements OnInit, AfterContentInit{
         alert("ClearList");
     }
     DeleteFromList() {
-        alert("DeleteFromList");
+        console.log("DeleteFromList");
+        var list: any[] = this.DataContext[this.LOVListComponentPropName];
+        list.pop(this.MyLogLovV2Component.SelectedItem);
+
     }
     AddToList() {
-        console.warn("AddToList");
+        console.log("AddToList");
         if (AppTool.IsNullOrEmpty(this.DataContext[this.LOVListComponentPropName])) {
             this.DataContext[this.LOVListComponentPropName] = [];
         }
@@ -173,7 +176,8 @@ export class MultiSelectLOVComponent implements OnInit, AfterContentInit{
         this._ChosenFormatedList = "";
         list.forEach(item => {
             this._ChosenFormatedList += item[this.MyLogLovV2Component.DisplayMemberPath];
-        });        
+        });
+        this.MyLogLovV2Component.SelectedItem = null;
     }
     RunComponent() {
         if (this.viewContainerRef) {
