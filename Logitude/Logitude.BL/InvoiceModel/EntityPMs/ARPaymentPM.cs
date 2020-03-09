@@ -205,6 +205,7 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
 
         public bool IsPaymentNumberManuallySet { get; set; }
 
+
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public CustomFieldClass Field1 { get; set; }
 
@@ -243,6 +244,10 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public CustomFieldClass Field10 { get; set; }
+
+
+        public string GLAccountCurrencyCode { get; set; }
+        public string PaymentCurrencySign { get; set; }
 
     }
 }

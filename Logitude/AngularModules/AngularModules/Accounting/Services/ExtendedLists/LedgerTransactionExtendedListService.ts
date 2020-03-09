@@ -415,14 +415,14 @@ export class LedgerTransactionExtendedListService {
         //});
     }
 
-    getTransactionsForARPayment(arpaymentId:string, billToGLAccountId:string) {
+    getTransactionsForARPayment(arpaymentId: string, billToGLAccountId: string, paymentCurrencyId:string) {
 
         //var authHeader = new Headers();
         //authHeader.append('Token', SessionInfo.Token);
 
 
         var url = this._apiUrl + '/GetTransactionsForARPayment?arpaymentId=' + arpaymentId
-        + '&billToGLAccountId=' + billToGLAccountId;
+            + '&billToGLAccountId=' + billToGLAccountId + '&paymentCurrencyId=' + paymentCurrencyId;
 
         return this.httpClient.get(url, httpOptions).pipe(
             map((response: ServiceResponse) => {
