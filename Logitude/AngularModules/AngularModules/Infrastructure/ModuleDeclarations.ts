@@ -168,6 +168,7 @@ import { BTEGeneralTabComponent } from './Components/Maintenance/BatchTaskExecut
 import { BTELogTabComponent } from './Components/Maintenance/BatchTaskExecution/BTELogTabComponent';
 import { BTEParameterTabComponent } from './Components/Maintenance/BatchTaskExecution/BTEParameterTabComponent/BTEParameterTabComponent';
 import { DropdownMenuComponent } from './Components/LogitudeComponents/DropdownMenuComponent';
+import { MultiSelectLOVComponent } from './Components/LogitudeComponents/MultiSelectLOVComponent';
 
 export const Directives =
     [
@@ -269,7 +270,7 @@ export const ControlsComponents =
         DocsInTabComponent,
         LastSuccessfulLoginComponent,
         DropdownMenuComponent,
-        MultiSelectLOV,
+        MultiSelectLOVComponent,
 
     ];
 export const Components =

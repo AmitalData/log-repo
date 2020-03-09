@@ -4,7 +4,7 @@
             <td style="width: 400px;">
                 {{_ChosenFormatedList}}<button (click)="ClearList()">X</button>
             </td>
-            <td>
+            <td >
                 <button [disabled]="IsDisabled"
                         (click)="DropdownMenuButtonClick($event)"
                         [attr.id]="_MultiSelectLOVId"
@@ -18,19 +18,37 @@
     <div [attr.id]="_MultiSelectLOVMenuId"
          [ngStyle]="{'display': _DropdownDisplay  }"
          style="position: fixed;z-index: 1;border: .5px solid  #45494A;border-radius: 3px;background-color: #F2F2F2;">
-        <!--<ng-content select=".class-MultiSelectLOV-content"></ng-content>-->
-        <LogLov [ObjectFieldName]="'CurrencyTypeCode'"
-                [ObjectTableName]="ObjectTableName"
-                [DataContext]="DataContext"
-                [HideColumns]="true"
-                [LookUpTableName]="'Customs.CurrencyType'"
-                [DisplayMemberPath]="'LocalName'">
-        </LogLov>
-        <ul>
-            <li *ngFor="let item of _TheList">
-                <button (click)="DeleteFromList(item)">x</button> {{item}}
-            </li>
-        </ul>
+        <div style="height:450px;width:300px">
+            
+            <div>
+                <table>
+                    <tr class="FormFieldRow">
+                        <td style="width: 400px;">
+                            <!--<ng-content select=".class-MultiSelectLOV-content"></ng-content>-->
+                            <LogLov [ObjectFieldName]="'CurrencyTypeCode'"
+                                    [ObjectTableName]="ObjectTableName"
+                                    [DataContext]="DataContext"
+                                    [HideColumns]="true"
+                                    [LookUpTableName]="'Customs.CurrencyType'"
+                                    [DisplayMemberPath]="'LocalName'">
+                            </LogLov>
+
+                        </td>
+                        <td  style="width:50px;">
+                            <button (click)="AddToList()">Add</button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div>
+                <ul>
+                    <li *ngFor="let item of DataContext[LOVListComponentPropName]">
+                        <button (click)="DeleteFromList(item)">x</button> {{item}}
+                    </li>
+                </ul>
+            </div>
+
+        </div>
 
 
     </div>

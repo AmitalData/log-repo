@@ -1,14 +1,16 @@
-import { Component, EventEmitter, Output, Input, OnInit, ElementRef, ChangeDetectorRef } from '@angular/core';
+import { Component, EventEmitter, Output, Input, OnInit, ElementRef, ChangeDetectorRef, ViewChild, ViewContainerRef, AfterContentInit } from '@angular/core';
 import { AppTool } from '../../Tools';
+import { LogLovV2Component } from './LogLovV2Component';
+import { forEach } from '@angular/router/src/utils/collection';
 
 @Component({
     selector: 'MultiSelectLOV',
     moduleId: module.id,
     host: { '(document:click)': 'handleClick($event)', },
-    templateUrl: 'MultiSelectLOV.html',
+    templateUrl: 'MultiSelectLOVComponent.html',
 })
 
-export class MultiSelectLOVComponent implements OnInit {
+export class MultiSelectLOVComponent implements OnInit, AfterContentInit{
     @Input()
     public IsDisabled: boolean
     @Output()
@@ -24,11 +26,20 @@ export class MultiSelectLOVComponent implements OnInit {
     MyDropdownMenuFilterId: number;
 
     @Input()
-    public DataContext: any[]=[];
+    public DataContext: any;
     @Input()
     public LOVListComponentPropName: string = null;
     @Input()
     public LOVLastChosenItemPropName: string = null;
+    @ViewChild('LogLov', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+
+    @ViewChild(LogLovV2Component)
+    public MyLogLovV2Component: LogLovV2Component = null;
+    _AfterContentInit: boolean = false;
+    ngAfterContentInit() {
+        //////alert(this.MyCustomSendOptionsComponent);
+        this._AfterContentInit = true;
+    }
 
     constructor(private _CD: ChangeDetectorRef, myElement: ElementRef) {
         this._ElementRef = myElement;
@@ -142,6 +153,35 @@ export class MultiSelectLOVComponent implements OnInit {
 
         if (document.body) {
             return document.body.clientHeight;
+        }
+    }
+
+    _ChosenFormatedList: String;
+    ClearList() {
+        alert("ClearList");
+    }
+    DeleteFromList() {
+        alert("DeleteFromList");
+    }
+    AddToList() {
+        console.warn("AddToList");
+        if (AppTool.IsNullOrEmpty(this.DataContext[this.LOVListComponentPropName])) {
+            this.DataContext[this.LOVListComponentPropName] = [];
+        }
+        var list: any[] = this.DataContext[this.LOVListComponentPropName];
+        list.push(this.MyLogLovV2Component.SelectedItem);
+        this._ChosenFormatedList = "";
+        list.forEach(item => {
+            this._ChosenFormatedList += item[this.MyLogLovV2Component.DisplayMemberPath];
+        });        
+    }
+    RunComponent() {
+        if (this.viewContainerRef) {
+            
+        }
+
+        else {
+            //this.RunComponentTimer();
         }
     }
 }
