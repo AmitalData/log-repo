@@ -79,11 +79,6 @@ export class DeclarationReferantDataPM {
     public set FollowUpDate(newValue: Date) { if (this.followUpDate != newValue) { this.followUpDate = newValue; this.MarkAsDirty("FollowUpDate"); } }
        
 	 
-    private isExceptional: boolean;
-    public get IsExceptional() { return this.isExceptional; }
-    public set IsExceptional(newValue: boolean) { if (this.isExceptional != newValue) { this.isExceptional = newValue; this.MarkAsDirty("IsExceptional"); } }
-       
-	 
     private withPaper: boolean;
     public get WithPaper() { return this.withPaper; }
     public set WithPaper(newValue: boolean) { if (this.withPaper != newValue) { this.withPaper = newValue; this.MarkAsDirty("WithPaper"); } }
@@ -112,6 +107,11 @@ export class DeclarationReferantDataPM {
     private searchFields: string;
     public get SearchFields() { return this.searchFields; }
     public set SearchFields(newValue: string) { if (this.searchFields != newValue) { this.searchFields = newValue; this.MarkAsDirty("SearchFields"); } }
+       
+	 
+    private exceptionReasonsList: string;
+    public get ExceptionReasonsList() { return this.exceptionReasonsList; }
+    public set ExceptionReasonsList(newValue: string) { if (this.exceptionReasonsList != newValue) { this.exceptionReasonsList = newValue; this.MarkAsDirty("ExceptionReasonsList"); } }
        
 	 
 

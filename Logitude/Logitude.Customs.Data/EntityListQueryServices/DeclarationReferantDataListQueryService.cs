@@ -44,8 +44,6 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
                                                                  FollowUpDate = a.FollowUpDate,
 
-                                                                 IsExceptional = a.IsExceptional,
-
                                                                  WithPaper = a.WithPaper,
 
                                                                  IsClosedForFollowUp = a.IsClosedForFollowUp,
