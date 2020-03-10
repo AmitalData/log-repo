@@ -19,7 +19,6 @@ export class DeclarationReferantDataList {
 	ControllerStatus: string;
 	CollectionOfMoneyStatus: string;
 	FollowUpDate: Date;
-	IsExceptional: boolean;
 	WithPaper: boolean;
 	IsClosedForFollowUp: string;
 	IsClassificationRemarks: boolean;
@@ -35,6 +34,7 @@ export class DeclarationReferantDataList {
 	DeclarationStatusTypeCode: string;
 	ATAOrETA: string;
 	SearchFields: string;
+	ExceptionReasonsList: string;
 	
 }
  

@@ -33,13 +33,13 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ControllerStatus, 
 	         CollectionOfMoneyStatus, 
 	         FollowUpDate, 
-	         IsExceptional, 
 	         WithPaper, 
 	         IsClosedForFollowUp, 
 	         IsClassificationRemarks, 
 	         IsControllerRemarks, 
 	         PreClassification, 
-	         SearchFields,
+	         SearchFields, 
+	         ExceptionReasonsList,
 	      }
 
 
@@ -57,13 +57,13 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ControllerStatus, 
 	         CollectionOfMoneyStatus, 
 	         FollowUpDate, 
-	         IsExceptional, 
 	         WithPaper, 
 	         IsClosedForFollowUp, 
 	         IsClassificationRemarks, 
 	         IsControllerRemarks, 
 	         PreClassification, 
-	         SearchFields,
+	         SearchFields, 
+	         ExceptionReasonsList,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -122,11 +122,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 				entityPOCO.FollowUpDate = entityPM.FollowUpDate;
 			}
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsExceptional))
-            {
-				entityPOCO.IsExceptional = entityPM.IsExceptional;
-			}
-			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.WithPaper))
             {
 				entityPOCO.WithPaper = entityPM.WithPaper;
@@ -155,6 +150,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SearchFields))
             {
 				entityPOCO.SearchFields = entityPM.SearchFields;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExceptionReasonsList))
+            {
+				entityPOCO.ExceptionReasonsList = entityPM.ExceptionReasonsList;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -218,11 +218,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.FollowUpDate = entityPOCO.FollowUpDate;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsExceptional))
-            {
-					entityPM.IsExceptional = entityPOCO.IsExceptional;
-            }
-
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.WithPaper))
             {
 					entityPM.WithPaper = entityPOCO.WithPaper;
@@ -251,6 +246,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.SearchFields))
             {
 					entityPM.SearchFields = entityPOCO.SearchFields;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ExceptionReasonsList))
+            {
+					entityPM.ExceptionReasonsList = entityPOCO.ExceptionReasonsList;
             }
 
 		}
@@ -309,11 +309,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 oldEntityPM.FollowUpDate = entityPM.FollowUpDate;
             }
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsExceptional))
-            {
-                oldEntityPM.IsExceptional = entityPM.IsExceptional;
-            }
-			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.WithPaper))
             {
                 oldEntityPM.WithPaper = entityPM.WithPaper;
@@ -342,6 +337,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SearchFields))
             {
                 oldEntityPM.SearchFields = entityPM.SearchFields;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExceptionReasonsList))
+            {
+                oldEntityPM.ExceptionReasonsList = entityPM.ExceptionReasonsList;
             }
 			
 		}

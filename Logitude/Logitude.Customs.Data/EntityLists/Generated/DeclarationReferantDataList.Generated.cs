@@ -37,8 +37,6 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public DateTime? FollowUpDate  { get; set; }
        [DataMember]
-       public bool IsExceptional  { get; set; }
-       [DataMember]
        public bool WithPaper  { get; set; }
        [DataMember]
        public string IsClosedForFollowUp  { get; set; }
@@ -68,6 +66,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string ATAOrETA  { get; set; }
        [DataMember]
        public string SearchFields  { get; set; }
+       [DataMember]
+       public string ExceptionReasonsList  { get; set; }
    }
 
 }
