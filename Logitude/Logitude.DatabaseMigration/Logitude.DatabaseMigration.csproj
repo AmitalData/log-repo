@@ -2155,7 +2155,6 @@
     <Compile Include="Migrations\202003080719024_Abed_AddCourierCustomStatusToLogitudeContext_PocoAndMap.Designer.cs">
       <DependentUpon>202003080719024_Abed_AddCourierCustomStatusToLogitudeContext_PocoAndMap.cs</DependentUpon>
     </Compile>
-
     <Compile Include="Migrations\202003050836063_AbedAddVATPercentageAndTypeOnQuoteTemplateSettings.cs" />
     <Compile Include="Migrations\202003050836063_AbedAddVATPercentageAndTypeOnQuoteTemplateSettings.Designer.cs">
       <DependentUpon>202003050836063_AbedAddVATPercentageAndTypeOnQuoteTemplateSettings.cs</DependentUpon>
@@ -2167,6 +2166,10 @@
     <Compile Include="Migrations\202002271245498_Mutaz_Add_CancelationFields_To_Database.cs" />
     <Compile Include="Migrations\202002271245498_Mutaz_Add_CancelationFields_To_Database.Designer.cs">
       <DependentUpon>202002271245498_Mutaz_Add_CancelationFields_To_Database.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003100731514_AbedAddReleaseNumberToShipmentPackage.cs" />
+    <Compile Include="Migrations\202003100731514_AbedAddReleaseNumberToShipmentPackage.Designer.cs">
+      <DependentUpon>202003100731514_AbedAddReleaseNumberToShipmentPackage.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\202003030904524_WesamDBMigrationFixes.cs" />
@@ -3908,16 +3911,17 @@
     <EmbeddedResource Include="Migrations\202003080719024_Abed_AddCourierCustomStatusToLogitudeContext_PocoAndMap.resx">
       <DependentUpon>202003080719024_Abed_AddCourierCustomStatusToLogitudeContext_PocoAndMap.cs</DependentUpon>
     </EmbeddedResource>
-
     <EmbeddedResource Include="Migrations\202003050836063_AbedAddVATPercentageAndTypeOnQuoteTemplateSettings.resx">
       <DependentUpon>202003050836063_AbedAddVATPercentageAndTypeOnQuoteTemplateSettings.cs</DependentUpon>
     </EmbeddedResource>
-
     <EmbeddedResource Include="Migrations\202003081420440_AddFactTableFieldToBIReportTable.resx">
       <DependentUpon>202003081420440_AddFactTableFieldToBIReportTable.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202002271245498_Mutaz_Add_CancelationFields_To_Database.resx">
       <DependentUpon>202002271245498_Mutaz_Add_CancelationFields_To_Database.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003100731514_AbedAddReleaseNumberToShipmentPackage.resx">
+      <DependentUpon>202003100731514_AbedAddReleaseNumberToShipmentPackage.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

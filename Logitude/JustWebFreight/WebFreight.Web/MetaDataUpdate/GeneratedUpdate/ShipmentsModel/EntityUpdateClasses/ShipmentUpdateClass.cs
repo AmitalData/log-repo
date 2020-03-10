@@ -40238,6 +40238,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "SLAC",
+					  						OldFieldName =  "SLAC",
 					  						ObjectTableName =  "Shipment",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -40258,6 +40259,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "SLAC",
 					  						ListPropertyPath =  "SLAC",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -41280,6 +41282,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 		   Feature ShipmentFeature_DeleteAllPayables = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DeleteAllPayables", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.DeleteAllPayables", NameTextCodeDefaultText = @"Delete All Payables" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
 		   Feature ShipmentFeature_ShipmentPriceCheck = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ShipmentPriceCheck", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.ShipmentPriceCheck", NameTextCodeDefaultText = @"Price Check" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature ShipmentFeature_RELEASENUMBER = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "RELEASENUMBER", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.RELEASENUMBER", NameTextCodeDefaultText = @"Release Number" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
    
 	    

@@ -304,6 +304,15 @@ class WarehouseReleaseGroup {
         this.WarehouseReleasePMLists = warehouseReleasePMLists;
         this.Title = title;
 
+        this.WarehouseReleasePMLists.forEach((item) => {
+            if (item.WarehouseReleasePackages) {
+                item.WarehouseReleasePackages.forEach((warehouseReleasePackage) => {
+                    warehouseReleasePackage.ReleaseNumber = item.ReleaseNumber;
+                });
+            }
+        });
+
+
         if (viewModel.IsContainerShipment) {
             this.WarehouseReleasePMLists.forEach((item) => {
                 if (item.WarehouseReleasePackages && item.WarehouseReleasePackages.length > 0) {
