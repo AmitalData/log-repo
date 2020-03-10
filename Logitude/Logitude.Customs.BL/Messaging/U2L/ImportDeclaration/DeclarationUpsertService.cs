@@ -41,7 +41,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
         public Boolean suppressNewTrans;
 
         private AmitalContext amitalContext;
-
+        private DeclarationReferantDataPM _DeclarationReferantDataPM;
         public const string UpsertActionConst = "Logitude.Customs.BL.Messaging.U2L.ImportDeclaration.DeclarationUpsertService.Upsert()";
 
         public DeclarationUpsertService()
@@ -654,6 +654,41 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                     MyGenericResponseObj.Message = "Declaration has multiple Consignments(" + this._MyDeclarationPM.Consignments.Count.ToString() + ") and Consignment details didn't update";
                     AppendLogLine("Declaration has multiple Consignments(" + this._MyDeclarationPM.Consignments.Count.ToString() + ") and Consignment details didn't update");
                 }
+
+                if (_AmitalCustomsFile.VendorId != null)
+                {
+                    MyGenericResponseObj.Stage = "DeclarationReferantDataUpsert";
+
+                    var myDeclarationReferantDataQueryService = new DeclarationReferantDataQueryService(_context);
+                    var myDeclarationReferantDataUpdateService = new DeclarationReferantDataUpdateService(_context, new Dictionary<string, IContext>(), ResolvedTenant());
+
+                    MyGenericResponseObj.Stage = "GetSingle DeclarationReferantData";
+                    this._DeclarationReferantDataPM = myDeclarationReferantDataQueryService.GetSingle(this._MyDeclarationPM.Id, true, false);
+                    /// Exist
+                    if (_DeclarationReferantDataPM == null)
+                    {
+                        this._DeclarationReferantDataPM = new Def.EntityPMs.DeclarationReferantDataPM();
+                        this._DeclarationReferantDataPM.ChangeSetOp = ChangeSetOperation.Insert;
+                        this._DeclarationReferantDataPM.DeclarationId = this._MyDeclarationPM.Id;
+                    }
+                    else
+                    {
+                        this._DeclarationReferantDataPM.ChangeSetOp = ChangeSetOperation.Update;
+                    }
+                    decimal GrossMassMeasure = 0;
+                    if (decimal.TryParse(_AmitalCustomsFile.GrossMassMeasure, out GrossMassMeasure) || string.IsNullOrWhiteSpace(_AmitalCustomsFile.GrossMassMeasure))
+                    {
+                        this._DeclarationReferantDataPM.Weight = GrossMassMeasure;
+                    }
+                    var arrivalDate = AmitalConvertUtil.GetUnifreightFormatedDate(_AmitalCustomsFile.ArrivalDateTime, "AmitalCustomsFile.ArrivalDateTime");
+                    if (arrivalDate.HasValue) this._DeclarationReferantDataPM.ArrivalDate = arrivalDate.Value;
+                    this._DeclarationReferantDataPM.VendorId = _AmitalCustomsFile.VendorId;
+                    //var estimatedTimeOfArrival = AmitalConvertUtil.GetUnifreightFormatedDate(_AmitalCustomsFile.EstimatedTimeOfSrrival, "AmitalCustomsFile.EstimatedTimeOfSrrival");
+                    //if (estimatedTimeOfArrival.HasValue) this._DeclarationReferantDataPM.EstimatedArrivalDate = estimatedTimeOfArrival.Value;
+                    //this._DeclarationReferantDataPM.OrderNumber = _AmitalCustomsFile.OrderNumber;
+                    //this._DeclarationReferantDataPM.WithPaper = _AmitalCustomsFile.WithPaper;
+                }
+
                 if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.VendorId))
                 {
                     if (false) //yaron !!!
