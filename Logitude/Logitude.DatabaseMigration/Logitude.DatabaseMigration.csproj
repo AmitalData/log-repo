@@ -2168,6 +2168,18 @@
     <Compile Include="Migrations\202002271245498_Mutaz_Add_CancelationFields_To_Database.Designer.cs">
       <DependentUpon>202002271245498_Mutaz_Add_CancelationFields_To_Database.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202003041406443_AddARInvoiceRegionalTax.cs" />
+    <Compile Include="Migrations\202003041406443_AddARInvoiceRegionalTax.Designer.cs">
+      <DependentUpon>202003041406443_AddARInvoiceRegionalTax.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003041421173_AddARInvoiceLineRegionalTax.cs" />
+    <Compile Include="Migrations\202003041421173_AddARInvoiceLineRegionalTax.Designer.cs">
+      <DependentUpon>202003041421173_AddARInvoiceLineRegionalTax.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003051111086_AddARInvoiceTotalVatIsRegional.cs" />
+    <Compile Include="Migrations\202003051111086_AddARInvoiceTotalVatIsRegional.Designer.cs">
+      <DependentUpon>202003051111086_AddARInvoiceTotalVatIsRegional.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\202003030904524_WesamDBMigrationFixes.cs" />
     <Compile Include="Migrations\202003030904524_WesamDBMigrationFixes.Designer.cs">
@@ -3918,6 +3930,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202002271245498_Mutaz_Add_CancelationFields_To_Database.resx">
       <DependentUpon>202002271245498_Mutaz_Add_CancelationFields_To_Database.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003041406443_AddARInvoiceRegionalTax.resx">
+      <DependentUpon>202003041406443_AddARInvoiceRegionalTax.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003041421173_AddARInvoiceLineRegionalTax.resx">
+      <DependentUpon>202003041421173_AddARInvoiceLineRegionalTax.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003051111086_AddARInvoiceTotalVatIsRegional.resx">
+      <DependentUpon>202003051111086_AddARInvoiceTotalVatIsRegional.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

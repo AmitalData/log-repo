@@ -64,5 +64,7 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
 
         [ForeignKey("PrepaidCollectId")]
         public virtual PrepaidCollect PrepaidCollect { get; set; }
+
+        public bool IsRegionalTax { get; set; }
     }
 }
