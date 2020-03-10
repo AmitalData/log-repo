@@ -1283,8 +1283,7 @@ export class QuoteChargeItem extends BaseComponent {
         }
 
         this.UIProperties.SetEnabled("CostCurrencyId", this.ObjectTableName, isEnabled_CostCurrencyId);
-        this.SetUIProperties_AllInCost();
-
+       
     }
 
     SetUIProperties_AllInCost() {
@@ -1295,6 +1294,7 @@ export class QuoteChargeItem extends BaseComponent {
         this.UIProperties.SetEnabled("CostCurrencyId", this.ObjectTableName, isEnabled_CostCurrencyId);
         this.UIProperties.SetEnabled("CostTotalAmount", this.ObjectTableName, isEnabled_CostCurrencyId);
         this.UIProperties.SetEnabled("CostUnitPrice", this.ObjectTableName, isEnabled_CostCurrencyId);
+        this.IsEnabled_CostUnitPrice = isEnabled_CostCurrencyId;
     }
 
     public IsEnabled_CostQuantity: boolean = false;
@@ -1363,6 +1363,7 @@ export class QuoteChargeItem extends BaseComponent {
         this.UIProperties.SetEnabled("CostMinAmount", this.ObjectTableName, isEnabled_CostMinAmount);
         this.UIProperties.SetEnabled("CostMaxAmount", this.ObjectTableName, isEnabled_CostMinAmount);
         this.SetUIProperties_CostRate();
+        this.SetUIProperties_AllInCost();
     }
     SetUIProperties_CostRate() {
         var isEnabled = false;

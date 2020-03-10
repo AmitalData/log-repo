@@ -453,6 +453,8 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                         List<string> AllInChargesIds = TariffVersionAllInChargesList.Where(p => p.TariffId == item.tariffid && p.Version == item.TariffVersion).Select(p => p.ChargesTypeId).ToList();
                         List<string> AllInChargesNames = chargesTypes.Where(p => AllInChargesIds.Contains(p.Id)).Select(p => p.EnglishName).ToList();
                         tariffsSummary.AllIn = string.Join(", ", AllInChargesNames);
+                        List<string> AllInIds_Charges = chargesTypes.Where(p => AllInChargesIds.Contains(p.Id)).Select(p => p.Id).ToList();
+                        tariffsSummary.AllInIds = string.Join(", ", AllInIds_Charges);
                     }
                     Tariff CurrentSurcharge = SurchargeTariffList.Where(p => p.SellerId == result.SellerId).FirstOrDefault();
 

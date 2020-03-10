@@ -381,6 +381,7 @@ export class TariffSearchSummary {
     WholePrice: string;
     Surcharges: Array<SurchargeSummary>;
     AllIn: string;
+    AllInIds: string;
     IsShown: boolean = false;
     UnitOfMesurmentCode: string;
     UnitOfMesurmentId: string;

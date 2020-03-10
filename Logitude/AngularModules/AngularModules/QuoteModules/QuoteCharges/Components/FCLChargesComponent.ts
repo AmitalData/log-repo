@@ -1471,8 +1471,20 @@ export class FCLQuoteChargeItem extends BaseComponent {
         }
 
         this.UIProperties.SetEnabled("CostCurrencyId", this.ObjectTableName, isEnabled_CostCurrencyId);
+        this.SetUIProperties_AllIn_CostCurrency();
     }
 
+    SetUIProperties_AllInCost() {
+        var isEnabled_CostCurrencyId = true;
+        if (this.IsCostAllIn) {
+            isEnabled_CostCurrencyId = false;
+        }
+        this.UIProperties.SetEnabled("CostCurrencyId", this.ObjectTableName, isEnabled_CostCurrencyId);
+        this.UIProperties.SetEnabled("CostTotalAmount", this.ObjectTableName, isEnabled_CostCurrencyId);
+        this.UIProperties.SetEnabled("CostUnitPrice", this.ObjectTableName, isEnabled_CostCurrencyId);
+        this.IsEnabled_CostUnitPrice = isEnabled_CostCurrencyId;
+    }
+    
     public IsEnabled_CostQuantity: boolean = false;
     public IsEnabled_CostUnitPrice: boolean = false;
     public IsEnabled_CostMinAmount: boolean = false;
@@ -1558,6 +1570,7 @@ export class FCLQuoteChargeItem extends BaseComponent {
         this.UIProperties.SetEnabled("CostMinAmount", this.ObjectTableName, isEnabled_CostMinAmount);
         this.UIProperties.SetEnabled("CostMaxAmount", this.ObjectTableName, isEnabled_CostMinAmount);
         this.SetUIProperties_CostRate();
+        this.SetUIProperties_AllInCost();
     }
     SetUIProperties_CostRate() {
         var isEnabled = false;

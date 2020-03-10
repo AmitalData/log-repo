@@ -800,18 +800,18 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
 
 
     // Quote Work
+    private allInIds = ""; 
     GenerateQuoteChargesFromTariff(item: TariffSearchSummary) {
         var isValid = this.ValidateExistChargesConnectedToTariff(item);
         if (isValid) {
 
             this.TariffList_Quote = [];
             // Generate Air Frieght
-            var notes = null;
             if (!AppTool.IsNullOrEmpty(item.AllIn)) {
-                notes = "Includes the following charges as all-in: " + item.AllIn;
+                this.allInIds = item.AllInIds;
             }
 
-            this.AddNewTariffQuoteCharge(item, notes);
+            this.AddNewTariffQuoteCharge(item);
             // Generate Surcharges
             if (item != null && item.Surcharges != null) {
                 item.Surcharges.forEach(surcharge => {
@@ -872,7 +872,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
         });
         return isDuplicate;
     }
-    AddNewTariffQuoteCharge(item: any, notes = null) {
+    AddNewTariffQuoteCharge(item: any) {
         this.myChargesTypeListService.getSingleFromCache(item.ChargeTypeId).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 var chargesType: ChargesTypeList = myResponse.Result;
@@ -903,12 +903,14 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                 chargePM.SaleCurrencyCode = this.FatherComponent.GetCurrencyCode(item.CurrencyId);
                 chargePM.SaleExchangeRate = this.FatherComponent.GetCurrencyRate(item.CurrencyId);
                 chargePM.SaleUnitPrice = chargePM.CostMinAmount;
-                chargePM.SaleMinAmount = chargePM.CostUnitPrice;
                 chargePM.VendorId = item.SellerId;
                 chargePM.VendorName = item.SellerName;
 
-                if (notes != null) {
-                    chargePM.IsCostAllIn = true;
+                if (this.allInIds != null) {
+                    var index = this.allInIds.indexOf(item.ChargeTypeId);
+                    if (index > -1) {
+                        chargePM.IsCostAllIn = true;
+                    }
                 }
              
                 this.TariffList_Quote.push(chargePM);
@@ -922,7 +924,6 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                 chargeItem.SaleMeasurementId = chargePM.SaleMeasurementId;
                 chargeItem.SaleCurrencyId = chargePM.SaleCurrencyId;
                 chargeItem.SaleUnitPrice = chargePM.SaleUnitPrice;
-                chargeItem.SaleMinAmount = chargePM.SaleMinAmount;
                 this.FatherComponent.ItemsSource.Insert(chargeItem);
 
                 chargeItem.ComputeCostInSalePrice();
