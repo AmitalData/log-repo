@@ -660,6 +660,7 @@ namespace WebFreight.Web.DataProviders
         public double? LocalAmountWithVAT { get; set; }
         public string VATDescription { get; set; }
         public string VATLocalDescription { get; set; }
+        public bool IsRegionalTax { get; set; }
     }
 
     public class TotalVat

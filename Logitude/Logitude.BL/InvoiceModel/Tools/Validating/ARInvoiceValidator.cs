@@ -237,6 +237,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             ValidateAccountingSetting(entityPM, myContext, myCommonContext, isNew);
             ValidateFullAccounting(entityPM, isNew);
             ValidateMultiVatPercentages(entityPM, accountingSetting, allVats);
+            ValidateRegionalTax(entityPM);
 
             SATInterfaceSettingRepository sATInterfaceSettingRepository = new SATInterfaceSettingRepository(entityPM.Tenant);
             SATInterfaceSetting satSetting = sATInterfaceSettingRepository.GetSingleSATInterfaceSetting(entityPM.Tenant);
@@ -248,6 +249,8 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                 }
             }
         }
+
+
 
         private static void ValidateConcurrencyGUID(ARInvoicePM entityPM, ARInvoice entityPOCO)
         {
@@ -1253,6 +1256,23 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                 {
                     string msg = TranslateTextsClass.Translate("ARInvoice.M.DisconnectPayments", entityPM.Tenant);
                     throw new ApplicationException(msg);
+                }
+            }
+        }
+
+        private static void ValidateRegionalTax(ARInvoicePM entityPM)
+        {
+            if(entityPM.RegionalTaxId != null)
+            {
+                List<string> allRegionalTaxVatsIds = (from d in entityPM.InvoiceLines.Where(d => d.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete)
+                                                      where d.VatTypeId != null
+                                                      && d.IsRegionalTax
+                                                      group d by d.VatTypeId into g
+                                                      select g.Key).ToList();
+
+                if (allRegionalTaxVatsIds.Count > 1)
+                {
+                    throw new ApplicationException("Can't set Regional Tax for different VATs");
                 }
             }
         }

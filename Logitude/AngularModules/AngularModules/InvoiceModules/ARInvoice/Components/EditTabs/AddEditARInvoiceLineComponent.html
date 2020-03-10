@@ -48,7 +48,7 @@
                                             [DataContext]="DataContext"
                                             [LookUpTableName]="'VatType'"
                                             [HideMaintenanceIcon]="true"
-                                            [HideAddLink]="true"  [DependencyFilter2Value]="false">
+                                            [HideAddLink]="true" [DependencyFilter2Value]="false">
                                     </LogLov>
                                 </td>
                             </tr>
@@ -143,7 +143,7 @@
                             </tr>
 
                             <!-- InvoiceCurrencyAmount -->
-                            <tr class="FormFieldRow">
+                            <tr class="FormFieldRow" *ngIf="DataContext.IsInvoiceCurrencyAmountVisible">
                                 <td>
                                     <LogLabel [ObjectFieldName]="'InvoiceCurrencyAmount'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="AmountInvoiceLabel"></LogLabel>
                                 </td>
@@ -153,6 +153,22 @@
                                 </td>
                             </tr>
 
+                            <!-- IsRegionalTax -->
+                            <tr class="FormFieldRow" *ngIf="IsRegionalTaxVisible">
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'IsRegionalTax'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td>
+                                    <LogCheckBox [ObjectFieldName]="'IsRegionalTax'" [Checked]="DataContext.IsRegionalTax" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="2">
+                                    <div></div>
+                                </td>
+                            </tr>
                         </table>
                     </td>
 
