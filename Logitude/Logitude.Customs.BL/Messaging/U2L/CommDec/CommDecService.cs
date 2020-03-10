@@ -122,12 +122,14 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
                 var FormatedException = ExceptionFormatUtil.GetFormated(ex);
                 AppendLogLine("ProccessRequest():Exception " + FormatedException.ToString() + Environment.NewLine + "---------------------------------------------");
                 AppendLogLine("Declaration Upsert Error " + Environment.NewLine + Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.ToString(1000));
+                MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.BusinessError;
                 return;
             }
             catch (Exception e)
             {
                 AppendLogLine("ProccessRequest():Exception " + e.ToString() + Environment.NewLine + "---------------------------------------------");
                 AppendLogLine("Declaration Upsert Error " + Environment.NewLine + Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.ToString(1000));
+                MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.BusinessError;
                 return;
             }
             if(!String.IsNullOrWhiteSpace(MyGenericResponseObj.StatusType.ToString()) && MyGenericResponseObj.StatusType != GenericResponseObj.StatusEnum.Success)
@@ -150,6 +152,8 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
             this._MyDeclarationPM = myQueryService.GetSingle(this._LogitudeCommDecFile.Id, true, false);
             if (this._MyDeclarationPM == null)
             {
+                AppendLogLine("Declaration Get Single Error " + Environment.NewLine + Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.ToString(1000));
+                MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.BusinessError;
                 throw new BusinessErrorException("LOGITUDE FILE is " + this._LogitudeCommDecFile.Id + " but not found");
             }
             AppendLogLine("GetSingle:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
