@@ -81,6 +81,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             {
 
             }
+            return null;
         }
 
         private string GetQuoteStage(string code)
