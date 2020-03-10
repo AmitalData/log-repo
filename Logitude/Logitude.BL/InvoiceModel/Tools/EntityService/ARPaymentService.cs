@@ -1880,7 +1880,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             // get payment line LT
             LedgerTransactionListQueryService ltListQuery = new LedgerTransactionListQueryService(ctx);
-            List<LedgerTransactionList> accountingTransactionList = ltListQuery.GetByAccountId(paymentPM.GLAccountId, paymentPM.Tenant);
+            string accountId = GetGLAccountIdForReconciledTransactions(paymentPM.GLAccountId, paymentPM.Tenant, paymentPM.PaymentCurrencyId);
+            List<LedgerTransactionList> accountingTransactionList = ltListQuery.GetByAccountId(accountId, paymentPM.Tenant);
             LedgerTransactionList paymentTransaction = accountingTransactionList.Where(d => d.SourceNumber == paymentPM.PaymentNo).FirstOrDefault(); // 3- ARPayment
             if (paymentTransaction == null) throw new ApplicationException("Cannot find ledger transaction for this payment!");
 
@@ -1914,6 +1915,28 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 ///....
 
             }
+        }
+        private string GetGLAccountIdForReconciledTransactions(string glAccountId, int tenant, string paymentCurrencyId)
+        {
+            IGLAccountQueryServiceExt glAccountQuery = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountQueryServiceExt;
+            
+            GLAccountPM gLAccount = glAccountQuery.GetSingleGLAccountPM(glAccountId, tenant);
+            if (gLAccount != null)
+            {
+                if (gLAccount.IsMultiCurrency.Value)
+                {
+
+                    GLAccountCurrencyRepository glAccountCurrencyRepository = new GLAccountCurrencyRepository(tenant);
+                    GLAccountCurrency gLAccountCurrency = glAccountCurrencyRepository.GetEntityByCurrencyAndGLAccountId(gLAccount.Id, paymentCurrencyId, tenant);
+                    if (gLAccountCurrency != null)
+                    {
+                        return gLAccountCurrency.GLAccountId;
+                    }
+                    else return gLAccount.Id;
+                }
+
+            }
+            return null;
         }
         private ReconciliationLinePM CreatePaymentRecoLine(ARPaymentPM paymentPM)
         {

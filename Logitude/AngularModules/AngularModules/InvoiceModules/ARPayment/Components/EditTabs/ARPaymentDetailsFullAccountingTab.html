@@ -657,10 +657,10 @@
                                     </log-column>
 
                                     <!-- <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'25'">
-                        <log-cell-template template="let item" [IgnoreMods]="true"  title="{{item.GetIndicatorText()}}">
-                            <div class="circleDraw" [class.orangeCircle]="item.OpenAmount != item.OriginalAmount"></div>
-                        </log-cell-template>
-                    </log-column> -->
+        <log-cell-template template="let item" [IgnoreMods]="true"  title="{{item.GetIndicatorText()}}">
+            <div class="circleDraw" [class.orangeCircle]="item.OpenAmount != item.OriginalAmount"></div>
+        </log-cell-template>
+    </log-column> -->
                                     <!-- Source -->
                                     <log-column [Alignment]="isRTL ? 'right' : 'left'"
                                                 [header]="'Accounting.O.ARP.InvoiceNumber' | TextCodeTranslationPipe"
@@ -668,7 +668,7 @@
                                         <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
                                             <div class="TextTrimming" text-start>
                                                 <!-- <span title="{{item.SourceType}}" *ngIf="item.IconCode" (click)="OpenSource(item.SourceId,item.SourceTypeCode)"
-                                    [class]="'SourceTypeIcon color-' + item.SourceTypeCode">{{item.IconCode}}</span> -->
+                [class]="'SourceTypeIcon color-' + item.SourceTypeCode">{{item.IconCode}}</span> -->
                                                 <a href="javascript:;"
                                                    (click)="OpenSource(item.SourceId,item.SourceTypeCode)">{{item.SourceNumber}}</a>
                                             </div>
@@ -676,8 +676,8 @@
                                     </log-column>
 
                                     <!-- InvoiceAmount -->
-                                    <log-column [width]="'110'"
-                                                [header]="'Accounting.O.ARP.InvoiceAmount' | TextCodeTranslationPipe"
+                                    <log-column [width]="'130'"
+                                                [header]="InvoiceAmountCurrency"
                                                 [Alignment]="'right'">
                                         <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1">
                                             <div style="width: 100%;padding: 0 3px; text-align: right;direction: ltr;"
@@ -689,25 +689,33 @@
                                     </log-column>
 
                                     <!-- OpenAmount -->
-                                    <log-column [width]="'110'"
-                                                [header]="'LedgerTransaction.F.OpenAmount' | TextCodeTranslationPipe"
+                                    <log-column [width]="'130'"
+                                                [header]="OpenAmountCurrency"
                                                 [Alignment]="isRTL ? 'right' : 'left'">
                                         <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1"
                                                            [Alignment]="'right'">
-                                            {{item.OpenAmount | NumbersPipe:'N2'}}
+                                            {{item.CalculatedOpenAmount | NumbersPipe:'N2'}}
                                         </log-cell-template>
                                     </log-column>
-
+                                    <!--OreginalInvoiceAmount -->
+                                    <log-column [width]="'130'"
+                                                [header]="'ARPayment.O.OriginalInvoiceAmount' | TextCodeTranslationPipe"
+                                                [Alignment]="isRTL ? 'right' : 'left'">
+                                        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1"
+                                                           [Alignment]="'right'">
+                                            {{item.OriginalInvoiceAmount | NumbersPipe:'N2'}}  {{item.InvoiceCurrency}}
+                                        </log-cell-template>
+                                    </log-column>
                                     <!-- AmountToReconcile -->
                                     <log-column [Alignment]="isRTL ? 'right' : 'left'"
                                                 [header]="'LedgerTransaction.F.AmountToReconcile' | TextCodeTranslationPipe"
                                                 [width]="'135'" [binding]="'AmountToReconcile'">
                                         <log-cell-template template="let item" [IsEditMode]="true" #logcelltemplate>
                                             <!-- <div class="TextTrimming"
-                                style="text-align: right;padding-right: 5px;direction: ltr;"
-                                *ngIf="logcelltemplate.IsDisplayMode">
-                                <span>{{item.AmountToReconcile | NumbersPipe:'N2'}}</span>
-                            </div> -->
+                style="text-align: right;padding-right: 5px;direction: ltr;"
+                *ngIf="logcelltemplate.IsDisplayMode">
+                <span>{{item.AmountToReconcile | NumbersPipe:'N2'}}</span>
+            </div> -->
                                             <!-- <div *ngIf="logcelltemplate.IsEditMode"> -->
                                             <div>
                                                 <!-- *ngIf="!item.IsReconciled"  -->
@@ -727,32 +735,32 @@
                                                 </LogTextBox>
 
                                                 <!-- <div class="TextTrimming"
-                                    style="text-align: right;padding-right: 5px;direction: ltr;"
-                                    *ngIf="item.IsReconciled">
-                                    <span>{{item.AmountToReconcile | NumbersPipe:'N2'}}</span>
-                                </div> -->
+                    style="text-align: right;padding-right: 5px;direction: ltr;"
+                    *ngIf="item.IsReconciled">
+                    <span>{{item.AmountToReconcile | NumbersPipe:'N2'}}</span>
+                </div> -->
                                             </div>
                                         </log-cell-template>
                                     </log-column>
 
                                     <!-- ReconciledAmount -->
                                     <!-- <log-column [width]="'130'"
-                        [header]="'Accounting.O.ARP.ReconciledAmount' | TextCodeTranslationPipe"
-                        [Alignment]="isRTL ? 'right' : 'left'">
-                        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1"
-                            [Alignment]="'right'">
-                            {{item.ReconciledAmount | NumbersPipe:'N2'}}
-                        </log-cell-template>
-                    </log-column> -->
+        [header]="'Accounting.O.ARP.ReconciledAmount' | TextCodeTranslationPipe"
+        [Alignment]="isRTL ? 'right' : 'left'">
+        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1"
+            [Alignment]="'right'">
+            {{item.ReconciledAmount | NumbersPipe:'N2'}}
+        </log-cell-template>
+    </log-column> -->
                                     <!-- PaymentReconciledAmount -->
                                     <!-- <log-column [width]="'130'"
-                        [header]="'PaymentReconciledAmount'"
-                        [Alignment]="isRTL ? 'right' : 'left'">
-                        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1"
-                            [Alignment]="'right'">
-                            {{item.PaymentReconciledAmount | NumbersPipe:'N2'}}
-                        </log-cell-template>
-                    </log-column> -->
+        [header]="'PaymentReconciledAmount'"
+        [Alignment]="isRTL ? 'right' : 'left'">
+        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1"
+            [Alignment]="'right'">
+            {{item.PaymentReconciledAmount | NumbersPipe:'N2'}}
+        </log-cell-template>
+    </log-column> -->
                                     <!-- DueDate -->
                                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'100'"
                                                 [header]="'Accounting.O.ARP.Duedate' | TextCodeTranslationPipe">
@@ -798,14 +806,14 @@
 
                                     <!--  -->
                                     <!-- <log-column [header]="''" [width]="'40'" [binding]="'button'">
-                        <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
-                            <img *ngIf="!item.isLineValid"
-                                [title]="'Accounting.O.ARP.invoiceAmount2reconcileMSG' | TextCodeTranslationPipe"
-                                style="margin-top: 3px;"
-                                class="exc-remark-button exc-remark-button-red" tabindex="-1"
-                                src="./Images/error-16.png" />
-                        </log-cell-template>
-                    </log-column> -->
+        <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
+            <img *ngIf="!item.isLineValid"
+                [title]="'Accounting.O.ARP.invoiceAmount2reconcileMSG' | TextCodeTranslationPipe"
+                style="margin-top: 3px;"
+                class="exc-remark-button exc-remark-button-red" tabindex="-1"
+                src="./Images/error-16.png" />
+        </log-cell-template>
+    </log-column> -->
 
                                 </logitude-edit-grid>
 
@@ -836,41 +844,117 @@
         <td>
             <TabSummary [Height]="90">
                 <table>
-                    <tr>
+                    <tr style=" width:100%">
                         <td>
                             <table>
-                                <tr style="height: 20px;">
+                                <tr>
+
+                                    <td>
+                                        <table>
+                                            <tr style="height: 20px;">
+                                                <td text-start class="BlueTitle">
+                                                    {{'Accounting.O.ARP.PaymentAmount' | TextCodeTranslationPipe}}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="vertical-align: middle;"class="arp-footer">
+                                                    <div float-start class="amount-div">
+                                                        <div class="amount">{{PaymentCurrencySign}} {{paymentAmountTotal | NumbersPipe:'N2'}}    </div>
+
+                                                    </div>
+                                                    
+                                                </td>
+                                            </tr>
+
+
+                                        </table>
+
+
+                                    </td><td style="width:20px"><div class="VerticalLine"></div></td>
+                                    <td>
+                                        <table>
+                                            <tr text-start class="BlueTitle">
+                                                {{'ARPayment.O.ReconcileData' | TextCodeTranslationPipe}}{{ReconcileAmountCurrency}}
+                                            </tr>
+                                            <tr>
+                                                <td style="vertical-align: middle;" class="arp-footer">
+                                                    <div float-start class="amount-div">
+                                                        <div class="amount">{{PaymenyAmount | NumbersPipe:'N2'
+                                                }}</div>
+                                                        <div class="label"> {{'Accounting.O.ARP.PaymentAmount' | TextCodeTranslationPipe}}</div>
+
+                                                </div>
+
+
+
+                                                <div float-start class="seperator">
+                                                    <div>-</div>
+                                                </div>
+
+                                                <div float-start class="amount-div">
+                                                    <div class="amount">{{AdjustedAmount | NumbersPipe:'N2'}}</div>
+                                                    <div class="label">{{'Accounting.O.ARP.ReconciledAmount' | TextCodeTranslationPipe}}</div>
+
+                                                </div>
+
+
+
+
+                                                <div float-start class="seperator">
+                                                    <div>=</div>
+                                                </div>
+
+
+                                                <div float-start class="amount-div">
+                                                    <div class="amount">{{PaymenyAmount - paymentReconciledAmountTotal - amount2reconcileTotal | NumbersPipe:'N2'}}</div>
+                                                    <div class="label">
+                                                        {{'ARPayment.F.OpenAmount' | TextCodeTranslationPipe}}
+                                                        {{ReconcileAmountCurrency}}
+                                                    </div>
+                                                </div>
+
+</td></tr>
+                                        </table>
+                                    </td>
+                                    <td></td>
+
+                                </tr>
+
+
+                                <!--<tr style="height: 20px;">
                                     <td text-start colspan="2" class="BlueTitle">
-                                       {{'ARPayment.S.Details.Totals' | TextCodeTranslationPipe}}</td>
+                                        {{'Accounting.O.ARP.PaymentAmount' | TextCodeTranslationPipe}}
+                                    </td>
                                 </tr>
 
                                 <tr style="width:100%;">
-                                    <td style="vertical-align: middle;" class="arp-footer">
-
+                                    <td style="vertical-align: middle;" >
                                         <div float-start class="amount-div">
-                                            <div class="amount">{{paymentAmountTotal | NumbersPipe:'N2'}}</div>
-                                            <div class="label">{{'Accounting.O.ARP.PaymentAmount' | TextCodeTranslationPipe}}</div>
+                                            <div class="amount">{{PaymentCurrencySign}} {{paymentAmountTotal | NumbersPipe:'N2'}}    </div>
+                                      
+                                        </div>
+                                          <div  class="VerticalLine"></div>
+                                    </td>
+                                    <td style="vertical-align: middle;" class="arp-footer">
+                                        <div float-start class="amount-div">
+                                            <div class="amount">{{PaymenyAmount | NumbersPipe:'N2'}}</div>
+                                            <div class="label">Payment amount</div>
 
                                         </div>
+
+                                        
 
                                         <div float-start class="seperator">
                                             <div>-</div>
                                         </div>
 
                                         <div float-start class="amount-div">
-                                            <div class="amount">{{paymentReconciledAmountTotal | NumbersPipe:'N2'}}</div>
+                                            <div class="amount">{{AdjustedAmount | NumbersPipe:'N2'}}</div>
                                             <div class="label">{{'Accounting.O.ARP.ReconciledAmount' | TextCodeTranslationPipe}}</div>
 
                                         </div>
 
-                                        <div float-start class="seperator">
-                                            <div>-</div>
-                                        </div>
-
-                                        <div float-start class="amount-div">
-                                            <div class="amount">{{amount2reconcileTotal | NumbersPipe:'N2'}}</div>
-                                            <div class="label">{{'Accounting.O.ARP.Amount2Reconcile' | TextCodeTranslationPipe}}</div>
-                                        </div>
+                                      
 
 
                                         <div float-start class="seperator">
@@ -880,7 +964,8 @@
 
                                         <div float-start class="amount-div">
                                             <div class="amount">{{paymentAmountTotal - paymentReconciledAmountTotal - amount2reconcileTotal | NumbersPipe:'N2'}}</div>
-                                            <div class="label">{{'ARPayment.F.OpenAmount' | TextCodeTranslationPipe}}
+                                            <div class="label">
+                                                {{'ARPayment.F.OpenAmount' | TextCodeTranslationPipe}}
                                                 ({{PaymentCurrencyCode}})
                                             </div>
                                         </div>
@@ -891,7 +976,7 @@
                                         <div></div>
                                     </td>
 
-                                </tr>
+                                </tr>-->
                             </table>
                         </td>
 

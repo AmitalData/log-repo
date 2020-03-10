@@ -121,8 +121,12 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                        BranchName = a.Branch == null ? null : a.Branch.EnglishName,
                                        CreatedByPartner = a.CreatedByPartner,
                                        IsPaymentNumberManuallySet = a.IsPaymentNumberManuallySet,
+
                                        AccountingCancelationDate = a.AccountingCancelationDate,
                                        CancelationNotes = a.CancelationNotes,
+
+                                       PaymentCurrencySign= a.PaymentCurrency.Sign,
+
                                    }).FirstOrDefault();
 
 
@@ -133,7 +137,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             payment.PaymentInvoices = entityQuery.GetARPaymentInvoicePMsForPayment(payment.Id, tenant);
 
             payment.ARPaymentChequeReplicas = GetARPaymentChequeReplicasByPaymentId(payment.Id, tenant);
-            GetGLAccountFields(payment);
+            SetGLAccountFields(payment);
             payment =  SetJournalFields(payment);
 
             ARPaymentPM securedPM = new ARPaymentPM();
@@ -189,13 +193,14 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             return aRPaymentChequeReplicaQuery.GetARPaymentChequeReplicaPMsByPaymentId(paymentid, tenant);
         }
 
-        void GetGLAccountFields(ARPaymentPM paymentPM)
+        void SetGLAccountFields(ARPaymentPM paymentPM)
         {
             GLAccountPM glaccount = getGLAccount(paymentPM.BillToId, paymentPM.Tenant);
             if (glaccount != null)
             {
                 paymentPM.GLAccountId = glaccount.Id;
                 paymentPM.GLAccountRecoMethodCode = glaccount.ReconcileMethodCode;
+                paymentPM.GLAccountCurrencyCode = glaccount.CurrencyCode;
             }
         }
         private ARPaymentPM SetJournalFields(ARPaymentPM payment)
