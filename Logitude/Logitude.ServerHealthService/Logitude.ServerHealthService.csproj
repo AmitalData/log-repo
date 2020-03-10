@@ -47,6 +47,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\Drive.cs" />
+    <Compile Include="Models\EmailAlertTimer.cs" />
+    <Compile Include="Models\DrivesSettings.cs" />
+    <Compile Include="Models\EmailSettings.cs" />
+    <Compile Include="Models\From.cs" />
+    <Compile Include="Models\GeneralSettings.cs" />
+    <Compile Include="Models\DrivesCheckTimer.cs" />
+    <Compile Include="Models\Settings.cs" />
+    <Compile Include="Models\SmtpClient.cs" />
+    <Compile Include="Models\To.cs" />
+    <Compile Include="Models\XMLParser.cs" />
     <Compile Include="ProjectInstaller.cs">
       <SubType>Component</SubType>
     </Compile>
