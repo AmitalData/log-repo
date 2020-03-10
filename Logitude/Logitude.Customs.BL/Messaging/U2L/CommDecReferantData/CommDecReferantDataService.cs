@@ -56,7 +56,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDecReferantData
 
         protected int ResolvedTenantLocal() 
         {
-            if (int.Parse(_LOGIDECREFERANTDATA.LogitudeDeclarationReferantData[0].Tenant) > 0)
+            if (!string.IsNullOrWhiteSpace(_LOGIDECREFERANTDATA.LogitudeDeclarationReferantData[0].Tenant) && int.Parse(_LOGIDECREFERANTDATA.LogitudeDeclarationReferantData[0].Tenant) > 0)
             {
                 return int.Parse(_LOGIDECREFERANTDATA.LogitudeDeclarationReferantData[0].Tenant);
             }
@@ -147,7 +147,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDecReferantData
 
                 if (!string.IsNullOrWhiteSpace(_LogitudeDeclarationReferantData.FollowUpStatus))_DeclarationReferantDataPM.IsClosedForFollowUp = _LogitudeDeclarationReferantData.FollowUpStatus;
 
-                _DeclarationReferantDataPM.PreClassification = _LogitudeDeclarationReferantData.PreClassification;
+                if (!string.IsNullOrWhiteSpace(_LogitudeDeclarationReferantData.PreClassification)) _DeclarationReferantDataPM.PreClassification = _LogitudeDeclarationReferantData.PreClassification;
                 if (_DeclarationReferantDataPM.Tenant < 1) _DeclarationReferantDataPM.Tenant = ResolvedTenant();
 
                 myDeclarationReferantDataUpdateService.Update(this._DeclarationReferantDataPM, true);
@@ -161,12 +161,14 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDecReferantData
             }
             catch (DbEntityValidationException ex)
             {
+                MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.BusinessError;
                 var FormatedException = ExceptionFormatUtil.GetFormated(ex);
                 AppendLogLine("ProccessRequest():Exception " + FormatedException.ToString() + Environment.NewLine + "---------------------------------------------");
                 return;
             }
             catch (Exception e)
             {
+                MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.BusinessError;
                 AppendLogLine("ProccessRequest():Exception " + e.ToString() + Environment.NewLine + "---------------------------------------------");
                 return;
             }

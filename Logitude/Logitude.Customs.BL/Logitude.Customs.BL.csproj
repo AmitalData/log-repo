@@ -1349,6 +1349,7 @@
     <Compile Include="EntityUpdateServices\CourierMasterUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CouriersVatUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CustomsDocumentsDefinitionUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\DeclarationReferantDataUpdateService.cs" />
     <Compile Include="EntityUpdateServices\DeclarationConsAcceptanceUpdateService.cs" />
     <Compile Include="EntityUpdateServices\DeclarationPendingUpdateService.cs" />
     <Compile Include="EntityUpdateServices\DeclarationCourierStatusUpdateService.amital.cs" />
