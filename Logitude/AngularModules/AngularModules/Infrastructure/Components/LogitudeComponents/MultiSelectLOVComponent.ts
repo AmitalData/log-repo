@@ -1,3 +1,4 @@
+///x = delet item close ddm
 import { Component, EventEmitter, Output, Input, OnInit, ElementRef, ChangeDetectorRef, ViewChild, ViewContainerRef, AfterContentInit, ContentChild } from '@angular/core';
 import { AppTool } from '../../Tools';
 import { LogLovV2Component } from './LogLovV2Component';
@@ -12,11 +13,11 @@ import { setInterval } from 'timers';
     templateUrl: 'MultiSelectLOVComponent.html',
 })
 
-export class MultiSelectLOVComponent implements OnInit, AfterContentInit{
+export class MultiSelectLOVComponent implements OnInit{
     @Input()
     public IsDisabled: boolean
-    @Output()
-    public DropdownMenuButtonClicked: EventEmitter<any> = new EventEmitter<any>();
+    //@Output()
+    //public DropdownMenuButtonClicked: EventEmitter<any> = new EventEmitter<any>();
 
     //private _CustomSendOptionsArgs: CustomSendOptionsArgs;
     public _DropdownDisplay: string = 'none';
@@ -32,23 +33,18 @@ export class MultiSelectLOVComponent implements OnInit, AfterContentInit{
     @Input()
     public LOVListComponentPropName: string = null;
     @Input()
-    public LOVLastChosenItemPropName: string = null;
+    public PlaceHolder: string = "Multi Select ....";
     @Input()
-    public PlaceHolder: string = "Select Users";
     LayoutDirection: string = 'rtl'//'ltr';
 
-    SearchFieldsId: string;
+    
 
     //@ViewChild(LogLovV2Component)
     @ContentChild(LogLovV2Component)
     public MyLogLovV2Component: LogLovV2Component = null;
 
 
-    _AfterContentInit: boolean = false;
-    ngAfterContentInit() {
-        //////alert(this.MyCustomSendOptionsComponent);
-        this._AfterContentInit = true;
-    }
+    
 
     constructor(private _CD: ChangeDetectorRef, myElement: ElementRef) {
         this._ElementRef = myElement;
@@ -59,7 +55,7 @@ export class MultiSelectLOVComponent implements OnInit, AfterContentInit{
         this.MyDropdownMenuFilterId = curId;
         this._MultiSelectLOVId = "MultiSelectLOV_" + curId;
         this._MultiSelectLOVMenuId = "MultiSelectLOVMenuId_" + curId;
-        this.SearchFieldsId = "MultiSelectLOVSearchFieldsId_" + curId;
+        
     }
 
     handleClick(event) {
@@ -74,6 +70,11 @@ export class MultiSelectLOVComponent implements OnInit, AfterContentInit{
                 inside = true;
                 break;
             }
+            if (clickedComponent.className === this._MultiSelectLOVMenuId) {
+                inside = true;
+                break;
+            }
+
             if (this.MyLogLovV2Component.ElementId == clickedComponent.id || this.MyLogLovV2Component.DropdownId == clickedComponent.id) {
                 inside = true;
                 break;
@@ -123,13 +124,11 @@ export class MultiSelectLOVComponent implements OnInit, AfterContentInit{
         //}
     }
 
-  
-    DropdownMenuButtonClick(event) {
-        this.DropdowndisplayToggle(event);
-        this.DropdownMenuButtonClicked.emit(event);
 
+    DropdownMenuButtonClick(event, fucusMe: boolean) {
+        this.DropdowndisplayToggle(event, fucusMe);
     }
-    DropdowndisplayToggle(event) {
+    DropdowndisplayToggle(event, fucusMe: boolean) {
 
 
         //MouseEvent
@@ -161,17 +160,20 @@ export class MultiSelectLOVComponent implements OnInit, AfterContentInit{
             document.getElementById(this._MultiSelectLOVMenuId).style.left =
                 (myleft/*- 100*/ ) + 'px';//min-width: 80px
             this._DropdownDisplay = 'block';
-            this.MyLogLovV2Component.OnToggleClicked();
-            this.MyLogLovV2Component.ForceFocus = true;
-            
-            setInterval(() => {
-                var input = document.getElementById(this.MyLogLovV2Component.ElementId);
-                if (input) {
-                    input.focus();
-                }
-            }, 200);
-            
+            if (fucusMe) {
+                this.MyLogLovV2Component.OnToggleClicked();
+                this.MyLogLovV2Component.ForceFocus = true;
 
+                setInterval(() => {
+                    var input = document.getElementById(this.MyLogLovV2Component.ElementId);
+                    if (input) {
+                        input.focus();
+                    }
+                }, 200);
+
+
+            }
+            
         } else {
             
             this._DropdownDisplay = 'none';
@@ -239,48 +241,7 @@ export class MultiSelectLOVComponent implements OnInit, AfterContentInit{
             this._ChosenFormatedList += item[this.MyLogLovV2Component.DisplayMemberPath];
         });
     }
-    ClearPlaceHolder() {
-        var temp = document.getElementById(this.SearchFieldsId) as HTMLInputElement;
-        if (temp) {
-            temp.placeholder = "";
-            temp.style.background = "rgba(0, 0, 0, 0)";
-            temp.style.backgroundColor = "white";
-        }
-    }
-    SearchText: any;
-    FillPlaceHolder() {
-        var temp = document.getElementById(this.SearchFieldsId) as HTMLInputElement;
-        temp.placeholder = this.PlaceHolder;
-        if (!this.SearchText) {
-            temp.style.background = "url(Images/Search.png) 6px 2px  no-repeat scroll";
-            temp.style.backgroundColor = "white";
-            temp.style.backgroundPosition = this.LayoutDirection == "rtl" ? '6px 2px' : "right center";
-        }
-        this.SetStyles();
-    }
-    textValueStyle: any;
-    SetStyles() {
-        if (this.LayoutDirection == "rtl") {
-            this.textValueStyle = {
-                'background-image': 'url(Images/Search.png)',
-                'background-repeat': 'no-repeat',
-                'background-color': 'white',
-                'background-attachment': 'scroll',
-                'background-position': '6px 2px',
-                'padding-left': '30px',
-                'font-style': 'italic',
-            };
-        } else {
-            this.textValueStyle = {
-                'background-image': 'url(Images/Search.png)',
-                'background-repeat': 'no-repeat',
-                'background-color': 'white',
-                'background-attachment': 'scroll',
-                'background-position': 'right center',
-                'padding-right': '30px',
-                'font-style': 'italic',
-            };
-        }
-    }
+    
+    
 
 }
