@@ -124,7 +124,9 @@ export class MultiSelectLOVComponent implements OnInit{
         //}
     }
 
-
+    ChosenFormatedListFocus() {
+        this.DropdowndisplayToggle(null, true);
+    }
     DropdownMenuButtonClick(event, fucusMe: boolean) {
         this.DropdowndisplayToggle(event, fucusMe);
     }
