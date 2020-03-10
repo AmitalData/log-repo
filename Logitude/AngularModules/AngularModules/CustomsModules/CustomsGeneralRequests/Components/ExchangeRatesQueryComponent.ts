@@ -178,17 +178,11 @@ export class ExchangeRatesQueryComponent
     }
 
     _LOVListCurrencys: any[] = [];
-    get LOVListCurrencys() { return this.RequestParams.FromDate; }
-    set LOVListCurrencys(value: Date) {
-        if (this.RequestParams.FromDate != value) {
-            this.RequestParams.FromDate = value;
-            if (value) {
-                this.UIProperties.SetRequired("FromDate", this.ObjectTableName, false);
-            }
-            else {
-                this.UIProperties.SetRequired("FromDate", this.ObjectTableName, true);
-            }
+    get LOVListCurrencys() { return this._LOVListCurrencys; }
+    set LOVListCurrencys(value) {
+        if (this._LOVListCurrencys != value) {
+            this._LOVListCurrencys = value;
         }
     }
-
+    
 }

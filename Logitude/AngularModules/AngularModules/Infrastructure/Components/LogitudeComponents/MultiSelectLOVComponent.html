@@ -2,21 +2,27 @@
     <table>
         <tr class="FormFieldRow">
             <td style="width: 400px;">
-                <table>
-                    <tr>
-                        <td><div (click)="DropdownMenuButtonClick($event)" >{{_ChosenFormatedList}}</div></td>
-                        <td *ngIf="_ChosenFormatedList"  style="width:20px"><button style="width:15px" (click)="ClearList()" >X</button> </td>
-                    </tr>
-                </table>
-                
-            </td>
-            <td >
-                <button [disabled]="IsDisabled"
+                <!--<table>
+        <tr>
+            <td><div (click)="DropdownMenuButtonClick($event)" >{{_ChosenFormatedList}}</div></td>
+            <td *ngIf="_ChosenFormatedList"  style="width:20px"><button style="width:15px" (click)="ClearList()" >X</button> </td>
+        </tr>
+    </table>-->
+                <!--(focus)="DropdownMenuButtonClick($event)"-->
+                <input type="text" placeholder="{{PlaceHolder}}" [(ngModel)]="_ChosenFormatedList"
+                       [ngStyle]="LayoutDirection == 'rtl' ? {'padding-left': '30px'} : {'padding-right': '30px'}"
+                       (click)="DropdownMenuButtonClick($event)" />
+                <img *ngIf="_ChosenFormatedList" [className]="LayoutDirection == 'rtl' ? 'DeleteButton LeftCenter' : 'DeleteButton RightCenter'" [ngStyle]="LayoutDirection == 'rtl' ? {'left': '30px'} : {'right': '30px'}" src="Images/RedX.png" (click)="ClearList()" />
+                <button class="DeleteButton LeftCenter"
+                        [disabled]="IsDisabled"
                         (click)="DropdownMenuButtonClick($event)"
                         [attr.id]="_MultiSelectLOVId"
-                        style="background-color: transparent;cursor:pointer">
-                    show
+                        style="background-color: transparent;cursor:pointer;left:5px;width:20px">
+                    &#9660;
                 </button>
+
+            </td>
+            <td >
 
             </td>
         </tr>
@@ -24,35 +30,43 @@
     <div [attr.id]="_MultiSelectLOVMenuId"
          [ngStyle]="{'display': _DropdownDisplay  }"
          style="position: fixed;z-index: 1;border: .5px solid  #45494A;border-radius: 3px;background-color: #F2F2F2;">
-        <div style="height:450px;width:300px">
+        <div style="height:450px;width:300px;">
             
-            <div>
+            <div style="margin:5px;padding:10px" >
                 <table>
                     <tr class="FormFieldRow">
+                        <td style="width:10px"></td>
                         <td style="width: 400px;" class="myLOV-td" >
-                            <!--<ng-content select=".class-MultiSelectLOV-content"></ng-content>-->
-                                <LogLov [ObjectFieldName]="'CurrencyTypeCode'"
+                            <ng-content select=".class-MultiSelectLOV-content"></ng-content>
+                                <!--<LogLov [ObjectFieldName]="'UserId'"
                                         [ObjectTableName]="ObjectTableName"
                                         [DataContext]="DataContext"
                                         [HideColumns]="true"
-                                        [LookUpTableName]="'Customs.CurrencyType'"
+                                        [LookUpTableName]="'User'"
                                         [DisplayMemberPath]="'LocalName'">
-                                </LogLov>
+                                </LogLov>-->
                             
 
                         </td>
-                        <td  style="width:50px;">
-                            <button (click)="AddToList()">Add</button>
+                        <td style="width:50px;">
+                            <IconButton [IsEnabled]="!IsDisplayOnly" [Name]="'Add'" (click)="AddToList()" ></IconButton>
+                            <!--<button (click)="AddToList()">Add</button>-->
                         </td>
                     </tr>
                 </table>
             </div>
-            <div>
-                <ul>
-                    <li *ngFor="let item of DataContext[LOVListComponentPropName]">
-                        <button (click)="DeleteFromList(item)">x</button> {{item[this.MyLogLovV2Component.DisplayMemberPath]}}
-                    </li>
-                </ul>
+            <div style="height:10px"></div>
+            <div style="margin:5px;padding:10px">
+                <table>
+                    <tr *ngFor="let item of DataContext[LOVListComponentPropName]">
+                        <td>
+                            <span> {{item[this.MyLogLovV2Component.DisplayMemberPath]}}</span>
+                        </td>
+                        <td style="width:30px">
+                            <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="DeleteFromList(item)"></IconButton>
+                        </td>
+                    </tr>
+                </table>
             </div>
 
         </div>

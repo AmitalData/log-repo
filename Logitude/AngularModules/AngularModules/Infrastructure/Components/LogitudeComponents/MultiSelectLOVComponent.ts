@@ -1,8 +1,9 @@
-import { Component, EventEmitter, Output, Input, OnInit, ElementRef, ChangeDetectorRef, ViewChild, ViewContainerRef, AfterContentInit } from '@angular/core';
+import { Component, EventEmitter, Output, Input, OnInit, ElementRef, ChangeDetectorRef, ViewChild, ViewContainerRef, AfterContentInit, ContentChild } from '@angular/core';
 import { AppTool } from '../../Tools';
 import { LogLovV2Component } from './LogLovV2Component';
 import { forEach } from '@angular/router/src/utils/collection';
 import { retry } from 'rxjs/operator/retry';
+import { setInterval } from 'timers';
 
 @Component({
     selector: 'MultiSelectLOV',
@@ -32,10 +33,17 @@ export class MultiSelectLOVComponent implements OnInit, AfterContentInit{
     public LOVListComponentPropName: string = null;
     @Input()
     public LOVLastChosenItemPropName: string = null;
-    @ViewChild('LogLov', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    @Input()
+    public PlaceHolder: string = "Select Users";
+    LayoutDirection: string = 'rtl'//'ltr';
 
-    @ViewChild(LogLovV2Component)
+    SearchFieldsId: string;
+
+    //@ViewChild(LogLovV2Component)
+    @ContentChild(LogLovV2Component)
     public MyLogLovV2Component: LogLovV2Component = null;
+
+
     _AfterContentInit: boolean = false;
     ngAfterContentInit() {
         //////alert(this.MyCustomSendOptionsComponent);
@@ -51,6 +59,7 @@ export class MultiSelectLOVComponent implements OnInit, AfterContentInit{
         this.MyDropdownMenuFilterId = curId;
         this._MultiSelectLOVId = "MultiSelectLOV_" + curId;
         this._MultiSelectLOVMenuId = "MultiSelectLOVMenuId_" + curId;
+        this.SearchFieldsId = "MultiSelectLOVSearchFieldsId_" + curId;
     }
 
     handleClick(event) {
@@ -113,6 +122,8 @@ export class MultiSelectLOVComponent implements OnInit, AfterContentInit{
         //    lastDropdownMenuFilter.style.display = 'none';
         //}
     }
+
+  
     DropdownMenuButtonClick(event) {
         this.DropdowndisplayToggle(event);
         this.DropdownMenuButtonClicked.emit(event);
@@ -129,25 +140,40 @@ export class MultiSelectLOVComponent implements OnInit, AfterContentInit{
             var itemRect = item.getBoundingClientRect();
             let myTop = itemRect.top;
             let myleft = itemRect.left;
-            if (!AppTool.IsNullOrEmpty(event)) {
+            let useMouseXY = false;
+            if (useMouseXY && !AppTool.IsNullOrEmpty(event)) {
                 myleft = event.clientX;//: 19
                 myTop = event.clientY;//: 19
                 // event.stopPropagation();
             }
-
+            myTop = myTop + 25;
             document.getElementById(this._MultiSelectLOVMenuId).style.top =
                 (myTop/*itemRect.top*/ /*+ 27*/ /*-5*/) + 'px';
 
             let DDLHeight = 65 + 20;//    height: 22px; * 3 +30 
-            let Extra = 22 + 1 + 1; //    height: 22px; +1 UP +1 DOWN 
-            if (itemRect.bottom + DDLHeight + Extra > this.getScreenHeight()) {//this.PaintTop = true                
+            let Extra = 22 + 1 + 1; //    height: 22px; +1 UP +1 DOWN
+            
+            if (itemRect.bottom + DDLHeight + Extra > this.getScreenHeight()) {//this.PaintTop = true
+                //to shoe the div Upper the Input due -At the end of screen
                 document.getElementById(this._MultiSelectLOVMenuId).style.top =
-                    (itemRect.top - DDLHeight - Extra) + 'px';
+                    (itemRect.top - DDLHeight - Extra + 25) + 'px';
             }
             document.getElementById(this._MultiSelectLOVMenuId).style.left =
-                (myleft/*itemRect.left*/ /*- 50*/ - 100 /*+5*/) + 'px';//min-width: 80px
+                (myleft/*- 100*/ ) + 'px';//min-width: 80px
             this._DropdownDisplay = 'block';
+            this.MyLogLovV2Component.OnToggleClicked();
+            this.MyLogLovV2Component.ForceFocus = true;
+            
+            setInterval(() => {
+                var input = document.getElementById(this.MyLogLovV2Component.ElementId);
+                if (input) {
+                    input.focus();
+                }
+            }, 200);
+            
+
         } else {
+            
             this._DropdownDisplay = 'none';
         }
         this._CD.detectChanges();
@@ -212,6 +238,49 @@ export class MultiSelectLOVComponent implements OnInit, AfterContentInit{
             }
             this._ChosenFormatedList += item[this.MyLogLovV2Component.DisplayMemberPath];
         });
+    }
+    ClearPlaceHolder() {
+        var temp = document.getElementById(this.SearchFieldsId) as HTMLInputElement;
+        if (temp) {
+            temp.placeholder = "";
+            temp.style.background = "rgba(0, 0, 0, 0)";
+            temp.style.backgroundColor = "white";
+        }
+    }
+    SearchText: any;
+    FillPlaceHolder() {
+        var temp = document.getElementById(this.SearchFieldsId) as HTMLInputElement;
+        temp.placeholder = this.PlaceHolder;
+        if (!this.SearchText) {
+            temp.style.background = "url(Images/Search.png) 6px 2px  no-repeat scroll";
+            temp.style.backgroundColor = "white";
+            temp.style.backgroundPosition = this.LayoutDirection == "rtl" ? '6px 2px' : "right center";
+        }
+        this.SetStyles();
+    }
+    textValueStyle: any;
+    SetStyles() {
+        if (this.LayoutDirection == "rtl") {
+            this.textValueStyle = {
+                'background-image': 'url(Images/Search.png)',
+                'background-repeat': 'no-repeat',
+                'background-color': 'white',
+                'background-attachment': 'scroll',
+                'background-position': '6px 2px',
+                'padding-left': '30px',
+                'font-style': 'italic',
+            };
+        } else {
+            this.textValueStyle = {
+                'background-image': 'url(Images/Search.png)',
+                'background-repeat': 'no-repeat',
+                'background-color': 'white',
+                'background-attachment': 'scroll',
+                'background-position': 'right center',
+                'padding-right': '30px',
+                'font-style': 'italic',
+            };
+        }
     }
 
 }
