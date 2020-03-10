@@ -2,7 +2,13 @@
     <table>
         <tr class="FormFieldRow">
             <td style="width: 400px;">
-                {{_ChosenFormatedList}}<button (click)="ClearList()">X</button>
+                <table>
+                    <tr>
+                        <td><div (click)="DropdownMenuButtonClick($event)" >{{_ChosenFormatedList}}</div></td>
+                        <td *ngIf="_ChosenFormatedList"  style="width:20px"><button style="width:15px" (click)="ClearList()" >X</button> </td>
+                    </tr>
+                </table>
+                
             </td>
             <td >
                 <button [disabled]="IsDisabled"
@@ -23,15 +29,16 @@
             <div>
                 <table>
                     <tr class="FormFieldRow">
-                        <td style="width: 400px;">
+                        <td style="width: 400px;" class="myLOV-td" >
                             <!--<ng-content select=".class-MultiSelectLOV-content"></ng-content>-->
-                            <LogLov [ObjectFieldName]="'CurrencyTypeCode'"
-                                    [ObjectTableName]="ObjectTableName"
-                                    [DataContext]="DataContext"
-                                    [HideColumns]="true"
-                                    [LookUpTableName]="'Customs.CurrencyType'"
-                                    [DisplayMemberPath]="'LocalName'">
-                            </LogLov>
+                                <LogLov [ObjectFieldName]="'CurrencyTypeCode'"
+                                        [ObjectTableName]="ObjectTableName"
+                                        [DataContext]="DataContext"
+                                        [HideColumns]="true"
+                                        [LookUpTableName]="'Customs.CurrencyType'"
+                                        [DisplayMemberPath]="'LocalName'">
+                                </LogLov>
+                            
 
                         </td>
                         <td  style="width:50px;">
@@ -43,7 +50,7 @@
             <div>
                 <ul>
                     <li *ngFor="let item of DataContext[LOVListComponentPropName]">
-                        <button (click)="DeleteFromList(item)">x</button> {{item}}
+                        <button (click)="DeleteFromList(item)">x</button> {{item[this.MyLogLovV2Component.DisplayMemberPath]}}
                     </li>
                 </ul>
             </div>

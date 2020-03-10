@@ -2,6 +2,7 @@ import { Component, EventEmitter, Output, Input, OnInit, ElementRef, ChangeDetec
 import { AppTool } from '../../Tools';
 import { LogLovV2Component } from './LogLovV2Component';
 import { forEach } from '@angular/router/src/utils/collection';
+import { retry } from 'rxjs/operator/retry';
 
 @Component({
     selector: 'MultiSelectLOV',
@@ -64,9 +65,18 @@ export class MultiSelectLOVComponent implements OnInit, AfterContentInit{
                 inside = true;
                 break;
             }
+            if (this.MyLogLovV2Component.ElementId == clickedComponent.id || this.MyLogLovV2Component.DropdownId == clickedComponent.id) {
+                inside = true;
+                break;
+            }
             if (clickedComponent.class === "class-MultiSelectLOV-content") {
                 inside = true;
                 break;
+            }
+            if (clickedComponent.class === "myLOV-td") {
+                inside = true;
+                break;
+
             }
             if (conter > 50) {
                 break;
@@ -158,34 +168,50 @@ export class MultiSelectLOVComponent implements OnInit, AfterContentInit{
 
     _ChosenFormatedList: String;
     ClearList() {
-        alert("ClearList");
+        console.log("ClearList");
+        var list: any[] = this.DataContext[this.LOVListComponentPropName];
+        //list = [];//list.forEach(r => { list.pop() });
+        while (list.length>0) {
+            list.pop();
+        }
+        this.FormatList();
     }
-    DeleteFromList() {
+    DeleteFromList(item2Del) {
         console.log("DeleteFromList");
         var list: any[] = this.DataContext[this.LOVListComponentPropName];
-        list.pop(this.MyLogLovV2Component.SelectedItem);
+        var index = list.findIndex(d => d == item2Del);
+        if (index>-1) {
+            list.splice(index, 1);
+        }
+        this.FormatList();
+        
 
     }
     AddToList() {
-        console.log("AddToList");
+        //console.log("AddToList");
+        if (this.MyLogLovV2Component.SelectedItem == null) {
+            return;
+        }
         if (AppTool.IsNullOrEmpty(this.DataContext[this.LOVListComponentPropName])) {
             this.DataContext[this.LOVListComponentPropName] = [];
         }
         var list: any[] = this.DataContext[this.LOVListComponentPropName];
+        if (list.filter(r => r[this.MyLogLovV2Component.SelectedValuePath] == this.MyLogLovV2Component.SelectedItem[this.MyLogLovV2Component.SelectedValuePath]).length > 0) {
+            return;
+        }
         list.push(this.MyLogLovV2Component.SelectedItem);
+        this.FormatList();
+        //this.MyLogLovV2Component.SelectedItem = null;
+    }
+    FormatList(): any {
         this._ChosenFormatedList = "";
+        var list: any[] = this.DataContext[this.LOVListComponentPropName];
         list.forEach(item => {
+            if (!AppTool.IsNullOrEmpty(this._ChosenFormatedList)) {
+                this._ChosenFormatedList += ','
+            }
             this._ChosenFormatedList += item[this.MyLogLovV2Component.DisplayMemberPath];
         });
-        this.MyLogLovV2Component.SelectedItem = null;
     }
-    RunComponent() {
-        if (this.viewContainerRef) {
-            
-        }
 
-        else {
-            //this.RunComponentTimer();
-        }
-    }
 }
