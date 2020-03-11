@@ -786,6 +786,11 @@
     <Content Include="Usefull Scripts\Detect Data Problems\Wrong Receivables Percentage Amounts.sql" />
     <Content Include="Usefull Scripts\Detect Data Problems\[Islam] shipments related with tenant zero issue.sql" />
     <Content Include="Usefull Scripts\Fill Data\Fill Shipments FirstOperationalCloseDate.sql" />
+    <Content Include="Usefull Scripts\Fill Data\ShipmentComputedFields\[Ayman] First Pickup.sql" />
+    <Content Include="Usefull Scripts\Fill Data\ShipmentComputedFields\[Ayman] Last Delivery.sql" />
+    <Content Include="Usefull Scripts\Fill Data\ShipmentComputedFields\[Ayman] Last Pickup.sql" />
+    <Content Include="Usefull Scripts\Fill Data\ShipmentComputedFields\[Ayman] Number of Deliveries.sql" />
+    <Content Include="Usefull Scripts\Fill Data\ShipmentComputedFields\[Ayman] Operationally Closed.sql" />
     <Content Include="Usefull Scripts\Fill Data\[Islam] Copy incoterms from tenant zero to all tenants.sql" />
     <Content Include="Usefull Scripts\Fill Data\[Ayman] Fill ShippingLines INTTRARegistrationNotes.sql" />
     <Content Include="Usefull Scripts\Fill Data\[Maheera] Fill Cc To From Fields of  Activities.sql" />
