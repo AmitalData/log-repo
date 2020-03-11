@@ -571,6 +571,10 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
                     this.IsAutonomy = true;
                 }
             }
+            if (!String.IsNullOrWhiteSpace(this._LogitudeCommDecFile.IsAutonomy) && (this._LogitudeCommDecFile.IsAutonomy.ToLower() == "y" || this._LogitudeCommDecFile.IsAutonomy.ToLower() == "yes"))
+            {
+                this.IsAutonomy = true;
+            }
         }
 
         private void CheckMasterToUpdate(string MoreParams)
