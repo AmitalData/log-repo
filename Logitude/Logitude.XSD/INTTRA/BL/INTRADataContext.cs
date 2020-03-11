@@ -607,17 +607,38 @@ namespace Logitude.XSD.INTTRA.BL
                 // Validate the Computing Partner of Packages
                 List<string> ids = this.ShipmentPackages.Select(s => s.PackageTypeId).ToList();
                 var allPackageTypes = (from d in CommonContext.PackageTypes
-                                        where d.Tenant == this.Tenant
-                                        && ids.Contains(d.Id)
-                                        select d).ToList();
-      
+                                       where d.Tenant == this.Tenant
+                                       && ids.Contains(d.Id)
+                                       select d).ToList();
+
                 foreach (var item in allPackageTypes)
                 {
                     string myTranslatedCode = computingPartnerHelper.GetComputingPartnerCodeTranslation(item.Code, "G-INTTRA", "PackageType");
                     if (string.IsNullOrEmpty(myTranslatedCode))
                     {
-                        this.Errors.Add( "Package Type : " + item.EnglishName +  " has no translation in the computing partner");
+                        this.Errors.Add("Package Type : " + item.EnglishName + " has no translation in the computing partner");
                     }
+                }
+
+                this.ValidateInsidePackages_ComputingPartnerTranslation();
+
+            }
+        }
+
+        private void ValidateInsidePackages_ComputingPartnerTranslation()
+        {
+            // Validate the Computing Partner of Packages
+            List<string> ids = this.InsidePackages.Select(s => s.PackageTypeId).ToList();
+            var packageTypesOfsidePackages = (from d in CommonContext.PackageTypes
+                                   where d.Tenant == this.Tenant
+                                   && ids.Contains(d.Id)
+                                   select d).ToList();
+            foreach (var item in packageTypesOfsidePackages)
+            {
+                string myTranslatedCode = computingPartnerHelper.GetComputingPartnerCodeTranslation(item.Code, "G-INTTRA", "PackageType");
+                if (string.IsNullOrEmpty(myTranslatedCode))
+                {
+                    this.Errors.Add("Inside Package Type : " + item.EnglishName + " has no translation in the computing partner");
                 }
             }
         }
