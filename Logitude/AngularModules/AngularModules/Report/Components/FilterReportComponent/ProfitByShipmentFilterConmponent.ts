@@ -200,6 +200,7 @@ export class ProfitByShipmentFilterConmponent extends BaseComponent implements O
         this.reportFliter.IncludeOperationalyClosed = this.IncludeClosed;
 
         this.ReportsPreview.CleanPartnersObslist();
+        if (!AppTool.IsNullOrEmpty(this.CustomerId)) this.ReportsPreview.AddPartner("Partner", this.CustomerId);
         if (!AppTool.IsNullOrEmpty(this.AgentId)) this.ReportsPreview.AddPartner("Agent", this.AgentId);
 
         this.ReportsPreview.GenerateReport(this.reportFliter, isloading);
