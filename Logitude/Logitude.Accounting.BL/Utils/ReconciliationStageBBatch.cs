@@ -48,7 +48,7 @@ namespace Logitude.Accounting.BL.Utils
         {
             try
             {
-                int SUB_BATCH_SIZE = 5; // 100;
+                int SUB_BATCH_SIZE = 50; // 100;
                 int tenant = reconciliationStageBArg.Tenant;
                 string myGLAccountId = reconciliationStageBArg.GLAccountId;
                 BatchTaskExecutionPM batchTaskExecutionPM = reconciliationStageBArg.BatchTask;
