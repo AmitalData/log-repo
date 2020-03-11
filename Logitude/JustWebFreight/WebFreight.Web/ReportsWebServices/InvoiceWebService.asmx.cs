@@ -398,6 +398,17 @@ namespace WebFreight.Web.ReportsWebServices
                     invoicedataprovider.Transshipment1MasterNumber = shipment.Transshipment1AdditionalMAWBOBLBL;
                     invoicedataprovider.Transshipment1FromPortName = shipment.Transshipment1FromPortName;
                     invoicedataprovider.Transshipment1CarrierName = shipment.Transshipment1CarrierName;
+                    invoicedataprovider.CustomsClearancePointName = shipment.CustomClearancePointName;
+                    invoicedataprovider.ValueOfGoods = shipment.ValueOfGoods;
+                   
+                    if (shipment.ValueOfGoodsCurrencyId != null)
+                    {
+                        Currency currency = commonContext.Currencies.Where(d => d.Id == shipment.ValueOfGoodsCurrencyId).FirstOrDefault();
+                        if (currency != null)
+                        {
+                            invoicedataprovider.ValueOfGoodsCurrency = currency.Code;
+                        }
+                    }
 
                     if (!string.IsNullOrEmpty(shipment.OBLTypeCode))
                     {
