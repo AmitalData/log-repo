@@ -14,7 +14,7 @@ namespace Logitude.ServerHealthService
     {
         protected Timer ServiceTimer = new Timer();
         protected Settings Settings;
-        protected DateTime? LastEmailAlert = null;
+        protected DateTime? LastEmailsAlert = null;
 
         public LogitudeServerHealthService()
         {
@@ -39,23 +39,22 @@ namespace Logitude.ServerHealthService
         {
             try
             {
-                DriveInfo[] serverDrives = DriveInfo.GetDrives().Where(d => d.DriveType == DriveType.Fixed).ToArray();
+                DriveInfo[] drivesInfo = GetServerDrives();
 
-                foreach (DriveInfo drive in serverDrives)
+                foreach (DriveInfo driveInfo in drivesInfo)
                 {
-                    if (drive.IsReady)
+                    if (driveInfo.IsReady)
                     {
-                        bool isDriveSpaceLow = IsDriveSpaceLow(drive);
-                        bool shouldSendEmails = ShouldSendEmails();
+                        bool isDriveFreeSpaceLow = IsDriveFreeSpaceLow(driveInfo);
+                        bool isTimeForNextEmailsAlert = IsTimeForNextEmailsAlert();
 
-                        if (isDriveSpaceLow && shouldSendEmails)
+                        if (isDriveFreeSpaceLow && isTimeForNextEmailsAlert)
                         {
-                            string driveLabelWithName = drive.VolumeLabel + " (" + drive.Name.Replace(@"\", String.Empty) + ")";
-                            string warningMessageSubject = "Low Drive Space In " + Environment.MachineName;
-                            string warningMessageBody = BuildWarningMessageBody(driveLabelWithName, drive.TotalSize, drive.TotalFreeSpace);
+                            string warningMessageSubject = BuildWarningMessageSubject();
+                            string warningMessageBody = BuildWarningMessageBody(driveInfo);
 
                             SendEmails(warningMessageSubject, warningMessageBody);
-                            LastEmailAlert = DateTime.Now;
+                            UpdateLastEmailsAlert();
                         }
                     }
                 }
@@ -80,15 +79,36 @@ namespace Logitude.ServerHealthService
                 this.Stop();
             }
         }
-        
-        protected string BuildWarningMessageBody(string driveLabelWithName, long driveTotalSize, long driveTotalFreeSpace)
-        {
-            string warningMessage = "Low Free Space Was Detected In Drive " + driveLabelWithName + " That In Server " + Environment.MachineName + ".\n";
-            warningMessage += "Total Space: " + Math.Round(ConvertBytesToGigabytes(driveTotalSize), 2).ToString() + " GB.\n";
-            warningMessage += "Total Free Space: " + Math.Round(ConvertBytesToGigabytes(driveTotalFreeSpace), 2).ToString() + " GB.\n";
-            warningMessage += "\n" + "From Logitude Server Health Service.";
 
+        protected string BuildWarningMessageSubject()
+        {
+            string serverName = GetServerName();
+            string subject = "Low Drive Free Space In " + serverName;
+            return subject;
+        }
+
+        protected string BuildWarningMessageBody(DriveInfo driveInfo)
+        {
+            string serverName = GetServerName();
+            string driveLabelWithName = driveInfo.VolumeLabel + " (" + driveInfo.Name.Replace(@"\", String.Empty) + ")";
+            double driveTotalSizeInGB = Math.Round(ConvertBytesToGigabytes(driveInfo.TotalSize), 2);
+            double driveTotalFreeSpaceInGB = Math.Round(ConvertBytesToGigabytes(driveInfo.TotalFreeSpace), 2);
+
+            string warningMessage = "Low Free Space Was Detected In Drive " + driveLabelWithName + " That In Server " + serverName + ".\n";
+            warningMessage += "Total Space: " + driveTotalSizeInGB.ToString() + " GB.\n";
+            warningMessage += "Total Free Space: " + driveTotalFreeSpaceInGB.ToString() + " GB.\n";
+            warningMessage += "\n" + "From Logitude Server Health Service.";
             return warningMessage;
+        }
+
+        protected DriveInfo[] GetServerDrives()
+        {
+            return DriveInfo.GetDrives().Where(d => d.DriveType == DriveType.Fixed).ToArray();
+        }
+
+        protected string GetServerName()
+        {
+            return Environment.MachineName;
         }
 
         protected void SendEmails(string subject, string body)
@@ -171,16 +191,16 @@ namespace Logitude.ServerHealthService
             double bytes = gigabytes / (9.31 * Math.Pow(10, -10));
             return bytes;
         }
-
-        protected bool ShouldSendEmails()
+        
+        protected bool IsTimeForNextEmailsAlert()
         {
-            if(LastEmailAlert == null)
+            if(LastEmailsAlert == null)
             {
                 return true;
             }
             else
             {
-                if((DateTime.Now - LastEmailAlert.Value).TotalSeconds >= Settings.GeneralSettings.EmailAlertTimer.IntervalInSeconds)
+                if((DateTime.Now - LastEmailsAlert.Value).TotalSeconds >= Settings.GeneralSettings.EmailAlertTimer.IntervalInSeconds)
                 {
                     return true;
                 }
@@ -191,11 +211,16 @@ namespace Logitude.ServerHealthService
             }
         }
 
-        protected bool IsDriveSpaceLow(DriveInfo drive)
+        protected void UpdateLastEmailsAlert()
+        {
+            LastEmailsAlert = DateTime.Now;
+        }
+
+        protected bool IsDriveFreeSpaceLow(DriveInfo driveInfo)
         {
             bool isDriveSpaceLow = false;
-            long driveTotalSize = drive.TotalSize;
-            long driveTotalFreeSpace = drive.TotalFreeSpace;
+            long driveTotalSize = driveInfo.TotalSize;
+            long driveTotalFreeSpace = driveInfo.TotalFreeSpace;
 
             if (Settings.DrivesSettings.Drives.Count == 0)
             {
@@ -207,7 +232,7 @@ namespace Logitude.ServerHealthService
             }
             else
             {
-                Drive driveToCheck = Settings.DrivesSettings.Drives.Where(d => drive.Name.ToLower().Contains(d.Name.ToLower())).FirstOrDefault();
+                Drive driveToCheck = Settings.DrivesSettings.Drives.Where(d => driveInfo.Name.ToLower().Contains(d.Name.ToLower())).FirstOrDefault();
                 if (driveToCheck != null)
                 {
                     if (driveToCheck.MinimumFreeSpacePercent != 0 || driveToCheck.MinimumFreeSpaceGB != 0)
@@ -223,7 +248,8 @@ namespace Logitude.ServerHealthService
 
                         if (driveToCheck.MinimumFreeSpaceGB != 0)
                         {
-                            if (driveTotalFreeSpace < ConvertGigabytesToBytes(driveToCheck.MinimumFreeSpaceGB))
+                            double minimumFreeSpaceInBytes = ConvertGigabytesToBytes(driveToCheck.MinimumFreeSpaceGB);
+                            if (driveTotalFreeSpace < minimumFreeSpaceInBytes)
                             {
                                 isDriveSpaceLow = true;
                             }
