@@ -53,7 +53,7 @@ export class ShipmentsStocksFiltersComponent extends BaseComponent implements On
         var daysofmonth = this.daysInMonth(new Date());
         this.FromDate = this.SetDate(Year, month - 1, 1);
         this.ToDate = this.SetDate(Year, month, daysofmonth);
-        this.RunReport(false);
+        //this.RunReport(false);
     }
 
     ngOnInit() {

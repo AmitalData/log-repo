@@ -87,7 +87,7 @@ export class VDKFilterComponent extends BaseComponent {
         this.FromDate = DateTool.GetCurrentDateAsUtc();
         this.FromDate.setMonth(this.FromDate.getMonth() - 1);
         this.ToDate = DateTool.GetCurrentDateAsUtc();
-        this.RunReport(false);
+        //this.RunReport(false);
     }
 
 
