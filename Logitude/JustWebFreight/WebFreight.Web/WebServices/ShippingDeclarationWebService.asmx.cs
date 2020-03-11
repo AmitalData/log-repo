@@ -239,7 +239,7 @@ namespace WebFreight.Web.WebServices
 
                 if (shipment.MainCarriageToPortId != null)
                 {
-                    mainCarriageToPort = (from a in commonContext.Ports where a.Id == shipment.MainCarriageToPortId select a).FirstOrDefault();
+                    mainCarriageToPort = (from a in commonContext.Ports.Include("State") where a.Id == shipment.MainCarriageToPortId select a).FirstOrDefault();
                 }
 
                 if (shipment.OnCarriageToPortId != null)
@@ -426,6 +426,14 @@ namespace WebFreight.Web.WebServices
                 {
                     myDataProvider.Dimensions = myDataProvider.TotalVolumetricWeight;
                 }
+
+                if(!string.IsNullOrEmpty(shipment.TotalContainers))
+                {
+                    myDataProvider.TotalContainers = shipment.TotalContainers;
+                }
+
+
+                
                 #endregion
 
                 #region Prepaid Collect
@@ -1456,6 +1464,8 @@ namespace WebFreight.Web.WebServices
                     }
 
                     myDataProvider.FirstPickupETD = myFirstPickup.ETD;
+                    myDataProvider.FirstPickupETA = myFirstPickup.ETA;
+
                     PlaceOfReceiptData data = myServicHelper.GetPlaceOfReceiptData(myFirstPickup);
 
                     if (data != null)
@@ -1607,6 +1617,11 @@ namespace WebFreight.Web.WebServices
                     DischargePortCountryCode = mainCarriageToPort.Country == null ? "" : mainCarriageToPort.Country.Code;
                     DischargePortCountryName = mainCarriageToPort.Country == null ? "" : mainCarriageToPort.Country.EnglishName;
                     DischargePortStateCode = mainCarriageToPort.State == null ? "" : mainCarriageToPort.State.Code;
+                }
+
+                if (mainCarriageToPort != null)
+                {
+                    myDataProvider.DischargePortStateCode = mainCarriageToPort.State == null ? "" : mainCarriageToPort.State.Code;
                 }
 
                 ShipmentPickUpDelivery delivery = shipmentsContext.ShipmentPickUpDeliveries.Where(a => a.PickUpDeliveryTypeCode == "DELV" && a.PickUpDeliveryNumber == shipment.ShipmentNumber + "/" + shipment.ShipmentDeliveryIndex).FirstOrDefault();

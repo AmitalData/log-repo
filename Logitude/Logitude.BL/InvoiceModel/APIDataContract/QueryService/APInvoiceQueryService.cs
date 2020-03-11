@@ -819,8 +819,13 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
             apinvoice.InvoiceExpectedAmount = Math.Round((double)apinvoice.AmountInInvoiceCurrency, 2);
             apinvoice.AmountInInvoiceCurrency= Math.Round((double)apinvoice.AmountInInvoiceCurrency, 2);
             apinvoice.AmountInLocalCurrency= Math.Round((double)apinvoice.AmountInLocalCurrency, 2);
-            apinvoice.SubTotalInInvoiceCurrency = Math.Round((double)apinvoice.SubTotalInInvoiceCurrency, 2);
+
+            if(apinvoice.SubTotalInInvoiceCurrency != null)
+                apinvoice.SubTotalInInvoiceCurrency = Math.Round((double)apinvoice.SubTotalInInvoiceCurrency, 2);
+
+            if(apinvoice.SubTotalInLocalCurrency != null)
             apinvoice.SubTotalInLocalCurrency = Math.Round((double)apinvoice.SubTotalInLocalCurrency, 2);
+
             if (apinvoice.InvoiceCurrencyExchangeRate == null)
             {
                 apinvoice.InvoiceCurrencyExchangeRate = GetInvoiceCurrencyExchangeRate(apinvoice, tenant);

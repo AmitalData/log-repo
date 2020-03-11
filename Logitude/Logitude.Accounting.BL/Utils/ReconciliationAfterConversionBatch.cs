@@ -47,7 +47,7 @@ namespace Logitude.Accounting.BL.Utils
 
         public void RunReconciliationAfterConversion(ReconciliationAfterConversionArg reconciliationAfterConversionArg)
         {
-            int SUB_BATCH_SIZE = 5; // 100;
+            int SUB_BATCH_SIZE = 50; // 100;
             string returnedMessage = "";
             int tenant = reconciliationAfterConversionArg.Tenant;
             string fromExtNum = reconciliationAfterConversionArg.FromExtNum;
