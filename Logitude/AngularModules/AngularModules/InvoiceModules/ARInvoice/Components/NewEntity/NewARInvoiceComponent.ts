@@ -1297,12 +1297,12 @@ export class NewARInvoiceComponent extends BaseComponent {
                         if (list != null) {
                             invoiceLine.Description = list.EnglishName;
                             invoiceLine.LocalDescription = list.LocalName;
-                            invoiceLine.IsCustomsCharge = list.IsCustoms;                            
-                        }
+                            invoiceLine.IsCustomsCharge = list.IsCustoms;
 
-                        if (this.RegionalTaxId) {
-                            if (invoiceLine.VatIsMultiPercentage == false) {
-                                invoiceLine.IsRegionalTax = list.ApplyRegionalTax;
+                            if (this.RegionalTaxId) {
+                                if (invoiceLine.VatIsMultiPercentage == false) {
+                                    invoiceLine.IsRegionalTax = list.ApplyRegionalTax;
+                                }
                             }
                         }
                     }

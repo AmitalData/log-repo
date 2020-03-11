@@ -1154,6 +1154,7 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
                         this.myChargesTypeListService.getSingleFromCache(receivable.ChargesTypeId).subscribe((myResponse: ServiceResponse) => {
                             if (!myResponse.HasError) {
                                 var list: ChargesTypeList = myResponse.Result;
+
                                 if (list != null) {
                                     invoiceLine.Description = list.EnglishName;
                                     invoiceLine.LocalDescription = list.LocalName;
@@ -1161,6 +1162,12 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
 
                                     if (AppTool.IsNullOrEmpty(invoiceLine.VatTypeId)) {
                                         invoiceLine.VatTypeId = list.VatTypeId;
+                                    }
+
+                                    if (this.RegionalTaxId) {
+                                        if (invoiceLine.VatIsMultiPercentage == false) {
+                                            invoiceLine.IsRegionalTax = list.ApplyRegionalTax;
+                                        }
                                     }
                                 }
                             }
@@ -1680,6 +1687,9 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
 
     get RegionalTaxId() { return this.EntityPM.RegionalTaxId; }
     set RegionalTaxId(newValue: string) {
+
+        var oldValue = this.EntityPM.RegionalTaxId;
+
         if (this.EntityPM.RegionalTaxId != newValue) {
             this.EntityPM.RegionalTaxId = newValue;
             
@@ -1689,6 +1699,19 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
 
             else {
                 this.RegionalTaxPercentage = this.GetVatTypePercentage(newValue);
+
+                if (AppTool.IsNullOrEmpty(oldValue)) {
+                    this.ItemsSource.filter(f => f.IsRegionalTax == false && f.VatIsMultiPercentage == false).forEach(item => {
+                        this.myChargesTypeListService.getSingleFromCache(item.ChargesTypeId).subscribe((myResponse: ServiceResponse) => {
+                            if (!myResponse.HasError) {
+                                var list: ChargesTypeList = myResponse.Result;
+                                if (list != null) {
+                                    item.IsRegionalTax = list.ApplyRegionalTax;
+                                }
+                            }
+                        });
+                    });
+                }
             }
         }
     }
