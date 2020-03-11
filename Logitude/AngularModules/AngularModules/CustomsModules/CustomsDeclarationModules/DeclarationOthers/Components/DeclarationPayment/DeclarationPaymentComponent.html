@@ -372,7 +372,7 @@
                                         </td>
                                         <td>
                                             <!-- *ngIf ="IsAutomaticPayment"-->
-                                            <CheckBox *ngIf ="IsAutomaticPayment" [IsChecked]="AutomaticPayment" (change)="OnCheckedAutomaticPayment($event)" [IsEnabled]="!IsDisplayOnly || !DisplayAutomaticPayment"></CheckBox>
+                                            <CheckBox *ngIf ="IsAutomaticPayment" [IsChecked]="AutomaticPayment" (change)="OnCheckedAutomaticPayment($event)" [IsEnabled]="(!IsDisplayOnly || !DisplayAutomaticPayment) && !IsDisplayOnlyAutomaticPayment"></CheckBox>
                                         </td>
                                         <td colspan="4"><div></div></td>
                                         <!-- FuturePaymentDateTime -->
