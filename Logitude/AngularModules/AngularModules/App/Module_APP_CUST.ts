@@ -91,7 +91,7 @@ import { AppComponent_Cust } from './AppComponent_Cust';
         { loadChildren: 'CustomsModules/CustomsCourier/ModuleCustomsCourier#ModuleCustomsCourier' },
         { loadChildren: 'CustomsModules/CustomsDeclarationCargoSplit/ModuleCustomsDeclarationCargoSplit#ModuleCustomsDeclarationCargoSplit' },
         { loadChildren: 'CustomsModules/CustomsMaintenance/ModuleCustomsMaintenance#ModuleCustomsMaintenance' },
-        { loadChildren: 'CustomsModules/CustomsRefarant/ModuleCustomsRefarant#ModuleCustomsRefarant' },
+        { loadChildren: 'CustomsModules/CustomsReferant/ModuleCustomsReferant#ModuleCustomsReferant' },
         { loadChildren: 'CustomsModules/CustomsCollateral/ModuleCustomsCollateral#ModuleCustomsCollateral' },
         { loadChildren: 'CustomsModules/CustomsPhysicalCheck/ModulePhysicalCheck#ModulePhysicalCheck' },
         { loadChildren: 'CustomsModules/CustomsProceduralFault/ModuleProceduralFault#ModuleProceduralFault' },

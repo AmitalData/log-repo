@@ -1029,6 +1029,7 @@
     <TypeScriptCompile Include="Customs\Services\StandardLists\DeclarationPendingListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\DeclarationReferantDataListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\DeficitDecisionListService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardLists\ExceptionReasonListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\ExceptionReasonsListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\GatepassRequestListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\GatepassReturnCodeListService.ts" />
