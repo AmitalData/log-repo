@@ -239,7 +239,7 @@ namespace WebFreight.Web.WebServices
 
                 if (shipment.MainCarriageToPortId != null)
                 {
-                    mainCarriageToPort = (from a in commonContext.Ports where a.Id == shipment.MainCarriageToPortId select a).FirstOrDefault();
+                    mainCarriageToPort = (from a in commonContext.Ports.Include("State") where a.Id == shipment.MainCarriageToPortId select a).FirstOrDefault();
                 }
 
                 if (shipment.OnCarriageToPortId != null)
@@ -427,7 +427,7 @@ namespace WebFreight.Web.WebServices
                     myDataProvider.Dimensions = myDataProvider.TotalVolumetricWeight;
                 }
 
-                if(string.IsNullOrEmpty(shipment.TotalContainers))
+                if(!string.IsNullOrEmpty(shipment.TotalContainers))
                 {
                     myDataProvider.TotalContainers = shipment.TotalContainers;
                 }
