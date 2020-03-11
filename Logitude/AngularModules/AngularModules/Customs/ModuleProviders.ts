@@ -225,6 +225,7 @@ import { SealTypeListService } from './Services/StandardLists/SealTypeListServic
 import { AmendmentTypeListService } from './Services/StandardLists/AmendmentTypeListService';
 import { SealUpdateReasonTypeListService } from './Services/StandardLists/SealUpdateReasonTypeListService';
 import { DeclarationReferantDataListService } from './Services/StandardLists/DeclarationReferantDataListService';
+import { ExceptionReasonListService } from './Services/StandardLists/ExceptionReasonListService';
 
 
 //#endregion
@@ -585,6 +586,7 @@ export class ModuleProviders {
             case "AmendmentTypeListService": { myResult = new AmendmentTypeListService(); break; }
             case "SealUpdateReasonTypeListService": { myResult = new SealUpdateReasonTypeListService(); break; }
             case "DeclarationReferantDataListService": { myResult = new DeclarationReferantDataListService(); break; }
+            case "ExceptionReasonListService": { myResult = new ExceptionReasonListService(); break;}
 
              //#endregion                
 
