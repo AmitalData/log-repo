@@ -32,6 +32,8 @@ export class DWDateComponent extends BaseComponent {
     RangeLists: string[];
     SelectedValue: any;
     DataContext: any;
+
+    Context: any = this;
     ObjectFieldName: string;
     Item: any;
     IsLoad: boolean = false;
@@ -233,7 +235,7 @@ export class DWDateComponent extends BaseComponent {
 
             if (this.SelectedValue) {
                 if (this.Operation == "Before" || this.Operation == "After") {
-                    this.DateValue = this.ConvertDateToString(this.SelectedValue);
+                    this.DateValue = this.SelectedValue;
                 }
 
                 else if (this.Operation == "Previous" || this.Operation == "Next") {
@@ -257,6 +259,7 @@ export class DWDateComponent extends BaseComponent {
             this.IsLoad = true;
         }
 
+
         ConvertDateToString(value: any) {
             var result = new Date();
             if (value) {
@@ -271,6 +274,8 @@ export class DWDateComponent extends BaseComponent {
 
             return result;
         }
+
+
         GetDateFormats(myFormats: any) {
             var result = "";
             if (myFormats) {
@@ -279,7 +284,12 @@ export class DWDateComponent extends BaseComponent {
                 var stringOfYear = AppTool.PadLeft("" + myDateParts.Year, 4, '0');
                 var stringOfMonth = AppTool.PadLeft("" + myDateParts.Month, 2, '0');
                 var stringOfDay = AppTool.PadLeft("" + myDateParts.Day, 2, '0');
-                result = stringOfYear + "-" + stringOfMonth + "-" + stringOfDay;
+                var stringOfHours = AppTool.PadLeft("" + myDateParts.Hours, 2, '0');
+                var stringOfMinutes = AppTool.PadLeft("" + myDateParts.Minutes, 2, '0');
+                var stringOfSeconds = AppTool.PadLeft("" + myDateParts.Seconds, 2, '0');
+               
+                result = stringOfYear + "-" + stringOfMonth + "-" + stringOfDay + " " + stringOfHours + ":" + stringOfMinutes + ":" + stringOfSeconds;
+
 
             }
             return result;

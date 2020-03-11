@@ -1325,6 +1325,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
         this.TooltipContentId = "TooltipContent_" + idIndex;
         this.BaseDWObjectField = DWObjectField;
 
+ 
         this.FilterTypes = [];
         this.FilterTypes.push(new ObjectFieldOperator("Fixed Filter", "Fixed Filter"));
         this.FilterTypes.push(new ObjectFieldOperator("Ask User", "Dynamic Filter"));
@@ -1551,7 +1552,10 @@ export class DWObjectFieldsDetails extends BaseComponent {
             }
         }
         else {
-            this.HasTree = false;
+            if (newValue == "DateTime" && this.DWObjectTableCode.indexOf("DIM_") == -1) {
+                this.HasTree = true;
+                
+            }
         }
         //}
     }
@@ -1837,6 +1841,13 @@ export class DWObjectFieldsDetails extends BaseComponent {
         var _DWObjectTablePMService = new DWObjectTablePMService();
         var _DWObjectFieldPMService = new DWObjectFieldExtendedPMService();
         var ObsList = [];
+
+        if (DWObjectField.DataTypeCode == "DateTime") {
+            this.GetDataTimeTree(DWObjectField);
+            return;
+        }
+
+    
         _DWObjectTablePMService.get(DWObjectField.DimensionTableCode).subscribe(myResult => {
             if (!myResult.HasError) {
                 _DWObjectFieldPMService.getDWObjectFieldsByDWTableId(myResult.Result.Code).subscribe(Result => {
@@ -1882,7 +1893,41 @@ export class DWObjectFieldsDetails extends BaseComponent {
 
         });
     }
+
+
+  
+    GetDataTimeTree(DWObjectField:any) {
+        var ObsList = [];
+
+        let listDateFields: string[] = ['Date', 'Time']; 
+       // listDateFields.push("Date");
+        //listDateFields.push("Time");
+
+        listDateFields.forEach((item) => {
+            var dWObjectFieldPM: DWObjectFieldPM = new DWObjectFieldPM();
+            dWObjectFieldPM.Code = DWObjectField.Code;
+            dWObjectFieldPM.DataTypeCode = item;
+            dWObjectFieldPM.CannotFilter = false;
+            dWObjectFieldPM.Name = item;
+            dWObjectFieldPM.DWObjectTableCode = DWObjectField.DWObjectTableCode;
+            var view = new DWObjectFieldsDetails(dWObjectFieldPM, this.MyParentClass);
+            view.displayname = DWObjectField.Name + " " + item;
+            view.ParentDataTypeCode = "DateParts";
+           
+            ObsList.push(view);
+            this.Items = ObsList;
+            this.IsViewTree = true;
+        });
+
+    }
+
+
+
+
+
+
     @Output() ShowSampleDateCommand = new EventEmitter();
+
 
     onTextChange(value) {
         if (this.DataTypeCode == "Boolean") {
