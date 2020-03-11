@@ -212,7 +212,7 @@ export class CourierWorksheetComponent extends BaseComponent
         this._SelectedTabFilter = this._TabFilterList[0];
         this.CheckRequiredFields();
 
-        if (windowArgs.TabMode != null) {
+        if (!AppTool.IsNullOrEmpty( windowArgs.TabMode)) {
             switch (windowArgs.TabMode) {
                 case "Pending902":
                     {
