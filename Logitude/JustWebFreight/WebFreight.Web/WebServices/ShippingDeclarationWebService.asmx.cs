@@ -1617,6 +1617,10 @@ namespace WebFreight.Web.WebServices
                     DischargePortCountryCode = mainCarriageToPort.Country == null ? "" : mainCarriageToPort.Country.Code;
                     DischargePortCountryName = mainCarriageToPort.Country == null ? "" : mainCarriageToPort.Country.EnglishName;
                     DischargePortStateCode = mainCarriageToPort.State == null ? "" : mainCarriageToPort.State.Code;
+                }
+
+                if (mainCarriageToPort != null)
+                {
                     myDataProvider.DischargePortStateCode = mainCarriageToPort.State == null ? "" : mainCarriageToPort.State.Code;
                 }
 
