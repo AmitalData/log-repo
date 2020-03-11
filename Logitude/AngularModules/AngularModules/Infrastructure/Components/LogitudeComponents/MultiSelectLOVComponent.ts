@@ -159,8 +159,11 @@ export class MultiSelectLOVComponent implements OnInit{
                 document.getElementById(this._MultiSelectLOVMenuId).style.top =
                     (itemRect.top - DDLHeight - Extra + 25) + 'px';
             }
-            document.getElementById(this._MultiSelectLOVMenuId).style.left =
-                (myleft/*- 100*/ ) + 'px';//min-width: 80px
+            let usengStyle = true;
+            if (!usengStyle) {
+                document.getElementById(this._MultiSelectLOVMenuId).style.left =
+                    (myleft/*- 100*/) + 'px';//min-width: 80px
+            }
             this._DropdownDisplay = 'block';
             if (fucusMe) {
                 this.MyLogLovV2Component.OnToggleClicked();
@@ -231,17 +234,25 @@ export class MultiSelectLOVComponent implements OnInit{
         }
         list.push(this.MyLogLovV2Component.SelectedItem);
         this.FormatList();
+        this.MyLogLovV2Component.OnDeleteValue();
         //this.MyLogLovV2Component.SelectedItem = null;
     }
     FormatList(): any {
         this._ChosenFormatedList = "";
         var list: any[] = this.DataContext[this.LOVListComponentPropName];
-        list.forEach(item => {
-            if (!AppTool.IsNullOrEmpty(this._ChosenFormatedList)) {
-                this._ChosenFormatedList += ','
-            }
-            this._ChosenFormatedList += item[this.MyLogLovV2Component.DisplayMemberPath];
-        });
+        if (list.length > 2) {
+            
+            this._ChosenFormatedList = list[0][this.MyLogLovV2Component.DisplayMemberPath] + ','
+                + list[1][this.MyLogLovV2Component.DisplayMemberPath] + "+" + (list.length - 2);
+        } else {
+            list.forEach(item => {
+                if (!AppTool.IsNullOrEmpty(this._ChosenFormatedList)) {
+                    this._ChosenFormatedList += ','
+                }
+                this._ChosenFormatedList += item[this.MyLogLovV2Component.DisplayMemberPath];
+            });
+
+        }
     }
     
     
