@@ -47,10 +47,21 @@ namespace CommunicationWorkerRole.Services
             SendHtmlDocument(documentId, toEmails, reportTask);
         }
 
-        private static SchedulerDetails GetSchedulerDetails(TasksSchedulerPM reportTask)
+        private SchedulerDetails GetSchedulerDetails(TasksSchedulerPM reportTask)
         {
             SchedulerDetails schedulerDetails = LogitudeXmlSerializer.DeserializeObject<SchedulerDetails>(reportTask.SchedulerDetailsXML);
             schedulerDetails.Tenant = reportTask.Tenant;
+            schedulerDetails = ModifyNullFilters(schedulerDetails);
+            return schedulerDetails;
+        }
+
+        private SchedulerDetails ModifyNullFilters(SchedulerDetails schedulerDetails)
+        {
+            schedulerDetails.ReportDetails.ReportFilterItems.ForEach(filterItem=> {
+                if(filterItem.FieldValue.GetType().Name == "XmlNode[]")
+                    filterItem.FieldValue = null;
+            });
+           
             return schedulerDetails;
         }
 

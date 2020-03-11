@@ -132,6 +132,20 @@ export class AddEditReportSchedulerComponent implements OnInit {
         this.PageChild_PRREP.SetReportFilterItems(reportFilterItems);
         this.PageChild_PRREP.SetReportTemplate(reportTemplateId);
         this.PageChild_PRREP.ReportsPreview(this.ReportGroupList, this.ReportList, this.ReportTemplates);
+        this.RunBuildStimulsoftTimer();
+    }
+
+    private Retrie: number = 0;
+    private RunBuildStimulsoftTimer() {
+        this.Retrie++;
+
+        if (this.timerToken) {
+            clearTimeout(this.timerToken);
+        }
+
+        if (this.Retrie < 20) {
+            this.timerToken = setTimeout(() => this.PageChild_PRREP.BuildStimulsoft(), 1);
+        }
     }
 
     NextButtonClicked() {
