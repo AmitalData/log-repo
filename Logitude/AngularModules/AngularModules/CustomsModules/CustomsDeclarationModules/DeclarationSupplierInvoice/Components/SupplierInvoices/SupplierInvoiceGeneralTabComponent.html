@@ -706,12 +706,12 @@
 
 
 
-                                <log-column [header]="'Customs.SupplierInvoiceItem.F.ItemCode' | TextCodeTranslationPipe" [binding]="'ItemCode'" [width]="'70'" [Editable]="true" [Alignment]="'right'">
+                                <log-column [header]="'Customs.SupplierInvoiceItem.F.ItemCode' | TextCodeTranslationPipe" [binding]="'ItemCode'" [width]="'70'" [Editable]="true" [Alignment]="'left'">
                                     <log-cell-template template="let item" (CellClicked)="onCellSelected($event,item)" #logcelltemplate [RIndex]="item.rowIndex" (dblclick)="item.ItemCodeDblClick(logcelltemplate)">
-                                        <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
+                                        <div class="TextTrimming" style="direction: ltr; text-align:left" *ngIf="logcelltemplate.IsDisplayMode">
                                             <span>{{item.ItemCode}}</span>
                                         </div>
-                                        <div (click)="OnSelectedItemChanged(item)" *ngIf="logcelltemplate.IsEditMode">
+                                        <div style="direction: ltr;" (click)="OnSelectedItemChanged(item)" *ngIf="logcelltemplate.IsEditMode">
                                             <LogTextBox [ObjectFieldName]="'ItemCode'" [DataContext]="item" [InputType]="'text'" [FocusOnMe]="true"
                                                         (LostFocus)="item.ItemCodeLostFocus(logcelltemplate)"
                                                         [Text]="item.ItemCode" [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
