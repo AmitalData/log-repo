@@ -1476,7 +1476,7 @@ export class FCLQuoteChargeItem extends BaseComponent {
 
     SetUIProperties_AllInCost() {
         var isEnabled_CostCurrencyId = true;
-        if (this.IsCostAllIn) {
+        if (this.IsCostAllIn || this.TariffId != null) {
             isEnabled_CostCurrencyId = false;
         }
         this.UIProperties.SetEnabled("CostCurrencyId", this.ObjectTableName, isEnabled_CostCurrencyId);

@@ -94,7 +94,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
 
     SetWindowArgs(args: any) {
         if (args != null) {
-            var isAutorun = false; 
+            var isAutorun = false;
             if (args['ShipmentPM'] || args['QuotePM']) {
                 this.IsGeneratePayablesVisible = true;
                 isAutorun = true;
@@ -141,7 +141,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
             this.SetLabels();
             this.SetUIProperties();
             this.SetPortsDependencyFilterValue();
-           
+
             if (isAutorun) {
                 this.SearchButtonClicked();
             }
@@ -410,7 +410,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                 this.dimenstionShipment.VolumeUnitCode = this.VolumeUnitCode;
                 this.dimenstionShipment.GrossWeightUnitCode = this.GrossWeightCode;
                 logeWindow.WindowArgs = this.dimenstionShipment;
-                logeWindow.Show("./TariffModule/Components/Workspaces/WizardDimensionsComponent");              
+                logeWindow.Show("./TariffModule/Components/Workspaces/WizardDimensionsComponent");
                 logeWindow.WindowClosed.subscribe(s => {
                     if (s) {
                         this.weight = this.dimenstionShipment.OrderChargeableWeight;
@@ -594,7 +594,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
             this.UIProperties.SetEnabled("GrossWeightCode", this.ObjectTableName, true);
             this.UIProperties.SetEnabled("VolumeUnitCode", this.ObjectTableName, true);
             this.UIProperties.SetEnabled("WeightCode", this.ObjectTableName, true);
-           
+
         }
     }
 
@@ -671,7 +671,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
     AssignTariffPayablesToShipment(): any {
         this.TariffList_Shipment.forEach(shipmentPayable => {
             this.ShipmentPM.AddPayable(shipmentPayable);
-            
+
         });
         this.ReloadTariffPayables();
     }
@@ -753,7 +753,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
     ValidateExistPayablesConnectedToTariff(item: TariffSearchSummary) {
         var isValid = true;
         var existsPayableOnAirFreight: ShipmentPayablePM = this.ShipmentPM.ShipmentPayables.filter(d => d.TariffId != null && d.TariffId != item.TariffId && d.ChargesTypeId == item.ChargeTypeId)[0];
-        var existsPayableOnSurcharges: ShipmentPayablePM [] = []; 
+        var existsPayableOnSurcharges: ShipmentPayablePM[] = [];
         item.Surcharges.forEach(surcharge => {
             var payable = this.ShipmentPM.ShipmentPayables.filter(d => d.TariffId != null && d.TariffId != surcharge.TariffId && d.ChargesTypeId == surcharge.ChargeTypeId)[0];
             if (payable) {
@@ -791,7 +791,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
             case "GWTN": { myQuantity = this.GrossWeightPerTon; break; }
             case "CWKG": { myQuantity = this.ChargeableWeightInKG; break; }
             case "GWKG": { myQuantity = this.GrossWeightInKG; break; }
-            case "QTY": { myQuantity = this.ShipmentPM.NumberOfPackages != null ? this.ShipmentPM.NumberOfPackages: null; break; }
+            case "QTY": { myQuantity = this.ShipmentPM.NumberOfPackages != null ? this.ShipmentPM.NumberOfPackages : null; break; }
             case "VCBM": { myQuantity = this.VolumeInCBM; break; }
             default: { break; }
         }
@@ -800,7 +800,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
 
 
     // Quote Work
-    private allInIds = ""; 
+    private allInIds = "";
     GenerateQuoteChargesFromTariff(item: TariffSearchSummary) {
         var isValid = this.ValidateExistChargesConnectedToTariff(item);
         if (isValid) {
@@ -835,14 +835,30 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                 });
             }
             else {
-                this.CurrentSession.StartBusyIndicatorLoading();
-                this.AssignTariffChargesToQuote();
+                var freightChrage = this.CheckFreightDuplicate();
+                if (freightChrage) {
+                    var messageWindow = new MessageWindow();
+                    messageWindow.Show("Freight Charge already added.");
+                }
+                else {
+                    this.CurrentSession.StartBusyIndicatorLoading();
+                    this.AssignTariffChargesToQuote();
+                }
             }
         }
     }
+
+    CheckFreightDuplicate(): any {
+        var isfreighExists= false;
+        if (this.QuotePM.QuoteCharges.filter(d => d.ChargesGroupCode == "FRT").length > 0) {
+            isfreighExists = true;      
+        }
+        return isfreighExists;
+    }
+
     OverrideTariffQuoteCharges(): any {
         this.TariffList_Quote.forEach(item => {
-            var charge: QuoteChargePM = this.QuotePM.QuoteCharges.filter(d => d.ChargesTypeId == item.ChargesTypeId && d.CostMeasurementId == item.CostMeasurementId && d.CostCurrencyId == item.CostCurrencyId &&(d.TariffId == item.TariffId || d.TariffId == null))[0];
+            var charge: QuoteChargePM = this.QuotePM.QuoteCharges.filter(d => d.ChargesTypeId == item.ChargesTypeId && d.CostCurrencyId == item.CostCurrencyId && d.CostMeasurementId == item.CostMeasurementId && (d.TariffId == item.TariffId || d.TariffId == null))[0];
             if (charge != null) {
                 this.QuotePM.RemoveQuoteChargePM(charge);
             }
@@ -865,7 +881,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
     CheckTariffChargesDuplicate(): any {
         var isDuplicate = false;
         this.TariffList_Quote.forEach(item => {
-            var isChargeExists: QuoteChargePM = this.QuotePM.QuoteCharges.filter(d => d.ChargesTypeId == item.ChargesTypeId && d.CostMeasurementId == item.CostMeasurementId && d.CostCurrencyId == item.CostCurrencyId && (d.TariffId == item.TariffId || d.TariffId == null))[0];
+            var isChargeExists: QuoteChargePM = this.QuotePM.QuoteCharges.filter(d => d.ChargesTypeId == item.ChargesTypeId && d.CostCurrencyId == item.CostCurrencyId && d.CostMeasurementId == item.CostMeasurementId && (d.TariffId == item.TariffId || d.TariffId == null))[0];
             if (isChargeExists != null) {
                 isDuplicate = true;
             }
@@ -912,7 +928,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                         chargePM.IsCostAllIn = true;
                     }
                 }
-             
+
                 this.TariffList_Quote.push(chargePM);
 
                 var chargeItem = new QuoteChargeItem(chargePM, this.FatherComponent, false);
@@ -931,7 +947,6 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                 chargeItem.ComputeSalePrice();
                 chargeItem.SetSaleQuantity();
                 chargeItem.SetCostQuantity();
-            
             }
         });
     }
@@ -952,10 +967,10 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
             isValid = false;
             messageWindow.Show("Can't have more than one tariff connected to the same line.");
         }
+
+        
         return isValid;
     }
-
-
 }
 
 
