@@ -402,14 +402,11 @@ namespace Logitude.DBMigrations.Models
         protected void BuildAddColumnMigration(ColumnDefinition currentTableColumn, ColumnDefinition dxmlTableColumn)
         {
             ColumnDefinition droppedColumn = CurrentTable.Columns.Where(c => c.Name.ToLower() == ("drop_" + dxmlTableColumn.Name.ToLower())).FirstOrDefault();
-            if(droppedColumn == null)
+
+            if (droppedColumn == null)
             {
                 ColumnMigration addMigration = GetColumnMigration(MigrationTypes.ADD, currentTableColumn, dxmlTableColumn);
                 ColumnsMigrations.Add(addMigration);
-                if (dxmlTableColumn.Constraints.PrimaryKey)
-                {
-                    PrimaryKeyColumnAdded = true;
-                }
             }
             else
             {
@@ -421,6 +418,11 @@ namespace Logitude.DBMigrations.Models
 
                 ColumnMigration addMigration = GetColumnMigration(MigrationTypes.RENAME, droppedColumn, dxmlTableColumn);
                 ColumnsMigrations.Add(addMigration);
+            }
+
+            if (dxmlTableColumn.Constraints.PrimaryKey)
+            {
+                PrimaryKeyColumnAdded = true;
             }
         }
 
