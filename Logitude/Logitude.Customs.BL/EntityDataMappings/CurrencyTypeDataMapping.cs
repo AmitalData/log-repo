@@ -48,10 +48,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
 
             }
-            if (Tenant == 0)
-            {
-                throw new Exception("Customer care shouldn't update Currency !");
-            }
+            
 
             entityPM.MehesInactive= entityPOCO.Inactive;
             var repo = new CurrencyTypeTenantRepository(Tenant);
