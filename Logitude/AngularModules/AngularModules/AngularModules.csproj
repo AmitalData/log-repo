@@ -891,6 +891,8 @@
     <TypeScriptCompile Include="CustomsModules\CustomsPhysicalCheck\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsProceduralFault\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsProceduralFault\ModuleProceduralFault.ts" />
+    <TypeScriptCompile Include="CustomsModules\CustomsReferant\ModuleCustomsReferant.ts" />
+    <TypeScriptCompile Include="CustomsModules\CustomsReferant\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsRequests\Components\DeclarationRequests\CargoSealsQueryComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsRequests\ModuleCustomsRequests.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsRequests\ModuleDeclarations.ts" />
@@ -948,6 +950,7 @@
     <TypeScriptCompile Include="Customs\EntityLists\DeclarationPendingList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\DeclarationReferantDataList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\DeficitDecisionList.ts" />
+    <TypeScriptCompile Include="Customs\EntityLists\ExceptionReasonsList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\GatepassRequestList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\GatepassReturnCodeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\HazardousSubstanceList.ts" />
@@ -984,12 +987,14 @@
     <TypeScriptCompile Include="Customs\EntityPMs\DeclarationPendingPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\DeclarationReferantDataPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\DeficitDecisionPM.ts" />
+    <TypeScriptCompile Include="Customs\EntityPMs\ExceptionReasonsPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\Extended\DeclarationRemarks.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\GatepassRequestPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\GatepassReturnCodePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\HazardousSubstancePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\PendingByKeywordPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\PendingErrorPlacePM.ts" />
+    <TypeScriptCompile Include="Customs\EntityPMs\ReferantExceptionPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\RefundCustomerActivityTypePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\RequestTypePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\SealCompletenesPM.ts" />
@@ -1024,6 +1029,8 @@
     <TypeScriptCompile Include="Customs\Services\StandardLists\DeclarationPendingListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\DeclarationReferantDataListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\DeficitDecisionListService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardLists\ExceptionReasonListService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardLists\ExceptionReasonsListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\GatepassRequestListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\GatepassReturnCodeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\HazardousSubstanceListService.ts" />
@@ -1048,6 +1055,7 @@
     <TypeScriptCompile Include="Customs\Services\StandardPMs\DeclarationMamanSpecialActionPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\DeclarationPendingPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\DeclarationReferantDataPMService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardPMs\ExceptionReasonsPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\GatepassRequestPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\PendingByKeywordPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\WebServices\DeclarationCourierStatusWebService.ts" />
@@ -1294,11 +1302,15 @@
     <TypeScriptCompile Include="InvoiceModules\APPayment\ModuleDeclarations.ts" />
     <Content Include="Infrastructure\Components\CustomControls\RatioBoxComponent.html" />
     <Content Include="Infrastructure\Components\ExportBI2ExcelControl\ExportBI2ExcelControl.html" />
+    <Content Include="Infrastructure\Components\LogitudeComponents\DropdownMenuComponent.html" />
     <Content Include="Infrastructure\Components\LogitudeComponents\DWDateComponent.html" />
     <Content Include="Infrastructure\Components\LogitudeComponents\DWLovComponent.html" />
     <TypeScriptCompile Include="Infrastructure\Helpers\DetectUserInActivity.ts" />
     <Content Include="Infrastructure\Components\LogitudeComponents\DWLogSearchWindowComponent.html" />
     <Content Include="Infrastructure\Components\LogitudeComponents\MultilineTextBoxWindow.html" />
+    <TypeScriptCompile Include="Infrastructure\Components\LogitudeComponents\DropdownMenuComponent.ts" />
+    <Content Include="Infrastructure\Components\LogitudeComponents\MultiSelectLOVComponent.html" />
+    <TypeScriptCompile Include="Infrastructure\Components\LogitudeComponents\MultiSelectLOVComponent.ts" />
     <Content Include="Infrastructure\Components\LogitudeComponents\TimeInput.html" />
     <Content Include="Infrastructure\Components\LogitudeCustomComponents\LastSuccessfulLoginComponent.html" />
     <Content Include="Infrastructure\Components\Maintenance\BatchTaskExecution\BTEGeneralTabComponent.html" />
@@ -7848,6 +7860,7 @@
     <Folder Include="Booking\DataContracts\" />
     <Folder Include="Booking\EntityPMInitServices\" />
     <Folder Include="CRM\Components\Tickets\MainTab\" />
+    <Folder Include="CustomsModules\CustomsReferant\Components\ReferantExceptionReason\" />
     <Folder Include="CustomsModules\PaymentOrder\" />
     <Folder Include="Customs\Components\CouriersVat\" />
     <Folder Include="Customs\Components\Courier\" />

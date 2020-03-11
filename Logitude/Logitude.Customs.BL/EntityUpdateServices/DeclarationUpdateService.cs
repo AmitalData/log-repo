@@ -981,6 +981,7 @@ using System.Diagnostics;
                     */
 
                     declarationCourierStatusUpdateService.Update(newDeclarationCourierStatusPM, true);
+                    /*
                     if(entityPM.CurrentContextTag != null && entityPM.CurrentContextTag.ToString() == "Logitude.Customs.BL.Messaging.U2L.CommDec.CommDecService.Upsert()")
                     {
                         if (!string.IsNullOrWhiteSpace(entityPM.ImporterCode))
@@ -1025,6 +1026,7 @@ using System.Diagnostics;
                             }
                         }
                     }
+                    */
                     if (newDeclarationCourierStatusPM.ChangeSetOp == ChangeSetOperation.Insert)
                     {
                         if(entityPM.Consignments != null && entityPM.Consignments.Count() > 0)

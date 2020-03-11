@@ -1,0 +1,38 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using System.Data.Entity.ModelConfiguration;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Data;
+ 
+namespace Logitude.Customs.Data.EntityMapping
+{
+ 
+    public class ReferantExceptionMap : EntityTypeConfiguration<ReferantException>
+    {
+	    string dbms;
+        public ReferantExceptionMap()
+        { 
+			  this.ToTable("ReferantExceptions", "Customs");
+		
+		    this.HasKey(t => new { t.DeclarationId, t.ExceptionReasonsCode });
+	 
+            this.Property(t => t.DeclarationId).HasColumnName("DeclarationId").IsRequired().HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.Tenant).HasColumnName("Tenant").IsRequired();
+
+            this.Property(t => t.ExceptionReasonsCode).HasColumnName("ExceptionReasonsCode").IsRequired().HasMaxLength(4).IsUnicode(true);
+
+            this.Property(t => t.ExceptionRemarks).HasColumnName("ExceptionRemarks").HasMaxLength(1024).IsUnicode(true);
+
+            this.Property(t => t.Status).HasColumnName("Status").HasMaxLength(1).IsUnicode(true);
+        }
+    }
+}
+	 

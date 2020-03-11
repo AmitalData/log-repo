@@ -88,4 +88,4 @@ export class ConsignmentInternalTransitionPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}
