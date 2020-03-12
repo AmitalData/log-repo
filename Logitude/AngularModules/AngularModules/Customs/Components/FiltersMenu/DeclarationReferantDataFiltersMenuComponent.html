@@ -1,0 +1,59 @@
+<table>
+    <tr>
+        <td>
+            <div></div>
+        </td>
+
+        <td style="width:55px; vertical-align:middle; font-size:11px; color : #6E7172;">
+            <div>Filter by:</div>
+        </td>
+        <!--(ChosenListItemsChanged)="OnChosenListItemsChanged()"-->
+        <td style="width:300px; vertical-align:middle;">
+            <MultiSelectLOV [DataContext]="DataContext"
+                            [PlaceHolder]="'בחר משתמשים'"
+                            [LayoutDirection]="'rtl'"
+                            [LOVListComponentPropName]="'LOVListUsers'"
+                            (ChosenListItemsChanged)="OnChosenListItemsChanged()"
+                            >
+                <span class="class-MultiSelectLOV-content">
+                    <LogLov [ObjectFieldName]="'UserId'"
+                            [ObjectTableName]="ObjectTableName"
+                            [DataContext]="DataContext"
+                            [HideColumns]="true"
+                            [LookUpTableName]="'User'"
+                            [DisplayMemberPath]="'LocalName'">
+                    </LogLov>
+                </span>
+            </MultiSelectLOV>
+        </td>
+
+        <td style="width:10px;">
+            <div></div>
+        </td>
+
+
+        <td style="width:300px; vertical-align:middle;">
+        </td>
+        <td style="width:10px;">
+            <div></div>
+        </td>
+        <td>
+        </td>
+        <!--<td style="width:117px; vertical-align:middle;">
+        <ul class="FiltersMenu">
+            <li (click)="LevelCodeitemClicked('All')" (mouseover)="LevelCodeMouseOver('All')" [class.SelectedFilter]="LevelCodeSelectedValue === 'All'">
+                All
+            </li>
+            <li (click)="LevelCodeitemClicked('D')" (mouseover)="LevelCodeMouseOver('D')" (mouseleave)="LevelCodeMouseLeave('D')" [class.SelectedFilter]="LevelCodeSelectedValue === 'D'" title="Direct">
+                D
+            </li>
+            <li (click)="LevelCodeitemClicked('H')" (mouseover)="LevelCodeMouseOver('H')" (mouseleave)="LevelCodeMouseLeave('H')" [class.SelectedFilter]="LevelCodeSelectedValue === 'H'" title="House">
+                H
+            </li>
+            <li (click)="LevelCodeitemClicked('C')" (mouseover)="LevelCodeMouseOver('C')" (mouseleave)="LevelCodeMouseLeave('C')" [class.SelectedFilter]="LevelCodeSelectedValue === 'C'" title="Master">
+                M
+            </li>
+        </ul>
+    </td>-->
+    </tr>
+</table>
