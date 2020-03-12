@@ -184,7 +184,6 @@ namespace Logitude.BL.QuoteModel
                     {
                         DateTime? fromDate = item.FieldValue != null && item.FieldValue.ToString() == "null" ? null : StringHelper.GetDate(item.FieldValue.ToString());
 
-
                         DateTime? toDate = item.FieldValue2 != null && item.FieldValue2.ToString() == "null" ? null : StringHelper.GetDate(item.FieldValue2.ToString().Split(';')[0]);
 
                         string category = item.FieldValue2 != null && item.FieldValue2.ToString() == "null" ? null : item.FieldValue2.ToString().Split(';')[1];
