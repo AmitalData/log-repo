@@ -219,7 +219,7 @@ namespace Logitude.Accounting.BL.CoreBL.BankDeposit
         {
             IAccountingContext MyContext = AccountingContext.GetContext(Tenant);
             var myChequeUpdateService = new ARPaymentChequeUpdateService(MyContext, new Dictionary<string, IContext>(), Tenant);
-            myChequeUpdateService.UpdateMulti(cheques, new List<ARPaymentChequePM>(), new ARPaymentChequePM() , false);
+            myChequeUpdateService.UpdateMulti(cheques, new List<ARPaymentChequePM>(), new ARPaymentChequePM() , true);
         }
 
         private ARPaymentChequePM GetARPaymentChequeById(string id)
