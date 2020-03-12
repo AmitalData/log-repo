@@ -409,15 +409,12 @@ namespace WebFreight.Web.ReportsWebServices
             dataProvider.TotalTEU = shipments.Sum(d => d.TEU);
 
             dataProvider.ShippingLineStatisticsReportList = (from a in shipments
-
                                                              group a by new
                                                              {
                                                                  a.MainCarriageCarrierId,
                                                                  a.MainCarriageCarrierName,
                                                              } into gr
-
                                                              orderby gr.Key.MainCarriageCarrierName
-
                                                              select new ShippingLineStatisticsDataProvider.ShippingLineStatisticsReport()
                                                              {
                                                                  Carrier = gr.Key.MainCarriageCarrierName == null ? "(No Carrier Specified)" : gr.Key.MainCarriageCarrierName,
@@ -427,6 +424,7 @@ namespace WebFreight.Web.ReportsWebServices
                                                                  LCLWeight = gr.Where(t => t.ShipmentType.Contains("LCL")).Sum(t => t.GrossWeightInKG),
                                                                  TEU = gr.Sum(t => t.TEU),
                                                                  PercentageFromTotalShipment = ((double)gr.Count() / (double)dataProvider.TotalShipments),
+                                                                 VolumeInCBM = gr.Where(t => t.ShipmentType.Contains("LCL")).Sum(t => t.VolumeInCBM),
                                                              }).ToList();
             #endregion
 
@@ -11182,6 +11180,8 @@ namespace WebFreight.Web.ReportsWebServices
             QueryFilterItem filterItem_tODate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CreateDate").FirstOrDefault();
             QueryFilterItem filterItem_level = queryOperations.QueryFilterItems.Where(d => d.FieldName == "Level").FirstOrDefault();
             QueryFilterItem filterItem_card = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CardFilter").FirstOrDefault();
+            QueryFilterItem filterItem_fromDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "FromDate").FirstOrDefault();
+
             //ToDate
             DateTime? toDate = null;
             if (filterItem_tODate != null)
@@ -11191,7 +11191,15 @@ namespace WebFreight.Web.ReportsWebServices
                     toDate = (DateTime)filterItem_tODate.FieldValue;
                 }
             }
-
+            //FromDate
+            DateTime? fromDate = null;
+            if (filterItem_fromDate != null)
+            {
+                if (filterItem_fromDate.FieldValue != null)
+                {
+                   fromDate = (DateTime)filterItem_fromDate.FieldValue;
+                }
+            }
             //Level
             string level = null;
             if (filterItem_level != null)
@@ -11221,6 +11229,7 @@ namespace WebFreight.Web.ReportsWebServices
                 Tenant = tenant,
                 //  MyRevenueExpenseReportLevel = ReportLevel.,
                 ToDate = (DateTime)toDate,
+                FromDate =(DateTime) fromDate
             };
 
             switch (level)
@@ -11264,6 +11273,7 @@ namespace WebFreight.Web.ReportsWebServices
 
             }
             totalData.ForDate = toDate;
+            totalData.FromDate = fromDate;
             List<RevenueExpenseReportM> result = null;
             List<string> GLAccountParents = new List<string>();
 

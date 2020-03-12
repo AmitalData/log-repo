@@ -138,6 +138,7 @@ export class RelatedCustomerComponent extends BaseComponent{
             value = LastThirtyDaysDate;
         }
         filters.addAdditionalFilter("CreateDate", value, null, null, "GreaterThanOrEqual", false, true, false, "datetime");
+        filters.addAdditionalFilter("CustomerId", this.SelectedItem.EntityPM.CustomerId, null, null, "Equal", false, true, false, "string");
         filters.PageSize = 100;
         filters.PageIndex = 0;
         filters.SortBy = "CreateDate";

@@ -18,5 +18,7 @@ namespace Logitude.BL.DataContracts
         public string DirectionId { get; set; }
         public bool IncludeOthersCountries { get; set; }
         public int? TopCountries { get; set; }
+        public string DatesCode { get; set; }
+        public string SelectedCurrency { get; set; }
     }
 }

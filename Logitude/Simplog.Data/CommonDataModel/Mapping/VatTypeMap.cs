@@ -39,6 +39,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.ExternalTAXItemId).HasColumnName("ExternalTAXItemId");
             this.Property(t => t.IsMultiPercentage).HasColumnName("IsMultiPercentage");
             this.Property(t => t.RecognizedPercentage).HasColumnName("RecognizedPercentage");
+            this.Property(t => t.IsRegionalTax).HasColumnName("IsRegionalTax");
 
         }
     }

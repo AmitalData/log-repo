@@ -303,3 +303,12 @@ IF not EXISTS(SELECT 1 FROM sys.columns
 		   ALTER TABLE ShipmentComputedFields ADD  AutomaticLastUpdateDate datetime NULL DEFAULT GETDATE(); 
 		  End
 
+
+
+ --LeadSources
+IF not EXISTS(SELECT 1 FROM sys.columns 
+          WHERE Name = N'AutomaticLastUpdateDate'
+          AND Object_ID = Object_ID(N'LeadSources'))
+		  Begin
+		   ALTER TABLE LeadSources ADD  AutomaticLastUpdateDate datetime NULL DEFAULT GETDATE(); 
+		  End

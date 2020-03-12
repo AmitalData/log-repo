@@ -405,6 +405,18 @@
     <Compile Include="Migrations\202002081630280_AddFieldsToTenantManagementTable_Maheera.Designer.cs">
       <DependentUpon>202002081630280_AddFieldsToTenantManagementTable_Maheera.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202002250701051_WesamAddSearchFieldsToWebHookKeysTable.cs" />
+    <Compile Include="Migrations\202002250701051_WesamAddSearchFieldsToWebHookKeysTable.Designer.cs">
+      <DependentUpon>202002250701051_WesamAddSearchFieldsToWebHookKeysTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003080908423_AddTMPersonalAccessTokenFieldToSettings_Maheera.cs" />
+    <Compile Include="Migrations\202003080908423_AddTMPersonalAccessTokenFieldToSettings_Maheera.Designer.cs">
+      <DependentUpon>202003080908423_AddTMPersonalAccessTokenFieldToSettings_Maheera.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003041403389_AddARInvoiceRegionalTax.cs" />
+    <Compile Include="Migrations\202003041403389_AddARInvoiceRegionalTax.Designer.cs">
+      <DependentUpon>202003041403389_AddARInvoiceRegionalTax.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="packages.config" />
@@ -561,6 +573,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202002081630280_AddFieldsToTenantManagementTable_Maheera.resx">
       <DependentUpon>202002081630280_AddFieldsToTenantManagementTable_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002250701051_WesamAddSearchFieldsToWebHookKeysTable.resx">
+      <DependentUpon>202002250701051_WesamAddSearchFieldsToWebHookKeysTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003080908423_AddTMPersonalAccessTokenFieldToSettings_Maheera.resx">
+      <DependentUpon>202003080908423_AddTMPersonalAccessTokenFieldToSettings_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003041403389_AddARInvoiceRegionalTax.resx">
+      <DependentUpon>202003041403389_AddARInvoiceRegionalTax.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

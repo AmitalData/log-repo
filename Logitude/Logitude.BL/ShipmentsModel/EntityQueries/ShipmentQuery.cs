@@ -1470,6 +1470,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 }
             }
 
+            shipmentPM.FirstARInvoiceApprovalDate = shipment.FirstARInvoiceApprovalDate;
             shipmentPM.RegistryDate = shipment.RegistryDate;
             shipmentPM.IsAssembly = shipment.IsAssembly;
             shipmentPM.LocalCustomsTransmissionsStatusCode = shipment.LocalCustomsTransmissionsStatusCode;
@@ -3355,6 +3356,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.IncotermId = shipment.IncotermId;
             shipmentPM.ShipmentTypeId = shipment.ShipmentTypeId;
             shipmentPM.IsCancelled = shipment.IsCancelled;
+            shipmentPM.FirstARInvoiceApprovalDate = shipment.FirstARInvoiceApprovalDate;
+            shipmentPM.ActualFinalArrivalDate = shipment.ActualFinalArrivalDate;
+            shipmentPM.EstimatedFinalArrivalDate = shipment.EstimatedFinalArrivalDate;
             if (masterData != null)
             {
                 shipmentPM.MainCarriageFinalDestinationETA = masterData.MainCarriageFinalDestinationETA;
@@ -11585,6 +11589,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                NotInvoicedReceivablesAmount = f.NotInvoicedReceivablesAmount,
                                CreatedByPartner = f.CreatedByPartner,
                                FirstARInvoiceApprovalDate = f.FirstARInvoiceApprovalDate,
+                               MainCarriageFinalDestinationATA = f.MainCarriageFinalDestinationATA,
+                               MainCarriageFinalDestinationETA = f.MainCarriageFinalDestinationETA,
                            };
             return myResult;
         }
@@ -11932,8 +11938,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     ARInvoices = f.ARInvoices,
                     NotInvoicedReceivablesAmount = f.NotInvoicedReceivablesAmount,
                     FirstARInvoiceApprovalDate = f.FirstARInvoiceApprovalDate,
-
                     CreatedByPartner= f.CreatedByPartner,
+                    MainCarriageFinalDestinationATA = f.MainCarriageFinalDestinationATA,
+                    MainCarriageFinalDestinationETA = f.MainCarriageFinalDestinationETA,
                 };
 
                 List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Shipment", tenant).ToList();

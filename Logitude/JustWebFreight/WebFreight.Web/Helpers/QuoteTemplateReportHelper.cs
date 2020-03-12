@@ -1024,9 +1024,10 @@ namespace Logitude.BL.Helpers
                         HtmlTemplate.Append("</tr>");
                     }
 
-
-                    AppendPerContainerTotalBySaleCurrency(quotePM, setting, HtmlTemplate, totalPerContainersTableDesign, totalPerContainersTableLines, totals);
-
+                    if (setting.TotalPerContainersCurrencyType != "MULTIPLE")
+                    {
+                        AppendPerContainerTotalBySaleCurrency(quotePM, setting, HtmlTemplate, totalPerContainersTableDesign, totalPerContainersTableLines, totals);
+                    }
                     if (setting.TotalPerContainersCurrencyType == "MULTIPLE")
                     {
                         HtmlTemplate.Append("<tr style= 'height:auto; width:auto;vertical-align:central'>");
@@ -3431,7 +3432,8 @@ namespace Logitude.BL.Helpers
                 {
                     double value = (double)chargePM.SaleUnitPrice;
                     saleUnitPriceValues = value.ToString("N"); // 1,234.512
-                    saleUnitPriceValues += " " + chargePM.CurrencyCode;
+                    string saleUnitPriceCurrency = chargePM.SaleMeasurementCode == "PRFR" ? "%" : chargePM.CurrencyCode;
+                    saleUnitPriceValues += " " + saleUnitPriceCurrency;
                 }
                 if (included)
                 {

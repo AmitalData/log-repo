@@ -46,7 +46,7 @@ export class AMANACExportTransferComponent {
 
             else {
                 this.IsExportingSuccess = true;
-                this.CurrentSession.FireEvent("TransferExportFirstTime");
+                this.CurrentSession.FireEvent("TransferCompleted");
             }
         });
 

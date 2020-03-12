@@ -46,8 +46,7 @@ export class NewCustomer {
     public ActivateCustomerGLAccount(Name: string) {
        // this.Generator.QuickSearchTextBox('SearchFieldsId_0_0', Name);
         this.Helper.WaitByIdAndFill('SearchFieldsId_0_0', Name);
-        this.Helper.ItemsPresent('ListDataLoaded');
-
+        this.Helper.WaitElementToBeDisplayedInTheList('.TextTrimming', Name);
         this.Helper.WaitByIdAndClick('LogGrid_0_0row0');
       //  this.Helper.WaitByIdAndClick('Ok-activate');
        // this.Helper.WaitBusyIndicator();

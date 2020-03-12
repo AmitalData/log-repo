@@ -1,16 +1,65 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <title></title>
-</head>
-<body>
-    <table style="background-color:darkkhaki;">
-        <tr>
-            <td>
-                <div></div>
-            </td>
-        </tr>
-    </table>
-</body>
-</html>
+<table>
+    <tr>
+        <td>
+            <div class="MediaFill">
+                <ScrollViewer [Small]="true">
+                    <SectionBox>
+                        <SectionHead>
+                            <table>
+                                <tr class="SectionHeader" style="height:27px">
+                                    <td>
+                                        <label>Top 5 Salesmen (Profit)</label>
+                                    </td>
+                                    <td></td>
+
+                                    <td style="width:80px">
+                                        <ul class="FiltersMenu">
+                                            <li (click)="ChangeCurrency(ProfitCurrencyCode)" [class.SelectedFilter]="SelectedCurrency === '2'" style="width:33px;">
+                                                {{ProfitCurrencyCode}}
+                                            </li>
+                                            <li (click)="ChangeCurrency(LocalCurrencyCode)" [class.SelectedFilter]="SelectedCurrency === '1'" style="width:33px;">
+                                                {{LocalCurrencyCode}}
+                                            </li>
+                                        </ul>
+                                    </td>
+
+                                </tr>
+                            </table>
+                        </SectionHead>
+                        <SectionBody>
+                            <table>
+                                <tr>
+                                    <td>
+                                        <div class="MediaFill">
+                                            <table>
+                                                <tr>
+                                                    <td>
+                                                        <div class="MediaFill">
+                                                            <div [attr.id]="PerformanceChartId" class="MediaFill"></div>
+                                                        </div>                                                        
+                                                    </td>
+                                                </tr>
+
+                                                <tr style="height:70px !important;">
+                                                    <td>
+                                                        <div class="MediaFill">
+                                                            <ScrollViewer>
+                                                                <div [attr.id]="LegendDiv"></div>
+                                                            </ScrollViewer>                                                            
+                                                        </div>                                                        
+                                                    </td>
+                                                </tr>
+                                            </table>
+
+                                            <div *ngIf="IsNoDataVisible" class="NoDataText">No Data</div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </SectionBody>
+                    </SectionBox>
+                </ScrollViewer>
+            </div>            
+        </td>
+    </tr>
+</table>

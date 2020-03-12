@@ -8079,7 +8079,7 @@
     Code="&quot;ALAR&quot;"
     ControlPath="&quot;Simplog.FreightLib.Views.Areas&quot;"
     TextCode="&quot;Airline.TH.Areas&quot;"
-    IsPackagable="false"
+    IsPackagable="true"
     IndexOrder="5"
     HtmlComponentURL="&quot;&quot;"
     IsSpellChecked="false"

@@ -253,6 +253,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
         public string PrepaidCollect { get; set; }
 
         public bool IsMultiTAX { get; set; }
+        public bool AppliesRegionalTax { get; set; }
 
         [XmlElement(ElementName = "Advanced")]
         public LineAdvancedElement Advanced { get; set; }
@@ -1156,6 +1157,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
         public string TaxCode { get; set; }
         public decimal TaxPercentage { get; set; }
         public decimal TaxAmount { get; set; }
+        public bool IsRegionalTax { get; set; }
     }
     public class LineTaxDetailsElement
     {

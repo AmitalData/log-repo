@@ -477,6 +477,10 @@ namespace Logitude.Accounting.BL.CoreBL
 
         private JournalLinePM GetJournalLine(MyJournalActionTypeEnum journalActionTypeEnum, CurrencySum myCurrencySum, JournalPM journal, string RevenueExpenseGLAccountId, string revenueExpenseType)
         {
+            if (string.IsNullOrWhiteSpace(RevenueExpenseGLAccountId))
+            {
+                RevenueExpenseGLAccountId = null;
+            }
             int tenant = journal.Tenant;
             bool useLocal = true;
             var journalLine = new JournalLinePM()
@@ -501,22 +505,34 @@ namespace Logitude.Accounting.BL.CoreBL
                 journalLine.LocalAmount = -journalLine.LocalAmount;
                 journalLine.ForeignAmount = -journalLine.ForeignAmount;
             }
+            int actionCode = 0;
             switch (journalActionTypeEnum)
             {
-                
                 case MyJournalActionTypeEnum.Credit:
                     journalLine.ActionTypeCodeEnum = MyJournalActionTypeEnum.Credit;
+                    actionCode = (int)MyJournalActionTypeEnum.Credit;
+                    journalLine.ActionCode = actionCode.ToString();
                     journalLine.CreditAccountId = myCurrencySum.AccountId; //
                     journalLine.DebitAccountId= RevenueExpenseGLAccountId; //
                     break;
                 case MyJournalActionTypeEnum.Debit:
                     journalLine.ActionTypeCodeEnum = MyJournalActionTypeEnum.Debit;
+                    actionCode = (int)MyJournalActionTypeEnum.Debit;
+                    journalLine.ActionCode = actionCode.ToString();
                     journalLine.DebitAccountId = myCurrencySum.AccountId; //
                     journalLine.CreditAccountId = RevenueExpenseGLAccountId; //
                     break;
                 
             }
-            
+            if (string.IsNullOrWhiteSpace(journalLine.CreditAccountId))
+            {
+                journalLine.CreditAccountId = null;
+            }
+            if (string.IsNullOrWhiteSpace(journalLine.DebitAccountId))
+            {
+                journalLine.DebitAccountId = null;
+            }
+
             return journalLine;
         }
         /// <summary>

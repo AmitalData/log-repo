@@ -2172,6 +2172,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public double? GrossWeightPerTon { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        [DataMember]
         public double? GrossWeightPerStorageDays { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
@@ -2447,5 +2448,6 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string UserIdNumber { get; set; }
         public string WarehouseReleasesIds { get; set; }
         public int? WarehouseStorageFreeDays { get; set; }
+        public bool IsDeclarationApprovalRequest { get; set; }
     }
 }

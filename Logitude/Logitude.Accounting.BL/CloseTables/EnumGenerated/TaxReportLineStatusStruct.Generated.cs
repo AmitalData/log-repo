@@ -16,6 +16,7 @@ namespace Logitude.Accounting.BL.CloseTables
        public const string DuplicateThereisanothertransactionwiththesameVATNoandReference = "5";  
        public const string Readyfortransmit = "6";  
        public const string WrongVATNumber = "2";  
+       public const string Invoicenotpreviouslyreported = "7";  
     }
 }
 

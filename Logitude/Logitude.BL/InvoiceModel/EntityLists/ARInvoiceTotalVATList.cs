@@ -14,6 +14,7 @@ namespace Logitude.BL.InvoiceModel.EntityLists
         public double? LocalVatableAmount { get; set; }
         public double? VATPercent { get; set; }
         public string ARInvoiceId { get; set; }
+        public bool IsRegionalTax { get; set; }
 
     }
 }

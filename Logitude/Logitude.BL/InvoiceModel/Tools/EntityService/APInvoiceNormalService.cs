@@ -1035,15 +1035,15 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                 bool isReady = true;
                 string myError = null;
-                string ExternalCodeError = "External Code is missing";
+                string ExternalCodeError = "Currency External Code is missing";
                 string paymentTermError = "Payment Term External Id is missing";
                 string vatError = "External VAT Card is missing";
-                string linesError = "Debit Account is missing";
+                string linesError = " Charge Type Payable Debit Account is missing";
 
                 if (FieldIsEmpty(entityPM.CreditAccount))
                 {
                     isReady = false;
-                    myError = "Credit Account is missing";
+                    myError = "Vendor Credit Account is missing";
                 }
 
                 if (isExternal)
@@ -1091,10 +1091,16 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                 else
                 {
-                    if (myLines.Where(d => d.DebitAccount == null || (d.DebitAccount != null && string.IsNullOrEmpty(d.DebitAccount.Trim()))).Any())
+                    List<APInvoiceLinePM> apInvoiceLines_DebitError = myLines.Where(d => d.DebitAccount == null || (d.DebitAccount != null && string.IsNullOrEmpty(d.DebitAccount.Trim()))).ToList();
+                    if (apInvoiceLines_DebitError != null && apInvoiceLines_DebitError.Count() > 0)
                     {
                         isReady = false;
-                        myError = string.IsNullOrEmpty(myError) ? linesError : myError + "," + linesError;
+                        foreach (APInvoiceLinePM item in apInvoiceLines_DebitError)
+                        {
+                            ChargesType myChargesType = ChargesTypeRepository.GetSingleChargesType(item.ChargesTypeId, tenant, true);
+                            string myChargesTypeName = myChargesType != null ? myChargesType.EnglishName : "";
+                            myError = string.IsNullOrEmpty(myError) ? myChargesTypeName + linesError : myError + "," + myChargesTypeName + linesError;
+                        }
                     }
 
                     var myGroup = (from a in myLines
@@ -1114,10 +1120,11 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     {
                         if (FieldIsEmpty(g.ExternalVATCard))
                         {
+                            VatType lineVatType = this.allVatTypes.Where(d => d.Id == g.VatTypeId).FirstOrDefault();
+                            var lineVatTypeName = lineVatType != null ? lineVatType.EnglishName : "";
                             isReady = false;
-                            vatError = "External VAT Card is missing";
+                            vatError = lineVatTypeName + " VAT External Id is missing";
                             myError = string.IsNullOrEmpty(myError) ? vatError : myError + "," + vatError;
-                            break;
                         }
                     }
                 }
@@ -1698,9 +1705,11 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             ExternalTAXItemId = item.ExternalTAXItemId,
                             // VatRecognizedPercentage = item.VatRecognizedPercentage,
                         };
-
-                        record.LocalVATAmount = MethodHelper.Roundd((record.LocalVatableAmount * record.VatPercent / 100), 2);
-                        record.InvoiceCurrencyVATAmount = MethodHelper.Roundd((record.InvoiceCurrencyVatableAmount * record.VatPercent / 100), 2);
+                        //InvoiceCurrencyVatableAmount= LocalVatableAmount/InvoiceCurrencyExchangeRate
+                      
+                       record.LocalVATAmount = MethodHelper.Roundd((record.LocalVatableAmount * record.VatPercent / 100), 2);
+                       record.InvoiceCurrencyVATAmount = MethodHelper.Roundd((record.InvoiceCurrencyVatableAmount * record.VatPercent / 100), 2);
+                        
                         record.ProfitCurrencyVATAmount = MethodHelper.Roundd((record.ProfitVatableAmount * record.VatPercent / 100), 2);
                         invoiceTotalVatRepository.Add(record);
 
@@ -2304,7 +2313,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                                                 (MethodHelper.Round( (a.LocalCurrencyAmount + ((a.VatPercentage / 100) * ((1 - a.VatRecognizedPercentage) * a.LocalCurrencyAmount))), 2)))),
 
                                                             CurrencyId = g.Key.ForiegnCurrencyId,
-                                                            ForeignAmount = (decimal)g.Sum(a => a.ForiegnCurrencyAmount),
+                                                            ForeignAmount = (decimal)g.Sum(a => a.ForiegnAmountWithRecognizedVat),
                                                             ExchangeRate = (decimal)g.Key.ForiegnExchangeRate,
                                                             Reference1 = theEntityPm.InvoiceNumber,
                                                             Reference2 = theEntityPm.MainEntityReference,
@@ -2327,6 +2336,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     FullAccountingSettingPM accountingSettings = getFullAccountingSettings(theEntityPm.Tenant);
                     foreach (APInvoiceTotalVATPM vat in totalVats)
                     {
+                        vat.LocalVatAmountWithVatRecognized = vat.VatRecognizedPercentage != null ? (((decimal)vat.VatRecognizedPercentage / 100) * (decimal)vat.LocalVATAmount) : (decimal)vat.LocalVATAmount;
+                          
                         journalLine = new JournalLinePM()
                         {
                             Tenant = tenant,
@@ -2338,9 +2349,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             DocumentDate = theEntityPm.InvoiceDate.Value,
                             AccountingDate = theEntityPm.AccountingDate != null ? theEntityPm.AccountingDate.Value : TenantServerConfigration.GetCurrentDateTime(tenant),
                             DueDate = theEntityPm.DueDate.Value,
-                            LocalAmount = vat.VatRecognizedPercentage != null ? (((decimal)vat.VatRecognizedPercentage / 100) * (decimal)vat.LocalVATAmount) : (decimal)vat.LocalVATAmount,
+                            LocalAmount = vat.LocalVatAmountWithVatRecognized,// vat.VatRecognizedPercentage != null ? (((decimal)vat.VatRecognizedPercentage / 100) * (decimal)vat.LocalVATAmount) : (decimal)vat.LocalVATAmount,
                             CurrencyId = theEntityPm.InvoiceCurrencyId,
-                            ForeignAmount = (decimal)vat.InvoiceCurrencyVATAmount,
+                            ForeignAmount = (vat.LocalVatAmountWithVatRecognized/(decimal)entityPM.InvoiceCurrencyExchangeRate),
                             ExchangeRate = (decimal)theEntityPm.InvoiceCurrencyExchangeRate,
                             Reference1 = theEntityPm.InvoiceNumber,
                             Reference2 = theEntityPm.MainEntityReference,

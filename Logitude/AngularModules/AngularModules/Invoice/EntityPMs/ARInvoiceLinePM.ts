@@ -248,6 +248,11 @@ export class ARInvoiceLinePM {
     public set IsExpense(newValue: boolean) { if (this.isExpense != newValue) { this.isExpense = newValue; this.MarkAsDirty("IsExpense"); } }
        
 	 
+    private isRegionalTax: boolean;
+    public get IsRegionalTax() { return this.isRegionalTax; }
+    public set IsRegionalTax(newValue: boolean) { if (this.isRegionalTax != newValue) { this.isRegionalTax = newValue; this.MarkAsDirty("IsRegionalTax"); } }
+       
+	 
 
     public OldEntityPM: ARInvoiceLinePM;
 	    

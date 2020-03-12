@@ -156,8 +156,8 @@ export class AccountPayablesComponent {
 
     InitComponent() {
         this.LoadAllScreenData();
-        this.APInvoiceErrorInTransferVisibility = (FeatureLocator.HasFeaturePermession("APInvoice", "ErrorInTransferInvoices")) ? true : false;
-        this.APPaymentErrorInTransferVisibility = (FeatureLocator.HasFeaturePermession("APPayment", "ErrorInTransfer")) ? true : false;
+        this.APInvoiceErrorInTransferVisibility = (FeatureLocator.HasFeaturePermession("APInvoice", "APInvoice.Q.ErrorInTransfer")) ? true : false;
+        this.APPaymentErrorInTransferVisibility = (FeatureLocator.HasFeaturePermession("APPayment", "APPayment.Q.ErrorInTransfer")) ? true : false;
     }
 
     LoadAllScreenData() {
@@ -310,7 +310,6 @@ export class AccountPayablesComponent {
                 this.APPaymentsOpenedCount = myResult.APPaymentsOpenedCount > 1000 ? "1000+" : myResult.APPaymentsOpenedCount.toString();
                 this.APInvoiceErrorInTransferCount = myResult.ARInvoicesFailedCount > 1000 ? "1000+" : myResult.APInvoicesFailedCount.toString();
                 this.APPaymentErrorInTransferCount = myResult.ARPaymentFailedCount > 1000 ? "1000+" : myResult.APPaymentFailedCount.toString();
-
             }
         });
     }

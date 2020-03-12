@@ -19,40 +19,79 @@ namespace Logitude.BL.QuoteModel.EntityQueries.Charts
         int tenant;
         IQueryable<Quote> dataSourceQuery;
         IQuotesContext context;
+        private QuoteDashboardArguments args;
         public DashboardQuery(int tenant)
         {
             this.tenant = tenant;
             context = QuotesContext.GetContext(tenant);
         }
-        public IQueryable<Quote> FilterBasicValues(QuoteDashboardArguments quoteDashboardArgs)
+        public IQueryable<Quote> FilterBasicValues(QuoteDashboardArguments args)
         {
+            this.args = args;
+
             dataSourceQuery =
                 (from d in context.Quotes
                  where d.Tenant == tenant
-                 && !d.IsClosed
+                 //&& !d.IsClosed
                  && !d.IsCancelled
                  select d);
 
+            switch (args.ChartCode)
+            {
+                case "TFS":
+                    {
+                        dataSourceQuery = (from d in dataSourceQuery
+                                           join db_Stages in context.QuoteStages 
+                                           on d.StageId equals db_Stages.Id into QuoteStages
+                                           from s in QuoteStages.DefaultIfEmpty()
+                                           where s.Tenant == tenant
+                                           && s.Code != "QTDC"
+                                           select d);                            
+                        break;
+                    }
+            }
+
+            if(args.ChartCode != "QCV" && args.ChartCode != "TFS" && args.ChartCode != "KPI")
+            {
+                dataSourceQuery = dataSourceQuery.Where(d => !d.IsClosed);
+            }
+
+            if (args.ChartCode == "KPI")
+            {
+                dataSourceQuery = dataSourceQuery.Where(a => a.SentDate != null && a.RequestDate != null);
+                //dataSourceQuery = this.FilterByAcceptedStage();
+            }
+
             QuoteBusinessUnitFilter filter = new QuoteBusinessUnitFilter(tenant);
             dataSourceQuery = filter.RunFilter(dataSourceQuery);
-            FilterOwner(quoteDashboardArgs.OwnerId);
-            FilterBusinessUnit(quoteDashboardArgs.BusinessUnitId);
-            FilterCreateDate(quoteDashboardArgs.FromDate, quoteDashboardArgs.ToDate);
+            FilterOwner(args.OwnerId);
+            FilterBusinessUnit(args.BusinessUnitId);
+            FilterCreateDate(args.FromDate, args.ToDate);
 
-            if (quoteDashboardArgs.ChartCode == "QOC")
+            if (args.ChartCode == "QOC")
             {
-                FilterDirectionAndTransportMode(quoteDashboardArgs.DirectionId, quoteDashboardArgs.TransportModeId);
+                FilterDirectionAndTransportMode(args.DirectionId, args.TransportModeId);
             }
 
             return dataSourceQuery;
         }
-        
+
+        private IQueryable<Quote> FilterByAcceptedStage()
+        {
+            QuoteStageRepository stageRepository = new QuoteStageRepository(this.tenant);
+            var myStage = stageRepository.GetSingleQuoteStageByCode("QTAC", this.tenant);
+
+            if (myStage != null) {
+                dataSourceQuery = dataSourceQuery.Where(d => d.StageId == myStage.Id);
+            }
+            return dataSourceQuery;
+        }
+
         private void FilterCreateDate(DateTime? fromDate, DateTime? toDate)
         {
             if (fromDate != null && toDate != null)
             {
-                dataSourceQuery = dataSourceQuery.Where(d => DbFunctions.TruncateTime(d.OpenDate) >= fromDate && 
-                                                             DbFunctions.TruncateTime(d.OpenDate) <= toDate);
+                dataSourceQuery = dataSourceQuery.Where(d => DbFunctions.TruncateTime(d.OpenDate) >= fromDate && DbFunctions.TruncateTime(d.OpenDate) <= toDate);
             }
         }        
 
@@ -60,7 +99,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries.Charts
         {
             if (!string.IsNullOrEmpty(ownerId))
             {
-                dataSourceQuery = dataSourceQuery.Where(d => d.CreatedByUserId == ownerId);
+                dataSourceQuery = dataSourceQuery.Where(d => d.SalesmanUserId == ownerId);
             }
         }
 
@@ -107,18 +146,19 @@ namespace Logitude.BL.QuoteModel.EntityQueries.Charts
             else if (chartCode == "QCV")
             {
                 QuoteConversionQuery myQuery = new QuoteConversionQuery();
-                result = myQuery.FilterQuotesBySalesman(dataSourceQuery);
+                result = myQuery.FilterQuotesByProductType(dataSourceQuery);
             }
 
             else if (chartCode == "TFS")
             {
-                TopFiveSalesmanQuery topFiveSalesmanQuery = new TopFiveSalesmanQuery();
-                result = topFiveSalesmanQuery.FilterToFiveSalesmanByProfit(dataSourceQuery);
+                TopFiveSalesmanQuery topFiveSalesmanQuery = new TopFiveSalesmanQuery(dataSourceQuery, args, tenant);
+                result = topFiveSalesmanQuery.GetChartData();
             }
 
             else if (chartCode == "KPI")
             {
-
+                SentQuotesKPIQuery sentQuotesKPIQuery = new SentQuotesKPIQuery();
+                result = sentQuotesKPIQuery.FilterQuotesByKPI(dataSourceQuery);
             }
 
             return result;

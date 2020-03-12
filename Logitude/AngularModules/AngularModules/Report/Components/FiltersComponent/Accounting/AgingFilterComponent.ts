@@ -65,7 +65,7 @@ export class AgingFilterComponent extends BaseComponent implements OnInit {
     //#region Filters
 
     //row 1
-    private agingForDate: Date = null;
+    private agingForDate: Date = new Date();
     public get AgingForDate() { return this.agingForDate; }
     public set AgingForDate(value: Date) {
         if (this.agingForDate != value) {
@@ -249,7 +249,7 @@ export class AgingFilterComponent extends BaseComponent implements OnInit {
             myFilterItems.push(new QueryFilterItem("GroupByDate", this.DateFilterSelectedValue));
 
             myFilterItems.push(new QueryFilterItem("BalanceFilter", this.balanceFilterSelectedValue.replace("filter_","")));
-            myFilterItems.push(new QueryFilterItem("BalanceFilterValue", this.balance||0));
+            myFilterItems.push(new QueryFilterItem("BalanceFilterValue", this.balance||0,"decimal"));
 
             var myReportFliter: ReportFliter = new ReportFliter();
             myReportFliter.NumberOfPage = 1;

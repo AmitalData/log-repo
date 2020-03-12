@@ -22,7 +22,7 @@
                     </div>
                 </li>
 
-                <li [class.Selected]="SelectedTabCode == 'QOT'" (click)="SelectedTabCode = 'QOT'">
+                <li  *ngIf="HasQuoteDashboardFeature" [class.Selected]="SelectedTabCode == 'QOT'" (click)="SelectedTabCode = 'QOT'">
                     <div class="InnerChild">
                         Quotes
                         <div class="TabSquareIcon"></div>
@@ -49,7 +49,7 @@
             </div>
 
             <!-- Quotes -->
-            <div class="LocationDirectiveHolder" [hidden]="SelectedTabCode != 'QOT'">
+            <div *ngIf="HasQuoteDashboardFeature" class="LocationDirectiveHolder" [hidden]="SelectedTabCode != 'QOT'">
                 <div class="LocationDirective" LocationDirective Code="QOT"></div>
             </div>
         </div>

@@ -53,7 +53,7 @@ namespace Logitude.BL.DataContracts
         public double Total { get; set; }
 
         public int Count_All { get; set; }
-        public int Count_Convert { get; set; }
+        public int Count_Converted { get; set; }
         public string SalesmanUserId { get; set; }
         public string SalesmanUserName { get; set; }
         public string TransportModeDirection { get; set; }
@@ -62,5 +62,8 @@ namespace Logitude.BL.DataContracts
         public string TransportModeName { get; set; }
         public string DirectionName { get; set; }
         public string TransportModeDirection_Display { get; set; }
+        public string Key { get; set; }
+        public string Label { get; set; }
+        public double? Value { get; set; }
     }
 }

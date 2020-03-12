@@ -160,7 +160,6 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.Field10 = entityPM.Field10 != null ? entityPM.Field10.Value : null;
             entity.DebitAccount = entityPM.DebitAccount;
             entity.TransferTries = entityPM.TransferTries;
-            entity.TransferError = entityPM.TransferError;
             entity.IsTransferStarted = entityPM.IsTransferStarted;
             entity.TransferStatusCode = entityPM.TransferStatusCode;
             entity.AccountingExternalCode = entityPM.AccountingExternalCode;
@@ -189,6 +188,20 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entityPM.SetReTransfer = false;
             entityPM.SetCancelDraft = false;
             entityPM.SetReSendQBO = false;
+
+            string transferError = entityPM.TransferError;
+
+            if (!string.IsNullOrEmpty(transferError))
+            {
+                if (transferError.Length > 250)
+                {
+                    transferError = transferError.Substring(0, 250);
+                }
+            }
+
+            entityPM.TransferError = transferError;
+            entity.TransferError = transferError;
+
             //Full Accounting 
             TenantRepository tenantRepository = new TenantRepository(entityPM.Tenant);
             Tenant tenantPOCO = tenantRepository.GetSingleTenant(entityPM.Tenant);
@@ -222,6 +235,9 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             {
                 entity.BillToGLAccountId = entityPM.BillToGLAccountId;
             }
+
+            entity.RegionalTaxId = entityPM.RegionalTaxId;
+            entity.RegionalTaxPercentage = entityPM.RegionalTaxPercentage;
         }
 
         public static void MapInvoiceLine(ARInvoiceLinePM entityPM, ARInvoiceLine entity, bool isNewState)
@@ -261,6 +277,7 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.IsBackToBack = entityPM.IsBackToBack;
             entity.IsExpense = entityPM.IsExpense;
             entity.PrepaidCollectId = entityPM.PrepaidCollectId;
+            entity.IsRegionalTax = entityPM.IsRegionalTax;
 
             Tenant myTenant = TenantRepository.GetSingleTenant(entityPM.Tenant, true);
 

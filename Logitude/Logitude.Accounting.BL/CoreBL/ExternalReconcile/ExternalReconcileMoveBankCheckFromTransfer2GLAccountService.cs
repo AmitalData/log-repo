@@ -126,7 +126,8 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
             journal.JournalNumber = "1";
             journal.CreateDate = _ExternalReconcileDataProvider.GetCurrentDateTime(myLedgerTransactionTransferPM.Tenant);
             journal.AccountingDate = //theEntityPm.AccountingDate != null ? theEntityPm.AccountingDate.Value : 
-                _ExternalReconcileDataProvider.GetCurrentDateTime(myLedgerTransactionTransferPM.Tenant);
+                                     //_ExternalReconcileDataProvider.GetCurrentDateTime(myLedgerTransactionTransferPM.Tenant);
+                myReconcileExternalPageLinePM.ReferenceDate;
             journal.TypeCode = "0";
 
             bool testedAndFoundAllOK = true;
@@ -142,9 +143,11 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
 
             journal.CreatedByUserId = _ExternalReconcileDataProvider.ResolveUserId(myLedgerTransactionTransferPM.Tenant);  // _ExternalReconcileDataProvider.ResolveUserId(myLedgerTransactionTransferPM.Tenant); ;
             journal.AccountingEntityCode = "6"; journal.AccountingEntityCode = ""; // Cheque Deposit//
-            journal.AccountingEntityCode = "";//if  AccountingEntityCode = "6" crush while aRPaymentCheque.StatusCode = "6"; due aRPaymentCheque not found !!
+            journal.AccountingEntityCode = "12";//if  AccountingEntityCode = "6" crush while aRPaymentCheque.StatusCode = "6"; due aRPaymentCheque not found !!
+
+
             //journal.AccountingEntityId = theEntityPm.Id;
-            journal.AccountingEntityReference = myReconcileExternalPageLinePM.Reference;
+            journal.AccountingEntityReference = "";// myReconcileExternalPageLinePM.Reference;
             journal.UpdateDate = _ExternalReconcileDataProvider.GetCurrentDateTime(myLedgerTransactionTransferPM.Tenant);
             journal.UpdatedByUserId = _ExternalReconcileDataProvider.ResolveUserId(myLedgerTransactionTransferPM.Tenant); ;
             journal.ApproveDate = _ExternalReconcileDataProvider.GetCurrentDateTime(myLedgerTransactionTransferPM.Tenant);
@@ -220,8 +223,8 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
             var hash = new HashSet<string>();
             AddRef(hash,myReconcileExternalPageLinePM.Reference);
 
-            AddRef(hash, myLedgerTransactionTransferPM.Reference1);
             AddRef(hash, myLedgerTransactionTransferPM.Reference2);
+            AddRef(hash, myLedgerTransactionTransferPM.Reference1);
             AddRef(hash, myLedgerTransactionTransferPM.Reference3);
 
             var list = hash.ToList();

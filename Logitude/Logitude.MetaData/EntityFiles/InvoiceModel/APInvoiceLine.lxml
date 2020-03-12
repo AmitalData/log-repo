@@ -35,7 +35,7 @@
   MaxNumberOfCustomFields="0"
   ParentTableName="APInvoice"
   DefaultText="&quot;A/P Invoice Line&quot;"
-  Code="&quot;29b2&quot;"
+  Code="&quot;070c&quot;"
   Name="&quot;APInvoiceLine&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Invoice&quot;"
@@ -3756,19 +3756,19 @@
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;APInvoiceLine.O.ExpectedAmount&quot;"
-      DefaultText="&quot;ExpectedAmount&quot;"
+      DefaultText="&quot;Expected Amount&quot;"
       LocalDefaultText="&quot;סכום צפוי&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;APInvoiceLine.O.OtherInvoices&quot;"
-      DefaultText="&quot;OtherInvoices&quot;"
+      DefaultText="&quot;Other Invoices&quot;"
       LocalDefaultText="&quot;חשבוניות אחרות&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;APInvoiceLine.O.OpenAmount&quot;"
-      DefaultText="&quot;OpenAmount&quot;"
+      DefaultText="&quot;Open Amount&quot;"
       LocalDefaultText="&quot;סכום פתוח&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />

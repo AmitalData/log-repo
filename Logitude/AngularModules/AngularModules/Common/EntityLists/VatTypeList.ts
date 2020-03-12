@@ -24,5 +24,6 @@ export class VatTypeList {
 		ReceivablesExternalId: string;
 		ExternalTAXItemId: string;
 		IsMultiPercentage: boolean;
+		IsRegionalTax: boolean;
 	
 }

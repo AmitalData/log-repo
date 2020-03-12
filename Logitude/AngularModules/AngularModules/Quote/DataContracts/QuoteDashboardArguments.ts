@@ -8,4 +8,6 @@ export class QuoteDashboardArguments {
     public DirectionId: string;
     public IncludeOthersCountries: boolean;
     public TopCountries: number;
+    public DatesCode: string;
+    public SelectedCurrency: string;
 }

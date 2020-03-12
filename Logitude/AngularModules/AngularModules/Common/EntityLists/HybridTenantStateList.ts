@@ -13,7 +13,8 @@ export class HybridTenantStateList {
 		LastUpdateDateTimeTextColor: string;
 		WaitingQueueTextColor: string;
 		FailedQueueTextColor: string;
+		TenantName: string;
 		LastUpdateDateTime: Date;
-        LastQueueDateTime: Date;
+		LastQueueDateTime: Date;
 	
 }

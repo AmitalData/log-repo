@@ -190,10 +190,14 @@ export class NewFullWarehouseEntryComponent extends BaseComponent implements OnI
             this.ShipmentTypeId = null;
             this.OnFiltersChanged();
             this.BuildShipmentTypes();
+            this.SetChargeableWeightUnit();
         }
     }
 
-    
+    SetChargeableWeightUnit() {
+        this.warehouseEntryPM.ChargeableWeightUnitCode = AppTool.GetChargeableWeightUnitCode(this.TransportModeId);
+    }
+
     public ShipmentTypeName: string = null;
     get ShipmentTypeId() { return this.warehouseEntryPM.ShipmentTypeId; }
     set ShipmentTypeId(newValue: string) {
