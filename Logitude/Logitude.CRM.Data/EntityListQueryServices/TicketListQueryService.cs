@@ -136,6 +136,7 @@ namespace Logitude.CRM.Data.EntityListQueryServices
                                                      SLAId = a.SLAId,
                                                      EntityNumber = a.ShipmentNumber != null ? a.ShipmentNumber: a.QuoteNumber,
                                                      LastCorrespondence = a.LastCorrespondence,
+                                                     EntityType = a.EntityType
                                             });
             return query;
 		}
@@ -266,6 +267,7 @@ namespace Logitude.CRM.Data.EntityListQueryServices
                         QuoteId = a.QuoteId,
                         QuoteNumber = a.QuoteNumber,
                         EntityNumber = a.ShipmentNumber != null ? a.ShipmentNumber : a.QuoteNumber,
+                        EntityType = a.EntityType
                     };
 
                     ContactRepository rep = new ContactRepository(tenant);
@@ -388,6 +390,7 @@ namespace Logitude.CRM.Data.EntityListQueryServices
                                                 QuoteId = a.QuoteId,
                                                 QuoteNumber = a.QuoteNumber,
                                                 EntityNumber = a.ShipmentNumber != null ? a.ShipmentNumber : a.QuoteNumber,
+                                                EntityType = a.EntityType
                                             });
             return query.ToList();
         }
@@ -479,6 +482,7 @@ namespace Logitude.CRM.Data.EntityListQueryServices
                                                 QuoteId = a.QuoteId,
                                                 QuoteNumber = a.QuoteNumber,
                                                 EntityNumber = a.ShipmentNumber != null ? a.ShipmentNumber : a.QuoteNumber,
+                                                EntityType = a.EntityType
                                             });
             return query.ToList();
         }
