@@ -14,5 +14,8 @@ namespace Logitude.IntegrationTest.Core
         public static string BranchId { get; set; }
         public static string DepartmentId { get; set; }
         public static string BusinessUnitId { get; set; }
+        public static string ProfitCurrencyId { get; set; }
+        public static double? ProfitCurrencyRate { get; set; }
+        public static string LocalCurrencyId { get; set; }
     }
 }

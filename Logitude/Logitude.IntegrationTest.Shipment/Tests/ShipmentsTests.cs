@@ -35,12 +35,32 @@ namespace Logitude.IntegrationTest.Shipment
             shipmentPM = await GetShipment(ShipmentVariables.ShipmentId);
             try
             {
-                Assert.AreEqual(50, shipmentPM.OpenReceivablesInLocalCurrency);
+                Assert.AreEqual(60, shipmentPM.OpenReceivablesInLocalCurrency);
 
             }
             catch (Exception Ex)
             {
+                throw new Exception(Ex.Message);
+            }
+        }
+        [TestMethod]
+        public async Task TestPayables()
+        {
+            int quantity = 5;
+            int unitPrice = 5;
+            await PostShipment("D", "E", "A");
+            shipmentPM = await GetShipment(ShipmentVariables.ShipmentId);
+            ShipmentPM entityPM = UpdatePayables(shipmentPM, quantity, unitPrice);
+            await PutShipment(entityPM);
+            shipmentPM = await GetShipment(ShipmentVariables.ShipmentId);
+            try
+            {
+                Assert.AreEqual("50", shipmentPM.OpenPayablesInLocalCurrency);
 
+            }
+            catch (Exception Ex)
+            {
+                throw new Exception(Ex.Message);
             }
         }
         public async Task<ShipmentPM> GetShipment(string shipmentId)
@@ -87,7 +107,6 @@ namespace Logitude.IntegrationTest.Shipment
 
         private ShipmentPM CreateShipmentPM(string shipmentLevelCode, string directionId, string transportModeId)
         {
-
             shipmentPM.Tenant = IntegrationTestLoginParameters.Tenant;
             shipmentPM.CreatedByUserId = IntegrationTestLoginParameters.LoginUserId;
             shipmentPM.BranchId = CorePreparationVariables.BranchId;
@@ -103,7 +122,6 @@ namespace Logitude.IntegrationTest.Shipment
             //shipmentPM.MainCarriageTransportModeId = "";
             shipmentPM.FreightPrepaidCollectId = "C";
             shipmentPM.OtherPrepaidCollectId = "C";
-
             shipmentPM.CreatedByUserId = CorePreparationVariables.UserId;
             shipmentPM.UpdatedByUserId = CorePreparationVariables.UserId;
             shipmentPM.CustomerId = ShipmentVariables.ShipperExport1;
@@ -120,12 +138,6 @@ namespace Logitude.IntegrationTest.Shipment
             shipmentPM.AccountManagerUserId = CorePreparationVariables.UserId;
 
             ShipmentVariables.ConcurrencyGUID = shipmentPM.NewConcurrencyGUID = Guid.NewGuid().ToString();
-            //shipmentPM.PackagesQuantity = 5;
-            //shipmentPM.GrossWeight = 100;
-            //shipmentPM.ChargeableWeight = 100;
-            //shipmentPM.NumberOfPackages = 5;
-
-
             return shipmentPM;
         }
         private ShipmentPM UpdateShipmentAirExport(ShipmentPM entityPM)
@@ -134,7 +146,7 @@ namespace Logitude.IntegrationTest.Shipment
             entityPM.NewConcurrencyGUID = ShipmentVariables.ConcurrencyGUID;
             entityPM.ShipmentPackages = IntegrationShipmentPackages.ShipmentPackages();
             //entityPM.ShipmentReceivables = IntegrationShipmentReceivable.ShipmentReceivables();
-            entityPM.ShipmentPayables = IntegrationShipmentPayable.ShipmentPayables();
+            //entityPM.ShipmentPayables = IntegrationShipmentPayable.ShipmentPayables();
             entityPM.ShipmentPickUps = IntegrationShipmentPickUps.ShipmentPickUps();
             entityPM.ShipmentDeliveries = IntegrationShipmentDeliveries.shipmentDelivey();
             return entityPM;
@@ -142,6 +154,11 @@ namespace Logitude.IntegrationTest.Shipment
         private ShipmentPM UpdateReceivables(ShipmentPM shipmentPM, int quantity, int unitPrice)
         {
             shipmentPM.ShipmentReceivables = IntegrationShipmentReceivable.ShipmentReceivables(quantity, unitPrice);
+            return shipmentPM;
+        }
+        private ShipmentPM UpdatePayables(ShipmentPM shipmentPM, int quantity, int unitPrice)
+        {
+            shipmentPM.ShipmentPayables = IntegrationShipmentPayable.ShipmentPayables(quantity, unitPrice);
             return shipmentPM;
         }
     }

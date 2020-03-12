@@ -1,4 +1,5 @@
 ﻿using Logitude.BL.ShipmentsModel.EntityPMs;
+using Logitude.IntegrationTest.Core;
 using Simplog.Server.Infrastructure;
 using System.Collections.Generic;
 
@@ -8,11 +9,11 @@ namespace Logitude.IntegrationTest.Shipment.Tests
     {
         static List<ShipmentPayablePM> shipmentpayablePM = new List<ShipmentPayablePM>();
 
-        public static List<ShipmentPayablePM> ShipmentPayables()
+        public static List<ShipmentPayablePM> ShipmentPayables(int quantity, int unitPrice)
         {
             for(int i = 0; i < 2; i++)
             {
-                shipmentpayablePM.Add(ShipmentPayableItem());
+                shipmentpayablePM.Add(ShipmentPayableItem(quantity, unitPrice));
             }
             return shipmentpayablePM;
         }
@@ -20,18 +21,20 @@ namespace Logitude.IntegrationTest.Shipment.Tests
          Should Rate, Quantity and UnitPrice be dynamic ?
          Also, from where we should get a Profit exchange rate ?
          */
-        public static ShipmentPayablePM ShipmentPayableItem()
+        public static ShipmentPayablePM ShipmentPayableItem(int quantity, int unitPrice)
         {
             ShipmentPayablePM ShipmentPayable = new ShipmentPayablePM();
             ShipmentPayable.ChargesTypeId = ShipmentVariables.ChargeTypeAFTId;
             ShipmentPayable.MeasurementId = ShipmentVariables.MeasurmentGRWTId;
-            ShipmentPayable.CurrencyId = ShipmentVariables.CurrencyEURId;
             ShipmentPayable.VatTypeId = ShipmentVariables.VATTypeZeroId;
             ShipmentPayable.ShipmentPayableLineStatusCode = "OAMT";
-            ShipmentPayable.ProfitCurrencyExchangeRate = 3.8;
-            ShipmentPayable.Rate = 1;
-            ShipmentPayable.Quantity = 5;
-            ShipmentPayable.UnitPrice = 2;
+
+            ShipmentPayable.CurrencyId = ShipmentVariables.CurrencyEURId;
+            ShipmentPayable.Rate = ShipmentVariables.CurrencyEURRate;
+
+            ShipmentPayable.ProfitCurrencyExchangeRate = CorePreparationVariables.ProfitCurrencyRate;
+            ShipmentPayable.Quantity = quantity;
+            ShipmentPayable.UnitPrice = unitPrice;
             ShipmentPayable.ChangeSetOp = ChangeSetOperation.Insert;
             ShipmentPayable.OpenAmount = ShipmentPayable.Quantity * ShipmentPayable.UnitPrice;
             ShipmentPayable.OpenAmountInLocalCurrency = ShipmentPayable.OpenAmount * ShipmentPayable.Rate;
