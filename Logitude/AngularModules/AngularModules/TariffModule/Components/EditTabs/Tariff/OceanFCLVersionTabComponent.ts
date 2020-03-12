@@ -520,9 +520,11 @@ export class OceanFCLVersionTabComponent extends BaseComponent implements OnDest
             tariffLine.Version = this.CurrentVersion.Version;
             tariffLine.OriginPortId = item.FromPortId;
             tariffLine.OriginPortCode = item.FromPortCode;
+            tariffLine.OriginPortCombinedCode = item.FromPortCombinedCode;
             tariffLine.OriginPortName = item.FromPortName;
             tariffLine.DestinationPortId = item.ToPortId;
             tariffLine.DestinationPortCode = item.ToPortCode;
+            tariffLine.DestinationPortCombinedCode = item.ToPortCombinedCode;
             tariffLine.DestinationPortName = item.ToPortName;
             tariffLine.OriginPortText = item.FromPortText;
             tariffLine.DestinationPortText = item.ToPortText;
@@ -636,9 +638,11 @@ export class OceanFCLVersionTabComponent extends BaseComponent implements OnDest
                         tariffLine.Version = copiedVersion.Version;
                         tariffLine.OriginPortId = item.OriginPortId;
                         tariffLine.OriginPortCode = item.OriginPortCode;
+                        tariffLine.OriginPortCombinedCode = item.OriginPortCombinedCode;
                         tariffLine.OriginPortName = item.OriginPortName;
                         tariffLine.DestinationPortId = item.DestinationPortId;
                         tariffLine.DestinationPortCode = item.DestinationPortCode;
+                        tariffLine.DestinationPortCombinedCode = item.DestinationPortCombinedCode;
                         tariffLine.DestinationPortName = item.DestinationPortName;
                         tariffLine.Surcharge1Price = item.Surcharge1Price;
                         tariffLine.Surcharge2Price = item.Surcharge2Price;

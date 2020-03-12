@@ -388,11 +388,11 @@ export class UpdateSurchargesComponent extends BaseComponent {
             args.StartDate = this.StartDate;
 
             this.FromObsList.forEach(item => {
-                args.From.push(item.Indication + "," + item.Id + "," + item.Code);
+                args.From.push(item.Indication + "," + item.Id + "," + item.Code + "," + item.CombinedCode);
             });
 
             this.ToObsList.forEach(item => {
-                args.To.push(item.Indication + "," + item.Id + "," + item.Code);
+                args.To.push(item.Indication + "," + item.Id + "," + item.Code + "," + item.CombinedCode);
             });
 
             if (this.TypeCode == "OFS") {
@@ -534,6 +534,7 @@ export class DestinationClass extends BaseComponent{
     public Indication: string;
     public DisplayText: string;
     public Code: string;
+    public CombinedCode: string;
     public Id: string;
     public Type: string;
     constructor(public fatherComponent: UpdateSurchargesComponent, type: string, Port: PortList, carrierArea: CarrierAreaList) {
@@ -545,6 +546,7 @@ export class DestinationClass extends BaseComponent{
             this.Indication = "Port";
             this.DisplayText = Port.EnglishName;
             this.Code = Port.Code;
+            this.CombinedCode = Port.CombinedCode;
             this.Id = Port.Id;
         }
 

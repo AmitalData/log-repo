@@ -1704,6 +1704,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     {
                         tariffLine.FromPortId = fromPort.Id;
                         tariffLine.FromPortCode = fromPort.Code;
+                        tariffLine.FromPortCombinedCode = fromPort.CombinedCode;
                         tariffLine.FromPortName = fromPort.EnglishName;
                     }
 
@@ -1725,6 +1726,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     {
                         tariffLine.ToPortId = toPort.Id;
                         tariffLine.ToPortCode = toPort.Code;
+                        tariffLine.ToPortCombinedCode = toPort.CombinedCode;
                         tariffLine.ToPortName = toPort.EnglishName;
                     }
 
@@ -1992,6 +1994,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     {
                         tariffLine.FromPortId = fromPort.Id;
                         tariffLine.FromPortCode = fromPort.Code;
+                        tariffLine.FromPortCombinedCode = fromPort.CombinedCode;
                         tariffLine.FromPortName = fromPort.EnglishName;
                     }
 
@@ -2013,6 +2016,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     {
                         tariffLine.ToPortId = toPort.Id;
                         tariffLine.ToPortCode = toPort.Code;
+                        tariffLine.ToPortCombinedCode = toPort.CombinedCode;
                         tariffLine.ToPortName = toPort.EnglishName;
                     }
 
@@ -2801,7 +2805,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 }
                 else if (this.TariffType == "OLC" || this.TariffType == "OFC")
                 {
-                    myPort = this.portRepository.GetOceanPortByCode(tenant, code, true);
+                    myPort = this.portRepository.GetSinglePortIdByCombinedCode(code, tenant);
                 }
 
                 if (myPort == null)
@@ -2813,7 +2817,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     }
                     else if (this.TariffType == "OLC" || this.TariffType == "OFC")
                     {
-                        portZero = this.portRepository.GetOceanPortByCode(0, code, true);
+                        portZero = this.portRepository.GetSinglePortIdByCombinedCode(code, 0);
                     }
                     if (portZero != null)
                     {
@@ -2877,6 +2881,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             {
                 Id = IdCounter.GetNumber("Port", tenant).ToString(),
                 Code = ZeroPort.Code,
+                CombinedCode = ZeroPort.CombinedCode,
                 EnglishName = ZeroPort.EnglishName,
                 LocalName = ZeroPort.LocalName,
                 Tenant = tenant,
@@ -3034,7 +3039,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     TariffSurchargesUpdatePM tariffSurchageLog;
                     if (iDraftVersion != null)
                     {
-                        List<FromToClass> routs = this.ComputeRoutsList(args.From, args.To, authToken.Tenant);
+                        List<FromToClass> routs = this.ComputeRoutsList(args.From, args.To, authToken.Tenant, tariff.TypeCode);
                         bool isValid = this.ValidateStartDate(tariff, iDraftVersion, routs, args.StartDate, tariffContext);
 
                         if (isValid)
@@ -3332,7 +3337,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         }
 
         List<SurchargeLog> SurchargeLog = new List<SurchargeLog>();
-        private List<FromToClass> ComputeRoutsList(List<string> fromList, List<string> toList, int tenant)
+        private List<FromToClass> ComputeRoutsList(List<string> fromList, List<string> toList, int tenant, string typeCode)
         {
             List<FromToClass> myResult = new List<FromToClass>();
             CarrierAreasPortRepository carrierAreasPortRepository = new CarrierAreasPortRepository(tenant);
@@ -3347,7 +3352,13 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 if (from[0] == "Port")
                 {
-                    areasFromPorts.Add(from[2]);
+                    if (typeCode.StartsWith("A"))
+                    {
+                        areasFromPorts.Add(from[2]);
+                    } else
+                    {
+                        areasFromPorts.Add(from[3]);
+                    }
                     foreach (string item_to in toList)
                     {
                         string[] to = item_to.Split(',');
@@ -3363,7 +3374,13 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                             myResult.Add(routItem);
                             if (isFirstTime)
                             {
-                                areasToPorts.Add(to[2]);
+                                if (typeCode.StartsWith("A"))
+                                {
+                                    areasToPorts.Add(to[2]);
+                                } else
+                                {
+                                    areasToPorts.Add(to[3]);
+                                }
                             }
 
                             surchargeLogItem.Count += 1;
@@ -3419,7 +3436,13 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                     myResult.Add(routItem);
                                     if (isFirstTime && isFirstTimeAreaLoop)
                                     {
-                                        areasToPorts.Add(to[2]);
+                                        if (typeCode.StartsWith("A"))
+                                        {
+                                            areasToPorts.Add(to[2]);
+                                        } else
+                                        {
+                                            areasToPorts.Add(to[3]);
+                                        }
                                     }
                                     surchargeLogItem.Count += 1;
 
@@ -3581,9 +3604,11 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
     {
         public string FromPortId { get; set; }
         public string FromPortCode { get; set; }
+        public string FromPortCombinedCode { get; set; }
         public string FromPortName { get; set; }
         public string ToPortId { get; set; }
         public string ToPortCode { get; set; }
+        public string ToPortCombinedCode { get; set; }
         public string ToPortName { get; set; }
         public decimal? MinPrice { get; set; }
         public decimal? Step1Price { get; set; }
