@@ -44,8 +44,6 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string CollectionOfMoneyStatus { get; set; }
         [Column("FollowUpDate")]
 	    public DateTime? FollowUpDate { get; set; }
-        [Column("IsExceptional")]
-	    public bool IsExceptional { get; set; }
         [Column("WithPaper")]
 	    public bool WithPaper { get; set; }
         [Column("IsClosedForFollowUp")]
@@ -56,6 +54,10 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public bool IsControllerRemarks { get; set; }
         [Column("PreClassification")]
 	    public string PreClassification { get; set; }
+        [Column("SearchFields")]
+	    public string SearchFields { get; set; }
+        [Column("ExceptionReasonsList")]
+	    public string ExceptionReasonsList { get; set; }
     }
 }
 	 

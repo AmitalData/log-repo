@@ -18,5 +18,6 @@ namespace Logitude.CustomsMessaging.Common.RequestParams
         public string SelectedTotalInvoiceValue { get; set; }
         public string SelectedFastIndividualProcessValue { get; set; }
         public string SelectedCustomStatusValue { get; set; }
+        public bool IsCreateNewDocumentVersion { get; set; }
     }
 }

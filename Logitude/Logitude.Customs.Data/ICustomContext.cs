@@ -98,6 +98,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<CouriersVat> CouriersVats { get; }
 		 IDbSet<CourtInstance> CourtInstances { get; }
 		 IDbSet<CurrencyType> CurrencyTypes { get; }
+		 IDbSet<CurrencyTypeTenant> CurrencyTypeTenants { get; }
 		 IDbSet<CustomBank> CustomBanks { get; }
 		 IDbSet<CustomBanksCard> CustomBanksCards { get; }
 		 IDbSet<CustomDocumentType> CustomDocumentTypes { get; }
@@ -179,6 +180,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<DocumentTypeCustomsData> DocumentTypeCustomsData { get; }
 		 IDbSet<EntitlementType> EntitlementTypes { get; }
 		 IDbSet<EntityTypeLookup> EntityTypeLookups { get; }
+		 IDbSet<ExceptionReason> ExceptionReasons { get; }
 		 IDbSet<FacilitationType> FacilitationTypes { get; }
 		 IDbSet<FaultInspectionType> FaultInspectionTypes { get; }
 		 IDbSet<FreightPaymentMethod> FreightPaymentMethods { get; }
@@ -256,6 +258,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<ProductNameType> ProductNameTypes { get; }
 		 IDbSet<PropertiesDetailsHistory> PropertiesDetailsHistorys { get; }
 		 IDbSet<RansomViolationType> RansomViolationTypes { get; }
+		 IDbSet<ReferantException> ReferantExceptions { get; }
 		 IDbSet<RefundCustomerActivityType> RefundCustomerActivityTypes { get; }
 		 IDbSet<RegisteredWarehouseSiteType> RegisteredWarehouseSiteTypes { get; }
 		 IDbSet<RequestStatus> RequestStatuses { get; }

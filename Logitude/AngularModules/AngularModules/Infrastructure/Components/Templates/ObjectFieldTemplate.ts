@@ -205,6 +205,7 @@ export class ObjectFieldTemplate implements OnInit, OnDestroy  {
     }
 
     LoadTemplate() {
+
         if (this.HasTemplate) {
             if (this.viewContainerRef) {
                 if (this.Entity != null && this.ObjectTable != null && this.ObjectField != null) {

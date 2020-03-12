@@ -110,6 +110,7 @@
     <None Include="EntityFiles\ClaimsRelatedEntitiesRefund.lxml" />
     <None Include="EntityFiles\ClaimsRelatedEntitiesSeizure.lxml" />
     <None Include="EntityFiles\ContinuousRequestType.lxml" />
+    <None Include="EntityFiles\CurrencyTypeTenant.lxml" />
     <None Include="EntityFiles\CustomsAutonomyKeyword.lxml" />
     <None Include="EntityFiles\CustomsPartnerFtp.lxml" />
     <None Include="EntityFiles\ApprovedProfession.lxml">
@@ -120,6 +121,7 @@
     <None Include="EntityFiles\DBMigrationLine.lxml" />
     <None Include="EntityFiles\DecDangersContacts.lxml" />
     <None Include="EntityFiles\DeclarationReferantData.lxml" />
+    <None Include="EntityFiles\ExceptionReason.lxml" />
     <None Include="EntityFiles\HazardousSubstance.lxml" />
     <None Include="EntityFiles\RequestType.lxml">
       <SubType>Designer</SubType>
@@ -197,6 +199,7 @@
     <None Include="EntityFiles\ImporterDeclarationType.lxml">
       <SubType>Designer</SubType>
     </None>
+    <None Include="EntityFiles\ReferantException.lxml" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

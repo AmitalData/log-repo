@@ -341,7 +341,7 @@ export class DeclarationCollateralsComponent extends BaseComponent implements On
 
 
         let declarationId = this.EntityPM.Id;
-        filters.addAdditionalFilter("DeclarationId", declarationId, null, null, "Equals", false, false, false, "string");
+        filters.addAdditionalFilter("DeclarationId", declarationId, null, null, "Equals", true, false, false, "string");
 
         /// filters.addAdditionalFilter("Tenant", SessionLocator.Tenant, null, null, "Equals", false, false, false, "number");
 

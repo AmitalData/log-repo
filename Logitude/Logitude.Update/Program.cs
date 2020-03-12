@@ -54,6 +54,8 @@ namespace Logitude.Update
                 WebFreight.Web.MetaDataUpdate.TenantsUpdateClass.UpdateDataForTenant(0, "customs");
                 Console.WriteLine("BuildObjectTablesZipFilesData:" + DateTime.Now.ToString());
                 WebFreight.Web.MetaDataUpdate.TenantsUpdateClass.BuildObjectTablesZipFilesData(false, true);
+                Console.WriteLine("TableLastUpdateClass.UpdateCacheTableHistory:" + DateTime.Now.ToString());
+                BL.Helpers.TableLastUpdateClass.UpdateCacheTableHistory();
                 Console.WriteLine("End:" + DateTime.Now.ToString());
             }
             catch (Exception e)

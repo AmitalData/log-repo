@@ -1,4 +1,4 @@
-	using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -15,56 +15,70 @@ using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.EntityLists;
 
 namespace Logitude.Customs.Data.EntityListQueryServices
-{ 
+{
 
     public partial class DeclarationReferantDataListQueryService
     {
-	    private IQueryable<DeclarationReferantDataList> GetIqueryableList(IQueryable<DeclarationReferantData> iQueryable)
+        private IQueryable<DeclarationReferantDataList> GetIqueryableList(IQueryable<DeclarationReferantData> iQueryable)
         {
-		IQueryable<DeclarationReferantDataList> query = (from a in iQueryable
-                                            select new DeclarationReferantDataList()
-											{
-                     
-					                          DeclarationId = a.DeclarationId,
-					
-					                          OrderNumber = a.OrderNumber,
-					
-					                          ArrivalDate = a.ArrivalDate,
-					
-					                          EstimatedArrivalDate = a.EstimatedArrivalDate,
-					
-					                          Weight = a.Weight,
-					
-					                          ClassificationStatus = a.ClassificationStatus,
-					
-					                          ControllerStatus = a.ControllerStatus,
-					
-					                          CollectionOfMoneyStatus = a.CollectionOfMoneyStatus,
-					
-					                          FollowUpDate = a.FollowUpDate,
-					
-					                          IsExceptional = a.IsExceptional,
-					
-					                          WithPaper = a.WithPaper,
-					
-					                          IsClosedForFollowUp = a.IsClosedForFollowUp,
-					
-					                          IsClassificationRemarks = a.IsClassificationRemarks,
-					
-					                          IsControllerRemarks = a.IsControllerRemarks,
-					
-					                          PreClassification = a.PreClassification,
-					
-		                    	            });
-            return query;
-		}
+            IQueryable<DeclarationReferantDataList> query = (from a in iQueryable.Include("CustomsVendor")
+                                                             join d in context.Declarations.Include("CustomerCard").Include("DeclarationOffice").Include("DeclarationStatusType")
+                                                             on a.DeclarationId equals d.Id
+                                                             select new DeclarationReferantDataList()
+                                                             {
+                                                                 Tenant=a.Tenant,
 
-		private IQueryable<DeclarationReferantData> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<DeclarationReferantData> iQueryable, int tenant)
+                                                                 DeclarationId = a.DeclarationId,
+
+                                                                 OrderNumber = a.OrderNumber,
+
+                                                                 EstimatedArrivalDate = a.EstimatedArrivalDate,
+
+                                                                 Weight = a.Weight,
+
+                                                                 ClassificationStatus = a.ClassificationStatus,
+
+                                                                 ControllerStatus = a.ControllerStatus,
+
+                                                                 CollectionOfMoneyStatus = a.CollectionOfMoneyStatus,
+
+                                                                 FollowUpDate = a.FollowUpDate,
+
+                                                                 WithPaper = a.WithPaper,
+
+                                                                 IsClosedForFollowUp = a.IsClosedForFollowUp,
+
+                                                                 IsClassificationRemarks = a.IsClassificationRemarks,
+
+                                                                 IsControllerRemarks = a.IsControllerRemarks,
+
+                                                                 PreClassification = a.PreClassification,
+
+                                                                 CustomFileNo = d.CustomFileNo,
+
+                                                                 CustomerName = d.CustomerCard.LocalName,
+
+                                                                 TransportModeId = d.TransportModeId,
+
+                                                                 DeclarationOfficeName = d.DeclarationOffice.LocalName,
+
+                                                                 VendorName = a.CustomsVendor.VendorName,
+                                                                 ArrivalDate = DateTime.MinValue != a.ArrivalDate ? a.ArrivalDate : a.EstimatedArrivalDate,
+                                                                 ATAOrETA = DateTime.MinValue != a.ArrivalDate ? "ATA" : "ETA",
+
+                                                                 DeclarationStatusTypeName = d.DeclarationStatusType.LocalName,
+                                                                 
+                                                                DeclarationStatusTypeCode = d.DeclarationStatusTypeCode
+                                                             });
+            return query;
+        }
+
+        private IQueryable<DeclarationReferantData> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<DeclarationReferantData> iQueryable, int tenant)
         {
-			throw new NotImplementedException();
-		}
-			}
+            return iQueryable;
+
+        }
+    }
 
 
 }
-	

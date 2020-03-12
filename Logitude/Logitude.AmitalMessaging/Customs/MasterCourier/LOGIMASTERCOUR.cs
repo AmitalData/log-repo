@@ -82,6 +82,8 @@ public partial class LogitudeMasterCourier
 
     private string noOfCourierHawbField;
 
+    private string truckerIdField;
+
     /// <remarks/>
     public string AirlineId
     {
@@ -274,6 +276,19 @@ public partial class LogitudeMasterCourier
         set
         {
             this.noOfCourierHawbField = value;
+        }
+    }
+
+    /// <remarks/>
+    public string TruckerId
+    {
+        get
+        {
+            return this.truckerIdField;
+        }
+        set
+        {
+            this.truckerIdField = value;
         }
     }
 }

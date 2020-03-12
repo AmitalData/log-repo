@@ -58,5 +58,17 @@ namespace Logitude.Customs.BL.EntityQueryServices
         {
             return repository.DeclarationHasConstraint(declarationId, tenant);
         }
+        public string GetDeclarationConstraintByDeclarationId(string declarationId)
+        {
+            if (!string.IsNullOrWhiteSpace(declarationId))
+            {
+                var type = context.DeclarationConstraints.FirstOrDefault(x => x.DeclarationID == declarationId);
+                if (type != null)
+                {
+                    return type.ConstraintNumber;
+                }
+            }
+            return "";
+        }
     }
 }

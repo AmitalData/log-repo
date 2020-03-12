@@ -1,47 +1,53 @@
 <!-- CargoSealsQueryComponent view  -->
-    <style type="text/css">
-        .NotesTextArea {
-            padding: 2px;
-            padding-left: 4px;
-            text-indent: 0px;
-            font-size: 12px;
-            color: black;
-            text-align: right;
-            border: 1px solid gray;
-            border-radius: 3px;
-            -moz-border-radius: 2px;
-            -webkit-border-radius: 2px;
-            -webkit-box-shadow: 0px 0px 5px 3px #C8C8C8;
-            -moz-box-shadow: 0px 0px 5px 3px #C8C8C8;
-            box-shadow: 0px 0px 5px 3px #C8C8C8;
-        }
+<style type="text/css">
+    .NotesTextArea {
+        padding: 2px;
+        padding-left: 4px;
+        text-indent: 0px;
+        font-size: 12px;
+        color: black;
+        text-align: right;
+        border: 1px solid gray;
+        border-radius: 3px;
+        -moz-border-radius: 2px;
+        -webkit-border-radius: 2px;
+        -webkit-box-shadow: 0px 0px 5px 3px #C8C8C8;
+        -moz-box-shadow: 0px 0px 5px 3px #C8C8C8;
+        box-shadow: 0px 0px 5px 3px #C8C8C8;
+    }
 
-        .DisbleBox {
-            display: inline-block;
-            border: 1px solid #ffd800;
-            border-radius: 5px;
-            background: #faf5c0;
-            padding: 2px 10px;
-            font-size: 12px;
-            color: black;
-            font-family: sans-serif;
-        }
-    </style>
+    .DisbleBox {
+        display: inline-block;
+        border: 1px solid #ffd800;
+        border-radius: 5px;
+        background: #faf5c0;
+        padding: 2px 10px;
+        font-size: 12px;
+        color: black;
+        font-family: sans-serif;
+    }
+
+    .disabled {
+        pointer-events: none;
+        opacity: 0.7;
+        cursor: default;
+    }
+</style>
 
 <div>
 
     <custom-message-wrapper [CustomSendOptionsButtonCanForcePersonalSign]="false"
-                            [IsShowCustomResponseContent]="false">
+                            [IsShowCustomResponseContent]="false" [CustomRequestContentIsDisable]="IsDisplayOnly">
 
         <!-- Request -->
-        <div class="class-request-content">
+        <div class="class-request-content" *ngIf="IsReady">
             <table *ngIf="IsReady" style="width: 750px;height: 400px; padding-top: 10px;">
 
-                <tr class="FormFieldRow" *ngIf="IsDisplayOnly">
+                <tr class="FormFieldRow" *ngIf="Status=='1'">
                     <td colspan="6">
                         <div style="width: 100%;text-align:center;  height:25px;">
                             <div class="DisbleBox">
-                                {{'המסך לתצוגה בלבד - התקבל אישור סגר'}}
+                                {{'התקבל אישור סגר'}}
                             </div>
                         </div>
                     </td>
@@ -172,10 +178,24 @@
                                                [IsImporterDetails]="true"
                                                [ItemHeight]="36"
                                                [HideIcons]="true"
+                                               [IsDisabled]="IsDisplayOnly"
                                                [HasFilters]="true"
                                                (LostFocus)="ImporterNumberLostFocus($event)"
                                                (TextChanged)="ImporterNumberTextChanged($event)"
                                                (ItemClicked)="ImporterNumberClicked($event)"></SearchBox>
+                                </td>
+
+
+                                <td style="width: 90px;">
+                                    <LogLabel [ObjectFieldName]="'StatusName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td style="width: 120px;">
+                                    <LogTextBox [ObjectFieldName]="'StatusName'"
+                                                [InputType]="text"
+                                                [DataContext]="DataContext"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [HideColumns]="true"
+                                                [Text]="StatusName"></LogTextBox>
                                 </td>
                             </tr>
 
@@ -202,7 +222,7 @@
                                                 <td colspan="6">
                                                     <div class="CellContent">
                                                         <logitude-edit-grid GridWidth="100%" GridHeight="100%" [FooterTop]="FooterMethods"
-                                                                            [ItemSource]="CargoSealObslist">
+                                                                            [ItemSource]="CargoSealObslist" [IsReadOnly]="IsDisplayOnly">
 
                                                             <!-- SealNumber -->
                                                             <log-column [header]="'Customs.CargoSeal.F.SealNumber' | TextCodeTranslationPipe"
@@ -286,11 +306,14 @@
                                                             <!-- UpdateTypeCode -->
                                                             <log-column [header]="'Customs.CargoSeal.F.UpdateTypeCode' | TextCodeTranslationPipe"
                                                                         [width]="'100'" [Alignment]="'right'" [binding]="'UpdateTypeCode'">
-                                                                <log-cell-template template="let item" #logcelltemplate>
-                                                                    <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="item.CanToAdd!=false">
+                                                                    <div  class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode || item.CanToAdd!=false">
                                                                         <span>{{item.UpdateTypeName}}</span>
                                                                     </div>
-                                                                    <div *ngIf="logcelltemplate.IsEditMode">
+                                                                    <div *ngIf="logcelltemplate.IsEditMode &&   item.CanToAdd==false">
+                                                                        <!--<select class="LogLovContainer LogLOVControl LogLovInputDiv" style="width: 200px; cursor:pointer;" #selectControl (change)="item.SetLocalName($event,'UpdateTypeName')">
+                                                                            <option *ngFor="let c of AmendmentTypes" [value]="c.Id" [selected]="c.Id==item.UpdateTypeCode">{{c.LocalName}}</option>
+                                                                        </select>-->
                                                                         <LogLov [ObjectFieldName]="'UpdateTypeCode'"
                                                                                 [ObjectTableName]="'Customs.AmendmentType'"
                                                                                 [DataContext]="item"
@@ -306,12 +329,12 @@
 
                                                             <!-- Remarks -->
                                                             <log-column [header]="'Customs.CargoSeal.F.Remarks' | TextCodeTranslationPipe"
-                                                                        [binding]="'Remarks'" [width]="'150'" [Alignment]="'right'">
+                                                                        [binding]="'Remarks'" [width]="'150'" [Alignment]="'right'" [Editable]="true">
                                                                 <log-cell-template template="let item" #logcelltemplate>
-                                                                    <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                    <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right">
                                                                         <span>{{item.Remarks}}</span>
                                                                     </div>
-                                                                    <div *ngIf="logcelltemplate.IsEditMode" style="height: 90%; width: 90%;">
+                                                                    <div *ngIf="logcelltemplate.IsEditMode" style="height: 100%; width: 100%;">
                                                                         <LogTextBox [ObjectFieldName]="'Remarks'" [InputType]="'ntext'" [DataContext]="item"
                                                                                     [ObjectTableName]="'Customs.SealType'" [HideColumns]="true"
                                                                                     [IsMultiline]="true"></LogTextBox>
@@ -320,9 +343,9 @@
                                                             </log-column>
 
                                                             <!-- Delete Button-->
-                                                            <log-column [width]="'70'" [Alignment]="'right'">
+                                                            <log-column [width]="'70'" [Alignment]="'right'" >
                                                                 <log-cell-template template="let item" [TabIndex]="-1" [IgnoreMods]="true">
-                                                                    <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="DeleteCargoSealCommand(item)"
+                                                                    <IconButton [Name]="'Delete'" [IsSmall]="true" *ngIf="!item.Id" (click)="DeleteCargoSealCommand(item)"
                                                                                 style="display: block; float: right; margin-right:3px; margin-top:2px;"></IconButton>
 
                                                                 </log-cell-template>
@@ -342,53 +365,53 @@
                             </tr>
 
                             <!-- ResponseMessage -->
-                            <tr class="FormFieldRow" *ngIf="IsResponseMessageVisibility">
-                                <td colspan="12" style="width: 500px; height:50px">
-                                    <table>
-                                        <tr class="FormFieldRow">
-                                            <td style="width: 500px;">
-                                                <div style="width: 100%; height:22px; text-align:right">
-                                                    <div>
-                                                        <span>{{'Customs.Claim.TH.CustomAnswer' | TextCodeTranslationPipe}}</span>
-                                                    </div>
-                                                </div>
-                                            </td>
 
-                                            <td><div></div></td>
-                                        </tr>
-
-                                        <tr class="FormFieldRow">
-                                            <td style="width: 500px;">
-                                                <div class="MediaFill">
-                                                    <textarea class="NotesTextArea"
-                                                              [(ngModel)]="ResponseMessage"
-                                                              [readonly]="false"
-                                                              style="background: #FFFADC !important;"></textarea>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </td>
-                            </tr>
                         </table>
                     </td>
                 <tr> <td><div></div></td> </tr>
             </table>
+            <table style="width: 650px; height:50px">
+                <tr class="FormFieldRow" *ngIf="IsResponseMessageVisibility">
+                    <td colspan="12" style="width: 650px; height:50px">
+                        <table>
+                            <!--<tr class="FormFieldRow">
+                                <td style="width: 150px;">
+                                    <div style="width: 100%; height:22px; text-align:right">
+                                        <div>
+                                            <span>{{'Customs.Claim.TH.CustomAnswer' | TextCodeTranslationPipe}}</span>
+                                        </div>
+                                    </div>
+                                </td>
 
+                                <td><div></div></td>
+                            </tr>-->
+
+                            <tr class="FormFieldRow">
+                                <td style="width: 500px;">
+                                    <div class="MediaFill">
+                                        <textarea class="NotesTextArea"
+                                                  [(ngModel)]="ResponseMessage"
+                                                  [readonly]="false"
+                                                  style="background: #FFFADC !important;"></textarea>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
         </div>
 
         <!-- Response -->
-        <div class="class-response-content" style="width: 500px;height: 50px;">
-            <table style="width: 500px;height: 50px;padding-top: 10px;">
+        <!--<div class="class-response-content" style="width: 500px;height: 50px;">
+            <table style="width: 500px;height:70px;padding-top: 10px;">
 
-                <tr style="height: 46px;">
+                <tr style="height: 70px;">
                     <td>
                         <table>
                             <tr class="FormFieldRow">
-                                <td style="width: 130px;">
-                                    <LogLabel [ObjectFieldName]="'ResponseMessage'" [DataContext]="DataContext" [TextCode]="'Customs.Claim.TH.CustomAnswer'"></LogLabel>
-                                </td>
-                                <td style="width: 130px;">
+                       
+                                <td style="width: 300px;">
                                     <LogTextBox [ObjectFieldName]="'ResponseMessage'" [DataContext]="DataContext"> </LogTextBox>
                                 </td>
 
@@ -399,7 +422,7 @@
                 </tr>
                 <tr> <td><div></div></td> </tr>
             </table>
-        </div>
+        </div>-->
 
     </custom-message-wrapper>
 </div>

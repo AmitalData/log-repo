@@ -51,7 +51,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
     {
 	  
        
-        public HttpResponseMessage GetSingle(string cargosealidentifierid, string sealnumber)
+        public HttpResponseMessage GetSingle(string id)
         {
 		  try
             {
@@ -61,7 +61,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
                 CargoSealListQueryService cargoSealQuery = new CargoSealListQueryService(MyContext);
-                CargoSealList cargoSealList = cargoSealQuery.GetSingle(cargosealidentifierid, sealnumber);
+                CargoSealList cargoSealList = cargoSealQuery.GetSingle(id);
  				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 				           
                 return Request.CreateResponse(HttpStatusCode.OK,  cargoSealList);

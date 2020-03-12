@@ -38,7 +38,7 @@ namespace Logitude.Customs.BL.CloseTables
                     Code = "2754Constraint",
                     Name = "הצהרת יבוא אילוץ",
                     Entity="Declaration",
-                    Param1= @"{ ""ConstraintName"":""MissingX"", ""MissingX"": ""Hello Word"" }"
+                    Param1= @"{ """":""""}"
                 },
                  new SincroTestCaseDetail()
                 {
@@ -47,35 +47,114 @@ namespace Logitude.Customs.BL.CloseTables
                     IsDCA= true,
                     Entity="Declaration",
                     Param1= @"{ ""RequestNumber"" :""1"" ,  ""Content32"" :""1"" , 
-                              ""Content29"" :""test 29"" , ""Content27"" :""test 27"", ""status"" :""13"" , ""error"" :""true"" , ""constrain"" :""false"" }",
+                              ""Content29"" :""test 29"" , ""Content27"" :""test 27"", ""status"" :""13"" , ""error"" :""true"" ,
+                               ""constrain"" :""false"" , ""amendmentDocumentDetails"" :""false""  }",
                                                    
                                                
                     MainInterfaceCode="5117",
                 },
-                                  
-    
                 new SincroTestCaseDetail()
                 {
-                    Code = "190Sincro",
+                    Code = "190",
                     Name = "בדיקות פיזיות	",
                     IsDCA = true,
                     Entity="Declaration",
-                    Param1= @"{ """":""""}",
-                    Param2= @"{ ""availability"":""2020-02-04T09:15:03.1085624"" }",
+                    Param1= @"{}",
+                    Param2= @"{}",
                     MainInterfaceCode="190",
                 },
                 new SincroTestCaseDetail()
                 {
-                    Code = "196Sincro",
+                    Code = "8215SincroConstraintApprove",
+                    Name = "אישור אילוץ-אישור ללא תנאי",
+                    IsDCA = true,
+                    Entity="Declaration",
+                    Param1= @"{""constraintId"":""18""}",
+                    Param2= @"{}",
+                    MainInterfaceCode="8215",
+                },
+                   new SincroTestCaseDetail()
+                {
+                    Code = "8215SincroConstraintDeny",
+                    Name = "אישור אילוץ-דחייה",
+                    IsDCA = true,
+                    Entity="Declaration",
+                    Param1= @"{""constraintId"":""18""}",
+                    Param2= @"{}",
+                    MainInterfaceCode="8215",
+                },
+                new SincroTestCaseDetail()
+                {
+                    Code = "196",
                     Name = "סיום בדיקה פיזית ",
                     IsDCA = true,
                     Entity="Declaration",
                     Param1= @"{ ""checkId"":""""}",
                     Param2= @"{ }",
                     MainInterfaceCode="196",
+                },
+                new SincroTestCaseDetail()
+                {
+                    Code = "2470",
+                    Name = "מסר התרת ",
+                    IsDCA = true,
+                    Entity="Declaration",
+                    Param1= @"{}",
+                    Param2= @"{}",
+                    MainInterfaceCode="2470",
+                },
+                new SincroTestCaseDetail()
+                {
+                    Code = "3050",
+                    Name = "הודעה לסוכן על הוראת תשלום",
+                    IsDCA = true,
+                    Entity="Declaration",
+                    Param1= @"{""paymentStatus"":""5""}",
+                    Param2= @"{}",
+                    MainInterfaceCode="3050",
+                },
+                   new SincroTestCaseDetail()
+                {
+                    Code = "8211",
+                    Name = "מסר פתיחת בטוחה",
+                    IsDCA = true,
+                    Entity="Declaration",
+                    Param1= @"{}",
+                    Param2= @"{}",
+                    MainInterfaceCode="8211",
+                },
+                   new SincroTestCaseDetail()
+                {
+                    Code = "3052",
+                    Name = " תשלום הוראה ",
+                    IsDCA = true,
+                    Entity="Declaration",
+                    Param1= @"{}",
+                    Param2= @"{}",
+                    MainInterfaceCode="3052",
+                },
+                   new SincroTestCaseDetail()
+                {
+                    Code = "5110",
+                    Name = "יידוע על קבלת פיקדון ופתיחת תיק פיקדון",
+                    IsDCA = true,
+                    Entity="Declaration",
+                    Param1= @"{""numeral"":""1""}",
+                    Param2= @"{}",
+                    MainInterfaceCode="5110",
+                },
+                   new SincroTestCaseDetail()
+                {
+                    Code = "2030",
+                    Name = " דרישה לתשלום פיקדון",
+                    IsDCA = true,
+                    Entity="Declaration",
+                    Param1= @"{""numeral"":""1""}",
+                    Param2= @"{}",
+                    MainInterfaceCode="2030",
                 }
 
-
+        
             };
             return all;
 

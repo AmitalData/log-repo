@@ -33,16 +33,18 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
             DF_NG_5117_MSG14003_ImportDeclarationAmendmentReplyMsg response = new DF_NG_5117_MSG14003_ImportDeclarationAmendmentReplyMsg();
             UpdateDeclaration();
             AddResponseHeader();
-              dec = new Declaration();
+            dec = new Declaration();
 
-       
+           
 
               CastObject(fakeRespond.Response.Declaration, dec);
             response.Response = new Response
             {
                 Declaration = dec
+           
             };
-            response.ResponseContentHeader = new ResponseContentHeader();
+
+             response.ResponseContentHeader = new ResponseContentHeader();
             AddResponseContentHeader();
             response.ResponseContentHeader = _header;
             List<ResponseAdditionalInformation> AdditionalInformation = new List< ResponseAdditionalInformation>();
@@ -105,11 +107,9 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
                     Pointer = new ResponseErrorPointer[1]
                     { new ResponseErrorPointer {
                     DocumentSectionCode = new PointerDocumentSectionCodeType { Value = "42A" },
-                SequenceNumeric = 0}
+                  SequenceNumeric = 0}
 
                     }
-
-
 
 
                 };
@@ -119,105 +119,73 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
 
             if (data.constrain == "true")
             {
-                response.Response.Error = new ResponseError[1];
-                response.Response.Error[0] = new ResponseError
+
+                AddConstraints();
+                response.Response.Error = CastError(fakeRespond.Response.Error);
+            }
+
+
+            if(data.amendmentDocumentDetails=="true")
+            {
+                response.AmendmentDocumentDetails = new UnifreightIIG.Common.MessageLib.ID.AmendmentDocumentDetails[1]
                 {
-                    ValidationCode = new ErrorValidationCodeType { name = "test constrain", listVersionID = "4", Value = "2584" , listName= "105" },
-                    Pointer = new ResponseErrorPointer[1]
-                    { new ResponseErrorPointer {
-                        DocumentSectionCode = new PointerDocumentSectionCodeType { Value = "42A" },
-                        SequenceNumeric = 0 }
-
-                    }, DMExtensions = new ResponseErrorDMExtensions
+                    new UnifreightIIG.Common.MessageLib.ID.AmendmentDocumentDetails()
                     {
-                        
-                            ConstraintID=99 , ConstraintStatus=2 , ConstraintType=1
- 
+                        RequiredDocumentDetails= new UnifreightIIG.Common.MessageLib.ID.RequiredDocumentDetails()
+                        {
+                            documentID = 646626900,
+                            requiredDocumentMessageType=  1 ,
+                            typeID="IL_81" ,
+                            remarks="test נא לצרף קטלוג"
+
+                        },
+                        ConnectedEntity = new UnifreightIIG.Common.MessageLib.ID.ConnectedEntity[]
+                        {
+                            new UnifreightIIG.Common.MessageLib.ID.ConnectedEntity()
+                            {
+                                entityIdKey1=dec.ID.Value.ToString(),
+                                entityType=11157,
+
+                            }
+                        }
+
                     }
-
-
-
-
                 };
-
             }
             response.Response.Status = new ResponseStatus() { EffectiveDateTime = DateTime.Now.ToString() };
             response.Response.Status.NameCode = new StatusNameCodeType() { Value = data.status };
 
 
 
-
-            //return new CH_NG_190_MSG1_NoticeToClient()
-            //{
-            //    RequestContentHeader = new RequestContentHeader()
-            //    {
-            //        TransmitionDateTime = DateTime.Now
-            //    },
-            //    NoticeToClient = new CH_NG_190_MSG1_NoticeToClientNoticeToClient()
-            //    {
-            //        operationCode = 1,
-            //        statusMessage = 2,
-            //        checkId = 2369229,
-            //        entityType = 5,
-            //        customsAgent = 1111,
-            //        importerNumber = 111,
-            //        storageSiteNumber = "ILMMN",
-            //        checkSiteNumber = "10470",
-            //        openDate = DateTime.Now,
-            //        CheckType = 1,
-            //        declarationID = requestParamsData.AppicationId,///change to number 
-
-
-            //    },
-            //    CheckEntity = new CH_NG_190_MSG1_NoticeToClientCheckEntity()
-            //    {
-            //        cargoIdentifier = new cargoIdentifier()
-            //        {
-            //            cargoIdentifierKey1 = "22",
-            //            cargoIdentifierType = 1
-            //        }
-
-            //    },
-            //    SplitCargoIdentifier = new CH_NG_190_MSG1_NoticeToClientSplitCargoIdentifier[]{
-            //          new CH_NG_190_MSG1_NoticeToClientSplitCargoIdentifier()
-            //      {
-            //           cargoIdentifier= new cargoIdentifier()
-            //           {
-            //                cargoIdentifierType= 27 ,
-            //                 cargoIdentifierKey1= "50497355"
-            //           }
-            //      }
-            //      }
-
-            //};
+ 
 
             return response;
         }
 
 
-        //public void CastDeclaration()
-        //{
-        //    Type objectType = fakeRespond.Response.Declaration.GetType();
-        //    Type target = dec.GetType();
-        //    var x = Activator.CreateInstance(target, false);
-        //    var z = from source in objectType.GetMembers().ToList()
-        //            where source.MemberType == MemberTypes.Property
-        //            select source;
-        //    var d = from source in target.GetMembers().ToList()
-        //            where source.MemberType == MemberTypes.Property
-        //            select source;
-        //    List<MemberInfo> members = d.Where(memberInfo => d.Select(c => c.Name)
-        //       .ToList().Contains(memberInfo.Name)).ToList();
-        //    PropertyInfo propertyInfo;
-        //    object value;
-        //    foreach (var memberInfo in members)
-        //    {
-        //        propertyInfo = dec.GetType().GetProperty(memberInfo.Name);
-        //        value = fakeRespond.Response.Declaration.GetType().GetProperty(memberInfo.Name).GetValue(fakeRespond.Response.Declaration, null);
+    
 
-        //        propertyInfo.SetValue(x, value, null);
-        //    }
-        //}
+        public UnifreightIIG.Common.MessageLib.ID.ResponseError[] CastError(UnifreightIIG.Common.ImportDeclarationServiceReference.ResponseError[] responseError)
+        {
+
+
+            string ErrorString;
+            using (var stringwriter = new System.IO.StringWriter())
+            {
+                var serializer = new XmlSerializer(responseError.GetType());
+                serializer.Serialize(stringwriter, responseError);
+                ErrorString = stringwriter.ToString();
+            }
+
+
+
+            using (var stringReader = new System.IO.StringReader(ErrorString))
+            {
+                var serializer = new XmlSerializer(typeof(UnifreightIIG.Common.MessageLib.ID.ResponseError[]));
+                return serializer.Deserialize(stringReader) as UnifreightIIG.Common.MessageLib.ID.ResponseError[];
+            }
+        }
+
 
 
         public void CastObject(object originObject , object targetObject)
@@ -282,6 +250,7 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
             };
             _header = new ResponseContentHeader()
             {
+
                 TransmitionDateTime = DateTime.Now,
                 Remark = "",
                 Exception = null,

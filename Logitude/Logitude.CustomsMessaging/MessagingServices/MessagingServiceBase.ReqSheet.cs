@@ -1551,11 +1551,11 @@ Exception:" + ee.Message
                 try
                 {
 
-                    
 
+                    String theInterfaceCode = requestParamsData.InterfaceTypeCode ?? this.MainInterfaceCode;
                     var InterfaceManagementQS = new InterfaceManagementQueryService(requestParamsData.Tenant);
                     var InterfaceManagementPM = InterfaceManagementQS.GetSingleInterfaceManagementwithDefinition(
-                        this.MainInterfaceCode, requestParamsData.Tenant);
+                        theInterfaceCode /*this.MainInterfaceCode*/, requestParamsData.Tenant);
                     fileName = fileName.Replace("DcaPrefixName.", InterfaceManagementPM.DcaPrefixName);
                     ourRef = this.DcaReceivedCustomResponseCorrelation(InterfaceManagementPM, requestParamsData.Tenant, new Customs.BL.Utils.DCAFileModel()
                     {

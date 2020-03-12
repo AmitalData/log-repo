@@ -36,13 +36,13 @@ export class DeclarationCargoSealTabComponent extends BaseComponent implements O
         super();
         this.CargoSealObslist = new ObservableCollection([]);
 
-            this.EntityResourceService.getEntityResourceByTableName("Customs.CargoSealIdentifier").subscribe((response: any) => {
-                this.EntityResourceService.getEntityResourceByTableName("Customs.CargoSeal").subscribe((response: any) => {
-                    this.EntityPM = this.entityArgs.EntityPM;
-                    this.ObjectTableName = this.entityArgs.ObjectTableName;
-                    this.LoadCargoSealsList();
-                    this.Listen();
-                    this.IsLoaded = true;
+        this.EntityResourceService.getEntityResourceByTableName("Customs.CargoSealIdentifier").subscribe((response: any) => {
+            this.EntityResourceService.getEntityResourceByTableName("Customs.CargoSeal").subscribe((response: any) => {
+                this.EntityPM = this.entityArgs.EntityPM;
+                this.ObjectTableName = this.entityArgs.ObjectTableName;
+                this.LoadCargoSealsList();
+                this.Listen();
+                this.IsLoaded = true;
             });
         });
     }
@@ -90,7 +90,7 @@ export class DeclarationCargoSealTabComponent extends BaseComponent implements O
     }
 
     private LoadCargoSealsList() {
-        this.CargoSealObslist = new ObservableCollection([]);
+         this.CargoSealObslist = new ObservableCollection([]);
 
         this._DeclarationWebService.GetDeclarationCargoSealLists(this.EntityPM.Id, this.EntityPM.Tenant)
             .subscribe((myResponse: ServiceResponse) => {
@@ -124,6 +124,27 @@ export class DeclarationCargoSealTabComponent extends BaseComponent implements O
 
     }
 
+
+    AddDeclarationCargoSplitCommand() {
+
+        var newCargoSealIdentifierPMPM = new CargoSealIdentifierPM();
+        newCargoSealIdentifierPMPM.Tenant = this.EntityPM.Tenant;
+        newCargoSealIdentifierPMPM.DeclarationId = this.EntityPM.Id;
+      
+        this.NewDeclarationCargoSplit(newCargoSealIdentifierPMPM);
+    }
+
+    NewDeclarationCargoSplit(item: CargoSealIdentifierPM) {
+
+        let customsRequestMenuService = new CustomsRequestMenuService();
+        let my = {
+            "CustomFileNo": this.EntityPM.CustomFileNo,
+            "DeclarationId": this.EntityPM.Id,
+        };
+        customsRequestMenuService.WindowClosed.subscribe(($event: any) => this.LoadCargoSealsList());
+        customsRequestMenuService.ShowModalAsEditMenuAction("6001", my);
+    }
+
 }
 
 export class CargoSealItemComponent extends BaseComponent {
@@ -132,8 +153,8 @@ export class CargoSealItemComponent extends BaseComponent {
 
     constructor(public entityPM: CargoSealIdentifierPM) {
         super();
-        if (entityPM != null && entityPM.CargoSeals != null) {
-            var cargoSealPM: CargoSealPM = entityPM.CargoSeals[0];
+  if (entityPM != null && entityPM.CargoSeals != null) {
+            var cargoSealPM: CargoSealPM =entityPM.CargoSeals[0];
             this.SealNumber = cargoSealPM.SealNumber;
             this.SealCompletenessStateCode = cargoSealPM.SealCompletenessStateCode;
             this.SealCompletenessStateName = cargoSealPM.SealCompletenessStateName;
@@ -141,8 +162,12 @@ export class CargoSealItemComponent extends BaseComponent {
             this.SealTypeName = cargoSealPM.SealTypeName;
             this.UpdateReasonCode = cargoSealPM.UpdateReasonCode;
             this.UpdateReasonName = cargoSealPM.UpdateReasonName;
+            this.Status = entityPM.Status;
+            this.StatusName =entityPM.StatusName;
         }
     }
+
+ 
 
     public get CargoRowNumber() { return this.entityPM.CargoRowNumber; }
     public set CargoRowNumber(newValue: string) { this.entityPM.CargoRowNumber = newValue; }
@@ -178,6 +203,17 @@ export class CargoSealItemComponent extends BaseComponent {
     public get UpdateReasonName() { return this._UpdateReasonName; }
     public set UpdateReasonName(newValue: string) { this._UpdateReasonName = newValue; }
 
+
+    private _StatusName: string;
+    public get StatusName() { return this._StatusName; }
+    public set StatusName(newValue: string) { this._StatusName = newValue; }
+
+
+    private _Status: string;
+    public get Status() { return this._Status; }
+    public set Status(newValue: string) { this._Status = newValue; }
+
+ 
     public SetLocalName(entity, fieldName) {
         if (!AppTool.IsNullOrEmpty(entity)) {
             this[fieldName] = entity.LocalName;

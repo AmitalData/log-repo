@@ -15,6 +15,7 @@ import { GeneralLOVComponent } from './Components/GeneralLOVComponent';
 import { CustomsDocumentsDefinitionComponent } from './Components/CustomsDocumentsDefinitionComponent';
 import { AddEditCustomsAirlineComponent } from './Components/AddEditCustomsAirlineComponent';
 import { CustomsPartnerFtpListComponent } from './Components/CustomsPartnerFtpListComponent';
+import { DeclarationRemarksComponent } from './Components/DeclarationRemarksComponent'
 //import { CustomsPartnerFtpEditComponent } from './Components/CustomsPartnerFtpEditComponent';
 
 
@@ -36,6 +37,7 @@ export const Components =
         AddEditCustomsAirlineComponent,
         CustomsPartnerFtpListComponent,
         //CustomsPartnerFtpEditComponent,
+        DeclarationRemarksComponent,
     ];
 
 export class ModuleDeclarations {
@@ -60,6 +62,7 @@ export class ModuleDeclarations {
             case "CustomsDocumentsDefinitionComponent": { myResult = CustomsDocumentsDefinitionComponent; break; }
             case "AddEditCustomsAirlineComponent": { myResult = AddEditCustomsAirlineComponent; break; }
             case "CustomsPartnerFtpListComponent": { myResult = CustomsPartnerFtpListComponent; break; }
+            case "DeclarationRemarksComponent": { myResult = DeclarationRemarksComponent; break; }
             //case "CustomsPartnerFtpEditComponent": { myResult = CustomsPartnerFtpEditComponent; break; }
                 
 

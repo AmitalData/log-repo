@@ -77,6 +77,11 @@ export class ConsignmentPackDangerPM {
     public set StorageTemperature(newValue: string) { if (this.storageTemperature != newValue) { this.storageTemperature = newValue; this.MarkAsDirty("StorageTemperature"); } }
        
 	 
+    private classificationFourDigit: string;
+    public get ClassificationFourDigit() { return this.classificationFourDigit; }
+    public set ClassificationFourDigit(newValue: string) { if (this.classificationFourDigit != newValue) { this.classificationFourDigit = newValue; this.MarkAsDirty("ClassificationFourDigit"); } }
+       
+	 
 
     public OldEntityPM: ConsignmentPackDangerPM;
 	

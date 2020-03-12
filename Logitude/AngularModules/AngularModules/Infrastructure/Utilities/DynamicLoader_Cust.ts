@@ -207,6 +207,7 @@ export class DynamicLoader_Cust {
       case "CustomsModules/CustomsClient": { myResult = "CustomsModules/CustomsClient/ModuleCustomsClient#ModuleCustomsClient"; break; }
       case "CustomsModules/CustomsCourier": { myResult = "CustomsModules/CustomsCourier/ModuleCustomsCourier#ModuleCustomsCourier"; break; }
       case "CustomsModules/CustomsMaintenance": { myResult = "CustomsModules/CustomsMaintenance/ModuleCustomsMaintenance#ModuleCustomsMaintenance"; break; }
+      case "CustomsModules/CustomsReferant": { myResult = "CustomsModules/CustomsReferant/ModuleCustomsReferant#ModuleCustomsReferant"; break; }
       case "CustomsModules/DeclarationTabs": { myResult = "CustomsModules/CustomsDeclarationModules/DeclarationTabs/ModuleDeclarationTabs#ModuleDeclarationTabs"; break; }
       case "CustomsModules/DeclarationSupplierInvoice": { myResult = "CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/ModuleDeclarationSupplierInvoice#ModuleDeclarationSupplierInvoice"; break; }
       case "CustomsModules/DeclarationOthers": { myResult = "CustomsModules/CustomsDeclarationModules/DeclarationOthers/ModuleDeclarationOthers#ModuleDeclarationOthers"; break; }

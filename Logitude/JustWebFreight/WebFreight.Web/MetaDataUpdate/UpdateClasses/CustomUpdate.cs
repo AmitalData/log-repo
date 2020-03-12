@@ -7913,7 +7913,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
 
 
             #region All Declarations Query
-            Query CustomsDeclarationQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Customs.Declaration.Q.DeclarationQuery" && d.ObjectTableId == CustomsDeclarationObject.Id).FirstOrDefault().Id, Code = "Declarations", QueryGroupCode = CustomsDeclarationGroup.Code, IndexOrder = 3, Tenant = 0, ObjectTableId = CustomsDeclarationObject.Id, QuerySection = "Customs.Declaration", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = DeclarationFeature.Id, }, QueriesRepository, tenantQueries);
+            Query CustomsDeclarationQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Customs.Declaration.Q.DeclarationQuery" && d.ObjectTableId == CustomsDeclarationObject.Id).FirstOrDefault().Id, Code = "Declarations", QueryGroupCode = CustomsDeclarationGroup.Code, IndexOrder = 4, Tenant = 0, ObjectTableId = CustomsDeclarationObject.Id, QuerySection = "Customs.Declaration", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = DeclarationFeature.Id, }, QueriesRepository, tenantQueries);
 
             QueryColumn Declaration0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsDeclarationQuery.Id, IndexOrder = 0, ObjectFieldId = CustomsDeclarationFields.Where(d => d.FieldName == "TaxationDateTime" && d.ObjectTableId == CustomsDeclarationObject.Id).FirstOrDefault().Id, ColumnWidth = 110 }, QueryColumnsRepository, tenantQueryColumns);
             QueryColumn Declaration1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsDeclarationQuery.Id, IndexOrder = 1, ObjectFieldId = CustomsDeclarationFields.Where(d => d.FieldName == "CustomFileNo" && d.ObjectTableId == CustomsDeclarationObject.Id).FirstOrDefault().Id, ColumnWidth = 100 }, QueryColumnsRepository, tenantQueryColumns);
@@ -14361,6 +14361,11 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CargoSealsQuery.F.SealCompletenessStateCodeMandatory", DefaultText = "Seal CompletenessState is mandatory", LocalDefaultText = "מצב שלמות הסגר הוא שדה חובה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CargoSealsQuery.F.UpdateReasonCodeMandatory", DefaultText = "Update Reason field is mandatory", LocalDefaultText = "סיבת עדכון הסגר הוא שדה חובה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CargoSealsQuery.F.UpdateTypeCodeMandatory", DefaultText = "Update Type field is mandatory", LocalDefaultText = "סוג עדכון של הסגר הוא שדה חובה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+ 
+            //Task 62936 
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.UpdateCountryOfOrigin", DefaultText = "Update Country of Origin", LocalDefaultText = "עדכון ארץ מקור", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.MultiCountryOfOrigin", DefaultText = "This screen allows to multi update Country of Origin", LocalDefaultText = "מסך זה מאפשר לעדכן את ארץ המקור באופן גורף לכל שורות פרטי המכס או לחלקן . אנא בחר בקוד התהליך ובפעולה הרצויה.", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ItemsWithNoCountrOfOrigin", DefaultText = "Update Items with no Country of Origin", LocalDefaultText = "עדכן פריטים ללא ארץ מקור", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
 
 
             ObjectContext.SaveChanges();
@@ -14821,6 +14826,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.HighLowValue.High", DefaultText = "High", LocalDefaultText = "מהיר", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.HighLowValue.Low", DefaultText = "Low", LocalDefaultText = "פרטני", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.MNF.CompleteMissing", DefaultText = "Complete Missing Data", LocalDefaultText = "השלם נתונים חסרים", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.CourierCustomStatus.NoValue", DefaultText = "No Value", LocalDefaultText = "ללא ערך", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.MNF.HandleWrong", DefaultText = "Handle Wrong Feedback", LocalDefaultText = "טפל במשובים שגויים", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.ACC.Wrong", DefaultText = "Wrong", LocalDefaultText = "ש.מ.ב שגויים", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.ACC.WrongSpecial", DefaultText = "Wrong Special", LocalDefaultText = "מיוחדות שגויים", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
@@ -14926,6 +14932,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             Feature CustomsPartnerFtpFeature = tenantFeatures.Where(d => d.Code == "CPARTNERFTP" && d.FeatureTypeCode == "MENU").FirstOrDefault();
             Feature courierDeclarationFeature = tenantFeatures.Where(d => d.Code == "COURIERDECLARATION" && d.FeatureTypeCode == "MENU").FirstOrDefault();
             Feature customsDeclarationFeature = tenantFeatures.Where(d => d.Code == "CUSTOMSDECLARATION" && d.FeatureTypeCode == "MENU").FirstOrDefault();
+            Feature customsReferantFeature = tenantFeatures.Where(d => d.Code == "CUSTOMREFERANT" && d.FeatureTypeCode == "MENU").FirstOrDefault();
 
             #region Menus
 
@@ -14944,7 +14951,8 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "COMA", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 1, CategoryTypeCode = null, TextCode = "General.MH.CourierMaster", Icon = "CustomersPath", FeatureId = customCouriersMasterFeature.Id, ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.CourierMaster").FirstOrDefault().Id }, MenusTablesRepository, tenantMenusTables);
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "CDCS", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 12, CategoryTypeCode = null, TextCode = "General.MH.DeclarationCargoSplits", Icon = "CustomersPath", FeatureId = customsDeclarationCargoSplitFeature.Id, ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.DeclarationCargoSplit").FirstOrDefault().Id }, MenusTablesRepository, tenantMenusTables);
             AddMenusTables.AddMenusTable(new MenusTableDetails() { HtmlView = "./CustomsModules/CustomsCourier/Components/CourierWorkspaces/CourierDeclarationWorkspaceComponent", Code = "CODC", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 3, CategoryTypeCode = null, TextCode = "General.MH.Declarations", Icon = "CustomersPath", FeatureId = courierDeclarationFeature.Id, ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.Declaration").FirstOrDefault().Id }, MenusTablesRepository, tenantMenusTables);
-        
+            AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "REDC", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 14, CategoryTypeCode = null, TextCode = "General.MH.ReferantScreen", Icon = "CustomersPath", FeatureId = customsDeclarationFeature.Id, ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.DeclarationReferantData").FirstOrDefault().Id }, MenusTablesRepository, tenantMenusTables);
+
             #endregion
 
             #region Maintanance
@@ -17505,7 +17513,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
                 Tenant = 0,
                 AddedManually = false,
                 LocalName = "תיקון הצהרה אושרה",
-                ObjectTableId = courierMasterObject.Id,
+                ObjectTableId = declarationObject.Id,
                 ShortView = false,
                 EventTypeCategoryCode = "LOG",
 
@@ -17518,7 +17526,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
                 Tenant = 0,
                 AddedManually = false,
                 LocalName = "תיקון הצהרה אושרה חלקית",
-                ObjectTableId = courierMasterObject.Id,
+                ObjectTableId = declarationObject.Id,
                 ShortView = false,
                 EventTypeCategoryCode = "LOG",
 
@@ -17530,7 +17538,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
                 Tenant = 0,
                 AddedManually = false,
                 LocalName = "תיקון הצהרה נדחתה",
-                ObjectTableId = courierMasterObject.Id,
+                ObjectTableId = declarationObject.Id,
                 ShortView = false,
                 EventTypeCategoryCode = "LOG",
 
@@ -17542,7 +17550,19 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
                 Tenant = 0,
                 AddedManually = false,
                 LocalName = "תיקון הצהרה בוטלה",
-                ObjectTableId = courierMasterObject.Id,
+                ObjectTableId = declarationObject.Id,
+                ShortView = false,
+                EventTypeCategoryCode = "LOG",
+
+            }, EventTypesRepository, tenantEventTypes);
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code = "DPR",
+                EnglishName = "Amendment Waiting for customs",
+                Tenant = 0,
+                AddedManually = false,
+                LocalName = "תיקון הצהרה ממתינה לטיפול מכס",
+                ObjectTableId = declarationObject.Id,
                 ShortView = false,
                 EventTypeCategoryCode = "LOG",
 

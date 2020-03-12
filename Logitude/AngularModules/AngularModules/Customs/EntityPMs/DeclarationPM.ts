@@ -1144,6 +1144,11 @@ export class DeclarationPM {
     public set AvailabilityDate(newValue: Date) { if (this.availabilityDate != newValue) { this.availabilityDate = newValue; this.MarkAsDirty("AvailabilityDate"); } }
        
 	 
+    private amendmentNumber: number;
+    public get AmendmentNumber() { return this.amendmentNumber; }
+    public set AmendmentNumber(newValue: number) { if (this.amendmentNumber != newValue) { this.amendmentNumber = newValue; this.MarkAsDirty("AmendmentNumber"); } }
+       
+	 
     private courierPendingReasonName: string;
     public get CourierPendingReasonName() { return this.courierPendingReasonName; }
     public set CourierPendingReasonName(newValue: string) { if (this.courierPendingReasonName != newValue) { this.courierPendingReasonName = newValue; this.MarkAsDirty("CourierPendingReasonName"); } }

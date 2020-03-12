@@ -6,14 +6,24 @@
     </tr>
     <tr>
         <td>
-            <table >
+            <table>
 
                 <tr style="height: 25px;">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'ClassificationFourDigit'" [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <LogTextBox [ObjectFieldName]="'ClassificationFourDigit'" [ObjectTableName]="ObjectTableName" [Text]="ClassificationFourDigit"
+                                    [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
+                    </td>
+                    <td style="width:7px"></td>
 
                     <td>
                         <LogLabel [ObjectFieldName]="'UNCode'" [ObjectTableName]="ObjectTableName"
                                   [DataContext]="DataContext"></LogLabel>
                     </td>
+
                     <td>
                         <LogLov [ObjectFieldName]="'UNCode'"
                                 [ObjectTableName]="ObjectTableName"
@@ -22,7 +32,7 @@
                                 [LookUpTableName]="'Customs.HazardousSubstance'">
                         </LogLov>
                         <!--<LogTextBox [ObjectFieldName]="'UNCode'" [ObjectTableName]="ObjectTableName"
-                [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>-->
+                        [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>-->
                     </td>
                     <td style="width:7px"></td>
                     <td>

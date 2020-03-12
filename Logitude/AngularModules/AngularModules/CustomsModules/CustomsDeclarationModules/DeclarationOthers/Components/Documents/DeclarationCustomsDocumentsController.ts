@@ -820,12 +820,21 @@ export class DeclarationCustomsDocumentsController implements ICustomsDocumentsC
                                 customsDocumentsTicket.RemoveCustomsDocumentPointer(editedPointer);
                             }
                             else {
+
+                                if (newChooseIsAmendment) {
+                                    editedPointer.Child1EntityCode = "DeclarationAmendment";
+                                    editedPointer.Child1EntityId = "3";
+                                    editedPointer.Child2EntityCode = null;
+                                    editedPointer.Child2EntityId = null;
+                                }
+                                else {
                                 //var deletedInvoice = args.SupplierInvoicesList.Collection.filter(d => d.InvoiceCounterKey + "" == editedPointer.Child1EntityId)[0];
                                 //args.SupplierInvoicesList.Remove(deletedInvoice);
                                 editedPointer.Child1EntityCode = null;
                                 editedPointer.Child1EntityId = null;
                                 editedPointer.Child2EntityCode = null;
-                                editedPointer.Child2EntityId = null;
+                                    editedPointer.Child2EntityId = null;
+                                }
                             }
                         }
                     }
@@ -893,9 +902,9 @@ export class DeclarationCustomsDocumentsController implements ICustomsDocumentsC
                             newPointer.Child2EntityId = invoiceItem.LineNumber + "";
                             newPointer.Child3EntityId = null;
                         };
-                        customsDocumentsTicket.AddCustomsDocumentPointer(newPointer);
+                        customsDocumentsTicket.AddCustomsDocumentPointer(newPointer);}
                     }
-                }
+                 
             });
         }
 
