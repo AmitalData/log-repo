@@ -30,7 +30,7 @@ namespace Logitude.IntegrationTest.Shipment.Tests
             ShipmentPayable.ShipmentPayableLineStatusCode = "OAMT";
 
             ShipmentPayable.CurrencyId = ShipmentVariables.CurrencyEURId;
-            ShipmentPayable.Rate = ShipmentVariables.CurrencyEURRate;
+            ShipmentPayable.Rate = 1;
 
             ShipmentPayable.ProfitCurrencyExchangeRate = CorePreparationVariables.ProfitCurrencyRate;
             ShipmentPayable.Quantity = quantity;
