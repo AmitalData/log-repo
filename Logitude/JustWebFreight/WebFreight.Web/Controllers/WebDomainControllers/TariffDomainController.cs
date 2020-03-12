@@ -375,8 +375,16 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     foreach (var item in tariffLines)
                     {
                         DataRow row = table.NewRow();
-                        row[0] = item.OriginPortCode ?? null;
-                        row[1] = item.DestinationPortCode ?? null;
+                        if(tariff.TypeCode == "AFC")
+                        {
+                            row[0] = item.OriginPortCode ?? null;
+                            row[1] = item.DestinationPortCode ?? null;
+                        } else
+                        {
+                            row[0] = item.OriginPortCombinedCode ?? null;
+                            row[1] = item.DestinationPortCombinedCode ?? null;
+                        }
+                        
                         row[2] = item.MinPrice ?? null;
                         row[3] = item.Step1Price ?? null;
 
@@ -789,8 +797,15 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     foreach (var item in tariffLines)
                     {
                         DataRow row = table.NewRow();
-                        row[0] = item.OriginPortCode ?? null;
-                        row[1] = item.DestinationPortCode ?? null;
+                        if(tariff.TypeCode == "ASC")
+                        {
+                            row[0] = item.OriginPortCode ?? null;
+                            row[1] = item.DestinationPortCode ?? null;
+                        } else
+                        {
+                            row[0] = item.OriginPortCombinedCode ?? null;
+                            row[1] = item.DestinationPortCombinedCode ?? null;
+                        }
                         row[2] = item.CurrencyCode ?? null;
                         row[3] = item.StartDate ?? null;
 
@@ -1103,8 +1118,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     foreach (var item in tariffLines)
                     {
                         DataRow row = table.NewRow();
-                        row[0] = item.OriginPortCode ?? null;
-                        row[1] = item.DestinationPortCode ?? null;
+                        row[0] = item.OriginPortCombinedCode ?? null;
+                        row[1] = item.DestinationPortCombinedCode ?? null;
 
                         int rowIndex = 2;
                         
@@ -1299,8 +1314,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     foreach (var item in tariffLines)
                     {
                         DataRow row = table.NewRow();
-                        row[0] = item.OriginPortCode ?? null;
-                        row[1] = item.DestinationPortCode ?? null;
+                        row[0] = item.OriginPortCombinedCode ?? null;
+                        row[1] = item.DestinationPortCombinedCode ?? null;
                         row[2] = item.CurrencyCode ?? null;
                         row[3] = item.StartDate ?? null;
 
