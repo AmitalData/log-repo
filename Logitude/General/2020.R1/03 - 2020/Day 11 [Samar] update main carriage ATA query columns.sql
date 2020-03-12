@@ -13,12 +13,13 @@ set @newFieldCode = (select Code from ObjectFields where FieldName = 'MainCarria
 
 delete from QueryColumns where ObjectFieldId = @newFieldId
 update QueryColumns
-set ObjectFieldId = @newFieldId, ObjectFieldCode = @newFieldCode
+set ObjectFieldId = @newFieldId, ObjectFieldCode = 'Shipment.'+@newFieldCode
 where ObjectFieldId = @oldFieldId
 
 
-select * from QueryColumns where ObjectFieldId = @oldFieldId
-select * from QueryColumns where ObjectFieldId = @newFieldId
+--select * from QueryColumns where ObjectFieldId = @oldFieldId
+--select * from QueryColumns where ObjectFieldId = @newFieldId
+
 
 
 
