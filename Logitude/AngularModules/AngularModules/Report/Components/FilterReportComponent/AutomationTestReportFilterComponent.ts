@@ -67,6 +67,11 @@ export class AutomationTestReportFilterComponent extends BaseComponent {
 
         return isValid;
     }
+
+    PrepareContactList() {
+        //for report scheduler
+    }
+
     RunReport() {
         var reportFliter: ReportFliter = new ReportFliter();
 

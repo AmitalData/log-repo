@@ -306,6 +306,8 @@ export class TaskReportSchedulerItemClass extends BaseComponent {
     get Status() { return this.EntityPM.Status; }
     get LastRunEndTime() { return this.EntityPM.LastRunEndTime; }
     get Duration() { return Math.abs(this.EntityPM.Duration); }
+    get UpdatedBy() { return this.EntityPM.UpdatedBy; }
+    get CreatedBy() { return this.EntityPM.CreatedBy; }
 
     get Name() { return this.EntityPM.Name; }
     set Name(newValue: string) {

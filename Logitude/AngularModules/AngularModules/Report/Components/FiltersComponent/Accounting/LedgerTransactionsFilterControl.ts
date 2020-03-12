@@ -413,6 +413,10 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
         return isValid;
     }
 
+    PrepareContactList() {
+        //for report scheduler
+    }
+
     RunButtonClicked() {
         this.SetUIProperties();
 

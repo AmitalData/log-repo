@@ -158,6 +158,11 @@ export class ReportsPreviewComponent implements AfterViewInit {
         return this.ReportFilterConmponent.ValidateSelectedFilters();
     }
 
+    PrepareContactList() {
+        this.CleanPartnersObslist();
+        this.ReportFilterConmponent.PrepareContactList();
+    }
+
     LoadReportFilterComponent() {
 
         SessionLocator.DynamicLoader.Load(this.Report.FilterHtmlComponentUrl, this.viewContainerRef)
