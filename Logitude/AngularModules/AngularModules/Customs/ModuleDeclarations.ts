@@ -24,6 +24,7 @@ import {DeclarationShortTitleComponent} from './Components/ShortTitles/Declarati
 //PhysicalCheck
 
 import {CustomsSpotlightComponent} from './Components/Spotlight/CustomsSpotlightComponent';
+import { DeclarationReferantDataFiltersMenuComponent } from './Components/FiltersMenu/DeclarationReferantDataFiltersMenuComponent';
 
 
 export const CustomsControlsComponents =
@@ -65,7 +66,7 @@ export const Components =
         CustomsSpotlightComponent,
 
        
-     
+        DeclarationReferantDataFiltersMenuComponent,
        
 
         
@@ -98,6 +99,7 @@ export class ModuleDeclarations {
           
             case "CustomsSpotlightComponent": { myResult = CustomsSpotlightComponent; break; }
 
+            case "DeclarationReferantDataFiltersMenuComponent": { myResult = DeclarationReferantDataFiltersMenuComponent; break; }
                 
         }
 
