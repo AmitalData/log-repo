@@ -271,6 +271,7 @@ export const ControlsComponents =
         LastSuccessfulLoginComponent,
         DropdownMenuComponent,
         MultiSelectLOVComponent,
+         
 
     ];
 export const Components =

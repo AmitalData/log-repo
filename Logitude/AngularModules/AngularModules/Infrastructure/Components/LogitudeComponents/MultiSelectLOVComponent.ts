@@ -37,7 +37,9 @@ export class MultiSelectLOVComponent implements OnInit{
     @Input()
     LayoutDirection: string = 'rtl'//'ltr';
 
-    
+    @Output()
+    ChosenListItemsChanged = new EventEmitter();
+
 
     //@ViewChild(LogLovV2Component)
     @ContentChild(LogLovV2Component)
@@ -253,6 +255,7 @@ export class MultiSelectLOVComponent implements OnInit{
             });
 
         }
+        this.ChosenListItemsChanged.emit(list);
     }
     
     
