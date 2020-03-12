@@ -122,6 +122,7 @@ export class AddEditARInvoiceLineComponent {
         this.myCloner.AddField('ForiegnCurrencyAmount');
         this.myCloner.AddField('LocalCurrencyAmount');
         this.myCloner.AddField('InvoiceCurrencyAmount');
+        this.myCloner.AddField('IsRegionalTax');
         this.myCloner.AddEntity(this.EntityPM);
         this.myCloner.AddEntity(this.DataContext.fatherComponent.EntityPM);
     }

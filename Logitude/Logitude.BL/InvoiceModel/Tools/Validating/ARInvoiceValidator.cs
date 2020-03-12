@@ -87,7 +87,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                 throw new ApplicationException(msg);
             }
 
-            if(accountingSetting != null)
+            if (accountingSetting != null)
             {
                 if (accountingSetting.IsVatNumberMandatoryInAR)
                 {
@@ -211,7 +211,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                                     }
                                 }
                             }
-                        }                        
+                        }
                     }
 
                     //List<string> gr1 = activeLines.GroupBy(g => new { g.ForiegnCurrencyId }).Select(s => s.Key.ForiegnCurrencyId).ToList();
@@ -280,7 +280,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                 string fieldLabel = TranslateTextsClass.Translate("ARInvoice.F.ARInvoiceTypeCode", entityPM.Tenant);
                 throw new ApplicationException(msgRequired.Replace("%FieldName", fieldLabel));
             }
-            
+
             if (string.IsNullOrEmpty(entityPM.BranchId))
             {
                 string fieldLabel = TranslateTextsClass.Translate("ARInvoice.F.BranchId", entityPM.Tenant);
@@ -493,7 +493,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
         }
         private static void ValidateExternalAPI(ARInvoicePM entityPM, ICommonDataContext myCommonContext)
         {
-            double? localAmount_Computed=0;
+            double? localAmount_Computed = 0;
             if (entityPM.IsExternalAPI)
             {
                 int tenant = entityPM.Tenant;
@@ -517,10 +517,10 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
 
                     double? lineLocalAmount = MethodHelper.Round(item.LocalCurrencyAmount, 2);
                     double? lineLocalAmount_Computed = MethodHelper.Round(item.ForiegnCurrencyAmount * item.ForiegnExchangeRate, 2);
-                    localAmount_Computed = localAmount_Computed + lineLocalAmount_Computed ;
-                    if(item.VatPercentage != 0)
+                    localAmount_Computed = localAmount_Computed + lineLocalAmount_Computed;
+                    if (item.VatPercentage != 0)
                     {
-                        localAmount_Computed = localAmount_Computed + (lineLocalAmount_Computed* item.VatPercentage/100);
+                        localAmount_Computed = localAmount_Computed + (lineLocalAmount_Computed * item.VatPercentage / 100);
                     }
                     if (lineLocalAmount != lineLocalAmount_Computed)
                     {
@@ -711,8 +711,8 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                 #region Local Amount
                 double? localAmount = MethodHelper.Round(entityPM.AmountInLocalCurrency, 2);
                 //   double? rate = MethodHelper.Round(entityPM.InvoiceCurrencyExchangeRate, 2);
-               // double computedLocalAmount = (Math.Truncate(100 * (double)(entityPM.AmountInInvoiceCurrency * entityPM.InvoiceCurrencyExchangeRate)) / 100);
-                 localAmount_Computed = MethodHelper.Round(localAmount_Computed, 2);
+                // double computedLocalAmount = (Math.Truncate(100 * (double)(entityPM.AmountInInvoiceCurrency * entityPM.InvoiceCurrencyExchangeRate)) / 100);
+                localAmount_Computed = MethodHelper.Round(localAmount_Computed, 2);
                 if (localAmount != localAmount_Computed)
                 {
                     throw new ApplicationException("Wrong Invoice Local Amount");
@@ -726,9 +726,9 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                 {
                     if (entityPM.IsMultiCurrency)
                     {
-                        if(entityPM.InvoiceCurrencyId != tenantPOCO.CurrencyId)
+                        if (entityPM.InvoiceCurrencyId != tenantPOCO.CurrencyId)
                         {
-                            throw new ApplicationException(TranslateTextsClass.Translate("ARInvoice.M.MultiCurrencyMustInLocalCurrency", tenant)); 
+                            throw new ApplicationException(TranslateTextsClass.Translate("ARInvoice.M.MultiCurrencyMustInLocalCurrency", tenant));
                         }
                     }
                 }
@@ -1025,18 +1025,18 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                     {
                         isValidatingChronological = true;
                     }
-                   
+
                     if (isValidatingChronological)
                     {
                         if (loggedTenant.AccountingSetting.IsARInvoiceChronologicalDates && !entityPM.IsExternalEntity)
                         {
                             ARInvoice lastApprovedInvoice = (from a in myContext.ARInvoices
-                                                               where a.Tenant == entityPM.Tenant
-                                                               && a.IsInvoiceNumberManuallySet == false
-                                                               && a.StatusCode != "DR"
-                                                               && a.StatusCode != "VD"
-                                                               && a.InvoiceNumber != a.Id
-                                                               select a).OrderByDescending(d => d.ApprovedDate).FirstOrDefault();
+                                                             where a.Tenant == entityPM.Tenant
+                                                             && a.IsInvoiceNumberManuallySet == false
+                                                             && a.StatusCode != "DR"
+                                                             && a.StatusCode != "VD"
+                                                             && a.InvoiceNumber != a.Id
+                                                             select a).OrderByDescending(d => d.ApprovedDate).FirstOrDefault();
 
                             if (lastApprovedInvoice != null)
                             {
@@ -1099,7 +1099,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             }
             else
             {
-                 account = getGLAccount(invoice.BillToId, invoice.Tenant);
+                account = getGLAccount(invoice.BillToId, invoice.Tenant);
             }
             if (account != null && (account.IsMultiCurrency == null || account.IsMultiCurrency == false))
             {
@@ -1110,12 +1110,12 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                     errorsList.Add(msg);
                 }
             }
-            
+
         }
         private static GLAccountPM GetGLaccountById(string accountId, int tenant)
         {
             IGLAccountQueryServiceExt glAccountQuery = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountQueryServiceExt;
-           return glAccountQuery.GetSingleGLAccountPM(accountId, tenant);
+            return glAccountQuery.GetSingleGLAccountPM(accountId, tenant);
         }
         private static void CheckCardConnectedGLAccount(int tenant, string billToId)
         {
@@ -1127,7 +1127,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                 string msg = TranslateTextsClass.Translate("ARInvoice.M.BillToGLAccount", tenant, useLocal);
                 errorsList.Add(msg);
             }
-            
+
         }
 
         private static void CheckClosedMonth(DateTime? accountingDate, int tenant)
@@ -1262,17 +1262,44 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
 
         private static void ValidateRegionalTax(ARInvoicePM entityPM)
         {
-            if(entityPM.RegionalTaxId != null)
-            {
-                List<string> allRegionalTaxVatsIds = (from d in entityPM.InvoiceLines.Where(d => d.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete)
-                                                      where d.VatTypeId != null
-                                                      && d.IsRegionalTax
-                                                      group d by d.VatTypeId into g
-                                                      select g.Key).ToList();
+            List<ARInvoiceLinePM> allRegionalTaxLines = entityPM.InvoiceLines.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete && d.IsRegionalTax).ToList();
 
-                if (allRegionalTaxVatsIds.Count > 1)
+            if (allRegionalTaxLines.Count > 0)
+            {
+                if (allRegionalTaxLines.Where(d => d.VatIsMultiPercentage).Any())
                 {
-                    throw new ApplicationException("Can't set Regional Tax for different VATs");
+                    throw new ApplicationException("Can't set regional Tax for multi VAT");
+                }
+
+                else if (entityPM.RegionalTaxId == null)
+                {
+                    throw new ApplicationException("Invoice regional tax field is required");
+                }
+
+                else
+                {
+                    var groupedIds = (from d in allRegionalTaxLines
+                                      where d.VatTypeId != null
+                                      group d by d.VatTypeId into g
+                                      select g.Key).ToList();
+
+                    if (groupedIds.Count > 1)
+                    {
+                        throw new ApplicationException("Can't set regional tax for different VATs");
+                    }
+
+                    else
+                    {
+                        var groupedPercentages = (from d in allRegionalTaxLines
+                                                  where d.VatTypeId != null
+                                                  group d by new { d.VatTypeId, d.VatPercentage } into g
+                                                  select g.Key).ToList();
+
+                        if (groupedPercentages.Count > 1)
+                        {
+                            throw new ApplicationException("Can't set different regional Tax percentages");
+                        }
+                    }
                 }
             }
         }

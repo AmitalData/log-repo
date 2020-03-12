@@ -2210,8 +2210,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                                     InvoiceTotalsClass newRegionalTaxItem = new InvoiceTotalsClass()
                                     {
-                                        Id = item.VatTypeId,
-                                        VatTypeId = item.VatTypeId,
+                                        Id = entityPM.RegionalTaxId,
+                                        VatTypeId = entityPM.RegionalTaxId,
                                         VatTypePercentage = entityPM.RegionalTaxPercentage,
                                         LocalCurrencyAmount = item.LocalCurrencyAmount,
                                         InvoiceCurrencyAmount = item.InvoiceCurrencyAmount,
