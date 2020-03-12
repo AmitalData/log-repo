@@ -20,8 +20,11 @@ namespace Logitude.Customs.Data.Repsitories
             
 			throw new NotImplementedException();
         }
-
-   }
+        public CurrencyTypeTenant GetPMByCode(int tenant, string code)
+        {
+            return this.GetAll(tenant).FirstOrDefault(r => r.Code == code);
+        }
+    }
 
 }
    

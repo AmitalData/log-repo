@@ -1,4 +1,4 @@
-﻿import {Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Http, Headers} from '@angular/http';
 import {Observable}     from 'rxjs/Rx';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
@@ -21,7 +21,7 @@ export class CustomsHouseTypeExtendedPMService {
     GetHouseTypewithAdditional(declarationOfficeCode: string) {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
-
+        debugger;
         return Observable.defer(() => {
             return this._http.get(this._apiUrl + '/GetHouseTypewithAdditional?declarationOfficeCode=' + declarationOfficeCode, { headers: authHeader }).map(response => {
 

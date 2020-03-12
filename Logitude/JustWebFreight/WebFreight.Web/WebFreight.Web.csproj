@@ -1251,6 +1251,7 @@
     <Compile Include="Controllers\CustomsModel\Extended\PhysicalCheckController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\CourierMasterController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\CourierPendingReasonController.cs" />
+    <Compile Include="Controllers\CustomsModel\Extended\CurrencyTypesController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\CustomsAirlineController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\CustomBankController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\CustomDocumentTypesController.cs" />
@@ -1599,6 +1600,7 @@
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CourierMasterController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CourierPendingReasonController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CouriersVatController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CurrencyTypeController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CurrencyTypeTenantController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CustomBankController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CustomDocumentTypeController.Generated.cs" />
@@ -6369,6 +6371,7 @@
     <Folder Include="JustConfig\" />
     <Folder Include="Logitude\BL\InfrastructureModel\" />
     <Folder Include="MessageModel\" />
+    <Folder Include="MobileApplication\Views\CurrencyType\" />
     <Folder Include="MobileApplication\Views\DeclarationVehicleModification\" />
     <Folder Include="MobileApplication\Views\IIGGeneralMessages\" />
     <Folder Include="MobileApplication\Views\InterfaceManagementListExtended\" />
