@@ -54,7 +54,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
             double doubleTotalInterestDays = (interestReportLinesByDatePM.ToDate - interestReportLinesByDatePM.FromDate).TotalDays;
             interestReportLinesByDatePM.TotalInterestDays = Convert.ToInt32(doubleTotalInterestDays);
             interestReportLinesByDatePM.TotalAmount = interestReportLinesByDateMappingParams.CurrentInterestTransactionGroupedByDate.TotalLocalAmount;
-            interestReportLinesByDatePM.AccumulatedAmount = interestReportLinesByDateMappingParams.AccumulatedAmount + interestReportLinesByDateMappingParams.CurrentInterestTransactionGroupedByDate.TotalLocalAmount;
+            interestReportLinesByDatePM.AccumulatedAmount = interestReportLinesByDateMappingParams.AccumulatedAmount;
 
             InterestPercentageForDateParams interestPercentageForDateParams = new InterestPercentageForDateParams(
                 interestReportLinesByDateMappingParams.InterestReportLinesByDateCreationParams,
@@ -196,7 +196,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
                                             select a).OrderByDescending(d => d.InterestBaseStartDate).FirstOrDefault();
 
             decimal creditAdditionalInterestPercentage = gLAccountInterestPeriodPM.CreditAddInterestPercent != null ? gLAccountInterestPeriodPM.CreditAddInterestPercent.Value : 0;
-            decimal percentage = Period.InterestRate + creditAdditionalInterestPercentage;
+            decimal percentage = (Period.InterestRate + creditAdditionalInterestPercentage)/100;
             return percentage;
         }
 
@@ -212,7 +212,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
                                             select a).OrderByDescending(d => d.InterestBaseStartDate).FirstOrDefault();
 
             decimal exceptionalAdditionalInterestPercentage = gLAccountInterestPeriodPM.ExceptionalAddInterestPercent != null ? gLAccountInterestPeriodPM.ExceptionalAddInterestPercent.Value : 0;
-            decimal percentage = Period.InterestRate + exceptionalAdditionalInterestPercentage;
+            decimal percentage = (Period.InterestRate + exceptionalAdditionalInterestPercentage)/100;
             return percentage;
         }
 
@@ -228,7 +228,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
                                           select a).OrderByDescending(d => d.InterestBaseStartDate).FirstOrDefault();
 
             decimal standardAdditionalInterestPercentage = gLAccountInterestPeriodPM.StandardAddInterestPercent != null ? gLAccountInterestPeriodPM.StandardAddInterestPercent.Value : 0;
-            decimal percentage = Period.InterestRate + standardAdditionalInterestPercentage;
+            decimal percentage = (Period.InterestRate + standardAdditionalInterestPercentage) / 100;
             return percentage;
         }
 

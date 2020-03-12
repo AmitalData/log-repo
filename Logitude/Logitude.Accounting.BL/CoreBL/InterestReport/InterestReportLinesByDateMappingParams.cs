@@ -12,7 +12,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
             InterestTransactionsGroupedByDate nextInterestTransactionGroupedByDate,
             string interestReportId,
             int tenant,
-            InterestReportLinesByDateCreationParams InterestReportLinesByDateCreationParams,
+            InterestReportLinesByDateCreationParams interestReportLinesByDateCreationParams,
             decimal accumulatedAmount)
         {
             CurrentInterestTransactionGroupedByDate = currentInterestTransactionGroupedByDate;
@@ -20,7 +20,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
             Tenant = tenant;
             AccumulatedAmount = accumulatedAmount;
             InterestReportId = interestReportId;
-
+            InterestReportLinesByDateCreationParams = interestReportLinesByDateCreationParams;
         }
         public InterestTransactionsGroupedByDate CurrentInterestTransactionGroupedByDate { get; private set; }
         public InterestTransactionsGroupedByDate NextInterestTransactionGroupedByDate { get; private set; }

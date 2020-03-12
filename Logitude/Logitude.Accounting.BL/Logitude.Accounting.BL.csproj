@@ -235,6 +235,7 @@
     <Compile Include="CoreBL\InterestReport\InterestReportLinesByDateCreationService.cs" />
     <Compile Include="CoreBL\InterestReport\InterestReportLinesByDateMappingParams.cs" />
     <Compile Include="CoreBL\InterestReport\InterestReportLinesCreationService.cs" />
+    <Compile Include="CoreBL\InterestReport\InterestReportTestResultGetter.cs" />
     <Compile Include="CoreBL\InterestReport\InterestTransactionsGroupedByDate.cs" />
     <Compile Include="CoreBL\InterestTrans\RegularJournalInterestTransactionMapping.cs" />
     <Compile Include="CoreBL\ISystem1000Service.cs" />
