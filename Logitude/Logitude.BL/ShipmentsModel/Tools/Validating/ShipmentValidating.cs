@@ -25,6 +25,7 @@ using Simplog.Data.InvoiceModel;
 using Simplog.Data.InvoiceModel.Repositories;
 using Logitude.BL.InvoiceModel.EntityQueries;
 using Simplog.Data.ShipmentsModel;
+using Simplog.Data.QuoteModel;
 
 namespace Logitude.BL.ShipmentsModel.Tools.Validating
 {
@@ -832,9 +833,21 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                                     {
                                         if (entityPM.QuoteId != null)
                                         {
-                                            // Get Quote Sale Amount in Local
+                                            IQuotesContext quotesContext = QuotesContext.GetContext(tenant);
+
+                                            double? quoteSaleLocalAmount = (from d in quotesContext.QuoteCharges
+                                                                            where d.QuoteId == entityPM.QuoteId
+                                                                            select d.SaleTotalAmountLocal).Sum();
+
+                                            if (quoteSaleLocalAmount != null)
+                                            {
+                                                ActualBalance += quoteSaleLocalAmount.Value;
+                                            }
                                         }
                                     }
+
+                                    LimitAmount = MethodHelper.Roundd(LimitAmount, 2);
+                                    ActualBalance = MethodHelper.Roundd(ActualBalance, 2);
 
                                     if (ActualBalance > LimitAmount)
                                     {
