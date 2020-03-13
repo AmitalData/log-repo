@@ -74,11 +74,6 @@ namespace Simplog.Data.InvoiceModel.Mapping
                 .IsRequired()
                 .HasMaxLength(15)
                 .IsUnicode(false);
-            
-            this.Property(t => t.PaymentMethodId)
-                .IsRequired()
-                .HasMaxLength(15)
-                .IsUnicode(false);
 
             this.Property(t => t.AccountingPaymentMethodId)
               .HasMaxLength(15).IsRequired()
@@ -187,7 +182,6 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.VendorId).HasColumnName("VendorId");
             this.Property(t => t.StatusCode).HasColumnName("StatusCode");
             this.Property(t => t.PaymentCurrencyId).HasColumnName("PaymentCurrencyId");
-            this.Property(t => t.PaymentMethodId).HasColumnName("PaymentMethodId");
             this.Property(t => t.AccountingPaymentMethodId).HasColumnName("AccountingPaymentMethodId");            
             this.Property(t => t.VendorAddressId).HasColumnName("VendorAddressId");
             this.Property(t => t.SearchFields).HasColumnName("SearchFields");
@@ -241,9 +235,7 @@ namespace Simplog.Data.InvoiceModel.Mapping
                 .WithMany()
                 .HasForeignKey(d => d.VendorAddressId)
                 .WillCascadeOnDelete(false);
-            this.HasRequired(t => t.PaymentMethod)
-                .WithMany()
-                .HasForeignKey(d => d.PaymentMethodId);
+            
             this.HasRequired(t => t.AccountingPaymentMethod)
                .WithMany()
                .HasForeignKey(d => d.AccountingPaymentMethodId);
