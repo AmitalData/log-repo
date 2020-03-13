@@ -28,8 +28,9 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
 
         public void StartCalculations()
         {
-            GetInterestReportAndInterestTransactionsForCalculations();
-            using(TransactionScope scope= TransactionFactory.GetNewTransaction())
+            interestReportPM = interestReportCalculationPreparations.GetInterestReportPM(interestReportId, tenant);
+            interestTransactionPMs = interestReportCalculationPreparations.GetInterestTransactionsForGlAccountAndInterestValueDate(interestReportPM.GLAccountId, interestReportPM.InterestCalculationDate, tenant);
+            using (TransactionScope scope= TransactionFactory.GetNewTransaction())
             {
                 CreateInterestReportLines();
                 interestReportPM.OpenBalance = GetInterestReportOpenBalance();
@@ -90,14 +91,6 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
             List<InterestReportLinesByDatePM> interestReportLinesByDatePMs = interestReportLinesByDateCreationService.CreateInterestReportLinesByDate(interestReportLinesByDateCreationParams);
             return interestReportLinesByDatePMs;
         }
-       
-        private void GetInterestReportAndInterestTransactionsForCalculations()
-        {
-            interestReportPM = interestReportCalculationPreparations.GetInterestReportPM(interestReportId, tenant);
-            interestTransactionPMs = interestReportCalculationPreparations.GetInterestTransactionsForGlAccountAndInterestValueDate(interestReportPM.GLAccountId, interestReportPM.InterestCalculationDate,tenant);
-        }
-
-      
 
     }
 }
