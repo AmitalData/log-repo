@@ -143,6 +143,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     ForeignCurrencySign = currency.Sign
                 });
             }
+
+            transactionsDataProvider.LocalClosedBalance = transactionsDataProvider.LocalClosedBalanceList.Sum(d => d.BalanceLocal).Value;
+
         }
 
         private void SetOpenBalanceForGLAccount(LedgerTransactionBalanceFilterCallBack LTBFilterCallBack)
@@ -174,6 +177,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     ForeignCurrencySign = currency.Sign
                 });
             }
+
+            transactionsDataProvider.LocalOpenBalance = transactionsDataProvider.LocalOpenBalanceList.Sum(d=>d.BalanceLocal).Value;
+
         }
 
         private Currency GetCurrencyById(string currencyId)
