@@ -69,6 +69,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
     public IconSize: number = 17;
     private IsCopy: boolean = false;
     private CopyBIReportsFromTenant: number;
+    private FactTableName: string;
     private ComponentRef;
     mouseover(MyItem) {
         if (MyItem.HelpText) {
@@ -138,7 +139,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
         this.ObsList = [];
         this._DWObjectTableListService.getAll().subscribe(myResult => {
             this.AllTables = myResult.Result;
-            this._DWObjectTablePMService.get("Fact_Shipments").subscribe(myResult => {
+            this._DWObjectTablePMService.get(this.FactTableName).subscribe(myResult => {
                 if (!myResult.HasError) {
                     this._DWObjectFieldPMService.GetDWObjectFieldsByDWTableIdGroupedByCategory(myResult.Result.Code).subscribe(Result => {//getDWObjectFieldsByDWTableId
                         if (!Result.HasError) {
@@ -246,6 +247,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
         this.ComponentRef = args.ComponentRef;
         this.BackCompleted = args.BackCompleted;
         this.CopyBIReportsFromTenant = args.BIReportsTenant;
+        this.FactTableName = args.FactTableName;
         //this.AllFieldsWithChildrenDataSource = args.DWObjectFieldsWithChildren;
         if (this.QID) {
             if (this.CopyBIReportsFromTenant || this.CopyBIReportsFromTenant == 0) {

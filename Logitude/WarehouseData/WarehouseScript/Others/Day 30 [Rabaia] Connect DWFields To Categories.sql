@@ -10,7 +10,7 @@ declare @Cat2Code varchar(150)
 	DECLARE DWObjectFieldsCursor CURSOR READ_ONLY
 	FOR	
 	SELECT Code,Category1,Category2
-	FROM DWObjectFields	where DWObjectTableCode = 'Fact_Shipments'
+	FROM DWObjectFields	where DWObjectTableCode = 'Fact_Shipments' or DWObjectTableCode = 'Fact_Charges'
 	OPEN DWObjectFieldsCursor FETCH NEXT FROM DWObjectFieldsCursor INTO @Id,@Cat1Code,@Cat2Code
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
@@ -23,7 +23,7 @@ declare @Cat2Code varchar(150)
 		         EXEC   [dbo].[usp_GetNextTableIdValue]
 		                @pLastNumber = @NewId OUTPUT,
 		                @pTableName = N'DWObjectFieldCategories' 
-			insert into [dbo].[DWObjectFieldCategories]([Id],[DWObjectFieldCode],[DWCategoryCode]) values(@NewId,@Id,@Cat1Code) 	
+			insert into [dbo].[DWObjectFieldCategories]([Id],[DWObjectFieldCode],[DWCategoryCode],[DWObjectTableCode]) values(@NewId,@Id,@Cat1Code) 	
 		end		
 
 		if(@Cat1Code is null and @Cat2Code is null)
@@ -31,21 +31,21 @@ declare @Cat2Code varchar(150)
 		    EXEC   [dbo].[usp_GetNextTableIdValue]
 		                @pLastNumber = @NewId OUTPUT,
 		                @pTableName = N'DWObjectFieldCategories'
-			insert into [dbo].[DWObjectFieldCategories]([Id],[DWObjectFieldCode],[DWCategoryCode]) values(@NewId,@Id,'General') 	
+			insert into [dbo].[DWObjectFieldCategories]([Id],[DWObjectFieldCode],[DWCategoryCode],[DWObjectTableCode]) values(@NewId,@Id,'General') 	
 		end		
 		if(@Cat2Code is not null and @Cat2Code <> @Cat1Code)
 		begin 
 		    EXEC   [dbo].[usp_GetNextTableIdValue]
 		                @pLastNumber = @NewId OUTPUT,
 		                @pTableName = N'DWObjectFieldCategories'
-			insert into [dbo].[DWObjectFieldCategories]([Id],[DWObjectFieldCode],[DWCategoryCode]) values(@NewId,@Id,@Cat2Code) 	
+			insert into [dbo].[DWObjectFieldCategories]([Id],[DWObjectFieldCode],[DWCategoryCode],[DWObjectTableCode]) values(@NewId,@Id,@Cat2Code) 	
 		end		
 		if(@Cat2Code is null and @Cat1Code is null)
 		begin 
 		    EXEC   [dbo].[usp_GetNextTableIdValue]
 		                @pLastNumber = @NewId OUTPUT,
 		                @pTableName = N'DWObjectFieldCategories'
-			insert into [dbo].[DWObjectFieldCategories]([Id],[DWObjectFieldCode],[DWCategoryCode]) values(@NewId,@Id,'General') 	
+			insert into [dbo].[DWObjectFieldCategories]([Id],[DWObjectFieldCode],[DWCategoryCode],[DWObjectTableCode]) values(@NewId,@Id,'General') 	
 		end	
 		FETCH NEXT FROM DWObjectFieldsCursor INTO @Id,@Cat1Code,@Cat2Code
 	END
