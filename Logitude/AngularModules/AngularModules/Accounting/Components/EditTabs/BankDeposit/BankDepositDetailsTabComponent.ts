@@ -57,6 +57,7 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
     private CurrentSession = SessionLocator.SelectedSession;
 
 
+    public showLocals: boolean = !SessionLocator.LoggedUserPM.DontShowLocal;
 
 
     BankDepositPMService: BankDepositPMService = new BankDepositPMService();

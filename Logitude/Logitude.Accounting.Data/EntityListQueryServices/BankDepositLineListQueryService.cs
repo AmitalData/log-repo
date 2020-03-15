@@ -39,6 +39,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                          Notes = a.Notes,
                                                          OutOfDepositeDate = a.OutOfDepositeDate,
                                                          Tenant = a.Tenant,
+                                                         ChequeStatusLocalName = a.ARPaymentCheque.ARPaymentChequeStatus.LocalName,
                                                          ChequeStatusName = a.ARPaymentCheque.ARPaymentChequeStatus.EnglishName,
                                                          ChequeStatusCode = a.ARPaymentCheque.ARPaymentChequeStatus.Code,
                                                          ARPaymentId = a.ARPaymentCheque.PaymentId,

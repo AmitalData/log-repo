@@ -640,7 +640,7 @@
                                     [binding]="'StatusCode'">
                                     <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
                                         <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
-                                            {{  IsLinesSelection ? item.ARPChequeStatusName : item.ChequeStatusName }}
+                                            {{  IsLinesSelection ? (showLocal?item.ARPChequeStatusName : item.ARPChequeStatusLocalName ) : (showLocal?item.ChequeStatusName : item.ChequeStatusLocalName )  }}
                                         </div>
                                     </log-cell-template>
                                 </log-column>
