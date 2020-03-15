@@ -12,16 +12,18 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
     public class InterestReportCalculationFromCSVPreparations : IInterestReportCalculationPreparations
     {
         private string path;
+        private CSVStringLinesGetter cSVStringLinesGetter;
         public InterestReportCalculationFromCSVPreparations(string path)
         {
             this.path = path;
+            cSVStringLinesGetter = new CSVStringLinesGetter();
         }
 
         
         public List<InterestBasesPeriodPM> GetAllInterestBasesPeriodPMs(int tenant)
         {
             List<InterestBasesPeriodPM> interestBasesPeriodPMs = new List<InterestBasesPeriodPM>();
-            string[] csvPeriodsLines = GetstringLinesFromCSV(path+ "interestPeriods.csv");
+            string[] csvPeriodsLines = cSVStringLinesGetter.GetstringLinesFromCSV(path+ "interestperiods.csv");
             for (int i = 0; i < csvPeriodsLines.Length; i++)
             {
                 //InterestBaseTypeId	LineNumber	Tenant	CreateDate	CreatedByUserId	UpdateDate
@@ -46,22 +48,11 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
             return interestBasesPeriodPMs;
         }
 
-        private string[] GetstringLinesFromCSV(string path)
-        {
-            string combinedPath = Path.Combine(Path.GetDirectoryName(Assembly.GetCallingAssembly().Location), path);
-            string[] pathstringSeparators = new string[] { "bin\\Debug\\" };
-            string[] pathParts = combinedPath.Split(pathstringSeparators, StringSplitOptions.None);
-            string filePath = pathParts[0] + pathParts[1];
-            string csvInterestBasesPeriods = File.ReadAllText(filePath);
-            string[] stringSeparators = new string[] { "\r\n" };
-            string[] lines = csvInterestBasesPeriods.Split(stringSeparators, StringSplitOptions.None);
-            lines = lines.Where(d => d != lines[0]).ToArray();
-            return lines;
-        }
+     
         public List<GLAccountInterestPeriodPM> GetGlaccountInterestPeriods(InterestReportPM interestReportPM)
         {
             List<GLAccountInterestPeriodPM> gLAccountInterestPeriodPMs = new List<GLAccountInterestPeriodPM>();
-            string[] csvPeriodsLines = GetstringLinesFromCSV(path + "glaccountPeriods.csv");
+            string[] csvPeriodsLines = cSVStringLinesGetter.GetstringLinesFromCSV(path + "glaccountperiods.csv");
             for (int i = 0; i < csvPeriodsLines.Length; i++)
             {
                 //LineNumber	Tenant	PeriodStartDate	GLAccountId	StandardInterestRateBaseId
@@ -96,22 +87,36 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
 
         public InterestReportPM GetInterestReportPM(string interestReportId, int tenant)
         {
-            InterestReportPM interestReportPM = new InterestReportPM()
+            //Id Tenant  CreateDateTime CreatedByUserId UpdatedByUserId GLAccountId ReportNumber InterestCalculationDate 
+            //TotalAmount OpenBalance CloseBalance ARinvoiceId InvoiceAmount GLAccountInterestCreditLimit  
+            //InterestReportStatusCode UpdateDateTime  SearchFields CustomerId
+
+            string[] csvInterestReportLines = cSVStringLinesGetter.GetstringLinesFromCSV(path + "interestreport.csv");
+            InterestReportPM interestReportPM=new InterestReportPM();
+            for (int i = 0; i < csvInterestReportLines.Length; i++)
             {
-                OpenBalance = 200,
-                CreateDateTime = new DateTime(2020, 2, 6),
-                Tenant = 1,
-                Id = "1-1",
-                InterestCalculationDate = new DateTime(2020, 2, 7),
-                GLAccountInterestCreditLimit = 500,
-            };
+                string[] lineFields = csvInterestReportLines[i].Split(',');
+                interestReportPM.Id = lineFields[0];
+                interestReportPM.Tenant = Convert.ToInt32(lineFields[1]);
+                interestReportPM.CreateDateTime = Convert.ToDateTime(lineFields[2]);
+                interestReportPM.CreatedByUserId = lineFields[3];
+                interestReportPM.UpdatedByUserId = lineFields[4];
+                interestReportPM.GLAccountId = lineFields[5];
+                interestReportPM.ReportNumber = lineFields[6];
+                interestReportPM.InterestCalculationDate = Convert.ToDateTime(lineFields[7]);
+                interestReportPM.TotalAmount = Convert.ToDecimal(lineFields[8]);
+                interestReportPM.OpenBalance = Convert.ToDecimal(lineFields[9]);
+                interestReportPM.CloseBalance = Convert.ToDecimal(lineFields[10]);
+                interestReportPM.ARinvoiceId = lineFields[11];
+                interestReportPM.InvoiceAmount = Convert.ToDecimal(lineFields[12]);
+            }
             return interestReportPM;
         }
 
         public List<InterestTransactionPM> GetInterestTransactionsForGlAccountAndInterestValueDate(string glaccountId, DateTime InterestReportCalculationDate, int tenant)
         {
             List<InterestTransactionPM> interestTransactionPMs = new List<InterestTransactionPM>();
-            string[] csvPeriodsLines = GetstringLinesFromCSV(path + "interestPeriods.csv");
+            string[] csvPeriodsLines = cSVStringLinesGetter.GetstringLinesFromCSV(path + "interesttransactions.csv");
             for (int i = 0; i < csvPeriodsLines.Length; i++)
             {
                 //Id	Tenant	CreateDateTime	UpdateDateTime	SearchFields	GLAccountId	
@@ -142,5 +147,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
             }
             return interestTransactionPMs;
         }
+
+      
     }
 }
