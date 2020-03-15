@@ -164,6 +164,7 @@ export class DeclarationList {
 	CustomFileAmendment: string;
 	DeclarationNoAmendment: string;
 	AmendmentNumber: number;
+	CourierPendingReasonName: string;
 	
 }
  

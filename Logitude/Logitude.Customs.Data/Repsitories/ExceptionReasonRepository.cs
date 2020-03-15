@@ -20,8 +20,15 @@ namespace Logitude.Customs.Data.Repsitories
             
 			throw new NotImplementedException();
         }
+        public List<ExceptionReason> GetExceptionReasonByUnifreightStatus(string unifreightStatusCode)
+        {
+            List<ExceptionReason> selectedexceptionReasons = (from exceptionReasons in context.ExceptionReasons
+                                                              where exceptionReasons.UnifreightStatusCode == unifreightStatusCode && !exceptionReasons.IsActive
+                                                                        select exceptionReasons).ToList();
+            return selectedexceptionReasons;
+        }
 
-   }
+    }
 
 }
    

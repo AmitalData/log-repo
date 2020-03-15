@@ -78,6 +78,7 @@
     <Compile Include="EntityPMs\ConsignmentPackagePM.cs" />
     <Compile Include="EntityPMs\ConsignmentPM.cs" />
     <Compile Include="EntityPMs\CourierMasterPM.cs" />
+    <Compile Include="EntityPMs\CurrencyTypePM.cs" />
     <Compile Include="EntityPMs\CustomBankPM.cs" />
     <Compile Include="EntityPMs\CustomDocumentTypePM.cs" />
     <Compile Include="EntityPMs\CustomsBranchPM.cs" />

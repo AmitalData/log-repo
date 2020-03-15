@@ -2958,8 +2958,6 @@ namespace Logitude.DatabaseMigration.LogitudeModel
         public IDbSet<CourierMaster> CourierMasters { get; set; }
         public IDbSet<CourierDeclaration> CourierDeclarations { get; set; }
         public IDbSet<CargoStatus> CargoStatuses { get; set; }
-        IDbSet<ExceptionReason> ExceptionReasons { get; }
-        IDbSet<ReferantException> ReferantExceptions { get; }
         public IDbSet<MAWBType> MAWBTypes { get; set; }
         public IDbSet<DeclarationConsAcceptance> DeclarationConsAcceptances { get; set; }
         public IDbSet<CourierCustomStatus> CourierCustomStatuses { get; set; }
