@@ -69,6 +69,7 @@ import {Component, ChangeDetectionStrategy, Input} from '@angular/core';
 
 export class SectionBox {
     public Top: number = null;
+    public borderLeft: number = null;
     public Bottom: number = null;
     public Scrolling: boolean = false;
     public SectionHead: SectionHead;
