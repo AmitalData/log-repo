@@ -140,6 +140,7 @@
     <Compile Include="CloseTables\CustomsCargoSealStatus.cs" />
     <Compile Include="CloseTables\CustomsAutonomyKeywordDetails.cs" />
     <Compile Include="CloseTables\CustomsPartnerFtpDetails.cs" />
+    <Compile Include="CloseTables\SincroTestCaseDetails.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\AcceptanceStatusDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\ActionCodeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\AmendmentTypeDetails.Generated.cs" />
@@ -170,6 +171,7 @@
     <Compile Include="CloseTables\DetailsClassesGenerated\FreightPaymentMethodDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\GatepassReturnCodeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\GovernmentProcedureTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\HazardousSubstanceDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\ImporterDeclarationTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\ImporterTypeForClaimDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\LeadDocumentTypeDetails.Generated.cs" />
@@ -227,6 +229,7 @@
     <Compile Include="CloseTables\EnumGenerated\FreightPaymentMethodStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\GatepassReturnCodeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\GovernmentProcedureTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\HazardousSubstanceStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\ImporterDeclarationTypeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\ImporterTypeForClaimStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\LeadDocumentTypeStruct.Generated.cs" />
@@ -243,6 +246,7 @@
     <Compile Include="CloseTables\EnumGenerated\ProcessingReasonStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\RefundCustomerActivityTypeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\RequestTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\SealCompletenesStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\SealTypeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\SeizureFactorTypeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\SeizureMethodTypeStruct.Generated.cs" />
@@ -255,7 +259,6 @@
     <Compile Include="CloseTables\EnumGenerated\UIMessageStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\UpdateCodeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\VendorTypeStruct.Generated.cs" />
-    <Compile Include="CloseTables\SincroTestCaseDetails.cs" />
     <Compile Include="EntityDataMappings\AcceptanceStatusDataMapping.cs" />
     <Compile Include="EntityDataMappings\AccumalationStateDataMapping.cs" />
     <Compile Include="EntityDataMappings\ActionCodeDataMapping.cs" />
@@ -264,6 +267,7 @@
     <Compile Include="EntityDataMappings\AgentTalkBackTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\AmendmentFieldReasonTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\AmendmentRequestStatusDataMapping.cs" />
+    <Compile Include="EntityDataMappings\AmendmentStatusDataMapping.cs" />
     <Compile Include="EntityDataMappings\AmendmentTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\ApprovedProfessionDataMapping.cs" />
     <Compile Include="EntityDataMappings\AssigneeNotificationTypeDataMapping.cs" />
@@ -436,6 +440,7 @@
     <Compile Include="EntityDataMappings\Generated\AgentTalkBackTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\AmendmentFieldReasonTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\AmendmentRequestStatusDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\AmendmentStatusDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\AmendmentTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ApprovedProfessionDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\AssigneeNotificationTypeDataMapping.Generated.cs" />
@@ -605,6 +610,7 @@
     <Compile Include="EntityDataMappings\Generated\GuaranteeConditionDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\GuaranteeCustomerActivityDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\GuaranteeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\HazardousSubstanceDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ImporterDeclarationTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ImporterDespositionDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ImporterPeriodicDeclarStatusDataMapping.Generated.cs" />
@@ -750,6 +756,7 @@
     <Compile Include="EntityDataMappings\GuaranteeConditionDataMapping.cs" />
     <Compile Include="EntityDataMappings\GuaranteeCustomerActivityDataMapping.cs" />
     <Compile Include="EntityDataMappings\GuaranteeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\HazardousSubstanceDataMapping.cs" />
     <Compile Include="EntityDataMappings\ImporterDeclarationTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\ImporterDespositionDataMapping.cs" />
     <Compile Include="EntityDataMappings\ImporterPeriodicDeclarStatusDataMapping.cs" />
@@ -907,6 +914,7 @@
     <Compile Include="EntityQueryServices\DBMigrationQueryService.cs" />
     <Compile Include="EntityQueryServices\DeclarationPendingQueryService.cs" />
     <Compile Include="EntityQueryServices\ExceptionReasonQueryService.cs" />
+    <Compile Include="EntityQueryServices\Generated\AmendmentStatusQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\AmendmentTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ApprovedProfessionQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CargoSealIdentifierQueryService.Generated.cs" />
@@ -924,6 +932,7 @@
     <Compile Include="EntityQueryServices\Generated\ExceptionReasonQueryService.cs" />
     <Compile Include="EntityQueryServices\Generated\ExceptionReasonQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ReferantExceptionQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\HazardousSubstanceQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\RequestTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\SealCompletenesQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\SealTypeQueryService.Generated.cs" />
@@ -1364,6 +1373,7 @@
     <Compile Include="EntityUpdateServices\Generated\AccumalationStateUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ActionCodeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\AgentTalkBackTypeUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\AmendmentStatusUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\AmendmentTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ApprovedProfessionUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CargoSealIdentifierUpdateService.Generated.cs" />
@@ -1413,6 +1423,7 @@
     <Compile Include="EntityUpdateServices\Generated\FreightPaymentMethodUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\GatepassRequestUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\GatepassReturnCodeUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\HazardousSubstanceUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ImporterDeclarationTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\MamanSpecialActionStatusUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\MamanSpecialActionUpdateService.Generated.cs" />
@@ -1903,6 +1914,7 @@
     <Compile Include="PatchDistribution\Patches\P19R03_0018_SealBAndAddOn.cs" />
     <Compile Include="PatchDistribution\Patches\P19R03_0019_SealB2Pioneers.cs" />
     <Compile Include="PatchDistribution\Patches\P19R03_0020_isCourierManadatory.cs" />
+    <Compile Include="PatchDistribution\Patches\P19R03_0021_TenantNone.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="EntityUpdateServices\ClientUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ConsignmentUpdateService.cs" />
