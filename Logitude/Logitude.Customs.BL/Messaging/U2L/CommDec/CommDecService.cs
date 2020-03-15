@@ -38,6 +38,9 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
         private CourierMasterPM _CourierMasterPM;
         private CourierDeclarationPM _CourierDeclarationPM;
         private ICustomContext _context;
+        private LOGICUSTFILE _LOGICUSTFILE;
+        private LogitudeCustomsFile _AmitalCustomsFile;
+        private DeclarationCourierStatusPM currentDeclarationCourierStatusPM;
 
         private AmitalContext amitalContext;
 
@@ -47,6 +50,8 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
         //private DeclarationPM _MyEntryDeclarationPM;
         private Stopwatch _Stopwatch;
         private bool _IsBuildItemsUnit = false;
+
+        public bool IsAutonomy = false;
 
         public CommDecService()
             : base(
@@ -115,16 +120,21 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
             catch (DbEntityValidationException ex)
             {
                 var FormatedException = ExceptionFormatUtil.GetFormated(ex);
+                AppendLogLine("Declaration Upsert Error " + Environment.NewLine + Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.ToString(1000));
                 AppendLogLine("ProccessRequest():Exception " + FormatedException.ToString() + Environment.NewLine + "---------------------------------------------");
+                MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.BusinessError;
                 return;
             }
             catch (Exception e)
             {
+                AppendLogLine("Declaration Upsert Error " + Environment.NewLine + Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.ToString(1000));
                 AppendLogLine("ProccessRequest():Exception " + e.ToString() + Environment.NewLine + "---------------------------------------------");
+                MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.BusinessError;
                 return;
             }
             if(!String.IsNullOrWhiteSpace(MyGenericResponseObj.StatusType.ToString()) && MyGenericResponseObj.StatusType != GenericResponseObj.StatusEnum.Success)
             {
+                AppendLogLine("Declaration Upsert Error " + Environment.NewLine + Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.ToString(1000));
                 return;
             }
             //Delete Supplier Invoice
@@ -142,6 +152,8 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
             this._MyDeclarationPM = myQueryService.GetSingle(this._LogitudeCommDecFile.Id, true, false);
             if (this._MyDeclarationPM == null)
             {
+                AppendLogLine("Declaration Get Single Error " + Environment.NewLine + Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.ToString(1000));
+                MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.BusinessError;
                 throw new BusinessErrorException("LOGITUDE FILE is " + this._LogitudeCommDecFile.Id + " but not found");
             }
             AppendLogLine("GetSingle:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
@@ -374,6 +386,24 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
                 }
             }
 
+
+            this._LOGICUSTFILE = XmlGenericUtil<LOGICUSTFILE>.DeSerializeObject(xmlLOGICUSTFILE);
+            if (_LOGICUSTFILE.LogitudeCustomsFile == null || _LOGICUSTFILE.LogitudeCustomsFile.Length != 1)
+            {
+                MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.BusinessError;
+                MyGenericResponseObj.Message = "customFile.LogitudeCustomsFile.Length !=1 !!!";
+            }
+            else
+            {
+                this._AmitalCustomsFile = _LOGICUSTFILE.LogitudeCustomsFile[0];
+                CalcIsAutonomy();
+                CalcProcedureCurrentCode();
+                if(this.IsAutonomy)
+                {
+                    UpdateDeclarationPending("901");
+                }
+            }
+
             _MyDeclarationPM.CurrentContextTag = UpsertActionConst; // moran 28.7.16 - Task 22249
 
             if(this._MyDeclarationPM.ProcedureCurrentCode == "4000020")
@@ -429,6 +459,128 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
             MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.Success;
         }
 
+        private void UpdateDeclarationPending(string declarationPendingCode)
+        {
+            if (currentDeclarationCourierStatusPM != null)
+            {
+                CourierPendingReasonQueryService myCourierPendingReasonQueryService = new CourierPendingReasonQueryService(_context);
+                CourierPendingReasonPM courierPendingReasonPM = myCourierPendingReasonQueryService.GetSingle(declarationPendingCode, false, false);
+                if (courierPendingReasonPM == null)
+                {
+                    LogMessagingUtil.Instance.AppendLine("לא קיים קוד Pending = " + declarationPendingCode + " בטבלת סיבות Pending");
+                    return;
+                }
+                LogMessagingUtil.Instance.AppendLine("Pending - " + declarationPendingCode);
+                DeclarationPendingPM _declarationPendingPM = null;
+                if (currentDeclarationCourierStatusPM.DeclarationPendings != null && currentDeclarationCourierStatusPM.DeclarationPendings.Count() > 0)
+                {
+                    _declarationPendingPM = currentDeclarationCourierStatusPM.DeclarationPendings.Where(r => r.DeclarationID == currentDeclarationCourierStatusPM.DeclarationId && r.CourierPendingReasonCode == declarationPendingCode).FirstOrDefault();
+                }
+                if (_declarationPendingPM == null)
+                {
+                    _declarationPendingPM = new DeclarationPendingPM();
+                    _declarationPendingPM.CourierPendingReasonCode = declarationPendingCode;
+                    _declarationPendingPM.Status = "A";
+                    _declarationPendingPM.ChangeSetOp = ChangeSetOperation.Insert;
+                    currentDeclarationCourierStatusPM.DeclarationPendings.Add(_declarationPendingPM);
+                }
+                else if (_declarationPendingPM.Status != "A")
+                {
+                    _declarationPendingPM.ChangeSetOp = ChangeSetOperation.Update;
+                    _declarationPendingPM.Status = "A";
+                }
+                if (_declarationPendingPM.ChangeSetOp != ChangeSetOperation.None)
+                {
+                    LogMessagingUtil.Instance.AppendLine("Set Courier Pending Reason Code To " + declarationPendingCode);
+                    if (currentDeclarationCourierStatusPM.ChangeSetOp != ChangeSetOperation.Update) currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                }
+                if (currentDeclarationCourierStatusPM.ChangeSetOp == ChangeSetOperation.Update)
+                {
+                    DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(_context, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
+                    declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
+                }
+            }
+        }
+
+        private void CalcProcedureCurrentCode()
+        {
+            if (currentDeclarationCourierStatusPM == null)
+            {
+                DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(_context);
+                currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(_MyDeclarationPM.Id, true, false);
+            }
+
+            if (this.IsAutonomy == true)
+            {
+                if (!String.IsNullOrWhiteSpace(this._MyDeclarationPM.ImporterCode) && this._MyDeclarationPM.ImporterCode.Substring(0, 1) == "5")
+                {
+                    if (this.currentDeclarationCourierStatusPM != null && this.currentDeclarationCourierStatusPM.HighLowValue == "H")
+                    {
+                        this._MyDeclarationPM.ProcedureCurrentCode = "4000005";
+                    }
+                    else
+                    {
+                        this._MyDeclarationPM.ProcedureCurrentCode = "4000012";
+                    }
+                }
+                else
+                {
+                    if (this.currentDeclarationCourierStatusPM != null && this.currentDeclarationCourierStatusPM.HighLowValue == "H")
+                    {
+                        this._MyDeclarationPM.ProcedureCurrentCode = "4000505";
+                    }
+                    else
+                    {
+                        this._MyDeclarationPM.ProcedureCurrentCode = "4000512";
+                    }
+                }
+            }
+            else
+            {
+                if (!String.IsNullOrWhiteSpace(this._MyDeclarationPM.ImporterCode) && this._MyDeclarationPM.ImporterCode.Substring(0, 1) == "5")
+                {
+                    if (this.currentDeclarationCourierStatusPM != null && this.currentDeclarationCourierStatusPM.HighLowValue == "H")
+                    {
+                        this._MyDeclarationPM.ProcedureCurrentCode = "4000001";
+                    }
+                    else
+                    {
+                        this._MyDeclarationPM.ProcedureCurrentCode = "4000007";
+                    }
+                }
+                else
+                {
+                    if (this.currentDeclarationCourierStatusPM != null && this.currentDeclarationCourierStatusPM.HighLowValue == "H")
+                    {
+                        this._MyDeclarationPM.ProcedureCurrentCode = "4000501";
+                    }
+                    else
+                    {
+                        this._MyDeclarationPM.ProcedureCurrentCode = "4000507";
+                    }
+                }
+            }
+        }
+
+        private void CalcIsAutonomy()
+        {
+            if (String.IsNullOrWhiteSpace(this._LogitudeCommDecFile.IsAutonomy) && !String.IsNullOrWhiteSpace(this._MyDeclarationPM.ImporterCode) && this._MyDeclarationPM.ImporterCode.Substring(0,1) == "8")
+            {
+                this.IsAutonomy = true;
+            }
+            if (String.IsNullOrWhiteSpace(this._LogitudeCommDecFile.IsAutonomy) && String.IsNullOrWhiteSpace(this._MyDeclarationPM.ImporterCode))
+            {
+                CustomsAutonomyKeywordQueryService customsAutonomyKeywordQueryService = new CustomsAutonomyKeywordQueryService(_context);
+                if(customsAutonomyKeywordQueryService.CheckIfsAutonomy(_AmitalCustomsFile.CasualImporterCity, _AmitalCustomsFile.CasualImportelTel.TrimStart(new Char[] { '0' }), ResolvedTenant()))
+                {
+                    this.IsAutonomy = true;
+                }
+            }
+            if (!String.IsNullOrWhiteSpace(this._LogitudeCommDecFile.IsAutonomy) && (this._LogitudeCommDecFile.IsAutonomy.ToLower() == "y" || this._LogitudeCommDecFile.IsAutonomy.ToLower() == "yes"))
+            {
+                this.IsAutonomy = true;
+            }
+        }
 
         private void CheckMasterToUpdate(string MoreParams)
         {
@@ -513,7 +665,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
                             string prevVal = null;
                             string currvVal = null;
                             DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(_context);
-                            DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(_MyDeclarationPM.Id, true, false);
+                            currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(_MyDeclarationPM.Id, true, false);
                             if (currentDeclarationCourierStatusPM != null)
                             {
                                 CalculateDeclarationCourierStatus calculateDeclarationCourierStatus = new CalculateDeclarationCourierStatus(_MyDeclarationPM, _MyDeclarationPM.Id, _MyDeclarationPM.Tenant);
