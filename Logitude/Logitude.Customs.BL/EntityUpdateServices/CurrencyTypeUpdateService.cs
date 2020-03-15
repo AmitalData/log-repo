@@ -34,10 +34,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
                 
             }
-            if (Tenant == 0)
-            {
-                throw new Exception("Customer care shouldn't update Currency !");
-            }
 
             var currencyTypeTenantQueryService = new CurrencyTypeTenantQueryService(Tenant);
             var pm =currencyTypeTenantQueryService.GetPMByCode(Tenant, entityPM.Code);
