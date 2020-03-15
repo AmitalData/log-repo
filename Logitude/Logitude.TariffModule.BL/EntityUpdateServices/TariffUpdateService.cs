@@ -680,7 +680,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                             }
                             else
                             {
-                                fromPort = portRepository.GetOceanPortByCode(entityPM.Tenant, tariffLine.OriginPortText.Trim(), true);
+                                fromPort = portRepository.GetOceanPortByCombinedCode( tariffLine.OriginPortText.Trim(), entityPM.Tenant);
                             }
                             if (fromPort == null)
                             {
@@ -691,7 +691,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                                 }
                                 else
                                 {
-                                    portZero = portRepository.GetOceanPortByCode(0, tariffLine.OriginPortText.Trim(), true);
+                                    portZero = portRepository.GetOceanPortByCombinedCode(tariffLine.OriginPortText.Trim(), 0);
                                 }
                                
                                 if (portZero != null)
@@ -717,7 +717,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                             }
                             else
                             {
-                                toPort = portRepository.GetOceanPortByCode(entityPM.Tenant, tariffLine.DestinationPortText.Trim(), true);
+                                toPort = portRepository.GetOceanPortByCombinedCode(tariffLine.DestinationPortText.Trim(), entityPM.Tenant);
                             }
 
                             if (toPort == null)
@@ -729,7 +729,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                                 }
                                 else
                                 {
-                                    portZero = portRepository.GetOceanPortByCode(0, tariffLine.DestinationPortText.Trim(), true);
+                                    portZero = portRepository.GetOceanPortByCombinedCode(tariffLine.DestinationPortText.Trim(), 0);
                                 }
                                 if (portZero != null)
                                 {
@@ -820,6 +820,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
             {
                 Id = IdCounter.GetNumber("Port", tenant).ToString(),
                 Code = ZeroPort.Code,
+                CombinedCode = ZeroPort.CombinedCode,
                 EnglishName = ZeroPort.EnglishName,
                 LocalName = ZeroPort.LocalName,
                 Tenant = tenant,

@@ -2820,7 +2820,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 }
                 else if (this.TariffType == "OLC" || this.TariffType == "OFC")
                 {
-                    myPort = this.portRepository.GetSinglePortIdByCombinedCode(code, tenant);
+                    myPort = this.portRepository.GetOceanPortByCombinedCode(code, tenant);
                 }
 
                 if (myPort == null)
@@ -2832,7 +2832,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     }
                     else if (this.TariffType == "OLC" || this.TariffType == "OFC")
                     {
-                        portZero = this.portRepository.GetSinglePortIdByCombinedCode(code, 0);
+                        portZero = this.portRepository.GetOceanPortByCombinedCode(code, 0);
                     }
                     if (portZero != null)
                     {
