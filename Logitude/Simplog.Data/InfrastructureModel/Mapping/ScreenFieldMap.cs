@@ -18,9 +18,13 @@ namespace Simplog.Data.InfrastructureModel.Mapping
                 .IsUnicode(false);
 
             this.Property(t => t.ScreenCode)
-                .IsRequired()
                 .HasMaxLength(200)
                 .IsUnicode(false);
+
+            //this.Property(t => t.ScreenCode)
+            //    .IsRequired()
+            //    .HasMaxLength(200)
+            //    .IsUnicode(false);
 
             this.Property(t => t.Id)
                 .IsRequired()
@@ -33,9 +37,12 @@ namespace Simplog.Data.InfrastructureModel.Mapping
                 .IsUnicode(false);
 
             this.Property(t => t.ObjectFieldCode)
-                  .IsRequired()
                   .HasMaxLength(200)
                   .IsUnicode(false);
+            //this.Property(t => t.ObjectFieldCode)
+            //      .IsRequired()
+            //      .HasMaxLength(200)
+            //      .IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("ScreenFields");

@@ -56,7 +56,8 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.Code).IsRequired().HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.EnableFullscreenTextBox);
             this.Property(t => t.RecordType).HasMaxLength(100).IsUnicode(false);
-            this.Property(t => t.FieldCode).IsRequired().HasMaxLength(200).IsUnicode(false);
+            this.Property(t => t.FieldCode).HasMaxLength(200).IsUnicode(false);
+            //this.Property(t => t.FieldCode).IsRequired().HasMaxLength(200).IsUnicode(false);
             this.Property(t => t.FullNameTextCodeCode).HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.HelpTextCodeCode).HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.ListTextCodeCode).HasMaxLength(100).IsUnicode(false);

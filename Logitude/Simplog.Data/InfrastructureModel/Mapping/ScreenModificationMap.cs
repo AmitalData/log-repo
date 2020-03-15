@@ -23,7 +23,6 @@ namespace Simplog.Data.InfrastructureModel.Mapping
                 .IsUnicode(false);
 
             this.Property(t => t.ScreenCode)
-               .IsRequired()
                .HasMaxLength(100)
                .IsUnicode(false);
 

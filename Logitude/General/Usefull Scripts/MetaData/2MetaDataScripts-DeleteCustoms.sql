@@ -1,6 +1,6 @@
 ﻿
-alter table RuleConditionFields drop constraint [FK_RuleConditionFieldsObjectTableRule]
-alter table Customs.CustomsRequiredFields drop constraint [FK_Customs.CustomsRequiredFields_dbo.ObjectFields_ObjectfieldId]
+--alter table RuleConditionFields drop constraint [FK_RuleConditionFieldsObjectTableRule]
+--alter table Customs.CustomsRequiredFields drop constraint [FK_Customs.CustomsRequiredFields_dbo.ObjectFields_ObjectfieldId]
 
 ----MetaData All Scripts: Never Apply these scripts
 

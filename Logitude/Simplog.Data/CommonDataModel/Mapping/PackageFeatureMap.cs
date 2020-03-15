@@ -12,7 +12,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.Id).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.PackageCode).IsRequired().HasMaxLength(5).IsUnicode(false);
             this.Property(t => t.FeatureId).IsRequired().HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.FeatureUniqeCode).IsRequired().HasMaxLength(120).IsUnicode(false);
+            this.Property(t => t.FeatureUniqeCode).HasMaxLength(120).IsUnicode(false);
 
             this.ToTable("PackageFeatures");
             this.Property(t => t.Id).HasColumnName("Id");
