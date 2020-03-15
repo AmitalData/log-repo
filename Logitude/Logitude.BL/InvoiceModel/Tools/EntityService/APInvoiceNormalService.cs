@@ -2309,9 +2309,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                                             AccountingDate = theEntityPm.AccountingDate != null ? theEntityPm.AccountingDate.Value : TenantServerConfigration.GetCurrentDateTime(tenant),
                                                             DueDate = theEntityPm.DueDate.Value,
 
-                                                            LocalAmount = ((decimal)g.Sum(a => 
+                                                            LocalAmount = (decimal)g.Sum(a => 
                                                             (a.VatRecognizedPercentage == null || a.VatRecognizedPercentage==0) ? a.LocalCurrencyAmount :
-                                                                (MethodHelper.Round( (a.LocalCurrencyAmount + ((a.VatPercentage / 100) * ((1 - a.VatRecognizedPercentage) * a.LocalCurrencyAmount))), 2)))),
+                                                                 (a.LocalCurrencyAmount + ((1 - a.VatRecognizedPercentage) * Math.Round((double)((a.VatPercentage / 100) * a.LocalCurrencyAmount), 2)))),
 
                                                             CurrencyId = g.Key.ForiegnCurrencyId,
                                                             ForeignAmount = (decimal)g.Sum(a => a.ForiegnAmountWithRecognizedVat),
