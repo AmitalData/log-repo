@@ -168,9 +168,6 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
    
 
         ComponentArgs.AddComponent(new ParameterComponentArgs(this.CurrentSession.Sessionkey + "DWLogSearchWindow", this));
-        if (args.ObjectTableName == "DIM_Partners" && args.DisplayFieldsFromList == "[Code]" && args.LOVAdditionalColumns == null) {
-            args.LOVAdditionalColumns = "[Name],[Partner Type]"; //this is because cannot filter on name
-        }
         this.ObjectTableName = args.ObjectTableName; // lookup table
         this.ObjectFieldName = args.DisplayFieldsFromList;
         this.LOVAdditionalColumns = this.BuildAdditionalColumns(args.LOVAdditionalColumns);
