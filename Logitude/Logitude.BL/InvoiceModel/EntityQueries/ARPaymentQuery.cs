@@ -26,7 +26,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
         ARPaymentRepository repository;
         public ARPaymentQuery()
         {
-            repository = new ARPaymentRepository(); 
+            repository = new ARPaymentRepository();
         }
         public ARPaymentQuery(int tenant)
         {
@@ -132,7 +132,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
             payment.ARPaymentChequeReplicas = GetARPaymentChequeReplicasByPaymentId(payment.Id, tenant);
             GetGLAccountFields(payment);
-            payment =  SetJournalFields(payment);
+            payment = SetJournalFields(payment);
             ARPaymentPM securedPM = new ARPaymentPM();
             SecuredMapping.GetMappedPM(payment, securedPM, "ARPayment", tenant);
 
@@ -207,11 +207,11 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             return payment;
         }
 
-        public bool CheckARPaymentNumber(string number,string id, int tenant)
+        public bool CheckARPaymentNumber(string number, string id, int tenant)
         {
             bool exist = (from a in repository.context.ARPayments.Include("LocalCurrency").Include("Status")
-                                 where a.PaymentNo == number &&a.Id != id && a.Tenant == tenant
-                                 select a).Any();
+                          where a.PaymentNo == number && a.Id != id && a.Tenant == tenant
+                          select a).Any();
 
             return exist;
         }
@@ -219,7 +219,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
         public ARPaymentPM GetSinglePaymentByPaymentNumber_00(string paymentNo, int tenant)
         {
-            
+
             AccountingPaymentMethodRepository paymentMethodRep = new AccountingPaymentMethodRepository(repository.context);
             ARPaymentStatusRepository arpaymentStatusRep = new ARPaymentStatusRepository(repository.context);
             ARPaymentPM payment = (from a in repository.context.ARPayments.Include("LocalCurrency").Include("TransferStatus").Include("Branch")
@@ -274,7 +274,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                        TransferStatusCode = a.TransferStatusCode,
                                        TransferStatusName = a.TransferStatus == null ? "" : a.TransferStatus.Name,
                                        ReadyForTransfer = a.TransferStatusCode == "RD" ? true : false,
-                                       ExternalAccountingEntityId=a.ExternalAccountingEntityId,
+                                       ExternalAccountingEntityId = a.ExternalAccountingEntityId,
                                        InvoiceNumber = a.InvoiceNumber,
                                        ShipmentNumber = a.ShipmentNumber,
                                        SATPaymentMethodCode = a.SATPaymentMethodCode,
@@ -328,7 +328,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
         {
             IBankAccountQueryServiceExt bankAccountQuery = ContainerAccessor.Container.Resolve(typeof(IBankAccountQueryServiceExt), "BankAccountQueryServiceExt", new ParameterOverride("", 1)) as IBankAccountQueryServiceExt;
             BankAccountPM bankAccount = bankAccountQuery.GetByFirstOrDefault(id, tenant);
-            if(bankAccount!= null)
+            if (bankAccount != null)
             {
                 return bankAccount.AccountNumber;
             }
@@ -690,6 +690,11 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             }
         }
 
-      
+        public string GetARPaymentNumber(string arPaymentId, int tenant)
+        {
+            ARPaymentRepository aRPaymentRepository = new ARPaymentRepository(tenant);
+            string arPaymentNo = aRPaymentRepository.GetARPaymentNumber(arPaymentId, tenant);
+            return arPaymentNo;
+        }
     }
 }

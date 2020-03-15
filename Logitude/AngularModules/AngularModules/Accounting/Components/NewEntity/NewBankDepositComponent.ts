@@ -1,3 +1,4 @@
+import { CashBookExtendedPMService } from './../../Services/ExtendedPMs/CashBookExtendedPMService';
 import {Component, ChangeDetectorRef, OnInit} from '@angular/core';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
@@ -14,6 +15,7 @@ import {CashBookPMService} from '../../Services/StandardPMs/CashBookPMService';
 import {AccountingPeriodExtendedListService} from '../../Services/ExtendedLists/AccountingPeriodExtendedListService';
 import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
 import {RatesTableExtendedListService } from '../../../Infrastructure/Services/ExtendedLists/RatesTableExtendedListService';
+import { CashbookChequesCounter } from '../../DataContracts/CashbookChequesCounter';
 
 @Component({
     selector: 'NewBankDepositComponent',
@@ -31,6 +33,7 @@ export class NewBankDepositComponent extends BaseComponent implements OnInit {
     private myAccountingPeriodListService: AccountingPeriodExtendedListService = new AccountingPeriodExtendedListService();
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     private ratesTableExtendedListService: RatesTableExtendedListService = new RatesTableExtendedListService();
+    cashBookExtendedPMService: CashBookExtendedPMService = new CashBookExtendedPMService();
 
 
     private CurrentSession = SessionLocator.SelectedSession;
@@ -158,45 +161,51 @@ export class NewBankDepositComponent extends BaseComponent implements OnInit {
 
     CheckIfThereIsCheques(id) {
 
-        // 1-get cashbook pm
-        this.cashBookPMService.get(id).subscribe(myResult => {
-            var myResponse: ServiceResponse = myResult;
+        if (!AppTool.IsNullOrEmpty(this.cashbook)) {
 
-            if (!myResponse.HasError) {
-                var entityPm: CashBookPM;
+            //2-check
+            if (this.cashbook.CashBookTypeCode == "2") { // 2-cheques
 
-                entityPm = myResponse.Result;
-                if (!AppTool.IsNullOrEmpty(entityPm)) {
 
-                    //2-check
-                    if (entityPm.CashBookTypeCode == "2") { // 2-cheques
-                        var exist = entityPm.CashBookLines.find(d => d.IsDeposited == false);
-                        if (exist) {
-                            this.SubmitChanges();
-                        } else {
-                            this.ValidationErrorsList = [];
-                            this.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.General.O.noChequesinCashbook"));
+
+                this.CurrentSession.CurrentWindow.StartBusyIndicator("Check Cashbook Cheques ...");
+
+
+                    this.cashBookExtendedPMService.GetCashbookChequesCounter(this.EntityPM.CashBookId)
+                        .subscribe((response: ServiceResponse) =>
+                        {
+                            console.log("[GetCashbookChequesCounter]", response);
                             this.CurrentSession.CurrentWindow.StopBusyIndicator();
-                        }
-                    } else if (entityPm.CashBookTypeCode == "1") { // 1-cash
-                        if (AppTool.IsNullOrZero(entityPm.TotalAmount)) {
-                            this.ValidationErrorsList = [];
-                            this.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.General.O.noCashICashbook"));
-                            this.CurrentSession.CurrentWindow.StopBusyIndicator();
-                        } else {
-                            this.SubmitChanges();
-                        }
-                    }
 
+                            if (!response.HasError) {
+                                var chequesCounter: CashbookChequesCounter = response.Result;
+
+                                var hasChequesToDeposit = chequesCounter.AllChequesCount > 0;
+                                if (hasChequesToDeposit) {
+                                    this.SubmitChanges();
+                                } else {
+                                    this.ValidationErrorsList = [];
+                                    this.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.General.O.noChequesinCashbook"));
+                                    this.CurrentSession.CurrentWindow.StopBusyIndicator();
+                                }
+                            }
+                            else {
+                                console.error(response.ErrorsArray);
+                            }
+                        });
+
+
+            } else if (this.cashbook.CashBookTypeCode == "1") { // 1-cash
+                if (AppTool.IsNullOrZero(this.cashbook.TotalAmount)) {
+                    this.ValidationErrorsList = [];
+                    this.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.General.O.noCashICashbook"));
+                    this.CurrentSession.CurrentWindow.StopBusyIndicator();
+                } else {
+                    this.SubmitChanges();
                 }
-
-            } else {
-                console.log("error");
-                this.CurrentSession.CurrentWindow.StopBusyIndicator();
-
             }
-        });
 
+        }
 
     }
 
