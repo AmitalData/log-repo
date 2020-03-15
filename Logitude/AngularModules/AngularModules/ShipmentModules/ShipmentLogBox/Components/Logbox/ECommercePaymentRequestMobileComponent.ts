@@ -274,6 +274,9 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
     public get TermsOfUseDocumentId() { return this.AdditionalData.RequestPaymentData.TermsOfUseDocumentId }
     public set TermsOfUseDocumentId(newValue: string) { this.AdditionalData.RequestPaymentData.TermsOfUseDocumentId = newValue; }
 
+    public get u71() { return this.AdditionalData.PaymentData.u71 }
+    public set u71(newValue: string) { this.AdditionalData.PaymentData.u71 = newValue; }
+
 
 
     ShowPaymentDetailsScreen: boolean = false;
