@@ -60,38 +60,38 @@
 
                                     <!-- Charges Type -->
                                     <log-column [width]="'150'" [header]="'QuoteCharge.CH.ChargesTypeIdListLable' | TextCodeTranslationPipe">
-                                        <log-cell-template #logcelltemplate [IsEnabled]="false">
-                                            <ng-template let-item>
+                                        <ng-template let-item>
+                                            <log-cell-template #logcelltemplate [IsEnabled]="false">
                                                 {{item.ChargesTypeCodeName}}
-                                            </ng-template>
-                                        </log-cell-template>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- Vendor -->
                                     <log-column [width]="'150'" [header]="'QuoteCharge.CH.VendorIdListLable' | TextCodeTranslationPipe">
-                                        <log-cell-template #logcelltemplate [IsEnabled]="false">
-                                            <ng-template let-item>
+                                        <ng-template let-item>
+                                            <log-cell-template #logcelltemplate [IsEnabled]="false">
                                                 {{item.VendorName}}
-                                            </ng-template>
-                                        </log-cell-template>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- Measurement Code -->
                                     <log-column [width]="'50'" [header]="'QuoteCharge.CH.CostMeasurementIdListLable' | TextCodeTranslationPipe" [Alignment]="'center'">
-                                        <log-cell-template #logcelltemplate [Alignment]="'center'" [IsEnabled]="false">
-                                            <ng-template let-item>
+                                        <ng-template let-item>
+                                            <log-cell-template #logcelltemplate [Alignment]="'center'" [IsEnabled]="false">
                                                 {{item.CostMeasurementCode}}
-                                            </ng-template>
-                                        </log-cell-template>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- Currency Code -->
                                     <log-column [width]="'40'" [header]="'QuoteCharge.CH.SaleCurrencyIdListLable' | TextCodeTranslationPipe" [Alignment]="'center'">
-                                        <log-cell-template #logcelltemplate [Alignment]="'center'" [IsEnabled]="false">
-                                            <ng-template let-item>
+                                        <ng-template let-item>
+                                            <log-cell-template #logcelltemplate [Alignment]="'center'" [IsEnabled]="false">
                                                 {{item.CostCurrencyCode}}
-                                            </ng-template>
-                                        </log-cell-template>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- Cost Quantity -->
@@ -191,8 +191,8 @@
                                             </ng-template>
                                         </log-header-template>
 
-                                        <log-cell-template #logcelltemplate [IsEnabled]="false">
-                                            <ng-template let-item>
+                                        <ng-template let-item>
+                                            <log-cell-template #logcelltemplate [IsEnabled]="false">
                                                 <div style="height: 100%; width: 100%; position: relative;">
                                                     <table>
                                                         <tr>
@@ -210,8 +210,8 @@
                                                         </tr>
                                                     </table>
                                                 </div>
-                                            </ng-template>
-                                        </log-cell-template>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- Sale Quantity -->

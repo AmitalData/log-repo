@@ -384,8 +384,8 @@
                                         </ng-template>
                                     </log-header-template>
 
-                                    <log-cell-template #logcelltemplate [IsEnabled]="false">
-                                        <ng-template let-item>
+                                    <ng-template let-item>
+                                        <log-cell-template #logcelltemplate [IsEnabled]="false">
                                             <div style="height: 100%; width: 100%; position: relative;">
                                                 <table>
                                                     <tr>
@@ -399,8 +399,8 @@
                                                     </tr>
                                                 </table>
                                             </div>
-                                        </ng-template>
-                                    </log-cell-template>
+                                        </log-cell-template>
+                                    </ng-template>                                   
                                 </log-column>
 
                                 <!-- Sale Quantity -->
