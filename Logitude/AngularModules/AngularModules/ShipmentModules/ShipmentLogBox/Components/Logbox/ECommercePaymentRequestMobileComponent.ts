@@ -75,10 +75,15 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
     public get IsAccepted() { return this.isAccepted }
     public set IsAccepted(newValue: boolean) { this.isAccepted = newValue; }
 
+    private ScreenWidth: number;
+    private MaxScreenWidth: number = 600;
+
     IsAcceptedChanged($event) {
         this.IsAccepted = $event;
     }
     ngOnInit() {
+
+        this.ScreenWidth = window.innerWidth > this.MaxScreenWidth ? this.MaxScreenWidth : window.innerWidth;;
 
     }
     ngAfterViewInit() {
