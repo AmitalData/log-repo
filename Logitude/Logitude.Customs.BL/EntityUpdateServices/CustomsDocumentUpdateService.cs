@@ -749,7 +749,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         private void UpdateDeclarationCourierStatus(CustomsDocumentPM entityPM, string status)
         {
 
-            if (!string.IsNullOrWhiteSpace(entityPM.DeclarationId) && (entityPM.DocumentStatusCode == "7" || entityPM.DocumentStatusCode == "1"))
+            if (!string.IsNullOrWhiteSpace(entityPM.DeclarationId) && entityPM.DocumentStatusCode == "7")
             {
                 ICustomContext context = MainContext as CustomContext;
                 DeclarationPM connectedDeclarationPM = GetConnectedDeclarationPM(entityPM);
