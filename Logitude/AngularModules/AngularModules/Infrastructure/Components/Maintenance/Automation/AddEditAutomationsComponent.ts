@@ -85,7 +85,6 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
     DelayTime: number;
     IsEnableAddTemplate: boolean = false;
     IsEnableEditTemplate: boolean = false;    
-    DelaytimeIndicator: string;
     CountDocumentSelection: string;
 
     AutomationCondationOrList: AutomationConditionViewModel[] = [];
@@ -651,29 +650,30 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
     }
 
 
+    private delaytimeIndicator: string;
+    get DelaytimeIndicator() {
+        return this.delaytimeIndicator;
+    }
+    set DelaytimeIndicator(value:string) {
 
-    DelaytimeIndicatorChange(value) {
+        if (value != this.delaytimeIndicator) {
 
-        if (value != null && value.Code != this.DelaytimeIndicator) {
-            var delayTime = this.DelayTime;
-            var delaytimeIndicator = this.DelaytimeIndicator;
-
-            var numOfMinutes = 1 * 60;
-            if (this.DelaytimeIndicator != "OO" && value.Code == "OO" && this.DelayTime >= 60) {
-                delayTime = this.DelayTime / numOfMinutes;
-          
+            if (!this.delaytimeIndicator) {
+                this.delaytimeIndicator = value;
             }
-            else if (this.DelaytimeIndicator != "II" && value.Code == "II") {
-                delayTime = this.DelayTime * numOfMinutes;
+            else {
+                var delayTime = this.DelayTime;
+                var numOfMinutes = 1 * 60;
+                if (this.delaytimeIndicator != "OO" && value == "OO" && this.DelayTime >= 60) delayTime = (this.DelayTime / numOfMinutes);
+                else if (this.delaytimeIndicator != "II" && value == "II") delayTime = (this.DelayTime * numOfMinutes);
+                this.DelayTime = delayTime;
+                this.delaytimeIndicator = value;
+                this.IsChangeAutomation = true;
             }
-
-
-            this.DelaytimeIndicator = value.Code;
-            this.DelayTime = delayTime;
-            this.IsChangeAutomation = true;
-
         }
     }
+
+
     
     SelectDocumentTypes() {
         var logWindow = new LogitudeWindow();

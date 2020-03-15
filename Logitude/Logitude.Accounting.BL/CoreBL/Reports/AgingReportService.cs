@@ -107,6 +107,8 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(10)))
             {
                 _AccountingContext = AccountingContext.GetContext(_Param.Tenant);
+                (_AccountingContext as System.Data.Entity.DbContext).Database.CommandTimeout = 300;
+
                 //var qsGLAccountTotalByMonth = new GLAccountTotalByMonthQueryService(_AccountingContext);
                 var repoGLAccountTotalByMonth = new GLAccountTotalByMonthRepository(_AccountingContext);
                 var repoLedgerTransactionRepository = new LedgerTransactionRepository(_AccountingContext);

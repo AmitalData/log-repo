@@ -616,7 +616,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  25,
-					  						DisplayInList =  true,
+					  						DisplayInList =  false,
 					  						DataTemplateName =  "DaysFromLastShipmentDataTemplate",
 					  						IsCustomFilter =  false,
 					  						Operator =  "Equals",

@@ -2071,6 +2071,18 @@
     <Compile Include="Migrations\202003011636020_addAllowRegionalTaxColumn.Designer.cs">
       <DependentUpon>202003011636020_addAllowRegionalTaxColumn.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202003041406443_AddARInvoiceRegionalTax.cs" />
+    <Compile Include="Migrations\202003041406443_AddARInvoiceRegionalTax.Designer.cs">
+      <DependentUpon>202003041406443_AddARInvoiceRegionalTax.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003041421173_AddARInvoiceLineRegionalTax.cs" />
+    <Compile Include="Migrations\202003041421173_AddARInvoiceLineRegionalTax.Designer.cs">
+      <DependentUpon>202003041421173_AddARInvoiceLineRegionalTax.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003051111086_AddARInvoiceTotalVatIsRegional.cs" />
+    <Compile Include="Migrations\202003051111086_AddARInvoiceTotalVatIsRegional.Designer.cs">
+      <DependentUpon>202003051111086_AddARInvoiceTotalVatIsRegional.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\202002041333119_InterestTransactionMigration.cs" />
     <Compile Include="Migrations\202002041333119_InterestTransactionMigration.Designer.cs">
@@ -3740,6 +3752,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202003011636020_addAllowRegionalTaxColumn.resx">
       <DependentUpon>202003011636020_addAllowRegionalTaxColumn.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003041406443_AddARInvoiceRegionalTax.resx">
+      <DependentUpon>202003041406443_AddARInvoiceRegionalTax.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003041421173_AddARInvoiceLineRegionalTax.resx">
+      <DependentUpon>202003041421173_AddARInvoiceLineRegionalTax.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003051111086_AddARInvoiceTotalVatIsRegional.resx">
+      <DependentUpon>202003051111086_AddARInvoiceTotalVatIsRegional.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -51,6 +51,7 @@ export class NewARInvoiceComponent extends BaseComponent {
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityResourceService: EntityResourceService) {
         super();
+
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");          
 
         this.InitializeServices();
@@ -64,6 +65,8 @@ export class NewARInvoiceComponent extends BaseComponent {
         if (FeatureLocator.HasFeaturePermession("General", "General.Features.SystemCurrencies")) {
             this.IsEditExchangeRateVisible = true;
         }
+
+        this.SetRegionalTaxVisibility();
     }
 
     public DisplaySATSettings: boolean = false;
@@ -267,7 +270,6 @@ export class NewARInvoiceComponent extends BaseComponent {
         }
       }
     }
-
 
     // BillTo
     public BillToDependencyValue1: string = null;
@@ -1295,7 +1297,13 @@ export class NewARInvoiceComponent extends BaseComponent {
                         if (list != null) {
                             invoiceLine.Description = list.EnglishName;
                             invoiceLine.LocalDescription = list.LocalName;
-                            invoiceLine.IsCustomsCharge = list.IsCustoms;                            
+                            invoiceLine.IsCustomsCharge = list.IsCustoms;
+
+                            if (this.RegionalTaxId) {
+                                if (invoiceLine.VatIsMultiPercentage == false) {
+                                    invoiceLine.IsRegionalTax = list.ApplyRegionalTax;
+                                }
+                            }
                         }
                     }
                 });
@@ -1370,7 +1378,26 @@ export class NewARInvoiceComponent extends BaseComponent {
                         myQroupItem.InvoiceCurrencyAmount = item.InvoiceCurrencyAmount;
                         myQroupItem.ProfitCurrencyAmount = item.ProfitCurrencyAmount;
                         myQroupItem.ExternalVatCard = SessionLocator.AccountingSettingPM.ReceivableVATCard;
-                        myQroupItem.ExternalTAXItemId = lineVatType.ExternalTAXItemId;                        
+                        myQroupItem.ExternalTAXItemId = lineVatType.ExternalTAXItemId;
+
+                        if (item.IsRegionalTax) {
+
+                            myQroupItem.LocalCurrencyAmount = item.LocalCurrencyAmount + item.LocalCurrencyAmount * (this.RegionalTaxPercentage / 100);
+                            myQroupItem.InvoiceCurrencyAmount = item.InvoiceCurrencyAmount + item.InvoiceCurrencyAmount * (this.RegionalTaxPercentage / 100);
+                            myQroupItem.ProfitCurrencyAmount = item.ProfitCurrencyAmount + item.ProfitCurrencyAmount * (this.RegionalTaxPercentage / 100);
+
+                            var regionalTaxItem = new InvoiceTotalsClass();
+                            regionalTaxItem.Id = this.RegionalTaxId;
+                            regionalTaxItem.VatTypeId = this.RegionalTaxId;
+                            regionalTaxItem.VatTypePercentage = this.RegionalTaxPercentage;
+                            regionalTaxItem.LocalCurrencyAmount = item.LocalCurrencyAmount;
+                            regionalTaxItem.InvoiceCurrencyAmount = item.InvoiceCurrencyAmount;
+                            regionalTaxItem.ProfitCurrencyAmount = item.ProfitCurrencyAmount;
+                            regionalTaxItem.ExternalVatCard = SessionLocator.AccountingSettingPM.ReceivableVATCard;
+                            regionalTaxItem.ExternalTAXItemId = lineVatType.ExternalTAXItemId;
+                            group_Source.push(regionalTaxItem);
+                        }
+
                         group_Source.push(myQroupItem);
                     }
 
@@ -1480,6 +1507,53 @@ export class NewARInvoiceComponent extends BaseComponent {
         if (this.HasCreditLimitFeature) {
             this.IsCreditLimitActivated = ObjectsLocator.CreditLimitSettingPM.IsCreditLimitEnabled;
             this.IsCreditLimitHasAction = (ObjectsLocator.CreditLimitSettingPM.InvoiceCreationBlock == true || ObjectsLocator.CreditLimitSettingPM.InvoiceCreationWarning == true) ? true : false;
+        }
+    }
+
+
+    // RegionalTaxId
+    public IsRegionalTaxVisible: boolean = false;
+    private SetRegionalTaxVisibility() {
+        var isVisible: boolean = false;
+
+        if (FeatureLocator.HasFeaturePermession("General", "REGIONALTAX")) {
+            if (SessionLocator.AccountingSettingPM.AllowRegionalTaxManagement) {
+                isVisible = true;
+            }
+        }
+
+        this.IsRegionalTaxVisible = isVisible;
+    }
+
+    get RegionalTaxId() { return this.EntityPM.RegionalTaxId; }
+    set RegionalTaxId(newValue: string) {
+        if (this.EntityPM.RegionalTaxId != newValue) {
+            this.EntityPM.RegionalTaxId = newValue;
+
+            if (AppTool.IsNullOrEmpty(newValue)) {
+                this.RegionalTaxPercentage = null;
+            }
+
+            else {
+                this.RegionalTaxPercentage = this.GetVatTypePercentage(newValue);
+            }
+        }
+    }
+
+    get RegionalTaxPercentage() {
+
+        var output: number = 0;
+
+        if (this.EntityPM.RegionalTaxPercentage) {
+            output = this.EntityPM.RegionalTaxPercentage;
+        }
+
+        return output;
+    }
+    set RegionalTaxPercentage(newValue: number) {
+        if (this.EntityPM.RegionalTaxPercentage != newValue) {
+            this.EntityPM.RegionalTaxPercentage = AppTool.Round(newValue, 2);
+            this.ComputeTotals();
         }
     }
 }
