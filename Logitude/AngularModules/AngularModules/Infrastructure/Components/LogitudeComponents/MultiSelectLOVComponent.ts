@@ -40,6 +40,7 @@ export class MultiSelectLOVComponent implements OnInit{
     @Output()
     ChosenListItemsChanged = new EventEmitter();
 
+    IsDisplayOnly: boolean = false;
 
     //@ViewChild(LogLovV2Component)
     @ContentChild(LogLovV2Component)
