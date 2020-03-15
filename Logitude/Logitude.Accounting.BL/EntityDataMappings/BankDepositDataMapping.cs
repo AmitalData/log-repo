@@ -81,7 +81,10 @@ namespace Logitude.Accounting.BL.EntityDataMappings
         private void MapJournalFields(BankDepositPM entityPM, BankDeposit entityPOCO)
         {
             JournalQueryService journalQueryService = new JournalQueryService(entityPOCO.Tenant);
-            JournalPM journal = journalQueryService.GetByAccountingEntityId(entityPOCO.Id, entityPOCO.Tenant);
+
+            JournalPM journal = journalQueryService
+                .GetByAccountingEntityIdAndAccountingEntityCode(entityPOCO.Id, entityPM.IsCashDeposit ? "7" : "6", entityPOCO.Tenant);
+
             if (journal != null)
             {
                 entityPM.JournalId = journal.Id;
