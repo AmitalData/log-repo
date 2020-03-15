@@ -528,6 +528,14 @@
     <Compile Include="Migrations\202003081316083_AddedSearchFieldReferant.Designer.cs">
       <DependentUpon>202003081316083_AddedSearchFieldReferant.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202003101034101_ReferantExceptionReason.cs" />
+    <Compile Include="Migrations\202003101034101_ReferantExceptionReason.Designer.cs">
+      <DependentUpon>202003101034101_ReferantExceptionReason.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003121039121_ExceptionReasons.cs" />
+    <Compile Include="Migrations\202003121039121_ExceptionReasons.Designer.cs">
+      <DependentUpon>202003121039121_ExceptionReasons.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -914,6 +922,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202003081316083_AddedSearchFieldReferant.resx">
       <DependentUpon>202003081316083_AddedSearchFieldReferant.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003101034101_ReferantExceptionReason.resx">
+      <DependentUpon>202003101034101_ReferantExceptionReason.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003121039121_ExceptionReasons.resx">
+      <DependentUpon>202003121039121_ExceptionReasons.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\logitude.oracledatabasemigration.dll.licenses" />
   </ItemGroup>

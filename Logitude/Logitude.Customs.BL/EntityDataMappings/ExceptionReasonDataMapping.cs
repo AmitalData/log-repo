@@ -19,12 +19,17 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
         public void CustomPMToPOCO(ExceptionReasonPM entityPM, ExceptionReason entityPOCO)
         {
-            //throw new NotImplementedException();
+
+            this.CustomMappedPOCOProperties.Add(POCOPropertyNames.Code);
+            if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert)
+            {
+                entityPOCO.Code = entityPM.Code;
+            }
         }
 
         public void CustomPOCOToPM(ExceptionReasonPM entityPM, ExceptionReason entityPOCO)
-        {
-            //throw new NotImplementedException();
+        {   
+
         }
    }
 

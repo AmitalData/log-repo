@@ -1447,6 +1447,7 @@
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\DocumentTypeCustomsDataViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\EntitlementTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\EntityTypeLookupViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\ExceptionReasonViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\FacilitationTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\FaultInspectionTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\FreightPaymentMethodViewsController.Generated.cs" />
@@ -1637,6 +1638,7 @@
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\DeficitController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\DepositController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\DocumentTypeCustomsDataController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\PMControllers\ExceptionReasonController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\GatepassRequestController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\GovernmentProcedureTypeController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\GuaranteeController.Generated.cs" />
@@ -6539,6 +6541,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Controllers\CustomsModel\Extended\ExceptionReasonController.cs" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

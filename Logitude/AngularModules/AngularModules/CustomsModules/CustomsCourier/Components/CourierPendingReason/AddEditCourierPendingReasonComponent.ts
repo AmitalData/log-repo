@@ -19,7 +19,7 @@ import { EntityResourceService } from '../../../../Infrastructure/Services/Entit
 
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 
-
+ 
 @Component({
     moduleId: module.id,
     templateUrl: './AddEditCourierPendingReasonComponent.html',
@@ -189,7 +189,6 @@ export class AddEditCourierPendingReasonComponent
 
         var errors = [];
         Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
-
         if (this.isNewRecord) {
             var first3LettersNumber: number = +this.EntityPM.Code.substring(0, 3);
             if (first3LettersNumber >= 900) {

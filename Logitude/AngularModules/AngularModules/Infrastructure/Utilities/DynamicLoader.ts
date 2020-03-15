@@ -162,7 +162,6 @@ export class DynamicLoader {
 
     private static GetModuleLoaderPath(moduleName: string) {
         var myResult: string;
-
         switch (moduleName) {
 
             case "Controls": { myResult = "Controls/Module_CTRL#ControlsModule"; break; }
@@ -208,9 +207,9 @@ export class DynamicLoader {
             case "CRMModules/CRMTickets": { myResult = "CRMModules/CRMTickets/ModuleCRMTickets#ModuleCRMTickets"; break; }
             case "CRMModules/CRMOccasion": { myResult = "CRMModules/CRMOccasion/ModuleCRMOccasion#ModuleCRMOccasion"; break; }
 
-                
-            
-                 
+
+
+               
              //Customs
            case "Customs": { myResult = "Customs/Module_CUST#CustomsModule"; break; }// must comment if in main dev mode.
            case "CustomsModules/CustomsClaim": { myResult = "CustomsModules/CustomsClaim/ModuleCustomsClaim#ModuleCustomsClaim"; break; }

@@ -272,6 +272,7 @@ import { VehiclePMService } from './Services/StandardPMs/VehiclePMService';
 import { VendorCommissionPMService } from './Services/StandardPMs/VendorCommissionPMService';
 import { CouriersVatPMService } from './Services/StandardPMs/CouriersVatPMService';
 import { CourierPendingReasonPMService } from './Services/StandardPMs/CourierPendingReasonPMService';
+import { ExceptionReasonPMService } from './Services/StandardPMs/ExceptionReasonPMService';
 import { CourierMasterPMService } from './Services/StandardPMs/CourierMasterPMService';
 import { CustomDocumentTypePMService } from './Services/StandardPMs/CustomDocumentTypePMService';
 import { UIMessagePMService } from './Services/StandardPMs/UIMessagePMService';
@@ -634,6 +635,7 @@ export class ModuleProviders {
             case "VendorCommissionPMService": { myResult = new VendorCommissionPMService(); break; }
             case "CouriersVatPMService": { myResult = new CouriersVatPMService(); break; }
             case "CourierPendingReasonPMService": { myResult = new CourierPendingReasonPMService(); break; }
+            case "ExceptionReasonPMService": { myResult = new ExceptionReasonPMService(); break; }
             case "CustomsAutonomyKeywordPMService": { myResult = new CustomsAutonomyKeywordPMService(); break; }
             case "CourierMasterPMService": { myResult = new CourierMasterPMService(); break; }
             case "CustomDocumentTypePMService": { myResult = new CustomDocumentTypePMService(); break; }

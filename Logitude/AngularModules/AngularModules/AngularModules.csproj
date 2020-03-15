@@ -268,6 +268,7 @@
     <Content Include="CustomsModules\CustomsGeneralRequests\Components\SpecialActivityRequestComponent.html" />
     <Content Include="CustomsModules\CustomsPaymentOrder\Components\EditTabs\Tapag\Deficit\DeficitDecisionComponent.html" />
     <Content Include="CustomsModules\CustomsPaymentOrder\Components\EditTabs\Tapag\Deposit\BankAccountToRefundComponent.html" />
+    <Content Include="CustomsModules\CustomsReferant\Components\ReferantExceptionReason\AddEditReferantExceptionReasonComponent.html" />
     <Content Include="CustomsModules\CustomsRequests\Components\DeclarationRequests\CargoSealsQueryComponent.html" />
     <Content Include="CustomsModules\CustomsVehicle\Components\EditTabs\VehicleEditComponent.html" />
     <Content Include="CustomsModules\CustomsVehicle\Components\EditTabs\VehicleEditComponent.js" />
@@ -893,6 +894,7 @@
     <TypeScriptCompile Include="CustomsModules\CustomsPhysicalCheck\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsProceduralFault\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsProceduralFault\ModuleProceduralFault.ts" />
+    <TypeScriptCompile Include="CustomsModules\CustomsReferant\Components\ReferantExceptionReason\AddEditReferantExceptionReasonComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsReferant\ModuleCustomsReferant.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsReferant\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsRequests\Components\DeclarationRequests\CargoSealsQueryComponent.ts" />
@@ -1008,6 +1010,7 @@
     <TypeScriptCompile Include="Customs\EntityPMs\UpdateCodePM.ts" />
     <TypeScriptCompile Include="Customs\Services\DataChange\CustomsCollateralAnswerSharedDataService.ts" />
     <TypeScriptCompile Include="Customs\Services\ExtendedLists\CourierMasterExtendedListService.ts" />
+    <TypeScriptCompile Include="Customs\Services\ExtendedLists\ExceptionReasonExtendedListService.ts" />
     <TypeScriptCompile Include="Customs\Services\ExtendedLists\CourierPendingReasonExtendedListService.ts" />
     <TypeScriptCompile Include="Customs\Services\ExtendedLists\CustomsCollateralExtendedListService.ts" />
     <TypeScriptCompile Include="Customs\Services\ExtendedPMs\CustomsAirlineExtendedPMService.ts" />
@@ -1057,7 +1060,7 @@
     <TypeScriptCompile Include="Customs\Services\StandardPMs\DeclarationMamanSpecialActionPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\DeclarationPendingPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\DeclarationReferantDataPMService.ts" />
-    <TypeScriptCompile Include="Customs\Services\StandardPMs\ExceptionReasonsPMService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardPMs\ExceptionReasonPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\GatepassRequestPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\PendingByKeywordPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\WebServices\DeclarationCourierStatusWebService.ts" />
@@ -7862,7 +7865,6 @@
     <Folder Include="Booking\DataContracts\" />
     <Folder Include="Booking\EntityPMInitServices\" />
     <Folder Include="CRM\Components\Tickets\MainTab\" />
-    <Folder Include="CustomsModules\CustomsReferant\Components\ReferantExceptionReason\" />
     <Folder Include="CustomsModules\PaymentOrder\" />
     <Folder Include="Customs\Components\CouriersVat\" />
     <Folder Include="Customs\Components\Courier\" />

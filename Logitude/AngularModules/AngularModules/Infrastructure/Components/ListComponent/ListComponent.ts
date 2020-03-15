@@ -1477,6 +1477,7 @@ export class ListComponent implements OnInit, AfterViewInit {
             console.log("SuppressOnRowSelected");
             return;
         }
+        debugger;
         //this.CurrentSession.StartBusyIndicator("Loading ...");
         //var BackGridEvent = $event.BackFromEdit;
         if ($event != null) {
@@ -1492,6 +1493,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                     case "Customs.CourierPendingReason":
                     case "Customs.CurrencyType":
                     case "Customs.CustomsCountry":
+                    case "Customs.ExceptionReason":
                     //case "Customs.InternationalSite":
                         selectedEntityId = $event.rowData.Code;
                         break;
