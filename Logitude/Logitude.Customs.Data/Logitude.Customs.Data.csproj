@@ -97,6 +97,7 @@
     <Compile Include="CustomContext.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DataContracts\DeclarationCourierStatusSummary.cs" />
     <Compile Include="EntityKeys\AcceptanceStatusKeys.cs" />
     <Compile Include="EntityKeys\ActionCodeKeys.cs" />
     <Compile Include="EntityKeys\AgentTalkBackTypeKeys.cs" />

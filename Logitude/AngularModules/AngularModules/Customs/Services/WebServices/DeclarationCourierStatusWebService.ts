@@ -41,5 +41,26 @@ export class DeclarationCourierStatusWebService {
 
         );
     }
+    GetQueriesCounts() {
+        return Observable.defer(() => {
 
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
+
+            var serviceResponse: ServiceResponse;
+            serviceResponse = new ServiceResponse();
+
+            return this._http.get(this._apiUrl + "/GetQueriesCounts", {
+                headers: authHeader
+            }).map(response => {
+
+                var serviceResponse: ServiceResponse = new ServiceResponse();
+                serviceResponse.Result = response.json();
+                return serviceResponse;
+            }).catch(ServiceHelper.HandleServiceError);
+        }
+
+        );
+    }
 }

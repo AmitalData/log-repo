@@ -20,11 +20,12 @@ import { EntityListService } from '../../../../Infrastructure/Services/EntityLis
 import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 import { DeclarationExtendedListService } from '../../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
+import { DeclarationCourierStatusWebService } from '../../../../Customs/Services/WebServices/DeclarationCourierStatusWebService';
 
 @Component({
     moduleId: module.id,
     templateUrl: './CourierDeclarationWorkspaceComponent.html',
-
+    providers: [DeclarationCourierStatusWebService]
 })
 
 export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
@@ -48,20 +49,25 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
     public isRTL: boolean = false;
     public isScreenLoaded: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
-
+    public counters:any;
     @Output() MenuHeaderchangeevent = new EventEmitter();
     @Output() onQueryChangeEvent = new EventEmitter();
-
-    constructor() {
+    
+    constructor(public _declarationCourierStatusWebService: DeclarationCourierStatusWebService) {
         //this.LoadAllScreenData();
         this.CurrentSession.StartBusyIndicatorLoading();
         this._entityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response: any) => {
             this._entityResourceService.getEntityResourceByTableName("Customs.CourierMaster").subscribe((response: any) => { 
                 {
-                    this.isScreenLoaded = true;
-                    this.CurrentSession.StopBusyIndicator();
-                    this.BuildColumns();
-                    this.RefreshList();
+                    _declarationCourierStatusWebService.GetQueriesCounts().subscribe(
+                        data => {
+                             this.counters = data.Result;
+                            this.isScreenLoaded = true;
+                            this.CurrentSession.StopBusyIndicator();
+                            this.BuildColumns();
+                            this.RefreshList();
+                        });
+                
                 }
             });
         });
@@ -250,13 +256,19 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;
                         cmpRef.instance.Run(listArgs);
-                        cmpRef.instance.BackCompleted.subscribe(($event: any) => this.LoadAllScreenData());
-                        this.CurrentSession.AddMenuReference(cmpRef);
+                        cmpRef.instance.BackCompleted.subscribe(($event: any) => {this.LoadAllScreenData()
+                        this._declarationCourierStatusWebService.GetQueriesCounts().subscribe(
+                            data => {
+                                this.counters = data.Result;
+
+                                this.CurrentSession.AddMenuReference(cmpRef);
+                                 this.RefreshList();
+                            });
+                    });
                     });
             });
         }
     }
-
 
     BuildFiltersForQuery(filters: ApiQueryFilters = null) {
 
@@ -268,25 +280,25 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
 
 
 
-    /*
+    
 
-    public RecentGLAccountsList: GLAccountList[];
-    LoadRecentGLAccounts() {
-        this.RecentGLAccountsList = [];
-        this.RecentGLAccountsCount = 0;
+    //public RecentGLAccountsList: GLAccountList[];
+    //LoadRecentGLAccounts() {
+    //    this.RecentGLAccountsList = [];
+    //    this.RecentGLAccountsCount = 0;
 
-        this._DeclarationExtendedListService.GetRecentGLAccounts("1").subscribe((myResponse: ServiceResponse) => {
-            if (myResponse != null) {
-                if (!myResponse.HasError) {
-                    var myResult = myResponse.Result;
+    //    this._DeclarationExtendedListService.GetRecentGLAccounts("1").subscribe((myResponse: ServiceResponse) => {
+    //        if (myResponse != null) {
+    //            if (!myResponse.HasError) {
+    //                var myResult = myResponse.Result;
 
-                    this.RecentGLAccountsList = myResult;
-                    this.RecentGLAccountsCount = myResult.length;
-                }
-            }
-        });
-    }
-    */
+    //                this.RecentGLAccountsList = myResult;
+    //                this.RecentGLAccountsCount = myResult.length;
+    //            }
+    //        }
+    //    });
+    //}
+    
 
     public columns: any[] = null;
     BuildColumns() {
