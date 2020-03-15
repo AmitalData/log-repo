@@ -148,8 +148,7 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
         this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
             if (isSaveSuccess) {
                 console.log("Deposited Success", this.EntityPM);
-                this.RedrawScreen();
-                this.ShowAlert();
+                this.RefreshEntity();
             }
         });
 
@@ -617,7 +616,7 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
         {
             this.CashBookTotal = this.CashBookPM.TotalAmount;
             this._CashbookTotal = this.CashBookPM.TotalAmount;
-            this.EntityPM.ForeignAmount = this.CashBookPM.TotalAmount;
+            // this.EntityPM.ForeignAmount = this.CashBookPM.TotalAmount;
 
 
         }
