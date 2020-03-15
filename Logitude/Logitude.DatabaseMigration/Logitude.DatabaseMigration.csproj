@@ -2155,7 +2155,6 @@
     <Compile Include="Migrations\202003080719024_Abed_AddCourierCustomStatusToLogitudeContext_PocoAndMap.Designer.cs">
       <DependentUpon>202003080719024_Abed_AddCourierCustomStatusToLogitudeContext_PocoAndMap.cs</DependentUpon>
     </Compile>
-
     <Compile Include="Migrations\202003050836063_AbedAddVATPercentageAndTypeOnQuoteTemplateSettings.cs" />
     <Compile Include="Migrations\202003050836063_AbedAddVATPercentageAndTypeOnQuoteTemplateSettings.Designer.cs">
       <DependentUpon>202003050836063_AbedAddVATPercentageAndTypeOnQuoteTemplateSettings.cs</DependentUpon>
@@ -2179,6 +2178,10 @@
     <Compile Include="Migrations\202003051111086_AddARInvoiceTotalVatIsRegional.cs" />
     <Compile Include="Migrations\202003051111086_AddARInvoiceTotalVatIsRegional.Designer.cs">
       <DependentUpon>202003051111086_AddARInvoiceTotalVatIsRegional.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003121123558_AddCountryAndStatePropertiesToPort_Samar.cs" />
+    <Compile Include="Migrations\202003121123558_AddCountryAndStatePropertiesToPort_Samar.Designer.cs">
+      <DependentUpon>202003121123558_AddCountryAndStatePropertiesToPort_Samar.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\202003030904524_WesamDBMigrationFixes.cs" />
@@ -3920,11 +3923,9 @@
     <EmbeddedResource Include="Migrations\202003080719024_Abed_AddCourierCustomStatusToLogitudeContext_PocoAndMap.resx">
       <DependentUpon>202003080719024_Abed_AddCourierCustomStatusToLogitudeContext_PocoAndMap.cs</DependentUpon>
     </EmbeddedResource>
-
     <EmbeddedResource Include="Migrations\202003050836063_AbedAddVATPercentageAndTypeOnQuoteTemplateSettings.resx">
       <DependentUpon>202003050836063_AbedAddVATPercentageAndTypeOnQuoteTemplateSettings.cs</DependentUpon>
     </EmbeddedResource>
-
     <EmbeddedResource Include="Migrations\202003081420440_AddFactTableFieldToBIReportTable.resx">
       <DependentUpon>202003081420440_AddFactTableFieldToBIReportTable.cs</DependentUpon>
     </EmbeddedResource>
@@ -3939,6 +3940,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202003051111086_AddARInvoiceTotalVatIsRegional.resx">
       <DependentUpon>202003051111086_AddARInvoiceTotalVatIsRegional.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003121123558_AddCountryAndStatePropertiesToPort_Samar.resx">
+      <DependentUpon>202003121123558_AddCountryAndStatePropertiesToPort_Samar.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
