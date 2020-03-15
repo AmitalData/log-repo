@@ -466,35 +466,35 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.CRM
 
         private void CorrectListValues(List<MonthItemClass> monthlyDataList)
         {
-            List<MonthItemClass> monthlyDataList_ordered = monthlyDataList.OrderByDescending(d => d.OpportunitiesCount).ToList();
+            List<decimal?> myOrder = monthlyDataList.Select(s => s.OpportunitiesCount).ToList();
+            List<decimal?> expectedOrder = monthlyDataList.OrderByDescending(d => d.OpportunitiesCount).Select(s => s.OpportunitiesCount).ToList();
+            bool isOrdered = myOrder.SequenceEqual(expectedOrder);
 
-            foreach(MonthItemClass item in monthlyDataList)
+            while (!isOrdered)
             {
-                item.OpportunitiesCount = monthlyDataList_ordered.Where(d => d.Id == item.Id).FirstOrDefault().OpportunitiesCount;
+                for (int i = 0; i < monthlyDataList.Count; i++)
+                {
+                    if (i > 0)
+                    {
+                        if (monthlyDataList[i - 1].OpportunitiesCount != null)
+                        {
+                            if (monthlyDataList[i - 1].OpportunitiesCount < monthlyDataList[i].OpportunitiesCount)
+                            {
+                                monthlyDataList[i - 1].OpportunitiesCount = monthlyDataList[i].OpportunitiesCount;
+                            }
+                        }
+
+                        else
+                        {
+                            monthlyDataList[i - 1].OpportunitiesCount = monthlyDataList[i].OpportunitiesCount;
+                        }
+                    }
+                }
+                
+                myOrder = monthlyDataList.Select(s => s.OpportunitiesCount).ToList();
+                expectedOrder = monthlyDataList.OrderByDescending(d => d.OpportunitiesCount).Select(s => s.OpportunitiesCount).ToList();
+                isOrdered = myOrder.SequenceEqual(expectedOrder);
             }
-
-
-            //var expectedOrder = monthlyDataList.OrderByDescending(d => d.OpportunitiesCount).Select(s => s.OpportunitiesCount).ToList();
-            //bool isOrdered = monthlyDataList.Select(s => s.OpportunitiesCount).SequenceEqual(expectedOrder);
-            //while (!isOrdered)
-            //{
-            //    for (int i = 0; i < monthlyDataList.Count; i++)
-            //    {
-            //        if (i > 0)
-            //        {
-            //            if (monthlyDataList[i - 1] != null && monthlyDataList[i - 1].OpportunitiesCount != null && monthlyDataList[i - 1].OpportunitiesCount != 0)
-            //            {
-            //                if (monthlyDataList[i - 1].OpportunitiesCount < monthlyDataList[i].OpportunitiesCount)
-            //                {
-            //                    monthlyDataList[i - 1].OpportunitiesCount = monthlyDataList[i].OpportunitiesCount;
-            //                }
-            //            }
-            //        }
-            //    }
-
-            //    expectedOrder = monthlyDataList.OrderByDescending(d => d.OpportunitiesCount).Select(s => s.OpportunitiesCount).ToList();
-            //    isOrdered = monthlyDataList.Select(s => s.OpportunitiesCount).SequenceEqual(expectedOrder);
-            //}
-        }
+        }        
     }
 }
