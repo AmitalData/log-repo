@@ -922,7 +922,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                 chargePM.SaleCurrencyId = item.CurrencyId;
                 chargePM.SaleCurrencyCode = this.FatherComponent.GetCurrencyCode(item.CurrencyId);
                 chargePM.SaleExchangeRate = this.FatherComponent.GetCurrencyRate(item.CurrencyId);
-                chargePM.SaleUnitPrice = chargePM.CostMinAmount;
+                chargePM.SaleUnitPrice = chargePM.CostUnitPrice;
                 chargePM.VendorId = item.SellerId;
                 chargePM.VendorName = item.SellerName;
                 chargePM.IsCostAllIn = item.IsAllIn;

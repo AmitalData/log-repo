@@ -1287,13 +1287,14 @@ export class QuoteChargeItem extends BaseComponent {
     }
 
     SetUIProperties_AllInCost() {
+        var isFromTariff = this.EntityPM != null && this.EntityPM.TariffId != null;
         var isEnabled_CostCurrencyId = true;
         if (this.IsCostAllIn || this.TariffId != null) {
             isEnabled_CostCurrencyId = false;
         }
-        this.UIProperties.SetEnabled("CostCurrencyId", this.ObjectTableName, isEnabled_CostCurrencyId);
-        this.UIProperties.SetEnabled("CostTotalAmount", this.ObjectTableName, isEnabled_CostCurrencyId);
-        this.UIProperties.SetEnabled("CostUnitPrice", this.ObjectTableName, isEnabled_CostCurrencyId);
+        this.UIProperties.SetEnabled("CostCurrencyId", this.ObjectTableName, isEnabled_CostCurrencyId || isFromTariff);
+        this.UIProperties.SetEnabled("CostTotalAmount", this.ObjectTableName, isEnabled_CostCurrencyId || isFromTariff);
+        this.UIProperties.SetEnabled("CostUnitPrice", this.ObjectTableName, isEnabled_CostCurrencyId || isFromTariff);
         this.IsEnabled_CostUnitPrice = isEnabled_CostCurrencyId;
     }
 
