@@ -530,6 +530,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                 if (!res.HasError) {
                     if (res.Result) {
                         this.AvailableTariffs = res.Result;
+                   
                     }
                 }
                 this.CurrentSession.StopBusyIndicator();
@@ -555,8 +556,8 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
     }
 
     ViewSurchargesClicked(item: TariffSearchSummary) {
-        if (item && item.Surcharges != null) {
-            var surcharge = item.Surcharges[0];
+        if (item && item.SurchargesWithoutAllIn != null) {
+            var surcharge = item.SurchargesWithoutAllIn[0];
             var editWindow = new LogitudeWindow();
             editWindow.ShowHeaderButtons = true;
             editWindow.Title = "Price Check";
@@ -631,8 +632,8 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
 
                 this.AddNewTariffPayable(item, notes);
                 // Generate Surcharges
-                if (item != null && item.Surcharges != null) {
-                    item.Surcharges.forEach(surcharge => {
+                if (item != null && item.SurchargesWithoutAllIn != null) {
+                    item.SurchargesWithoutAllIn.forEach(surcharge => {
                         this.AddNewTariffPayable(surcharge);
                     });
                 }
@@ -754,7 +755,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
         var isValid = true;
         var existsPayableOnAirFreight: ShipmentPayablePM = this.ShipmentPM.ShipmentPayables.filter(d => d.TariffId != null && d.TariffId != item.TariffId && d.ChargesTypeId == item.ChargeTypeId)[0];
         var existsPayableOnSurcharges: ShipmentPayablePM[] = [];
-        item.Surcharges.forEach(surcharge => {
+        item.SurchargesWithoutAllIn.forEach(surcharge => {
             var payable = this.ShipmentPM.ShipmentPayables.filter(d => d.TariffId != null && d.TariffId != surcharge.TariffId && d.ChargesTypeId == surcharge.ChargeTypeId)[0];
             if (payable) {
                 existsPayableOnSurcharges.push(payable);
@@ -800,21 +801,25 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
 
 
     // Quote Work
-    private allInIds = "";
     GenerateQuoteChargesFromTariff(item: TariffSearchSummary) {
         var isValid = this.ValidateExistChargesConnectedToTariff(item);
         if (isValid) {
 
             this.TariffList_Quote = [];
+
             // Generate Air Frieght
-            if (!AppTool.IsNullOrEmpty(item.AllIn)) {
-                this.allInIds = item.AllInIds;
+            this.AddNewTariffQuoteCharge(item);
+
+            // Generate Surcharges
+            if (item != null && item.SurchargesWithoutAllIn != null) {
+                item.SurchargesWithoutAllIn.forEach(surcharge => {
+                    this.AddNewTariffQuoteCharge(surcharge);
+                });
             }
 
-            this.AddNewTariffQuoteCharge(item);
-            // Generate Surcharges
-            if (item != null && item.Surcharges != null) {
-                item.Surcharges.forEach(surcharge => {
+            // Generate AllIn Surcharges
+            if (item != null && item.AllInSurcharges != null) {
+                item.AllInSurcharges.forEach(surcharge => {
                     this.AddNewTariffQuoteCharge(surcharge);
                 });
             }
@@ -855,7 +860,6 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
         }
         return isfreighExists;
     }
-
     OverrideTariffQuoteCharges(): any {
         this.TariffList_Quote.forEach(item => {
             var charge: QuoteChargePM = this.QuotePM.QuoteCharges.filter(d => d.ChargesTypeId == item.ChargesTypeId && d.CostCurrencyId == item.CostCurrencyId && d.CostMeasurementId == item.CostMeasurementId && (d.TariffId == item.TariffId || d.TariffId == null))[0];
@@ -921,14 +925,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                 chargePM.SaleUnitPrice = chargePM.CostMinAmount;
                 chargePM.VendorId = item.SellerId;
                 chargePM.VendorName = item.SellerName;
-
-                if (this.allInIds != null) {
-                    var index = this.allInIds.indexOf(item.ChargeTypeId);
-                    if (index > -1) {
-                        chargePM.IsCostAllIn = true;
-                    }
-                }
-
+                chargePM.IsCostAllIn = item.IsAllIn;
                 this.TariffList_Quote.push(chargePM);
 
                 var chargeItem = new QuoteChargeItem(chargePM, this.FatherComponent, false);
@@ -955,7 +952,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
         var isValid = true;
         var existsPayableOnAirFreight: QuoteChargePM = this.QuotePM.QuoteCharges.filter(d => d.TariffId != null && d.TariffId != item.TariffId && d.ChargesTypeId == item.ChargeTypeId)[0];
         var quoteChargesOnSurcharges: QuoteChargePM[] = [];
-        item.Surcharges.forEach(surcharge => {
+        item.SurchargesWithoutAllIn.forEach(surcharge => {
             var charge = this.QuotePM.QuoteCharges.filter(d => d.TariffId != null && d.TariffId != surcharge.TariffId && d.ChargesTypeId == surcharge.ChargeTypeId)[0];
             if (charge) {
                 quoteChargesOnSurcharges.push(charge);
@@ -972,6 +969,3 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
         return isValid;
     }
 }
-
-
-

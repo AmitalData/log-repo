@@ -565,7 +565,7 @@
                                                                                                 <td style="width:3px;">
                                                                                                     <div></div>
                                                                                                 </td>
-                                                                                                <td *ngIf="item != null && item.Surcharges != null && item.Surcharges.length > 0" style="float:left;top:12px;">
+                                                                                                <td *ngIf="item != null && item.SurchargesWithoutAllIn != null && item.SurchargesWithoutAllIn.length > 0" style="float:left;top:12px;">
                                                                                                     <Hyperlink [FontSize]="12" (click)="ViewSurchargesClicked(item)">(view tariff)</Hyperlink>
                                                                                                 </td>
                                                                                             </tr>
@@ -578,7 +578,7 @@
                                                                                         <div></div>
                                                                                     </td>
                                                                                 </tr>
-                                                                                <tr *ngFor="let surcharge of item.Surcharges" style="height:10px;border-bottom:2px;border-color:#D1D1D1">
+                                                                                <tr *ngFor="let surcharge of item.SurchargesWithoutAllIn" style="height:10px;border-bottom:2px;border-color:#D1D1D1">
                                                                                     <td>
                                                                                         <table>
                                                                                             <tr>
