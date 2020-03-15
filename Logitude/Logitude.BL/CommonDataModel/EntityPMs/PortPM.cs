@@ -120,12 +120,18 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         [DataMember]
         public string Field10 { get; set; }
+        
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         [DataMember]
         public string CountryName { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         [DataMember]
         public string CountryCode { get; set; }
+
         [DataMember]
         public string ComputedLocalName { get; set; }
+
         [DataMember]
         public bool CountryEC { get; set; }
         [DataMember]
@@ -133,9 +139,11 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         [DataMember]
         public string CombinedCode { get; set; }
 
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         [DataMember]
         public string StateCode { get; set; }
 
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         [DataMember]
         public string StateName { get; set; }
 
