@@ -11,6 +11,8 @@ using System.Threading.Tasks;
 using Logitude.Customs.BL.EntityDataMappings;
 using Logitude.Customs.Data;
 using Simplog.Server.Infrastructure;
+using Logitude.Customs.Data.DataContracts;
+using System.Data.Entity;
 
 namespace Logitude.Customs.BL.EntityQueryServices
 {
@@ -266,5 +268,35 @@ namespace Logitude.Customs.BL.EntityQueryServices
             }
             return declarationPMs;
         }
+
+
+        public DeclarationCourierStatusSummary GetQueriesCounts(int tenant)
+        {
+            DeclarationCourierStatusSummary declarationCourierStatusSummary = new DeclarationCourierStatusSummary();
+            IQueryable<DeclarationCourierStatus> declarationCourierStatuses = (from dc in context.DeclarationCourierStatuses.Include("Declaration")
+                                                                               join d in context.CourierDeclarations on dc.DeclarationId equals d.DeclarationId
+                                                                               join dm in context.CourierMasters 
+                                                                               on d.CourierMasterId  equals dm.Id
+                                                                               where dc.Tenant == tenant
+                                                                               select  dc);
+        
+                                                                            
+
+
+            declarationCourierStatusSummary.OpenCourierMasterCount = declarationCourierStatuses.Where(x => x.IsClosedForFollowUp == false).Count();
+            declarationCourierStatusSummary.UnReleasedFastProcessCount = declarationCourierStatuses.Where(x => x.FastIndividualProcessCode =="F" &&  (x.Declaration.HatraDate==null || x.Declaration.HatraDate==DateTime.MinValue)).Count();
+            declarationCourierStatusSummary.WithoutIdCount = declarationCourierStatuses.Where(x => x.IsClosedForFollowUp ==false && x.CourierPendingReasonList.Contains("902")).Count();
+            declarationCourierStatusSummary.WithoutClassificationCount = declarationCourierStatuses.Where(x => x.IsCourierMissingClassification == true).Count();
+            declarationCourierStatusSummary.PendingPaymentCount = declarationCourierStatuses.Where(x => x.CourierPendingReasonList.Contains("900")).Count();
+            declarationCourierStatusSummary.PendingCustomsCount = declarationCourierStatuses.Where(x => x.IsClosedForFollowUp == false && x.Declaration.CourierCustomStatusCode =="2").Count();
+            declarationCourierStatusSummary.PendingCount = declarationCourierStatuses.Where(x => !string.IsNullOrEmpty( x.CourierPendingReasonList )).Count();
+
+            declarationCourierStatusSummary.CourierMasterOpenIndividualCount = declarationCourierStatuses.Where(x => x.IsClosedForFollowUp == false && x.FastIndividualProcessCode=="I").Count();
+            declarationCourierStatusSummary.UnReleasedIndividualCount = declarationCourierStatuses.Where(x => x.FastIndividualProcessCode == "I" && (x.Declaration.HatraDate == null || x.Declaration.HatraDate == DateTime.MinValue)).Count();
+ 
+            return declarationCourierStatusSummary;
+
+        }
+
     }
 }
