@@ -113,7 +113,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 }
                 args.BetweenDate = betweenDate;
 
-                List<TariffSearchSummary> myResult = tariffQueryService.GetTariffSearchSummary(args, tenant);
+                List<TariffSearchSummary> myResult;
+                myResult=args.TariffType=="OFC"? tariffQueryService.GetTariffSearchFCLSummary(args, tenant) : tariffQueryService.GetTariffSearchSummary(args, tenant);
 
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
