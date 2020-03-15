@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.ServiceProcess;
 using System.Timers;
@@ -15,7 +16,8 @@ namespace Logitude.ServerHealthService
         protected Timer ServiceTimer = new Timer();
         protected Settings Settings;
         protected DateTime? LastEmailsAlert = null;
-
+        protected List<string> LowSpaceDrives = new List<string>();
+        
         public LogitudeServerHealthService()
         {
             InitializeComponent();
@@ -23,7 +25,7 @@ namespace Logitude.ServerHealthService
 
         protected override void OnStart(string[] args)
         {
-            WriteToLogsFile("Service Is Started");
+            WriteToLogsFile("Server Health Service Is Started");
             ReadServiceSettings();
             ServiceTimer.Elapsed += new ElapsedEventHandler(OnElapsedTime);
             ServiceTimer.Interval = Settings.GeneralSettings.DrivesCheckTimer.IntervalInSeconds * 1000;
@@ -32,7 +34,7 @@ namespace Logitude.ServerHealthService
 
         protected override void OnStop()
         {
-            WriteToLogsFile("Service Is Stopped");
+            WriteToLogsFile("Server Health Service Is Stopped");
         }
 
         protected void OnElapsedTime(object source, ElapsedEventArgs e)
@@ -47,7 +49,7 @@ namespace Logitude.ServerHealthService
                     {
                         bool isDriveFreeSpaceLow = IsDriveFreeSpaceLow(driveInfo);
                         bool isTimeForNextEmailsAlert = IsTimeForNextEmailsAlert();
-
+                        
                         if (isDriveFreeSpaceLow && isTimeForNextEmailsAlert)
                         {
                             string warningMessageSubject = BuildWarningMessageSubject();
@@ -55,6 +57,17 @@ namespace Logitude.ServerHealthService
 
                             SendEmails(warningMessageSubject, warningMessageBody);
                             UpdateLastEmailsAlert();
+                            AddToLowSpaceDrives(driveInfo.Name);
+                        }
+
+                        if (!isDriveFreeSpaceLow && isTimeForNextEmailsAlert && IsDriveInLowSpaceDrives(driveInfo.Name))
+                        {
+                            string stableMessageSubject = BuildStableMessageSubject();
+                            string stableMessageBody = BuildStableMessageBody(driveInfo);
+
+                            SendEmails(stableMessageSubject, stableMessageBody);
+                            UpdateLastEmailsAlert();
+                            RemoveFromLowSpaceDrives(driveInfo.Name);
                         }
                     }
                 }
@@ -97,8 +110,29 @@ namespace Logitude.ServerHealthService
             string warningMessage = "Low Free Space Was Detected In Drive " + driveLabelWithName + " That In Server " + serverName + ".\n";
             warningMessage += "Total Space: " + driveTotalSizeInGB.ToString() + " GB.\n";
             warningMessage += "Total Free Space: " + driveTotalFreeSpaceInGB.ToString() + " GB.\n";
-            warningMessage += "\n" + "From Logitude Server Health Service.";
+            warningMessage += "\n" + "Sent From Logitude Server Health Service.";
             return warningMessage;
+        }
+
+        protected string BuildStableMessageSubject()
+        {
+            string serverName = GetServerName();
+            string subject = "Stable Drive Free Space In " + serverName;
+            return subject;
+        }
+
+        protected string BuildStableMessageBody(DriveInfo driveInfo)
+        {
+            string serverName = GetServerName();
+            string driveLabelWithName = driveInfo.VolumeLabel + " (" + driveInfo.Name.Replace(@"\", String.Empty) + ")";
+            double driveTotalSizeInGB = Math.Round(ConvertBytesToGigabytes(driveInfo.TotalSize), 2);
+            double driveTotalFreeSpaceInGB = Math.Round(ConvertBytesToGigabytes(driveInfo.TotalFreeSpace), 2);
+
+            string stableMessage = "The Free Space Has Become Stable In Drive " + driveLabelWithName + " That In Server " + serverName + ".\n";
+            stableMessage += "Total Space: " + driveTotalSizeInGB.ToString() + " GB.\n";
+            stableMessage += "Total Free Space: " + driveTotalFreeSpaceInGB.ToString() + " GB.\n";
+            stableMessage += "\n" + "Sent From Logitude Server Health Service.";
+            return stableMessage;
         }
 
         protected DriveInfo[] GetServerDrives()
@@ -109,6 +143,27 @@ namespace Logitude.ServerHealthService
         protected string GetServerName()
         {
             return Environment.MachineName;
+        }
+
+        protected void AddToLowSpaceDrives(string driveName)
+        {
+            if (!IsDriveInLowSpaceDrives(driveName))
+            {
+                LowSpaceDrives.Add(driveName);
+            }
+        }
+
+        protected void RemoveFromLowSpaceDrives(string driveName)
+        {
+            if (IsDriveInLowSpaceDrives(driveName))
+            {
+                LowSpaceDrives.Remove(driveName);
+            }
+        }
+        
+        protected bool IsDriveInLowSpaceDrives(string driveName)
+        {
+            return LowSpaceDrives.Contains(driveName);
         }
 
         protected void SendEmails(string subject, string body)
@@ -130,11 +185,11 @@ namespace Logitude.ServerHealthService
                 smtpClient.Credentials = new NetworkCredential(Settings.EmailSettings.SmtpClient.Username, Settings.EmailSettings.SmtpClient.Password);
                 smtpClient.Send(mailMessage);
 
-                WriteToLogsFile("Warning Message Sent Successfully To " + Settings.EmailSettings.To.Addresses);
+                WriteToLogsFile("Message Sent Successfully To " + Settings.EmailSettings.To.Addresses);
             }
             catch (Exception exception)
             {
-                WriteToLogsFile("Error While Sending Warning Message With Exception: " + exception.Message);
+                WriteToLogsFile("Error While Sending Message With Exception: " + exception.Message);
             }
         }
 
@@ -200,7 +255,7 @@ namespace Logitude.ServerHealthService
             }
             else
             {
-                if((DateTime.Now - LastEmailsAlert.Value).TotalSeconds >= Settings.GeneralSettings.EmailAlertTimer.IntervalInSeconds)
+                if(Math.Ceiling((DateTime.Now - LastEmailsAlert.Value).TotalSeconds) >= Settings.GeneralSettings.EmailAlertTimer.IntervalInSeconds)
                 {
                     return true;
                 }
