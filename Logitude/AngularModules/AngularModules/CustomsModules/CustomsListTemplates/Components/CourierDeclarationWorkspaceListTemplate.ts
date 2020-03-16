@@ -37,10 +37,10 @@ export class CourierDeclarationWorkspaceListTemplate {
         today.setHours(0, 0, 0, 0);
         var estimatedArrivalDate = new Date(this._CourierMasterList.EstimatedArrivalDate);//.setHours(0, 0, 0, 0);
         estimatedArrivalDate.setHours(0, 0, 0, 0);
-        if (estimatedArrivalDate < today) {
+         if (estimatedArrivalDate.getTime() < today.getTime()) {
             this.colorDate = "Red";
         }
-        else if (estimatedArrivalDate == today) {
+        else if (estimatedArrivalDate.getTime() === today.getTime()) {
             this.colorDate = "Blue";
         }
       
