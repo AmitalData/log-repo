@@ -256,7 +256,8 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;
                         cmpRef.instance.Run(listArgs);
-                        cmpRef.instance.BackCompleted.subscribe(($event: any) => {this.LoadAllScreenData()
+                        cmpRef.instance.BackCompleted.subscribe(($event: any) => {
+                            this.LoadAllScreenData();
                         this._declarationCourierStatusWebService.GetQueriesCounts().subscribe(
                             data => {
                                 this.counters = data.Result;
