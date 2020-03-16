@@ -3040,7 +3040,10 @@ export class PaymentProtestModel extends BaseComponent {
 
                             //    item.Tenant = this.protestPM.Tenant,
                             // item.DeclarationId = this.parent.DeclarationPM.Id;
-                            this.protestPM.Line = line;
+                            if (AppTool.IsNullOrEmpty(this.protestPM.Line)) { ///itzik :???
+                                this.protestPM.Line = line;
+                            }
+                            
                             this.protestPM.InvoiceNumber = invoice.InvoiceNumber;
                             this.protestPM.InvoiceCounterKey = invoice.InvoiceCounterKey;
                             this.protestPM.ProtestTypeName = paymentProtestType,
