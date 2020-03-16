@@ -43,14 +43,24 @@ namespace CommunicationWorkerRole.Services
             ReportFliter reportFilter = GetReportFilters(reportTask, schedulerDetails);
             StiReport stiReport = GetStimulReportByReportFilter(reportFilter);
             string documentId = GetDocumentIdAfterExport(stiReport, reportTask.Name, reportTask.Tenant);
-            string toEmails = GetRecepientsEmails(schedulerDetails.ReportDetails.Recepients, reportFilter.tenant);
-            SendHtmlDocument(documentId, toEmails, reportTask);
+            SendHtmlDocument(documentId, schedulerDetails.ReportDetails.Recepients, reportTask);
         }
 
-        private static SchedulerDetails GetSchedulerDetails(TasksSchedulerPM reportTask)
+        private SchedulerDetails GetSchedulerDetails(TasksSchedulerPM reportTask)
         {
             SchedulerDetails schedulerDetails = LogitudeXmlSerializer.DeserializeObject<SchedulerDetails>(reportTask.SchedulerDetailsXML);
             schedulerDetails.Tenant = reportTask.Tenant;
+            schedulerDetails = ModifyNullFilters(schedulerDetails);
+            return schedulerDetails;
+        }
+
+        private SchedulerDetails ModifyNullFilters(SchedulerDetails schedulerDetails)
+        {
+            schedulerDetails.ReportDetails.ReportFilterItems.ForEach(filterItem=> {
+                if(filterItem.FieldValue.GetType().Name == "XmlNode[]")
+                    filterItem.FieldValue = null;
+            });
+           
             return schedulerDetails;
         }
 
@@ -134,27 +144,14 @@ namespace CommunicationWorkerRole.Services
             storageservice.Write(ByteData, fileInfo);
         }
 
-        private string GetRecepientsEmails(string Recepients, int tenant)
-        {
-            string toEmails = string.Empty;
-            ContactQuery contactQuery = new ContactQuery(tenant);
-            string[] allRecepients = Recepients.Split(';');
-            foreach (string recep in allRecepients)
-            {
-                toEmails += contactQuery.GetContactEmailById(recep, tenant);
-                toEmails += ';';
-            }
 
-            return toEmails;
-        }
-
-        private void SendHtmlDocument(string documentId, string toEmails, TasksSchedulerPM reportTask)
+        private void SendHtmlDocument(string documentId, ReportSchedulerRecepients recepients, TasksSchedulerPM reportTask)
         {
             HtmlEditorHelper htmlEditorHelper = new HtmlEditorHelper();
             System.Text.UTF8Encoding enc = new System.Text.UTF8Encoding();
             Byte[] htmlData = enc.GetBytes("");
             string reportTableId = GetReportTableId(reportTask.Tenant);
-            htmlEditorHelper.SendHtmlDocument(htmlData, null, null, reportTask.Tenant, toEmails, reportTask.Name, "", "", reportTask.CreatedBy, reportTask.EntityId, reportTableId, documentId + ",", "", "", "");
+            htmlEditorHelper.SendHtmlDocument(htmlData, null, null, reportTask.Tenant, recepients.To, reportTask.Name, recepients.Cc, recepients.Bcc, reportTask.CreatedBy, reportTask.EntityId, reportTableId, documentId + ",", "", "", "");
         }
 
         private string GetReportTableId(int tenant)

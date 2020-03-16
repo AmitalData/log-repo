@@ -9,7 +9,7 @@ import {SchedulerExtendedPMService} from '../../../Infrastructure/Services/Exten
 import {Component, }  from '@angular/core';
 import { TaskReportSchedulerItemClass } from './TaskReportSchedulerComponent';
 import { QueryFilterItem } from '../Filters/QueryFilterItem';
-import { SchedulerDetails, ReportSchedulerDetails } from '../../../Infrastructure/DataContracts/SchedulerDetails';
+import { SchedulerDetails, ReportSchedulerDetails, ReportSchedulerRecepients } from '../../../Infrastructure/DataContracts/SchedulerDetails';
 
 @Component({
     moduleId: module.id,
@@ -21,7 +21,6 @@ export class AddEditReportTaskSchedulerComponent  {
     public DataContext: TaskReportSchedulerItemClass;
     public ObjectTableName: string = "TasksScheduler";
     public ValidationErrorsList: string[];
-    public Recepients: string = "";
     schedulerExtendedPMService: SchedulerExtendedPMService;
 
     private CurrentSession = SessionLocator.SelectedSession;
@@ -51,13 +50,13 @@ export class AddEditReportTaskSchedulerComponent  {
         else {
             var schedulerDetails = new SchedulerDetails();
             schedulerDetails.ReportDetails = new ReportSchedulerDetails();
+            schedulerDetails.ReportDetails.Recepients = new ReportSchedulerRecepients();
             this.SetSchedulerDetailsData(schedulerDetails);
         }
     }
 
     SetSchedulerDetailsData(schedulerDetails: SchedulerDetails) {
         this.DataContext.SetReportSchedulerDetailsData(schedulerDetails);
-        this.Recepients = this.DataContext.SchedulerDetails.ReportDetails.Recepients;
         this.Clone();
     }
 
@@ -193,11 +192,12 @@ export class AddEditReportTaskSchedulerComponent  {
         });
     }
 
-    SaveButtonClicked(reportFilterItems: Array<QueryFilterItem>,reportTemplateId: string) {
+    SaveButtonClicked(reportFilterItems: Array<QueryFilterItem>, reportTemplateId: string, recepients: ReportSchedulerRecepients) {
         this.CurrentSession.StartBusyIndicatorSaving();
 
-        this.SetReportDetails(reportFilterItems, reportTemplateId);
+        this.SetReportDetails(reportFilterItems, reportTemplateId, recepients);
         if (this.DataContext.IsNew) {
+            this.DataContext.SchedulerDetails.ReportDetails.CreatedByUserId = SessionLocator.LoggedUserId;
             this.schedulerExtendedPMService.insert(this.EntityPM).subscribe(myResult => {
                 var myResponse: ServiceResponse = myResult;
                 if (!myResponse.HasError) {
@@ -237,11 +237,12 @@ export class AddEditReportTaskSchedulerComponent  {
         }
     }
 
-    SetReportDetails(reportFilterItems: Array<QueryFilterItem>, reportTemplateId: string) {
+    SetReportDetails(reportFilterItems: Array<QueryFilterItem>, reportTemplateId: string, recepients: ReportSchedulerRecepients) {
         this.DataContext.SchedulerDetails.ReportDetails.ReportFilterItems = reportFilterItems;
         this.DataContext.SchedulerDetails.ReportDetails.ReportTemplateId = reportTemplateId;
-        this.DataContext.SchedulerDetails.ReportDetails.Recepients = this.Recepients;
-        this.DataContext.SchedulerDetails.ReportDetails.CreatedByUserId = SessionLocator.LoggedUserId;
+        this.DataContext.SchedulerDetails.ReportDetails.Recepients.To = recepients.To ? recepients.To.toString().replace(',', ';') : "";
+        this.DataContext.SchedulerDetails.ReportDetails.Recepients.Cc = recepients.Cc ? recepients.Cc.toString().replace(',', ';') : "";
+        this.DataContext.SchedulerDetails.ReportDetails.Recepients.Bcc = recepients.Bcc ? recepients.Bcc.toString().replace(',', ';') : "";
     }
 
     GetReportFilterItems() {
