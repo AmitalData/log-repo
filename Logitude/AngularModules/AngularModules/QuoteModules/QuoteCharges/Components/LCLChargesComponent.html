@@ -398,21 +398,22 @@
                                             </ng-template>
                                         </log-header-template>
 
-                                        <log-cell-template #logcelltemplate [TabIndex]="-1">
-                                            <ng-template let-item>
+                                        <ng-template let-item>
+                                            <log-cell-template #logcelltemplate [TabIndex]="-1">
+
                                                 <div style="height: 100%; width: 100%; position:relative;">
                                                     <div class="CenterCenter" style="width: 16px;">
                                                         <CheckBox *ngIf="item.IsAllInCheckBoxVisible" [IsChecked]="item.IsAllIN" (Checked)="item.IsAllIN = $event" [IsEnabled]="item.IsEditingEnabled"></CheckBox>
                                                     </div>
                                                 </div>
-                                            </ng-template>
-                                        </log-cell-template>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- VatType -->
                                     <log-column *ngIf="IsAdhoc && IsChargesByVAT" [header]="'QuoteCharge.F.VatTypeId' | TextCodeTranslationPipe" [width]="VATColumnWidth + ''" [Editable]="false" [Alignment]="'left'">
-                                        <log-cell-template #logcelltemplate [TabIndex]="-1">
-                                            <ng-template let-item>
+                                        <ng-template let-item>
+                                            <log-cell-template #logcelltemplate [TabIndex]="-1">
                                                 <div class="MediaFill">
                                                     <table>
                                                         <tr>
@@ -448,20 +449,20 @@
                                                         </tr>
                                                     </table>
                                                 </div>
-                                            </ng-template>
-                                        </log-cell-template>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- Notes -->
                                     <log-column [width]="'25'">
-                                        <log-cell-template #logcelltemplate [TabIndex]="-1">
-                                            <ng-template let-item>
+                                        <ng-template let-item>
+                                            <log-cell-template #logcelltemplate [TabIndex]="-1">
                                                 <div style="width: 16px; height: 16px;" class="CenterCenter">
                                                     <img *ngIf="!item.Notes" src="./Images/Notes_notexists.png" style="vertical-align: middle; display: block;" />
                                                     <CellTooltip *ngIf="item.Notes" [IconPath]="'./Images/Notes_exists.png'" [Head]="'Quote.F.Notes' | TextCodeTranslationPipe" [Body]="item.Notes"></CellTooltip>
                                                 </div>
-                                            </ng-template>
-                                        </log-cell-template>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- Buttons -->

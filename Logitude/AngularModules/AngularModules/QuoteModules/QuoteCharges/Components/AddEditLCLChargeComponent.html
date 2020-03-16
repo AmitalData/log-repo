@@ -591,21 +591,21 @@
                                         </ng-template>
                                     </log-header-template>
 
-                                    <log-cell-template #logcelltemplate [TabIndex]="-1">
-                                        <ng-template let-item>
+                                    <ng-template let-item>
+                                        <log-cell-template #logcelltemplate [TabIndex]="-1">
                                             <div style="height: 100%; width: 100%; position:relative;">
                                                 <div class="CenterCenter" style="width: 16px;">
                                                     <CheckBox *ngIf="item.IsAllInCheckBoxVisible" [IsChecked]="item.IsAllIN" (Checked)="item.IsAllIN = $event" [IsEnabled]="item.IsEditingEnabled"></CheckBox>
                                                 </div>
                                             </div>
-                                        </ng-template>
-                                    </log-cell-template>
+                                        </log-cell-template>
+                                    </ng-template>
                                 </log-column>
 
                                 <!-- VatType -->
                                 <log-column *ngIf="IsVATVisible" [header]="'QuoteCharge.F.VatTypeId' | TextCodeTranslationPipe" [width]="Father.VATColumnWidth + ''" [Editable]="false" [Alignment]="'left'">
-                                    <log-cell-template #logcelltemplate [TabIndex]="-1">
-                                        <ng-template let-item>
+                                    <ng-template let-item>
+                                        <log-cell-template #logcelltemplate [TabIndex]="-1">
                                             <div class="MediaFill">
                                                 <table>
                                                     <tr>
@@ -641,8 +641,8 @@
                                                     </tr>
                                                 </table>
                                             </div>
-                                        </ng-template>
-                                    </log-cell-template>
+                                        </log-cell-template>
+                                    </ng-template>
                                 </log-column>
 
                             </logitude-edit-grid>
@@ -657,8 +657,8 @@
 
                                                 <!-- Step -->
                                                 <log-column [header]="'QuotePriceSteps.F.Step' | TextCodeTranslationPipe" [width]="'150'" [Alignment]="'left'">
-                                                    <log-cell-template #logcelltemplate>
-                                                        <ng-template let-item>
+                                                    <ng-template let-item>
+                                                        <log-cell-template #logcelltemplate>
                                                             <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
                                                                 <table>
                                                                     <tr>
@@ -686,60 +686,60 @@
                                                             <div *ngIf="logcelltemplate.IsEditMode">
                                                                 <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Step'" [ObjectTableName]="QuotePriceObjectTableName" [DataContext]="item" [Text]="item.Step" [HideColumns]="true"></LogTextBox>
                                                             </div>
-                                                        </ng-template>
-                                                    </log-cell-template>
+                                                        </log-cell-template>
+                                                    </ng-template>
                                                 </log-column>
 
                                                 <!-- CostUnitPrice -->
                                                 <log-column [header]="'QuotePriceSteps.F.CostUnitPrice.Short' | TextCodeTranslationPipe" [width]="'100'" [Alignment]="'right'">
-                                                    <log-cell-template #logcelltemplate>
-                                                        <ng-template let-item>
+                                                    <ng-template let-item>
+                                                        <log-cell-template #logcelltemplate>
                                                             <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
                                                                 <span>{{item.CostUnitPrice | NumbersPipe:'N3'}}</span>
                                                             </div>
                                                             <div *ngIf="logcelltemplate.IsEditMode">
                                                                 <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'CostUnitPrice'" [ObjectTableName]="QuotePriceObjectTableName" [DataContext]="item" [Text]="item.CostUnitPrice" [HideColumns]="true"></LogTextBox>
                                                             </div>
-                                                        </ng-template>
-                                                    </log-cell-template>
+                                                        </log-cell-template>
+                                                    </ng-template>
                                                 </log-column>
 
                                                 <!-- MarkupValue -->
                                                 <log-column [header]="'QuotePriceSteps.F.MarkupValue.Short' | TextCodeTranslationPipe" [width]="'70'" [Alignment]="'right'">
-                                                    <log-cell-template #logcelltemplate>
-                                                        <ng-template let-item>
+                                                    <ng-template let-item>
+                                                        <log-cell-template #logcelltemplate>
                                                             <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
                                                                 <span>{{item.MarkupValue | NumbersPipe:'N3'}}</span>
                                                             </div>
                                                             <div *ngIf="logcelltemplate.IsEditMode">
                                                                 <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'MarkupValue'" [ObjectTableName]="QuotePriceObjectTableName" [DataContext]="item" [Text]="item.MarkupValue" [HideColumns]="true"></LogTextBox>
                                                             </div>
-                                                        </ng-template>
-                                                    </log-cell-template>
+                                                        </log-cell-template>
+                                                    </ng-template>
                                                 </log-column>
 
                                                 <!-- SaleStepPrices -->
                                                 <log-column [header]="'QuotePriceSteps.F.SaleUnitPrice.Short' | TextCodeTranslationPipe" [width]="'100'" [Alignment]="'right'">
-                                                    <log-cell-template #logcelltemplate>
-                                                        <ng-template let-item>
+                                                    <ng-template let-item>
+                                                        <log-cell-template #logcelltemplate>
                                                             <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
                                                                 <span>{{item.SaleUnitPrice | NumbersPipe:'N3'}}</span>
                                                             </div>
                                                             <div *ngIf="logcelltemplate.IsEditMode">
                                                                 <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'SaleUnitPrice'" [ObjectTableName]="QuotePriceObjectTableName" [DataContext]="item" [Text]="item.SaleUnitPrice" [HideColumns]="true"></LogTextBox>
                                                             </div>
-                                                        </ng-template>
-                                                    </log-cell-template>
+                                                        </log-cell-template>
+                                                    </ng-template>
                                                 </log-column>
 
                                                 <!-- Buttons -->
                                                 <log-column [width]="'30'" [Alignment]="'left'">
-                                                    <log-cell-template [IgnoreMods]="true">
-                                                        <ng-template let-item>
+                                                    <ng-template let-item>
+                                                        <log-cell-template [IgnoreMods]="true">
                                                             <IconButton [Name]="'Delete'" [IsSmall]="true"
                                                                         style="display: block; float: left; margin-left:3px; margin-top:4px;" [disabled]="!IsEditingEnabled" (click)="DeleteStepClicked(item)"></IconButton>
-                                                        </ng-template>
-                                                    </log-cell-template>
+                                                        </log-cell-template>
+                                                    </ng-template>
                                                 </log-column>
 
                                             </logitude-edit-grid>
