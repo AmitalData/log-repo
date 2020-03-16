@@ -75,7 +75,7 @@ export class btnComponent implements OnInit {
 
             case "Warehouse":
                 {
-                    this.GetInUseCarrier("WH", this.rowData.Code);
+                    this.GetInUseWarehouse(this.rowData.Code);
                     break;
                 }
         }
@@ -169,5 +169,12 @@ export class btnComponent implements OnInit {
 
     private StopBusyIndicator() {
         this.CurrentSession.StopBusyIndicator();
+    }
+
+    GetInUseWarehouse(code: string) {
+        var myService: PartnersDomainService = new PartnersDomainService();
+        myService.GetInUseWarehouse(code).subscribe(myResult => {
+            this.InUseVisibile = myResult.Result;
+        });
     }
 }
