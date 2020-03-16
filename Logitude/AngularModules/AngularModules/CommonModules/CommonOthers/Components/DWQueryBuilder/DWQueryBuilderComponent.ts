@@ -814,6 +814,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
         this.DWQueryData = new DWQueryData();
         this.DWQueryData.Filters = this.SelectedFiltersDataSource[0];
         this.DWQueryData.Columns = this.SelectedFieldsDataSource;
+        this.DWQueryData.FactTableName = this.FactTableName;
         this.DWQueryData.PageIndex = 0;
         this.DWQueryData.PageSize = 100;
 
@@ -1094,7 +1095,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
             return;
         }
         this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving ..");
-        this._DWObjectTablePMService.get("Fact_Shipments").subscribe(myResult => {
+        this._DWObjectTablePMService.get(this.FactTableName).subscribe(myResult => {
             if (!myResult.HasError) {
                 //if (this.IsCopy) {
                 //    this.ComponentRef.destroy();
