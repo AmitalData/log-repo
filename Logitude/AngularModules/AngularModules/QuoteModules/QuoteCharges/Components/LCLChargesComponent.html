@@ -466,8 +466,8 @@
 
                                     <!-- Buttons -->
                                     <log-column [width]="'55'">
-                                        <log-cell-template #logcelltemplate [TabIndex]="-1">
-                                            <ng-template let-item>
+                                        <ng-template let-item>
+                                            <log-cell-template #logcelltemplate [TabIndex]="-1">
                                                 <div style="width: 100%; height: 100%; position: relative;">
                                                     <div class="LeftCenter" style="height: 20px;">
                                                         <span class="CellSeparator"></span>
@@ -475,8 +475,8 @@
                                                         <IconButton [Name]="'Delete'" [IsSmall]="true" [Left]="3" (click)="DeleteChargeClicked(item)" [disabled]="!item.IsEditingEnabled"></IconButton>
                                                     </div>
                                                 </div>
-                                            </ng-template>
-                                        </log-cell-template>
+                                            </log-cell-template>
+                                        </ng-template>                                       
                                     </log-column>
 
                                 </logitude-edit-grid>
