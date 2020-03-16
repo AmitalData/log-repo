@@ -109,7 +109,7 @@ export class FieldTemplateComponent {
         logitudeWindow.Height = 525;
         logitudeWindow.Width = 750;
         logitudeWindow.ShowCloseButton = true;
-        debugger;
+
         if (this.Entity.IsClassificationRemarks) {
             _declarationRemarksService.GetSVCOrSRVStatusList(this.Entity.Tenant, this.Entity.CustomFileNo)
                 .subscribe((response: any) => {

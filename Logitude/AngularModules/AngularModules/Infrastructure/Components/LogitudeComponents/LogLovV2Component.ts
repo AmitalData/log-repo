@@ -2344,7 +2344,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                 case "Customs.Client": 
                 case "Customs.CourierPendingReason":
                     {
-                        debugger;
+                        
                     logWindow.Width = 800;
                     logWindow.Height = 600;
                     logWindow.IsShowCloseButton = true;

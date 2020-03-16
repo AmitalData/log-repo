@@ -525,23 +525,28 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
          	
 		    ExceptionReasonObjectTable.HeaderScreenId = ExceptionReasonCustomsExceptionReasonHeaderScreenScreen0.Id;
 	   		  
-	      
-
-	         Screen ExceptionReasonGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ExceptionReason.GeneralTabScreen", Name = "GeneralTabScreen", ObjectTableId = ExceptionReasonObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 4, IsReadOnly = false }, screensRepository, tenantScreens);
-      
-            ScreenField ExceptionReasonGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = ExceptionReasonObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = ExceptionReasonGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField ExceptionReasonGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = ExceptionReasonObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().Id, ScreenId = ExceptionReasonGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField ExceptionReasonGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = ExceptionReasonObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().Id, ScreenId = ExceptionReasonGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField ExceptionReasonGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = ExceptionReasonObjectFields.Where(d => d.FieldName == "IsActive").FirstOrDefault().Id, ScreenId = ExceptionReasonGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-           
 
 	    }
 
 	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
-	    {      
+	    {    
+			 ObjectTable ExceptionReasonObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.ExceptionReason" && d.Tenant == 0).FirstOrDefault();  
+                 
+			   TextCode ExceptionReasonGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ExceptionReason.TH.General", DefaultText = "General",LocalDefaultText = "כללי", ObjectTableId = ExceptionReasonObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature ExceptionReasonGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ExceptionReason.Tab.General", ObjectTableId = ExceptionReasonObjectTable.Id, Tenant = 0, NameTextCodeCode = "ExceptionReason.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+ 
+                 
+			   TextCode ExceptionReasonEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ExceptionReason.TH.Events", DefaultText = "Events",LocalDefaultText = "אירועים", ObjectTableId = ExceptionReasonObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature ExceptionReasonEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ExceptionReason.Tab.Events", ObjectTableId = ExceptionReasonObjectTable.Id, Tenant = 0, NameTextCodeCode = "ExceptionReason.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			 TextCodeRepository.SubmitChanges();
+			 FeaturesRepository.SubmitChanges();
+			 List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
+			 List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
+			    
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "ERGT",HtmlComponentName = "AddEditReferantExceptionReasonComponent",HtmlComponentUrl = "./CustomsModules/CustomsReferant/Components/ReferantExceptionReason/AddEditReferantExceptionReasonComponent", FeatureId = tenantFeatures.Where(d => d.Code == "ExceptionReason.Tab.General" && d.ObjectTableId == ExceptionReasonObjectTable.Id).FirstOrDefault().Id, ControlPath = "./CustomsModules/CustomsReferant/Components/ReferantExceptionReason/AddEditReferantExceptionReasonComponent", ObjectTableId = ExceptionReasonObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "Customs.ExceptionReason.TH.General" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+   
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "ERET",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = tenantFeatures.Where(d => d.Code == "ExceptionReason.Tab.Events" && d.ObjectTableId == ExceptionReasonObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = ExceptionReasonObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "Customs.ExceptionReason.TH.Events" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+   
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
