@@ -18,7 +18,8 @@ import { ChargesTypeList } from '../../../Common/EntityLists/ChargesTypeList';
 import { ChargesTypeListService } from '../../../Common/Services/StandardLists/ChargesTypeListService';
 import { ShipmentPayableItem } from '../../../ShipmentModules/ShipmentTabs/Components/Payables/PayablesTabComponent';
 import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
-
+import { PackageTypeList } from '../../../Common/EntityLists/PackageTypeList';
+import { PackageTypeListService } from '../../../Common/Services/StandardLists/PackageTypeListService';
 
 @Component({
     moduleId: module.id,
@@ -43,6 +44,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
     public FreightLabel: string;
     public OriginDependencyFilterValue: string = "A";
     public DestinationDependencyFilterValue = "A";
+    private packageTypeListService: PackageTypeListService;
 
     constructor(private entityResourceService: EntityResourceService) {
         super();
@@ -52,6 +54,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
         this.Date = DateTool.GetCurrentDateAsUtc();
         this.CalculateDefaultCurrency();
         this.dimenstionShipment = new ShipmentPM();
+        this.packageTypeListService = new PackageTypeListService();
     }
 
     private CalculateDefaultCurrency() {
@@ -432,6 +435,12 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
     ContainerType3Id: string;
     ContainerType4Id: string;
     ContainerType5Id: string;
+    Quantity1: number;
+    Quantity2: number;
+    Quantity3: number;
+    Quantity4: number;
+    Quantity5: number;
+
     FillContainersClicked() {
         var logeWindow = new LogitudeWindow();
         logeWindow.Title = "Fill Containers";
@@ -476,18 +485,22 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
             this.ValidationErrorsList.push("Date is required");
         }
 
-        if (AppTool.IsNullOrEmpty(this.Weight)) {
-            this.ValidationErrorsList.push("Chargeable Weight is required");
-        }
+        if (this.TariffType != "OFC") {
+            if (AppTool.IsNullOrEmpty(this.Weight)) {
+                this.ValidationErrorsList.push("Chargeable Weight is required");
+            }
 
-        if (AppTool.IsNullOrEmpty(this.WeightCode)) {
-            this.ValidationErrorsList.push("Chargeable Weight unit is required");
+            if (AppTool.IsNullOrEmpty(this.WeightCode)) {
+                this.ValidationErrorsList.push("Chargeable Weight unit is required");
+            }
         }
 
         if (this.TariffType == "OFC") { // validate the containers
             if (AppTool.IsNullOrEmpty(this.ContainerType1Id) && AppTool.IsNullOrEmpty(this.ContainerType2Id) && AppTool.IsNullOrEmpty(this.ContainerType3Id) && AppTool.IsNullOrEmpty(this.ContainerType4Id) && AppTool.IsNullOrEmpty(this.ContainerType5Id)) {
                 this.ValidationErrorsList.push("You have to fill at least one Container type");
             }
+
+            this.ValidateContainerTypes_Duplicate();
         }
 
         if (this.ValidationErrorsList.length == 0) {
@@ -517,6 +530,11 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
             tariffSearchArgs.ContainerType3Id = this.ContainerType3Id;
             tariffSearchArgs.ContainerType4Id = this.ContainerType4Id;
             tariffSearchArgs.ContainerType5Id = this.ContainerType5Id;
+            tariffSearchArgs.Quantity1 = this.Quantity1;
+            tariffSearchArgs.Quantity2 = this.Quantity2;
+            tariffSearchArgs.Quantity3 = this.Quantity3;
+            tariffSearchArgs.Quantity4 = this.Quantity4;
+            tariffSearchArgs.Quantity5 = this.Quantity5;
 
             this.myDomainService.GetAvailableAirlineFreightTariffs(tariffSearchArgs).subscribe(res => {
                 if (!res.HasError) {
@@ -526,6 +544,25 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                 }
                 this.CurrentSession.StopBusyIndicator();
             });
+        }
+    }
+
+    ValidateContainerTypes_Duplicate() {
+        for (var firstIndex = 1; firstIndex <= 5; firstIndex++) {
+            for (var secondIndex = firstIndex + 1; secondIndex <= 5; secondIndex++) {
+                var comparedContainer = "ContainerType" + firstIndex + "Id";
+                var targetContainer = "ContainerType" + secondIndex + "Id";
+                if (this[comparedContainer] != null && this[comparedContainer] == this[targetContainer]) {
+                    this.packageTypeListService.getSingleFromCache(this[targetContainer + ""]).subscribe(res => {
+                        if (!res.HasError) {
+                            var packageTypeList: PackageTypeList = res.Result;
+                            if (res) {
+                                this.ValidationErrorsList.push("Container type " + packageTypeList.EnglishName + " is duplicated");
+                            }
+                        }
+                    });
+                }
+            }
         }
     }
 
