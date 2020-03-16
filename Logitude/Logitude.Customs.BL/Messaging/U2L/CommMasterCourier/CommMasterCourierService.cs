@@ -222,7 +222,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommMasterCourier
                 if (!string.IsNullOrWhiteSpace(_LogitudeMasterCourier.IntegratorIndex) && string.IsNullOrWhiteSpace(_CourierMasterPM.IntegratorCode)) _CourierMasterPM.IntegratorCode = TranslateIntegratorIndex(_LogitudeMasterCourier.IntegratorIndex);
                 _CourierMasterPM.CurrentContextTag = UpsertActionConst;
                 if (!string.IsNullOrWhiteSpace(_LogitudeMasterCourier.StorageSiteCode) && string.IsNullOrWhiteSpace(_CourierMasterPM.StorageSiteCode)) _CourierMasterPM.StorageSiteCode = TranslateStorageSite(_LogitudeMasterCourier.StorageSiteCode);
-                if (!string.IsNullOrWhiteSpace(_LogitudeMasterCourier.NoOfCourierHawb) && string.IsNullOrWhiteSpace(_CourierMasterPM.NoOfCourierHawb)) _CourierMasterPM.NoOfCourierHawb = _LogitudeMasterCourier.NoOfCourierHawb;
+                ///if (!string.IsNullOrWhiteSpace(_LogitudeMasterCourier.NoOfCourierHawb) && string.IsNullOrWhiteSpace(_CourierMasterPM.NoOfCourierHawb)) _CourierMasterPM.NoOfCourierHawb = _LogitudeMasterCourier.NoOfCourierHawb;
                 if (!string.IsNullOrWhiteSpace(_LogitudeMasterCourier.TruckerId) && string.IsNullOrWhiteSpace(_CourierMasterPM.TruckerId))
                 {
                     CardRepository cardRep = new CardRepository(_CourierMasterPM.Tenant);
