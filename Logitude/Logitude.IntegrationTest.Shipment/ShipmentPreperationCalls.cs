@@ -23,14 +23,14 @@ namespace Logitude.IntegrationTest.Shipment
 
             try
             {
-                ShipmentIntegrationVariables vars = new ShipmentIntegrationVariables();
-                ShipmentPreperationIntegrationVariables test = new ShipmentPreperationIntegrationVariables(IntegrationTestLoginParameters.Tenant);
-                vars = test.GetShipmentVars();
+                HttpResponseMessage response = await RestClientService.GetAsync("ShipmentIntegrationc/GetShipmentVars");
+                ShipmentIntegrationVariables vars = RestClientService.ParseResponse<ShipmentIntegrationVariables>(response);
             }
             catch (Exception Ex)
             {
                 throw new Exception(Ex.Message);
             }
+
             //    ShipmentVariables.CurrencyEURId = await GetCurrencyId("EUR");
             //    ShipmentVariables.IncotermLDEId = await GetIncotermId("LDE");
             //    ShipmentVariables.MeasurmentGRWTId = await GetMeasurmentId("GRWT");
@@ -265,7 +265,7 @@ namespace Logitude.IntegrationTest.Shipment
         //        return countryPM;
         //    }
         //    public static async Task<string> GetStateId(string stateCode)
-        //    {
+        //    {a
         //        HttpResponseMessage response = await RestClientService.GetAsync("stateviews" + QueryFiltersPreparation.GetUrlParameters(stateCode, QueryFiltersPreparation.QueryfilterByCode(stateCode)));
         //        StatePM currentTenantStatePM = RestClientService.ParseResponse<StatePM>(response);
         //        if (currentTenantStatePM == null)

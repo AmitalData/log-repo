@@ -73,21 +73,21 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return vars;
         }
 
-        private string GetVendor(string code)
+        private string GetVendor(string vendorName)
         {
             VendorRepository vendorRepository = new VendorRepository(commonDataContext);
-            Vendor vendor = vendorRepository.GetSingleVendorByCode(code, tenant);
+            Vendor vendor = vendorRepository.GetSingleVendorByCode(vendorName, tenant);
             if(vendor == null)
             {
-                InsertNewVendor(code);
-                vendor = vendorRepository.GetSingleVendorByCode(code, tenant);
+                InsertNewVendor(vendorName);
+                vendor = vendorRepository.GetSingleVendorByCode(vendorName, tenant);
             }
             return null;
         }
-        private void InsertNewVendor(string code)
+        private void InsertNewVendor(string vendorName)
         {
             VendorService vendorService = new VendorService(commonDataContext, tenant);
-            vendorService.Create(CreateVendorPM(code));
+            vendorService.Create(CreateVendorPM(vendorName));
         }
 
         public VendorPM CreateVendorPM(string vendorName)
@@ -98,10 +98,23 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             vendorPM.CityName = "AKD";
             vendorPM.PartnerTypeId = "VD";
             vendorPM.CountryId = vars.CountryUSId;
-            //vendorPM.Addresses.Add(Address("M", vendorName));
+            vendorPM.Addresses.Add(Address("M", vendorName));
             return vendorPM;
         }
 
+        public  AddressPM Address(string addressTypeId, string partnerName)
+        {
+            AddressPM address = new AddressPM();
+            address.Tenant = tenant;
+            address.AddressTypeId = addressTypeId;
+            address.Description = "Main Address";
+            address.Name = partnerName;
+            address.City = "XSD";
+            address.CountryId = vars.CountryGBId;
+            address.IsCreatedWithPartner = true;
+
+            return address;
+        }
 
         private string GetQuoteStage(string code)
         {
@@ -158,12 +171,13 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             paymentTermService.Create(CreatePaymentTermPM(code));
         }
 
-        public PaymentTermPM CreatePaymentTermPM(string paymentTermName)
+        public PaymentTermPM CreatePaymentTermPM(string paymentTermNameCode)
         {
             PaymentTermPM paymentTermPM = new PaymentTermPM();
             paymentTermPM.Tenant = tenant;
-            paymentTermPM.EnglishName = paymentTermName;
-            paymentTermPM.LocalName = paymentTermName;
+            paymentTermPM.Code = paymentTermNameCode;
+            paymentTermPM.EnglishName = paymentTermNameCode;
+            paymentTermPM.LocalName = paymentTermNameCode;
             paymentTermPM.FromDateTypeCode = "SHI";
             return paymentTermPM;
         }
