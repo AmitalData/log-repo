@@ -63,7 +63,12 @@ namespace Logitude.Accounting.BL.CoreBL.BankDeposit
         private void GetRelatedEntities()
         {
             CashbookPM = GetCashbookById(DepositPM.CashBookId);
-            BankAccount = GetBankAccountByNumber(DepositPM.BankAccountNumber);
+            
+            if(DepositPM.DepositBankAccountId != null)
+                BankAccount = GetBankAccountById(DepositPM.DepositBankAccountId);
+            else
+                BankAccount = GetBankAccountByNumber(DepositPM.BankAccountNumber);
+            
             BankGLAccount = GetGLAccountById(BankAccount.GLAccountId, true);
             BankDeferedGLAccount = GetGLAccountById(BankAccount.DeferredGLAccountId, true);
             CashbookGLAccount = GetGLAccountById(CashbookPM.AccountId, true);
@@ -344,6 +349,12 @@ namespace Logitude.Accounting.BL.CoreBL.BankDeposit
         {
             BankAccountQueryService bankAccountQueryService = new BankAccountQueryService(Tenant);
             BankAccountPM bankAccount = bankAccountQueryService.GetByAccountNumber(id, Tenant);
+            return bankAccount;
+        }
+        private BankAccountPM GetBankAccountById(string id)
+        {
+            BankAccountQueryService bankAccountQueryService = new BankAccountQueryService(Tenant);
+            BankAccountPM bankAccount = bankAccountQueryService.GetSingle(id,false,false);
             return bankAccount;
         }
 
