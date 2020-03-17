@@ -477,7 +477,7 @@ namespace WebFreight.Web.Helpers
             string Fact = FromTables.Find(a => a == "Fact");
             if (string.IsNullOrEmpty(Fact))
             {
-                Fact = "Fact_Shipments";
+                Fact = DWQueryParam.FactTableName;
             }
             FinalSelectStmt += " from " + Fact;
 

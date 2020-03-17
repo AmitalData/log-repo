@@ -1,4 +1,15 @@
-truncate table [DWObjectFieldCategories]
+namespace Logitude.DatabaseMigration.Migrations
+{
+    using System;
+    using System.Data.Entity.Migrations;
+    
+    public partial class WesamAddDWObjectTableCodeToDWObjectFieldCategoriesTable : DbMigration
+    {
+        public override void Up()
+        {
+            AddColumn("dbo.DWObjectFieldCategories", "DWObjectTableCode", c => c.String(nullable: true, maxLength: 50, unicode: false));
+            Sql(@"
+                truncate table [DWObjectFieldCategories]
 
 ------------------------------------------------------
 
@@ -52,3 +63,13 @@ declare @FactCode varchar(50)
 	END
 	CLOSE DWObjectFieldsCursor
 	DEALLOCATE DWObjectFieldsCursor
+            ");
+            AlterColumn("dbo.DWObjectFieldCategories", "DWObjectTableCode", c => c.String(nullable: false, maxLength: 50, unicode: false));
+        }
+
+        public override void Down()
+        {
+            DropColumn("dbo.DWObjectFieldCategories", "DWObjectTableCode");
+        }
+    }
+}

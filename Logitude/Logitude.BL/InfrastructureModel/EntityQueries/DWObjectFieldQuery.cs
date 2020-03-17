@@ -418,7 +418,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             return (from aa in repository.webFreightContext.DWObjectFieldCategories
                     join a in repository.webFreightContext.DWObjectFields on aa.DWObjectFieldCode equals a.Code
                     join b in repository.webFreightContext.DWCategories on aa.DWCategoryCode equals b.Code
-                    where a.Tenant == tenant && a.DWObjectTableCode == dwotCode
+                    where a.Tenant == tenant && a.DWObjectTableCode == dwotCode && aa.DWObjectTableCode == dwotCode
                     select new DWObjectFieldPM()
                     {
                         Id = a.Id,

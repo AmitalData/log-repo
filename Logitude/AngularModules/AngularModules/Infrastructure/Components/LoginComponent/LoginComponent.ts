@@ -856,6 +856,13 @@ export class LoginComponent implements OnInit {
                 //});
             }
         });
+
+        this.myInfrastructureDomainService.getDWObjectFieldsWithChildrenByDWTableId("Fact_Charges").subscribe(Result => {
+            if (!Result.HasError) {
+                window.DWObjectFields.concat(Result.Result);
+                this.IncreaseProgressBar();
+            }
+        });
                 //this._objectTableRuleFieldPMService.getAllByTenant(CurrentTenant).subscribe(myResult => {
                 //    window.ObjectTableRulePMs = myResult;
                 //    this.IncreaseProgressBar();

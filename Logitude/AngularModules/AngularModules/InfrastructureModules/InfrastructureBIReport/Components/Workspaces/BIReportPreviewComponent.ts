@@ -620,6 +620,7 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
         var windowArgs: any = {};
         windowArgs.DWQueryId = this.DWQueryId;
         windowArgs.IsBIReportEditScreen = true;
+        windowArgs.FactTableName = this.EntityPM.FactTableName;
         logWindow.WindowArgs = windowArgs;
         logWindow.Width = 1200;
         logWindow.Height = 780;
