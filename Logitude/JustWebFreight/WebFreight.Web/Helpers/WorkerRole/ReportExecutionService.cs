@@ -11,6 +11,7 @@ using WebFreight.Web.DataContracts;
 using Logitude.Server.Tools.Helpers;
 using System.Threading.Tasks;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Simplog.Server.Infrastructure;
 
 namespace WebFreight.Web.Helpers.WorkerRoleHelpers
 {
@@ -52,6 +53,7 @@ namespace WebFreight.Web.Helpers.WorkerRoleHelpers
             }
             catch (Exception ex)
             {
+                DatabaseInitializer.RunOnSeconderyDB = false;
                 HandleReportExecutionException(ex);
             }
         }
@@ -63,6 +65,7 @@ namespace WebFreight.Web.Helpers.WorkerRoleHelpers
             {
                 AuthenticationUtil.AuthenticatedUserEmail = GetContactEmailByContactId(reportFliter.UserId, reportFliter.tenant);
                 ReportHelper reportHelper = new ReportHelper();
+                if (FeatureToggleHelper.HasFeatureToggle("RRS", reportExecutionLog.Tenant)) DatabaseInitializer.RunOnSeconderyDB = true;
                 reportHelper.BuildStimulReport(reportFliter);
                 UpdateReportExecutionLog(new ReportExecutionLogArgs() { StatusCode = "D", DoneDate = DateTime.Now });
                 queueService.Complete();
