@@ -3,7 +3,6 @@ using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
-using WebFreight.Web.CommonDataModel.DomainServices;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
@@ -16,6 +15,7 @@ using Logitude.BL.InfrastructureModel.EntityPMs;
 using Simplog.Data.QuoteModel.Repositories;
 using Simplog.Data.QuoteModel;
 using Simplog.Data.QuoteModel.EntityPOCOs;
+using WebFreight.Web.CommonDataModel.DomainServices;
 
 namespace Logitude.BL.ShipmentsModel.EntityQueries
 {
@@ -79,10 +79,29 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             Vendor vendor = vendorRepository.GetSingleVendorByCode(code, tenant);
             if(vendor == null)
             {
-
+                InsertNewVendor(code);
+                vendor = vendorRepository.GetSingleVendorByCode(code, tenant);
             }
             return null;
         }
+        private void InsertNewVendor(string code)
+        {
+            VendorService vendorService = new VendorService(commonDataContext, tenant);
+            vendorService.Create(CreateVendorPM(code));
+        }
+
+        public VendorPM CreateVendorPM(string vendorName)
+        {            
+            VendorPM vendorPM = new VendorPM();
+            vendorPM.Tenant = tenant;
+            vendorPM.EnglishName = vendorName;
+            vendorPM.CityName = "AKD";
+            vendorPM.PartnerTypeId = "VD";
+            vendorPM.CountryId = vars.CountryUSId;
+            //vendorPM.Addresses.Add(Address("M", vendorName));
+            return vendorPM;
+        }
+
 
         private string GetQuoteStage(string code)
         {
