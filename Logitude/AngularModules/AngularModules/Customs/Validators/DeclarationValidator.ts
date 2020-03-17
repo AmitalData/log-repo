@@ -125,11 +125,11 @@ export class DeclarationValidator {
         // Levies
         for (let item of supplierInvoiceItemPM.SupplierInvoiceItemLevies) {
             if (AppTool.IsNullOrEmpty(item.TradeLevyExamptCode) && AppTool.IsNullOrEmpty(item.TradeLevyNumber)) {
-                errors.push("יש למלא קוד פטור או זיהוי");
+                errors.push("יש למלם קוד פטור םו זיהוי");
                 break;
             }
             //else if (!AppTool.IsNullOrEmpty(item.TradeLevyExamptCode) && !AppTool.IsNullOrEmpty(item.TradeLevyNumber)) {//task 36728 --mohammad
-            //    errors.push("יש למלא קוד פטור או זיהוי ולא גם וגם");
+            //    errors.push("יש למלם קוד פטור םו זיהוי ולם גם וגם");
             //}
             else {
                 // do nothing one of them is filled.
@@ -249,13 +249,13 @@ export class DeclarationValidator {
                             //search the code in Clients table 
                             //if (false)
                             //{
-                            //    errorMessage = "יש לשלוף יבואן מהמכס לפני שליחה";
+                            //    errorMessage = "יש לשלוף יבוםן מהמכס לפני שליחה";
                             //}
                         }
                         else {
                             //Check if ImporterName & ImporterAddrress has value
                             if (AppTool.IsNullOrEmpty(importerName) && AppTool.IsNullOrEmpty(importerAddress)) {
-                                errorMessage = "יש להזין נתוני יבואן " + importerField + " לפני שליחה";
+                                errorMessage = "יש להזין נתוני יבוםן " + importerField + " לפני שליחה";
                             }
                         }
                     }
@@ -266,7 +266,7 @@ export class DeclarationValidator {
 
                         //Check That Both PassportCountry & PassportNumber has values
                         if (AppTool.IsNullOrEmpty(importerPassportNumber) || AppTool.IsNullOrEmpty(importerPassCountryCode)) {
-                            errorMessage = "יש להזין נתוני יבואן " + importerField + " לפני שליחה";
+                            errorMessage = "יש להזין נתוני יבוםן " + importerField + " לפני שליחה";
                         }
                         break;
                     }
@@ -275,11 +275,11 @@ export class DeclarationValidator {
                         if (AppTool.IsNullOrEmpty(importerId)) {
                             if (!AppTool.IsNullOrEmpty(importerCode)) {
                                 //errorMessage = "Customs.General.O.ImporterCodeNoId";
-                                errorMessage = "יש לשלוף לקוח מהמכס עבור יבואן " + importerField + " לפני שליחה";
+                                errorMessage = "יש לשלוף לקוח מהמכס עבור יבוםן " + importerField + " לפני שליחה";
                             }
                             else {
                                 //errorMessage = "Customs.General.O.NoImporterId";
-                                errorMessage = "מספר יבואן " + importerField + " הוא שדה חובה";
+                                errorMessage = "מספר יבוםן " + importerField + " הום שדה חובה";
                             }
                         }
                         break;
@@ -442,7 +442,7 @@ export class DeclarationValidator {
         //    ErrorCode.Add(errorMessage);
         //}
         //Transfer Importer
-        //errorMessage = ImportersCheck("זכאי", _DeclarationPM.EntitleImporterCode, _DeclarationPM.EntitleImporterId, _DeclarationPM.EntitleImporterTypeCode, _DeclarationPM.EntitleImporterName, _DeclarationPM.EntitleImporterAddress, _DeclarationPM.EntitlePassportNumber, _DeclarationPM.EntitleImporterCountryCode);
+        //errorMessage = ImportersCheck("זכםי", _DeclarationPM.EntitleImporterCode, _DeclarationPM.EntitleImporterId, _DeclarationPM.EntitleImporterTypeCode, _DeclarationPM.EntitleImporterName, _DeclarationPM.EntitleImporterAddress, _DeclarationPM.EntitlePassportNumber, _DeclarationPM.EntitleImporterCountryCode);
         //if (!string.IsNullOrWhiteSpace(errorMessage))
         //{
         //    ErrorCode.Add(errorMessage);
@@ -491,7 +491,23 @@ export class DeclarationValidator {
         //SubmitDeclarationAgainDoneCheck(); // Mirit 25/06/15 Task 14330 + Remarked by Yuval Chalup 02.08.2015 TASK-15145
         this.CheckIsConvertedDeclaration(); // Mirit 02/12/15 Task 18508
         this.CheckIsCloseDeclaration();
-       // return error;
+        this.CheckIfAutomaticPayment();
+    }
+    CheckIfAutomaticPayment() {
+
+        var errorMessage: string = "";
+
+        if (this._DeclarationPM != null) {
+            if (this._DeclarationPM.AutomaticPayment) {
+                //"הצהרה בתהליך תשלום םוטומטי - לתצוגה בלבד"
+                errorMessage = "Customs.General.O.InAutomaticPayment";
+                if (!AppTool.IsNullOrEmpty(errorMessage)) {
+                    this.ValidationErrorMessageCodes.push(errorMessage);
+                }
+            }
+        }
+ 
+
     }
     //Yuval Chalup 18.11.2014 TASK-4240 --->
 
@@ -536,7 +552,7 @@ export class DeclarationValidator {
 
 
             if (this._DeclarationPM.ImporterCode.length < 9) {
-                this.ValidationErrorMessageCodes.push("מספר יבואן קצר מידיי");
+                this.ValidationErrorMessageCodes.push("מספר יבוםן קצר מידיי");
             }
             else if (this._DeclarationPM.ImporterCode.length > 9) {
                 this.ValidationErrorMessageCodes.push(TextCodeTranslator.Translate("Customs.Declaration.O.TooLongCode"));

@@ -19,7 +19,7 @@ using Unifreight.Data.AmitalModel;
 
 namespace Logitude.Customs.BL.TraceEvents
 {
-    internal class UnifreightEventTaskService
+    public class UnifreightEventTaskService
     {
         private AmitalContext _AmitalContext;
 

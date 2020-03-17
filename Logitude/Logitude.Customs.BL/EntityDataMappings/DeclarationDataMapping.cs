@@ -95,7 +95,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
             this.CustomMappedPMProperties.Add(PMPropertyNames.AmendmentStatusName);
             this.CustomMappedPMProperties.Add(PMPropertyNames.AmendmentMessage);
             this.CustomMappedPMProperties.Add(PMPropertyNames.IsAmendmentDisplayOnly);
-
+            this.CustomMappedPMProperties.Add(PMPropertyNames.AutomaticPayment);
 
             AmendmentStatusRepository amendmentStatusRepository = new AmendmentStatusRepository(entityPOCO.Tenant);
             AmendmentStatus amendmentStatus = amendmentStatusRepository.GetSingle(entityPOCO.AmendmentStatus);
@@ -134,6 +134,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 //    entityPM.AmendmentMessage = TranslateTextsClass.Translate("Customs.Declaration.O.ExistsAmendments", entityPOCO.Tenant , true);
                 //}
             }
+
+
 
             //CardRepository rep = new CardRepository(entityPM.Tenant);
             Card customerCard = CardRepository.GetSingleCard(entityPOCO.CustomerId, entityPOCO.Tenant, true);
@@ -363,6 +365,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
                     entityPM.CourierData = courierMaster.AirlinePrefix + "-" + courierMaster.MAWB;
                 }
             }
+
+            DeclarationPaymentQueryService declarationPaymentQueryService = new DeclarationPaymentQueryService(entityPOCO.Tenant);
+            DeclarationPaymentPM declarationPaymentPM = declarationPaymentQueryService.GetSingle(entityPOCO.Id, false, false);
+         if(declarationPaymentPM!=null)   entityPM.AutomaticPayment = declarationPaymentPM.AutomaticPayment;
 
             if (entityPOCO.WeightValue != null)
             {

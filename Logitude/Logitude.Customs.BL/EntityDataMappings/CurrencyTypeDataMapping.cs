@@ -49,6 +49,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
             }
  
+            
+
             entityPM.MehesInactive= entityPOCO.Inactive;
             var repo = new CurrencyTypeTenantRepository(Tenant);
             var pocoTenant=repo.GetPMByCode(Tenant, entityPOCO.Code);
