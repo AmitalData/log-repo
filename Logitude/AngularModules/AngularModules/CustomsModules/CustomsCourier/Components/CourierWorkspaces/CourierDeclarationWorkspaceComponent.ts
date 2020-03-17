@@ -21,11 +21,12 @@ import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 import { DeclarationExtendedListService } from '../../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
 import { DeclarationCourierStatusWebService } from '../../../../Customs/Services/WebServices/DeclarationCourierStatusWebService';
+import { CourierWorksheetSharedDataService } from '../../../../Customs/Services/DataChange/CourierWorksheetSharedDataService';
 
 @Component({
     moduleId: module.id,
     templateUrl: './CourierDeclarationWorkspaceComponent.html',
-    providers: [DeclarationCourierStatusWebService]
+    providers: [DeclarationCourierStatusWebService, CourierWorksheetSharedDataService]
 })
 
 export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
@@ -53,7 +54,7 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
     @Output() MenuHeaderchangeevent = new EventEmitter();
     @Output() onQueryChangeEvent = new EventEmitter();
     
-    constructor(public _declarationCourierStatusWebService: DeclarationCourierStatusWebService) {
+    constructor(public _CourierWorksheetSharedDataService:CourierWorksheetSharedDataService,public _declarationCourierStatusWebService: DeclarationCourierStatusWebService) {
         //this.LoadAllScreenData();
         this.CurrentSession.StartBusyIndicatorLoading();
         this._entityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response: any) => {
@@ -75,14 +76,29 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
     }
     ngAfterViewInit() {
-        
-        this.LoadAllScreenData();
+        this._CourierWorksheetSharedDataService.CurrentMessage
+            .subscribe(message => {
+                if (message == "DoRefresh") {
+                    this.RefreshButtonClicked();
+                   
+                }
+
+                this.LoadAllScreenData();
+
+            });
+
+
     }
     public IsQueryVisible_MyViewsGroup: boolean = true;
 
     RefreshButtonClicked() {
-        this.LoadAllScreenData();
-        this.RefreshList();
+        this._declarationCourierStatusWebService.GetQueriesCounts().subscribe(
+            data => {
+                this.counters = data.Result;
+                this.LoadAllScreenData();
+                this.RefreshList();
+            });
+     
     }
 
     public LoadAllScreenData() {
