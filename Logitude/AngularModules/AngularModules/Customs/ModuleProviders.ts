@@ -349,6 +349,7 @@ import { VendorCommissionService } from './Services/WebServices/VendorCommission
 import { ApprovedProfessionListService } from './Services/StandardLists/ApprovedProfessionListService'
 import { RequestTypeListService } from './Services/StandardLists/RequestTypeListService'
 import { CustomsAutonomyKeywordPMService } from './Services/StandardPMs/CustomsAutonomyKeywordPMService';
+import { CurrencyTypePMService } from './Services/StandardPMs/CurrencyTypePMService';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -581,7 +582,7 @@ export class ModuleProviders {
             case "SealUpdateReasonTypeListService": { myResult = new SealUpdateReasonTypeListService(); break; }
             case "AmendmentTypeListService": { myResult = new AmendmentTypeListService(); break; }
             case "SealCompletenesListService": { myResult = new SealCompletenesListService(); break; }
-
+          
             //#endregion                
 
             //#region StandardPMs
@@ -636,6 +637,7 @@ export class ModuleProviders {
             case "CustomsAirlinePMService": { myResult = new CustomsAirlinePMService(); break; }
             case "CustomsCountryPMService": { myResult = new CustomsCountryPMService(); break; }
             case "PendingByKeywordPMService": { myResult = new PendingByKeywordPMService(); break; }
+            case "CurrencyTypePMService": { myResult = new CurrencyTypePMService(); break; }
             //#endregion
 
             //#region ExtendedLists

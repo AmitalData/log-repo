@@ -9412,6 +9412,8 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             QueryColumn currencyTypeQueryColumn2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = currencyTypeQuery.Id, IndexOrder = 1, ObjectFieldId = currencyTypeFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == currencyTypeObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
             QueryColumn currencyTypeQueryColumn3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = currencyTypeQuery.Id, IndexOrder = 2, ObjectFieldId = currencyTypeFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == currencyTypeObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
             QueryColumn currencyTypeQueryColumn4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = currencyTypeQuery.Id, IndexOrder = 3, ObjectFieldId = currencyTypeFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == currencyTypeObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn currencyTypeQueryColumn5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = currencyTypeQuery.Id, IndexOrder = 4, ObjectFieldId = currencyTypeFields.Where(d => d.FieldName == "TenantInactive" && d.ObjectTableId == currencyTypeObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn currencyTypeQueryColumn6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = currencyTypeQuery.Id, IndexOrder = 5, ObjectFieldId = currencyTypeFields.Where(d => d.FieldName == "MehesInactive" && d.ObjectTableId == currencyTypeObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
 
 
             #endregion
@@ -14057,7 +14059,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             //Task 62936 
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.UpdateCountryOfOrigin", DefaultText = "Update Country of Origin", LocalDefaultText = "עדכון ארץ מקור", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.MultiCountryOfOrigin", DefaultText = "This screen allows to multi update Country of Origin", LocalDefaultText = "מסך זה מאפשר לעדכן את ארץ המקור באופן גורף לכל שורות פרטי המכס או לחלקן . אנא בחר בקוד התהליך ובפעולה הרצויה.", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ItemsWithNoCountrOfOrigin", DefaultText = "Update Items with no Country of Origin", LocalDefaultText = "עדכן פריטים ללא ערך מקור", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ItemsWithNoCountrOfOrigin", DefaultText = "Update Items with no Country of Origin", LocalDefaultText = "עדכן פריטים ללא ארץ מקור", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
 
 
             ObjectContext.SaveChanges();

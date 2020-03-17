@@ -10,27 +10,27 @@ namespace Logitude.Customs.BL.CloseTables
     {
         public List<InterfaceDetails> GetAllCustomsAutonomyKeywords()
         {
-            var all = new List<InterfaceDetails>() { 
+            var all = new List<InterfaceDetails>() {
             //all.Add(new KeyValuePair<string, string>("", ""));
-
-            new InterfaceDetails()
+             
+             new InterfaceDetails()
             {
                 Code = "1",
-                Name = "טלפון",
+                Name = "עיר",
                 TypeCode = "1",
                 Partner = "",
                 ViaMethod = ""
             }
-          ,
-             new InterfaceDetails()
+,
+            new InterfaceDetails()
             {
                 Code = "2",
-                Name = "עיר",
+                Name = "טלפון",
                 TypeCode = "2",
                 Partner = "",
                 ViaMethod = ""
             }
-
+        
             };
             ///
 

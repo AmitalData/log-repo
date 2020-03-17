@@ -16,6 +16,7 @@ using Logitude.Customs.Data.EntityKeys;
 using Logitude.Customs.Data;
 using Simplog.Server.Infrastructure;
 using Logitude.Customs.BL.CloseTables;
+using System.Text.RegularExpressions;
 
 namespace Logitude.Customs.BL.EntityQueryServices
 {
@@ -35,8 +36,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
             CustomsAutonomyKeywordDetails customsAutonomyKeywordDetails = new CustomsAutonomyKeywordDetails();
             var customsAutonomyKeywords = customsAutonomyKeywordDetails.GetAllCustomsAutonomyKeywords();
 
-            if (CheckIfsAutonomyByType(customsAutonomyKeywords[0].Code, phone, tenant)) return true;
-            if (CheckIfsAutonomyByType(customsAutonomyKeywords[1].Code, city, tenant)) return true;
+            if (CheckIfsAutonomyByType(customsAutonomyKeywords[0].Code, city, tenant)) return true;
+            if (CheckIfsAutonomyByType(customsAutonomyKeywords[1].Code, phone, tenant)) return true;
 
             return false;
 
@@ -46,10 +47,21 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
         public bool CheckIfsAutonomyByType(string type ,string  valueToSearch , int tenant)
         {
-       
+
+            valueToSearch = valueToSearch.TrimEnd();
+            valueToSearch = valueToSearch.TrimStart();
 
             var myCustomsAutonomyKeyword = this.repository.GetByKeywordtypeCode(type, tenant);
-            var list = myCustomsAutonomyKeyword.KeywordsList.Split(',');
+            if (myCustomsAutonomyKeyword == null) return false;
+            string[] list = myCustomsAutonomyKeyword.KeywordsList.Split(',');
+
+            for (int i = 0; i < list.Count(); i++)
+            {
+                list[i]= list[i].TrimEnd();
+                list[i] = list[i].TrimStart();
+            
+            }
+             
             if (list != null && list.Count() > 0)
             {
                 if (list.Contains(valueToSearch))

@@ -38,7 +38,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             this.MyResponseData.Succeeded = true;
             this.MyResponseData.HasException = false;
 
-            CargoSealIdentifierPM cargoSealIdentifierPM = cargoSealIdentifierQueryService.GetSingle(requestParams.CargoSealIdentifierId, false, false);
+            CargoSealIdentifierPM cargoSealIdentifierPM = cargoSealIdentifierQueryService.GetSingle(requestParams.CargoSealIdentifierId, true, false);
             if (cargoSealIdentifierPM == null)
             {
                 this.MyResponseData.HasException = true;
@@ -55,6 +55,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
             else
             {
                 cargoSealIdentifierPM.Status = "1";
+
+                cargoSealIdentifierPM.CargoSeals.ForEach(x => { x.UpdateTypeCode = "2"; x.ChangeSetOp = ChangeSetOperation.Update; });
                 this.MyResponseData.UserMessage = "התקבלה תשובה תקינה והסגר עודכן";
             }
             cargoSealIdentifierPM.ChangeSetOp = ChangeSetOperation.Update;

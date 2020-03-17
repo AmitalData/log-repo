@@ -1479,10 +1479,8 @@ export class ListComponent implements OnInit, AfterViewInit {
         //var BackGridEvent = $event.BackFromEdit;
         if ($event != null) {
             if (!this.isEditControlOpened) {
-
                 var entityList = $event.rowData;
                 var selectedEntityId = $event.rowData.Id;
-
                 switch (this.ObjectTableName) {
                     case 'Customs.GovernmentProcedureType':
                     case "Customs.NotificationDefinition":
@@ -1490,6 +1488,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                     case "Customs.CustomDocumentType":
                     case "Customs.UIMessage":
                     case "Customs.CourierPendingReason":
+                    case "Customs.CurrencyType":
                     case "Customs.CustomsCountry":
                     //case "Customs.InternationalSite":
                         selectedEntityId = $event.rowData.Code;
