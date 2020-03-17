@@ -59,8 +59,8 @@ import {ErrorLogPM} from '../../../../../Infrastructure/EntityPMs/ErrorLogPM';
 import { DateTimeFormat } from '../../../../../Infrastructure/Utilities/DateTimeZone';
 import { DeclarationCourierStatusList } from '../../../../../Customs/EntityLists/DeclarationCourierStatusList';
 import { DeclarationCourierStatusListService } from '../../../../../Customs/Services/StandardLists/DeclarationCourierStatusListService';
-
-
+import { Observable } from 'rxjs';
+ 
 @Component({
     moduleId: module.id,
     templateUrl: './DeclarationPaymentComponent.html',
@@ -92,11 +92,14 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
     PaymentProtestsList: ObservableCollection;
     SelectedInvoiceItems: ObservableCollection;
     SelectedInvoices: ObservableCollection;
-
+    IsDisplayOnlyAutomaticPayment: boolean;
     _ErrorLogPMFileLoggerService: ErrorLogPMFileLoggerService;
     _2LogBankList: boolean = false;
+    IsDisplayMessage: boolean;
+    DisplayAutomaticPayment: boolean= true;
     ClientBankListLogUntilDateyyyyMMdd = "20180820.ClientBankListLogUntilDateyyyyMMdd";
     _CourierWorksheet: DeclarationCourierStatusList;
+    IsAutomaticPayment: boolean;
     constructor() {
         super();
         this.PaymentMethodsList = new ObservableCollection([]);
@@ -106,8 +109,18 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
         this._ErrorLogPMFileLoggerService = new ErrorLogPMFileLoggerService();
         this._ErrorLogPMFileLoggerService.get(this.ClientBankListLogUntilDateyyyyMMdd)
             .subscribe(response => {
-
                 this._2LogBankList = response.Result.IsLogInOn;
+
+                this._CustomsSettingExtendedListService.GetDefault("ISRAEL", "CGG_AVA_AUTOPAY", "NON", "NON", SessionLocator.Tenant).subscribe((response: ServiceResponse) => {
+                     let obj = response.Result;
+                    if (obj) {
+                        let DefaultValue = obj['DefaultValue'];
+                        if (!AppTool.IsNullOrEmpty(DefaultValue) && DefaultValue=="Y") {
+                            this.IsAutomaticPayment = true;
+
+                        }
+                    }
+                });
             });
     }
 
@@ -115,6 +128,29 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
 
 
     }
+
+
+    	
+    OnCheckedAutomaticPayment(event) {
+         if (event.target.checked && this.FuturePaymentDateTime != null) {
+           this.AutomaticPayment = 0;
+             event.preventDefault()
+        var myMessageWindow = new MessageWindow
+        myMessageWindow.Show("לא ניתן לבצע תשלום בזמינות עם תאריך תשלום עתידי");//TextCodeTranslator.Translate("")
+       
+    }
+	
+    else {
+            this.AutomaticPayment = Number(event.target.checked);
+        if (!this.AutomaticPayment) {
+        this.ErrorMessage = null;
+            this.IsDisplayMessage = false;
+            this.RefreshScreen()
+        }
+    }
+}
+	
+   
 
     SetWindowArgs(args: any) {
         if (!AppTool.IsNullOrEmpty(args)) {
@@ -236,6 +272,11 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
     public set FuturePaymentDateTime(newValue: Date) {
         this.paymentPM.FuturePaymentDateTime = newValue;
     }
+
+    public get AutomaticPayment() { return this.paymentPM.AutomaticPayment; }
+    public set AutomaticPayment(newValue: number) {
+    this.paymentPM.AutomaticPayment = newValue;
+   }
 
     _FuturePaymentTime: Date;
     public get FuturePaymentTime() { return this._FuturePaymentTime; }
@@ -491,6 +532,8 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
         if (AppTool.IsNullOrEmpty(this.paymentPM)) {
             this.paymentPM = new DeclarationPaymentPM();
         }
+
+        this.IsDisplayOnlyAutomaticPayment = (this.DeclarationPM.AvailabilityDate != null && this.DeclarationPM.AvailabilityDate.toString() != '0001-01-01T00:00:00' && !this.paymentPM.AutomaticPayment);
         if (!AppTool.IsNullOrEmpty(this.paymentPM) && AppTool.IsNullOrEmpty(this.paymentPM.DeclarationId)) {
             this.paymentPM.DeclarationId = this.DeclarationPM.Id;
             this.paymentPM.Tenant = this.DeclarationPM.Tenant;
@@ -953,12 +996,20 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
             this.ErrorMessage = TextCodeTranslator.Translate("Customs.General.O.SubmitDeclarationAgain");
         }
 
+
         this.CheckTotals();
 
         //this.BuildMethods();
         //this.BuildProtest();
 
         this.DisplayOnlyCheck();
+
+
+        if (entityPM.AutomaticPayment && this.ErrorMessage != TextCodeTranslator.Translate("Customs.General.O.InAutomaticPayment")) {
+            this.OkButtonEnabled = true;
+            this.DisplayAutomaticPayment = false;
+
+        }
 
         this.SetScreenFieldsEditability();
     }
@@ -973,6 +1024,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
 
         //get declaration display only
         declarationDisplayOnly = SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.InDisplayMode;
+      
 
         if (declarationDisplayOnly) {
             this.IsDisplayOnly = true;
@@ -1209,9 +1261,16 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
     FuturePaymentDateTimeOnBlur(event) {
         // WI 32593
         this.IsFuturePaymentDateValid();
+
+
     }
     IsFuturePaymentDateValid() {
-
+        if (this.AutomaticPayment && this.FuturePaymentDateTime != null) {
+            var myMessageWindow = new MessageWindow
+            myMessageWindow.Show("לא ניתן לבצע תשלום בזמינות עם תאריך תשלום עתידי");//TextCodeTranslator.Translate("")
+            this.FuturePaymentDateTime = null;
+            return false;
+        }
         if (this.FuturePaymentDateTime) {
 
             var newDate = new Date();
@@ -1261,29 +1320,126 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
     }
 
     OkButtonClicked() {
-
-        if (!this.FuturePaymentTime && this.FuturePaymentDateTime) {
+         if (!this.FuturePaymentTime && this.FuturePaymentDateTime) {
             this.ValidationErrorsList = [];
             this.ValidationErrorsList.push("הזן זמן עתידי"); // Please enter a future time
             return;
         }
-
+        
         var isFuturePaymentDateValid = this.IsFuturePaymentDateValid(); // WI 32593
         var isPaymentDateValid = this.IsPaymentDateValid();
+        var isBlockTime = false;
+        if (!isFuturePaymentDateValid || !isPaymentDateValid) {
 
-        if (isFuturePaymentDateValid && isPaymentDateValid) {
-            this.ValidationErrorsList = [];
-            this.ActivateUnifreightInstructionOK();
-        }
-        else {
             this.ValidationErrorsList = [];
             if (!isFuturePaymentDateValid)
                 this.ValidationErrorsList.push(TextCodeTranslator.Translate("Customs.Declaration.O.futuredatecantbepast"));
             if (!isPaymentDateValid)
                 this.ValidationErrorsList.push("לא ניתן להזין תאריך בעבר");
+
         }
+        else {
+            this._CustomsSettingExtendedListService.GetDefault("ISRAEL", "CGG_PAY_BLK_RNG", "NON", "NON", SessionLocator.Tenant).subscribe((response: ServiceResponse) => {
+                let obj = response.Result;
+                if (obj) {
+                    let timeCompany = obj['DefaultValue'];
+                    //timeCompany = "12:00 - 13:00";
+                    this._CustomsSettingExtendedListService.GetDefault("ISRAEL", "CIM_PAY_BLK_RNG", "NON", this.DeclarationPM.CustomerCode, SessionLocator.Tenant).subscribe((response: ServiceResponse) => {
+                        let obj = response.Result;
+                         if (obj) {
+                            let timeCustomer = obj['DefaultValue'];
+                         //   timeCustomer = "20:00 - 22:00";
+                            if (AppTool.IsNullOrEmpty(timeCompany) && AppTool.IsNullOrEmpty(timeCustomer)) {
+                                isBlockTime = false;
+                            }
+                            else {
+
+                                if (!this.AutomaticPayment) {
+                                    if (!AppTool.IsNullOrEmpty(this.FuturePaymentDateTime)) {
+                                        if (!AppTool.IsNullOrEmpty(timeCompany)) {
+                                            if (this.CheckIdDateBetween2Times(timeCompany, this.FuturePaymentDateTime)) {
+                                                this.ValidationErrorsList.push("לא ניתן להגיש תשלום בשעות שהוזנו , לפי הגדרה ברמת חברה");
+                                                isBlockTime = true;
+                                            }
+
+                                        }
+                                        if (!AppTool.IsNullOrEmpty(timeCustomer)) {
+
+                                            if (this.CheckIdDateBetween2Times(timeCustomer, this.FuturePaymentDateTime)) {
+                                                this.ValidationErrorsList.push("לא ניתן להגיש תשלום בשעות שהוזנו , לפי הגדרה ברמת לקוח");
+                                                isBlockTime = true;
+                                            }
+                                        }
+                                    }
+
+                                    else {
+                                        if (!AppTool.IsNullOrEmpty(timeCompany)) {
+
+                                            if (this.CheckIdDateBetween2Times(timeCompany, this.PaymentDate)) {
+                                                this.ValidationErrorsList.push("לא ניתן להגיש תשלום בשעות שהוזנו , לפי הגדרה ברמת חברה");
+                                                isBlockTime = true;
+                                            }
+                                        }
+                                        if (!AppTool.IsNullOrEmpty(timeCustomer)) {
+
+                                            if (this.CheckIdDateBetween2Times(timeCustomer, this.PaymentDate)) {
+                                                this.ValidationErrorsList.push("לא ניתן להגיש תשלום בשעות שהוזנו , לפי הגדרה ברמת לקוח");
+                                                isBlockTime = true;
+                                            }
+                                        }
+                                    }
+
+                                }
+                            }
+
+
+                            if (!isBlockTime) {
+                                this.ValidationErrorsList = [];
+                                this.ActivateUnifreightInstructionOK();
+                            }
+ 
+                        }
+
+
+
+
+                    });
+                }
+            });
+        }
+  
+
+
+            //var isBlockTime: boolean;
+
+            //isBlockTime = this.CheckIfBlockTime();
+  
+
+
+
     }
 
+
+ 
+    CheckIdDateBetween2Times(times: any,date1:Date) {
+
+        var startTime = times.split(" - ")[0];
+        var endTime = times.split(" - ")[1];
+        var date = new Date(date1.getFullYear(), date1.getMonth(), date1.getDate(), date1.getUTCHours(), date1.getUTCMinutes(), 0);
+
+         var startDate = new Date(date.getTime());
+        startDate.setHours(startTime.split(":")[0]);
+        startDate.setMinutes(startTime.split(":")[1]);
+
+        var endDate = new Date(date.getTime());
+        endDate.setHours(endTime.split(":")[0]);
+        endDate.setMinutes(endTime.split(":")[1]);
+
+
+
+        return startDate < date && endDate > date
+    }
+    
     ActivateUnifreightInstructionOK() {
         //if (!AppTool.IsNullOrEmpty(this.DeclarationPM.CustomFileNo) && AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
         if (AmitalGatewayUtil.Instance.IsDeclarationInUse(this.DeclarationPM.CustomFileNo, this.DeclarationPM.IsConvertedDeclaration, this.DeclarationPM.IsConnectedToUnifreight)) {
@@ -1410,41 +1566,114 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
 
         if (this.ValidationErrorsList.length > 0) return;
 
-        // Validate payment date with future date
-        if (this.FuturePaymentDateTime && this.PaymentDate) {
+        var isBlockTime=false;
 
-            this.PaymentDate = new Date(Date.parse(this.PaymentDate + "")); // sometimes this variable contains string value of date, so convert it to date
-            this.FuturePaymentDateTime = new Date(Date.parse(this.FuturePaymentDateTime + "")); // sometimes this variable contains string value of date, so convert it to date
+        this._CustomsSettingExtendedListService.GetDefault("ISRAEL", "CGG_PAY_BLK_RNG", "NON", "NON", SessionLocator.Tenant).subscribe((response: ServiceResponse) => {
+            let obj = response.Result;
+            if (obj) {
+                let timeCompany = obj['DefaultValue'];
+                //timeCompany = "12:00 - 13:00";
+                this._CustomsSettingExtendedListService.GetDefault("ISRAEL", "CIM_PAY_BLK_RNG", "NON", this.DeclarationPM.CustomerCode, SessionLocator.Tenant).subscribe((response: ServiceResponse) => {
+                    let obj = response.Result;
+                     if (obj) {
+                        let timeCustomer = obj['DefaultValue'];
+                        //   timeCustomer = "20:00 - 22:00";
+                        if (AppTool.IsNullOrEmpty(timeCompany) && AppTool.IsNullOrEmpty(timeCustomer)) {
+                            isBlockTime = false;
+                        }
+                        else {
 
-            var paymentDate = new Date(this.PaymentDate.getFullYear(), this.PaymentDate.getMonth(), this.PaymentDate.getDate(), 0, 0, 0);
-            var futurePaymentDateTime = new Date(this.FuturePaymentDateTime.getFullYear(), this.FuturePaymentDateTime.getMonth(), this.FuturePaymentDateTime.getDate(), 0, 0, 0);
+                            if (!this.AutomaticPayment) {
+                                if (!AppTool.IsNullOrEmpty(this.FuturePaymentDateTime)) {
+                                    if (!AppTool.IsNullOrEmpty(timeCompany)) {
+                                        if (this.CheckIdDateBetween2Times(timeCompany, this.FuturePaymentDateTime)) {
+                                            this.ValidationErrorsList.push("לא ניתן להגיש תשלום בשעות שהוזנו , לפי הגדרה ברמת חברה");
+                                            isBlockTime = true;
+                                        }
 
-            if (futurePaymentDateTime > paymentDate) {
-                //valid
-                var confirmWindow = new ConfirmWindow();
-                confirmWindow.Title = TextCodeTranslator.Translate("Customs.General.O.Warning");
-                confirmWindow.ShowCancelButton = false;
-                confirmWindow.ShowNoButton = true;
-                confirmWindow.WindowClosed.subscribe((event: any) => {
-                    if (confirmWindow.No) {
-                        console.log("[!] Send payment canceled");
-                        return;
+                                    }
+                                    if (!AppTool.IsNullOrEmpty(timeCustomer)) {
+
+                                        if (this.CheckIdDateBetween2Times(timeCustomer, this.FuturePaymentDateTime)) {
+                                            this.ValidationErrorsList.push("לא ניתן להגיש תשלום בשעות שהוזנו , לפי הגדרה ברמת לקוח");
+                                            isBlockTime = true;
+                                        }
+                                    }
+                                }
+
+                                else {
+                                    if (!AppTool.IsNullOrEmpty(timeCompany)) {
+
+                                        if (this.CheckIdDateBetween2Times(timeCompany, this.PaymentDate)) {
+                                            this.ValidationErrorsList.push("לא ניתן להגיש תשלום בשעות שהוזנו , לפי הגדרה ברמת חברה");
+                                            isBlockTime = true;
+                                        }
+                                    }
+                                    if (!AppTool.IsNullOrEmpty(timeCustomer)) {
+
+                                        if (this.CheckIdDateBetween2Times(timeCustomer, this.PaymentDate)) {
+                                            this.ValidationErrorsList.push("לא ניתן להגיש תשלום בשעות שהוזנו , לפי הגדרה ברמת לקוח");
+                                            isBlockTime = true;
+                                        }
+                                    }
+                                }
+
+                            }
+                        }
+
+
+                        if (!isBlockTime) {
+                            // Validate payment date with future date
+                            if (this.FuturePaymentDateTime && this.PaymentDate) {
+
+                                this.PaymentDate = new Date(Date.parse(this.PaymentDate + "")); // sometimes this variable contains string value of date, so convert it to date
+                                this.FuturePaymentDateTime = new Date(Date.parse(this.FuturePaymentDateTime + "")); // sometimes this variable contains string value of date, so convert it to date
+
+                                var paymentDate = new Date(this.PaymentDate.getFullYear(), this.PaymentDate.getMonth(), this.PaymentDate.getDate(), 0, 0, 0);
+                                var futurePaymentDateTime = new Date(this.FuturePaymentDateTime.getFullYear(), this.FuturePaymentDateTime.getMonth(), this.FuturePaymentDateTime.getDate(), 0, 0, 0);
+
+                                if (futurePaymentDateTime > paymentDate) {
+                                    //valid
+                                    var confirmWindow = new ConfirmWindow();
+                                    confirmWindow.Title = TextCodeTranslator.Translate("Customs.General.O.Warning");
+                                    confirmWindow.ShowCancelButton = false;
+                                    confirmWindow.ShowNoButton = true;
+                                    confirmWindow.WindowClosed.subscribe((event: any) => {
+                                        if (confirmWindow.No) {
+                                            console.log("[!] Send payment canceled");
+                                            return;
+                                        }
+                                        else if (confirmWindow.Yes) {
+                                            this.SendMethodStep1();
+                                        }
+
+                                    });
+                                    confirmWindow.Show(TextCodeTranslator.Translate("Customs.Declaration.O.paymentDateSmallerThanFuture"));
+
+                                }
+                                else {
+                                    this.SendMethodStep1();
+                                }
+                            }
+                            else {
+                                this.SendMethodStep1();
+                            }
+
+                        }
+
                     }
-                    else if (confirmWindow.Yes) {
-                        this.SendMethodStep1();
-                    }
+
+
+
 
                 });
-                confirmWindow.Show(TextCodeTranslator.Translate("Customs.Declaration.O.paymentDateSmallerThanFuture"));
+            }
+        });
 
-            }
-            else {
-                this.SendMethodStep1();
-            }
-        }
-        else {
-            this.SendMethodStep1();
-        }
+
+
+
+
 
 
     }
@@ -1854,6 +2083,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                     SessionLocator.SelectedSession.CloseCurrentWindow();
                 });
             });
+        if (this.AutomaticPayment!=1)
         this.declarationMessagesService.PostSendPaymentOnly(params)
             .subscribe(res1 => {
             });

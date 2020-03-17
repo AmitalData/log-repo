@@ -17,6 +17,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnifreightIIG.Common.ImportDeclarationSubmitRequestServiceReference;
 using Logitude.Customs.BL.BL;
+using Logitude.Customs.BL.TraceEvents;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -93,7 +94,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     var declarationException = new UnifreightIIG.Common.ImportDeclarationServiceReference.Exception();
                     declarationException.ExeptionDescription = customResponse.ResponseContentHeader.Remark;
                     this._MyDeclarationPM.ErrosXml = mydDclarationErrorPointerService.AddDeclarationException(this._MyDeclarationPM.ErrosXml, "Warning", declarationException);
-
+                    
                     //Update Status- Future Payment(In case of sending DeclarationStatus message will fail)
                     this._MyDeclarationPM.DeclarationStatusTypeCode = "10";
                     if (_MyDeclarationPM.UserNotes == "LoadTestOnProgress")
@@ -101,6 +102,32 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         _MyDeclarationPM.UserNotes = "LoadTest";
                     }
                     this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
+
+                    var myDeclarationPaymentQueryService = new DeclarationPaymentQueryService(_MyDeclarationPM.Tenant);
+                    var declarationPaymentPM = myDeclarationPaymentQueryService.GetSingle(_MyDeclarationPM.Id, true, false);
+
+                    if(declarationPaymentPM.AutomaticPayment==1)
+                    {
+                      
+
+                        var MyUnifreightEventParam = new UnifreightEventParam()
+                        {
+                            Code = "APAY",
+                            Mode = UnifreightEventMode.@new,
+                            EventDateTime = DateTime.Now,
+                            Entname = "CFIFILEM",
+                            PrimaryNum = _MyDeclarationPM.CustomFileNo,
+                            EventRemarks = "",
+                        };
+                        LogMessagingUtil.Instance.AppendLine("MyUnifreightEventParam = " + MyUnifreightEventParam ?? "NULL");
+                        var myOpenUnifreighTask = new UnifreightEventTaskService();
+                        myOpenUnifreighTask.UpsertEventLE2U(
+                            _MyDeclarationPM.Tenant,
+                           requestParams.LoggingUserId,
+                            MyUnifreightEventParam);
+                    
+                }
+
                     myDeclarationUpdateService.Update(this._MyDeclarationPM, true);
 
                     //Send interactive declaration Status request - will send from GetResponse

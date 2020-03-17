@@ -17161,8 +17161,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
                 EventTypeCategoryCode = "LOG",
 
             }, EventTypesRepository, tenantEventTypes);
-
-            EventTypesRepository.SubmitChanges();
+             EventTypesRepository.SubmitChanges();
         }
 
         #endregion

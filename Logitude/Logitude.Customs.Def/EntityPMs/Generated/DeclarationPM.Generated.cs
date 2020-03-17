@@ -3789,6 +3789,7 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+
 	  private DateTime availabilityDate ;
 	  	  
        
@@ -3812,6 +3813,31 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private int automaticPayment ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int AutomaticPayment  
+	   {
+	    
+	     get
+		{
+		   return automaticPayment;
+		 }
+		 set
+		 {
+		   if(automaticPayment != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AutomaticPayment",OldValue=automaticPayment,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   automaticPayment=value;
+		   }
+			
+		 }
+	   }
+
+
    }
    
 }
