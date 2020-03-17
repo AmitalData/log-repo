@@ -31,7 +31,7 @@ export class EmployeeTimeSheetFilterComponent extends BaseComponent {
 
     constructor() {
         super();
-        this.DateOfWorkMinutes = 540;
+        this.DateOfWorkMinutes = 525;
     }
 
 

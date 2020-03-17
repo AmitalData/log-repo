@@ -111,7 +111,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
             Assert.AreEqual(expectedParentIdCounter, actualLineDepositId, "Deposit line does not take parent Id #DP03");
 
         }
-
+#if i_send_email_to_Adullah
         [DataTestMethod]
         [DataRow(true)]
         [DataRow(false)]
@@ -137,8 +137,6 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 DepositNumber = 1000,
                 IsCashDeposit = isCashDeposit,
             };
-
-            JournalPM newJournal = new JournalPM() { };
 
             JournalPM expectedJournal = new JournalPM()
             {
@@ -167,12 +165,15 @@ namespace Logitude.UnitTest.Accounting.UniTests
             A.CallTo(() => bankDepositOnCreatingService.LogActivity(entityPM)).DoesNothing();
 
             // Act
-            bankDepositOnCreatingService.InitJournal(entityPM, newJournal);
+            JournalPM newJournal = bankDepositOnCreatingService.InitJournal(entityPM);
 
             // Assert
             AssertHelper.HasEqualFieldValues(expectedJournal, newJournal, Environment.NewLine + "[TEST ERROR] Initiated Jounal does not match expected #DP04");
 
         }
+
+
+#endif
 
 
         private ContactPM GetLoggedContactInstance()

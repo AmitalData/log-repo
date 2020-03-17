@@ -1,3 +1,4 @@
+import { BankDepositLineListService } from './Services/StandardLists/BankDepositLineListService';
 import { IntegrityCheckStatusListService } from './Services/StandardLists/IntegrityCheckStatusListService';
 import { AccountingNoteExtendedListService } from './Services/ExtendedLists/AccountingNoteExtendedListService';
 //#region import services
@@ -174,6 +175,7 @@ export class ModuleProviders {
             case "ReconciliationListService": { myResult = new ReconciliationListService(); break; }
             case "ReconciliationLineListService": { myResult = new ReconciliationLineListService(); break; }
             case "CashBookLineListService": { myResult = new CashBookLineListService(); break; }
+            case "BankDepositLineListService": { myResult = new BankDepositLineListService(); break; }
             case "RevenueExpenseTypeListService": { myResult = new RevenueExpenseTypeListService(); break; }
             case "TestEntityListService": { myResult = new TestEntityListService(); break; }
             case "TestEntityListService": { myResult = new TestEntityListService(); break; }

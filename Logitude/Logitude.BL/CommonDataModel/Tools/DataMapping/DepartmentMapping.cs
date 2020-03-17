@@ -18,9 +18,21 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             poco.InActive = entityPM.InActive;
             poco.LocalName = entityPM.LocalName;
             poco.Notes = entityPM.Notes;
-            poco.Tenant = entityPM.Tenant;
-            poco.SearchFields = entityPM.EnglishName + "," + entityPM.LocalName;
+            poco.Tenant = entityPM.Tenant;            
             poco.Code = entityPM.Code;
+
+            BuildSearchField(entityPM, poco);
+        }
+
+        private static void BuildSearchField(DepartmentPM entityPM, Department entityPoco)
+        {
+            string mySearchFields = "";
+
+            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.EnglishName);
+            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.LocalName);
+
+            entityPM.SearchFields = mySearchFields;
+            entityPoco.SearchFields = mySearchFields;
         }
     }
 }
