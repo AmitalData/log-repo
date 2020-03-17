@@ -1404,7 +1404,9 @@ namespace Logitude.BL.Helpers
                 foreach (QuoteSaleChargePM quoteSaleChargePM in quoteSaleCharges)
                 {
                     currencyCode = quoteSaleChargePM.CurrencyCode;
-                    amount += (!quotePM.IsChargesByVAT ? quoteSaleChargePM.SaleTotalAmount : quoteSaleChargePM.VatAmount);
+
+                    double vatAmount = quoteSaleChargePM.VatAmount != null ? (double)quoteSaleChargePM.VatAmount : 0;
+                    amount += ((quoteSaleChargePM.SaleTotalAmount) + (quotePM.IsChargesByVAT ? vatAmount : 0 ));
 
                 }
                 QuoteSalesTotals.Add(new QuoteSalesTotalPM() { CurrencyCode = currencyCode, Amount = amount });
