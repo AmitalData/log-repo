@@ -795,6 +795,7 @@
     <Content Include="Usefull Scripts\Fill Data\ShipmentComputedFields\[Ayman] Last Pickup.sql" />
     <Content Include="Usefull Scripts\Fill Data\ShipmentComputedFields\[Ayman] Number of Deliveries.sql" />
     <Content Include="Usefull Scripts\Fill Data\ShipmentComputedFields\[Ayman] Operationally Closed.sql" />
+    <Content Include="Usefull Scripts\Fill Data\[Ayman] FirstOperationalCloseDate.sql" />
     <Content Include="Usefull Scripts\Fill Data\[Islam] Copy incoterms from tenant zero to all tenants.sql" />
     <Content Include="Usefull Scripts\Fill Data\[Ayman] Fill ShippingLines INTTRARegistrationNotes.sql" />
     <Content Include="Usefull Scripts\Fill Data\[Maheera] Fill Cc To From Fields of  Activities.sql" />
@@ -2126,7 +2127,6 @@
   <ItemGroup>
     <Folder Include="2016.R4.1\12 - 2016\" />
     <Folder Include="Customs Branch\" />
-    <Folder Include="Main Branch\2020\03 - 2020\" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0,Profile=Client">

@@ -403,7 +403,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.LastSharedEventLocation = entityPM.LastSharedEventLocation;
             entityPoco.LastSharedEventNotes = entityPM.LastSharedEventNotes;
             entityPoco.LastSharedEventDate = entityPM.LastSharedEventDate;
-            entityPoco.FirstOperationalCloseDate = entityPM.FirstOperationalCloseDate;
+
+            if (entityPoco.FirstOperationalCloseDate == null)
+            {
+                entityPoco.FirstOperationalCloseDate = entityPM.FirstOperationalCloseDate;
+            }
+
             entityPoco.FirstAccountingCloseDate = entityPM.FirstAccountingCloseDate;
             entityPoco.AMSClosingDate = entityPM.AMSClosingDate;
             entityPoco.UpdatedByPartner = entityPM.UpdatedByPartner;
