@@ -42,7 +42,7 @@ namespace Logitude.Customs.BL.CloseTables
                 },
                  new SincroTestCaseDetail()
                 {
-                    Code = "5117SincroFix",
+                    Code = "5117",
                     Name = "הצהרת תקן5117 ",
                     IsDCA= true,
                     Entity="Declaration",
