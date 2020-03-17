@@ -1629,7 +1629,7 @@ namespace WebFreight.Web.Helpers
 
         private byte[] LoadShipmentsEventsListDataProvider(byte[] filters, int tenant)
         {
-            DatabaseInitializer.RunOnSeconderyDB = true;
+           
             LogitudeReportsWebService logitudeReportsWebService = new LogitudeReportsWebService();
             return logitudeReportsWebService.LoadShipmentsEventsListDataProvider(filters, tenant);
         }
@@ -1651,9 +1651,7 @@ namespace WebFreight.Web.Helpers
 
                 case "SHEL":
                     {
-                        Thread thread = new Thread(() => { dataProvider = LoadShipmentsEventsListDataProvider(filters, reportFliter.tenant); });
-                        thread.Start();
-                        thread.Join();
+                        dataProvider = LoadShipmentsEventsListDataProvider(filters, reportFliter.tenant);
                         break;
                     }
 
