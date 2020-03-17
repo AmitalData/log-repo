@@ -2167,6 +2167,7 @@
     <Compile Include="Migrations\202002271245498_Mutaz_Add_CancelationFields_To_Database.Designer.cs">
       <DependentUpon>202002271245498_Mutaz_Add_CancelationFields_To_Database.cs</DependentUpon>
     </Compile>
+
     <Compile Include="Migrations\202003041406443_AddARInvoiceRegionalTax.cs" />
     <Compile Include="Migrations\202003041406443_AddARInvoiceRegionalTax.Designer.cs">
       <DependentUpon>202003041406443_AddARInvoiceRegionalTax.cs</DependentUpon>
@@ -2191,6 +2192,12 @@
     <Compile Include="Migrations\202003151252549_WesamAddDWObjectTableCodeToDWObjectFieldCategoriesTable.Designer.cs">
       <DependentUpon>202003151252549_WesamAddDWObjectTableCodeToDWObjectFieldCategoriesTable.cs</DependentUpon>
     </Compile>
+
+    <Compile Include="Migrations\202003100731514_AbedAddReleaseNumberToShipmentPackage.cs" />
+    <Compile Include="Migrations\202003100731514_AbedAddReleaseNumberToShipmentPackage.Designer.cs">
+      <DependentUpon>202003100731514_AbedAddReleaseNumberToShipmentPackage.cs</DependentUpon>
+    </Compile>
+
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\202003030904524_WesamDBMigrationFixes.cs" />
     <Compile Include="Migrations\202003030904524_WesamDBMigrationFixes.Designer.cs">
@@ -3940,6 +3947,7 @@
     <EmbeddedResource Include="Migrations\202002271245498_Mutaz_Add_CancelationFields_To_Database.resx">
       <DependentUpon>202002271245498_Mutaz_Add_CancelationFields_To_Database.cs</DependentUpon>
     </EmbeddedResource>
+
     <EmbeddedResource Include="Migrations\202003041406443_AddARInvoiceRegionalTax.resx">
       <DependentUpon>202003041406443_AddARInvoiceRegionalTax.cs</DependentUpon>
     </EmbeddedResource>
@@ -3958,6 +3966,11 @@
     <EmbeddedResource Include="Migrations\202003151252549_WesamAddDWObjectTableCodeToDWObjectFieldCategoriesTable.resx">
       <DependentUpon>202003151252549_WesamAddDWObjectTableCodeToDWObjectFieldCategoriesTable.cs</DependentUpon>
     </EmbeddedResource>
+
+    <EmbeddedResource Include="Migrations\202003100731514_AbedAddReleaseNumberToShipmentPackage.resx">
+      <DependentUpon>202003100731514_AbedAddReleaseNumberToShipmentPackage.cs</DependentUpon>
+    </EmbeddedResource>
+
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Logitude.Accounting.Data\Logitude.Accounting.Data.csproj">
