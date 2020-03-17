@@ -73,7 +73,7 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.QBOClientID).HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.QBOClientSecret).HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.StorageAccountKey).IsRequired().HasMaxLength(1000).IsUnicode(false);
-
+            this.Property(t => t.TMPersonalAccessToken).HasMaxLength(100).IsUnicode(false);
 
 
             // Table & Column Mappings
@@ -156,6 +156,7 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.OceanInsightsToken).HasColumnName("OceanInsightsToken");
             this.Property(t => t.EmailSendingQuota).HasColumnName("EmailSendingQuota");
             this.Property(t => t.ReleaseNotesURL).HasColumnName("ReleaseNotesURL");
+            this.Property(t => t.TMPersonalAccessToken).HasColumnName("TMPersonalAccessToken");
         }
     }
 }

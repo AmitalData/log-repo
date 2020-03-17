@@ -53,36 +53,23 @@ namespace Logitude.BL.InfrastructureModel.DataContracts
     public class ReportSchedulerDetails
     {
         [DataMember]
+        public string CreatedByUserId { get; set; }
+        [DataMember]
         public string ReportTemplateId { get; set; }
         [DataMember]
-        public string Recepients { get; set; }
+        public ReportSchedulerRecepients Recepients { get; set; }
         [DataMember]
-        public List<ReportFilterItem> ReportFilterItems { get; set; }
-
+        public List<QueryFilterItem> ReportFilterItems { get; set; }
     }
 
     [DataContract(Namespace = "")]
-    public class ReportFilterItem
+    public class ReportSchedulerRecepients
     {
         [DataMember]
-        public string FieldName { get; set; }
+        public string To { get; set; }
         [DataMember]
-        public object FieldValue { get; set; }
+        public string Cc { get; set; }
         [DataMember]
-        public object FieldValue2 { get; set; }
-        [DataMember]
-        public object FieldValue3 { get; set; }
-        [DataMember]
-        public string Operator { get; set; }
-        [DataMember]
-        public bool IsCustom { get; set; }
-        [DataMember]
-        public bool DisplayInList { get; set; }
-        [DataMember]
-        public bool IsCustomField { get; set; }
-        [DataMember]
-        public string FieldDataType { get; set; }
-
+        public string Bcc { get; set; }
     }
-
 }

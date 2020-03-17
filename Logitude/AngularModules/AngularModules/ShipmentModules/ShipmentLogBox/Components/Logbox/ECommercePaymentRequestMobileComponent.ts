@@ -75,10 +75,15 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
     public get IsAccepted() { return this.isAccepted }
     public set IsAccepted(newValue: boolean) { this.isAccepted = newValue; }
 
+    private ScreenWidth: number;
+    private MaxScreenWidth: number = 600;
+
     IsAcceptedChanged($event) {
         this.IsAccepted = $event;
     }
     ngOnInit() {
+
+        this.ScreenWidth = window.innerWidth > this.MaxScreenWidth ? this.MaxScreenWidth : window.innerWidth;;
 
     }
     ngAfterViewInit() {
@@ -273,6 +278,9 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
 
     public get TermsOfUseDocumentId() { return this.AdditionalData.RequestPaymentData.TermsOfUseDocumentId }
     public set TermsOfUseDocumentId(newValue: string) { this.AdditionalData.RequestPaymentData.TermsOfUseDocumentId = newValue; }
+
+    public get u71() { return this.AdditionalData.PaymentData.u71 }
+    public set u71(newValue: string) { this.AdditionalData.PaymentData.u71 = newValue; }
 
 
 

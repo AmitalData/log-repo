@@ -2202,6 +2202,28 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                     }
                                 }
 
+                                if (item.IsRegionalTax)
+                                {
+                                    newItem.LocalCurrencyAmount = item.LocalCurrencyAmount + newItem.LocalCurrencyAmount * (entityPM.RegionalTaxPercentage / 100);
+                                    newItem.InvoiceCurrencyAmount = item.InvoiceCurrencyAmount + item.InvoiceCurrencyAmount * (entityPM.RegionalTaxPercentage / 100);
+                                    newItem.ProfitCurrencyAmount = item.ProfitCurrencyAmount + item.ProfitCurrencyAmount * (entityPM.RegionalTaxPercentage / 100);
+
+                                    InvoiceTotalsClass newRegionalTaxItem = new InvoiceTotalsClass()
+                                    {
+                                        Id = entityPM.RegionalTaxId,
+                                        VatTypeId = entityPM.RegionalTaxId,
+                                        VatTypePercentage = entityPM.RegionalTaxPercentage,
+                                        LocalCurrencyAmount = item.LocalCurrencyAmount,
+                                        InvoiceCurrencyAmount = item.InvoiceCurrencyAmount,
+                                        ProfitCurrencyAmount = item.ProfitCurrencyAmount,
+                                        ExternalVatCard = newItem.ExternalVatCard,
+                                        ExternalTAXItemId = newItem.ExternalTAXItemId,
+                                        IsRegionalTax = true,
+                                    };
+
+                                    group_Source.Add(newRegionalTaxItem);
+                                }
+
                                 group_Source.Add(newItem);
                             }
 
@@ -2251,20 +2273,21 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         #endregion
                     }
 
-                     group_data
-                        = (from items in group_Source
-                           group items by new { items.VatTypeId, items.VatTypePercentage, items.ExternalVatCard, items.ExternalTAXItemId } into g
-                           select new InvoiceTotalsClass()
-                           {
-                               Id = g.Key.VatTypeId,
-                               VatTypeId = g.Key.VatTypeId,
-                               VatTypePercentage = g.Key.VatTypePercentage,
-                               LocalCurrencyAmount = g.Sum(s => s.LocalCurrencyAmount),
-                               InvoiceCurrencyAmount = g.Sum(s => s.InvoiceCurrencyAmount),
-                               ProfitCurrencyAmount = g.Sum(s => s.ProfitCurrencyAmount),
-                               ExternalVatCard = g.Key.ExternalVatCard,
-                               ExternalTAXItemId = g.Key.ExternalTAXItemId
-                           }).ToList();
+                    group_data
+                       = (from items in group_Source
+                          group items by new { items.VatTypeId, items.VatTypePercentage, items.ExternalVatCard, items.ExternalTAXItemId, items.IsRegionalTax } into g
+                          select new InvoiceTotalsClass()
+                          {
+                              Id = g.Key.VatTypeId,
+                              VatTypeId = g.Key.VatTypeId,
+                              VatTypePercentage = g.Key.VatTypePercentage,
+                              LocalCurrencyAmount = g.Sum(s => s.LocalCurrencyAmount),
+                              InvoiceCurrencyAmount = g.Sum(s => s.InvoiceCurrencyAmount),
+                              ProfitCurrencyAmount = g.Sum(s => s.ProfitCurrencyAmount),
+                              ExternalVatCard = g.Key.ExternalVatCard,
+                              ExternalTAXItemId = g.Key.ExternalTAXItemId,
+                              IsRegionalTax = g.Key.IsRegionalTax,
+                          }).ToList();
 
                     foreach (InvoiceTotalsClass item in group_data)
                     {
@@ -2279,7 +2302,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             InvoiceCurrencyVatableAmount = MethodHelper.Roundd(item.InvoiceCurrencyAmount, 2),
                             ProfitVatableAmount = MethodHelper.Round(item.ProfitCurrencyAmount, 2),
                             ExternalVATCard = item.ExternalVatCard,
-                            ExternalTAXItemId = item.ExternalTAXItemId
+                            ExternalTAXItemId = item.ExternalTAXItemId,
+                            IsRegionalTax = item.IsRegionalTax,
                         };
 
                         record.LocalVATAmount = MethodHelper.Roundd((record.LocalVatableAmount * record.VatPercent / 100), 2);

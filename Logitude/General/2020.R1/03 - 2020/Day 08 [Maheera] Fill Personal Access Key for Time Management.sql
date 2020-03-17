@@ -1,0 +1,1 @@
+update Settings set TMPersonalAccessToken = 'xbekti46cnnxsz3selcaazf7lx5ypsm774cwd35wtbj2bswz6xha'

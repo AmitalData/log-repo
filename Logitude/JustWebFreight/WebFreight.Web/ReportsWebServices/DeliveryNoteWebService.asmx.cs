@@ -193,8 +193,10 @@ namespace WebFreight.Web.ReportsWebServices
             dataProvider.AMSBL = shipment.AMSBL;
             dataProvider.DescriptionOfGoods = DataProviders.General.GetFieldString(shipment.DescriptionOfGoods);
             dataProvider.IncotermName = shipment.IncotermName;
+            dataProvider.DeclarationNumber = shipment.DeclarationNumber;
+            dataProvider.CustomsClearancePointName = shipment.CustomClearancePointName;
             dataProvider.ValueOfGoods = shipment.ValueOfGoods;
-
+            
             if (shipment.ValueOfGoodsCurrencyId != null)
             {
                 Currency currency = commonContext.Currencies.Where(d => d.Id == shipment.ValueOfGoodsCurrencyId).FirstOrDefault();
@@ -202,7 +204,7 @@ namespace WebFreight.Web.ReportsWebServices
                 {
                     dataProvider.ValueOfGoodsCurrency = currency.Code;
                 }
-            }       
+            }
 
             this.MapShipmentFrom();
             this.MapShipmentTo();

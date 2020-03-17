@@ -19,5 +19,6 @@ namespace Logitude.BL.DataContracts
         public double VatRecognizedPercentage { get; set; }
         public DateTime DateForVatInterest { get; set; }
         public int LineNumber { get; set; }
+        public bool IsRegionalTax { get; set; }
     }
 }

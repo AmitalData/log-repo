@@ -75,6 +75,8 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.CreatedByPartner).HasMaxLength(25).IsUnicode(false);
             this.Property(t => t.DocumentFilingId).HasMaxLength(40).IsUnicode(false);
             this.Property(t => t.BillToGLAccountId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.RegionalTaxId).HasMaxLength(15).IsUnicode(false);
+
             // Table & Column Mappings
             this.ToTable("ARInvoices");
             this.Property(t => t.Id).HasColumnName("Id");
@@ -181,7 +183,8 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.CreatedByPartner).HasColumnName("CreatedByPartner");
             this.Property(t => t.DocumentFilingId).HasColumnName("DocumentFilingId");
             this.Property(t => t.BillToGLAccountId).HasColumnName("BillToGLAccountId");
-            
+            this.Property(t => t.RegionalTaxId).HasColumnName("RegionalTaxId");
+            this.Property(t => t.RegionalTaxPercentage).HasColumnName("RegionalTaxPercentage");
 
             // Relationships
             this.HasOptional(t => t.BillToAddress).WithMany().HasForeignKey(d => d.BillToAddressId);
@@ -207,6 +210,7 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.HasRequired(t => t.SATTransferStatus).WithMany().HasForeignKey(d => d.SATTransferStatusCode);
             this.HasRequired(t => t.SATInvoiceStatus).WithMany().HasForeignKey(d => d.SATInvoiceStatusCode);
             this.HasOptional(t => t.BankAccountLite).WithMany().HasForeignKey(d => d.BankAccountLiteId);
+            this.HasOptional(t => t.RegionalTax).WithMany().HasForeignKey(d => d.RegionalTaxId);
         }
     }
 }

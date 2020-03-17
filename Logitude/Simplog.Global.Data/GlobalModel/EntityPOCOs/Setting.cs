@@ -79,7 +79,7 @@ namespace Simplog.Global.Data.GlobalModel.EntityPOCOs
         public int QBOOAuthDefault { get; set; }
         public string QBOClientID { get; set; }
         public string QBOClientSecret { get; set; }
-
+        public string TMPersonalAccessToken { get; set; }
 
     }
 }

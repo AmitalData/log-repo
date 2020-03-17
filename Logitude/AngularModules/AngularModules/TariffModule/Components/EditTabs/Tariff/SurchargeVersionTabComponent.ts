@@ -47,13 +47,24 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
     public SelectedVersionNumber: number;
     public OriginDependencyFilterValue: string = "A";
     public DestinationDependencyFilterValue = "A";
+    public IsAir: boolean = false;
     private deletedLinesExpirationDates: TariffLineExpirationDatePM[];
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
+        this.GetTariffType();
         this.Listen();
     }
 
+    GetTariffType() {
+        if (this.EntityPM.TypeCode == "ASC") { 
+            this.IsAir = true;
+        }
+    }
+
+    GetDisplayMemberPath() {
+        return this.IsAir ? "Code" : "CombinedCode";
+    }
 
     SetOriginDependencyFilterValue() {
         if (this.EntityPM.TypeCode == "OLC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFS") {

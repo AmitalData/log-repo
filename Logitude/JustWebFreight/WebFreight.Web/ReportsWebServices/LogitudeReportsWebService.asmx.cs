@@ -1128,7 +1128,7 @@ namespace WebFreight.Web.ReportsWebServices
                      Notes = d.InternalNotes,
                      RegisterDate = d.RegisterDate,
                      ValueDate = d.ValueDate,
-                     PaymentMethod = d.PaymentMethod == null ? null : d.PaymentMethod.Name,
+                     PaymentMethod = d.AccountingPaymentMethod == null ? null : d.AccountingPaymentMethod.Name,
                      BillToVendorId = d.VendorId,
                      BranchId = d.BranchId,
                  }).ToList();

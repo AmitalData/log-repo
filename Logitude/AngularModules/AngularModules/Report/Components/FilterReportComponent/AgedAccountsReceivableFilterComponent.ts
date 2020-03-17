@@ -78,7 +78,7 @@ public selectedCurrency: string = this.LocalCurrencyCode;
 
     InitializeComponent(myReportsPreview: ReportsPreviewComponent) {
         this.ReportsPreview = myReportsPreview;
-        this.RunReport(false);
+        //this.RunReport(false);
     }
         
     ngOnInit() {

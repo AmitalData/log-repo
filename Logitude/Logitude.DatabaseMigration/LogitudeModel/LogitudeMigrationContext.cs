@@ -81,7 +81,43 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             get;
             set;
         }
-        
+
+        public IDbSet<PaymentGatewayPartner> PaymentGatewayPartners
+        {
+            get;
+            set;
+        }
+
+        public IDbSet<CustomerSize> CustomerSizes
+        {
+            get;
+            set;
+        }
+
+        public IDbSet<UsoCFDI> UsoCFDIs
+        {
+            get;
+            set;
+        }
+
+        public IDbSet<DocumentStatus> DocumentStatuses
+        {
+            get;
+            set;
+        }
+
+        public IDbSet<DecisionType> DecisionTypes
+        {
+            get;
+            set;
+        }
+
+        public IDbSet<CourierCustomStatus> CourierCustomStatuses
+        {
+            get;
+            set;
+        }
+
         #region Common Context
         public IDbSet<CustomerOpenFilesAmount> CustomerOpenFilesAmounts { get; set; }
         
@@ -5058,7 +5094,37 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new SchedulerProcedureMap());
             modelBuilder.Configurations.Add(new UsersReleaseNotesDisplayMap());
             modelBuilder.Configurations.Add(new CheckDigitControlAlgorithmMap());
-            
+
+
+            #region Missing Maps For DBMigrations
+            modelBuilder.Configurations.Add(new TenantAdditionalDataMap());
+            modelBuilder.Configurations.Add(new NumberFormatMap());
+            modelBuilder.Configurations.Add(new ChargeTypeAccountingMap());
+            modelBuilder.Configurations.Add(new ContactLoginLogMap());
+            modelBuilder.Configurations.Add(new UserPermittedBranchMap());
+            modelBuilder.Configurations.Add(new ReportGroupMap());
+            modelBuilder.Configurations.Add(new HybridTenantStateMap());
+            modelBuilder.Configurations.Add(new HybridTenantThresholdMap());
+            modelBuilder.Configurations.Add(new GeneralLockMap());
+            modelBuilder.Configurations.Add(new EventTypeCategoryMap());
+            modelBuilder.Configurations.Add(new DWSubQueryMap());
+            modelBuilder.Configurations.Add(new AWBOCIMap());
+            modelBuilder.Configurations.Add(new AWBCustomsInformationMap());
+            modelBuilder.Configurations.Add(new AWBInformationMap());
+            modelBuilder.Configurations.Add(new UserPermittedProductMap());
+            modelBuilder.Configurations.Add(new AccountingTransferHeaderMap());
+            modelBuilder.Configurations.Add(new AccountingTransferLineMap());
+            modelBuilder.Configurations.Add(new AccountingTransferTypeMap());
+
+            modelBuilder.Configurations.Add(new PaymentGatewayPartnerMap());
+            modelBuilder.Configurations.Add(new CustomerSizeMap());
+            modelBuilder.Configurations.Add(new UsoCFDIMap());
+            modelBuilder.Configurations.Add(new DocumentTypeCustomsDataMap());
+            modelBuilder.Configurations.Add(new DocumentStatusMap());
+            modelBuilder.Configurations.Add(new DecisionTypeMap());
+            modelBuilder.Configurations.Add(new CourierCustomStatusMap());
+            #endregion
+
             base.OnModelCreating(modelBuilder);
         }
     }

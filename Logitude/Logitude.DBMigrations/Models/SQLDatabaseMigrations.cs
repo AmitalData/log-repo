@@ -360,7 +360,12 @@ namespace Logitude.DBMigrations.Models
             if (DXMLTable.Columns.Where(c => c.Constraints.PrimaryKey).Any())
             {
                 string primaryKeyColumns = string.Join(",", DXMLTable.Columns.Where(c => c.Constraints.PrimaryKey).Select(c => "[" + c.Name + "]").ToArray());
-                createTableScript += "PRIMARY KEY(" + primaryKeyColumns + ")" + "\n";
+                string primaryKeyConstraintName = "PK_" + DXMLTable.Name;
+                if (primaryKeyConstraintName.Length > 128)
+                {
+                    primaryKeyConstraintName = primaryKeyConstraintName.Substring(0, 128);
+                }
+                createTableScript += "CONSTRAINT [" + primaryKeyConstraintName + "] PRIMARY KEY(" + primaryKeyColumns + ")" + "\n";
             }
             createTableScript += ");" + "\n\n";
 
@@ -939,7 +944,7 @@ namespace Logitude.DBMigrations.Models
             }
             else if (IsTableHasPrimaryKeys(DXMLTable))
             {
-                string primaryKeyConstraintName = "PK_" + TableMigrations.DxmlTableName + "_" + GenerateRandomString();
+                string primaryKeyConstraintName = "PK_" + TableMigrations.DxmlTableName;
                 if (primaryKeyConstraintName.Length > 128)
                 {
                     primaryKeyConstraintName = primaryKeyConstraintName.Substring(0, 128);

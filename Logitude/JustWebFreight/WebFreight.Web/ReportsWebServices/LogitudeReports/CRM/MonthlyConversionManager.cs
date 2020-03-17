@@ -466,27 +466,35 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.CRM
 
         private void CorrectListValues(List<MonthItemClass> monthlyDataList)
         {
-            var expectedOrder = monthlyDataList.OrderByDescending(d => d.OpportunitiesCount).Select(s => s.OpportunitiesCount).ToList();
-            bool isOrdered = monthlyDataList.Select(s => s.OpportunitiesCount).SequenceEqual(expectedOrder);
+            List<decimal?> myOrder = monthlyDataList.Select(s => s.OpportunitiesCount).ToList();
+            List<decimal?> expectedOrder = monthlyDataList.OrderByDescending(d => d.OpportunitiesCount).Select(s => s.OpportunitiesCount).ToList();
+            bool isOrdered = myOrder.SequenceEqual(expectedOrder);
+
             while (!isOrdered)
             {
                 for (int i = 0; i < monthlyDataList.Count; i++)
                 {
                     if (i > 0)
                     {
-                        if (monthlyDataList[i - 1] != null && monthlyDataList[i - 1].OpportunitiesCount != null && monthlyDataList[i - 1].OpportunitiesCount != 0)
+                        if (monthlyDataList[i - 1].OpportunitiesCount != null)
                         {
                             if (monthlyDataList[i - 1].OpportunitiesCount < monthlyDataList[i].OpportunitiesCount)
                             {
                                 monthlyDataList[i - 1].OpportunitiesCount = monthlyDataList[i].OpportunitiesCount;
                             }
                         }
+
+                        else
+                        {
+                            monthlyDataList[i - 1].OpportunitiesCount = monthlyDataList[i].OpportunitiesCount;
+                        }
                     }
                 }
-
+                
+                myOrder = monthlyDataList.Select(s => s.OpportunitiesCount).ToList();
                 expectedOrder = monthlyDataList.OrderByDescending(d => d.OpportunitiesCount).Select(s => s.OpportunitiesCount).ToList();
-                isOrdered = monthlyDataList.Select(s => s.OpportunitiesCount).SequenceEqual(expectedOrder);
+                isOrdered = myOrder.SequenceEqual(expectedOrder);
             }
-        }
+        }        
     }
 }

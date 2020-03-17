@@ -70,7 +70,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                               VatPercentage = a.VatPercentage,
                                               IsBackToBack = a.IsBackToBack,
                                               IsExpense = a.IsExpense,
-                                              PrepaidCollectId = a.PrepaidCollectId
+                                              PrepaidCollectId = a.PrepaidCollectId,
+                                              IsRegionalTax = a.IsRegionalTax,
                                           }).ToList();
 
             ShipmentReceivableRepository receivableRepository = new ShipmentReceivableRepository(tenant);
@@ -162,6 +163,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                             VatIsMultiPercentage = a.VatType == null ? false : a.VatType.IsMultiPercentage,
                                             IsExpense = a.IsExpense,
                                             PrepaidCollectId = a.PrepaidCollectId,
+                                            IsRegionalTax = a.IsRegionalTax,
                                         }).FirstOrDefault();
 
             ShipmentReceivableRepository receivableRepository = new ShipmentReceivableRepository(tenant);
@@ -251,6 +253,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                               IsBackToBack = a.IsBackToBack,
                                               IsExpense = a.IsExpense,
                                               PrepaidCollectId = a.PrepaidCollectId,
+                                              IsRegionalTax = a.IsRegionalTax,
                                           }).ToList();
             return list;
         }

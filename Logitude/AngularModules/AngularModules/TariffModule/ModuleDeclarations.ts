@@ -8,6 +8,8 @@ import { WizardDimensionsComponent } from './Components/Workspaces/WizardDimensi
 import { TariffHelperComponent } from './Components/Helpers/TariffHelperComponent';
 import { TariffWorkspaceComponent } from './Components/Workspaces/TariffWorkspaceComponent';
 import { SettingsWorkspaceComponent } from './Components/Workspaces/SettingsWorkspaceComponent';
+import { ContainerDefaultsComponent } from './Components/Workspaces/ContainerDefaultsComponent';
+
 // Tabs
 import { TariffDetailsTabComponent } from './Components/EditTabs/Tariff/TariffDetailsTabComponent';
 import { VersionTabComponent } from './Components/EditTabs/Tariff/VersionTabComponent';
@@ -26,6 +28,7 @@ import { AddTariffContainersComponent } from './Components/NewEntity/AddTariffCo
 
 export const Components =
     [
+        ContainerDefaultsComponent,
         CostWorkspaceComponent,
         TariffSettingComponent,
         NewAirFreightCostComponent,
@@ -86,6 +89,7 @@ export class ModuleDeclarations {
             case "SettingsWorkspaceComponent": { myResult = SettingsWorkspaceComponent; break; }
             case "OceanFCLSurchargeVersionTabComponent": { myResult = OceanFCLSurchargeVersionTabComponent; break; }
             case "AddTariffContainersComponent": { myResult = AddTariffContainersComponent; break; }
+            case "ContainerDefaultsComponent": { myResult = ContainerDefaultsComponent; break; }
         }
 
         return myResult;

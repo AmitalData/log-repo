@@ -631,6 +631,38 @@ export class ARPaymentMenuButtonsHandler {
     }
 
     // [Void]
+    VoidingARPayment(event: any) {
+        var messageWindow: MessageWindow;
+        if (event == null || event == "Ok") {
+            if (this.EntityPM.PaymentInvoices.length > 0) {
+                var messageText = TextCodeTranslator.Translate("ARPayment.M.DisconnectInvoices");
+                messageWindow = new MessageWindow();
+                messageWindow.Show(messageText);
+            }
+
+            else {
+                var confirmVoid = new ConfirmWindow();
+                confirmVoid.Width = 400;
+                var confirmMsg = TextCodeTranslator.Translate("ARPayment.M.ConfirmVoid");
+                confirmVoid.ShowCancelButton = false;
+                confirmVoid.WindowClosed.subscribe(c => {
+                    if (confirmVoid.Yes) {
+                        this.EntityPM.SetVoided = true;
+                        this.EntityPM.SetApproved = false;
+                        this.EntityPM.SetCancelApproval = false;
+                        if (this.CurrentDocument != null) {
+                            this.CurrentDocument.NeedsRebuild = true;
+                            //CommonContext.SubmitChanges();
+                        }
+                        this.EntityPM.OpenAmount=234242;
+                        this.entityArgs.EditComponent.SaveChanges();
+                    }
+                });
+                confirmVoid.Show(confirmMsg);
+            }
+        }
+    }
+
     VoidMethod() {
 
         var messageWindow: MessageWindow;
@@ -657,32 +689,11 @@ export class ARPaymentMenuButtonsHandler {
         }
 
         if (isValid) {
-            if (this.EntityPM.PaymentInvoices.length > 0) {
-                var messageText = TextCodeTranslator.Translate("ARPayment.M.DisconnectInvoices");
-                messageWindow = new MessageWindow();
-                messageWindow.Show(messageText);
+            if (SessionLocator.TenantPM.AccountingActivated) {
+                this.OpenCancelARPaymentScreen();
             }
 
-            else {
-                var confirmVoid = new ConfirmWindow();
-                confirmVoid.Width = 400;
-                var confirmMsg = TextCodeTranslator.Translate("ARPayment.M.ConfirmVoid");
-                confirmVoid.ShowCancelButton = false;
-                confirmVoid.WindowClosed.subscribe(c => {
-                    if (confirmVoid.Yes) {
-                        this.EntityPM.SetVoided = true;
-                        this.EntityPM.SetApproved = false;
-                        this.EntityPM.SetCancelApproval = false;
-                        if (this.CurrentDocument != null) {
-                            this.CurrentDocument.NeedsRebuild = true;
-                            //CommonContext.SubmitChanges();
-                        }
-
-                        this.entityArgs.EditComponent.SaveChanges();
-                    }
-                });
-                confirmVoid.Show(confirmMsg);
-            }
+            else { this.VoidingARPayment(null); }
         }
     }
 
@@ -696,5 +707,27 @@ export class ARPaymentMenuButtonsHandler {
             this.EntityPM.SetCancelApproval = false;
             this.entityArgs.EditComponent.SaveChanges();
         }
+    }
+
+    OpenCancelARPaymentScreen() {
+        this.CurrentSession.StartBusyIndicatorLoading();
+
+
+        var windowTitle = TextCodeTranslator.Translate("ARPayment.O.CancelAPPayment");
+        var logWindow = new LogitudeWindow();
+        var windowArgs: any = {};
+        windowArgs.PaymentDate = this.EntityPM.RegisterDate;
+        windowArgs.PaymentPM = this.EntityPM;
+        // windowArgs = this.SetPaymentChequeWindowArgs(windowArgs);
+        logWindow.WindowArgs = windowArgs;
+        logWindow.Width = 480;
+        logWindow.Height = 280;
+        logWindow.Title = windowTitle;
+        //  logWindow.ShowCloseButton = true;
+
+        logWindow.WindowClosed.subscribe(($event: any) => this.VoidingARPayment($event));
+        logWindow.Show('./InvoiceModules/ARPayment/Components/Other/CancelARPaymentComponent');
+        this.CurrentSession.StopBusyIndicator();
+
     }
 }

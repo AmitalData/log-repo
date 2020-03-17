@@ -23,6 +23,12 @@
                             </div>
                         </div>
 
+                        <div class="MediaFillRelative" [hidden]="SelectedTabCode != 'OPEMA'">
+                            <div class="MediaFillAbsolute" style="top: 5px;margin:5px">
+                                <div LocationDirective Code="OPEMA"></div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -35,24 +41,24 @@
         <td style="vertical-align: bottom">
             <table style="height: 22px;">
                 <tr>
-                    <td style="width: 57px;" [hidden]="!IsNextButtonClicked">
-                        <button class="Button" (click)="BackButtonClicked()">{{'General.B.Back' | TextCodeTranslationPipe}}</button>
+                    <td style="width: 57px;" [hidden]="SelectedTabLocation == 0">
+                        <button style="cursor:pointer" class="Button" (click)="BackButtonClicked()">{{'General.B.Back' | TextCodeTranslationPipe}}</button>
                     </td>
                     <td>
                         <div></div>
                     </td>
 
-                    <td style="width: 57px;" [hidden]="IsNextButtonClicked">
-                        <button class="Button" (click)="CloseButtonClicked()">{{'General.B.Close' | TextCodeTranslationPipe}}</button>
+                    <td style="width: 57px;" [hidden]="SelectedTabLocation != 0">
+                        <button style="cursor:pointer" class="Button" (click)="CloseButtonClicked()">{{'General.B.Close' | TextCodeTranslationPipe}}</button>
                     </td>
                     <td style="width: 5px;">
                         <div></div>
                     </td>
-                    <td style="width: 57px;" [hidden]="IsNextButtonClicked">
-                        <button class="RedButton" (click)="NextButtonClicked()">{{'General.B.Next' | TextCodeTranslationPipe}}</button>
+                    <td style="width: 57px;" [hidden]="SelectedTabLocation == 2">
+                        <button style="cursor:pointer" class="RedButton" (click)="NextButtonClicked()">{{'General.B.Next' | TextCodeTranslationPipe}}</button>
                     </td>
-                    <td style="width: 57px;" [hidden]="!IsNextButtonClicked">
-                        <button class="RedButton" (click)="SaveButtonClicked()">{{'General.B.Finish' | TextCodeTranslationPipe}}</button>
+                    <td style="width: 57px;" [hidden]="SelectedTabLocation != 2">
+                        <button style="cursor:pointer" class="RedButton" [disabled]="DisableFinishButton()" (click)="SaveButtonClicked()">{{'General.B.Finish' | TextCodeTranslationPipe}}</button>
                     </td>
                 </tr>
             </table>

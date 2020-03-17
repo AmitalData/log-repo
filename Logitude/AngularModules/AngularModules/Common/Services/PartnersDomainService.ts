@@ -1802,6 +1802,19 @@ export class PartnersDomainService {
             }).catch(ServiceHelper.HandleServiceError);
         });
     }
+
+    GetInUseWarehouse(code: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
+        var url = this._apiUrl + '/GetInUseWarehouse?code=' + code;
+
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                return response.json();
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
 }
 export class AirlineMessagingRuleList {
     Id: string;

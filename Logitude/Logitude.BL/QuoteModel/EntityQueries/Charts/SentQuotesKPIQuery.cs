@@ -18,7 +18,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries.Charts
             List<ChartingDataClass> quoteChartist_Labels = new List<ChartingDataClass>();
 
             
-            dataSourceQuery  = dataSourceQuery.Where(a => a.SentDate != null && a.RequestDate != null);
+            //dataSourceQuery  = dataSourceQuery.Where(a => a.SentDate != null && a.RequestDate != null);
             var quoteList = (from a in dataSourceQuery
                              select new
                              {

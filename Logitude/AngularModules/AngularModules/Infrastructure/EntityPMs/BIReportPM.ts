@@ -118,7 +118,10 @@ export class BIReportPM {
     public get LastRunByUserName() { return this.lastRunByUserName; }
     public set LastRunByUserName(newValue: string) { if (this.lastRunByUserName != newValue) { this.lastRunByUserName = newValue; this.MarkAsDirty("LastRunByUserName"); } }
        
-	 
+    private factTableName: string;
+    public get FactTableName() { return this.factTableName; }
+    public set FactTableName(newValue: string) { if (this.factTableName != newValue) { this.factTableName = newValue; this.MarkAsDirty("FactTableName"); } }
+
 
     public OldEntityPM: BIReportPM;
 		

@@ -50,7 +50,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.AvailableForScheduling).HasColumnName("AvailableForScheduling");
 
             //this.HasOptional(t => t.Feature).WithMany().HasForeignKey(d => d.FeatureId);
-            this.HasRequired(d => d.ReportGroup).WithMany().HasForeignKey(d => d.ReportGroupId);
+            this.HasOptional(d => d.ReportGroup).WithMany().HasForeignKey(d => d.ReportGroupId);
             //this.HasOptional(t => t.Feature).WithMany().HasForeignKey(d => d.FeatureId);
             this.HasOptional(t => t.ReportsTemplate).WithMany().HasForeignKey(d => d.DefaultTemplateId);
             this.HasOptional(t => t.ReportsTemplateDefaultMessage).WithMany().HasForeignKey(d => d.DefaultMessageTemplateId);

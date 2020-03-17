@@ -602,6 +602,29 @@ namespace Logitude.CRM.BL.EntityPMs
 			
 		 }
 	   }
+	  private bool isContainsQuotationAttachment ;
+	  	  
+       
+	   [CustomValidation(typeof(CRMValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsContainsQuotationAttachment  
+	   {
+	    
+	     get
+		{
+		   return isContainsQuotationAttachment;
+		 }
+		 set
+		 {
+		   if(isContainsQuotationAttachment != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsContainsQuotationAttachment",OldValue=isContainsQuotationAttachment,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isContainsQuotationAttachment=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

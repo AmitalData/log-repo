@@ -1,6 +1,7 @@
 ﻿using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.DataContracts;
 using Logitude.Server.Tools.Helpers;
+using Simplog.Data.CommonDataModel;
 using Simplog.Data.Helpers;
 using Simplog.Data.QuoteModel.EntityPOCOs;
 using System;
@@ -86,8 +87,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries.Charts
 
             if (chartData.Keys.Count > 0)
             {
-                UserQuery userQuery = new UserQuery(tenant);
-                chartData.Users = userQuery.GetUsersListFromIdList(chartData.Keys, tenant);
+                chartData.Users = this.GetUsersListFromIdList(chartData.Keys);
 
                 if (chartData.Users.Count == 0)
                 {
@@ -97,6 +97,28 @@ namespace Logitude.BL.QuoteModel.EntityQueries.Charts
                     }
                 }
             }
+        }
+
+        private Dictionary<string, string> GetUsersListFromIdList(List<string> ids)
+        {
+            ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
+
+            Dictionary<string, string> salesmanNames = new Dictionary<string, string>();
+
+            var users = (from a in commonContext.Contacts
+                         where ids.Contains(a.Id)
+                         select new
+                         {
+                             Id = a.Id,
+                             EnglishName = a.EnglishName,
+                         }).ToList();
+
+            foreach (var item in users)
+            {
+                salesmanNames.Add(item.Id, item.EnglishName);
+            }
+
+            return salesmanNames;
         }
         private void BuildChartData()
         {

@@ -169,7 +169,9 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         Surcharge9MinPrice, 
 	         Surcharge10MinPrice, 
 	         CurrencyId, 
-	         CurrencyCode,
+	         CurrencyCode, 
+	         OriginPortCombinedCode, 
+	         DestinationPortCombinedCode,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

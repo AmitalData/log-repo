@@ -287,7 +287,7 @@
                                             [LookUpTableName]="'Port'"
                                             [HideColumns]="true"
                                             (SelectedItemChanged)="item.OriginPort = $event"
-                                            [DisplayMemberPath]="'Code'"
+                                            [DisplayMemberPath]="'CombinedCode'"
                                             [FocusOnMe]="true"
                                             [SelectedValue]="item.OriginPortId"
                                             [DependencyFilter1Value]="'O'">
@@ -314,7 +314,7 @@
                                             [LookUpTableName]="'Port'"
                                             [HideColumns]="true"
                                             (SelectedItemChanged)="item.DestinationPort = $event"
-                                            [DisplayMemberPath]="'Code'"
+                                            [DisplayMemberPath]="'CombinedCode'"
                                             [FocusOnMe]="true"
                                             [SelectedValue]="item.DestinationPortId"
                                             [DependencyFilter1Value]="'O'">

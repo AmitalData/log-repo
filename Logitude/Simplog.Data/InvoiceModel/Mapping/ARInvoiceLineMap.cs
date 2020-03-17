@@ -58,6 +58,7 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.IsBackToBack).HasColumnName("IsBackToBack");
             this.Property(t => t.IsExpense).HasColumnName("IsExpense");
             this.Property(t => t.PrepaidCollectId).HasColumnName("PrepaidCollectId");
+            this.Property(t => t.IsRegionalTax).HasColumnName("IsRegionalTax");
 
             // Relationships
             this.HasRequired(t => t.ChargesType).WithMany().HasForeignKey(d => d.ChargesTypeId);

@@ -153,7 +153,7 @@ namespace Logitude.Accounting.BL.Validators
 
                 if (String.IsNullOrWhiteSpace(myGLAccountPM.CustomerGLAccountId))
                 {
-                    return new ValidationResult(TextCodesTranslator.TranslateText("GLAccounts.O.CustomerAccountMissing", myGLAccountPM.Tenant, showLocals));
+                  //  return new ValidationResult(TextCodesTranslator.TranslateText("GLAccounts.O.CustomerAccountMissing", myGLAccountPM.Tenant, showLocals));
                 }
                 else
                 {

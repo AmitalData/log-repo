@@ -124,7 +124,7 @@ namespace WebFreight.Web.ReportsWebServices
                 awbDp.VolumeUnitCode = shipmentPM.VolumeUnitCode;
                 awbDp.ChargeableWeightEdited = shipmentPM.ChargeableWeightEdited;
                 awbDp.MainCarriageLeg2_MAWB = shipmentPM.Transshipment1AdditionalMAWBOBLBL;
-
+                
                 if (shipmentPM.BranchId != null)
                 {
                     Branch myBranch = (from d in myCommonContext.Branches where d.Tenant == tenant && d.Id == shipmentPM.BranchId select d).FirstOrDefault();
@@ -155,6 +155,7 @@ namespace WebFreight.Web.ReportsWebServices
                 this.GetNotify2Data(awbDp, shipmentPM, addressRepository);
                 this.GetAgentData(awbDp, shipmentPM, addressRepository);
                 this.GetConsolidatorData(awbDp, shipmentPM);
+                this.GetOpenedByUser(awbDp, shipmentPM.CreatedByUserId);
 
                 #region PlaceOfDelivery
 
@@ -196,6 +197,21 @@ namespace WebFreight.Web.ReportsWebServices
             }
 
             return awbDp;
+        }
+
+        private void GetOpenedByUser(AWBDataProvider awbDp, string createdByUserId)
+        {
+
+            this.myCommonContext = CommonDataContext.GetContext(myTenant);
+            ContactRepository contactRepository = new ContactRepository(myCommonContext);
+            if (!string.IsNullOrEmpty(createdByUserId))
+            {
+                Contact createdByContact = contactRepository.GetSingleContact(createdByUserId, myTenant);
+                if (createdByContact != null)
+                {
+                    awbDp.OpenedBy = createdByContact.EnglishName;
+                }
+            }
         }
 
         private void GetLoggedTenantData(AWBDataProvider awbDp)
