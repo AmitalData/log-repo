@@ -79,7 +79,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         ChildEntityId = a.ChildEntityId,
                         ChildObjectTableId = a.ChildObjectTableId,
                         SecurityId = a.ExternalDocument.SecurityId,
-                        LogSettings = a.LogSettings,
+                        
                         IsBodySecured = a.IsSecured,
                         EmailDeliveryError = a.EmailDeliveryError,
                         ResponseDocumentId = a.ResponseDocumentId,
@@ -133,7 +133,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         ReplyToList = a.ReplyToList,
                         ChildEntityId = a.ChildEntityId,
                         ChildObjectTableId = a.ChildObjectTableId,
-                        LogSettings = a.LogSettings,
+                      
                         IsBodySecured = a.IsSecured,
                         EmailDeliveryError = a.EmailDeliveryError,
                         ResponseDocumentId = a.ResponseDocumentId,
@@ -224,7 +224,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         ReplyToList=a.ReplyToList,
                         ChildEntityId = a.ChildEntityId,
                         ChildObjectTableId = a.ChildObjectTableId,
-                        LogSettings = a.LogSettings,
+                        
                         IsBodySecured = a.IsSecured,
                         EmailDeliveryError = a.EmailDeliveryError,
                         ResponseDocumentId = a.ResponseDocumentId,
@@ -279,7 +279,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                           ReplyToList= f.ReplyToList,
                                                           ChildEntityId = f.ChildEntityId,
                                                           ChildObjectTableId = f.ChildObjectTableId,
-                                                          LogSettings = f.LogSettings,
+                                                        
                                                           IsBodySecured = f.IsSecured,
                                                           EmailDeliveryError = f.EmailDeliveryError,
                                                           ResponseDocumentId = f.ResponseDocumentId,
@@ -334,7 +334,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                          ReplyToList = f.ReplyToList,
                                                          ChildEntityId = f.ChildEntityId,
                                                          ChildObjectTableId = f.ChildObjectTableId,
-                                                         LogSettings = f.LogSettings,
+                                                        
                                                          IsBodySecured = f.IsSecured,
                                                          EmailDeliveryError = f.EmailDeliveryError,
                                                          ResponseDocumentId =f.ResponseDocumentId,
@@ -397,7 +397,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                            ReplyToList = a.ReplyToList,
                                                            ChildEntityId = a.ChildEntityId,
                                                            ChildObjectTableId = a.ChildObjectTableId,
-                                                           LogSettings = a.LogSettings,
+                                                          
                                                            IsBodySecured = a.IsSecured,
                                                            EmailDeliveryError = a.EmailDeliveryError,
                                                            ResponseDocumentId = a.ResponseDocumentId,
@@ -453,7 +453,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                            ReplyToList = a.ReplyToList,
                                                            ChildEntityId = a.ChildEntityId,
                                                            ChildObjectTableId = a.ChildObjectTableId,
-                                                           LogSettings = a.LogSettings,
+                                                          
                                                            IsBodySecured = a.IsSecured,
                                                            EmailDeliveryError = a.EmailDeliveryError,
                                                            ResponseDocumentId = a.ResponseDocumentId,

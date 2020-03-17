@@ -111,7 +111,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                        AccountingCancelationDate = a.AccountingCancelationDate,
                                        CancelationNotes = a.CancelationNotes,
                                        DontIncludeInDeductionReport = a.DontIncludeInDeductionReport,
-
+                                       
 
                                    }).FirstOrDefault();
 
@@ -551,8 +551,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                             PaymentCurrencyCode = a.PaymentCurrency == null ? null : a.PaymentCurrency.Code,
                             ProfitCurrencyExchangeRate = a.ProfitCurrencyExchangeRate,
                             AmountInProfitCurrency = a.AmountInProfitCurrency,
-                            PaymentMethodName = a.PaymentMethod == null ? null : a.PaymentMethod.Name,
-                            PaymentMethodCode = a.PaymentMethod == null ? null : a.PaymentMethod.Code,
+                            PaymentMethodName = a.AccountingPaymentMethod == null ? null : a.AccountingPaymentMethod.Name,
+                            PaymentMethodCode = a.AccountingPaymentMethod == null ? null : a.AccountingPaymentMethod.Code,
                             VendorName = a.VendorCard == null ? "" : a.VendorCard.EnglishName,
                             VendorLocalName = a.VendorCard == null ? "" : a.VendorCard.LocalName,
                             ExternalAccountingEntityId = a.ExternalAccountingEntityId,

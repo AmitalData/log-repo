@@ -240,6 +240,9 @@
     <Content Include="2020.R1\02 - 2020\Day 19 [Samar] add new help resources.sql" />
     <Content Include="2020.R1\02 - 2020\Day 24 [Samar] Add new help resources.sql" />
     <Content Include="2020.R1\02 - 2020\Day 26 [Samar] Compute final destination dates on shipment.sql" />
+    <Content Include="2020.R1\03 - 2020\Day 08 [Maheera] Fill Personal Access Key for Time Management.sql" />
+    <Content Include="2020.R1\03 - 2020\Day 09 [Samar] update DaysFromLastShipment objectfeild.sql" />
+    <Content Include="2020.R1\03 - 2020\Day 11 [Samar] update main carriage ATA query columns.sql" />
     <Content Include="Accounting\2015 - 8\day 10 [alex] unique constraint in JournalActionTypes.sql" />
     <Content Include="2019.R2\06 - 2019\Day 24 [Rabaia] DalayWithReturnStatusToZeroSP.sql" />
     <Content Include="Customs\2018 - 04\[Abdullah] Day 10 Delete forign keys for table CustomCountry.sql" />
@@ -695,7 +698,9 @@
     <Content Include="Main Branch\2020\02 - 2020\Day 08 [Maheera] Fill Totals of TenantManagement Table.sql" />
     <Content Include="Main Branch\2020\02 - 2020\Day 04 [Maheera] Add Storage Chargeable Days Gross Weight UOM.sql" />
     <Content Include="Main Branch\2020\02 - 2020\Day 06 [Maheera] Fill GrossWeightPerStorageDays Field in Shipment.sql" />
-    <Content Include="Main Branch\2020\03 - 2020\Day 26 [Abed]InSertRecordToQuoteTemplateTextCode%28VatType and VatPerc%29.sql" />
+    <Content Include="Main Branch\2020\03 - 2020\Day 08 [Samar] Fill default containers on tariff settings.sql" />
+    <Content Include="Main Branch\2020\03 - 2020\Day 08 [Abed]InSertRecordToQuoteTemplateTextCode%28VatType and VatPerc%29.sql" />
+    <Content Include="Main Branch\2020\02 - 2020\Day 10 [Bisan] Update Storage free days in Cards table.sql" />
     <Content Include="Main Branch\2020\1 - 2020\Day 12 [Mutaz] Delete Constraint between SharedUserQueries and Query.sql" />
     <Content Include="Main Branch\2020\1 - 2020\Day 22 [Abed] update Help Center.sql" />
     <Content Include="Main Branch\2020\1 - 2020\Day 31 [Mutaz] Add Constraint UniqCode In Query.sql" />
@@ -785,6 +790,11 @@
     <Content Include="Usefull Scripts\Detect Data Problems\Wrong Receivables Percentage Amounts.sql" />
     <Content Include="Usefull Scripts\Detect Data Problems\[Islam] shipments related with tenant zero issue.sql" />
     <Content Include="Usefull Scripts\Fill Data\Fill Shipments FirstOperationalCloseDate.sql" />
+    <Content Include="Usefull Scripts\Fill Data\ShipmentComputedFields\[Ayman] First Pickup.sql" />
+    <Content Include="Usefull Scripts\Fill Data\ShipmentComputedFields\[Ayman] Last Delivery.sql" />
+    <Content Include="Usefull Scripts\Fill Data\ShipmentComputedFields\[Ayman] Last Pickup.sql" />
+    <Content Include="Usefull Scripts\Fill Data\ShipmentComputedFields\[Ayman] Number of Deliveries.sql" />
+    <Content Include="Usefull Scripts\Fill Data\ShipmentComputedFields\[Ayman] Operationally Closed.sql" />
     <Content Include="Usefull Scripts\Fill Data\[Islam] Copy incoterms from tenant zero to all tenants.sql" />
     <Content Include="Usefull Scripts\Fill Data\[Ayman] Fill ShippingLines INTTRARegistrationNotes.sql" />
     <Content Include="Usefull Scripts\Fill Data\[Maheera] Fill Cc To From Fields of  Activities.sql" />
@@ -2116,6 +2126,7 @@
   <ItemGroup>
     <Folder Include="2016.R4.1\12 - 2016\" />
     <Folder Include="Customs Branch\" />
+    <Folder Include="Main Branch\2020\03 - 2020\" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0,Profile=Client">

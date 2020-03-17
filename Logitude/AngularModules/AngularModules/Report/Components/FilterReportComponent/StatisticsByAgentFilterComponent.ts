@@ -56,7 +56,7 @@ export class StatisticsByAgentFilterComponent extends BaseComponent  {
         this.FromDate = this.SetDate(Year, month - 1, 1);
         this.ToDate = this.SetDate(Year, month, daysofmonth);
 
-        this.RunReport(false);
+        //this.RunReport(false);
     }
 
     public IsByCreateDate: boolean = true;

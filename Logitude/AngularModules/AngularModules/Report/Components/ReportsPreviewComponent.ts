@@ -90,7 +90,9 @@ export class ReportsPreviewComponent implements AfterViewInit {
 
 
     ngAfterViewInit() {
-        this.BuildStimulsoft();
+        if (!this.IsSchedulerReport) {
+            this.BuildStimulsoft();
+        }
     }
 
     QueryFilterItems: Array<QueryFilterItem>;
@@ -151,6 +153,16 @@ export class ReportsPreviewComponent implements AfterViewInit {
             }
         }
     }
+
+    ValidateSelectedFilters() {
+        return this.ReportFilterConmponent.ValidateSelectedFilters();
+    }
+
+    PrepareContactList() {
+        this.CleanPartnersObslist();
+        this.ReportFilterConmponent.PrepareContactList();
+    }
+
     LoadReportFilterComponent() {
 
         SessionLocator.DynamicLoader.Load(this.Report.FilterHtmlComponentUrl, this.viewContainerRef)
@@ -160,12 +172,12 @@ export class ReportsPreviewComponent implements AfterViewInit {
                     this.ReportFilterConmponent.SetQueryFilterItems(this.QueryFilterItems);
                 }
 
-                if (cmpRef.instance['InitializeComponent']) {
-                    cmpRef.instance.InitializeComponent(this);
+                if (this.ReportFilterConmponent['InitializeComponent']) {
+                    this.ReportFilterConmponent.InitializeComponent(this);
                 }
 
-                if (cmpRef.instance['RunReportEvent']) {
-                    cmpRef.instance.RunReportEvent.subscribe(s => {
+                if (this.ReportFilterConmponent['RunReportEvent']) {
+                    this.ReportFilterConmponent.RunReportEvent.subscribe(s => {
                         if (s) {
                             if (this.IsSchedulerReport) {
                                 //this.CurrentSession.ResizeCurrentWindow(1050);
@@ -188,13 +200,9 @@ export class ReportsPreviewComponent implements AfterViewInit {
             if (Component && filtersArea) {
                 this.StimulsoftArg = new StimulsoftArg();
                 if (this.IsSchedulerReport) {
-                    this.FilterConrolHeight = window.innerHeight / 20;
-                    //this.FilterConrolHeight = 50;
                     this.StimulsoftArg.IsSchedulerReport = true;
                 }
-                else {
-                    this.FilterConrolHeight = filtersArea.clientHeight;
-                }
+                this.FilterConrolHeight = filtersArea.clientHeight;
                 this.StimulsoftArg.Tenant = SessionLocator.Tenant;
                 this.StimulsoftArg.ReportsPreviewComponent = this;
                 this.StimulsoftArg.TypePage = "Report";
@@ -237,9 +245,9 @@ export class ReportsPreviewComponent implements AfterViewInit {
         if (width < 1024) {
             width = 1024;
         }
+
         if (this.IsSchedulerReport) {
-            height = window.innerHeight - (window.innerHeight/3.8);
-            //height = 700;
+            height += 30;
         }
 
         width = width - 20;

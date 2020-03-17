@@ -118,16 +118,14 @@
                                             <table>
                                                 <tr>
                                                     <td style="width: 70px;">
-                                                        <div class="RadioButton">
-                                                            <input id="FreightPrepaidRadio" type="radio" name="FreightPrepaidCollectRadio" [checked]="FreightPrepaidCollectId == 'P'" (click)="SetFreightPrepaidCollect('P')" [disabled]="!IsEditingEnabled" />
-                                                            <label for="FreightPrepaidRadio">Prepaid</label>
+                                                        <div>
+                                                            <RadioButton [Name]="'FreightPrepaidCollectRadio'" [IsChecked]="FreightPrepaidCollectId == 'P'" (Checked)="SetFreightPrepaidCollect('P')" [Text]="'Prepaid'"></RadioButton>
                                                         </div>
                                                     </td>
 
                                                     <td>
-                                                        <div class="RadioButton">
-                                                            <input id="FreightCollectRadio" type="radio" name="FreightPrepaidCollectRadio" [checked]="FreightPrepaidCollectId == 'C'" (click)="SetFreightPrepaidCollect('C')" [disabled]="!IsEditingEnabled" />
-                                                            <label for="FreightCollectRadio">Collect</label>
+                                                        <div>
+                                                            <RadioButton [Name]="'FreightPrepaidCollectRadio'" [IsChecked]="FreightPrepaidCollectId == 'C'" (Checked)="SetFreightPrepaidCollect('C')" [Text]="'Collect'"></RadioButton>                                                           
                                                         </div>
                                                     </td>
 

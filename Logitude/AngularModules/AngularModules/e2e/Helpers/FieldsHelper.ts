@@ -46,18 +46,20 @@ export class FieldsHelper {
     }
 
 
-    ItemsVisibility(Id: string) {
-        var EC = protractor.ExpectedConditions;
-        browser.wait(EC.visibilityOf(element(by.id(Id))), 100000000).then(a => function () {
-        });
-    }
-
     ItemsPresentWithOutClick(Id: string) {
         var EC = protractor.ExpectedConditions;
         browser.wait(EC.presenceOf(element(by.id(Id))), 100000000).then(a => function () {
 
         });
     }
+
+    ItemsVisibility(Id: string) {
+        var EC = protractor.ExpectedConditions;
+        browser.wait(EC.visibilityOf(element(by.id(Id))), 100000000).then(a => function () {
+        });
+    }
+
+
 
     ItemsPresent(Id: string) {
         var EC = protractor.ExpectedConditions;

@@ -123,11 +123,13 @@ export class ReportPM {
     private featureUniqeCode: string;
     public get FeatureUniqeCode() { return this.featureUniqeCode; }
     public set FeatureUniqeCode(newValue: string) { if (this.featureUniqeCode != newValue) { this.featureUniqeCode = newValue; this.MarkAsDirty("FeatureUniqeCode"); } }
-
-    private availableForScheduling: string;
+       
+	 
+    private availableForScheduling: boolean;
     public get AvailableForScheduling() { return this.availableForScheduling; }
-    public set AvailableForScheduling(newValue: string) { if (this.availableForScheduling != newValue) { this.availableForScheduling = newValue; this.MarkAsDirty("AvailableForScheduling"); } }
-
+    public set AvailableForScheduling(newValue: boolean) { if (this.availableForScheduling != newValue) { this.availableForScheduling = newValue; this.MarkAsDirty("AvailableForScheduling"); } }
+       
+	 
 
     public OldEntityPM: ReportPM;
 		

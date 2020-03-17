@@ -448,6 +448,8 @@ namespace WebFreight.Web.DataProviders
         public string ConnectedQuoteNumber { get; set; }
 
         public byte[] MainCarriageCarrierLogo { get; set; }
-
+        public string DischargePortStateCode { get; set; }
+        public string TotalContainers { get; set; }
+        public DateTime? FirstPickupETA { get; set; }
     }
 }

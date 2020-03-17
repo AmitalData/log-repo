@@ -135,7 +135,7 @@
                                             [LookUpTableName]="'Port'"
                                             [HideColumns]="true"
                                             (SelectedItemChanged)="item.OriginPort = $event"
-                                            [DisplayMemberPath]="'Code'"
+                                            [DisplayMemberPath]="GetDisplayMemberPath()"
                                             [FocusOnMe]="true"
                                             [SelectedValue]="item.OriginPortId"
                                             [DependencyFilter1Value]="OriginDependencyFilterValue">
@@ -162,7 +162,7 @@
                                             [LookUpTableName]="'Port'"
                                             [HideColumns]="true"
                                             (SelectedItemChanged)="item.DestinationPort = $event"
-                                            [DisplayMemberPath]="'Code'"
+                                            [DisplayMemberPath]="GetDisplayMemberPath()"
                                             [FocusOnMe]="true"
                                             [SelectedValue]="item.DestinationPortId"
                                             [DependencyFilter1Value]="DestinationDependencyFilterValue">

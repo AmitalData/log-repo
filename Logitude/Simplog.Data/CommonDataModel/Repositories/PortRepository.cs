@@ -466,5 +466,13 @@ namespace Simplog.Data.CommonDataModel.Repositories
                           select a).FirstOrDefault();
             return entity;
         }
+
+        public Port GetOceanPortByCombinedCode(string code, int tenant)
+        {
+            var entity = (from a in context.Ports.Include("Country").Include("State")
+                          where a.CombinedCode == code && a.Tenant == tenant && a.IsOcean
+                          select a).FirstOrDefault();
+            return entity;
+        }
     }
 }

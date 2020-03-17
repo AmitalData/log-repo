@@ -193,6 +193,20 @@
                                                                                 </td>
                                                                             </tr>
 
+                                                                            <tr *ngIf="DataContext.TriggerType == 'D'" class="FormFieldRow">
+                                                                                <td>
+                                                                                    <LogLabel [ObjectFieldName]="'RepeatInMinutes'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                                </td>
+
+                                                                                <td>
+                                                                                    <LogTextBox [ObjectFieldName]="'RepeatInMinutes'" [Text]="DataContext.RepeatInMinutes" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                                </td>
+
+                                                                                <td>
+                                                                                    <div></div>
+                                                                                </td>
+                                                                            </tr>
+
                                                                             <tr style="height:1px;" *ngIf="DataContext.TriggerType == 'W'">
                                                                                 <td>
                                                                                     <LogLabel [NoObjectField]="true" [ObjectFieldName]="'Days'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'Days'"></LogLabel>
@@ -342,7 +356,7 @@
                                                             <table>
                                                                 <tr>
                                                                     <td style="width:300px">
-                                                                        <p style="font-size:11px;margin-left:5px;margin-top:1px;color:#1B90CB">Recepients</p>
+                                                                        <p style="font-size:11px;margin-left:5px;margin-top:1px;color:#1B90CB">Create\Update Details</p>
                                                                     </td>
                                                                 </tr>
                                                             </table>
@@ -357,38 +371,46 @@
                                                 </tr>
 
                                                 <tr style="height:60px">
-                                                    <td style="vertical-align:top; left:10px;">
-                                                        <table>
+                                                    <td style="vertical-align:top;">
+                                                        <table style="margin-left:5px;">
                                                             <tr>
-                                                                <td style="width:300px">
+                                                                <td>
                                                                     <table>
-                                                                        <tr style="height:5px"><td colspan="2"></td></tr>
-                                                                        <tr style="height:25px;">
-                                                                            <td style="width:150px;vertical-align:top">
-                                                                                <label style="font-size:12px;margin-left:5px;margin-top:1px;color:black;font:bold">Send Via E-mail</label>
-                                                                            </td>
-                                                                            <td></td>
-                                                                        </tr>
-
-                                                                        <tr style="height:50px;">
-                                                                            <td style="width:300px;vertical-align:top">
-                                                                                <EmailSearchTextBox [DontInCludeInactive]="true" [EmailsText]="Recepients" [SelectedValuePath]="'Id'" [IsUsersList]="true" (EmailsTextChanged)="Recepients = $event"></EmailSearchTextBox>
-                                                                            </td>
-                                                                            <td></td>
-                                                                        </tr>
-
                                                                         <tr>
-                                                                            <td colspan="2"></td>
+                                                                            <td style="width:80px;"><label class="Label">Created By:</label></td>
+                                                                            <td><label>{{DataContext.CreatedBy}}</label></td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </td>
+                                                                <td>
+                                                                    <table>
+                                                                        <tr>
+                                                                            <td style="width:80px;"><label class="Label">Updated By:</label></td>
+                                                                            <td><label>{{DataContext.UpdatedBy}}</label></td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    <table>
+                                                                        <tr>
+                                                                            <td style="width:80px;"><label class="Label">Create Date:</label></td>
+                                                                            <td><label>{{DataContext.CreateDate | DateTimePipe:'DTLL12'}}</label></td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </td>
+                                                                <td>
+                                                                    <table>
+                                                                        <tr>
+                                                                            <td style="width:80px;"><label class="Label">Update Date:</label></td>
+                                                                            <td><label>{{DataContext.UpdateDate | DateTimePipe:'DTLL12'}}</label></td>
                                                                         </tr>
                                                                     </table>
                                                                 </td>
                                                             </tr>
                                                         </table>
                                                     </td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td colspan="2"></td>
                                                 </tr>
                                             </table>
                                         </div>

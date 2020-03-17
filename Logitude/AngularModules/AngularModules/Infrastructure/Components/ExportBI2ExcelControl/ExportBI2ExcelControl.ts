@@ -129,23 +129,20 @@ export class ExportBI2ExcelControl {
                 this.WebFreightDomainService.GetBIReportLogStatus(this.reportId).subscribe(res => {
                     var pmResponse: ServiceResponse = res;
                     if (this.IsStartCheckBIReportBliudViaWorkerRoleTimer) {
-                        if (pmResponse.HasError || (pmResponse.Result && pmResponse.Result.HasError) || (pmResponse.Result && pmResponse.Result.StatusCode == "D")) {
+                        if (pmResponse.HasError || (pmResponse.Result && pmResponse.Result.ExceptionMessage) || (pmResponse.Result && pmResponse.Result.StatusCode == "D")) {
                             this.StartCheckBIReportBliudViaWorkerRoleTimersub.unsubscribe();
                             this.IsStartCheckBIReportBliudViaWorkerRoleTimer = false;
                             this.StopBusyIndicator();
+                            this.btnRetryVisibile = false;
+                            this.busyExportingVisibile = false;
+                            this.btnSaveToFileVisibile = true;
                         }
                         if (!pmResponse.HasError) {
                             var result = pmResponse.Result;
                             if (result) {
-                                if (result.HasError) {
+                                if (result.ExceptionMessage) {
                                     var messageWindow = new MessageWindow();
                                     messageWindow.Show(result.ExceptionMessage);
-                                }
-                                else if (result.StatusCode == "D") {
-                                    // Work
-                                    this.btnRetryVisibile = false;
-                                    this.busyExportingVisibile = false;
-                                    this.btnSaveToFileVisibile = true;
                                 }
                             }
                         }

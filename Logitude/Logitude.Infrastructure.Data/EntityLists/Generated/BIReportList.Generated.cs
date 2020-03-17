@@ -52,6 +52,8 @@ namespace Logitude.Infrastructure.Data.EntityLists
        public string LastRunByUserId  { get; set; }
        [DataMember]
        public string LastRunByUserName  { get; set; }
+       [DataMember]
+       public string FactTableName  { get; set; }
    }
 
 }

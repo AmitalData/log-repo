@@ -116,7 +116,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Correspondence",
-			      				    Code =  "963d",
+			      				    Code =  "866f",
 			      				    Name =  "Correspondence Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "CRM",
@@ -1447,6 +1447,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ContactIndexColor",
+					  						OldFieldName =  "ContactIndexColor",
 					  						ObjectTableName =  "Correspondence",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -1466,6 +1467,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "ContactIndexColor",
 					  						ListPropertyPath =  "ContactIndexColor",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,

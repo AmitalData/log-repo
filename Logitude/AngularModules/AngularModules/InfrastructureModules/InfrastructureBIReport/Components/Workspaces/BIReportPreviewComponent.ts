@@ -743,6 +743,7 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
         windowArgs.DWQueryId = this.EntityPM.DWQueryId;
         windowArgs.IsCopy = true;
         windowArgs.BIReportFolderId = this.EntityPM.BIReportFolderId;
+        windowArgs.FactTableName = this.EntityPM.FactTableName;
         //windowArgs.ComponentRef = this.ComponentRef;
         //windowArgs.BackCompleted = this.BackCompleted;
         logWindow.WindowArgs = windowArgs;

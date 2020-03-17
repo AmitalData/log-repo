@@ -1,67 +1,106 @@
-﻿
-import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
-import {Observable}     from 'rxjs/Rx';
-import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
-import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
-import {Guid} from '../../../Infrastructure/Utilities/Guid';
-import {InfraSettings} from '../../../Infrastructure/Utilities/InfraSettings';
-import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
-import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
-import {CustomFieldClass} from '../../../Infrastructure/DataContracts/CustomFieldClass'
-import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLogger';
 
-import {QuoteTemplatePM} from '../../EntityPMs/QuoteTemplatePM';
+import { Injectable } from '@angular/core';
+import { Http, Headers } from '@angular/http';
+import { Observable } from 'rxjs/Rx';
+import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
+import { ClassLevelValidator } from '../../../Infrastructure/Validators/ClassLevelValidator';
+import { Guid } from '../../../Infrastructure/Utilities/Guid';
+import { InfraSettings } from '../../../Infrastructure/Utilities/InfraSettings';
+import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
+import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
+import { CustomFieldClass } from '../../../Infrastructure/DataContracts/CustomFieldClass'
+import { PerformanceLogger } from '../../../Infrastructure/Utilities/PerformanceLogger';
 
-import {QuoteTemplateSectionPM} from '../../EntityPMs/QuoteTemplateSectionPM';
+import { QuoteTemplatePM } from '../../EntityPMs/QuoteTemplatePM';
+
+import { QuoteTemplateSectionPM } from '../../EntityPMs/QuoteTemplateSectionPM';
+
+import { HttpClient, HttpHeaders, HttpEvent, HttpResponse } from '@angular/common/http';
+
+//import { defer } from 'rxjs';
+import { catchError, map, tap } from 'rxjs/operators';
 
 @Injectable()
 
 export class QuoteTemplateExtendedPMService {
     private _http: Http;
     private _apiUrl: string;
+    private _httpClient: HttpClient
     constructor() {
         this._http = ServiceHelper.Http;
+        this._httpClient = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/QuoteTemplateExtended';
     }
 
- 
-    insert(entityPM: QuoteTemplatePM) {
+
+    insert(entityPM: QuoteTemplatePM): Observable<ServiceResponse> {
 
         var callTime = new Date();
         return Observable.defer(() => {
 
-            var authHeader = new Headers();
-            authHeader.append('Token', SessionInfo.Token);
-            authHeader.append('Content-Type', 'application/json');
-            
+
+            const headers: HttpHeaders = new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Token': ServiceHelper.GetLoggedUserToken(),
+            });
+
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
 
-                var mappedEntity: QuoteTemplatePM;
-                mappedEntity = this.MapJsonToEntityPM(entityPM, false);
-                return this._http.post(this._apiUrl, JSON.stringify(mappedEntity),
-                    { headers: authHeader }).map((response) => {
+            var mappedEntity: QuoteTemplatePM;
+            mappedEntity = this.MapJsonToEntityPM(entityPM, false);
+            return this._httpClient.post(this._apiUrl, JSON.stringify(mappedEntity),
+                { headers, observe: 'response' }).pipe(map(
+                    //tap((event: HttpEvent<any>) => {
+                    //    if (event instanceof HttpResponse) {
+                    //        var servertime = event.headers.get('ServerExecutionTime');
+                    //        PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "QuoteTemplate", "SaveChanges", "");
+                    //    }
+                    //}),
+                    (response: HttpEvent<any>) => {
+                        if (response instanceof HttpResponse) {
+                            var pm = response.body;
+                            if (pm) {
+                                var mappedResult: QuoteTemplatePM;
+                                mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
+                                serviceResponse.Result = mappedResult;
+                            }
 
-                        var pm = response.json();
-                        if (pm) {
-                            var mappedResult: QuoteTemplatePM;
-                            mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
-                            serviceResponse.Result = mappedResult;
+                            var servertime = response.headers.get('ServerExecutionTime');
+                            PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "QuoteTemplate", "SaveChanges", "");
                         }
-                        
-                        var servertime = response.headers.get('ServerExecutionTime');
-                        PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "QuoteTemplate", "SaveChanges", "");
+
 
 
                         return serviceResponse;
 
-                    }).catch(ServiceHelper.HandleServiceError);
-         
-          
-        }
+                    },
+                    catchError(ServiceHelper.HandleServiceError)));
 
-        );
+
+        });
+    }
+
+    GetQuoteTemplateLists(queryName: string): Observable<ServiceResponse> {
+        const httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Token': ServiceHelper.GetLoggedUserToken()
+            }),
+        };
+
+        //var authHeader = new HttpHeaders();
+        //authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        return this._httpClient.get(this._apiUrl + '/GetQuoteTemplateLists/?' + 'queryName=' + queryName, httpOptions).pipe(
+            map(response => {
+                var pmresponse: ServiceResponse;
+                pmresponse = new ServiceResponse();
+                pmresponse.Result = response;//.json();
+                return pmresponse;
+            },
+
+                // catchErrro operator inside pipe
+                catchError(ServiceHelper.HandleServiceError)));
     }
 
 
@@ -75,13 +114,13 @@ export class QuoteTemplateExtendedPMService {
             return pmresponse;
         }).catch(ServiceHelper.HandleServiceError);
     }
-    
 
 
-    GetQuoteTemplateListsByQuoteTemplateTypeAndTenant(quotetemplatetype: string, tenant : number) {
+
+    GetQuoteTemplateListsByQuoteTemplateTypeAndTenant(quotetemplatetype: string, tenant: number) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return this._http.get(this._apiUrl + '/GetQuoteTemplateListsByQuoteTemplateTypeAndTenant/?' + 'quotetemplatetype=' + quotetemplatetype+ '&tenant=' + tenant, { headers: authHeader }).map(response => {
+        return this._http.get(this._apiUrl + '/GetQuoteTemplateListsByQuoteTemplateTypeAndTenant/?' + 'quotetemplatetype=' + quotetemplatetype + '&tenant=' + tenant, { headers: authHeader }).map(response => {
             var pmresponse: ServiceResponse;
             pmresponse = new ServiceResponse();
             pmresponse.Result = response.json();
@@ -89,17 +128,8 @@ export class QuoteTemplateExtendedPMService {
         }).catch(ServiceHelper.HandleServiceError);
     }
 
-    
-    GetQuoteTemplateLists(queryName: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return this._http.get(this._apiUrl + '/GetQuoteTemplateLists/?' + 'queryName=' + queryName , { headers: authHeader }).map(response => {
-            var pmresponse: ServiceResponse;
-            pmresponse = new ServiceResponse();
-            pmresponse.Result = response.json();
-            return pmresponse;
-        }).catch(ServiceHelper.HandleServiceError);
-    }
+
+
 
     GetQuoteTemplateListsFromLibrary(quotetemplatetype) {
         var authHeader = new Headers();
@@ -114,13 +144,13 @@ export class QuoteTemplateExtendedPMService {
 
 
 
-    
 
-    GetCopyQuoteTemplateFromLibrary(quoteTemplateId: string,  userId: string) {
+
+    GetCopyQuoteTemplateFromLibrary(quoteTemplateId: string, userId: string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return this._http.get(this._apiUrl + '/GetCopyQuoteTemplateFromLibrary/?' + 'quoteTemplateId=' + quoteTemplateId +  '&userId=' + userId , { headers: authHeader }).map(response => {
-         
+        return this._http.get(this._apiUrl + '/GetCopyQuoteTemplateFromLibrary/?' + 'quoteTemplateId=' + quoteTemplateId + '&userId=' + userId, { headers: authHeader }).map(response => {
+
             var pmresponse: ServiceResponse;
             pmresponse = new ServiceResponse();
             pmresponse.Result = response.json();
@@ -134,7 +164,7 @@ export class QuoteTemplateExtendedPMService {
 
 
 
-    GetCopyQuoteTemplate(quoteTemplateId: string, copyName: string, userid:string, tenant: number) {
+    GetCopyQuoteTemplate(quoteTemplateId: string, copyName: string, userid: string, tenant: number) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         return this._http.get(this._apiUrl + '/GetCopyQuoteTemplate/?' + 'quoteTemplateId=' + quoteTemplateId + '&copyName=' + copyName + '&userid=' + userid + '&tenant=' + tenant, { headers: authHeader }).map(response => {
@@ -151,7 +181,7 @@ export class QuoteTemplateExtendedPMService {
 
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return this._http.get(this._apiUrl + '/GetQuoteTemplatePdfReport/?' + 'quoteId=' + quotePMId + '&quoteTemplateId=' + templateId + '&userId=' + userId , { headers: authHeader }).map(response => {
+        return this._http.get(this._apiUrl + '/GetQuoteTemplatePdfReport/?' + 'quoteId=' + quotePMId + '&quoteTemplateId=' + templateId + '&userId=' + userId, { headers: authHeader }).map(response => {
             var result = response.json();
             var pmresponse: ServiceResponse;
             pmresponse = new ServiceResponse();
@@ -172,7 +202,7 @@ export class QuoteTemplateExtendedPMService {
             pmresponse.Result = result;
             return pmresponse;
         }).catch(ServiceHelper.HandleServiceError);
-        
+
     }
     GetQuoteDocumentVersionsByQuoteId(quoteId: string, tenant: number) {
         var authHeader = new Headers();
@@ -200,7 +230,7 @@ export class QuoteTemplateExtendedPMService {
         }).catch(ServiceHelper.HandleServiceError);
     }
 
-    UpLoadQuoteDocumentVersionFile(fileData:any,tenant:number) {
+    UpLoadQuoteDocumentVersionFile(fileData: any, tenant: number) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         authHeader.append('Content-Type', 'application/json');

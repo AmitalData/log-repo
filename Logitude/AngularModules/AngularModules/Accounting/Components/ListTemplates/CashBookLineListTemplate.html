@@ -30,7 +30,12 @@
 </div>
 
 <!-- textTrimming Fields -->
-<div class="TextTrimming" *ngIf="fieldName == 'ChequeNumber' || fieldName == 'ARPChequeStatusName' || fieldName == 'AccountNumber' || fieldName == 'Bank' || fieldName == 'Branch'"
+<div class="TextTrimming" *ngIf="fieldName == 'ChequeNumber' || fieldName == 'AccountNumber' || fieldName == 'Bank' || fieldName == 'Branch'"
     text-start>
     {{ rowData[fieldName] }}
+</div>
+
+<div class="TextTrimming" *ngIf="fieldName == 'ARPChequeStatusName'"
+    text-start>
+    {{ showLocals ? rowData['ARPChequeStatusLocalName'] : rowData[fieldName] }}
 </div>

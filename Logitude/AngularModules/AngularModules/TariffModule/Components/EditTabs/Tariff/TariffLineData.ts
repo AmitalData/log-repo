@@ -8,19 +8,21 @@ import { OceanFCLVersionTabComponent } from './OceanFCLVersionTabComponent';
 import { CurrencyList } from '../../../../Common/EntityLists/CurrencyList';
 
 export class AirCostTariffLineData extends BaseComponent {
+    
     public EntityPM: TariffLinePM;
     public DataContext: AirCostTariffLineData = this;
     private ObjectTableName = "TariffLine";
     public IsNewEntity: boolean = false;
     public IsEditEnabled: boolean = false;
-    public ComparedEntity: TariffLinePM;    
+    public ComparedEntity: TariffLinePM;
+
     constructor(entity: TariffLinePM, public FatherComponent: VersionTabComponent, isNew: boolean = false) {
         super();
         this.EntityPM = entity;
         this.IsNewEntity = isNew;
         this.IsEditEnabled = FatherComponent.IsDraftVersion;
         this.SetUIProperties();
-        this.SetCellColorsForPriceCheck();        
+        this.SetCellColorsForPriceCheck();
     }
     
     public CellColor: string = "transparent";
@@ -398,6 +400,15 @@ export class AirCostTariffLineData extends BaseComponent {
         }
     }
 
+    get OriginPortCombinedCode() {
+        return this.EntityPM.OriginPortCombinedCode;
+    }
+    set OriginPortCombinedCode(value: string) {
+        if (this.EntityPM.OriginPortCombinedCode != value) {
+            this.EntityPM.OriginPortCombinedCode = value;
+        }
+    }
+
     originPort: PortList;
     get OriginPort() { return this.originPort; }
     set OriginPort(value: PortList) {
@@ -406,18 +417,30 @@ export class AirCostTariffLineData extends BaseComponent {
         }
         if (!AppTool.IsNullOrEmpty(value)) {
             this.OriginPortCode = value.Code;
+            this.OriginPortCombinedCode = value.CombinedCode;
         } else {
             this.OriginPortCode = null;
+            this.OriginPortCombinedCode = null;
         }
     }
 
     get OriginPortValue() {
-        if (!AppTool.IsNullOrEmpty(this.EntityPM.OriginPortCode)) {
-            return this.EntityPM.OriginPortCode;
-        }
+        if (this.FatherComponent.IsAir) {
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.OriginPortCode)) {
+                return this.EntityPM.OriginPortCode;
+            }
 
-        else {
-            return this.EntityPM.OriginPortText;
+            else {
+                return this.EntityPM.OriginPortText;
+            }
+        } else {
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.OriginPortCombinedCode)) {
+                return this.EntityPM.OriginPortCombinedCode;
+            }
+
+            else {
+                return this.EntityPM.OriginPortText;
+            }
         }
     }
 
@@ -452,6 +475,15 @@ export class AirCostTariffLineData extends BaseComponent {
         }
     }
 
+    get DestinationPortCombinedCode() {
+        return this.EntityPM.DestinationPortCombinedCode;
+    }
+    set DestinationPortCombinedCode(value: string) {
+        if (this.EntityPM.DestinationPortCombinedCode != value) {
+            this.EntityPM.DestinationPortCombinedCode = value;
+        }
+    }
+
     destinationPort: PortList;
     get DestinationPort() { return this.destinationPort; }
     set DestinationPort(value: PortList) {
@@ -460,18 +492,31 @@ export class AirCostTariffLineData extends BaseComponent {
         }
         if (!AppTool.IsNullOrEmpty(value)) {
             this.DestinationPortCode = value.Code;
+            this.DestinationPortCombinedCode = value.CombinedCode;
         } else {
             this.DestinationPortCode = null;
+            this.DestinationPortCombinedCode = null;
         }
     }
 
     get DestinationPortValue() {
-        if (!AppTool.IsNullOrEmpty(this.EntityPM.DestinationPortCode)) {
-            return this.EntityPM.DestinationPortCode;
-        }
+        if (this.FatherComponent.IsAir) {
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.DestinationPortCode)) {
+                return this.EntityPM.DestinationPortCode;
+            }
 
-        else {
-            return this.EntityPM.DestinationPortText;
+            else {
+                return this.EntityPM.DestinationPortText;
+            }
+        } else {
+
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.DestinationPortCombinedCode)) {
+                return this.EntityPM.DestinationPortCombinedCode;
+            }
+
+            else {
+                return this.EntityPM.DestinationPortText;
+            }
         }
     }
 
@@ -791,6 +836,7 @@ export class AirSurchargeTariffLineData extends BaseComponent {
     public IsEditEnabled: boolean = false;
     public ComparedEntity: TariffLinePM;
     private initialIndex: number;
+
     constructor(entity: TariffLinePM, public FatherComponent: SurchargeVersionTabComponent, isNew: boolean = false) {
         super();
         this.EntityPM = entity;
@@ -1286,6 +1332,15 @@ export class AirSurchargeTariffLineData extends BaseComponent {
         }
     }
 
+    get OriginPortCombinedCode() {
+        return this.EntityPM.OriginPortCombinedCode;
+    }
+    set OriginPortCombinedCode(value: string) {
+        if (this.EntityPM.OriginPortCombinedCode != value) {
+            this.EntityPM.OriginPortCombinedCode = value;
+        }
+    }
+
     originPort: PortList;
     get OriginPort() { return this.originPort; }
     set OriginPort(value: PortList) {
@@ -1294,18 +1349,30 @@ export class AirSurchargeTariffLineData extends BaseComponent {
         }
         if (!AppTool.IsNullOrEmpty(value)) {
             this.OriginPortCode = value.Code;
+            this.OriginPortCombinedCode = value.CombinedCode; 
         } else {
             this.OriginPortCode = null;
+            this.OriginPortCombinedCode = null;
         }
     }
 
     get OriginPortValue() {
-        if (!AppTool.IsNullOrEmpty(this.EntityPM.OriginPortCode)) {
-            return this.EntityPM.OriginPortCode;
-        }
+        if (this.FatherComponent.IsAir) {
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.OriginPortCode)) {
+                return this.EntityPM.OriginPortCode;
+            }
 
-        else {
-            return this.EntityPM.OriginPortText;
+            else {
+                return this.EntityPM.OriginPortText;
+            }
+        } else {
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.OriginPortCombinedCode)) {
+                return this.EntityPM.OriginPortCombinedCode;
+            }
+
+            else {
+                return this.EntityPM.OriginPortText;
+            }
         }
     }
 
@@ -1343,6 +1410,15 @@ export class AirSurchargeTariffLineData extends BaseComponent {
         }
     }
 
+    get DestinationPortCombinedCode() {
+        return this.EntityPM.DestinationPortCombinedCode;
+    }
+    set DestinationPortCombinedCode(value: string) {
+        if (this.EntityPM.DestinationPortCombinedCode != value) {
+            this.EntityPM.DestinationPortCombinedCode = value;
+        }
+    }
+
     destinationPort: PortList;
     get DestinationPort() { return this.destinationPort; }
     set DestinationPort(value: PortList) {
@@ -1351,8 +1427,10 @@ export class AirSurchargeTariffLineData extends BaseComponent {
         }
         if (!AppTool.IsNullOrEmpty(value)) {
             this.DestinationPortCode = value.Code;
+            this.DestinationPortCombinedCode = value.CombinedCode; 
         } else {
             this.DestinationPortCode = null;
+            this.DestinationPortCombinedCode = null;
         }
     }
     
@@ -1390,12 +1468,23 @@ export class AirSurchargeTariffLineData extends BaseComponent {
     }
 
     get DestinationPortValue() {
-        if (!AppTool.IsNullOrEmpty(this.EntityPM.DestinationPortCode)) {
-            return this.EntityPM.DestinationPortCode;
-        }
+        if (this.FatherComponent.IsAir) {
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.DestinationPortCode)) {
+                return this.EntityPM.DestinationPortCode;
+            }
 
-        else {
-            return this.EntityPM.DestinationPortText;
+            else {
+                return this.EntityPM.DestinationPortText;
+            }
+        } else {
+
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.DestinationPortCombinedCode)) {
+                return this.EntityPM.DestinationPortCombinedCode;
+            }
+
+            else {
+                return this.EntityPM.DestinationPortText;
+            }
         }
     }
 
@@ -2234,6 +2323,15 @@ export class OceanFCLFreightTariffLineData extends BaseComponent {
         }
     }
 
+    get OriginPortCombinedCode() {
+        return this.EntityPM.OriginPortCombinedCode;
+    }
+    set OriginPortCombinedCode(value: string) {
+        if (this.EntityPM.OriginPortCombinedCode != value) {
+            this.EntityPM.OriginPortCombinedCode = value;
+        }
+    }
+
     originPort: PortList;
     get OriginPort() { return this.originPort; }
     set OriginPort(value: PortList) {
@@ -2242,14 +2340,16 @@ export class OceanFCLFreightTariffLineData extends BaseComponent {
         }
         if (!AppTool.IsNullOrEmpty(value)) {
             this.OriginPortCode = value.Code;
+            this.OriginPortCombinedCode = value.CombinedCode;
         } else {
             this.OriginPortCode = null;
+            this.OriginPortCombinedCode = null;
         }
     }
 
     get OriginPortValue() {
-        if (!AppTool.IsNullOrEmpty(this.EntityPM.OriginPortCode)) {
-            return this.EntityPM.OriginPortCode;
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.OriginPortCombinedCode)) {
+            return this.EntityPM.OriginPortCombinedCode;
         }
 
         else {
@@ -2288,6 +2388,15 @@ export class OceanFCLFreightTariffLineData extends BaseComponent {
         }
     }
 
+    get DestinationPortCombinedCode() {
+        return this.EntityPM.DestinationPortCombinedCode;
+    }
+    set DestinationPortCombinedCode(value: string) {
+        if (this.EntityPM.DestinationPortCombinedCode != value) {
+            this.EntityPM.DestinationPortCombinedCode = value;
+        }
+    }
+
     destinationPort: PortList;
     get DestinationPort() { return this.destinationPort; }
     set DestinationPort(value: PortList) {
@@ -2296,14 +2405,16 @@ export class OceanFCLFreightTariffLineData extends BaseComponent {
         }
         if (!AppTool.IsNullOrEmpty(value)) {
             this.DestinationPortCode = value.Code;
+            this.DestinationPortCombinedCode = value.CombinedCode;
         } else {
             this.DestinationPortCode = null;
+            this.DestinationPortCombinedCode = null;
         }
     }
 
     get DestinationPortValue() {
-        if (!AppTool.IsNullOrEmpty(this.EntityPM.DestinationPortCode)) {
-            return this.EntityPM.DestinationPortCode;
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.DestinationPortCombinedCode)) {
+            return this.EntityPM.DestinationPortCombinedCode;
         }
 
         else {

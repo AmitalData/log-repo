@@ -79,7 +79,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             if (entityPOCO.CustomerId != null)
             {
                 CustomerQuery customerQuery = new CustomerQuery(entityPOCO.Tenant);
-                CustomerPM customerPM = customerQuery.GetSinglePM(entityPOCO.CustomerId, entityPOCO.Tenant);
+                CustomerPM customerPM = customerQuery.GetBasicSinglePM(entityPOCO.CustomerId, entityPOCO.Tenant,true);
                 entityPM.CustomerName = showLocals ? customerPM.LocalName : customerPM.EnglishName;
              }
         }

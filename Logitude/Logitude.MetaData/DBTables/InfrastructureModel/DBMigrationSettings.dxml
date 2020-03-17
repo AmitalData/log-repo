@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="DBMigrationSettings" Schema="dbo" DBType="Main">
+
+  <Column Name="Mode" Type="varchar" Size="10">
+    <Constraints Nullable="false" />
+  </Column>
+
+  <Column Name="ModulesList" Type="varchar" Size="1000">
+    <Constraints Nullable="false" />
+  </Column>
+
+</Table>

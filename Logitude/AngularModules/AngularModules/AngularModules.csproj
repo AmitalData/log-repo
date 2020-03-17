@@ -1073,6 +1073,7 @@
     <TypeScriptCompile Include="Infrastructure\EntityPMs\WebhookKeysPM.ts" />
     <TypeScriptCompile Include="Infrastructure\Helpers\DWQueryBuilderHelper.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\BusinessProcessDomainService.ts" />
+    <TypeScriptCompile Include="Infrastructure\Services\ExtendedLists\DWObjectTableExtendedListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\ExtendedLists\BIReportExtendedListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\ExtendedLists\BusinessRoleExtendedListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\ExtendedPMs\BIReportExtendedPMService.ts" />
@@ -1161,6 +1162,7 @@
     <Content Include="InvoiceModules\ARPayment\Components\EditTabs\EditMultiCurrency.html" />
     <Content Include="InvoiceModules\ARPayment\Components\NewEntity\ARPaymentTransferTemplate.html" />
     <Content Include="InvoiceModules\ARPayment\Components\NewEntity\NewARPaymentComponent.html" />
+    <Content Include="InvoiceModules\ARPayment\Components\Other\CancelARPaymentComponent.html" />
     <Content Include="InvoiceModules\InvoiceStocks\Components\ARInvoiceStockInputTemplate.html" />
     <Content Include="InvoiceModules\InvoiceStocks\Components\EditTabs\ARInvoiceStockGeneralTabComponent.html" />
     <Content Include="InvoiceModules\InvoiceStocks\Components\ManageStocksComponent.html" />
@@ -2062,6 +2064,7 @@
     <TypeScriptCompile Include="InvoiceModules\ARPayment\Components\EditTabs\EditMultiCurrency.ts" />
     <TypeScriptCompile Include="InvoiceModules\ARPayment\Components\NewEntity\ARPaymentTransferTemplate.ts" />
     <TypeScriptCompile Include="InvoiceModules\ARPayment\Components\NewEntity\NewARPaymentComponent.ts" />
+    <TypeScriptCompile Include="InvoiceModules\ARPayment\Components\Other\CancelARPaymentComponent.ts" />
     <TypeScriptCompile Include="InvoiceModules\ARPayment\ModuleARPayment.ts" />
     <TypeScriptCompile Include="InvoiceModules\ARPayment\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="InvoiceModules\InvoiceStocks\Components\ARInvoiceStockInputTemplate.ts" />
@@ -2322,6 +2325,7 @@
     <Content Include="TariffModule\Components\NewEntity\NewAirFreightCostComponent.html" />
     <Content Include="TariffModule\Components\NewEntity\TariffPriceStepsComponent.html" />
     <Content Include="TariffModule\Components\Templates\FieldTemplateComponent.html" />
+    <Content Include="TariffModule\Components\Workspaces\ContainerDefaultsComponent.html" />
     <Content Include="TariffModule\Components\Workspaces\SettingsWorkspaceComponent.html" />
     <Content Include="TariffModule\Components\Workspaces\TariffWorkspaceComponent.html" />
     <Content Include="TariffModule\Components\Workspaces\CostWorkspaceComponent.html" />
@@ -6740,6 +6744,7 @@
     <TypeScriptCompile Include="TariffModule\Components\NewEntity\NewAirFreightCostComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\NewEntity\TariffPriceStepsComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\Templates\FieldTemplateComponent.ts" />
+    <TypeScriptCompile Include="TariffModule\Components\Workspaces\ContainerDefaultsComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\Workspaces\CostWorkspaceComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\Workspaces\TariffSearchAirFreightPricesComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\Workspaces\TariffSettingComponent.ts" />
