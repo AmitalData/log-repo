@@ -1713,7 +1713,14 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     }
                 }
 
-                Port fromPort = this.GetPortDetails(rowData[0], tenant);
+                /*From Port*/
+                string fromPortCode = rowData[0];
+                if(!Regex.IsMatch(fromPortCode, @"^[a-zA-Z]+$"))
+                {
+                    fromPortCode = Regex.Replace(fromPortCode, @"[^a-zA-Z]+", "");
+                }
+
+                Port fromPort = this.GetPortDetails(fromPortCode, tenant);
                 if (fromPort != null)
                 {
                     if ((fromPort.IsAir && tariffType == "AFC") || (fromPort.IsOcean && tariffType == "OLC"))
@@ -1727,15 +1734,22 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     else
                     {
                         tariffLine.FromPortIsNotAir = true;
-                        tariffLine.FromPortText = rowData[0];
+                        tariffLine.FromPortText = fromPortCode;
                     }
                 }
                 else
                 {
-                    tariffLine.FromPortText = this.TrimTo_20(rowData[0]);
+                    tariffLine.FromPortText = this.TrimTo_20(fromPortCode);
                 }
 
-                Port toPort = this.GetPortDetails(rowData[1], tenant);
+                /*To Port*/
+                string toPortCode = rowData[1];
+                if (!Regex.IsMatch(toPortCode, @"^[a-zA-Z]+$"))
+                {
+                    toPortCode = Regex.Replace(toPortCode, @"[^a-zA-Z]+", "");
+                }
+
+                Port toPort = this.GetPortDetails(toPortCode, tenant);
                 if (toPort != null)
                 {
                     if ((toPort.IsAir && tariffType == "AFC") || (toPort.IsOcean && tariffType == "OLC"))
@@ -1749,12 +1763,12 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     else
                     {
                         tariffLine.ToPortIsNotAir = true;
-                        tariffLine.ToPortText = rowData[1];
+                        tariffLine.ToPortText = toPortCode;
                     }
                 }
                 else
                 {
-                    tariffLine.ToPortText = this.TrimTo_20(rowData[1]);
+                    tariffLine.ToPortText = this.TrimTo_20(toPortCode);
                 }
 
                 if (StepLength > 2 && rowDataLength > 2)
@@ -2003,7 +2017,14 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     }
                 }
 
-                Port fromPort = this.GetPortDetails(rowData[0], tenant);
+                /*From Port*/
+                string fromPortCode = rowData[0];
+                if (!Regex.IsMatch(fromPortCode, @"^[a-zA-Z]+$"))
+                {
+                    fromPortCode = Regex.Replace(fromPortCode, @"[^a-zA-Z]+", "");
+                }
+
+                Port fromPort = this.GetPortDetails(fromPortCode, tenant);
                 if (fromPort != null)
                 {
                     if ((fromPort.IsAir && this.TariffType == "AFC") || (fromPort.IsOcean && this.TariffType == "OLC") || (fromPort.IsOcean && this.TariffType == "OFC"))
@@ -2017,15 +2038,22 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     else
                     {
                         tariffLine.FromPortIsNotAir = true;
-                        tariffLine.FromPortText = rowData[0];
+                        tariffLine.FromPortText = fromPortCode;
                     }
                 }
                 else
                 {
-                    tariffLine.FromPortText = this.TrimTo_20(rowData[0]);
+                    tariffLine.FromPortText = this.TrimTo_20(fromPortCode);
                 }
 
-                Port toPort = this.GetPortDetails(rowData[1], tenant);
+                /*To Port*/
+                string toPortCode = rowData[1];
+                if (!Regex.IsMatch(toPortCode, @"^[a-zA-Z]+$"))
+                {
+                    toPortCode = Regex.Replace(toPortCode, @"[^a-zA-Z]+", "");
+                }
+
+                Port toPort = this.GetPortDetails(toPortCode, tenant);
                 if (toPort != null)
                 {
                     if ((toPort.IsAir && this.TariffType == "AFC") || (toPort.IsOcean && this.TariffType == "OLC") || (toPort.IsOcean && this.TariffType == "OFC"))
@@ -2039,12 +2067,12 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     else
                     {
                         tariffLine.ToPortIsNotAir = true;
-                        tariffLine.ToPortText = rowData[1];
+                        tariffLine.ToPortText = toPortCode;
                     }
                 }
                 else
                 {
-                    tariffLine.ToPortText = this.TrimTo_20(rowData[1]);
+                    tariffLine.ToPortText = this.TrimTo_20(toPortCode);
                 }
                 
                 if (rowData.Length > 2)
