@@ -15,7 +15,6 @@ using Logitude.BL.InfrastructureModel.EntityPMs;
 using Simplog.Data.QuoteModel.Repositories;
 using Simplog.Data.QuoteModel;
 using Simplog.Data.QuoteModel.EntityPOCOs;
-using WebFreight.Web.CommonDataModel.DomainServices;
 
 namespace Logitude.BL.ShipmentsModel.EntityQueries
 {
@@ -555,8 +554,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             string copiedPortId = "";
             if (tenantZeroPort != null)
             {
-                CommonDataDomainService commonDomain = new CommonDataDomainService();
-                PortList copiedPort = commonDomain.GetPortCopyToCurrentTenant(tenantZeroPort.Id, tenant);
+                PortQuery portQuery = new PortQuery(portRepository);
+                PortList copiedPort = portQuery.GetPortCopyToCurrentTenant(tenantZeroPort.Id, tenant);
                 copiedPortId = copiedPort != null ? copiedPort.Id : "";
             }
             return copiedPortId;
@@ -659,9 +658,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             string copiedCurrencyId = "";
             if (tenantZeroCurrency != null)
             {
-                CommonDataDomainService commonDomain = new CommonDataDomainService();
-                CurrencyList copiedCurrency = commonDomain.CopyCurrencyToTenant(tenantZeroCurrency.Id, tenant, 4, DateTime.Today);
-                copiedCurrencyId = copiedCurrency != null ? copiedCurrency.Id : "";
+                //CommonDataDomainService commonDomain = new CommonDataDomainService();
+                //CurrencyList copiedCurrency = commonDomain.CopyCurrencyToTenant(tenantZeroCurrency.Id, tenant, 4, DateTime.Today);
+                //copiedCurrencyId = copiedCurrency != null ? copiedCurrency.Id : "";
             }
             return copiedCurrencyId;
         }
