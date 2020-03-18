@@ -124,7 +124,7 @@ namespace WebFreight.Web.ReportsWebServices
                 awbDp.VolumeUnitCode = shipmentPM.VolumeUnitCode;
                 awbDp.ChargeableWeightEdited = shipmentPM.ChargeableWeightEdited;
                 awbDp.MainCarriageLeg2_MAWB = shipmentPM.Transshipment1AdditionalMAWBOBLBL;
-
+                
                 if (shipmentPM.BranchId != null)
                 {
                     Branch myBranch = (from d in myCommonContext.Branches where d.Tenant == tenant && d.Id == shipmentPM.BranchId select d).FirstOrDefault();
@@ -155,6 +155,7 @@ namespace WebFreight.Web.ReportsWebServices
                 this.GetNotify2Data(awbDp, shipmentPM, addressRepository);
                 this.GetAgentData(awbDp, shipmentPM, addressRepository);
                 this.GetConsolidatorData(awbDp, shipmentPM);
+                this.GetOpenedByUser(awbDp, shipmentPM.CreatedByUserId);
 
                 #region PlaceOfDelivery
 
@@ -196,6 +197,21 @@ namespace WebFreight.Web.ReportsWebServices
             }
 
             return awbDp;
+        }
+
+        private void GetOpenedByUser(AWBDataProvider awbDp, string createdByUserId)
+        {
+
+            this.myCommonContext = CommonDataContext.GetContext(myTenant);
+            ContactRepository contactRepository = new ContactRepository(myCommonContext);
+            if (!string.IsNullOrEmpty(createdByUserId))
+            {
+                Contact createdByContact = contactRepository.GetSingleContact(createdByUserId, myTenant);
+                if (createdByContact != null)
+                {
+                    awbDp.OpenedBy = createdByContact.EnglishName;
+                }
+            }
         }
 
         private void GetLoggedTenantData(AWBDataProvider awbDp)
@@ -2264,6 +2280,12 @@ namespace WebFreight.Web.ReportsWebServices
                         }
 
                         commodityLine.DescriptionOfGoods = commodityLine.DescriptionOfGoods + Environment.NewLine;
+
+                        if(!string.IsNullOrEmpty(shipmentPM.SLAC))
+                        {
+                            commodityLine.DescriptionOfGoods = commodityLine.DescriptionOfGoods + "SLAC: " + shipmentPM.SLAC + Environment.NewLine;
+                        }
+
                         commodityLine.DescriptionOfGoods = commodityLine.DescriptionOfGoods + dimentions;
 
                         if(!string.IsNullOrEmpty(grossWeightUnitCode))
@@ -2389,6 +2411,16 @@ namespace WebFreight.Web.ReportsWebServices
 
                     string myDescriptionOfGoods = shipmentPM.DescriptionOfGoods == null ? "" : shipmentPM.DescriptionOfGoods;
                     awbDp.JustDescriptionofGoods = myDescriptionOfGoods;
+
+                    if (!string.IsNullOrEmpty(shipmentPM.SLAC))
+                    {
+                        if (!string.IsNullOrEmpty(myDescriptionOfGoods))
+                        {
+                            myDescriptionOfGoods += Environment.NewLine;
+                        }
+
+                        myDescriptionOfGoods += "SLAC: " + shipmentPM.SLAC;
+                    }
 
                     if (!string.IsNullOrEmpty(dimentions))
                     {

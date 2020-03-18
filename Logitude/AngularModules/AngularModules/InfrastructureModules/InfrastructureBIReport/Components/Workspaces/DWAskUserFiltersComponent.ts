@@ -15,7 +15,7 @@ import {MessageWindow} from '../../../../Controls/Windows/MessageWindow';
     selector: 'DWAskUserFiltersComponent',
     moduleId: module.id,
     templateUrl: './DWAskUserFiltersComponent.html',
-    inputs: ['SelectedFiltersDataSource', 'ShowRunButton', 'RunReportCommand', 'IsDateFilter', 'ComputeFiltersCommand', 'IsFirstTime', 'IsStaticFilter', 'IsStaticDateFilter', 'SelectedDynamicFiltersDataSource', 'SelectedFixedFiltersDataSource','ShowFixedFilters']
+    inputs: ['SelectedFiltersDataSource', 'ShowRunButton', 'RunReportCommand', 'IsDateFilter', 'ComputeFiltersCommand', 'IsFirstTime', 'IsStaticFilter', 'IsStaticDateFilter', 'SelectedDynamicFiltersDataSource', 'SelectedFixedFiltersDataSource', 'ShowFixedFilters']
 })
 
 export class DWAskUserFiltersComponent extends BaseComponent implements OnInit {
@@ -152,6 +152,7 @@ export class DWAskUserFiltersComponent extends BaseComponent implements OnInit {
             QueryData.PageIndex = this.PageIndex;
             QueryData.PageSize = this.PageSize;
             QueryData.ColumnsSort = this.DWQueryData.ColumnsSort;
+            QueryData.FactTableName = this.DWQueryData.FactTableName;
             var myAndOr = "And";
             if (this.DWQueryData.Filters) {
                 myAndOr = this.DWQueryData.Filters.AndOr;

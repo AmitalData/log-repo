@@ -224,39 +224,49 @@
 
                     <!--InterestBaseStartDate-->
                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'120'" [header]="InterestBaseStartDateHeader">
-                        <log-cell-template template="let item" #logcelltemplate>
-                            <div [style.text-align]="isRTL ? 'right' : 'left'"> {{item.InterestBaseStartDate | DateTimeToDatePipe}} </div>
-                        </log-cell-template>
+                        <ng-template let-item>
+                            <log-cell-template #logcelltemplate>
+                                <div [style.text-align]="isRTL ? 'right' : 'left'"> {{item.InterestBaseStartDate | DateTimeToDatePipe}} </div>
+                            </log-cell-template>
+                        </ng-template>
                     </log-column>
 
                     <!--InterestRate-->
                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'120'" [header]="InterestRateHeader">
-                        <log-cell-template template="let item" #logcelltemplate>
-                            <div [style.text-align]="isRTL ? 'right' : 'left'"> {{item.InterestRate}} </div>
-                        </log-cell-template>
+                        <ng-template let-item>
+                            <log-cell-template #logcelltemplate>
+                                <div [style.text-align]="isRTL ? 'right' : 'left'"> {{item.InterestRate}} </div>
+                            </log-cell-template>
+                        </ng-template>
                     </log-column>
 
                     <!--UpdatedByUserId-->
                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'120'" [header]="UpdatedByUserIdHeader">
-                        <log-cell-template template="let item" #logcelltemplate>
-                            <div [style.text-align]="isRTL ? 'right' : 'left'"> {{item.UpdatedByUserName}} </div>
-                        </log-cell-template>
+                        <ng-template let-item>
+                            <log-cell-template #logcelltemplate>
+                                <div [style.text-align]="isRTL ? 'right' : 'left'"> {{item.UpdatedByUserName}} </div>
+                            </log-cell-template>
+                        </ng-template>
                     </log-column>
 
                     <!--UpdateDate-->
                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'120'" [header]="UpdateDateHeader">
-                        <log-cell-template template="let item" #logcelltemplate>
-                            <div [style.text-align]="isRTL ? 'right' : 'left'"> {{item.UpdateDate | DateTimeToDatePipe}} </div>
-                        </log-cell-template>
+                        <ng-template let-item>
+                            <log-cell-template #logcelltemplate>
+                                <div [style.text-align]="isRTL ? 'right' : 'left'"> {{item.UpdateDate | DateTimeToDatePipe}} </div>
+                            </log-cell-template>
+                        </ng-template>
                     </log-column>
 
                     <!--NULL-->
                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'50'" [header]="' '" class="CellTools">
-                        <log-cell-template template="let item" #logcelltemplate>
-                            <div [style.text-align]="isRTL ? 'right' : 'left'" style="margin-top:4px;">
-                                <IconButton [Name]="'Edit'" [IsSmall]="true" [Left]="3" [disabled]="EntityPM.InActive" (click)="EditPeriodClicked(item)"></IconButton>
-                            </div>
-                        </log-cell-template>
+                        <ng-template let-item>
+                            <log-cell-template #logcelltemplate>
+                                <div [style.text-align]="isRTL ? 'right' : 'left'" style="margin-top:4px;">
+                                    <IconButton [Name]="'Edit'" [IsSmall]="true" [Left]="3" [disabled]="EntityPM.InActive" (click)="EditPeriodClicked(item)"></IconButton>
+                                </div>
+                            </log-cell-template>
+                        </ng-template>
                     </log-column>
 
                 </logitude-edit-grid>

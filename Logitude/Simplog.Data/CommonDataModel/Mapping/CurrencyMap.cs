@@ -31,6 +31,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.Notes).HasColumnName("Notes");
             this.Property(t => t.SearchFields).HasColumnName("SearchFields");
             this.Property(t => t.AccountingExternalCode).HasColumnName("AccountingExternalCode");
+            this.Property(t => t.AutomaticLastUpdateDate).HasColumnName("AutomaticLastUpdateDate"); 
         }
     }
 }

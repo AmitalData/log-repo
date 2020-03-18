@@ -12,9 +12,9 @@ using System.Xml.Serialization;
 
 namespace Logitude.Accounting.BL.CoreBL.Batch
 {
-    public class BatckReconciliationAfterConversionTask : BatchTaskExecutionsService
+    public class BatchReconciliationAfterConversionTask : BatchTaskExecutionsService
     {
-        public BatckReconciliationAfterConversionTask(BatchTaskExecutionPM batchTaskExecution) : base(batchTaskExecution)
+        public BatchReconciliationAfterConversionTask(BatchTaskExecutionPM batchTaskExecution) : base(batchTaskExecution)
         {
         }
         public override void RunCode()
@@ -26,8 +26,8 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             try
             {
 
-
-                using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(10)))
+                
+                using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(600)))
                 {
 
 
@@ -48,7 +48,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             catch (Exception ex)
             {
 
-                LogitudeSettings.HandleLogMe(ex.ToString(), true, "BatckReconciliationAfterConversionTask", new DateTime(2019, 10, 1));
+                LogitudeSettings.HandleLogMe(ex.ToString(), true, "BatchReconciliationAfterConversionTask", new DateTime(2019, 10, 1));
                 throw;
 
             }

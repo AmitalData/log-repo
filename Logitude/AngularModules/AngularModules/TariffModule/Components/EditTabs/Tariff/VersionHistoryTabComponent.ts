@@ -539,9 +539,11 @@ export class VersionHistoryTabComponent implements OnDestroy {
             tariffLine.Version = copiedVersion.Version;
             tariffLine.OriginPortId = item.OriginPortId;
             tariffLine.OriginPortCode = item.OriginPortCode;
+            tariffLine.OriginPortCombinedCode = item.OriginPortCombinedCode;
             tariffLine.OriginPortName = item.OriginPortName;
             tariffLine.DestinationPortId = item.DestinationPortId;
             tariffLine.DestinationPortCode = item.DestinationPortCode;
+            tariffLine.DestinationPortCombinedCode = item.DestinationPortCombinedCode;
             tariffLine.DestinationPortName = item.DestinationPortName;
             tariffLine.Index = item.Index;
             tariffLine.Notes = item.Notes;
@@ -647,6 +649,8 @@ export class VersionHistoryTabComponent implements OnDestroy {
 export class VersionHistoryTariffLine {
     public OriginPortCode: string;
     public DestinationPortCode: string;
+    public OriginPortCombinedCode: string;
+    public DestinationPortCombinedCode: string;
     public Notes: string;
     public ExpirationDate: Date;
     public IsFromAllOtherPorts: boolean;
@@ -722,6 +726,8 @@ export class VersionHistoryTariffLine {
     private AssignCommonData() {
         this.OriginPortCode = this.myTariffLine.OriginPortCode;
         this.DestinationPortCode = this.myTariffLine.DestinationPortCode;
+        this.OriginPortCombinedCode = this.myTariffLine.OriginPortCombinedCode;
+        this.DestinationPortCombinedCode = this.myTariffLine.DestinationPortCombinedCode;
         this.Notes = this.myTariffLine.Notes;
         this.ExpirationDate = this.myTariffLine.ExpirationDate;
         this.IsFromAllOtherPorts = this.myTariffLine.IsFromAllOtherPorts;

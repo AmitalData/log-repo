@@ -82,18 +82,23 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
                     if (paymentPM == null)
                     {
-                        JournalPM journal = GetNewJournal(paymentChequePM, paymentPM);
 
-                        if (paymentChequePM.ForeignAmount == null) paymentChequePM.ForeignAmount = 0;
+                        bool exist  = CheckIfPaymentChequeHasAjournal(paymentChequePM);
+                        if (!exist)
+                        {
+                            JournalPM journal = GetNewJournal(paymentChequePM, paymentPM);
 
-                        string creditAccount = FillCreditAccount(paymentChequePM, bankAccount);
+                            if (paymentChequePM.ForeignAmount == null) paymentChequePM.ForeignAmount = 0;
 
-                        AddJournalLines(paymentChequePM, paymentPM, journal, creditAccount);
+                            string creditAccount = FillCreditAccount(paymentChequePM, bankAccount);
 
-                        JournalUpdateService journalUpdateService = new JournalUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
-                        journalUpdateService.Update(journal, true);
+                            AddJournalLines(paymentChequePM, paymentPM, journal, creditAccount);
 
-                        paymentChequePM.JournalNumber = journal.JournalNumber;
+                            JournalUpdateService journalUpdateService = new JournalUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
+                            journalUpdateService.Update(journal, true);
+
+                            paymentChequePM.JournalNumber = journal.JournalNumber;
+                        }
                     }
                 }
                 else
@@ -105,6 +110,17 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             ValidateEntity(paymentChequePM);
             paymentChequePM.UpdateDate = DateTime.Now;
             paymentChequePM.UpdatedByUserId = AuthenticationUtil.ResolveUserId(paymentChequePM.Tenant);
+        }
+        private static bool CheckIfPaymentChequeHasAjournal(PaymentChequePM paymentCheque)
+        {
+            JournalQueryService journalQueryService = new JournalQueryService(paymentCheque.Tenant);
+            JournalPM journal = journalQueryService.GetByAccountingEntityIdAndAccountingEntityCode(paymentCheque.Id, "9", paymentCheque.Tenant);
+            if (journal != null)
+            {
+                return true;
+            }
+            else return false;
+
         }
 
         private static string FillCreditAccount(PaymentChequePM paymentChequePM, BankAccountPM bankAccount)

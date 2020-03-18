@@ -37,6 +37,7 @@ BEGIN
 		declare @GWKG_Id as varchar(15)
 		declare @CWKG_Id as varchar(15)
 		declare @VCBM_Id as varchar(15)
+		declare @SCGW_Id as varchar(15)
 		set @GRWT_Id = (select Id from Measurements where Code = 'GRWT' AND Tenant = @Tenant)
 		set @CHWT_Id = (select Id from Measurements where Code = 'CHWT' AND Tenant = @Tenant)
 		set @FIXD_Id = (select Id from Measurements where Code = 'FIXD' AND Tenant = @Tenant)
@@ -49,6 +50,7 @@ BEGIN
 		set @GWKG_Id = (select Id from Measurements where Code = 'GWKG' AND Tenant = @Tenant)
 		set @CWKG_Id = (select Id from Measurements where Code = 'CWKG' AND Tenant = @Tenant)
 		set @VCBM_Id = (select Id from Measurements where Code = 'VCBM' AND Tenant = @Tenant)
+		set @SCGW_Id = (select Id from Measurements where Code = 'SCGW' AND Tenant = @Tenant)
 
 		-- 02
 		declare @AllHousesCount as float
@@ -63,6 +65,7 @@ BEGIN
 		declare @AllHousesTotalGrossWeightInKG as float
 		declare @AllHousesTotalChargeableWeightInKG as float
 		declare @AllHousesTotalVolumeInCBM as float
+		declare @AllHousesGrossWeightPerStorageDays as float;
 
 		if exists (select * from Shipments where ShipmentLevelCode = 'H' AND MasterShipmentDataId = @MasterId)
 		begin
@@ -78,7 +81,8 @@ BEGIN
 			@AllHousesTotalNumberOfContainers = sum(isnull(NumberOfContainers,0)),
 			@AllHousesTotalGrossWeightInKG = sum(isnull(GrossWeightInKG,0)),
 			@AllHousesTotalChargeableWeightInKG = sum(isnull(ChargeableWeightInKG,0)),
-			@AllHousesTotalVolumeInCBM = sum(isnull(VolumeInCBM,0))
+			@AllHousesTotalVolumeInCBM = sum(isnull(VolumeInCBM,0)),
+			@AllHousesGrossWeightPerStorageDays = sum(isnull(GrossWeightPerStorageDays,0))
 			from Shipments
 			where ShipmentLevelCode = 'H' AND MasterShipmentDataId = @MasterId
 		end
@@ -95,6 +99,7 @@ BEGIN
 			set @AllHousesTotalGrossWeightInKG = 0
 			set @AllHousesTotalChargeableWeightInKG = 0
 			set @AllHousesTotalVolumeInCBM = 0
+			set @AllHousesGrossWeightPerStorageDays = 0
 		end
 
 		-- 03
@@ -151,6 +156,7 @@ BEGIN
 		declare @HouseGrossWeightInKG as float
 		declare @HouseChargeableWeightInKG as float
 		declare @HouseVolumeInCBM as float
+		declare @HouseGrossWeightPerStorageDays as float
 		declare @HousePayableId as varchar(15)
 		declare @HousePayableMeasurementId as varchar(15)
 		declare @HousePayableLineStatusCode as varchar(4)
@@ -189,10 +195,10 @@ BEGIN
 			BEGIN
 				DECLARE Houses1Cursor CURSOR READ_ONLY
 				FOR
-				SELECT Id, TEU, Volume, GrossWeight, ChargeableWeight, GrossWeightPerTon, ValueOfGoods, NumberOfPackages, NumberOfContainers, TransportModeId, ShipmentTypeId, GrossWeightInKG, ChargeableWeightInKG, VolumeInCBM
+				SELECT Id, TEU, Volume, GrossWeight, ChargeableWeight, GrossWeightPerTon, ValueOfGoods, NumberOfPackages, NumberOfContainers, TransportModeId, ShipmentTypeId, GrossWeightInKG, ChargeableWeightInKG, VolumeInCBM, GrossWeightPerStorageDays
 				FROM Shipments
 				WHERE ShipmentLevelCode = 'H' AND MasterShipmentDataId = @MasterId and Tenant = @Tenant
-				OPEN Houses1Cursor FETCH NEXT FROM Houses1Cursor INTO @HouseId, @HouseTEU, @HouseVolume, @HouseGrossWeight, @HouseChargeableWeight, @HouseGrossWeightPerTon, @HouseValueOfGoods, @HouseNumberOfPackages, @HouseNumberOfContainers, @HouseTransportModeId,@HouseTypeId, @HouseGrossWeightInKG, @HouseChargeableWeightInKG, @HouseVolumeInCBM
+				OPEN Houses1Cursor FETCH NEXT FROM Houses1Cursor INTO @HouseId, @HouseTEU, @HouseVolume, @HouseGrossWeight, @HouseChargeableWeight, @HouseGrossWeightPerTon, @HouseValueOfGoods, @HouseNumberOfPackages, @HouseNumberOfContainers, @HouseTransportModeId,@HouseTypeId, @HouseGrossWeightInKG, @HouseChargeableWeightInKG, @HouseVolumeInCBM, @HouseGrossWeightPerStorageDays
 				WHILE @@FETCH_STATUS = 0
 				BEGIN
 
@@ -218,6 +224,7 @@ BEGIN
 							OR @MasterPayableMeasurementId = @GWKG_Id
 							OR @MasterPayableMeasurementId = @CWKG_Id
 							OR @MasterPayableMeasurementId = @VCBM_Id
+							OR @MasterPayableMeasurementId = @SCGW_Id
 							)
 					BEGIN
 						if not exists (select * from ShipmentPayables where Tenant = @Tenant and ShipmentId = @HouseId and ShipmentPayableParentId = @MasterPayableId and ChargesTypeId = @MasterPayableChargesTypeId)
@@ -438,6 +445,17 @@ BEGIN
 									set @UnitPrice = @Ratio * @MasterPayableUnitPrice
 								END
 
+								-- GrossWeightPerStorageDays
+								else if (@MasterPayableMeasurementId = @SCGW_Id)
+								BEGIN
+									if (@AllHousesGrossWeightPerStorageDays <> 0)
+									begin
+										set @Ratio = @MasterPayableQuantity / @AllHousesGrossWeightPerStorageDays
+									end
+
+									set @Quantity = @HouseGrossWeightPerStorageDays
+									set @UnitPrice = @Ratio * @MasterPayableUnitPrice
+								END
 
 										-- GWKG: Gross Weight in Kg
 										else if (@MasterPayableMeasurementId = @GWKG_Id)
@@ -604,7 +622,7 @@ BEGIN
 					DEALLOCATE HousePayables1Cursor
 				END
 
-				FETCH NEXT FROM Houses1Cursor INTO @HouseId, @HouseTEU, @HouseVolume, @HouseGrossWeight, @HouseChargeableWeight, @HouseGrossWeightPerTon, @HouseValueOfGoods, @HouseNumberOfPackages, @HouseNumberOfContainers, @HouseTransportModeId, @HouseTypeId, @HouseGrossWeightInKG, @HouseChargeableWeightInKG, @HouseVolumeInCBM
+				FETCH NEXT FROM Houses1Cursor INTO @HouseId, @HouseTEU, @HouseVolume, @HouseGrossWeight, @HouseChargeableWeight, @HouseGrossWeightPerTon, @HouseValueOfGoods, @HouseNumberOfPackages, @HouseNumberOfContainers, @HouseTransportModeId, @HouseTypeId, @HouseGrossWeightInKG, @HouseChargeableWeightInKG, @HouseVolumeInCBM, @HouseGrossWeightPerStorageDays
 				END
 				CLOSE Houses1Cursor
 				DEALLOCATE Houses1Cursor

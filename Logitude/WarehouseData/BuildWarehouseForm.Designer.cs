@@ -91,6 +91,8 @@
             this.DWARInvoiceLinesLabel = new System.Windows.Forms.Label();
             this.DimChargesTypesLabel = new System.Windows.Forms.Label();
             this.label29 = new System.Windows.Forms.Label();
+            this.FactChargeslabel = new System.Windows.Forms.Label();
+            this.label30 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // BuildWarehouseData
@@ -799,11 +801,35 @@
             this.label29.TabIndex = 160;
             this.label29.Text = "Dimension ChargeType";
             // 
+            // FactChargeslabel
+            // 
+            this.FactChargeslabel.AutoSize = true;
+            this.FactChargeslabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.FactChargeslabel.ForeColor = System.Drawing.Color.CornflowerBlue;
+            this.FactChargeslabel.Location = new System.Drawing.Point(784, 331);
+            this.FactChargeslabel.Name = "FactChargeslabel";
+            this.FactChargeslabel.Size = new System.Drawing.Size(0, 20);
+            this.FactChargeslabel.TabIndex = 163;
+            // 
+            // label30
+            // 
+            this.label30.AutoSize = true;
+            this.label30.BackColor = System.Drawing.SystemColors.Control;
+            this.label30.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label30.ForeColor = System.Drawing.Color.CornflowerBlue;
+            this.label30.Location = new System.Drawing.Point(571, 332);
+            this.label30.Name = "label30";
+            this.label30.Size = new System.Drawing.Size(105, 20);
+            this.label30.TabIndex = 162;
+            this.label30.Text = "Fact Charges";
+            // 
             // BuildWarehouseForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1083, 698);
+            this.Controls.Add(this.FactChargeslabel);
+            this.Controls.Add(this.label30);
             this.Controls.Add(this.DimChargesTypesLabel);
             this.Controls.Add(this.label29);
             this.Controls.Add(this.label24);
@@ -939,6 +965,8 @@
         public System.Windows.Forms.Label DWARInvoiceLinesLabel;
         private System.Windows.Forms.Label DimChargesTypesLabel;
         private System.Windows.Forms.Label label29;
+        private System.Windows.Forms.Label FactChargeslabel;
+        private System.Windows.Forms.Label label30;
     }
 }
 

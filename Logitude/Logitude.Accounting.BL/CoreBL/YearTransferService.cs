@@ -477,6 +477,10 @@ namespace Logitude.Accounting.BL.CoreBL
 
         private JournalLinePM GetJournalLine(MyJournalActionTypeEnum journalActionTypeEnum, CurrencySum myCurrencySum, JournalPM journal, string RevenueExpenseGLAccountId, string revenueExpenseType)
         {
+            if (string.IsNullOrWhiteSpace(RevenueExpenseGLAccountId))
+            {
+                RevenueExpenseGLAccountId = null;
+            }
             int tenant = journal.Tenant;
             bool useLocal = true;
             var journalLine = new JournalLinePM()
@@ -520,7 +524,15 @@ namespace Logitude.Accounting.BL.CoreBL
                     break;
                 
             }
-            
+            if (string.IsNullOrWhiteSpace(journalLine.CreditAccountId))
+            {
+                journalLine.CreditAccountId = null;
+            }
+            if (string.IsNullOrWhiteSpace(journalLine.DebitAccountId))
+            {
+                journalLine.DebitAccountId = null;
+            }
+
             return journalLine;
         }
         /// <summary>

@@ -691,7 +691,7 @@ export class LoginComponent implements OnInit {
 
                     // Accounting - Abdullah
                     if (InfraSettings.TenantPM) {
-                        myResult.LayoutDirection = InfraSettings.TenantPM.LayoutDirection ? InfraSettings.TenantPM.LayoutDirection.toLowerCase() : InfraSettings.TenantPM.LayoutDirection;
+                        myResult.LayoutDirection = SessionInfo.LoggedUserPM.LayoutDirection ? SessionInfo.LoggedUserPM.LayoutDirection.toLowerCase():(InfraSettings.TenantPM.LayoutDirection ? InfraSettings.TenantPM.LayoutDirection.toLowerCase() : InfraSettings.TenantPM.LayoutDirection);
                     }
 
                     //
@@ -854,6 +854,13 @@ export class LoginComponent implements OnInit {
                 //        ObsList.push(view);
                 //    }
                 //});
+            }
+        });
+
+        this.myInfrastructureDomainService.getDWObjectFieldsWithChildrenByDWTableId("Fact_Charges").subscribe(Result => {
+            if (!Result.HasError) {
+                window.DWObjectFields.concat(Result.Result);
+                this.IncreaseProgressBar();
             }
         });
                 //this._objectTableRuleFieldPMService.getAllByTenant(CurrentTenant).subscribe(myResult => {

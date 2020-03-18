@@ -75,6 +75,9 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
         public DateTime? ApprovedDate { get; set; }
         public string ApprovedByUserId { get; set; }
 
+        public DateTime? AccountingCancelationDate { get; set; }
+        public string CancelationNotes { get; set; }
+
         public string BankAccountLiteId { get; set; }
         [ForeignKey("BankAccountLiteId")]
         public virtual BankAccountLite BankAccountLite { get; set; }

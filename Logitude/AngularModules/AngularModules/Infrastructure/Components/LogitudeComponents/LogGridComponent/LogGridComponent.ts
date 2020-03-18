@@ -622,12 +622,12 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
             if (this.Filters.AdditionalFilters.filter(a => a.FieldName == filters.FieldName).length > 0) {
                 this.Filters.AdditionalFilters = this.Filters.AdditionalFilters.filter(a => a.FieldName != filters.FieldName);
             }
-            this.Filters.addAdditionalFilter(filters.FieldName, null, null, null, "Equals", filters.ObjectField.IsCustomFilter, filters.ObjectField.DisplayInList, filters.ObjectField.IsCustom, filters.ObjectField.DataTypeCode);
+            this.Filters.addAdditionalFilter(filters.FieldName, null, null, null, "NoDate", filters.ObjectField.IsCustomFilter, filters.ObjectField.DisplayInList, filters.ObjectField.IsCustom, filters.ObjectField.DataTypeCode);
 
             if (this.AdvanceFilters.AdditionalFilters.filter(a => a.FieldName == filters.FieldName).length > 0) {
                 this.AdvanceFilters.AdditionalFilters = this.AdvanceFilters.AdditionalFilters.filter(a => a.FieldName != filters.FieldName);
             }
-            this.AdvanceFilters.addAdditionalFilter(filters.FieldName, null, null, null, "Equals", filters.ObjectField.IsCustomFilter, filters.ObjectField.DisplayInList, filters.ObjectField.IsCustom, filters.ObjectField.DataTypeCode);
+            this.AdvanceFilters.addAdditionalFilter(filters.FieldName, null, null, null, "NoDate", filters.ObjectField.IsCustomFilter, filters.ObjectField.DisplayInList, filters.ObjectField.IsCustom, filters.ObjectField.DataTypeCode);
 
         }
         else if (!AppTool.IsNullOrEmpty(filters.MyName)) {
@@ -1324,8 +1324,8 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
                 for (var i = 0; i < ColumnsElements.length; i++) {
                     if (ColumnsElements[i].attributes['LogGridId'].value == this.LogGridId && ColumnsElements[i].attributes['colid']) {
                         if (ColumnsElements[i].attributes['colid'].value == colDef.FieldName) {
-                            (<HTMLElement>ColumnsElements[i]).style.color = 'rgb(103, 103, 103)';
-                            (<HTMLElement>ColumnsElements[i]).style.background = '#cfcbcb';
+                            //(<HTMLElement>ColumnsElements[i]).style.color = 'rgb(103, 103, 103)';
+                            //(<HTMLElement>ColumnsElements[i]).style.background = '#cfcbcb';
                         }
                     }
                     //ColIndexes.push({ FieldName: ColumnsElements[i].attributes['colid'].value, Index: +(ColumnsElements[i].id.split(',')[1]), Width: ColumnsElements[i].clientWidth });
@@ -1338,6 +1338,10 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
             this.rows = [];
             //this.init();
             this.updateDisplayList();
+            var elem: HTMLDivElement = <HTMLDivElement>document.getElementById(this.LogGridRowsId);
+            if (elem) {
+                elem.scrollTop = 0;
+            }
             //var columns: HTMLDivElement = <HTMLDivElement>document.getElementById(this.LogGridColumnsId);
             //if (columns) {
             //    columns.style.left = (-1 * this.HScrollPosition) + "px";
@@ -2122,10 +2126,10 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
     private RedrowScrollBar() {
         this.AfterServerSort = false;
         var columns: HTMLDivElement = <HTMLDivElement>document.getElementById(this.LogGridColumnsId);
-        var elem: HTMLDivElement = <HTMLDivElement>document.getElementById(this.LogGridRowsId);
+        var elem: HTMLDivElement = <HTMLDivElement>document.getElementById(this.LogGridRowsId); 
 
         if (columns) {
-            elem.scrollLeft = +(this.HorizantalScrollValue.replace("px", ""));
+            elem.scrollLeft = +(this.HorizantalScrollValue.replace("px", "")); 
             columns.style.left = (-1 * (+(this.HorizantalScrollValue.replace("px", "")))) + "px";
         }
     }

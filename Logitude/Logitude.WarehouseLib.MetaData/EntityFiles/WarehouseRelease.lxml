@@ -2502,7 +2502,7 @@
     SystemRequired="false"
     ObjectFieldNotRequired="false"
     SystemMaxLength="1"
-    DisplayInList="true"
+    DisplayInList="false"
     IsCustomFilter="false"
     Operator="&quot;Equals&quot;"
     MultiLine="false"
@@ -3125,7 +3125,7 @@
     SystemRequired="false"
     ObjectFieldNotRequired="false"
     SystemMaxLength="1"
-    DisplayInList="true"
+    DisplayInList="false"
     IsCustomFilter="false"
     Operator="&quot;Equals&quot;"
     MultiLine="false"
@@ -4509,6 +4509,7 @@
   <field
     Id="&quot;908d4277-7db3-4a95-af9e-6b87604d7e5b&quot;"
     FieldName="&quot;Destination&quot;"
+    OldFieldName="&quot;Destination&quot;"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -4532,6 +4533,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;Destination&quot;"
     ListPropertyPath="&quot;Destination&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -4595,71 +4597,61 @@
       <QueryColumn
         QueryCode="&quot;CreatedReleasesQuery&quot;"
         IndexOrder="0"
-        ObjectFieldName="&quot;TransportModeId&quot;"
-        ColumnWidth="40" />
-      <QueryColumn
-        QueryCode="&quot;CreatedReleasesQuery&quot;"
-        IndexOrder="1"
-        ObjectFieldName="&quot;DirectionId&quot;"
-        ColumnWidth="40" />
-      <QueryColumn
-        QueryCode="&quot;CreatedReleasesQuery&quot;"
-        IndexOrder="2"
         ObjectFieldName="&quot;ReleaseNumber&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;CreatedReleasesQuery&quot;"
-        IndexOrder="3"
+        IndexOrder="1"
         ObjectFieldName="&quot;ReleaseDate&quot;"
         ColumnWidth="180" />
       <QueryColumn
         QueryCode="&quot;CreatedReleasesQuery&quot;"
-        IndexOrder="4"
+        IndexOrder="2"
         ObjectFieldName="&quot;TotalQuantity&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;CreatedReleasesQuery&quot;"
-        IndexOrder="5"
+        IndexOrder="3"
         ObjectFieldName="&quot;ReleaseBy&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;CreatedReleasesQuery&quot;"
-        IndexOrder="6"
+        IndexOrder="4"
         ObjectFieldName="&quot;WarehouseName&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;CreatedReleasesQuery&quot;"
-        IndexOrder="7"
+        IndexOrder="5"
         ObjectFieldName="&quot;SpecialInstruction&quot;"
         ColumnWidth="190" />
       <QueryColumn
         QueryCode="&quot;CreatedReleasesQuery&quot;"
-        IndexOrder="8"
+        IndexOrder="6"
         ObjectFieldName="&quot;Notes&quot;"
         ColumnWidth="190" />
       <QueryColumn
         QueryCode="&quot;CreatedReleasesQuery&quot;"
-        IndexOrder="9"
+        IndexOrder="7"
         ObjectFieldName="&quot;CustomerName&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;CreatedReleasesQuery&quot;"
-        IndexOrder="10"
+        IndexOrder="8"
         ObjectFieldName="&quot;References&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;CreatedReleasesQuery&quot;"
-        IndexOrder="11"
+        IndexOrder="9"
         ObjectFieldName="&quot;HouseNumber&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;CreatedReleasesQuery&quot;"
-        IndexOrder="12"
+        IndexOrder="10"
         ObjectFieldName="&quot;MasterNumber&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;CreatedReleasesQuery&quot;"
-        IndexOrder="13"
+        IndexOrder="11"
         ObjectFieldName="&quot;StatusName&quot;"
         ColumnWidth="100" />
     </QueryColumns>
@@ -4695,71 +4687,61 @@
       <QueryColumn
         QueryCode="&quot;ReleasedQuery&quot;"
         IndexOrder="0"
-        ObjectFieldName="&quot;TransportModeId&quot;"
-        ColumnWidth="40" />
-      <QueryColumn
-        QueryCode="&quot;ReleasedQuery&quot;"
-        IndexOrder="1"
-        ObjectFieldName="&quot;DirectionId&quot;"
-        ColumnWidth="40" />
-      <QueryColumn
-        QueryCode="&quot;ReleasedQuery&quot;"
-        IndexOrder="2"
         ObjectFieldName="&quot;ReleaseNumber&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;ReleasedQuery&quot;"
-        IndexOrder="3"
+        IndexOrder="1"
         ObjectFieldName="&quot;ReleaseBy&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;ReleasedQuery&quot;"
-        IndexOrder="4"
+        IndexOrder="2"
         ObjectFieldName="&quot;SpecialInstruction&quot;"
         ColumnWidth="190" />
       <QueryColumn
         QueryCode="&quot;ReleasedQuery&quot;"
-        IndexOrder="5"
+        IndexOrder="3"
         ObjectFieldName="&quot;Notes&quot;"
         ColumnWidth="190" />
       <QueryColumn
         QueryCode="&quot;ReleasedQuery&quot;"
-        IndexOrder="6"
+        IndexOrder="4"
         ObjectFieldName="&quot;HouseNumber&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;ReleasedQuery&quot;"
-        IndexOrder="7"
+        IndexOrder="5"
         ObjectFieldName="&quot;MasterNumber&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;ReleasedQuery&quot;"
-        IndexOrder="8"
+        IndexOrder="6"
         ObjectFieldName="&quot;WarehouseName&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;ReleasedQuery&quot;"
-        IndexOrder="9"
+        IndexOrder="7"
         ObjectFieldName="&quot;CustomerName&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;ReleasedQuery&quot;"
-        IndexOrder="10"
+        IndexOrder="8"
         ObjectFieldName="&quot;References&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;ReleasedQuery&quot;"
-        IndexOrder="11"
+        IndexOrder="9"
         ObjectFieldName="&quot;StatusName&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;ReleasedQuery&quot;"
-        IndexOrder="12"
+        IndexOrder="10"
         ObjectFieldName="&quot;ReleaseDate&quot;"
         ColumnWidth="180" />
       <QueryColumn
         QueryCode="&quot;ReleasedQuery&quot;"
-        IndexOrder="13"
+        IndexOrder="11"
         ObjectFieldName="&quot;TotalQuantity&quot;"
         ColumnWidth="100" />
     </QueryColumns>
@@ -4795,71 +4777,61 @@
       <QueryColumn
         QueryCode="&quot;CancelledReleasesQuery&quot;"
         IndexOrder="0"
-        ObjectFieldName="&quot;TransportModeId&quot;"
-        ColumnWidth="40" />
-      <QueryColumn
-        QueryCode="&quot;CancelledReleasesQuery&quot;"
-        IndexOrder="1"
-        ObjectFieldName="&quot;DirectionId&quot;"
-        ColumnWidth="40" />
-      <QueryColumn
-        QueryCode="&quot;CancelledReleasesQuery&quot;"
-        IndexOrder="2"
         ObjectFieldName="&quot;ReleaseNumber&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;CancelledReleasesQuery&quot;"
-        IndexOrder="3"
+        IndexOrder="1"
         ObjectFieldName="&quot;ReleaseBy&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;CancelledReleasesQuery&quot;"
-        IndexOrder="4"
+        IndexOrder="2"
         ObjectFieldName="&quot;SpecialInstruction&quot;"
         ColumnWidth="190" />
       <QueryColumn
         QueryCode="&quot;CancelledReleasesQuery&quot;"
-        IndexOrder="5"
+        IndexOrder="3"
         ObjectFieldName="&quot;Notes&quot;"
         ColumnWidth="190" />
       <QueryColumn
         QueryCode="&quot;CancelledReleasesQuery&quot;"
-        IndexOrder="6"
+        IndexOrder="4"
         ObjectFieldName="&quot;HouseNumber&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;CancelledReleasesQuery&quot;"
-        IndexOrder="7"
+        IndexOrder="5"
         ObjectFieldName="&quot;MasterNumber&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;CancelledReleasesQuery&quot;"
-        IndexOrder="8"
+        IndexOrder="6"
         ObjectFieldName="&quot;WarehouseName&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;CancelledReleasesQuery&quot;"
-        IndexOrder="9"
+        IndexOrder="7"
         ObjectFieldName="&quot;CustomerName&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;CancelledReleasesQuery&quot;"
-        IndexOrder="10"
+        IndexOrder="8"
         ObjectFieldName="&quot;References&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;CancelledReleasesQuery&quot;"
-        IndexOrder="11"
+        IndexOrder="9"
         ObjectFieldName="&quot;StatusName&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;CancelledReleasesQuery&quot;"
-        IndexOrder="12"
+        IndexOrder="10"
         ObjectFieldName="&quot;ReleaseDate&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;CancelledReleasesQuery&quot;"
-        IndexOrder="13"
+        IndexOrder="11"
         ObjectFieldName="&quot;TotalQuantity&quot;"
         ColumnWidth="100" />
     </QueryColumns>
@@ -4895,71 +4867,61 @@
       <QueryColumn
         QueryCode="&quot;AllReleasesQuery&quot;"
         IndexOrder="0"
-        ObjectFieldName="&quot;TransportModeId&quot;"
-        ColumnWidth="40" />
-      <QueryColumn
-        QueryCode="&quot;AllReleasesQuery&quot;"
-        IndexOrder="1"
-        ObjectFieldName="&quot;DirectionId&quot;"
-        ColumnWidth="40" />
-      <QueryColumn
-        QueryCode="&quot;AllReleasesQuery&quot;"
-        IndexOrder="2"
         ObjectFieldName="&quot;ReleaseNumber&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;AllReleasesQuery&quot;"
-        IndexOrder="3"
+        IndexOrder="1"
         ObjectFieldName="&quot;ReleaseBy&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;AllReleasesQuery&quot;"
-        IndexOrder="4"
+        IndexOrder="2"
         ObjectFieldName="&quot;SpecialInstruction&quot;"
         ColumnWidth="190" />
       <QueryColumn
         QueryCode="&quot;AllReleasesQuery&quot;"
-        IndexOrder="5"
+        IndexOrder="3"
         ObjectFieldName="&quot;Notes&quot;"
         ColumnWidth="190" />
       <QueryColumn
         QueryCode="&quot;AllReleasesQuery&quot;"
-        IndexOrder="6"
+        IndexOrder="4"
         ObjectFieldName="&quot;HouseNumber&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;AllReleasesQuery&quot;"
-        IndexOrder="7"
+        IndexOrder="5"
         ObjectFieldName="&quot;MasterNumber&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;AllReleasesQuery&quot;"
-        IndexOrder="8"
+        IndexOrder="6"
         ObjectFieldName="&quot;WarehouseName&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;AllReleasesQuery&quot;"
-        IndexOrder="9"
+        IndexOrder="7"
         ObjectFieldName="&quot;CustomerName&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;AllReleasesQuery&quot;"
-        IndexOrder="10"
+        IndexOrder="8"
         ObjectFieldName="&quot;References&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;AllReleasesQuery&quot;"
-        IndexOrder="11"
+        IndexOrder="9"
         ObjectFieldName="&quot;StatusName&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;AllReleasesQuery&quot;"
-        IndexOrder="12"
+        IndexOrder="10"
         ObjectFieldName="&quot;ReleaseDate&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;AllReleasesQuery&quot;"
-        IndexOrder="13"
+        IndexOrder="11"
         ObjectFieldName="&quot;TotalQuantity&quot;"
         ColumnWidth="100" />
     </QueryColumns>

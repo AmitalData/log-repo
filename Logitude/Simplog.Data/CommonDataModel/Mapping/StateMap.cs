@@ -31,6 +31,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.AddedManually).HasColumnName("AddedManually");
             this.Property(t => t.SearchFields).HasColumnName("SearchFields");
             this.Property(t => t.QBOTransactionLocationCode).HasColumnName("QBOTransactionLocationCode");
+            this.Property(t => t.AutomaticLastUpdateDate).HasColumnName("AutomaticLastUpdateDate"); 
 
             // Relationships
             this.HasRequired(t => t.Country).WithMany().HasForeignKey(d => d.CountryId);

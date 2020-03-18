@@ -2047,7 +2047,7 @@ export class NewQuoteComponent extends BaseComponent implements OnInit {
         var myDimensionsUnitCode = SessionLocator.TenantPM.DimensionsUnitCode;
         var myVolumeUnitCode = SessionLocator.TenantPM.VolumeUnitCode;
         var myGrossWeightUnitCode = SessionLocator.TenantPM.GrossWeightUnitCode;
-        var myChargeableWeightUnitCode = AppTool.GetChargeableWeightUnitCode(this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId);
+        var myChargeableWeightUnitCode = AppTool.GetChargeableWeightUnitCode(this.EntityPM.TransportModeId);
 
         if (this.EntityPM.DirectionId == "D") {
             if (!AppTool.IsNullOrEmpty(SessionLocator.TenantPM.CountryCode)) {
@@ -2073,10 +2073,8 @@ export class NewQuoteComponent extends BaseComponent implements OnInit {
                 this.EntityPM.GrossWeightUnitCode = myGrossWeightUnitCode;
             }
 
-            if (AppTool.IsNullOrEmpty(this.EntityPM.ChargeableWeightUnitCode)) {
-                this.EntityPM.ChargeableWeightUnitCode = myChargeableWeightUnitCode;
-            }
-
+            this.EntityPM.ChargeableWeightUnitCode = myChargeableWeightUnitCode;
+            
             if (this.EntityPM.Ratio == null) {
                 this.EntityPM.Ratio = AppTool.GetRatio(this.EntityPM.DirectionId, this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId, SessionLocator.TenantPM.CountryCode);
             }

@@ -86,10 +86,11 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 decimal? VatAmount = 0;
                 decimal? InvoiceAmount = 0;
-                string transmitStatus = "1";
+                string transmitStatus;
                 foreach (TaxReportData a in TaxReportJournalData)
                 {
                     string vatNumber = null;
+                    transmitStatus = "1";
                     var exist = reportLinesList.Where(d => d.JournalId == a.Id).Any();
                     if (!exist)
                     {
@@ -115,8 +116,8 @@ namespace Logitude.Accounting.BL.CoreBL
                             {
                                 vatNumber = invoice.VatNumber;
                             }
-                          
-                            TaxReportLinePM line = new TaxReportLinePM()
+                      
+                        TaxReportLinePM line = new TaxReportLinePM()
                             {
                                 VatNumber = vatNumber,
                                 Reference = outputreference,

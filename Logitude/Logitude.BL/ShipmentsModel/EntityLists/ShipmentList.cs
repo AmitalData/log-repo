@@ -528,7 +528,7 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public double? NotInvoicedReceivablesAmount { get; set; }
         public string CreatedByPartner { get; set; }
         public DateTime? FirstARInvoiceApprovalDate { get; set; }
-
+        public string SLAC { get; set; }
 
     }
 }

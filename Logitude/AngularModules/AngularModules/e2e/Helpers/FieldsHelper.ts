@@ -22,7 +22,7 @@ export class FieldsHelper {
     }
     WaitActionButtonAndClick(containerClassName: string, isLast: boolean) {
         var EC = protractor.ExpectedConditions;
-        browser.wait(EC.elementToBeClickable(element(by.className(containerClassName))), 100000).then(a => {
+        browser.wait(EC.elementToBeClickable(element(by.className(containerClassName))), 1000000).then(a => {
             let last = element.all(by.className(containerClassName)).last();
             browser.actions().mouseMove(last).perform();
             var allBtns = last.all(by.css('.ActionButtons'));
@@ -46,18 +46,20 @@ export class FieldsHelper {
     }
 
 
-    ItemsVisibility(Id: string) {
-        var EC = protractor.ExpectedConditions;
-        browser.wait(EC.visibilityOf(element(by.id(Id))), 100000000).then(a => function () {
-        });
-    }
-
     ItemsPresentWithOutClick(Id: string) {
         var EC = protractor.ExpectedConditions;
         browser.wait(EC.presenceOf(element(by.id(Id))), 100000000).then(a => function () {
 
         });
     }
+
+    ItemsVisibility(Id: string) {
+        var EC = protractor.ExpectedConditions;
+        browser.wait(EC.visibilityOf(element(by.id(Id))), 100000000).then(a => function () {
+        });
+    }
+
+
 
     ItemsPresent(Id: string) {
         var EC = protractor.ExpectedConditions;

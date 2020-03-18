@@ -44,25 +44,25 @@ namespace WebFreight.Web.Helpers.APIHelpers
             {
                 case "B":
                     {
-                        procedureName = "usp_DeleteBusinessRecords";
+                        procedureName = "dbo.usp_DeleteBusinessRecords";
                         break;
                     }
 
                 case "P":
                     {
-                        procedureName = "usp_DeleteCustomerRecords";
+                        procedureName = "dbo.usp_DeleteCustomerRecords";
                         break;
                     }
 
                 case "T":
                     {
-                        procedureName = "usp_DeleteTicketsRecords";
+                        procedureName = "dbo.usp_DeleteTicketsRecords";
                         break;
                     }
 
                 case "C":
                     {
-                        procedureName = "usp_DeleteCRMRecords";
+                        procedureName = "dbo.usp_DeleteCRMRecords";
                         break;
                     }
             }

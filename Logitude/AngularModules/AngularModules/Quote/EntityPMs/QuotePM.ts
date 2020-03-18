@@ -998,6 +998,11 @@ export class QuotePM {
     public set IsQuoteDocumentExternal(newValue: boolean) { if (this.isQuoteDocumentExternal != newValue) { this.isQuoteDocumentExternal = newValue; this.MarkAsDirty("IsQuoteDocumentExternal"); } }
        
 	 
+    private externalEntityNumber: string;
+    public get ExternalEntityNumber() { return this.externalEntityNumber; }
+    public set ExternalEntityNumber(newValue: string) { if (this.externalEntityNumber != newValue) { this.externalEntityNumber = newValue; this.MarkAsDirty("ExternalEntityNumber"); } }
+       
+	 
     private transitTime: string;
     public get TransitTime() { return this.transitTime; }
     public set TransitTime(newValue: string) { if (this.transitTime != newValue) { this.transitTime = newValue; this.MarkAsDirty("TransitTime"); } }

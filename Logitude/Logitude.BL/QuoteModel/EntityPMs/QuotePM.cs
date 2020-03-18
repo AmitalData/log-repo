@@ -317,6 +317,7 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public bool IsQuoteDataExternal { get; set; }
         public bool IsQuoteDocumentExternal { get; set; }
 
+        public string ExternalEntityNumber { get; set; }
         public string TransitTime { get; set; }
         public string DepartureFrequency { get; set; }
         public DateTime? ETD { get; set; }

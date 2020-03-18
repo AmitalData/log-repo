@@ -46,16 +46,14 @@
                                         </td>
 
                                         <td style="width: 70px; vertical-align: middle;">
-                                            <div class="RadioButton">
-                                                <input id="PrepaidRadio" type="radio" name="PCRadio" [checked]="IsPrepaidSelected" (click)="SetIsPrepaidSelected(true)" [disabled]="!IsEditingEnabled" />
-                                                <label for="PrepaidRadio">Prepaid</label>
+                                            <div>
+                                                <RadioButton [Name]="'PCRadio'" [IsChecked]="IsPrepaidSelected" (Checked)="SetIsPrepaidSelected(true)" [Text]="'Prepaid'" [IsEnabled]="IsEditingEnabled"></RadioButton>                                               
                                             </div>
                                         </td>
 
                                         <td style="width: 65px; vertical-align: middle;">
-                                            <div class="RadioButton">
-                                                <input id="CollectRadio" type="radio" name="PCRadio" [checked]="!IsPrepaidSelected" (click)="SetIsPrepaidSelected(false)" [disabled]="!IsEditingEnabled" />
-                                                <label for="CollectRadio">Collect</label>
+                                            <div>
+                                                <RadioButton [Name]="'PCRadio'" [IsChecked]="!IsPrepaidSelected" (Checked)="SetIsPrepaidSelected(false)" [Text]="'Collect'" [IsEnabled]="IsEditingEnabled"></RadioButton>
                                             </div>
                                         </td>
 

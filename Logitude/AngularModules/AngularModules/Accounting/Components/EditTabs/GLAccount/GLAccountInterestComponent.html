@@ -8,7 +8,7 @@
         -webkit-user-select: text;
     }
 </style>
-<div  class="TabHolder">
+<div class="TabHolder">
     <table>
         <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
             <td colspan="4">
@@ -231,8 +231,8 @@
                                                         <tr style="height:15px;">
                                                             <td>
 
-                                                                <LogTextBoxV2 [DigitsAfterPoint]="0" [FocusOnMe]="'true'" [ObjectFieldName]="'MinimumInterestInvoiceBilling'"  [DataContext]="DataContext"
-                                                                [Text]="MinimumInterestInvoiceBilling" [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBoxV2>
+                                                                <LogTextBoxV2 [DigitsAfterPoint]="0" [FocusOnMe]="'true'" [ObjectFieldName]="'MinimumInterestInvoiceBilling'" [DataContext]="DataContext"
+                                                                              [Text]="MinimumInterestInvoiceBilling" [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBoxV2>
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -279,8 +279,7 @@
         </tr>
         <tr>
             <td>
-                <logitude-edit-grid
-                                    GridWidth="100%"
+                <logitude-edit-grid GridWidth="100%"
                                     GridHeight="100%"
                                     [ItemSource]="GLAccountInterestPeriodsList"
                                     [HeaderHeight]="25"
@@ -288,7 +287,7 @@
                                     [IsReadOnly]="false"
                                     (RowEnded)="OnRowEnded($event)"
                                     (Ondblclick)="OnFocus()">
-                                    
+
                     <!--PeriodStartDate-->
                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'80'" [header]="PeriodStartDateHeader" [binding]="'PeriodStartDate'">
                         <log-cell-template template="let item" #logcelltemplate>
@@ -329,12 +328,12 @@
 
                             <div *ngIf="logcelltemplate.IsDisplayMode" [style.text-align]="isRTL ? 'right' : 'left'">
                                 <span> {{item.StandardAddInterestPercent}} </span>
-                             </div>
+                            </div>
 
-                             <div *ngIf="logcelltemplate.IsEditMode" [style.text-align]="isRTL ? 'right' : 'left'">
-                                 <LogTextBox [DigitsAfterPoint]="2" [FocusOnMe]="'true'" [ObjectFieldName]="'StandardAddInterestPercent'" [InputType]="'sigdouble'" [DataContext]="item"
-                                             [Text]="item.StandardAddInterestPercent" [ObjectTableName]="'GLAccountInterestPeriod'" [HideColumns]="true"></LogTextBox>
-                             </div>
+                            <div *ngIf="logcelltemplate.IsEditMode" [style.text-align]="isRTL ? 'right' : 'left'">
+                                <LogTextBox [DigitsAfterPoint]="2" [FocusOnMe]="'true'" [ObjectFieldName]="'StandardAddInterestPercent'" [InputType]="'sigdouble'" [DataContext]="item"
+                                            [Text]="item.StandardAddInterestPercent" [ObjectTableName]="'GLAccountInterestPeriod'" [HideColumns]="true"></LogTextBox>
+                            </div>
 
                         </log-cell-template>
                     </log-column>
@@ -365,7 +364,7 @@
                         <log-cell-template template="let item" #logcelltemplate>
                             <div *ngIf="logcelltemplate.IsDisplayMode" [style.text-align]="isRTL ? 'right' : 'left'">
                                 <span>{{item.ExceptionalAddInterestPercent}}</span>
-                             </div>
+                            </div>
                             <div *ngIf="logcelltemplate.IsEditMode" [style.text-align]="isRTL ? 'right' : 'left'">
                                 <LogTextBox [DigitsAfterPoint]="2" [FocusOnMe]="'true'" [ObjectFieldName]="'ExceptionalAddInterestPercent'" [InputType]="'sigdouble'" [DataContext]="item"
                                             [Text]="item.ExceptionalAddInterestPercent" [ObjectTableName]="'GLAccountInterestPeriod'" [HideColumns]="true"></LogTextBox>
@@ -408,12 +407,12 @@
                     </log-column>
 
                     <!--UpdatedByUser-->
-                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'80'" [header]="UpdatedByUserHeader" >
+                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'80'" [header]="UpdatedByUserHeader">
                         <log-cell-template template="let item" #logcelltemplate>
-                            <div  [style.text-align]="isRTL ? 'right' : 'left'">
+                            <div [style.text-align]="isRTL ? 'right' : 'left'">
                                 <span>{{item.UpdatedByUserName}}</span>
                             </div>
-                          </log-cell-template>
+                        </log-cell-template>
                     </log-column>
 
                     <!--UpdateDateTime-->
@@ -427,7 +426,7 @@
                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'30'" [header]="' '" class="CellTools">
                         <log-cell-template template="let item" #logcelltemplate>
                             <div [style.text-align]="isRTL ? 'right' : 'left'" style="margin-top:4px;">
-                                <IconButton [Name]="'Delete'" [IsSmall]="true" [Left]="3"  (click)="RemoveLine(item)"></IconButton>
+                                <IconButton [Name]="'Delete'" [IsSmall]="true" [Left]="3" (click)="RemoveLine(item)"></IconButton>
                             </div>
                         </log-cell-template>
                     </log-column>

@@ -133,6 +133,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                 entityPoco.NextLegCode = entityPM.NextLegCode;
             }
 
+            entityPoco.WarehouseStorageFreeDays = entityPM.WarehouseStorageFreeDays;
             entityPoco.FreelancerId = entityPM.FreelancerId;
             entityPoco.FreelancerAddressId = entityPM.FreelancerAddressId;
             entityPoco.FreelancerContactId = entityPM.FreelancerContactId;
@@ -232,6 +233,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.OrderGrossWeightEdited = entityPM.OrderGrossWeightEdited;
             entityPoco.OrderChargeableWeightEdited = entityPM.OrderChargeableWeightEdited;
             entityPoco.CASSCode = entityPM.CASSCode;
+            entityPoco.SLAC = entityPM.SLAC;
             entityPoco.OrderGrossWeight = entityPM.OrderGrossWeight;
             entityPoco.BookingVolume = entityPM.BookingVolume;
             entityPoco.OrderVolumetricWeight = entityPM.OrderVolumetricWeight;
@@ -427,7 +429,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.To = entityPM.To;
             entityPoco.Origin = entityPM.Origin;
             entityPoco.ComputedShipmentNumber = entityPM.ComputedShipmentNumber;
-            entityPoco.FirstARInvoiceApprovalDate = entityPM.FirstARInvoiceApprovalDate;
 
             //entityPoco.ContainersNumbers = entityPM.ContainersNumbers;
             //entityPoco.FirstPickupLocation = entityPM.FirstPickupLocation;
@@ -439,7 +440,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             //entityPoco.FinalArrivalDate = entityPM.FinalArrivalDate;
             //entityPoco.EstimatedFinalArrivalDate = entityPM.EstimatedFinalArrivalDate;
             //entityPoco.ActualFinalArrivalDate = entityPM.ActualFinalArrivalDate;
-
+            //entityPoco.FirstARInvoiceApprovalDate = entityPM.FirstARInvoiceApprovalDate;
+            
             BuildSearchField(entityPM, entityPoco, entityMasterData, myPackagesList);
             if (!LBcurrentTenant.IsDocumentsArchive)
             {
@@ -1561,6 +1563,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                     entityMasterData.AdditionalHandlingInfoEdited = entityPM.AdditionalHandlingInfoEdited;
                     entityMasterData.InterlineId = entityPM.InterlineId;
                     ComputeDepartureArrivalDates(entityMasterData, entityPM);
+                    ComputeMainCarriageFinalDestinationDates(entityMasterData, entityPM);
 
                     entityPM.OriginMainCarriageFromPortId = entityMasterData.MainCarriageFromPortId;
                     entityPM.OriginFinalDestinationPortId = entityMasterData.MainCarriageFinalDestinationPortId;
@@ -1574,7 +1577,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             {
                 entityPM.DepartureArrivalFromDate = entityPM.MainCarriageATD;
             }
-
+            
             DateTime? to_ETA = entityPM.MainCarriageETA;
             DateTime? to_ATA = entityPM.MainCarriageATA;
 
@@ -1616,9 +1619,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                     to_ATA = entityPM.Transshipment3ATA;
                 }
             }
-
-            entityPM.MainCarriageFinalDestinationETA = to_ETA;
-            entityPM.MainCarriageFinalDestinationATA = to_ATA;
+            
             entityPM.DepartureArrivalToDate = to_ETA;
             if (to_ATA != null)
             {
@@ -1635,9 +1636,42 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
 
             entityMasterData.DepartureArrivalFromDate = entityPM.DepartureArrivalFromDate;
             entityMasterData.DepartureArrivalToDate = entityPM.DepartureArrivalToDate;
+        }
+        private static void ComputeMainCarriageFinalDestinationDates(ShipmentMasterData entityMasterData, ShipmentPM entityPM)
+        {
+            DateTime? to_ETA = null;
+            DateTime? to_ATA = null;
+
+            if (entityPM.Transshipment3ToPortId != null)
+            {
+                to_ETA = entityPM.Transshipment3ETA;
+                to_ATA = entityPM.Transshipment3ATA;
+            }
+
+            else if (entityPM.Transshipment2ToPortId != null)
+            {
+                to_ETA = entityPM.Transshipment2ETA;
+                to_ATA = entityPM.Transshipment2ATA;
+            }
+
+            else if (entityPM.Transshipment1ToPortId != null)
+            {
+                to_ETA = entityPM.Transshipment1ETA;
+                to_ATA = entityPM.Transshipment1ATA;
+            }
+
+            else
+            {
+                to_ETA = entityPM.MainCarriageETA;
+                to_ATA = entityPM.MainCarriageATA;
+            }
+
+            entityPM.MainCarriageFinalDestinationETA = to_ETA;
+            entityPM.MainCarriageFinalDestinationATA = to_ATA;
             entityMasterData.MainCarriageFinalDestinationETA = entityPM.MainCarriageFinalDestinationETA;
             entityMasterData.MainCarriageFinalDestinationATA = entityPM.MainCarriageFinalDestinationATA;
         }
+
         private static void MapRoutings(ShipmentPM entityPM, Shipment entityPoco, bool isNewEntity)
         {
             entityPoco.PreCarriageFromPortId = entityPM.PreCarriageFromPortId;
@@ -1839,6 +1873,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.DimensionsUnitCode = entityPM.DimensionsUnitCode;
             entityPoco.VolumeUnitCode = entityPM.VolumeUnitCode;
             entityPoco.ChargeableWeightUnitCode = entityPM.ChargeableWeightUnitCode;
+            entityPoco.GrossWeightPerStorageDays = entityPM.GrossWeightPerStorageDays;
             entityPoco.GrossWeightEdited = entityPM.GrossWeightEdited;
             entityPoco.ChargeableWeightEdited = entityPM.ChargeableWeightEdited;
             entityPoco.Volume = entityPM.Volume;
@@ -2465,6 +2500,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             AddFieldChangedProperties(changeTrackingPM, "MainCarriageFinalDestinationATA", changeTrackingPM.MainCarriageFinalDestinationATA, pm.MainCarriageFinalDestinationATA, "DateTime?", notifyPropertyChangeValuesList);
             AddFieldChangedProperties(changeTrackingPM, "CutoffDate", changeTrackingPM.CutoffDate, pm.CutoffDate, "DateTime?", notifyPropertyChangeValuesList);
             AddFieldChangedProperties(changeTrackingPM, "IsCancelled", changeTrackingPM.IsCancelled, pm.IsCancelled, "bool", notifyPropertyChangeValuesList);
+            AddFieldChangedProperties(changeTrackingPM, "FirstARInvoiceApprovalDate", changeTrackingPM.FirstARInvoiceApprovalDate, pm.FirstARInvoiceApprovalDate, "DateTime?", notifyPropertyChangeValuesList);
+            AddFieldChangedProperties(changeTrackingPM, "ActualFinalArrivalDate", changeTrackingPM.ActualFinalArrivalDate, pm.ActualFinalArrivalDate, "DateTime?", notifyPropertyChangeValuesList);
+            AddFieldChangedProperties(changeTrackingPM, "EstimatedFinalArrivalDate", changeTrackingPM.EstimatedFinalArrivalDate, pm.EstimatedFinalArrivalDate, "DateTime?", notifyPropertyChangeValuesList);
 
 
             AddCustomFieldChangedProperties(changeTrackingPM, changeTrackingPM.Field1, pm.Field1, "Field1", notifyPropertyChangeValuesList);
@@ -2573,6 +2611,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             shipmentPM.CustomerContactId = houseShipment.CustomerContactId;
             shipmentPM.AgentContactId = houseShipment.AgentContactId;
             shipmentPM.IsCancelled = houseShipment.IsCancelled;
+            shipmentPM.FirstARInvoiceApprovalDate = houseShipment.FirstARInvoiceApprovalDate;
+            shipmentPM.ActualFinalArrivalDate = houseShipment.ActualFinalArrivalDate;
+            shipmentPM.EstimatedFinalArrivalDate = houseShipment.EstimatedFinalArrivalDate;
             if (EntityChangeHelper.IsShowLogBoxAutomationFields())
             {
                 shipmentPM.IsDepositionRequired = houseShipment.IsDepositionRequired;

@@ -372,14 +372,14 @@
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
     MaxLength="15"
-    IsRequired="false"
+    IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="true"
     DisplayOnLookUpLocal="false"
     CanFilter="true"
     DisplayOnly="false"
     SystemRequired="false"
-    ObjectFieldNotRequired="false"
+    ObjectFieldNotRequired="true"
     SystemMaxLength="15"
     DisplayInList="true"
     IsCustomFilter="false"
@@ -11777,6 +11777,11 @@
       Code="&quot;GLAccount.O.Balance&quot;"
       DefaultText="&quot;Balance&quot;"
       LocalDefaultText="&quot;יתרה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;AgingReport.O.PreviewReport&quot;"
+      DefaultText="&quot;Preview&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

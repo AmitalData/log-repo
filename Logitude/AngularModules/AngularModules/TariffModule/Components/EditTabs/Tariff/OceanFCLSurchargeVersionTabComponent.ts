@@ -60,6 +60,7 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
     public AllChargesTypes: ChargesTypeList[];
     public AllMeasurements: MeasurementList[];
     public AllPackageTypes: PackageTypeList[];
+    public LineIdFromPriceCheck: string;
     Intialize(args: any) {
         this.TariffsLinesSource = new ObservableCollection([]);
         this.TariffDomainService = new TariffDomainService();
@@ -67,6 +68,7 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
 
         this.CurrentVersion = args['CurrentVersion'];
         this.SelectedVersionNumber = args['SelectedVersionNumber'];
+        this.LineIdFromPriceCheck = args['LineIdFromPriceCheck'];
 
         if (this.CurrentVersion != null) {
             this.IsDraftVersion = this.CurrentVersion.IsDraft;
@@ -676,9 +678,11 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
             tariffLine.Version = copiedVersion.Version;
             tariffLine.OriginPortId = item.OriginPortId;
             tariffLine.OriginPortCode = item.OriginPortCode;
+            tariffLine.OriginPortCombinedCode = item.OriginPortCombinedCode;
             tariffLine.OriginPortName = item.OriginPortName;
             tariffLine.DestinationPortId = item.DestinationPortId;
             tariffLine.DestinationPortCode = item.DestinationPortCode;
+            tariffLine.DestinationPortCombinedCode = item.DestinationPortCombinedCode;
             tariffLine.DestinationPortName = item.DestinationPortName;
             tariffLine.Surcharge1Price = item.Surcharge1Price;
             tariffLine.Surcharge2Price = item.Surcharge2Price;
@@ -798,6 +802,7 @@ export class OceanFCLSurchargeTariffLineData extends BaseComponent {
         this.IsEditEnabled = FatherComponent.IsDraftVersion;
 
         this.SetUIProperties();
+        this.SetCellColorsForPriceCheck();
 
         if (!isDeleted) {
             this.LoadCompareContainerPrices();
@@ -805,6 +810,23 @@ export class OceanFCLSurchargeTariffLineData extends BaseComponent {
 
         this.BuildContainerPricesItemsSource();
         this.ComputeSurchargePricesValues();
+    }
+
+    public CellColor: string = "transparent";
+    private SetCellColorsForPriceCheck() {
+        if (!AppTool.IsNullOrEmpty(this.FatherComponent.LineIdFromPriceCheck) && this.FatherComponent.LineIdFromPriceCheck == this.EntityPM.Id) {
+            this.CellColor = "#FFFBDA";
+        }
+
+        else {
+            if (this.IsEditEnabled) {
+                this.CellColor = "transparent";
+            }
+
+            else {
+                this.CellColor = "rgba(230, 231, 232, 0.5)";
+            }
+        }
     }
 
     private CheckIfLineHasError() {
@@ -1109,6 +1131,15 @@ export class OceanFCLSurchargeTariffLineData extends BaseComponent {
         }
     }
 
+    get OriginPortCombinedCode() {
+        return this.EntityPM.OriginPortCombinedCode;
+    }
+    set OriginPortCombinedCode(value: string) {
+        if (this.EntityPM.OriginPortCombinedCode != value) {
+            this.EntityPM.OriginPortCombinedCode = value;
+        }
+    }
+
     originPort: PortList;
     get OriginPort() { return this.originPort; }
     set OriginPort(value: PortList) {
@@ -1117,14 +1148,15 @@ export class OceanFCLSurchargeTariffLineData extends BaseComponent {
         }
         if (!AppTool.IsNullOrEmpty(value)) {
             this.OriginPortCode = value.Code;
+            this.OriginPortCombinedCode = value.CombinedCode; 
         } else {
             this.OriginPortCode = null;
         }
     }
 
     get OriginPortValue() {
-        if (!AppTool.IsNullOrEmpty(this.EntityPM.OriginPortCode)) {
-            return this.EntityPM.OriginPortCode;
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.OriginPortCombinedCode)) {
+            return this.EntityPM.OriginPortCombinedCode;
         }
 
         else {
@@ -1165,6 +1197,14 @@ export class OceanFCLSurchargeTariffLineData extends BaseComponent {
             this.EntityPM.DestinationPortCode = value;
         }
     }
+    get DestinationPortCombinedCode() {
+        return this.EntityPM.DestinationPortCombinedCode;
+    }
+    set DestinationPortCombinedCode(value: string) {
+        if (this.EntityPM.DestinationPortCombinedCode != value) {
+            this.EntityPM.DestinationPortCombinedCode = value;
+        }
+    }
 
     destinationPort: PortList;
     get DestinationPort() { return this.destinationPort; }
@@ -1174,14 +1214,15 @@ export class OceanFCLSurchargeTariffLineData extends BaseComponent {
         }
         if (!AppTool.IsNullOrEmpty(value)) {
             this.DestinationPortCode = value.Code;
+            this.DestinationPortCombinedCode = value.CombinedCode;
         } else {
             this.DestinationPortCode = null;
         }
     }
 
     get DestinationPortValue() {
-        if (!AppTool.IsNullOrEmpty(this.EntityPM.DestinationPortCode)) {
-            return this.EntityPM.DestinationPortCode;
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.DestinationPortCombinedCode)) {
+            return this.EntityPM.DestinationPortCombinedCode;
         }
 
         else {

@@ -362,6 +362,11 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string BillToCountry { get; set; }
         public string CreatedByPartner { get; set; }
         public string BillToGLAccountId { get; set; }
-        
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string RegionalTaxId { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public double? RegionalTaxPercentage { get; set; }
     }
 }

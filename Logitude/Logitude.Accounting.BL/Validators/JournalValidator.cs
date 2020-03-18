@@ -422,13 +422,20 @@ namespace Logitude.Accounting.BL.Validators
 
 
                         bool? SuppressCheckGLAccountIsMultiCurrencyWI40640 = false;
-                        if (accountingValidationContextServiceProvider.Items.ContainsKey(JournalValidator.K_SuppressCheckGLAccountIsMultiCurrencyWI40640))
+                        if (true)
                         {
-                            SuppressCheckGLAccountIsMultiCurrencyWI40640 = accountingValidationContextServiceProvider.Items[JournalValidator.K_SuppressCheckGLAccountIsMultiCurrencyWI40640] as bool?;
+                            SuppressCheckGLAccountIsMultiCurrencyWI40640 = true;//im+yaron - all the time !!
                         }
                         else
                         {
-                            throw new Exception("Dear Programmer U must initialize in context SuppressCheckGLAccountIsMultiCurrencyWI40640");
+                            if (accountingValidationContextServiceProvider.Items.ContainsKey(JournalValidator.K_SuppressCheckGLAccountIsMultiCurrencyWI40640))
+                            {
+                                SuppressCheckGLAccountIsMultiCurrencyWI40640 = accountingValidationContextServiceProvider.Items[JournalValidator.K_SuppressCheckGLAccountIsMultiCurrencyWI40640] as bool?;
+                            }
+                            else
+                            {
+                                throw new Exception("Dear Programmer U must initialize in context SuppressCheckGLAccountIsMultiCurrencyWI40640");
+                            }
                         }
 
 

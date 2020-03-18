@@ -56,6 +56,18 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     if (state != null)
                     {
                         entityPM.StateName = state.EnglishName;
+                        entityPM.StateCode = state.Code;
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(entityPM.CountryId))
+                {
+                    CountryRepository countryRepository = new CountryRepository(objectContext);
+                    Country country = countryRepository.GetSingleCountry(entityPM.CountryId, entityPM.Tenant);
+                    if (country != null)
+                    {
+                        entityPM.CountryName = country.EnglishName;
+                        entityPM.CountryCode = country.Code;
                     }
                 }
 
@@ -107,6 +119,21 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     if (state != null)
                     {
                         entityPM.StateName = state.EnglishName;
+                        entityPM.StateCode = state.Code;
+                    }
+                }
+            }
+
+            if (!string.IsNullOrEmpty(entityPM.CountryId))
+            {
+                if (entityPM.CountryId != Poco.CountryId)
+                {
+                    CountryRepository countryRepository = new CountryRepository(objectContext);
+                    Country country = countryRepository.GetSingleCountry(entityPM.CountryId, entityPM.Tenant);
+                    if (country != null)
+                    {
+                        entityPM.CountryName = country.EnglishName;
+                        entityPM.CountryCode = country.Code;
                     }
                 }
             }

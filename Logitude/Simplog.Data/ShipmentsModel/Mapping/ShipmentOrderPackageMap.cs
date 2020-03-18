@@ -30,7 +30,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.ToTable("ShipmentOrderPackages");
             this.Property(t => t.Id).HasColumnName("Id");
             this.Property(t => t.Tenant).HasColumnName("Tenant");
-            this.Property(t => t.Quantity).HasColumnName("Quantity");
+            this.Property(t => t.Quantity).HasColumnName("Quantity").IsRequired();
             this.Property(t => t.IsContainer).HasColumnName("IsContainer");
             this.Property(t => t.ShipmentId).HasColumnName("ShipmentId");
             this.Property(t => t.PackageTypeId).HasColumnName("PackageTypeId");

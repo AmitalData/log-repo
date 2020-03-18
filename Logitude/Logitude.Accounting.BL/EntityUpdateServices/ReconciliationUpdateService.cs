@@ -175,14 +175,14 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
 
 
-                var validContext = AccountingValidationContextServiceProvider.NewReconciliationValidatorContext((MainContext as IAccountingContext), entityPM);
-                var validationResult = ReconciliationValidator.IsReconciliationValid(entityPM, validContext);
-                if (validationResult != null)
-                {
-                    string errorText = validationResult.ErrorMessage;//+ ", Number=" + _JournalPM.ExternalNo + @"/" + _JournalPM.Id;
-                                                                     //ThrowException(errorText);
-                    throw new Exception(errorText);
-                }
+                //var validContext = AccountingValidationContextServiceProvider.NewReconciliationValidatorContext((MainContext as IAccountingContext), entityPM);
+                //var validationResult = ReconciliationValidator.IsReconciliationValid(entityPM, validContext);
+                //if (validationResult != null)
+                //{
+                //    string errorText = validationResult.ErrorMessage;//+ ", Number=" + _JournalPM.ExternalNo + @"/" + _JournalPM.Id;
+                //                                                     //ThrowException(errorText);
+                //    throw new Exception(errorText);
+                //}
 
 
 

@@ -3497,7 +3497,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         public bool IsEntityHasDocs(string entityId, int tenant)
         {
             var extDocPm = (from a in repository.context.DocumentsFilings
-                            where a.EntityId == entityId && a.Tenant == tenant && a.IsDeleted == false
+                            where a.EntityId == entityId && a.Tenant == tenant && a.IsDeleted == false && a.DocumentId != null
                             select a);
             return (extDocPm.Count() > 0);
         }

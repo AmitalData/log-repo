@@ -178,6 +178,8 @@ namespace Logitude.BL.InvoiceModel.EntityLists
 
         public string BillToGLAccountId { get; set; }
 
+        public string RegionalTaxId { get; set; }
+        public double? RegionalTaxPercentage { get; set; }
 
     }
 }

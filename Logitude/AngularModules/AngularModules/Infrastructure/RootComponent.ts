@@ -38,7 +38,7 @@ export class RootComponent implements OnInit {
 
     Boot(args: any) {
         ServiceHelper.Http = args["Http"];
-        SessionLocator.Http = args["Http"];
+        ServiceHelper.HttpClient = args["HttpClient"];
         DynamicLoader.Compiler = args["Compiler"];
         DynamicLoader.Resolver = args["Resolver"];
         DynamicLoader.Injector = args["Injector"];

@@ -1,0 +1,109 @@
+
+import {Injectable} from '@angular/core';
+import {Http, Headers} from '@angular/http';
+import {Observable}     from 'rxjs/Rx';
+import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
+import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
+import {InfraGenericFilter} from '../../../Infrastructure/Utilities/InfraGenericFilter';
+import {CachedDataManager} from '../../../Infrastructure/Utilities/CachedDataManager';
+import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
+import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
+import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
+import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLogger';
+import {LocalStorageManager} from '../../../Infrastructure/Utilities/LocalStorageManager';
+
+@Injectable()
+
+export class BankDepositLineListService {
+	private _http: Http;
+    private _apiUrl: string;
+    constructor() {
+        this._http = ServiceHelper.Http;
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/BankDepositLineViews';
+    }
+
+    getByFilters(filters: ApiQueryFilters) {
+
+        var callTime = new Date();
+
+        var urlparameters = '/getbyfilters?';
+        var mykeys = Object.keys(filters);
+        var addtionalFiltersValues = null;
+        for (var i in mykeys) {
+            var propName = mykeys[i];
+            var propValue = filters[propName];
+
+            var ignoreFilter = ((propName.indexOf("Operator") > 0 && propValue == "Equals") || propName == "AdditionalFilters");
+
+            if (urlparameters != "?") {
+                urlparameters = urlparameters.concat('&');
+            }
+            if (!ignoreFilter)
+                {
+					propValue = encodeURIComponent(propValue);
+					urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
+				}
+
+            if (propName == "AdditionalFilters" && propValue.length > 0)
+                addtionalFiltersValues = JSON.stringify(propValue);
+
+
+        }
+        if (addtionalFiltersValues) {
+            urlparameters = urlparameters.concat("&AdditionalFilters=").concat(addtionalFiltersValues);
+        }
+
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+        var callUrl = this._apiUrl.concat(urlparameters);//
+
+
+	   return Observable.defer(() => {
+            return this._http.get(callUrl, {
+                headers: authHeader
+            }).map(response => {
+
+                var serviceResponse: ServiceResponse;
+                serviceResponse = response.json();
+
+                // var _mappedListsArray: Array< BankDepositLineList> = [];
+                // if (serviceResponse.Result) {
+                //     for (var key in serviceResponse.Result) {
+
+                //         var entity: BankDepositLineList;
+                //         entity = this.MapJsonToEntityList(serviceResponse.Result[key]);
+                //         _mappedListsArray.push(entity);
+
+                //     }
+                // }
+                // serviceResponse.Result = _mappedListsArray;
+
+                serviceResponse.Result = serviceResponse.Result;
+				serviceResponse.CallTime = callTime;
+                var servertime = response.headers.get('ServerExecutionTime');
+                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "BankDepositLine", "GetByFilters", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll);
+
+                return serviceResponse;
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
+
+
+    // MapJsonToEntityList(jsonList: any)
+    // {
+
+    //     var entityList: BankDepositLineList;
+    //     entityList = new BankDepositLineList();
+    //     var jsonListKeys = Object.keys(jsonList);
+
+    //     for (var key in jsonListKeys) {
+    //         var property = jsonListKeys[key];
+    //         entityList[property] = jsonList[property];
+    //     }
+
+
+    //     return entityList;
+    // }
+
+}
+

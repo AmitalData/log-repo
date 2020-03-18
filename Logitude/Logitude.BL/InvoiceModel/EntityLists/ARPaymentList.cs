@@ -73,6 +73,9 @@ namespace Logitude.BL.InvoiceModel.EntityLists
         public string TransmissionError { get; set; }
         public string BankAccountLiteId { get; set; }
         public string BankAccountName { get; set; }
+        public DateTime? AccountingCancelationDate { get; set; }
+        public string CancelationNotes { get; set; }
+        public string VoidedByJournalNumber { get; set; }
 
         public string MetodoPagoCode { get; set; }
         public string TipoCadenaPago { get; set; }

@@ -99,7 +99,15 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     }
                     else if(transactionPM.SourceTypeCode == "5") {
                         List<PaymentChequePM> paymentCheques = paymentChequeQuery.GetPaymentChequesByPaymentId(transactionPM.SourceId, transactionPM.Tenant);
-                        UpdatePaymentChequeStatus(paymentCheques[0]);
+                        //IM+ OHAD - IN CASE NOT manual Cheques (NOT INSERTED AS  PaymentCheque) 
+                        // NOT NEED TO CHANGE STATUS 2 Redeemed
+                        //ITZIK :I THINK manual/PRINTED Cheque - also have to create dummy  paymentCheque !!!
+                        if (paymentCheques.Count > 0)
+                            
+                        {
+                            UpdatePaymentChequeStatus(paymentCheques[0]);
+                        }
+                        
                     }
                     transactionService.Update(transactionPM, false);
                 }
@@ -161,7 +169,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 {
                     if (transactionPM.SourceTypeCode == "9") // 9- Payment Cheque
                     {
-                        PaymentChequePM chequePM = paymentChequeQuery.GetSingle(transactionPM.SourceId, false, false);
+                        PaymentChequePM chequePM = paymentChequeQuery.GetSingle(transactionPM.SourceId, true, false);
                         chequePM.PaymentChequeStatusCode = "2"; // 2- Approved
                         chequePM.ChangeSetOp = ChangeSetOperation.Update;
                         PaymentChequeUpdateService paymentChequeUpdateService = new PaymentChequeUpdateService(MainContext, AdditionalContexts, entityPM.Tenant);

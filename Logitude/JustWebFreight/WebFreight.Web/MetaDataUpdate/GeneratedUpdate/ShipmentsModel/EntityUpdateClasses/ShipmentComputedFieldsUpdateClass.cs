@@ -116,7 +116,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "ShipmentComputedField",
-			      				    Code =  "d417",
+			      				    Code =  "ad51",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Shipment",
@@ -1249,6 +1249,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "OperationallyClosedByUserName",
+					  						OldFieldName =  "OperationallyClosedByUserName",
 					  						ObjectTableName =  "ShipmentComputedFields",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -1268,6 +1269,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "OperationallyClosedByUserName",
 					  						ListPropertyPath =  "OperationallyClosedByUserName",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,

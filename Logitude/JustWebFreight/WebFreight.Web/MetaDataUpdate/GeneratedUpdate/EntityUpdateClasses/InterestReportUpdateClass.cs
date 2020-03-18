@@ -2003,6 +2003,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode InterestReportTextCode_InterestReportOShowDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.ShowDetails", DefaultText = "Show Details",LocalDefaultText = @"פירוט", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
+ 		   TextCode InterestReportTextCode_InterestReportOCustomeralreadyhasarecent = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.Customeralreadyhasarecent", DefaultText = "Customer already has a recent interest report date number",LocalDefaultText = @"ללקוח כבר קיים דוח ריבית מתאריך מאוחר יותר- מספר דוח", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
    
 	    
 }

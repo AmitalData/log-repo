@@ -27,9 +27,8 @@ namespace WarehouseData
         public string DWObjectTableCode { get; set; }
         public bool HasCustomFields { get; set; }
         public int CustomFieldsCount { get; set; }
-       public List<string> FactUsedTable { get; set; }
         public List<DWObjectFieldDB> DWObjectFieldDBLists { get; set; }
-        
+        public string DWTableKeyName { get; set; }
         public string FieldIndexes { get; set; }
         public string RefreshIds { get; set; }
     }

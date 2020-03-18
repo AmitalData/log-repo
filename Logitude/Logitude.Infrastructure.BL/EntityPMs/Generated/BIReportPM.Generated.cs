@@ -457,6 +457,29 @@ namespace Logitude.Infrastructure.BL.EntityPMs
 			
 		 }
 	   }
+	  private string factTableName ;
+	  	  
+       
+	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string FactTableName  
+	   {
+	    
+	     get
+		{
+		   return factTableName;
+		 }
+		 set
+		 {
+		   if(factTableName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FactTableName",OldValue=factTableName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   factTableName=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

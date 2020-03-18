@@ -56,6 +56,8 @@ namespace Logitude.Accounting.Data.EntityLists
        public string ChequeStatusName  { get; set; }
        [DataMember]
        public string ChequeStatusCode  { get; set; }
+       [DataMember]
+       public string ChequeStatusLocalName  { get; set; }
    }
 
 }

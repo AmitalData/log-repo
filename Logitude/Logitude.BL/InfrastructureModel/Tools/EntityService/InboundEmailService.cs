@@ -1,4 +1,5 @@
 ﻿using Logitude.BL.InfrastructureModel.EntityPMs;
+using Logitude.BL.InfrastructureModel.Service;
 using Logitude.BL.InfrastructureModel.Tools.DataMapping;
 using Logitude.BL.Security;
 using Logitude.CRM.BL.EntityPMs;
@@ -179,7 +180,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             inboundEmailLineRepository.Remove(itemPoco);
         }
 
-        public void ApplyEmailSending(InboundEmailLinePM entityLinePM, string ticketid, string ticketTableId, string guidId, bool notifyMe, string contactId, string childObjetctTableId)
+        public void ApplyEmailSending(InboundEmailLinePM entityLinePM, string ticketid, string ticketTableId, string guidId, bool notifyMe, string contactId, string childObjetctTableId , bool isContainsQuotationAttachment =false)
         {
             this.tenant = entityLinePM.Tenant;
 
@@ -194,10 +195,15 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             InboundEmailMapping.MapInboundEmailLineEntity(entityLinePM, itemPoco, true);
             inboundEmailLineRepository.Add(itemPoco);
             inboundEmailLineRepository.SubmitChanges();
-
-
             this.SendEmail(itemPoco, ticket.TicketNumber, ticket.ContactId, ticket.OwnerId, contactId, "", ticket.Id, ticketTableId, childObjetctTableId);
+
+            if (isContainsQuotationAttachment)
+            {
+                QuoteUpdateService quoteUpdateService = new QuoteUpdateService();
+                quoteUpdateService.UpdateQuoteStatusToSend(ticket.QuoteId, ticket.TicketNumber, ticket.Tenant);
+            }
         }
+
 
         public void SendEmail(InboundEmailLine entity, string ticketNumber, string contactId, string ownerId, string currentUserId, string guidId, string ticketId, string objectTableId, string childObjectTableId)
         {

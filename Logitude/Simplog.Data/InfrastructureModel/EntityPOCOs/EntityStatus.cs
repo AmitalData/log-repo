@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -20,6 +21,7 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         //public int IndexOrder { get; set; }
         public string SearchFields { get; set; }
         public string DisplayName { get; set; }
+        public DateTime? AutomaticLastUpdateDate { get; set; }
         [ForeignKey("ObjectTableId")]
         public virtual ObjectTable ObjectTable { get; set; }
      //   public List<EventType> EventTypes { get; set; }

@@ -397,6 +397,7 @@
     <Compile Include="InfrastructureModel\EntityLists\SchedulerProcedureList.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\RuleUpdateHistoryPM.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\RuleUpdateHistoryQuery.cs" />
+    <Compile Include="InfrastructureModel\Services\QuoteUpdateService.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\RuleUpdateHistoryMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\SchedulerProcedureMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\RuleUpdateHistoryService.cs" />
