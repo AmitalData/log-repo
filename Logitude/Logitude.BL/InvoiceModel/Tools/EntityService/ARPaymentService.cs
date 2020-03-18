@@ -1271,7 +1271,14 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             journalLine.CreditAccountId = glAccount != null ? glAccount.Id : null;
             journalLine.DocumentDate = paymentPM.RegisterDate.Value;
             journalLine.AccountingDate = paymentPM.RegisterDate.Value;
-            journalLine.DueDate = arPaymentcheque != null ? arPaymentcheque.ValueDate : paymentPM.ValueDate.Value;
+            if (paymentPM.AccountingPaymentMethodCode == "CA")
+            {
+                journalLine.DueDate = (DateTime)paymentPM.RegisterDate;
+            }
+            else
+            {
+                journalLine.DueDate = arPaymentcheque != null ? arPaymentcheque.ValueDate : paymentPM.ValueDate.Value;
+            }
             journalLine.LocalAmount = (decimal)paymentPM.AmountInLocalCurrency;
             journalLine.CurrencyId = paymentPM.PaymentCurrencyId;
             journalLine.ForeignAmount = (decimal)paymentPM.AmountInPaymentCurrency;
