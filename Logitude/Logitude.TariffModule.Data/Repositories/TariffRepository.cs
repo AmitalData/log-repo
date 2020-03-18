@@ -44,7 +44,7 @@ namespace Logitude.TariffModule.Data.Repositories
                    select a;
         }
 
-        public IQueryable<Tariff> GetSurchargeTariffsByAirline(string[] ids,string typeCode, int tenant)
+        public IQueryable<Tariff> GetSurchargeTariffsByCodeAndSellerId(string[] ids,string typeCode, int tenant)
         {
             var code = "ASC";
             if(typeCode == "OLC")
