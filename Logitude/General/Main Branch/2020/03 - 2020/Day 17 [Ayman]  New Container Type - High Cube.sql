@@ -28,7 +28,7 @@ BEGIN
 			EXECUTE usp_GetNextTableIdValue @PackageTypeId OUTPUT,'PackageType'
             insert into PackageTypes
 			(
-			Id, Tenant, Code, EnglishName, LocalName, IsContainer, InActive, IsAir, IsOcean, IsInland, ContainerSize, TEU, PrintAs, SearchFields, AddedManually, MeasurementId
+			Id, Tenant, Code, EnglishName, LocalName, IsContainer, InActive, IsAir, IsOcean, IsInland, ContainerSize, TEU, PrintAs, SearchFields, AddedManually, MeasurementId, Volume
 			)
             values
 			(
@@ -47,7 +47,8 @@ BEGIN
 			'20HC',
 			'20HC,20 ft. high cube,20 ft. high cube',
 			0,
-			@MeasurementId
+			@MeasurementId,
+			0
 			)                            
         end                    
 
