@@ -1910,6 +1910,11 @@ namespace Logitude.DatabaseMigration.LogitudeModel
 
         #region Custom Context
 
+        public IDbSet<CurrencyTypeTenant> CurrencyTypeTenants
+        {
+            get; set;
+
+        }
         public IDbSet<MamanStatus> MamanStatuses
         {
             get; set;
@@ -3920,6 +3925,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             #endregion
 
             #region customs
+            modelBuilder.Configurations.Add(new CurrencyTypeTenantMap());
             modelBuilder.Configurations.Add(new MamanSpecialActionMap());
             modelBuilder.Configurations.Add(new MamanSpecialActionStatusMap());
             modelBuilder.Configurations.Add(new DeclarationMamanSpecialActionMap());

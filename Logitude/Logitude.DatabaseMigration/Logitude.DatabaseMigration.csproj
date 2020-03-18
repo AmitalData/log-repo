@@ -2155,6 +2155,14 @@
     <Compile Include="Migrations\202001221256270_lastbutnotleast.Designer.cs">
       <DependentUpon>202001221256270_lastbutnotleast.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202003171001593_missingforcustoms.cs" />
+    <Compile Include="Migrations\202003171001593_missingforcustoms.Designer.cs">
+      <DependentUpon>202003171001593_missingforcustoms.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003171013160_missingcusoms22.cs" />
+    <Compile Include="Migrations\202003171013160_missingcusoms22.Designer.cs">
+      <DependentUpon>202003171013160_missingcusoms22.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\202003030904524_WesamDBMigrationFixes.cs" />
     <Compile Include="Migrations\202003030904524_WesamDBMigrationFixes.Designer.cs">
@@ -3911,6 +3919,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202001221256270_lastbutnotleast.resx">
       <DependentUpon>202001221256270_lastbutnotleast.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003171001593_missingforcustoms.resx">
+      <DependentUpon>202003171001593_missingforcustoms.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003171013160_missingcusoms22.resx">
+      <DependentUpon>202003171013160_missingcusoms22.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
