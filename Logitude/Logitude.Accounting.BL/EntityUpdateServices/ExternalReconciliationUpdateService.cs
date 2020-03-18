@@ -244,12 +244,34 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
             base.Trace(entityPM, entityPOCO, changesXml);
         }
-        protected override void Validate(ExternalReconciliationPM entityPM)
+        protected override void Validate(ExternalReconciliationPM externalRecoPM)
         {
 
-            CheckDifferenc(entityPM);
+            CheckDifferenc(externalRecoPM);
+            CheckTransferTransactions(externalRecoPM);
 
-            base.Validate(entityPM);
+            base.Validate(externalRecoPM);
+        }
+
+        private static void CheckTransferTransactions(ExternalReconciliationPM externalRecoPM)
+        {
+            BankAccountPM bankAccount = GetBankAccount(externalRecoPM);
+
+            bool haveExternalPageLines = externalRecoPM.ExternalReconciliationLines.Count(d => d.LedgerTransactionId == null && d.ExternalPageLineId != null) > 0;
+            int transferTransactionsCount = externalRecoPM.ExternalReconciliationLines.Count(d => d.LedgerGLAccountId == bankAccount.TransferGLAcccountId);
+            if (haveExternalPageLines && transferTransactionsCount > 1)
+            {
+                var msg = TextCodesTranslator.TranslateText("ExternalReconciliation.O.CantReconcileTwoTransfer", 0,
+                    LoggedContactResolver.GetLoggedContactShowLocal(externalRecoPM.Tenant));
+                throw new ApplicationException(msg);
+            }
+        }
+
+        private static BankAccountPM GetBankAccount(ExternalReconciliationPM externalRecoPM)
+        {
+            BankAccountQueryService bankAccountQueryService = new BankAccountQueryService(externalRecoPM.Tenant);
+            BankAccountPM bankAccount = bankAccountQueryService.GetSingle(externalRecoPM.BankAccountId, false, false);
+            return bankAccount;
         }
 
         void CheckDifferenc(ExternalReconciliationPM entityPM)

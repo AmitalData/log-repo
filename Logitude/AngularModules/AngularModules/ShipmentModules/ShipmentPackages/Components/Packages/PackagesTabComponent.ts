@@ -1102,7 +1102,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         if (!AppTool.IsNullOrEmpty(this.WarehouseReleaseNumber)) {
             this.CurrentSession.StartBusyIndicator("Saving...");
             if (this.warehouseReleasePMExtendedService == null) this.warehouseReleasePMExtendedService = new WarehouseReleasePMExtendedService();
-            this.warehouseReleasePMExtendedService.EnableWarehouseRelaseForUse(this.WarehouseReleaseNumber).subscribe((myResponse: ServiceResponse) => {
+            this.warehouseReleasePMExtendedService.EnableWarehouseRelaseForUse(this.WarehouseReleaseNumber, this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
                 this.CurrentSession.StopBusyIndicator();
             });
         }

@@ -30,11 +30,11 @@ namespace Logitude.WarehouseLib.Data.Repositories
 
 
 
-        public WarehouseRelease GetWarehouseReleasesByReleaseNumber(string releaseNumber, int tenant)
+        public WarehouseRelease GetWarehouseReleasesByReleaseNumberAndShipmentId(string releaseNumber,string shipmentId, int tenant)
         {
             WarehouseRelease myResult = (from a in context.WarehouseReleases
-                                                     where a.ReleaseNumber == releaseNumber && a.Tenant == tenant
-                                                     select a).FirstOrDefault();
+                                                     where a.ReleaseNumber == releaseNumber && a.Tenant == tenant && a.ShipmentId == shipmentId
+                                         select a).FirstOrDefault();
             return myResult;
         }
 

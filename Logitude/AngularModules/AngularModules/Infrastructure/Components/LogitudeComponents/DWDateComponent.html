@@ -26,12 +26,12 @@
                 <table>
                     <tr>
                         <td>
-                            <LogDatePicker [InputType]="'date'" (ValueChanged)="DatePickerValueChange($event)" [HideColumns]="true" [IsFreeValue]="true" [SelectedDateValue]="DateValue" [ObjectFieldName]="'DateValue'" [DataContext]="Context"></LogDatePicker>
+                            <LogDatePicker [InputType]="'date'" [ObjectTableName]="ObjectTableName" (ValueChanged)="DatePickerValueChange($event)" [HideColumns]="true" [IsFreeValue]="true" [SelectedDateValue]="DateValue" [ObjectFieldName]="'DateValue'" [DataContext]="Context"></LogDatePicker>
 
                         </td>
                         <td style="width:5px"></td>
                         <td style="width:47%">
-                            <LogDatePicker [InputType]="'time'"  (ValueChanged)="DatePickerValueChange($event)" [HideColumns]="true" [SelectedDateValue]="DateValue" [ObjectFieldName]="'DateValue'" [DataContext]="Context"></LogDatePicker>
+                            <LogDatePicker [InputType]="'time'"   [ObjectTableName]="ObjectTableName" (ValueChanged)="DatePickerValueChange($event)" [HideColumns]="true" [SelectedDateValue]="DateValue" [ObjectFieldName]="'DateValue'" [DataContext]="Context"></LogDatePicker>
 
                         </td>
                     </tr>

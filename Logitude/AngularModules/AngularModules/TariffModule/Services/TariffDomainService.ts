@@ -498,4 +498,9 @@ export class TariffSearchArgs {
     ContainerType3Id: string;
     ContainerType4Id: string;
     ContainerType5Id: string;
+    Quantity1: number;
+    Quantity2: number;
+    Quantity3: number;
+    Quantity4: number;
+    Quantity5: number;
 }

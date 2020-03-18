@@ -26,6 +26,7 @@ namespace Logitude.Infrastructure.Data
 		 IDbSet<BusinessProcessQueue> BusinessProcessQueues { get; }
 		 IDbSet<BusinessRole> BusinessRoles { get; }
 		 IDbSet<FeatureToggle> FeatureToggles { get; }
+		 IDbSet<LastRunDetail> LastRunDetails { get; }
 		 IDbSet<LBPTeamMember> LBPTeamMembers { get; }
 		 IDbSet<PriceStep> PriceSteps { get; }
 		 IDbSet<SharedLogisticsSetting> SharedLogisticsSettings { get; }
