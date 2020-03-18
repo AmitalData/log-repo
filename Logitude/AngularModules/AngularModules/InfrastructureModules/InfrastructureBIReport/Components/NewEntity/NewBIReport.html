@@ -91,9 +91,7 @@
                         <LogLabel [ObjectFieldName]="'FactTableName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                     </td>
                     <td>
-                        <select class="LogLovContainer LogLOVControl LogLovInputDiv" style="width:260px;height:22px;cursor:pointer;" #selectControl (change)="FactTableSelectionChanged(selectControl.value)">
-                            <option *ngFor="let table  of FactTables" [value]="table" [selected]="table == SelectdFactTableName">{{table}}</option>
-                        </select>
+                        <ComboBox (SelectedItemChanged)="FactTableSelectionChanged($event)" [SelectedItem]="SelectdFactTableName" [ItemsSource]="FactTables"></ComboBox>
                     </td>
                 </tr>
 

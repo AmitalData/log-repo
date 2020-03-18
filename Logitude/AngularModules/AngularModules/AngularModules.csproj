@@ -1041,6 +1041,7 @@
     <TypeScriptCompile Include="Infrastructure\EntityLists\DWSubQueryList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\DWQueryList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\FeatureToggleList.ts" />
+    <TypeScriptCompile Include="Infrastructure\EntityLists\LastRunDetailList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\LogitudeLeadList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\PriceStepList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\RuleUpdateHistoryList.ts" />
@@ -1059,6 +1060,7 @@
     <TypeScriptCompile Include="Infrastructure\EntityPMs\DWSubQueryPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\DWQueryPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\FeatureTogglePM.ts" />
+    <TypeScriptCompile Include="Infrastructure\EntityPMs\LastRunDetailPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\LBPTeamMemberPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\LogitudeLeadPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\PriceStepPM.ts" />
@@ -1078,6 +1080,7 @@
     <TypeScriptCompile Include="Infrastructure\Services\ExtendedLists\BusinessRoleExtendedListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\ExtendedPMs\BIReportExtendedPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\ExtendedPMs\DWQueryBuilderService.ts" />
+    <TypeScriptCompile Include="Infrastructure\Services\ExtendedPMs\LastRunDetailExtendedPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\ExtendedPMs\ObjectFieldPMExtendedService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\ExtendedPMs\SchedulerExtendedPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\ExtendedPMs\WebhookKeysExtendedPMService.ts" />
@@ -1093,6 +1096,7 @@
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\DWObjectFieldListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\DWObjectTableListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\FeatureToggleListService.ts" />
+    <TypeScriptCompile Include="Infrastructure\Services\StandardLists\LastRunDetailListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\ObjectFieldListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\PriceStepListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\RuleUpdateHistoryListService.ts" />
@@ -1107,6 +1111,7 @@
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\DWSubQueryPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\DWQueryPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\FeatureTogglePMService.ts" />
+    <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\LastRunDetailPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\PriceStepPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\SchedulerLogsPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\SharedLogisticsSettingPMService.ts" />

@@ -411,29 +411,6 @@ namespace Logitude.Infrastructure.BL.EntityPMs
 			
 		 }
 	   }
-	  private string lastRunByUserId ;
-	  	  
-       
-	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string LastRunByUserId  
-	   {
-	    
-	     get
-		{
-		   return lastRunByUserId;
-		 }
-		 set
-		 {
-		   if(lastRunByUserId != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LastRunByUserId",OldValue=lastRunByUserId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   lastRunByUserId=value;
-		   }
-			
-		 }
-	   }
 	  private string lastRunByUserName ;
 	  	  
        
@@ -476,6 +453,29 @@ namespace Logitude.Infrastructure.BL.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FactTableName",OldValue=factTableName,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   factTableName=value;
+		   }
+			
+		 }
+	   }
+	  private string lastRunId ;
+	  	  
+       
+	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string LastRunId  
+	   {
+	    
+	     get
+		{
+		   return lastRunId;
+		 }
+		 set
+		 {
+		   if(lastRunId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LastRunId",OldValue=lastRunId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   lastRunId=value;
 		   }
 			
 		 }

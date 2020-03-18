@@ -1,4 +1,4 @@
-﻿
+
 <table *ngIf="Entity">
     <tr>
         <td>
@@ -9,6 +9,10 @@
 
                 <div *ngIf="ObjectTableName == 'CommunicationLog' && (FieldName == 'CreateDate' || FieldName == 'CreateDateUTC')" class="TemplateTrimming">
                     {{FieldValue | DateTimePipe:'DTL12'}}
+                </div>
+
+                <div *ngIf="ObjectTableName == 'BIReport' && FieldName == 'LastRunDate'" class="TemplateTrimming">
+                    {{FieldValue | DateTimePipe:'DT'}}
                 </div>
 
                 <div *ngIf="ObjectTableName == 'APILogs' && FieldName == 'Direction'">
@@ -40,7 +44,7 @@
                     <div *ngIf="FieldName == 'CreateDate'||FieldName == 'StartDateTime'||FieldName == 'DoneDateTime'">
                         <div [style.text-align]="isRTL ? 'right' : 'left'">{{FieldValue | DateTimePipe:'DT'}}</div>
                     </div>
-                
+
                 </div>
             </div>
         </td>

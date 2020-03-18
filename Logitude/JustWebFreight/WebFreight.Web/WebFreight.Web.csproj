@@ -1707,6 +1707,7 @@
     <Compile Include="Controllers\InfrastructureModel\Extended\EventTypeExtendedController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\FollowUpExtendedController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\IATACodesExtendedController.cs" />
+    <Compile Include="Controllers\InfrastructureModel\Extended\LastRunDetailExtendedController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\LogitudeApplicationController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\ObjectFieldExtendedController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\ObjectTableLastUpdateController.cs" />
@@ -2743,6 +2744,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\JournalExternalReconcileUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\JournalMoreDataUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\JournalReconcileUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\LastRunDetailUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\LBPTeamMemberUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\LedgerTransactionUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\MamanSpecialActionStatusUpdateClass.cs" />

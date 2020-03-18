@@ -2188,6 +2188,7 @@
     <Compile Include="Migrations\202003121123558_AddCountryAndStatePropertiesToPort_Samar.Designer.cs">
       <DependentUpon>202003121123558_AddCountryAndStatePropertiesToPort_Samar.cs</DependentUpon>
     </Compile>
+
     <Compile Include="Migrations\202003151252549_WesamAddDWObjectTableCodeToDWObjectFieldCategoriesTable.cs" />
     <Compile Include="Migrations\202003151252549_WesamAddDWObjectTableCodeToDWObjectFieldCategoriesTable.Designer.cs">
       <DependentUpon>202003151252549_WesamAddDWObjectTableCodeToDWObjectFieldCategoriesTable.cs</DependentUpon>
@@ -2197,6 +2198,12 @@
     <Compile Include="Migrations\202003100731514_AbedAddReleaseNumberToShipmentPackage.Designer.cs">
       <DependentUpon>202003100731514_AbedAddReleaseNumberToShipmentPackage.cs</DependentUpon>
     </Compile>
+
+    <Compile Include="Migrations\202003171008363_WesamAddLastRunDetailTable.cs" />
+    <Compile Include="Migrations\202003171008363_WesamAddLastRunDetailTable.Designer.cs">
+      <DependentUpon>202003171008363_WesamAddLastRunDetailTable.cs</DependentUpon>
+    </Compile>
+
 
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\202003030904524_WesamDBMigrationFixes.cs" />
@@ -3963,12 +3970,18 @@
     <EmbeddedResource Include="Migrations\202003121123558_AddCountryAndStatePropertiesToPort_Samar.resx">
       <DependentUpon>202003121123558_AddCountryAndStatePropertiesToPort_Samar.cs</DependentUpon>
     </EmbeddedResource>
+
     <EmbeddedResource Include="Migrations\202003151252549_WesamAddDWObjectTableCodeToDWObjectFieldCategoriesTable.resx">
       <DependentUpon>202003151252549_WesamAddDWObjectTableCodeToDWObjectFieldCategoriesTable.cs</DependentUpon>
     </EmbeddedResource>
 
     <EmbeddedResource Include="Migrations\202003100731514_AbedAddReleaseNumberToShipmentPackage.resx">
       <DependentUpon>202003100731514_AbedAddReleaseNumberToShipmentPackage.cs</DependentUpon>
+    </EmbeddedResource>
+
+
+    <EmbeddedResource Include="Migrations\202003171008363_WesamAddLastRunDetailTable.resx">
+      <DependentUpon>202003171008363_WesamAddLastRunDetailTable.cs</DependentUpon>
     </EmbeddedResource>
 
   </ItemGroup>
