@@ -1254,7 +1254,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    HasTemplate="false"
+    HasTemplate="true"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
@@ -1524,7 +1524,7 @@
         QueryCode="&quot;ALLBIREPORTS&quot;"
         IndexOrder="6"
         ObjectFieldName="&quot;LastRunDate&quot;"
-        ColumnWidth="120" />
+        ColumnWidth="150" />
       <QueryColumn
         QueryCode="&quot;ALLBIREPORTS&quot;"
         IndexOrder="7"

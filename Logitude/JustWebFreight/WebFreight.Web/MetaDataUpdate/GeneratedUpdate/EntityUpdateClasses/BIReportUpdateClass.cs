@@ -1014,7 +1014,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
-					  						HasTemplate =  false,
+					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
@@ -1234,7 +1234,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn ALLBIREPORTSQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLBIREPORTSQuery.Id,QueryCode = ALLBIREPORTSQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = BIReportObjectFields.Where(d => d.FieldName == "UpdatedByUserName" && d.ObjectTableId == BIReportObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BIReportObjectFields.Where(d => d.FieldName == "UpdatedByUserName" && d.ObjectTableId == BIReportObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ALLBIREPORTSQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLBIREPORTSQuery.Id,QueryCode = ALLBIREPORTSQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = BIReportObjectFields.Where(d => d.FieldName == "LastRunDate" && d.ObjectTableId == BIReportObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BIReportObjectFields.Where(d => d.FieldName == "LastRunDate" && d.ObjectTableId == BIReportObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ALLBIREPORTSQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLBIREPORTSQuery.Id,QueryCode = ALLBIREPORTSQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = BIReportObjectFields.Where(d => d.FieldName == "LastRunDate" && d.ObjectTableId == BIReportObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BIReportObjectFields.Where(d => d.FieldName == "LastRunDate" && d.ObjectTableId == BIReportObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
 			 QueryColumn ALLBIREPORTSQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLBIREPORTSQuery.Id,QueryCode = ALLBIREPORTSQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = BIReportObjectFields.Where(d => d.FieldName == "LastRunByUserName" && d.ObjectTableId == BIReportObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BIReportObjectFields.Where(d => d.FieldName == "LastRunByUserName" && d.ObjectTableId == BIReportObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
 	   
