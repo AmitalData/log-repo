@@ -333,7 +333,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         CustomFileAmendment, 
 	         DeclarationNoAmendment, 
 	         AvailabilityDate, 
-	         AmendmentNumber,
+	         AmendmentNumber, 
+	         CourierPendingReasonName,
+	         AutomaticPayment,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -920,6 +922,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsValidTicketsDiamond))
             {
 				entityPOCO.IsValidTicketsDiamond = entityPM.IsValidTicketsDiamond;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AvailabilityDate))
+            {
+				entityPOCO.AvailabilityDate = entityPM.AvailabilityDate;
 			}
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AvailabilityDate))
@@ -1518,10 +1525,13 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.IsValidTicketsDiamond = entityPOCO.IsValidTicketsDiamond;
             }
 
+
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AvailabilityDate))
             {
 					entityPM.AvailabilityDate = entityPOCO.AvailabilityDate;
             }
+
+ 
 
 		}
 

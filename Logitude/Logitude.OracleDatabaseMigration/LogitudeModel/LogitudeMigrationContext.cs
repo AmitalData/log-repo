@@ -2904,6 +2904,8 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
 
         public IDbSet<ProceduralFaultInProcessType> ProceduralFaultInProcessTypes { get; set; }
         public IDbSet<RansomViolationType> RansomViolationTypes { get; set; }
+        public IDbSet<ReferantException> ReferantExceptions { get; set; }
+        public IDbSet<ExceptionReason> ExceptionReasons { get; set; }
         public IDbSet<ProceduralFaultsConnEntity> ProceduralFaultsConnEntities { get; set; }
         public IDbSet<CargoIdentityQualifier> CargoIdentityQualifiers { get; set; }
         public IDbSet<DepositFileType> DepositFileTypes { get; set; }
@@ -3956,6 +3958,10 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new PropertiesDetailsHistoryMap());
 
             modelBuilder.Configurations.Add(new RansomViolationTypeMap());
+
+            modelBuilder.Configurations.Add(new ReferantExceptionMap()); 
+
+            modelBuilder.Configurations.Add(new ExceptionReasonMap());
 
             modelBuilder.Configurations.Add(new RegisteredWarehouseSiteTypeMap());
 

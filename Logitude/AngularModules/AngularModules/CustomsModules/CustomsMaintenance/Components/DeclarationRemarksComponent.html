@@ -48,13 +48,13 @@
                             </log-cell-template>
                         </log-column>-->
 
-                        <log-column [header]="'Customs.CargoSeal.F.Remarks' | TextCodeTranslationPipe"
-                                    [binding]="'Remarks'" [width]="'150'" [Alignment]="'right'" [Editable]="true">
+                        <log-column [header]="'הערות'"
+                                    [binding]="'StatusComment'" [width]="'300'" [Alignment]="'right'">
                             <log-cell-template template="let item" #logcelltemplate>
-                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right">
+                                <div class="TextTrimming"  style="text-align:right">
                                     <span>{{item.StatusComment}}</span>
                                 </div>
-                                <div *ngIf="logcelltemplate.IsEditMode" style="height: 100%; width: 100%;">
+                                <div style="height: 100%; width: 100%;">
                                     <LogTextBox [ObjectFieldName]="'StatusComment'" [InputType]="'ntext'" [DataContext]="item"
                                                 [HideColumns]="true"
                                                 [IsMultiline]="true" [NoObjectField]="true" ></LogTextBox>

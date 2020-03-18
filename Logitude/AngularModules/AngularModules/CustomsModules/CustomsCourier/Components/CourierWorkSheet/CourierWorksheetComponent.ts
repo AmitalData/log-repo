@@ -1974,7 +1974,7 @@ export class CourierWorksheetComponent extends BaseComponent
         });
     }
 
-    SendUncorrectDocuments() {
+    SendUncorrectDocuments(sendMode: string) {
 
         if (this._DOC_U_Total == 0) {
             var myMessageWindow = new MessageWindow();
@@ -2000,6 +2000,7 @@ export class CourierWorksheetComponent extends BaseComponent
         currRequestParams.SelectedTotalInvoiceValue = this._SelectedTotalInvoiceValue;
         currRequestParams.SelectedFastIndividualProcessValue = this._SelectedFastIndividualProcessValue;
         currRequestParams.SelectedCustomStatusValue = this._SelectedCustomStatusValue;
+        if (sendMode == 'VX') currRequestParams.IsCreateNewDocumentVersion = true;
 
         this._CourierMasterService.PostSendUnCorrectDocuments(currRequestParams)
             .subscribe(res => {

@@ -26,6 +26,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                              on a.DeclarationId equals d.Id
                                                              select new DeclarationReferantDataList()
                                                              {
+                                                                 Tenant=a.Tenant,
 
                                                                  DeclarationId = a.DeclarationId,
 
@@ -42,8 +43,6 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                  CollectionOfMoneyStatus = a.CollectionOfMoneyStatus,
 
                                                                  FollowUpDate = a.FollowUpDate,
-
-                                                                 IsExceptional = a.IsExceptional,
 
                                                                  WithPaper = a.WithPaper,
 

@@ -774,8 +774,11 @@ export class ListComponent implements OnInit, AfterViewInit {
 
                     let myLocation: LocationDirective = this.AllLocations.toArray().filter(d => d.Code == "MNH")[0];
                     if (myLocation != null) {
-
-                        var myComponentPath = "./" + this.ObjectTable.ClientModuleName + "/Components/FiltersMenu/" + this.ObjectTable.Name + "FiltersMenuComponent";
+                        let myObjectTableName = this.ObjectTable.Name;
+                        if (myObjectTableName.startsWith(this.ObjectTable.ClientModuleName + '.')) {
+                            myObjectTableName = myObjectTableName.substr((this.ObjectTable.ClientModuleName + '.').length)
+                        }
+                        var myComponentPath = "./" + this.ObjectTable.ClientModuleName + "/Components/FiltersMenu/" + /*this.ObjectTable.Name*/myObjectTableName + "FiltersMenuComponent";
 
                         SessionLocator.DynamicLoader.Load(myComponentPath, myLocation.viewContainerRef)
                             .then(cmpRef => {
@@ -1474,14 +1477,13 @@ export class ListComponent implements OnInit, AfterViewInit {
             console.log("SuppressOnRowSelected");
             return;
         }
+
         //this.CurrentSession.StartBusyIndicator("Loading ...");
         //var BackGridEvent = $event.BackFromEdit;
         if ($event != null) {
             if (!this.isEditControlOpened) {
-
                 var entityList = $event.rowData;
                 var selectedEntityId = $event.rowData.Id;
-
                 switch (this.ObjectTableName) {
                     case 'Customs.GovernmentProcedureType':
                     case "Customs.NotificationDefinition":
@@ -1489,7 +1491,9 @@ export class ListComponent implements OnInit, AfterViewInit {
                     case "Customs.CustomDocumentType":
                     case "Customs.UIMessage":
                     case "Customs.CourierPendingReason":
+                    case "Customs.CurrencyType":
                     case "Customs.CustomsCountry":
+                    case "Customs.ExceptionReason":
                     //case "Customs.InternationalSite":
                         selectedEntityId = $event.rowData.Code;
                         break;

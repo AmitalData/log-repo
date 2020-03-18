@@ -162,7 +162,6 @@ export class DynamicLoader {
 
     private static GetModuleLoaderPath(moduleName: string) {
         var myResult: string;
-
         switch (moduleName) {
 
             case "Controls": { myResult = "Controls/Module_CTRL#ControlsModule"; break; }
@@ -208,9 +207,9 @@ export class DynamicLoader {
             case "CRMModules/CRMTickets": { myResult = "CRMModules/CRMTickets/ModuleCRMTickets#ModuleCRMTickets"; break; }
             case "CRMModules/CRMOccasion": { myResult = "CRMModules/CRMOccasion/ModuleCRMOccasion#ModuleCRMOccasion"; break; }
 
-                
-            
-                 
+
+
+               
              //Customs
            case "Customs": { myResult = "Customs/Module_CUST#CustomsModule"; break; }// must comment if in main dev mode.
            case "CustomsModules/CustomsClaim": { myResult = "CustomsModules/CustomsClaim/ModuleCustomsClaim#ModuleCustomsClaim"; break; }
@@ -219,6 +218,7 @@ export class DynamicLoader {
            case "CustomsModules/CustomsClient": { myResult = "CustomsModules/CustomsClient/ModuleCustomsClient#ModuleCustomsClient"; break; }
            case "CustomsModules/CustomsCourier": { myResult = "CustomsModules/CustomsCourier/ModuleCustomsCourier#ModuleCustomsCourier"; break; }
            case "CustomsModules/CustomsMaintenance": { myResult = "CustomsModules/CustomsMaintenance/ModuleCustomsMaintenance#ModuleCustomsMaintenance"; break; }
+           case "CustomsModules/CustomsReferant": { myResult = "CustomsModules/CustomsReferant/ModuleCustomsReferant#ModuleCustomsReferant"; break; }
            case "CustomsModules/DeclarationTabs": { myResult = "CustomsModules/CustomsDeclarationModules/DeclarationTabs/ModuleDeclarationTabs#ModuleDeclarationTabs"; break; }
            case "CustomsModules/DeclarationSupplierInvoice": { myResult = "CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/ModuleDeclarationSupplierInvoice#ModuleDeclarationSupplierInvoice"; break; }
            case "CustomsModules/DeclarationOthers": { myResult = "CustomsModules/CustomsDeclarationModules/DeclarationOthers/ModuleDeclarationOthers#ModuleDeclarationOthers"; break; }

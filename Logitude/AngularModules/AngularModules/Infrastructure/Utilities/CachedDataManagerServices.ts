@@ -69,6 +69,7 @@ import { GovernmentProcedureTypeListService } from '../../Customs/Services/Stand
 import { CourierPendingReasonListService } from '../../Customs/Services/StandardLists/CourierPendingReasonListService';
 import { InterfaceTenantDefinitionListService } from '../../Customs/Services/StandardLists/InterfaceTenantDefinitionListService';
 import { CustomsItemListService } from '../../Customs/Services/StandardLists/CustomsItemListService';
+import { CurrencyTypeListService } from '../../Customs/Services/StandardLists/CurrencyTypeListService';
 
 
 // Business Process
@@ -96,6 +97,7 @@ import { OccasionTypeListService } from '../../CRM/Services/StandardLists/Occasi
 import { SessionLocator } from './SessionLocator';
 import { ObjectsLocator } from '../Locators/ObjectsLocator';
 import { AppTool } from '../Tools';
+import { ExceptionReasonListService } from '../../Customs/Services/StandardLists/ExceptionReasonListService';
 
 
 export class CachedDataManagerServices {
@@ -183,10 +185,12 @@ export class CachedDataManagerServices {
 
             case "Customs.CustomBankListService": { myResult = new CustomBankListService(); break; }
             case "Customs.CustomsHouseTypeListService": { myResult = new CustomsHouseTypeListService(); break; }
+            case "Customs.CurrencyTypeListService": { myResult = new CurrencyTypeListService(); break; }
             case "Customs.CustomsSettingListService": { myResult = new CustomsSettingListService(); break; }
             case "Customs.CustomsHouseTypeAdditionalListService": { myResult = new CustomsHouseTypeAdditionalListService(); break; }
             case "Customs.GovernmentProcedureTypeListService": { myResult = new GovernmentProcedureTypeListService(); break; }
             case "Customs.CourierPendingReasonListService": { myResult = new CourierPendingReasonListService(); break; }
+            case "Customs.ExceptionReasonListService": { myResult = new ExceptionReasonListService(); break; }
             case "JournalActionTypeListService": { myResult = new JournalActionTypeListService(); break; }
             case "BusinessRoleListService": { myResult = new BusinessRoleListService(); break; }
             case "BusinessProcessQueueListService": { myResult = new BusinessProcessQueueListService(); break; }

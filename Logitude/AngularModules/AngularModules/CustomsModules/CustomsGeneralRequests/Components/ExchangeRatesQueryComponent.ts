@@ -62,6 +62,7 @@ export class ExchangeRatesQueryComponent
         }
     }
 
+
     get FromDate() { return this.RequestParams.FromDate; }
     set FromDate(value: Date) {
         if (this.RequestParams.FromDate != value) {
@@ -176,6 +177,12 @@ export class ExchangeRatesQueryComponent
             });
     }
 
-
-
+    _LOVListCurrencys: any[] = [];
+    get LOVListCurrencys() { return this._LOVListCurrencys; }
+    set LOVListCurrencys(value) {
+        if (this._LOVListCurrencys != value) {
+            this._LOVListCurrencys = value;
+        }
+    }
+    
 }

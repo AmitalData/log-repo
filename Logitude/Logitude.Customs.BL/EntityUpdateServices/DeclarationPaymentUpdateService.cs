@@ -14,6 +14,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Logitude.Customs.BL.Helpers;
+using Logitude.Customs.BL.TraceEvents;
+
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
@@ -42,7 +44,50 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 var unifreightDeclarationPaymentUpdateService = new UnifreightDeclarationPaymentUpdateService(entityPM, declaration);
                 unifreightDeclarationPaymentUpdateService.Update();
             }
+
+            if(entityPM.AutomaticPayment==1)
+            {
+                SendAVAPAY(entityPM, null, UnifreightEventMode.@new);
+            }
+            else
+            {
+                SendAVAPAY(entityPM, null, UnifreightEventMode.del);
+            }
             base.OnUpdating(entityPM);
+        }
+
+
+        private void SendAVAPAY(DeclarationPaymentPM declarationPaymentPM, string loggingUserId, UnifreightEventMode action)
+        {
+            try
+            {
+                var declarationQueryService = new DeclarationQueryService(declarationPaymentPM.Tenant);
+                DeclarationPM connectedDeclarationPM = declarationQueryService.GetSingle(declarationPaymentPM.DeclarationId, false, false);
+
+               
+               
+                    var MyUnifreightEventParam = new UnifreightEventParam()
+                    {
+                        Code = "AVAPAY",
+                        Mode = action,
+                        EventDateTime = DateTime.Now,
+                        Entname = "CFIFILEM",
+                        PrimaryNum = connectedDeclarationPM.CustomFileNo,
+                        EventRemarks = "",
+                    };
+                    LogMessagingUtil.Instance.AppendLine("MyUnifreightEventParam = " + MyUnifreightEventParam ?? "NULL");
+                    var myOpenUnifreighTask = new UnifreightEventTaskService();
+                    myOpenUnifreighTask.UpsertEventLE2U(
+                        connectedDeclarationPM.Tenant,
+                       loggingUserId,
+                        MyUnifreightEventParam);
+            
+            }
+            catch (System.Exception)
+            {
+                // TODO: BL Stop Execute or Cuntinue - Ask IHAB
+                throw;
+            }
         }
 
         protected override void CheckConcurrency(DeclarationPaymentPM entityPM, DeclarationPayment entityPOCO)

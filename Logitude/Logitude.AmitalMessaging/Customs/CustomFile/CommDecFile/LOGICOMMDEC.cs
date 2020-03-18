@@ -140,6 +140,8 @@
 
         private string carrierPrefixField;
 
+        private string isAutonomyField;
+
         /// <remarks/>
         public string CustomFileNo
         {
@@ -699,6 +701,19 @@
             set
             {
                 this.carrierPrefixField = value;
+            }
+        }
+
+        /// <remarks/>
+        public string IsAutonomy
+        {
+            get
+            {
+                return this.isAutonomyField;
+            }
+            set
+            {
+                this.isAutonomyField = value;
             }
         }
     }
