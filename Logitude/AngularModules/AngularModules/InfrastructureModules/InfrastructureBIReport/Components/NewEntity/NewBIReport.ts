@@ -104,7 +104,6 @@ export class NewBIReport extends BaseComponent {
     }
 
     FillFactTableNamesList() {
-        this.FactTables.push("");
         this.SelectdFactTableName = "";
         this.DWObjectTableExtendedListService.GetFactTablesNames().subscribe(response => {
             var factTablesNames: string[] = response.Result;
