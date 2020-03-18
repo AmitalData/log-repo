@@ -7,18 +7,18 @@ import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLoca
 import { AppTool, DateTool } from '../../../../Infrastructure/Tools'
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
-import { UpdateDeleteVehicleRequestParams } from    '../../../../Customs/DataContract/RequestParams/UpdateDeleteVehicleRequestParams';
+import { UpdateDeleteVehicleRequestParams } from '../../../../Customs/DataContract/RequestParams/UpdateDeleteVehicleRequestParams';
 import { SendRequestVIA } from '../../../../Customs/DataContract/RequestParams/RequestParamsBase';
 import { CustomMessageProgressComponent } from '../../../../CustomsModules/CustomsControls/Components/CustomMessageProgressComponent';
 import { ClientSearchResponseData } from '../../../../Customs/DataContract/ResponseData/ClientSearchResponseData';
-import { EntityPMService } from     '../../../../Infrastructure/Services/EntityPMService';
+import { EntityPMService } from '../../../../Infrastructure/Services/EntityPMService';
 import { IIGGeneralMessagesService } from '../../../../Customs/Services/WebServices/IIGGeneralMessagesService';
 import { VehiclePM } from '../../../../Customs/EntityPMs/VehiclePM';
 import { VehicleExtendedPMService } from '../../../../Customs/Services/ExtendedPMs/VehicleExtendedPMService';
 
 @Component({
     moduleId: module.id,
-    selector: 'SendVehicleComponent', 
+    selector: 'SendVehicleComponent',
     templateUrl: "SendVehicleComponent.html",
 })
 
@@ -160,7 +160,7 @@ export class SendVehicleComponent {
                 var myErrors: string[] = [];
                 myErrors.push(error.message);
                 this.CurrentSession.CurrentEditComponent.ValidationErrorsList = myErrors;
-                
+
             });
         });
     }
@@ -196,6 +196,6 @@ export class SendVehicleComponent {
             this.SaveEntityChanges(customSendOptionsArgs, this.EntityPM, false);
         });
     }
- 
+
 
 }
