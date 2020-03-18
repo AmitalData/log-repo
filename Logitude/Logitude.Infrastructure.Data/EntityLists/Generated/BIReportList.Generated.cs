@@ -49,11 +49,11 @@ namespace Logitude.Infrastructure.Data.EntityLists
        [DataMember]
        public DateTime LastRunDate  { get; set; }
        [DataMember]
-       public string LastRunByUserId  { get; set; }
-       [DataMember]
        public string LastRunByUserName  { get; set; }
        [DataMember]
        public string FactTableName  { get; set; }
+       [DataMember]
+       public string LastRunId  { get; set; }
    }
 
 }
