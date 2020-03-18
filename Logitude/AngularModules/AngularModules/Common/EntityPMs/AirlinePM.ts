@@ -519,6 +519,11 @@ export class AirlinePM {
     public set GLAccountId(newValue: string) { if (this.gLAccountId != newValue) { this.gLAccountId = newValue; this.MarkAsDirty("GLAccountId"); } }
        
 	 
+    private logo: string;
+    public get Logo() { return this.logo; }
+    public set Logo(newValue: string) { if (this.logo != newValue) { this.logo = newValue; this.MarkAsDirty("Logo"); } }
+       
+	 
 
     public OldEntityPM: AirlinePM;
 		
