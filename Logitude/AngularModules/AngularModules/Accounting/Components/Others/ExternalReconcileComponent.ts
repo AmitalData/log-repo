@@ -634,7 +634,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             // if(r.LedgerTransactionPM.AccountId == this.BankAccountPM.TransferGLAcccountId)
             //     this.selectedTransferTransactionsCount++;
             var isTransferTransaction = r.LedgerTransactionPM.AccountId == this.BankAccountPM.TransferGLAcccountId;
-            if (isTransferTransaction && this.selectedTransferTransactionsCount >= 1) {
+            if (isTransferTransaction && this.selectedTransferTransactionsCount >= 1 && this.ExtPageSelectedLines.Length > 0) {
                 // this.ValidationErrorsList = ["Cannot Reconcile two transfer account transactions at a time"];
                 this.ValidationErrorsList = [TextCodeTranslator.Translate("ExternalReconciliation.O.CantReconcileTwoTransfer")];
                 this.TransactionFireCheckBoxChecked.emit({ rowData: r.LedgerTransactionPM, IsChecked: false, RowIndex: RowIndex, ById: true });
