@@ -683,10 +683,18 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                     var arrivalDate = AmitalConvertUtil.GetUnifreightFormatedDate(_AmitalCustomsFile.ArrivalDateTime, "AmitalCustomsFile.ArrivalDateTime");
                     if (arrivalDate.HasValue) this._DeclarationReferantDataPM.ArrivalDate = arrivalDate.Value;
                     this._DeclarationReferantDataPM.VendorId = _AmitalCustomsFile.VendorId;
-                    //var estimatedTimeOfArrival = AmitalConvertUtil.GetUnifreightFormatedDate(_AmitalCustomsFile.EstimatedTimeOfSrrival, "AmitalCustomsFile.EstimatedTimeOfSrrival");
-                    //if (estimatedTimeOfArrival.HasValue) this._DeclarationReferantDataPM.EstimatedArrivalDate = estimatedTimeOfArrival.Value;
-                    //this._DeclarationReferantDataPM.OrderNumber = _AmitalCustomsFile.OrderNumber;
-                    //this._DeclarationReferantDataPM.WithPaper = _AmitalCustomsFile.WithPaper;
+                    var estimatedTimeOfArrival = AmitalConvertUtil.GetUnifreightFormatedDate(_AmitalCustomsFile.EstimatedTimeOfArrival, "AmitalCustomsFile.EstimatedTimeOfSrrival");
+                    if (estimatedTimeOfArrival.HasValue) this._DeclarationReferantDataPM.EstimatedArrivalDate = estimatedTimeOfArrival.Value;
+                    this._DeclarationReferantDataPM.OrderNumber = _AmitalCustomsFile.OrderNumber;
+                    if (string.IsNullOrWhiteSpace(_AmitalCustomsFile.WithPaper) || (!string.IsNullOrWhiteSpace(_AmitalCustomsFile.WithPaper) && _AmitalCustomsFile.WithPaper.ToLower() != "true"))
+                    {
+                        this._DeclarationReferantDataPM.WithPaper = false;
+
+                    }
+                    else
+                    {
+                        this._DeclarationReferantDataPM.WithPaper = true;
+                    }
                 }
 
                 if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.VendorId))
