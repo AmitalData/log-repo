@@ -53,7 +53,7 @@ export class GLAccountSelectComponent extends BaseComponent implements OnInit
     {
         this.chartOfAccountTypeCode = args.AccountTypeCode;
         this.cardId = args.CardId;
-        this.PatynerId = args.PatynerId;
+        this.PartnerId = args.PartnerId;
     }
 
     public columns: any[] = null;
