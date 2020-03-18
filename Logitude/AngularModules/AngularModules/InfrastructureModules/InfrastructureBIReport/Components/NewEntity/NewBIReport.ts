@@ -307,6 +307,7 @@ export class NewBIReport extends BaseComponent {
         var logWindow = new LogitudeWindow();
         var windowArgs: any = {};
         windowArgs.DWQueryId = this.DWQueryId;
+        windowArgs.FactTableName = this.FactTableName;
         logWindow.WindowArgs = windowArgs;
         logWindow.Width = 1200;
         logWindow.Height = 820;
@@ -365,6 +366,7 @@ export class NewBIReport extends BaseComponent {
                 windowArgs.BIReportsTenant = this.BIReportsTenant;
                 windowArgs.ComponentRef = this.ComponentRef;
                 windowArgs.BackCompleted = this.BackCompleted;
+                windowArgs.FactTableName = this.FactTableName;
                 windowArgs.IsBIReportWorkspace = true;
                 logWindow.WindowArgs = windowArgs;
                 logWindow.Width = 1200;

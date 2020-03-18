@@ -81122,6 +81122,7 @@
   <field
     Id="&quot;58bf0507-e338-4ac0-a52c-152376dc9a28&quot;"
     FieldName="&quot;AutomaticLastUpdateDate&quot;"
+    OldFieldName="&quot;AutomaticLastUpdateDate&quot;"
     IsNew="true"
     IsChecked="false"
     IsDeleted="false"
@@ -81145,6 +81146,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;AutomaticLastUpdateDate&quot;"
     ListPropertyPath="&quot;AutomaticLastUpdateDate&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -81188,6 +81190,7 @@
   <field
     Id="&quot;039e666a-4b13-46a9-8616-3964855b3029&quot;"
     FieldName="&quot;SLAC&quot;"
+    OldFieldName="&quot;SLAC&quot;"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -81212,6 +81215,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;SLAC&quot;"
     ListPropertyPath="&quot;SLAC&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -90864,6 +90868,15 @@
       FeatureTypeCode="&quot;ACT&quot;"
       FeatureTextCodeCode="&quot;Shipment.Features.ShipmentPriceCheck&quot;"
       FeatureDefaultText="&quot;Price Check&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;RELEASENUMBER&quot;"
+      FeatureTypeCode="&quot;AREA&quot;"
+      FeatureTextCodeCode="&quot;Shipment.Features.RELEASENUMBER&quot;"
+      FeatureDefaultText="&quot;Release Number&quot;"
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"

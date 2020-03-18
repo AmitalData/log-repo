@@ -1688,6 +1688,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 DWQueryData DWQueryData = new DWQueryData();
                 DWQueryData.PageIndex = 0;
                 DWQueryData.PageSize = 0;
+                DWQueryData.FactTableName = entityPM.FactTableName;
                 bool isUpdated = false; 
      
                 List<DWObjectFieldsDetails> Columns = null;

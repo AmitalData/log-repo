@@ -2721,5 +2721,45 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+
+        public HttpResponseMessage GetInUseWarehouse(string code)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                string loggedUserEmail = authToken.Email;
+                int tenant = authToken.Tenant;
+                PartnersDomainService partnersDomain = new PartnersDomainService();
+
+                bool myResult = false;
+                
+                CardRepository rep = new CardRepository(tenant);
+                List<Card> cards = rep.GetWarehouseCards(tenant).ToList();
+
+                if (!string.IsNullOrEmpty(code))
+                {
+                    if (cards.Where(p => p.Code == code).FirstOrDefault() != null)
+                    {
+                        myResult = true;
+                    }
+                    else
+                    {
+                        myResult = false;
+                    }
+                }
+                else
+                {
+                    myResult = false;
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, myResult);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
     }
 }
