@@ -1139,12 +1139,11 @@ export class DeclarationPM {
     public set DeclarationNoAmendment(newValue: string) { if (this.declarationNoAmendment != newValue) { this.declarationNoAmendment = newValue; this.MarkAsDirty("DeclarationNoAmendment"); } }
        
 	 
-
     private availabilityDate: Date;
     public get AvailabilityDate() { return this.availabilityDate; }
     public set AvailabilityDate(newValue: Date) { if (this.availabilityDate != newValue) { this.availabilityDate = newValue; this.MarkAsDirty("AvailabilityDate"); } }
        
-
+	 
     private amendmentNumber: number;
     public get AmendmentNumber() { return this.amendmentNumber; }
     public set AmendmentNumber(newValue: number) { if (this.amendmentNumber != newValue) { this.amendmentNumber = newValue; this.MarkAsDirty("AmendmentNumber"); } }
@@ -1154,11 +1153,10 @@ export class DeclarationPM {
     public get CourierPendingReasonName() { return this.courierPendingReasonName; }
     public set CourierPendingReasonName(newValue: string) { if (this.courierPendingReasonName != newValue) { this.courierPendingReasonName = newValue; this.MarkAsDirty("CourierPendingReasonName"); } }
        
-
+	 
     private automaticPayment: number;
     public get AutomaticPayment() { return this.automaticPayment; }
     public set AutomaticPayment(newValue: number) { if (this.automaticPayment != newValue) { this.automaticPayment = newValue; this.MarkAsDirty("AutomaticPayment"); } }
-
        
 	 
 
@@ -1185,4 +1183,4 @@ export class DeclarationPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

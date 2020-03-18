@@ -68,6 +68,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string SearchFields  { get; set; }
        [DataMember]
        public string ExceptionReasonsList  { get; set; }
+       [DataMember]
+       public string Actions  { get; set; }
    }
 
 }
