@@ -150,10 +150,10 @@ export class WarehouseReleasePMExtendedService {
         }).catch(ServiceHelper.HandleServiceError);
     }
 
-    EnableWarehouseRelaseForUse(releaseNumber:string) {
+    EnableWarehouseRelaseForUse(releaseNumber:string,shipmentId:string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return this._http.get(this._apiUrl + '/GetEnableWarehouseRelaseForUse?' + 'releaseNumber=' + releaseNumber , { headers: authHeader }).map(response => {
+        return this._http.get(this._apiUrl + '/GetEnableWarehouseRelaseForUse?' + 'releaseNumber=' + releaseNumber + '&shipmentId=' + shipmentId  , { headers: authHeader }).map(response => {
             var pmresponse: ServiceResponse;
             pmresponse = new ServiceResponse();
             pmresponse.Result = response.json();

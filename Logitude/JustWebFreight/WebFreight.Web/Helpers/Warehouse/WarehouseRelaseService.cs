@@ -10,10 +10,10 @@ namespace WebFreight.Web.Helpers.Warehouse
     public class WarehouseRelaseService
     {
 
-        public void EnableWarehouseRelaseForUse(string releaseNumber, int tenant)
+        public void EnableWarehouseRelaseForUse(string releaseNumber,string shipmentId,int tenant)
         {
             WarehouseReleaseRepository warehouseReleaseRepository = new WarehouseReleaseRepository(tenant);
-            WarehouseRelease warehouseRelease = warehouseReleaseRepository.GetWarehouseReleasesByReleaseNumber(releaseNumber, tenant);
+            WarehouseRelease warehouseRelease = warehouseReleaseRepository.GetWarehouseReleasesByReleaseNumberAndShipmentId(releaseNumber , shipmentId, tenant);
             if (warehouseRelease != null && warehouseRelease.IsUsed)
             {
                 warehouseRelease.IsUsed = false;
