@@ -1,7 +1,7 @@
 <Procedure DBType="Main" Name="usp_UpdateTenantCustomersActualData" Schema="dbo">
   <SqlScript>
     <![CDATA[
-Create PROCEDURE [dbo].[usp_UpdateTenantCustomersActualData]
+CREATE PROCEDURE [dbo].[usp_UpdateTenantCustomersActualData]
 (
 	@Tenant int
 )

@@ -2,7 +2,8 @@
 <Table
   Name="ObjectTables"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="BusinessInfrastructure">
   <Column
     Name="Id"
     Type="varchar"
@@ -309,7 +310,7 @@
   <Column
     Name="CodeField"
     Type="varchar"
-    Size="15">
+    Size="60">
     <Constraints
       Nullable="true" />
   </Column>
@@ -422,7 +423,7 @@
   <Column
     Name="SplitComponentPath"
     Type="nvarchar"
-    Size="250">
+    Size="-1">
     <Constraints
       Nullable="true" />
   </Column>

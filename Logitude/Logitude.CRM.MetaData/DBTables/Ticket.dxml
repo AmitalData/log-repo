@@ -2,7 +2,8 @@
 <Table
   Name="Tickets"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="CRM">
   <Column
     Name="Id"
     Type="varchar"
@@ -440,6 +441,13 @@
     Name="SupportMailboxId"
     Type="varchar"
     Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="LastCorrespondence"
+    Type="nvarchar"
+    Size="4000">
     <Constraints
       Nullable="true" />
   </Column>

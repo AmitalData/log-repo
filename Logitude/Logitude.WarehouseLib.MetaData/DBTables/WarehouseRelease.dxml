@@ -2,7 +2,8 @@
 <Table
   Name="WarehouseReleases"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Warehouse">
   <Column
     Name="Id"
     Type="varchar"
@@ -325,6 +326,12 @@
     Size="15">
     <Constraints
       Nullable="true" />
+  </Column>
+  <Column
+    Name="IsUsed"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
   <Relation
     ForeignKeyColumn="CreatedByUserId"

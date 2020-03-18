@@ -2,7 +2,8 @@
 <Table
   Name="ShipmentReceivables"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Shipment">
   <Column
     Name="Id"
     Type="varchar"
@@ -108,7 +109,7 @@
     Name="UpdateDate"
     Type="datetime">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="PrepaidCollectId"
@@ -166,7 +167,7 @@
     Name="CreateDate"
     Type="datetime">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="CreatedByUserId"

@@ -2,7 +2,8 @@
 <Table
   Name="DWObjectTables"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="BusinessInfrastructure">
   <Column
     Name="Code"
     Type="varchar"

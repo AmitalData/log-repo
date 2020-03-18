@@ -2,7 +2,8 @@
 <Table
   Name="TasksScheduler"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="BusinessInfrastructure">
   <Column
     Name="Id"
     Type="varchar"
@@ -233,5 +234,12 @@
     DefaultValue="0">
     <Constraints
       Nullable="false" />
+  </Column>
+  <Column
+    Name="EntityId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
 </Table>

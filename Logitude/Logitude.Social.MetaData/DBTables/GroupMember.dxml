@@ -2,7 +2,8 @@
 <Table
   Name="GroupMembers"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Social">
   <Column
     Name="GroupId"
     Type="varchar"

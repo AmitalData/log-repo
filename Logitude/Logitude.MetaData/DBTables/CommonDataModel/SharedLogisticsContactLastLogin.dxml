@@ -2,7 +2,8 @@
 <Table
   Name="SharedLogisticsContactLastLogins"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Common">
   <Column
     Name="ContactId"
     Type="varchar"

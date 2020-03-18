@@ -2,7 +2,8 @@
 <Table
   Name="WarehouseEntryPackagesReleases"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Warehouse">
   <Column
     Name="EntryPackageId"
     Type="varchar"

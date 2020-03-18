@@ -2,7 +2,8 @@
 <Table
   Name="GeneralLocks"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="BusinessInfrastructure">
   <Column
     Name="GeneralKey"
     Type="varchar"

@@ -2,26 +2,27 @@
 <Table
   Name="PaymentGatewayPartners"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Common">
   <Column
     Name="Code"
-    Type="nvarchar"
-    Size="128">
+    Type="varchar"
+    Size="15">
     <Constraints
       PrimaryKey="true"
       Nullable="false" />
   </Column>
   <Column
     Name="Name"
-    Type="nvarchar"
-    Size="-1">
+    Type="varchar"
+    Size="150">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="SearchFields"
     Type="nvarchar"
-    Size="-1">
+    Size="1000">
     <Constraints
       Nullable="true" />
   </Column>

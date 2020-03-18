@@ -2,7 +2,8 @@
 <Table
   Name="FeaturePackageTypes"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Common">
   <Column
     Name="Code"
     Type="varchar"

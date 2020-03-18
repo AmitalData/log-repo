@@ -2,7 +2,8 @@
 <Table
   Name="Contacts"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Common">
   <Column
     Name="Id"
     Type="varchar"
@@ -47,8 +48,8 @@
   </Column>
   <Column
     Name="ExternalId"
-    Type="nvarchar"
-    Size="-1">
+    Type="varchar"
+    Size="20">
     <Constraints
       Nullable="true" />
   </Column>
@@ -161,6 +162,12 @@
       Nullable="true" />
   </Column>
   <Column
+    Name="AutomaticLastUpdateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="Position"
     Type="varchar"
     Size="40">
@@ -262,4 +269,6 @@
     Columns="Tenant,Email" />
   <Index
     Columns="Tenant" />
+  <Index
+    Columns="AutomaticLastUpdateDate" />
 </Table>

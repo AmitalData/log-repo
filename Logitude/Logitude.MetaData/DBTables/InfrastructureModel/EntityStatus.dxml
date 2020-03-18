@@ -2,7 +2,8 @@
 <Table
   Name="EntityStatus"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="BusinessInfrastructure">
   <Column
     Name="Id"
     Type="varchar"
@@ -65,11 +66,19 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="AutomaticLastUpdateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="ObjectTableId"
     ReferencedTable="ObjectTables"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
+  <Index
+    Columns="AutomaticLastUpdateDate" />
   <UniqueConstraint
     Columns="Code,Tenant" />
 </Table>

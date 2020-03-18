@@ -2,7 +2,8 @@
 <Table
   Name="QuoteCharges"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Quote">
   <Column
     Name="Id"
     Type="varchar"
@@ -111,7 +112,7 @@
     Name="CostExchangeRate"
     Type="float">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="CostIsFixedRate"

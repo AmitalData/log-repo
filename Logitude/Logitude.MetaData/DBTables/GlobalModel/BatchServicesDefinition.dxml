@@ -2,40 +2,41 @@
 <Table
   Name="BatchServicesDefinitions"
   Schema="dbo"
-  DBType="Global">
+  DBType="Global"
+  Module="Global">
   <Column
     Name="Code"
-    Type="nvarchar"
-    Size="128">
+    Type="varchar"
+    Size="40">
     <Constraints
       PrimaryKey="true"
       Nullable="false" />
   </Column>
   <Column
     Name="ClassName"
-    Type="nvarchar"
-    Size="-1">
+    Type="varchar"
+    Size="100">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="Parameter1"
-    Type="nvarchar"
-    Size="-1">
+    Type="varchar"
+    Size="25">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="Parameter2"
-    Type="nvarchar"
-    Size="-1">
+    Type="varchar"
+    Size="25">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="QueueDefinitionCode"
-    Type="nvarchar"
-    Size="-1">
+    Type="varchar"
+    Size="200">
     <Constraints
       Nullable="true" />
   </Column>
