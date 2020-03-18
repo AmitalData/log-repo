@@ -1878,17 +1878,24 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             _reco.CreateDate = TenantServerConfigration.GetCurrentDateTime(paymentPM.Tenant);
 
             GLAccountListQueryService glaQuery = new GLAccountListQueryService(ctx);
+            GLAccountCurrencyList splittedAccount = null;
             GLAccountList gla = glaQuery.GetByAccountId(paymentPM.GLAccountId, paymentPM.Tenant);
             if (gla != null)
             {
                 _reco.AccountCurrencyId = gla.CurrencyId;
                 _reco.CurrencyCode = gla.CurrencyCode;
+
+                GLAccountCurrencyListQueryService glaCurrencyQuery = new GLAccountCurrencyListQueryService(ctx);
+                splittedAccount = glaCurrencyQuery.GetByAccountAndCurrency(paymentPM.GLAccountId, paymentPM.PaymentCurrencyId, paymentPM.Tenant);
+
             }
 
             // get payment line LT
             LedgerTransactionListQueryService ltListQuery = new LedgerTransactionListQueryService(ctx);
+ master
             string accountId = GetGLAccountIdForReconciledTransactions(paymentPM.GLAccountId, paymentPM.Tenant, paymentPM.PaymentCurrencyId);
-            List<LedgerTransactionList> accountingTransactionList = ltListQuery.GetByAccountId(accountId, paymentPM.Tenant);
+
+            List<LedgerTransactionList> accountingTransactionList = ltListQuery.GetByAccountId(splittedAccount != null ? splittedAccount.GLAccountId : accountId, paymentPM.Tenant);
             LedgerTransactionList paymentTransaction = accountingTransactionList.Where(d => d.SourceNumber == paymentPM.PaymentNo).FirstOrDefault(); // 3- ARPayment
             if (paymentTransaction == null) throw new ApplicationException("Cannot find ledger transaction for this payment!");
 
