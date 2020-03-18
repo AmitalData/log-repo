@@ -307,7 +307,7 @@ namespace Logitude.Accounting.BL.DataContract
                 {
                     vendorId = gLAccount.Id;// vendors.Where(d => d.GLAccountId == gLAccount.Id).FirstOrDefault();
                 }}
-                taxDeductionReportLine.VendorId = vendorId;// vendor != null? vendor.GLAccountId : vendorId;
+                taxDeductionReportLine.VendorId =  vendor != null? vendor.GLAccountId : vendorId;
                 taxDeductionReportLine.MonthOfRegisterDate = transaction.DocumentDate.Month;
                 LedgerTransaction oppositeTransaction = oppositeAccountTransactions.Where(d => d.JournalId == transaction.JournalId && d.AccountId == transaction.OppositeAccountId && d.Reference1 == transaction.Reference1).FirstOrDefault();
                 taxDeductionReportLine.AmountInLocalCurrency = oppositeTransaction != null ? (double?)oppositeTransaction.LocalAmountCredit: 0;
