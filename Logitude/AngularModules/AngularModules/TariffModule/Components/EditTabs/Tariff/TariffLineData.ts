@@ -1130,6 +1130,27 @@ export class AirSurchargeTariffLineData extends BaseComponent {
     public Surcharge9ComparingTextColor: string = null;
     public Surcharge10ComparingPrice: number;
     public Surcharge10ComparingTextColor: string = null;
+
+    public MinPrice1ComparingPrice: number;
+    public MinPrice1ComparingTextColor: string = null;
+    public MinPrice2ComparingPrice: number;
+    public MinPrice2ComparingTextColor: string = null;
+    public MinPrice3ComparingPrice: number;
+    public MinPrice3ComparingTextColor: string = null;
+    public MinPrice4ComparingPrice: number;
+    public MinPrice4ComparingTextColor: string = null;
+    public MinPrice5ComparingPrice: number;
+    public MinPrice5ComparingTextColor: string = null;
+    public MinPrice6ComparingPrice: number;
+    public MinPrice6ComparingTextColor: string = null;
+    public MinPrice7ComparingPrice: number;
+    public MinPrice7ComparingTextColor: string = null;
+    public MinPrice8ComparingPrice: number;
+    public MinPrice8ComparingTextColor: string = null;
+    public MinPrice9ComparingPrice: number;
+    public MinPrice9ComparingTextColor: string = null;
+    public MinPrice10ComparingPrice: number;
+    public MinPrice10ComparingTextColor: string = null;
     private DefaultColor = "blue";
 
     SetCellsComparingText() {
@@ -1143,7 +1164,37 @@ export class AirSurchargeTariffLineData extends BaseComponent {
         this.CompareSurcharge8Price();
         this.CompareSurcharge9Price();
         this.CompareSurcharge10Price();
+
+        this.CompareSurchargeMinPrices();
     }
+    private CompareSurchargeMinPrices() {
+        this.CompareMainPrice(1);
+        this.CompareMainPrice(2);
+        this.CompareMainPrice(3);
+        this.CompareMainPrice(4);
+        this.CompareMainPrice(5);
+        this.CompareMainPrice(6);
+        this.CompareMainPrice(7);
+        this.CompareMainPrice(8);
+        this.CompareMainPrice(9);
+        this.CompareMainPrice(10);
+    }
+
+    private CompareMainPrice(index: number) {
+        if (this.ComparedEntity != null) {
+            this['MinPrice' + index + 'ComparingPrice'] = null;
+            this['MinPrice' + index + 'ComparingTextColor'] = this.DefaultColor;
+
+            if (this.ComparedEntity['Surcharge' + index + 'MinPrice'] != null) {
+                var priceValue = this['Surcharge' + index + 'MinPrice'] - this.ComparedEntity['Surcharge' + index + 'MinPrice'];
+                if (!AppTool.IsNullOrZero(priceValue) && !AppTool.IsNullOrZero(this.ComparedEntity['Surcharge' + index + 'MinPrice'])) {
+                    this['MinPrice' + index + 'ComparingPrice'] = (priceValue / this.ComparedEntity['Surcharge' + index + 'MinPrice']) * 100;
+                    this['MinPrice' + index + 'ComparingTextColor'] = this.ComputeWarningPercentageColor(this['MinPrice' + index + 'ComparingPrice']);
+                }
+            }
+        }
+    }
+
 
     private CompareSurcharge1Price() {
         if (this.ComparedEntity != null) {
@@ -1538,7 +1589,8 @@ export class AirSurchargeTariffLineData extends BaseComponent {
     }
     set Surcharge1MinPrice(value: number) {
         if (this.EntityPM.Surcharge1MinPrice != value) {
-            this.EntityPM.Surcharge1MinPrice = value;            
+            this.EntityPM.Surcharge1MinPrice = value;
+            this.CompareMainPrice(1);
         }
     }
 
@@ -1584,6 +1636,7 @@ export class AirSurchargeTariffLineData extends BaseComponent {
     set Surcharge2MinPrice(value: number) {
         if (this.EntityPM.Surcharge2MinPrice != value) {
             this.EntityPM.Surcharge2MinPrice = value;
+            this.CompareMainPrice(2);
         }
     }
 
@@ -1629,6 +1682,7 @@ export class AirSurchargeTariffLineData extends BaseComponent {
     set Surcharge3MinPrice(value: number) {
         if (this.EntityPM.Surcharge3MinPrice != value) {
             this.EntityPM.Surcharge3MinPrice = value;
+            this.CompareMainPrice(3);
         }
     }
 
@@ -1674,6 +1728,7 @@ export class AirSurchargeTariffLineData extends BaseComponent {
     set Surcharge4MinPrice(value: number) {
         if (this.EntityPM.Surcharge4MinPrice != value) {
             this.EntityPM.Surcharge4MinPrice = value;
+            this.CompareMainPrice(4);
         }
     }
 
@@ -1719,6 +1774,7 @@ export class AirSurchargeTariffLineData extends BaseComponent {
     set Surcharge5MinPrice(value: number) {
         if (this.EntityPM.Surcharge5MinPrice != value) {
             this.EntityPM.Surcharge5MinPrice = value;
+            this.CompareMainPrice(5);
         }
     }
 
@@ -1764,6 +1820,7 @@ export class AirSurchargeTariffLineData extends BaseComponent {
     set Surcharge6MinPrice(value: number) {
         if (this.EntityPM.Surcharge6MinPrice != value) {
             this.EntityPM.Surcharge6MinPrice = value;
+            this.CompareMainPrice(6);
         }
     }
 
@@ -1809,6 +1866,7 @@ export class AirSurchargeTariffLineData extends BaseComponent {
     set Surcharge7MinPrice(value: number) {
         if (this.EntityPM.Surcharge7MinPrice != value) {
             this.EntityPM.Surcharge7MinPrice = value;
+            this.CompareMainPrice(7);
         }
     }
 
@@ -1854,6 +1912,7 @@ export class AirSurchargeTariffLineData extends BaseComponent {
     set Surcharge8MinPrice(value: number) {
         if (this.EntityPM.Surcharge8MinPrice != value) {
             this.EntityPM.Surcharge8MinPrice = value;
+            this.CompareMainPrice(8);
         }
     }
 
@@ -1899,6 +1958,7 @@ export class AirSurchargeTariffLineData extends BaseComponent {
     set Surcharge9MinPrice(value: number) {
         if (this.EntityPM.Surcharge9MinPrice != value) {
             this.EntityPM.Surcharge9MinPrice = value;
+            this.CompareMainPrice(9);
         }
     }
 
@@ -1944,6 +2004,7 @@ export class AirSurchargeTariffLineData extends BaseComponent {
     set Surcharge10MinPrice(value: number) {
         if (this.EntityPM.Surcharge10MinPrice != value) {
             this.EntityPM.Surcharge10MinPrice = value;
+            this.CompareMainPrice(10);
         }
     }
 
