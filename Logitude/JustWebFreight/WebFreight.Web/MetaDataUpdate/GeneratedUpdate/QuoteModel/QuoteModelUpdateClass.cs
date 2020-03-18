@@ -163,6 +163,672 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel
 
         }
 
+		public void LoadObjectTablesMetadata(IWebFreightContext context)
+        {
+		    ICommonDataContext commonContext =  CommonDataContext.GetContext(0);
+            ObjectContext = context;
+			CommonContext = commonContext;
+            TextCodeRepository = new TextCodeRepository(ObjectContext);
+            ObjectTableRepository = new ObjectTableRepository(ObjectContext);
+            ObjectFieldsRepository = new ObjectFieldRepository(ObjectContext);
+			queriesRepository = new QueryRepository(ObjectContext);
+			queryColumnsRepository = new QueryColumnRepository(ObjectContext);
+            queryGroupRepository = new QueryGroupRepository(ObjectContext);
+			advancedQueryFiltersRepository = new AdvancedQueryFilterRepository(ObjectContext);
+			screensRepository = new ScreensRepository(ObjectContext);
+			screenFieldsRepository = new ScreenFieldsRepository(ObjectContext);
+			objectTableTabsRepository = new ObjectTableTabRepository(ObjectContext);
+			EventTypeRepository = new EventTypeRepository(ObjectContext);
+			menuButtonRepository = new MenuButtonRepository(ObjectContext);
+			menuButtonGroupRepository = new MenuButtonGroupRepository(ObjectContext);
+			FeaturesRepository = new FeatureRepository(CommonContext);
+			EntityStatusRepository = new EntityStatusRepository(context);
+
+            ObjectTables = ObjectTableRepository.GetObjectsByTenant(0).ToDictionary(d => d.Name, a => a);
+            ObjectTable generalTable = ObjectTables["General"];
+            TextCodes = TextCodeRepository.GetTextCodesByTenant(0).Where(t => t.ObjectTableId == generalTable.Id).ToDictionary(d => d.Code + d.Tenant.ToString() + d.ObjectTableId, a => a, StringComparer.OrdinalIgnoreCase);
+			TenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).Where(t => t.ObjectTableId == generalTable.Id).ToDictionary(d => d.Code + d.ObjectTableId, a => a);
+			ObjectFields = new Dictionary<string, ObjectField>();//ObjectFieldsRepository.GetObjectFieldsByTenant(0).ToDictionary(d => d.FieldName + d.ObjectTableId, a => a);
+			Queries = new Dictionary<string, Query>();//queriesRepository.GetQueriesByTenantSystemLevel(0).ToDictionary(d => d.Code + d.ObjectTableId, a => a);
+			QueryColumns = new Dictionary<string, QueryColumn>();//queryColumnsRepository.GetQueryColumnsByTenant(0).ToDictionary(d => d.QueryCode + d.ObjectFieldCode, a => a);
+			tenantAdvancedFilters = new Dictionary<string, AdvancedQueryFilter>();//advancedQueryFiltersRepository.GetAdvancedQueryFiltersByTenant(0).ToDictionary(d => d.QueryCode + d.ObjectFieldCode, a => a);
+			tenantScreens = new Dictionary<string, Screen>();//screensRepository.GetScreensByTenant(0).ToDictionary(d => d.Code + d.ObjectTableId, a => a);
+			tenantScreenFields = new Dictionary<string, ScreenField>();//screenFieldsRepository.GetScreenFieldsByTenant(0).ToDictionary(d => d.ScreenCode + d.ObjectFieldCode);
+			TenantObjectTableTabs = new Dictionary<string, ObjectTableTab>();//objectTableTabsRepository.GetObjectTableTabsByTenant(0).ToDictionary(d => d.Code, a => a);
+			tenantEventTypes = EventTypeRepository.GetEventTypesByTenant(0).ToDictionary(d => d.Code + d.ObjectTableId, a => a);
+			tenantMenuButtons = new Dictionary<string, MenuButton>();//menuButtonRepository.GetMenuButtonsByTenant(0).ToDictionary(d => d.EventCode + d.MenuButtonGroupId, a => a);
+			tenantMenuButtonGroups = menuButtonGroupRepository.GetMenuButtonGroupsByTenant(0).ToDictionary(d => d.Name, a => a);
+			AllEntityStatuses = EntityStatusRepository.GetEntityStatusByTenant(0).ToList();
+
+			 MetadataUpdateUtility.RunPreDeleteProcedure();
+
+			 CreateAllObjectTablesMetadata();
+			 CreateAllClosedTablesByHash();
+			 this.ObjectContext.SaveChanges();
+			 this.CommonContext.SaveChanges();
+
+			 MetadataUpdateUtility.RunPostDeleteProcedure();
+			//CreateAllObjectTables();
+		    //this.ObjectContext.SaveChanges();
+			//
+			//CreateAllObjectFields();
+		    //this.ObjectContext.SaveChanges();
+//
+			//CreateAllQueries();
+		    //this.ObjectContext.SaveChanges();
+//
+			//CreateAllScreens();
+		    //this.ObjectContext.SaveChanges();
+//
+			//CreateAllTabs();
+		    //this.ObjectContext.SaveChanges();
+//
+			//CreateAllEventTypes();
+		    //this.ObjectContext.SaveChanges();
+//
+			//CreateAllClosedTables();
+		    //this.ObjectContext.SaveChanges();
+//
+			//CreateAllFeatures();
+			//CreateAdditionalTextCodes();
+		    //this.ObjectContext.SaveChanges();
+		    //this.CommonContext.SaveChanges();
+//
+			//CreateAllMenuButtons();
+		    //this.ObjectContext.SaveChanges();
+//
+        }
+
+		private static Dictionary<string,string> TablesHashStrings { get; set; }		 
+	    public static Dictionary<string, string> GetAllTablesHashStrings()
+        {
+			if (TablesHashStrings != null)
+				return TablesHashStrings;
+
+			TablesHashStrings = new Dictionary<string, string>();
+ 			TablesHashStrings.Add("BorderType",  BorderTypeUpdateClass.HashString);
+			TablesHashStrings.Add("MarkUpType",  MarkUpTypeUpdateClass.HashString);
+			TablesHashStrings.Add("Quote",  QuoteUpdateClass.HashString);
+			TablesHashStrings.Add("QuoteCharge",  QuoteChargeUpdateClass.HashString);
+			TablesHashStrings.Add("QuoteClosingReason",  QuoteClosingReasonUpdateClass.HashString);
+			TablesHashStrings.Add("QuoteCostCharge",  QuoteCostChargeUpdateClass.HashString);
+			TablesHashStrings.Add("QuoteCustomerType",  QuoteCustomerTypeUpdateClass.HashString);
+			TablesHashStrings.Add("QuotePackage",  QuotePackageUpdateClass.HashString);
+			TablesHashStrings.Add("QuotePriceSteps",  QuotePriceStepsUpdateClass.HashString);
+			TablesHashStrings.Add("QuoteRating",  QuoteRatingUpdateClass.HashString);
+			TablesHashStrings.Add("QuoteSaleCharge",  QuoteSaleChargeUpdateClass.HashString);
+			TablesHashStrings.Add("QuoteSalesTotal",  QuoteSalesTotalUpdateClass.HashString);
+			TablesHashStrings.Add("QuoteSetting",  QuoteSettingUpdateClass.HashString);
+			TablesHashStrings.Add("QuoteStage",  QuoteStageUpdateClass.HashString);
+			TablesHashStrings.Add("QuoteTemplate",  QuoteTemplateUpdateClass.HashString);
+			TablesHashStrings.Add("QuoteTemplateSection",  QuoteTemplateSectionUpdateClass.HashString);
+			TablesHashStrings.Add("QuoteTemplateSectionType",  QuoteTemplateSectionTypeUpdateClass.HashString);
+			TablesHashStrings.Add("QuoteTemplateSetting",  QuoteTemplateSettingUpdateClass.HashString);
+			TablesHashStrings.Add("QuoteTemplateTableDesign",  QuoteTemplateTableDesignUpdateClass.HashString);
+			TablesHashStrings.Add("QuoteTemplateTextCode",  QuoteTemplateTextCodeUpdateClass.HashString);
+			TablesHashStrings.Add("QuoteTemplateTextDesign",  QuoteTemplateTextDesignUpdateClass.HashString);
+			TablesHashStrings.Add("QuoteTotalVAT",  QuoteTotalVATUpdateClass.HashString);
+			TablesHashStrings.Add("QuoteType",  QuoteTypeUpdateClass.HashString);
+			TablesHashStrings.Add("QuoteVATsTotal",  QuoteVATsTotalUpdateClass.HashString);
+			return TablesHashStrings;
+        }
+        public void CreateAllObjectTablesMetadata()
+        {
+   
+			if(MetadataUpdateUtility.IsChangedMetadataTable("BorderType", ObjectTables, BorderTypeUpdateClass.HashString))
+			{
+				MetadataUpdateUtility.DeleteAllTableMetadata("BorderType");
+				BorderTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+				this.ObjectContext.SaveChanges();
+				BorderTypeUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository, TextCodeRepository);
+				this.ObjectContext.SaveChanges();
+				BorderTypeUpdateClass.AddTableQueries(Queries, QueryColumns, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
+				this.ObjectContext.SaveChanges();
+				BorderTypeUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				BorderTypeUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				BorderTypeUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
+				this.ObjectContext.SaveChanges();
+				BorderTypeUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				BorderTypeUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				BorderTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
+				this.ObjectContext.SaveChanges();
+			}
+
+			if(MetadataUpdateUtility.IsChangedMetadataTable("MarkUpType", ObjectTables, MarkUpTypeUpdateClass.HashString))
+			{
+				MetadataUpdateUtility.DeleteAllTableMetadata("MarkUpType");
+				MarkUpTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+				this.ObjectContext.SaveChanges();
+				MarkUpTypeUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository, TextCodeRepository);
+				this.ObjectContext.SaveChanges();
+				MarkUpTypeUpdateClass.AddTableQueries(Queries, QueryColumns, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
+				this.ObjectContext.SaveChanges();
+				MarkUpTypeUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				MarkUpTypeUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				MarkUpTypeUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
+				this.ObjectContext.SaveChanges();
+				MarkUpTypeUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				MarkUpTypeUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				MarkUpTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
+				this.ObjectContext.SaveChanges();
+			}
+
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Quote", ObjectTables, QuoteUpdateClass.HashString))
+			{
+				MetadataUpdateUtility.DeleteAllTableMetadata("Quote");
+				QuoteUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+				this.ObjectContext.SaveChanges();
+				QuoteUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository, TextCodeRepository);
+				this.ObjectContext.SaveChanges();
+				QuoteUpdateClass.AddTableQueries(Queries, QueryColumns, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
+				this.ObjectContext.SaveChanges();
+				QuoteUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				QuoteUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				QuoteUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
+				this.ObjectContext.SaveChanges();
+				QuoteUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				QuoteUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				QuoteUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
+				this.ObjectContext.SaveChanges();
+			}
+
+			if(MetadataUpdateUtility.IsChangedMetadataTable("QuoteCharge", ObjectTables, QuoteChargeUpdateClass.HashString))
+			{
+				MetadataUpdateUtility.DeleteAllTableMetadata("QuoteCharge");
+				QuoteChargeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+				this.ObjectContext.SaveChanges();
+				QuoteChargeUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository, TextCodeRepository);
+				this.ObjectContext.SaveChanges();
+				QuoteChargeUpdateClass.AddTableQueries(Queries, QueryColumns, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
+				this.ObjectContext.SaveChanges();
+				QuoteChargeUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				QuoteChargeUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				QuoteChargeUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
+				this.ObjectContext.SaveChanges();
+				QuoteChargeUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				QuoteChargeUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				QuoteChargeUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
+				this.ObjectContext.SaveChanges();
+			}
+
+			if(MetadataUpdateUtility.IsChangedMetadataTable("QuoteClosingReason", ObjectTables, QuoteClosingReasonUpdateClass.HashString))
+			{
+				MetadataUpdateUtility.DeleteAllTableMetadata("QuoteClosingReason");
+				QuoteClosingReasonUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+				this.ObjectContext.SaveChanges();
+				QuoteClosingReasonUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository, TextCodeRepository);
+				this.ObjectContext.SaveChanges();
+				QuoteClosingReasonUpdateClass.AddTableQueries(Queries, QueryColumns, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
+				this.ObjectContext.SaveChanges();
+				QuoteClosingReasonUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				QuoteClosingReasonUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				QuoteClosingReasonUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
+				this.ObjectContext.SaveChanges();
+				QuoteClosingReasonUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				QuoteClosingReasonUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				QuoteClosingReasonUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
+				this.ObjectContext.SaveChanges();
+			}
+
+			if(MetadataUpdateUtility.IsChangedMetadataTable("QuoteCostCharge", ObjectTables, QuoteCostChargeUpdateClass.HashString))
+			{
+				MetadataUpdateUtility.DeleteAllTableMetadata("QuoteCostCharge");
+				QuoteCostChargeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+				this.ObjectContext.SaveChanges();
+				QuoteCostChargeUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository, TextCodeRepository);
+				this.ObjectContext.SaveChanges();
+				QuoteCostChargeUpdateClass.AddTableQueries(Queries, QueryColumns, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
+				this.ObjectContext.SaveChanges();
+				QuoteCostChargeUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				QuoteCostChargeUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				QuoteCostChargeUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
+				this.ObjectContext.SaveChanges();
+				QuoteCostChargeUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				QuoteCostChargeUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				QuoteCostChargeUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
+				this.ObjectContext.SaveChanges();
+			}
+
+			if(MetadataUpdateUtility.IsChangedMetadataTable("QuoteCustomerType", ObjectTables, QuoteCustomerTypeUpdateClass.HashString))
+			{
+				MetadataUpdateUtility.DeleteAllTableMetadata("QuoteCustomerType");
+				QuoteCustomerTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+				this.ObjectContext.SaveChanges();
+				QuoteCustomerTypeUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository, TextCodeRepository);
+				this.ObjectContext.SaveChanges();
+				QuoteCustomerTypeUpdateClass.AddTableQueries(Queries, QueryColumns, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
+				this.ObjectContext.SaveChanges();
+				QuoteCustomerTypeUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				QuoteCustomerTypeUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				QuoteCustomerTypeUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
+				this.ObjectContext.SaveChanges();
+				QuoteCustomerTypeUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				QuoteCustomerTypeUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				QuoteCustomerTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
+				this.ObjectContext.SaveChanges();
+			}
+
+			if(MetadataUpdateUtility.IsChangedMetadataTable("QuotePackage", ObjectTables, QuotePackageUpdateClass.HashString))
+			{
+				MetadataUpdateUtility.DeleteAllTableMetadata("QuotePackage");
+				QuotePackageUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+				this.ObjectContext.SaveChanges();
+				QuotePackageUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository, TextCodeRepository);
+				this.ObjectContext.SaveChanges();
+				QuotePackageUpdateClass.AddTableQueries(Queries, QueryColumns, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
+				this.ObjectContext.SaveChanges();
+				QuotePackageUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				QuotePackageUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				QuotePackageUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
+				this.ObjectContext.SaveChanges();
+				QuotePackageUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				QuotePackageUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				QuotePackageUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
+				this.ObjectContext.SaveChanges();
+			}
+
+			if(MetadataUpdateUtility.IsChangedMetadataTable("QuotePriceSteps", ObjectTables, QuotePriceStepsUpdateClass.HashString))
+			{
+				MetadataUpdateUtility.DeleteAllTableMetadata("QuotePriceSteps");
+				QuotePriceStepsUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+				this.ObjectContext.SaveChanges();
+				QuotePriceStepsUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository, TextCodeRepository);
+				this.ObjectContext.SaveChanges();
+				QuotePriceStepsUpdateClass.AddTableQueries(Queries, QueryColumns, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
+				this.ObjectContext.SaveChanges();
+				QuotePriceStepsUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				QuotePriceStepsUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				QuotePriceStepsUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
+				this.ObjectContext.SaveChanges();
+				QuotePriceStepsUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				QuotePriceStepsUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				QuotePriceStepsUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
+				this.ObjectContext.SaveChanges();
+			}
+
+			if(MetadataUpdateUtility.IsChangedMetadataTable("QuoteRating", ObjectTables, QuoteRatingUpdateClass.HashString))
+			{
+				MetadataUpdateUtility.DeleteAllTableMetadata("QuoteRating");
+				QuoteRatingUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+				this.ObjectContext.SaveChanges();
+				QuoteRatingUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository, TextCodeRepository);
+				this.ObjectContext.SaveChanges();
+				QuoteRatingUpdateClass.AddTableQueries(Queries, QueryColumns, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
+				this.ObjectContext.SaveChanges();
+				QuoteRatingUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				QuoteRatingUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				QuoteRatingUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
+				this.ObjectContext.SaveChanges();
+				QuoteRatingUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				QuoteRatingUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				QuoteRatingUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
+				this.ObjectContext.SaveChanges();
+			}
+
+			if(MetadataUpdateUtility.IsChangedMetadataTable("QuoteSaleCharge", ObjectTables, QuoteSaleChargeUpdateClass.HashString))
+			{
+				MetadataUpdateUtility.DeleteAllTableMetadata("QuoteSaleCharge");
+				QuoteSaleChargeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+				this.ObjectContext.SaveChanges();
+				QuoteSaleChargeUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository, TextCodeRepository);
+				this.ObjectContext.SaveChanges();
+				QuoteSaleChargeUpdateClass.AddTableQueries(Queries, QueryColumns, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
+				this.ObjectContext.SaveChanges();
+				QuoteSaleChargeUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				QuoteSaleChargeUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				QuoteSaleChargeUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
+				this.ObjectContext.SaveChanges();
+				QuoteSaleChargeUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				QuoteSaleChargeUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				QuoteSaleChargeUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
+				this.ObjectContext.SaveChanges();
+			}
+
+			if(MetadataUpdateUtility.IsChangedMetadataTable("QuoteSalesTotal", ObjectTables, QuoteSalesTotalUpdateClass.HashString))
+			{
+				MetadataUpdateUtility.DeleteAllTableMetadata("QuoteSalesTotal");
+				QuoteSalesTotalUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+				this.ObjectContext.SaveChanges();
+				QuoteSalesTotalUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository, TextCodeRepository);
+				this.ObjectContext.SaveChanges();
+				QuoteSalesTotalUpdateClass.AddTableQueries(Queries, QueryColumns, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
+				this.ObjectContext.SaveChanges();
+				QuoteSalesTotalUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				QuoteSalesTotalUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				QuoteSalesTotalUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
+				this.ObjectContext.SaveChanges();
+				QuoteSalesTotalUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				QuoteSalesTotalUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				QuoteSalesTotalUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
+				this.ObjectContext.SaveChanges();
+			}
+
+			if(MetadataUpdateUtility.IsChangedMetadataTable("QuoteSetting", ObjectTables, QuoteSettingUpdateClass.HashString))
+			{
+				MetadataUpdateUtility.DeleteAllTableMetadata("QuoteSetting");
+				QuoteSettingUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+				this.ObjectContext.SaveChanges();
+				QuoteSettingUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository, TextCodeRepository);
+				this.ObjectContext.SaveChanges();
+				QuoteSettingUpdateClass.AddTableQueries(Queries, QueryColumns, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
+				this.ObjectContext.SaveChanges();
+				QuoteSettingUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				QuoteSettingUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				QuoteSettingUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
+				this.ObjectContext.SaveChanges();
+				QuoteSettingUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				QuoteSettingUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				QuoteSettingUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
+				this.ObjectContext.SaveChanges();
+			}
+
+			if(MetadataUpdateUtility.IsChangedMetadataTable("QuoteStage", ObjectTables, QuoteStageUpdateClass.HashString))
+			{
+				MetadataUpdateUtility.DeleteAllTableMetadata("QuoteStage");
+				QuoteStageUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+				this.ObjectContext.SaveChanges();
+				QuoteStageUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository, TextCodeRepository);
+				this.ObjectContext.SaveChanges();
+				QuoteStageUpdateClass.AddTableQueries(Queries, QueryColumns, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
+				this.ObjectContext.SaveChanges();
+				QuoteStageUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				QuoteStageUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				QuoteStageUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
+				this.ObjectContext.SaveChanges();
+				QuoteStageUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				QuoteStageUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				QuoteStageUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
+				this.ObjectContext.SaveChanges();
+			}
+
+			if(MetadataUpdateUtility.IsChangedMetadataTable("QuoteTemplate", ObjectTables, QuoteTemplateUpdateClass.HashString))
+			{
+				MetadataUpdateUtility.DeleteAllTableMetadata("QuoteTemplate");
+				QuoteTemplateUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+				this.ObjectContext.SaveChanges();
+				QuoteTemplateUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository, TextCodeRepository);
+				this.ObjectContext.SaveChanges();
+				QuoteTemplateUpdateClass.AddTableQueries(Queries, QueryColumns, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
+				this.ObjectContext.SaveChanges();
+				QuoteTemplateUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				QuoteTemplateUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				QuoteTemplateUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
+				this.ObjectContext.SaveChanges();
+				QuoteTemplateUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				QuoteTemplateUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				QuoteTemplateUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
+				this.ObjectContext.SaveChanges();
+			}
+
+			if(MetadataUpdateUtility.IsChangedMetadataTable("QuoteTemplateSection", ObjectTables, QuoteTemplateSectionUpdateClass.HashString))
+			{
+				MetadataUpdateUtility.DeleteAllTableMetadata("QuoteTemplateSection");
+				QuoteTemplateSectionUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+				this.ObjectContext.SaveChanges();
+				QuoteTemplateSectionUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository, TextCodeRepository);
+				this.ObjectContext.SaveChanges();
+				QuoteTemplateSectionUpdateClass.AddTableQueries(Queries, QueryColumns, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
+				this.ObjectContext.SaveChanges();
+				QuoteTemplateSectionUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				QuoteTemplateSectionUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				QuoteTemplateSectionUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
+				this.ObjectContext.SaveChanges();
+				QuoteTemplateSectionUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				QuoteTemplateSectionUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				QuoteTemplateSectionUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
+				this.ObjectContext.SaveChanges();
+			}
+
+			if(MetadataUpdateUtility.IsChangedMetadataTable("QuoteTemplateSectionType", ObjectTables, QuoteTemplateSectionTypeUpdateClass.HashString))
+			{
+				MetadataUpdateUtility.DeleteAllTableMetadata("QuoteTemplateSectionType");
+				QuoteTemplateSectionTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+				this.ObjectContext.SaveChanges();
+				QuoteTemplateSectionTypeUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository, TextCodeRepository);
+				this.ObjectContext.SaveChanges();
+				QuoteTemplateSectionTypeUpdateClass.AddTableQueries(Queries, QueryColumns, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
+				this.ObjectContext.SaveChanges();
+				QuoteTemplateSectionTypeUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				QuoteTemplateSectionTypeUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				QuoteTemplateSectionTypeUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
+				this.ObjectContext.SaveChanges();
+				QuoteTemplateSectionTypeUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				QuoteTemplateSectionTypeUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				QuoteTemplateSectionTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
+				this.ObjectContext.SaveChanges();
+			}
+
+			if(MetadataUpdateUtility.IsChangedMetadataTable("QuoteTemplateSetting", ObjectTables, QuoteTemplateSettingUpdateClass.HashString))
+			{
+				MetadataUpdateUtility.DeleteAllTableMetadata("QuoteTemplateSetting");
+				QuoteTemplateSettingUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+				this.ObjectContext.SaveChanges();
+				QuoteTemplateSettingUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository, TextCodeRepository);
+				this.ObjectContext.SaveChanges();
+				QuoteTemplateSettingUpdateClass.AddTableQueries(Queries, QueryColumns, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
+				this.ObjectContext.SaveChanges();
+				QuoteTemplateSettingUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				QuoteTemplateSettingUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				QuoteTemplateSettingUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
+				this.ObjectContext.SaveChanges();
+				QuoteTemplateSettingUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				QuoteTemplateSettingUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				QuoteTemplateSettingUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
+				this.ObjectContext.SaveChanges();
+			}
+
+			if(MetadataUpdateUtility.IsChangedMetadataTable("QuoteTemplateTableDesign", ObjectTables, QuoteTemplateTableDesignUpdateClass.HashString))
+			{
+				MetadataUpdateUtility.DeleteAllTableMetadata("QuoteTemplateTableDesign");
+				QuoteTemplateTableDesignUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+				this.ObjectContext.SaveChanges();
+				QuoteTemplateTableDesignUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository, TextCodeRepository);
+				this.ObjectContext.SaveChanges();
+				QuoteTemplateTableDesignUpdateClass.AddTableQueries(Queries, QueryColumns, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
+				this.ObjectContext.SaveChanges();
+				QuoteTemplateTableDesignUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				QuoteTemplateTableDesignUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				QuoteTemplateTableDesignUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
+				this.ObjectContext.SaveChanges();
+				QuoteTemplateTableDesignUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				QuoteTemplateTableDesignUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				QuoteTemplateTableDesignUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
+				this.ObjectContext.SaveChanges();
+			}
+
+			if(MetadataUpdateUtility.IsChangedMetadataTable("QuoteTemplateTextCode", ObjectTables, QuoteTemplateTextCodeUpdateClass.HashString))
+			{
+				MetadataUpdateUtility.DeleteAllTableMetadata("QuoteTemplateTextCode");
+				QuoteTemplateTextCodeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+				this.ObjectContext.SaveChanges();
+				QuoteTemplateTextCodeUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository, TextCodeRepository);
+				this.ObjectContext.SaveChanges();
+				QuoteTemplateTextCodeUpdateClass.AddTableQueries(Queries, QueryColumns, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
+				this.ObjectContext.SaveChanges();
+				QuoteTemplateTextCodeUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				QuoteTemplateTextCodeUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				QuoteTemplateTextCodeUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
+				this.ObjectContext.SaveChanges();
+				QuoteTemplateTextCodeUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				QuoteTemplateTextCodeUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				QuoteTemplateTextCodeUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
+				this.ObjectContext.SaveChanges();
+			}
+
+			if(MetadataUpdateUtility.IsChangedMetadataTable("QuoteTemplateTextDesign", ObjectTables, QuoteTemplateTextDesignUpdateClass.HashString))
+			{
+				MetadataUpdateUtility.DeleteAllTableMetadata("QuoteTemplateTextDesign");
+				QuoteTemplateTextDesignUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+				this.ObjectContext.SaveChanges();
+				QuoteTemplateTextDesignUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository, TextCodeRepository);
+				this.ObjectContext.SaveChanges();
+				QuoteTemplateTextDesignUpdateClass.AddTableQueries(Queries, QueryColumns, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
+				this.ObjectContext.SaveChanges();
+				QuoteTemplateTextDesignUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				QuoteTemplateTextDesignUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				QuoteTemplateTextDesignUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
+				this.ObjectContext.SaveChanges();
+				QuoteTemplateTextDesignUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				QuoteTemplateTextDesignUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				QuoteTemplateTextDesignUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
+				this.ObjectContext.SaveChanges();
+			}
+
+			if(MetadataUpdateUtility.IsChangedMetadataTable("QuoteTotalVAT", ObjectTables, QuoteTotalVATUpdateClass.HashString))
+			{
+				MetadataUpdateUtility.DeleteAllTableMetadata("QuoteTotalVAT");
+				QuoteTotalVATUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+				this.ObjectContext.SaveChanges();
+				QuoteTotalVATUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository, TextCodeRepository);
+				this.ObjectContext.SaveChanges();
+				QuoteTotalVATUpdateClass.AddTableQueries(Queries, QueryColumns, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
+				this.ObjectContext.SaveChanges();
+				QuoteTotalVATUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				QuoteTotalVATUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				QuoteTotalVATUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
+				this.ObjectContext.SaveChanges();
+				QuoteTotalVATUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				QuoteTotalVATUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				QuoteTotalVATUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
+				this.ObjectContext.SaveChanges();
+			}
+
+			if(MetadataUpdateUtility.IsChangedMetadataTable("QuoteType", ObjectTables, QuoteTypeUpdateClass.HashString))
+			{
+				MetadataUpdateUtility.DeleteAllTableMetadata("QuoteType");
+				QuoteTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+				this.ObjectContext.SaveChanges();
+				QuoteTypeUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository, TextCodeRepository);
+				this.ObjectContext.SaveChanges();
+				QuoteTypeUpdateClass.AddTableQueries(Queries, QueryColumns, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
+				this.ObjectContext.SaveChanges();
+				QuoteTypeUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				QuoteTypeUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				QuoteTypeUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
+				this.ObjectContext.SaveChanges();
+				QuoteTypeUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				QuoteTypeUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				QuoteTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
+				this.ObjectContext.SaveChanges();
+			}
+
+			if(MetadataUpdateUtility.IsChangedMetadataTable("QuoteVATsTotal", ObjectTables, QuoteVATsTotalUpdateClass.HashString))
+			{
+				MetadataUpdateUtility.DeleteAllTableMetadata("QuoteVATsTotal");
+				QuoteVATsTotalUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+				this.ObjectContext.SaveChanges();
+				QuoteVATsTotalUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository, TextCodeRepository);
+				this.ObjectContext.SaveChanges();
+				QuoteVATsTotalUpdateClass.AddTableQueries(Queries, QueryColumns, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
+				this.ObjectContext.SaveChanges();
+				QuoteVATsTotalUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				QuoteVATsTotalUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				QuoteVATsTotalUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
+				this.ObjectContext.SaveChanges();
+				QuoteVATsTotalUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				QuoteVATsTotalUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				QuoteVATsTotalUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
+				this.ObjectContext.SaveChanges();
+			}
+
+        }
+   
 
         public void CreateAllObjectTables()
         {
@@ -673,6 +1339,47 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel
 	
 	   
         }
+
+		public void CreateAllClosedTablesByHash()
+		{
+   
+	   
+	   			if(MetadataUpdateUtility.IsChangedMetadataTable("MarkUpType", ObjectTables, MarkUpTypeUpdateClass.HashString))
+				MarkUpTypeUpdateClass.FillMarkUpType();
+	
+	   
+	   
+	   			if(MetadataUpdateUtility.IsChangedMetadataTable("QuoteClosingReason", ObjectTables, QuoteClosingReasonUpdateClass.HashString))
+				QuoteClosingReasonUpdateClass.FillQuoteClosingReason();
+	
+	   
+	   			if(MetadataUpdateUtility.IsChangedMetadataTable("QuoteCustomerType", ObjectTables, QuoteCustomerTypeUpdateClass.HashString))
+				QuoteCustomerTypeUpdateClass.FillQuoteCustomerType();
+	
+	   
+	   
+	   			if(MetadataUpdateUtility.IsChangedMetadataTable("QuoteRating", ObjectTables, QuoteRatingUpdateClass.HashString))
+				QuoteRatingUpdateClass.FillQuoteRating();
+	
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   			if(MetadataUpdateUtility.IsChangedMetadataTable("QuoteType", ObjectTables, QuoteTypeUpdateClass.HashString))
+				QuoteTypeUpdateClass.FillQuoteType();
+	
+	   
+        }
+
+  
 
    	 
 	 

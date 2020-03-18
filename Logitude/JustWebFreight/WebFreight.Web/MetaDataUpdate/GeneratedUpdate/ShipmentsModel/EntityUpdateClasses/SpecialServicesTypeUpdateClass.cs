@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class SpecialServicesTypeUpdateClass
    {  		
-		public const string HashString = "4af6a8db119141f0a085a74a47de2988";
+		public const string HashString = "bc73b44825d7d9aae45142213541a866";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -131,7 +131,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    IsLookUp =  true,
 			      				    IsTabsHidden =  false,
 			      				    SearchFields =  "SpecialServicesType,SpecialServicesTypes,,Id,",
-			      				    HashString =  "4af6a8db119141f0a085a74a47de2988",
+			      				    HashString =  SpecialServicesTypeUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
@@ -474,7 +474,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	        ObjectTable SpecialServicesTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "SpecialServicesType" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> SpecialServicesTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "SpecialServicesType").ToList();   
 
-			   TextCode SpecialServicesTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "SpecialSericesType.Q.AllSpecialServices", DefaultText = @"All Special Service Types",LocalDefaultText = "All Special Service Types", ObjectTableId = SpecialServicesTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   TextCode SpecialServicesTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "SpecialSericesType.Q.AllSpecialServices", DefaultText = @"All Special Service Types",LocalDefaultText = null, ObjectTableId = SpecialServicesTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
 			   Feature SpecialServicesTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLSPECIALSERVICES", ObjectTableId = SpecialServicesTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "SpecialServicesType.Features.AllSpecialServices", NameTextCodeDefaultText = "All Special Servcies Type", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();

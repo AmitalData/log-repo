@@ -133,7 +133,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    IsLookUp =  true,
 			      				    IsTabsHidden =  false,
 			      				    SearchFields =  "CustomsTransmissionsStatus,CustomsTransmissionsStatus,,Code,Name",
-			      				    HashString =  "240c8e7b448c577c3d9a685be0452e83",
+			      				    HashString =  CustomsTransmissionsStatusUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}

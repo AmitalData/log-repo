@@ -28300,7 +28300,7 @@
     <Feature
       Code="&quot;Quote.Followups&quot;"
       FeatureTypeCode="&quot;AREA&quot;"
-      FeatureTextCodeCode="&quot;Quote.Features.Followups&quot;"
+      FeatureTextCodeCode="&quot;Quote.Features.QuoteFollowups&quot;"
       FeatureDefaultText="&quot;Follow ups&quot;"
       IsPackagable="true"
       IsOld="false"

@@ -128,7 +128,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
 			      				    SearchFields =  "ShipmentCustomsTransmission,ShipmentCustomsTransmissions,,Id,",
-			      				    HashString =  "4e0fe0261f17c82b87a9ff5f2158d111",
+			      				    HashString =  ShipmentCustomsTransmissionUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}

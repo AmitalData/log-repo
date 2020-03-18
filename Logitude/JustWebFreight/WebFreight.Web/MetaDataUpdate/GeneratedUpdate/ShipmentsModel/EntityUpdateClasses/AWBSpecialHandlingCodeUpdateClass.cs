@@ -120,7 +120,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    IsEditable =  true,
 			      				    HasCustomFilter =  true,
 			      				    ClientModuleName =  "Shipment",
-			      				    HashString =  "078031144e5737f0c3bde4978a262bf9",
+			      				    HashString =  AWBSpecialHandlingCodeUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}

@@ -129,7 +129,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    IsLookUp =  false,
 			      				    IsTabsHidden =  false,
 			      				    SearchFields =  "ShipmentOrderPackage,ShipmentOrderPackages,,Id,",
-			      				    HashString =  "cc5d3e562ff305432483cdec955302f6",
+			      				    HashString =  ShipmentOrderPackageUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}

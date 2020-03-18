@@ -128,7 +128,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
 			      				    SearchFields =  "MessagingStockUsageHistory,MessagingStockUsageHistories,,Id,TenantNumber",
-			      				    HashString =  "f26d2fc8b7242033158d4a9590afabfb",
+			      				    HashString =  MessagingStockUsageHistoryUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}

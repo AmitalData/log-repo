@@ -128,7 +128,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    IsLookUp =  false,
 			      				    IsTabsHidden =  false,
 			      				    SearchFields =  "ShipmentPickUpDeliveryPackage,ShipmentPickUpDeliveryPackages,,Id,",
-			      				    HashString =  "c9978585fe6b7ea22800a4420888bbb1",
+			      				    HashString =  ShipmentPickUpDeliveryPackageUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}

@@ -207,12 +207,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel
 			FeaturesRepository = new FeatureRepository(CommonContext);
 			EntityStatusRepository = new EntityStatusRepository(context);
 
-            TextCodes = new Dictionary<string, TextCode>();//TextCodeRepository.GetTextCodesByTenant(0).ToDictionary(d => d.Code + d.Tenant.ToString() + d.ObjectTableId, a => a, StringComparer.OrdinalIgnoreCase);
             ObjectTables = ObjectTableRepository.GetObjectsByTenant(0).ToDictionary(d => d.Name, a => a);
+            ObjectTable generalTable = ObjectTables["General"];
+            TextCodes = TextCodeRepository.GetTextCodesByTenant(0).Where(t => t.ObjectTableId == generalTable.Id).ToDictionary(d => d.Code + d.Tenant.ToString() + d.ObjectTableId, a => a, StringComparer.OrdinalIgnoreCase);
+			TenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).Where(t => t.ObjectTableId == generalTable.Id).ToDictionary(d => d.Code + d.ObjectTableId, a => a);
 			ObjectFields = new Dictionary<string, ObjectField>();//ObjectFieldsRepository.GetObjectFieldsByTenant(0).ToDictionary(d => d.FieldName + d.ObjectTableId, a => a);
 			Queries = new Dictionary<string, Query>();//queriesRepository.GetQueriesByTenantSystemLevel(0).ToDictionary(d => d.Code + d.ObjectTableId, a => a);
 			QueryColumns = new Dictionary<string, QueryColumn>();//queryColumnsRepository.GetQueryColumnsByTenant(0).ToDictionary(d => d.QueryCode + d.ObjectFieldCode, a => a);
-			TenantFeatures = new Dictionary<string, Feature>();//FeaturesRepository.GetFeaturesByTenant(0).ToDictionary(d => d.Code + d.ObjectTableId, a => a);
 			tenantAdvancedFilters = new Dictionary<string, AdvancedQueryFilter>();//advancedQueryFiltersRepository.GetAdvancedQueryFiltersByTenant(0).ToDictionary(d => d.QueryCode + d.ObjectFieldCode, a => a);
 			tenantScreens = new Dictionary<string, Screen>();//screensRepository.GetScreensByTenant(0).ToDictionary(d => d.Code + d.ObjectTableId, a => a);
 			tenantScreenFields = new Dictionary<string, ScreenField>();//screenFieldsRepository.GetScreenFieldsByTenant(0).ToDictionary(d => d.ScreenCode + d.ObjectFieldCode);
@@ -261,7 +262,62 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel
 //
         }
 
+		private static Dictionary<string,string> TablesHashStrings { get; set; }		 
+	    public static Dictionary<string, string> GetAllTablesHashStrings()
+        {
+			if (TablesHashStrings != null)
+				return TablesHashStrings;
 
+			TablesHashStrings = new Dictionary<string, string>();
+ 			TablesHashStrings.Add("AccountingInformationIdentifier",  AccountingInformationIdentifierUpdateClass.HashString);
+			TablesHashStrings.Add("AWBAdditionalHandlingInfo",  AWBAdditionalHandlingInfoUpdateClass.HashString);
+			TablesHashStrings.Add("AWBChargesCode",  AWBChargesCodeUpdateClass.HashString);
+			TablesHashStrings.Add("AWBCustomsInformation",  AWBCustomsInformationUpdateClass.HashString);
+			TablesHashStrings.Add("AWBInformation",  AWBInformationUpdateClass.HashString);
+			TablesHashStrings.Add("AWBOCI",  AWBOCIUpdateClass.HashString);
+			TablesHashStrings.Add("AWBSpecialHandlingCode",  AWBSpecialHandlingCodeUpdateClass.HashString);
+			TablesHashStrings.Add("CommodityPackage",  CommodityPackageUpdateClass.HashString);
+			TablesHashStrings.Add("ContainerFollowUp",  ContainerFollowUpUpdateClass.HashString);
+			TablesHashStrings.Add("CustomsTransferHeader",  CustomsTransferHeaderUpdateClass.HashString);
+			TablesHashStrings.Add("CustomsTransferLine",  CustomsTransferLineUpdateClass.HashString);
+			TablesHashStrings.Add("CustomsTransferType",  CustomsTransferTypeUpdateClass.HashString);
+			TablesHashStrings.Add("CustomsTransmissionsStatus",  CustomsTransmissionsStatusUpdateClass.HashString);
+			TablesHashStrings.Add("FBLStock",  FBLStockUpdateClass.HashString);
+			TablesHashStrings.Add("HarmonizeCode",  HarmonizeCodeUpdateClass.HashString);
+			TablesHashStrings.Add("InsideShipmentPackage",  InsideShipmentPackageUpdateClass.HashString);
+			TablesHashStrings.Add("INTTRABookingStatus",  INTTRABookingStatusUpdateClass.HashString);
+			TablesHashStrings.Add("INTTRABookingTransStatus",  INTTRABookingTransStatusUpdateClass.HashString);
+			TablesHashStrings.Add("INTTRADocumentType",  INTTRADocumentTypeUpdateClass.HashString);
+			TablesHashStrings.Add("ManifestStatus",  ManifestStatusUpdateClass.HashString);
+			TablesHashStrings.Add("MessagingStock",  MessagingStockUpdateClass.HashString);
+			TablesHashStrings.Add("MessagingStockUsageHistory",  MessagingStockUsageHistoryUpdateClass.HashString);
+			TablesHashStrings.Add("OBLType",  OBLTypeUpdateClass.HashString);
+			TablesHashStrings.Add("OtherParticipantId",  OtherParticipantIdUpdateClass.HashString);
+			TablesHashStrings.Add("PickUpDeliveryPackageHarmonize",  PickUpDeliveryPackageHarmonizeUpdateClass.HashString);
+			TablesHashStrings.Add("PickUpDeliveryTransportMode",  PickUpDeliveryTransportModeUpdateClass.HashString);
+			TablesHashStrings.Add("Shipment",  ShipmentUpdateClass.HashString);
+			TablesHashStrings.Add("ShipmentAssembly",  ShipmentAssemblyUpdateClass.HashString);
+			TablesHashStrings.Add("ShipmentAWBPrintOnly",  ShipmentAWBPrintOnlyUpdateClass.HashString);
+			TablesHashStrings.Add("ShipmentCommodity",  ShipmentCommodityUpdateClass.HashString);
+			TablesHashStrings.Add("ShipmentComputedFields",  ShipmentComputedFieldsUpdateClass.HashString);
+			TablesHashStrings.Add("ShipmentCustomerType",  ShipmentCustomerTypeUpdateClass.HashString);
+			TablesHashStrings.Add("ShipmentCustomsMessageType",  ShipmentCustomsMessageTypeUpdateClass.HashString);
+			TablesHashStrings.Add("ShipmentCustomsTransmission",  ShipmentCustomsTransmissionUpdateClass.HashString);
+			TablesHashStrings.Add("ShipmentLevel",  ShipmentLevelUpdateClass.HashString);
+			TablesHashStrings.Add("ShipmentOrderPackage",  ShipmentOrderPackageUpdateClass.HashString);
+			TablesHashStrings.Add("ShipmentPackage",  ShipmentPackageUpdateClass.HashString);
+			TablesHashStrings.Add("ShipmentPackageHarmonize",  ShipmentPackageHarmonizeUpdateClass.HashString);
+			TablesHashStrings.Add("ShipmentPackageItem",  ShipmentPackageItemUpdateClass.HashString);
+			TablesHashStrings.Add("ShipmentPayable",  ShipmentPayableUpdateClass.HashString);
+			TablesHashStrings.Add("ShipmentPayableStatus",  ShipmentPayableStatusUpdateClass.HashString);
+			TablesHashStrings.Add("ShipmentPickUpDelivery",  ShipmentPickUpDeliveryUpdateClass.HashString);
+			TablesHashStrings.Add("ShipmentPickUpDeliveryPackage",  ShipmentPickUpDeliveryPackageUpdateClass.HashString);
+			TablesHashStrings.Add("ShipmentReceivable",  ShipmentReceivableUpdateClass.HashString);
+			TablesHashStrings.Add("ShipmentReceivableStatus",  ShipmentReceivableStatusUpdateClass.HashString);
+			TablesHashStrings.Add("ShipmentType",  ShipmentTypeUpdateClass.HashString);
+			TablesHashStrings.Add("SpecialServicesType",  SpecialServicesTypeUpdateClass.HashString);
+			return TablesHashStrings;
+        }
         public void CreateAllObjectTablesMetadata()
         {
    

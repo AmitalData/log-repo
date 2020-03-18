@@ -119,7 +119,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    IsEditable =  false,
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "Name",
-			      				    HashString =  "b77afbc53c3df6d98b5f0aaad9e21ab8",
+			      				    HashString =  OtherParticipantIdUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}

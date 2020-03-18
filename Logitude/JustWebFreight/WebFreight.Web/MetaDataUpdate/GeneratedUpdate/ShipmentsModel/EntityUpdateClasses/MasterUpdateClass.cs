@@ -131,7 +131,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    IsLookUp =  false,
 			      				    IsTabsHidden =  false,
 			      				    SearchFields =  "Master,Masters,Simplog.ShipmentLib.NewMasterCommand,Id,",
-			      				    HashString =  "93f52c940ec5635c5dad19a503ead5bf",
+			      				    HashString =  MasterUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}

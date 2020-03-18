@@ -119,7 +119,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    HasMenuButtons =  false,
 			      				    CustomFieldsCount =  0,
 			      				    SearchFields =  "ShipmentCommodity,ShipmentCommodities,,Id,",
-			      				    HashString =  "b4e91fc15903e61e1c5c4399c9f692ee",
+			      				    HashString =  ShipmentCommodityUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}

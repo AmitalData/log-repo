@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentUpdateClass
    {  		
-		public const string HashString = "eeb22206c7e573bab35f2def6ace34ba";
+		public const string HashString = "221e3d0c1122c4405824e4255fdec4e7b1e";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -123,7 +123,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    Name =  "Queries",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Shipment",
-			      				    ServerModuleName =  "ShipmentModel",
 			      				    NewWizardComponentPath =  "./Shipment/Components/NewEntity/NewShipmentComponent",
 			      				    NoTS =  true,
 			      				    HasMenuButtons =  true,
@@ -134,7 +133,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    IsLookUp =  false,
 			      				    IsTabsHidden =  false,
 			      				    SearchFields =  "Shipment,Shipments,Simplog.ShipmentLib.NewShipmentCommand,Id,",
-			      				    HashString =  "eeb22206c7e573bab35f2def6ace34ba",
+			      				    HashString =  ShipmentUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
@@ -4866,6 +4865,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DepartmentId",
 					  						DefaultText =  "Department",
+					  						FullLocalDefaultText =  "Department",
+					  						HelpTextCode =  "DepartmentId",
+					  						HelpTextDefaultText =  "Department",
+					  						HelpLocalDefaultText =  "Department",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -4876,7 +4879,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						HelpTextCode =  "DepartmentId",
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -6050,7 +6052,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DefaultText =  "Shipper",
 					  						ListFieldLable =  "ShipperNameListLable",
 					  						ListLableDefaultText =  "Shipper",
-					  						ListLocalDefaultText =  "Shipper",
 					  						ShortFieldLable =  "ShipperName",
 					  						ShortFieldLableDefaultText =  "Name",
 					  						IsMaxLength =  false,
@@ -7509,7 +7510,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DefaultText =  "Notes",
 					  						ListFieldLable =  "NotesListLable",
 					  						ListLableDefaultText =  "Notes",
-					  						ListLocalDefaultText =  "Notes",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,

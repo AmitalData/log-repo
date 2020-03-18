@@ -129,7 +129,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    IsLookUp =  false,
 			      				    IsTabsHidden =  false,
 			      				    SearchFields =  "ContainerFollowUp,ContainerFollowUps,,Id,",
-			      				    HashString =  "4327501f4f422cc636e6bcf848e31465",
+			      				    HashString =  ContainerFollowUpUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}

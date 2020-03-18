@@ -131,7 +131,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    IsLookUp =  true,
 			      				    IsTabsHidden =  false,
 			      				    SearchFields =  "AWBAdditionalHandlingInfo,AWBAdditionalHandlingInfos,,Code,Code",
-			      				    HashString =  "44aa672fd9e3ec61073745a9fc48e9c7",
+			      				    HashString =  AWBAdditionalHandlingInfoUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}

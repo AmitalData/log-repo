@@ -75,7 +75,8 @@ using Logitude.TariffModule.BL.CLoseTable;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdateClasses
 {
    public class WebhookKeysUpdateClass
-   {  
+   {  		
+		public const string HashString = "1cbc31e716f01cfb7432decc901a1b80";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -128,6 +129,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
 			      				    IsTabsHidden =  false,
+			      				    HashString =  WebhookKeysUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
@@ -750,6 +752,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
 	    {   
+
+		   ObjectTable WebhookKeysObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "WebhookKeys" && d.Tenant == 0).FirstOrDefault();
+		   List<ObjectField> WebhookKeysObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "WebhookKeys").ToList();
+		       
+	      
+
+	         Screen WebhookKeysWebhookKeysHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "WebhookKeys.HeaderScreen", Name = "WebhookKeysHeaderScreen", ObjectTableId = WebhookKeysObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      	
+		    WebhookKeysObjectTable.HeaderScreenId = WebhookKeysWebhookKeysHeaderScreenScreen0.Id;
+		    WebhookKeysObjectTable.HeaderScreenCode = WebhookKeysWebhookKeysHeaderScreenScreen0.Code;
+
+	   		  
 
 	    }
 
