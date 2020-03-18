@@ -523,8 +523,9 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
                     this.PushLine(row, RowIndex);
                 } else {
                     this.PopLine(rowId);
+                    this.TransactionFireCheckBoxChecked.emit({ rowData: row, IsChecked: isChecked, RowIndex: RowIndex });
+
                 }
-                this.TransactionFireCheckBoxChecked.emit({ rowData: row, IsChecked: isChecked, RowIndex: RowIndex });
 
 
             }
@@ -605,12 +606,49 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
         this.ExtPageSelectedLines = new ObservableCollection([]);
     }
 
+    // selectedTransferTransactionsCount: number = 0;
+
+
+    public get selectedTransferTransactionsCount() : number {
+        var count = 0;
+        if(this.TransactionSelectedLines.Length > 0){
+
+            var transferTransactions = this.TransactionSelectedLines.Collection
+            .filter((d:TransactionLineModel)=>d.LedgerTransactionPM.AccountId == this.BankAccountPM.TransferGLAcccountId);
+
+            if(transferTransactions)
+                count = transferTransactions.length;
+        }
+        return count;
+    }
+
+
     PushLine(row, RowIndex) {
         var index = this.TransactionSelectedLines.Collection.findIndex(c => c.Id == row.Id);
         if (index < 0) { // DNE
+
+
+
             var r = new TransactionLineModel(row, this, RowIndex);
-            this.TransactionSelectedLines.Insert(r);
-            this.CalculateTotals();
+
+            // if(r.LedgerTransactionPM.AccountId == this.BankAccountPM.TransferGLAcccountId)
+            //     this.selectedTransferTransactionsCount++;
+            var isTransferTransaction = r.LedgerTransactionPM.AccountId == this.BankAccountPM.TransferGLAcccountId;
+            if (isTransferTransaction && this.selectedTransferTransactionsCount >= 1 && this.ExtPageSelectedLines.Length > 0) {
+                // this.ValidationErrorsList = ["Cannot Reconcile two transfer account transactions at a time"];
+                this.ValidationErrorsList = [TextCodeTranslator.Translate("ExternalReconciliation.O.CantReconcileTwoTransfer")];
+                this.TransactionFireCheckBoxChecked.emit({ rowData: r.LedgerTransactionPM, IsChecked: false, RowIndex: RowIndex, ById: true });
+            }
+            else {
+                this.TransactionSelectedLines.Insert(r);
+                this.CalculateTotals();
+                this.TransactionFireCheckBoxChecked.emit({ rowData: row, IsChecked: true, RowIndex: RowIndex });
+                this.ValidationErrorsList = [];
+            }
+
+
+
+
         }
     }
 
@@ -628,6 +666,8 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
 
         this.TransactionSelectedLines.Remove(this.TransactionSelectedLines.Collection.find(c => c.Id == id));
         this.CalculateTotals();
+
+
     }
 
     CheckBoxValueChanged(Row) {

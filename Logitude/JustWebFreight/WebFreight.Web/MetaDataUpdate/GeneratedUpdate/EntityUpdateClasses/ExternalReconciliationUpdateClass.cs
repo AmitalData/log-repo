@@ -119,7 +119,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "התאמה",
 			      				    DefaultText =  "External Reconciliation",
-			      				    Code =  "8d9f",
+			      				    Code =  "f857",
 			      				    Name =  "ExternalReconciliation Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Accounting",
@@ -814,6 +814,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "BankAccountId",
+					  						OldFieldName =  "BankAccountId",
 					  						ObjectTableName =  "ExternalReconciliation",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -833,6 +834,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "BankAccountId",
 					  						ListPropertyPath =  "BankAccountId",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -1028,7 +1030,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable ExternalReconciliationObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ExternalReconciliation" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode ExternalReconciliationTextCode_ExternalReconciliationOCantReconcileTwoTransfer = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExternalReconciliation.O.CantReconcileTwoTransfer", DefaultText = "One line at a time must be marked when making a deferred check payment reconcile.",LocalDefaultText = @"יש לסמן שורה אחת בכל פעם כאשר מבצעים התאמה של פירעון שיק דחוי.", ObjectTableId = ExternalReconciliationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
 	    
 }
 
