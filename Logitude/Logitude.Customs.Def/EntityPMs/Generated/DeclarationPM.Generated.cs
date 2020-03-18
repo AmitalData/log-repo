@@ -4491,7 +4491,6 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-
 	  private string customFileAmendment ;
 	  	  
        
@@ -4538,7 +4537,6 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-
 	  private DateTime availabilityDate ;
 	  	  
        
@@ -4608,7 +4606,6 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-
 	  private int automaticPayment ;
 	  	  
        
@@ -4632,9 +4629,6 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-
-
-
    }
    
 }
