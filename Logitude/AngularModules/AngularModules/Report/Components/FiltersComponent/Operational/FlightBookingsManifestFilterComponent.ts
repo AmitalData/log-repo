@@ -131,10 +131,6 @@ export class FlightBookingsManifestFilterComponent extends BaseComponent {
             this.reportFliter.NumberOfPage = 1;
             this.reportFliter.ProcessType = "GenerateReport";
 
-            this.ReportsPreview.CleanPartnersObslist();
-            if (!AppTool.IsNullOrEmpty(this.ClearingAgentId)) {
-                this.ReportsPreview.AddPartner("Custom Agent", this.ClearingAgentId);
-            }
             this.ReportsPreview.GenerateReport(this.reportFliter, true);
         }
     }
