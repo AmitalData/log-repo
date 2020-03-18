@@ -415,8 +415,9 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                     }
                     if(code != "CA" && valueDate == null)
                     {
-                        string rmsg = TranslateTextsClass.Translate("General.M.FieldIsRequired", tenant, showLocal);
-                        errors += rmsg.Replace("%FieldName", TranslateTextsClass.Translate("ARPayment.F.ValueDate", tenant, useLocal)) + ";";
+
+                        string rmsg = TranslateTextsClass.Translate("General.M.FieldIsRequired", tenant, false);
+                        errors += rmsg.Replace("%FieldName", TranslateTextsClass.Translate("ARPayment.F.ValueDate", tenant, false)) + ";";
 
                     }
                     if (code  == "CH" && valueDate != null && registerDate != null)
