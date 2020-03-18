@@ -500,6 +500,27 @@ namespace WebFreight.Web.MetaDataUpdate
                     Prefix = "CC",
                 };
 
+
+                CounterDefinition myCounterDefinition_08 = new CounterDefinition()
+                {
+                    Id = IdCounter.GetNumber("CounterDefinition", 0).ToString(),
+                    CounterId = myCounter.Id,
+                    Tenant = 0,
+                    StartNumber = 1000,
+                    Parameter1 = "II",
+                    Prefix = "II",
+                };
+
+                CounterDefinition myCounterDefinition_9 = new CounterDefinition()
+                {
+                    Id = IdCounter.GetNumber("CounterDefinition", 0).ToString(),
+                    CounterId = myCounter.Id,
+                    Tenant = 0,
+                    StartNumber = 1000,
+                    Parameter1 = "IC",
+                    Prefix = "IC",
+                };
+
                 CounterRepository.Add(myCounter);
                 CounterDefinitionRepository.Add(myCounterDefinition_01);
                 CounterDefinitionRepository.Add(myCounterDefinition_02);
