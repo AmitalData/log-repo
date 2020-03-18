@@ -14,7 +14,7 @@ using WebFreight.Web.Security;
 
 namespace WebFreight.Web.Controllers.ShipmentsModel
 {
-    public class ShipmentIntegrationcController: ApiController
+    public class ShipmentIntegrationController: ApiController
     {
         public HttpResponseMessage GetShipmentVars()
         {

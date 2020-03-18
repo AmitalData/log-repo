@@ -36,7 +36,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
         public ShipmentIntegrationVariables GetShipmentVars()
         {
-            
             vars.CurrencyEURId = GetCurrency("EUR");
             vars.IncotermLDEId = GetIncoterm("LDE");
             vars.MeasurementGRWTId = GetMeasurement("GRWT");
@@ -70,19 +69,139 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             vars.VATTypeZeroId = GetVATType("ZERO");
             vars.QuoteStageQTDRId = GetQuoteStage("QTDR");
             vars.VendorId = GetVendor("TestVendor");
+            vars.AgentId = GetAgent("TestAgentExport1");
+            //vars.CustomerId =  GetCustomer("TestShipperExport1");
+            vars.CustomAgentId = GetCustomsAgent("TestCustomAgentExport1");
+            vars.ShippingAgentId = GetShippingAgent("TestShippingAgentExport1");
+            //    ShipmentVariables.WarehouseId = await GetWarehouseId("TestWarehouseExport1", "WR2");
+            //    ShipmentVariables.ShipperExport1 = await GetCustomerId("TstShipExport1");
+
+
             return vars;
+        }
+        private string GetShippingAgent(string shippingAgentName)
+        {
+            ShippingAgentRepository shippingAgentRepository = new ShippingAgentRepository(commonDataContext);
+            ShippingAgent shippingAgent = shippingAgentRepository.GetSingleShippingAgentByCode(shippingAgentName, tenant);
+            if (shippingAgent == null)
+            {
+                InsertNewShippingAgent(shippingAgentName);
+                shippingAgent = shippingAgentRepository.GetSingleShippingAgentByCode(shippingAgentName, tenant);
+            }
+            return shippingAgent.Id;
+        }
+        private void InsertNewShippingAgent(string shippingAgentName)
+        {
+            ShippingAgentService shippingAgentService = new ShippingAgentService(commonDataContext, tenant);
+            shippingAgentService.Create(CreateShippingAgentPM(shippingAgentName));
+        }
+
+        public ShippingAgentPM CreateShippingAgentPM(string shippingAgentName)
+        {
+            ShippingAgentPM shippingAgentPM = new ShippingAgentPM();
+            shippingAgentPM.Tenant = tenant;
+            shippingAgentPM.EnglishName = shippingAgentName;
+            shippingAgentPM.CityName = "AKD";
+            shippingAgentPM.PartnerTypeId = "AG";
+            shippingAgentPM.CountryId = vars.CountryUSId;
+            return shippingAgentPM;
+
+        }
+        private string GetCustomsAgent(string customAgentName)
+        {
+            CustomAgentRepository customAgentRepository = new CustomAgentRepository(commonDataContext);
+            CustomAgent customAgent = customAgentRepository.GetSingleCustomAgentByCode(tenant, customAgentName);
+            if (customAgent == null)
+            {
+                InsertNewCustomAgent(customAgentName);
+                customAgent = customAgentRepository.GetSingleCustomAgentByCode(tenant, customAgentName);
+            }
+            return customAgent.Id;
+        }
+        private void InsertNewCustomAgent(string customAgentName)
+        {
+            CustomAgentService customAgentService = new CustomAgentService(commonDataContext, tenant);
+            customAgentService.Create(CreateCustomAgentPM(customAgentName));
+        }
+
+        public CustomAgentPM CreateCustomAgentPM(string customAgentName)
+        {
+            CustomAgentPM customAgentPM = new CustomAgentPM();
+            customAgentPM.Tenant = tenant;
+            customAgentPM.EnglishName = customAgentName;
+            customAgentPM.CityName = "AKD";
+            customAgentPM.PartnerTypeId = "AG";
+            customAgentPM.CountryId = vars.CountryUSId;
+            customAgentPM.Addresses.Add(Address("M", customAgentName));
+            return customAgentPM;
+        }
+        //private string GetCustomer(string customerName)
+        //{
+        //    CustomerRepository customerRepository = new CustomerRepository(commonDataContext);
+        //    Customer customer = customerRepository.GetSingleCustomerByCode(customerName, tenant,false);
+        //    if (customer == null)
+        //    {
+        //        InsertNewCustomer(customerName);
+        //        customer = customerRepository.GetSingleCustomerByCode(customerName, tenant,false);
+        //    }
+        //    return customer.Id;
+        //}
+        //private void InsertNewCustomer(string customerName)
+        //{
+        //    CustomerService customerService = new PartnerService(commonDataContext, tenant);
+        //    customerService.Create(CreateCustomertPM(customerName));
+        //}
+
+        //public AgentPM CreateCustomertPM(string agentName)
+        //{
+        //    AgentPM agentPM = new AgentPM();
+        //    agentPM.Tenant = tenant;
+        //    agentPM.EnglishName = agentName;
+        //    agentPM.CityName = "AKD";
+        //    agentPM.PartnerTypeId = "AG";
+        //    agentPM.CountryId = vars.CountryUSId;
+        //    agentPM.Addresses.Add(Address("M", agentName));
+        //    return agentPM;
+        //}
+        private string GetAgent(string agentName)
+        {
+            AgentRepository agentRepository = new AgentRepository(commonDataContext);
+            Agent agent = agentRepository.GetSingleAgentByCode(agentName, tenant);
+            if (agent == null)
+            {
+                InsertNewAgent(agentName);
+                agent = agentRepository.GetSingleAgentByCode(agentName, tenant);
+            }
+            return agent.Id;
+        }
+        private void InsertNewAgent(string agentName)
+        {
+            AgentService agentService = new AgentService(commonDataContext, tenant);
+            agentService.Create(CreateAgentPM(agentName));
+        }
+
+        public AgentPM CreateAgentPM(string agentName)
+        {
+            AgentPM agentPM = new AgentPM();
+            agentPM.Tenant = tenant;
+            agentPM.EnglishName = agentName;
+            agentPM.CityName = "AKD";
+            agentPM.PartnerTypeId = "AG";
+            agentPM.CountryId = vars.CountryUSId;
+            agentPM.Addresses.Add(Address("M", agentName));
+            return agentPM;
         }
 
         private string GetVendor(string vendorName)
         {
             VendorRepository vendorRepository = new VendorRepository(commonDataContext);
             Vendor vendor = vendorRepository.GetSingleVendorByCode(vendorName, tenant);
-            if(vendor == null)
+            if (vendor == null)
             {
                 InsertNewVendor(vendorName);
                 vendor = vendorRepository.GetSingleVendorByCode(vendorName, tenant);
             }
-            return null;
+            return vendor.Id;
         }
         private void InsertNewVendor(string vendorName)
         {
@@ -91,7 +210,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         }
 
         public VendorPM CreateVendorPM(string vendorName)
-        {            
+        {
             VendorPM vendorPM = new VendorPM();
             vendorPM.Tenant = tenant;
             vendorPM.EnglishName = vendorName;
@@ -102,7 +221,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return vendorPM;
         }
 
-        public  AddressPM Address(string addressTypeId, string partnerName)
+        public AddressPM Address(string addressTypeId, string partnerName)
         {
             AddressPM address = new AddressPM();
             address.Tenant = tenant;
@@ -157,7 +276,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         {
             PaymentTermRepository paymentTermRepository = new PaymentTermRepository(commonDataContext);
             PaymentTerm paymentTerm = paymentTermRepository.GetSinglePaymentTermByCode(code, tenant);
-            if(paymentTerm == null)
+            if (paymentTerm == null)
             {
                 InsertNewPaymentTerm(code);
                 paymentTerm = paymentTermRepository.GetSinglePaymentTermByCode(code, tenant);
@@ -186,7 +305,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         {
             PackageTypeRepository packageRepository = new PackageTypeRepository(commonDataContext);
             PackageType packageType = packageRepository.GetSinglePackageTypeByCode(packageTypeCode, tenant, false);
-            if(packageType == null)
+            if (packageType == null)
             {
                 InsertNewPackageType(packageTypeCode, transportModeCode, isContainer);
                 packageType = packageRepository.GetSinglePackageTypeByCode(packageTypeCode, tenant, false);
@@ -218,14 +337,14 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         {
             VesselRepository vesselRepository = new VesselRepository(commonDataContext);
             Vessel vessel = vesselRepository.GetSingleVesselByCode(code, tenant);
-            if(vessel == null)
+            if (vessel == null)
             {
                 InsertNewVessel(code);
                 vessel = vesselRepository.GetSingleVesselByCode(code, tenant);
             }
             return vessel.Id;
         }
-       
+
         private void InsertNewVessel(string code)
         {
             VesselService vesselService = new VesselService(commonDataContext, tenant);
@@ -246,7 +365,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         {
             MoveTypeRepository moveTypeRepository = new MoveTypeRepository(webFreightContext);
             MoveType moveType = moveTypeRepository.GetSingleMoveTypesByCode(moveTypeCode, tenant);
-            if(moveType == null)
+            if (moveType == null)
             {
                 InsertNewMoveType(moveTypeCode, transportModeCode);
                 moveType = moveTypeRepository.GetSingleMoveTypesByCode(moveTypeCode, tenant);
@@ -279,10 +398,11 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             string shippingLineId = "";
             ShippingLineRepository shippingLineRepository = new ShippingLineRepository(commonDataContext);
             ShippingLine shippingLine = shippingLineRepository.GetSingleShippingLineByCode(code, tenant);
-            if(shippingLine == null)
+            if (shippingLine == null)
             {
                 shippingLineId = CopyShippingLineFromTenantZero(code, shippingLineRepository);
-            } else
+            }
+            else
             {
                 shippingLineId = shippingLine.Id;
             }
@@ -307,10 +427,11 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             string airlineId = "";
             AirlineRepository airlineRepository = new AirlineRepository(commonDataContext);
             Airline airline = airlineRepository.GetSingleAirlineByCode(code, tenant);
-            if(airline == null)
+            if (airline == null)
             {
                 airlineId = CopyAirlineFromTenantZero(code, airlineRepository);
-            } else
+            }
+            else
             {
                 airlineId = airline.Id;
             }
@@ -347,7 +468,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             StateService stateService = new StateService(commonDataContext, tenant);
             stateService.Create(CreateStatePM(code));
         }
-        public  StatePM CreateStatePM(string stateCode)
+        public StatePM CreateStatePM(string stateCode)
         {
             StatePM statePM = new StatePM();
             statePM.Tenant = tenant;
@@ -361,7 +482,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             string countryId = "";
             CountryRepository countryRepository = new CountryRepository(commonDataContext);
             countryId = countryRepository.GetCountryIdByCode(code, tenant);
-            if(string.IsNullOrEmpty(countryId))
+            if (string.IsNullOrEmpty(countryId))
             {
                 InsertNewCountry(code);
                 countryId = countryRepository.GetCountryIdByCode(code, tenant);
@@ -389,7 +510,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         {
             GlobalZoneRepository globalZoneRepository = new GlobalZoneRepository(commonDataContext);
             GlobalZone globalZone = globalZoneRepository.GetSingleGlobalZoneByCode(code, tenant);
-            if(globalZone == null)
+            if (globalZone == null)
             {
                 InsertNewGlobalZone(code);
                 globalZone = globalZoneRepository.GetSingleGlobalZoneByCode(code, tenant);
@@ -419,7 +540,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             if (port == null)
             {
                 portId = CopyPortFromTenantZero(code);
-            } else {
+            }
+            else
+            {
                 portId = port.Id;
             }
             return portId;
@@ -518,11 +641,13 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         {
             string currencyId = "";
             Currency currency = CurrencyRepository.GetSingleCurrencyByCode(code, tenant, false);
-            
+
             if (currency == null)
             {
                 currencyId = CopyCurrencyFromTenantZero(code);
-            } else {
+            }
+            else
+            {
                 currencyId = currency.Id;
             }
             return currencyId;
