@@ -704,6 +704,7 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
     }
 
     LineSelection(cashbookLine, event) {
+        this.CashbookLines.Collection.filter(a => a.CashBookId == cashbookLine.CashBookId && a.ARPChequeId == cashbookLine.ARPChequeId)[0].IsSelected = event;
         if (event == true) {
             this.PushBankDeposit(cashbookLine);
         } else if (event == false) {
