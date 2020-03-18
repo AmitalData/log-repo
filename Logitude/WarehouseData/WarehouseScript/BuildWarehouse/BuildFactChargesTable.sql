@@ -79,7 +79,7 @@
 
 
 		union
-		select dw_ShipmentPayables.ShipmentId ,dw_ShipmentPayables.ChargesTypeId, 'Payables' as EntityType , null , null , null  ,  null, dw_ShipmentPayables.OpenAmountInLocalCurrency as OpenPayablesinLocal ,dw_ShipmentPayables.OpenAmountInProfitCurrency as OpenPayablesinProfit , AccountedAmountInLocalCurrency as AccountedPayablesinLocal ,AccountedAmountInProfitCurrency as AccountedPayablesinProfit , '' as  InvoiceLineId , 0 as ReceivablesTotalAmount ,0 as ReceivablesTotalAmountLocal , dw_ShipmentPayables.Id as PayableId, null as ReceivableId   from dw_shipments 
+		select dw_ShipmentPayables.ShipmentId ,dw_ShipmentPayables.ChargesTypeId, 'Payables' as EntityType , null , null , null  ,  null, dw_ShipmentPayables.OpenAmountInLocalCurrency as OpenPayablesinLocal ,dw_ShipmentPayables.OpenAmountInProfitCurrency as OpenPayablesinProfit , 0 as AccountedPayablesinLocal ,0 as AccountedPayablesinProfit , '' as  InvoiceLineId , 0 as ReceivablesTotalAmount ,0 as ReceivablesTotalAmountLocal , dw_ShipmentPayables.Id as PayableId, null as ReceivableId   from dw_shipments 
         inner JOIN dw_ShipmentPayables  ON dw_shipments.Id = dw_ShipmentPayables.ShipmentId
 		where dw_Shipments.IsCancelled = 0 and dw_Shipments.ShipmentLevelCode in ('H','D') and ( dw_ShipmentPayables.OpenAmountInLocalCurrency>0 or dw_ShipmentPayables.OpenAmountInProfitCurrency >0 )
 		
