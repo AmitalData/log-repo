@@ -189,6 +189,16 @@ export class InterestReportPM {
     public set CustomerName(newValue: string) { if (this.customerName != newValue) { this.customerName = newValue; this.MarkAsDirty("CustomerName"); } }
        
 	 
+    private gLAccountMinimumInterest: number;
+    public get GLAccountMinimumInterest() { return this.gLAccountMinimumInterest; }
+    public set GLAccountMinimumInterest(newValue: number) { if (this.gLAccountMinimumInterest != newValue) { this.gLAccountMinimumInterest = newValue; this.MarkAsDirty("GLAccountMinimumInterest"); } }
+       
+	 
+    private customerLocalName: string;
+    public get CustomerLocalName() { return this.customerLocalName; }
+    public set CustomerLocalName(newValue: string) { if (this.customerLocalName != newValue) { this.customerLocalName = newValue; this.MarkAsDirty("CustomerLocalName"); } }
+       
+	 
 
     public OldEntityPM: InterestReportPM;
 		

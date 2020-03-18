@@ -1,3 +1,4 @@
+declare var window: any;
 import { MenuButtonPM } from '../../../Infrastructure/EntityPMs/MenuButtonPM'
 import { TenantPM } from '../../../Common/EntityPMs/TenantPM';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
@@ -7,19 +8,46 @@ import { InterestBasesTypePM } from '../../EntityPMs/InterestBasesTypePM';
 import { InterestReportPM } from '../../EntityPMs/InterestReportPM';
 import { GeneralPrintHelper } from '../../../Infrastructure/Helpers/GeneralPrintHelper';
 import { ServiceLocator } from '../../../Infrastructure/Locators/ServiceLocator';
+import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
+import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
+import { InterestTransactionExtendedListService } from '../../Services/ExtendedLists/InterestTransactionExtendedListService';
+import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
+import { InterestReportPMService } from '../../Services/StandardPMs/InterestReportPMService';
+import { ARInvoicePM } from '../../../Invoice/EntityPMs/ARInvoicePM';
+import { InvoicePartnerType, InvoiceTool } from '../../../Invoice/Tools';
+import { ARInvoiceEntityPM } from '../../../Invoice/EntityPMs/ARInvoiceEntityPM';
+import { ARInvoiceLinePM } from '../../../Invoice/EntityPMs/ARInvoiceLinePM';
+ import { DateTool, AppTool } from '../../../Infrastructure/Tools';
+import { ChargesTypeListService } from '../../../Common/Services/StandardLists/ChargesTypeListService';
+import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { ChargesTypeList } from '../../../Common/EntityLists/ChargesTypeList';
+import { VatTypeList } from '../../../Common/EntityLists/VatTypeList';
+import { VatTypeListService } from '../../../Common/Services/StandardLists/VatTypeListService';
+import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import { reject } from 'q';
+import { CurrencyRatesService, LastRate } from '../../../Common/Services/CurrencyRatesService';
 
-export class InterestReportMenuButtonsHandler {
+export class InterestReportMenuButtonsHandler extends BaseComponent  {
     public EntityPM: InterestReportPM;
     public entityArgs: EntityArgs;
     public TenantPM: TenantPM;
     public ObjectTableName: string = "InterestReport";
-
+    public InterestReportService: InterestTransactionExtendedListService;
+    public ChargesTypePMService: ChargesTypeListService;
+    private CurrentSession = SessionLocator.SelectedSession;
+    private VatTypeListService: VatTypeListService;
+    private myCurrencyRatesService: CurrencyRatesService;
 
     public SetEntityPM(entityArgs: EntityArgs) {
         this.TenantPM = SessionLocator.TenantPM;
         this.entityArgs = entityArgs;
         this.EntityPM = entityArgs.EntityPM;
-    }
+        this.InterestReportService = new InterestTransactionExtendedListService();
+        this.ChargesTypePMService = new ChargesTypeListService();
+        this.VatTypeListService = new VatTypeListService();
+        this.myCurrencyRatesService = new CurrencyRatesService();
+     }
+ 
 
     public CheckButtonState(menuButtons: MenuButtonPM[]) {
         if (this.EntityPM != null) {
@@ -30,6 +58,14 @@ export class InterestReportMenuButtonsHandler {
                         case "InterestPrint":
                             {
                                 button.IsDisabled = false;
+                                break;
+                            }
+                        case "InterestInvoice":
+                            {
+                                if (this.EntityPM.InterestReportStatusCode == "1")
+                                    button.IsDisabled = false;
+                                else
+                                    button.IsDisabled = true;
                                 break;
                             }
                     }
@@ -49,6 +85,19 @@ export class InterestReportMenuButtonsHandler {
                         this.PrintInterestReport();
                         break;
                     }
+                case "InterestInvoice":
+                    {
+                        if ((!this.EntityPM.TotalAmount) ||
+                            (!this.EntityPM.TotalAmount && !this.EntityPM.GLAccountMinimumInterest) ||
+                            (this.EntityPM.GLAccountMinimumInterest && this.EntityPM.GLAccountMinimumInterest >= this.EntityPM.TotalAmount)) {
+                            this.ConfirmCreateInvoice();
+                        }
+                        else {
+                            this.GeTARInvoice();
+
+                        }
+                        break;
+                    }
             }
         }
         else {
@@ -64,4 +113,224 @@ export class InterestReportMenuButtonsHandler {
             myPrintHelper.ShowPrintControl();
         }
     }
+
+    private _ARInvoicePM: ARInvoicePM;
+
+    private ConfirmCreateInvoice() {
+        let confirmWindow = new ConfirmWindow();
+        confirmWindow.Width = 400;
+        confirmWindow.YesButtonText = TextCodeTranslator.Translate('InterestReport.O.Approve');
+        confirmWindow.NoButtonText = TextCodeTranslator.Translate('InterestReport.O.Cancel');
+
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes) {
+                this.ApproveConfirmCreateInvoice();
+            }
+        });
+        confirmWindow.Show(TextCodeTranslator.Translate('InterestReport.O.ReportTotalAmountIslowerthanGLAccountMinimumamount'));
+    }
+    ApproveConfirmCreateInvoice() {
+        this.CurrentSession.StartBusyIndicatorLoading();
+        this.InterestReportService.PutConfirmCreateInvoice(this.EntityPM).subscribe((myResult: ServiceResponse) => {
+            this.CurrentSession.StopBusyIndicator();
+            var mm: ServiceResponse = myResult;
+            if (!mm.HasError) {
+                this.EntityPM = mm.Result;
+                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+            }
+            else {
+
+
+            }
+        });
+    }
+    get ARInvoicePMWithLine(): ARInvoicePM {
+        var _ARInvoicePM: ARInvoicePM = new ARInvoicePM();
+         _ARInvoicePM.ARInvoiceTypeCode = "IN";
+         _ARInvoicePM.BillToGLAccountId = this.EntityPM.GLAccountId;
+         _ARInvoicePM.BillToId = this.EntityPM.CustomerId;
+        _ARInvoicePM.BillToLocalName = this.EntityPM.CustomerLocalName;
+        _ARInvoicePM.BillToName = this.EntityPM.CustomerName;
+        _ARInvoicePM.Tenant = this.TenantPM.Id;
+         this.InvoicePartners = InvoiceTool.GetARInvoicePartners(null);
+         this.PartnersTypeSelectionMethod(this.InvoicePartners[0]);
+         _ARInvoicePM.BillToPartnerTypeId = this.BillToPartnerTypeId;
+        var _ARInvoiceEntityPM: ARInvoiceEntityPM = new ARInvoiceEntityPM();
+        _ARInvoiceEntityPM.Tenant = this.TenantPM.Id;
+        _ARInvoiceEntityPM.EntityId = this.EntityPM.Id;
+        _ARInvoiceEntityPM.EntityId = this.EntityPM.Id;
+        _ARInvoiceEntityPM.EntityReference = this.EntityPM.ReportNumber;
+        _ARInvoicePM.AmountInLocalCurrency = this.EntityPM.TotalAmount;
+        _ARInvoicePM.LocalCurrencyId = this.TenantPM.CurrencyId;
+        _ARInvoicePM.InvoiceCurrencyId = this.TenantPM.CurrencyId;
+        _ARInvoicePM.AmountInInvoiceCurrency = this.EntityPM.TotalAmount;
+        _ARInvoicePM.AmountInProfitCurrency = this.EntityPM.TotalAmount;
+        _ARInvoicePM.BranchId  = SessionLocator.LoggedUserPM.BranchId;;
+        var todayDate = DateTool.GetCurrentDateAsUtc();
+        _ARInvoicePM.CreateDate = todayDate;
+        _ARInvoicePM.UpdateDate = todayDate;
+        _ARInvoicePM.InvoiceDate = todayDate;
+        _ARInvoicePM.BranchId = SessionLocator.LoggedUserPM.BranchId;
+        _ARInvoicePM.LocalCurrencyId = SessionLocator.TenantPM.CurrencyId;
+        _ARInvoicePM.IssuedByUserId = SessionLocator.LoggedUserId;
+        _ARInvoicePM.CreatedByUserId = SessionLocator.LoggedUserId;
+        _ARInvoicePM.UpdatedByUserId = SessionLocator.LoggedUserId;
+        _ARInvoicePM.MainEntityId = null;
+        _ARInvoicePM.MainEntityReference = null;
+        _ARInvoicePM.HouseNumber = null;
+        _ARInvoicePM.MasterNumber = null;
+        var myDescription: string = null;
+        _ARInvoicePM.Description = myDescription;
+        _ARInvoicePM.IsGeneralInvoice = true;
+        _ARInvoicePM.IsFullAccounting = true;
+        _ARInvoicePM.InvoiceCurrencyId = SessionLocator.TenantPM.CurrencyId;
+        _ARInvoicePM.PaymentTermId = SessionLocator.TenantPM.PaymentTermId;
+        InvoiceTool.ComputeARInvoiceDueDate(_ARInvoicePM);
+         _ARInvoicePM.ProfitCurrencyId = SessionLocator.TenantPM.ProfitCurrencyId;
+        _ARInvoicePM.ProfitCurrencyCode = SessionLocator.TenantPM.ProfitCurrencyCode;
+ 
+        var _ARInvoiceLinePM: ARInvoiceLinePM = new ARInvoiceLinePM(_ARInvoicePM);
+        _ARInvoiceLinePM.Tenant = this.TenantPM.Id;
+        _ARInvoiceLinePM.InvoiceLocalCurrencyCode = this.TenantPM.CurrencyCode;
+        _ARInvoiceLinePM.ForiegnCurrencyCode = this.TenantPM.CurrencyCode;
+        _ARInvoiceLinePM.ForiegnCurrencyId = this.TenantPM.CurrencyId;
+        _ARInvoiceLinePM.UnitPrice = this.EntityPM.TotalAmount;
+        _ARInvoiceLinePM.Quantity = 1; 
+        _ARInvoiceLinePM.UnitPrice = this.EntityPM.TotalAmount; 
+        _ARInvoiceLinePM.ForiegnCurrencyAmount = this.EntityPM.TotalAmount;
+        _ARInvoiceLinePM.InvoiceCurrencyAmount = this.EntityPM.TotalAmount;
+        _ARInvoiceLinePM.ProfitCurrencyAmount = this.EntityPM.TotalAmount;
+        _ARInvoiceLinePM.LocalCurrencyAmount = this.EntityPM.TotalAmount; 
+        _ARInvoiceLinePM.InvoiceCurrencyCode = this.TenantPM.CurrencyCode;
+        _ARInvoiceLinePM.Description ="Interest For Date "+ this.EntityPM.InterestCalculationDate; 
+        _ARInvoiceLinePM.LocalDescription = "חישוב ריבית לתאריך" + this.EntityPM.InterestCalculationDate;
+        _ARInvoiceLinePM.ChargesTypeId = this.chargesTypeList? this.chargesTypeList.Id:null;
+        _ARInvoiceLinePM.VatTypeId = this.vatTypeList ? this.vatTypeList.Id : null;
+        _ARInvoiceLinePM.GLAccountId = this.EntityPM.GLAccountId;
+        _ARInvoiceLinePM.ForiegnExchangeRate = _ARInvoiceLinePM.ForiegnCurrencyAmount / _ARInvoiceLinePM.LocalCurrencyAmount;
+        _ARInvoiceLinePM.VatTypeId
+        var objectTable = window.ObjectTables.filter(d => d.Name === "InterestReport")[0];
+        var objectTableId = objectTable.Id;
+        _ARInvoiceEntityPM.ObjectTableId = objectTableId;
+        _ARInvoicePM.InvoiceEntities.push(_ARInvoiceEntityPM);
+        _ARInvoicePM.InvoiceLines.push(_ARInvoiceLinePM);
+        
+        return _ARInvoicePM;
+    }
+ 
+ 
+
+    public InvoicePartners: InvoicePartnerType[] = [];
+    public SelectedPartnerType: InvoicePartnerType = null;
+    PartnersTypeSelectionMethod(selected: InvoicePartnerType) {
+        if (this.SelectedPartnerType != selected) {
+            this.SelectedPartnerType = selected;
+            this.BillToPartnerTypeId = selected.PartnerTypeId;
+        }
+    }
+    private billToPartnerTypeId: string;
+    get BillToPartnerTypeId() { return this.billToPartnerTypeId; }
+    set BillToPartnerTypeId(newValue: string) {
+        if (this.billToPartnerTypeId != newValue) {
+            this.billToPartnerTypeId = newValue;
+        }
+    }
+
+    private GeTARInvoice() {
+
+        var filters = new ApiQueryFilters(true);
+        filters.addAdditionalFilter("Code", "INT", null, null, "Equals", false, false, false, "string");
+        this.CurrentSession.StartBusyIndicatorLoading();
+        this.ChargesTypePMService.getByFilters(filters).subscribe((myResponse: ServiceResponse) => {
+            this.CurrentSession.StopBusyIndicator();
+            if (myResponse != null) {
+                if (!myResponse.HasError) {
+                    this.chargesTypeList = myResponse.Result[0];
+                    this.GetVatType();
+                }
+            }
+        });
+    }
+
+    private GetVatType() {
+
+        var filters = new ApiQueryFilters(true);
+        filters.addAdditionalFilter("EnglishName", "Excempt", null, null, "Equals", false, false, false, "string");
+        this.CurrentSession.StartBusyIndicatorLoading();
+        this.VatTypeListService.getByFilters(filters).subscribe((myResponse: ServiceResponse) => {
+            this.CurrentSession.StopBusyIndicator();
+            if (myResponse != null) {
+                if (!myResponse.HasError) {
+                    this.vatTypeList = myResponse.Result[0];
+                    this._ARInvoicePM = this.ARInvoicePMWithLine;
+                    this.LoadCurrencyRates().then(res => {
+                        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+                            .then(cmpRef => {
+                                cmpRef.instance.ComponentRef = cmpRef;
+                                cmpRef.instance.Run({ EntityPM: this._ARInvoicePM, ObjectTableName: 'ARInvoice' });
+                                //cmpRef.instance.BackCompleted.subscribe(($event: any) => this.LoadAllScreenData());
+                            });
+                    });
+               
+                }
+            }
+        });
+
+    }
+
+    private LastRatesList: LastRate[] = [];
+    LoadCurrencyRates() {
+        return new Promise(resolve => {
+            var loadingDate = this._ARInvoicePM.InvoiceDate || DateTool.GetCurrentDateAsUtc();
+            this.myCurrencyRatesService.GetCurrenciesExchangeRateByValueDate(SessionLocator.TenantPM.CurrencyId, loadingDate).subscribe((myResponse: ServiceResponse) => {
+                if (!myResponse.HasError) {
+                    this.LastRatesList = myResponse.Result;
+                    this.SetCurrencyRateData();
+                    resolve(myResponse.Result);
+                }
+                else {
+                    reject();
+                }
+            });
+        });
+
+    }
+    SetCurrencyRateData() {
+        var myRate: number = null;
+        var myRateDate: Date = null;
+
+        if (!AppTool.IsNullOrEmpty(this._ARInvoicePM.InvoiceCurrencyId)) {
+            if (this._ARInvoicePM.InvoiceCurrencyId == SessionLocator.TenantPM.CurrencyId) {
+                myRate = 1;
+            }
+
+            else {
+                var lastRate: LastRate = this.LastRatesList.filter(d => d.ForeignCurrencyId == this._ARInvoicePM.InvoiceCurrencyId)[0];
+                if (lastRate != null) {
+                    myRate = lastRate.Rate;
+                    myRateDate = lastRate.ValueDate;
+                }
+            }
+        }
+
+        this._ARInvoicePM.InvoiceCurrencyExchangeRate = myRate;
+        this._ARInvoicePM.ProfitCurrencyExchangeRate = myRate;
+        this._ARInvoicePM.ExchangeRateDate = myRateDate;
+    }
+    SetUIProperties_DueDate() {
+        var AllowManuallyDueDate: boolean = false;
+
+        if (SessionLocator.AccountingSystemPM) {
+            AllowManuallyDueDate = SessionLocator.AccountingSystemPM.AllowManuallyDueDate;
+        }
+
+        this.UIProperties.SetEnabled("DueDate", this.ObjectTableName, AllowManuallyDueDate);
+
+   
+    }
+
+    public chargesTypeList: ChargesTypeList;
+    public vatTypeList: VatTypeList;
+
 }
