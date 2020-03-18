@@ -44,6 +44,9 @@ using Logitude.BL.ShipmentsModel.EntityPMs;
 using System.Text;
 using System.IO;
 using Logitude.BL.Resolvers;
+using WebFreight.Web.AccountingModel.DomainServices;
+using Logitude.Accounting.Data;
+using Logitude.Accounting.Data.EntityPOCOs;
 
 namespace Logitude.BL.InvoiceModel.Tools.EntityService
 {
@@ -62,6 +65,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private IInvoiceContext objectContext;
         private ICommonDataContext myCommonContext;
         private IShipmentsContext myShipmentContext;
+        private IAccountingContext myAccountingContext;
         private ARInvoiceRepository invoiceRepository;
         private ARInvoiceLineRepository invoiceLineRepository;
         private ARInvoiceTotalVATRepository invoiceTotalVatRepository;
@@ -72,6 +76,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private AccountingSettingRepository accountingSettingRepository;
         private AccountingSystemRepository accountingSystemRepository;
         private ContactRepository contactRepository;
+        private InterestReportRepository InterestReportRepository;
         private List<string> allShipmentIds;
         private List<string> allActiveShipmentIds;
         private List<Shipment> allShipments;
@@ -90,6 +95,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.objectContext = objectContext;
             this.myCommonContext = CommonDataContext.GetContext(tenant);
             this.myShipmentContext = ShipmentsContext.GetContext(tenant);
+            this.myAccountingContext = AccountingContext.GetContext(tenant);
 
             this.invoiceRepository = new ARInvoiceRepository(objectContext);
             this.invoiceLineRepository = new ARInvoiceLineRepository(objectContext);
@@ -103,6 +109,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.accountingSettingRepository = new AccountingSettingRepository(myCommonContext);
             this.accountingSystemRepository = new AccountingSystemRepository(myCommonContext);
             this.contactRepository = new ContactRepository(myCommonContext);
+
+
+            this.InterestReportRepository = new InterestReportRepository(myAccountingContext);
 
             allShipments = new List<Shipment>();
             allReceivables = new List<ShipmentReceivable>();
@@ -246,7 +255,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 this.InitializeTransferComponents();
             }
 
-            else if (!entityPM.IsGeneralInvoice)
+            else if (!entityPM.IsGeneralInvoice || entityPM.ARInvoiceTypeCode == "IN")
             {
                 this.GetShipmentsData(entityPM.InvoiceLines);
                 this.UpdateInvoiceEntities();
@@ -279,7 +288,44 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.GetForeignFields();
             this.RunStoredProcedures();
             this.AfterServiceFinished();
+            if (entityPM.ARInvoiceTypeCode == "IN")
+            {
+                this.UpdateInterestReportFields(entityPM);
+            }
 
+
+        }
+
+
+
+        private void UpdateInterestReportFields(ARInvoicePM theEntityPM)
+        {
+            AccountingDomainService interestTransactionQuery = new AccountingDomainService();
+            InterestReport interestReport = InterestReportRepository.GetSingle(theEntityPM.InvoiceEntities[0].EntityId, tenant);
+            InterestReportPM interestReportPM = new InterestReportPM()
+            {
+                Id = interestReport.Id,
+                InterestReportStatusCode = "2",
+                ARinvoiceId = theEntityPM.Id,
+                ARInvoiceNumber =theEntityPM.InvoiceNumber,
+                OpenBalance = interestReport.OpenBalance,
+                CloseBalance = interestReport.CloseBalance,
+                TotalAmount = interestReport.TotalAmount,
+                UpdatedByUserId = interestReport.UpdatedByUserId,
+                UpdateDateTime = interestReport.UpdateDateTime,
+                Tenant = interestReport.Tenant,
+                CreateDateTime = interestReport.CreateDateTime,
+                CreatedByUserId = interestReport.CreatedByUserId,
+                CustomerId = interestReport.CustomerId,
+                GLAccountId = interestReport.GLAccountId,
+                GLAccountInterestCreditLimit = interestReport.GLAccountInterestCreditLimit,
+                ReportNumber = interestReport.ReportNumber,
+                InterestCalculationDate = interestReport.InterestCalculationDate,
+                SearchFields = interestReport.SearchFields,
+                InvoiceAmount = (decimal?) theEntityPM.AmountInLocalCurrency,
+
+            };
+            interestTransactionQuery.PutConfirmCreateInvoice(interestReportPM, tenant, myAccountingContext);
 
         }
 
@@ -3678,6 +3724,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             if (isNewEntity)
             {
                 ARInvoiceEntityQuery arInvoiceEntityQuery = new ARInvoiceEntityQuery(invoiceEntityRepository);
+                if(entityPM.ARInvoiceTypeCode != "IN")
                 entityPM.InvoiceEntities = arInvoiceEntityQuery.GetInvoiceEntityPMsForInvoice(entityPM.Id, tenant);
             }
            

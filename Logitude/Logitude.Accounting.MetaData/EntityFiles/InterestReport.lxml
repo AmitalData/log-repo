@@ -2314,6 +2314,14 @@
     MenuButtonGroupType="&quot;InterestReportEdit&quot;"
     MenuButtonGroupName="&quot;InterestReportEditButtonsGroup&quot;">
     <MenuButton
+      EventCode="&quot;CreateInvoice&quot;"
+      DefaultText="&quot;Create Invoice&quot;"
+      MenuButtonType="&quot;button&quot;"
+      Style="&quot;ApproveButtonStyle&quot;"
+      IndexOrder="0"
+      LocalDefaultText="&quot;הפק חשבונית&quot;"
+      IsPackagable="false" />
+    <MenuButton
       EventCode="&quot;More&quot;"
       DefaultText="&quot;More&quot;"
       MenuButtonType="&quot;dropdownbutton&quot;"
@@ -2326,13 +2334,6 @@
         MenuButtonType="&quot;menuitem&quot;"
         IndexOrder="0"
         LocalDefaultText="&quot;הדפסה&quot;"
-        IsPackagable="false" />
-      <MenuItem
-        EventCode="&quot;InterestInvoice&quot;"
-        DefaultText="&quot;Create Invoice&quot;"
-        MenuButtonType="&quot;menuitem&quot;"
-        IndexOrder="1"
-        LocalDefaultText="&quot;הפק חשבונית&quot;"
         IsPackagable="false" />
     </MenuButton>
   </MenuButtons>

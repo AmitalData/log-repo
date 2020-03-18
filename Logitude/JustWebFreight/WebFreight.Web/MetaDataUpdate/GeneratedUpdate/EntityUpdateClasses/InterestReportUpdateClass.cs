@@ -2051,8 +2051,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    {  
 		   FeatureRepository featureRepository = new FeatureRepository(0); 
 		   //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
-		   ObjectTable InterestReportObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "InterestReport" && d.Tenant == 0).FirstOrDefault(); 			   Feature InterestReportFeature_MB00 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InterestPrint", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestReport.Features.Print", NameTextCodeDefaultText = "Print", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
-             			   Feature InterestReportFeature_MB01 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InterestInvoice", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestReport.Features.CreateInvoice", NameTextCodeDefaultText = "Create Invoice", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+		   ObjectTable InterestReportObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "InterestReport" && d.Tenant == 0).FirstOrDefault();       
+    
+			   Feature InterestReportFeature_MB0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CreateInvoice", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestReport.Features.CreateInvoice", NameTextCodeDefaultText = "Create Invoice", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+
+			   Feature InterestReportFeature_MB10 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InterestPrint", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestReport.Features.Print", NameTextCodeDefaultText = "Print", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
               
 
 		   TextCodeRepository.SubmitChanges();
@@ -2066,6 +2069,24 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 				}, menuButtonGroupRepository, tenantMenuButtonGroups);        
    
 			   MenuButton InterestReportMenuButton0 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+					{
+						EventCode = "CreateInvoice",
+						Index = 0, 
+						IsActive = true,
+						LabelTextCodeCode = "InterestReport.B.CreateInvoice",
+						LabelTextCodeDefaultText = "Create Invoice",
+						Tenant = 0,
+						MenuButtonGroupId = InterestReportMenuButtonGroup.Id,
+						ObjectTableId = InterestReportObjectTable.Id,
+						MenuButtonType = "button",
+						FeatureId = InterestReportFeature_MB0.Id,
+						Style = "ApproveButtonStyle",
+						LocalDefaultText = "הפק חשבונית",
+						FeatureUniqeCode = InterestReportFeature_MB0.FeatureUniqeCode,
+					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
+       
+   
+			   MenuButton InterestReportMenuButton1 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "More",
 						Index = 100, 
@@ -2082,7 +2103,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureUniqeCode = null,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 
-			   MenuButton InterestReportMenuButton00 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+			   MenuButton InterestReportMenuButton10 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "InterestPrint",
 						Index = 0, 
@@ -2091,31 +2112,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						LabelTextCodeDefaultText = "Print",
 						Tenant = 0,
 						MenuButtonGroupId = InterestReportMenuButtonGroup.Id,
-						ParentMenuButtonId = InterestReportMenuButton0.Id,
+						ParentMenuButtonId = InterestReportMenuButton1.Id,
 						ObjectTableId = InterestReportObjectTable.Id,
 						MenuButtonType = "menuitem",
-						FeatureId=  InterestReportFeature_MB00.Id,
+						FeatureId=  InterestReportFeature_MB10.Id,
 						Style = null,
 						LocalDefaultText = "הדפסה",
-						FeatureUniqeCode=  InterestReportFeature_MB00.FeatureUniqeCode,
-					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
-	   
-			   MenuButton InterestReportMenuButton01 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
-					{
-						EventCode = "InterestInvoice",
-						Index = 1, 
-						IsActive = true,
-						LabelTextCodeCode = "InterestReport.B.CreateInvoice",
-						LabelTextCodeDefaultText = "Create Invoice",
-						Tenant = 0,
-						MenuButtonGroupId = InterestReportMenuButtonGroup.Id,
-						ParentMenuButtonId = InterestReportMenuButton0.Id,
-						ObjectTableId = InterestReportObjectTable.Id,
-						MenuButtonType = "menuitem",
-						FeatureId=  InterestReportFeature_MB01.Id,
-						Style = null,
-						LocalDefaultText = "הפק חשבונית",
-						FeatureUniqeCode=  InterestReportFeature_MB01.FeatureUniqeCode,
+						FeatureUniqeCode=  InterestReportFeature_MB10.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 	    }

@@ -102,6 +102,11 @@ namespace WebFreight.Web.AccountingModel.DomainServices
 
         public InterestReportPM PutConfirmCreateInvoice(InterestReportPM interestReportPM,int Tenant, IAccountingContext MainContext)
         {
+            if (MainContext == null)
+            {
+                MainContext = AccountingContext.GetContext(Tenant);
+            }
+
             ContactQuery contactQuery = new ContactQuery(Tenant);
             ContactPM contact = GetLoggedContact(Tenant) ?? new ContactPM();
             bool showLocals = !contact.DontShowLocal;
@@ -109,7 +114,10 @@ namespace WebFreight.Web.AccountingModel.DomainServices
             InterestTransactionUpdateService InterestTransactionUpdate = new InterestTransactionUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
 
             interestReportPM.CloseBalance = interestReportPM.OpenBalance!=null? interestReportPM.OpenBalance:0 + interestReportPM.TotalAmount!=null? interestReportPM.TotalAmount:0;
-            interestReportPM.InterestReportStatusCode = "4";
+            if (interestReportPM.InterestReportStatusCode != "2")
+            {
+                interestReportPM.InterestReportStatusCode = "4";
+            }
             if (interestReportPM.InterestReportStatusCode != null)
             {
                 InterestReportStatuseRepository interestReportStatuseRepository = new InterestReportStatuseRepository(Tenant);
@@ -124,6 +132,8 @@ namespace WebFreight.Web.AccountingModel.DomainServices
 
             for (int i =0; i < interestTransactionPMs.Count; i++)
             {
+                interestTransactionPMs[i].IsClosed = true;
+                interestTransactionPMs[i].InterestReportId = interestReportPM.Id;
                 interestTransactionPMs[i].ChangeSetOp = ChangeSetOperation.Update;
                 InterestTransactionUpdate.Update(interestTransactionPMs[i], true);
             }

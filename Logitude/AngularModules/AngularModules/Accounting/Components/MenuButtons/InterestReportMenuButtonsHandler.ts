@@ -60,7 +60,7 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
                                 button.IsDisabled = false;
                                 break;
                             }
-                        case "InterestInvoice":
+                        case "CreateInvoice":
                             {
                                 if (this.EntityPM.InterestReportStatusCode == "1")
                                     button.IsDisabled = false;
@@ -85,7 +85,7 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
                         this.PrintInterestReport();
                         break;
                     }
-                case "InterestInvoice":
+                case "CreateInvoice":
                     {
                         if ((!this.EntityPM.TotalAmount) ||
                             (!this.EntityPM.TotalAmount && !this.EntityPM.GLAccountMinimumInterest) ||
@@ -153,14 +153,16 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
         _ARInvoicePM.BillToLocalName = this.EntityPM.CustomerLocalName;
         _ARInvoicePM.BillToName = this.EntityPM.CustomerName;
         _ARInvoicePM.Tenant = this.TenantPM.Id;
+ 
          this.InvoicePartners = InvoiceTool.GetARInvoicePartners(null);
          this.PartnersTypeSelectionMethod(this.InvoicePartners[0]);
-         _ARInvoicePM.BillToPartnerTypeId = this.BillToPartnerTypeId;
+        _ARInvoicePM.BillToPartnerTypeId = this.BillToPartnerTypeId;
+
         var _ARInvoiceEntityPM: ARInvoiceEntityPM = new ARInvoiceEntityPM();
         _ARInvoiceEntityPM.Tenant = this.TenantPM.Id;
         _ARInvoiceEntityPM.EntityId = this.EntityPM.Id;
-        _ARInvoiceEntityPM.EntityId = this.EntityPM.Id;
         _ARInvoiceEntityPM.EntityReference = this.EntityPM.ReportNumber;
+
         _ARInvoicePM.AmountInLocalCurrency = this.EntityPM.TotalAmount;
         _ARInvoicePM.LocalCurrencyId = this.TenantPM.CurrencyId;
         _ARInvoicePM.InvoiceCurrencyId = this.TenantPM.CurrencyId;
@@ -269,7 +271,7 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
                             .then(cmpRef => {
                                 cmpRef.instance.ComponentRef = cmpRef;
                                 cmpRef.instance.Run({ EntityPM: this._ARInvoicePM, ObjectTableName: 'ARInvoice' });
-                                //cmpRef.instance.BackCompleted.subscribe(($event: any) => this.LoadAllScreenData());
+                                cmpRef.instance.BackCompleted.subscribe(($event: any) => this.CurrentSession.CurrentEditComponent.ReloadEntityPM());
                             });
                     });
                
