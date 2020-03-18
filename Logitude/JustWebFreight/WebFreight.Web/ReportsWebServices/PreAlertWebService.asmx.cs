@@ -681,6 +681,8 @@ namespace WebFreight.Web.ReportsWebServices
                     masterpackage.Reference3 = package.Reference3;
                     masterpackage.CommodityNumber = package.CommodityNumber;
                     masterpackage.DescriptionOfGoods = package.Description;
+                    masterpackage.NumberOfInsidePackages = package.NumberOfInsidePackages;
+                    masterpackage.ContainerNumber = package.ContainerNumber;
 
                     if (package.IsDangerous)
                     {
