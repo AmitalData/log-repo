@@ -41,7 +41,7 @@ namespace WarehouseDataViews
                     string sourceConnectionString = warehouseViewsService.BuildConnectionString(dbSourceConnection);
                     string destinationConnectionString = warehouseViewsService.BuildConnectionString(dbDestinationConnection);
                     CreateDimensionViews(sourceConnectionString, destinationConnectionString);
-                    CreateFactViews(warehouseViewsService, destinationConnectionString);
+                    CreateFactViews(warehouseViewsService, sourceConnectionString, destinationConnectionString);
                     SetResultLable(true);
                 }
                 else MessageBox.Show("Connection Problem");
@@ -66,17 +66,20 @@ namespace WarehouseDataViews
                         if (fieldCode == "[Notify 1]") fieldCode = "[Notify One]";
                         else if (fieldCode == "[Notify 2]") fieldCode = "[Notify Two]";
                         warehouseViewsService.DropView(fieldCode, destinationConnectionString);
-                        warehouseViewsService.CreateView(fieldCode, dimensionTableCode, destinationConnectionString);
+                        warehouseViewsService.CreateDimensionView(fieldCode, dimensionTableCode, destinationConnectionString);
                     }
-                    // warehouseViewsService.GrantView(fieldCode, destinationConnectionString);
+                  //  warehouseViewsService.GrantView(fieldCode, destinationConnectionString);
                 }
             }
         }
-        private  void CreateFactViews(WarehouseViewsService warehouseViewsService, string destinationConnectionString)
+
+
+
+        private  void CreateFactViews(WarehouseViewsService warehouseViewsService,string sourceConnection,  string destinationConnectionString)
         {
             warehouseViewsService.DropView("Shipment", destinationConnectionString);
-            warehouseViewsService.CreateView("Shipment", "Fact_Shipments", destinationConnectionString);
-            //  warehouseViewsService.GrantView("Shipment", destinationConnectionString);
+            warehouseViewsService.CreateFactView("Fact_Shipments", sourceConnection , destinationConnectionString);
+           // warehouseViewsService.GrantView("Shipment", destinationConnectionString);
         }
 
 
