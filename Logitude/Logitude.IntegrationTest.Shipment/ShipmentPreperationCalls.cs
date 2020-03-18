@@ -18,21 +18,25 @@ namespace Logitude.IntegrationTest.Shipment
 {
     class ShipmentPreperationCalls
     {
+        static ShipmentIntegrationVariables vars;
         public static async Task PrepareVariables()
         {
-
             try
             {
-                HttpResponseMessage response = await RestClientService.GetAsync("ShipmentIntegrationc/GetShipmentVars");
-                ShipmentIntegrationVariables vars = RestClientService.ParseResponse<ShipmentIntegrationVariables>(response);
+                HttpResponseMessage response = await RestClientService.GetAsync("ShipmentIntegration/GetShipmentVars");
+                vars = RestClientService.ParseResponse<ShipmentIntegrationVariables>(response);
+                VarsMap();
+
             }
             catch (Exception Ex)
             {
                 throw new Exception(Ex.Message);
             }
-
-            //    ShipmentVariables.CurrencyEURId = await GetCurrencyId("EUR");
-            //    ShipmentVariables.IncotermLDEId = await GetIncotermId("LDE");
+        }
+        public static void VarsMap()
+        {
+            ShipmentVariables.CurrencyEURId = vars.CurrencyEURId;
+            ShipmentVariables.IncotermLDEId = vars.IncotermLDEId;
             //    ShipmentVariables.MeasurmentGRWTId = await GetMeasurmentId("GRWT");
             //    var chargeGroup = new ChargesGroupList();
             //    chargeGroup = await GetChargeGroup("COMM");
@@ -65,16 +69,13 @@ namespace Logitude.IntegrationTest.Shipment
             //    ShipmentVariables.PaymentTermCashId = await GetPaymentTermId("Cash");
             //    ShipmentVariables.VATTypeZeroId = await GetVATTypeId("ZERO");
             //    ShipmentVariables.QuoteStageQTDRId = await GetQuoteStageId("QTDR");
-            //    ShipmentVariables.VendorId = await GetVendorId("TestVendor");
+            //  ShipmentVariables.VendorId = await GetVendorId("TestVendor");
             //    ShipmentVariables.AgentId = await GetAgentId("TestAgentExport1");
             //    ShipmentVariables.CustomerId = await GetCustomerId("TestShipperExport1");
             //    ShipmentVariables.CustomAgentId = await GetCustomsAgentId("TestCustomAgentExport1");
             //    ShipmentVariables.ShippingAgentId = await GetShippingAgentId("TestShippingAgentExport1");
             //    ShipmentVariables.WarehouseId = await GetWarehouseId("TestWarehouseExport1", "WR2");
             //    ShipmentVariables.ShipperExport1 = await GetCustomerId("TstShipExport1");
-
-
-
 
         }
         //    public static async Task<string> GetCurrencyId(string currencyCode)

@@ -15,6 +15,8 @@ using Logitude.BL.InfrastructureModel.EntityPMs;
 using Simplog.Data.QuoteModel.Repositories;
 using Simplog.Data.QuoteModel;
 using Simplog.Data.QuoteModel.EntityPOCOs;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace Logitude.BL.ShipmentsModel.EntityQueries
 {
@@ -68,24 +70,50 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             vars.VATTypeZeroId = GetVATType("ZERO");
             vars.QuoteStageQTDRId = GetQuoteStage("QTDR");
             vars.VendorId = GetVendor("TestVendor");
-            vars.AgentId = GetAgent("TestAgentExport1");
-            //vars.CustomerId =  GetCustomer("TestShipperExport1");
-            vars.CustomAgentId = GetCustomsAgent("TestCustomAgentExport1");
+            vars.AgentId = GetAgent("NewaAgentTest 55");
+            vars.CustomAgentId = GetCustomsAgent("TestCustomAgentExport177");
             vars.ShippingAgentId = GetShippingAgent("TestShippingAgentExport1");
-            //    ShipmentVariables.WarehouseId = await GetWarehouseId("TestWarehouseExport1", "WR2");
-            //    ShipmentVariables.ShipperExport1 = await GetCustomerId("TstShipExport1");
-
-
+            vars.WarehouseId =  GetWarehouse("TestWarehous4444444eExport1", "WR9");
+            vars.CustomerId = GetCustomer("TestShipperExpo77777rt1");
             return vars;
+        }
+        private string GetWarehouse(string warehouseName,string code)
+        {
+            WarehouseRepository warehouseRepository = new WarehouseRepository(commonDataContext);
+            Warehouse warehouse = warehouseRepository.GetFirstSingleByCode(code, tenant);
+            if (warehouse == null)
+            {
+                InsertNewWarehouse(warehouseName,code);
+                warehouse = warehouseRepository.GetFirstSingleByCode(code, tenant);
+            }
+            return warehouse.Id;
+        }
+        private void InsertNewWarehouse(string warehouseName, string code)
+        {
+            WarehouseService warehouseService = new WarehouseService(commonDataContext, tenant);
+            warehouseService.Create(CreateWarehousePM(warehouseName, code));
+        }
+
+        public WarehousePM CreateWarehousePM(string warehouseName, string code)
+        {
+            WarehousePM WarehousePM = new WarehousePM();
+            WarehousePM.Tenant = tenant;
+            WarehousePM.EnglishName = warehouseName;
+            WarehousePM.CityName = "AKD";
+            WarehousePM.PartnerTypeId = "WH";
+            WarehousePM.CountryId = vars.CountryUSId;
+            WarehousePM.Code = code;
+            return WarehousePM;
+
         }
         private string GetShippingAgent(string shippingAgentName)
         {
             ShippingAgentRepository shippingAgentRepository = new ShippingAgentRepository(commonDataContext);
-            ShippingAgent shippingAgent = shippingAgentRepository.GetSingleShippingAgentByCode(shippingAgentName, tenant);
+            ShippingAgent shippingAgent = shippingAgentRepository.GetFirstSingleByName(shippingAgentName, tenant);
             if (shippingAgent == null)
             {
                 InsertNewShippingAgent(shippingAgentName);
-                shippingAgent = shippingAgentRepository.GetSingleShippingAgentByCode(shippingAgentName, tenant);
+                shippingAgent = shippingAgentRepository.GetFirstSingleByName(shippingAgentName, tenant);
             }
             return shippingAgent.Id;
         }
@@ -101,7 +129,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shippingAgentPM.Tenant = tenant;
             shippingAgentPM.EnglishName = shippingAgentName;
             shippingAgentPM.CityName = "AKD";
-            shippingAgentPM.PartnerTypeId = "AG";
+            shippingAgentPM.PartnerTypeId = "SG";
             shippingAgentPM.CountryId = vars.CountryUSId;
             return shippingAgentPM;
 
@@ -109,11 +137,11 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         private string GetCustomsAgent(string customAgentName)
         {
             CustomAgentRepository customAgentRepository = new CustomAgentRepository(commonDataContext);
-            CustomAgent customAgent = customAgentRepository.GetSingleCustomAgentByCode(tenant, customAgentName);
+            CustomAgent customAgent = customAgentRepository.GetFirstSingleByName(customAgentName,tenant);
             if (customAgent == null)
             {
                 InsertNewCustomAgent(customAgentName);
-                customAgent = customAgentRepository.GetSingleCustomAgentByCode(tenant, customAgentName);
+                customAgent = customAgentRepository.GetFirstSingleByName(customAgentName, tenant);
             }
             return customAgent.Id;
         }
@@ -129,47 +157,47 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             customAgentPM.Tenant = tenant;
             customAgentPM.EnglishName = customAgentName;
             customAgentPM.CityName = "AKD";
-            customAgentPM.PartnerTypeId = "AG";
+            customAgentPM.PartnerTypeId = "CG";
             customAgentPM.CountryId = vars.CountryUSId;
             customAgentPM.Addresses.Add(Address("M", customAgentName));
             return customAgentPM;
         }
-        //private string GetCustomer(string customerName)
-        //{
-        //    CustomerRepository customerRepository = new CustomerRepository(commonDataContext);
-        //    Customer customer = customerRepository.GetSingleCustomerByCode(customerName, tenant,false);
-        //    if (customer == null)
-        //    {
-        //        InsertNewCustomer(customerName);
-        //        customer = customerRepository.GetSingleCustomerByCode(customerName, tenant,false);
-        //    }
-        //    return customer.Id;
-        //}
-        //private void InsertNewCustomer(string customerName)
-        //{
-        //    CustomerService customerService = new PartnerService(commonDataContext, tenant);
-        //    customerService.Create(CreateCustomertPM(customerName));
-        //}
+        private string GetCustomer(string customerName)
+        {
+            CustomerRepository customerRepository = new CustomerRepository(commonDataContext);
+            Customer customer = customerRepository.GetFirstSingleByName(customerName, tenant);
+            if (customer == null)
+            {
+                InsertNewCustomer(customerName);
+                customer = customerRepository.GetFirstSingleByName(customerName, tenant);
+            }
+            return customer.Id;
+        }
+        private void InsertNewCustomer(string customerName)
+        {
+            CustomerService customerService = new CustomerService(commonDataContext, CreateCustomertPM(customerName));
+            customerService.Create();
+        }
 
-        //public AgentPM CreateCustomertPM(string agentName)
-        //{
-        //    AgentPM agentPM = new AgentPM();
-        //    agentPM.Tenant = tenant;
-        //    agentPM.EnglishName = agentName;
-        //    agentPM.CityName = "AKD";
-        //    agentPM.PartnerTypeId = "AG";
-        //    agentPM.CountryId = vars.CountryUSId;
-        //    agentPM.Addresses.Add(Address("M", agentName));
-        //    return agentPM;
-        //}
+        public CustomerPM CreateCustomertPM(string agentName)
+        {
+            CustomerPM customerPM = new CustomerPM();
+            customerPM.Tenant = tenant;
+            customerPM.EnglishName = agentName;
+            customerPM.CityName = "AKD";
+            customerPM.PartnerTypeId = "CS";
+            customerPM.CountryId = vars.CountryUSId;
+            customerPM.Addresses.Add(Address("M", agentName));
+            return customerPM;
+        }
         private string GetAgent(string agentName)
         {
             AgentRepository agentRepository = new AgentRepository(commonDataContext);
-            Agent agent = agentRepository.GetSingleAgentByCode(agentName, tenant);
+            Agent agent = agentRepository.GetFirstSingleByName(agentName, tenant);
             if (agent == null)
             {
                 InsertNewAgent(agentName);
-                agent = agentRepository.GetSingleAgentByCode(agentName, tenant);
+                agent = agentRepository.GetFirstSingleByName(agentName, tenant);
             }
             return agent.Id;
         }
@@ -194,14 +222,18 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         private string GetVendor(string vendorName)
         {
             VendorRepository vendorRepository = new VendorRepository(commonDataContext);
-            Vendor vendor = vendorRepository.GetSingleVendorByCode(vendorName, tenant);
+            Vendor vendor = vendorRepository.GetFirstSingleByName(vendorName, tenant);
             if (vendor == null)
             {
                 InsertNewVendor(vendorName);
-                vendor = vendorRepository.GetSingleVendorByCode(vendorName, tenant);
+                vendor = vendorRepository.GetFirstSingleByName(vendorName, tenant);
             }
+            //IQueryable<Vendor> iqueryable = vendorRepository.GetVendors( tenant);
+            //Vendor vendor = iqueryable.Where(d => d.Card.EnglishName == vendorName).FirstOrDefault();
+
             return vendor.Id;
         }
+
         private void InsertNewVendor(string vendorName)
         {
             VendorService vendorService = new VendorService(commonDataContext, tenant);
