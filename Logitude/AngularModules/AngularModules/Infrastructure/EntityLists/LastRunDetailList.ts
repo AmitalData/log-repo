@@ -6,28 +6,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-export class BIReportList {
+export class LastRunDetailList {
    
 	Id: string;
 	Tenant: number;
-	CreateDate: Date;
-	CreatedByUserId: string;
-	UpdateDate: Date;
-	UpdatedByUserId: string;
-	SearchFields: string;
-	Name: string;
-	Description: string;
-	DWQueryId: string;
-	Inactive: boolean;
-	TypeCode: string;
-	AGGridOptionsXML: string;
-	BIReportFolderId: string;
-	CreatedByUserName: string;
-	UpdatedByUserName: string;
 	LastRunDate: Date;
+	LastRunByUserId: string;
 	LastRunByUserName: string;
-	FactTableName: string;
-	LastRunId: string;
 	
 }
  

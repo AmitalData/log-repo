@@ -26,7 +26,7 @@ export class NewBIReport extends BaseComponent {
     public DataContext: NewBIReport = this;
     public ObjectTableName: string = "BIReport";
     public IsNewQuery = true;
-    public BIReportExtendedPMService : BIReportExtendedPMService;
+    public BIReportExtendedPMService: BIReportExtendedPMService;
     public BIReportExtendedListService: BIReportExtendedListService;
     public DWObjectTableExtendedListService: DWObjectTableExtendedListService;
     private CurrentSession = SessionLocator.SelectedSession;
@@ -56,7 +56,6 @@ export class NewBIReport extends BaseComponent {
         this.EntityPM.UpdateDate = todayDate;
         this.EntityPM.LastRunDate = todayDate;
         this.EntityPM.UpdatedByUserId = SessionLocator.LoggedUserId;
-        this.EntityPM.LastRunByUserId = SessionLocator.LoggedUserId;
         this.EntityPM.TypeCode = "EXL";
         this.FillFactTableNamesList();
         this.myService = new BIReportPMService();
@@ -317,6 +316,9 @@ export class NewBIReport extends BaseComponent {
                 if (s != null) {
                     this.EntityPM.DWQueryId = s.QID;
                     this.SetUIProperties();
+                    if (s != "cancel") {
+                        this.myService.update(this.EntityPM);
+                    }
                 }
             });
         });
@@ -390,6 +392,7 @@ export class NewBIReport extends BaseComponent {
                                         else {
                                             this.CurrentSession.CloseCurrentWindow();
 
+                                            this.myService.update(this.EntityPM);
 
                                             SessionLocator.DynamicLoader.Load("./InfrastructureModules/InfrastructureBIReport/Components/Workspaces/BIReportPreviewComponent", this.CurrentSession.SessionLocation.viewContainerRef)
                                                 .then(cmpRef => {

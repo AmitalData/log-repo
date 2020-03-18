@@ -2187,6 +2187,10 @@
     <Compile Include="Migrations\202003121123558_AddCountryAndStatePropertiesToPort_Samar.Designer.cs">
       <DependentUpon>202003121123558_AddCountryAndStatePropertiesToPort_Samar.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202003171008363_WesamAddLastRunDetailTable.cs" />
+    <Compile Include="Migrations\202003171008363_WesamAddLastRunDetailTable.Designer.cs">
+      <DependentUpon>202003171008363_WesamAddLastRunDetailTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\202003030904524_WesamDBMigrationFixes.cs" />
     <Compile Include="Migrations\202003030904524_WesamDBMigrationFixes.Designer.cs">
@@ -3950,6 +3954,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202003121123558_AddCountryAndStatePropertiesToPort_Samar.resx">
       <DependentUpon>202003121123558_AddCountryAndStatePropertiesToPort_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003171008363_WesamAddLastRunDetailTable.resx">
+      <DependentUpon>202003171008363_WesamAddLastRunDetailTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

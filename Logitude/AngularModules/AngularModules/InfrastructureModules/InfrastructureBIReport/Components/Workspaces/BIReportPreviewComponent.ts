@@ -22,6 +22,8 @@ import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLoca
 import { EditShipmentLinkRendererComponent } from "../TemplateRenderer/EditShipmentLinkRendererComponent";
 import { ShipmentPMService } from '../../../../Shipment/Services/StandardPMs/ShipmentPMService';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import { LastRunDetailPM } from '../../../../Infrastructure/EntityPMs/LastRunDetailPM';
+import { LastRunDetailExtendedPMService } from '../../../../Infrastructure/Services/ExtendedPMs/LastRunDetailExtendedPMService';
 @Component({
     moduleId: module.id,
     templateUrl: 'BIReportPreviewComponent.html',
@@ -42,6 +44,7 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
     public _DWQueryBuilderService: DWQueryBuilderService;
     public _DWQueryBuilderHelper: DWQueryBuilderHelper
     public _BIReportPMService: BIReportPMService;
+    public LastRunDetailExtendedPMService: LastRunDetailExtendedPMService;
     DataContext: any = this;
     public _InfrastructureDomainService: InfrastructureDomainService;
     public _ShipmentPMService: ShipmentPMService;
@@ -99,6 +102,7 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
         this._InfrastructureDomainService = new InfrastructureDomainService();
         this._DWSubQueryPMService = new DWSubQueryPMService();
         this._BIReportPMService = new BIReportPMService();
+        this.LastRunDetailExtendedPMService = new LastRunDetailExtendedPMService();
         this._DWQueryBuilderService = new DWQueryBuilderService();
         this._ShipmentPMService = new ShipmentPMService();
     }
@@ -641,6 +645,7 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
                         this.SelectedFiltersDataSource = [];
                     }
                     this.LoadBIReportData();
+                    this._BIReportPMService.update(this.EntityPM).subscribe(response => { });
                 }
             });
         });
@@ -676,11 +681,9 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
             this.StopBusyIndicator();
         }
         else {
+            var lastRunDetail: LastRunDetailPM = this.FillLastRunDetails();
 
-            var todayDate: Date = DateTool.GetCurrentDateAsUtc();
-            this.EntityPM.LastRunDate = todayDate;
-            this.EntityPM.LastRunByUserId = SessionLocator.LoggedUserId;
-            this._BIReportPMService.update(this.EntityPM).subscribe(myResult => {
+            this.LastRunDetailExtendedPMService.UpdateLastRunDetails(lastRunDetail, SessionLocator.LoggedUserId).subscribe(myResult => {
                 this.HasValidationError = false;
                 this.rowData = MyData.rowData;
                 this.isParentTenant = MyData.IsParentTenant;
@@ -692,6 +695,17 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
 
         this.StopBusyIndicator();
     }
+    private FillLastRunDetails() {
+        var lastRunDetail: LastRunDetailPM = new LastRunDetailPM();
+        var todayDate: Date = DateTool.GetCurrentDateTimeAsUtc();
+        lastRunDetail.Id = this.EntityPM.LastRunId;
+        lastRunDetail.Tenant = SessionLocator.Tenant;
+        lastRunDetail.LastRunByUserId;
+        lastRunDetail.LastRunDate = todayDate;
+        lastRunDetail.LastRunByUserId = SessionLocator.LoggedUserId;
+        return lastRunDetail;
+    }
+
     OnComputeFiltersComplete(MyData) {
         this.BIReportXMLData.DWQueryData = MyData;
         this.ExportToExcelAction();

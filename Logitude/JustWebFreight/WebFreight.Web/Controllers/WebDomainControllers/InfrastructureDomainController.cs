@@ -1837,11 +1837,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 var ColumnsXML = LogitudeXmlSerializer.SerializeObjectToXmlString(QueryData.BITabularViewSettings);
 
-                ICommonDataContext commonContext = CommonDataContext.GetContext(authToken.Tenant);
                 IInfrastructureContext objectContext = InfrastructureContext.GetContext(authToken.Tenant);
                 BIReportRepository repository = new BIReportRepository(objectContext);
                 BIReportXMLData QueryData_Updated = new BIReportXMLData();
-                UserService userService = new UserService(commonContext, authToken.Tenant);
 
                 var entityPM = QueryData.BIReportPM;
                 var entityPOCO = repository.GetSingle(entityPM.Id, entityPM.Tenant);
@@ -1850,12 +1848,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     entityPM.AGGridOptionsXML = ColumnsXML;
                     entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
                     entityPOCO.AGGridOptionsXML = entityPM.AGGridOptionsXML;
-                    bool isCustomerCare = userService.CheckIsUserCustomerCareById(entityPM.LastRunByUserId);
-                    if (!isCustomerCare)
-                    {
-                        entityPOCO.LastRunDate = entityPM.LastRunDate;
-                        entityPOCO.LastRunByUserId = entityPM.LastRunByUserId;
-                    }
                     repository.Update(entityPOCO);
                     repository.SubmitChanges();
 
