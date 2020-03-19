@@ -117,7 +117,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    NewWizardControlName =  "./TariffModule/Components/NewEntity/NewTariffProductsComponent",
-			      				    DefaultText =  "Tariff Products",
+			      				    DefaultText =  "Tariff Product",
 			      				    Code =  "0c06",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
@@ -549,13 +549,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	   		  
 	      
 
-	         Screen TariffProductTariffProductGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "TariffProduct.GeneralTabScreen", Name = "TariffProductGeneralTabScreen", ObjectTableId = TariffProductObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 3, IsReadOnly = false }, screensRepository, tenantScreens);
+	         Screen TariffProductTariffProductGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "TariffProduct.GeneralTabScreen", Name = "TariffProductGeneralTabScreen", ObjectTableId = TariffProductObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 4, IsReadOnly = false }, screensRepository, tenantScreens);
       
             ScreenField TariffProductTariffProductGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = TariffProductObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = TariffProductTariffProductGeneralTabScreenScreen1.Id,ScreenCode = TariffProductTariffProductGeneralTabScreenScreen1.Code, ObjectFieldCode = TariffProductObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
             ScreenField TariffProductTariffProductGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = TariffProductObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = TariffProductTariffProductGeneralTabScreenScreen1.Id,ScreenCode = TariffProductTariffProductGeneralTabScreenScreen1.Code, ObjectFieldCode = TariffProductObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField TariffProductTariffProductGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = TariffProductObjectFields.Where(d => d.FieldName == "Inactive").FirstOrDefault().Id, ScreenId = TariffProductTariffProductGeneralTabScreenScreen1.Id,ScreenCode = TariffProductTariffProductGeneralTabScreenScreen1.Code, ObjectFieldCode = TariffProductObjectFields.Where(d => d.FieldName == "Inactive").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField TariffProductTariffProductGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = TariffProductObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().Id, ScreenId = TariffProductTariffProductGeneralTabScreenScreen1.Id,ScreenCode = TariffProductTariffProductGeneralTabScreenScreen1.Code, ObjectFieldCode = TariffProductObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         
+            ScreenField TariffProductTariffProductGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = TariffProductObjectFields.Where(d => d.FieldName == "Inactive").FirstOrDefault().Id, ScreenId = TariffProductTariffProductGeneralTabScreenScreen1.Id,ScreenCode = TariffProductTariffProductGeneralTabScreenScreen1.Code, ObjectFieldCode = TariffProductObjectFields.Where(d => d.FieldName == "Inactive").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 
 	    }

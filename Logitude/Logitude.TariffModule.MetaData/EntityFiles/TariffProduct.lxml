@@ -38,7 +38,7 @@
   ObjectTableTypeCode="&quot;BR&quot;"
   MaxNumberOfCustomFields="0"
   NewWizardControlName="&quot;./TariffModule/Components/NewEntity/NewTariffProductsComponent&quot;"
-  DefaultText="&quot;Tariff Products&quot;"
+  DefaultText="&quot;Tariff Product&quot;"
   Code="&quot;0c06&quot;"
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"
@@ -618,7 +618,7 @@
     IsHeaderScreen="false"
     Code="&quot;TariffProduct.GeneralTabScreen&quot;"
     NumberOfColumns="1"
-    NumberOfRows="3">
+    NumberOfRows="4">
     <ScreenFields>
       <ScreenField
         Column="0"
@@ -633,6 +633,11 @@
       <ScreenField
         Column="0"
         Row="2"
+        ObjectFieldName="&quot;LocalName&quot;"
+        ScreenName="TariffProductGeneralTabScreen" />
+      <ScreenField
+        Column="0"
+        Row="3"
         ObjectFieldName="&quot;Inactive&quot;"
         ScreenName="TariffProductGeneralTabScreen" />
     </ScreenFields>
