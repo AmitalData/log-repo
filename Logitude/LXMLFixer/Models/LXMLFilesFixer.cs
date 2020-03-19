@@ -43,7 +43,9 @@ namespace Logitude.LXMLFixer.Models
 
         public void ExtractLXMLFilesMistakes()
         {
-            string[] lxmlFiles = GetLXMLFiles(false);
+            bool exceptCustomsLxml = ConfigurationManager.AppSettings["ExceptCustomsLXML"] == "true";
+
+            string[] lxmlFiles = GetLXMLFiles(exceptCustomsLxml);
 
             if(lxmlFiles != null)
             {
@@ -193,7 +195,9 @@ namespace Logitude.LXMLFixer.Models
         {
             BuildExcludedTablesList();
 
-            string[] lxmlFiles = GetLXMLFiles(true);
+            bool exceptCustomsLxml = ConfigurationManager.AppSettings["ExceptCustomsLXML"] == "true";
+
+            string[] lxmlFiles = GetLXMLFiles(exceptCustomsLxml);
 
             if (lxmlFiles != null)
             {
