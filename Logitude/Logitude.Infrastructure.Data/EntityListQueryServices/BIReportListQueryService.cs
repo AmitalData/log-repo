@@ -40,8 +40,8 @@ namespace Logitude.Infrastructure.Data.EntityListQueryServices
                                                   BIReportFolderId = a.BIReportFolderId,
                                                   UpdatedByUserName = a.UpdatedByUser == null ? null : (a.UpdatedByUser.Contact == null ? null : a.UpdatedByUser.Contact.EnglishName),
                                                   CreatedByUserName = a.CreatedByUser == null ? null : (a.CreatedByUser.Contact == null ? null : a.CreatedByUser.Contact.EnglishName),
-                                                  LastRunDate = a.LastRunDetail.LastRunDate,
-                                                  LastRunByUserName = a.LastRunDetail.LastRunByUser.Contact.EnglishName,
+                                                  LastRunDate = a.LastRunDetail == null ? null : (DateTime?)a.LastRunDetail.LastRunDate,
+                                                  LastRunByUserName = a.LastRunDetail == null ? null : (a.LastRunDetail.LastRunByUser == null ? null : (a.LastRunDetail.LastRunByUser.Contact == null ? null : a.LastRunDetail.LastRunByUser.Contact.EnglishName)),
                                               });
             return query;
         }

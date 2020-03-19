@@ -388,12 +388,12 @@ namespace Logitude.Infrastructure.BL.EntityPMs
 			
 		 }
 	   }
-	  private DateTime lastRunDate ;
+	  private DateTime? lastRunDate ;
 	  	  
        
 	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
-       public DateTime LastRunDate  
+       public DateTime? LastRunDate  
 	   {
 	    
 	     get
@@ -404,7 +404,7 @@ namespace Logitude.Infrastructure.BL.EntityPMs
 		 {
 		   if(lastRunDate != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LastRunDate",OldValue=lastRunDate,NewValue=value,PropertyType="DateTime"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LastRunDate",OldValue=lastRunDate,NewValue=value,PropertyType="DateTime?"};
 		    NotifyPropertyChanged(values);
 		   lastRunDate=value;
 		   }
