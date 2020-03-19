@@ -403,9 +403,9 @@ namespace WebFreight.Web.ReportsWebServices
             #region Fill Report Data
 
 
-            dataProvider.TotalFCLShipments = shipments.Where(d => (d.TransportModeId == "O" && (d.ShipmentTypeId == "FCLD" || d.ShipmentTypeId == "MYGO")) || (d.TransportModeId == "I" && (d.ShipmentTypeId == "FTL" || d.ShipmentTypeId == "MYGI"))).Count();
-            dataProvider.TotalLCLShipments = shipments.Where(d => d.TransportModeId == "A" || (d.TransportModeId == "O" && d.ShipmentTypeId == "LCLD") || (d.TransportModeId == "I" && d.ShipmentTypeId == "LTL")).Count();
-            dataProvider.TotalLCLWeight = shipments.Where(d => d.TransportModeId == "A" || (d.TransportModeId == "O" && d.ShipmentTypeId == "LCLD") || (d.TransportModeId == "I" && d.ShipmentTypeId == "LTL")).Sum(d => d.GrossWeightInKG);
+            dataProvider.TotalFCLShipments = shipments.Where(d => d.ShipmentTypeId == "FCLD" || d.ShipmentTypeId == "MYGO").Count();
+            dataProvider.TotalLCLShipments = shipments.Where(d => d.ShipmentTypeId == "LCLD").Count();
+            dataProvider.TotalLCLWeight = shipments.Where(d => d.ShipmentTypeId == "LCLD").Sum(d => d.GrossWeightInKG);
             dataProvider.TotalShipments = shipments.Count();
             dataProvider.TotalTEU = shipments.Sum(d => d.TEU);
 
@@ -419,13 +419,13 @@ namespace WebFreight.Web.ReportsWebServices
                                                              select new ShippingLineStatisticsDataProvider.ShippingLineStatisticsReport()
                                                              {
                                                                  Carrier = gr.Key.MainCarriageCarrierName == null ? "(No Carrier Specified)" : gr.Key.MainCarriageCarrierName,
-                                                                 FCLShipments = gr.Where(d => (d.TransportModeId == "O" && (d.ShipmentTypeId == "FCLD" || d.ShipmentTypeId == "MYGO")) || (d.TransportModeId == "I" && (d.ShipmentTypeId == "FTL" || d.ShipmentTypeId == "MYGI"))).Count(),
-                                                                 LCLShipments = gr.Where(d => d.TransportModeId == "A" || (d.TransportModeId == "O" && d.ShipmentTypeId == "LCLD") || (d.TransportModeId == "I" && d.ShipmentTypeId == "LTL")).Count(),
+                                                                 FCLShipments = gr.Where(d =>  d.ShipmentTypeId == "FCLD" || d.ShipmentTypeId == "MYGO").Count(),
+                                                                 LCLShipments = gr.Where(d =>  d.ShipmentTypeId == "LCLD").Count(),
                                                                  TotalShipments = gr.Count(),
-                                                                 LCLWeight = gr.Where(d => d.TransportModeId == "A" || (d.TransportModeId == "O" && d.ShipmentTypeId == "LCLD") || (d.TransportModeId == "I" && d.ShipmentTypeId == "LTL")).Sum(t => t.GrossWeightInKG),
+                                                                 LCLWeight = gr.Where(d => d.ShipmentTypeId == "LCLD").Sum(t => t.GrossWeightInKG),
                                                                  TEU = gr.Sum(t => t.TEU),
                                                                  PercentageFromTotalShipment = ((double)gr.Count() / (double)dataProvider.TotalShipments),
-                                                                 VolumeInCBM = gr.Where(d => d.TransportModeId == "A" || (d.TransportModeId == "O" && d.ShipmentTypeId == "LCLD") || (d.TransportModeId == "I" && d.ShipmentTypeId == "LTL")).Sum(t => t.VolumeInCBM),
+                                                                 VolumeInCBM = gr.Where(d => d.ShipmentTypeId == "LCLD").Sum(t => t.VolumeInCBM),
                                                              }).ToList();
             #endregion
 
