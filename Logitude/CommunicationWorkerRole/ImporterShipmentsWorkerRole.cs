@@ -85,8 +85,9 @@ namespace CommunicationWorkerRole
                     string AuthURI = URI + "APIAuthentication";
                     var serializedObject = JsonConvert.SerializeObject(APICredentialsParam);
                     var content = new StringContent(serializedObject, Encoding.UTF8, "application/json");
-                    var result = await client.PostAsync(AuthURI, content);
-                    var tempUser = result.Content.ReadAsStringAsync().Result;
+                    var result = client.PostAsync(AuthURI, content);
+                    result.Wait();
+                    var tempUser = result.Result.Content.ReadAsStringAsync().Result;
                     ApiCredential User = JsonConvert.DeserializeObject<ApiCredential>(tempUser);
                     Token = User.Token;
                 }
@@ -222,8 +223,9 @@ namespace CommunicationWorkerRole
                                                         };
                                                         var serializedObject = JsonConvert.SerializeObject(shipmentAM);
                                                         var content = new StringContent(serializedObject, Encoding.UTF8, "application/json");
-                                                        var result = await client.PutAsync(ImporterShipmentsURI, content);
-                                                        if (result.StatusCode == System.Net.HttpStatusCode.OK)
+                                                        var result = client.PutAsync(ImporterShipmentsURI, content);
+                                                        result.Wait();
+                                                        if (result.Result.StatusCode == System.Net.HttpStatusCode.OK)
                                                         {
                                                             if (ForwarderShipment == null)
                                                             {
@@ -255,7 +257,7 @@ namespace CommunicationWorkerRole
                                                                     DocumentsFilingService documentsFilingService = new DocumentsFilingService(CommonContext, ForwarderShipment.Tenant);
                                                                     documentsFilingService.Update(item, null);
                                                                 }
-                                                                var ResponseData = result.Content.ReadAsStringAsync().Result;
+                                                                var ResponseData = result.Result.Content.ReadAsStringAsync().Result;
                                                                 var Donemsg = "Cancelling Shipment From Tenant " + Shipment.CustomerTenantNumber + " Done Successfully /" + DateTime.Now;
                                                                 APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "D", response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, Donemsg, null, ResponseData, null, "");
                                                                 //importerTenant = customerTenantAccessInfo.CustomerTenant;
@@ -278,7 +280,7 @@ namespace CommunicationWorkerRole
                                                         }
                                                         else //if (result.StatusCode == System.Net.HttpStatusCode.BadRequest)
                                                         {
-                                                            APIException EXC = JsonConvert.DeserializeObject<APIException>(result.Content.ReadAsStringAsync().Result);
+                                                            APIException EXC = JsonConvert.DeserializeObject<APIException>(result.Result.Content.ReadAsStringAsync().Result);
                                                             if (EXC != null)
                                                             {
                                                                 var Failmsg = EXC.ErrorType + " Fail To Send Shipment Updates To Importer Tenant " + DateTime.Now;
@@ -323,8 +325,9 @@ namespace CommunicationWorkerRole
                                                     };
                                                     var serializedObject = JsonConvert.SerializeObject(shipmentAM);
                                                     var content = new StringContent(serializedObject, Encoding.UTF8, "application/json");
-                                                    var result = await client.PutAsync(ImporterShipmentsURI, content);
-                                                    if (result.StatusCode == System.Net.HttpStatusCode.OK)
+                                                    var result = client.PutAsync(ImporterShipmentsURI, content);
+                                                    result.Wait();
+                                                    if (result.Result.StatusCode == System.Net.HttpStatusCode.OK)
                                                     {
                                                         if (ForwarderShipment == null)
                                                         {
@@ -348,7 +351,7 @@ namespace CommunicationWorkerRole
                                                             //var shipmentService = new ShipmentService(objectContext, ForwarderShipment, systemEmail);
                                                             //shipmentService.Update();
                                                             queueservice.Complete();
-                                                            var ResponseData = result.Content.ReadAsStringAsync().Result;
+                                                            var ResponseData = result.Result.Content.ReadAsStringAsync().Result;
                                                             var Donemsg = "Cancelling Shipment From Tenant " + Shipment.CustomerTenantNumber + " Done Successfully /" + DateTime.Now;
                                                             APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "D", response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, Donemsg, null, ResponseData, null, "");
                                                         }
@@ -370,7 +373,7 @@ namespace CommunicationWorkerRole
                                                     }
                                                     else //if (result.StatusCode == System.Net.HttpStatusCode.BadRequest)
                                                     {
-                                                        APIException EXC = JsonConvert.DeserializeObject<APIException>(result.Content.ReadAsStringAsync().Result);
+                                                        APIException EXC = JsonConvert.DeserializeObject<APIException>(result.Result.Content.ReadAsStringAsync().Result);
                                                         if (EXC != null)
                                                         {
                                                             var Failmsg = EXC.ErrorType + " Fail To Send Shipment Updates To Importer Tenant " + DateTime.Now;
@@ -389,12 +392,13 @@ namespace CommunicationWorkerRole
                                                 using (var client = new HttpClient())
                                                 {
                                                     client.DefaultRequestHeaders.Add("Token", Token);
-                                                    using (var apiresponse = await client.GetAsync(GetURI))
+                                                    using (var apiresponse = client.GetAsync(GetURI))
                                                     {
-                                                        if (apiresponse.IsSuccessStatusCode)
+                                                        apiresponse.Wait();
+                                                        if (apiresponse.Result.IsSuccessStatusCode)
                                                         {
 
-                                                            var IsShipmentExistJsonString = apiresponse.Content.ReadAsStringAsync().Result;
+                                                            var IsShipmentExistJsonString = apiresponse.Result.Content.ReadAsStringAsync().Result;
                                                             var tempResult = JsonConvert.DeserializeObject(IsShipmentExistJsonString);
                                                             if (tempResult != null)
                                                             {
@@ -676,10 +680,11 @@ namespace CommunicationWorkerRole
 
                                                         var serializedObject = JsonConvert.SerializeObject(shipmentAM);
                                                         var content = new StringContent(serializedObject, Encoding.UTF8, "application/json");
-                                                        var result = await client.PutAsync(ImporterShipmentsURI, content);
-                                                        if (result.StatusCode == System.Net.HttpStatusCode.OK)
+                                                        var result = client.PutAsync(ImporterShipmentsURI, content);
+                                                        result.Wait();
+                                                        if (result.Result.StatusCode == System.Net.HttpStatusCode.OK)
                                                         {
-                                                            var temp = result.Content.ReadAsStringAsync().Result;
+                                                            var temp = result.Result.Content.ReadAsStringAsync().Result;
                                                             List<string> ImporterShipmentNoId = JsonConvert.DeserializeObject<List<string>>(temp);
 
                                                             if (ForwarderShipment == null)
@@ -706,7 +711,7 @@ namespace CommunicationWorkerRole
                                                                 var shipmentService = new ShipmentService(objectContext, ForwarderShipment, systemEmail);
                                                                 shipmentService.Update();
                                                                 queueservice.Complete();
-                                                                var ResponseData = result.Content.ReadAsStringAsync().Result;
+                                                                var ResponseData = result.Result.Content.ReadAsStringAsync().Result;
                                                                 var Donemsg = "Updates Of Shipment Sent To Importer Successfully " + DateTime.Now;
                                                                 APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "D", response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, Donemsg, null, ResponseData, null, "");
                                                             }
@@ -728,7 +733,7 @@ namespace CommunicationWorkerRole
                                                         }
                                                         else //if (result.StatusCode == System.Net.HttpStatusCode.BadRequest)
                                                         {
-                                                            APIException EXC = JsonConvert.DeserializeObject<APIException>(result.Content.ReadAsStringAsync().Result);
+                                                            APIException EXC = JsonConvert.DeserializeObject<APIException>(result.Result.Content.ReadAsStringAsync().Result);
                                                             if (EXC != null)
                                                             {
                                                                 var Failmsg = EXC.ErrorType + " Fail To Send Shipment Updates To Importer Tenant " + DateTime.Now;
@@ -904,10 +909,11 @@ namespace CommunicationWorkerRole
 
                                                         var serializedObject = JsonConvert.SerializeObject(shipmentAM);
                                                         var content = new StringContent(serializedObject, Encoding.UTF8, "application/json");
-                                                        var result = await client.PostAsync(ImporterShipmentsURI, content);
-                                                        if (result.StatusCode == System.Net.HttpStatusCode.OK)
+                                                        var result = client.PostAsync(ImporterShipmentsURI, content);
+                                                        result.Wait();
+                                                        if (result.Result.StatusCode == System.Net.HttpStatusCode.OK)
                                                         {
-                                                            var temp = result.Content.ReadAsStringAsync().Result;
+                                                            var temp = result.Result.Content.ReadAsStringAsync().Result;
                                                             List<string> ImporterShipmentNoId = JsonConvert.DeserializeObject<List<string>>(temp);
                                                             if (ForwarderShipment == null)
                                                             {
@@ -986,7 +992,7 @@ namespace CommunicationWorkerRole
                                                         }
                                                         else //if (result.StatusCode == System.Net.HttpStatusCode.BadRequest)
                                                         {
-                                                            APIException EXC = JsonConvert.DeserializeObject<APIException>(result.Content.ReadAsStringAsync().Result);
+                                                            APIException EXC = JsonConvert.DeserializeObject<APIException>(result.Result.Content.ReadAsStringAsync().Result);
                                                             var Failmsg = EXC.ErrorType + " Faild To Send Updates To Importer Tenant " + DateTime.Now;
                                                             APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "F", response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, Failmsg, null, LogitudeXmlSerializer.SerializeObjectToXmlString(EXC), null, "");
                                                             if (EXC != null)

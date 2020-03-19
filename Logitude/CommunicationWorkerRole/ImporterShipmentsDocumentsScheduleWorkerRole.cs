@@ -104,8 +104,9 @@ namespace CommunicationWorkerRole
                 string AuthURI = URI + "APIAuthentication";
                 var serializedObject = JsonConvert.SerializeObject(APICredentialsParam);
                 var content = new StringContent(serializedObject, Encoding.UTF8, "application/json");
-                var result = await client.PostAsync(AuthURI, content);
-                var tempUser = result.Content.ReadAsStringAsync().Result;
+                var result = client.PostAsync(AuthURI, content);
+                result.Wait();
+                var tempUser = result.Result.Content.ReadAsStringAsync().Result;
                 ApiCredential User = JsonConvert.DeserializeObject<ApiCredential>(tempUser);
                 Token = User.Token;
             }
@@ -248,12 +249,13 @@ namespace CommunicationWorkerRole
                                                 using (var client = new HttpClient())
                                                 {
                                                     client.DefaultRequestHeaders.Add("Token", Token);
-                                                    using (var apiresponse = await client.GetAsync(GetURI))
+                                                    using (var apiresponse = client.GetAsync(GetURI))
                                                     {
-                                                        if (apiresponse.IsSuccessStatusCode)
+                                                        apiresponse.Wait();
+                                                        if (apiresponse.Result.IsSuccessStatusCode)
                                                         {
 
-                                                            var IsNewJsonString = apiresponse.Content.ReadAsStringAsync().Result;
+                                                            var IsNewJsonString = apiresponse.Result.Content.ReadAsStringAsync().Result;
                                                             var tempResult = JsonConvert.DeserializeObject(IsNewJsonString);
                                                             if (tempResult != null)
                                                             {
@@ -364,10 +366,11 @@ namespace CommunicationWorkerRole
 
                                                         var serializedObject = JsonConvert.SerializeObject(NewDocumentFilingAM);
                                                         var content = new StringContent(serializedObject, Encoding.UTF8, "application/json");
-                                                        var result = await client.PostAsync(ImporterShipmentDocumentsURI, content);
-                                                        if (result.StatusCode == System.Net.HttpStatusCode.OK)
+                                                        var result = client.PostAsync(ImporterShipmentDocumentsURI, content);
+                                                        result.Wait();
+                                                        if (result.Result.StatusCode == System.Net.HttpStatusCode.OK)
                                                         {
-                                                            var temp1 = result.Content.ReadAsStringAsync().Result;
+                                                            var temp1 = result.Result.Content.ReadAsStringAsync().Result;
                                                             var Donemsg = "New Document Sent To Importer Successfully " + DateTime.Now;
                                                             APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "D", response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, Donemsg, null, temp1, null, "");
 
@@ -405,7 +408,7 @@ namespace CommunicationWorkerRole
                                                         }
                                                         else //if (result.StatusCode == System.Net.HttpStatusCode.BadRequest)
                                                         {
-                                                            var temp1 = result.Content.ReadAsStringAsync().Result;
+                                                            var temp1 = result.Result.Content.ReadAsStringAsync().Result;
                                                             APIException EXC = JsonConvert.DeserializeObject<APIException>(temp1);
                                                             if (EXC != null)
                                                             {
@@ -474,18 +477,19 @@ namespace CommunicationWorkerRole
 
                                                         var serializedObject = JsonConvert.SerializeObject(NewDocumentFilingAM);
                                                         var content = new StringContent(serializedObject, Encoding.UTF8, "application/json");
-                                                        var result = await client.PutAsync(ImporterShipmentDocumentsURI, content);
-                                                        if (result.StatusCode == System.Net.HttpStatusCode.OK)
+                                                        var result = client.PutAsync(ImporterShipmentDocumentsURI, content);
+                                                        result.Wait();
+                                                        if (result.Result.StatusCode == System.Net.HttpStatusCode.OK)
                                                         {
                                                             CorrelationId = Guid.NewGuid().ToString();
-                                                            var temp1 = result.Content.ReadAsStringAsync().Result;
+                                                            var temp1 = result.Result.Content.ReadAsStringAsync().Result;
                                                             var Donemsg = "Document Updates Sent To Importer Successfully " + DateTime.Now;
                                                             APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "D", response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, Donemsg, null, temp1, null, "");
                                                             //queueservice.Complete();
                                                         }
                                                         else //if (result.StatusCode == System.Net.HttpStatusCode.BadRequest)
                                                         {
-                                                            var temp1 = result.Content.ReadAsStringAsync().Result;
+                                                            var temp1 = result.Result.Content.ReadAsStringAsync().Result;
                                                             APIException EXC = JsonConvert.DeserializeObject<APIException>(temp1);
                                                             if (EXC != null)
                                                             {
