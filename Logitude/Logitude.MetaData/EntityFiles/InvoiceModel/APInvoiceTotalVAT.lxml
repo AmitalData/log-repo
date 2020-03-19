@@ -57,7 +57,9 @@
   HasDocuments="false"
   IsLookUp="false"
   IsTabsHidden="false"
-  SearchFields="&quot;APInvoiceTotalVAT,APInvoiceTotalVATs,,Id,&quot;">
+  SearchFields="&quot;APInvoiceTotalVAT,APInvoiceTotalVATs,,Id,&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;cd4103e3-8ed0-44b1-9f19-84cbfbc7637c&quot;"
     FieldName="&quot;Id&quot;"
@@ -68,7 +70,7 @@
     ObjectTableName="&quot;APInvoiceTotalVAT&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="0"
+    MaxLength="15"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -360,7 +362,7 @@
     ObjectTableName="&quot;APInvoiceTotalVAT&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="0"
+    MaxLength="25"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -433,7 +435,7 @@
     ObjectTableName="&quot;APInvoiceTotalVAT&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="0"
+    MaxLength="25"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -1014,7 +1016,7 @@
     DefaultText="&quot;VAT Type&quot;"
     FullLocalDefaultText="&quot;מספר סוג מע''מ&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -1036,7 +1038,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="VatType"
+    NavigationPropertyName="VatType" />
   <field
     Id="&quot;2a05d13f-fe1d-427b-8e46-5924eb4b6ffe&quot;"
     FieldName="&quot;VatTypeName&quot;"
@@ -1168,7 +1172,7 @@
     DefaultText="&quot;Invoice&quot;"
     FullLocalDefaultText="&quot;חשבונית&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -1190,7 +1194,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="APInvoice"
+    NavigationPropertyName="APInvoice" />
   <field
     Id="&quot;5c77e380-0dde-4cf9-af68-760b16b6e8dc&quot;"
     FieldName="&quot;VatTypeCell&quot;"

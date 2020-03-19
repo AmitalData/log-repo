@@ -57,7 +57,9 @@
   HasDocuments="false"
   IsLookUp="false"
   IsTabsHidden="false"
-  SearchFields="&quot;QuoteStage,QuoteStages,,Id,&quot;">
+  SearchFields="&quot;QuoteStage,QuoteStages,,Id,&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;5becea60-74c8-4f66-a5a1-61203d8cd686&quot;"
     FieldName="&quot;Id&quot;"
@@ -68,7 +70,7 @@
     ObjectTableName="&quot;QuoteStage&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="0"
+    MaxLength="15"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -366,7 +368,7 @@
     ObjectTableName="&quot;QuoteStage&quot;"
     FieldsDataType="&quot;Integer&quot;"
     MinLength="0"
-    MaxLength="1"
+    MaxLength="0"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -515,7 +517,7 @@
     ObjectTableName="&quot;QuoteStage&quot;"
     FieldsDataType="&quot;DateTime&quot;"
     MinLength="0"
-    MaxLength="1"
+    MaxLength="0"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -633,7 +635,7 @@
     FullFieldLable="&quot;UpdatedByUserId&quot;"
     DefaultText="&quot;Updated By&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -655,7 +657,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="User"
+    NavigationPropertyName="UpdatedByUser" />
   <field
     Id="&quot;f045485a-277f-4cf5-95bc-e5f42721dd64&quot;"
     FieldName="&quot;UpdatedByUserName&quot;"
@@ -742,7 +746,7 @@
     ObjectTableName="&quot;QuoteStage&quot;"
     FieldsDataType="&quot;Integer&quot;"
     MinLength="0"
-    MaxLength="1"
+    MaxLength="0"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"

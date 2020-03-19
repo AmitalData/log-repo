@@ -2,7 +2,7 @@
 <entity
   Id="&quot;efe2cd53-420b-4b6d-9eb8-f985b4b9fa03&quot;"
   ObjectTableName="&quot;VatFormatType&quot;"
-  DBTableName="&quot;VatFormatTypes&quot;"
+  DBTableName="&quot;VatFormatType&quot;"
   ObjectTableSingular="&quot;VAT Format Type&quot;"
   ObjectTablePlural="&quot;VAT Format Types&quot;"
   DefaultText="&quot;VAT Format Type&quot;"
@@ -42,7 +42,9 @@
   HasFiltersMenu="false"
   ClientModuleName="&quot;Common&quot;"
   CloseTableCode="&quot;Code&quot;"
-  CloseTableName="&quot;Name&quot;">
+  CloseTableName="&quot;Name&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;a4f3c710-f8eb-48f0-b49e-bb10baf25ab0&quot;"
     FieldName="&quot;ViewOrder&quot;"
@@ -129,7 +131,7 @@
     ObjectTableName="&quot;VatFormatType&quot;"
     FieldsDataType="&quot;Text&quot;"
     DataTypeCode="&quot;Text&quot;"
-    MaxLength="40"
+    MaxLength="60"
     IsRequiered="true"
     IsCustom="false"
     MinLength="0"

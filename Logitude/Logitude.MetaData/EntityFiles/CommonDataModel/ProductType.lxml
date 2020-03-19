@@ -58,7 +58,9 @@
   DisableSearchBox="false"
   HasDocuments="false"
   IsLookUp="true"
-  SearchFields="&quot;ProductType,ProductTypes,,Code,&quot;">
+  SearchFields="&quot;ProductType,ProductTypes,,Code,&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;beac01fa-87d8-46df-81fc-7fc53a926a71&quot;"
     FieldName="&quot;Code&quot;"
@@ -219,7 +221,7 @@
     IsChecked="false"
     IsDeleted="false"
     ObjectTableName="&quot;ProductType&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;nText&quot;"
     MinLength="0"
     MaxLength="1000"
     IsRequired="false"

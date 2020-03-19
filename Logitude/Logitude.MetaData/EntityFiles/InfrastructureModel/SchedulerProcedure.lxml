@@ -3,7 +3,7 @@
   Id="&quot;bc65587b-b805-4199-85f7-c7f6658c6f1b&quot;"
   ObjectTableName="&quot;SchedulerProcedure&quot;"
   IsNew="true"
-  DBTableName="&quot;SchedulerProcedures&quot;"
+  DBTableName="&quot;SchedulerProcedure&quot;"
   OldDBTableName="&quot;SchedulerProcedures&quot;"
   ObjectTableSingular="&quot;SchedulerProcedure&quot;"
   ObjectTablePlural="&quot;SchedulerProcedures&quot;"
@@ -59,7 +59,9 @@
   DisableSearchBox="false"
   HasDocuments="false"
   IsLookUp="false"
-  IsTabsHidden="false">
+  IsTabsHidden="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;606868e0-63ef-45a8-b181-b293bf74b3b9&quot;"
     FieldName="&quot;Code&quot;"
@@ -254,7 +256,7 @@
     HasDataBaseField="true"
     HasPMField="true"
     IsComposition="false"
-    IsMaxLength="true"
+    IsMaxLength="false"
     NoMetaDataField="false"
     GenerateInList="true"
     IsFixedLength="false"
@@ -385,7 +387,7 @@
     DisplayLongName="false"
     FullFieldLable="&quot;IsInternallyDefined&quot;"
     DefaultText="&quot;IsInternallyDefined&quot;"
-    IsNullable="false"
+    IsNullable="true"
     IsForeignKey="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"

@@ -58,7 +58,9 @@
   DisableSearchBox="false"
   HasDocuments="false"
   IsLookUp="false"
-  IsTabsHidden="false">
+  IsTabsHidden="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;2c390f97-74c1-43cf-a1ee-1630e1a5fad0&quot;"
     FieldName="&quot;CustomerId&quot;"
@@ -169,7 +171,7 @@
     DisplayInSearchWindowFilters="false"
     DisplayInSearchWindowFiltersIndex="0"
     DisplayInDocumentReferences="false"
-    DigitsAfterPoint="16"
+    DigitsAfterPoint="2"
     InActive="false"
     DisplayLongName="false"
     FullFieldLable="&quot;TotalOpenFilesAmount&quot;"
@@ -195,7 +197,8 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    NumberOfDigits="18" />
   <field
     Id="&quot;74187906-5b89-4591-b671-cf257d4d6d05&quot;"
     FieldName="&quot;Tenant&quot;"

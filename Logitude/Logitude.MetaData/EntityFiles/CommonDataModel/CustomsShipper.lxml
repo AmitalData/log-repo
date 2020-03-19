@@ -59,7 +59,9 @@
   DisableSearchBox="false"
   HasDocuments="false"
   IsLookUp="true"
-  SearchFields="&quot;CustomsShipper,CustomsShippers,,Id,Id&quot;">
+  SearchFields="&quot;CustomsShipper,CustomsShippers,,Id,Id&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;e4376638-9e69-41b4-bf1f-480ab48ad46d&quot;"
     FieldName="&quot;Id&quot;"
@@ -109,7 +111,7 @@
     ListFieldLable="&quot;IdListLable&quot;"
     ListLableDefaultText="&quot;Id&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="true"
     HasDataBaseField="true"
     HasPMField="true"
@@ -128,7 +130,9 @@
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    ForeignEntity="Card"
+    NavigationPropertyName="Card" />
   <field
     Id="&quot;2fa17f78-8f4f-4835-8b47-8c557ffc19f1&quot;"
     FieldName="&quot;Tenant&quot;"
@@ -252,7 +256,7 @@
     HasDataBaseField="true"
     HasPMField="true"
     IsComposition="false"
-    IsMaxLength="true"
+    IsMaxLength="false"
     NoMetaDataField="false"
     GenerateInList="true"
     IsFixedLength="false"
@@ -453,7 +457,7 @@
     DefaultText="&quot;Validity Start Date&quot;"
     ListFieldLable="&quot;ValidityStartDateListLable&quot;"
     ListLableDefaultText="&quot;Start Date&quot;"
-    IsNullable="false"
+    IsNullable="true"
     IsForeignKey="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
@@ -522,7 +526,7 @@
     DefaultText="&quot;ValidityEndDate&quot;"
     ListFieldLable="&quot;ValidityEndDateListLable&quot;"
     ListLableDefaultText="&quot;End Date&quot;"
-    IsNullable="false"
+    IsNullable="true"
     IsForeignKey="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"

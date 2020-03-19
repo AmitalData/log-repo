@@ -56,7 +56,9 @@
   DisableSearchBox="false"
   HasDocuments="false"
   IsLookUp="false"
-  SearchFields="&quot;DWObjectField,DWObjectFields,,Id,&quot;">
+  SearchFields="&quot;DWObjectField,DWObjectFields,,Id,&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;2ff31c00-bfc6-4faa-b90a-87ef0432561c&quot;"
     FieldName="&quot;Id&quot;"
@@ -399,7 +401,7 @@
     FullFieldLable="&quot;DWObjectTableCode&quot;"
     DefaultText="&quot;DW Object Table Code&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -420,7 +422,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="DWObjectTable"
+    NavigationPropertyName="DWObjectTable" />
   <field
     Id="&quot;7bf8af5c-f248-4db2-8f78-0d157bcd28ee&quot;"
     FieldName="&quot;DataTypeCode&quot;"
@@ -546,7 +550,7 @@
     FullFieldLable="&quot;DimensionTableCode&quot;"
     DefaultText="&quot;DimensionTableCode&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -567,7 +571,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="DWObjectTable"
+    NavigationPropertyName="DimensionTable" />
   <field
     Id="&quot;aa2e498e-6292-4fb3-9524-f249b1fd1193&quot;"
     FieldName="&quot;MinLength&quot;"
@@ -720,7 +726,7 @@
     ObjectTableName="&quot;DWObjectField&quot;"
     FieldsDataType="&quot;Boolean&quot;"
     MinLength="0"
-    MaxLength="100"
+    MaxLength="0"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -796,7 +802,7 @@
     ObjectTableName="&quot;DWObjectField&quot;"
     FieldsDataType="&quot;Boolean&quot;"
     MinLength="0"
-    MaxLength="100"
+    MaxLength="0"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"

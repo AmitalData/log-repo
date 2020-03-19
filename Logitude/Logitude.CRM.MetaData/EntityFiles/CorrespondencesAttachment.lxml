@@ -31,7 +31,9 @@
   Code="&quot;7482&quot;"
   Name="&quot;CorrespondencesAttachment Query Group&quot;"
   GenerateDomainService="true"
-  ClientModuleName="&quot;CRM&quot;">
+  ClientModuleName="&quot;CRM&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;1513ca94-511c-4cba-87f5-bb78e7cf8b0d&quot;"
     FieldName="&quot;Id&quot;"

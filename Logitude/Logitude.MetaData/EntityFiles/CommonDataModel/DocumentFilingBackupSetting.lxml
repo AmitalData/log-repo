@@ -58,7 +58,9 @@
   DisableSearchBox="false"
   HasDocuments="false"
   IsLookUp="false"
-  SearchFields="&quot;DocumentFilingBackupSetting,DocumentFilingBackupSettings,,Tenant,&quot;">
+  SearchFields="&quot;DocumentFilingBackupSetting,DocumentFilingBackupSettings,,Tenant,&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;44b70990-bd3b-4f96-b69c-1e0465bb3b93&quot;"
     FieldName="&quot;Tenant&quot;"

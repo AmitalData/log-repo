@@ -40,7 +40,9 @@
   HasShortTitle="false"
   HasMenuButtons="false"
   HasFiltersMenu="false"
-  ParentTableName="&quot;BusinessHour&quot;">
+  ParentTableName="&quot;BusinessHour&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;eacfdcf3-bff4-4d63-b53b-f034eb58d2d9&quot;"
     FieldName="&quot;Id&quot;"
@@ -61,7 +63,8 @@
     DisplayInList="true"
     NoMetaDataField="true"
     HasPMField="true"
-    GenerateInList="true" />
+    GenerateInList="true"
+    MaxLength="15" />
   <field
     Id="&quot;5de1fe17-d30b-4d9b-aa94-4ee7443df08c&quot;"
     FieldName="&quot;Tenant&quot;"
@@ -96,12 +99,16 @@
     ListLableDefaultText="&quot;BusinessHourId&quot;"
     ListLocalDefaultText="&quot;BusinessHourId&quot;"
     ValidForQuerySection1="&quot;BusinessHoursHoliday&quot;"
-    IsRequired="false"
+    IsRequired="true"
     HasDataBaseField="true"
     DisplayInList="true"
     NoMetaDataField="true"
     HasPMField="true"
-    GenerateInList="true" />
+    GenerateInList="true"
+    MaxLength="15"
+    IsForeignKey="true"
+    ForeignEntity="BusinessHour"
+    NavigationPropertyName="BusinessHour" />
   <field
     Id="&quot;1ac25882-8881-44c0-844a-7d3ec7124054&quot;"
     FieldName="&quot;Day&quot;"
@@ -289,7 +296,7 @@
     Id="&quot;48b3d25b-916e-4a27-ba84-01d2b6682176&quot;"
     FieldName="&quot;HolidayName&quot;"
     ObjectTableName="&quot;BusinessHoursHoliday&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;nText&quot;"
     DataTypeCode="&quot;Text&quot;"
     MaxLength="60"
     IsRequiered="true"
@@ -355,7 +362,7 @@
     ObjectTableName="&quot;BusinessHoursHoliday&quot;"
     FieldsDataType="&quot;DateTime&quot;"
     DataTypeCode="&quot;DateTime&quot;"
-    MaxLength="1"
+    MaxLength="0"
     IsRequiered="false"
     IsCustom="false"
     MinLength="0"
@@ -421,7 +428,7 @@
     ObjectTableName="&quot;BusinessHoursHoliday&quot;"
     FieldsDataType="&quot;DateTime&quot;"
     DataTypeCode="&quot;DateTime&quot;"
-    MaxLength="1"
+    MaxLength="0"
     IsRequiered="false"
     IsCustom="false"
     MinLength="0"
@@ -602,12 +609,15 @@
     DependencyFilter3IsList="false"
     DisplayInDocumentReferences="false"
     CopyToDW="false"
-    IsRequired="false"
+    IsRequired="true"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     NoMetaDataField="false"
     HasPMField="true"
-    GenerateInList="true" />
+    GenerateInList="true"
+    IsForeignKey="true"
+    ForeignEntity="User"
+    NavigationPropertyName="CreatedByUser" />
   <field
     Id="&quot;d0433668-aba0-4bf4-b6b1-7f365542a172&quot;"
     FieldName="&quot;UpdatedByUserId&quot;"
@@ -665,12 +675,15 @@
     DependencyFilter3IsList="false"
     DisplayInDocumentReferences="false"
     CopyToDW="false"
-    IsRequired="false"
+    IsRequired="true"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     NoMetaDataField="false"
     HasPMField="true"
-    GenerateInList="true" />
+    GenerateInList="true"
+    IsForeignKey="true"
+    ForeignEntity="User"
+    NavigationPropertyName="UpdatedByUser" />
   <field
     Id="&quot;d32c97a5-aba7-470a-bf00-95f04dcccb5c&quot;"
     FieldName="&quot;Inactive&quot;"

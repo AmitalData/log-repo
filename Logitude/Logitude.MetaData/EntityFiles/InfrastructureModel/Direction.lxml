@@ -58,7 +58,9 @@
   HasDocuments="false"
   IsLookUp="false"
   IsTabsHidden="false"
-  SearchFields="&quot;Direction,Directions,,Id,&quot;">
+  SearchFields="&quot;Direction,Directions,,Id,&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;5726ef79-04ee-4ce3-b1f1-17a51db9d1af&quot;"
     FieldName="&quot;Id&quot;"
@@ -69,7 +71,7 @@
     ObjectTableName="&quot;Direction&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="0"
+    MaxLength="1"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -141,7 +143,7 @@
     IsChecked="false"
     IsDeleted="false"
     ObjectTableName="&quot;Direction&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;nText&quot;"
     MinLength="0"
     MaxLength="1000"
     IsRequired="false"
@@ -217,7 +219,7 @@
     ObjectTableName="&quot;Direction&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="10"
+    MaxLength="40"
     IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="true"

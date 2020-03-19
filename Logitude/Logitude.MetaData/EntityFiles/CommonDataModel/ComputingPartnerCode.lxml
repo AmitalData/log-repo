@@ -54,7 +54,9 @@
   DisableSearchBox="false"
   HasDocuments="false"
   IsLookUp="false"
-  SearchFields="&quot;ComputingPartnerCode,ComputingPartnerCodes,,Id,&quot;">
+  SearchFields="&quot;ComputingPartnerCode,ComputingPartnerCodes,,Id,&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;2d3abb17-cf17-469a-b8e0-f1dfe3158cc6&quot;"
     FieldName="&quot;Id&quot;"
@@ -65,7 +67,7 @@
     ObjectTableName="&quot;ComputingPartnerCode&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="0"
+    MaxLength="15"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -210,7 +212,7 @@
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
     MaxLength="50"
-    IsRequired="false"
+    IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
@@ -283,7 +285,7 @@
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
     MaxLength="50"
-    IsRequired="false"
+    IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
@@ -355,7 +357,7 @@
     ObjectTableName="&quot;ComputingPartnerCode&quot;"
     FieldsDataType="&quot;DateTime&quot;"
     MinLength="0"
-    MaxLength="1"
+    MaxLength="0"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -431,7 +433,7 @@
     ObjectTableName="&quot;ComputingPartnerCode&quot;"
     FieldsDataType="&quot;DateTime&quot;"
     MinLength="0"
-    MaxLength="1"
+    MaxLength="0"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -509,7 +511,7 @@
     LookUpTableName="&quot;User&quot;"
     MinLength="0"
     MaxLength="15"
-    IsRequired="false"
+    IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
@@ -549,7 +551,7 @@
     FullFieldLable="&quot;CreatedByUserId&quot;"
     DefaultText="&quot;Created By&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -570,7 +572,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="User"
+    NavigationPropertyName="CreatedByUser" />
   <field
     Id="&quot;2cd6708e-bdc9-48fd-a650-312ca470895f&quot;"
     FieldName="&quot;UpdatedByUserId&quot;"
@@ -583,7 +587,7 @@
     LookUpTableName="&quot;User&quot;"
     MinLength="0"
     MaxLength="15"
-    IsRequired="false"
+    IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
@@ -623,7 +627,7 @@
     FullFieldLable="&quot;UpdatedByUserId&quot;"
     DefaultText="&quot;Updated By&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -644,7 +648,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="User"
+    NavigationPropertyName="UpdatedByUser" />
   <field
     Id="&quot;d34309ed-4f8a-4188-990a-cd2973b3ee81&quot;"
     FieldName="&quot;ObjectTableId&quot;"
@@ -657,7 +663,7 @@
     LookUpTableName="&quot;ObjectTable&quot;"
     MinLength="0"
     MaxLength="15"
-    IsRequired="false"
+    IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
@@ -697,7 +703,7 @@
     FullFieldLable="&quot;ObjectTableId&quot;"
     DefaultText="&quot;Object Table&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -718,7 +724,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="ObjectTable"
+    NavigationPropertyName="ObjectTable" />
   <field
     Id="&quot;7af831fe-11ac-48f0-854f-9b33b45601a0&quot;"
     FieldName="&quot;ComputingPartnerId&quot;"
@@ -731,7 +739,7 @@
     LookUpTableName="&quot;ComputingPartner&quot;"
     MinLength="0"
     MaxLength="15"
-    IsRequired="false"
+    IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
@@ -771,7 +779,7 @@
     FullFieldLable="&quot;ComputingPartnerId&quot;"
     DefaultText="&quot;Computing Partner&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -792,7 +800,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="ComputingPartner"
+    NavigationPropertyName="ComputingPartner" />
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"

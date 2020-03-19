@@ -60,7 +60,9 @@
   HasDocuments="true"
   IsLookUp="false"
   IsTabsHidden="false"
-  SearchFields="&quot;ARPayment,ARPayments,Simplog.InvoiceLib.NewARPaymentCommand,Id,&quot;">
+  SearchFields="&quot;ARPayment,ARPayments,Simplog.InvoiceLib.NewARPaymentCommand,Id,&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;05f12db3-5334-4aaf-a44c-151b35e18e65&quot;"
     FieldName="&quot;Id&quot;"
@@ -71,7 +73,7 @@
     ObjectTableName="&quot;ARPayment&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="0"
+    MaxLength="15"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -217,7 +219,7 @@
     ObjectTableName="&quot;ARPayment&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="0"
+    MaxLength="15"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -258,7 +260,7 @@
     ListLableDefaultText="&quot;DebitAccountId&quot;"
     ListLocalDefaultText="&quot;DebitAccountId&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -279,7 +281,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="Account"
+    NavigationPropertyName="DebitAccount" />
   <field
     Id="&quot;585eee2f-f166-4266-9ed2-2866a2a06772&quot;"
     FieldName="&quot;UpdatedByUserId&quot;"
@@ -292,7 +296,7 @@
     LookUpTableName="&quot;User&quot;"
     MinLength="0"
     MaxLength="15"
-    IsRequired="false"
+    IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
@@ -336,7 +340,7 @@
     ListLableDefaultText="&quot;UpdatedByUserId&quot;"
     ListLocalDefaultText="&quot;UpdatedByUserId&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -358,7 +362,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="User"
+    NavigationPropertyName="UpdatedByUser" />
   <field
     Id="&quot;c3344a56-5dcb-4a1c-8309-41bb9248f62b&quot;"
     FieldName="&quot;UpdateDate&quot;"
@@ -369,7 +375,7 @@
     ObjectTableName="&quot;ARPayment&quot;"
     FieldsDataType="&quot;DateTime&quot;"
     MinLength="0"
-    MaxLength="1"
+    MaxLength="0"
     IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -595,7 +601,7 @@
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
     MaxLength="20"
-    IsRequired="false"
+    IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="true"
     DisplayOnLookUpLocal="false"
@@ -794,7 +800,7 @@
     DefaultText="&quot;Created By&quot;"
     FullLocalDefaultText="&quot;יוצר&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -816,7 +822,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="User"
+    NavigationPropertyName="CreatedByUser" />
   <field
     Id="&quot;3b6cc2b7-32d1-4124-b1d6-b3d8e578b241&quot;"
     FieldName="&quot;CreatedByUserName&quot;"
@@ -1027,7 +1035,7 @@
     DefaultText="&quot;Print By User&quot;"
     FullLocalDefaultText="&quot;הודפס ע''י&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -1049,7 +1057,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="User"
+    NavigationPropertyName="PrintByUser" />
   <field
     Id="&quot;eec227fa-6d11-4d6f-a69d-4d0cfc2df49f&quot;"
     FieldName="&quot;LocalCurrencyId&quot;"
@@ -1103,7 +1113,7 @@
     DefaultText="&quot;Local Currency&quot;"
     FullLocalDefaultText="&quot;מטבע מקומי&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -1125,7 +1135,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="Currency"
+    NavigationPropertyName="LocalCurrency" />
   <field
     Id="&quot;88edde2b-b669-41fc-adfb-b46335239d6f&quot;"
     FieldName="&quot;AmountInLocalCurrency&quot;"
@@ -1258,7 +1270,7 @@
     DefaultText="&quot;Branch&quot;"
     FullLocalDefaultText="&quot;סניף&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -1280,7 +1292,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="Branch"
+    NavigationPropertyName="Branch" />
   <field
     Id="&quot;b7c05ad7-b2d2-40f4-b9e8-9e3c0c8a1c06&quot;"
     FieldName="&quot;BillToId&quot;"
@@ -1334,7 +1348,7 @@
     DefaultText="&quot;Bill To&quot;"
     FullLocalDefaultText="&quot;לקוח&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -1356,7 +1370,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="Card"
+    NavigationPropertyName="BillToCard" />
   <field
     Id="&quot;5eb44bde-d834-4b26-a655-fcc2f62f11c8&quot;"
     FieldName="&quot;BillToName&quot;"
@@ -1490,7 +1506,7 @@
     ListFieldLable="&quot;ARAccountIdListLable&quot;"
     ListLableDefaultText="&quot;Account Id&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -1512,7 +1528,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="Account"
+    NavigationPropertyName="ARAccount" />
   <field
     Id="&quot;3f23c6af-0d2a-4590-8cea-f3461e4581f9&quot;"
     FieldName="&quot;StatusCode&quot;"
@@ -1524,7 +1542,7 @@
     FieldsDataType="&quot;LookUp&quot;"
     LookUpTableName="&quot;ARPaymentStatus&quot;"
     MinLength="0"
-    MaxLength="15"
+    MaxLength="2"
     IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -1566,7 +1584,7 @@
     DefaultText="&quot;Status&quot;"
     FullLocalDefaultText="&quot;סטטוס&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -1588,7 +1606,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="ARPaymentStatus"
+    NavigationPropertyName="Status" />
   <field
     Id="&quot;88e7821f-1ab4-4a88-8d66-56419a08e345&quot;"
     FieldName="&quot;StatusName&quot;"
@@ -1677,7 +1697,7 @@
     ObjectTableName="&quot;ARPayment&quot;"
     FieldsDataType="&quot;Boolean&quot;"
     MinLength="0"
-    MaxLength="15"
+    MaxLength="0"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -1800,7 +1820,7 @@
     ListFieldLable="&quot;PaymentCurrencyIdListLable&quot;"
     ListLableDefaultText="&quot;Payment Currency Id&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -1822,7 +1842,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="Currency"
+    NavigationPropertyName="PaymentCurrency" />
   <field
     Id="&quot;1f5b38a2-83e9-4253-9a3a-da4d7e126055&quot;"
     FieldName="&quot;PaymentCurrencyCode&quot;"
@@ -1988,7 +2010,7 @@
     IsChecked="false"
     IsDeleted="false"
     ObjectTableName="&quot;ARPayment&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;nText&quot;"
     MinLength="0"
     MaxLength="50"
     IsRequired="false"
@@ -2297,7 +2319,7 @@
     IsChecked="false"
     IsDeleted="false"
     ObjectTableName="&quot;ARPayment&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;nText&quot;"
     MinLength="0"
     MaxLength="500"
     IsRequired="false"
@@ -2375,7 +2397,7 @@
     IsChecked="false"
     IsDeleted="false"
     ObjectTableName="&quot;ARPayment&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;nText&quot;"
     MinLength="0"
     MaxLength="250"
     IsRequired="false"
@@ -2657,7 +2679,7 @@
     ListFieldLable="&quot;BillToAddressIdListLable&quot;"
     ListLableDefaultText="&quot;Bill To Address Id&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -2679,7 +2701,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="Address"
+    NavigationPropertyName="BillToAddress" />
   <field
     Id="&quot;96995f54-d19f-4b7f-9785-f4fb0fa3338d&quot;"
     FieldName="&quot;SearchFields&quot;"
@@ -2739,7 +2763,7 @@
     HasDataBaseField="true"
     HasPMField="true"
     IsComposition="false"
-    IsMaxLength="false"
+    IsMaxLength="true"
     NoMetaDataField="false"
     GenerateInList="true"
     IsFixedLength="false"
@@ -2923,7 +2947,7 @@
     FieldsDataType="&quot;DateTime&quot;"
     MinLength="0"
     MaxLength="0"
-    IsRequired="true"
+    IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
@@ -3500,7 +3524,7 @@
     DefaultText="&quot;Credit Card Type&quot;"
     FullLocalDefaultText="&quot;סוג כרטיס אשראי&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -3522,7 +3546,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="CreditCardType"
+    NavigationPropertyName="CreditCardType" />
   <field
     Id="&quot;c7c4d542-62d9-4af7-b64a-efc721170a63&quot;"
     FieldName="&quot;LocalCurrencyCode&quot;"
@@ -4393,7 +4419,7 @@
     HelpTextCode="&quot;SATPaymentMethodCode&quot;"
     HelpTextDefaultText="&quot;Payment Method&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -4414,7 +4440,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="SATPaymentMethod"
+    NavigationPropertyName="SATPaymentMethod" />
   <field
     Id="&quot;e14e1d90-d415-4511-97a7-3e2babd401dc&quot;"
     FieldName="&quot;SATXML&quot;"
@@ -4423,7 +4451,7 @@
     IsChecked="false"
     IsDeleted="false"
     ObjectTableName="&quot;ARPayment&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;nText&quot;"
     MinLength="0"
     MaxLength="0"
     IsRequired="false"
@@ -4471,7 +4499,7 @@
     HasDataBaseField="true"
     HasPMField="true"
     IsComposition="false"
-    IsMaxLength="false"
+    IsMaxLength="true"
     NoMetaDataField="true"
     GenerateInList="false"
     IsFixedLength="false"
@@ -4500,7 +4528,7 @@
     LookUpTableName="&quot;SATTransferStatus&quot;"
     MinLength="0"
     MaxLength="2"
-    IsRequired="false"
+    IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
@@ -4543,7 +4571,7 @@
     ListLableDefaultText="&quot;SAT TransferStatus Code&quot;"
     ListLocalDefaultText="&quot;UsoCFDI&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -4565,7 +4593,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="SATTransferStatus"
+    NavigationPropertyName="SATTransferStatus" />
   <field
     Id="&quot;0da3877b-6dda-4747-bfbb-ba61f078745e&quot;"
     FieldName="&quot;TransmissionError&quot;"
@@ -4574,7 +4604,7 @@
     IsChecked="false"
     IsDeleted="false"
     ObjectTableName="&quot;ARPayment&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;nText&quot;"
     MinLength="0"
     MaxLength="8000"
     IsRequired="false"
@@ -4627,7 +4657,7 @@
     HasDataBaseField="true"
     HasPMField="true"
     IsComposition="false"
-    IsMaxLength="false"
+    IsMaxLength="true"
     NoMetaDataField="false"
     GenerateInList="true"
     IsFixedLength="false"
@@ -4702,7 +4732,7 @@
     HelpTextCode="&quot;MetodoPagoCode&quot;"
     HelpTextDefaultText="&quot;Way to Pay:&#xA;-Pago en una sola exhibición (PUE): payment closed at once in one single payment type performed prior to the issuance of the invoice&#xA;-Pago en parcialidades o diferido (PPD): partial payment or deferred performed after the issuance of the invoice&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -4723,7 +4753,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="MetodoPago"
+    NavigationPropertyName="MetodoPago" />
   <field
     Id="&quot;673bd5cf-6a20-43be-bc0e-88b3e81517e2&quot;"
     FieldName="&quot;TipoCadenaPago&quot;"
@@ -5041,7 +5073,7 @@
     ObjectTableName="&quot;ARPayment&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="0"
+    MaxLength="15"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -5114,7 +5146,7 @@
     ObjectTableName="&quot;ARPayment&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="0"
+    MaxLength="15"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -5185,7 +5217,7 @@
     IsChecked="false"
     IsDeleted="false"
     ObjectTableName="&quot;ARPayment&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;nText&quot;"
     MinLength="0"
     MaxLength="0"
     IsRequired="false"
@@ -5233,7 +5265,7 @@
     HasDataBaseField="true"
     HasPMField="false"
     IsComposition="false"
-    IsMaxLength="false"
+    IsMaxLength="true"
     NoMetaDataField="true"
     GenerateInList="false"
     IsFixedLength="false"
@@ -5686,7 +5718,7 @@
     ListLableDefaultText="&quot;Bank Account&quot;"
     ListLocalDefaultText="&quot;חשבון בנק&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -5708,7 +5740,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="BankAccountLite"
+    NavigationPropertyName="BankAccountLite" />
   <field
     Id="&quot;7a24d19a-7d09-47c7-bae3-a00da9cba2bb&quot;"
     FieldName="&quot;BankAccountId&quot;"
@@ -5867,7 +5901,7 @@
     IsChecked="false"
     IsDeleted="false"
     ObjectTableName="&quot;ARPayment&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;nText&quot;"
     MinLength="0"
     MaxLength="250"
     IsRequired="false"
@@ -5920,7 +5954,7 @@
     HasDataBaseField="true"
     HasPMField="true"
     IsComposition="false"
-    IsMaxLength="false"
+    IsMaxLength="true"
     NoMetaDataField="false"
     GenerateInList="true"
     IsFixedLength="false"
@@ -5948,7 +5982,7 @@
     ObjectTableName="&quot;ARPayment&quot;"
     FieldsDataType="&quot;Integer&quot;"
     MinLength="0"
-    MaxLength="1"
+    MaxLength="0"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -6023,7 +6057,7 @@
     ObjectTableName="&quot;ARPayment&quot;"
     FieldsDataType="&quot;Boolean&quot;"
     MinLength="0"
-    MaxLength="1"
+    MaxLength="0"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -6100,7 +6134,7 @@
     LookUpTableName="&quot;ARPaymentTransferStatus&quot;"
     MinLength="0"
     MaxLength="2"
-    IsRequired="false"
+    IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
@@ -6140,7 +6174,7 @@
     DefaultText="&quot;Transfer Status&quot;"
     FullLocalDefaultText="&quot;סטטוס העברה&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -6162,7 +6196,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="ARPaymentTransferStatus"
+    NavigationPropertyName="TransferStatus" />
   <field
     Id="&quot;3a8d9c19-ade1-4541-9a52-a181aa5d44a3&quot;"
     FieldName="&quot;TransferStatusName&quot;"
@@ -6478,7 +6514,7 @@
     FieldsDataType="&quot;LookUp&quot;"
     LookUpTableName="&quot;AccountingPaymentMethod&quot;"
     MinLength="0"
-    MaxLength="20"
+    MaxLength="15"
     IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -6520,7 +6556,7 @@
     DefaultText="&quot;Payment Method&quot;"
     FullLocalDefaultText="&quot;אמצעי תשלום&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -6542,7 +6578,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="AccountingPaymentMethod"
+    NavigationPropertyName="AccountingPaymentMethod" />
   <field
     Id="&quot;7a8f58c7-131b-492e-ac8a-eca93e1cd345&quot;"
     FieldName="&quot;BranchName&quot;"
@@ -7114,7 +7152,7 @@
     DefaultText="&quot;Approved By&quot;"
     FullLocalDefaultText="&quot;אושר ע''י&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -7135,7 +7173,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="User"
+    NavigationPropertyName="ApprovedByUser" />
   <field
     Id="&quot;fd914304-a7e0-48e4-adde-9a73582be969&quot;"
     FieldName="&quot;FirstApproveDate&quot;"
@@ -7559,7 +7599,7 @@
     IsChecked="true"
     IsDeleted="false"
     ObjectTableName="&quot;ARPayment&quot;"
-    FieldsDataType="&quot;Date&quot;"
+    FieldsDataType="&quot;DateTime&quot;"
     MinLength="0"
     MaxLength="0"
     IsRequired="false"
@@ -7916,7 +7956,7 @@
     FieldsDataType="&quot;Double&quot;"
     MinLength="0"
     MaxLength="0"
-    IsRequired="true"
+    IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
@@ -10076,8 +10116,12 @@
       LocalDefaultText="&quot;בוטל ע”י פקודת יומן &quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
-   <TextCode Code="&quot;ARPayment.O.OriginalInvoiceAmount&quot;" DefaultText="&quot;Original Invoice Amount&quot;" LocalDefaultText="&quot;סכום חשבונית מקורי&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-
+    <TextCode
+      Code="&quot;ARPayment.O.OriginalInvoiceAmount&quot;"
+      DefaultText="&quot;Original Invoice Amount&quot;"
+      LocalDefaultText="&quot;סכום חשבונית מקורי&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature

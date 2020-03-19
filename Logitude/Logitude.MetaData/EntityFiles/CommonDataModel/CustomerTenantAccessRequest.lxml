@@ -55,7 +55,9 @@
   HasDocuments="false"
   IsLookUp="false"
   IsTabsHidden="false"
-  SearchFields="&quot;CustomerTenantAccessRequest,CustomerTenantAccessRequests,,Id,&quot;">
+  SearchFields="&quot;CustomerTenantAccessRequest,CustomerTenantAccessRequests,,Id,&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;eb9b85a9-5f98-4090-9781-ddae586f430d&quot;"
     FieldName="&quot;Id&quot;"
@@ -334,7 +336,7 @@
     ListFieldLable="&quot;RequestStatusListLable&quot;"
     ListLableDefaultText="&quot;Request Status&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -356,7 +358,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="CustomerTenantAccessStatusType"
+    NavigationPropertyName="RequestStatusCode" />
   <field
     Id="&quot;378b092b-c559-4b00-84a5-c9d3f15bdb36&quot;"
     FieldName="&quot;StatusName&quot;"
@@ -488,7 +492,7 @@
     ListFieldLable="&quot;ForwarderIdListLable&quot;"
     ListLableDefaultText="&quot;Forwarder Name&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -510,7 +514,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="HybridPartner"
+    NavigationPropertyName="HybridPartnerId" />
   <field
     Id="&quot;df359010-0e6c-4059-8756-a6af8be2fd00&quot;"
     FieldName="&quot;ForwarderName&quot;"

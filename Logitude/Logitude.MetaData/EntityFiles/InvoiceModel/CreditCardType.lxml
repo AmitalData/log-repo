@@ -60,7 +60,9 @@
   HasDocuments="false"
   IsLookUp="true"
   IsTabsHidden="false"
-  SearchFields="&quot;CreditCardType,CreditCardTypes,,Id,&quot;">
+  SearchFields="&quot;CreditCardType,CreditCardTypes,,Id,&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;1295103f-fa7d-463e-9fda-9b454b0d82d5&quot;"
     FieldName="&quot;Id&quot;"
@@ -71,7 +73,7 @@
     ObjectTableName="&quot;CreditCardType&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="0"
+    MaxLength="15"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -367,7 +369,7 @@
     IsChecked="false"
     IsDeleted="false"
     ObjectTableName="&quot;CreditCardType&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;nText&quot;"
     MinLength="0"
     MaxLength="1000"
     IsRequired="false"

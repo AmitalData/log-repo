@@ -59,7 +59,9 @@
   HasDocuments="false"
   IsLookUp="false"
   IsTabsHidden="false"
-  SearchFields="&quot;Trucker,Truckers,Simplog.FreightLib.NewTruckerCommand,Id,&quot;">
+  SearchFields="&quot;Trucker,Truckers,Simplog.FreightLib.NewTruckerCommand,Id,&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;c9658a9b-03a0-4065-8c52-96ab22868304&quot;"
     FieldName="&quot;Id&quot;"
@@ -70,7 +72,7 @@
     ObjectTableName="&quot;Trucker&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="0"
+    MaxLength="15"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -111,7 +113,7 @@
     ListLableDefaultText="&quot;Id&quot;"
     ListLocalDefaultText="&quot;Id&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="true"
     HasDataBaseField="true"
     HasPMField="true"
@@ -132,7 +134,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="Card"
+    NavigationPropertyName="Card" />
   <field
     Id="&quot;e3cd863e-04c0-40a2-bc02-8e4aeda50e28&quot;"
     FieldName="&quot;Tenant&quot;"
@@ -1340,7 +1344,7 @@
     ObjectTableName="&quot;Trucker&quot;"
     FieldsDataType="&quot;Boolean&quot;"
     MinLength="0"
-    MaxLength="15"
+    MaxLength="0"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"

@@ -59,7 +59,9 @@
   HasDocuments="false"
   IsLookUp="false"
   IsTabsHidden="false"
-  SearchFields="&quot;ShipmentType,ShipmentTypes,,Id,&quot;">
+  SearchFields="&quot;ShipmentType,ShipmentTypes,,Id,&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;b51dec2d-9532-444a-ace8-679cd986c5d5&quot;"
     FieldName="&quot;Id&quot;"
@@ -70,7 +72,7 @@
     ObjectTableName="&quot;ShipmentType&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="0"
+    MaxLength="4"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -255,7 +257,7 @@
     FullFieldLable="&quot;TransportModeId&quot;"
     DefaultText="&quot;Transport Mode&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -277,7 +279,9 @@
     IsSpellCheckedHelpLocalDefaultText="true"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="TransportMode"
+    NavigationPropertyName="TransportMode" />
   <field
     Id="&quot;4fc6e133-8669-401d-a4ac-10afba90c9e9&quot;"
     FieldName="&quot;SearchFields&quot;"
@@ -286,7 +290,7 @@
     IsChecked="false"
     IsDeleted="false"
     ObjectTableName="&quot;ShipmentType&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;nText&quot;"
     MinLength="0"
     MaxLength="1000"
     IsRequired="false"

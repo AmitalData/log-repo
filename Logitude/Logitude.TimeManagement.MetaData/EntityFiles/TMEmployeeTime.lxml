@@ -56,7 +56,9 @@
   CustomFieldsCount="0"
   DisableSearchBox="false"
   HasDocuments="false"
-  IsLookUp="false">
+  IsLookUp="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;eb4f95fd-bb99-451b-89c2-b09d368ec677&quot;"
     FieldName="&quot;Id&quot;"
@@ -555,10 +557,10 @@
     IsChecked="false"
     IsDeleted="false"
     ObjectTableName="&quot;TMEmployeeTime&quot;"
-    FieldsDataType="&quot;Date&quot;"
+    FieldsDataType="&quot;DateTime&quot;"
     MinLength="0"
     MaxLength="0"
-    IsRequired="false"
+    IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
@@ -895,7 +897,7 @@
     FieldsDataType="&quot;LookUp&quot;"
     LookUpTableName="&quot;TMLocation&quot;"
     MinLength="0"
-    MaxLength="1"
+    MaxLength="3"
     IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="false"

@@ -57,7 +57,9 @@
   HasDocuments="false"
   IsLookUp="false"
   IsTabsHidden="false"
-  SearchFields="&quot;Tenant,Tenants,,,&quot;">
+  SearchFields="&quot;Tenant,Tenants,,,&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;96765a44-928e-4185-a5a7-3d6622c5e4a0&quot;"
     FieldName="&quot;IsHybrid&quot;"
@@ -783,7 +785,7 @@
     HelpTextCode="&quot;AddressId&quot;"
     HelpTextDefaultText="&quot;Your company’s address details will appear on airwaybills and other documents and outgoing messages.&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -804,7 +806,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="Address"
+    NavigationPropertyName="Address" />
   <field
     Id="&quot;c48be80c-b6f1-44e3-af15-7a88d9325c1a&quot;"
     FieldName="&quot;Company&quot;"
@@ -816,7 +820,7 @@
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
     MaxLength="100"
-    IsRequired="false"
+    IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
@@ -936,7 +940,7 @@
     HelpTextCode="&quot;PaymentTermId&quot;"
     HelpTextDefaultText="&quot;default payment term for customers&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -957,7 +961,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="PaymentTerm"
+    NavigationPropertyName="PaymentTerm" />
   <field
     Id="&quot;56812c06-590b-469a-b514-8ce1f73cf688&quot;"
     FieldName="&quot;AgentId&quot;"
@@ -1012,7 +1018,7 @@
     HelpTextCode="&quot;AgentId&quot;"
     HelpTextDefaultText="&quot;The default shipper for the Master.&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -1033,7 +1039,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="Card"
+    NavigationPropertyName="AgentCard" />
   <field
     Id="&quot;c18ef5fb-7211-491c-b6e7-81eaeae9a975&quot;"
     FieldName="&quot;CurrencyId&quot;"
@@ -1046,7 +1054,7 @@
     LookUpTableName="&quot;Currency&quot;"
     MinLength="0"
     MaxLength="15"
-    IsRequired="true"
+    IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
@@ -1088,7 +1096,7 @@
     HelpTextCode="&quot;CurrencyId&quot;"
     HelpTextDefaultText="&quot;The currency in which you conduct your business. This currency will be used by default for all billing operations, after opening the first shipment, this currency can't be changed&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -1109,7 +1117,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="Currency"
+    NavigationPropertyName="Currency" />
   <field
     Id="&quot;0d8cff5b-383c-4e38-8efe-9b314e85123a&quot;"
     FieldName="&quot;ProfitCurrencyId&quot;"
@@ -1122,7 +1132,7 @@
     LookUpTableName="&quot;Currency&quot;"
     MinLength="0"
     MaxLength="15"
-    IsRequired="true"
+    IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
@@ -1164,7 +1174,7 @@
     HelpTextCode="&quot;ProfitCurrencyId&quot;"
     HelpTextDefaultText="&quot;The currency to be used for displaying profit values.&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -1185,7 +1195,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="Currency"
+    NavigationPropertyName="ProfitCurrency" />
   <field
     Id="&quot;211df681-e117-48b6-b2cd-30f7f0d1ab12&quot;"
     FieldName="&quot;FreightCurrencyId&quot;"
@@ -1240,7 +1252,7 @@
     HelpTextCode="&quot;FreightCurrencyId&quot;"
     HelpTextDefaultText="&quot;The default currency for freight charges.&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -1261,7 +1273,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="Currency"
+    NavigationPropertyName="FreightCurrency" />
   <field
     Id="&quot;6fd9881b-a640-4805-b177-f595db2d7b7f&quot;"
     FieldName="&quot;OtherChargesCurrencyId&quot;"
@@ -1316,7 +1330,7 @@
     HelpTextCode="&quot;OtherChargesCurrencyId&quot;"
     HelpTextDefaultText="&quot;The default currency for charges other than freight.&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -1337,7 +1351,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="Currency"
+    NavigationPropertyName="OtherChargesCurrency" />
   <field
     Id="&quot;d939ed2e-4fcc-4641-8b42-c2e2730160b5&quot;"
     FieldName="&quot;QuoteSaleCurrencyId&quot;"
@@ -1392,7 +1408,7 @@
     HelpTextCode="&quot;QuoteSaleCurrencyId&quot;"
     HelpTextDefaultText="&quot;The default currency for quoting sale prices.&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -1413,7 +1429,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="Currency"
+    NavigationPropertyName="QuoteSaleCurrency" />
   <field
     Id="&quot;520db647-5e56-40fe-b6bf-e74b44138b3d&quot;"
     FieldName="&quot;VolumeUnitCode&quot;"
@@ -1468,7 +1486,7 @@
     ListFieldLable="&quot;VolumeUnitCodeListLable&quot;"
     ListLableDefaultText="&quot;Volume Unit&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -1490,7 +1508,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="VolumeUnit"
+    NavigationPropertyName="VolumeUnit" />
   <field
     Id="&quot;edef58eb-ee21-4f43-867c-7fb220f2c17e&quot;"
     FieldName="&quot;DimensionsUnitCode&quot;"
@@ -1545,7 +1565,7 @@
     ListFieldLable="&quot;DimensionsUnitCodeListLable&quot;"
     ListLableDefaultText="&quot;Dimensions Unit&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -1567,7 +1587,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="DimensionsUnit"
+    NavigationPropertyName="DimensionsUnit" />
   <field
     Id="&quot;34617447-607b-48e5-9df7-f3f24b461bd9&quot;"
     FieldName="&quot;GrossWeightUnitCode&quot;"
@@ -1622,7 +1644,7 @@
     ListFieldLable="&quot;GrossWeightUnitCodeListLable&quot;"
     ListLableDefaultText="&quot;Gross Weight Unit&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -1644,7 +1666,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="WeightUnit"
+    NavigationPropertyName="GrossWeightUnit" />
   <field
     Id="&quot;06b83c10-5817-4b41-888a-b7d5b1ef5044&quot;"
     FieldName="&quot;ChargeableWeightUnitCode&quot;"
@@ -1699,7 +1723,7 @@
     ListFieldLable="&quot;ChargeableWeightUnitCodeListLable&quot;"
     ListLableDefaultText="&quot;Chargeable Weight Unit&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -1721,7 +1745,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="WeightUnit"
+    NavigationPropertyName="WeightUnit" />
   <field
     Id="&quot;bd083aff-1cef-46de-87e2-9c084242c79a&quot;"
     FieldName="&quot;WeightMeasurementUnitCode&quot;"
@@ -1776,7 +1802,7 @@
     ListFieldLable="&quot;WeightMeasurementUnitCodeListLable&quot;"
     ListLableDefaultText="&quot;Wt / Msr Unit&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -1798,7 +1824,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="WeightUnit"
+    NavigationPropertyName="ChargeableWeightUnit" />
   <field
     Id="&quot;cdc36d13-e007-405e-b90f-dab36ea2eb8d&quot;"
     FieldName="&quot;ExportFreightPrepaidCollectId&quot;"
@@ -1810,7 +1838,7 @@
     FieldsDataType="&quot;LookUp&quot;"
     LookUpTableName="&quot;PrepaidCollect&quot;"
     MinLength="0"
-    MaxLength="15"
+    MaxLength="1"
     IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -1853,7 +1881,7 @@
     ListFieldLable="&quot;ExportFreightPrepaidCollectIdListLable&quot;"
     ListLableDefaultText="&quot;Export Freight P/C&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -1875,7 +1903,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="PrepaidCollect"
+    NavigationPropertyName="ExportFreightPrepaidCollect" />
   <field
     Id="&quot;d2128aec-863d-424c-b4f3-2840ece1d21d&quot;"
     FieldName="&quot;ImportFreightPrepaidCollectId&quot;"
@@ -1887,7 +1917,7 @@
     FieldsDataType="&quot;LookUp&quot;"
     LookUpTableName="&quot;PrepaidCollect&quot;"
     MinLength="0"
-    MaxLength="15"
+    MaxLength="1"
     IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -1930,7 +1960,7 @@
     ListFieldLable="&quot;ImportFreightPrepaidCollectIdListLable&quot;"
     ListLableDefaultText="&quot;Import Freight P/C&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -1952,7 +1982,8 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="PrepaidCollect" />
   <field
     Id="&quot;bf815082-3f81-4460-b0cf-1019aba6c3d6&quot;"
     FieldName="&quot;ExportOtherPrepaidCollectId&quot;"
@@ -1964,7 +1995,7 @@
     FieldsDataType="&quot;LookUp&quot;"
     LookUpTableName="&quot;PrepaidCollect&quot;"
     MinLength="0"
-    MaxLength="15"
+    MaxLength="1"
     IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -2007,7 +2038,7 @@
     ListFieldLable="&quot;ExportOtherPrepaidCollectIdListLable&quot;"
     ListLableDefaultText="&quot;Export Other P/C&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -2029,7 +2060,8 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="PrepaidCollect" />
   <field
     Id="&quot;ae6f928d-c27f-41df-aa43-bad765286ba2&quot;"
     FieldName="&quot;ImportOtherPrepaidCollectId&quot;"
@@ -2041,7 +2073,7 @@
     FieldsDataType="&quot;LookUp&quot;"
     LookUpTableName="&quot;PrepaidCollect&quot;"
     MinLength="0"
-    MaxLength="15"
+    MaxLength="1"
     IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -2084,7 +2116,7 @@
     ListFieldLable="&quot;ImportOtherPrepaidCollectIdListLable&quot;"
     ListLableDefaultText="&quot;Import Other P/C&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -2106,7 +2138,8 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="PrepaidCollect" />
   <field
     Id="&quot;bc9daddd-6a2c-492c-ac8f-e54df29d2fea&quot;"
     FieldName="&quot;MasterExportFreightPrepaidCollectId&quot;"
@@ -2118,7 +2151,7 @@
     FieldsDataType="&quot;LookUp&quot;"
     LookUpTableName="&quot;PrepaidCollect&quot;"
     MinLength="0"
-    MaxLength="15"
+    MaxLength="1"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -2161,7 +2194,7 @@
     ListFieldLable="&quot;MasterExportFreightPrepaidCollectIdListLable&quot;"
     ListLableDefaultText="&quot;Master Export Freight P/C&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -2183,7 +2216,8 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="PrepaidCollect" />
   <field
     Id="&quot;0253a9b8-1efa-4d8a-b0fd-739468dadf54&quot;"
     FieldName="&quot;MasterImportFreightPrepaidCollectId&quot;"
@@ -2195,7 +2229,7 @@
     FieldsDataType="&quot;LookUp&quot;"
     LookUpTableName="&quot;PrepaidCollect&quot;"
     MinLength="0"
-    MaxLength="15"
+    MaxLength="1"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -2238,7 +2272,7 @@
     ListFieldLable="&quot;MasterImportFreightPrepaidCollectIdListLable&quot;"
     ListLableDefaultText="&quot;Master Import Freight P/C&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -2260,7 +2294,8 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="PrepaidCollect" />
   <field
     Id="&quot;b70f0da7-16ae-43de-aefa-fbe1845bd8ee&quot;"
     FieldName="&quot;MasterExportOtherPrepaidCollectId&quot;"
@@ -2272,7 +2307,7 @@
     FieldsDataType="&quot;LookUp&quot;"
     LookUpTableName="&quot;PrepaidCollect&quot;"
     MinLength="0"
-    MaxLength="15"
+    MaxLength="1"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -2315,7 +2350,7 @@
     ListFieldLable="&quot;MasterExportOtherPrepaidCollectIdListLable&quot;"
     ListLableDefaultText="&quot;Master Export Other P/C&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -2337,7 +2372,8 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="PrepaidCollect" />
   <field
     Id="&quot;443d817a-c751-48f6-abe2-462f2c711b96&quot;"
     FieldName="&quot;MasterImportOtherPrepaidCollectId&quot;"
@@ -2349,7 +2385,7 @@
     FieldsDataType="&quot;LookUp&quot;"
     LookUpTableName="&quot;PrepaidCollect&quot;"
     MinLength="0"
-    MaxLength="15"
+    MaxLength="1"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -2392,7 +2428,7 @@
     ListFieldLable="&quot;MasterImportOtherPrepaidCollectIdListLable&quot;"
     ListLableDefaultText="&quot;Master Import Other P/C&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -2414,7 +2450,8 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="PrepaidCollect" />
   <field
     Id="&quot;2bbb8c61-de7d-4121-bf40-29980d2133a4&quot;"
     FieldName="&quot;STDVatPercentage&quot;"
@@ -3791,7 +3828,7 @@
     ObjectTableName="&quot;Tenant&quot;"
     FieldsDataType="&quot;DateTime&quot;"
     MinLength="0"
-    MaxLength="40"
+    MaxLength="0"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -3867,7 +3904,7 @@
     ObjectTableName="&quot;Tenant&quot;"
     FieldsDataType="&quot;DateTime&quot;"
     MinLength="0"
-    MaxLength="40"
+    MaxLength="0"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -3985,7 +4022,7 @@
     FullFieldLable="&quot;PasswordPolicyCode&quot;"
     DefaultText="&quot;Password Policy&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -4007,7 +4044,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="PasswordPolicy"
+    NavigationPropertyName="PasswordPolicy" />
   <field
     Id="&quot;d5a1fc70-a411-48b7-9043-e3194e68bb94&quot;"
     FieldName="&quot;PasswordStrength&quot;"
@@ -4621,8 +4660,8 @@
     ObjectTableName="&quot;Tenant&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="40"
-    IsRequired="false"
+    MaxLength="100"
+    IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
@@ -5113,7 +5152,7 @@
     FullFieldLable="&quot;VatUniqueTypeCode&quot;"
     DefaultText="&quot;Is Unique For&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -5135,7 +5174,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="VatUniqueType"
+    NavigationPropertyName="VatUniqueType" />
   <field
     Id="&quot;ac58d323-3407-4ec5-b0b4-1c2c6ae08c6c&quot;"
     FieldName="&quot;VatMandatoryTypeCode&quot;"
@@ -5188,7 +5229,7 @@
     FullFieldLable="&quot;VatMandatoryTypeCode&quot;"
     DefaultText="&quot;Is Mandatory For&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -5210,7 +5251,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="VatMandatoryType"
+    NavigationPropertyName="VatMandatoryType" />
   <field
     Id="&quot;1cf216f8-60e1-45b0-b445-d68275e28ae6&quot;"
     FieldName="&quot;VatUniqueCountryId&quot;"
@@ -5263,7 +5306,7 @@
     FullFieldLable="&quot;VatUniqueCountryId&quot;"
     DefaultText="&quot;Unique Country&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -5285,7 +5328,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="Country"
+    NavigationPropertyName="VatUniqueCountry" />
   <field
     Id="&quot;01985b06-4228-4627-8308-55991124b956&quot;"
     FieldName="&quot;VatMandatoryCountryId&quot;"
@@ -5338,7 +5383,7 @@
     FullFieldLable="&quot;VatMandatoryCountryId&quot;"
     DefaultText="&quot;Mandatory Country&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -5360,7 +5405,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="Country"
+    NavigationPropertyName="VatMandatoryCountry" />
   <field
     Id="&quot;5ef8ef36-8b46-4877-b7ae-59302f8446a9&quot;"
     FieldName="&quot;IsCustomerTelRequired&quot;"
@@ -5675,7 +5722,7 @@
     ObjectTableName="&quot;Tenant&quot;"
     FieldsDataType="&quot;Boolean&quot;"
     MinLength="0"
-    MaxLength="1"
+    MaxLength="0"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -6091,7 +6138,7 @@
     HelpTextCode="&quot;CustomerId&quot;"
     HelpTextDefaultText="&quot;The default shipper for the Master.&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -6112,7 +6159,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="Card"
+    NavigationPropertyName="CustomerCard" />
   <field
     Id="&quot;811a6e42-3938-4d1b-b60c-189d022dc313&quot;"
     FieldName="&quot;CustomerName&quot;"
@@ -6199,7 +6248,7 @@
     ObjectTableName="&quot;Tenant&quot;"
     FieldsDataType="&quot;Boolean&quot;"
     MinLength="0"
-    MaxLength="1"
+    MaxLength="0"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -6545,7 +6594,7 @@
     FullFieldLable="&quot;VatFormatTypeCode&quot;"
     DefaultText="&quot;VAT Format Type&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -6567,7 +6616,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="VatFormatType"
+    NavigationPropertyName="VatFormatType" />
   <field
     Id="&quot;a2f608f3-9a4b-4bb4-801e-5389d0c457ea&quot;"
     FieldName="&quot;VatFormatCountryId&quot;"
@@ -6620,7 +6671,7 @@
     FullFieldLable="&quot;VatFormatCountryId&quot;"
     DefaultText="&quot;VAT Format Country&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -6642,7 +6693,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="Country"
+    NavigationPropertyName="VatFormatCountry" />
   <field
     Id="&quot;7b39f512-cea5-4711-86e0-ceb2133b15eb&quot;"
     FieldName="&quot;IsNumeric&quot;"
@@ -6875,7 +6928,7 @@
     IsChecked="false"
     IsDeleted="false"
     ObjectTableName="&quot;Tenant&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;nText&quot;"
     MinLength="0"
     MaxLength="1000"
     IsRequired="false"
@@ -8227,7 +8280,7 @@
     ObjectTableName="&quot;Tenant&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="0"
+    MaxLength="40"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -8299,7 +8352,7 @@
     IsChecked="false"
     IsDeleted="false"
     ObjectTableName="&quot;Tenant&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;nText&quot;"
     MinLength="0"
     MaxLength="0"
     IsRequired="false"
@@ -8348,7 +8401,7 @@
     HasDataBaseField="true"
     HasPMField="true"
     IsComposition="false"
-    IsMaxLength="false"
+    IsMaxLength="true"
     NoMetaDataField="true"
     GenerateInList="false"
     IsFixedLength="false"
@@ -9162,7 +9215,7 @@
     FullFieldLable="&quot;TemperatureUnitCode&quot;"
     DefaultText="&quot;Temperature Unit&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -9184,7 +9237,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="TemperatureUnit"
+    NavigationPropertyName="TemperatureUnit" />
   <field
     Id="&quot;722241f8-41f5-4718-8eff-67eb2bc31405&quot;"
     FieldName="&quot;DefaultSLAId&quot;"
@@ -9195,7 +9250,7 @@
     ObjectTableName="&quot;Tenant&quot;"
     FieldsDataType="&quot;Boolean&quot;"
     MinLength="0"
-    MaxLength="0"
+    MaxLength="15"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -9235,7 +9290,7 @@
     DisplayLongName="false"
     FullFieldLable="&quot;DefaultSLAId&quot;"
     DefaultText="&quot;Default SLA&quot;"
-    IsNullable="false"
+    IsNullable="true"
     IsForeignKey="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
@@ -9311,7 +9366,7 @@
     FullFieldLable="&quot;LocalAddressId&quot;"
     DefaultText="&quot;Local Address&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -9333,7 +9388,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="Address"
+    NavigationPropertyName="LocalAddress" />
   <field
     Id="&quot;4b436ab3-9a9c-4ad7-9265-254793247e5c&quot;"
     FieldName="&quot;PrivateLabelId&quot;"
@@ -9531,7 +9588,7 @@
     HelpTextDefaultText="&quot;Numbers formatting will apply for all the screens at Logitude&quot;"
     HelpLocalDefaultText="&quot;Numbers formatting will apply for all the screens at Logitude&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -9552,7 +9609,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="NumberFormat"
+    NavigationPropertyName="NumberFormat" />
   <field
     Id="&quot;6132b3e2-d346-4897-be6f-a7d273844505&quot;"
     FieldName="&quot;CustomerTenantShareExportFile&quot;"
@@ -9918,7 +9977,7 @@
     LookUpTableName="&quot;CheckDigitControlAlgorithm&quot;"
     MinLength="0"
     MaxLength="4"
-    IsRequired="false"
+    IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"

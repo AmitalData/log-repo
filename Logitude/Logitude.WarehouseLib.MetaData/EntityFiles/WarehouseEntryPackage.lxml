@@ -57,7 +57,9 @@
   CustomFieldsCount="0"
   DisableSearchBox="false"
   HasDocuments="false"
-  IsLookUp="false">
+  IsLookUp="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;e645546b-b62e-462e-984e-3c9f04069ea6&quot;"
     FieldName="&quot;Id&quot;"
@@ -1453,7 +1455,7 @@
     ObjectTableName="&quot;WarehouseEntryPackage&quot;"
     FieldsDataType="&quot;Boolean&quot;"
     MinLength="0"
-    MaxLength="100"
+    MaxLength="0"
     IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="false"

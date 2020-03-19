@@ -60,7 +60,9 @@
   HasDocuments="false"
   IsLookUp="true"
   IsTabsHidden="false"
-  SearchFields="&quot;PartnerType,PartnerTypes,,Id,&quot;">
+  SearchFields="&quot;PartnerType,PartnerTypes,,Id,&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;0fdfe6f4-c59a-424c-a7fd-bdb4d4da12ec&quot;"
     FieldName="&quot;Id&quot;"
@@ -213,7 +215,7 @@
     IsChecked="false"
     IsDeleted="false"
     ObjectTableName="&quot;PartnerType&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;nText&quot;"
     MinLength="0"
     MaxLength="1000"
     IsRequired="false"

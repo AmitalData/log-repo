@@ -56,7 +56,9 @@
   HasDocuments="false"
   IsLookUp="false"
   IsTabsHidden="false"
-  SearchFields="&quot;CustomerTenantAccess,CustomerTenantAccesses,,Id,&quot;">
+  SearchFields="&quot;CustomerTenantAccess,CustomerTenantAccesses,,Id,&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;fa6dd837-9d92-4f74-9ea4-4713c91c1395&quot;"
     FieldName="&quot;Id&quot;"
@@ -67,7 +69,7 @@
     ObjectTableName="&quot;CustomerTenantAccess&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="0"
+    MaxLength="15"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -942,7 +944,7 @@
     ListFieldLable="&quot;StatusListLable&quot;"
     ListLableDefaultText="&quot;Status&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -964,7 +966,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="CustomerTenantAccessStatusType"
+    NavigationPropertyName="StatusCode" />
   <field
     Id="&quot;c07951ce-3bf5-4d6f-b859-d6a5a9f8d358&quot;"
     FieldName="&quot;StatusName&quot;"
@@ -1097,7 +1101,7 @@
     ListFieldLable="&quot;UpdatedByUserIdListLable&quot;"
     ListLableDefaultText="&quot;Updated By User&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -1119,7 +1123,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="User"
+    NavigationPropertyName="UpdatedByUser" />
   <field
     Id="&quot;ecacd118-c616-4164-814a-8ba749a450bd&quot;"
     FieldName="&quot;LastUpdateDate&quot;"
@@ -1204,7 +1210,7 @@
     IsChecked="false"
     IsDeleted="false"
     ObjectTableName="&quot;CustomerTenantAccess&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;nText&quot;"
     MinLength="0"
     MaxLength="1000"
     IsRequired="false"

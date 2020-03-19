@@ -43,7 +43,9 @@
   HasMenuButtons="false"
   HasFiltersMenu="false"
   AllowedInQueues="false"
-  IsTabsHidden="false">
+  IsTabsHidden="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;474ebc12-feae-48a8-bf53-a76f51496077&quot;"
     FieldName="&quot;Id&quot;"
@@ -62,7 +64,8 @@
     HasDataBaseField="true"
     DisplayInList="false"
     NoMetaDataField="true"
-    HasPMField="true" />
+    HasPMField="true"
+    MaxLength="15" />
   <field
     Id="&quot;67b824a3-e92d-48a9-ba4d-dfcc79bdbbea&quot;"
     FieldName="&quot;ShipmentId&quot;"
@@ -80,7 +83,11 @@
     HasDataBaseField="true"
     DisplayInList="false"
     NoMetaDataField="true"
-    HasPMField="true" />
+    HasPMField="true"
+    MaxLength="15"
+    IsForeignKey="true"
+    ForeignEntity="Shipment"
+    NavigationPropertyName="Shipment" />
   <field
     Id="&quot;c7b82522-ec6d-4105-988c-35054dbb8c42&quot;"
     FieldName="&quot;JobId&quot;"
@@ -98,7 +105,8 @@
     HasDataBaseField="true"
     DisplayInList="false"
     NoMetaDataField="true"
-    HasPMField="true" />
+    HasPMField="true"
+    MaxLength="15" />
   <field
     Id="&quot;37951919-c3f8-4cf8-b3aa-8541504987bb&quot;"
     FieldName="&quot;Tenant&quot;"
@@ -134,7 +142,11 @@
     HasDataBaseField="true"
     HasPMField="false"
     DisplayInList="false"
-    NoMetaDataField="true" />
+    NoMetaDataField="true"
+    MaxLength="40"
+    IsForeignKey="true"
+    ForeignEntity="DocumentsFiling"
+    NavigationPropertyName="ExternalDocument" />
   <field
     Id="&quot;83509d8d-0141-49e4-b8e2-5078802aeb2b&quot;"
     FieldName="&quot;IsNew&quot;"
@@ -170,7 +182,11 @@
     HasDataBaseField="true"
     DisplayInList="false"
     NoMetaDataField="true"
-    HasPMField="true" />
+    HasPMField="true"
+    MaxLength="40"
+    IsForeignKey="true"
+    ForeignEntity="DocumentOut"
+    NavigationPropertyName="InternalDocument" />
   <field
     Id="&quot;0c83001e-cc9e-4935-b0c2-08d16eca03f9&quot;"
     FieldName="&quot;LegType&quot;"
@@ -188,7 +204,8 @@
     HasDataBaseField="true"
     DisplayInList="false"
     NoMetaDataField="true"
-    HasPMField="true" />
+    HasPMField="true"
+    MaxLength="40" />
   <field
     Id="&quot;877144fb-1356-44bd-8efa-512574d60ed2&quot;"
     FieldName="&quot;QuoteId&quot;"
@@ -206,7 +223,11 @@
     HasDataBaseField="true"
     HasPMField="false"
     DisplayInList="false"
-    NoMetaDataField="true" />
+    NoMetaDataField="true"
+    MaxLength="15"
+    IsForeignKey="true"
+    ForeignEntity="Quote"
+    NavigationPropertyName="Quote" />
   <field
     Id="&quot;666565b7-899e-4435-93bc-88300f70053e&quot;"
     FieldName="&quot;Area&quot;"
@@ -224,7 +245,8 @@
     HasDataBaseField="true"
     DisplayInList="false"
     NoMetaDataField="true"
-    HasPMField="true" />
+    HasPMField="true"
+    MaxLength="20" />
   <field
     Id="&quot;2745365b-55c1-4c4a-ac0c-2ad967a77977&quot;"
     FieldName="&quot;DocumentTypeId&quot;"
@@ -242,7 +264,11 @@
     HasDataBaseField="true"
     DisplayInList="false"
     NoMetaDataField="true"
-    HasPMField="true" />
+    HasPMField="true"
+    MaxLength="15"
+    IsForeignKey="true"
+    ForeignEntity="DocumentType"
+    NavigationPropertyName="DocumentType" />
   <field
     Id="&quot;3b88d87f-353f-4299-aaee-8ed4905aec17&quot;"
     FieldName="&quot;AutomationId&quot;"
@@ -260,7 +286,11 @@
     HasDataBaseField="true"
     DisplayInList="false"
     NoMetaDataField="true"
-    HasPMField="true" />
+    HasPMField="true"
+    MaxLength="15"
+    IsForeignKey="true"
+    ForeignEntity="Automation"
+    NavigationPropertyName="Automation" />
   <field
     Id="&quot;7ca74355-c13f-4c36-b781-6e8eb0d82d25&quot;"
     FieldName="&quot;DateEscalationActionTimeIndicatorCode&quot;"
@@ -278,7 +308,8 @@
     HasDataBaseField="true"
     HasPMField="false"
     DisplayInList="false"
-    NoMetaDataField="true" />
+    NoMetaDataField="true"
+    MaxLength="2" />
   <field
     Id="&quot;633766fd-e3ed-4c31-9cb3-bd89407312ee&quot;"
     FieldName="&quot;DateEscalationTime&quot;"
@@ -314,7 +345,8 @@
     HasDataBaseField="true"
     HasPMField="false"
     DisplayInList="false"
-    NoMetaDataField="true" />
+    NoMetaDataField="true"
+    MaxLength="120" />
   <field
     Id="&quot;dcd9cc7a-42a5-4d86-98df-a38cb2e6104c&quot;"
     FieldName="&quot;Notes&quot;"
@@ -446,7 +478,10 @@
     HasDataBaseField="true"
     GenerateInList="false"
     NoMetaDataField="false"
-    HasPMField="true" />
+    HasPMField="true"
+    IsForeignKey="true"
+    ForeignEntity="EventType"
+    NavigationPropertyName="EventType" />
   <field
     Id="&quot;63b5627a-3c82-471f-9f53-e9864b64e1cb&quot;"
     FieldName="&quot;OwnerUserId&quot;"
@@ -513,7 +548,10 @@
     HasDataBaseField="true"
     GenerateInList="false"
     NoMetaDataField="false"
-    HasPMField="true" />
+    HasPMField="true"
+    IsForeignKey="true"
+    ForeignEntity="User"
+    NavigationPropertyName="OwnerUser" />
   <field
     Id="&quot;ac3e0352-89b6-4eba-ade9-ef9e5d07dcf4&quot;"
     FieldName="&quot;Date&quot;"

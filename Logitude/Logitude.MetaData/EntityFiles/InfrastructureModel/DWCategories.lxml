@@ -56,7 +56,9 @@
   CustomFieldsCount="0"
   DisableSearchBox="false"
   HasDocuments="false"
-  IsLookUp="false">
+  IsLookUp="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;a8aae430-232b-4918-b8ef-30acd6b2497b&quot;"
     FieldName="&quot;Code&quot;"
@@ -66,7 +68,7 @@
     ObjectTableName="&quot;DWCategories&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="3"
+    MaxLength="50"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -132,8 +134,8 @@
     ObjectTableName="&quot;DWCategories&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="3"
-    IsRequired="false"
+    MaxLength="50"
+    IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="false"
     CanFilter="false"

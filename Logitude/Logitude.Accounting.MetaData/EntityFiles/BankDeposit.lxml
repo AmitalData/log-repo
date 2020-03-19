@@ -61,7 +61,9 @@
   DisableSearchBox="false"
   HasDocuments="false"
   IsLookUp="false"
-  IsTabsHidden="false">
+  IsTabsHidden="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;c343e469-a7bf-441a-82a9-a692ab0b6188&quot;"
     FieldName="&quot;Id&quot;"
@@ -733,7 +735,7 @@
     FieldsDataType="&quot;LookUp&quot;"
     LookUpTableName="&quot;Currency&quot;"
     MinLength="0"
-    MaxLength="2"
+    MaxLength="15"
     IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -1113,7 +1115,7 @@
     IsChecked="false"
     IsDeleted="false"
     ObjectTableName="&quot;BankDeposit&quot;"
-    FieldsDataType="&quot;Date&quot;"
+    FieldsDataType="&quot;DateTime&quot;"
     MinLength="0"
     MaxLength="0"
     IsRequired="true"

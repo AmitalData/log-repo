@@ -59,7 +59,9 @@
   HasDocuments="false"
   IsLookUp="false"
   IsTabsHidden="false"
-  SearchFields="&quot;ShippingAgent,ShippingAgents,Simplog.FreightLib.NewShippingAgentCommand,Id,&quot;">
+  SearchFields="&quot;ShippingAgent,ShippingAgents,Simplog.FreightLib.NewShippingAgentCommand,Id,&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;a89eaa5e-3445-43c9-9aa6-69668862fddf&quot;"
     FieldName="&quot;Id&quot;"
@@ -70,7 +72,7 @@
     ObjectTableName="&quot;ShippingAgent&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="0"
+    MaxLength="15"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -111,7 +113,7 @@
     ListLableDefaultText="&quot;Id&quot;"
     ListLocalDefaultText="&quot;Id&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="true"
     HasDataBaseField="true"
     HasPMField="true"
@@ -132,7 +134,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="Card"
+    NavigationPropertyName="Card" />
   <field
     Id="&quot;0809a160-ecc7-4f9b-ac81-0b4f537c4751&quot;"
     FieldName="&quot;Tenant&quot;"
@@ -1336,7 +1340,7 @@
     ObjectTableName="&quot;ShippingAgent&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="25"
+    MaxLength="15"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"

@@ -40,7 +40,9 @@
   IsEditable="true"
   ClientModuleName="&quot;Common&quot;"
   Code="&quot;RGQG&quot;"
-  DescriptionDefaultText="&quot;Define the geographic regions to be used for specifying customers' regional location.&quot;">
+  DescriptionDefaultText="&quot;Define the geographic regions to be used for specifying customers' regional location.&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;82714c2f-984d-4934-99a3-d161b280d942&quot;"
     FieldName="&quot;Id&quot;"
@@ -61,7 +63,8 @@
     DisplayInList="true"
     NoMetaDataField="true"
     HasPMField="true"
-    GenerateInList="true" />
+    GenerateInList="true"
+    MaxLength="15" />
   <field
     Id="&quot;af075ba8-6609-4b53-b533-219c0c7484c8&quot;"
     FieldName="&quot;Tenant&quot;"
@@ -139,7 +142,7 @@
     DisplayInDocumentReferences="false"
     CopyToDW="false"
     HasTemplate="false"
-    IsRequired="true"
+    IsRequired="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedListLocalDefaultText="false"
     IsSpellCheckedHelpLocalDefaultText="false"

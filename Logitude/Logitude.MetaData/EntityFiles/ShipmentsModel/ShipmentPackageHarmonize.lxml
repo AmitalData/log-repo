@@ -3,7 +3,7 @@
   Id="&quot;38701f50-4f8b-4a7d-b2aa-107946d3de37&quot;"
   ObjectTableName="&quot;ShipmentPackageHarmonize&quot;"
   IsNew="false"
-  DBTableName="&quot;ShipmentPackageHarmonizes&quot;"
+  DBTableName="&quot;ShipmentPackageHarmonize&quot;"
   OldDBTableName="&quot;ShipmentPackageHarmonizes&quot;"
   ObjectTableSingular="&quot;Shipment Package Harmonize&quot;"
   ObjectTablePlural="&quot;Shipment Package Harmonizes&quot;"
@@ -57,7 +57,9 @@
   HasDocuments="false"
   IsLookUp="false"
   IsTabsHidden="false"
-  SearchFields="&quot;ShipmentPackageHarmonize,ShipmentPackageHarmonizes,,Id,&quot;">
+  SearchFields="&quot;ShipmentPackageHarmonize,ShipmentPackageHarmonizes,,Id,&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;a4ec9b7f-850e-4b69-9fcb-4f184c7fb143&quot;"
     FieldName="&quot;Id&quot;"
@@ -68,7 +70,7 @@
     ObjectTableName="&quot;ShipmentPackageHarmonize&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="0"
+    MaxLength="15"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -212,8 +214,8 @@
     ObjectTableName="&quot;ShipmentPackageHarmonize&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="0"
-    IsRequired="false"
+    MaxLength="15"
+    IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
@@ -252,7 +254,7 @@
     ListLableDefaultText="&quot;PackageId&quot;"
     ListLocalDefaultText="&quot;PackageId&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -273,7 +275,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="ShipmentPackage"
+    NavigationPropertyName="Package" />
   <field
     Id="&quot;ea4652dd-6a80-4055-bf1e-5bb9ab66940e&quot;"
     FieldName="&quot;Harmonize&quot;"

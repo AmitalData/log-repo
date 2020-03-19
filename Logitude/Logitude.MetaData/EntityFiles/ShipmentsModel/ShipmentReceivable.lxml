@@ -58,7 +58,9 @@
   HasDocuments="false"
   IsLookUp="false"
   IsTabsHidden="false"
-  SearchFields="&quot;ShipmentReceivable,ShipmentReceivables,,Id,&quot;">
+  SearchFields="&quot;ShipmentReceivable,ShipmentReceivables,,Id,&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;7db4bb11-8d37-43fc-bb59-144583a995b8&quot;"
     FieldName="&quot;Id&quot;"
@@ -69,7 +71,7 @@
     ObjectTableName="&quot;ShipmentReceivable&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="0"
+    MaxLength="15"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -214,7 +216,7 @@
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
     MaxLength="15"
-    IsRequired="false"
+    IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
@@ -253,7 +255,7 @@
     ListLableDefaultText="&quot;ShipmentId&quot;"
     ListLocalDefaultText="&quot;ShipmentId&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -274,7 +276,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="Shipment"
+    NavigationPropertyName="Shipment" />
   <field
     Id="&quot;d7a00bad-3a97-43b7-b14c-34d41ff29100&quot;"
     FieldName="&quot;PayableLocal&quot;"
@@ -346,7 +350,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    NumberOfDigits="18"
+    DigitsAfterPoint="2" />
   <field
     Id="&quot;9799965d-3667-4932-9fb0-1a76234268b2&quot;"
     FieldName="&quot;UpdateByUserId&quot;"
@@ -357,8 +363,8 @@
     ObjectTableName="&quot;ShipmentReceivable&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="0"
-    IsRequired="false"
+    MaxLength="15"
+    IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
@@ -397,7 +403,7 @@
     ListLableDefaultText="&quot;UpdateByUserId&quot;"
     ListLocalDefaultText="&quot;UpdateByUserId&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -418,7 +424,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="User"
+    NavigationPropertyName="UpdateByUser" />
   <field
     Id="&quot;e91687fe-428f-4713-a5ee-f030c7aa0e96&quot;"
     FieldName="&quot;UpdateDate&quot;"
@@ -501,7 +509,7 @@
     ObjectTableName="&quot;ShipmentReceivable&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="0"
+    MaxLength="15"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -541,7 +549,7 @@
     ListLableDefaultText="&quot;ARInvoiceLineId&quot;"
     ListLocalDefaultText="&quot;ARInvoiceLineId&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -562,7 +570,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="ARInvoiceLine"
+    NavigationPropertyName="ARInvoiceLine" />
   <field
     Id="&quot;b1f91ef5-3676-41c2-9638-ffe2f5580b53&quot;"
     FieldName="&quot;AmountInProfitCurrency&quot;"
@@ -571,9 +581,9 @@
     IsChecked="false"
     IsDeleted="false"
     ObjectTableName="&quot;ShipmentReceivable&quot;"
-    FieldsDataType="&quot;Decimal&quot;"
+    FieldsDataType="&quot;Double&quot;"
     MinLength="0"
-    MaxLength="2"
+    MaxLength="0"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -722,7 +732,7 @@
     ObjectTableName="&quot;ShipmentReceivable&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="0"
+    MaxLength="15"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -762,7 +772,7 @@
     ListLableDefaultText="&quot;ARInvoiceId&quot;"
     ListLocalDefaultText="&quot;ARInvoiceId&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -783,7 +793,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="ARInvoice"
+    NavigationPropertyName="ARInvoice" />
   <field
     Id="&quot;18e423bf-8e8c-4840-a8a1-9b578ba0c9ef&quot;"
     FieldName="&quot;CreateDate&quot;"
@@ -866,8 +878,8 @@
     ObjectTableName="&quot;ShipmentReceivable&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="0"
-    IsRequired="false"
+    MaxLength="15"
+    IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
@@ -906,7 +918,7 @@
     ListLableDefaultText="&quot;CreatedByUserId&quot;"
     ListLocalDefaultText="&quot;CreatedByUserId&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -927,7 +939,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="User"
+    NavigationPropertyName="CreatedByUser" />
   <field
     Id="&quot;48a072b0-8dd7-4d68-93a9-ed93ca4f4a72&quot;"
     FieldName="&quot;IsFromQuote&quot;"
@@ -1082,7 +1096,7 @@
     ObjectTableName="&quot;ShipmentReceivable&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="0"
+    MaxLength="15"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -1296,7 +1310,7 @@
     IsChecked="false"
     IsDeleted="false"
     ObjectTableName="&quot;ShipmentReceivable&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;nText&quot;"
     MinLength="0"
     MaxLength="250"
     IsRequired="false"
@@ -1411,7 +1425,7 @@
     FullFieldLable="&quot;IATACodeId&quot;"
     DefaultText="&quot;IATA Code&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -1433,7 +1447,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="IATACode"
+    NavigationPropertyName="IATACode" />
   <field
     Id="&quot;23cc4ada-6811-4740-8b4d-f90fa623a8ef&quot;"
     FieldName="&quot;IsExchangeRateFixed&quot;"
@@ -1444,7 +1460,7 @@
     ObjectTableName="&quot;ShipmentReceivable&quot;"
     FieldsDataType="&quot;Boolean&quot;"
     MinLength="0"
-    MaxLength="15"
+    MaxLength="0"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -1629,7 +1645,7 @@
     FullFieldLable="&quot;DueTypeCode&quot;"
     DefaultText="&quot;Due Type&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -1651,7 +1667,9 @@
     IsSpellCheckedHelpLocalDefaultText="true"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="DueType"
+    NavigationPropertyName="DueType" />
   <field
     Id="&quot;931e0ba2-0654-405a-a902-89e8986a5664&quot;"
     FieldName="&quot;ShipmentReceivableLineStatusCode&quot;"
@@ -1703,7 +1721,7 @@
     FullFieldLable="&quot;ShipmentReceivableLineStatusCode&quot;"
     DefaultText="&quot;Status Type&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -1725,7 +1743,9 @@
     IsSpellCheckedHelpLocalDefaultText="true"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="ShipmentReceivableLineStatus"
+    NavigationPropertyName="ShipmentReceivableLineStatus" />
   <field
     Id="&quot;f4362aac-0f72-4f46-9ec9-660d4e2f5066&quot;"
     FieldName="&quot;PrepaidCollectId&quot;"
@@ -1779,7 +1799,7 @@
     FullFieldLable="&quot;PrepaidCollectId&quot;"
     DefaultText="&quot;Prepaid/Collect&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -1801,7 +1821,9 @@
     IsSpellCheckedHelpLocalDefaultText="true"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="PrepaidCollect"
+    NavigationPropertyName="PrepaidCollect" />
   <field
     Id="&quot;6f58bc22-5499-45cf-8541-1d17d120498f&quot;"
     FieldName="&quot;MeasurementId&quot;"
@@ -1855,7 +1877,7 @@
     ShortFieldLable="&quot;MeasurementId&quot;"
     ShortFieldLableDefaultText="&quot;UOM&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -1877,7 +1899,9 @@
     IsSpellCheckedHelpLocalDefaultText="true"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="Measurement"
+    NavigationPropertyName="Measurement" />
   <field
     Id="&quot;f51c560e-154a-469d-825d-21fcb02eac62&quot;"
     FieldName="&quot;Quantity&quot;"
@@ -1888,7 +1912,7 @@
     ObjectTableName="&quot;ShipmentReceivable&quot;"
     FieldsDataType="&quot;Double&quot;"
     MinLength="0"
-    MaxLength="2"
+    MaxLength="0"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -1960,7 +1984,7 @@
     ObjectTableName="&quot;ShipmentReceivable&quot;"
     FieldsDataType="&quot;Double&quot;"
     MinLength="0"
-    MaxLength="2"
+    MaxLength="0"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -2079,7 +2103,7 @@
     ShortFieldLable="&quot;CurrencyId&quot;"
     ShortFieldLableDefaultText="&quot;Curr&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -2100,7 +2124,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="Currency"
+    NavigationPropertyName="Currency" />
   <field
     Id="&quot;52223d9a-278a-4164-bca5-9cbcd644e22c&quot;"
     FieldName="&quot;UnitPrice&quot;"
@@ -2111,7 +2137,7 @@
     ObjectTableName="&quot;ShipmentReceivable&quot;"
     FieldsDataType="&quot;SigDouble&quot;"
     MinLength="0"
-    MaxLength="2"
+    MaxLength="0"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -2181,9 +2207,9 @@
     IsChecked="false"
     IsDeleted="false"
     ObjectTableName="&quot;ShipmentReceivable&quot;"
-    FieldsDataType="&quot;Decimal&quot;"
+    FieldsDataType="&quot;Double&quot;"
     MinLength="0"
-    MaxLength="2"
+    MaxLength="0"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -2255,9 +2281,9 @@
     IsChecked="false"
     IsDeleted="false"
     ObjectTableName="&quot;ShipmentReceivable&quot;"
-    FieldsDataType="&quot;Decimal&quot;"
+    FieldsDataType="&quot;Double&quot;"
     MinLength="0"
-    MaxLength="2"
+    MaxLength="0"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -2372,7 +2398,7 @@
     FullFieldLable="&quot;ChargesTypeId&quot;"
     DefaultText="&quot;Charges Type&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -2394,7 +2420,9 @@
     IsSpellCheckedHelpLocalDefaultText="true"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="ChargesType"
+    NavigationPropertyName="ChargesType" />
   <field
     Id="&quot;597c969f-75ed-4f84-b275-7fb8275547e0&quot;"
     FieldName="&quot;FixedAmountCode&quot;"
@@ -3170,7 +3198,7 @@
     ListLableDefaultText="&quot;VatTypeId&quot;"
     ListLocalDefaultText="&quot;VatTypeId&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -3192,7 +3220,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="VatType"
+    NavigationPropertyName="VatType" />
   <field
     Id="&quot;051ee095-4c3e-47bb-8edb-0f2c28690583&quot;"
     FieldName="&quot;ChangeSetOp&quot;"
@@ -3347,7 +3377,7 @@
     ObjectTableName="&quot;ShipmentReceivable&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="0"
+    MaxLength="15"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -3387,7 +3417,7 @@
     ListLableDefaultText="&quot;ShipmentReceivableParentId&quot;"
     ListLocalDefaultText="&quot;ShipmentReceivableParentId&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -3408,7 +3438,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="ShipmentReceivable"
+    NavigationPropertyName="ShipmentReceivableParent" />
   <field
     Id="&quot;46876f22-5df8-4530-ae8d-b87b061b20a5&quot;"
     FieldName="&quot;ChildShipmentReceivables&quot;"
@@ -3566,7 +3598,7 @@
     ObjectTableName="&quot;ShipmentReceivable&quot;"
     FieldsDataType="&quot;Boolean&quot;"
     MinLength="0"
-    MaxLength="1"
+    MaxLength="0"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -3639,7 +3671,7 @@
     ObjectTableName="&quot;ShipmentReceivable&quot;"
     FieldsDataType="&quot;Double&quot;"
     MinLength="0"
-    MaxLength="1"
+    MaxLength="0"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -3712,7 +3744,7 @@
     ObjectTableName="&quot;ShipmentReceivable&quot;"
     FieldsDataType="&quot;Double&quot;"
     MinLength="0"
-    MaxLength="1"
+    MaxLength="0"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"

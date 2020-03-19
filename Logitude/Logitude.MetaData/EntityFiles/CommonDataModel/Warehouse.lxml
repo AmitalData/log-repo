@@ -63,7 +63,9 @@
   HasDocuments="false"
   IsLookUp="true"
   IsTabsHidden="false"
-  SearchFields="&quot;Warehouse,Warehouses,Simplog.FreightLib.NewWarehouseCommand,Id,&quot;">
+  SearchFields="&quot;Warehouse,Warehouses,Simplog.FreightLib.NewWarehouseCommand,Id,&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;611ac4ec-e486-46fa-b1d3-86ee4e126e76&quot;"
     FieldName="&quot;Id&quot;"
@@ -74,7 +76,7 @@
     ObjectTableName="&quot;Warehouse&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="0"
+    MaxLength="15"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -116,7 +118,7 @@
     ListLableDefaultText="&quot;Id&quot;"
     ListLocalDefaultText="&quot;Id&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="true"
     HasDataBaseField="true"
     HasPMField="true"
@@ -137,7 +139,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="Card"
+    NavigationPropertyName="Card" />
   <field
     Id="&quot;26e827b9-07f0-4e13-9da9-1ac4b755133a&quot;"
     FieldName="&quot;Tenant&quot;"
@@ -524,7 +528,7 @@
     ObjectTableName="&quot;Warehouse&quot;"
     FieldsDataType="&quot;Boolean&quot;"
     MinLength="0"
-    MaxLength="15"
+    MaxLength="0"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -3869,7 +3873,7 @@
     FullFieldLable="&quot;TypeCode&quot;"
     DefaultText="&quot;Type&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -3891,7 +3895,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="WarehouseType"
+    NavigationPropertyName="WarehouseType" />
   <field
     Id="&quot;9977b0df-c39a-4bcb-b74a-7aeeb173d483&quot;"
     FieldName="&quot;MyWarehouse&quot;"
@@ -3902,7 +3908,7 @@
     ObjectTableName="&quot;Warehouse&quot;"
     FieldsDataType="&quot;Boolean&quot;"
     MinLength="0"
-    MaxLength="15"
+    MaxLength="0"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"

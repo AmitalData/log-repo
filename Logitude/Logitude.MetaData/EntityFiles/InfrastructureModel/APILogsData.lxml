@@ -56,7 +56,9 @@
   HasDocuments="false"
   IsLookUp="false"
   IsTabsHidden="false"
-  SearchFields="&quot;APILogsData,APILogsData,,Id,&quot;">
+  SearchFields="&quot;APILogsData,APILogsData,,Id,&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;cc1ad5eb-b3db-44b4-bdd9-a99f1bfed181&quot;"
     FieldName="&quot;Tenant&quot;"
@@ -399,7 +401,7 @@
     FullFieldLable="&quot;Id&quot;"
     DefaultText="&quot;Id&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="true"
     HasDataBaseField="true"
     HasPMField="true"
@@ -421,7 +423,8 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="APILogs" />
   <field
     Id="&quot;df2e02fa-8959-4ffb-a653-0829153d98c4&quot;"
     FieldName="&quot;RequestData&quot;"

@@ -63,7 +63,9 @@
   HasDocuments="false"
   IsLookUp="false"
   IsTabsHidden="false"
-  SearchFields="&quot;MoveType,MoveTypes,Simplog.Infrastructure.NewMoveTypeCommand,Id,&quot;">
+  SearchFields="&quot;MoveType,MoveTypes,Simplog.Infrastructure.NewMoveTypeCommand,Id,&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;2cdea4f7-6fcf-4642-b61d-9bb1a7540209&quot;"
     FieldName="&quot;Id&quot;"
@@ -74,7 +76,7 @@
     ObjectTableName="&quot;MoveType&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="0"
+    MaxLength="15"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -525,7 +527,7 @@
     FieldsDataType="&quot;LookUp&quot;"
     LookUpTableName="&quot;TransportMode&quot;"
     MinLength="0"
-    MaxLength="15"
+    MaxLength="1"
     IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -570,7 +572,7 @@
     ListFieldLable="&quot;TransportModeIdListLable&quot;"
     ListLableDefaultText="&quot;Transport Mode&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -592,7 +594,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="TransportMode"
+    NavigationPropertyName="TransportMode" />
   <field
     Id="&quot;6a6462db-13c2-46e7-b695-5ffcffa0ac56&quot;"
     FieldName="&quot;Code&quot;"
@@ -677,7 +681,7 @@
     IsChecked="false"
     IsDeleted="false"
     ObjectTableName="&quot;MoveType&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;nText&quot;"
     MinLength="0"
     MaxLength="1000"
     IsRequired="false"

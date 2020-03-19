@@ -54,7 +54,9 @@
   DisableSearchBox="false"
   HasDocuments="false"
   IsLookUp="false"
-  SearchFields="&quot;MAWBStack,MAWBStacks,,Id,&quot;">
+  SearchFields="&quot;MAWBStack,MAWBStacks,,Id,&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;f7be379a-28a5-4412-939a-18c46c848da4&quot;"
     FieldName="&quot;Id&quot;"
@@ -65,7 +67,7 @@
     ObjectTableName="&quot;MAWBStack&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="0"
+    MaxLength="15"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -463,7 +465,7 @@
     FullFieldLable="&quot;AirlineId&quot;"
     DefaultText="&quot;Airline&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -484,7 +486,9 @@
     IsSpellCheckedHelpLocalDefaultText="true"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="Airline"
+    NavigationPropertyName="Airline" />
   <field
     Id="&quot;1d16f84d-401c-4a58-a671-2214d982c7ce&quot;"
     FieldName="&quot;Notes&quot;"
@@ -493,7 +497,7 @@
     IsChecked="false"
     IsDeleted="false"
     ObjectTableName="&quot;MAWBStack&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;nText&quot;"
     MinLength="0"
     MaxLength="250"
     IsRequired="false"
@@ -569,7 +573,7 @@
     LookUpTableName="&quot;Card&quot;"
     MinLength="0"
     MaxLength="15"
-    IsRequired="true"
+    IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
@@ -608,7 +612,7 @@
     FullFieldLable="&quot;AssignedToId&quot;"
     DefaultText="&quot;Assigned To&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -629,7 +633,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="Card"
+    NavigationPropertyName="AssignedToCard" />
   <field
     Id="&quot;6411dda7-56e9-4e99-afde-00b28de3d52a&quot;"
     FieldName="&quot;AssignedToShipperName&quot;"

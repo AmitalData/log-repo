@@ -42,7 +42,9 @@
   HasMenuButtons="false"
   HasFiltersMenu="false"
   CloseTableCode="&quot;Code&quot;"
-  CloseTableName="&quot;Name&quot;">
+  CloseTableName="&quot;Name&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;38da0dbe-68ed-4933-87a7-f3fc95554465&quot;"
     FieldName="&quot;Code&quot;"
@@ -114,7 +116,7 @@
     ObjectTableName="&quot;AccountType&quot;"
     FieldsDataType="&quot;Text&quot;"
     DataTypeCode="&quot;Text&quot;"
-    MaxLength="30"
+    MaxLength="40"
     IsRequiered="true"
     IsCustom="false"
     MinLength="0"
@@ -176,7 +178,7 @@
     Id="&quot;72fca51d-ddf9-4c04-950a-17c6d92aa947&quot;"
     FieldName="&quot;SearchFields&quot;"
     ObjectTableName="&quot;AccountType&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;nText&quot;"
     DataTypeCode="&quot;Text&quot;"
     MaxLength="1000"
     IsRequiered="false"

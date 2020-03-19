@@ -41,7 +41,9 @@
   ApplyDefaultValues="true"
   ClientModuleName="&quot;Common&quot;"
   Code="&quot;CUSS&quot;"
-  DescriptionDefaultText="&quot;Define sizes for evaluating the volume of customer business.&quot;">
+  DescriptionDefaultText="&quot;Define sizes for evaluating the volume of customer business.&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;ec97ad1b-4fa3-416a-94d5-8404d766caf0&quot;"
     FieldName="&quot;Id&quot;"
@@ -62,7 +64,8 @@
     DisplayInList="true"
     NoMetaDataField="true"
     HasPMField="true"
-    GenerateInList="true" />
+    GenerateInList="true"
+    MaxLength="15" />
   <field
     Id="&quot;7465a877-d395-4932-9ebd-6d19e6da9655&quot;"
     FieldName="&quot;Tenant&quot;"
@@ -108,7 +111,7 @@
     ObjectTableName="&quot;CustomerSize&quot;"
     FieldsDataType="&quot;Boolean&quot;"
     DataTypeCode="&quot;Boolean&quot;"
-    MaxLength="1"
+    MaxLength="0"
     IsRequiered="true"
     IsCustom="false"
     MinLength="0"
@@ -223,7 +226,7 @@
     DisplayInDocumentReferences="false"
     CopyToDW="false"
     HasTemplate="false"
-    IsRequired="true"
+    IsRequired="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedListLocalDefaultText="false"
     IsSpellCheckedHelpLocalDefaultText="false"
