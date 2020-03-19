@@ -701,6 +701,7 @@
     <Content Include="Main Branch\2020\03 - 2020\Day 08 [Samar] Fill default containers on tariff settings.sql" />
     <Content Include="Main Branch\2020\03 - 2020\Day 08 [Abed]InSertRecordToQuoteTemplateTextCode%28VatType and VatPerc%29.sql" />
     <Content Include="Main Branch\2020\02 - 2020\Day 10 [Bisan] Update Storage free days in Cards table.sql" />
+    <Content Include="Main Branch\2020\03 - 2020\Day 19 [Bisan] Fill default values in TariffProducts table.sql" />
     <Content Include="Main Branch\2020\1 - 2020\Day 12 [Mutaz] Delete Constraint between SharedUserQueries and Query.sql" />
     <Content Include="Main Branch\2020\1 - 2020\Day 22 [Abed] update Help Center.sql" />
     <Content Include="Main Branch\2020\1 - 2020\Day 31 [Mutaz] Add Constraint UniqCode In Query.sql" />
@@ -2126,7 +2127,6 @@
   <ItemGroup>
     <Folder Include="2016.R4.1\12 - 2016\" />
     <Folder Include="Customs Branch\" />
-    <Folder Include="Main Branch\2020\03 - 2020\" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0,Profile=Client">

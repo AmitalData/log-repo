@@ -2187,6 +2187,14 @@
     <Compile Include="Migrations\202003121123558_AddCountryAndStatePropertiesToPort_Samar.Designer.cs">
       <DependentUpon>202003121123558_AddCountryAndStatePropertiesToPort_Samar.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202003181116035_AddTariffProductsTable.cs" />
+    <Compile Include="Migrations\202003181116035_AddTariffProductsTable.Designer.cs">
+      <DependentUpon>202003181116035_AddTariffProductsTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003191030414_ChangeTariffProductsColumnName.cs" />
+    <Compile Include="Migrations\202003191030414_ChangeTariffProductsColumnName.Designer.cs">
+      <DependentUpon>202003191030414_ChangeTariffProductsColumnName.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\202003030904524_WesamDBMigrationFixes.cs" />
     <Compile Include="Migrations\202003030904524_WesamDBMigrationFixes.Designer.cs">
@@ -3950,6 +3958,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202003121123558_AddCountryAndStatePropertiesToPort_Samar.resx">
       <DependentUpon>202003121123558_AddCountryAndStatePropertiesToPort_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003181116035_AddTariffProductsTable.resx">
+      <DependentUpon>202003181116035_AddTariffProductsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003191030414_ChangeTariffProductsColumnName.resx">
+      <DependentUpon>202003191030414_ChangeTariffProductsColumnName.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
