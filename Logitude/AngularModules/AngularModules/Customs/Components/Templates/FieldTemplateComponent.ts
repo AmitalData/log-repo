@@ -4,6 +4,7 @@ import {CourierMasterService} from '../../Services/Others/CourierMasterService';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 import { DeclarationRemarksService } from '../../../Common/Services/ExtendedPMs/DeclarationRemarksService';
+import { ListComponentArgs } from '../../../Infrastructure/Args';
 
 @Component({
     moduleId: module.id,
@@ -20,12 +21,12 @@ export class FieldTemplateComponent {
     public IsHeaderScreenTemplate: boolean = false;
     courierMasterService: CourierMasterService = new CourierMasterService();
     @ViewChild('SpotLight', { read: ViewContainerRef }) SpotLightViewContainerRef: ViewContainerRef;
-    constructor() {
+    constructor(private _ListComponentArgs: ListComponentArgs) {
 
     }
 
     public ButtonClick() {
-        debugger;
+        this._ListComponentArgs.SuppressOnRowSelectedField = true;
     }
     public Run(args: any) {
           this.Entity = args['Entity'];
@@ -105,6 +106,8 @@ export class FieldTemplateComponent {
     }
 
     OpenRemarks() {
+        this._ListComponentArgs.SuppressOnRowSelectedField = true;
+
         var _declarationRemarksService: DeclarationRemarksService = new DeclarationRemarksService();
         var windowArgs: any = {};
         var logitudeWindow = new LogitudeWindow();
