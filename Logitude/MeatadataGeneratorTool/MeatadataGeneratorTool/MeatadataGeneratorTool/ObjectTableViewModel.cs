@@ -22,6 +22,7 @@ using MeatadataGeneratorTool.DataContractsModule;
 using MeatadataGeneratorTool.TextCodes;
 using MeatadataGeneratorTool.Features;
 using System.Diagnostics;
+using System.IO;
 
 namespace MeatadataGeneratorTool
 {
@@ -30,10 +31,27 @@ namespace MeatadataGeneratorTool
         public string Code { get; set; }
         public string Name { get; set; }
     }
+
+    public class DxmlDatabaseType
+    {
+        public string Code { get; set; }
+        public string Name { get; set; }
+    }
+
+    public class DxmlDatabaseSchema
+    {
+        public string Code { get; set; }
+        public string Name { get; set; }
+    }
+
     public class ObjectTableViewModel : PropertyChangedImplementation
     {
 
         public List<ObjectTableType> ObjectTableTypes { get; set; }
+
+        public List<DxmlDatabaseType> DxmlDatabaseTypes { get; set; }
+
+        public List<DxmlDatabaseSchema> DxmlDatabaseSchemas { get; set; }
 
         public ObservableCollection<ObjectFieldsViewModel> ObsList { get; set; }
 
@@ -379,6 +397,13 @@ namespace MeatadataGeneratorTool
             ToBeDisplayOnLookUpList = new ObservableCollection<ObjectFieldsViewModel>();
             ToBeDisplayOnLookUpLocalList = new ObservableCollection<ObjectFieldsViewModel>();
             ObjectTableTypes = new List<ObjectTableType>() { new ObjectTableType { Code = "MD", Name = "Master Data" }, new ObjectTableType() { Code = "BR", Name = "Business Record" } };
+            DxmlDatabaseTypes = new List<DxmlDatabaseType>() {
+                new DxmlDatabaseType { Code = "Main", Name = "Main Database" },
+                new DxmlDatabaseType { Code = "Global", Name = "Global Database" },
+                new DxmlDatabaseType() { Code = "SystemLogs", Name = "SystemLogs Database" } };
+            DxmlDatabaseSchemas = new List<DxmlDatabaseSchema>() {
+                new DxmlDatabaseSchema { Code = "dbo", Name = "Dbo Schema" },
+                new DxmlDatabaseSchema() { Code = "Customs", Name = "Customs Schema" } };
             this.AdditionalTextCodesList = new ObservableCollection<TextCodesViewModel>();
             this.AdditionalFeaturesList = new ObservableCollection<FeaturesViewModel>();
 			this.AdditionalFeaturesTempList = new ObservableCollection<FeaturesViewModel>();
@@ -1298,6 +1323,20 @@ namespace MeatadataGeneratorTool
             set { dBTableName = value; IsDirty = true; FirePropertyChanged("DBTableName"); }
         }
 
+        string dBTableOldNames;
+        public string DBTableOldNames
+        {
+            get { return dBTableOldNames; }
+            set { dBTableOldNames = value; FirePropertyChanged("DBTableOldNames"); }
+        }
+
+        string dBTableShortName;
+        public string DBTableShortName
+        {
+            get { return dBTableShortName; }
+            set { dBTableShortName = value; IsDirty = true; FirePropertyChanged("DBTableShortName"); }
+        }
+        
         string olddBTableName;
         public string OldDBTableName
         {
@@ -1582,6 +1621,20 @@ namespace MeatadataGeneratorTool
         {
             get { return objectTableTypeCode; }
             set { objectTableTypeCode = value; FirePropertyChanged("ObjectTableTypeCode"); }
+        }
+
+        string dxmlDatabaseTypeCode;
+        public string DxmlDatabaseTypeCode
+        {
+            get { return dxmlDatabaseTypeCode; }
+            set { dxmlDatabaseTypeCode = value; FirePropertyChanged("DxmlDatabaseTypeCode"); }
+        }
+
+        string dxmlDatabaseSchemaCode;
+        public string DxmlDatabaseSchemaCode
+        {
+            get { return dxmlDatabaseSchemaCode; }
+            set { dxmlDatabaseSchemaCode = value; FirePropertyChanged("DxmlDatabaseSchemaCode"); }
         }
 
         int maxNumberOfCustomFields;
@@ -2499,6 +2552,21 @@ namespace MeatadataGeneratorTool
                 ErrorsVisibility = Visibility.Visible;
                 return false;
             }
+
+            if (string.IsNullOrEmpty(DxmlDatabaseTypeCode))
+            {
+                ErrorMessages = "Database Type is Required";
+                ErrorsVisibility = Visibility.Visible;
+                return false;
+            }
+
+            if (string.IsNullOrEmpty(DxmlDatabaseSchemaCode))
+            {
+                ErrorMessages = "Database Schema is Required";
+                ErrorsVisibility = Visibility.Visible;
+                return false;
+            }
+
             try
             {
                 ErrorsVisibility = Visibility.Collapsed;
@@ -2611,7 +2679,7 @@ namespace MeatadataGeneratorTool
                 }
                 if (DataContractsObsList != null)
                 {
-                    ErrorMessages = "";
+                    //ErrorMessages = "";
                     foreach (var item in DataContractsObsList)
                     {
                         if (item.DCFieldsObsList != null && item.DCFieldsObsList.Where(a => a.IsKey == true).Count() == 0)
@@ -2625,12 +2693,25 @@ namespace MeatadataGeneratorTool
                     }
                 }
 
-
                 if (ErrorMessages == "")
                 {
                     //UpdateObsList(this);
                     succeeded = true;
+
+                    Stopwatch stopWatch1 = new Stopwatch();
+                    stopWatch1.Start();
                     XmlGeneratorClass.GenerateXmlFileFromTool(this);
+                    stopWatch1.Stop();
+                    string generateLXMLTime = stopWatch1.ElapsedMilliseconds.ToString();
+
+                    Stopwatch stopWatch2 = new Stopwatch();
+                    stopWatch2.Start();
+                    XmlGeneratorClass.GenerateDXMLFileFromTool(this);
+                    stopWatch2.Stop();
+                    string generateDXMLTime = stopWatch2.ElapsedMilliseconds.ToString();
+
+                    //MessageBox.Show("Generate LXML Time(ms): " + generateLXMLTime + "\nGenerate DXML Time(ms): " + generateDXMLTime);
+
                     // App.CurrentControl.Close();
                     Environment.Exit(0);
                 }
@@ -2639,7 +2720,6 @@ namespace MeatadataGeneratorTool
                     ErrorsVisibility = Visibility.Visible;
                 }
             }
-
             catch (Exception ex)
             {
                 string error = ex.Message + "\n" + ex.StackTrace != null ? ex.StackTrace : "";
@@ -2802,6 +2882,14 @@ namespace MeatadataGeneratorTool
                 if (string.IsNullOrEmpty(item.Operator))
                 {
                     str.AppendLine("Operator is Required");
+                }
+            }
+
+            if (item.IsForeignKey && !string.IsNullOrEmpty(item.ForeignEntity))
+            {
+                if (!App.LXMLFilesPaths.Where(l => Path.GetFileName(l).ToLower() == item.ForeignEntity.ToLower() + ".lxml").Any() && !App.DXMLFilesPaths.Where(d => Path.GetFileName(d).ToLower() == item.ForeignEntity.ToLower() + ".dxml").Any())
+                {
+                    str.AppendLine("Cannot Find Foreign Entity " + item.ForeignEntity);
                 }
             }
 

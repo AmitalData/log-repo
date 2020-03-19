@@ -13,6 +13,7 @@ using System.Configuration;
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
@@ -29,6 +30,9 @@ namespace MeatadataGeneratorTool
         public static string DirectOpenPath { get; set; }
         public static ObjectTableControl CurrentControl { get; set; }
         public static MainWindowControl MainControl { get; set; }
+
+        public static List<string> LXMLFilesPaths { get; set; }
+        public static List<string> DXMLFilesPaths { get; set; }
 
         protected override void OnStartup(StartupEventArgs e)
         {
@@ -113,7 +117,22 @@ namespace MeatadataGeneratorTool
                 LoadFileWindow loadFileWindow = new LoadFileWindow();
                 loadFileWindow.Show();
             }
+
+            LXMLFilesPaths = new List<string>();
+            DXMLFilesPaths = new List<string>();
+
+            Thread thread = new Thread(new ThreadStart(GetLXMLAndDXMLFilesPaths));
+            thread.Start();
+
             base.OnStartup(e);
+        }
+
+        public void GetLXMLAndDXMLFilesPaths()
+        {
+            string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+            string logitudePath = projectDirectory.Split(new string[] { @"\Logitude" }, StringSplitOptions.None)[0];
+            LXMLFilesPaths = Directory.GetFiles(logitudePath + @"\Logitude\", "*.lxml", SearchOption.AllDirectories).Where(l => !l.ToLower().Contains("logitudefrontend")).ToList();
+            DXMLFilesPaths = Directory.GetFiles(logitudePath + @"\Logitude\", "*.dxml", SearchOption.AllDirectories).ToList();
         }
 
         private void MainControl_Closed(object sender, EventArgs e)

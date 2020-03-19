@@ -1,5 +1,5 @@
 ﻿using GalaSoft.MvvmLight.Command;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+//using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
