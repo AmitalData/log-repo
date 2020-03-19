@@ -212,33 +212,6 @@ export class InvoiceTool {
                                 entityPM.DueDate = null;
                             }
 
-                            else if (AppTool.IsNullOrZero(list.Days)) {
-
-                                var myComparativeDate: Date = null;
-
-                                if (entityPM.IsConsolidationInvoice) {
-                                    myComparativeDate = DateTool.GetDateParts(entityPM.InvoiceDate).DateObject;
-                                }
-
-                                else {
-                                    if (list.FromDateTypeCode == "SHI") {
-                                        myComparativeDate = DateTool.GetDateParts(entityPM.OperationalDate).DateObject;
-
-                                        if (myComparativeDate == null) {
-                                            myComparativeDate = DateTool.GetDateParts(entityPM.InvoiceDate).DateObject;
-                                        }
-                                    }
-
-                                    else {
-                                        myComparativeDate = DateTool.GetDateParts(entityPM.InvoiceDate).DateObject;
-                                    }
-                                }
-
-                                if (entityPM.DueDate != myComparativeDate) {
-                                    entityPM.DueDate = myComparativeDate;
-                                }
-                            }
-
                             else {
                                 var myComparativeDate: Date = null;
 
@@ -280,7 +253,10 @@ export class InvoiceTool {
                                     myDate.setUTCMilliseconds(0);
 
                                     myComparativeDate = myDate;
-                                    myComparativeDate.setUTCDate(myComparativeDate.getUTCDate() + list.Days);
+
+                                    if (!AppTool.IsNullOrZero(list.Days)) {
+                                        myComparativeDate.setUTCDate(myComparativeDate.getUTCDate() + list.Days);
+                                    }
 
                                     if (entityPM.DueDate != myComparativeDate) {
                                         entityPM.DueDate = myComparativeDate;
@@ -309,33 +285,6 @@ export class InvoiceTool {
                                 entityPM.DueDate = null;
                             }
 
-                            else if (AppTool.IsNullOrZero(list.Days)) {
-
-                                var myComparativeDate: Date = null;
-
-                                if (entityPM.IsMultipleEntities) {
-                                    myComparativeDate = DateTool.GetDateParts(entityPM.InvoiceDate).DateObject;
-                                }
-
-                                else {
-                                    if (list.FromDateTypeCode == "SHI") {
-                                        myComparativeDate = DateTool.GetDateParts(entityPM.OperationalDate).DateObject;
-
-                                        if (myComparativeDate == null) {
-                                            myComparativeDate = DateTool.GetDateParts(entityPM.InvoiceDate).DateObject;
-                                        }
-                                    }
-
-                                    else {
-                                        myComparativeDate = DateTool.GetDateParts(entityPM.InvoiceDate).DateObject;
-                                    }
-                                }
-
-                                if (entityPM.DueDate != myComparativeDate) {
-                                    entityPM.DueDate = myComparativeDate;
-                                }
-                            }
-
                             else {
                                 var myComparativeDate: Date = null;
 
@@ -377,13 +326,16 @@ export class InvoiceTool {
                                     myDate.setUTCMilliseconds(0);
 
                                     myComparativeDate = myDate;
-                                    myComparativeDate.setUTCDate(myComparativeDate.getUTCDate() + list.Days);
+
+                                    if (!AppTool.IsNullOrZero(list.Days)) {
+                                        myComparativeDate.setUTCDate(myComparativeDate.getUTCDate() + list.Days);
+                                    }
 
                                     if (entityPM.DueDate != myComparativeDate) {
                                         entityPM.DueDate = myComparativeDate;
                                     }
                                 }
-                            }
+                            }                           
                         }
                     }
                 });

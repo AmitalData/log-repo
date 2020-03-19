@@ -189,6 +189,7 @@ namespace WebFreight.Web.DataProviders
         public double? ValueOfGoods { get; set; }
         public string ValueOfGoodsCurrency { get; set; }
         public string TruckerName { get; set; }
-
+        public string CustomsClearancePointName { get; set; }
+        public string DeclarationNumber { get; set; }
     }
 }

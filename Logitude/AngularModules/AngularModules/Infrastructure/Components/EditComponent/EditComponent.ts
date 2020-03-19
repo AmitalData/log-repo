@@ -1,3 +1,4 @@
+import { BankDepositExtendedPMService } from './../../../Accounting/Services/ExtendedPMs/BankDepositExtendedPMService';
 import { CashBookExtendedPMService } from './../../../Accounting/Services/ExtendedPMs/CashBookExtendedPMService';
 import { ReconciliationExtendedPMService } from './../../../Accounting/Services/ExtendedPMs/ReconciliationExtendedPMService';
 import { Settings } from './../../Settings';
@@ -1412,9 +1413,39 @@ export class EditComponent implements OnDestroy {
                     console.log("[GetSingleWithoutLines] ", response);
 
                     if (!response.HasError) {
-                        var reconciliation = response.Result;
+                        var cashbook = response.Result;
 
-                        this.EntityPM = reconciliation;
+                        this.EntityPM = cashbook;
+                        this.entityArgs.EntityPM = this.EntityPM;
+
+                        this.EditComponentController.OnReloadEntityPM().then((isLock) =>
+                        {
+                            this.StopBusyIndicator();
+                            this.UpdateComponentMembers();
+                            this.LoadCompleted.emit(true);
+                        });
+
+                    }
+                    else {
+                        this.StopBusyIndicator();
+                        this.ValidationErrorsList = response.ErrorsArray;
+                        this.LoadCompleted.emit(false);
+                    }
+                });
+
+
+            }
+            else if (this.ObjectTableName == "BankDeposit")
+            {
+                let service = new BankDepositExtendedPMService();
+                service.GetSingleWithoutLines(this.EntityId).subscribe((response: ServiceResponse) =>
+                {
+                    console.log("[GetSingleWithoutLines] ", response);
+
+                    if (!response.HasError) {
+                        var bankdeposit = response.Result;
+
+                        this.EntityPM = bankdeposit;
                         this.entityArgs.EntityPM = this.EntityPM;
 
                         this.EditComponentController.OnReloadEntityPM().then((isLock) =>
