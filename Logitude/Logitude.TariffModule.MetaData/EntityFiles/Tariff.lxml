@@ -5175,8 +5175,8 @@
     EnableFullscreenTextBox="false" />
   <Query
     Code="&quot;Air Freight Cost Tariffs&quot;"
-    TextCode="&quot;Air Frieght Cost&quot;"
-    LocalTextCode="&quot;Air Frieght Cost&quot;"
+    TextCode="&quot;Air Freight Cost&quot;"
+    LocalTextCode="&quot;Air Freight Cost&quot;"
     QueryGroupCode="&quot;d341&quot;"
     IndexOrder="0"
     ObjectTableName="&quot;Tariff&quot;"
