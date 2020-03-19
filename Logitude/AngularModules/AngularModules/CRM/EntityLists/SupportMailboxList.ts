@@ -17,6 +17,7 @@ export class SupportMailboxList {
 	Mailbox: string;
 	Inactive: boolean;
 	IsDefault: boolean;
+	SearchFields: string;
 	
 }
  

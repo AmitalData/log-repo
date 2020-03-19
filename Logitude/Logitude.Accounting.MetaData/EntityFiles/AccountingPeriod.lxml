@@ -41,13 +41,14 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;הגדרות תקופות חשבונאיות&quot;"
   DefaultText="&quot;Accounting Period&quot;"
-  Code="&quot;3bc2&quot;"
+  Code="&quot;d24c&quot;"
   Name="&quot;AccountingPeriod Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Accounting&quot;"
   NoViewController="false"
   NoPMController="false"
   NoTS="false"
+  NoDefaultFeatures="false"
   HasCompactSearch="false"
   ApplyDefaultValues="false"
   HasMenuButtons="false"
@@ -59,7 +60,8 @@
   CustomFieldsCount="0"
   DisableSearchBox="false"
   HasDocuments="false"
-  IsLookUp="false">
+  IsLookUp="false"
+  IsTabsHidden="false">
   <field
     Id="&quot;883eafb7-acd8-4f19-97ca-27992a528452&quot;"
     FieldName="&quot;Id&quot;"
@@ -117,7 +119,7 @@
     HasPMField="true"
     IsComposition="false"
     IsMaxLength="false"
-    NoMetaDataField="false"
+    NoMetaDataField="true"
     GenerateInList="false"
     IsFixedLength="false"
     EnableAutoFill="false"
@@ -125,6 +127,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -189,7 +192,7 @@
     HasPMField="true"
     IsComposition="false"
     IsMaxLength="false"
-    NoMetaDataField="false"
+    NoMetaDataField="true"
     GenerateInList="false"
     IsFixedLength="false"
     EnableAutoFill="false"
@@ -197,6 +200,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -270,6 +274,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -345,6 +350,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -418,6 +424,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -491,6 +498,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -564,6 +572,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -571,6 +580,15 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+  <Screen
+    Name="&quot;AccountingPeriodHeaderScreen&quot;"
+    ObjectTableName="&quot;AccountingPeriod&quot;"
+    IsReadOnly="true"
+    IsHeaderScreen="true"
+    NumberOfColumns="2"
+    NumberOfRows="1">
+    <ScreenFields />
+  </Screen>
   <Tab
     TabName="&quot;General&quot;"
     TabLocalName="&quot;כללי&quot;"
@@ -720,6 +738,30 @@
       Code="&quot;AccountingPeriod.O.CantCancelOpenMonth&quot;"
       DefaultText="&quot;Can’t cancel opened month, There are transactions that already registered for this month&quot;"
       LocalDefaultText="&quot;לא ניתן לבטל את פתיחת החודש משום שנרשמו תנועות עליו&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;AccountingPeriod.O.CantOpenInvoiceMonth&quot;"
+      DefaultText="&quot;Invoice month cannot be opened, The accounting month must first be opened&quot;"
+      LocalDefaultText="&quot;לא ניתן לפתוח חודש חשבונית , יש לפתוח ראשית את החודש החשבונאי&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;AccountingPeriod.O.CantCancelInvoiceClosedMonth&quot;"
+      DefaultText="&quot;Cannot open an invoice's closed month which is less than accounting period's closed month.&quot;"
+      LocalDefaultText="&quot;לא ניתן לפתוח חודש חשבונית לתקופה קודמת לחודש חשבונאי&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;AccountingPeriod.O.CantOpenInterestInvoiceMonth&quot;"
+      DefaultText="&quot;Interest Invoice month cannot be opened, The accounting month must first be opened&quot;"
+      LocalDefaultText="&quot;לא ניתן לפתוח תקופה חשבונאית לחשבוניות ריבית , יש לפתוח תחילה את התקופה החשבונאית לרישום חשבונאי&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;AccountingPeriod.O.CantCancelInterestInvoiceClosedMonth&quot;"
+      DefaultText="&quot;Cannot open an invoice's closed month which is less than accounting period's closed month.&quot;"
+      LocalDefaultText="&quot;לא ניתן לפתוח חודש חשבונית לתקופה קודמת לחודש חשבונאי&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

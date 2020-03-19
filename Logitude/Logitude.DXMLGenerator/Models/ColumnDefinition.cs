@@ -35,6 +35,12 @@ namespace Logitude.DXMLGenerator.Models
         [XmlIgnore]
         public bool ScaleSpecified { get { return Type == "decimal"; } }
 
+        [XmlAttribute()]
+        public string DefaultValue { get; set; }
+
+        [XmlIgnore]
+        public bool DefaultValueSpecified { get { return DefaultValue != null; } }
+
         [XmlElement]
         public ConstraintsDefinition Constraints { get; set; }
     }

@@ -20,10 +20,19 @@ namespace Logitude.DXMLGenerator.Models
         [XmlAttribute()]
         public string DBType { get; set; }
 
+        [XmlAttribute()]
+        public string Module { get; set; }
+
         [XmlElement("Column")]
         public List<ColumnDefinition> Columns { get; set; }
 
         [XmlElement("Relation")]
         public List<RelationDefinition> Relations { get; set; }
+
+        [XmlElement("Index")]
+        public List<IndexDefinition> Indexes { get; set; }
+
+        [XmlElement("UniqueConstraint")]
+        public List<UniqueConstraintDefinition> UniqueConstraints { get; set; }
     }
 }

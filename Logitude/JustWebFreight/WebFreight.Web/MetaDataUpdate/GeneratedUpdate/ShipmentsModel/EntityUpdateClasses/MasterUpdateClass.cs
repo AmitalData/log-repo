@@ -205,6 +205,71 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
+					 						FieldName =  "SpecialServicesTypeId",
+					  						OldFieldName =  "SpecialServicesTypeId",
+					  						ObjectTableName =  "Master",
+					  						FieldsDataType =  "LookUp",
+					  						LookUpTableName =  "SpecialServicesType",
+					  						MinLength =  0,
+					  						MaxLength =  15,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "SpecialServicesTypeId",
+					  						ListPropertyPath =  "SpecialServicesTypeId",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Master",
+					  						ValidForQuerySection2 =  "MasterFollowUp",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						Code =  "SpecialServicesTypeId",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
+					  						DigitsAfterPoint =  0,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "SpecialServicesTypeId",
+					  						DefaultText =  "Special Services Type",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						HelpTextCode =  "SpecialServicesTypeId",
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
 					 						FieldName =  "ConsigneeNotImporterId",
 					  						OldFieldName =  "ConsigneeNotImporterId",
 					  						ObjectTableName =  "Master",
@@ -1925,7 +1990,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DelivaryToAddressId",
-					  						DefaultText =  "Delivery To Address",
+					  						DefaultText =  "Delivery Address",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2122,7 +2187,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PreCarriageVesselId",
-					  						DefaultText =  "Pre Carriage Vessel",
+					  						DefaultText =  "Pre-Carriage Vessel",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2567,7 +2632,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						FullFieldLable =  "Partner",
 					  						DefaultText =  "Partner",
 					  						HelpTextCode =  "Partner",
-					  						HelpTextDefaultText =  "Searching by :\n1: Agent name\n2: Consignee name\n3: Customs Agent name\n4: Shipping Agent name",
+					  						HelpTextDefaultText =  "Searching by:\n1. Agent name\n2. Consignee name\n3. Customs Agent name\n4. Shipping Agent name",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2630,7 +2695,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						FullFieldLable =  "Reference",
 					  						DefaultText =  "Reference",
 					  						HelpTextCode =  "Reference",
-					  						HelpTextDefaultText =  "Searching by :\n1: Shipper Reference 1\n2: Customer Reference 2\n3: Consignee Reference 1\n4: Consignee Reference 2\n5: Master Shipemnt Number\n6: MAWBOBL\n7: House/FBL",
+					  						HelpTextDefaultText =  "Searching by:\n1. Shipper Reference 1\n2. Customer Reference 2\n3. Consignee Reference 1\n4. Consignee Reference 2\n5. Shipment Number\n6. MAWBOBL\n7. House/FBL",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2690,7 +2755,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "TodayFollowUps",
-					  						DefaultText =  "Today's Follow Ups",
+					  						DefaultText =  "Today's Follow-Ups",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2751,7 +2816,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "TomorrowFollowUps",
-					  						DefaultText =  "Tomorrow's Follow Ups",
+					  						DefaultText =  "Tomorrow's Follow-Ups",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2812,7 +2877,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DueDateFollowUps",
-					  						DefaultText =  "Due Dated Follow Ups",
+					  						DefaultText =  "Due Dated Follow-Ups",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2873,7 +2938,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AllFollowUps",
-					  						DefaultText =  "All Follow Ups",
+					  						DefaultText =  "All Follow-Ups",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -3129,7 +3194,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "VolumeInCBM",
-					  						DefaultText =  "Volume (%VolumeCode)",
+					  						DefaultText =  "Volume In CBM (%VolumeCode)",
 					  						ListFieldLable =  "VolumeInCBMListLable",
 					  						ListLableDefaultText =  "Volume In CBM",
 					  						IsMaxLength =  false,
@@ -3197,7 +3262,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						FullFieldLable =  "ChargeableWeight",
 					  						DefaultText =  "Chargeable Weight (%ChargWeightCode)",
 					  						ListFieldLable =  "ChargeableWeightListLable",
-					  						ListLableDefaultText =  "ChargW",
+					  						ListLableDefaultText =  "Charg. Weight",
 					  						ShortFieldLable =  "ChargeableWeight",
 					  						ShortFieldLableDefaultText =  "Wt / Msr (%ChargWeightCode)",
 					  						IsMaxLength =  false,
@@ -4052,6 +4117,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ShipmentLevelCode",
 					  						DefaultText =  "Shipment Level",
+					  						HelpTextCode =  "ShipmentLevelCode",
+					  						HelpTextDefaultText =  "House: Shipment that is connected to a Master.",
+					  						ShortFieldLable =  "ShipmentLevelCode",
+					  						ShortFieldLableDefaultText =  "Level",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -4062,7 +4131,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						HelpTextCode =  "ShipmentLevelCode",
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -4245,7 +4313,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						FullFieldLable =  "SearchFields",
 					  						DefaultText =  "Search partners / ports / ref.#",
 					  						HelpTextCode =  "SearchFields",
-					  						HelpTextDefaultText =  "Searching by :\n1: hob number\n2: References\n3: From or to ports\n4: agent and shipper names",
+					  						HelpTextDefaultText =  "Searching by :\n1: Shipment and master shipment numbers\n2: References\n3: From or to ports\n4: Invoice numbers",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -4699,7 +4767,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "MainCarriageCarrierName",
-					  						DefaultText =  "Carrier",
+					  						DefaultText =  "Main Carriage Carrier",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -5491,11 +5559,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CutoffDate",
-					  						DefaultText =  "Cut-Off Date",
+					  						DefaultText =  "Cut off Date",
 					  						ListFieldLable =  "CutoffDateListLable",
 					  						ListLableDefaultText =  "Cut-Off Date",
-					  						HelpTextCode =  "CutoffDate",
-					  						HelpTextDefaultText =  "Will be printed in the Booking Confirmation form",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -5506,6 +5572,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
+					  						HelpTextCode =  "CutoffDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -7250,7 +7317,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						FullFieldLable =  "FWBStatusName",
 					  						DefaultText =  "FWB Status",
 					  						ListFieldLable =  "FWBStatusNameListLable",
-					  						ListLableDefaultText =  "FWB Status",
+					  						ListLableDefaultText =  "FWB",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -7317,7 +7384,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						FullFieldLable =  "FHLStatusName",
 					  						DefaultText =  "FHL Status",
 					  						ListFieldLable =  "FHLStatusNameListLable",
-					  						ListLableDefaultText =  "FHL Status",
+					  						ListLableDefaultText =  "FHL",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -7384,7 +7451,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						FullFieldLable =  "AWBPrint",
 					  						DefaultText =  "AWB Print",
 					  						ListFieldLable =  "AWBPrintListLable",
-					  						ListLableDefaultText =  "AWB Print",
+					  						ListLableDefaultText =  "AWB",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -8294,6 +8361,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "EstimateProfitInLocalCurrency",
 					  						DefaultText =  "Estimate Profit (Local Currency)",
+					  						HelpTextCode =  "EstimateProfitInLocalCurrency",
+					  						HelpTextDefaultText =  "Displays from the quote on which this shipment is based. You can enter a value manually.",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -8304,7 +8373,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						HelpTextCode =  "EstimateProfitInLocalCurrency",
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -8357,7 +8425,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsCancelled",
-					  						DefaultText =  "Is Cancelled",
+					  						DefaultText =  "Is Canceled",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -8420,7 +8488,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ShowAllFollowUps",
-					  						DefaultText =  "Show All Follow Ups",
+					  						DefaultText =  "Show All Follow-Ups",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -8485,7 +8553,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsOperationalClosed",
-					  						DefaultText =  "Operationally Closed",
+					  						DefaultText =  "Is Operationally Closed",
 					  						ListFieldLable =  "IsOperationalClosedListLable",
 					  						ListLableDefaultText =  "Operationally Closed",
 					  						IsMaxLength =  false,
@@ -8681,9 +8749,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsAccountingClosed",
-					  						DefaultText =  "Accounting",
+					  						DefaultText =  "Accounting Closed",
 					  						ListFieldLable =  "IsAccountingClosedListLable",
-					  						ListLableDefaultText =  "Accounting",
+					  						ListLableDefaultText =  "Accounting Closed",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -9077,7 +9145,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						FullFieldLable =  "ProfitInLocalCurrency",
 					  						DefaultText =  "Profit (Local Currency)",
 					  						ListFieldLable =  "ProfitInLocalCurrencyListLable",
-					  						ListLableDefaultText =  "Profit (Local Currency)",
+					  						ListLableDefaultText =  "Actual Profit",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -9846,7 +9914,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ARInvoiceIssued",
-					  						DefaultText =  "AR Invoice Issued",
+					  						DefaultText =  "A/R invoice issued",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -10426,7 +10494,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						FullFieldLable =  "CargonautFHLStatusName",
 					  						DefaultText =  "Cargonaut/DEXX FHL Status",
 					  						ListFieldLable =  "CargonautFHLStatusNameListLable",
-					  						ListLableDefaultText =  "Cargonaut/DEXX FHL Status",
+					  						ListLableDefaultText =  "Cargonaut/DEXX FHL",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -10624,7 +10692,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						FullFieldLable =  "CargonautFWBStatusName",
 					  						DefaultText =  "Cargonaut/DEXX FWB Status",
 					  						ListFieldLable =  "CargonautFWBStatusNameListLable",
-					  						ListLableDefaultText =  "Cargonaut/DEXX FWB Status",
+					  						ListLableDefaultText =  "Cargonaut/DEXX FWB",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -14314,11 +14382,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ShipperReference1",
-					  						DefaultText =  "Shipper Ref 1",
+					  						DefaultText =  "Shipper Ref. 1",
 					  						ListFieldLable =  "ShipperReference1ListLable",
-					  						ListLableDefaultText =  "Shipper Ref",
+					  						ListLableDefaultText =  "Shipper Ref.",
 					  						ShortFieldLable =  "ShipperReference1",
-					  						ShortFieldLableDefaultText =  "Reference 1",
+					  						ShortFieldLableDefaultText =  "Reference1",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -15421,9 +15489,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ShipperReference2",
-					  						DefaultText =  "Shipper Ref 2",
+					  						DefaultText =  "Shipper Ref. 2",
 					  						ShortFieldLable =  "ShipperReference2",
-					  						ShortFieldLableDefaultText =  "Reference 2",
+					  						ShortFieldLableDefaultText =  "Reference2",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -15487,9 +15555,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ConsigneeReference2",
-					  						DefaultText =  "Consignee Ref 2",
+					  						DefaultText =  "Consignee Ref. 2",
 					  						ShortFieldLable =  "ConsigneeReference2",
-					  						ShortFieldLableDefaultText =  "Reference 2",
+					  						ShortFieldLableDefaultText =  "Reference2",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -15618,9 +15686,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ConsigneeReference1",
-					  						DefaultText =  "Consignee Ref 1",
+					  						DefaultText =  "Consignee Ref. 1",
 					  						ShortFieldLable =  "ConsigneeReference1",
-					  						ShortFieldLableDefaultText =  "Reference 1",
+					  						ShortFieldLableDefaultText =  "Reference1",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -15817,7 +15885,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						FullFieldLable =  "CreateDateTime",
 					  						DefaultText =  "Create Date",
 					  						ListFieldLable =  "CreateDateTimeListLable",
-					  						ListLableDefaultText =  "Create Date",
+					  						ListLableDefaultText =  "Open Date",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -16079,7 +16147,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						FullFieldLable =  "CustomerId",
 					  						DefaultText =  "Customer",
 					  						HelpTextCode =  "CustomerId",
-					  						HelpTextDefaultText =  "Indicates who the customer is, so that Logitude knows to refer to the relevant partner for statistics and billing. For Export, the Shipper is selected automatically. For Import, the Consignee is selected automatically.",
+					  						HelpTextDefaultText =  "Indicates who the customer is, so that Logitude knows to refer to the relevant partner for statistics, billing and shared logistics. For Export, the Shipper is selected automatically. For Import, the Consignee is selected automatically.",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -17175,7 +17243,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "FreightForwarderId",
-					  						DefaultText =  "Forwarder",
+					  						DefaultText =  "Freight Forwarder",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -18334,7 +18402,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Notify1AddressId",
-					  						DefaultText =  "Notify1 Address",
+					  						DefaultText =  "Notify 1 Address",
 					  						ShortFieldLable =  "Notify1AddressId",
 					  						ShortFieldLableDefaultText =  "Address",
 					  						IsMaxLength =  false,
@@ -18401,7 +18469,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Notify2AddressId",
-					  						DefaultText =  "Notify2 Address",
+					  						DefaultText =  "Notify 2 Address",
 					  						ShortFieldLable =  "Notify2AddressId",
 					  						ShortFieldLableDefaultText =  "Address",
 					  						IsMaxLength =  false,
@@ -19709,7 +19777,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Notify1ContactId",
-					  						DefaultText =  "Notify1 Contact",
+					  						DefaultText =  "Notify 1 Contact",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -19774,7 +19842,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Notify2ContactId",
-					  						DefaultText =  "Notify2 Contact",
+					  						DefaultText =  "Notify 2 Contact",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -20102,7 +20170,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "MainCarriageFromPortId",
-					  						DefaultText =  "MainCarriage From Port",
+					  						DefaultText =  "Main Carriage From Port",
 					  						ShortFieldLable =  "MainCarriageFromPortId",
 					  						ShortFieldLableDefaultText =  "Main Carriage From Port",
 					  						IsMaxLength =  false,
@@ -20171,7 +20239,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						FullFieldLable =  "MainCarriageFinalDestinationPortId",
 					  						DefaultText =  "Main Carriage Final Destination",
 					  						ShortFieldLable =  "MainCarriageFinalDestinationPortId",
-					  						ShortFieldLableDefaultText =  "Main CarriageFinal Destination",
+					  						ShortFieldLableDefaultText =  "Main Carriage Final Destination",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -20236,7 +20304,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "MainCarriageToPortId",
-					  						DefaultText =  "MainCarriage To Port",
+					  						DefaultText =  "Main Carriage To Port",
 					  						ShortFieldLable =  "MainCarriageToPortId",
 					  						ShortFieldLableDefaultText =  "Main Carriage To Port",
 					  						IsMaxLength =  false,
@@ -20305,7 +20373,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						ColumnHeaderTemplateName =  "TransportModeHeaderTemplate",
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "TransportModeId",
-					  						DefaultText =  "Transport Mode",
+					  						DefaultText =  "Main Carriage Transport Mode",
 					  						ListFieldLable =  "TransportModeIdListLable",
 					  						ListLableDefaultText =  "Transport Mode",
 					  						ShortFieldLable =  "TransportModeId",
@@ -20374,9 +20442,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PreCarriageTransportModeId",
-					  						DefaultText =  "Pre Carriage Transport Mode",
+					  						DefaultText =  "Pre-Carriage Transport Mode",
 					  						ShortFieldLable =  "PreCarriageTransportModeId",
-					  						ShortFieldLableDefaultText =  "Pre Carriage Transport Mode",
+					  						ShortFieldLableDefaultText =  "Pre-Carriage Transport Mode",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -20441,9 +20509,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PreCarriageFromPortId",
-					  						DefaultText =  "Pre Carriage From Port",
+					  						DefaultText =  "Pre-Carriage From Port",
 					  						ShortFieldLable =  "PreCarriageFromPortId",
-					  						ShortFieldLableDefaultText =  "Pre Carriage From Port",
+					  						ShortFieldLableDefaultText =  "Pre-Carriage From Port",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -20508,9 +20576,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PreCarriageToPortId",
-					  						DefaultText =  "Pre Carriage To Port",
+					  						DefaultText =  "Pre-Carriage To Port",
 					  						ShortFieldLable =  "PreCarriageToPortId",
-					  						ShortFieldLableDefaultText =  "Pre Carriage To Port",
+					  						ShortFieldLableDefaultText =  "Pre-Carriage To Port",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -20574,9 +20642,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PreCarriageATD",
-					  						DefaultText =  "Pre Carriage ATD",
+					  						DefaultText =  "Pre-Carriage ATD",
 					  						ShortFieldLable =  "PreCarriageATD",
-					  						ShortFieldLableDefaultText =  "Pre Carriage ATD",
+					  						ShortFieldLableDefaultText =  "Pre-Carriage ATD",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -20640,9 +20708,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PreCarriageATA",
-					  						DefaultText =  "Pre Carriage ATA",
+					  						DefaultText =  "Pre-Carriage ATA",
 					  						ShortFieldLable =  "PreCarriageATA",
-					  						ShortFieldLableDefaultText =  "Pre Carriage ATA",
+					  						ShortFieldLableDefaultText =  "Pre-Carriage ATA",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -20707,11 +20775,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PreCarriageETD",
-					  						DefaultText =  "Pre Carriage ETD",
+					  						DefaultText =  "Pre-Carriage ETD",
 					  						ListFieldLable =  "PreCarriageETDListLable",
 					  						ListLableDefaultText =  "Pre Carriage ETD",
 					  						ShortFieldLable =  "PreCarriageETD",
-					  						ShortFieldLableDefaultText =  "Pre Carriage ETD",
+					  						ShortFieldLableDefaultText =  "Pre-Carriage ETD",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -20775,9 +20843,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PreCarriageETA",
-					  						DefaultText =  "Pre Carriage ETA",
+					  						DefaultText =  "Pre-Carriage ETA",
 					  						ShortFieldLable =  "PreCarriageETA",
-					  						ShortFieldLableDefaultText =  "Pre Carriage ETA",
+					  						ShortFieldLableDefaultText =  "Pre-Carriage ETA",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -20841,9 +20909,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PreCarriageCarrierNumber",
-					  						DefaultText =  "Pre Carriage Carrier No.",
+					  						DefaultText =  "Pre-Carriage Carrier No.",
 					  						ShortFieldLable =  "PreCarriageCarrierNumber",
-					  						ShortFieldLableDefaultText =  "Pre Carriage Carrier No.",
+					  						ShortFieldLableDefaultText =  "Pre-Carriage Carrier No.",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -20908,9 +20976,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PreCarriageCarrierId",
-					  						DefaultText =  "Pre Carriage Carrier",
+					  						DefaultText =  "Pre-Carriage Carrier",
 					  						ShortFieldLable =  "PreCarriageCarrierId",
-					  						ShortFieldLableDefaultText =  "Pre Carriage Carrier",
+					  						ShortFieldLableDefaultText =  "Pre-Carriage Carrier",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -20975,9 +21043,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "MainCarriageETA",
-					  						DefaultText =  "MainCarriage ETA",
+					  						DefaultText =  "Main Carriage ETA",
 					  						ListFieldLable =  "MainCarriageETAListLable",
-					  						ListLableDefaultText =  "Exp.Date",
+					  						ListLableDefaultText =  "Exp. Date",
 					  						ShortFieldLable =  "MainCarriageETA",
 					  						ShortFieldLableDefaultText =  "Main Carriage ETA",
 					  						IsMaxLength =  false,
@@ -21044,7 +21112,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "OnCarriageTransportModeId",
-					  						DefaultText =  "OnCarriage Transport Mode",
+					  						DefaultText =  "On Carriage Transport Mode",
 					  						ShortFieldLable =  "OnCarriageTransportModeId",
 					  						ShortFieldLableDefaultText =  "On Carriage Transport Mode",
 					  						IsMaxLength =  false,
@@ -21244,7 +21312,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "OnCarriageATD",
-					  						DefaultText =  "OnCarriage ATD",
+					  						DefaultText =  "On Carriage ATD",
 					  						ShortFieldLable =  "OnCarriageATD",
 					  						ShortFieldLableDefaultText =  "On Carriage ATD",
 					  						IsMaxLength =  false,
@@ -21310,7 +21378,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "OnCarriageATA",
-					  						DefaultText =  "OnCarriage ATA",
+					  						DefaultText =  "On Carriage ATA",
 					  						ShortFieldLable =  "OnCarriageATA",
 					  						ShortFieldLableDefaultText =  "On Carriage ATA",
 					  						IsMaxLength =  false,
@@ -21376,7 +21444,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "OnCarriageETD",
-					  						DefaultText =  "OnCarriage ETD",
+					  						DefaultText =  "On Carriage ETD",
 					  						ShortFieldLable =  "OnCarriageETD",
 					  						ShortFieldLableDefaultText =  "On Carriage ETD",
 					  						IsMaxLength =  false,
@@ -21442,7 +21510,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "OnCarriageETA",
-					  						DefaultText =  "OnCarriage ETA",
+					  						DefaultText =  "On Carriage ETA",
 					  						ShortFieldLable =  "OnCarriageETA",
 					  						ShortFieldLableDefaultText =  "On Carriage ETA",
 					  						IsMaxLength =  false,
@@ -21508,7 +21576,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "OnCarriageCarrierNumber",
-					  						DefaultText =  "OnCarriage Carrier No.",
+					  						DefaultText =  "On Carriage Carrier No.",
 					  						ShortFieldLable =  "OnCarriageCarrierNumber",
 					  						ShortFieldLableDefaultText =  "On Carriage Carrier No.",
 					  						IsMaxLength =  false,
@@ -21575,7 +21643,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "OnCarriageCarrierId",
-					  						DefaultText =  "OnCarriage Carrier",
+					  						DefaultText =  "On Carriage Carrier",
 					  						ShortFieldLable =  "OnCarriageCarrierId",
 					  						ShortFieldLableDefaultText =  "On Carriage Carrier",
 					  						IsMaxLength =  false,
@@ -21773,7 +21841,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Transshipment1AdditionalMAWBOBLBL",
-					  						DefaultText =  "Transshipment1 Additional MAWBOBLBL",
+					  						DefaultText =  "Transshipment 1 Additional MAWBOBLBL",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -21837,7 +21905,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Transshipment2AdditionalMAWBOBLBL",
-					  						DefaultText =  "Transshipment2 Additional MAWBOBLBL",
+					  						DefaultText =  "Transshipment 2 Additional MAWBOBLBL",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -21966,7 +22034,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "MainCarriageCarrierId",
-					  						DefaultText =  "MainCarriage Carrier",
+					  						DefaultText =  "Main Carriage Carrier",
 					  						ShortFieldLable =  "MainCarriageCarrierId",
 					  						ShortFieldLableDefaultText =  "Main Carriage Carrier",
 					  						IsMaxLength =  false,
@@ -22032,7 +22100,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "MainCarriageCarrierNumber",
-					  						DefaultText =  "MainCarriage Carrier No.",
+					  						DefaultText =  "Main Carriage Carrier No.",
 					  						ShortFieldLable =  "MainCarriageCarrierNumber",
 					  						ShortFieldLableDefaultText =  "Main Carriage Carrier Number",
 					  						IsMaxLength =  false,
@@ -22099,7 +22167,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "MainCarriageETD",
-					  						DefaultText =  "MainCarriage ETD",
+					  						DefaultText =  "Main Carriage ETD",
 					  						ListFieldLable =  "MainCarriageETDListLable",
 					  						ListLableDefaultText =  "ETD",
 					  						IsMaxLength =  false,
@@ -22165,7 +22233,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "MainCarriageATA",
-					  						DefaultText =  "MainCarriage ATA",
+					  						DefaultText =  "Main Carriage ATA",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -22229,7 +22297,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "MainCarriageATD",
-					  						DefaultText =  "MainCarriage ATD",
+					  						DefaultText =  "Main Carriage ATD",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -22559,7 +22627,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "FollowUpTypeId",
-					  						DefaultText =  "Follow Up Type",
+					  						DefaultText =  "Follow-Up Type",
 					  						ListFieldLable =  "FollowUpTypeIdListLable",
 					  						ListLableDefaultText =  "F/U Type",
 					  						IsMaxLength =  false,
@@ -22625,7 +22693,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "FollowUpDate",
-					  						DefaultText =  "Follow Up Date",
+					  						DefaultText =  "Follow-Up Date",
 					  						ListFieldLable =  "FollowUpDateListLable",
 					  						ListLableDefaultText =  "F/U Date",
 					  						IsMaxLength =  false,
@@ -22691,7 +22759,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "FollowUpNotes",
-					  						DefaultText =  "Follow Up Notes",
+					  						DefaultText =  "Follow-Up Notes",
 					  						ListFieldLable =  "FollowUpNotesListLable",
 					  						ListLableDefaultText =  "Notes",
 					  						IsMaxLength =  false,
@@ -22756,7 +22824,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "FollowUpOwner",
-					  						DefaultText =  "Follow Up Owner",
+					  						DefaultText =  "Follow-Up Owner",
 					  						ListFieldLable =  "FollowUpOwnerListLable",
 					  						ListLableDefaultText =  "F/U Owner",
 					  						IsMaxLength =  false,
@@ -22822,7 +22890,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "FollowUpOwnerId",
-					  						DefaultText =  "Follow Up Owner",
+					  						DefaultText =  "Follow-Up Owner",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -23150,7 +23218,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "OtherPrepaidCollectId",
-					  						DefaultText =  "Other charges P/C",
+					  						DefaultText =  "Other P/C",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -23216,7 +23284,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						FullFieldLable =  "DangerousMaterialDescription",
 					  						DefaultText =  "Dangerous Material Description",
 					  						ShortFieldLable =  "DangerousMaterialDescription",
-					  						ShortFieldLableDefaultText =  "Material Description",
+					  						ShortFieldLableDefaultText =  "Materials Description",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -24335,7 +24403,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ChargeableWeightEdited",
-					  						DefaultText =  "Is Chargeable Weight Edited",
+					  						DefaultText =  "Chargeable Weight Edited",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -24399,7 +24467,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "GrossWeightEdited",
-					  						DefaultText =  "Is Gross Weight Edited",
+					  						DefaultText =  "Gross Weight Edited",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -24595,7 +24663,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "RateClassCode",
-					  						DefaultText =  "RateClass Code",
+					  						DefaultText =  "Rate Class Code",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -24660,7 +24728,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DimensionsUnitCode",
-					  						DefaultText =  "Dimensions Unit Code",
+					  						DefaultText =  "Dimension Unit Code",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -25069,6 +25137,64 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "SLAC",
+					  						ObjectTableName =  "Master",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  5,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  5,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						Operator =  "StartsWith",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "SLAC",
+					  						ListPropertyPath =  "SLAC",
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Master",
+					  						ValidForQuerySection2 =  "MasterFollowUp",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "SLAC",
+					  						DefaultText =  "SLAC",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
@@ -25106,136 +25232,136 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query OperationalOpenQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = MasterTextCode_0.Id, NameTextCodeCode = MasterTextCode_0.Code, Code = "Operational Open",  SpotlightDataTemplate = "MasterSpotlightDataTemplate",  QueryGroupCode = "MAST", IndexOrder = 0, Tenant = 0, ObjectTableId = MasterObjectTable.Id, QuerySection = "Master", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = MasterFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query OperationalOpenQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = MasterTextCode_0.Id, NameTextCodeCode = MasterTextCode_0.Code, ObjectTableName = "Master", Code = "Operational Open",  SpotlightDataTemplate = "MasterSpotlightDataTemplate",  QueryGroupCode = "MAST", IndexOrder = 0, Tenant = 0, ObjectTableId = MasterObjectTable.Id, QuerySection = "Master", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = MasterFeature_0.Id,FeatureUniqeCode= MasterFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn OperationalOpenQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OperationalOpenQuery.Id, IndexOrder = 0, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OperationalOpenQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OperationalOpenQuery.Id,QueryCode = OperationalOpenQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn OperationalOpenQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OperationalOpenQuery.Id, IndexOrder = 1, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OperationalOpenQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OperationalOpenQuery.Id,QueryCode = OperationalOpenQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn OperationalOpenQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OperationalOpenQuery.Id, IndexOrder = 2, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "CreateDateTime" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "CreateDateTime" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 90 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OperationalOpenQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OperationalOpenQuery.Id,QueryCode = OperationalOpenQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "CreateDateTime" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "CreateDateTime" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 90 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn OperationalOpenQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OperationalOpenQuery.Id, IndexOrder = 3, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "ShipmentNumber" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "ShipmentNumber" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 70 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OperationalOpenQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OperationalOpenQuery.Id,QueryCode = OperationalOpenQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "ShipmentNumber" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "ShipmentNumber" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 70 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn OperationalOpenQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OperationalOpenQuery.Id, IndexOrder = 4, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "ShipmentType" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "ShipmentType" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OperationalOpenQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OperationalOpenQuery.Id,QueryCode = OperationalOpenQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "ShipmentType" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "ShipmentType" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn OperationalOpenQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OperationalOpenQuery.Id, IndexOrder = 5, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "AgentName" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "AgentName" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OperationalOpenQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OperationalOpenQuery.Id,QueryCode = OperationalOpenQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "AgentName" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "AgentName" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn OperationalOpenQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OperationalOpenQuery.Id, IndexOrder = 6, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "Routing" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "Routing" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OperationalOpenQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OperationalOpenQuery.Id,QueryCode = OperationalOpenQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "Routing" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "Routing" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn OperationalOpenQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OperationalOpenQuery.Id, IndexOrder = 7, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "LongMaster" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "LongMaster" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OperationalOpenQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OperationalOpenQuery.Id,QueryCode = OperationalOpenQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "LongMaster" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "LongMaster" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn OperationalOpenQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OperationalOpenQuery.Id, IndexOrder = 8, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 80 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OperationalOpenQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OperationalOpenQuery.Id,QueryCode = OperationalOpenQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 80 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn OperationalOpenQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OperationalOpenQuery.Id, IndexOrder = 9, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "MainCarriageETA" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "MainCarriageETA" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 90 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OperationalOpenQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OperationalOpenQuery.Id,QueryCode = OperationalOpenQuery.UniqueCode, IndexOrder = 9, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "MainCarriageETA" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "MainCarriageETA" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 90 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter OperationalOpenQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "OpenMasters" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "OpenMasters" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "false",PredefinedValue2 = null, QueryId = OperationalOpenQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter OperationalOpenQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "OpenMasters" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "OpenMasters" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "false",PredefinedValue2 = null, QueryId = OperationalOpenQuery.Id,QueryCode = OperationalOpenQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
 
-			  Query FollowUpsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = MasterTextCode_1.Id, NameTextCodeCode = MasterTextCode_1.Code, Code = "Follow Ups",  SpotlightDataTemplate = "MasterSpotlightDataTemplate",  QueryGroupCode = "MAFU", IndexOrder = 1, Tenant = 0, ObjectTableId = MasterObjectTable.Id, QuerySection = "MasterFollowUp", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = MasterFeature_1.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query FollowUpsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = MasterTextCode_1.Id, NameTextCodeCode = MasterTextCode_1.Code, ObjectTableName = "Master", Code = "Follow Ups",  SpotlightDataTemplate = "MasterSpotlightDataTemplate",  QueryGroupCode = "MAFU", IndexOrder = 1, Tenant = 0, ObjectTableId = MasterObjectTable.Id, QuerySection = "MasterFollowUp", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = MasterFeature_1.Id,FeatureUniqeCode= MasterFeature_1.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn FollowUpsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FollowUpsQuery.Id, IndexOrder = 0, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 30 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn FollowUpsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FollowUpsQuery.Id,QueryCode = FollowUpsQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 30 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn FollowUpsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FollowUpsQuery.Id, IndexOrder = 1, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 30 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn FollowUpsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FollowUpsQuery.Id,QueryCode = FollowUpsQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 30 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn FollowUpsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FollowUpsQuery.Id, IndexOrder = 2, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "FollowUpOwner" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "FollowUpOwner" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 127 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn FollowUpsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FollowUpsQuery.Id,QueryCode = FollowUpsQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "FollowUpOwner" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "FollowUpOwner" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 127 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn FollowUpsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FollowUpsQuery.Id, IndexOrder = 3, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "FollowUpDate" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "FollowUpDate" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 70 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn FollowUpsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FollowUpsQuery.Id,QueryCode = FollowUpsQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "FollowUpDate" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "FollowUpDate" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 70 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn FollowUpsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FollowUpsQuery.Id, IndexOrder = 4, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "FollowUpType" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "FollowUpType" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 115 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn FollowUpsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FollowUpsQuery.Id,QueryCode = FollowUpsQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "FollowUpType" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "FollowUpType" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 115 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn FollowUpsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FollowUpsQuery.Id, IndexOrder = 5, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "FollowUpNotes" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "FollowUpNotes" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn FollowUpsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FollowUpsQuery.Id,QueryCode = FollowUpsQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "FollowUpNotes" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "FollowUpNotes" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn FollowUpsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FollowUpsQuery.Id, IndexOrder = 6, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 75 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn FollowUpsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FollowUpsQuery.Id,QueryCode = FollowUpsQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 75 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn FollowUpsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FollowUpsQuery.Id, IndexOrder = 7, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "ShipmentNumber" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "ShipmentNumber" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 84 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn FollowUpsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FollowUpsQuery.Id,QueryCode = FollowUpsQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "ShipmentNumber" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "ShipmentNumber" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 84 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn FollowUpsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FollowUpsQuery.Id, IndexOrder = 8, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "AgentName" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "AgentName" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 127 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn FollowUpsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FollowUpsQuery.Id,QueryCode = FollowUpsQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "AgentName" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "AgentName" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 127 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn FollowUpsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FollowUpsQuery.Id, IndexOrder = 9, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "Routing" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "Routing" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 40 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn FollowUpsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FollowUpsQuery.Id,QueryCode = FollowUpsQuery.UniqueCode, IndexOrder = 9, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "Routing" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "Routing" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 40 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn FollowUpsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FollowUpsQuery.Id, IndexOrder = 10, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "CreateDateTime" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "CreateDateTime" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 70 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn FollowUpsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FollowUpsQuery.Id,QueryCode = FollowUpsQuery.UniqueCode, IndexOrder = 10, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "CreateDateTime" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "CreateDateTime" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 70 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn FollowUpsQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FollowUpsQuery.Id, IndexOrder = 11, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "ShipmentType" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "ShipmentType" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 92 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn FollowUpsQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FollowUpsQuery.Id,QueryCode = FollowUpsQuery.UniqueCode, IndexOrder = 11, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "ShipmentType" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "ShipmentType" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 92 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter FollowUpsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "AllFollowUps" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "AllFollowUps" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "12/16/2018 12:00:00 AM",PredefinedValue2 = null, QueryId = FollowUpsQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter FollowUpsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "AllFollowUps" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "AllFollowUps" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "12/16/2018 12:00:00 AM",PredefinedValue2 = null, QueryId = FollowUpsQuery.Id,QueryCode = FollowUpsQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
 
-			  Query AccountingOpenQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = MasterTextCode_2.Id, NameTextCodeCode = MasterTextCode_2.Code, Code = "Accounting Open",  SpotlightDataTemplate = "MasterSpotlightDataTemplate",  QueryGroupCode = "MAST", IndexOrder = 2, Tenant = 0, ObjectTableId = MasterObjectTable.Id, QuerySection = "Master", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = MasterFeature_2.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AccountingOpenQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = MasterTextCode_2.Id, NameTextCodeCode = MasterTextCode_2.Code, ObjectTableName = "Master", Code = "Accounting Open",  SpotlightDataTemplate = "MasterSpotlightDataTemplate",  QueryGroupCode = "MAST", IndexOrder = 2, Tenant = 0, ObjectTableId = MasterObjectTable.Id, QuerySection = "Master", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = MasterFeature_2.Id,FeatureUniqeCode= MasterFeature_2.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn AccountingOpenQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AccountingOpenQuery.Id, IndexOrder = 0, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AccountingOpenQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AccountingOpenQuery.Id,QueryCode = AccountingOpenQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AccountingOpenQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AccountingOpenQuery.Id, IndexOrder = 1, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AccountingOpenQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AccountingOpenQuery.Id,QueryCode = AccountingOpenQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AccountingOpenQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AccountingOpenQuery.Id, IndexOrder = 2, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "OpenReceivablesInLocalCurrency" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "OpenReceivablesInLocalCurrency" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 75 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AccountingOpenQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AccountingOpenQuery.Id,QueryCode = AccountingOpenQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "OpenReceivablesInLocalCurrency" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "OpenReceivablesInLocalCurrency" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 75 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AccountingOpenQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AccountingOpenQuery.Id, IndexOrder = 3, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "OpenPayablesInLocalCurrency" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "OpenPayablesInLocalCurrency" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 75 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AccountingOpenQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AccountingOpenQuery.Id,QueryCode = AccountingOpenQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "OpenPayablesInLocalCurrency" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "OpenPayablesInLocalCurrency" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 75 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AccountingOpenQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AccountingOpenQuery.Id, IndexOrder = 4, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "CreateDateTime" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "CreateDateTime" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 92 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AccountingOpenQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AccountingOpenQuery.Id,QueryCode = AccountingOpenQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "CreateDateTime" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "CreateDateTime" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 92 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AccountingOpenQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AccountingOpenQuery.Id, IndexOrder = 5, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "ShipmentNumber" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "ShipmentNumber" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 84 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AccountingOpenQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AccountingOpenQuery.Id,QueryCode = AccountingOpenQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "ShipmentNumber" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "ShipmentNumber" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 84 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AccountingOpenQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AccountingOpenQuery.Id, IndexOrder = 6, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "AgentName" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "AgentName" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 127 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AccountingOpenQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AccountingOpenQuery.Id,QueryCode = AccountingOpenQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "AgentName" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "AgentName" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 127 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AccountingOpenQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AccountingOpenQuery.Id, IndexOrder = 7, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "Routing" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "Routing" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 40 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AccountingOpenQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AccountingOpenQuery.Id,QueryCode = AccountingOpenQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "Routing" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "Routing" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 40 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AccountingOpenQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AccountingOpenQuery.Id, IndexOrder = 8, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "ProfitInLocalCurrency" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "ProfitInLocalCurrency" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 75 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AccountingOpenQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AccountingOpenQuery.Id,QueryCode = AccountingOpenQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "ProfitInLocalCurrency" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "ProfitInLocalCurrency" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 75 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter AccountingOpenQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "AccountingOpen" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "AccountingOpen" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "True",PredefinedValue2 = null, QueryId = AccountingOpenQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter AccountingOpenQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "AccountingOpen" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "AccountingOpen" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "True",PredefinedValue2 = null, QueryId = AccountingOpenQuery.Id,QueryCode = AccountingOpenQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
 
-			  Query AllMastersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = MasterTextCode_3.Id, NameTextCodeCode = MasterTextCode_3.Code, Code = "All Masters",  SpotlightDataTemplate = "MasterSpotlightDataTemplate",  QueryGroupCode = "MAST", IndexOrder = 3, Tenant = 0, ObjectTableId = MasterObjectTable.Id, QuerySection = "Master", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = MasterFeature_3.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllMastersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = MasterTextCode_3.Id, NameTextCodeCode = MasterTextCode_3.Code, ObjectTableName = "Master", Code = "All Masters",  SpotlightDataTemplate = "MasterSpotlightDataTemplate",  QueryGroupCode = "MAST", IndexOrder = 3, Tenant = 0, ObjectTableId = MasterObjectTable.Id, QuerySection = "Master", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = MasterFeature_3.Id,FeatureUniqeCode= MasterFeature_3.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn AllMastersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMastersQuery.Id, IndexOrder = 0, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllMastersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMastersQuery.Id,QueryCode = AllMastersQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllMastersQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMastersQuery.Id, IndexOrder = 1, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllMastersQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMastersQuery.Id,QueryCode = AllMastersQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllMastersQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMastersQuery.Id, IndexOrder = 2, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "CreateDateTime" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "CreateDateTime" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 90 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllMastersQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMastersQuery.Id,QueryCode = AllMastersQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "CreateDateTime" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "CreateDateTime" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 90 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllMastersQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMastersQuery.Id, IndexOrder = 3, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "ShipmentNumber" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "ShipmentNumber" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 70 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllMastersQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMastersQuery.Id,QueryCode = AllMastersQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "ShipmentNumber" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "ShipmentNumber" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 70 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllMastersQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMastersQuery.Id, IndexOrder = 4, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "ShipmentType" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "ShipmentType" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllMastersQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMastersQuery.Id,QueryCode = AllMastersQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "ShipmentType" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "ShipmentType" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllMastersQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMastersQuery.Id, IndexOrder = 5, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "AgentName" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "AgentName" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllMastersQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMastersQuery.Id,QueryCode = AllMastersQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "AgentName" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "AgentName" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllMastersQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMastersQuery.Id, IndexOrder = 6, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "Routing" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "Routing" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllMastersQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMastersQuery.Id,QueryCode = AllMastersQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "Routing" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "Routing" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllMastersQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMastersQuery.Id, IndexOrder = 7, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "LongMaster" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "LongMaster" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllMastersQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMastersQuery.Id,QueryCode = AllMastersQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "LongMaster" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "LongMaster" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllMastersQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMastersQuery.Id, IndexOrder = 8, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 80 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllMastersQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMastersQuery.Id,QueryCode = AllMastersQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 80 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllMastersQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMastersQuery.Id, IndexOrder = 9, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "MainCarriageETA" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "MainCarriageETA" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 90 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllMastersQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMastersQuery.Id,QueryCode = AllMastersQuery.UniqueCode, IndexOrder = 9, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "MainCarriageETA" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "MainCarriageETA" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 90 }, queryColumnsRepository, tenantQueryColumns);
   
 	      
 
-			  Query CancelledMastersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = MasterTextCode_4.Id, NameTextCodeCode = MasterTextCode_4.Code, Code = "Cancelled Masters",  SpotlightDataTemplate = "MasterSpotlightDataTemplate",  QueryGroupCode = "MAST", IndexOrder = 4, Tenant = 0, ObjectTableId = MasterObjectTable.Id, QuerySection = "Master", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = MasterFeature_4.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query CancelledMastersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = MasterTextCode_4.Id, NameTextCodeCode = MasterTextCode_4.Code, ObjectTableName = "Master", Code = "Cancelled Masters",  SpotlightDataTemplate = "MasterSpotlightDataTemplate",  QueryGroupCode = "MAST", IndexOrder = 4, Tenant = 0, ObjectTableId = MasterObjectTable.Id, QuerySection = "Master", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = MasterFeature_4.Id,FeatureUniqeCode= MasterFeature_4.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn CancelledMastersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledMastersQuery.Id, IndexOrder = 0, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CancelledMastersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledMastersQuery.Id,QueryCode = CancelledMastersQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn CancelledMastersQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledMastersQuery.Id, IndexOrder = 1, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CancelledMastersQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledMastersQuery.Id,QueryCode = CancelledMastersQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn CancelledMastersQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledMastersQuery.Id, IndexOrder = 2, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "CreateDateTime" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "CreateDateTime" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 90 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CancelledMastersQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledMastersQuery.Id,QueryCode = CancelledMastersQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "CreateDateTime" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "CreateDateTime" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 90 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn CancelledMastersQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledMastersQuery.Id, IndexOrder = 3, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "ShipmentNumber" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "ShipmentNumber" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 70 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CancelledMastersQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledMastersQuery.Id,QueryCode = CancelledMastersQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "ShipmentNumber" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "ShipmentNumber" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 70 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn CancelledMastersQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledMastersQuery.Id, IndexOrder = 4, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "ShipmentType" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "ShipmentType" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CancelledMastersQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledMastersQuery.Id,QueryCode = CancelledMastersQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "ShipmentType" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "ShipmentType" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn CancelledMastersQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledMastersQuery.Id, IndexOrder = 5, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "AgentName" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "AgentName" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CancelledMastersQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledMastersQuery.Id,QueryCode = CancelledMastersQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "AgentName" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "AgentName" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn CancelledMastersQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledMastersQuery.Id, IndexOrder = 6, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "Routing" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "Routing" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CancelledMastersQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledMastersQuery.Id,QueryCode = CancelledMastersQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "Routing" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "Routing" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn CancelledMastersQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledMastersQuery.Id, IndexOrder = 7, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "LongMaster" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "LongMaster" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CancelledMastersQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledMastersQuery.Id,QueryCode = CancelledMastersQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "LongMaster" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "LongMaster" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn CancelledMastersQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledMastersQuery.Id, IndexOrder = 8, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 80 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CancelledMastersQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledMastersQuery.Id,QueryCode = CancelledMastersQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 80 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn CancelledMastersQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledMastersQuery.Id, IndexOrder = 9, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "MainCarriageETA" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "MainCarriageETA" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 90 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CancelledMastersQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledMastersQuery.Id,QueryCode = CancelledMastersQuery.UniqueCode, IndexOrder = 9, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "MainCarriageETA" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "MainCarriageETA" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 90 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter CancelledMastersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "IsCancelled" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "IsCancelled" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = CancelledMastersQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter CancelledMastersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "IsCancelled" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "IsCancelled" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = CancelledMastersQuery.Id,QueryCode = CancelledMastersQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
 	   
 	    }
@@ -25250,63 +25376,65 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
 	         Screen MasterPreAlertScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Master.PreAlert", Name = "Pre Alert", ObjectTableId = MasterObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 2, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField MasterMasterPreAlertScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "Master").FirstOrDefault().Id, ScreenId = MasterPreAlertScreen0.Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "Master").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField MasterMasterPreAlertScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "Master").FirstOrDefault().Id, ScreenId = MasterPreAlertScreen0.Id,ScreenCode = MasterPreAlertScreen0.Code, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "Master").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField MasterMasterPreAlertScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "MainCarriageCarrierNumber").FirstOrDefault().Id, ScreenId = MasterPreAlertScreen0.Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "MainCarriageCarrierNumber").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField MasterMasterPreAlertScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "MainCarriageCarrierNumber").FirstOrDefault().Id, ScreenId = MasterPreAlertScreen0.Id,ScreenCode = MasterPreAlertScreen0.Code, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "MainCarriageCarrierNumber").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField MasterMasterPreAlertScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "MainCarriageCarrierId").FirstOrDefault().Id, ScreenId = MasterPreAlertScreen0.Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "MainCarriageCarrierId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField MasterMasterPreAlertScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "MainCarriageCarrierId").FirstOrDefault().Id, ScreenId = MasterPreAlertScreen0.Id,ScreenCode = MasterPreAlertScreen0.Code, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "MainCarriageCarrierId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField MasterMasterPreAlertScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "MainCarriageETD").FirstOrDefault().Id, ScreenId = MasterPreAlertScreen0.Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "MainCarriageETD").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField MasterMasterPreAlertScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "MainCarriageETD").FirstOrDefault().Id, ScreenId = MasterPreAlertScreen0.Id,ScreenCode = MasterPreAlertScreen0.Code, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "MainCarriageETD").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 	      
 
 	         Screen MasterCustomerAddEditScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Master.CustomerAddEditScreen", Name = "Customer Add Edit Screen", ObjectTableId = MasterObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 3, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField MasterMasterCustomerAddEditScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "ShipperId").FirstOrDefault().Id, ScreenId = MasterCustomerAddEditScreenScreen1.Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "ShipperId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField MasterMasterCustomerAddEditScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "ShipperId").FirstOrDefault().Id, ScreenId = MasterCustomerAddEditScreenScreen1.Id,ScreenCode = MasterCustomerAddEditScreenScreen1.Code, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "ShipperId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField MasterMasterCustomerAddEditScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "ShipperReference1").FirstOrDefault().Id, ScreenId = MasterCustomerAddEditScreenScreen1.Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "ShipperReference1").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField MasterMasterCustomerAddEditScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "ShipperReference1").FirstOrDefault().Id, ScreenId = MasterCustomerAddEditScreenScreen1.Id,ScreenCode = MasterCustomerAddEditScreenScreen1.Code, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "ShipperReference1").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField MasterMasterCustomerAddEditScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "ShipperAddressId").FirstOrDefault().Id, ScreenId = MasterCustomerAddEditScreenScreen1.Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "ShipperAddressId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField MasterMasterCustomerAddEditScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "ShipperAddressId").FirstOrDefault().Id, ScreenId = MasterCustomerAddEditScreenScreen1.Id,ScreenCode = MasterCustomerAddEditScreenScreen1.Code, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "ShipperAddressId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField MasterMasterCustomerAddEditScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "ShipperReference2").FirstOrDefault().Id, ScreenId = MasterCustomerAddEditScreenScreen1.Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "ShipperReference2").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField MasterMasterCustomerAddEditScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "ShipperReference2").FirstOrDefault().Id, ScreenId = MasterCustomerAddEditScreenScreen1.Id,ScreenCode = MasterCustomerAddEditScreenScreen1.Code, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "ShipperReference2").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField MasterMasterCustomerAddEditScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "ShipperContactId").FirstOrDefault().Id, ScreenId = MasterCustomerAddEditScreenScreen1.Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "ShipperContactId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField MasterMasterCustomerAddEditScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "ShipperContactId").FirstOrDefault().Id, ScreenId = MasterCustomerAddEditScreenScreen1.Id,ScreenCode = MasterCustomerAddEditScreenScreen1.Code, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "ShipperContactId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 	      
 
 	         Screen MasterNewMasterScreen2 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "NewMaster", Name = "New Master", ObjectTableId = MasterObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 3, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField MasterNewMasterScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "AgentId").FirstOrDefault().Id, ScreenId = MasterNewMasterScreen2.Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "AgentId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField MasterNewMasterScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "AgentId").FirstOrDefault().Id, ScreenId = MasterNewMasterScreen2.Id,ScreenCode = MasterNewMasterScreen2.Code, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "AgentId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField MasterNewMasterScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "AgentReference1").FirstOrDefault().Id, ScreenId = MasterNewMasterScreen2.Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "AgentReference1").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField MasterNewMasterScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "AgentReference1").FirstOrDefault().Id, ScreenId = MasterNewMasterScreen2.Id,ScreenCode = MasterNewMasterScreen2.Code, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "AgentReference1").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField MasterNewMasterScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "AgentReference2").FirstOrDefault().Id, ScreenId = MasterNewMasterScreen2.Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "AgentReference2").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField MasterNewMasterScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "AgentReference2").FirstOrDefault().Id, ScreenId = MasterNewMasterScreen2.Id,ScreenCode = MasterNewMasterScreen2.Code, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "AgentReference2").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 	      
 
 	         Screen MasterHeaderScreenScreen3 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Master.HeaderScreen", Name = "Header Screen", ObjectTableId = MasterObjectTable.Id, NumberOfColumns = 5, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField MasterMasterHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "ShipmentTypeViewField").FirstOrDefault().Id, ScreenId = MasterHeaderScreenScreen3.Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "ShipmentTypeViewField").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField MasterMasterHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "ShipmentTypeViewField").FirstOrDefault().Id, ScreenId = MasterHeaderScreenScreen3.Id,ScreenCode = MasterHeaderScreenScreen3.Code, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "ShipmentTypeViewField").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField MasterMasterHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "PPCC").FirstOrDefault().Id, ScreenId = MasterHeaderScreenScreen3.Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "PPCC").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField MasterMasterHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "PPCC").FirstOrDefault().Id, ScreenId = MasterHeaderScreenScreen3.Id,ScreenCode = MasterHeaderScreenScreen3.Code, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "PPCC").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField MasterMasterHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "LongMaster").FirstOrDefault().Id, ScreenId = MasterHeaderScreenScreen3.Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "LongMaster").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField MasterMasterHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "LongMaster").FirstOrDefault().Id, ScreenId = MasterHeaderScreenScreen3.Id,ScreenCode = MasterHeaderScreenScreen3.Code, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "LongMaster").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField MasterMasterHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "FlightDate").FirstOrDefault().Id, ScreenId = MasterHeaderScreenScreen3.Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "FlightDate").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField MasterMasterHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "FlightDate").FirstOrDefault().Id, ScreenId = MasterHeaderScreenScreen3.Id,ScreenCode = MasterHeaderScreenScreen3.Code, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "FlightDate").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField MasterMasterHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "Routing").FirstOrDefault().Id, ScreenId = MasterHeaderScreenScreen3.Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "Routing").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField MasterMasterHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "Routing").FirstOrDefault().Id, ScreenId = MasterHeaderScreenScreen3.Id,ScreenCode = MasterHeaderScreenScreen3.Code, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "Routing").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField MasterMasterHeaderScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "StatusName").FirstOrDefault().Id, ScreenId = MasterHeaderScreenScreen3.Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "StatusName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField MasterMasterHeaderScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "StatusName").FirstOrDefault().Id, ScreenId = MasterHeaderScreenScreen3.Id,ScreenCode = MasterHeaderScreenScreen3.Code, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "StatusName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField MasterMasterHeaderScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "MainCarriageCarrierName").FirstOrDefault().Id, ScreenId = MasterHeaderScreenScreen3.Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "MainCarriageCarrierName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField MasterMasterHeaderScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "MainCarriageCarrierName").FirstOrDefault().Id, ScreenId = MasterHeaderScreenScreen3.Id,ScreenCode = MasterHeaderScreenScreen3.Code, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "MainCarriageCarrierName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField MasterMasterHeaderScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 1, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "AgentName").FirstOrDefault().Id, ScreenId = MasterHeaderScreenScreen3.Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "AgentName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField MasterMasterHeaderScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 1, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "AgentName").FirstOrDefault().Id, ScreenId = MasterHeaderScreenScreen3.Id,ScreenCode = MasterHeaderScreenScreen3.Code, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "AgentName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField MasterMasterHeaderScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 4, Row = 0, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "IsOperationalClosed").FirstOrDefault().Id, ScreenId = MasterHeaderScreenScreen3.Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "IsOperationalClosed").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField MasterMasterHeaderScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 4, Row = 0, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "IsOperationalClosed").FirstOrDefault().Id, ScreenId = MasterHeaderScreenScreen3.Id,ScreenCode = MasterHeaderScreenScreen3.Code, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "IsOperationalClosed").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField MasterMasterHeaderScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 4, Row = 1, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "IsAccountingClosed").FirstOrDefault().Id, ScreenId = MasterHeaderScreenScreen3.Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "IsAccountingClosed").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField MasterMasterHeaderScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 4, Row = 1, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "IsAccountingClosed").FirstOrDefault().Id, ScreenId = MasterHeaderScreenScreen3.Id,ScreenCode = MasterHeaderScreenScreen3.Code, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "IsAccountingClosed").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    MasterObjectTable.HeaderScreenId = MasterHeaderScreenScreen3.Id;
+		    MasterObjectTable.HeaderScreenCode = MasterHeaderScreenScreen3.Code;
+
 	   		  
 
 	    }
@@ -25375,33 +25503,33 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "JHOV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = MasterOverviewFeature_TH0.Id, ControlPath = "Simplog.ShipmentLib.Views.MasterLib.MasterOverview.MasterOverviewControl", ObjectTableId = MasterObjectTable.Id, TabNameTextCodeId = MasterOverviewTextCode_TH0.Id, TabNameTextCodeCode = MasterOverviewTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "JHOV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = MasterOverviewFeature_TH0.Id,FeatureUniqeCode = MasterOverviewFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.ShipmentLib.Views.MasterLib.MasterOverview.MasterOverviewControl", ObjectTableId = MasterObjectTable.Id, TabNameTextCodeId = MasterOverviewTextCode_TH0.Id, TabNameTextCodeCode = MasterOverviewTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "JHGC",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = MasterGeneralFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = MasterObjectTable.Id, TabNameTextCodeId = MasterGeneralTextCode_TH1.Id, TabNameTextCodeCode = MasterGeneralTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "JHGC",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = MasterGeneralFeature_TH1.Id,FeatureUniqeCode = MasterGeneralFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = MasterObjectTable.Id, TabNameTextCodeId = MasterGeneralTextCode_TH1.Id, TabNameTextCodeCode = MasterGeneralTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "JHOR",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = MasterBookingFeature_TH2.Id, ControlPath = "Simplog.ShipmentLib.Views.Orders.OrdersUserControl", ObjectTableId = MasterObjectTable.Id, TabNameTextCodeId = MasterBookingTextCode_TH2.Id, TabNameTextCodeCode = MasterBookingTextCode_TH2.Code, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "JHOR",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = MasterBookingFeature_TH2.Id,FeatureUniqeCode = MasterBookingFeature_TH2.FeatureUniqeCode, ControlPath = "Simplog.ShipmentLib.Views.Orders.OrdersUserControl", ObjectTableId = MasterObjectTable.Id, TabNameTextCodeId = MasterBookingTextCode_TH2.Id, TabNameTextCodeCode = MasterBookingTextCode_TH2.Code, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "JHPA",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = MasterPartnersFeature_TH3.Id, ControlPath = "Simplog.ShipmentLib.Views.Partners.PartnersControl", ObjectTableId = MasterObjectTable.Id, TabNameTextCodeId = MasterPartnersTextCode_TH3.Id, TabNameTextCodeCode = MasterPartnersTextCode_TH3.Code, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "JHPA",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = MasterPartnersFeature_TH3.Id,FeatureUniqeCode = MasterPartnersFeature_TH3.FeatureUniqeCode, ControlPath = "Simplog.ShipmentLib.Views.Partners.PartnersControl", ObjectTableId = MasterObjectTable.Id, TabNameTextCodeId = MasterPartnersTextCode_TH3.Id, TabNameTextCodeCode = MasterPartnersTextCode_TH3.Code, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "JHPK",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = MasterPackagesFeature_TH4.Id, ControlPath = "Simplog.ShipmentLib.Views.Packages.PackagesUserControl", ObjectTableId = MasterObjectTable.Id, TabNameTextCodeId = MasterPackagesTextCode_TH4.Id, TabNameTextCodeCode = MasterPackagesTextCode_TH4.Code, Tenant = 0, IndexOrder = 4 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "JHPK",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = MasterPackagesFeature_TH4.Id,FeatureUniqeCode = MasterPackagesFeature_TH4.FeatureUniqeCode, ControlPath = "Simplog.ShipmentLib.Views.Packages.PackagesUserControl", ObjectTableId = MasterObjectTable.Id, TabNameTextCodeId = MasterPackagesTextCode_TH4.Id, TabNameTextCodeCode = MasterPackagesTextCode_TH4.Code, Tenant = 0, IndexOrder = 4 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "JHRT",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = MasterRoutingsFeature_TH5.Id, ControlPath = "Simplog.ShipmentLib.Views.Routings.RoutingsControl", ObjectTableId = MasterObjectTable.Id, TabNameTextCodeId = MasterRoutingsTextCode_TH5.Id, TabNameTextCodeCode = MasterRoutingsTextCode_TH5.Code, Tenant = 0, IndexOrder = 5 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "JHRT",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = MasterRoutingsFeature_TH5.Id,FeatureUniqeCode = MasterRoutingsFeature_TH5.FeatureUniqeCode, ControlPath = "Simplog.ShipmentLib.Views.Routings.RoutingsControl", ObjectTableId = MasterObjectTable.Id, TabNameTextCodeId = MasterRoutingsTextCode_TH5.Id, TabNameTextCodeCode = MasterRoutingsTextCode_TH5.Code, Tenant = 0, IndexOrder = 5 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "JHPY",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = MasterPayablesFeature_TH6.Id, ControlPath = "Simplog.ShipmentLib.Views.Payables.PayablesUserControl", ObjectTableId = MasterObjectTable.Id, TabNameTextCodeId = MasterPayablesTextCode_TH6.Id, TabNameTextCodeCode = MasterPayablesTextCode_TH6.Code, Tenant = 0, IndexOrder = 6 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "JHPY",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = MasterPayablesFeature_TH6.Id,FeatureUniqeCode = MasterPayablesFeature_TH6.FeatureUniqeCode, ControlPath = "Simplog.ShipmentLib.Views.Payables.PayablesUserControl", ObjectTableId = MasterObjectTable.Id, TabNameTextCodeId = MasterPayablesTextCode_TH6.Id, TabNameTextCodeCode = MasterPayablesTextCode_TH6.Code, Tenant = 0, IndexOrder = 6 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "JHRE",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = MasterReceivablesFeature_TH7.Id, ControlPath = "Simplog.ShipmentLib.Views.Receivables.ReceivablesUserControl", ObjectTableId = MasterObjectTable.Id, TabNameTextCodeId = MasterReceivablesTextCode_TH7.Id, TabNameTextCodeCode = MasterReceivablesTextCode_TH7.Code, Tenant = 0, IndexOrder = 7 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "JHRE",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = MasterReceivablesFeature_TH7.Id,FeatureUniqeCode = MasterReceivablesFeature_TH7.FeatureUniqeCode, ControlPath = "Simplog.ShipmentLib.Views.Receivables.ReceivablesUserControl", ObjectTableId = MasterObjectTable.Id, TabNameTextCodeId = MasterReceivablesTextCode_TH7.Id, TabNameTextCodeCode = MasterReceivablesTextCode_TH7.Code, Tenant = 0, IndexOrder = 7 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "JHDO",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = MasterDocsOutFeature_TH8.Id, ControlPath = "Simplog.ShipmentLib.Views.MasterLib.MasterDocuments.MasterDocOutControl", ObjectTableId = MasterObjectTable.Id, TabNameTextCodeId = MasterDocsOutTextCode_TH8.Id, TabNameTextCodeCode = MasterDocsOutTextCode_TH8.Code, Tenant = 0, IndexOrder = 8 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "JHDO",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = MasterDocsOutFeature_TH8.Id,FeatureUniqeCode = MasterDocsOutFeature_TH8.FeatureUniqeCode, ControlPath = "Simplog.ShipmentLib.Views.MasterLib.MasterDocuments.MasterDocOutControl", ObjectTableId = MasterObjectTable.Id, TabNameTextCodeId = MasterDocsOutTextCode_TH8.Id, TabNameTextCodeCode = MasterDocsOutTextCode_TH8.Code, Tenant = 0, IndexOrder = 8 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "JHDI",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = MasterDocsInFeature_TH9.Id, ControlPath = "Simplog.ShipmentLib.Views.MasterLib.MasterDocuments.MasterDocInControl", ObjectTableId = MasterObjectTable.Id, TabNameTextCodeId = MasterDocsInTextCode_TH9.Id, TabNameTextCodeCode = MasterDocsInTextCode_TH9.Code, Tenant = 0, IndexOrder = 9 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "JHDI",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = MasterDocsInFeature_TH9.Id,FeatureUniqeCode = MasterDocsInFeature_TH9.FeatureUniqeCode, ControlPath = "Simplog.ShipmentLib.Views.MasterLib.MasterDocuments.MasterDocInControl", ObjectTableId = MasterObjectTable.Id, TabNameTextCodeId = MasterDocsInTextCode_TH9.Id, TabNameTextCodeCode = MasterDocsInTextCode_TH9.Code, Tenant = 0, IndexOrder = 9 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "JHCM",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = MasterCommunicationFeature_TH10.Id, ControlPath = "Simplog.Infrastructure.Views.Communications.CommunicationsControl", ObjectTableId = MasterObjectTable.Id, TabNameTextCodeId = MasterCommunicationTextCode_TH10.Id, TabNameTextCodeCode = MasterCommunicationTextCode_TH10.Code, Tenant = 0, IndexOrder = 10 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "JHCM",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = MasterCommunicationFeature_TH10.Id,FeatureUniqeCode = MasterCommunicationFeature_TH10.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Communications.CommunicationsControl", ObjectTableId = MasterObjectTable.Id, TabNameTextCodeId = MasterCommunicationTextCode_TH10.Id, TabNameTextCodeCode = MasterCommunicationTextCode_TH10.Code, Tenant = 0, IndexOrder = 10 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "JHEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = MasterEventsFeature_TH11.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = MasterObjectTable.Id, TabNameTextCodeId = MasterEventsTextCode_TH11.Id, TabNameTextCodeCode = MasterEventsTextCode_TH11.Code, Tenant = 0, IndexOrder = 11 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "JHEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = MasterEventsFeature_TH11.Id,FeatureUniqeCode = MasterEventsFeature_TH11.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = MasterObjectTable.Id, TabNameTextCodeId = MasterEventsTextCode_TH11.Id, TabNameTextCodeCode = MasterEventsTextCode_TH11.Code, Tenant = 0, IndexOrder = 11 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "JHCO",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = MasterShipmentsFeature_TH12.Id, ControlPath = "Simplog.ShipmentLib.Views.MasterLib.Consolidation.ConsolidationControl", ObjectTableId = MasterObjectTable.Id, TabNameTextCodeId = MasterShipmentsTextCode_TH12.Id, TabNameTextCodeCode = MasterShipmentsTextCode_TH12.Code, Tenant = 0, IndexOrder = 13 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "JHCO",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = MasterShipmentsFeature_TH12.Id,FeatureUniqeCode = MasterShipmentsFeature_TH12.FeatureUniqeCode, ControlPath = "Simplog.ShipmentLib.Views.MasterLib.Consolidation.ConsolidationControl", ObjectTableId = MasterObjectTable.Id, TabNameTextCodeId = MasterShipmentsTextCode_TH12.Id, TabNameTextCodeCode = MasterShipmentsTextCode_TH12.Code, Tenant = 0, IndexOrder = 13 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "JHCN",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = MasterConnectedEntitiesFeature_TH13.Id, ControlPath = "Simplog.ShipmentLib.Views.ShipmentConnections.ShipmentConnectionsControl", ObjectTableId = MasterObjectTable.Id, TabNameTextCodeId = MasterConnectedEntitiesTextCode_TH13.Id, TabNameTextCodeCode = MasterConnectedEntitiesTextCode_TH13.Code, Tenant = 0, IndexOrder = 14 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "JHCN",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = MasterConnectedEntitiesFeature_TH13.Id,FeatureUniqeCode = MasterConnectedEntitiesFeature_TH13.FeatureUniqeCode, ControlPath = "Simplog.ShipmentLib.Views.ShipmentConnections.ShipmentConnectionsControl", ObjectTableId = MasterObjectTable.Id, TabNameTextCodeId = MasterConnectedEntitiesTextCode_TH13.Id, TabNameTextCodeCode = MasterConnectedEntitiesTextCode_TH13.Code, Tenant = 0, IndexOrder = 14 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -25421,8 +25549,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 		   Feature MasterFeature_AIREXPORTONLY = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AIREXPORTONLY", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = MasterObjectTable.Id, Tenant = 0, NameTextCodeCode = "Master.Features.AirExportOnly", NameTextCodeDefaultText = @"Air-Export-Only" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
 		   Feature MasterFeature_ALLTRANSPORTMODES = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLTRANSPORTMODES", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = MasterObjectTable.Id, Tenant = 0, NameTextCodeCode = "Master.Features.AllTransportModes", NameTextCodeDefaultText = @"AllTransportModes" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-		   Feature MasterFeature_FOLLOWUPS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "FOLLOWUPS", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = true, IsCoreFeature = false, ObjectTableId = MasterObjectTable.Id, Tenant = 0, NameTextCodeCode = "Master.Features.FollowUps", NameTextCodeDefaultText = @"Follow Ups" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
 		   Feature MasterFeature_NEWMASTER = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEWMASTER", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = MasterObjectTable.Id, Tenant = 0, NameTextCodeCode = "Master.Features.NewMaster", NameTextCodeDefaultText = @"New Master" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
@@ -25495,6 +25621,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 						FeatureId = null,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode = null,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 
 			   MenuButton MasterMenuButton00 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -25512,6 +25639,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 						FeatureId=  MasterFeature_MB00.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  MasterFeature_MB00.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton MasterMenuButton01 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -25529,6 +25657,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 						FeatureId=  MasterFeature_MB01.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  MasterFeature_MB01.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton MasterMenuButton02 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -25546,6 +25675,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 						FeatureId=  MasterFeature_MB02.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  MasterFeature_MB02.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton MasterMenuButton03 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -25563,6 +25693,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 						FeatureId=  MasterFeature_MB03.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  MasterFeature_MB03.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton MasterMenuButton04 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -25580,6 +25711,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 						
 						Style = null,
 						LocalDefaultText = null,
+						
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton MasterMenuButton05 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -25597,6 +25729,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 						FeatureId=  MasterFeature_MB04.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  MasterFeature_MB04.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton MasterMenuButton06 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -25614,6 +25747,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 						
 						Style = null,
 						LocalDefaultText = null,
+						
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton MasterMenuButton07 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -25631,6 +25765,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 						
 						Style = null,
 						LocalDefaultText = null,
+						
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton MasterMenuButton08 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -25648,6 +25783,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 						FeatureId=  MasterFeature_MB05.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  MasterFeature_MB05.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton MasterMenuButton09 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -25665,6 +25801,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 						FeatureId=  MasterFeature_MB06.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  MasterFeature_MB06.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton MasterMenuButton010 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -25682,6 +25819,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 						FeatureId=  MasterFeature_MB07.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  MasterFeature_MB07.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton MasterMenuButton011 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -25699,6 +25837,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 						FeatureId=  MasterFeature_MB08.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  MasterFeature_MB08.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 	    }

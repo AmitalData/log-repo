@@ -1,12 +1,12 @@
-﻿import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
-import {Observable}     from 'rxjs/Rx';
-import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
-import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
-import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
-import {ContainerFollowUpList} from '../../EntityLists/ContainerFollowUpList';
-import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
-import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLogger';
+import { Injectable } from '@angular/core';
+import { Http, Headers } from '@angular/http';
+import { Observable } from 'rxjs/Rx';
+import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
+import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
+import { ContainerFollowUpList } from '../../EntityLists/ContainerFollowUpList';
+import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
+import { PerformanceLogger } from '../../../Infrastructure/Utilities/PerformanceLogger';
 
 @Injectable()
 

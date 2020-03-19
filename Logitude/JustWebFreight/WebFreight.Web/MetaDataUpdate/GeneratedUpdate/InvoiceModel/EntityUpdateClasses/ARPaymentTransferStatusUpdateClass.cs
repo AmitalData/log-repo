@@ -68,6 +68,10 @@ using Logitude.BL.GlobalModel;
 using Logitude.Infrastructure.Data.Repsitories;
 using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Infrastructure.BL;
+using Logitude.TariffModule.Data.Repositories;
+using Logitude.TariffModule.Data.EntityPOCOs;
+using Logitude.TariffModule.BL.CLoseTable;
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdateClasses
 {
    public class ARPaymentTransferStatusUpdateClass
@@ -121,6 +125,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			      				    HasMenuButtons =  false,
 			      				    HasFiltersMenu =  false,
 			      				    AllowedInQueues =  false,
+			      				    IsTabsHidden =  false,
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "Name",
 			                    
@@ -136,6 +141,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					 						FieldName =  "Code",
 					  						ObjectTableName =  "ARPaymentTransferStatus",
 					  						FieldsDataType =  "Text",
+					  						FieldCode =  "ARPaymentTransferStatus.Code",
 					  						Code =  "Code",
 					  						MaxLength =  2,
 					  						IsCustom =  false,
@@ -176,10 +182,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						FullNameTextCodeCode =  "ARPaymentTransferStatus.F.Code",
+					  						HelpTextCodeCode =  "ARPaymentTransferStatus.CodeHelpText",
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
+					  						EnableFullscreenTextBox =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "Code",
-					  						DefaultText =  @"Code",
+					  						DefaultText =  "Code",
 					  						HelpTextCode =  "Code",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -191,6 +202,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					 						FieldName =  "Name",
 					  						ObjectTableName =  "ARPaymentTransferStatus",
 					  						FieldsDataType =  "Text",
+					  						FieldCode =  "ARPaymentTransferStatus.Name",
 					  						Code =  "Name",
 					  						MaxLength =  40,
 					  						IsCustom =  false,
@@ -232,12 +244,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						FullNameTextCodeCode =  "ARPaymentTransferStatus.F.Name",
+					  						HelpTextCodeCode =  "ARPaymentTransferStatus.NameHelpText",
+					  						ListTextCodeCode =  "ARPaymentTransferStatus.CH.NameListLable",
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
+					  						EnableFullscreenTextBox =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "Name",
-					  						DefaultText =  @"Name",
+					  						DefaultText =  "Name",
 					  						ListFieldLable =  "NameListLable",
-					  						ListLableDefaultText =  @"Name",
+					  						ListLableDefaultText =  "Name",
 					  						HelpTextCode =  "Name",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -249,6 +267,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					 						FieldName =  "SearchFields",
 					  						ObjectTableName =  "ARPaymentTransferStatus",
 					  						FieldsDataType =  "Text",
+					  						FieldCode =  "ARPaymentTransferStatus.SearchFields",
 					  						Code =  "SearchFields",
 					  						MaxLength =  1000,
 					  						IsCustom =  false,
@@ -288,12 +307,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						FullNameTextCodeCode =  "ARPaymentTransferStatus.F.SearchFields",
+					  						HelpTextCodeCode =  "ARPaymentTransferStatus.SearchFieldsHelpText",
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
+					  						EnableFullscreenTextBox =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "SearchFields",
-					  						DefaultText =  @"Search codes/ names",
+					  						DefaultText =  "Search codes/ names",
 					  						HelpTextCode =  "SearchFields",
-					  						HelpTextDefaultText =  @"Searching by :\n1: code\n2: name",
+					  						HelpTextDefaultText =  "Searching by :\n1: code\n2: name",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -327,15 +351,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-
-		   		   //--------------> Additional TextCodes <--------------\\
-
- 		   ObjectTable ARPaymentTransferStatusObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ARPaymentTransferStatus" && d.Tenant == 0).FirstOrDefault(); 
-
- 		   TextCode ARPaymentTransferStatusTextCode_ARPaymentTransferStatus = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPaymentTransferStatus", DefaultText = "A/R Payment Transfer Status",LocalDefaultText = null, ObjectTableId = ARPaymentTransferStatusObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
-   
+	    {     
 	    
 }
 

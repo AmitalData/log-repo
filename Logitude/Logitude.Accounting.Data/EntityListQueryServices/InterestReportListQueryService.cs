@@ -63,7 +63,9 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
                                               UpdatedByLocalName = a.UpdatedByUser != null ? a.UpdatedByUser.Contact.LocalName : null,
 
-                                              InterestReportStatusName = a.InterestReportStatuse == null ? null : a.InterestReportStatuse.LocalName,
+                                              InterestReportStatusName = a.InterestReportStatuse == null ? null : a.InterestReportStatuse.EnglishName,
+
+                                              InterestReportStatusLocalName = a.InterestReportStatuse==null ? null :a.InterestReportStatuse.LocalName,
 
                                               GLAccountDisplayNumber = a.GLAccount == null ? null : a.GLAccount.DisplayNumber,
 

@@ -25,6 +25,7 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public bool ActiveForUpdate { get; set; }
         public bool Internal { get; set; }
         public bool AdvancedCondition { get; set; }
+        public string TriggerFieldCode { get; set; }
 
         public bool IsCreatedFromSystemRule { get; set; }
 

@@ -28,6 +28,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             poco.InActive = entityPM.InActive;
             poco.UpdateDate = entityPM.UpdateDate;
             poco.UpdatedByUserId = entityPM.UpdatedByUserId;
+            poco.RuleFieldCode = entityPM.RuleFieldCode;
         }
     }
 }

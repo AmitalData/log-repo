@@ -114,6 +114,9 @@ export class JournalMenuButtonsHandler {
                                     button.IsDisabled = true;
                                 }
 
+                                if(this.EntityPM.ExternalSystem)
+                                    button.IsDisabled = true;
+
 
                                 // if (this.EntityPM.StatusCode == "3" || this.EntityPM.AccountingEntityCode != "1") { // 3- Voided | 1- Journal
                                 //     button.IsDisabled = true;

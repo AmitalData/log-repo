@@ -8,6 +8,7 @@
 //------------------------------------------------------------------------------
 
 import {TariffVersionPM} from './TariffVersionPM';
+import {TariffLinesContainersPricePM} from './TariffLinesContainersPricePM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -395,6 +396,50 @@ export class TariffLinePM {
     private currencyCode: string;
     public get CurrencyCode() { return this.currencyCode; }
     public set CurrencyCode(newValue: string) { if (this.currencyCode != newValue) { this.currencyCode = newValue; this.MarkAsDirty("CurrencyCode"); } }
+       
+	 
+     
+	private containersPrices: TariffLinesContainersPricePM[];
+    get  ContainersPrices() {
+        if (this.containersPrices == null) {
+            this.containersPrices = [];
+        }
+
+        return this.containersPrices;
+    }
+    set  ContainersPrices(newValue: TariffLinesContainersPricePM[]) {
+        if (this.containersPrices != newValue) {
+            this.containersPrices = newValue;
+        }
+    }
+    public AddTariffLinesContainersPrice(item: TariffLinesContainersPricePM) {
+        if (item != null) {
+            var index = this. ContainersPrices.indexOf(item);
+            if (index == -1) {
+                item.EntityParentPM = this;
+                this. ContainersPrices.push(item);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    public RemoveTariffLinesContainersPrice(item: TariffLinesContainersPricePM) {
+        if (item != null) {
+            var index = this. ContainersPrices.indexOf(item);
+            if (index > -1) {
+                this. ContainersPrices.splice(index, 1);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    //public ContainersPrices: Array<TariffLinesContainersPricePM>= [];
+     private originPortCombinedCode: string;
+    public get OriginPortCombinedCode() { return this.originPortCombinedCode; }
+    public set OriginPortCombinedCode(newValue: string) { if (this.originPortCombinedCode != newValue) { this.originPortCombinedCode = newValue; this.MarkAsDirty("OriginPortCombinedCode"); } }
+       
+	 
+    private destinationPortCombinedCode: string;
+    public get DestinationPortCombinedCode() { return this.destinationPortCombinedCode; }
+    public set DestinationPortCombinedCode(newValue: string) { if (this.destinationPortCombinedCode != newValue) { this.destinationPortCombinedCode = newValue; this.MarkAsDirty("DestinationPortCombinedCode"); } }
        
 	 
 

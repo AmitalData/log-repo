@@ -7,6 +7,11 @@ namespace WebFreight.Web.DataProviders
 {
     public class PackageLine
     {
+        public PackageLine()
+        {
+            this.InsidePackagesLines = new List<InsidePackageLine>();
+        }
+
         public string Width { get; set; }
         public string Height { get; set; }
         public string Length { get; set; }

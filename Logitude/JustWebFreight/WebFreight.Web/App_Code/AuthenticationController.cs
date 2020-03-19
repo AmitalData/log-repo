@@ -2012,7 +2012,15 @@ namespace WebFreight.Web
                 bool isIpAuthenticated = true;
                 if (customerCare)//(contact.Email == "customercare@logitudeworld.com")
                 {
-                    isIpAuthenticated = IscustomerCareIpAuthenticated();
+                    if (CustomerCareEmails.Contains(contact.Email))
+                    {
+                        isIpAuthenticated = true;
+                    }
+                    else
+                    {
+                        isIpAuthenticated = IscustomerCareIpAuthenticated();
+                    }
+                   
                 }
 
                 if (isIpAuthenticated)
@@ -2360,7 +2368,7 @@ namespace WebFreight.Web
         }
 
         PasswordCheckService passwordChkService = new PasswordCheckService();
-
+        List<string> CustomerCareEmails = new List<string>() {"fajr@logitudeworld.com", "eman@logitudeworld.com", "azhar@logitudeworld.com", "balqees@logitudeworld.com", "isra@logitudeworld.com", "mujahed@logitudeworld.com", "maram@logitudeworld.com", "diaa@logitudeworld.com", "zaki@logitudeworld.com", "ahmada@logitudeworld.com", "ihab@logitudeworld.com" };
         private UserData CheckUserState(string email, string password, ref ContactPassword contactPassword, bool byToken, string clientType)
         {
 
@@ -2437,7 +2445,15 @@ namespace WebFreight.Web
                     //        userData.IpRestricted = true;
                     //    }
                     //}
-                    userData.IpRestricted = !IscustomerCareIpAuthenticated();
+                    if (CustomerCareEmails.Contains(email))
+                    {
+                        userData.IpRestricted = false;
+                    }
+                    else
+                    {
+                        userData.IpRestricted = !IscustomerCareIpAuthenticated();
+                    }
+                    
                 }
             }
             else

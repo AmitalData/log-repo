@@ -319,6 +319,7 @@
                                             <TextBlock Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" Text="Code Field:" />
                                             <TextBlock Grid.Row="6" Grid.Column="0" VerticalAlignment="Center" Text="Name Field:" />
                                             <TextBlock Grid.Row="7" Grid.Column="0" VerticalAlignment="Center" Text="Allowed For Computing Partners :" />
+                                            <TextBlock Grid.Row="8" Grid.Column="0" VerticalAlignment="Center" Text="Generate Metadata Classes Only :" />
 
                                             <CheckBox Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" IsChecked="{Binding HasApiHelper, Mode=TwoWay}" />
                                             <CheckBox Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" IsChecked="{Binding HasCustomFields, Mode=TwoWay}" />
@@ -329,6 +330,7 @@
                                             <ComboBox  Grid.Row="5" Grid.Column="1" Height="22" VerticalAlignment="Center" DisplayMemberPath="FieldName" ItemsSource="{Binding ObsList}" SelectedValue="{Binding CodeField, Mode=TwoWay}" SelectedValuePath="FieldName" />
                                             <ComboBox  Grid.Row="6" Grid.Column="1" Height="22" VerticalAlignment="Center" DisplayMemberPath="FieldName" ItemsSource="{Binding ObsList}" SelectedValue="{Binding NameField, Mode=TwoWay}" SelectedValuePath="FieldName" />
                                             <CheckBox Grid.Row="7" Grid.Column="1" VerticalAlignment="Center" IsChecked="{Binding AllowedForComputingPartners, Mode=TwoWay}" />
+                                            <CheckBox Grid.Row="8" Grid.Column="1" VerticalAlignment="Center" IsChecked="{Binding IsMetadataOnlyTable, Mode=TwoWay}" />
 
                                         </Grid>
 

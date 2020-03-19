@@ -66,6 +66,18 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             return myList;
         }
 
+        public GLAccountCurrencyList GetByAccountAndCurrency(string accountId,string currencyId, int tenant)
+        {
+            IQueryable<GLAccountCurrency> query = (from a in context.GLAccountCurrencies
+                                                   where a.Tenant == tenant 
+                                                   && a.MainGLAccountId == accountId
+                                                   && a.CurrencyId == currencyId
+                                                   select a);
+
+            IQueryable<GLAccountCurrencyList> result = GetIqueryableList(query);
+            var acc = result.FirstOrDefault();
+            return acc;
+        }
 
 
         private IQueryable<GLAccountCurrency> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<GLAccountCurrency> iQueryable, int tenant)

@@ -31,11 +31,11 @@ export class APPaymentMenuButtonsHandler {
     private isPrintRequested: boolean;
     private CurrentSession = SessionLocator.SelectedSession;
     fullAccountingSettingPMService: FullAccountingSettingPMService = new FullAccountingSettingPMService();
-    private isFullAccountingGranted: boolean;
+    // private isFullAccountingGranted: boolean;
     private isOerationInProgrees: boolean = false;
 
     constructor(){
-        this.isFullAccountingGranted = this.GetFullAccountingFeature();
+        // this.isFullAccountingGranted = this.GetFullAccountingFeature();
     }
 
     public SetEntityPM(entityArgs: EntityArgs) {
@@ -348,10 +348,7 @@ export class APPaymentMenuButtonsHandler {
         if (isValid) {
             this.entityArgs.EditComponent.ValidationErrorsList = [];
 
-            if(this.isFullAccountingGranted)
-                this.GetFullAccountingSettingsAndApprove();
-            else
-                this.ContinueSaving(null);
+            this.GetFullAccountingSettingsAndApprove();
         }
 
         else {
@@ -412,14 +409,20 @@ export class APPaymentMenuButtonsHandler {
                 var res = myResponse.Result;
                 var fullAccountingSetting: FullAccountingSettingPM = res;
 
-                this.Approve(fullAccountingSetting);
+                if(fullAccountingSetting)
+                    this.Approve(fullAccountingSetting);
+                else
+                    this.ContinueSaving(null);
 
+
+            }else{
+                this.ContinueSaving(null);
             }
 
         });
 
     }
-
+    NameForPrintingCheques: string;
     private Approve(fullAccountingSetting: FullAccountingSettingPM)
     {
         if (fullAccountingSetting.AccountingActivated) {
@@ -428,6 +431,7 @@ export class APPaymentMenuButtonsHandler {
 
                 if (fullAccountingSetting != null && glaccount != null) {
                     if (fullAccountingSetting.IsPaymentChequesActivated && glaccount.AllowEditChequePayToName && this.EntityPM.PaymentMethodCode == "CH") {
+                        this.NameForPrintingCheques = glaccount.NameForPrintingCheques != null ? glaccount.NameForPrintingCheques : (glaccount.LocalName != null ? glaccount.LocalName : glaccount.EnglishName);
                         this.OpenEditPaymentChequeScreen();
                     }
                     else {
@@ -454,7 +458,7 @@ export class APPaymentMenuButtonsHandler {
         windowArgs.ForeignAmount = this.EntityPM.AmountInPaymentCurrency;
         windowArgs.ValueDate = this.EntityPM.ValueDate;
         windowArgs.APPayment = this.EntityPM;
-
+        windowArgs.NameForPrintingCheques = this.NameForPrintingCheques;
 
         return windowArgs;
     }

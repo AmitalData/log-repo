@@ -9,6 +9,8 @@ export class FeaturePM {
     public IsBusinessUnitEnabled: boolean;
     public IsOld: boolean;
     public IsCoreFeature: boolean;
+    public FeatureUniqeCode: string;
+
     public NameTextCodeCode: string;
 
     // Dummy

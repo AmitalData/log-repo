@@ -193,6 +193,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "InvoiceCurrencyId",
@@ -256,6 +257,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "VatTypeId",
@@ -318,6 +320,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "BankName",
@@ -380,6 +383,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "BankAddress",
@@ -442,6 +446,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Swift",
@@ -504,6 +509,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "AccountNumber",
@@ -566,6 +572,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "IBANNumber",
@@ -630,6 +637,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -693,6 +701,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Website",
@@ -757,6 +766,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Code",
@@ -821,6 +831,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Name",
@@ -885,6 +896,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "LocalName",
@@ -947,6 +959,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "ComputedLocalName",
@@ -1011,6 +1024,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "InActive",
@@ -1075,6 +1089,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "VatNumber",
@@ -1138,6 +1153,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "AccountingCard",
@@ -1201,6 +1217,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "PaymentTermId",
@@ -1265,6 +1282,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "PaymentTermEnglishName",
@@ -1330,6 +1348,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Notes",
@@ -1396,6 +1415,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "CityName",
@@ -1463,6 +1483,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "CountryId",
@@ -1528,6 +1549,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "CountryName",
@@ -1596,6 +1618,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1663,6 +1686,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1723,6 +1747,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "SATForeignRFC",
@@ -1783,6 +1808,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "ExternalId2",
@@ -1845,6 +1871,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "IRSPlace",
@@ -1907,6 +1934,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "IRSNumber",
@@ -1971,6 +1999,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "ReceivablesAccountingCard",
@@ -2035,6 +2064,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "PayablesAccountingCard",
@@ -2097,6 +2127,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "ExternalAccountingBusinessArea",
@@ -2161,6 +2192,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -2224,6 +2256,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "PrimaryContactName",
@@ -2288,6 +2321,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "PrimaryContactEmail",
@@ -2350,6 +2384,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "PrimaryContactPhone",
@@ -2407,6 +2442,67 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "StateName",
+					  						OldFieldName =  "StateName",
+					  						ObjectTableName =  "CustomAgent",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  40,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  40,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "StateName",
+					  						ListPropertyPath =  "StateName",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "CustomAgent",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "StateName",
+					  						DefaultText =  "State",
+					  						ListFieldLable =  "StateNameListLable",
+					  						ListLableDefaultText =  "State",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -2434,23 +2530,23 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query CustomagentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomAgentTextCode_0.Id, NameTextCodeCode = CustomAgentTextCode_0.Code, Code = "Custom agents",  QueryGroupCode = "CAGT", IndexOrder = 0, Tenant = 0, ObjectTableId = CustomAgentObjectTable.Id, QuerySection = "CustomAgent", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomAgentFeature_0.Id, DefaultSortName = "Code", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query CustomagentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomAgentTextCode_0.Id, NameTextCodeCode = CustomAgentTextCode_0.Code, ObjectTableName = "CustomAgent", Code = "Custom agents",  QueryGroupCode = "CAGT", IndexOrder = 0, Tenant = 0, ObjectTableId = CustomAgentObjectTable.Id, QuerySection = "CustomAgent", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomAgentFeature_0.Id,FeatureUniqeCode= CustomAgentFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn CustomagentsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomagentsQuery.Id, IndexOrder = 0, ObjectFieldId = CustomAgentObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == CustomAgentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomAgentObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == CustomAgentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CustomagentsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomagentsQuery.Id,QueryCode = CustomagentsQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = CustomAgentObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == CustomAgentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomAgentObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == CustomAgentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn CustomagentsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomagentsQuery.Id, IndexOrder = 1, ObjectFieldId = CustomAgentObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == CustomAgentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomAgentObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == CustomAgentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CustomagentsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomagentsQuery.Id,QueryCode = CustomagentsQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = CustomAgentObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == CustomAgentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomAgentObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == CustomAgentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn CustomagentsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomagentsQuery.Id, IndexOrder = 2, ObjectFieldId = CustomAgentObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == CustomAgentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomAgentObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == CustomAgentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CustomagentsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomagentsQuery.Id,QueryCode = CustomagentsQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = CustomAgentObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == CustomAgentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomAgentObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == CustomAgentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn CustomagentsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomagentsQuery.Id, IndexOrder = 3, ObjectFieldId = CustomAgentObjectFields.Where(d => d.FieldName == "VatNumber" && d.ObjectTableId == CustomAgentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomAgentObjectFields.Where(d => d.FieldName == "VatNumber" && d.ObjectTableId == CustomAgentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CustomagentsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomagentsQuery.Id,QueryCode = CustomagentsQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = CustomAgentObjectFields.Where(d => d.FieldName == "VatNumber" && d.ObjectTableId == CustomAgentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomAgentObjectFields.Where(d => d.FieldName == "VatNumber" && d.ObjectTableId == CustomAgentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn CustomagentsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomagentsQuery.Id, IndexOrder = 4, ObjectFieldId = CustomAgentObjectFields.Where(d => d.FieldName == "ReceivablesAccountingCard" && d.ObjectTableId == CustomAgentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomAgentObjectFields.Where(d => d.FieldName == "ReceivablesAccountingCard" && d.ObjectTableId == CustomAgentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CustomagentsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomagentsQuery.Id,QueryCode = CustomagentsQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = CustomAgentObjectFields.Where(d => d.FieldName == "ReceivablesAccountingCard" && d.ObjectTableId == CustomAgentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomAgentObjectFields.Where(d => d.FieldName == "ReceivablesAccountingCard" && d.ObjectTableId == CustomAgentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn CustomagentsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomagentsQuery.Id, IndexOrder = 5, ObjectFieldId = CustomAgentObjectFields.Where(d => d.FieldName == "PaymentTermEnglishName" && d.ObjectTableId == CustomAgentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomAgentObjectFields.Where(d => d.FieldName == "PaymentTermEnglishName" && d.ObjectTableId == CustomAgentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CustomagentsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomagentsQuery.Id,QueryCode = CustomagentsQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = CustomAgentObjectFields.Where(d => d.FieldName == "PaymentTermEnglishName" && d.ObjectTableId == CustomAgentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomAgentObjectFields.Where(d => d.FieldName == "PaymentTermEnglishName" && d.ObjectTableId == CustomAgentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn CustomagentsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomagentsQuery.Id, IndexOrder = 6, ObjectFieldId = CustomAgentObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == CustomAgentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomAgentObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == CustomAgentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CustomagentsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomagentsQuery.Id,QueryCode = CustomagentsQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = CustomAgentObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == CustomAgentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomAgentObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == CustomAgentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn CustomagentsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomagentsQuery.Id, IndexOrder = 7, ObjectFieldId = CustomAgentObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == CustomAgentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomAgentObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == CustomAgentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CustomagentsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomagentsQuery.Id,QueryCode = CustomagentsQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = CustomAgentObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == CustomAgentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomAgentObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == CustomAgentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 	   
 	    }
 
@@ -2464,59 +2560,61 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 	         Screen CustomAgentGeneralTabScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CustomAgent.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = CustomAgentObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 6, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField CustomAgentCustomAgentGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = CustomAgentObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = CustomAgentGeneralTabScreenScreen0.Id, ObjectFieldCode = CustomAgentObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomAgentCustomAgentGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = CustomAgentObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = CustomAgentGeneralTabScreenScreen0.Id,ScreenCode = CustomAgentGeneralTabScreenScreen0.Code, ObjectFieldCode = CustomAgentObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomAgentCustomAgentGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = CustomAgentObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().Id, ScreenId = CustomAgentGeneralTabScreenScreen0.Id, ObjectFieldCode = CustomAgentObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomAgentCustomAgentGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = CustomAgentObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().Id, ScreenId = CustomAgentGeneralTabScreenScreen0.Id,ScreenCode = CustomAgentGeneralTabScreenScreen0.Code, ObjectFieldCode = CustomAgentObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomAgentCustomAgentGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = CustomAgentObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().Id, ScreenId = CustomAgentGeneralTabScreenScreen0.Id, ObjectFieldCode = CustomAgentObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomAgentCustomAgentGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = CustomAgentObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().Id, ScreenId = CustomAgentGeneralTabScreenScreen0.Id,ScreenCode = CustomAgentGeneralTabScreenScreen0.Code, ObjectFieldCode = CustomAgentObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomAgentCustomAgentGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = CustomAgentObjectFields.Where(d => d.FieldName == "Website").FirstOrDefault().Id, ScreenId = CustomAgentGeneralTabScreenScreen0.Id, ObjectFieldCode = CustomAgentObjectFields.Where(d => d.FieldName == "Website").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomAgentCustomAgentGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = CustomAgentObjectFields.Where(d => d.FieldName == "Website").FirstOrDefault().Id, ScreenId = CustomAgentGeneralTabScreenScreen0.Id,ScreenCode = CustomAgentGeneralTabScreenScreen0.Code, ObjectFieldCode = CustomAgentObjectFields.Where(d => d.FieldName == "Website").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomAgentCustomAgentGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ObjectFieldId = CustomAgentObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().Id, ScreenId = CustomAgentGeneralTabScreenScreen0.Id, ObjectFieldCode = CustomAgentObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomAgentCustomAgentGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ObjectFieldId = CustomAgentObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().Id, ScreenId = CustomAgentGeneralTabScreenScreen0.Id,ScreenCode = CustomAgentGeneralTabScreenScreen0.Code, ObjectFieldCode = CustomAgentObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomAgentCustomAgentGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ObjectFieldId = CustomAgentObjectFields.Where(d => d.FieldName == "Notes").FirstOrDefault().Id, ScreenId = CustomAgentGeneralTabScreenScreen0.Id, ObjectFieldCode = CustomAgentObjectFields.Where(d => d.FieldName == "Notes").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomAgentCustomAgentGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ObjectFieldId = CustomAgentObjectFields.Where(d => d.FieldName == "Notes").FirstOrDefault().Id, ScreenId = CustomAgentGeneralTabScreenScreen0.Id,ScreenCode = CustomAgentGeneralTabScreenScreen0.Code, ObjectFieldCode = CustomAgentObjectFields.Where(d => d.FieldName == "Notes").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 	      
 
 	         Screen CustomAgentHeaderScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CustomAgent.HeaderScreen", Name = "Header Screen", ObjectTableId = CustomAgentObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField CustomAgentCustomAgentHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = CustomAgentObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = CustomAgentHeaderScreenScreen1.Id, ObjectFieldCode = CustomAgentObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomAgentCustomAgentHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = CustomAgentObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = CustomAgentHeaderScreenScreen1.Id,ScreenCode = CustomAgentHeaderScreenScreen1.Code, ObjectFieldCode = CustomAgentObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomAgentCustomAgentHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = CustomAgentObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().Id, ScreenId = CustomAgentHeaderScreenScreen1.Id, ObjectFieldCode = CustomAgentObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomAgentCustomAgentHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = CustomAgentObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().Id, ScreenId = CustomAgentHeaderScreenScreen1.Id,ScreenCode = CustomAgentHeaderScreenScreen1.Code, ObjectFieldCode = CustomAgentObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    CustomAgentObjectTable.HeaderScreenId = CustomAgentHeaderScreenScreen1.Id;
+		    CustomAgentObjectTable.HeaderScreenCode = CustomAgentHeaderScreenScreen1.Code;
+
 	   		  
 	      
 
 	         Screen CustomAgentBillingTabScreenScreen2 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CustomAgent.BillingTabScreen", Name = "Billing Tab Screen", ObjectTableId = CustomAgentObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 5, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField CustomAgentCustomAgentBillingTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = CustomAgentObjectFields.Where(d => d.FieldName == "VatNumber").FirstOrDefault().Id, ScreenId = CustomAgentBillingTabScreenScreen2.Id, ObjectFieldCode = CustomAgentObjectFields.Where(d => d.FieldName == "VatNumber").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomAgentCustomAgentBillingTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = CustomAgentObjectFields.Where(d => d.FieldName == "VatNumber").FirstOrDefault().Id, ScreenId = CustomAgentBillingTabScreenScreen2.Id,ScreenCode = CustomAgentBillingTabScreenScreen2.Code, ObjectFieldCode = CustomAgentObjectFields.Where(d => d.FieldName == "VatNumber").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomAgentCustomAgentBillingTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = CustomAgentObjectFields.Where(d => d.FieldName == "PaymentTermId").FirstOrDefault().Id, ScreenId = CustomAgentBillingTabScreenScreen2.Id, ObjectFieldCode = CustomAgentObjectFields.Where(d => d.FieldName == "PaymentTermId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomAgentCustomAgentBillingTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = CustomAgentObjectFields.Where(d => d.FieldName == "PaymentTermId").FirstOrDefault().Id, ScreenId = CustomAgentBillingTabScreenScreen2.Id,ScreenCode = CustomAgentBillingTabScreenScreen2.Code, ObjectFieldCode = CustomAgentObjectFields.Where(d => d.FieldName == "PaymentTermId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomAgentCustomAgentBillingTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = CustomAgentObjectFields.Where(d => d.FieldName == "InvoiceCurrencyId").FirstOrDefault().Id, ScreenId = CustomAgentBillingTabScreenScreen2.Id, ObjectFieldCode = CustomAgentObjectFields.Where(d => d.FieldName == "InvoiceCurrencyId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomAgentCustomAgentBillingTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = CustomAgentObjectFields.Where(d => d.FieldName == "InvoiceCurrencyId").FirstOrDefault().Id, ScreenId = CustomAgentBillingTabScreenScreen2.Id,ScreenCode = CustomAgentBillingTabScreenScreen2.Code, ObjectFieldCode = CustomAgentObjectFields.Where(d => d.FieldName == "InvoiceCurrencyId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomAgentCustomAgentBillingTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = CustomAgentObjectFields.Where(d => d.FieldName == "VatTypeId").FirstOrDefault().Id, ScreenId = CustomAgentBillingTabScreenScreen2.Id, ObjectFieldCode = CustomAgentObjectFields.Where(d => d.FieldName == "VatTypeId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomAgentCustomAgentBillingTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = CustomAgentObjectFields.Where(d => d.FieldName == "VatTypeId").FirstOrDefault().Id, ScreenId = CustomAgentBillingTabScreenScreen2.Id,ScreenCode = CustomAgentBillingTabScreenScreen2.Code, ObjectFieldCode = CustomAgentObjectFields.Where(d => d.FieldName == "VatTypeId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomAgentCustomAgentBillingTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ObjectFieldId = CustomAgentObjectFields.Where(d => d.FieldName == "EnableConsolidationInvoices").FirstOrDefault().Id, ScreenId = CustomAgentBillingTabScreenScreen2.Id, ObjectFieldCode = CustomAgentObjectFields.Where(d => d.FieldName == "EnableConsolidationInvoices").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomAgentCustomAgentBillingTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ObjectFieldId = CustomAgentObjectFields.Where(d => d.FieldName == "EnableConsolidationInvoices").FirstOrDefault().Id, ScreenId = CustomAgentBillingTabScreenScreen2.Id,ScreenCode = CustomAgentBillingTabScreenScreen2.Code, ObjectFieldCode = CustomAgentObjectFields.Where(d => d.FieldName == "EnableConsolidationInvoices").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomAgentCustomAgentBillingTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = CustomAgentObjectFields.Where(d => d.FieldName == "BankName").FirstOrDefault().Id, ScreenId = CustomAgentBillingTabScreenScreen2.Id, ObjectFieldCode = CustomAgentObjectFields.Where(d => d.FieldName == "BankName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomAgentCustomAgentBillingTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = CustomAgentObjectFields.Where(d => d.FieldName == "BankName").FirstOrDefault().Id, ScreenId = CustomAgentBillingTabScreenScreen2.Id,ScreenCode = CustomAgentBillingTabScreenScreen2.Code, ObjectFieldCode = CustomAgentObjectFields.Where(d => d.FieldName == "BankName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomAgentCustomAgentBillingTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = CustomAgentObjectFields.Where(d => d.FieldName == "BankAddress").FirstOrDefault().Id, ScreenId = CustomAgentBillingTabScreenScreen2.Id, ObjectFieldCode = CustomAgentObjectFields.Where(d => d.FieldName == "BankAddress").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomAgentCustomAgentBillingTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = CustomAgentObjectFields.Where(d => d.FieldName == "BankAddress").FirstOrDefault().Id, ScreenId = CustomAgentBillingTabScreenScreen2.Id,ScreenCode = CustomAgentBillingTabScreenScreen2.Code, ObjectFieldCode = CustomAgentObjectFields.Where(d => d.FieldName == "BankAddress").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomAgentCustomAgentBillingTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ObjectFieldId = CustomAgentObjectFields.Where(d => d.FieldName == "Swift").FirstOrDefault().Id, ScreenId = CustomAgentBillingTabScreenScreen2.Id, ObjectFieldCode = CustomAgentObjectFields.Where(d => d.FieldName == "Swift").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomAgentCustomAgentBillingTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ObjectFieldId = CustomAgentObjectFields.Where(d => d.FieldName == "Swift").FirstOrDefault().Id, ScreenId = CustomAgentBillingTabScreenScreen2.Id,ScreenCode = CustomAgentBillingTabScreenScreen2.Code, ObjectFieldCode = CustomAgentObjectFields.Where(d => d.FieldName == "Swift").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomAgentCustomAgentBillingTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 3, ObjectFieldId = CustomAgentObjectFields.Where(d => d.FieldName == "AccountNumber").FirstOrDefault().Id, ScreenId = CustomAgentBillingTabScreenScreen2.Id, ObjectFieldCode = CustomAgentObjectFields.Where(d => d.FieldName == "AccountNumber").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomAgentCustomAgentBillingTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 3, ObjectFieldId = CustomAgentObjectFields.Where(d => d.FieldName == "AccountNumber").FirstOrDefault().Id, ScreenId = CustomAgentBillingTabScreenScreen2.Id,ScreenCode = CustomAgentBillingTabScreenScreen2.Code, ObjectFieldCode = CustomAgentObjectFields.Where(d => d.FieldName == "AccountNumber").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomAgentCustomAgentBillingTabScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 4, ObjectFieldId = CustomAgentObjectFields.Where(d => d.FieldName == "IBANNumber").FirstOrDefault().Id, ScreenId = CustomAgentBillingTabScreenScreen2.Id, ObjectFieldCode = CustomAgentObjectFields.Where(d => d.FieldName == "IBANNumber").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomAgentCustomAgentBillingTabScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 4, ObjectFieldId = CustomAgentObjectFields.Where(d => d.FieldName == "IBANNumber").FirstOrDefault().Id, ScreenId = CustomAgentBillingTabScreenScreen2.Id,ScreenCode = CustomAgentBillingTabScreenScreen2.Code, ObjectFieldCode = CustomAgentObjectFields.Where(d => d.FieldName == "IBANNumber").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 	      
 
 	         Screen CustomAgentAccountingTabScreenScreen3 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CustomAgent.AccountingTabScreen", Name = "Accounting Tab Screen", ObjectTableId = CustomAgentObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 2, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField CustomAgentCustomAgentAccountingTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = CustomAgentObjectFields.Where(d => d.FieldName == "ReceivablesAccountingCard").FirstOrDefault().Id, ScreenId = CustomAgentAccountingTabScreenScreen3.Id, ObjectFieldCode = CustomAgentObjectFields.Where(d => d.FieldName == "ReceivablesAccountingCard").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomAgentCustomAgentAccountingTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = CustomAgentObjectFields.Where(d => d.FieldName == "ReceivablesAccountingCard").FirstOrDefault().Id, ScreenId = CustomAgentAccountingTabScreenScreen3.Id,ScreenCode = CustomAgentAccountingTabScreenScreen3.Code, ObjectFieldCode = CustomAgentObjectFields.Where(d => d.FieldName == "ReceivablesAccountingCard").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomAgentCustomAgentAccountingTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = CustomAgentObjectFields.Where(d => d.FieldName == "PayablesAccountingCard").FirstOrDefault().Id, ScreenId = CustomAgentAccountingTabScreenScreen3.Id, ObjectFieldCode = CustomAgentObjectFields.Where(d => d.FieldName == "PayablesAccountingCard").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomAgentCustomAgentAccountingTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = CustomAgentObjectFields.Where(d => d.FieldName == "PayablesAccountingCard").FirstOrDefault().Id, ScreenId = CustomAgentAccountingTabScreenScreen3.Id,ScreenCode = CustomAgentAccountingTabScreenScreen3.Code, ObjectFieldCode = CustomAgentObjectFields.Where(d => d.FieldName == "PayablesAccountingCard").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 
 	    }
@@ -2557,19 +2655,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CUGC",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = CustomAgentGeneralFeature_TH0.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = CustomAgentObjectTable.Id, TabNameTextCodeId = CustomAgentGeneralTextCode_TH0.Id, TabNameTextCodeCode = CustomAgentGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CUGC",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = CustomAgentGeneralFeature_TH0.Id,FeatureUniqeCode = CustomAgentGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = CustomAgentObjectTable.Id, TabNameTextCodeId = CustomAgentGeneralTextCode_TH0.Id, TabNameTextCodeCode = CustomAgentGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CUBL",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = CustomAgentBillingFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.BillingTabControl", ObjectTableId = CustomAgentObjectTable.Id, TabNameTextCodeId = CustomAgentBillingTextCode_TH1.Id, TabNameTextCodeCode = CustomAgentBillingTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CUBL",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = CustomAgentBillingFeature_TH1.Id,FeatureUniqeCode = CustomAgentBillingFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.BillingTabControl", ObjectTableId = CustomAgentObjectTable.Id, TabNameTextCodeId = CustomAgentBillingTextCode_TH1.Id, TabNameTextCodeCode = CustomAgentBillingTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CUAC",HtmlComponentName = "",HtmlComponentUrl = "./Common/Components/AccountingTab/AccountingTabComponent", FeatureId = GeneralAccountingFeature_TH2.Id, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.PartnersAccountingTab.CustomAgentAccountingTabControl", ObjectTableId = CustomAgentObjectTable.Id, TabNameTextCodeId = CustomAgentAccountingTextCode_TH2.Id, TabNameTextCodeCode = CustomAgentAccountingTextCode_TH2.Code, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CUAC",HtmlComponentName = "",HtmlComponentUrl = "./Common/Components/AccountingTab/AccountingTabComponent", FeatureId = GeneralAccountingFeature_TH2.Id,FeatureUniqeCode = GeneralAccountingFeature_TH2.FeatureUniqeCode, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.PartnersAccountingTab.CustomAgentAccountingTabControl", ObjectTableId = CustomAgentObjectTable.Id, TabNameTextCodeId = CustomAgentAccountingTextCode_TH2.Id, TabNameTextCodeCode = CustomAgentAccountingTextCode_TH2.Code, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CUAD",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = CustomAgentAddressesFeature_TH3.Id, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.PartnerAddressesTab", ObjectTableId = CustomAgentObjectTable.Id, TabNameTextCodeId = CustomAgentAddressesTextCode_TH3.Id, TabNameTextCodeCode = CustomAgentAddressesTextCode_TH3.Code, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CUAD",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = CustomAgentAddressesFeature_TH3.Id,FeatureUniqeCode = CustomAgentAddressesFeature_TH3.FeatureUniqeCode, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.PartnerAddressesTab", ObjectTableId = CustomAgentObjectTable.Id, TabNameTextCodeId = CustomAgentAddressesTextCode_TH3.Id, TabNameTextCodeCode = CustomAgentAddressesTextCode_TH3.Code, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CUCO",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = CustomAgentContactsFeature_TH4.Id, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.PartnerContactsTab", ObjectTableId = CustomAgentObjectTable.Id, TabNameTextCodeId = CustomAgentContactsTextCode_TH4.Id, TabNameTextCodeCode = CustomAgentContactsTextCode_TH4.Code, Tenant = 0, IndexOrder = 4 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CUCO",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = CustomAgentContactsFeature_TH4.Id,FeatureUniqeCode = CustomAgentContactsFeature_TH4.FeatureUniqeCode, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.PartnerContactsTab", ObjectTableId = CustomAgentObjectTable.Id, TabNameTextCodeId = CustomAgentContactsTextCode_TH4.Id, TabNameTextCodeCode = CustomAgentContactsTextCode_TH4.Code, Tenant = 0, IndexOrder = 4 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CGDI",HtmlComponentName = "",HtmlComponentUrl = "./CommonModules/CommonPartners/Components/EditTabs/CustomAgent/CustomAgentDocsInTabComponent", FeatureId = CustomAgentDocsInFeature_TH5.Id, ControlPath = "", ObjectTableId = CustomAgentObjectTable.Id, TabNameTextCodeId = CustomAgentDocsInTextCode_TH5.Id, TabNameTextCodeCode = CustomAgentDocsInTextCode_TH5.Code, Tenant = 0, IndexOrder = 5 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CGDI",HtmlComponentName = "",HtmlComponentUrl = "./CommonModules/CommonPartners/Components/EditTabs/CustomAgent/CustomAgentDocsInTabComponent", FeatureId = CustomAgentDocsInFeature_TH5.Id,FeatureUniqeCode = CustomAgentDocsInFeature_TH5.FeatureUniqeCode, ControlPath = "", ObjectTableId = CustomAgentObjectTable.Id, TabNameTextCodeId = CustomAgentDocsInTextCode_TH5.Id, TabNameTextCodeCode = CustomAgentDocsInTextCode_TH5.Code, Tenant = 0, IndexOrder = 5 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CUEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = CustomAgentEventsFeature_TH6.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = CustomAgentObjectTable.Id, TabNameTextCodeId = CustomAgentEventsTextCode_TH6.Id, TabNameTextCodeCode = CustomAgentEventsTextCode_TH6.Code, Tenant = 0, IndexOrder = 6 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CUEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = CustomAgentEventsFeature_TH6.Id,FeatureUniqeCode = CustomAgentEventsFeature_TH6.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = CustomAgentObjectTable.Id, TabNameTextCodeId = CustomAgentEventsTextCode_TH6.Id, TabNameTextCodeCode = CustomAgentEventsTextCode_TH6.Code, Tenant = 0, IndexOrder = 6 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -2676,6 +2774,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 						FeatureId = null,
 						Style = null,
 						LocalDefaultText = "More",
+						FeatureUniqeCode = null,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 
 			   MenuButton CustomAgentMenuButton00 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -2693,6 +2792,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 						FeatureId=  CustomAgentFeature_MB00.Id,
 						Style = null,
 						LocalDefaultText = "נתק כרטיס",
+						FeatureUniqeCode=  CustomAgentFeature_MB00.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 	    }

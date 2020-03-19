@@ -8,6 +8,7 @@ using Logitude.Accounting.Data.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -44,6 +45,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
         public void Run()
         {
+            var sw = Stopwatch.StartNew();
             DateTime? maxCreateDate = null;
             
             this.Response = new LedgerTransactionBalanceResponse();
@@ -150,7 +152,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                 }
                 Response.MyLedgerTransactionList = list;
             }
-
+            this.Response.TookMS = sw.ElapsedMilliseconds;
         }
 
         private IQueryable<Data.EntityPOCOs.LedgerTransaction> RemoveYearTransferLedgerTrans(IQueryable<Data.EntityPOCOs.LedgerTransaction> QOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId)

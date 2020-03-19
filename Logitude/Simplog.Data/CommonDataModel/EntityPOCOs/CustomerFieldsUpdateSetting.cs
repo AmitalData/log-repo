@@ -16,6 +16,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public int Tenant { get; set; }
         public string ObjectFieldId { get; set; }
         public string UpdateDirection { get; set; }
+        public string ObjectFieldCode { get; set; }
 
 
         [ForeignKey("ObjectFieldId")]

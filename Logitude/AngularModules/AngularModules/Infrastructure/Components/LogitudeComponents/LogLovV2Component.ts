@@ -233,6 +233,11 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
 
+        this.CurrentSession.SessionEvent.subscribe((res) => {
+            if (res == "TariffStepsRefresh") {
+                this.OnEditCompleted();
+            }
+        });
     }
 
     DropPopUpStyle: any;

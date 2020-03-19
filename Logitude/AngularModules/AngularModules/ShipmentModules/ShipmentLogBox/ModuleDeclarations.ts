@@ -18,6 +18,7 @@ import {GoodsValueComponent} from './Components/Logbox/GoodsValueComponent';
 import {DenyReasonComponent} from './Components/Logbox/DenyReasonComponent';
 import {LogBoxPackagesComponent} from './Components/Logbox/LogBoxPackagesComponent';
 import {DepositionRequestComponent} from './Components/Logbox/DepositionRequestComponent';
+import { UserIdNumberMobileComponent } from './Components/Logbox/UserIdNumberMobileComponent';
 
 
 
@@ -43,6 +44,7 @@ export const Components =
         LogBoxPackagesComponent,
         ECommercePaymentRequestMobileComponent,
         DepositionRequestComponent,
+        UserIdNumberMobileComponent,
     ];
 
 
@@ -72,7 +74,7 @@ export class ModuleDeclarations {
             case "LogBoxPackagesComponent": { myResult = LogBoxPackagesComponent; break; }
             case "ECommercePaymentRequestMobileComponent": { myResult = ECommercePaymentRequestMobileComponent; break; }
             case "DepositionRequestComponent": { myResult = DepositionRequestComponent; break; }
-                
+            case "UserIdNumberMobileComponent": { myResult = UserIdNumberMobileComponent; break; }                
         }
 
         return myResult;

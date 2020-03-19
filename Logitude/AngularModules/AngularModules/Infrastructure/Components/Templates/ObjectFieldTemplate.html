@@ -85,9 +85,9 @@
 
                                         </div>
 
-                                        <div *ngIf=!IsHeaderScreenTemplate [style.textAlign]="TextAlign">
-                                            <img *ngIf="FieldValue" src="./Images/CheckBoxIcon.png" class="CenterCenter" />
-                                        </div>
+                                        <!-- <div *ngIf=!IsHeaderScreenTemplate [style.textAlign]="TextAlign">
+                                            <img *ngIf="CustomField.ResolvedValue" src="./Images/CheckBoxIcon.png" class="CenterCenter" />
+                                        </div> -->
 
                                     </div>
                                 </div>
@@ -99,14 +99,14 @@
 
                                     <div *ngIf="DataTypeCode == 'Boolean'">
 
-                                        <div *ngIf=IsHeaderScreenTemplate>
+                                        <!-- <div *ngIf=IsHeaderScreenTemplate>
                                             <img *ngIf="FieldValue" src="./Images/CheckBoxIcon.png" [className]="isRTL ? 'RightCenter' : 'LeftCenter'" />
                                             <div *ngIf="!FieldValue">{{FieldValue}}</div>
-                                        </div>
+                                        </div> -->
 
-                                        <div *ngIf=!IsHeaderScreenTemplate [style.textAlign]="TextAlign">
+                                         
                                             <img *ngIf="FieldValue" src="./Images/CheckBoxIcon.png" class="CenterCenter" />
-                                        </div>
+                                         
 
                                     </div>
                                 </div>

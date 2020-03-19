@@ -23,6 +23,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             rule.RuleNotificationTypeCode = rulePM.RuleNotificationTypeCode;
             rule.Internal = rulePM.Internal;
             rule.AdvancedCondition = rulePM.AdvancedCondition;
+            rule.TriggerFieldCode = rulePM.TriggerFieldCode;
         }
     }
 }

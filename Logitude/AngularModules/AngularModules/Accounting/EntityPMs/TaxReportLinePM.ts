@@ -134,6 +134,11 @@ export class TaxReportLinePM {
     public set JournalNumber(newValue: string) { if (this.journalNumber != newValue) { this.journalNumber = newValue; this.MarkAsDirty("JournalNumber"); } }
        
 	 
+    private taxReportDate: Date;
+    public get TaxReportDate() { return this.taxReportDate; }
+    public set TaxReportDate(newValue: Date) { if (this.taxReportDate != newValue) { this.taxReportDate = newValue; this.MarkAsDirty("TaxReportDate"); } }
+       
+	 
 
     public OldEntityPM: TaxReportLinePM;
 		

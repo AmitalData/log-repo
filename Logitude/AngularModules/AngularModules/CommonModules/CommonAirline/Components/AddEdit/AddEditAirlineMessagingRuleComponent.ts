@@ -76,7 +76,7 @@ export class AddEditAirlineMessagingRuleComponent extends BaseComponent {
         }
     }
 
-    public RuleFieldsList: CodeNameClass[];
+    public RuleFieldsList: CodeNameClass[] = [];
     private LoadAllowedObjectFields() {
         var tableName: string;
 
@@ -97,15 +97,15 @@ export class AddEditAirlineMessagingRuleComponent extends BaseComponent {
             var objectTable: ObjectTablePM = window.ObjectTables.filter(d => d.Name == tableName)[0];
             var objectFields: ObjectFieldPM[] = window.ObjectFields.filter(d => d.ObjectTableId == objectTable.Id && d.AllowedInAirlineMessaging);
 
+            this.RuleFieldsList = [];
             if (objectFields.length > 0) {
-                this.RuleFieldsList = [];
 
                 objectFields.forEach((item) => {
-                    this.RuleFieldsList.push(new CodeNameClass(item.Id, item.FullNameTextCodeDefaultText));
+                    this.RuleFieldsList.push(new CodeNameClass(item.Id, item.FullNameTextCodeDefaultText, null, item.FieldCode));
                 });
 
-                if (!AppTool.IsNullOrEmpty(this.EntityPM.Id) && !AppTool.IsNullOrEmpty(this.EntityPM.RuleFieldId)) {
-                    this.selectedRuleField = this.RuleFieldsList.filter(d => d.Code == this.RuleFieldId)[0];
+                if (!AppTool.IsNullOrEmpty(this.EntityPM.Id) && !AppTool.IsNullOrEmpty(this.EntityPM.RuleFieldCode)) {
+                    this.selectedRuleField = this.RuleFieldsList.filter(d => d.AdditionalField == this.RuleFieldCode)[0];
                 }
             }
         });
@@ -117,7 +117,8 @@ export class AddEditAirlineMessagingRuleComponent extends BaseComponent {
         if (this.selectedRuleField != value) {
             this.selectedRuleField = value;
 
-            this.RuleFieldId = value.Code
+            this.RuleFieldId = value.Code;
+            this.RuleFieldCode = value.AdditionalField;
         }
     }
 
@@ -134,6 +135,13 @@ export class AddEditAirlineMessagingRuleComponent extends BaseComponent {
     set RuleFieldId(value: string) {
         if (this.EntityPM.RuleFieldId != value) {
             this.EntityPM.RuleFieldId = value;
+        }
+    }
+
+    get RuleFieldCode() { return this.EntityPM.RuleFieldCode; }
+    set RuleFieldCode(value: string) {
+        if (this.EntityPM.RuleFieldCode != value) {
+            this.EntityPM.RuleFieldCode = value;
         }
     }
 
@@ -222,6 +230,7 @@ export class AddEditAirlineMessagingRuleComponent extends BaseComponent {
         this.myCloner = new Cloner(this.DataContext);
         this.myCloner.AddField('MessageTypeCode');
         this.myCloner.AddField('RuleFieldId');
+        this.myCloner.AddField('RuleFieldCode');
         this.myCloner.AddField('MaxSize');
         this.myCloner.AddField('IsMandatoryForSending');
         this.myCloner.AddField('InActive');

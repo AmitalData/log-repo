@@ -1,4 +1,4 @@
-import {Component, OnInit, ElementRef}  from '@angular/core';
+import {Component, OnInit, ElementRef, Output, EventEmitter}  from '@angular/core';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
@@ -10,6 +10,7 @@ import {ReportGroupService} from '../../../Common/Services/ExtendedLists/ReportG
 import {ServiceLocator} from '../../../Infrastructure/Locators/ServiceLocator';
 import {AppTool} from '../../../Infrastructure/Tools';
 import {ReportsTemplateListExtendedService} from '../../../Common/Services/ExtendedLists/ReportsTemplateListExtendedService';
+import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 
 @Component({
     moduleId: './Report/Components/Workspaces/',
@@ -19,11 +20,13 @@ import {ReportsTemplateListExtendedService} from '../../../Common/Services/Exten
 export class ReportComponent {
     public ItemsSource: ReportsGrpupClass[] = [];
     public ItemsSourceTemp: ReportsGrpupClass[] = [];
+    public IsAvailableForScheduling: boolean = false;
     reportsTemplateListExtendedService: ReportsTemplateListExtendedService;
     IsViewReport: boolean = false;
     showLocal: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityResourceService: EntityResourceService) {
+        this.IsAvailableForScheduling = FeatureLocator.HasFeaturePermession("Report", "ReportsScheduler");
         this.reportsTemplateListExtendedService = new ReportsTemplateListExtendedService();
         this.LoadData();
         this.showLocal = !SessionLocator.LoggedUserPM.DontShowLocal;
@@ -95,6 +98,31 @@ export class ReportComponent {
                                         }
                                     }
                                 }
+                                else if (item.Code == "SHRR") {
+                                    if (SessionLocator.Tenant == 2095 || SessionLocator.Tenant == 2052 || SessionLocator.TenantManagementJS.PackageCode == "DVMT") {
+                                        if (item.FeatureCode && FeatureLocator.HasFeaturePermession("Report", item.FeatureCode)) {
+                                            this.reportList.push(item);
+                                        }
+                                    }
+                                }
+
+                                else if (item.Code == "FLBM") {
+                                    if (SessionLocator.Tenant == 2095 || SessionLocator.Tenant == 2052 || FeatureLocator.IsPackage_DVMT()) {
+                                        if (item.FeatureCode && FeatureLocator.HasFeaturePermession("Report", item.FeatureCode)) {
+                                            this.reportList.push(item);
+                                        }
+                                    }
+                                }
+
+
+                                else if (item.Code == "RCRF") {
+                                    if (SessionLocator.Tenant == 1326 || FeatureLocator.IsPackage_DVMT()) {
+                                        if (item.FeatureCode && FeatureLocator.HasFeaturePermession("Report", item.FeatureCode)) {
+                                            this.reportList.push(item);
+                                        }
+                                    }
+                                }
+
                                 else {
                                     if (item.FeatureCode && FeatureLocator.HasFeaturePermession("Report", item.FeatureCode)) {
                                         this.reportList.push(item);
@@ -198,14 +226,17 @@ export class ReportComponent {
     //}
     
     LoadComplete(groupList: ReportGroupList, reportList: ReportList) {
-
         if (!this.IsLoadReportsTemplateListRuning) {
-            SessionLocator.DynamicLoader.Load("./Report/Components/ReportsPreviewComponent", this.CurrentSession.SessionLocation.viewContainerRef)
-                .then(cmpRef => {
-                    cmpRef.instance.ComponentRef = cmpRef;
-                    cmpRef.instance.ReportsPreview(groupList, reportList, this.ReportTemplates);
-                });
+            if (true) {
+                SessionLocator.DynamicLoader.Load("./Report/Components/ReportsPreviewComponent", this.CurrentSession.SessionLocation.viewContainerRef)
+                    .then(cmpRef => {
+                        cmpRef.instance.ComponentRef = cmpRef;
+                        cmpRef.instance.ReportsPreview(groupList, reportList, this.ReportTemplates);
+                    });
+            }
+            else {
 
+            }
             this.IsViewReport = false;
         }
     }
@@ -214,6 +245,23 @@ export class ReportComponent {
     SearchTextChanged(text: string) {         
         this.mySearchText = text;
         this.FillTempItemsSource();
+    }
+
+    onReportSchedulerClick(groupList: ReportGroupList, reportList: ReportList) {
+        this.entityResourceService.getEntityResourceByTableName("TasksScheduler", 0).subscribe(response => {
+
+            var windowArgs: any = {};
+            windowArgs.ReportGroupList = groupList;
+            windowArgs.ReportList = reportList;
+
+            var logWindow = new LogitudeWindow();
+            logWindow.Width = 1200;
+            logWindow.Height = 1000;
+
+            logWindow.Title = "Report Scheduler";
+            logWindow.WindowArgs = windowArgs;
+            logWindow.Show('./Report/Components/Scheduler/MainReportSchedulerComponent');
+        });
     }
 }
 export class ReportsGrpupClass {

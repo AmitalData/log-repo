@@ -85,6 +85,18 @@
                     </td>
                 </tr>
 
+                <!-- FactTableName -->
+                <tr class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'FactTableName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <select class="LogLovContainer LogLOVControl LogLovInputDiv" style="width:260px;height:22px;cursor:pointer;" #selectControl (change)="FactTableSelectionChanged(selectControl.value)">
+                            <option *ngFor="let table  of FactTables" [value]="table" [selected]="table == SelectdFactTableName">{{table}}</option>
+                        </select>
+                    </td>
+                </tr>
+
                 <!-- BIReportFolderId -->
                 <tr class="FormFieldRow">
                     <td>
@@ -105,28 +117,28 @@
 
                 <!-- DWQueryId -->
                 <!--<tr class="FormFieldRow">
-                    <td>
-                        <LogLabel [ObjectFieldName]="'DWQueryId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+        <td>
+            <LogLabel [ObjectFieldName]="'DWQueryId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+        </td>
+        <td>
+            <table>
+                <tr>
+                    <td *ngIf="IsNewQuery" style="width: 57px;">
+                        <button class="Button" (click)="ShowQueryBuilderClicked()">Build Query</button>
                     </td>
-                    <td>
-                        <table>
-                            <tr>
-                                <td *ngIf="IsNewQuery" style="width: 57px;">
-                                    <button class="Button" (click)="ShowQueryBuilderClicked()">Build Query</button>
-                                </td>
-                                <td *ngIf="!IsNewQuery" s style="width: 57px;">
-                                    <button class="Button" (click)="ShowQueryBuilderClicked()">Edit Query</button>
-                                </td>
-                                <td>
-                                    <div></div>
-                                </td>
-                            </tr>
-                        </table>
+                    <td *ngIf="!IsNewQuery" s style="width: 57px;">
+                        <button class="Button" (click)="ShowQueryBuilderClicked()">Edit Query</button>
                     </td>
                     <td>
                         <div></div>
                     </td>
-                </tr>-->
+                </tr>
+            </table>
+        </td>
+        <td>
+            <div></div>
+        </td>
+    </tr>-->
 
                 <tr>
                     <td colspan="3">
@@ -156,6 +168,18 @@
                     </td>
                 </tr>
 
+                <!-- FactTableName -->
+                <tr class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'FactTableName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <select class="LogLovContainer LogLOVControl LogLovInputDiv" style="width:260px;height:22px;cursor:pointer;" #selectControl (change)="FactTableSelectionChanged(selectControl.value)">
+                            <option *ngFor="let table  of FactTables" [value]="table" [selected]="table == SelectdFactTableName">{{table}}</option>
+                        </select>
+                    </td>
+                </tr>
+
                 <!-- BIReportFolderId -->
                 <tr class="FormFieldRow">
                     <td>
@@ -175,7 +199,7 @@
                 </tr>
 
                 <!-- Tenant -->
-                <tr *ngIf="IsTenantZero"  class="FormFieldRow">
+                <tr *ngIf="IsTenantZero" class="FormFieldRow">
                     <td style="width:120px;">
                         <LogLabel [NoObjectField]="true" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'Tenant'"></LogLabel>
                     </td>
@@ -190,24 +214,23 @@
 
                 <!-- Tenant -->
                 <!--<tr class="FormFieldRow">
-                    <td>
-                        <LogLabel [NoObjectField]="true" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'Tenant'"></LogLabel>
-                    </td>
-                    <td>
-                        <LogLov [ObjectFieldName]="'Tenant'"
-                                [SelectedValue]="BIReportTenant"
-                                [ObjectTableName]="ObjectTableName"
-                                [DataContext]="DataContext"
-                                [LookUpTableName]="'Tenant'"
-                                [SelectedValuePath]="BIReportTenant"
-                                [HideColumns]="true">
-                        </LogLov>
-                    </td>
-                    <td>
-                        <div></div>
-                    </td>
-                </tr>-->
-
+        <td>
+            <LogLabel [NoObjectField]="true" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'Tenant'"></LogLabel>
+        </td>
+        <td>
+            <LogLov [ObjectFieldName]="'Tenant'"
+                    [SelectedValue]="BIReportTenant"
+                    [ObjectTableName]="ObjectTableName"
+                    [DataContext]="DataContext"
+                    [LookUpTableName]="'Tenant'"
+                    [SelectedValuePath]="BIReportTenant"
+                    [HideColumns]="true">
+            </LogLov>
+        </td>
+        <td>
+            <div></div>
+        </td>
+    </tr>-->
                 <!-- Grid -->
                 <tr>
                     <td colspan="4">

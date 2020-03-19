@@ -383,7 +383,9 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             Styles: { width: '100px' },
             HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
-            IsCustomTemplate: true
+            IsCustomTemplate: true,
+            ServerSideSortable: true,
+            SortByName: 'DocumentDate'
         });
         //this.TransactionsColumns.push({
         //    FieldName: 'DocumentDate',
@@ -411,6 +413,9 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
             IsCustomTemplate: true
+            ,
+            ServerSideSortable: true,
+            SortByName: 'Source'
         });
 
         //this.TransactionsColumns.push({ // Check ReconcileMethodCode.GLAccounts:
@@ -421,7 +426,10 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
         //    HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
         //    HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
         //    IsCustomTemplate: true,
-        //});
+        //,
+        // ServerSideSortable: true,
+        // SortByName: 'Source'
+        // });
         //this.TransactionsColumns.push({
         //    FieldName: 'OpenAmount',
         //    DataTypeCode: 'String',
@@ -430,7 +438,10 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
         //    HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
         //    HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
         //    IsCustomTemplate: true
-        //});
+        //,
+        //     ServerSideSortable: true,
+        //     SortByName: 'Source'
+        // });
         this.TransactionsColumns.push({
             FieldName: 'ForeignAmount',
             DataTypeCode: 'String',
@@ -439,6 +450,9 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
             IsCustomTemplate: true
+            ,
+            ServerSideSortable: true,
+            SortByName: 'ForeignAmount'
         });
         this.TransactionsColumns.push({
             FieldName: 'Reference1',
@@ -446,6 +460,9 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             Display: TextCodeTranslator.Translate("LedgerTransaction.F.Reference1"), // 'Ref. 1',
             Styles: { width: '80px' },
             IsCustomTemplate: true
+            ,
+            ServerSideSortable: true,
+            SortByName: 'Reference1'
         });
         this.TransactionsColumns.push({
             FieldName: 'Reference2',
@@ -453,6 +470,9 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             Display: TextCodeTranslator.Translate("LedgerTransaction.F.Reference2"), // 'Ref. 2',
             Styles: { width: '80px' },
             IsCustomTemplate: true
+            ,
+            ServerSideSortable: true,
+            SortByName: 'Reference2'
         });
         this.TransactionsColumns.push({
             FieldName: 'Reference3',
@@ -460,6 +480,9 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             Display: TextCodeTranslator.Translate("LedgerTransaction.F.Reference3"), // 'Ref. 3',
             Styles: { width: '80px' },
             IsCustomTemplate: true
+            ,
+            ServerSideSortable: true,
+            SortByName: 'Reference3'
         });
         //this.TransactionsColumns.push({
         //    FieldName: 'JournalNumber',
@@ -469,7 +492,10 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
         //    HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
         //    HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
         //    IsCustomTemplate: true
-        //});
+        //,
+        //     ServerSideSortable: true,
+        //     SortByName: 'Source'
+        // });
 
         this.TransactionsColumns.push({
             FieldName: 'Notes',
@@ -479,6 +505,9 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
             IsCustomTemplate: true
+            ,
+            ServerSideSortable: true,
+            SortByName: 'Notes'
         });
 
         ReconcileEventManager.CheckBoxChecked.subscribe(($event) => {
@@ -494,8 +523,9 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
                     this.PushLine(row, RowIndex);
                 } else {
                     this.PopLine(rowId);
+                    this.TransactionFireCheckBoxChecked.emit({ rowData: row, IsChecked: isChecked, RowIndex: RowIndex });
+
                 }
-                this.TransactionFireCheckBoxChecked.emit({ rowData: row, IsChecked: isChecked, RowIndex: RowIndex });
 
 
             }
@@ -552,6 +582,10 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
         if(this.ObjectTableName == "BankAccount")
             filters.addAdditionalFilter("DUMMY_TransferAccountId", this.BankAccountPM.TransferGLAcccountId, null, null, "Equals", false, false, false, "String");
 
+
+        filters.SortBy = sortingCol;
+        filters.SortDirection = sortingDir;
+
         var glaccountId = this.getGLAccountId();
 
         return this.entityListService.getReconciliationsByFilter("LedgerTransaction", glaccountId, filters);
@@ -567,12 +601,54 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
         return glaccountId;
     }
 
+    OnSortInvoked(event){
+        this.TransactionSelectedLines = new ObservableCollection([]);
+        this.ExtPageSelectedLines = new ObservableCollection([]);
+    }
+
+    // selectedTransferTransactionsCount: number = 0;
+
+
+    public get selectedTransferTransactionsCount() : number {
+        var count = 0;
+        if(this.TransactionSelectedLines.Length > 0){
+
+            var transferTransactions = this.TransactionSelectedLines.Collection
+            .filter((d:TransactionLineModel)=>d.LedgerTransactionPM.AccountId == this.BankAccountPM.TransferGLAcccountId);
+
+            if(transferTransactions)
+                count = transferTransactions.length;
+        }
+        return count;
+    }
+
+
     PushLine(row, RowIndex) {
         var index = this.TransactionSelectedLines.Collection.findIndex(c => c.Id == row.Id);
         if (index < 0) { // DNE
+
+
+
             var r = new TransactionLineModel(row, this, RowIndex);
-            this.TransactionSelectedLines.Insert(r);
-            this.CalculateTotals();
+
+            // if(r.LedgerTransactionPM.AccountId == this.BankAccountPM.TransferGLAcccountId)
+            //     this.selectedTransferTransactionsCount++;
+            var isTransferTransaction = r.LedgerTransactionPM.AccountId == this.BankAccountPM.TransferGLAcccountId;
+            if (isTransferTransaction && this.selectedTransferTransactionsCount >= 1 && this.ExtPageSelectedLines.Length > 0) {
+                // this.ValidationErrorsList = ["Cannot Reconcile two transfer account transactions at a time"];
+                this.ValidationErrorsList = [TextCodeTranslator.Translate("ExternalReconciliation.O.CantReconcileTwoTransfer")];
+                this.TransactionFireCheckBoxChecked.emit({ rowData: r.LedgerTransactionPM, IsChecked: false, RowIndex: RowIndex, ById: true });
+            }
+            else {
+                this.TransactionSelectedLines.Insert(r);
+                this.CalculateTotals();
+                this.TransactionFireCheckBoxChecked.emit({ rowData: row, IsChecked: true, RowIndex: RowIndex });
+                this.ValidationErrorsList = [];
+            }
+
+
+
+
         }
     }
 
@@ -590,6 +666,8 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
 
         this.TransactionSelectedLines.Remove(this.TransactionSelectedLines.Collection.find(c => c.Id == id));
         this.CalculateTotals();
+
+
     }
 
     CheckBoxValueChanged(Row) {
@@ -664,7 +742,9 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             Styles: { width: '100px' },
             HtmlListComponentName: 'ReconcileExternalPageLineListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/ReconcileExternalPageLineListTemplate',
-            IsCustomTemplate: true
+            IsCustomTemplate: true,
+            ServerSideSortable: true,
+            SortByName: 'ReferenceDate'
         });
         this.ExtPageColumns.push({
             FieldName: 'Amount',
@@ -673,7 +753,9 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             Styles: { width: '120px' },
             HtmlListComponentName: 'ReconcileExternalPageLineListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/ReconcileExternalPageLineListTemplate',
-            IsCustomTemplate: true
+            IsCustomTemplate: true,
+            ServerSideSortable: true,
+            SortByName: 'Amount'
         });
         this.ExtPageColumns.push({
             FieldName: 'Reference',
@@ -682,7 +764,9 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             Styles: { width: '150px' },
             HtmlListComponentName: 'ReconcileExternalPageLineListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/ReconcileExternalPageLineListTemplate',
-            IsCustomTemplate: true
+            IsCustomTemplate: true,
+            ServerSideSortable: true,
+            SortByName: 'Reference'
         });
 
         this.ExtPageColumns.push({
@@ -692,7 +776,9 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             Styles: { width: '150px' },
             HtmlListComponentName: 'ReconcileExternalPageLineListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/ReconcileExternalPageLineListTemplate',
-            IsCustomTemplate: true
+            IsCustomTemplate: true,
+            ServerSideSortable: true,
+            SortByName: 'Notes'
         });
 
         ReconcileEventManager.ExtPageCheckBoxChecked.subscribe(($event) => {
@@ -762,6 +848,10 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
         filters.PageIndex = skip + 1; // decremented 1 in the service
         filters.GetAll = true;
         filters.GetCount = true;
+
+
+        filters.SortBy = sortingCol;
+        filters.SortDirection = sortingDir;
 
         var objectTable = window.ObjectTables.filter(d => d.Name === this.ObjectTableName)[0];
 
@@ -987,7 +1077,12 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
         serviceArgs.refDateReconcile = this.ReferenceDateCheckBoxChecked;
         serviceArgs.objectTableId = objectTable.Id;
         serviceArgs.entityId = this.EntityPM.Id;
-        serviceArgs.glAccountId = this.GLAccountPM.Id;
+
+        if(this.ObjectTableName == "BankAccount")
+            serviceArgs.glAccountId = this.EntityPM.GLAccountId;
+        else if(this.ObjectTableName == "GLAccount")
+            serviceArgs.glAccountId = this.EntityPM.Id;
+
         serviceArgs.filters = filters;
         return serviceArgs;
     }

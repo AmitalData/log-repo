@@ -5547,6 +5547,71 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
+					 						FieldName =  "Id",
+					  						OldFieldName =  "Id",
+					  						ObjectTableName =  "TenantManagement",
+					  						FieldsDataType =  "Integer",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  true,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "Id",
+					  						ListPropertyPath =  "Id",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "TenantManagement",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						Code =  "Id",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
+					  						DigitsAfterPoint =  0,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "Id",
+					  						DefaultText =  "ID",
+					  						ListFieldLable =  "IdListLable",
+					  						ListLableDefaultText =  "ID",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  true,
+					  						IsCustom =  false,
+					  						HelpTextCode =  "Id",
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
 					 						FieldName =  "Name",
 					  						OldFieldName =  "Name",
 					  						ObjectTableName =  "TenantManagement",
@@ -8546,6 +8611,244 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "TotalNumberOfUsers",
+					  						OldFieldName =  "TotalNumberOfUsers",
+					  						ObjectTableName =  "TenantManagement",
+					  						FieldsDataType =  "Integer",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "TotalNumberOfUsers",
+					  						ListPropertyPath =  "TotalNumberOfUsers",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "TenantManagement",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "TotalNumberOfUsers",
+					  						DefaultText =  "Total Number of users",
+					  						ListFieldLable =  "TotalNumberOfUsersListLable",
+					  						ListLableDefaultText =  "Total Number of users",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "TotalFreeUsers",
+					  						OldFieldName =  "TotalFreeUsers",
+					  						ObjectTableName =  "TenantManagement",
+					  						FieldsDataType =  "Integer",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "TotalFreeUsers",
+					  						ListPropertyPath =  "TotalFreeUsers",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "TenantManagement",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "TotalFreeUsers",
+					  						DefaultText =  "Total Free Users",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "AveragePrice",
+					  						OldFieldName =  "AveragePrice",
+					  						ObjectTableName =  "TenantManagement",
+					  						FieldsDataType =  "Double",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "AveragePrice",
+					  						ListPropertyPath =  "AveragePrice",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "TenantManagement",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
+					  						DigitsAfterPoint =  0,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "AveragePrice",
+					  						DefaultText =  "Average Price",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "TotalPaymentamount",
+					  						OldFieldName =  "TotalPaymentamount",
+					  						ObjectTableName =  "TenantManagement",
+					  						FieldsDataType =  "Double",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "TotalPaymentamount",
+					  						ListPropertyPath =  "TotalPaymentamount",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "TenantManagement",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
+					  						DigitsAfterPoint =  0,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "TotalPaymentamount",
+					  						DefaultText =  "Total Payment amount",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
@@ -8583,136 +8886,136 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllTenantManagementsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TenantManagementTextCode_0.Id, NameTextCodeCode = TenantManagementTextCode_0.Code, Code = "All Tenant Managements",  QueryGroupCode = "TNTS", IndexOrder = 1, Tenant = 0, ObjectTableId = TenantManagementObjectTable.Id, QuerySection = "TenantManagement", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = TenantManagementFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllTenantManagementsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TenantManagementTextCode_0.Id, NameTextCodeCode = TenantManagementTextCode_0.Code, ObjectTableName = "TenantManagement", Code = "All Tenant Managements",  QueryGroupCode = "TNTS", IndexOrder = 0, Tenant = 0, ObjectTableId = TenantManagementObjectTable.Id, QuerySection = "TenantManagement", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = TenantManagementFeature_0.Id,FeatureUniqeCode= TenantManagementFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn AllTenantManagementsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTenantManagementsQuery.Id, IndexOrder = 0, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "Id" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "Id" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllTenantManagementsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTenantManagementsQuery.Id,QueryCode = AllTenantManagementsQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "Id" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "Id" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllTenantManagementsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTenantManagementsQuery.Id, IndexOrder = 1, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllTenantManagementsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTenantManagementsQuery.Id,QueryCode = AllTenantManagementsQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllTenantManagementsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTenantManagementsQuery.Id, IndexOrder = 2, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "PackageCode" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "PackageCode" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllTenantManagementsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTenantManagementsQuery.Id,QueryCode = AllTenantManagementsQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "PackageCode" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "PackageCode" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllTenantManagementsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTenantManagementsQuery.Id, IndexOrder = 3, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "PackageName" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "PackageName" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllTenantManagementsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTenantManagementsQuery.Id,QueryCode = AllTenantManagementsQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "PackageName" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "PackageName" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllTenantManagementsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTenantManagementsQuery.Id, IndexOrder = 4, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "IsActive" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "IsActive" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllTenantManagementsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTenantManagementsQuery.Id,QueryCode = AllTenantManagementsQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "IsActive" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "IsActive" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllTenantManagementsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTenantManagementsQuery.Id, IndexOrder = 5, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "NumberOfUsers" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "NumberOfUsers" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllTenantManagementsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTenantManagementsQuery.Id,QueryCode = AllTenantManagementsQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "NumberOfUsers" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "NumberOfUsers" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllTenantManagementsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTenantManagementsQuery.Id, IndexOrder = 6, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "IsTrial" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "IsTrial" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllTenantManagementsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTenantManagementsQuery.Id,QueryCode = AllTenantManagementsQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "IsTrial" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "IsTrial" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllTenantManagementsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTenantManagementsQuery.Id, IndexOrder = 7, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "TrialStartDate" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "TrialStartDate" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllTenantManagementsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTenantManagementsQuery.Id,QueryCode = AllTenantManagementsQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "TrialStartDate" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "TrialStartDate" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllTenantManagementsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTenantManagementsQuery.Id, IndexOrder = 8, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "TrialEndDate" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "TrialEndDate" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllTenantManagementsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTenantManagementsQuery.Id,QueryCode = AllTenantManagementsQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "TrialEndDate" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "TrialEndDate" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllTenantManagementsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTenantManagementsQuery.Id, IndexOrder = 9, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "FirstPaymentDate" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "FirstPaymentDate" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllTenantManagementsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTenantManagementsQuery.Id,QueryCode = AllTenantManagementsQuery.UniqueCode, IndexOrder = 9, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "FirstPaymentDate" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "FirstPaymentDate" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllTenantManagementsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTenantManagementsQuery.Id, IndexOrder = 10, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "PaidUntilDate" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "PaidUntilDate" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllTenantManagementsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTenantManagementsQuery.Id,QueryCode = AllTenantManagementsQuery.UniqueCode, IndexOrder = 10, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "PaidUntilDate" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "PaidUntilDate" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllTenantManagementsQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTenantManagementsQuery.Id, IndexOrder = 11, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "TTY" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "TTY" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllTenantManagementsQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTenantManagementsQuery.Id,QueryCode = AllTenantManagementsQuery.UniqueCode, IndexOrder = 11, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "TTY" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "TTY" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
   
 	      
 
-			  Query InactiveTenantManagementsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TenantManagementTextCode_1.Id, NameTextCodeCode = TenantManagementTextCode_1.Code, Code = "Inactive Tenant Managements",  QueryGroupCode = "TNTS", IndexOrder = 2, Tenant = 0, ObjectTableId = TenantManagementObjectTable.Id, QuerySection = "TenantManagement", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = TenantManagementFeature_1.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query InactiveTenantManagementsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TenantManagementTextCode_1.Id, NameTextCodeCode = TenantManagementTextCode_1.Code, ObjectTableName = "TenantManagement", Code = "Inactive Tenant Managements",  QueryGroupCode = "TNTS", IndexOrder = 1, Tenant = 0, ObjectTableId = TenantManagementObjectTable.Id, QuerySection = "TenantManagement", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = TenantManagementFeature_1.Id,FeatureUniqeCode= TenantManagementFeature_1.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn InactiveTenantManagementsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveTenantManagementsQuery.Id, IndexOrder = 0, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "Id" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "Id" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InactiveTenantManagementsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveTenantManagementsQuery.Id,QueryCode = InactiveTenantManagementsQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "Id" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "Id" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn InactiveTenantManagementsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveTenantManagementsQuery.Id, IndexOrder = 1, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InactiveTenantManagementsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveTenantManagementsQuery.Id,QueryCode = InactiveTenantManagementsQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn InactiveTenantManagementsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveTenantManagementsQuery.Id, IndexOrder = 2, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "PackageCode" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "PackageCode" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InactiveTenantManagementsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveTenantManagementsQuery.Id,QueryCode = InactiveTenantManagementsQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "PackageCode" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "PackageCode" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn InactiveTenantManagementsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveTenantManagementsQuery.Id, IndexOrder = 3, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "PackageName" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "PackageName" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InactiveTenantManagementsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveTenantManagementsQuery.Id,QueryCode = InactiveTenantManagementsQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "PackageName" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "PackageName" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn InactiveTenantManagementsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveTenantManagementsQuery.Id, IndexOrder = 4, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "IsActive" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "IsActive" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InactiveTenantManagementsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveTenantManagementsQuery.Id,QueryCode = InactiveTenantManagementsQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "IsActive" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "IsActive" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn InactiveTenantManagementsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveTenantManagementsQuery.Id, IndexOrder = 5, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "NumberOfUsers" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "NumberOfUsers" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InactiveTenantManagementsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveTenantManagementsQuery.Id,QueryCode = InactiveTenantManagementsQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "NumberOfUsers" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "NumberOfUsers" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn InactiveTenantManagementsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveTenantManagementsQuery.Id, IndexOrder = 6, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "IsTrial" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "IsTrial" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InactiveTenantManagementsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveTenantManagementsQuery.Id,QueryCode = InactiveTenantManagementsQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "IsTrial" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "IsTrial" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn InactiveTenantManagementsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveTenantManagementsQuery.Id, IndexOrder = 7, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "TrialStartDate" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "TrialStartDate" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InactiveTenantManagementsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveTenantManagementsQuery.Id,QueryCode = InactiveTenantManagementsQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "TrialStartDate" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "TrialStartDate" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn InactiveTenantManagementsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveTenantManagementsQuery.Id, IndexOrder = 8, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "TrialEndDate" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "TrialEndDate" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InactiveTenantManagementsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveTenantManagementsQuery.Id,QueryCode = InactiveTenantManagementsQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "TrialEndDate" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "TrialEndDate" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn InactiveTenantManagementsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveTenantManagementsQuery.Id, IndexOrder = 9, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "FirstPaymentDate" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "FirstPaymentDate" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InactiveTenantManagementsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveTenantManagementsQuery.Id,QueryCode = InactiveTenantManagementsQuery.UniqueCode, IndexOrder = 9, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "FirstPaymentDate" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "FirstPaymentDate" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn InactiveTenantManagementsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveTenantManagementsQuery.Id, IndexOrder = 10, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "PaidUntilDate" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "PaidUntilDate" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InactiveTenantManagementsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveTenantManagementsQuery.Id,QueryCode = InactiveTenantManagementsQuery.UniqueCode, IndexOrder = 10, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "PaidUntilDate" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "PaidUntilDate" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn InactiveTenantManagementsQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveTenantManagementsQuery.Id, IndexOrder = 11, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "TTY" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "TTY" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InactiveTenantManagementsQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveTenantManagementsQuery.Id,QueryCode = InactiveTenantManagementsQuery.UniqueCode, IndexOrder = 11, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "TTY" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "TTY" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter InactiveTenantManagementsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "IsActive" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "IsActive" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "false",PredefinedValue2 = null, QueryId = InactiveTenantManagementsQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
-
-  
-	      
-
-			  Query TrialTenantManagementsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TenantManagementTextCode_2.Id, NameTextCodeCode = TenantManagementTextCode_2.Code, Code = "Trial Tenant Managements",  QueryGroupCode = "TNTS", IndexOrder = 3, Tenant = 0, ObjectTableId = TenantManagementObjectTable.Id, QuerySection = "TenantManagement", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = TenantManagementFeature_2.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
-	
-			 QueryColumn TrialTenantManagementsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TrialTenantManagementsQuery.Id, IndexOrder = 0, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "Id" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "Id" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn TrialTenantManagementsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TrialTenantManagementsQuery.Id, IndexOrder = 1, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn TrialTenantManagementsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TrialTenantManagementsQuery.Id, IndexOrder = 2, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "PackageCode" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "PackageCode" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn TrialTenantManagementsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TrialTenantManagementsQuery.Id, IndexOrder = 3, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "PackageName" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "PackageName" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn TrialTenantManagementsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TrialTenantManagementsQuery.Id, IndexOrder = 4, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "IsActive" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "IsActive" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn TrialTenantManagementsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TrialTenantManagementsQuery.Id, IndexOrder = 5, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "NumberOfUsers" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "NumberOfUsers" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn TrialTenantManagementsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TrialTenantManagementsQuery.Id, IndexOrder = 6, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "IsTrial" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "IsTrial" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn TrialTenantManagementsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TrialTenantManagementsQuery.Id, IndexOrder = 7, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "TrialStartDate" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "TrialStartDate" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn TrialTenantManagementsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TrialTenantManagementsQuery.Id, IndexOrder = 8, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "TrialEndDate" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "TrialEndDate" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
-
-             AdvancedQueryFilter TrialTenantManagementsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "ActiveTrail" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "ActiveTrail" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "false",PredefinedValue2 = null, QueryId = TrialTenantManagementsQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter InactiveTenantManagementsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "IsActive" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "IsActive" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "false",PredefinedValue2 = null, QueryId = InactiveTenantManagementsQuery.Id,QueryCode = InactiveTenantManagementsQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
 
-			  Query PayingTenantManagementsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TenantManagementTextCode_3.Id, NameTextCodeCode = TenantManagementTextCode_3.Code, Code = "Paying Tenant Managements",  QueryGroupCode = "TNTS", IndexOrder = 4, Tenant = 0, ObjectTableId = TenantManagementObjectTable.Id, QuerySection = "TenantManagement", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = TenantManagementFeature_3.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query TrialTenantManagementsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TenantManagementTextCode_2.Id, NameTextCodeCode = TenantManagementTextCode_2.Code, ObjectTableName = "TenantManagement", Code = "Trial Tenant Managements",  QueryGroupCode = "TNTS", IndexOrder = 2, Tenant = 0, ObjectTableId = TenantManagementObjectTable.Id, QuerySection = "TenantManagement", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = TenantManagementFeature_2.Id,FeatureUniqeCode= TenantManagementFeature_2.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn PayingTenantManagementsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PayingTenantManagementsQuery.Id, IndexOrder = 0, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "Id" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "Id" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TrialTenantManagementsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TrialTenantManagementsQuery.Id,QueryCode = TrialTenantManagementsQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "Id" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "Id" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn PayingTenantManagementsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PayingTenantManagementsQuery.Id, IndexOrder = 1, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TrialTenantManagementsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TrialTenantManagementsQuery.Id,QueryCode = TrialTenantManagementsQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn PayingTenantManagementsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PayingTenantManagementsQuery.Id, IndexOrder = 2, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "PackageCode" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "PackageCode" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TrialTenantManagementsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TrialTenantManagementsQuery.Id,QueryCode = TrialTenantManagementsQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "PackageCode" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "PackageCode" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn PayingTenantManagementsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PayingTenantManagementsQuery.Id, IndexOrder = 3, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "PackageName" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "PackageName" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TrialTenantManagementsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TrialTenantManagementsQuery.Id,QueryCode = TrialTenantManagementsQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "PackageName" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "PackageName" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn PayingTenantManagementsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PayingTenantManagementsQuery.Id, IndexOrder = 4, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "IsActive" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "IsActive" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TrialTenantManagementsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TrialTenantManagementsQuery.Id,QueryCode = TrialTenantManagementsQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "IsActive" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "IsActive" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn PayingTenantManagementsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PayingTenantManagementsQuery.Id, IndexOrder = 5, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "NumberOfUsers" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "NumberOfUsers" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TrialTenantManagementsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TrialTenantManagementsQuery.Id,QueryCode = TrialTenantManagementsQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "NumberOfUsers" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "NumberOfUsers" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn PayingTenantManagementsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PayingTenantManagementsQuery.Id, IndexOrder = 6, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "FirstPaymentDate" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "FirstPaymentDate" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TrialTenantManagementsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TrialTenantManagementsQuery.Id,QueryCode = TrialTenantManagementsQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "IsTrial" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "IsTrial" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn PayingTenantManagementsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PayingTenantManagementsQuery.Id, IndexOrder = 7, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "PaidUntilDate" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "PaidUntilDate" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TrialTenantManagementsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TrialTenantManagementsQuery.Id,QueryCode = TrialTenantManagementsQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "TrialStartDate" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "TrialStartDate" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn PayingTenantManagementsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PayingTenantManagementsQuery.Id, IndexOrder = 8, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "IsRecurring" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "IsRecurring" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TrialTenantManagementsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TrialTenantManagementsQuery.Id,QueryCode = TrialTenantManagementsQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "TrialEndDate" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "TrialEndDate" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter PayingTenantManagementsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "PayingCustomers" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "PayingCustomers" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "false",PredefinedValue2 = null, QueryId = PayingTenantManagementsQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter TrialTenantManagementsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "ActiveTrail" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "ActiveTrail" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "false",PredefinedValue2 = null, QueryId = TrialTenantManagementsQuery.Id,QueryCode = TrialTenantManagementsQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
 
-			  Query NotRecuringTenantsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TenantManagementTextCode_4.Id, NameTextCodeCode = TenantManagementTextCode_4.Code, Code = "Not Recuring Tenants",  QueryGroupCode = "TNTS", IndexOrder = 5, Tenant = 0, ObjectTableId = TenantManagementObjectTable.Id, QuerySection = "TenantManagement", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = TenantManagementFeature_4.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query PayingTenantManagementsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TenantManagementTextCode_3.Id, NameTextCodeCode = TenantManagementTextCode_3.Code, ObjectTableName = "TenantManagement", Code = "Paying Tenant Managements",  QueryGroupCode = "TNTS", IndexOrder = 3, Tenant = 0, ObjectTableId = TenantManagementObjectTable.Id, QuerySection = "TenantManagement", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = TenantManagementFeature_3.Id,FeatureUniqeCode= TenantManagementFeature_3.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn NotRecuringTenantsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotRecuringTenantsQuery.Id, IndexOrder = 0, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "Id" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "Id" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn PayingTenantManagementsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PayingTenantManagementsQuery.Id,QueryCode = PayingTenantManagementsQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "Id" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "Id" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn NotRecuringTenantsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotRecuringTenantsQuery.Id, IndexOrder = 1, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn PayingTenantManagementsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PayingTenantManagementsQuery.Id,QueryCode = PayingTenantManagementsQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn NotRecuringTenantsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotRecuringTenantsQuery.Id, IndexOrder = 2, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "PackageCode" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "PackageCode" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn PayingTenantManagementsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PayingTenantManagementsQuery.Id,QueryCode = PayingTenantManagementsQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "PackageCode" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "PackageCode" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn NotRecuringTenantsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotRecuringTenantsQuery.Id, IndexOrder = 3, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "PackageName" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "PackageName" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn PayingTenantManagementsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PayingTenantManagementsQuery.Id,QueryCode = PayingTenantManagementsQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "PackageName" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "PackageName" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn NotRecuringTenantsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotRecuringTenantsQuery.Id, IndexOrder = 4, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "IsActive" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "IsActive" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn PayingTenantManagementsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PayingTenantManagementsQuery.Id,QueryCode = PayingTenantManagementsQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "IsActive" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "IsActive" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn NotRecuringTenantsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotRecuringTenantsQuery.Id, IndexOrder = 5, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "NumberOfUsers" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "NumberOfUsers" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn PayingTenantManagementsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PayingTenantManagementsQuery.Id,QueryCode = PayingTenantManagementsQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "NumberOfUsers" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "NumberOfUsers" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn NotRecuringTenantsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotRecuringTenantsQuery.Id, IndexOrder = 6, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "FirstPaymentDate" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "FirstPaymentDate" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn PayingTenantManagementsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PayingTenantManagementsQuery.Id,QueryCode = PayingTenantManagementsQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "FirstPaymentDate" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "FirstPaymentDate" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn NotRecuringTenantsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotRecuringTenantsQuery.Id, IndexOrder = 7, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "PaidUntilDate" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "PaidUntilDate" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn PayingTenantManagementsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PayingTenantManagementsQuery.Id,QueryCode = PayingTenantManagementsQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "PaidUntilDate" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "PaidUntilDate" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn NotRecuringTenantsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotRecuringTenantsQuery.Id, IndexOrder = 8, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "IsRecurring" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "IsRecurring" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn PayingTenantManagementsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PayingTenantManagementsQuery.Id,QueryCode = PayingTenantManagementsQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "IsRecurring" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "IsRecurring" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter NotRecuringTenantsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "NotRecuringTenants" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "NotRecuringTenants" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "false",PredefinedValue2 = null, QueryId = NotRecuringTenantsQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter PayingTenantManagementsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "PayingCustomers" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "PayingCustomers" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "false",PredefinedValue2 = null, QueryId = PayingTenantManagementsQuery.Id,QueryCode = PayingTenantManagementsQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+
+  
+	      
+
+			  Query NotRecuringTenantsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TenantManagementTextCode_4.Id, NameTextCodeCode = TenantManagementTextCode_4.Code, ObjectTableName = "TenantManagement", Code = "Not Recuring Tenants",  QueryGroupCode = "TNTS", IndexOrder = 4, Tenant = 0, ObjectTableId = TenantManagementObjectTable.Id, QuerySection = "TenantManagement", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = TenantManagementFeature_4.Id,FeatureUniqeCode= TenantManagementFeature_4.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+	
+			 QueryColumn NotRecuringTenantsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotRecuringTenantsQuery.Id,QueryCode = NotRecuringTenantsQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "Id" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "Id" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn NotRecuringTenantsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotRecuringTenantsQuery.Id,QueryCode = NotRecuringTenantsQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn NotRecuringTenantsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotRecuringTenantsQuery.Id,QueryCode = NotRecuringTenantsQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "PackageCode" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "PackageCode" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn NotRecuringTenantsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotRecuringTenantsQuery.Id,QueryCode = NotRecuringTenantsQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "PackageName" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "PackageName" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn NotRecuringTenantsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotRecuringTenantsQuery.Id,QueryCode = NotRecuringTenantsQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "IsActive" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "IsActive" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn NotRecuringTenantsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotRecuringTenantsQuery.Id,QueryCode = NotRecuringTenantsQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "NumberOfUsers" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "NumberOfUsers" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn NotRecuringTenantsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotRecuringTenantsQuery.Id,QueryCode = NotRecuringTenantsQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "FirstPaymentDate" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "FirstPaymentDate" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn NotRecuringTenantsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotRecuringTenantsQuery.Id,QueryCode = NotRecuringTenantsQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "PaidUntilDate" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "PaidUntilDate" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn NotRecuringTenantsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotRecuringTenantsQuery.Id,QueryCode = NotRecuringTenantsQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "IsRecurring" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "IsRecurring" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+             AdvancedQueryFilter NotRecuringTenantsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "NotRecuringTenants" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "NotRecuringTenants" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "false",PredefinedValue2 = null, QueryId = NotRecuringTenantsQuery.Id,QueryCode = NotRecuringTenantsQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
 	   
 	    }
@@ -8727,15 +9030,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 
 	         Screen TenantManagementHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "TenantManagement.HeaderScreen", Name = "Header Screen", ObjectTableId = TenantManagementObjectTable.Id, NumberOfColumns = 4, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField TenantManagementTenantManagementHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "Id").FirstOrDefault().Id, ScreenId = TenantManagementHeaderScreenScreen0.Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "Id").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField TenantManagementTenantManagementHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "Id").FirstOrDefault().Id, ScreenId = TenantManagementHeaderScreenScreen0.Id,ScreenCode = TenantManagementHeaderScreenScreen0.Code, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "Id").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField TenantManagementTenantManagementHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = TenantManagementHeaderScreenScreen0.Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField TenantManagementTenantManagementHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = TenantManagementHeaderScreenScreen0.Id,ScreenCode = TenantManagementHeaderScreenScreen0.Code, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField TenantManagementTenantManagementHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "TimeZone").FirstOrDefault().Id, ScreenId = TenantManagementHeaderScreenScreen0.Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "TimeZone").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField TenantManagementTenantManagementHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "TimeZone").FirstOrDefault().Id, ScreenId = TenantManagementHeaderScreenScreen0.Id,ScreenCode = TenantManagementHeaderScreenScreen0.Code, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "TimeZone").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField TenantManagementTenantManagementHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "GlobalDBId").FirstOrDefault().Id, ScreenId = TenantManagementHeaderScreenScreen0.Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "GlobalDBId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField TenantManagementTenantManagementHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "GlobalDBId").FirstOrDefault().Id, ScreenId = TenantManagementHeaderScreenScreen0.Id,ScreenCode = TenantManagementHeaderScreenScreen0.Code, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "GlobalDBId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    TenantManagementObjectTable.HeaderScreenId = TenantManagementHeaderScreenScreen0.Id;
+		    TenantManagementObjectTable.HeaderScreenCode = TenantManagementHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }
@@ -8780,21 +9085,21 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TGGC",HtmlComponentName = "TenantManagementGeneralTabComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureTenantManagement/Components/TenantManagement/TenantManagementGeneralTabComponent", FeatureId = TenantManagementGeneralFeature_TH0.Id, ControlPath = "Simplog.InfrastructureExt.Views.Maintenance.TenantManagement.EditTenantManagementControl", ObjectTableId = TenantManagementObjectTable.Id, TabNameTextCodeId = TenantManagementGeneralTextCode_TH0.Id, TabNameTextCodeCode = TenantManagementGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TGGC",HtmlComponentName = "TenantManagementGeneralTabComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureTenantManagement/Components/TenantManagement/TenantManagementGeneralTabComponent", FeatureId = TenantManagementGeneralFeature_TH0.Id,FeatureUniqeCode = TenantManagementGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.InfrastructureExt.Views.Maintenance.TenantManagement.EditTenantManagementControl", ObjectTableId = TenantManagementObjectTable.Id, TabNameTextCodeId = TenantManagementGeneralTextCode_TH0.Id, TabNameTextCodeCode = TenantManagementGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TGCH",HtmlComponentName = "CCSSettingsTabComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureTenantManagement/Components/TenantManagement/CCSSettingsTabComponent", FeatureId = TenantManagementCCSSettingsFeature_TH1.Id, ControlPath = "Simplog.InfrastructureExt.Views.Maintenance.TenantManagement.TenantManagementChampTabControl", ObjectTableId = TenantManagementObjectTable.Id, TabNameTextCodeId = TenantManagementCCSSettingsTextCode_TH1.Id, TabNameTextCodeCode = TenantManagementCCSSettingsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TGCH",HtmlComponentName = "CCSSettingsTabComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureTenantManagement/Components/TenantManagement/CCSSettingsTabComponent", FeatureId = TenantManagementCCSSettingsFeature_TH1.Id,FeatureUniqeCode = TenantManagementCCSSettingsFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.InfrastructureExt.Views.Maintenance.TenantManagement.TenantManagementChampTabControl", ObjectTableId = TenantManagementObjectTable.Id, TabNameTextCodeId = TenantManagementCCSSettingsTextCode_TH1.Id, TabNameTextCodeCode = TenantManagementCCSSettingsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TGST",HtmlComponentName = "TenantManagementStatisticsTabComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureTenantManagement/Components/TenantManagement/TenantManagementStatisticsTabComponent", FeatureId = TenantManagementStatisticsFeature_TH2.Id, ControlPath = "Simplog.InfrastructureExt.Views.Maintenance.TenantManagement.TenantManagementStatisticsControl", ObjectTableId = TenantManagementObjectTable.Id, TabNameTextCodeId = TenantManagementStatisticsTextCode_TH2.Id, TabNameTextCodeCode = TenantManagementStatisticsTextCode_TH2.Code, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TGST",HtmlComponentName = "TenantManagementStatisticsTabComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureTenantManagement/Components/TenantManagement/TenantManagementStatisticsTabComponent", FeatureId = TenantManagementStatisticsFeature_TH2.Id,FeatureUniqeCode = TenantManagementStatisticsFeature_TH2.FeatureUniqeCode, ControlPath = "Simplog.InfrastructureExt.Views.Maintenance.TenantManagement.TenantManagementStatisticsControl", ObjectTableId = TenantManagementObjectTable.Id, TabNameTextCodeId = TenantManagementStatisticsTextCode_TH2.Id, TabNameTextCodeCode = TenantManagementStatisticsTextCode_TH2.Code, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TGMS",HtmlComponentName = "",HtmlComponentUrl = "./ShipmentModules/ShipmentStock/Components/Maintenance/TenantManagementAWBStockTabComponent", FeatureId = TenantManagementAWBMessagingStockFeature_TH3.Id, ControlPath = "Simplog.InfrastructureExt.Views.Maintenance.TenantManagement.TenantManagementAWBMessagingStockControl", ObjectTableId = TenantManagementObjectTable.Id, TabNameTextCodeId = TenantManagementAWBMessagingStockTextCode_TH3.Id, TabNameTextCodeCode = TenantManagementAWBMessagingStockTextCode_TH3.Code, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TGMS",HtmlComponentName = "",HtmlComponentUrl = "./ShipmentModules/ShipmentStock/Components/Maintenance/TenantManagementAWBStockTabComponent", FeatureId = TenantManagementAWBMessagingStockFeature_TH3.Id,FeatureUniqeCode = TenantManagementAWBMessagingStockFeature_TH3.FeatureUniqeCode, ControlPath = "Simplog.InfrastructureExt.Views.Maintenance.TenantManagement.TenantManagementAWBMessagingStockControl", ObjectTableId = TenantManagementObjectTable.Id, TabNameTextCodeId = TenantManagementAWBMessagingStockTextCode_TH3.Id, TabNameTextCodeCode = TenantManagementAWBMessagingStockTextCode_TH3.Code, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TGSU",HtmlComponentName = "SupportTabComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureTenantManagement/Components/TenantManagement/SupportTabComponent", FeatureId = TenantManagementSupportFeature_TH4.Id, ControlPath = "Simplog.InfrastructureExt.Views.Maintenance.TenantManagement.SupportTabControl", ObjectTableId = TenantManagementObjectTable.Id, TabNameTextCodeId = TenantManagementSupportTextCode_TH4.Id, TabNameTextCodeCode = TenantManagementSupportTextCode_TH4.Code, Tenant = 0, IndexOrder = 4 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TGSU",HtmlComponentName = "SupportTabComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureTenantManagement/Components/TenantManagement/SupportTabComponent", FeatureId = TenantManagementSupportFeature_TH4.Id,FeatureUniqeCode = TenantManagementSupportFeature_TH4.FeatureUniqeCode, ControlPath = "Simplog.InfrastructureExt.Views.Maintenance.TenantManagement.SupportTabControl", ObjectTableId = TenantManagementObjectTable.Id, TabNameTextCodeId = TenantManagementSupportTextCode_TH4.Id, TabNameTextCodeCode = TenantManagementSupportTextCode_TH4.Code, Tenant = 0, IndexOrder = 4 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TGBR",HtmlComponentName = "BrandingTabComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureTenantManagement/Components/TenantManagement/BrandingTabComponent", FeatureId = TenantManagementBrandingFeature_TH5.Id, ControlPath = "", ObjectTableId = TenantManagementObjectTable.Id, TabNameTextCodeId = TenantManagementBrandingTextCode_TH5.Id, TabNameTextCodeCode = TenantManagementBrandingTextCode_TH5.Code, Tenant = 0, IndexOrder = 5 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TGBR",HtmlComponentName = "BrandingTabComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureTenantManagement/Components/TenantManagement/BrandingTabComponent", FeatureId = TenantManagementBrandingFeature_TH5.Id,FeatureUniqeCode = TenantManagementBrandingFeature_TH5.FeatureUniqeCode, ControlPath = "", ObjectTableId = TenantManagementObjectTable.Id, TabNameTextCodeId = TenantManagementBrandingTextCode_TH5.Id, TabNameTextCodeCode = TenantManagementBrandingTextCode_TH5.Code, Tenant = 0, IndexOrder = 5 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TGEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = TenantManagementEventsFeature_TH6.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = TenantManagementObjectTable.Id, TabNameTextCodeId = TenantManagementEventsTextCode_TH6.Id, TabNameTextCodeCode = TenantManagementEventsTextCode_TH6.Code, Tenant = 0, IndexOrder = 6 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TGEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = TenantManagementEventsFeature_TH6.Id,FeatureUniqeCode = TenantManagementEventsFeature_TH6.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = TenantManagementObjectTable.Id, TabNameTextCodeId = TenantManagementEventsTextCode_TH6.Id, TabNameTextCodeCode = TenantManagementEventsTextCode_TH6.Code, Tenant = 0, IndexOrder = 6 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TGCA",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = TenantManagementConnectedAirlinesFeature_TH7.Id, ControlPath = "Simplog.InfrastructureExt.Views.Maintenance.TenantManagement.TenantManagementConnectedAirlinesControl", ObjectTableId = TenantManagementObjectTable.Id, TabNameTextCodeId = TenantManagementConnectedAirlinesTextCode_TH7.Id, TabNameTextCodeCode = TenantManagementConnectedAirlinesTextCode_TH7.Code, Tenant = 0, IndexOrder = 7 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TGCA",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = TenantManagementConnectedAirlinesFeature_TH7.Id,FeatureUniqeCode = TenantManagementConnectedAirlinesFeature_TH7.FeatureUniqeCode, ControlPath = "Simplog.InfrastructureExt.Views.Maintenance.TenantManagement.TenantManagementConnectedAirlinesControl", ObjectTableId = TenantManagementObjectTable.Id, TabNameTextCodeId = TenantManagementConnectedAirlinesTextCode_TH7.Id, TabNameTextCodeCode = TenantManagementConnectedAirlinesTextCode_TH7.Code, Tenant = 0, IndexOrder = 7 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -9160,6 +9465,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 						FeatureId = TenantManagementFeature_MB0.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode = TenantManagementFeature_MB0.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 
 	    }

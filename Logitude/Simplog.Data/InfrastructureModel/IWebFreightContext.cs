@@ -13,7 +13,7 @@ namespace Simplog.Data.InfrastructureModel
     public interface IWebFreightContext : IContext
     {
 
-
+        IDbSet<RuleUpdateHistory> RuleUpdateHistories { get; }
         IDbSet<CounterLastNumber> CounterLastNumbers { get; }
         IDbSet<TransportMode> TransportModes { get; }
         IDbSet<Direction> Directions { get; }

@@ -90,6 +90,20 @@ namespace Logitude.BL.ShipmentsModel
                 Code = "CRR", 
                 SearchFields = "CRR,Cancellation Request Rejected", 
 			});
+			 
+            all.Add(new INTTRABookingTransStatusDetails()
+            {    
+                Name = "Accepted by INTTRA ", 
+                Code = "ACI", 
+                SearchFields = "ACI,Accepted by INTTRA ", 
+			});
+			 
+            all.Add(new INTTRABookingTransStatusDetails()
+            {    
+                Name = "Rejected by INTTRA", 
+                Code = "RBI", 
+                SearchFields = "RBI,Rejected by INTTRA", 
+			});
 			
             return all;
        }

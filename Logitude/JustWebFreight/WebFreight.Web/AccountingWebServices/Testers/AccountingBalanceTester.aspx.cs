@@ -809,8 +809,8 @@ namespace WebFreight.Web.AccountingWebServices.Testers
 
                 var agingReport = new AgingReportService(myAgingReportParam);
                 var xml = agingReport.RunReport();
-                var MyPeriodList = agingReport.MyPeriodList;
-                var xmlMyPeriodList = LogitudeXmlSerializer.SerializeObjectToXmlString(agingReport.MyPeriodList);
+                //var MyPeriodList = agingReport.MyPeriodList;
+                var xmlMyPeriodList = LogitudeXmlSerializer.SerializeObjectToXmlString(agingReport.MyPeriodExtendedList);
                 _LabelResult.Text = xmlMyPeriodList;
 
                 ReloadGrid(System.Text.Encoding.UTF8.GetBytes(xml));
@@ -2366,38 +2366,39 @@ namespace WebFreight.Web.AccountingWebServices.Testers
         protected void _ButtonCardIndexNew_Click(object sender, EventArgs e)
         {
 
-           
-                CardIndexReportParams myCardIndexReportParams = null;
 
-                if (GetMyLastAction() != MyLastAction._ButtonLedgerTransactionBalance_Click)
-                {
-                    myCardIndexReportParams = UpdateDefaultCardIndexNew(myCardIndexReportParams) as CardIndexReportParams;
-                    return;
-                } 
-                if (string.IsNullOrWhiteSpace(_TextBoxParam.Text))
-                {
-                    myCardIndexReportParams = UpdateDefaultCardIndexNew(myCardIndexReportParams) as CardIndexReportParams;
-                    return;
-                }
-                myCardIndexReportParams =
-                    LogitudeXmlSerializer.DeserializeObject<CardIndexReportParams>(_TextBoxParam.Text);
+            CardIndexReportParams myCardIndexReportParams = null;
 
-                _MyLastAction.Value = MyLastAction._ButtonLedgerTransactionBalance_Click.ToString();
-                var accountingContext = AccountingContext.GetContext(myCardIndexReportParams.Tenant);
-                var CardIndexReportService = new CardIndexReportService(accountingContext, myCardIndexReportParams);
-                CardIndexReportService.Run();
-
-                //_LabelResult.Text = "ledgerTransactionBalance" +ledgerTransactionBalanceService.Response.StartBalanceLocal + " " + ledgerTransactionBalanceService.Response.EndBalanceLocal;
-
-                
-                var SerializeObjectByteParam2 = LogitudeXmlSerializer.SerializeObject<CardIndexReportParams>(myCardIndexReportParams);
-                _TextBoxParam.Text = System.Text.Encoding.UTF8.GetString(SerializeObjectByteParam2);
-
-                var SerializeObjectByte = LogitudeXmlSerializer.SerializeObject<List<LedgerTransactionBalanceResponse>>(CardIndexReportService.CardIndexs);
-                ReloadGrid(SerializeObjectByte);
-                _LabelLog.Text = LogMessagingUtil.Instance.ToString();
-
+            if (GetMyLastAction() != MyLastAction._ButtonLedgerTransactionBalance_Click)
+            {
+                myCardIndexReportParams = UpdateDefaultCardIndexNew(myCardIndexReportParams) as CardIndexReportParams;
+                return;
             }
+            if (string.IsNullOrWhiteSpace(_TextBoxParam.Text))
+            {
+                myCardIndexReportParams = UpdateDefaultCardIndexNew(myCardIndexReportParams) as CardIndexReportParams;
+                return;
+            }
+            myCardIndexReportParams =
+                LogitudeXmlSerializer.DeserializeObject<CardIndexReportParams>(_TextBoxParam.Text);
+
+            _MyLastAction.Value = MyLastAction._ButtonLedgerTransactionBalance_Click.ToString();
+            var accountingContext = AccountingContext.GetContext(myCardIndexReportParams.Tenant);
+            var CardIndexReportService = new CardIndexReportService(accountingContext, myCardIndexReportParams);
+            CardIndexReportService.Run();
+
+            //_LabelResult.Text = "ledgerTransactionBalance" +ledgerTransactionBalanceService.Response.StartBalanceLocal + " " + ledgerTransactionBalanceService.Response.EndBalanceLocal;
+
+
+            var SerializeObjectByteParam2 = LogitudeXmlSerializer.SerializeObject<CardIndexReportParams>(myCardIndexReportParams);
+
+            _TextBoxParam.Text = System.Text.Encoding.UTF8.GetString(SerializeObjectByteParam2);
+
+            var SerializeObjectJson = LogitudeXmlSerializer.SerializeObjectToJosnString<List<LedgerTransactionBalanceResponse>>(CardIndexReportService.CardIndexs);
+            ///ReloadGrid(SerializeObjectByte);
+            _LabelLog.Text = SerializeObjectJson;//LogMessagingUtil.Instance.ToString();
+
+        }
         }
 
     public class ReconcileParam

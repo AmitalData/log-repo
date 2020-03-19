@@ -473,7 +473,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query SeizureFactorTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = SeizureFactorTypeTextCode_0.Id, Code = "SeizureFactorType",  QueryGroupCode = "a5be", IndexOrder = 0, Tenant = 0, ObjectTableId = SeizureFactorTypeObjectTable.Id, QuerySection = "Customs.SeizureFactorType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = SeizureFactorTypeFeature_0.Id, DefaultSortName = "Code", DefaultSortDirection = "Desending" }, queriesRepository, tenantQueries);
+			  Query SeizureFactorTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = SeizureFactorTypeTextCode_0.Id, Code = "SeizureFactorType",  QueryGroupCode = "a5be", IndexOrder = 0, Tenant = 0, ObjectTableId = SeizureFactorTypeObjectTable.Id, QuerySection = "Customs.SeizureFactorType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = SeizureFactorTypeFeature_0.Id,FeatureUniqeCode= SeizureFactorTypeFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending" }, queriesRepository, tenantQueries);
 	
 			 QueryColumn SeizureFactorTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SeizureFactorTypeQuery.Id, IndexOrder = 0, ObjectFieldId = SeizureFactorTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == SeizureFactorTypeObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 

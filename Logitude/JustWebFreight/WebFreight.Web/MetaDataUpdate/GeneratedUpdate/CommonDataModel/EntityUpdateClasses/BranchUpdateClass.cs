@@ -97,6 +97,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    IsEditable =  true,
 			      				    IsNewWizard =  false,
 			      				    LookUp1 =  "EnglishName",
+			      				    CodeField =  "Code",
+			      				    NameField =  "EnglishName",
 			      				    LovDisplayMemberPath =  "CalculatedEnglishName",
 			      				    LovDisplayMemberPathLocal =  "CalculatedLocalName",
 			      				    KeyPropertyPath =  "Id",
@@ -125,7 +127,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ClientModuleName =  "Common",
 			      				    NoTS =  false,
 			      				    HasMenuButtons =  false,
-			      				    AllowedForComputingPartners =  false,
+			      				    AllowedForComputingPartners =  true,
 			      				    CustomFieldsCount =  0,
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
@@ -1159,13 +1161,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query BranchesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = BranchTextCode_0.Id, NameTextCodeCode = BranchTextCode_0.Code, Code = "Branches",  QueryGroupCode = "BRCH", IndexOrder = 0, Tenant = 0, ObjectTableId = BranchObjectTable.Id, QuerySection = "Branch", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = BranchFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query BranchesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = BranchTextCode_0.Id, NameTextCodeCode = BranchTextCode_0.Code, ObjectTableName = "Branch", Code = "Branches",  QueryGroupCode = "BRCH", IndexOrder = 0, Tenant = 0, ObjectTableId = BranchObjectTable.Id, QuerySection = "Branch", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = BranchFeature_0.Id,FeatureUniqeCode= BranchFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn BranchesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = BranchesQuery.Id, IndexOrder = 0, ObjectFieldId = BranchObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == BranchObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BranchObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == BranchObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn BranchesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = BranchesQuery.Id,QueryCode = BranchesQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = BranchObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == BranchObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BranchObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == BranchObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn BranchesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = BranchesQuery.Id, IndexOrder = 1, ObjectFieldId = BranchObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == BranchObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BranchObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == BranchObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn BranchesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = BranchesQuery.Id,QueryCode = BranchesQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = BranchObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == BranchObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BranchObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == BranchObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn BranchesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = BranchesQuery.Id, IndexOrder = 2, ObjectFieldId = BranchObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == BranchObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BranchObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == BranchObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn BranchesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = BranchesQuery.Id,QueryCode = BranchesQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = BranchObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == BranchObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BranchObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == BranchObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 	   
 	    }
 
@@ -1179,21 +1181,23 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 	         Screen BranchGeneralTabScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Branch.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = BranchObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 4, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField BranchBranchGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = BranchObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().Id, ScreenId = BranchGeneralTabScreenScreen0.Id, ObjectFieldCode = BranchObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField BranchBranchGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = BranchObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().Id, ScreenId = BranchGeneralTabScreenScreen0.Id,ScreenCode = BranchGeneralTabScreenScreen0.Code, ObjectFieldCode = BranchObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField BranchBranchGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = BranchObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().Id, ScreenId = BranchGeneralTabScreenScreen0.Id, ObjectFieldCode = BranchObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField BranchBranchGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = BranchObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().Id, ScreenId = BranchGeneralTabScreenScreen0.Id,ScreenCode = BranchGeneralTabScreenScreen0.Code, ObjectFieldCode = BranchObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField BranchBranchGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = BranchObjectFields.Where(d => d.FieldName == "CounterCode").FirstOrDefault().Id, ScreenId = BranchGeneralTabScreenScreen0.Id, ObjectFieldCode = BranchObjectFields.Where(d => d.FieldName == "CounterCode").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField BranchBranchGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = BranchObjectFields.Where(d => d.FieldName == "CounterCode").FirstOrDefault().Id, ScreenId = BranchGeneralTabScreenScreen0.Id,ScreenCode = BranchGeneralTabScreenScreen0.Code, ObjectFieldCode = BranchObjectFields.Where(d => d.FieldName == "CounterCode").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField BranchBranchGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = BranchObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().Id, ScreenId = BranchGeneralTabScreenScreen0.Id, ObjectFieldCode = BranchObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField BranchBranchGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = BranchObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().Id, ScreenId = BranchGeneralTabScreenScreen0.Id,ScreenCode = BranchGeneralTabScreenScreen0.Code, ObjectFieldCode = BranchObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 	      
 
 	         Screen BranchHeaderScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Branch.HeaderScreen", Name = "Header Screen", ObjectTableId = BranchObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField BranchBranchHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = BranchObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().Id, ScreenId = BranchHeaderScreenScreen1.Id, ObjectFieldCode = BranchObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField BranchBranchHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = BranchObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().Id, ScreenId = BranchHeaderScreenScreen1.Id,ScreenCode = BranchHeaderScreenScreen1.Code, ObjectFieldCode = BranchObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    BranchObjectTable.HeaderScreenId = BranchHeaderScreenScreen1.Id;
+		    BranchObjectTable.HeaderScreenCode = BranchHeaderScreenScreen1.Code;
+
 	   		  
 
 	    }
@@ -1218,11 +1222,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "BRGC",HtmlComponentName = "",HtmlComponentUrl = "./Common/Components/Maintenance/Branch/BranchGeneralTabComponent", FeatureId = BranchGeneralFeature_TH0.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = BranchObjectTable.Id, TabNameTextCodeId = BranchGeneralTextCode_TH0.Id, TabNameTextCodeCode = BranchGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "BRGC",HtmlComponentName = "",HtmlComponentUrl = "./Common/Components/Maintenance/Branch/BranchGeneralTabComponent", FeatureId = BranchGeneralFeature_TH0.Id,FeatureUniqeCode = BranchGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = BranchObjectTable.Id, TabNameTextCodeId = BranchGeneralTextCode_TH0.Id, TabNameTextCodeCode = BranchGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "BRAC",HtmlComponentName = "",HtmlComponentUrl = "./Common/Components/AccountingTab/AccountingTabComponent", FeatureId = GeneralAccountingFeature_TH1.Id, ControlPath = "Simplog.FreightLib.Views.Tabs.BranchAccountingTabControl", ObjectTableId = BranchObjectTable.Id, TabNameTextCodeId = BranchAccountingTextCode_TH1.Id, TabNameTextCodeCode = BranchAccountingTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "BRAC",HtmlComponentName = "",HtmlComponentUrl = "./Common/Components/AccountingTab/AccountingTabComponent", FeatureId = GeneralAccountingFeature_TH1.Id,FeatureUniqeCode = GeneralAccountingFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.FreightLib.Views.Tabs.BranchAccountingTabControl", ObjectTableId = BranchObjectTable.Id, TabNameTextCodeId = BranchAccountingTextCode_TH1.Id, TabNameTextCodeCode = BranchAccountingTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "BREV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = BranchEventsFeature_TH2.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = BranchObjectTable.Id, TabNameTextCodeId = BranchEventsTextCode_TH2.Id, TabNameTextCodeCode = BranchEventsTextCode_TH2.Code, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "BREV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = BranchEventsFeature_TH2.Id,FeatureUniqeCode = BranchEventsFeature_TH2.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = BranchObjectTable.Id, TabNameTextCodeId = BranchEventsTextCode_TH2.Id, TabNameTextCodeCode = BranchEventsTextCode_TH2.Code, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	

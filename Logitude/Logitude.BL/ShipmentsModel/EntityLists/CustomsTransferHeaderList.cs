@@ -21,5 +21,6 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string Notes { get; set; }
         public string CreatedByUserName { get; set; }
         public string CustomsTransferTypeName { get; set; }
+        public string ShipmentNumber { get; set; }
     }
 }

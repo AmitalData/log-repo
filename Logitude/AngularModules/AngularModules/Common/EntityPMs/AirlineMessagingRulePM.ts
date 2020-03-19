@@ -65,6 +65,11 @@ export class AirlineMessagingRulePM {
     public set UpdatedByUserId(newValue: string) { if (this.updatedByUserId != newValue) { this.updatedByUserId = newValue; this.MarkAsDirty("UpdatedByUserId"); } }
        
 	 
+    private ruleFieldCode: string;
+    public get RuleFieldCode() { return this.ruleFieldCode; }
+    public set RuleFieldCode(newValue: string) { if (this.ruleFieldCode != newValue) { this.ruleFieldCode = newValue; this.MarkAsDirty("RuleFieldCode"); } }
+       
+	 
     private updateDate: Date;
     public get UpdateDate() { return this.updateDate; }
     public set UpdateDate(newValue: Date) { if (this.updateDate != newValue) { this.updateDate = newValue; this.MarkAsDirty("UpdateDate"); } }

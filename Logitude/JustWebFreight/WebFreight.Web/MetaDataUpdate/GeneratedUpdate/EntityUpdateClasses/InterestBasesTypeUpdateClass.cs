@@ -197,6 +197,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -254,6 +255,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -315,6 +317,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -372,6 +375,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -431,6 +435,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -492,6 +497,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -553,6 +559,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -614,6 +621,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -675,6 +683,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -736,6 +745,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -793,6 +803,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -820,13 +831,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query InterestBasesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = InterestBasesTypeTextCode_0.Id, NameTextCodeCode = InterestBasesTypeTextCode_0.Code, Code = "Interest Bases",  QueryGroupCode = "a37b", IndexOrder = 0, Tenant = 0, ObjectTableId = InterestBasesTypeObjectTable.Id, QuerySection = "InterestBasesType", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = InterestBasesTypeFeature_0.Id, DefaultSortName = "Code", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query InterestBasesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = InterestBasesTypeTextCode_0.Id, NameTextCodeCode = InterestBasesTypeTextCode_0.Code, ObjectTableName = "InterestBasesType", Code = "Interest Bases",  QueryGroupCode = "a37b", IndexOrder = 0, Tenant = 0, ObjectTableId = InterestBasesTypeObjectTable.Id, QuerySection = "InterestBasesType", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = InterestBasesTypeFeature_0.Id,FeatureUniqeCode= InterestBasesTypeFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn InterestBasesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InterestBasesQuery.Id, IndexOrder = 0, ObjectFieldId = InterestBasesTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == InterestBasesTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = InterestBasesTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == InterestBasesTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InterestBasesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InterestBasesQuery.Id,QueryCode = InterestBasesQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = InterestBasesTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == InterestBasesTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = InterestBasesTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == InterestBasesTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn InterestBasesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InterestBasesQuery.Id, IndexOrder = 1, ObjectFieldId = InterestBasesTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == InterestBasesTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = InterestBasesTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == InterestBasesTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InterestBasesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InterestBasesQuery.Id,QueryCode = InterestBasesQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = InterestBasesTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == InterestBasesTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = InterestBasesTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == InterestBasesTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn InterestBasesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InterestBasesQuery.Id, IndexOrder = 2, ObjectFieldId = InterestBasesTypeObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == InterestBasesTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = InterestBasesTypeObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == InterestBasesTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InterestBasesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InterestBasesQuery.Id,QueryCode = InterestBasesQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = InterestBasesTypeObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == InterestBasesTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = InterestBasesTypeObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == InterestBasesTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 	   
 	    }
 
@@ -840,13 +851,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen InterestBasesTypeInterestBasesTypeHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "InterestBasesType.HeaderScreen", Name = "InterestBasesTypeHeaderScreen", ObjectTableId = InterestBasesTypeObjectTable.Id, NumberOfColumns = 3, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField InterestBasesTypeInterestBasesTypeHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = InterestBasesTypeObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = InterestBasesTypeInterestBasesTypeHeaderScreenScreen0.Id, ObjectFieldCode = InterestBasesTypeObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField InterestBasesTypeInterestBasesTypeHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = InterestBasesTypeObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = InterestBasesTypeInterestBasesTypeHeaderScreenScreen0.Id,ScreenCode = InterestBasesTypeInterestBasesTypeHeaderScreenScreen0.Code, ObjectFieldCode = InterestBasesTypeObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField InterestBasesTypeInterestBasesTypeHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = InterestBasesTypeObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().Id, ScreenId = InterestBasesTypeInterestBasesTypeHeaderScreenScreen0.Id, ObjectFieldCode = InterestBasesTypeObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField InterestBasesTypeInterestBasesTypeHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = InterestBasesTypeObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().Id, ScreenId = InterestBasesTypeInterestBasesTypeHeaderScreenScreen0.Id,ScreenCode = InterestBasesTypeInterestBasesTypeHeaderScreenScreen0.Code, ObjectFieldCode = InterestBasesTypeObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField InterestBasesTypeInterestBasesTypeHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = InterestBasesTypeObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().Id, ScreenId = InterestBasesTypeInterestBasesTypeHeaderScreenScreen0.Id, ObjectFieldCode = InterestBasesTypeObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField InterestBasesTypeInterestBasesTypeHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = InterestBasesTypeObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().Id, ScreenId = InterestBasesTypeInterestBasesTypeHeaderScreenScreen0.Id,ScreenCode = InterestBasesTypeInterestBasesTypeHeaderScreenScreen0.Code, ObjectFieldCode = InterestBasesTypeObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    InterestBasesTypeObjectTable.HeaderScreenId = InterestBasesTypeInterestBasesTypeHeaderScreenScreen0.Id;
+		    InterestBasesTypeObjectTable.HeaderScreenCode = InterestBasesTypeInterestBasesTypeHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }
@@ -867,9 +880,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "IBTD",HtmlComponentName = "",HtmlComponentUrl = "./Accounting/Components/EditTabs/Interest/DetailsTab/InterestBasesTypeDetailsTabComponent", FeatureId = InterestBasesTypeDetailsFeature_TH0.Id, ControlPath = "Simplog.InvoiceLib.Views.Tabs.InterestBasesTypesTabs.InterestBasesTypesDetailsTabControl", ObjectTableId = InterestBasesTypeObjectTable.Id, TabNameTextCodeId = InterestBasesTypeDetailsTextCode_TH0.Id, TabNameTextCodeCode = InterestBasesTypeDetailsTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "IBTD",HtmlComponentName = "",HtmlComponentUrl = "./Accounting/Components/EditTabs/Interest/DetailsTab/InterestBasesTypeDetailsTabComponent", FeatureId = InterestBasesTypeDetailsFeature_TH0.Id,FeatureUniqeCode = InterestBasesTypeDetailsFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.InvoiceLib.Views.Tabs.InterestBasesTypesTabs.InterestBasesTypesDetailsTabControl", ObjectTableId = InterestBasesTypeObjectTable.Id, TabNameTextCodeId = InterestBasesTypeDetailsTextCode_TH0.Id, TabNameTextCodeCode = InterestBasesTypeDetailsTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "IBEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = InterestBasesTypeEventsFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = InterestBasesTypeObjectTable.Id, TabNameTextCodeId = InterestBasesTypeEventsTextCode_TH1.Id, TabNameTextCodeCode = InterestBasesTypeEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "IBEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = InterestBasesTypeEventsFeature_TH1.Id,FeatureUniqeCode = InterestBasesTypeEventsFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = InterestBasesTypeObjectTable.Id, TabNameTextCodeId = InterestBasesTypeEventsTextCode_TH1.Id, TabNameTextCodeCode = InterestBasesTypeEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -1010,6 +1023,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId = null,
 						Style = null,
 						LocalDefaultText = "נוספים",
+						FeatureUniqeCode = null,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 
 			   MenuButton InterestBasesTypeMenuButton00 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -1027,12 +1041,21 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId=  InterestBasesTypeFeature_MB00.Id,
 						Style = null,
 						LocalDefaultText = "חסימה",
+						FeatureUniqeCode=  InterestBasesTypeFeature_MB00.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable InterestBasesTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "InterestBasesType" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode InterestBasesTypeTextCode_AccountingGeneralONewInterestBases = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.NewInterestBases", DefaultText = "New Interest Bases",LocalDefaultText = @"חדש  בסיס ריבית", ObjectTableId = InterestBasesTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
 	    
 }
 

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="DXMLMigrationHashes" Schema="dbo" DBType="Main">
+
+  <Column Name="DxmlFileName" Type="varchar" Size="500">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  
+  <Column Name="HashString" Type="nvarchar" Size="-1">
+    <Constraints Nullable="false" />
+  </Column>
+
+</Table>

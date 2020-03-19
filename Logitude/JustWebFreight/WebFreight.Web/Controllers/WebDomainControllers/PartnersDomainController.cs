@@ -1469,7 +1469,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             ICommonDataContext objectContext = CommonDataContext.GetContext(args.Tenant);
             VendorService myPartnerService = new VendorService(objectContext, args.Tenant);
 
-            if (args.Vendor.Addresses.Count == 0)
+            if (args.Vendor.Addresses != null && args.Vendor.Addresses.Count == 0)
             {
                 if (args.Address != null)
                 {
@@ -1477,7 +1477,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 }
             }
 
-            if (args.Vendor.Contacts.Count == 0)
+            if (args.Vendor.Contacts != null && args.Vendor.Contacts.Count == 0)
             {
                 if (args.Contact != null)
                 {
@@ -1487,12 +1487,12 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
             myPartnerService.Create(args.Vendor);
 
-            if (args.Vendor.Addresses.Count > 0)
+            if (args.Vendor.Addresses != null && args.Vendor.Addresses.Count > 0)
             {
                 args.AddressId = args.Vendor.Addresses.FirstOrDefault().Id;
             }
 
-            if (args.Vendor.Contacts.Count > 0)
+            if (args.Vendor.Contacts != null &&  args.Vendor.Contacts.Count > 0)
             {
                 args.ContactId = args.Vendor.Contacts.FirstOrDefault().Id;
             }
@@ -2127,18 +2127,100 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
         private void CreateAccountingPartner(PartnerServicePM args)
         {
+            SecurityUtility.CheckContactFeature("AccountingPartner", "NEW", args.Tenant);
+
             ICommonDataContext objectContext = CommonDataContext.GetContext(args.Tenant);
-            AccountingPartnerService AccountingPartnerService = new AccountingPartnerService(objectContext, args.Tenant);
-            AccountingPartnerService.Create(args.AccountingPartner);
-            var xml = LogitudeXmlSerializer.SerializeObjectToUTF8XmlString(args.AccountingPartner);
+            AccountingPartnerService myPartnerService = new AccountingPartnerService(objectContext, args.Tenant);
+
+            if (args.AccountingPartner.Addresses != null && args.AccountingPartner.Addresses.Count == 0)
+            {
+                if (args.Address != null)
+                {
+                    args.AccountingPartner.Addresses.Add(args.Address);
+                }
+            }
+
+            if (args.AccountingPartner.Contacts != null && args.AccountingPartner.Contacts.Count == 0)
+            {
+                if (args.Contact != null)
+                {
+                    args.AccountingPartner.Contacts.Add(args.Contact);
+                }
+            }
+
+            myPartnerService.Create(args.AccountingPartner);
+
+            if (args.AccountingPartner.Addresses != null && args.AccountingPartner.Addresses.Count > 0)
+            {
+                args.AddressId = args.AccountingPartner.Addresses.FirstOrDefault().Id;
+            }
+
+            if (args.AccountingPartner.Contacts != null && args.AccountingPartner.Contacts.Count > 0)
+            {
+                args.ContactId = args.AccountingPartner.Contacts.FirstOrDefault().Id;
+            }
+
+            args.PartnerId = args.AccountingPartner.Id;
 
         }
         private void UpdateAccountingPartner(PartnerServicePM args)
         {
             ICommonDataContext objectContext = CommonDataContext.GetContext(args.Tenant);
-            AccountingPartnerService AccountingPartnerService = new AccountingPartnerService(objectContext, args.Tenant);
-            AccountingPartnerService.Update(args.AccountingPartner);
-            var xml = LogitudeXmlSerializer.SerializeObjectToUTF8XmlString(args.AccountingPartner);
+
+            if (args.Address != null)
+            {
+                if (args.IsAddressDirty)
+                {
+                    AddressService service = new AddressService(objectContext, args.Tenant);
+
+                    if (args.Address.Id == null)
+                    {
+                        service.Create(args.Address);
+                        args.AddressId = args.Address.Id;
+                    }
+
+                    else
+                    {
+                        service.Update(args.Address);
+                    }
+                }
+            }
+
+            if (args.Contact != null)
+            {
+                if (args.IsContactDirty)
+                {
+                    ContactService service = new ContactService(objectContext, args.Tenant);
+
+                    if (args.Contact.Id == null)
+                    {
+                        SecurityUtility.CheckContactFeature("Contact", "NEW", args.Tenant);
+
+                        service.Create(args.Contact);
+                        args.ContactId = args.Contact.Id;
+                    }
+
+                    else
+                    {
+                        SecurityUtility.CheckContactFeature("Contact", "UPDATE", args.Tenant);
+
+                        service.Update(args.Contact);
+                    }
+                }
+            }
+
+            if (args.IsPartnerDirty)
+            {
+                SecurityUtility.CheckContactFeature("AccountingPartner", "UPDATE", args.Tenant);
+
+                if (args.AccountingPartner.IsFirstContactToAdd)
+                {
+                    args.AccountingPartner.PrimaryContactId = args.ContactId;
+                }
+
+                AccountingPartnerService myPartnerService = new AccountingPartnerService(objectContext, args.Tenant);
+                myPartnerService.Update(args.AccountingPartner);
+            }
 
         }
 
@@ -2632,6 +2714,46 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 }               
 
                 return Request.CreateResponse(HttpStatusCode.OK, "ok");
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public HttpResponseMessage GetInUseWarehouse(string code)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                string loggedUserEmail = authToken.Email;
+                int tenant = authToken.Tenant;
+                PartnersDomainService partnersDomain = new PartnersDomainService();
+
+                bool myResult = false;
+                
+                CardRepository rep = new CardRepository(tenant);
+                List<Card> cards = rep.GetWarehouseCards(tenant).ToList();
+
+                if (!string.IsNullOrEmpty(code))
+                {
+                    if (cards.Where(p => p.Code == code).FirstOrDefault() != null)
+                    {
+                        myResult = true;
+                    }
+                    else
+                    {
+                        myResult = false;
+                    }
+                }
+                else
+                {
+                    myResult = false;
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, myResult);
             }
 
             catch (Exception ex)

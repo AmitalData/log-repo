@@ -137,12 +137,12 @@ namespace Logitude.Social.BL.EntityPMs
 			
 		 }
 	   }
-	  private bool? cancelledDate ;
+	  private DateTime? cancelledDate ;
 	  	  
        
 	   [CustomValidation(typeof(SocialValidationClass), "ValidateClass")]
 	   [DataMember]
-       public bool? CancelledDate  
+       public DateTime? CancelledDate  
 	   {
 	    
 	     get
@@ -153,7 +153,7 @@ namespace Logitude.Social.BL.EntityPMs
 		 {
 		   if(cancelledDate != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CancelledDate",OldValue=cancelledDate,NewValue=value,PropertyType="bool?"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CancelledDate",OldValue=cancelledDate,NewValue=value,PropertyType="DateTime?"};
 		    NotifyPropertyChanged(values);
 		   cancelledDate=value;
 		   }

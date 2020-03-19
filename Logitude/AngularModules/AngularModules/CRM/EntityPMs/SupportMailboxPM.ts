@@ -69,6 +69,11 @@ export class SupportMailboxPM {
     public set IsDefault(newValue: boolean) { if (this.isDefault != newValue) { this.isDefault = newValue; this.MarkAsDirty("IsDefault"); } }
        
 	 
+    private searchFields: string;
+    public get SearchFields() { return this.searchFields; }
+    public set SearchFields(newValue: string) { if (this.searchFields != newValue) { this.searchFields = newValue; this.MarkAsDirty("SearchFields"); } }
+       
+	 
     private updatedByUserName: string;
     public get UpdatedByUserName() { return this.updatedByUserName; }
     public set UpdatedByUserName(newValue: string) { if (this.updatedByUserName != newValue) { this.updatedByUserName = newValue; this.MarkAsDirty("UpdatedByUserName"); } }

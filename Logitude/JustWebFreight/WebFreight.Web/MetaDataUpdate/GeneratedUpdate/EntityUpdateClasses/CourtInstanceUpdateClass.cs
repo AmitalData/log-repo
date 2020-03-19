@@ -375,7 +375,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query CourtInstanceQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CourtInstanceTextCode_0.Id, Code = "CourtInstance",  QueryGroupCode = "269e", IndexOrder = 0, Tenant = 0, ObjectTableId = CourtInstanceObjectTable.Id, QuerySection = "Customs.CourtInstance", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CourtInstanceFeature_0.Id, DefaultSortName = "Code", DefaultSortDirection = "Desending" }, queriesRepository, tenantQueries);
+			  Query CourtInstanceQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CourtInstanceTextCode_0.Id, Code = "CourtInstance",  QueryGroupCode = "269e", IndexOrder = 0, Tenant = 0, ObjectTableId = CourtInstanceObjectTable.Id, QuerySection = "Customs.CourtInstance", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CourtInstanceFeature_0.Id,FeatureUniqeCode= CourtInstanceFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending" }, queriesRepository, tenantQueries);
 	
 			 QueryColumn CourtInstanceQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CourtInstanceQuery.Id, IndexOrder = 0, ObjectFieldId = CourtInstanceObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == CourtInstanceObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 50 }, queryColumnsRepository, tenantQueryColumns);
 

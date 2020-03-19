@@ -28,12 +28,12 @@ import { DocumentsFilingExtendedPMService } from '../../../../Common/Services/Ex
 import { GroupByPipe } from '../../../../Infrastructure/Pipes/GroupByPipe';
 import { ImageLibraryService } from '../../../../Common/Services/Others/ImageLibraryService';
 import { ServiceHelper } from '../../../../Infrastructure/Utilities/ServiceHelper';
-import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
+//import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 import { DocumentTypeMetaDataExtendedService } from '../../../../Common/Services/ExtendedPMs/DocumentTypeMetaDataExtendedService'
 import { ServiceLocator } from '../../../../Infrastructure/Locators/ServiceLocator';
 import { CommonDomainService } from '../../../../Common/Services/CommonDomainService';
 import { TenantPMService } from '../../../../Common/Services/StandardPMs/TenantPMService';
-import { DownloadManager } from '../../../../Infrastructure/Utilities/DownloadManager'; 
+import { DownloadManager } from '../../../../Infrastructure/Utilities/DownloadManager';
 
 
 @Component({
@@ -44,15 +44,16 @@ import { DownloadManager } from '../../../../Infrastructure/Utilities/DownloadMa
 export class ECommercePaymentRequestMobileComponent extends BaseComponent implements OnInit, AfterViewInit {
 
     DataContext: ECommercePaymentRequestMobileComponent = this;
-    private messageWindow: MessageWindow = new MessageWindow();
+    //private messageWindow: MessageWindow = new MessageWindow();
     EntityPm: ShipmentPM = new ShipmentPM();
     AdditionalData: any = {
-        RequestPaymentData: {}, PaymentData: {}};
+        RequestPaymentData: {}, PaymentData: {}
+    };
     externalDocs: any[] = [];
 
     public _DocumentTypeMetaDataExtendedService: DocumentTypeMetaDataExtendedService;
     public _documentsFilingExtendedPMService: DocumentsFilingExtendedPMService;
-    public _ShipmentAdditionalCloudDataService: ShipmentAdditionalCloudDataService; 
+    public _ShipmentAdditionalCloudDataService: ShipmentAdditionalCloudDataService;
 
     public _ShipmentPMService: ShipmentPMService;
     RefreshTimer: any;
@@ -74,20 +75,25 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
     public get IsAccepted() { return this.isAccepted }
     public set IsAccepted(newValue: boolean) { this.isAccepted = newValue; }
 
+    private ScreenWidth: number;
+    private MaxScreenWidth: number = 600;
+
     IsAcceptedChanged($event) {
         this.IsAccepted = $event;
     }
     ngOnInit() {
+
+        this.ScreenWidth = window.innerWidth > this.MaxScreenWidth ? this.MaxScreenWidth : window.innerWidth;;
 
     }
     ngAfterViewInit() {
 
     }
     ShowFinalMessage: boolean = false;
-    SecurityKey:string = "";
-    Tenant : number = null;
+    SecurityKey: string = "";
+    Tenant: number = null;
     RunComponent() {
-        
+
         if (SessionLocator.IsExternalParams) {
             if (SessionLocator.ExternalParams) {
                 if (SessionLocator.ExternalParams.Menu && SessionLocator.ExternalParams.Menu.toLocaleLowerCase() == "preq") {
@@ -149,7 +155,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
                 if (this.RefreshTimer) {
                     clearTimeout(this.RefreshTimer);
                 }
-                
+
                 this.RefreshTimer = setInterval(() => this.ReloadPage(), 1200000);//1200000
             }
             else {
@@ -195,7 +201,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
                     this.ShowFinalMessage = true;
                 }
             });
-        } 
+        }
     }
     private companyLogo: string = "";
     public get CompanyLogo() { return this.companyLogo }
@@ -273,6 +279,9 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
     public get TermsOfUseDocumentId() { return this.AdditionalData.RequestPaymentData.TermsOfUseDocumentId }
     public set TermsOfUseDocumentId(newValue: string) { this.AdditionalData.RequestPaymentData.TermsOfUseDocumentId = newValue; }
 
+    public get u71() { return this.AdditionalData.PaymentData.u71 }
+    public set u71(newValue: string) { this.AdditionalData.PaymentData.u71 = newValue; }
+
 
 
     ShowPaymentDetailsScreen: boolean = false;
@@ -300,14 +309,14 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
     }
 
     ViewAggreement() {
-        this._documentsFilingExtendedPMService.getDocumentsFilingsByCode(this.TermsOfUseDocumentId).subscribe(myResult => {
-             
-            if (myResult.Result) { 
-                var securityId = myResult.Result.SecurityId;
-                DownloadManager.DownloadPage(null, securityId);
-            }
-        });
-      
+        //this._documentsFilingExtendedPMService.getDocumentsFilingsByCode(this.TermsOfUseDocumentId).subscribe(myResult => {
+
+        //if (myResult.Result) { 
+        //var securityId = myResult.Result.SecurityId;
+        DownloadManager.DownloadExternalPage(null, this.Tenant, this.TermsOfUseDocumentId);
+        //  }
+        //});
+
     }
 
 

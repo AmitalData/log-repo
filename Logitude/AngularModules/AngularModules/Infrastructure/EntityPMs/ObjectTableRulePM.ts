@@ -23,6 +23,7 @@ export class ObjectTableRulePM {
     public RuleNotificationTypeCode: string;
     public TriggerTypeCode: string;
     public TriggerFieldId: string;
+    public TriggerFieldCode: string;
     public ActiveForNew: boolean;
     public ActiveForUpdate: boolean;
     public Internal: boolean;

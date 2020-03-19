@@ -51,6 +51,13 @@ public void GenerateEntityMap(string xmlFilePath,string outputFilePath)
 		entitymapnamespacestring = GetEntityMapNameSpace(outputFilePath);
     }
     var entity = FromEntityMapFile(xmlFilePath);
+		 if( entity.IsMetadataOnlyTable.GetType() == typeof(string))
+      	{
+	    	if(entity.IsMetadataOnlyTable == "true")
+	    	{
+	    		return;
+	    	}
+	    } 
     WriteEntityMapMethod(entity);
     SaveEntityMapOutput(outputFilePath);
     

@@ -1787,7 +1787,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
@@ -1856,7 +1856,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
@@ -12039,6 +12039,130 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
+					 						FieldName =  "FromPortCountry",
+					  						OldFieldName =  "FromPortCountry",
+					  						ObjectTableName =  "Quote",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  120,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  120,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "FromPortCountry",
+					  						ListPropertyPath =  "FromPortCountry",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Quote",
+					  						ValidForQuerySection2 =  "QuoteFollowUp",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "FromPortCountry",
+					  						DefaultText =  "From Port Country",
+					  						FullLocalDefaultText =  "FromPortCountry",
+					  						ListFieldLable =  "FromPortCountryListLable",
+					  						ListLableDefaultText =  "From Port Country",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "ToPortCountry",
+					  						OldFieldName =  "ToPortCountry",
+					  						ObjectTableName =  "Quote",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  120,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  120,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "ToPortCountry",
+					  						ListPropertyPath =  "ToPortCountry",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Quote",
+					  						ValidForQuerySection2 =  "QuoteFollowUp",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "ToPortCountry",
+					  						DefaultText =  "To Port Country",
+					  						FullLocalDefaultText =  "ToPortCountry",
+					  						ListFieldLable =  "ToPortCountryListLable",
+					  						ListLableDefaultText =  "To Port Country",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
 					 						FieldName =  "IsQuoteDataExternal",
 					  						OldFieldName =  "IsQuoteDataExternal",
 					  						ObjectTableName =  "Quote",
@@ -13301,6 +13425,473 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "RequestDate",
+					  						OldFieldName =  "RequestDate",
+					  						ObjectTableName =  "Quote",
+					  						FieldsDataType =  "DateTime",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "RequestDate",
+					  						ListPropertyPath =  "RequestDate",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Quote",
+					  						ValidForQuerySection2 =  "QuoteFollowUp",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "RequestDate",
+					  						DefaultText =  "Request Date",
+					  						ListFieldLable =  "RequestDateListLable",
+					  						ListLableDefaultText =  "Request Date",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "IsCreatedFromTicket",
+					  						OldFieldName =  "IsCreatedFromTicket",
+					  						ObjectTableName =  "Quote",
+					  						FieldsDataType =  "Boolean",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "IsCreatedFromTicket",
+					  						ListPropertyPath =  "IsCreatedFromTicket",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "IsCreatedFromTicket",
+					  						DefaultText =  "IsCreatedFromTicket",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "TicketCreateDate",
+					  						OldFieldName =  "TicketCreateDate",
+					  						ObjectTableName =  "Quote",
+					  						FieldsDataType =  "DateTime",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "TicketCreateDate",
+					  						ListPropertyPath =  "TicketCreateDate",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "TicketCreateDate",
+					  						DefaultText =  "TicketCreateDate",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "EstimatedProfitInLocal",
+					  						OldFieldName =  "EstimatedProfitInLocal",
+					  						ObjectTableName =  "Quote",
+					  						FieldsDataType =  "Double",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "EstimatedProfitInLocal",
+					  						ListPropertyPath =  "EstimatedProfitInLocal",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						DigitsAfterPoint =  2,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "EstimatedProfitInLocal",
+					  						DefaultText =  "Estimated Profit In Local",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "EstimatedProfitInProfit",
+					  						OldFieldName =  "EstimatedProfitInProfit",
+					  						ObjectTableName =  "Quote",
+					  						FieldsDataType =  "Double",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "EstimatedProfitInProfit",
+					  						ListPropertyPath =  "EstimatedProfitInProfit",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						DigitsAfterPoint =  2,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "EstimatedProfitInProfit",
+					  						DefaultText =  "Estimated Profit In Profit",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "ProfitCurrencyId",
+					  						OldFieldName =  "ProfitCurrencyId",
+					  						ObjectTableName =  "Quote",
+					  						FieldsDataType =  "LookUp",
+					  						MinLength =  0,
+					  						MaxLength =  15,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "ProfitCurrencyId",
+					  						ListPropertyPath =  "ProfitCurrencyId",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "ProfitCurrencyId",
+					  						DefaultText =  "Profit Currency",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "ProfitExchangeRate",
+					  						OldFieldName =  "ProfitExchangeRate",
+					  						ObjectTableName =  "Quote",
+					  						FieldsDataType =  "Double",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "ProfitExchangeRate",
+					  						ListPropertyPath =  "ProfitExchangeRate",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
+					  						DigitsAfterPoint =  0,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "ProfitExchangeRate",
+					  						DefaultText =  "Profit Exchange Rate",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "CountryForStatisticsId",
+					  						OldFieldName =  "CountryForStatisticsId",
+					  						ObjectTableName =  "Quote",
+					  						FieldsDataType =  "LookUp",
+					  						LookUpTableName =  "Country",
+					  						MinLength =  0,
+					  						MaxLength =  15,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "CountryForStatisticsId",
+					  						ListPropertyPath =  "CountryForStatisticsId",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Quote",
+					  						ValidForQuerySection2 =  "QuoteFollowUp",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "CountryForStatisticsId",
+					  						DefaultText =  "Country For Statistics Id",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
@@ -13332,7 +13923,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
  
 
 			   TextCode QuoteTextCode_4 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.Q.FollowUps", DefaultText = @"Follow Ups",LocalDefaultText = "Follow Ups", ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature QuoteFeature_4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "FOLLOWUPS", ObjectTableId = QuoteObjectTable.Id, Tenant = 0, NameTextCodeCode = "Master.Features.FollowUps", NameTextCodeDefaultText = "Follow Ups", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature QuoteFeature_4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "FOLLOWUPS", ObjectTableId = QuoteObjectTable.Id, Tenant = 0, NameTextCodeCode = "Quote.Features.FollowUps", NameTextCodeDefaultText = "Follow Ups", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
  
 
 			   TextCode QuoteTextCode_5 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.Q.AcceptedQuotes", DefaultText = @"Accepted Quotes",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
@@ -13370,407 +13961,407 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query CreatedQuotesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuoteTextCode_0.Id, NameTextCodeCode = QuoteTextCode_0.Code, Code = "Created Quotes",  QueryGroupCode = "QUOT", IndexOrder = 0, Tenant = 0, ObjectTableId = QuoteObjectTable.Id, QuerySection = "Quote", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = QuoteFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query CreatedQuotesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuoteTextCode_0.Id, NameTextCodeCode = QuoteTextCode_0.Code, ObjectTableName = "Quote", Code = "Created Quotes",  QueryGroupCode = "QUOT", IndexOrder = 0, Tenant = 0, ObjectTableId = QuoteObjectTable.Id, QuerySection = "Quote", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = QuoteFeature_0.Id,FeatureUniqeCode= QuoteFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn CreatedQuotesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedQuotesQuery.Id, IndexOrder = 0, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CreatedQuotesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedQuotesQuery.Id,QueryCode = CreatedQuotesQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn CreatedQuotesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedQuotesQuery.Id, IndexOrder = 1, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CreatedQuotesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedQuotesQuery.Id,QueryCode = CreatedQuotesQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn CreatedQuotesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedQuotesQuery.Id, IndexOrder = 2, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "OpenDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "OpenDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 90 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CreatedQuotesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedQuotesQuery.Id,QueryCode = CreatedQuotesQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "OpenDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "OpenDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 90 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn CreatedQuotesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedQuotesQuery.Id, IndexOrder = 3, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "QuoteNumber" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "QuoteNumber" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 84 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CreatedQuotesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedQuotesQuery.Id,QueryCode = CreatedQuotesQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "QuoteNumber" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "QuoteNumber" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 84 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn CreatedQuotesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedQuotesQuery.Id, IndexOrder = 4, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "Shipper" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "Shipper" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 127 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CreatedQuotesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedQuotesQuery.Id,QueryCode = CreatedQuotesQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "Shipper" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "Shipper" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 127 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn CreatedQuotesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedQuotesQuery.Id, IndexOrder = 5, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "Consignee" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "Consignee" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 146 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CreatedQuotesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedQuotesQuery.Id,QueryCode = CreatedQuotesQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "Consignee" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "Consignee" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 146 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn CreatedQuotesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedQuotesQuery.Id, IndexOrder = 6, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "MainCarriageCarrierName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "MainCarriageCarrierName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 127 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CreatedQuotesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedQuotesQuery.Id,QueryCode = CreatedQuotesQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "MainCarriageCarrierName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "MainCarriageCarrierName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 127 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn CreatedQuotesQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedQuotesQuery.Id, IndexOrder = 7, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "FromPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "FromPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 40 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CreatedQuotesQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedQuotesQuery.Id,QueryCode = CreatedQuotesQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "FromPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "FromPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 40 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn CreatedQuotesQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedQuotesQuery.Id, IndexOrder = 8, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ToPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ToPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 40 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CreatedQuotesQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedQuotesQuery.Id,QueryCode = CreatedQuotesQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ToPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ToPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 40 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn CreatedQuotesQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedQuotesQuery.Id, IndexOrder = 9, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "QuoteTypeName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "QuoteTypeName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 127 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CreatedQuotesQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedQuotesQuery.Id,QueryCode = CreatedQuotesQuery.UniqueCode, IndexOrder = 9, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "QuoteTypeName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "QuoteTypeName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 127 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn CreatedQuotesQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedQuotesQuery.Id, IndexOrder = 10, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ShipmentType" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ShipmentType" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 92 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CreatedQuotesQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedQuotesQuery.Id,QueryCode = CreatedQuotesQuery.UniqueCode, IndexOrder = 10, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ShipmentType" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ShipmentType" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 92 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn CreatedQuotesQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedQuotesQuery.Id, IndexOrder = 11, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ExpirationDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ExpirationDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 92 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CreatedQuotesQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedQuotesQuery.Id,QueryCode = CreatedQuotesQuery.UniqueCode, IndexOrder = 11, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ExpirationDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ExpirationDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 92 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter CreatedQuotesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "IsCreatedQuote" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "IsCreatedQuote" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = CreatedQuotesQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter CreatedQuotesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "IsCreatedQuote" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "IsCreatedQuote" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = CreatedQuotesQuery.Id,QueryCode = CreatedQuotesQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
 
-			  Query DraftQuotesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuoteTextCode_1.Id, NameTextCodeCode = QuoteTextCode_1.Code, Code = "Draft Quotes",  QueryGroupCode = "QUOT", IndexOrder = 1, Tenant = 0, ObjectTableId = QuoteObjectTable.Id, QuerySection = "Quote", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = QuoteFeature_1.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query DraftQuotesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuoteTextCode_1.Id, NameTextCodeCode = QuoteTextCode_1.Code, ObjectTableName = "Quote", Code = "Draft Quotes",  QueryGroupCode = "QUOT", IndexOrder = 1, Tenant = 0, ObjectTableId = QuoteObjectTable.Id, QuerySection = "Quote", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = QuoteFeature_1.Id,FeatureUniqeCode= QuoteFeature_1.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn DraftQuotesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftQuotesQuery.Id, IndexOrder = 0, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DraftQuotesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftQuotesQuery.Id,QueryCode = DraftQuotesQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn DraftQuotesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftQuotesQuery.Id, IndexOrder = 1, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DraftQuotesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftQuotesQuery.Id,QueryCode = DraftQuotesQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn DraftQuotesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftQuotesQuery.Id, IndexOrder = 2, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "OpenDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "OpenDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 90 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DraftQuotesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftQuotesQuery.Id,QueryCode = DraftQuotesQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "OpenDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "OpenDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 90 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn DraftQuotesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftQuotesQuery.Id, IndexOrder = 3, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "QuoteNumber" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "QuoteNumber" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 84 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DraftQuotesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftQuotesQuery.Id,QueryCode = DraftQuotesQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "QuoteNumber" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "QuoteNumber" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 84 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn DraftQuotesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftQuotesQuery.Id, IndexOrder = 4, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "Shipper" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "Shipper" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 127 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DraftQuotesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftQuotesQuery.Id,QueryCode = DraftQuotesQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "Shipper" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "Shipper" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 127 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn DraftQuotesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftQuotesQuery.Id, IndexOrder = 5, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "Consignee" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "Consignee" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 146 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DraftQuotesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftQuotesQuery.Id,QueryCode = DraftQuotesQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "Consignee" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "Consignee" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 146 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn DraftQuotesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftQuotesQuery.Id, IndexOrder = 6, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "MainCarriageCarrierName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "MainCarriageCarrierName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 127 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DraftQuotesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftQuotesQuery.Id,QueryCode = DraftQuotesQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "MainCarriageCarrierName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "MainCarriageCarrierName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 127 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn DraftQuotesQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftQuotesQuery.Id, IndexOrder = 7, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "FromPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "FromPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 40 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DraftQuotesQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftQuotesQuery.Id,QueryCode = DraftQuotesQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "FromPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "FromPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 40 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn DraftQuotesQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftQuotesQuery.Id, IndexOrder = 8, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ToPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ToPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 40 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DraftQuotesQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftQuotesQuery.Id,QueryCode = DraftQuotesQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ToPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ToPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 40 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn DraftQuotesQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftQuotesQuery.Id, IndexOrder = 9, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "QuoteTypeName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "QuoteTypeName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 127 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DraftQuotesQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftQuotesQuery.Id,QueryCode = DraftQuotesQuery.UniqueCode, IndexOrder = 9, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "QuoteTypeName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "QuoteTypeName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 127 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn DraftQuotesQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftQuotesQuery.Id, IndexOrder = 10, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ShipmentType" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ShipmentType" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 92 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DraftQuotesQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftQuotesQuery.Id,QueryCode = DraftQuotesQuery.UniqueCode, IndexOrder = 10, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ShipmentType" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ShipmentType" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 92 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn DraftQuotesQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftQuotesQuery.Id, IndexOrder = 11, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ExpirationDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ExpirationDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 92 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DraftQuotesQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftQuotesQuery.Id,QueryCode = DraftQuotesQuery.UniqueCode, IndexOrder = 11, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ExpirationDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ExpirationDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 92 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter DraftQuotesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "IsDraftQuote" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "IsDraftQuote" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = DraftQuotesQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter DraftQuotesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "IsDraftQuote" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "IsDraftQuote" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = DraftQuotesQuery.Id,QueryCode = DraftQuotesQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
 
-			  Query SentQuotesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuoteTextCode_2.Id, NameTextCodeCode = QuoteTextCode_2.Code, Code = "Sent Quotes",  QueryGroupCode = "QUOT", IndexOrder = 2, Tenant = 0, ObjectTableId = QuoteObjectTable.Id, QuerySection = "Quote", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = QuoteFeature_2.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query SentQuotesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuoteTextCode_2.Id, NameTextCodeCode = QuoteTextCode_2.Code, ObjectTableName = "Quote", Code = "Sent Quotes",  QueryGroupCode = "QUOT", IndexOrder = 2, Tenant = 0, ObjectTableId = QuoteObjectTable.Id, QuerySection = "Quote", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = QuoteFeature_2.Id,FeatureUniqeCode= QuoteFeature_2.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn SentQuotesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SentQuotesQuery.Id, IndexOrder = 0, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn SentQuotesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SentQuotesQuery.Id,QueryCode = SentQuotesQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn SentQuotesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SentQuotesQuery.Id, IndexOrder = 1, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn SentQuotesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SentQuotesQuery.Id,QueryCode = SentQuotesQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn SentQuotesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SentQuotesQuery.Id, IndexOrder = 2, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "OpenDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "OpenDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 90 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn SentQuotesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SentQuotesQuery.Id,QueryCode = SentQuotesQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "OpenDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "OpenDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 90 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn SentQuotesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SentQuotesQuery.Id, IndexOrder = 3, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "QuoteNumber" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "QuoteNumber" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 84 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn SentQuotesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SentQuotesQuery.Id,QueryCode = SentQuotesQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "QuoteNumber" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "QuoteNumber" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 84 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn SentQuotesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SentQuotesQuery.Id, IndexOrder = 4, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "Shipper" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "Shipper" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 127 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn SentQuotesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SentQuotesQuery.Id,QueryCode = SentQuotesQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "Shipper" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "Shipper" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 127 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn SentQuotesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SentQuotesQuery.Id, IndexOrder = 5, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "Consignee" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "Consignee" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 146 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn SentQuotesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SentQuotesQuery.Id,QueryCode = SentQuotesQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "Consignee" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "Consignee" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 146 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn SentQuotesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SentQuotesQuery.Id, IndexOrder = 6, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "MainCarriageCarrierName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "MainCarriageCarrierName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 127 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn SentQuotesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SentQuotesQuery.Id,QueryCode = SentQuotesQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "MainCarriageCarrierName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "MainCarriageCarrierName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 127 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn SentQuotesQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SentQuotesQuery.Id, IndexOrder = 7, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "FromPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "FromPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 40 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn SentQuotesQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SentQuotesQuery.Id,QueryCode = SentQuotesQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "FromPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "FromPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 40 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn SentQuotesQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SentQuotesQuery.Id, IndexOrder = 8, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ToPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ToPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 40 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn SentQuotesQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SentQuotesQuery.Id,QueryCode = SentQuotesQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ToPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ToPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 40 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn SentQuotesQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SentQuotesQuery.Id, IndexOrder = 9, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "QuoteTypeName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "QuoteTypeName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 127 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn SentQuotesQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SentQuotesQuery.Id,QueryCode = SentQuotesQuery.UniqueCode, IndexOrder = 9, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "QuoteTypeName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "QuoteTypeName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 127 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn SentQuotesQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SentQuotesQuery.Id, IndexOrder = 10, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ShipmentType" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ShipmentType" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 92 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn SentQuotesQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SentQuotesQuery.Id,QueryCode = SentQuotesQuery.UniqueCode, IndexOrder = 10, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ShipmentType" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ShipmentType" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 92 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn SentQuotesQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SentQuotesQuery.Id, IndexOrder = 11, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ExpirationDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ExpirationDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 92 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn SentQuotesQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SentQuotesQuery.Id,QueryCode = SentQuotesQuery.UniqueCode, IndexOrder = 11, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ExpirationDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ExpirationDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 92 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter SentQuotesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "IsSentQuote" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "IsSentQuote" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = SentQuotesQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter SentQuotesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "IsSentQuote" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "IsSentQuote" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = SentQuotesQuery.Id,QueryCode = SentQuotesQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
 
-			  Query ExpiredQuotesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuoteTextCode_3.Id, NameTextCodeCode = QuoteTextCode_3.Code, Code = "Expired Quotes",  QueryGroupCode = "QUOT", IndexOrder = 3, Tenant = 0, ObjectTableId = QuoteObjectTable.Id, QuerySection = "Quote", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = QuoteFeature_3.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query ExpiredQuotesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuoteTextCode_3.Id, NameTextCodeCode = QuoteTextCode_3.Code, ObjectTableName = "Quote", Code = "Expired Quotes",  QueryGroupCode = "QUOT", IndexOrder = 3, Tenant = 0, ObjectTableId = QuoteObjectTable.Id, QuerySection = "Quote", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = QuoteFeature_3.Id,FeatureUniqeCode= QuoteFeature_3.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn ExpiredQuotesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExpiredQuotesQuery.Id, IndexOrder = 0, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ExpiredQuotesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExpiredQuotesQuery.Id,QueryCode = ExpiredQuotesQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ExpiredQuotesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExpiredQuotesQuery.Id, IndexOrder = 1, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ExpiredQuotesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExpiredQuotesQuery.Id,QueryCode = ExpiredQuotesQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ExpiredQuotesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExpiredQuotesQuery.Id, IndexOrder = 2, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "OpenDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "OpenDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 90 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ExpiredQuotesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExpiredQuotesQuery.Id,QueryCode = ExpiredQuotesQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "OpenDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "OpenDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 90 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ExpiredQuotesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExpiredQuotesQuery.Id, IndexOrder = 3, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "StageName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "StageName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ExpiredQuotesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExpiredQuotesQuery.Id,QueryCode = ExpiredQuotesQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "StageName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "StageName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ExpiredQuotesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExpiredQuotesQuery.Id, IndexOrder = 4, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "QuoteNumber" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "QuoteNumber" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 84 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ExpiredQuotesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExpiredQuotesQuery.Id,QueryCode = ExpiredQuotesQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "QuoteNumber" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "QuoteNumber" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 84 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ExpiredQuotesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExpiredQuotesQuery.Id, IndexOrder = 5, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "Shipper" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "Shipper" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 127 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ExpiredQuotesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExpiredQuotesQuery.Id,QueryCode = ExpiredQuotesQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "Shipper" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "Shipper" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 127 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ExpiredQuotesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExpiredQuotesQuery.Id, IndexOrder = 6, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "Consignee" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "Consignee" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 146 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ExpiredQuotesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExpiredQuotesQuery.Id,QueryCode = ExpiredQuotesQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "Consignee" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "Consignee" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 146 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ExpiredQuotesQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExpiredQuotesQuery.Id, IndexOrder = 7, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "MainCarriageCarrierName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "MainCarriageCarrierName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 127 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ExpiredQuotesQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExpiredQuotesQuery.Id,QueryCode = ExpiredQuotesQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "MainCarriageCarrierName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "MainCarriageCarrierName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 127 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ExpiredQuotesQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExpiredQuotesQuery.Id, IndexOrder = 8, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "FromPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "FromPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 40 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ExpiredQuotesQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExpiredQuotesQuery.Id,QueryCode = ExpiredQuotesQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "FromPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "FromPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 40 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ExpiredQuotesQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExpiredQuotesQuery.Id, IndexOrder = 9, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ToPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ToPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 40 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ExpiredQuotesQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExpiredQuotesQuery.Id,QueryCode = ExpiredQuotesQuery.UniqueCode, IndexOrder = 9, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ToPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ToPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 40 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ExpiredQuotesQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExpiredQuotesQuery.Id, IndexOrder = 10, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "QuoteTypeName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "QuoteTypeName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 127 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ExpiredQuotesQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExpiredQuotesQuery.Id,QueryCode = ExpiredQuotesQuery.UniqueCode, IndexOrder = 10, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "QuoteTypeName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "QuoteTypeName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 127 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ExpiredQuotesQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExpiredQuotesQuery.Id, IndexOrder = 11, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ShipmentType" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ShipmentType" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 92 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ExpiredQuotesQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExpiredQuotesQuery.Id,QueryCode = ExpiredQuotesQuery.UniqueCode, IndexOrder = 11, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ShipmentType" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ShipmentType" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 92 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ExpiredQuotesQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExpiredQuotesQuery.Id, IndexOrder = 12, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ExpirationDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ExpirationDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 92 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ExpiredQuotesQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExpiredQuotesQuery.Id,QueryCode = ExpiredQuotesQuery.UniqueCode, IndexOrder = 12, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ExpirationDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ExpirationDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 92 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter ExpiredQuotesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "IsExpiredQuote" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "IsExpiredQuote" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = ExpiredQuotesQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter ExpiredQuotesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "IsExpiredQuote" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "IsExpiredQuote" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = ExpiredQuotesQuery.Id,QueryCode = ExpiredQuotesQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
 
-			  Query FollowUpsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuoteTextCode_4.Id, NameTextCodeCode = QuoteTextCode_4.Code, Code = "Follow Ups",  QueryGroupCode = "QFLU", IndexOrder = 4, Tenant = 0, ObjectTableId = QuoteObjectTable.Id, QuerySection = "QuoteFollowUp", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = QuoteFeature_4.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query FollowUpsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuoteTextCode_4.Id, NameTextCodeCode = QuoteTextCode_4.Code, ObjectTableName = "Quote", Code = "Follow Ups",  QueryGroupCode = "QFLU", IndexOrder = 4, Tenant = 0, ObjectTableId = QuoteObjectTable.Id, QuerySection = "QuoteFollowUp", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = QuoteFeature_4.Id,FeatureUniqeCode= QuoteFeature_4.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn FollowUpsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FollowUpsQuery.Id, IndexOrder = 0, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn FollowUpsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FollowUpsQuery.Id,QueryCode = FollowUpsQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn FollowUpsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FollowUpsQuery.Id, IndexOrder = 1, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn FollowUpsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FollowUpsQuery.Id,QueryCode = FollowUpsQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn FollowUpsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FollowUpsQuery.Id, IndexOrder = 2, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "FollowUpDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "FollowUpDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 70 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn FollowUpsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FollowUpsQuery.Id,QueryCode = FollowUpsQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "FollowUpDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "FollowUpDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 70 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn FollowUpsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FollowUpsQuery.Id, IndexOrder = 3, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "FollowUpType" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "FollowUpType" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 115 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn FollowUpsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FollowUpsQuery.Id,QueryCode = FollowUpsQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "FollowUpType" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "FollowUpType" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 115 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn FollowUpsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FollowUpsQuery.Id, IndexOrder = 4, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "FollowUpNotes" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "FollowUpNotes" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn FollowUpsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FollowUpsQuery.Id,QueryCode = FollowUpsQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "FollowUpNotes" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "FollowUpNotes" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn FollowUpsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FollowUpsQuery.Id, IndexOrder = 5, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "Shipper" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "Shipper" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 127 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn FollowUpsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FollowUpsQuery.Id,QueryCode = FollowUpsQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "Shipper" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "Shipper" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 127 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn FollowUpsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FollowUpsQuery.Id, IndexOrder = 6, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "FromPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "FromPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 40 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn FollowUpsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FollowUpsQuery.Id,QueryCode = FollowUpsQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "FromPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "FromPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 40 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn FollowUpsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FollowUpsQuery.Id, IndexOrder = 7, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ToPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ToPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 40 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn FollowUpsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FollowUpsQuery.Id,QueryCode = FollowUpsQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ToPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ToPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 40 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn FollowUpsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FollowUpsQuery.Id, IndexOrder = 8, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ExpirationDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ExpirationDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 90 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn FollowUpsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FollowUpsQuery.Id,QueryCode = FollowUpsQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ExpirationDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ExpirationDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 90 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn FollowUpsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FollowUpsQuery.Id, IndexOrder = 9, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "QuoteNumber" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "QuoteNumber" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 84 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn FollowUpsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FollowUpsQuery.Id,QueryCode = FollowUpsQuery.UniqueCode, IndexOrder = 9, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "QuoteNumber" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "QuoteNumber" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 84 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn FollowUpsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FollowUpsQuery.Id, IndexOrder = 10, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ShipmentType" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ShipmentType" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 92 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn FollowUpsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FollowUpsQuery.Id,QueryCode = FollowUpsQuery.UniqueCode, IndexOrder = 10, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ShipmentType" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ShipmentType" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 92 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn FollowUpsQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FollowUpsQuery.Id, IndexOrder = 11, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "FollowUpOwner" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "FollowUpOwner" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 127 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn FollowUpsQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FollowUpsQuery.Id,QueryCode = FollowUpsQuery.UniqueCode, IndexOrder = 11, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "FollowUpOwner" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "FollowUpOwner" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 127 }, queryColumnsRepository, tenantQueryColumns);
   
 	      
 
-			  Query AcceptedQuotesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuoteTextCode_5.Id, NameTextCodeCode = QuoteTextCode_5.Code, Code = "Accepted Quotes",  QueryGroupCode = "QUOT", IndexOrder = 5, Tenant = 0, ObjectTableId = QuoteObjectTable.Id, QuerySection = "Quote", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = QuoteFeature_5.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AcceptedQuotesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuoteTextCode_5.Id, NameTextCodeCode = QuoteTextCode_5.Code, ObjectTableName = "Quote", Code = "Accepted Quotes",  QueryGroupCode = "QUOT", IndexOrder = 5, Tenant = 0, ObjectTableId = QuoteObjectTable.Id, QuerySection = "Quote", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = QuoteFeature_5.Id,FeatureUniqeCode= QuoteFeature_5.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn AcceptedQuotesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AcceptedQuotesQuery.Id, IndexOrder = 0, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AcceptedQuotesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AcceptedQuotesQuery.Id,QueryCode = AcceptedQuotesQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AcceptedQuotesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AcceptedQuotesQuery.Id, IndexOrder = 1, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AcceptedQuotesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AcceptedQuotesQuery.Id,QueryCode = AcceptedQuotesQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AcceptedQuotesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AcceptedQuotesQuery.Id, IndexOrder = 2, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "OpenDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "OpenDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 90 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AcceptedQuotesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AcceptedQuotesQuery.Id,QueryCode = AcceptedQuotesQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "OpenDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "OpenDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 90 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AcceptedQuotesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AcceptedQuotesQuery.Id, IndexOrder = 3, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "QuoteNumber" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "QuoteNumber" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 84 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AcceptedQuotesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AcceptedQuotesQuery.Id,QueryCode = AcceptedQuotesQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "QuoteNumber" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "QuoteNumber" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 84 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AcceptedQuotesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AcceptedQuotesQuery.Id, IndexOrder = 4, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "Shipper" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "Shipper" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 127 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AcceptedQuotesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AcceptedQuotesQuery.Id,QueryCode = AcceptedQuotesQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "Shipper" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "Shipper" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 127 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AcceptedQuotesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AcceptedQuotesQuery.Id, IndexOrder = 5, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "Consignee" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "Consignee" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 146 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AcceptedQuotesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AcceptedQuotesQuery.Id,QueryCode = AcceptedQuotesQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "Consignee" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "Consignee" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 146 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AcceptedQuotesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AcceptedQuotesQuery.Id, IndexOrder = 6, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "MainCarriageCarrierName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "MainCarriageCarrierName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 127 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AcceptedQuotesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AcceptedQuotesQuery.Id,QueryCode = AcceptedQuotesQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "MainCarriageCarrierName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "MainCarriageCarrierName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 127 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AcceptedQuotesQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AcceptedQuotesQuery.Id, IndexOrder = 7, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "FromPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "FromPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 40 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AcceptedQuotesQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AcceptedQuotesQuery.Id,QueryCode = AcceptedQuotesQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "FromPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "FromPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 40 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AcceptedQuotesQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AcceptedQuotesQuery.Id, IndexOrder = 8, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ToPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ToPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 40 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AcceptedQuotesQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AcceptedQuotesQuery.Id,QueryCode = AcceptedQuotesQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ToPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ToPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 40 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AcceptedQuotesQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AcceptedQuotesQuery.Id, IndexOrder = 9, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "QuoteTypeName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "QuoteTypeName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 127 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AcceptedQuotesQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AcceptedQuotesQuery.Id,QueryCode = AcceptedQuotesQuery.UniqueCode, IndexOrder = 9, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "QuoteTypeName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "QuoteTypeName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 127 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AcceptedQuotesQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AcceptedQuotesQuery.Id, IndexOrder = 10, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ShipmentType" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ShipmentType" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 92 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AcceptedQuotesQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AcceptedQuotesQuery.Id,QueryCode = AcceptedQuotesQuery.UniqueCode, IndexOrder = 10, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ShipmentType" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ShipmentType" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 92 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AcceptedQuotesQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AcceptedQuotesQuery.Id, IndexOrder = 11, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ExpirationDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ExpirationDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 92 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AcceptedQuotesQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AcceptedQuotesQuery.Id,QueryCode = AcceptedQuotesQuery.UniqueCode, IndexOrder = 11, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ExpirationDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ExpirationDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 92 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter AcceptedQuotesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "IsAcceptedQuote" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "IsAcceptedQuote" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = AcceptedQuotesQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
-
-  
-	      
-
-			  Query AcceptedWithoutShipmentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuoteTextCode_6.Id, NameTextCodeCode = QuoteTextCode_6.Code, Code = "Accepted Without Shipments",  QueryGroupCode = "QUOT", IndexOrder = 6, Tenant = 0, ObjectTableId = QuoteObjectTable.Id, QuerySection = "Quote", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = QuoteFeature_6.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
-	
-			 QueryColumn AcceptedWithoutShipmentsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AcceptedWithoutShipmentsQuery.Id, IndexOrder = 0, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn AcceptedWithoutShipmentsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AcceptedWithoutShipmentsQuery.Id, IndexOrder = 1, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn AcceptedWithoutShipmentsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AcceptedWithoutShipmentsQuery.Id, IndexOrder = 2, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "OpenDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "OpenDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 90 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn AcceptedWithoutShipmentsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AcceptedWithoutShipmentsQuery.Id, IndexOrder = 3, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "QuoteNumber" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "QuoteNumber" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 84 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn AcceptedWithoutShipmentsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AcceptedWithoutShipmentsQuery.Id, IndexOrder = 4, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "Shipper" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "Shipper" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 127 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn AcceptedWithoutShipmentsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AcceptedWithoutShipmentsQuery.Id, IndexOrder = 5, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "Consignee" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "Consignee" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 146 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn AcceptedWithoutShipmentsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AcceptedWithoutShipmentsQuery.Id, IndexOrder = 6, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "MainCarriageCarrierName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "MainCarriageCarrierName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 127 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn AcceptedWithoutShipmentsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AcceptedWithoutShipmentsQuery.Id, IndexOrder = 7, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "FromPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "FromPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 40 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn AcceptedWithoutShipmentsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AcceptedWithoutShipmentsQuery.Id, IndexOrder = 8, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ToPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ToPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 40 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn AcceptedWithoutShipmentsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AcceptedWithoutShipmentsQuery.Id, IndexOrder = 9, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "QuoteTypeName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "QuoteTypeName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 127 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn AcceptedWithoutShipmentsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AcceptedWithoutShipmentsQuery.Id, IndexOrder = 10, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ShipmentType" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ShipmentType" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 92 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn AcceptedWithoutShipmentsQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AcceptedWithoutShipmentsQuery.Id, IndexOrder = 11, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ExpirationDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ExpirationDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 92 }, queryColumnsRepository, tenantQueryColumns);
-
-             AdvancedQueryFilter AcceptedWithoutShipmentsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "AcceptedWithoutShipments" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "AcceptedWithoutShipments" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = AcceptedWithoutShipmentsQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter AcceptedQuotesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "IsAcceptedQuote" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "IsAcceptedQuote" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = AcceptedQuotesQuery.Id,QueryCode = AcceptedQuotesQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
 
-			  Query AllQuotesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuoteTextCode_7.Id, NameTextCodeCode = QuoteTextCode_7.Code, Code = "All Quotes",  QueryGroupCode = "QUOT", IndexOrder = 7, Tenant = 0, ObjectTableId = QuoteObjectTable.Id, QuerySection = "Quote", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = QuoteFeature_7.Id, DefaultSortName = "OpenDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query AcceptedWithoutShipmentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuoteTextCode_6.Id, NameTextCodeCode = QuoteTextCode_6.Code, ObjectTableName = "Quote", Code = "Accepted Without Shipments",  QueryGroupCode = "QUOT", IndexOrder = 6, Tenant = 0, ObjectTableId = QuoteObjectTable.Id, QuerySection = "Quote", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = QuoteFeature_6.Id,FeatureUniqeCode= QuoteFeature_6.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn AllQuotesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllQuotesQuery.Id, IndexOrder = 0, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AcceptedWithoutShipmentsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AcceptedWithoutShipmentsQuery.Id,QueryCode = AcceptedWithoutShipmentsQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllQuotesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllQuotesQuery.Id, IndexOrder = 1, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AcceptedWithoutShipmentsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AcceptedWithoutShipmentsQuery.Id,QueryCode = AcceptedWithoutShipmentsQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllQuotesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllQuotesQuery.Id, IndexOrder = 2, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "OpenDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "OpenDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 90 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AcceptedWithoutShipmentsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AcceptedWithoutShipmentsQuery.Id,QueryCode = AcceptedWithoutShipmentsQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "OpenDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "OpenDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 90 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllQuotesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllQuotesQuery.Id, IndexOrder = 3, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "StageName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "StageName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AcceptedWithoutShipmentsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AcceptedWithoutShipmentsQuery.Id,QueryCode = AcceptedWithoutShipmentsQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "QuoteNumber" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "QuoteNumber" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 84 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllQuotesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllQuotesQuery.Id, IndexOrder = 4, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "QuoteNumber" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "QuoteNumber" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 84 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AcceptedWithoutShipmentsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AcceptedWithoutShipmentsQuery.Id,QueryCode = AcceptedWithoutShipmentsQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "Shipper" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "Shipper" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 127 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllQuotesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllQuotesQuery.Id, IndexOrder = 5, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "Shipper" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "Shipper" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 127 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AcceptedWithoutShipmentsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AcceptedWithoutShipmentsQuery.Id,QueryCode = AcceptedWithoutShipmentsQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "Consignee" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "Consignee" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 146 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllQuotesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllQuotesQuery.Id, IndexOrder = 6, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "MainCarriageCarrierName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "MainCarriageCarrierName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 127 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AcceptedWithoutShipmentsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AcceptedWithoutShipmentsQuery.Id,QueryCode = AcceptedWithoutShipmentsQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "MainCarriageCarrierName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "MainCarriageCarrierName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 127 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllQuotesQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllQuotesQuery.Id, IndexOrder = 7, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "FromPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "FromPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 40 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AcceptedWithoutShipmentsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AcceptedWithoutShipmentsQuery.Id,QueryCode = AcceptedWithoutShipmentsQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "FromPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "FromPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 40 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllQuotesQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllQuotesQuery.Id, IndexOrder = 8, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ToPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ToPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 40 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AcceptedWithoutShipmentsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AcceptedWithoutShipmentsQuery.Id,QueryCode = AcceptedWithoutShipmentsQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ToPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ToPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 40 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllQuotesQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllQuotesQuery.Id, IndexOrder = 9, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "QuoteTypeName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "QuoteTypeName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 127 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AcceptedWithoutShipmentsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AcceptedWithoutShipmentsQuery.Id,QueryCode = AcceptedWithoutShipmentsQuery.UniqueCode, IndexOrder = 9, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "QuoteTypeName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "QuoteTypeName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 127 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllQuotesQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllQuotesQuery.Id, IndexOrder = 10, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ShipmentType" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ShipmentType" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 92 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AcceptedWithoutShipmentsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AcceptedWithoutShipmentsQuery.Id,QueryCode = AcceptedWithoutShipmentsQuery.UniqueCode, IndexOrder = 10, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ShipmentType" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ShipmentType" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 92 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllQuotesQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllQuotesQuery.Id, IndexOrder = 11, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ExpirationDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ExpirationDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 92 }, queryColumnsRepository, tenantQueryColumns);
-  
-	      
+			 QueryColumn AcceptedWithoutShipmentsQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AcceptedWithoutShipmentsQuery.Id,QueryCode = AcceptedWithoutShipmentsQuery.UniqueCode, IndexOrder = 11, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ExpirationDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ExpirationDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 92 }, queryColumnsRepository, tenantQueryColumns);
 
-			  Query CancelledQuotesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuoteTextCode_8.Id, NameTextCodeCode = QuoteTextCode_8.Code, Code = "Cancelled Quotes",  QueryGroupCode = "QUOT", IndexOrder = 8, Tenant = 0, ObjectTableId = QuoteObjectTable.Id, QuerySection = "Quote", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = QuoteFeature_8.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
-	
-			 QueryColumn CancelledQuotesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledQuotesQuery.Id, IndexOrder = 0, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn CancelledQuotesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledQuotesQuery.Id, IndexOrder = 1, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn CancelledQuotesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledQuotesQuery.Id, IndexOrder = 2, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "OpenDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "OpenDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 90 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn CancelledQuotesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledQuotesQuery.Id, IndexOrder = 3, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "StageName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "StageName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn CancelledQuotesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledQuotesQuery.Id, IndexOrder = 4, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "QuoteNumber" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "QuoteNumber" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 84 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn CancelledQuotesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledQuotesQuery.Id, IndexOrder = 5, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "Shipper" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "Shipper" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 127 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn CancelledQuotesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledQuotesQuery.Id, IndexOrder = 6, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "Consignee" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "Consignee" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 146 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn CancelledQuotesQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledQuotesQuery.Id, IndexOrder = 7, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "MainCarriageCarrierName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "MainCarriageCarrierName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 127 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn CancelledQuotesQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledQuotesQuery.Id, IndexOrder = 8, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "FromPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "FromPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 40 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn CancelledQuotesQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledQuotesQuery.Id, IndexOrder = 9, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ToPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ToPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 40 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn CancelledQuotesQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledQuotesQuery.Id, IndexOrder = 10, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "QuoteTypeName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "QuoteTypeName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 127 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn CancelledQuotesQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledQuotesQuery.Id, IndexOrder = 11, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ShipmentType" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ShipmentType" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 92 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn CancelledQuotesQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledQuotesQuery.Id, IndexOrder = 12, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ExpirationDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ExpirationDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 92 }, queryColumnsRepository, tenantQueryColumns);
-
-             AdvancedQueryFilter CancelledQuotesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "IsCancelled" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "IsCancelled" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = CancelledQuotesQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter AcceptedWithoutShipmentsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "AcceptedWithoutShipments" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "AcceptedWithoutShipments" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = AcceptedWithoutShipmentsQuery.Id,QueryCode = AcceptedWithoutShipmentsQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
 
-			  Query AllFollowUpsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuoteTextCode_9.Id, NameTextCodeCode = QuoteTextCode_9.Code, Code = "All Follow Ups",  QueryGroupCode = "QFLU", IndexOrder = 9, Tenant = 0, ObjectTableId = QuoteObjectTable.Id, QuerySection = "QuoteFollowUp", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = QuoteFeature_9.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllQuotesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuoteTextCode_7.Id, NameTextCodeCode = QuoteTextCode_7.Code, ObjectTableName = "Quote", Code = "All Quotes",  QueryGroupCode = "QUOT", IndexOrder = 7, Tenant = 0, ObjectTableId = QuoteObjectTable.Id, QuerySection = "Quote", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = QuoteFeature_7.Id,FeatureUniqeCode= QuoteFeature_7.FeatureUniqeCode, DefaultSortName = "OpenDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn AllFollowUpsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllFollowUpsQuery.Id, IndexOrder = 0, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "StageName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "StageName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllQuotesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllQuotesQuery.Id,QueryCode = AllQuotesQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllFollowUpsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllFollowUpsQuery.Id, IndexOrder = 1, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllQuotesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllQuotesQuery.Id,QueryCode = AllQuotesQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllFollowUpsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllFollowUpsQuery.Id, IndexOrder = 2, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllQuotesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllQuotesQuery.Id,QueryCode = AllQuotesQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "OpenDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "OpenDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 90 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllFollowUpsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllFollowUpsQuery.Id, IndexOrder = 3, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "FollowUpDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "FollowUpDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 70 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllQuotesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllQuotesQuery.Id,QueryCode = AllQuotesQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "StageName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "StageName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllFollowUpsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllFollowUpsQuery.Id, IndexOrder = 4, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "FollowUpType" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "FollowUpType" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 115 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllQuotesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllQuotesQuery.Id,QueryCode = AllQuotesQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "QuoteNumber" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "QuoteNumber" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 84 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllFollowUpsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllFollowUpsQuery.Id, IndexOrder = 5, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "FollowUpNotes" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "FollowUpNotes" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllQuotesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllQuotesQuery.Id,QueryCode = AllQuotesQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "Shipper" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "Shipper" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 127 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllFollowUpsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllFollowUpsQuery.Id, IndexOrder = 6, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "Shipper" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "Shipper" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 127 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllQuotesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllQuotesQuery.Id,QueryCode = AllQuotesQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "MainCarriageCarrierName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "MainCarriageCarrierName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 127 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllFollowUpsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllFollowUpsQuery.Id, IndexOrder = 7, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "FromPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "FromPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 40 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllQuotesQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllQuotesQuery.Id,QueryCode = AllQuotesQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "FromPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "FromPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 40 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllFollowUpsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllFollowUpsQuery.Id, IndexOrder = 8, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ToPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ToPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 40 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllQuotesQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllQuotesQuery.Id,QueryCode = AllQuotesQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ToPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ToPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 40 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllFollowUpsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllFollowUpsQuery.Id, IndexOrder = 9, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ExpirationDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ExpirationDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 90 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllQuotesQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllQuotesQuery.Id,QueryCode = AllQuotesQuery.UniqueCode, IndexOrder = 9, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "QuoteTypeName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "QuoteTypeName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 127 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllFollowUpsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllFollowUpsQuery.Id, IndexOrder = 10, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "QuoteNumber" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "QuoteNumber" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 84 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllQuotesQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllQuotesQuery.Id,QueryCode = AllQuotesQuery.UniqueCode, IndexOrder = 10, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ShipmentType" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ShipmentType" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 92 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllFollowUpsQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllFollowUpsQuery.Id, IndexOrder = 11, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ShipmentType" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ShipmentType" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 92 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllQuotesQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllQuotesQuery.Id,QueryCode = AllQuotesQuery.UniqueCode, IndexOrder = 11, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ExpirationDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ExpirationDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 92 }, queryColumnsRepository, tenantQueryColumns);
+  
+	      
 
-			 QueryColumn AllFollowUpsQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllFollowUpsQuery.Id, IndexOrder = 12, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "FollowUpOwner" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "FollowUpOwner" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 127 }, queryColumnsRepository, tenantQueryColumns);
+			  Query CancelledQuotesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuoteTextCode_8.Id, NameTextCodeCode = QuoteTextCode_8.Code, ObjectTableName = "Quote", Code = "Cancelled Quotes",  QueryGroupCode = "QUOT", IndexOrder = 8, Tenant = 0, ObjectTableId = QuoteObjectTable.Id, QuerySection = "Quote", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = QuoteFeature_8.Id,FeatureUniqeCode= QuoteFeature_8.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+	
+			 QueryColumn CancelledQuotesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledQuotesQuery.Id,QueryCode = CancelledQuotesQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter AllFollowUpsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "AllFollowUps" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "AllFollowUps" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "12/6/2018 12:00:00 AM",PredefinedValue2 = null, QueryId = AllFollowUpsQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+			 QueryColumn CancelledQuotesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledQuotesQuery.Id,QueryCode = CancelledQuotesQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn CancelledQuotesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledQuotesQuery.Id,QueryCode = CancelledQuotesQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "OpenDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "OpenDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 90 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn CancelledQuotesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledQuotesQuery.Id,QueryCode = CancelledQuotesQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "StageName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "StageName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn CancelledQuotesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledQuotesQuery.Id,QueryCode = CancelledQuotesQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "QuoteNumber" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "QuoteNumber" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 84 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn CancelledQuotesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledQuotesQuery.Id,QueryCode = CancelledQuotesQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "Shipper" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "Shipper" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 127 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn CancelledQuotesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledQuotesQuery.Id,QueryCode = CancelledQuotesQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "Consignee" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "Consignee" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 146 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn CancelledQuotesQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledQuotesQuery.Id,QueryCode = CancelledQuotesQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "MainCarriageCarrierName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "MainCarriageCarrierName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 127 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn CancelledQuotesQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledQuotesQuery.Id,QueryCode = CancelledQuotesQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "FromPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "FromPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 40 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn CancelledQuotesQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledQuotesQuery.Id,QueryCode = CancelledQuotesQuery.UniqueCode, IndexOrder = 9, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ToPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ToPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 40 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn CancelledQuotesQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledQuotesQuery.Id,QueryCode = CancelledQuotesQuery.UniqueCode, IndexOrder = 10, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "QuoteTypeName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "QuoteTypeName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 127 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn CancelledQuotesQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledQuotesQuery.Id,QueryCode = CancelledQuotesQuery.UniqueCode, IndexOrder = 11, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ShipmentType" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ShipmentType" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 92 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn CancelledQuotesQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledQuotesQuery.Id,QueryCode = CancelledQuotesQuery.UniqueCode, IndexOrder = 12, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ExpirationDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ExpirationDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 92 }, queryColumnsRepository, tenantQueryColumns);
+
+             AdvancedQueryFilter CancelledQuotesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "IsCancelled" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "IsCancelled" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = CancelledQuotesQuery.Id,QueryCode = CancelledQuotesQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
 
-			  Query MyFollowUpsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuoteTextCode_10.Id, NameTextCodeCode = QuoteTextCode_10.Code, Code = "My Follow Ups",  QueryGroupCode = "QFLU", IndexOrder = 10, Tenant = 0, ObjectTableId = QuoteObjectTable.Id, QuerySection = "QuoteFollowUp", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = QuoteFeature_10.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllFollowUpsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuoteTextCode_9.Id, NameTextCodeCode = QuoteTextCode_9.Code, ObjectTableName = "Quote", Code = "All Follow Ups",  QueryGroupCode = "QFLU", IndexOrder = 9, Tenant = 0, ObjectTableId = QuoteObjectTable.Id, QuerySection = "QuoteFollowUp", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = QuoteFeature_9.Id,FeatureUniqeCode= QuoteFeature_9.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn MyFollowUpsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyFollowUpsQuery.Id, IndexOrder = 0, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "StageName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "StageName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllFollowUpsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllFollowUpsQuery.Id,QueryCode = AllFollowUpsQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "StageName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "StageName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn MyFollowUpsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyFollowUpsQuery.Id, IndexOrder = 1, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllFollowUpsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllFollowUpsQuery.Id,QueryCode = AllFollowUpsQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn MyFollowUpsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyFollowUpsQuery.Id, IndexOrder = 2, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllFollowUpsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllFollowUpsQuery.Id,QueryCode = AllFollowUpsQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn MyFollowUpsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyFollowUpsQuery.Id, IndexOrder = 3, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "FollowUpDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "FollowUpDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 70 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllFollowUpsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllFollowUpsQuery.Id,QueryCode = AllFollowUpsQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "FollowUpDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "FollowUpDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 70 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn MyFollowUpsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyFollowUpsQuery.Id, IndexOrder = 4, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "FollowUpType" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "FollowUpType" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 115 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllFollowUpsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllFollowUpsQuery.Id,QueryCode = AllFollowUpsQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "FollowUpType" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "FollowUpType" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 115 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn MyFollowUpsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyFollowUpsQuery.Id, IndexOrder = 5, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "FollowUpNotes" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "FollowUpNotes" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllFollowUpsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllFollowUpsQuery.Id,QueryCode = AllFollowUpsQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "FollowUpNotes" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "FollowUpNotes" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn MyFollowUpsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyFollowUpsQuery.Id, IndexOrder = 6, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "Shipper" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "Shipper" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 127 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllFollowUpsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllFollowUpsQuery.Id,QueryCode = AllFollowUpsQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "Shipper" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "Shipper" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 127 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn MyFollowUpsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyFollowUpsQuery.Id, IndexOrder = 7, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "FromPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "FromPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 40 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllFollowUpsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllFollowUpsQuery.Id,QueryCode = AllFollowUpsQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "FromPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "FromPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 40 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn MyFollowUpsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyFollowUpsQuery.Id, IndexOrder = 8, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ToPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ToPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 40 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllFollowUpsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllFollowUpsQuery.Id,QueryCode = AllFollowUpsQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ToPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ToPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 40 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn MyFollowUpsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyFollowUpsQuery.Id, IndexOrder = 9, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ExpirationDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ExpirationDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 90 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllFollowUpsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllFollowUpsQuery.Id,QueryCode = AllFollowUpsQuery.UniqueCode, IndexOrder = 9, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ExpirationDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ExpirationDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 90 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn MyFollowUpsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyFollowUpsQuery.Id, IndexOrder = 10, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "QuoteNumber" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "QuoteNumber" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 84 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllFollowUpsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllFollowUpsQuery.Id,QueryCode = AllFollowUpsQuery.UniqueCode, IndexOrder = 10, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "QuoteNumber" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "QuoteNumber" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 84 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn MyFollowUpsQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyFollowUpsQuery.Id, IndexOrder = 11, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ShipmentType" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ShipmentType" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 92 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllFollowUpsQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllFollowUpsQuery.Id,QueryCode = AllFollowUpsQuery.UniqueCode, IndexOrder = 11, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ShipmentType" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ShipmentType" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 92 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn MyFollowUpsQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyFollowUpsQuery.Id, IndexOrder = 12, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "FollowUpOwner" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "FollowUpOwner" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 127 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllFollowUpsQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllFollowUpsQuery.Id,QueryCode = AllFollowUpsQuery.UniqueCode, IndexOrder = 12, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "FollowUpOwner" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "FollowUpOwner" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 127 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter MyFollowUpsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "MyFollowUps" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "MyFollowUps" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "12/6/2018 12:00:00 AM",PredefinedValue2 = null, QueryId = MyFollowUpsQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter AllFollowUpsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "AllFollowUps" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "AllFollowUps" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "12/6/2018 12:00:00 AM",PredefinedValue2 = null, QueryId = AllFollowUpsQuery.Id,QueryCode = AllFollowUpsQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
 
-			  Query MyQuotesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuoteTextCode_11.Id, NameTextCodeCode = QuoteTextCode_11.Code, Code = "My Quotes",  QueryGroupCode = "QUOT", IndexOrder = 11, Tenant = 0, ObjectTableId = QuoteObjectTable.Id, QuerySection = "Quote", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = QuoteFeature_11.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query MyFollowUpsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuoteTextCode_10.Id, NameTextCodeCode = QuoteTextCode_10.Code, ObjectTableName = "Quote", Code = "My Follow Ups",  QueryGroupCode = "QFLU", IndexOrder = 10, Tenant = 0, ObjectTableId = QuoteObjectTable.Id, QuerySection = "QuoteFollowUp", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = QuoteFeature_10.Id,FeatureUniqeCode= QuoteFeature_10.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn MyQuotesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyQuotesQuery.Id, IndexOrder = 0, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn MyFollowUpsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyFollowUpsQuery.Id,QueryCode = MyFollowUpsQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "StageName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "StageName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn MyQuotesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyQuotesQuery.Id, IndexOrder = 1, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn MyFollowUpsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyFollowUpsQuery.Id,QueryCode = MyFollowUpsQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn MyQuotesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyQuotesQuery.Id, IndexOrder = 2, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "OpenDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "OpenDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 90 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn MyFollowUpsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyFollowUpsQuery.Id,QueryCode = MyFollowUpsQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn MyQuotesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyQuotesQuery.Id, IndexOrder = 3, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "StageName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "StageName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn MyFollowUpsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyFollowUpsQuery.Id,QueryCode = MyFollowUpsQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "FollowUpDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "FollowUpDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 70 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn MyQuotesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyQuotesQuery.Id, IndexOrder = 4, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "QuoteNumber" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "QuoteNumber" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 84 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn MyFollowUpsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyFollowUpsQuery.Id,QueryCode = MyFollowUpsQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "FollowUpType" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "FollowUpType" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 115 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn MyQuotesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyQuotesQuery.Id, IndexOrder = 5, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "Shipper" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "Shipper" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 127 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn MyFollowUpsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyFollowUpsQuery.Id,QueryCode = MyFollowUpsQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "FollowUpNotes" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "FollowUpNotes" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn MyQuotesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyQuotesQuery.Id, IndexOrder = 6, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "MainCarriageCarrierName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "MainCarriageCarrierName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 127 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn MyFollowUpsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyFollowUpsQuery.Id,QueryCode = MyFollowUpsQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "Shipper" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "Shipper" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 127 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn MyQuotesQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyQuotesQuery.Id, IndexOrder = 7, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "FromPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "FromPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 40 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn MyFollowUpsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyFollowUpsQuery.Id,QueryCode = MyFollowUpsQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "FromPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "FromPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 40 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn MyQuotesQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyQuotesQuery.Id, IndexOrder = 8, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ToPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ToPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 40 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn MyFollowUpsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyFollowUpsQuery.Id,QueryCode = MyFollowUpsQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ToPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ToPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 40 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn MyQuotesQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyQuotesQuery.Id, IndexOrder = 9, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "QuoteTypeName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "QuoteTypeName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 127 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn MyFollowUpsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyFollowUpsQuery.Id,QueryCode = MyFollowUpsQuery.UniqueCode, IndexOrder = 9, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ExpirationDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ExpirationDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 90 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn MyQuotesQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyQuotesQuery.Id, IndexOrder = 10, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ShipmentType" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ShipmentType" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 92 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn MyFollowUpsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyFollowUpsQuery.Id,QueryCode = MyFollowUpsQuery.UniqueCode, IndexOrder = 10, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "QuoteNumber" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "QuoteNumber" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 84 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn MyQuotesQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyQuotesQuery.Id, IndexOrder = 11, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ExpirationDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ExpirationDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 92 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn MyFollowUpsQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyFollowUpsQuery.Id,QueryCode = MyFollowUpsQuery.UniqueCode, IndexOrder = 11, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ShipmentType" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ShipmentType" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 92 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter MyQuotesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "MyQuotes" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "MyQuotes" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = MyQuotesQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+			 QueryColumn MyFollowUpsQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyFollowUpsQuery.Id,QueryCode = MyFollowUpsQuery.UniqueCode, IndexOrder = 12, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "FollowUpOwner" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "FollowUpOwner" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 127 }, queryColumnsRepository, tenantQueryColumns);
+
+             AdvancedQueryFilter MyFollowUpsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "MyFollowUps" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "MyFollowUps" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "12/6/2018 12:00:00 AM",PredefinedValue2 = null, QueryId = MyFollowUpsQuery.Id,QueryCode = MyFollowUpsQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
 
-			  Query OpenQuotesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuoteTextCode_12.Id, NameTextCodeCode = QuoteTextCode_12.Code, Code = "Open Quotes",  QueryGroupCode = "QUOT", IndexOrder = 12, Tenant = 0, ObjectTableId = QuoteObjectTable.Id, QuerySection = "Quote", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = QuoteFeature_12.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query MyQuotesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuoteTextCode_11.Id, NameTextCodeCode = QuoteTextCode_11.Code, ObjectTableName = "Quote", Code = "My Quotes",  QueryGroupCode = "QUOT", IndexOrder = 11, Tenant = 0, ObjectTableId = QuoteObjectTable.Id, QuerySection = "Quote", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = QuoteFeature_11.Id,FeatureUniqeCode= QuoteFeature_11.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn OpenQuotesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenQuotesQuery.Id, IndexOrder = 0, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn MyQuotesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyQuotesQuery.Id,QueryCode = MyQuotesQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn OpenQuotesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenQuotesQuery.Id, IndexOrder = 1, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn MyQuotesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyQuotesQuery.Id,QueryCode = MyQuotesQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn OpenQuotesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenQuotesQuery.Id, IndexOrder = 2, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "OpenDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "OpenDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 90 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn MyQuotesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyQuotesQuery.Id,QueryCode = MyQuotesQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "OpenDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "OpenDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 90 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn OpenQuotesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenQuotesQuery.Id, IndexOrder = 3, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "StageName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "StageName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn MyQuotesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyQuotesQuery.Id,QueryCode = MyQuotesQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "StageName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "StageName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn OpenQuotesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenQuotesQuery.Id, IndexOrder = 4, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "QuoteNumber" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "QuoteNumber" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 84 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn MyQuotesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyQuotesQuery.Id,QueryCode = MyQuotesQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "QuoteNumber" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "QuoteNumber" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 84 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn OpenQuotesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenQuotesQuery.Id, IndexOrder = 5, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "Shipper" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "Shipper" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 127 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn MyQuotesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyQuotesQuery.Id,QueryCode = MyQuotesQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "Shipper" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "Shipper" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 127 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn OpenQuotesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenQuotesQuery.Id, IndexOrder = 6, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "MainCarriageCarrierName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "MainCarriageCarrierName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 127 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn MyQuotesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyQuotesQuery.Id,QueryCode = MyQuotesQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "MainCarriageCarrierName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "MainCarriageCarrierName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 127 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn OpenQuotesQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenQuotesQuery.Id, IndexOrder = 7, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "FromPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "FromPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 40 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn MyQuotesQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyQuotesQuery.Id,QueryCode = MyQuotesQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "FromPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "FromPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 40 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn OpenQuotesQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenQuotesQuery.Id, IndexOrder = 8, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ToPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ToPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 40 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn MyQuotesQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyQuotesQuery.Id,QueryCode = MyQuotesQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ToPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ToPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 40 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn OpenQuotesQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenQuotesQuery.Id, IndexOrder = 9, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "QuoteTypeName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "QuoteTypeName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 127 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn MyQuotesQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyQuotesQuery.Id,QueryCode = MyQuotesQuery.UniqueCode, IndexOrder = 9, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "QuoteTypeName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "QuoteTypeName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 127 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn OpenQuotesQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenQuotesQuery.Id, IndexOrder = 10, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ShipmentType" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ShipmentType" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 92 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn MyQuotesQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyQuotesQuery.Id,QueryCode = MyQuotesQuery.UniqueCode, IndexOrder = 10, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ShipmentType" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ShipmentType" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 92 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn OpenQuotesQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenQuotesQuery.Id, IndexOrder = 11, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ExpirationDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ExpirationDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 92 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn MyQuotesQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyQuotesQuery.Id,QueryCode = MyQuotesQuery.UniqueCode, IndexOrder = 11, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ExpirationDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ExpirationDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 92 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter OpenQuotesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "OpenQuotes" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "OpenQuotes" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = OpenQuotesQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter MyQuotesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "MyQuotes" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "MyQuotes" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = MyQuotesQuery.Id,QueryCode = MyQuotesQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+
+  
+	      
+
+			  Query OpenQuotesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuoteTextCode_12.Id, NameTextCodeCode = QuoteTextCode_12.Code, ObjectTableName = "Quote", Code = "Open Quotes",  QueryGroupCode = "QUOT", IndexOrder = 12, Tenant = 0, ObjectTableId = QuoteObjectTable.Id, QuerySection = "Quote", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = QuoteFeature_12.Id,FeatureUniqeCode= QuoteFeature_12.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+	
+			 QueryColumn OpenQuotesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenQuotesQuery.Id,QueryCode = OpenQuotesQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn OpenQuotesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenQuotesQuery.Id,QueryCode = OpenQuotesQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn OpenQuotesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenQuotesQuery.Id,QueryCode = OpenQuotesQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "OpenDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "OpenDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 90 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn OpenQuotesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenQuotesQuery.Id,QueryCode = OpenQuotesQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "StageName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "StageName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn OpenQuotesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenQuotesQuery.Id,QueryCode = OpenQuotesQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "QuoteNumber" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "QuoteNumber" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 84 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn OpenQuotesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenQuotesQuery.Id,QueryCode = OpenQuotesQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "Shipper" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "Shipper" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 127 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn OpenQuotesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenQuotesQuery.Id,QueryCode = OpenQuotesQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "MainCarriageCarrierName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "MainCarriageCarrierName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 127 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn OpenQuotesQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenQuotesQuery.Id,QueryCode = OpenQuotesQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "FromPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "FromPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 40 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn OpenQuotesQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenQuotesQuery.Id,QueryCode = OpenQuotesQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ToPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ToPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 40 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn OpenQuotesQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenQuotesQuery.Id,QueryCode = OpenQuotesQuery.UniqueCode, IndexOrder = 9, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "QuoteTypeName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "QuoteTypeName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 127 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn OpenQuotesQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenQuotesQuery.Id,QueryCode = OpenQuotesQuery.UniqueCode, IndexOrder = 10, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ShipmentType" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ShipmentType" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 92 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn OpenQuotesQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenQuotesQuery.Id,QueryCode = OpenQuotesQuery.UniqueCode, IndexOrder = 11, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ExpirationDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ExpirationDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 92 }, queryColumnsRepository, tenantQueryColumns);
+
+             AdvancedQueryFilter OpenQuotesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "OpenQuotes" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "OpenQuotes" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = OpenQuotesQuery.Id,QueryCode = OpenQuotesQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
 	   
 	    }
@@ -13785,51 +14376,53 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 
 	         Screen QuoteGeneralTabScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Quote.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = QuoteObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 6, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField QuoteQuoteGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "SalesmanUserId").FirstOrDefault().Id, ScreenId = QuoteGeneralTabScreenScreen0.Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "SalesmanUserId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField QuoteQuoteGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "SalesmanUserId").FirstOrDefault().Id, ScreenId = QuoteGeneralTabScreenScreen0.Id,ScreenCode = QuoteGeneralTabScreenScreen0.Code, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "SalesmanUserId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField QuoteQuoteGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "CreatedByUserId").FirstOrDefault().Id, ScreenId = QuoteGeneralTabScreenScreen0.Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "CreatedByUserId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField QuoteQuoteGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "CreatedByUserId").FirstOrDefault().Id, ScreenId = QuoteGeneralTabScreenScreen0.Id,ScreenCode = QuoteGeneralTabScreenScreen0.Code, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "CreatedByUserId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField QuoteQuoteGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "DepartmentId").FirstOrDefault().Id, ScreenId = QuoteGeneralTabScreenScreen0.Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "DepartmentId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField QuoteQuoteGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "DepartmentId").FirstOrDefault().Id, ScreenId = QuoteGeneralTabScreenScreen0.Id,ScreenCode = QuoteGeneralTabScreenScreen0.Code, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "DepartmentId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField QuoteQuoteGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "BranchId").FirstOrDefault().Id, ScreenId = QuoteGeneralTabScreenScreen0.Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "BranchId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField QuoteQuoteGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "BranchId").FirstOrDefault().Id, ScreenId = QuoteGeneralTabScreenScreen0.Id,ScreenCode = QuoteGeneralTabScreenScreen0.Code, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "BranchId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField QuoteQuoteGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ValueOfGoods").FirstOrDefault().Id, ScreenId = QuoteGeneralTabScreenScreen0.Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ValueOfGoods").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField QuoteQuoteGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ValueOfGoods").FirstOrDefault().Id, ScreenId = QuoteGeneralTabScreenScreen0.Id,ScreenCode = QuoteGeneralTabScreenScreen0.Code, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ValueOfGoods").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField QuoteQuoteGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ValueOfGoodsCurrencyId").FirstOrDefault().Id, ScreenId = QuoteGeneralTabScreenScreen0.Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ValueOfGoodsCurrencyId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField QuoteQuoteGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ValueOfGoodsCurrencyId").FirstOrDefault().Id, ScreenId = QuoteGeneralTabScreenScreen0.Id,ScreenCode = QuoteGeneralTabScreenScreen0.Code, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ValueOfGoodsCurrencyId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 	      
 
 	         Screen QuoteHeaderScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Quote.HeaderScreen", Name = "Header Screen", ObjectTableId = QuoteObjectTable.Id, NumberOfColumns = 4, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField QuoteQuoteHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "QuoteTypeName").FirstOrDefault().Id, ScreenId = QuoteHeaderScreenScreen1.Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "QuoteTypeName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField QuoteQuoteHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "QuoteTypeName").FirstOrDefault().Id, ScreenId = QuoteHeaderScreenScreen1.Id,ScreenCode = QuoteHeaderScreenScreen1.Code, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "QuoteTypeName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField QuoteQuoteHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "IncotermCode").FirstOrDefault().Id, ScreenId = QuoteHeaderScreenScreen1.Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "IncotermCode").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField QuoteQuoteHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "IncotermCode").FirstOrDefault().Id, ScreenId = QuoteHeaderScreenScreen1.Id,ScreenCode = QuoteHeaderScreenScreen1.Code, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "IncotermCode").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField QuoteQuoteHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "Subject").FirstOrDefault().Id, ScreenId = QuoteHeaderScreenScreen1.Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "Subject").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField QuoteQuoteHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "OpenDate").FirstOrDefault().Id, ScreenId = QuoteHeaderScreenScreen1.Id,ScreenCode = QuoteHeaderScreenScreen1.Code, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "OpenDate").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField QuoteQuoteHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "Routing").FirstOrDefault().Id, ScreenId = QuoteHeaderScreenScreen1.Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "Routing").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField QuoteQuoteHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "Routing").FirstOrDefault().Id, ScreenId = QuoteHeaderScreenScreen1.Id,ScreenCode = QuoteHeaderScreenScreen1.Code, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "Routing").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField QuoteQuoteHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "LastUsageDate").FirstOrDefault().Id, ScreenId = QuoteHeaderScreenScreen1.Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "LastUsageDate").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField QuoteQuoteHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "LastUsageDate").FirstOrDefault().Id, ScreenId = QuoteHeaderScreenScreen1.Id,ScreenCode = QuoteHeaderScreenScreen1.Code, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "LastUsageDate").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField QuoteQuoteHeaderScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ExpirationDate").FirstOrDefault().Id, ScreenId = QuoteHeaderScreenScreen1.Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ExpirationDate").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField QuoteQuoteHeaderScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ExpirationDate").FirstOrDefault().Id, ScreenId = QuoteHeaderScreenScreen1.Id,ScreenCode = QuoteHeaderScreenScreen1.Code, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ExpirationDate").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField QuoteQuoteHeaderScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "SalesmanName").FirstOrDefault().Id, ScreenId = QuoteHeaderScreenScreen1.Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "SalesmanName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField QuoteQuoteHeaderScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "SalesmanName").FirstOrDefault().Id, ScreenId = QuoteHeaderScreenScreen1.Id,ScreenCode = QuoteHeaderScreenScreen1.Code, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "SalesmanName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField QuoteQuoteHeaderScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 1, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "StageName").FirstOrDefault().Id, ScreenId = QuoteHeaderScreenScreen1.Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "StageName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField QuoteQuoteHeaderScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 1, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "StageName").FirstOrDefault().Id, ScreenId = QuoteHeaderScreenScreen1.Id,ScreenCode = QuoteHeaderScreenScreen1.Code, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "StageName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    QuoteObjectTable.HeaderScreenId = QuoteHeaderScreenScreen1.Id;
+		    QuoteObjectTable.HeaderScreenCode = QuoteHeaderScreenScreen1.Code;
+
 	   		  
 	      
 
 	         Screen QuoteNewQuoteScreen2 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "NewQuote", Name = "New Quote", ObjectTableId = QuoteObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 3, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField QuoteNewQuoteScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ShipperReference2").FirstOrDefault().Id, ScreenId = QuoteNewQuoteScreen2.Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ShipperReference2").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField QuoteNewQuoteScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ShipperReference2").FirstOrDefault().Id, ScreenId = QuoteNewQuoteScreen2.Id,ScreenCode = QuoteNewQuoteScreen2.Code, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ShipperReference2").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField QuoteNewQuoteScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ConsigneeReference2").FirstOrDefault().Id, ScreenId = QuoteNewQuoteScreen2.Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ConsigneeReference2").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField QuoteNewQuoteScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ConsigneeReference2").FirstOrDefault().Id, ScreenId = QuoteNewQuoteScreen2.Id,ScreenCode = QuoteNewQuoteScreen2.Code, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ConsigneeReference2").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField QuoteNewQuoteScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "AgentId").FirstOrDefault().Id, ScreenId = QuoteNewQuoteScreen2.Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "AgentId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField QuoteNewQuoteScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "AgentId").FirstOrDefault().Id, ScreenId = QuoteNewQuoteScreen2.Id,ScreenCode = QuoteNewQuoteScreen2.Code, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "AgentId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField QuoteNewQuoteScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "Notes").FirstOrDefault().Id, ScreenId = QuoteNewQuoteScreen2.Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "Notes").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField QuoteNewQuoteScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "Notes").FirstOrDefault().Id, ScreenId = QuoteNewQuoteScreen2.Id,ScreenCode = QuoteNewQuoteScreen2.Code, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "Notes").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 
 	    }
@@ -13886,27 +14479,27 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "QTOV",HtmlComponentName = "OverviewTabComponent",HtmlComponentUrl = "./QuoteModules/QuoteTabs/Components/Overview/OverviewTabComponent", FeatureId = QuoteOverviewFeature_TH0.Id, ControlPath = "Simplog.QuoteLib.Views.OverView.OverViewTabControl", ObjectTableId = QuoteObjectTable.Id, TabNameTextCodeId = QuoteOverviewTextCode_TH0.Id, TabNameTextCodeCode = QuoteOverviewTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "QTOV",HtmlComponentName = "OverviewTabComponent",HtmlComponentUrl = "./QuoteModules/QuoteTabs/Components/Overview/OverviewTabComponent", FeatureId = QuoteOverviewFeature_TH0.Id,FeatureUniqeCode = QuoteOverviewFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.QuoteLib.Views.OverView.OverViewTabControl", ObjectTableId = QuoteObjectTable.Id, TabNameTextCodeId = QuoteOverviewTextCode_TH0.Id, TabNameTextCodeCode = QuoteOverviewTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "QTOR",HtmlComponentName = "OrdersabComponent",HtmlComponentUrl = "./QuoteModules/QuoteTabs/Components/Orders/OrdersTabComponent", FeatureId = QuoteDetailsFeature_TH1.Id, ControlPath = "Simplog.QuoteLib.Views.Orders.OrdersControl", ObjectTableId = QuoteObjectTable.Id, TabNameTextCodeId = QuoteDetailsTextCode_TH1.Id, TabNameTextCodeCode = QuoteDetailsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "QTOR",HtmlComponentName = "OrdersabComponent",HtmlComponentUrl = "./QuoteModules/QuoteTabs/Components/Orders/OrdersTabComponent", FeatureId = QuoteDetailsFeature_TH1.Id,FeatureUniqeCode = QuoteDetailsFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.QuoteLib.Views.Orders.OrdersControl", ObjectTableId = QuoteObjectTable.Id, TabNameTextCodeId = QuoteDetailsTextCode_TH1.Id, TabNameTextCodeCode = QuoteDetailsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "QTPA",HtmlComponentName = "PartnersTabComponent",HtmlComponentUrl = "./QuoteModules/QuoteTabs/Components/Partners/PartnersTabComponent", FeatureId = QuotePartnersFeature_TH2.Id, ControlPath = "Simplog.QuoteLib.Views.Partners.PartnersControl", ObjectTableId = QuoteObjectTable.Id, TabNameTextCodeId = QuotePartnersTextCode_TH2.Id, TabNameTextCodeCode = QuotePartnersTextCode_TH2.Code, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "QTPA",HtmlComponentName = "PartnersTabComponent",HtmlComponentUrl = "./QuoteModules/QuoteTabs/Components/Partners/PartnersTabComponent", FeatureId = QuotePartnersFeature_TH2.Id,FeatureUniqeCode = QuotePartnersFeature_TH2.FeatureUniqeCode, ControlPath = "Simplog.QuoteLib.Views.Partners.PartnersControl", ObjectTableId = QuoteObjectTable.Id, TabNameTextCodeId = QuotePartnersTextCode_TH2.Id, TabNameTextCodeCode = QuotePartnersTextCode_TH2.Code, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "QTPK",HtmlComponentName = "PackagesTabComponent",HtmlComponentUrl = "./QuoteModules/QuoteTabs/Components/Packages/PackagesTabComponent", FeatureId = QuotePackagesFeature_TH3.Id, ControlPath = "Simplog.QuoteLib.Views.Packages.PackagesControl", ObjectTableId = QuoteObjectTable.Id, TabNameTextCodeId = QuotePackagesTextCode_TH3.Id, TabNameTextCodeCode = QuotePackagesTextCode_TH3.Code, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "QTPK",HtmlComponentName = "PackagesTabComponent",HtmlComponentUrl = "./QuoteModules/QuoteTabs/Components/Packages/PackagesTabComponent", FeatureId = QuotePackagesFeature_TH3.Id,FeatureUniqeCode = QuotePackagesFeature_TH3.FeatureUniqeCode, ControlPath = "Simplog.QuoteLib.Views.Packages.PackagesControl", ObjectTableId = QuoteObjectTable.Id, TabNameTextCodeId = QuotePackagesTextCode_TH3.Id, TabNameTextCodeCode = QuotePackagesTextCode_TH3.Code, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "QTRT",HtmlComponentName = "RoutingsTabComponent",HtmlComponentUrl = "./QuoteModules/QuoteTabs/Components/Routings/RoutingsTabComponent", FeatureId = QuoteRoutingsFeature_TH4.Id, ControlPath = "Simplog.QuoteLib.Views.Routings.RoutingsControl", ObjectTableId = QuoteObjectTable.Id, TabNameTextCodeId = QuoteRoutingsTextCode_TH4.Id, TabNameTextCodeCode = QuoteRoutingsTextCode_TH4.Code, Tenant = 0, IndexOrder = 4 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "QTRT",HtmlComponentName = "RoutingsTabComponent",HtmlComponentUrl = "./QuoteModules/QuoteTabs/Components/Routings/RoutingsTabComponent", FeatureId = QuoteRoutingsFeature_TH4.Id,FeatureUniqeCode = QuoteRoutingsFeature_TH4.FeatureUniqeCode, ControlPath = "Simplog.QuoteLib.Views.Routings.RoutingsControl", ObjectTableId = QuoteObjectTable.Id, TabNameTextCodeId = QuoteRoutingsTextCode_TH4.Id, TabNameTextCodeCode = QuoteRoutingsTextCode_TH4.Code, Tenant = 0, IndexOrder = 4 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "QTCH",HtmlComponentName = "ChargesTabComponent",HtmlComponentUrl = "./QuoteModules/QuoteCharges/Components/ChargesTabComponent", FeatureId = QuoteChargesFeature_TH5.Id, ControlPath = "Simplog.QuoteLib.Views.Charges.ChargesUserControl", ObjectTableId = QuoteObjectTable.Id, TabNameTextCodeId = QuoteChargesTextCode_TH5.Id, TabNameTextCodeCode = QuoteChargesTextCode_TH5.Code, Tenant = 0, IndexOrder = 5 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "QTCH",HtmlComponentName = "ChargesTabComponent",HtmlComponentUrl = "./QuoteModules/QuoteCharges/Components/ChargesTabComponent", FeatureId = QuoteChargesFeature_TH5.Id,FeatureUniqeCode = QuoteChargesFeature_TH5.FeatureUniqeCode, ControlPath = "Simplog.QuoteLib.Views.Charges.ChargesUserControl", ObjectTableId = QuoteObjectTable.Id, TabNameTextCodeId = QuoteChargesTextCode_TH5.Id, TabNameTextCodeCode = QuoteChargesTextCode_TH5.Code, Tenant = 0, IndexOrder = 5 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "QTDO",HtmlComponentName = "QuoteDocsOutTabComponent",HtmlComponentUrl = "./QuoteModules/QuoteTabs/Components/DocsOut/QuoteDocsOutTabComponent", FeatureId = QuoteDocsOutFeature_TH6.Id, ControlPath = "Simplog.QuoteLib.Views.Documents.DocumentOutsControl", ObjectTableId = QuoteObjectTable.Id, TabNameTextCodeId = QuoteDocsOutTextCode_TH6.Id, TabNameTextCodeCode = QuoteDocsOutTextCode_TH6.Code, Tenant = 0, IndexOrder = 6 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "QTDO",HtmlComponentName = "QuoteDocsOutTabComponent",HtmlComponentUrl = "./QuoteModules/QuoteTabs/Components/DocsOut/QuoteDocsOutTabComponent", FeatureId = QuoteDocsOutFeature_TH6.Id,FeatureUniqeCode = QuoteDocsOutFeature_TH6.FeatureUniqeCode, ControlPath = "Simplog.QuoteLib.Views.Documents.DocumentOutsControl", ObjectTableId = QuoteObjectTable.Id, TabNameTextCodeId = QuoteDocsOutTextCode_TH6.Id, TabNameTextCodeCode = QuoteDocsOutTextCode_TH6.Code, Tenant = 0, IndexOrder = 6 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "QTDI",HtmlComponentName = "QuoteDocsInTabComponent",HtmlComponentUrl = "./QuoteModules/QuoteTabs/Components/DocsIn/QuoteDocsInTabComponent", FeatureId = QuoteDocsInFeature_TH7.Id, ControlPath = "Simplog.QuoteLib.Views.Documents.DocumentInsControl", ObjectTableId = QuoteObjectTable.Id, TabNameTextCodeId = QuoteDocsInTextCode_TH7.Id, TabNameTextCodeCode = QuoteDocsInTextCode_TH7.Code, Tenant = 0, IndexOrder = 7 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "QTDI",HtmlComponentName = "QuoteDocsInTabComponent",HtmlComponentUrl = "./QuoteModules/QuoteTabs/Components/DocsIn/QuoteDocsInTabComponent", FeatureId = QuoteDocsInFeature_TH7.Id,FeatureUniqeCode = QuoteDocsInFeature_TH7.FeatureUniqeCode, ControlPath = "Simplog.QuoteLib.Views.Documents.DocumentInsControl", ObjectTableId = QuoteObjectTable.Id, TabNameTextCodeId = QuoteDocsInTextCode_TH7.Id, TabNameTextCodeCode = QuoteDocsInTextCode_TH7.Code, Tenant = 0, IndexOrder = 7 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "QTEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = QuoteEventsFeature_TH8.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = QuoteObjectTable.Id, TabNameTextCodeId = QuoteEventsTextCode_TH8.Id, TabNameTextCodeCode = QuoteEventsTextCode_TH8.Code, Tenant = 0, IndexOrder = 8 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "QTEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = QuoteEventsFeature_TH8.Id,FeatureUniqeCode = QuoteEventsFeature_TH8.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = QuoteObjectTable.Id, TabNameTextCodeId = QuoteEventsTextCode_TH8.Id, TabNameTextCodeCode = QuoteEventsTextCode_TH8.Code, Tenant = 0, IndexOrder = 8 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "QTCM",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = QuoteCommunicationsFeature_TH9.Id, ControlPath = "Simplog.Infrastructure.Views.Communications.CommunicationsControl", ObjectTableId = QuoteObjectTable.Id, TabNameTextCodeId = QuoteCommunicationsTextCode_TH9.Id, TabNameTextCodeCode = QuoteCommunicationsTextCode_TH9.Code, Tenant = 0, IndexOrder = 9 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "QTCM",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = QuoteCommunicationsFeature_TH9.Id,FeatureUniqeCode = QuoteCommunicationsFeature_TH9.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Communications.CommunicationsControl", ObjectTableId = QuoteObjectTable.Id, TabNameTextCodeId = QuoteCommunicationsTextCode_TH9.Id, TabNameTextCodeCode = QuoteCommunicationsTextCode_TH9.Code, Tenant = 0, IndexOrder = 9 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "QTCE",HtmlComponentName = "ConnectionsTabComponent",HtmlComponentUrl = "./QuoteModules/QuoteTabs/Components/Connections/ConnectionsTabComponent", FeatureId = QuoteConnectedEntitiesFeature_TH10.Id, ControlPath = "Simplog.QuoteLib.Views.Shipments.ShipmentsControl", ObjectTableId = QuoteObjectTable.Id, TabNameTextCodeId = QuoteConnectedEntitiesTextCode_TH10.Id, TabNameTextCodeCode = QuoteConnectedEntitiesTextCode_TH10.Code, Tenant = 0, IndexOrder = 10 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "QTCE",HtmlComponentName = "ConnectionsTabComponent",HtmlComponentUrl = "./QuoteModules/QuoteTabs/Components/Connections/ConnectionsTabComponent", FeatureId = QuoteConnectedEntitiesFeature_TH10.Id,FeatureUniqeCode = QuoteConnectedEntitiesFeature_TH10.FeatureUniqeCode, ControlPath = "Simplog.QuoteLib.Views.Shipments.ShipmentsControl", ObjectTableId = QuoteObjectTable.Id, TabNameTextCodeId = QuoteConnectedEntitiesTextCode_TH10.Id, TabNameTextCodeCode = QuoteConnectedEntitiesTextCode_TH10.Code, Tenant = 0, IndexOrder = 10 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -13934,6 +14527,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 		   Feature QuoteFeature_QouteEditExchangeRate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "QouteEditExchangeRate", FeatureTypeCode = "ACT", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, NameTextCodeCode = "Quote.Features.EditExchangeRate", NameTextCodeDefaultText = @"Edit Exchange Rate" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
 		   Feature QuoteFeature_TOTALPERCONTAINER = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TOTALPERCONTAINER", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, NameTextCodeCode = "Quote.Features.TOTALPERCONTAINER", NameTextCodeDefaultText = @"Total Per Container" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature QuoteFeature_VATDetAILSINQUOTATION = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "VATDetAILSINQUOTATION", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, NameTextCodeCode = "Quote.Features.VATDetAILSINQUOTATION", NameTextCodeDefaultText = @"VAT details in Quotation" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
    
 	    
@@ -14495,6 +15090,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 						FeatureId = QuoteFeature_MB0.Id,
 						Style = "ApproveButtonStyle",
 						LocalDefaultText = null,
+						FeatureUniqeCode = QuoteFeature_MB0.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
    
@@ -14512,6 +15108,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 						FeatureId = QuoteFeature_MB1.Id,
 						Style = "RedButtonStyle",
 						LocalDefaultText = null,
+						FeatureUniqeCode = QuoteFeature_MB1.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
    
@@ -14529,6 +15126,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 						FeatureId = QuoteFeature_MB2.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode = QuoteFeature_MB2.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
    
@@ -14546,6 +15144,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 						FeatureId = QuoteFeature_MB3.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode = QuoteFeature_MB3.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
    
@@ -14563,6 +15162,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 						FeatureId = null,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode = null,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 
 			   MenuButton QuoteMenuButton40 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -14580,6 +15180,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 						FeatureId=  QuoteFeature_MB40.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  QuoteFeature_MB40.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton QuoteMenuButton41 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -14597,6 +15198,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 						FeatureId=  QuoteFeature_MB41.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  QuoteFeature_MB41.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton QuoteMenuButton42 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -14614,6 +15216,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 						FeatureId=  QuoteFeature_MB42.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  QuoteFeature_MB42.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton QuoteMenuButton43 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -14631,6 +15234,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 						
 						Style = null,
 						LocalDefaultText = null,
+						
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton QuoteMenuButton44 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -14648,6 +15252,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 						FeatureId=  QuoteFeature_MB43.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  QuoteFeature_MB43.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton QuoteMenuButton45 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -14665,6 +15270,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 						FeatureId=  QuoteFeature_MB44.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  QuoteFeature_MB44.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton QuoteMenuButton46 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -14682,6 +15288,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 						
 						Style = null,
 						LocalDefaultText = null,
+						
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton QuoteMenuButton47 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -14699,6 +15306,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 						FeatureId=  QuoteFeature_MB45.Id,
 						Style = null,
 						LocalDefaultText = "Convert to LCL",
+						FeatureUniqeCode=  QuoteFeature_MB45.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton QuoteMenuButton48 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -14716,6 +15324,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 						FeatureId=  QuoteFeature_MB46.Id,
 						Style = null,
 						LocalDefaultText = "Convert to FCL",
+						FeatureUniqeCode=  QuoteFeature_MB46.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 	    }
@@ -15194,6 +15803,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
  		   TextCode QuoteTextCode_QuoteQuotationSVersions = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.Quotation.S.Versions", DefaultText = "Versions",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode QuoteTextCode_QuoteMValueEditedByUser = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.M.ValueEditedByUser", DefaultText = "Value Edited by User, Double Click to Reset Calculated value",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSChargesProfitInSaleCurrency = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.Charges.ProfitInSaleCurrency", DefaultText = "Profit In Sale Currency",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSSaleTotalAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.SaleTotalAmount", DefaultText = "Sale",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSCostTotalAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.CostTotalAmount", DefaultText = "Cost",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteFPackageTypeQuantityShort = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.F.PackageTypeQuantity.Short", DefaultText = "Quantity",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "F", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

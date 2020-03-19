@@ -50,5 +50,7 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string PrimaryContactName { get; set; }
         public string PrimaryContactEmail { get; set; }
         public string PrimaryContactPhone { get; set; }
+        public string StateName { get; set; }
+        public int? StorageFreeDays { get; set; }
     }
 }

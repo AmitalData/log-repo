@@ -13,11 +13,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
         public CustomerCompetitorProductMap()
         {
             // Primary Keys
-            this.HasKey(t => t.CustomerId);
-
-            this.HasKey(t => t.CompetitorId);
-
-            this.HasKey(t => t.ProductTypeCode);
+            this.HasKey(t => new { t.CustomerId, t.CompetitorId, t.ProductTypeCode });
 
             // Properties
             this.Property(t => t.CustomerId)

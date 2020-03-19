@@ -86,6 +86,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                     menuButton.ControlPath = menuButtonDetails.ControlPath;
                     menuButton.Width = menuButtonDetails.Width;
                     menuButton.HtmlComponentPath = menuButtonDetails.HtmlComponentPath;
+                    menuButton.FeatureUniqeCode = menuButtonDetails.FeatureUniqeCode;
                     menuButtonRepository.Update(menuButton);
 
                     if (textCodes.Keys.Contains(menuButtonDetails.LabelTextCodeCode))
@@ -170,7 +171,9 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                         Id = IdCounter.GetNumber("MenuButton", menuButtonDetails.Tenant).ToString(),
                         LabelTextCodeId = newTextCode.Id,
                         LabelTextCodeCode = newTextCode.Code,
-                        Style = menuButtonDetails.Style
+                        Style = menuButtonDetails.Style,
+                        FeatureUniqeCode = menuButtonDetails.FeatureUniqeCode
+
                     };
                     menuButtonRepository.Add(newMenuButton);
 

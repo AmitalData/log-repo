@@ -16,6 +16,7 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public int Row { get; set; }
 
         public string ScreenId { get; set; }
+        public string ScreenCode { get; set; }
 
         // public string FieldName { get; set; }
         public string ObjectFieldId { get; set; }

@@ -1,4 +1,4 @@
-﻿declare var window: any;
+declare var window: any;
 declare var System: any;
 import {Component, Output, EventEmitter, OnDestroy, ChangeDetectorRef} from '@angular/core';
 import {ObjectTablePM} from '../../../EntityPMs/ObjectTablePM'
@@ -125,8 +125,8 @@ export class MenuButtonsComponent implements OnDestroy {
 
         var buttons: MenuButtonPM[] = [];
         for (var i = 0; i < btns.length; i++) {
-            if (btns[i].FeatureId != null && btns[i].FeatureId != undefined) {
-                if (FeatureLocator.IsFeatureGranted(btns[i].FeatureId)) {
+            if (btns[i].FeatureUniqeCode != null && btns[i].FeatureUniqeCode != undefined) {//if (btns[i].FeatureId != null && btns[i].FeatureId != undefined) {
+                if (FeatureLocator.IsFeatureGrantedByUniqeCode(btns[i].FeatureUniqeCode)) {
                     buttons.push(btns[i]);
                 }
             }

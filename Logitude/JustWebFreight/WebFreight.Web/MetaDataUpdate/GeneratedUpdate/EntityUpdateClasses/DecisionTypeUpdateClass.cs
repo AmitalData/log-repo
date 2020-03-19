@@ -472,7 +472,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query DecisionTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DecisionTypeTextCode_0.Id, Code = "DecisionType",  QueryGroupCode = "29af", IndexOrder = 0, Tenant = 0, ObjectTableId = DecisionTypeObjectTable.Id, QuerySection = "Customs.DecisionType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = DecisionTypeFeature_0.Id, DefaultSortName = "Code", DefaultSortDirection = "Desending" }, queriesRepository, tenantQueries);
+			  Query DecisionTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DecisionTypeTextCode_0.Id, Code = "DecisionType",  QueryGroupCode = "29af", IndexOrder = 0, Tenant = 0, ObjectTableId = DecisionTypeObjectTable.Id, QuerySection = "Customs.DecisionType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = DecisionTypeFeature_0.Id,FeatureUniqeCode= DecisionTypeFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending" }, queriesRepository, tenantQueries);
 	
 			 QueryColumn DecisionTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DecisionTypeQuery.Id, IndexOrder = 0, ObjectFieldId = DecisionTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == DecisionTypeObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 

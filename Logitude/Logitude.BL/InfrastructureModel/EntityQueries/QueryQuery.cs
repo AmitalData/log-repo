@@ -33,14 +33,15 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             repository = queryRepository;
         }
 
-        public QueryPM GetSingleQueryPM(string id, int tenant)
+        public QueryPM GetSingleQueryPM(string Code, int tenant)
         {
             QueryPM result =
             (from a in repository.context.Queries.Include("ObjectTable").Include("QueryGroup").Include("NameTextCode").Include("SharedByUser")
-             where a.Id == id && (a.Tenant == tenant || a.Tenant == 0)
+             where a.UniqueCode == Code && (a.Tenant == tenant || a.Tenant == 0)
              select new QueryPM()
              {
                  Code = a.Code,
+                 UniqueCode = a.UniqueCode,
                  DisplayCount = a.DisplayCount,
                  Id = a.Id,
                  IndexOrder = a.IndexOrder,
@@ -48,6 +49,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                  ObjectTableId = a.ObjectTableId,
                  ObjectTableName = a.ObjectTable.Name,
                  OriginalQueryId = a.OriginalQueryId,
+                 OriginalQueryCode = a.OriginalQueryCode,
+
                  SystemLevel = a.SystemLevel,
                  Tenant = a.Tenant,
                  TenantLevel = a.TenantLevel,
@@ -77,25 +80,27 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                  SharedByUserName = a.SharedByUser == null ? null : a.SharedByUser.Contact.EnglishName,
                  SharedByUserEmail = a.SharedByUser == null ? null : a.SharedByUser.Contact.Email,
                  SpotlightModeActivated = a.SpotlightModeActivated,
+                 FeatureUniqeCode = a.FeatureUniqeCode
              }).FirstOrDefault();
 
             if (result != null)
             {
                 SharedUserQueryQuery sharedUserQueryQuery = new SharedUserQueryQuery(tenant);
-                result.SharedUserQueries = sharedUserQueryQuery.GetSharedUserQueriesForQuery(result.Id, tenant).ToList();
+                result.SharedUserQueries = sharedUserQueryQuery.GetSharedUserQueriesForQuery(result.UniqueCode, tenant).ToList();
             }
 
             return result;
         }
 
-        public QueryPM GetSingleQueryPM(string id)
+        public QueryPM GetSingleQueryPM(string Code)
         {
             QueryPM result =
             (from a in repository.context.Queries.Include("ObjectTable").Include("QueryGroup").Include("NameTextCode")
-             where a.Id == id
+             where a.UniqueCode == Code
              select new QueryPM()
              {
                  Code = a.Code,
+                 UniqueCode = a.UniqueCode,
                  DisplayCount = a.DisplayCount,
                  Id = a.Id,
                  IndexOrder = a.IndexOrder,
@@ -103,6 +108,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                  ObjectTableId = a.ObjectTableId,
                  ObjectTableName = a.ObjectTable.Name,
                  OriginalQueryId = a.OriginalQueryId,
+                 OriginalQueryCode = a.OriginalQueryCode,
+
                  SystemLevel = a.SystemLevel,
                  Tenant = a.Tenant,
                  TenantLevel = a.TenantLevel,
@@ -129,6 +136,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                  SharedWithAll = a.SharedWithAll,
                  SharedWithSpecificUsers = a.SharedWithSpecificUsers,
                  SharedByUserId = a.SharedByUserId,
+                 FeatureUniqeCode = a.FeatureUniqeCode
              }).FirstOrDefault();
 
             //if (result != null)
@@ -155,6 +163,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                      select new QueryPM()
                                      {
                                          Code = a.Code,
+                                         UniqueCode = a.UniqueCode,
                                          DisplayCount = a.DisplayCount,
                                          Id = a.Id,
                                          IndexOrder = a.IndexOrder,
@@ -162,6 +171,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                          ObjectTableId = a.ObjectTableId,
                                          ObjectTableName = a.ObjectTable.Name,
                                          OriginalQueryId = a.OriginalQueryId,
+                                         OriginalQueryCode = a.OriginalQueryCode,
+
                                          SystemLevel = a.SystemLevel,
                                          Tenant = a.Tenant,
                                          TenantLevel = a.TenantLevel,
@@ -190,7 +201,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                          SharedWithSpecificUsers = a.SharedWithSpecificUsers,
                                          SharedByUserId = a.SharedByUserId,
                                          SpotlightModeActivated = a.SpotlightModeActivated,
-
+                                         FeatureUniqeCode = a.FeatureUniqeCode
                                      }).ToList();
 
             //foreach (QueryPM item in queries)
@@ -216,6 +227,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                    select new QueryPM()
                    {
                        Code = a.Code,
+                       UniqueCode = a.UniqueCode,
                        DisplayCount = a.DisplayCount,
                        Id = a.Id,
                        IndexOrder = a.IndexOrder,
@@ -223,6 +235,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                        ObjectTableId = a.ObjectTableId,
                        ObjectTableName = a.ObjectTable.Name,
                        OriginalQueryId = a.OriginalQueryId,
+                       OriginalQueryCode = a.OriginalQueryCode,
+
                        SystemLevel = a.SystemLevel,
                        Tenant = a.Tenant,
                        TenantLevel = a.TenantLevel,
@@ -251,6 +265,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                        SharedWithSpecificUsers = a.SharedWithSpecificUsers,
                        SharedByUserId = a.SharedByUserId,
                        SpotlightModeActivated = a.SpotlightModeActivated,
+                       FeatureUniqeCode = a.FeatureUniqeCode
                    }).ToList();
             
             return queries;
@@ -263,6 +278,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                      select new QueryPM()
                                      {
                                          Code = a.Code,
+                                         UniqueCode = a.UniqueCode,
                                          DisplayCount = a.DisplayCount,
                                          Id = a.Id,
                                          IndexOrder = a.IndexOrder,
@@ -270,6 +286,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                          ObjectTableId = a.ObjectTableId,
                                          ObjectTableName = a.ObjectTable.Name,
                                          OriginalQueryId = a.OriginalQueryId,
+                                         OriginalQueryCode = a.OriginalQueryCode,
+
                                          SystemLevel = a.SystemLevel,
                                          Tenant = a.Tenant,
                                          TenantLevel = a.TenantLevel,
@@ -298,6 +316,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                          SharedWithSpecificUsers = a.SharedWithSpecificUsers,
                                          SharedByUserId = a.SharedByUserId,
                                          SpotlightModeActivated = a.SpotlightModeActivated,
+                                         FeatureUniqeCode = a.FeatureUniqeCode
                                      }).ToList();
 
             List<QueryPM> myResult = new List<QueryPM>();
@@ -307,7 +326,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             {
                 if (item.SharedWithSpecificUsers)
                 {
-                    if (sharedUserQueries.Where(d => d.QueryId == item.Id && d.UserId == userid).Any())
+                    if (sharedUserQueries.Where(d => d.QueryCode == item.UniqueCode && d.UserId == userid).Any())
                     {
                         myResult.Add(item);
                     }
@@ -333,6 +352,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                      select new QueryPM()
                                      {
                                          Code = a.Code,
+                                         UniqueCode = a.UniqueCode,
                                          DisplayCount = a.DisplayCount,
                                          Id = a.Id,
                                          IndexOrder = a.IndexOrder,
@@ -340,6 +360,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                          ObjectTableId = a.ObjectTableId,
                                          ObjectTableName = a.ObjectTable.Name,
                                          OriginalQueryId = a.OriginalQueryId,
+                                         OriginalQueryCode = a.OriginalQueryCode,
+
                                          SystemLevel = a.SystemLevel,
                                          Tenant = a.Tenant,
                                          TenantLevel = a.TenantLevel,
@@ -368,7 +390,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                          SharedWithSpecificUsers = a.SharedWithSpecificUsers,
                                          SharedByUserId = a.SharedByUserId,
                                          SpotlightModeActivated = a.SpotlightModeActivated,
-
+                                         FeatureUniqeCode = a.FeatureUniqeCode
                                      }).ToList();
 
             //foreach (QueryPM item in queries)
@@ -390,10 +412,11 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
         public QueryPM GetQueryByNameTenant(int tenant, string name)
         {
             QueryPM result = (from a in repository.context.Queries.Include("ObjectTable").Include("QueryGroup").Include("NameTextCode")
-                              where a.Code == name && a.Tenant == tenant
+                              where a.UniqueCode == name && a.Tenant == tenant
                               select new QueryPM()
                               {
                                   Code = a.Code,
+                                  UniqueCode = a.UniqueCode,
                                   DisplayCount = a.DisplayCount,
                                   Id = a.Id,
                                   IndexOrder = a.IndexOrder,
@@ -401,6 +424,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                   ObjectTableId = a.ObjectTableId,
                                   ObjectTableName = a.ObjectTable.Name,
                                   OriginalQueryId = a.OriginalQueryId,
+                                  OriginalQueryCode = a.OriginalQueryCode,
+
                                   SystemLevel = a.SystemLevel,
                                   Tenant = a.Tenant,
                                   TenantLevel = a.TenantLevel,
@@ -429,7 +454,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                   SharedWithSpecificUsers = a.SharedWithSpecificUsers,
                                   SharedByUserId = a.SharedByUserId,
                                   SpotlightModeActivated = a.SpotlightModeActivated,
-
+                                  FeatureUniqeCode = a.FeatureUniqeCode
                               }).FirstOrDefault();
 
 
@@ -461,6 +486,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                      select new QueryPM()
                      {
                          Code = a.Code,
+                         UniqueCode = a.UniqueCode,
                          DisplayCount = a.DisplayCount,
                          Id = a.Id,
                          IndexOrder = a.IndexOrder,
@@ -468,6 +494,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                          ObjectTableId = a.ObjectTableId,
                          ObjectTableName = a.ObjectTable.Name,
                          OriginalQueryId = a.OriginalQueryId,
+                         OriginalQueryCode = a.OriginalQueryCode,
+
                          SystemLevel = a.SystemLevel,
                          Tenant = a.Tenant,
                          TenantLevel = a.TenantLevel,
@@ -496,7 +524,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                          SharedWithSpecificUsers = a.SharedWithSpecificUsers,
                          SharedByUserId = a.SharedByUserId,
                          SpotlightModeActivated = a.SpotlightModeActivated,
-
+                         FeatureUniqeCode = a.FeatureUniqeCode
                      }).ToList();
 
             }
@@ -507,6 +535,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                          select new QueryPM()
                          {
                              Code = a.Code,
+                             UniqueCode = a.UniqueCode,
                              DisplayCount = a.DisplayCount,
                              Id = a.Id,
                              IndexOrder = a.IndexOrder,
@@ -514,6 +543,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                              ObjectTableId = a.ObjectTableId,
                              ObjectTableName = a.ObjectTable.Name,
                              OriginalQueryId = a.OriginalQueryId,
+                             OriginalQueryCode = a.OriginalQueryCode,
+
                              SystemLevel = a.SystemLevel,
                              Tenant = a.Tenant,
                              TenantLevel = a.TenantLevel,
@@ -542,7 +573,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                              SharedWithSpecificUsers = a.SharedWithSpecificUsers,
                              SharedByUserId = a.SharedByUserId,
                              SpotlightModeActivated = a.SpotlightModeActivated,
-
+                             FeatureUniqeCode = a.FeatureUniqeCode
                          }).ToList();
 
             }
@@ -572,6 +603,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                      select new QueryPM()
                                      {
                                          Code = a.Code,
+                                         UniqueCode = a.UniqueCode,
                                          DisplayCount = a.DisplayCount,
                                          Id = a.Id,
                                          IndexOrder = a.IndexOrder,
@@ -579,6 +611,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                          ObjectTableId = a.ObjectTableId,
                                          ObjectTableName = a.ObjectTable.Name,
                                          OriginalQueryId = a.OriginalQueryId,
+                                         OriginalQueryCode = a.OriginalQueryCode,
+
                                          SystemLevel = a.SystemLevel,
                                          Tenant = a.Tenant,
                                          TenantLevel = a.TenantLevel,
@@ -603,7 +637,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                          SharedWithSpecificUsers = a.SharedWithSpecificUsers,
                                          SharedByUserId = a.SharedByUserId,
                                          SpotlightModeActivated = a.SpotlightModeActivated,
-
+                                         FeatureUniqeCode = a.FeatureUniqeCode
                                      }).ToList();
 
       

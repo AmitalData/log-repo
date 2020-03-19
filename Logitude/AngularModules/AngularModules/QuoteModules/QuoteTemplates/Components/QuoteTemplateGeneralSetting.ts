@@ -103,30 +103,26 @@ export class QuoteTemplateGeneralSetting extends BaseComponent implements OnInit
             this.ValidationErrorsList.push("Please Select QuoteTemplate");
         }
 
-        if (this.QuoteTemplateSettingPM.QuoteTemplatePDFMarginRight > 200) {
+        if (this.QuoteTemplatePDFMarginRight > 200) {
             this.ValidationErrorsList.push("Right margin must be less than 200");
         }
 
 
-        if (this.QuoteTemplateSettingPM.QuoteTemplatePDFMarginLeft > 200) {
+        if (this.QuoteTemplatePDFMarginLeft > 200) {
             this.ValidationErrorsList.push("Left margin must be less than 200");
         }
 
 
-        if (this.QuoteTemplateSettingPM.QuoteTemplatePDFMarginBottom > 200) {
+        if (this.QuoteTemplatePDFMarginBottom > 200) {
             this.ValidationErrorsList.push("Bottom margin must be less than 200");
         }
 
 
-        if (this.QuoteTemplateSettingPM.QuoteTemplatePDFMarginTop > 200) {
+        if (this.QuoteTemplatePDFMarginTop > 200) {
             this.ValidationErrorsList.push("Top margin must be less than 200");
         }
 
-        
-
-
-
-
+       
         if (this.ValidationErrorsList.length == 0) {
 
             this.QuoteTemplatePM.Name = this.Name;

@@ -204,6 +204,29 @@ namespace Logitude.TariffModule.BL.EntityPMs
 			
 		 }
 	   }
+	  private string containerDefaults ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ContainerDefaults  
+	   {
+	    
+	     get
+		{
+		   return containerDefaults;
+		 }
+		 set
+		 {
+		   if(containerDefaults != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ContainerDefaults",OldValue=containerDefaults,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   containerDefaults=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

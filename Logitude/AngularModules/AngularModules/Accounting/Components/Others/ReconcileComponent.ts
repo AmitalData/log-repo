@@ -439,14 +439,14 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
             errors.push(TextCodeTranslator.Translate("Reconciliations.O.ErrorsInSelectedLines"));
         }
 
-        //multiple payment check
-        var paymentsCount = this.SelectedLines.Collection.filter(d=>d.SourceTypeCode == "3" || d.SourceTypeCode == "5" ).length;
-        if (paymentsCount > 1)
-        {
-            errors.push(TextCodeTranslator.Translate("Accounting.O.CantIncludeTwoOrMorePayment"));
-            this.ValidationErrorsList = errors;
-            return;
-        }
+        // //multiple payment check
+        // var paymentsCount = this.SelectedLines.Collection.filter(d=>d.SourceTypeCode == "3" || d.SourceTypeCode == "5" ).length;
+        // if (paymentsCount > 1)
+        // {
+        //     errors.push(TextCodeTranslator.Translate("Accounting.O.CantIncludeTwoOrMorePayment"));
+        //     this.ValidationErrorsList = errors;
+        //     return;
+        // }
 
 
         this.ValidationErrorsList = errors;
@@ -538,7 +538,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
             m3 = this.AutomaticReconcileMethodList.AutomaticReconcile3;
         }
 
-        this._LedgerTransactionExtendedListService.getAutomaticReconcileByFilter(m1, m2, m3, this.GLAccountPM.Id, filters).subscribe(myResult => {
+        this._LedgerTransactionExtendedListService.getAutomaticReconcileByFilter(m1, m2, m3, this.GLAccountPM.Id, filters).subscribe((myResult: ServiceResponse) => {
 
             var mm: ServiceResponse = myResult;
             var result = mm.Result;
@@ -969,9 +969,9 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
         for (let line of this.SelectedLines.Collection) {
 
             if (line.AmountToReconcile < 0)
-                this.TotalDebit += +line.AmountToReconcile * -1; //cast number
+                this.TotalCredit += +line.AmountToReconcile * -1; //cast number
             else
-                this.TotalCredit += +line.AmountToReconcile;
+                this.TotalDebit += +line.AmountToReconcile;
 
             // due this.TotalCredit + amountToReconcile;  == 335.78999999999996 <>335.79
             this.TotalDebit = AppTool.Round(this.TotalDebit, 2);

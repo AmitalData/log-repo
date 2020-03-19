@@ -167,7 +167,7 @@ export class TariffTabsContentComponent implements OnDestroy {
     Run(args: any) {
         this.EntityPM = args['EntityPM'];
 
-        if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFS") {
+        if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC") {
             this.EditTabTariffType = "SVR";
         }
 
@@ -177,6 +177,10 @@ export class TariffTabsContentComponent implements OnDestroy {
 
         else if (this.EntityPM.TypeCode == "OFC") {
             this.EditTabTariffType = "CVR";
+        }
+
+        else if (this.EntityPM.TypeCode == "OFS") {
+            this.EditTabTariffType = "OVR";
         }
 
         this.BuildTabs();
@@ -263,6 +267,7 @@ export class TariffTabsContentComponent implements OnDestroy {
 
     private Retries: number = 0;
     private timerToken: any;
+    private lineIdFromPriceCheck: string;
     RunComponent(IsNext: boolean = true) {
         var index = 0;
         if (!IsNext) {
@@ -276,7 +281,17 @@ export class TariffTabsContentComponent implements OnDestroy {
 
             else {
                 if (!AppTool.IsNullOrEmpty(this.entityArgs.EditComponent.PreSelectedTabCode)) {
-                    var SelectedTab: TariffDetailsTab = this.Tabs.filter(p => p.VersionPM != null ? (p.VersionPM.Version == + this.entityArgs.EditComponent.PreSelectedTabCode) : 0)[0];
+
+                    var versionId = null;
+
+                    if (this.entityArgs.EditComponent.PreSelectedTabCode.indexOf(',') > -1) {
+                        var codeArray: string[] = this.entityArgs.EditComponent.PreSelectedTabCode.split(',');
+
+                        versionId = codeArray[0];
+                        this.lineIdFromPriceCheck = codeArray[1];
+                    }
+                    
+                    var SelectedTab: TariffDetailsTab = this.Tabs.filter(p => p.VersionPM != null ? (p.VersionPM.Version == + versionId) : 0)[0];
 
                     if (SelectedTab) {
                         this.SelectionChanged(SelectedTab);
@@ -352,7 +367,11 @@ export class TariffTabsContentComponent implements OnDestroy {
                                 this.Tabs.filter(p => p.Index == this.SelectedTabItem.Index)[0].IsTabLoaded = true;
                             }
                             if (this.SelectedTabItem.VersionPM) {
-                                cmpRef.instance.Intialize({ CurrentVersion: this.SelectedTabItem.VersionPM, SelectedVersionNumber: this.SelectedTabItem.VersionPM.Version });
+                                cmpRef.instance.Intialize({
+                                    CurrentVersion: this.SelectedTabItem.VersionPM,
+                                    SelectedVersionNumber: this.SelectedTabItem.VersionPM.Version,
+                                    LineIdFromPriceCheck: this.lineIdFromPriceCheck
+                                });
                             }
                         });
                     }
@@ -391,11 +410,18 @@ class TariffDetailsTab {
                 break;
             }
 
-            case "CVR":
-                {
+            case "CVR":{
                     this.IsDraft = version.IsDraft;
                     this.VersionPM = version;
                     this.ComponentPath = "./TariffModule/Components/EditTabs/Tariff/OceanFCLVersionTabComponent";
+                    break;
+                }
+
+            case "OVR":
+                {
+                    this.IsDraft = version.IsDraft;
+                    this.VersionPM = version;
+                    this.ComponentPath = "./TariffModule/Components/EditTabs/Tariff/OceanFCLSurchargeVersionTabComponent";
                     break;
                 }
 
@@ -416,8 +442,6 @@ class TariffDetailsTab {
         }
     }
 }
-
-
 
 export class PagerService {
     getPager(totalItems: number, currentPage: number = 1, pageSize: number = 4) {

@@ -56,6 +56,8 @@ export class CustomFieldsComponent {
         this.CustomFieldsCollection = new ObservableCollection(this.loadedFields);
 
         var fieldsCount = (this.ObjectTableName == "Shipment" || this.ObjectTableName == "Master") ? 40 : 10;
+        if (this.ObjectTableName == "Quote") fieldsCount = 20;
+
         this.IsAddButtonEnabled = this.CustomFieldsCollection.Length < fieldsCount ? true : false;
 
         //var objectTablePM: ObjectTablePM;

@@ -44,6 +44,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         Tenant = a.Tenant,
                         Value = a.Value,
                         ObjectFieldName = a.ObjectField.FieldName,
+                        ObjectFieldCode = a.ObjectFieldCode,
                     });
         }
 
@@ -60,6 +61,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         Tenant = a.Tenant,
                         Value = a.Value,
                         ObjectFieldName = a.ObjectField.FieldName,
+                        ObjectFieldCode = a.ObjectFieldCode,
                     });
         }
 
@@ -75,6 +77,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         ObjectTableId = a.ObjectTableId,
                         Tenant = a.Tenant,
                         Value = a.Value,
+                        ObjectFieldCode = a.ObjectFieldCode,
                     }).ToList();
         }
     }

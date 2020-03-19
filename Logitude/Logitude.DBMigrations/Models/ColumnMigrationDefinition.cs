@@ -14,6 +14,7 @@ namespace Logitude.DBMigrations.Models
         public int Size { get; set; }
         public int Precision { get; set; }
         public int Scale { get; set; }
+        public string DefaultValue { get; set; }
         public ConstraintsDefinition Constraints { get; set; }
     }
 }

@@ -118,7 +118,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Interest Report Statuse",
-			      				    Code =  "9ccc",
+			      				    Code =  "1bb2",
 			      				    Name =  " Query Group",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "EnglishName",
@@ -401,6 +401,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	         Screen InterestReportStatuseInterestReportStatuseHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "InterestReportStatuse.HeaderScreen", Name = "InterestReportStatuseHeaderScreen", ObjectTableId = InterestReportStatuseObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       	
 		    InterestReportStatuseObjectTable.HeaderScreenId = InterestReportStatuseInterestReportStatuseHeaderScreenScreen0.Id;
+		    InterestReportStatuseObjectTable.HeaderScreenCode = InterestReportStatuseInterestReportStatuseHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }

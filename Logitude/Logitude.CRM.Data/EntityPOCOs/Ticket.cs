@@ -206,6 +206,8 @@ namespace Logitude.CRM.Data.EntityPOCOs
 	    public string SupportMailboxId { get; set; }
 	      
         public virtual SupportMailbox SupportMailbox { get; set; }
+        [Column("LastCorrespondence")]
+	    public string LastCorrespondence { get; set; }
     }
 }
 	 

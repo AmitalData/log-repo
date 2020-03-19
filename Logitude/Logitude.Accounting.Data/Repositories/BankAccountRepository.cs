@@ -52,18 +52,19 @@ namespace Logitude.Accounting.Data.Repositories
 
             return entity;
         }
-        public BankAccount GetBankAccountByBankIdAccNumber(string  BankId, string AccountNumber, int tenant)
+        public List<BankAccount> GetBankAccountListByBankIdAccNumber(string  BankId, string AccountNumber, int tenant)
         {
-            BankAccount entity;
+            
 
-            entity = (from a in context.BankAccounts
+            var entityList = (from a in context.BankAccounts
                       where
                       a.BankId == BankId &&
-                      a.AccountNumber == AccountNumber && 
+                      a.AccountNumber == AccountNumber &&
                       a.Tenant == tenant
-                      select a).FirstOrDefault();
+                      select a)/*.FirstOrDefault();*/
+                      ;
 
-            return entity;
+            return entityList.ToList();
         }
 
         public BankAccount GetBankAccountByTransferGLAcccountId(string transferGLAcccountId, int tenant)

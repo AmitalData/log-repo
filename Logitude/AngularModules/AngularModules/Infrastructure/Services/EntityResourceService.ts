@@ -541,14 +541,14 @@ export class EntityResourceService {
 
         if (window.ObjectFieldModifications != undefined && window.ObjectFieldModifications != null) {
             window.ObjectFieldModifications.forEach(ofMod => {
-                var objectField = window.ObjectFields.filter(d => d.Id == ofMod.ObjectFieldId)[0];
+                var objectField = window.ObjectFields.filter(d => d.FieldCode == ofMod.ObjectFieldCode)[0];
                 if (objectField) {
                     objectField.IsRequired = objectField.IsRequiered = ofMod.IsRequired;
                     objectField.MaxLength = ofMod.MaxLength;
                     objectField.MinLength = ofMod.MinLength;
                     
                     window.ObjectFields.splice(window.ObjectFields.indexOf(objectField), 1, objectField);
-                    var objectField = window.ObjectFields.filter(d => d.Id == ofMod.ObjectFieldId)[0];
+                    var objectField = window.ObjectFields.filter(d => d.FieldCode == ofMod.ObjectFieldCode)[0];
                 }
             });
         }

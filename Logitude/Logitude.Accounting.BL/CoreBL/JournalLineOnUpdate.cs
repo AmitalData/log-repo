@@ -41,48 +41,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
             journalLinePM.AccountingDate = journalLinePM.AccountingDate.Date; //Eyal:Time No Meaning (create+update Have  Time have Meaning )
 
-
-            var creditIVerifyGLAccountManager = GetIVerifyGLAccountManager();
-            creditIVerifyGLAccountManager.Verify(this._MainContext, journalLinePM.Tenant, journalLinePM.CreditAccountId, journalLinePM.CreditAccountNumber, journalLinePM.CurrencyId );
-            bool haveChange = false;
-            haveChange =(journalLinePM.CreditAccountId != creditIVerifyGLAccountManager.AccountId ||
-                journalLinePM.CreditControlAccountId != creditIVerifyGLAccountManager.ControlAccountId);            
-            journalLinePM.CreditAccountId = creditIVerifyGLAccountManager.AccountId;
-            journalLinePM.CreditControlAccountId = creditIVerifyGLAccountManager.ControlAccountId;
-
-
-            FullAccountingSettingPM accountingSettings = getFullAccountingSettings(journalPM.Tenant);
-
-            var debitIVerifyGLAccountManager = GetIVerifyGLAccountManager();
-            debitIVerifyGLAccountManager.Verify(
-                this._MainContext, 
-                journalLinePM.Tenant, 
-                journalLinePM.DebitAccountId, 
-                journalLinePM.DebitAccountNumber,
-                journalLinePM.CurrencyId
-                );
-            if (!haveChange)
-            {
-                haveChange = (journalLinePM.DebitAccountId != debitIVerifyGLAccountManager.AccountId ||
-                    journalLinePM.DebitControlAccountId != debitIVerifyGLAccountManager.ControlAccountId);
-            }
-            if (accountingSettings.VATOutputGLAccountId != journalLinePM.CreditAccountId)
-            {
-                journalLinePM.DebitAccountId = debitIVerifyGLAccountManager.AccountId;
-                journalLinePM.DebitControlAccountId = debitIVerifyGLAccountManager.ControlAccountId;
-            }
-
-
-
-
-            if (haveChange && journalLinePM.ChangeSetOp == ChangeSetOperation.None)
-            {
-                journalLinePM.ChangeSetOp = ChangeSetOperation.Update;
-            }
-
-
-
-            //if (journalLinePM.Line == 0) renumber = true;
+            ///move up b4 CurrencyId is using 
             if (!String.IsNullOrWhiteSpace(journalLinePM.CurrencyCode) && String.IsNullOrWhiteSpace(journalLinePM.CurrencyId))
             {
                 CurrencyPM currency =
@@ -94,6 +53,22 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
             }
 
+            bool haveChange = false;
+            haveChange = FixCredit(journalLinePM, haveChange);
+
+            FullAccountingSettingPM accountingSettings = getFullAccountingSettings(journalPM.Tenant);
+
+            haveChange = FixDebit(journalLinePM, haveChange, accountingSettings);
+
+            if (haveChange && journalLinePM.ChangeSetOp == ChangeSetOperation.None)
+            {
+                journalLinePM.ChangeSetOp = ChangeSetOperation.Update;
+            }
+
+
+
+            //if (journalLinePM.Line == 0) renumber = true;
+
 
             if (!String.IsNullOrWhiteSpace(journalLinePM.ActionTypeCode) &&
                 String.IsNullOrWhiteSpace(journalLinePM.ActionCode))
@@ -103,7 +78,8 @@ namespace Logitude.Accounting.BL.CoreBL
                     JournalActionTypeListGetByCode(journalLinePM);
                 if (action != null)
                 {
-                    journalLinePM.ActionCode = action.Id;
+                    journalLinePM.ActionId = action.Id;
+                    journalLinePM.ActionCode = action.Code;
                     journalLinePM.ActionName = action.EnglishName;
                 }
             }
@@ -124,12 +100,81 @@ namespace Logitude.Accounting.BL.CoreBL
             }
         }
 
+        private bool FixCredit(JournalLinePM journalLinePM, bool haveChange)
+        {
+            if (journalLinePM.ActionTypeCodeEnum == MyJournalActionTypeEnum.Credit ||
+                            journalLinePM.ActionTypeCodeEnum == MyJournalActionTypeEnum.DebitAndCredit ||
+                            journalLinePM.ActionTypeCodeEnum == MyJournalActionTypeEnum.DebitCreditAndVatdeduction
+                            )
+            {
+                var creditIVerifyGLAccountManager = GetIVerifyGLAccountManager();
+                creditIVerifyGLAccountManager.Verify(this._MainContext, journalLinePM.Tenant, journalLinePM.CreditAccountId, journalLinePM.CreditAccountNumber, journalLinePM.CurrencyId);
+
+                haveChange = (journalLinePM.CreditAccountId != creditIVerifyGLAccountManager.AccountId ||
+                    journalLinePM.CreditControlAccountId != creditIVerifyGLAccountManager.ControlAccountId);
+                journalLinePM.CreditControlAccountId = creditIVerifyGLAccountManager.ControlAccountId;
+
+                journalLinePM.CreditAccountId = creditIVerifyGLAccountManager.AccountId;
+            }
+
+            return haveChange;
+        }
+
+        private bool FixDebit(JournalLinePM journalLinePM, bool haveChange, FullAccountingSettingPM accountingSettings)
+        {
+            if (
+                            //from mumps >>> CHANGE DEBIT
+                            IsFromMumps(journalLinePM)
+                            ||
+                            // Regular Journal do not  CHANGE DEBIT if credit equal VATOutputGLAccountId
+                            CreditAccountIsNotVATOutputGLAccountId(journalLinePM, accountingSettings)
+                            )
+            {
+                if (journalLinePM.ActionTypeCodeEnum == MyJournalActionTypeEnum.Debit ||
+    journalLinePM.ActionTypeCodeEnum == MyJournalActionTypeEnum.DebitAndCredit ||
+    journalLinePM.ActionTypeCodeEnum == MyJournalActionTypeEnum.DebitCreditAndVatdeduction
+    )
+                {
+                    var debitIVerifyGLAccountManager = GetIVerifyGLAccountManager();
+                    debitIVerifyGLAccountManager.Verify(
+                        this._MainContext,
+                        journalLinePM.Tenant,
+                        journalLinePM.DebitAccountId,
+                        journalLinePM.DebitAccountNumber,
+                        journalLinePM.CurrencyId
+                        );
+
+                    if (!haveChange)
+                    {
+                        haveChange = (journalLinePM.DebitAccountId != debitIVerifyGLAccountManager.AccountId ||
+                            journalLinePM.DebitControlAccountId != debitIVerifyGLAccountManager.ControlAccountId);
+                    }
+
+                    journalLinePM.DebitControlAccountId = debitIVerifyGLAccountManager.ControlAccountId;
+
+                    journalLinePM.DebitAccountId = debitIVerifyGLAccountManager.AccountId;
+
+                }
+            }
+
+            return haveChange;
+        }
+
+        private static bool CreditAccountIsNotVATOutputGLAccountId(JournalLinePM journalLinePM, FullAccountingSettingPM accountingSettings)
+        {
+            return accountingSettings.VATOutputGLAccountId != journalLinePM.CreditAccountId;
+        }
+
+        private static bool IsFromMumps(JournalLinePM journalLinePM)
+        {
+            return journalLinePM.DebitAccountId == "dmy";
+        }
 
 
         public virtual FullAccountingSettingPM getFullAccountingSettings(int tenant)
         {
             bool fromCache = true;
-            FullAccountingSettingPM accountingSettings=null;
+            FullAccountingSettingPM accountingSettings = null;
             if (fromCache)
             {
                 accountingSettings = FullAccountingSettingQueryService.Get(tenant);
@@ -137,7 +182,7 @@ namespace Logitude.Accounting.BL.CoreBL
             }
 
 
-            
+
             FullAccountingSettingQueryService query = new FullAccountingSettingQueryService(tenant);
             accountingSettings = query.GetSingleFullAccountingSetting(tenant);
             return accountingSettings;
@@ -164,8 +209,8 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 return queryService.GetSingleCurrencyByCode(CurrencyCode, tenant);
             });
-            
-            
+
+
         }
 
 
@@ -308,7 +353,7 @@ namespace Logitude.Accounting.BL.CoreBL
         {
             var glQS = new GLAccountQueryService(this._MainContext);
             glQS.SetSuppressFetchOpenReconcilation(true);
-            
+
             var pm = glQS.GetSingle(accountId, false, true);
             return pm;
         }
@@ -323,7 +368,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 var pm = glQS.GetByInternalNumber(accountNumber, tenant)/*.SingleOrDefault()*/;
                 return pm;
             });
-            
+
         }
 
 

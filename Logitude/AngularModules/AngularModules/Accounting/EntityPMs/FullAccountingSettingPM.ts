@@ -244,6 +244,11 @@ export class FullAccountingSettingPM {
     public set PaymentChequesLogoId(newValue: string) { if (this.paymentChequesLogoId != newValue) { this.paymentChequesLogoId = newValue; this.MarkAsDirty("PaymentChequesLogoId"); } }
        
 	 
+    private numberOfAgingMonths: number;
+    public get NumberOfAgingMonths() { return this.numberOfAgingMonths; }
+    public set NumberOfAgingMonths(newValue: number) { if (this.numberOfAgingMonths != newValue) { this.numberOfAgingMonths = newValue; this.MarkAsDirty("NumberOfAgingMonths"); } }
+       
+	 
 
     public OldEntityPM: FullAccountingSettingPM;
 		

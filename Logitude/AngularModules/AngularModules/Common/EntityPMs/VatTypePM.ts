@@ -99,6 +99,11 @@ export class VatTypePM {
     public set NewEntityPercentageDate(newValue: Date) { if (this.newEntityPercentageDate != newValue) { this.newEntityPercentageDate = newValue; this.MarkAsDirty("NewEntityPercentageDate"); } }
        
 	 
+    private externalVATCard: string;
+    public get ExternalVATCard() { return this.externalVATCard; }
+    public set ExternalVATCard(newValue: string) { if (this.externalVATCard != newValue) { this.externalVATCard = newValue; this.MarkAsDirty("ExternalVATCard"); } }
+       
+	 
     private payablesExternalId: string;
     public get PayablesExternalId() { return this.payablesExternalId; }
     public set PayablesExternalId(newValue: string) { if (this.payablesExternalId != newValue) { this.payablesExternalId = newValue; this.MarkAsDirty("PayablesExternalId"); } }
@@ -206,7 +211,12 @@ export class VatTypePM {
         }
     }
 	    //public VatTypeGroups: Array<VATTypesGroupPMPM>= [];
- 
+     private isRegionalTax: boolean;
+    public get IsRegionalTax() { return this.isRegionalTax; }
+    public set IsRegionalTax(newValue: boolean) { if (this.isRegionalTax != newValue) { this.isRegionalTax = newValue; this.MarkAsDirty("IsRegionalTax"); } }
+       
+	 
+
     public OldEntityPM: VatTypePM;
 		
     public IsDirty: boolean;

@@ -63,9 +63,9 @@ export class MainMenuComponent {
 
 
             else {
-                if (FeatureLocator.IsFeatureGranted(item.FeatureId)) {
+                if (FeatureLocator.IsFeatureGrantedByUniqeCode(item.FeatureUniqeCode)) {
                     isAddingItem = true;
-                }
+                } 
             }
          
             if (isAddingItem) {

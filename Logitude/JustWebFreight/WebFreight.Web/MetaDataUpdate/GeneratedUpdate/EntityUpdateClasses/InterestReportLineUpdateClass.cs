@@ -110,13 +110,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    InActive =  false,
 			      				    IsSaveButtonVisible =  false,
 			      				    IsComposition =  false,
-			      				    EnableSecurity =  true,
+			      				    EnableSecurity =  false,
 			      				    AllowCustomFields =  false,
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Interest Report Line",
-			      				    Code =  "edd4",
+			      				    Code =  "547d",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Accounting",
@@ -267,6 +267,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	         Screen InterestReportLineInterestReportLineHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "InterestReportLine.HeaderScreen", Name = "InterestReportLineHeaderScreen", ObjectTableId = InterestReportLineObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       	
 		    InterestReportLineObjectTable.HeaderScreenId = InterestReportLineInterestReportLineHeaderScreenScreen0.Id;
+		    InterestReportLineObjectTable.HeaderScreenCode = InterestReportLineInterestReportLineHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }

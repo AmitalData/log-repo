@@ -137,7 +137,10 @@ using Simplog.Data.InvoiceModel;
 					 temp.ARPaymentCheques = ARPaymentChequeService6.ARPaymentChequeDataMapping(MyEntityPM.ARPaymentChequeReplicas,Tenant);
 				}
 
-							 					
+							 
+				   temp.BankAccountNumber = MyEntityPM.BankAccountNumber;
+				   temp.CancelationNotes = MyEntityPM.CancelationNotes;
+				   temp.AccountingCancelationDate = MyEntityPM.AccountingCancelationDate;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -278,7 +281,10 @@ using Simplog.Data.InvoiceModel;
 						temp.ARPaymentChequeReplicas = ARPaymentChequeService6.ARPaymentChequeDataMappingAndValidatin(MyEntity.ARPaymentCheques,Tenant,ComputingPartnerName);
 					}
 
-								 					   
+								 
+					temp.BankAccountNumber = MyEntity.BankAccountNumber;
+					temp.CancelationNotes = MyEntity.CancelationNotes;
+					temp.AccountingCancelationDate = MyEntity.AccountingCancelationDate;					   
 					   return temp;
 		    }
             catch (Exception ex)

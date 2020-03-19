@@ -95,14 +95,19 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     else if (transactionPM.SourceTypeCode == "9") // 9- Payment Cheque
                     {
                         PaymentChequePM chequePM = paymentChequeQuery.GetSingle(transactionPM.SourceId, false, false);
-                        if (chequePM != null)
+                       
+                    }
+                    else if(transactionPM.SourceTypeCode == "5") {
+                        List<PaymentChequePM> paymentCheques = paymentChequeQuery.GetPaymentChequesByPaymentId(transactionPM.SourceId, transactionPM.Tenant);
+                        //IM+ OHAD - IN CASE NOT manual Cheques (NOT INSERTED AS  PaymentCheque) 
+                        // NOT NEED TO CHANGE STATUS 2 Redeemed
+                        //ITZIK :I THINK manual/PRINTED Cheque - also have to create dummy  paymentCheque !!!
+                        if (paymentCheques.Count > 0)
+                            
                         {
-                            chequePM.PaymentChequeStatusCode = "3"; // 3- Redeemed
-                            chequePM.ChangeSetOp = ChangeSetOperation.Update;
-                            PaymentChequeUpdateService paymentChequeUpdateService = new PaymentChequeUpdateService(MainContext, AdditionalContexts, entityPM.Tenant);
-                            paymentChequeUpdateService.Update(chequePM, true);
+                            UpdatePaymentChequeStatus(paymentCheques[0]);
                         }
-
+                        
                     }
                     transactionService.Update(transactionPM, false);
                 }
@@ -127,7 +132,17 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             aRPaymentChequeUpdateService.Update(aRPaymentCheque, true);
             
         }
+        private void UpdatePaymentChequeStatus(PaymentChequePM chequePM)
+        {
+            if (chequePM != null)
+            {
+                chequePM.PaymentChequeStatusCode = "3"; // 3- Redeemed
+                chequePM.ChangeSetOp = ChangeSetOperation.Update;
+                PaymentChequeUpdateService paymentChequeUpdateService = new PaymentChequeUpdateService(MainContext, AdditionalContexts, chequePM.Tenant);
+                paymentChequeUpdateService.Update(chequePM, true);
+            }
 
+        }
         protected override void OnUpdating(ExternalReconciliationPM entityPM, ExternalReconciliation entityPOCO)
         {
 
@@ -154,7 +169,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 {
                     if (transactionPM.SourceTypeCode == "9") // 9- Payment Cheque
                     {
-                        PaymentChequePM chequePM = paymentChequeQuery.GetSingle(transactionPM.SourceId, false, false);
+                        PaymentChequePM chequePM = paymentChequeQuery.GetSingle(transactionPM.SourceId, true, false);
                         chequePM.PaymentChequeStatusCode = "2"; // 2- Approved
                         chequePM.ChangeSetOp = ChangeSetOperation.Update;
                         PaymentChequeUpdateService paymentChequeUpdateService = new PaymentChequeUpdateService(MainContext, AdditionalContexts, entityPM.Tenant);
@@ -229,12 +244,34 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
             base.Trace(entityPM, entityPOCO, changesXml);
         }
-        protected override void Validate(ExternalReconciliationPM entityPM)
+        protected override void Validate(ExternalReconciliationPM externalRecoPM)
         {
 
-            CheckDifferenc(entityPM);
+            CheckDifferenc(externalRecoPM);
+            CheckTransferTransactions(externalRecoPM);
 
-            base.Validate(entityPM);
+            base.Validate(externalRecoPM);
+        }
+
+        private static void CheckTransferTransactions(ExternalReconciliationPM externalRecoPM)
+        {
+            BankAccountPM bankAccount = GetBankAccount(externalRecoPM);
+
+            bool haveExternalPageLines = externalRecoPM.ExternalReconciliationLines.Count(d => d.LedgerTransactionId == null && d.ExternalPageLineId != null) > 0;
+            int transferTransactionsCount = externalRecoPM.ExternalReconciliationLines.Count(d => d.LedgerGLAccountId == bankAccount.TransferGLAcccountId);
+            if (haveExternalPageLines && transferTransactionsCount > 1)
+            {
+                var msg = TextCodesTranslator.TranslateText("ExternalReconciliation.O.CantReconcileTwoTransfer", 0,
+                    LoggedContactResolver.GetLoggedContactShowLocal(externalRecoPM.Tenant));
+                throw new ApplicationException(msg);
+            }
+        }
+
+        private static BankAccountPM GetBankAccount(ExternalReconciliationPM externalRecoPM)
+        {
+            BankAccountQueryService bankAccountQueryService = new BankAccountQueryService(externalRecoPM.Tenant);
+            BankAccountPM bankAccount = bankAccountQueryService.GetSingle(externalRecoPM.BankAccountId, false, false);
+            return bankAccount;
         }
 
         void CheckDifferenc(ExternalReconciliationPM entityPM)

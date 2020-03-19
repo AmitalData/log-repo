@@ -17,6 +17,11 @@ namespace Simplog.Data.InfrastructureModel.Mapping
                 .HasMaxLength(15)
                 .IsUnicode(false);
 
+            this.Property(t => t.ScreenCode)
+                .IsRequired()
+                .HasMaxLength(200)
+                .IsUnicode(false);
+
             this.Property(t => t.Id)
                 .IsRequired()
                 .HasMaxLength(15)
@@ -37,6 +42,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.Tenant).HasColumnName("Tenant");
           
             this.Property(t => t.ScreenId).HasColumnName("ScreenId");
+            this.Property(t => t.ScreenCode).HasColumnName("ScreenCode");
             this.Property(t => t.Id).HasColumnName("Id");
             this.Property(t => t.ObjectFieldId).HasColumnName("ObjectFieldId");
             this.Property(t => t.ObjectFieldCode).HasColumnName("ObjectFieldCode");

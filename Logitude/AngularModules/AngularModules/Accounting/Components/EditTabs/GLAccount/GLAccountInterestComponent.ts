@@ -1,5 +1,5 @@
-import {Component}  from '@angular/core';
-import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import { Component } from '@angular/core';
+import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { GLAccountPM } from '../../../EntityPMs/GLAccountPM';
 import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -22,7 +22,7 @@ import { InterestBasesTypePM } from '../../../EntityPMs/InterestBasesTypePM';
     templateUrl: './GLAccountInterestComponent.html',
 })
 
-export class GLAccountInterestComponent extends BaseComponent{
+export class GLAccountInterestComponent extends BaseComponent {
     public EntityPM: GLAccountPM;
     public ObjectTableName: string = "GLAccount";
     public DataContext: GLAccountInterestComponent = this;
@@ -43,7 +43,7 @@ export class GLAccountInterestComponent extends BaseComponent{
             this.EntityPM.Tenant = this.TenantPM.Id;
         }
         //Resources
-  
+
         this.myService = new GLAccountPMService();
         this.GLAccountInterestPeriodsList = new ObservableCollection([]);
         this.EntityPM.OldEntityPM = this.EntityPM;
@@ -58,11 +58,15 @@ export class GLAccountInterestComponent extends BaseComponent{
             this.UIProperties.SetEnabled("ActiveForInterestCreditInvoice", "GLAccount", true);
             this.UIProperties.SetEnabled("InterestCalculationStartDate", "GLAccount", true);
             this.UIProperties.SetEnabled("MinimumInterestInvoiceBilling", "GLAccount", true);
+            this.UIProperties.SetEnabled("InterestCreditLimit", "GLAccount", true);
+
         }
         else {
             this.UIProperties.SetEnabled("ActiveForInterestCreditInvoice", "GLAccount", false);
             this.UIProperties.SetEnabled("InterestCalculationStartDate", "GLAccount", false);
             this.UIProperties.SetEnabled("MinimumInterestInvoiceBilling", "GLAccount", false);
+            this.UIProperties.SetEnabled("InterestCreditLimit", "GLAccount", false);
+
         }
     }
     SetWindowArgs(args) {
@@ -118,11 +122,14 @@ export class GLAccountInterestComponent extends BaseComponent{
 
     RemoveLine(line: GLAccountInterestPeriodModel) {
         var confirmWindow = new ConfirmWindow();
-        confirmWindow.Show(TextCodeTranslator.Translate("Accounting.General.O.Areyousuredeleteline")+" ?");
+        confirmWindow.Show(TextCodeTranslator.Translate("Accounting.General.O.Areyousuredeleteline") + " ?");
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
-                  this.EntityPM.RemoveGLAccountInterestPeriod(line.EntityPM);
-                  this.GLAccountInterestPeriodsList.Remove(line);
+                //this.EntityPM.RemoveGLAccountInterestPeriod(line.EntityPM);
+                line.EntityPM.ChangeSetOp = "Delete"; //Delete
+                this.EntityPM.MarkAsDirty();
+                //this.EntityPM.AddGLAccountInterestPeriod(line.EntityPM);
+                this.GLAccountInterestPeriodsList.Remove(line);
             }
         });
 
@@ -138,18 +145,29 @@ export class GLAccountInterestComponent extends BaseComponent{
                 if (isSaveSuccess) {
                     this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
-                    this.BuildData();
+                    //this.BuildData();
                     this.SetUIProperties();
                 }
 
                 var IsFailedDeleted: boolean = false;
                 this.entityArgs.EditComponent.ValidationErrorsList.forEach(s => s.includes(TextCodeTranslator.Translate("GLAccount.O.AtleastoneGLAccountInterestPeriodsrecordisrequired")) ? IsFailedDeleted = true : null);
-                if (IsFailedDeleted && !this.ActiveForInterest) {
+                if (IsFailedDeleted && this.ActiveForInterest) {
                     this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
                     this.BuildData();
                     this.SetUIProperties();
 
+                }
+
+                if (this.entityArgs.EditComponent.ValidationErrorsList.length != 0) {
+                    if (this.GLAccountInterestPeriodsList.Collection.length > 0) {
+                        var errors = [];
+                        var lastRow = this.GLAccountInterestPeriodsList.Collection[this.GLAccountInterestPeriodsList.Collection.length - 1];
+                        var ObjectTableName: string = "GLAccountInterestPeriod";
+                        Validator.TryValidateObject(lastRow, ObjectTableName, errors);
+                        if (errors.length > 0)
+                            this.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
+                    }
                 }
             });
 
@@ -181,8 +199,8 @@ export class GLAccountInterestComponent extends BaseComponent{
     }
 
     get ActiveForInterest() {
-            return this.EntityPM.ActiveForInterest;
-      }
+        return this.EntityPM.ActiveForInterest;
+    }
     set ActiveForInterest(newValue: boolean) {
         this.EntityPM.ActiveForInterest = newValue;
         this.SetUIProperties();
@@ -191,21 +209,26 @@ export class GLAccountInterestComponent extends BaseComponent{
         return this.EntityPM.ActiveForInterestCreditInvoice;
     }
     set ActiveForInterestCreditInvoice(newValue: boolean) {
-            this.EntityPM.ActiveForInterestCreditInvoice = newValue;
+        this.EntityPM.ActiveForInterestCreditInvoice = newValue;
     }
     get InterestCalculationStartDate() {
-            return this.EntityPM.InterestCalculationStartDate;
-      }
+        return this.EntityPM.InterestCalculationStartDate;
+    }
     set InterestCalculationStartDate(newValue: Date) {
-            this.EntityPM.InterestCalculationStartDate = newValue;
-     }
+        this.EntityPM.InterestCalculationStartDate = newValue;
+    }
     get MinimumInterestInvoiceBilling() {
-            return this.EntityPM.MinimumInterestInvoiceBilling;
+        return this.EntityPM.MinimumInterestInvoiceBilling;
     }
     set MinimumInterestInvoiceBilling(newValue: number) {
-            this.EntityPM.MinimumInterestInvoiceBilling = newValue;
+        this.EntityPM.MinimumInterestInvoiceBilling = newValue;
     }
-
+    get InterestCreditLimit() {
+        return this.EntityPM.InterestCreditLimit;
+    }
+    set InterestCreditLimit(newValue: number) {
+        this.EntityPM.InterestCreditLimit = newValue;
+    }
 
     ngOnDestroy() {
         AppTool.KillEventEmitter(this.SaveCompletedEvent);
@@ -219,7 +242,7 @@ export class GLAccountInterestPeriodModel extends BaseComponent {
     public GLAccountPM: GLAccountPM;
     public ObjectTableName: string = "GLAccountInterestPeriod";
 
-    constructor(entityPM: GLAccountInterestPeriodPM,  public fatherComponent) {
+    constructor(entityPM: GLAccountInterestPeriodPM, public fatherComponent) {
         super();
         this.EntityPM = entityPM;
         this.GLAccountPM = fatherComponent.EntityPM;
@@ -273,7 +296,7 @@ export class GLAccountInterestPeriodModel extends BaseComponent {
             else
                 this.UIProperties.SetValidity("StandardAddInterestPercent", "GLAccountInterestPeriod", true, "Number Of Digit Before Comma Must Be Two Or Less In Standard Add Interest Percent");
 
-                this.EntityPM.StandardAddInterestPercent = newValue;
+            this.EntityPM.StandardAddInterestPercent = newValue;
         }
     }
     private standardInterestRateBase: InterestBasesTypePM;
@@ -310,7 +333,7 @@ export class GLAccountInterestPeriodModel extends BaseComponent {
             else
                 this.UIProperties.SetValidity("ExceptionalAddInterestPercent", "GLAccountInterestPeriod", true, "Number Of Digit Before Comma Must Be Two Or Less In Exceptional Add Interest Percent");
 
-                this.EntityPM.ExceptionalAddInterestPercent = newValue;
+            this.EntityPM.ExceptionalAddInterestPercent = newValue;
         }
     }
 
@@ -347,7 +370,7 @@ export class GLAccountInterestPeriodModel extends BaseComponent {
                 this.UIProperties.SetValidity("CreditAddInterestPercent", "GLAccountInterestPeriod", false, "Number Of Digit Before Comma Must Be Two Or Less In Credit Add Interest Percent");
             else
                 this.UIProperties.SetValidity("CreditAddInterestPercent", "GLAccountInterestPeriod", true, "Number Of Digit Before Comma Must Be Two Or Less In Credit Add Interest Percent");
-                this.EntityPM.CreditAddInterestPercent = newValue;
+            this.EntityPM.CreditAddInterestPercent = newValue;
         }
     }
 

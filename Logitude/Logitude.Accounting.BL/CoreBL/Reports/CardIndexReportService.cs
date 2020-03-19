@@ -38,13 +38,13 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                 myLedgerTransactionBalanceFilter.CallBack = null;
                 var myLedgerTransactionBalanceService = new LedgerTransactionBalanceService(_AccountingContext, myLedgerTransactionBalanceFilter);
                 myLedgerTransactionBalanceService.Run();
-                if (this._Param.IsReconciled.HasValue)
+                if (this._Param.IsReconciled.HasValue && _Param.IsReconciled==false)
                 {
                     bool IsReconciled =this._Param.IsReconciled.GetValueOrDefault();
                     myLedgerTransactionBalanceService.Response.MyLedgerTransactionList = myLedgerTransactionBalanceService.Response.MyLedgerTransactionList
-                        .Where(r => r.IsReconciled = IsReconciled).ToList();
+                        .Where(r => r.IsReconciled == IsReconciled).ToList();
                 }
-                
+                myLedgerTransactionBalanceService.Response.GLAccountId = currGLAccountId;
                 CardIndexs.Add(myLedgerTransactionBalanceService.Response);
 
             }

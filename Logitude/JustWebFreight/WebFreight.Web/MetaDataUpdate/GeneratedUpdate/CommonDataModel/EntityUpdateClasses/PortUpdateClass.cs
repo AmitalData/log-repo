@@ -199,6 +199,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Code",
@@ -263,6 +264,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "EnglishName",
@@ -325,6 +327,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "LocalName",
@@ -387,6 +390,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "ComputedLocalName",
@@ -451,6 +455,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "IsOcean",
@@ -515,6 +520,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "IsAir",
@@ -579,6 +585,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "IsInland",
@@ -643,6 +650,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "AddedManually",
@@ -707,6 +715,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "InActive",
@@ -771,6 +780,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Remark",
@@ -834,6 +844,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "CountryId",
@@ -896,6 +907,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Latitude",
@@ -958,6 +970,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Longtitude",
@@ -974,7 +987,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ObjectTableName =  "Port",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
-					  						MaxLength =  40,
+					  						MaxLength =  2,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -982,7 +995,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CanFilter =  true,
 					  						DisplayOnly =  true,
 					  						SystemRequired =  false,
-					  						SystemMaxLength =  0,
+					  						SystemMaxLength =  2,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						Operator =  "StartsWith",
@@ -1022,6 +1035,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "CountryCode",
@@ -1086,6 +1100,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "CountryName",
@@ -1148,6 +1163,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "CountryCodeOrName",
@@ -1212,6 +1228,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "CodeOrName",
@@ -1275,6 +1292,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "TransportModeId",
@@ -1339,6 +1357,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "StateId",
@@ -1404,6 +1423,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Notes",
@@ -1467,6 +1487,69 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "StateCode",
+					  						OldFieldName =  "StateCode",
+					  						ObjectTableName =  "Port",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  10,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  10,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "StateCode",
+					  						ListPropertyPath =  "StateCode",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Port",
+					  						ValidForQuerySection2 =  "PortFollowUp",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "StateCode",
+					  						DefaultText =  "State Code",
+					  						FullLocalDefaultText =  "StateCode",
+					  						ListFieldLable =  "StateCodeListLable",
+					  						ListLableDefaultText =  "State Code",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1530,6 +1613,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "CombinedCode",
@@ -1593,6 +1677,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1617,14 +1702,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "State",
-					  						ListPropertyPath =  "State",
+					  						PMPropertyPath =  "StateName",
+					  						ListPropertyPath =  "StateName",
 					  						DisplayInLookUpIndex =  4,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -1633,6 +1718,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Port",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						Code =  "StateName",
@@ -1645,9 +1731,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "StateName",
-					  						DefaultText =  "State",
+					  						DefaultText =  "State Name",
 					  						ListFieldLable =  "StateNameListLable",
-					  						ListLableDefaultText =  "State",
+					  						ListLableDefaultText =  "State Name",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1655,6 +1741,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "StateName",
@@ -1683,23 +1770,23 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query PortsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = PortTextCode_0.Id, NameTextCodeCode = PortTextCode_0.Code, Code = "Ports",  QueryGroupCode = "PORT", IndexOrder = 0, Tenant = 0, ObjectTableId = PortObjectTable.Id, QuerySection = "Port", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = PortFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query PortsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = PortTextCode_0.Id, NameTextCodeCode = PortTextCode_0.Code, ObjectTableName = "Port", Code = "Ports",  QueryGroupCode = "PORT", IndexOrder = 0, Tenant = 0, ObjectTableId = PortObjectTable.Id, QuerySection = "Port", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = PortFeature_0.Id,FeatureUniqeCode= PortFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn PortsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PortsQuery.Id, IndexOrder = 0, ObjectFieldId = PortObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == PortObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PortObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == PortObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn PortsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PortsQuery.Id,QueryCode = PortsQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = PortObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == PortObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PortObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == PortObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn PortsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PortsQuery.Id, IndexOrder = 1, ObjectFieldId = PortObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == PortObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PortObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == PortObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn PortsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PortsQuery.Id,QueryCode = PortsQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = PortObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == PortObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PortObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == PortObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn PortsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PortsQuery.Id, IndexOrder = 2, ObjectFieldId = PortObjectFields.Where(d => d.FieldName == "IsAir" && d.ObjectTableId == PortObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PortObjectFields.Where(d => d.FieldName == "IsAir" && d.ObjectTableId == PortObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn PortsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PortsQuery.Id,QueryCode = PortsQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = PortObjectFields.Where(d => d.FieldName == "IsAir" && d.ObjectTableId == PortObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PortObjectFields.Where(d => d.FieldName == "IsAir" && d.ObjectTableId == PortObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn PortsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PortsQuery.Id, IndexOrder = 3, ObjectFieldId = PortObjectFields.Where(d => d.FieldName == "IsOcean" && d.ObjectTableId == PortObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PortObjectFields.Where(d => d.FieldName == "IsOcean" && d.ObjectTableId == PortObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn PortsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PortsQuery.Id,QueryCode = PortsQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = PortObjectFields.Where(d => d.FieldName == "IsOcean" && d.ObjectTableId == PortObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PortObjectFields.Where(d => d.FieldName == "IsOcean" && d.ObjectTableId == PortObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn PortsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PortsQuery.Id, IndexOrder = 4, ObjectFieldId = PortObjectFields.Where(d => d.FieldName == "IsInland" && d.ObjectTableId == PortObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PortObjectFields.Where(d => d.FieldName == "IsInland" && d.ObjectTableId == PortObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn PortsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PortsQuery.Id,QueryCode = PortsQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = PortObjectFields.Where(d => d.FieldName == "IsInland" && d.ObjectTableId == PortObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PortObjectFields.Where(d => d.FieldName == "IsInland" && d.ObjectTableId == PortObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn PortsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PortsQuery.Id, IndexOrder = 5, ObjectFieldId = PortObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == PortObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PortObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == PortObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn PortsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PortsQuery.Id,QueryCode = PortsQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = PortObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == PortObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PortObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == PortObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn PortsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PortsQuery.Id, IndexOrder = 6, ObjectFieldId = PortObjectFields.Where(d => d.FieldName == "CountryName" && d.ObjectTableId == PortObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PortObjectFields.Where(d => d.FieldName == "CountryName" && d.ObjectTableId == PortObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn PortsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PortsQuery.Id,QueryCode = PortsQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = PortObjectFields.Where(d => d.FieldName == "CountryName" && d.ObjectTableId == PortObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PortObjectFields.Where(d => d.FieldName == "CountryName" && d.ObjectTableId == PortObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn PortsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PortsQuery.Id, IndexOrder = 7, ObjectFieldId = PortObjectFields.Where(d => d.FieldName == "Remark" && d.ObjectTableId == PortObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PortObjectFields.Where(d => d.FieldName == "Remark" && d.ObjectTableId == PortObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn PortsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PortsQuery.Id,QueryCode = PortsQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = PortObjectFields.Where(d => d.FieldName == "Remark" && d.ObjectTableId == PortObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PortObjectFields.Where(d => d.FieldName == "Remark" && d.ObjectTableId == PortObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 	   
 	    }
 
@@ -1713,37 +1800,39 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 	         Screen PortGeneralTabScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Port.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = PortObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 6, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField PortPortGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = PortObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = PortGeneralTabScreenScreen0.Id, ObjectFieldCode = PortObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField PortPortGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = PortObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = PortGeneralTabScreenScreen0.Id,ScreenCode = PortGeneralTabScreenScreen0.Code, ObjectFieldCode = PortObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField PortPortGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = PortObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().Id, ScreenId = PortGeneralTabScreenScreen0.Id, ObjectFieldCode = PortObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField PortPortGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = PortObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().Id, ScreenId = PortGeneralTabScreenScreen0.Id,ScreenCode = PortGeneralTabScreenScreen0.Code, ObjectFieldCode = PortObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField PortPortGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = PortObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().Id, ScreenId = PortGeneralTabScreenScreen0.Id, ObjectFieldCode = PortObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField PortPortGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = PortObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().Id, ScreenId = PortGeneralTabScreenScreen0.Id,ScreenCode = PortGeneralTabScreenScreen0.Code, ObjectFieldCode = PortObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField PortPortGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = PortObjectFields.Where(d => d.FieldName == "CountryId").FirstOrDefault().Id, ScreenId = PortGeneralTabScreenScreen0.Id, ObjectFieldCode = PortObjectFields.Where(d => d.FieldName == "CountryId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField PortPortGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = PortObjectFields.Where(d => d.FieldName == "CountryId").FirstOrDefault().Id, ScreenId = PortGeneralTabScreenScreen0.Id,ScreenCode = PortGeneralTabScreenScreen0.Code, ObjectFieldCode = PortObjectFields.Where(d => d.FieldName == "CountryId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField PortPortGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ObjectFieldId = PortObjectFields.Where(d => d.FieldName == "StateId").FirstOrDefault().Id, ScreenId = PortGeneralTabScreenScreen0.Id, ObjectFieldCode = PortObjectFields.Where(d => d.FieldName == "StateId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField PortPortGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ObjectFieldId = PortObjectFields.Where(d => d.FieldName == "StateId").FirstOrDefault().Id, ScreenId = PortGeneralTabScreenScreen0.Id,ScreenCode = PortGeneralTabScreenScreen0.Code, ObjectFieldCode = PortObjectFields.Where(d => d.FieldName == "StateId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField PortPortGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ObjectFieldId = PortObjectFields.Where(d => d.FieldName == "Notes").FirstOrDefault().Id, ScreenId = PortGeneralTabScreenScreen0.Id, ObjectFieldCode = PortObjectFields.Where(d => d.FieldName == "Notes").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField PortPortGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ObjectFieldId = PortObjectFields.Where(d => d.FieldName == "Notes").FirstOrDefault().Id, ScreenId = PortGeneralTabScreenScreen0.Id,ScreenCode = PortGeneralTabScreenScreen0.Code, ObjectFieldCode = PortObjectFields.Where(d => d.FieldName == "Notes").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField PortPortGeneralTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = PortObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().Id, ScreenId = PortGeneralTabScreenScreen0.Id, ObjectFieldCode = PortObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField PortPortGeneralTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = PortObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().Id, ScreenId = PortGeneralTabScreenScreen0.Id,ScreenCode = PortGeneralTabScreenScreen0.Code, ObjectFieldCode = PortObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField PortPortGeneralTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = PortObjectFields.Where(d => d.FieldName == "IsOcean").FirstOrDefault().Id, ScreenId = PortGeneralTabScreenScreen0.Id, ObjectFieldCode = PortObjectFields.Where(d => d.FieldName == "IsOcean").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField PortPortGeneralTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = PortObjectFields.Where(d => d.FieldName == "IsOcean").FirstOrDefault().Id, ScreenId = PortGeneralTabScreenScreen0.Id,ScreenCode = PortGeneralTabScreenScreen0.Code, ObjectFieldCode = PortObjectFields.Where(d => d.FieldName == "IsOcean").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField PortPortGeneralTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ObjectFieldId = PortObjectFields.Where(d => d.FieldName == "IsAir").FirstOrDefault().Id, ScreenId = PortGeneralTabScreenScreen0.Id, ObjectFieldCode = PortObjectFields.Where(d => d.FieldName == "IsAir").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField PortPortGeneralTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ObjectFieldId = PortObjectFields.Where(d => d.FieldName == "IsAir").FirstOrDefault().Id, ScreenId = PortGeneralTabScreenScreen0.Id,ScreenCode = PortGeneralTabScreenScreen0.Code, ObjectFieldCode = PortObjectFields.Where(d => d.FieldName == "IsAir").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField PortPortGeneralTabScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 3, ObjectFieldId = PortObjectFields.Where(d => d.FieldName == "IsInland").FirstOrDefault().Id, ScreenId = PortGeneralTabScreenScreen0.Id, ObjectFieldCode = PortObjectFields.Where(d => d.FieldName == "IsInland").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField PortPortGeneralTabScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 3, ObjectFieldId = PortObjectFields.Where(d => d.FieldName == "IsInland").FirstOrDefault().Id, ScreenId = PortGeneralTabScreenScreen0.Id,ScreenCode = PortGeneralTabScreenScreen0.Code, ObjectFieldCode = PortObjectFields.Where(d => d.FieldName == "IsInland").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 	      
 
 	         Screen PortHeaderScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Port.HeaderScreen", Name = "Header Screen", ObjectTableId = PortObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 3, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField PortPortHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = PortObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = PortHeaderScreenScreen1.Id, ObjectFieldCode = PortObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField PortPortHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = PortObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = PortHeaderScreenScreen1.Id,ScreenCode = PortHeaderScreenScreen1.Code, ObjectFieldCode = PortObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField PortPortHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = PortObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().Id, ScreenId = PortHeaderScreenScreen1.Id, ObjectFieldCode = PortObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField PortPortHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = PortObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().Id, ScreenId = PortHeaderScreenScreen1.Id,ScreenCode = PortHeaderScreenScreen1.Code, ObjectFieldCode = PortObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField PortPortHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = PortObjectFields.Where(d => d.FieldName == "AddedManually").FirstOrDefault().Id, ScreenId = PortHeaderScreenScreen1.Id, ObjectFieldCode = PortObjectFields.Where(d => d.FieldName == "AddedManually").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField PortPortHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = PortObjectFields.Where(d => d.FieldName == "AddedManually").FirstOrDefault().Id, ScreenId = PortHeaderScreenScreen1.Id,ScreenCode = PortHeaderScreenScreen1.Code, ObjectFieldCode = PortObjectFields.Where(d => d.FieldName == "AddedManually").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    PortObjectTable.HeaderScreenId = PortHeaderScreenScreen1.Id;
+		    PortObjectTable.HeaderScreenCode = PortHeaderScreenScreen1.Code;
+
 	   		  
 
 	    }
@@ -1764,9 +1853,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "POGC",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = PortGeneralFeature_TH0.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = PortObjectTable.Id, TabNameTextCodeId = PortGeneralTextCode_TH0.Id, TabNameTextCodeCode = PortGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "POGC",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = PortGeneralFeature_TH0.Id,FeatureUniqeCode = PortGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = PortObjectTable.Id, TabNameTextCodeId = PortGeneralTextCode_TH0.Id, TabNameTextCodeCode = PortGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "POEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = PortEventsFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = PortObjectTable.Id, TabNameTextCodeId = PortEventsTextCode_TH1.Id, TabNameTextCodeCode = PortEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "POEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = PortEventsFeature_TH1.Id,FeatureUniqeCode = PortEventsFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = PortObjectTable.Id, TabNameTextCodeId = PortEventsTextCode_TH1.Id, TabNameTextCodeCode = PortEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -1844,8 +1933,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
  		   TextCode PortTextCode_PortMChoosePortTransportation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Port.M.ChoosePortTransportation", DefaultText = "Please choose the transportation method of the Port",LocalDefaultText = null, ObjectTableId = PortObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode PortTextCode_PortMTheCodeAlreadyExists = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Port.M.TheCodeAlreadyExists", DefaultText = "The Code already exists",LocalDefaultText = null, ObjectTableId = PortObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
- 		   TextCode PortTextCode_PortTipGeneral = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Port.Tip.General", DefaultText = " - Ports are listed  in this pane(%L) - To add a Port to your company press the 'add' button(%L)",LocalDefaultText = null, ObjectTableId = PortObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TIP", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

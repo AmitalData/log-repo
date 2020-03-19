@@ -400,8 +400,9 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
             ContactPM contact = GetLoggedContact(entityPM.Tenant);
             bool showLocals = !contact.DontShowLocal;
-            if (entityPM.GLAccountInterestPeriods.GroupBy(x => x.PeriodStartDate).Any(g => g.Count() > 1))
+            if (entityPM.GLAccountInterestPeriods.Where(s => s.ChangeSetOp != ChangeSetOperation.Delete).GroupBy(x => x.PeriodStartDate).Any(g => g.Count() > 1))
             {
+
                 throw new Exception(TextCodesTranslator.TranslateText("GLAccount.O.LineDateExist", entityPM.Tenant, showLocals));
 
             }
@@ -587,7 +588,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
             FillForeignFields(entityPM);
             FillSearchFields(entityPM);
-            SendHybridTask(entityPM);
+
 
         }
         private TenantPM GetTenantPM(int tenantId)
@@ -599,7 +600,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         {
 
             TenantPM tenantPM = GetTenantPM(glaccounPM.Tenant);
-            if  (tenantPM.IsHybrid && glaccounPM.AccountTypeCode != "4" && glaccounPM.AccountTypeCode != "5" && glaccounPM.IsControlAccount==false)
+            if (tenantPM.IsHybrid && glaccounPM.AccountTypeCode != "4" && glaccounPM.AccountTypeCode != "5" && glaccounPM.IsControlAccount == false)
 
             {
                 FillGLAccountCurrencyCode(glaccounPM);
@@ -661,7 +662,15 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             List<CardList> cardLists = GetCardsByGLAccountId(gLAccount.Id, gLAccount.Tenant);
 
             List<Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Card> cards = new List<Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Card>();
-            foreach (CardList card in cardLists.Where(d => d.PartnerTypeId == gLAccount.PartnerTypeId))
+
+
+
+            if (gLAccount.PartnerTypeId != null)
+            {
+                cardLists = cardLists.Where(d => d.PartnerTypeId == gLAccount.PartnerTypeId).ToList();
+            }
+            foreach (CardList card in cardLists)
+
             {
                 Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Card connectedCard = new Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Card();
                 connectedCard.Code = card.Code;
@@ -882,7 +891,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             }
 
             var gLAccountInterestPeriodUpdateService = new GLAccountInterestPeriodUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
-            gLAccountInterestPeriodUpdateService.UpdateMulti(entityPM.GLAccountInterestPeriods, entityPM.DeletedGLAccountInterestPeriods, entityPM, true);
+            InterestPeriodUpdate(entityPM.GLAccountInterestPeriods.Where(s => s.ChangeSetOp != ChangeSetOperation.Delete).ToList(), entityPM.GLAccountInterestPeriods.Where(s => s.ChangeSetOp == ChangeSetOperation.Delete).ToList(), Tenant);
 
             if (entityPM.ChangeSetOp == ChangeSetOperation.Update && entityPM.GLAccountWithholdingTaxes.Count > 0)
             {
@@ -1089,6 +1098,19 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                         ObjectTableName = "GLAccount",
                         IsAddedManually = false,
                         EventTypeCode = "AFIT",
+                    });
+                }
+
+                if (entityPM.Smallcashbook != entityPOCO.Smallcashbook)
+                {
+                    EventTracer.CreateTraceEvent(new EventTracerArgs()
+                    {
+                        EntityId = entityPM.Id,
+                        Tenant = entityPM.Tenant,
+                        UserId = contact.Id,
+                        ObjectTableName = "GLAccount",
+                        IsAddedManually = false,
+                        EventTypeCode = "SCBC",
                     });
                 }
 
@@ -1558,6 +1580,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             base.AfterUpdating(entityPM, entityParentPM);
             // Update Card GLAccountId [Maheera]
             UpdateCardGLAccountId(entityPM.Tenant, entityPM.NewGLAccountCardId, entityPM.Id);
+            SendHybridTask(entityPM);
         }
         public bool FullAccountingProvider { get; set; }
         protected override void Validate(GLAccountPM entityPM)
@@ -2093,6 +2116,21 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 ChangeSetOp = ChangeSetOperation.Insert
 
             }, false);
+        }
+
+        private void InterestPeriodUpdate(List<GLAccountInterestPeriodPM> GLAccountInterestPeriods, List<GLAccountInterestPeriodPM> DeletedGLAccountInterestPeriods, int Tenant)
+        {
+            var myGLAccountInterestPeriodUpdateService = new GLAccountInterestPeriodUpdateService(this.MainContext, new Dictionary<string, IContext>(), Tenant);
+            foreach (GLAccountInterestPeriodPM DeletedgLAccountInterestPeriodPM in DeletedGLAccountInterestPeriods)
+            {
+                myGLAccountInterestPeriodUpdateService.Update(DeletedgLAccountInterestPeriodPM, true);
+            }
+
+            foreach (GLAccountInterestPeriodPM gLAccountInterestPeriodPM in GLAccountInterestPeriods)
+            {
+                myGLAccountInterestPeriodUpdateService.Update(gLAccountInterestPeriodPM, false);
+            }
+
         }
 
         private static string GetLoggedContactId(GLAccountPM entityPM)

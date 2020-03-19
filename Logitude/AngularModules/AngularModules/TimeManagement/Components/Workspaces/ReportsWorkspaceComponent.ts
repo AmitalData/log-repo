@@ -105,16 +105,8 @@ export class ReportsGrpupClass {
 
                 myResult.forEach((item) => {
 
-                    if (SessionLocator.Tenant == 1526 || SessionLocator.Tenant == 1525 || SessionLocator.Tenant == 1524 || SessionLocator.Tenant == 1523 || SessionLocator.Tenant == 1608) {
-                        if (item.Code == "SHID") {
-                            this.ItemsSource.push(item);
-                        }
-                    }
-
-                    else {
-                        if (item.FeatureCode && FeatureLocator.HasFeaturePermession("Report", item.FeatureCode)) {
-                            this.ItemsSource.push(item);
-                        }
+                    if (item.FeatureCode && FeatureLocator.HasFeaturePermession("Report", item.FeatureCode)) {
+                        this.ItemsSource.push(item);
                     }
 
                 });

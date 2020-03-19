@@ -18,6 +18,8 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.DependencyFilter3).HasMaxLength(40).IsUnicode(false);
             this.Property(t => t.KeyPropertyPath).HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.HeaderScreenId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.HeaderScreenCode).HasMaxLength(100).IsUnicode(false);
+
             this.Property(t => t.SortingByObjectField).HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.DBTableName).HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.DescriptionTextCodeId).HasMaxLength(30).IsUnicode(false);
@@ -38,6 +40,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.DownloadToExcelFeatureCode).HasMaxLength(120).IsUnicode(false);
             this.Property(t => t.DescriptionTextCodeCode).HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.NewButtonTextCodeCode).HasMaxLength(100).IsUnicode(false);
+            this.Property(t => t.SplitComponentPath).IsMaxLength().IsUnicode(true);
 
 
             //this.Property(t => t.FilterMenuComponentPath).HasMaxLength(250).IsUnicode(false);
@@ -62,6 +65,8 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.AutoCompleteSearchWindow).HasColumnName("AutoCompleteSearchWindow");
             this.Property(t => t.IsClosed).HasColumnName("IsClosed");
             this.Property(t => t.HeaderScreenId).HasColumnName("HeaderScreenId");
+            this.Property(t => t.HeaderScreenCode).HasColumnName("HeaderScreenCode");
+
             this.Property(t => t.CacheOnClient).HasColumnName("CacheOnClient");
             this.Property(t => t.EditableFromAutoCompleteWindow).HasColumnName("EditableFromAutoCompleteWindow");
             this.Property(t => t.LastUpdateDate).HasColumnName("LastUpdateDate");
@@ -102,8 +107,8 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.EntityResourceLastUpdate).HasColumnName("EntityResourceLastUpdate");
             this.Property(t => t.DownloadToExcelFeatureCode).HasColumnName("DownloadToExcelFeatureCode");
             this.Property(t => t.AllowedForComputingPartners).HasColumnName("AllowedForComputingPartners");
-            this.Property(t => t.CodeField).HasColumnName("CodeField").HasMaxLength(15);            
-            this.Property(t => t.SplitComponentPath).HasColumnName("SplitComponentPath").HasMaxLength(250);
+            this.Property(t => t.CodeField).HasColumnName("CodeField");            
+            this.Property(t => t.SplitComponentPath).HasColumnName("SplitComponentPath");
             this.Property(t => t.DisableSearchBox).HasColumnName("DisableSearchBox");
             this.Property(t => t.AllowedInQueues).HasColumnName("AllowedInQueues");
             this.Property(t => t.IsTabsHidden).HasColumnName("IsTabsHidden");

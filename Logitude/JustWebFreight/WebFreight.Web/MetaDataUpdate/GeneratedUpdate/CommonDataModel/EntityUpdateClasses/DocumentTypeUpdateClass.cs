@@ -985,13 +985,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
-					  						Operator =  "StartsWith",
+					  						Operator =  "Equals",
 					  						MultiLine =  true,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -1005,6 +1005,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "DocumentType",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						Code =  "InActive",
@@ -1883,6 +1884,69 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
+					 						FieldName =  "Tenant",
+					  						OldFieldName =  "Tenant",
+					  						ObjectTableName =  "DocumentType",
+					  						FieldsDataType =  "Integer",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "Tenant",
+					  						ListPropertyPath =  "Tenant",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "DocumentType",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						Code =  "Tenant",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
+					  						DigitsAfterPoint =  0,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "Tenant",
+					  						DefaultText =  "Tenant",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						HelpTextCode =  "Tenant",
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
 					 						FieldName =  "IsDocOut",
 					  						OldFieldName =  "IsDocOut",
 					  						ObjectTableName =  "DocumentType",
@@ -2095,23 +2159,23 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query DocumentTypesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DocumentTypeTextCode_0.Id, NameTextCodeCode = DocumentTypeTextCode_0.Code, Code = "Document Types",  QueryGroupCode = "DOCT", IndexOrder = 0, Tenant = 0, ObjectTableId = DocumentTypeObjectTable.Id, QuerySection = "DocumentType", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = DocumentTypeFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query DocumentTypesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DocumentTypeTextCode_0.Id, NameTextCodeCode = DocumentTypeTextCode_0.Code, ObjectTableName = "DocumentType", Code = "Document Types",  QueryGroupCode = "DOCT", IndexOrder = 0, Tenant = 0, ObjectTableId = DocumentTypeObjectTable.Id, QuerySection = "DocumentType", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = DocumentTypeFeature_0.Id,FeatureUniqeCode= DocumentTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn DocumentTypesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DocumentTypesQuery.Id, IndexOrder = 0, ObjectFieldId = DocumentTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == DocumentTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DocumentTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == DocumentTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DocumentTypesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DocumentTypesQuery.Id,QueryCode = DocumentTypesQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = DocumentTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == DocumentTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DocumentTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == DocumentTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn DocumentTypesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DocumentTypesQuery.Id, IndexOrder = 1, ObjectFieldId = DocumentTypeObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == DocumentTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DocumentTypeObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == DocumentTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DocumentTypesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DocumentTypesQuery.Id,QueryCode = DocumentTypesQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = DocumentTypeObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == DocumentTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DocumentTypeObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == DocumentTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn DocumentTypesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DocumentTypesQuery.Id, IndexOrder = 2, ObjectFieldId = DocumentTypeObjectFields.Where(d => d.FieldName == "IsAir" && d.ObjectTableId == DocumentTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DocumentTypeObjectFields.Where(d => d.FieldName == "IsAir" && d.ObjectTableId == DocumentTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DocumentTypesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DocumentTypesQuery.Id,QueryCode = DocumentTypesQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = DocumentTypeObjectFields.Where(d => d.FieldName == "IsAir" && d.ObjectTableId == DocumentTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DocumentTypeObjectFields.Where(d => d.FieldName == "IsAir" && d.ObjectTableId == DocumentTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn DocumentTypesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DocumentTypesQuery.Id, IndexOrder = 3, ObjectFieldId = DocumentTypeObjectFields.Where(d => d.FieldName == "IsOcean" && d.ObjectTableId == DocumentTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DocumentTypeObjectFields.Where(d => d.FieldName == "IsOcean" && d.ObjectTableId == DocumentTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DocumentTypesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DocumentTypesQuery.Id,QueryCode = DocumentTypesQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = DocumentTypeObjectFields.Where(d => d.FieldName == "IsOcean" && d.ObjectTableId == DocumentTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DocumentTypeObjectFields.Where(d => d.FieldName == "IsOcean" && d.ObjectTableId == DocumentTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn DocumentTypesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DocumentTypesQuery.Id, IndexOrder = 4, ObjectFieldId = DocumentTypeObjectFields.Where(d => d.FieldName == "IsInland" && d.ObjectTableId == DocumentTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DocumentTypeObjectFields.Where(d => d.FieldName == "IsInland" && d.ObjectTableId == DocumentTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DocumentTypesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DocumentTypesQuery.Id,QueryCode = DocumentTypesQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = DocumentTypeObjectFields.Where(d => d.FieldName == "IsInland" && d.ObjectTableId == DocumentTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DocumentTypeObjectFields.Where(d => d.FieldName == "IsInland" && d.ObjectTableId == DocumentTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn DocumentTypesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DocumentTypesQuery.Id, IndexOrder = 5, ObjectFieldId = DocumentTypeObjectFields.Where(d => d.FieldName == "IsDocIn" && d.ObjectTableId == DocumentTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DocumentTypeObjectFields.Where(d => d.FieldName == "IsDocIn" && d.ObjectTableId == DocumentTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DocumentTypesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DocumentTypesQuery.Id,QueryCode = DocumentTypesQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = DocumentTypeObjectFields.Where(d => d.FieldName == "IsDocIn" && d.ObjectTableId == DocumentTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DocumentTypeObjectFields.Where(d => d.FieldName == "IsDocIn" && d.ObjectTableId == DocumentTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn DocumentTypesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DocumentTypesQuery.Id, IndexOrder = 6, ObjectFieldId = DocumentTypeObjectFields.Where(d => d.FieldName == "IsDocOut" && d.ObjectTableId == DocumentTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DocumentTypeObjectFields.Where(d => d.FieldName == "IsDocOut" && d.ObjectTableId == DocumentTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DocumentTypesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DocumentTypesQuery.Id,QueryCode = DocumentTypesQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = DocumentTypeObjectFields.Where(d => d.FieldName == "IsDocOut" && d.ObjectTableId == DocumentTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DocumentTypeObjectFields.Where(d => d.FieldName == "IsDocOut" && d.ObjectTableId == DocumentTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn DocumentTypesQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DocumentTypesQuery.Id, IndexOrder = 7, ObjectFieldId = DocumentTypeObjectFields.Where(d => d.FieldName == "OrderBy" && d.ObjectTableId == DocumentTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DocumentTypeObjectFields.Where(d => d.FieldName == "OrderBy" && d.ObjectTableId == DocumentTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DocumentTypesQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DocumentTypesQuery.Id,QueryCode = DocumentTypesQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = DocumentTypeObjectFields.Where(d => d.FieldName == "OrderBy" && d.ObjectTableId == DocumentTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DocumentTypeObjectFields.Where(d => d.FieldName == "OrderBy" && d.ObjectTableId == DocumentTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 	   
 	    }
 
@@ -2125,41 +2189,43 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 	         Screen DocumentTypeGeneralTabScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "DocumentType.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = DocumentTypeObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 7, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField DocumentTypeDocumentTypeGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = DocumentTypeObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = DocumentTypeGeneralTabScreenScreen0.Id, ObjectFieldCode = DocumentTypeObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField DocumentTypeDocumentTypeGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = DocumentTypeObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = DocumentTypeGeneralTabScreenScreen0.Id,ScreenCode = DocumentTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = DocumentTypeObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField DocumentTypeDocumentTypeGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = DocumentTypeObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = DocumentTypeGeneralTabScreenScreen0.Id, ObjectFieldCode = DocumentTypeObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField DocumentTypeDocumentTypeGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = DocumentTypeObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = DocumentTypeGeneralTabScreenScreen0.Id,ScreenCode = DocumentTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = DocumentTypeObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField DocumentTypeDocumentTypeGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = DocumentTypeObjectFields.Where(d => d.FieldName == "ObjectTableId").FirstOrDefault().Id, ScreenId = DocumentTypeGeneralTabScreenScreen0.Id, ObjectFieldCode = DocumentTypeObjectFields.Where(d => d.FieldName == "ObjectTableId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField DocumentTypeDocumentTypeGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = DocumentTypeObjectFields.Where(d => d.FieldName == "ObjectTableId").FirstOrDefault().Id, ScreenId = DocumentTypeGeneralTabScreenScreen0.Id,ScreenCode = DocumentTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = DocumentTypeObjectFields.Where(d => d.FieldName == "ObjectTableId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField DocumentTypeDocumentTypeGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = DocumentTypeObjectFields.Where(d => d.FieldName == "TemplateFormatCode").FirstOrDefault().Id, ScreenId = DocumentTypeGeneralTabScreenScreen0.Id, ObjectFieldCode = DocumentTypeObjectFields.Where(d => d.FieldName == "TemplateFormatCode").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField DocumentTypeDocumentTypeGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = DocumentTypeObjectFields.Where(d => d.FieldName == "TemplateFormatCode").FirstOrDefault().Id, ScreenId = DocumentTypeGeneralTabScreenScreen0.Id,ScreenCode = DocumentTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = DocumentTypeObjectFields.Where(d => d.FieldName == "TemplateFormatCode").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField DocumentTypeDocumentTypeGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ObjectFieldId = DocumentTypeObjectFields.Where(d => d.FieldName == "IsDocIn").FirstOrDefault().Id, ScreenId = DocumentTypeGeneralTabScreenScreen0.Id, ObjectFieldCode = DocumentTypeObjectFields.Where(d => d.FieldName == "IsDocIn").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField DocumentTypeDocumentTypeGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ObjectFieldId = DocumentTypeObjectFields.Where(d => d.FieldName == "IsDocIn").FirstOrDefault().Id, ScreenId = DocumentTypeGeneralTabScreenScreen0.Id,ScreenCode = DocumentTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = DocumentTypeObjectFields.Where(d => d.FieldName == "IsDocIn").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField DocumentTypeDocumentTypeGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ObjectFieldId = DocumentTypeObjectFields.Where(d => d.FieldName == "IsDocOut").FirstOrDefault().Id, ScreenId = DocumentTypeGeneralTabScreenScreen0.Id, ObjectFieldCode = DocumentTypeObjectFields.Where(d => d.FieldName == "IsDocOut").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField DocumentTypeDocumentTypeGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ObjectFieldId = DocumentTypeObjectFields.Where(d => d.FieldName == "IsDocOut").FirstOrDefault().Id, ScreenId = DocumentTypeGeneralTabScreenScreen0.Id,ScreenCode = DocumentTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = DocumentTypeObjectFields.Where(d => d.FieldName == "IsDocOut").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField DocumentTypeDocumentTypeGeneralTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = DocumentTypeObjectFields.Where(d => d.FieldName == "IsAir").FirstOrDefault().Id, ScreenId = DocumentTypeGeneralTabScreenScreen0.Id, ObjectFieldCode = DocumentTypeObjectFields.Where(d => d.FieldName == "IsAir").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField DocumentTypeDocumentTypeGeneralTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = DocumentTypeObjectFields.Where(d => d.FieldName == "IsAir").FirstOrDefault().Id, ScreenId = DocumentTypeGeneralTabScreenScreen0.Id,ScreenCode = DocumentTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = DocumentTypeObjectFields.Where(d => d.FieldName == "IsAir").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField DocumentTypeDocumentTypeGeneralTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = DocumentTypeObjectFields.Where(d => d.FieldName == "IsOcean").FirstOrDefault().Id, ScreenId = DocumentTypeGeneralTabScreenScreen0.Id, ObjectFieldCode = DocumentTypeObjectFields.Where(d => d.FieldName == "IsOcean").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField DocumentTypeDocumentTypeGeneralTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = DocumentTypeObjectFields.Where(d => d.FieldName == "IsOcean").FirstOrDefault().Id, ScreenId = DocumentTypeGeneralTabScreenScreen0.Id,ScreenCode = DocumentTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = DocumentTypeObjectFields.Where(d => d.FieldName == "IsOcean").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField DocumentTypeDocumentTypeGeneralTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ObjectFieldId = DocumentTypeObjectFields.Where(d => d.FieldName == "IsInland").FirstOrDefault().Id, ScreenId = DocumentTypeGeneralTabScreenScreen0.Id, ObjectFieldCode = DocumentTypeObjectFields.Where(d => d.FieldName == "IsInland").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField DocumentTypeDocumentTypeGeneralTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ObjectFieldId = DocumentTypeObjectFields.Where(d => d.FieldName == "IsInland").FirstOrDefault().Id, ScreenId = DocumentTypeGeneralTabScreenScreen0.Id,ScreenCode = DocumentTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = DocumentTypeObjectFields.Where(d => d.FieldName == "IsInland").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField DocumentTypeDocumentTypeGeneralTabScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 3, ObjectFieldId = DocumentTypeObjectFields.Where(d => d.FieldName == "IsMaster").FirstOrDefault().Id, ScreenId = DocumentTypeGeneralTabScreenScreen0.Id, ObjectFieldCode = DocumentTypeObjectFields.Where(d => d.FieldName == "IsMaster").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField DocumentTypeDocumentTypeGeneralTabScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 3, ObjectFieldId = DocumentTypeObjectFields.Where(d => d.FieldName == "IsMaster").FirstOrDefault().Id, ScreenId = DocumentTypeGeneralTabScreenScreen0.Id,ScreenCode = DocumentTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = DocumentTypeObjectFields.Where(d => d.FieldName == "IsMaster").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField DocumentTypeDocumentTypeGeneralTabScreenScreenField10 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 4, ObjectFieldId = DocumentTypeObjectFields.Where(d => d.FieldName == "IsDirect").FirstOrDefault().Id, ScreenId = DocumentTypeGeneralTabScreenScreen0.Id, ObjectFieldCode = DocumentTypeObjectFields.Where(d => d.FieldName == "IsDirect").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField DocumentTypeDocumentTypeGeneralTabScreenScreenField10 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 4, ObjectFieldId = DocumentTypeObjectFields.Where(d => d.FieldName == "IsDirect").FirstOrDefault().Id, ScreenId = DocumentTypeGeneralTabScreenScreen0.Id,ScreenCode = DocumentTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = DocumentTypeObjectFields.Where(d => d.FieldName == "IsDirect").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField DocumentTypeDocumentTypeGeneralTabScreenScreenField11 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 5, ObjectFieldId = DocumentTypeObjectFields.Where(d => d.FieldName == "IsHouse").FirstOrDefault().Id, ScreenId = DocumentTypeGeneralTabScreenScreen0.Id, ObjectFieldCode = DocumentTypeObjectFields.Where(d => d.FieldName == "IsHouse").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField DocumentTypeDocumentTypeGeneralTabScreenScreenField11 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 5, ObjectFieldId = DocumentTypeObjectFields.Where(d => d.FieldName == "IsHouse").FirstOrDefault().Id, ScreenId = DocumentTypeGeneralTabScreenScreen0.Id,ScreenCode = DocumentTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = DocumentTypeObjectFields.Where(d => d.FieldName == "IsHouse").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField DocumentTypeDocumentTypeGeneralTabScreenScreenField12 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 6, ObjectFieldId = DocumentTypeObjectFields.Where(d => d.FieldName == "DocumentTypeCategoryCode").FirstOrDefault().Id, ScreenId = DocumentTypeGeneralTabScreenScreen0.Id, ObjectFieldCode = DocumentTypeObjectFields.Where(d => d.FieldName == "DocumentTypeCategoryCode").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField DocumentTypeDocumentTypeGeneralTabScreenScreenField12 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 6, ObjectFieldId = DocumentTypeObjectFields.Where(d => d.FieldName == "DocumentTypeCategoryCode").FirstOrDefault().Id, ScreenId = DocumentTypeGeneralTabScreenScreen0.Id,ScreenCode = DocumentTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = DocumentTypeObjectFields.Where(d => d.FieldName == "DocumentTypeCategoryCode").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 	      
 
 	         Screen DocumentTypeHeaderScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "DocumentType.HeaderScreen", Name = "Header Screen", ObjectTableId = DocumentTypeObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField DocumentTypeDocumentTypeHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = DocumentTypeObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = DocumentTypeHeaderScreenScreen1.Id, ObjectFieldCode = DocumentTypeObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField DocumentTypeDocumentTypeHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = DocumentTypeObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = DocumentTypeHeaderScreenScreen1.Id,ScreenCode = DocumentTypeHeaderScreenScreen1.Code, ObjectFieldCode = DocumentTypeObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField DocumentTypeDocumentTypeHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = DocumentTypeObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = DocumentTypeHeaderScreenScreen1.Id, ObjectFieldCode = DocumentTypeObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField DocumentTypeDocumentTypeHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = DocumentTypeObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = DocumentTypeHeaderScreenScreen1.Id,ScreenCode = DocumentTypeHeaderScreenScreen1.Code, ObjectFieldCode = DocumentTypeObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    DocumentTypeObjectTable.HeaderScreenId = DocumentTypeHeaderScreenScreen1.Id;
+		    DocumentTypeObjectTable.HeaderScreenCode = DocumentTypeHeaderScreenScreen1.Code;
+
 	   		  
 
 	    }
@@ -2177,42 +2243,36 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   Feature DocumentTypeSharedLogisticsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SHAREDLOGISTICS", ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentType.Features.SHAREDLOGISTICS", NameTextCodeDefaultText = "SharedLogistics", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
  
                  
-			   TextCode DocumentTypeDigitalSignTextCode_TH2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentType.TH.LogBoxTab", DefaultText = "Digital Sign",LocalDefaultText = null, ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature GeneralDigitalSignFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "LogBoxTab", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.DocumentTypesDS", NameTextCodeDefaultText = "Digital Sign Definitions", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode DocumentTypeCustomFieldsTextCode_TH2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentType.TH.CustomFields", DefaultText = "Custom Fields",LocalDefaultText = null, ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature DocumentTypeCustomFieldsFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMEFIELD", ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentType.Features.CustomFields", NameTextCodeDefaultText = "Custom Fields", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
  
                  
-			   TextCode DocumentTypeCustomFieldsTextCode_TH3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentType.TH.CustomFields", DefaultText = "Custom Fields",LocalDefaultText = null, ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature DocumentTypeCustomFieldsFeature_TH3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMEFIELD", ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentType.Features.CustomFields", NameTextCodeDefaultText = "Custom Fields", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode DocumentTypePrintingOptionsTextCode_TH3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentType.TH.PrintingOptions", DefaultText = "Printing Options",LocalDefaultText = null, ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature DocumentTypePrintingOptionsFeature_TH3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PRINTINGOPTIONS", ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentType.Features.PRINTINGOPTIONS", NameTextCodeDefaultText = "Printing Options", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
  
                  
-			   TextCode DocumentTypePrintingOptionsTextCode_TH4 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentType.TH.PrintingOptions", DefaultText = "Printing Options",LocalDefaultText = null, ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature DocumentTypePrintingOptionsFeature_TH4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PRINTINGOPTIONS", ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentType.Features.PRINTINGOPTIONS", NameTextCodeDefaultText = "Printing Options", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode DocumentTypeCopiesTextCode_TH4 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentType.TH.Copies", DefaultText = "Copies",LocalDefaultText = null, ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature DocumentTypeCopiesFeature_TH4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "COPIES", ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentType.Features.COPIES", NameTextCodeDefaultText = "Copies", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
  
                  
-			   TextCode DocumentTypeCopiesTextCode_TH5 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentType.TH.Copies", DefaultText = "Copies",LocalDefaultText = null, ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature DocumentTypeCopiesFeature_TH5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "COPIES", ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentType.Features.COPIES", NameTextCodeDefaultText = "Copies", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
- 
-                 
-			   TextCode DocumentTypeEventsTextCode_TH6 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentType.TH.Events", DefaultText = "Events",LocalDefaultText = null, ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature DocumentTypeEventsFeature_TH6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentType.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode DocumentTypeEventsTextCode_TH5 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentType.TH.Events", DefaultText = "Events",LocalDefaultText = null, ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature DocumentTypeEventsFeature_TH5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentType.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DTGC",HtmlComponentName = "DocumentTypeGeneralTabComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureDocuments/Components/DocumentType/DocumentTypeGeneralTabComponent", FeatureId = DocumentTypeGeneralFeature_TH0.Id, ControlPath = "Simplog.Infrastructure.Views.Documents.DocumentTypeTabControl", ObjectTableId = DocumentTypeObjectTable.Id, TabNameTextCodeId = DocumentTypeGeneralTextCode_TH0.Id, TabNameTextCodeCode = DocumentTypeGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DTGC",HtmlComponentName = "DocumentTypeGeneralTabComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureDocuments/Components/DocumentType/DocumentTypeGeneralTabComponent", FeatureId = DocumentTypeGeneralFeature_TH0.Id,FeatureUniqeCode = DocumentTypeGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Documents.DocumentTypeTabControl", ObjectTableId = DocumentTypeObjectTable.Id, TabNameTextCodeId = DocumentTypeGeneralTextCode_TH0.Id, TabNameTextCodeCode = DocumentTypeGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DTSL",HtmlComponentName = "SharedLogisticsTabComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureDocuments/Components/DocumentType/Tab/SharedLogisticsTabComponent", FeatureId = DocumentTypeSharedLogisticsFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.Views.Documents.DocumentTypes.SharedLogisticsTabControl", ObjectTableId = DocumentTypeObjectTable.Id, TabNameTextCodeId = DocumentTypeSharedLogisticsTextCode_TH1.Id, TabNameTextCodeCode = DocumentTypeSharedLogisticsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DTSL",HtmlComponentName = "SharedLogisticsTabComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureDocuments/Components/DocumentType/Tab/SharedLogisticsTabComponent", FeatureId = DocumentTypeSharedLogisticsFeature_TH1.Id,FeatureUniqeCode = DocumentTypeSharedLogisticsFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Documents.DocumentTypes.SharedLogisticsTabControl", ObjectTableId = DocumentTypeObjectTable.Id, TabNameTextCodeId = DocumentTypeSharedLogisticsTextCode_TH1.Id, TabNameTextCodeCode = DocumentTypeSharedLogisticsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DTLB",HtmlComponentName = "LogBoxTabComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureDocuments/Components/DocumentType/Tab/LogBoxTabComponent", FeatureId = GeneralDigitalSignFeature_TH2.Id, ControlPath = "Simplog.Infrastructure.Views.Documents.DocumentTypes.LogBoxTabComponent", ObjectTableId = DocumentTypeObjectTable.Id, TabNameTextCodeId = DocumentTypeDigitalSignTextCode_TH2.Id, TabNameTextCodeCode = DocumentTypeDigitalSignTextCode_TH2.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DTCF",HtmlComponentName = "DocumentTypeCustomFieldsComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureDocuments/Components/DocumentType/Tab/DocumentTypeCustomFieldsComponent", FeatureId = DocumentTypeCustomFieldsFeature_TH2.Id,FeatureUniqeCode = DocumentTypeCustomFieldsFeature_TH2.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Documents.DocumentTypes.DocumentTypeCustomFieldsControl", ObjectTableId = DocumentTypeObjectTable.Id, TabNameTextCodeId = DocumentTypeCustomFieldsTextCode_TH2.Id, TabNameTextCodeCode = DocumentTypeCustomFieldsTextCode_TH2.Code, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DTCF",HtmlComponentName = "DocumentTypeCustomFieldsComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureDocuments/Components/DocumentType/Tab/DocumentTypeCustomFieldsComponent", FeatureId = DocumentTypeCustomFieldsFeature_TH3.Id, ControlPath = "Simplog.Infrastructure.Views.Documents.DocumentTypes.DocumentTypeCustomFieldsControl", ObjectTableId = DocumentTypeObjectTable.Id, TabNameTextCodeId = DocumentTypeCustomFieldsTextCode_TH3.Id, TabNameTextCodeCode = DocumentTypeCustomFieldsTextCode_TH3.Code, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DTPO",HtmlComponentName = "PrintingOptionsComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureDocuments/Components/DocumentType/Tab/PrintingOptionsComponent", FeatureId = DocumentTypePrintingOptionsFeature_TH3.Id,FeatureUniqeCode = DocumentTypePrintingOptionsFeature_TH3.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Documents.DocumentTypes.PrintingOptionsControl", ObjectTableId = DocumentTypeObjectTable.Id, TabNameTextCodeId = DocumentTypePrintingOptionsTextCode_TH3.Id, TabNameTextCodeCode = DocumentTypePrintingOptionsTextCode_TH3.Code, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DTPO",HtmlComponentName = "PrintingOptionsComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureDocuments/Components/DocumentType/Tab/PrintingOptionsComponent", FeatureId = DocumentTypePrintingOptionsFeature_TH4.Id, ControlPath = "Simplog.Infrastructure.Views.Documents.DocumentTypes.PrintingOptionsControl", ObjectTableId = DocumentTypeObjectTable.Id, TabNameTextCodeId = DocumentTypePrintingOptionsTextCode_TH4.Id, TabNameTextCodeCode = DocumentTypePrintingOptionsTextCode_TH4.Code, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DTCP",HtmlComponentName = "DocumentTypeCopiesComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureDocuments/Components/DocumentType/Tab/DocumentTypeCopiesComponent", FeatureId = DocumentTypeCopiesFeature_TH4.Id,FeatureUniqeCode = DocumentTypeCopiesFeature_TH4.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Documents.DocumentTypes.DocumentTypeCopiesControl", ObjectTableId = DocumentTypeObjectTable.Id, TabNameTextCodeId = DocumentTypeCopiesTextCode_TH4.Id, TabNameTextCodeCode = DocumentTypeCopiesTextCode_TH4.Code, Tenant = 0, IndexOrder = 4 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DTCP",HtmlComponentName = "DocumentTypeCopiesComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureDocuments/Components/DocumentType/Tab/DocumentTypeCopiesComponent", FeatureId = DocumentTypeCopiesFeature_TH5.Id, ControlPath = "Simplog.Infrastructure.Views.Documents.DocumentTypes.DocumentTypeCopiesControl", ObjectTableId = DocumentTypeObjectTable.Id, TabNameTextCodeId = DocumentTypeCopiesTextCode_TH5.Id, TabNameTextCodeCode = DocumentTypeCopiesTextCode_TH5.Code, Tenant = 0, IndexOrder = 4 }, objectTableTabsRepository, TenantObjectTableTabs);
-   
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DTEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = DocumentTypeEventsFeature_TH6.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = DocumentTypeObjectTable.Id, TabNameTextCodeId = DocumentTypeEventsTextCode_TH6.Id, TabNameTextCodeCode = DocumentTypeEventsTextCode_TH6.Code, Tenant = 0, IndexOrder = 5 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DTEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = DocumentTypeEventsFeature_TH5.Id,FeatureUniqeCode = DocumentTypeEventsFeature_TH5.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = DocumentTypeObjectTable.Id, TabNameTextCodeId = DocumentTypeEventsTextCode_TH5.Id, TabNameTextCodeCode = DocumentTypeEventsTextCode_TH5.Code, Tenant = 0, IndexOrder = 5 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -2242,6 +2302,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 		   Feature DocumentTypeFeature_MRTPDFPRINT = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MRTPDFPRINT", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentType.Features.MrtPdfPrint", NameTextCodeDefaultText = @"Mrt Pdf Print" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
 		   Feature DocumentTypeFeature_CATEGORY = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CATEGORY", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.DocumentTypesCategory", NameTextCodeDefaultText = @"Document Types Category" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature DocumentTypeFeature_LogBoxTab = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "LogBoxTab", FeatureTypeCode = "OTH", Packagable = true, IsBusinessUnitEnabled = false, IsOld = true, IsCoreFeature = false, ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentType.Features.LogBoxTab", NameTextCodeDefaultText = @"Digital Sign Definitions" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
    
 	    
@@ -2310,6 +2372,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
  		   TextCode DocumentTypeTextCode_DocumentTypeMEntityLevelvalidation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentType.M.EntityLevelvalidation", DefaultText = "Please choose  Doc in or Doc out",LocalDefaultText = null, ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode DocumentTypeTextCode_DocumentTypeMTableNameDoesNotExist = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentType.M.TableNameDoesNotExist", DefaultText = "Table name does not exist",LocalDefaultText = null, ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DocumentTypeTextCode_DocumentTypeOTemplates = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentType.O.Templates", DefaultText = "Document Templates",LocalDefaultText = null, ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DocumentTypeTextCode_DocumentTypeOHTMLTemplates = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentType.O.HTMLTemplates", DefaultText = "Email Message Templates",LocalDefaultText = null, ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DocumentTypeTextCode_DocumentTypeOTableDescription = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentType.O.TableDescription", DefaultText = "Create document types, use the layout designer to build document templates and customize documents.",LocalDefaultText = null, ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

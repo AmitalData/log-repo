@@ -51,13 +51,31 @@
                                         [ObjectTableName]="ObjectTableName"
                                         [SelectedValue]="LCLDefaultStepsId"
                                         [DataContext]="DataContext"
-                                        [LookUpTableName]="'PriceStep'" [HideColumns]="true">
+                                        [LookUpTableName]="'PriceStep'"
+                                        [HideColumns]="true">
                                 </LogLov>
                             </td>
 
                             <td>
                                 <IconButton [Name]="'Edit'" [IsSmall]="true" [Left]="5" (click)="EditPriceStepsClicked('LCL')" [disabled]="!IsLCLEditBtnEnabled"></IconButton>
-                                <IconButton [Name]="'Add'" [IsSmall]="true" [Left]="3" (click)="AddPriceStepsClicked('LCL')" ></IconButton>
+                                <IconButton [Name]="'Add'" [IsSmall]="true" [Left]="3" (click)="AddPriceStepsClicked('LCL')"></IconButton>
+                            </td>
+                            <td>
+                                <div></div>
+                            </td>
+                        </tr>
+
+                        <tr class="FormFieldRow">
+                            <td style="width:130px;">
+                                <LogLabel [ObjectFieldName]="'ContainerDefaults'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                            </td>
+
+                            <td style="width:220px;">
+                                <LogTextBox [HideColumns]="true" [ObjectFieldName]="'ContainerDefaults'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="ContainerDefaults"></LogTextBox>
+                            </td>
+
+                            <td style="width:50px;">
+                                <IconButton [Name]="'Edit'" [IsSmall]="true" [Left]="5" (click)="EditContainerDefaultsClicked()"></IconButton>
                             </td>
                             <td>
                                 <div></div>

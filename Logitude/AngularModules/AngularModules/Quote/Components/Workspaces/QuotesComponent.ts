@@ -415,26 +415,26 @@ export class QuotesComponent extends BaseComponent {
     public Quotes_All: number;
     public Quotes_My: number;
     private LoadQueriesCounts() {
-        this.myDomainService.GetQuotesCounts(this.OwnerId, this.BusinessUnitId, this.currentDirectionId, this.currentTransportModeId, this.RecordsTypeFilterCode).subscribe(myResult => {
-            var myResponse: ServiceResponse = myResult;
-            if (!myResponse.HasError) {
-
-                var myData: CRMSummary = myResponse.Result;
-                if (myData != null) {
-                    this.Quotes_Created = myData.Quotes_Created;
-                    this.Quotes_Draft = myData.Quotes_Draft;
-                    this.Quotes_Expired = myData.Quotes_Expired;
-                    this.Quotes_Accepted = myData.Quotes_Accepted;
-                    this.Quotes_AcceptedNOShip = myData.Quotes_AcceptedNOShip;
-                    this.Quotes_Cancelled = myData.Quotes_Cancelled;
-                    this.Quotes_Sent = myData.Quotes_Sent;
-                    this.Quotes_AllFollowups = myData.Quotes_AllFollowups;
-                    this.Quotes_MyFollowups = myData.Quotes_MyFollowups;
-                    this.Quotes_All = myData.Quotes_All;
-                    this.Quotes_My = myData.Quotes_My;
+        this.myDomainService.GetQuotesCounts(this.OwnerId, this.BusinessUnitId, this.currentDirectionId, this.currentTransportModeId, this.RecordsTypeFilterCode).subscribe((myResponse: ServiceResponse) => {
+            if (myResponse != null) {
+                if (!myResponse.HasError) {
+                    var myData: CRMSummary = myResponse.Result;
+                    if (myData != null) {
+                        this.Quotes_Created = myData.Quotes_Created;
+                        this.Quotes_Draft = myData.Quotes_Draft;
+                        this.Quotes_Expired = myData.Quotes_Expired;
+                        this.Quotes_Accepted = myData.Quotes_Accepted;
+                        this.Quotes_AcceptedNOShip = myData.Quotes_AcceptedNOShip;
+                        this.Quotes_Cancelled = myData.Quotes_Cancelled;
+                        this.Quotes_Sent = myData.Quotes_Sent;
+                        this.Quotes_AllFollowups = myData.Quotes_AllFollowups;
+                        this.Quotes_MyFollowups = myData.Quotes_MyFollowups;
+                        this.Quotes_All = myData.Quotes_All;
+                        this.Quotes_My = myData.Quotes_My;
+                    }
                 }
             }
-        });  
+        });
     }
 
     // Load Recent Data

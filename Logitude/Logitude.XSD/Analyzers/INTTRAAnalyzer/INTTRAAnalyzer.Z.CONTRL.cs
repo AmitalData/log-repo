@@ -17,16 +17,30 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                 this.shipmentPM.IsUpdatedByINTTRAAnalyzer = true;
                 string systemEmail = "system@tenant" + this.Tenant + ".com";
 
-                //shipmentPM.AWBNumber = this.HeaderDocumentIdentifier;
-
-                if (this.IsAccepted)
+                if (this.isBookingControl)
                 {
-                    shipmentPM.INTTRASIStatusCode = "ACIN";
+                    if (this.IsAccepted)
+                    {
+                        shipmentPM.INTTRABookingTransStatusCode = "ACI";
+                    }
+
+                    else
+                    {
+                        shipmentPM.INTTRABookingTransStatusCode = "RBI";
+                    }
                 }
 
                 else
                 {
-                    shipmentPM.INTTRASIStatusCode = "RJIN";
+                    if (this.IsAccepted)
+                    {
+                        shipmentPM.INTTRASIStatusCode = "ACIN";
+                    }
+
+                    else
+                    {
+                        shipmentPM.INTTRASIStatusCode = "RJIN";
+                    }
                 }
 
                 shipmentPM.INTTRASIStatusDate = TenantServerConfigration.GetCurrentDateTime(this.Tenant);

@@ -38,7 +38,12 @@ namespace WebFreight.Web.Helpers
 
         public static object GetTableListData(string tableName, int tenant = 0,string modelName = null)
         {
-           
+
+            if (tableName == "DescriptionOfGoods")
+            {
+                tableName = "DescriptionOfGood";
+            }
+
             ObjectTableRepository obRepository = new ObjectTableRepository(0);
             ObjectTable table = obRepository.GetObjectTableByName(tableName, 0, true);
 

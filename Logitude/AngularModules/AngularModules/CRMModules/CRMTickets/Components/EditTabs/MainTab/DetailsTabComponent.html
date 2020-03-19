@@ -253,7 +253,7 @@
                                                     <table>
                                                         <tr>
                                                             <td style="width:1px;" *ngIf="EntityLinkNumberVisibility">
-                                                                <IconButton [IsEnabled]="IsTicketEditEnabled" [Width]="18" [Height]="18" style="width: 10px; height: 10px;" [Name]="'delete'" (click)="DeleteEntity()"></IconButton>
+                                                                <IconButton [IsEnabled]="IsTicketEditEnabled && EntityType != null" [Width]="18" [Height]="18" style="width: 10px; height: 10px;" [Name]="'delete'" (click)="DeleteEntity()"></IconButton>
                                                             </td>
                                                             <td style="width:2px;"> <div></div></td>
                                                             <td style="width:14px;">
@@ -262,7 +262,7 @@
                                                             <td style="width:2px;"> <div> </div></td>
 
                                                             <td *ngIf="EntityObjectTableName =='Quote'" style="width: 15px;">
-                                                                <IconButton [IsEnabled]="IsTicketEditEnabled" [Name]="'Add'" [IsSmall]="true" (click)="AddButtonClicked()"></IconButton>
+                                                                <IconButton [IsEnabled]="IsTicketEditEnabled && EntityType != null" [Name]="'Add'" [IsSmall]="true" (click)="AddButtonClicked()"></IconButton>
                                                             </td>
                                                             <td><div></div></td>
                                                         </tr>

@@ -106,7 +106,7 @@ namespace WebFreight.Web.Helpers
                             {
                                 if (AutomationConditionFieldLists != null)
                                 {
-                                    Field entityContactVariable = AutomationConditionFieldLists.Where(d => d.Id == automationResultEmail.RecipientValue).FirstOrDefault();
+                                    Field entityContactVariable = AutomationConditionFieldLists.Where(d => d.FieldCode == automationResultEmail.RecipientValue).FirstOrDefault();
                                     if (entityContactVariable != null)
                                     {
                                         if (automationResultEmail.RecipientType == "Emails")

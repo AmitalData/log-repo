@@ -66,6 +66,8 @@ namespace Logitude.Accounting.Data.EntityMapping
             this.Property(t => t.ExternalReconcileNumber).HasColumnName("ExternalReconcileNumber").HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.IsExternalReconcile).HasColumnName("IsExternalReconcile");
+
+            this.Property(t => t.ActionId).HasColumnName("ActionId").HasMaxLength(15).IsUnicode(false);
         }
     }
 }

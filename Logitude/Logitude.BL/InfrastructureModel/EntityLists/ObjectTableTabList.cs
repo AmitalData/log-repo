@@ -13,6 +13,8 @@ namespace Logitude.BL.InfrastructureModel.EntityLists
         public int IndexOrder { get; set; }
         public string TabNameTextCodeDefaultText { get; set; }
         public string TabNameTextCodeCode { get; set; }
+        public string FeatureUniqeCode { get; set; }
+
 
     }
 }

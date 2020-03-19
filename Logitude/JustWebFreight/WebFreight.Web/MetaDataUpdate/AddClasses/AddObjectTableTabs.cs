@@ -35,6 +35,8 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 objectTableTab.FeatureId = objectTableTabDetails.FeatureId;
                 objectTableTab.HtmlComponentName = objectTableTabDetails.HtmlComponentName;
                 objectTableTab.HtmlComponentUrl = objectTableTabDetails.HtmlComponentUrl;
+                objectTableTab.FeatureUniqeCode = objectTableTabDetails.FeatureUniqeCode;
+
 
                 objectTableTabRepository.Update(objectTableTab);
             }
@@ -53,6 +55,8 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                     FeatureId = objectTableTabDetails.FeatureId,
                     HtmlComponentName = objectTableTabDetails.HtmlComponentName,
                     HtmlComponentUrl = objectTableTabDetails.HtmlComponentUrl,
+                    FeatureUniqeCode = objectTableTabDetails.FeatureUniqeCode,
+
 
                 };
  

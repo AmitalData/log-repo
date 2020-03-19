@@ -154,17 +154,17 @@ export class CostWorkspaceComponent implements OnInit {
                 break;
             }
             case "OSC": {
-                windowTitle = "New " + TextCodeTranslator.Translate("Tariff.Q.Ocean.LCL.Surcharges.Cost") + " Surcharges Cost";
+                windowTitle = "New " + TextCodeTranslator.Translate("Tariff.Q.Ocean.LCL.Surcharges.Cost");
                 typeCode = "OSC";
                 break;
             }
             case "OFC": {
-                windowTitle = "New " + TextCodeTranslator.Translate("Tariff.Q.OceanFCLFreightCost") + " Freight Cost";
+                windowTitle = "New " + TextCodeTranslator.Translate("Tariff.Q.OceanFCLFreightCost");
                 typeCode = "OFC";
                 break;
             }
             case "OFS": {
-                windowTitle = "New " + TextCodeTranslator.Translate("Tariff.Q.OceanFCLSurchargesCost") + " Surcharges Cost";
+                windowTitle = "New " + TextCodeTranslator.Translate("Tariff.Q.OceanFCLSurchargesCost");
                 typeCode = "OFS";
                 break;
             }

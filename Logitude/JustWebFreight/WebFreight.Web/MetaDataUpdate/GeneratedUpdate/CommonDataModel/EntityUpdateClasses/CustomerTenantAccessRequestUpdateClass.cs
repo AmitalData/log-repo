@@ -137,6 +137,131 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
+					 						FieldName =  "Id",
+					  						OldFieldName =  "Id",
+					  						ObjectTableName =  "CustomerTenantAccessRequest",
+					  						MinLength =  0,
+					  						MaxLength =  15,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						Operator =  "StartsWith",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "Id",
+					  						ListPropertyPath =  "Id",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "CustomerTenantAccessRequest",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						Code =  "Id",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
+					  						DigitsAfterPoint =  0,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "Id",
+					  						DefaultText =  "Id",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						HelpTextCode =  "Id",
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "Tenant",
+					  						OldFieldName =  "Tenant",
+					  						ObjectTableName =  "CustomerTenantAccessRequest",
+					  						FieldsDataType =  "Integer",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "Tenant",
+					  						ListPropertyPath =  "Tenant",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "CustomerTenantAccessRequest",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						Code =  "Tenant",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
+					  						DigitsAfterPoint =  0,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "Tenant",
+					  						DefaultText =  "Tenant",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						HelpTextCode =  "Tenant",
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
 					 						FieldName =  "RequestDateTime",
 					  						OldFieldName =  "RequestDateTime",
 					  						ObjectTableName =  "CustomerTenantAccessRequest",
@@ -483,13 +608,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query CustomerTenantAccessRequestsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomerTenantAccessRequestTextCode_0.Id, NameTextCodeCode = CustomerTenantAccessRequestTextCode_0.Code, Code = "CustomerTenantAccessRequests",  QueryGroupCode = "CTAR", IndexOrder = 0, Tenant = 0, ObjectTableId = CustomerTenantAccessRequestObjectTable.Id, QuerySection = "CustomerTenantAccessRequest", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomerTenantAccessRequestFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query CustomerTenantAccessRequestsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomerTenantAccessRequestTextCode_0.Id, NameTextCodeCode = CustomerTenantAccessRequestTextCode_0.Code, ObjectTableName = "CustomerTenantAccessRequest", Code = "CustomerTenantAccessRequests",  QueryGroupCode = "CTAR", IndexOrder = 0, Tenant = 0, ObjectTableId = CustomerTenantAccessRequestObjectTable.Id, QuerySection = "CustomerTenantAccessRequest", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomerTenantAccessRequestFeature_0.Id,FeatureUniqeCode= CustomerTenantAccessRequestFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn CustomerTenantAccessRequestsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomerTenantAccessRequestsQuery.Id, IndexOrder = 0, ObjectFieldId = CustomerTenantAccessRequestObjectFields.Where(d => d.FieldName == "RequestDateTime" && d.ObjectTableId == CustomerTenantAccessRequestObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerTenantAccessRequestObjectFields.Where(d => d.FieldName == "RequestDateTime" && d.ObjectTableId == CustomerTenantAccessRequestObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CustomerTenantAccessRequestsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomerTenantAccessRequestsQuery.Id,QueryCode = CustomerTenantAccessRequestsQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = CustomerTenantAccessRequestObjectFields.Where(d => d.FieldName == "RequestDateTime" && d.ObjectTableId == CustomerTenantAccessRequestObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerTenantAccessRequestObjectFields.Where(d => d.FieldName == "RequestDateTime" && d.ObjectTableId == CustomerTenantAccessRequestObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn CustomerTenantAccessRequestsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomerTenantAccessRequestsQuery.Id, IndexOrder = 1, ObjectFieldId = CustomerTenantAccessRequestObjectFields.Where(d => d.FieldName == "RequestStatus" && d.ObjectTableId == CustomerTenantAccessRequestObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerTenantAccessRequestObjectFields.Where(d => d.FieldName == "RequestStatus" && d.ObjectTableId == CustomerTenantAccessRequestObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CustomerTenantAccessRequestsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomerTenantAccessRequestsQuery.Id,QueryCode = CustomerTenantAccessRequestsQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = CustomerTenantAccessRequestObjectFields.Where(d => d.FieldName == "RequestStatus" && d.ObjectTableId == CustomerTenantAccessRequestObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerTenantAccessRequestObjectFields.Where(d => d.FieldName == "RequestStatus" && d.ObjectTableId == CustomerTenantAccessRequestObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn CustomerTenantAccessRequestsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomerTenantAccessRequestsQuery.Id, IndexOrder = 2, ObjectFieldId = CustomerTenantAccessRequestObjectFields.Where(d => d.FieldName == "ForwarderId" && d.ObjectTableId == CustomerTenantAccessRequestObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerTenantAccessRequestObjectFields.Where(d => d.FieldName == "ForwarderId" && d.ObjectTableId == CustomerTenantAccessRequestObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CustomerTenantAccessRequestsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomerTenantAccessRequestsQuery.Id,QueryCode = CustomerTenantAccessRequestsQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = CustomerTenantAccessRequestObjectFields.Where(d => d.FieldName == "ForwarderId" && d.ObjectTableId == CustomerTenantAccessRequestObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerTenantAccessRequestObjectFields.Where(d => d.FieldName == "ForwarderId" && d.ObjectTableId == CustomerTenantAccessRequestObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 	   
 	    }
 
@@ -503,17 +628,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 	         Screen CustomerTenantAccessRequestGeneralTabScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CustomerTenantAccessRequest.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = CustomerTenantAccessRequestObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 1, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField CustomerTenantAccessRequestCustomerTenantAccessRequestGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = CustomerTenantAccessRequestObjectFields.Where(d => d.FieldName == "ForwarderId").FirstOrDefault().Id, ScreenId = CustomerTenantAccessRequestGeneralTabScreenScreen0.Id, ObjectFieldCode = CustomerTenantAccessRequestObjectFields.Where(d => d.FieldName == "ForwarderId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomerTenantAccessRequestCustomerTenantAccessRequestGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = CustomerTenantAccessRequestObjectFields.Where(d => d.FieldName == "ForwarderId").FirstOrDefault().Id, ScreenId = CustomerTenantAccessRequestGeneralTabScreenScreen0.Id,ScreenCode = CustomerTenantAccessRequestGeneralTabScreenScreen0.Code, ObjectFieldCode = CustomerTenantAccessRequestObjectFields.Where(d => d.FieldName == "ForwarderId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 	      
 
 	         Screen CustomerTenantAccessRequestHeaderScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CustomerTenantAccessRequest.HeaderScreen", Name = "Header Screen", ObjectTableId = CustomerTenantAccessRequestObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField CustomerTenantAccessRequestCustomerTenantAccessRequestHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = CustomerTenantAccessRequestObjectFields.Where(d => d.FieldName == "ForwarderId").FirstOrDefault().Id, ScreenId = CustomerTenantAccessRequestHeaderScreenScreen1.Id, ObjectFieldCode = CustomerTenantAccessRequestObjectFields.Where(d => d.FieldName == "ForwarderId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomerTenantAccessRequestCustomerTenantAccessRequestHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = CustomerTenantAccessRequestObjectFields.Where(d => d.FieldName == "ForwarderId").FirstOrDefault().Id, ScreenId = CustomerTenantAccessRequestHeaderScreenScreen1.Id,ScreenCode = CustomerTenantAccessRequestHeaderScreenScreen1.Code, ObjectFieldCode = CustomerTenantAccessRequestObjectFields.Where(d => d.FieldName == "ForwarderId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomerTenantAccessRequestCustomerTenantAccessRequestHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = CustomerTenantAccessRequestObjectFields.Where(d => d.FieldName == "RequestStatus").FirstOrDefault().Id, ScreenId = CustomerTenantAccessRequestHeaderScreenScreen1.Id, ObjectFieldCode = CustomerTenantAccessRequestObjectFields.Where(d => d.FieldName == "RequestStatus").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomerTenantAccessRequestCustomerTenantAccessRequestHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = CustomerTenantAccessRequestObjectFields.Where(d => d.FieldName == "RequestStatus").FirstOrDefault().Id, ScreenId = CustomerTenantAccessRequestHeaderScreenScreen1.Id,ScreenCode = CustomerTenantAccessRequestHeaderScreenScreen1.Code, ObjectFieldCode = CustomerTenantAccessRequestObjectFields.Where(d => d.FieldName == "RequestStatus").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    CustomerTenantAccessRequestObjectTable.HeaderScreenId = CustomerTenantAccessRequestHeaderScreenScreen1.Id;
+		    CustomerTenantAccessRequestObjectTable.HeaderScreenCode = CustomerTenantAccessRequestHeaderScreenScreen1.Code;
+
 	   		  
 
 	    }
@@ -534,9 +661,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CRGT",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = CustomerTenantAccessRequestGeneralFeature_TH0.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = CustomerTenantAccessRequestObjectTable.Id, TabNameTextCodeId = CustomerTenantAccessRequestGeneralTextCode_TH0.Id, TabNameTextCodeCode = CustomerTenantAccessRequestGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CRGT",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = CustomerTenantAccessRequestGeneralFeature_TH0.Id,FeatureUniqeCode = CustomerTenantAccessRequestGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = CustomerTenantAccessRequestObjectTable.Id, TabNameTextCodeId = CustomerTenantAccessRequestGeneralTextCode_TH0.Id, TabNameTextCodeCode = CustomerTenantAccessRequestGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CRET",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = CustomerTenantAccessRequestEventsFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = CustomerTenantAccessRequestObjectTable.Id, TabNameTextCodeId = CustomerTenantAccessRequestEventsTextCode_TH1.Id, TabNameTextCodeCode = CustomerTenantAccessRequestEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CRET",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = CustomerTenantAccessRequestEventsFeature_TH1.Id,FeatureUniqeCode = CustomerTenantAccessRequestEventsFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = CustomerTenantAccessRequestObjectTable.Id, TabNameTextCodeId = CustomerTenantAccessRequestEventsTextCode_TH1.Id, TabNameTextCodeCode = CustomerTenantAccessRequestEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	

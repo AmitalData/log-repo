@@ -395,7 +395,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query CourierStatusQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CourierStatusTextCode_0.Id, Code = "CourierStatus",  QueryGroupCode = "5d5d", IndexOrder = 0, Tenant = 0, ObjectTableId = CourierStatusObjectTable.Id, QuerySection = "Customs.CourierStatus", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CourierStatusFeature_0.Id, DefaultSortName = "Code", DefaultSortDirection = "Desending" }, queriesRepository, tenantQueries);
+			  Query CourierStatusQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CourierStatusTextCode_0.Id, Code = "CourierStatus",  QueryGroupCode = "5d5d", IndexOrder = 0, Tenant = 0, ObjectTableId = CourierStatusObjectTable.Id, QuerySection = "Customs.CourierStatus", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CourierStatusFeature_0.Id,FeatureUniqeCode= CourierStatusFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending" }, queriesRepository, tenantQueries);
 	
 			 QueryColumn CourierStatusQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CourierStatusQuery.Id, IndexOrder = 0, ObjectFieldId = CourierStatusObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == CourierStatusObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 50 }, queryColumnsRepository, tenantQueryColumns);
 

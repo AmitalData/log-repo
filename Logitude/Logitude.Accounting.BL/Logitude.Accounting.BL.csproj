@@ -105,6 +105,7 @@
     <Compile Include="APIDataContract\ChartOfAccountsType.Generated.cs" />
     <Compile Include="APIDataContract\GLAccount.cs" />
     <Compile Include="APIDataContract\GLAccount.Generated.cs" />
+    <Compile Include="APIDataContract\GLAccountMoreData.Generated.cs" />
     <Compile Include="APIDataContract\GLAccountType.Generated.cs" />
     <Compile Include="APIDataContract\Journal.Generated.cs" />
     <Compile Include="APIDataContract\JournalActionType.Generated.cs" />
@@ -121,6 +122,8 @@
     <Compile Include="APIDataContract\QueryService\Category5QueryService.Generated.cs" />
     <Compile Include="APIDataContract\QueryService\ChartOfAccountQueryService.Generated.cs" />
     <Compile Include="APIDataContract\QueryService\ChartOfAccountsTypeQueryService.Generated.cs" />
+    <Compile Include="APIDataContract\QueryService\GLAccountMoreDataQueryService.cs" />
+    <Compile Include="APIDataContract\QueryService\GLAccountMoreDataQueryService.Generated.cs" />
     <Compile Include="APIDataContract\QueryService\GLAccountQueryService.cs" />
     <Compile Include="APIDataContract\QueryService\GLAccountQueryService.Generated.cs" />
     <Compile Include="APIDataContract\QueryService\GLAccountTypeQueryService.Generated.cs" />
@@ -191,12 +194,15 @@
     <Compile Include="CoreBL\AutomaticReconcileService.cs" />
     <Compile Include="CoreBL\BankAccountPages\BankAccountPageAnalyzer.cs" />
     <Compile Include="CoreBL\BankAccountPages\BankAccountPagesExample.cs" />
+    <Compile Include="CoreBL\BankDeposit\BankDepositJournalCreator.cs" />
     <Compile Include="CoreBL\Batch\BatchAccountingLoadTestTask.cs" />
+    <Compile Include="CoreBL\Batch\BatchCardGLAccountConnectTask.cs" />
     <Compile Include="CoreBL\Batch\BatchCreateTaxReportService.cs" />
     <Compile Include="CoreBL\Batch\BatchFixIntegrityCheckErrorsService.cs" />
     <Compile Include="CoreBL\Batch\BatchAccFunctionalTestTask.cs" />
     <Compile Include="CoreBL\Batch\BatchInterestReportService.cs" />
     <Compile Include="CoreBL\Batch\BatchOpenFormatReportService.cs" />
+    <Compile Include="CoreBL\Batch\BatchReconciliationStageBTask.cs" />
     <Compile Include="CoreBL\Batch\BatchRevaluationService.cs" />
     <Compile Include="CoreBL\Batch\BatchTaxDeductionReportService.cs" />
     <Compile Include="CoreBL\Batch\BatchIntegrityCheckService.cs" />
@@ -219,6 +225,12 @@
     <Compile Include="CoreBL\CashbookService.cs" />
     <Compile Include="CoreBL\FunctionalTests\ClearAccountingDB.cs" />
     <Compile Include="CoreBL\FunctionalTests\JournalToGLAccountMoreData.cs" />
+    <Compile Include="CoreBL\InterestReport\InterestCalculationDetails.cs" />
+    <Compile Include="CoreBL\InterestReport\InterestReportArgs.cs" />
+    <Compile Include="CoreBL\InterestReport\InterestReportCalculationPreparations.cs" />
+    <Compile Include="CoreBL\InterestReport\InterestReportDataCalculations.cs" />
+    <Compile Include="CoreBL\InterestReport\InterestReportLinesCreationService.cs" />
+    <Compile Include="CoreBL\InterestReport\InterestTransactionsGroupedByDate.cs" />
     <Compile Include="CoreBL\InterestTrans\RegularJournalInterestTransactionMapping.cs" />
     <Compile Include="CoreBL\ISystem1000Service.cs" />
     <Compile Include="CoreBL\OpenFormatReportService.cs" />
@@ -230,11 +242,9 @@
     <Compile Include="CoreBL\Reconcile\ICreateAutoReconcileWhileStreamingService.cs" />
     <Compile Include="CoreBL\Reconcile\LedgerTransactionsSorter.cs" />
     <Compile Include="CoreBL\Reports\BalanceGroupByCollectorService.cs" />
-
     <Compile Include="CoreBL\Reports\CardIndexReportService.cs" />
+    <Compile Include="CoreBL\Reports\RevenueExpenseV1ReportService.cs" />
     <Compile Include="CoreBL\RevaluationService.cs" />
-
- 
     <Compile Include="CoreBL\ReverseEngineer\DueLocalBalanceService.cs" />
     <Compile Include="CoreBL\IAccountingSettingResolver.cs" />
     <Compile Include="CoreBL\IYearTransferService.cs" />
@@ -288,6 +298,7 @@
     <Compile Include="DataContract\OpenFormatReportData.cs" />
     <Compile Include="DataContract\OpenFormatReportDataProvider.cs" />
     <Compile Include="DataContract\TaxDeductionReportData.cs" />
+    <Compile Include="DataContract\TaxDeductionReportDataProvider.cs" />
     <Compile Include="DataContract\TaxReportLinesCounter.cs" />
     <Compile Include="EntityDataMappings\AccountingCompanyTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\AccountingEntityDataMapping.cs" />
@@ -477,6 +488,7 @@
     <Compile Include="EntityQueryServices\AutomaticReconcileQueryService.cs" />
     <Compile Include="EntityQueryServices\BankAccountQueryService.cs" />
     <Compile Include="EntityQueryServices\BankCodeQueryService.cs" />
+    <Compile Include="EntityQueryServices\CashBookLineQueryService.cs" />
     <Compile Include="EntityQueryServices\BankDepositLineQueryService.cs" />
     <Compile Include="EntityQueryServices\Category1QueryService.cs" />
     <Compile Include="EntityQueryServices\Category2QueryService.cs" />
@@ -533,9 +545,13 @@
     <Compile Include="EntityQueryServices\Generated\VatReportStatusQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\WithholdingTaxDeductionTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\GLAccountCounterQueryService.cs" />
+    <Compile Include="EntityQueryServices\GLAccountInterestPeriodQueryService.cs" />
     <Compile Include="EntityQueryServices\GLAccountMoreDataQueryService.cs" />
     <Compile Include="EntityQueryServices\GLAccountTypeQueryService.cs" />
     <Compile Include="EntityQueryServices\GLAccountWithholdingTaxQueryService.cs" />
+    <Compile Include="EntityQueryServices\InterestBasesPeriodQueryService.cs" />
+    <Compile Include="EntityQueryServices\InterestReportQueryService.cs" />
+    <Compile Include="EntityQueryServices\InterestTransactionQueryService.cs" />
     <Compile Include="EntityQueryServices\JournalLineLedgerTransactionAccDTO.cs" />
     <Compile Include="EntityQueryServices\JournalLineLedgerTransactionDTO.cs" />
     <Compile Include="EntityQueryServices\InterestBasesTypeQueryService.cs" />
@@ -623,6 +639,7 @@
     <Compile Include="EntityUpdateServices\Generated\WithholdingTaxDeductionTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\GLAccountWithholdingTaxUpdateService.cs" />
     <Compile Include="EntityUpdateServices\IJournalUpdateServiceProvider.cs" />
+    <Compile Include="EntityUpdateServices\InterestReportLinesByDateUpdateService.cs" />
     <Compile Include="EntityUpdateServices\InterestReportUpdateService.cs" />
     <Compile Include="EntityUpdateServices\InterestBasesTypeUpdateService.cs" />
     <Compile Include="EntityUpdateServices\InterestTransactionUpdateService.cs" />
@@ -640,6 +657,12 @@
     <Compile Include="CoreBL\TaxReportService.cs" />
     <Compile Include="EntityUpdateServices\TaxReportUpdateService.cs" />
     <Compile Include="EntityUpdateServices\TaxWithholdingAssessOfficeUpdateService.cs" />
+    <Compile Include="InterestEntityQueryServices\IInterestEntityQueryService.cs" />
+    <Compile Include="InterestEntityQueryServices\InterestEntityResult\InterestEntityResult.cs" />
+    <Compile Include="InterestEntityQueryServices\InterestFactory\InterestQueryFactory.cs" />
+    <Compile Include="InterestEntityQueryServices\InterestQueryServises\InterestARPaymentQueryService.cs" />
+    <Compile Include="InterestEntityQueryServices\InterestQueryServises\InterestARInvoiceQueryService.cs" />
+    <Compile Include="InterestEntityQueryServices\InterestQueryServises\InterestJournalQueryService.cs" />
     <Compile Include="TestService\BatchTestService.cs" />
     <Compile Include="Utils\AccountingLogger.cs" />
     <Compile Include="Utils\CardGLAccountConnectBatch.cs" />

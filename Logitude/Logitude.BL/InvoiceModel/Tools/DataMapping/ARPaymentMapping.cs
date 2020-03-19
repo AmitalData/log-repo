@@ -32,7 +32,6 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
                     entityPM.OpenAmountInLocalCurrency = entityPM.AmountInLocalCurrency;
 
                     entity.Id = entityPM.Id;
-                    entity.PaymentNo = entityPM.PaymentNo;
                     entity.Tenant = entityPM.Tenant;
                     entity.CreatedByUserId = entityPM.CreatedByUserId;
                     entity.CreateDate = entityPM.CreateDate;                    
@@ -67,6 +66,7 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
                 entity.CreditCardTypeId = entityPM.CreditCardTypeId;
                 entity.ChequeOrPaymentRef = entityPM.ChequeOrPaymentRef;
                 entity.CreateDate = entityPM.CreateDate;
+                entity.PaymentNo = entityPM.PaymentNo;
             }
             #endregion
 
@@ -97,6 +97,10 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.MetodoPagoCode = entityPM.MetodoPagoCode;
             entity.TipoCadenaPago = entityPM.TipoCadenaPago;
             entity.CadPago = entityPM.CadPago;
+
+            entity.CancelationNotes = entityPM.CancelationNotes;
+            entity.AccountingCancelationDate = entityPM.AccountingCancelationDate;
+
             entity.CertPago = entityPM.CertPago;
             entity.SelloPago = entityPM.SelloPago;
             entity.ApprovedDate = entityPM.ApprovedDate;
@@ -152,6 +156,18 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entityPM.SetReTransfer = false;
             entityPM.SetReSendQBO = false;
             entity.CreatedByPartner = entityPM.CreatedByPartner;
+            entity.IsPaymentNumberManuallySet = entityPM.IsPaymentNumberManuallySet;
+
+            entity.Field1 = entityPM.Field1 != null ? entityPM.Field1.Value : null;
+            entity.Field2 = entityPM.Field2 != null ? entityPM.Field2.Value : null;
+            entity.Field3 = entityPM.Field3 != null ? entityPM.Field3.Value : null;
+            entity.Field4 = entityPM.Field4 != null ? entityPM.Field4.Value : null;
+            entity.Field5 = entityPM.Field5 != null ? entityPM.Field5.Value : null;
+            entity.Field6 = entityPM.Field6 != null ? entityPM.Field6.Value : null;
+            entity.Field7 = entityPM.Field7 != null ? entityPM.Field7.Value : null;
+            entity.Field8 = entityPM.Field8 != null ? entityPM.Field8.Value : null;
+            entity.Field9 = entityPM.Field9 != null ? entityPM.Field9.Value : null;
+            entity.Field10 = entityPM.Field10 != null ? entityPM.Field10.Value : null;
         }
         public static ContactPM GetLoggedContactPM(int tenant)
         {

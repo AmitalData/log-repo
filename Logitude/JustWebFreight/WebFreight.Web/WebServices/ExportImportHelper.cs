@@ -117,6 +117,7 @@ namespace WebFreight.Web.WebServices
                                         RoleId = role.Id,
                                         Tenant = 0,
                                         FeatureAccessLevelCode = featureAccessLevelCode,
+                                        FeatureUniqeCode = feature.FeatureUniqeCode
                                     };
 
                                     rolefeaturerep.Add(rolefeature);
@@ -292,6 +293,7 @@ namespace WebFreight.Web.WebServices
                                         FeatureId = feature.Id,
                                         PackageCode = packagecode,
                                         Tenant = 0,
+                                        FeatureUniqeCode = feature.FeatureUniqeCode
                                     };
 
                                     packfeaturerep.Add(packagefeature);

@@ -1893,5 +1893,13 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return documentTypeLists;
         }
 
+
+
+        public string GetDocumentTypeIdByCode(string code, int tenant)
+        {
+            return (from a in repository.context.DocumentTypes where a.Code == code && a.Tenant == tenant select a.Id).FirstOrDefault();
+        }
+
+
     }
 }

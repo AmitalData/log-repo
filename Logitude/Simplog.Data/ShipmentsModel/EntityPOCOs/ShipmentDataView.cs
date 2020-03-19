@@ -28,6 +28,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public int? ShipmentMasterDataTenant { get; set; }
         public double? ChargeableWeightInKG { get; set; }
         public double? GrossWeightInKG { get; set; }
+        public double? GrossWeightPerStorageDays { get; set; }
         public double? ChargeableWeight { get; set; }
         public double? GrossWeight { get; set; }
         public string OperationalClosedByUserId { get; set; }
@@ -738,5 +739,6 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string CreatedByPartner { get; set; }
 
         public DateTime? FirstARInvoiceApprovalDate { get; set; }
+        public string SLAC { get; set; }
     }
 }

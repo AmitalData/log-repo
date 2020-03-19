@@ -453,6 +453,7 @@ namespace Simplog.Data.CommonDataModel
             modelBuilder.Configurations.Add(new DocumentsExecutionLogMap());
             modelBuilder.Configurations.Add(new CardContactAdditionalServiceMap()); 
             modelBuilder.Configurations.Add(new UserLastSettingsMap());
+            modelBuilder.Configurations.Add(new CustomerOpenFilesAmountMap());
 
             base.OnModelCreating(modelBuilder);
         }
@@ -1008,7 +1009,8 @@ namespace Simplog.Data.CommonDataModel
         public IDbSet<CardContactAdditionalService> CardContactAdditionalServices { get; set; }
 
         public IDbSet<SharedLogisticsContactLastLogin> SharedLogisticsContactLastLogins { get; set; }
-
+        public IDbSet<CustomerOpenFilesAmount> CustomerOpenFilesAmounts { get; set; }
+        
         public DbConnection GetConnection()
         {
             return this.Database.Connection;

@@ -24,7 +24,7 @@ export class AutomationHelper   {
     }
 
     ObjectFieldCondationValueChange(value) {
-        var newValue: string = value ? !AppTool.IsNullOrEmpty(value.Id) ? value.Id : "" : "";
+        var newValue: string = value ? !AppTool.IsNullOrEmpty(value.FieldCode) ? value.FieldCode : "" : "";
         this.ConditionValueChange(newValue);
     }
 

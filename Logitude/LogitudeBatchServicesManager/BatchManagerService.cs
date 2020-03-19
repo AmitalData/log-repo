@@ -79,10 +79,13 @@ namespace LogitudeBatchServicesManager
             {
                 ProcessToRestart.Arguments = ProcessToRestart.Arguments.Replace(ProcessUniqueKey, "");
                 ManagedProcessesIds = ManagedProcessesIds.Where(a => a != processId).ToList();
+                ManagedProcessesInfos = ManagedProcessesInfos.Where(a => !a.Arguments.Contains(ProcessUniqueKey)).ToList();
                 using (Process exeProcess = Process.Start(ProcessToRestart))
                 {
                     EventLog.WriteEntry("BatchManagerService Starting Process With Id : " + processId);
                     ManagedProcessesIds.Add(exeProcess.Id);
+                    ProcessToRestart.Arguments = ProcessToRestart.Arguments + "*" + exeProcess.Id + "*";
+                    ManagedProcessesInfos.Add(ProcessToRestart);
                 }
             }
         }

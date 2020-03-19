@@ -41,6 +41,14 @@ namespace Logitude.Accounting.Data.Repositories
             return Period;
         }
 
+        public List<GLAccountInterestPeriod> GetLAccountInterestPeriodPMsByInterestDate(string glAccountId, DateTime InterestCalculationDate,int tenant)
+        {
+            List<GLAccountInterestPeriod> gLAccountInterestPeriods = (from a in context.GLAccountInterestPeriods
+                                                                      where a.Tenant == tenant && a.GLAccountId == glAccountId && a.PeriodStartDate <= InterestCalculationDate
+                                                                      select a).ToList();
+            return gLAccountInterestPeriods;
+        }
+
     }
 
 }

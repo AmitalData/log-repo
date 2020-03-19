@@ -59,8 +59,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckContactFeature("BatchTaskExecution", "READ", authToken.Tenant);
-	                IInfrastructureContext MyContext = InfrastructureContext.GetContext(authToken.Tenant);
+                IInfrastructureContext MyContext = InfrastructureContext.GetContext(authToken.Tenant);
                 BatchTaskExecutionListQueryService batchTaskExecutionQuery = new BatchTaskExecutionListQueryService(MyContext);
                 BatchTaskExecutionList batchTaskExecutionList = batchTaskExecutionQuery.GetSingle(id);
  				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
@@ -82,8 +81,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckContactFeature("BatchTaskExecution", "READ", authToken.Tenant);
-	                IInfrastructureContext MyContext = InfrastructureContext.GetContext(authToken.Tenant);
+                IInfrastructureContext MyContext = InfrastructureContext.GetContext(authToken.Tenant);
                 BatchTaskExecutionListQueryService batchTaskExecutionQuery = new BatchTaskExecutionListQueryService(MyContext);
                 List<BatchTaskExecutionList> result = batchTaskExecutionQuery.GetList(authToken.Tenant);
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
@@ -105,8 +103,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckContactFeature("BatchTaskExecution", "READ", authToken.Tenant);
-	                
+                
 				int tenant = authToken.Tenant;
 
                 QueryOperations queryOperations = new QueryOperations()

@@ -37,7 +37,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         ARinvoiceId, 
 	         InvoiceAmount, 
 	         GLAccountInterestCreditLimit, 
-	         InterestReportStatusCode,
+	         InterestReportStatusCode, 
+	         SearchFields, 
+	         CustomerId,
 	      }
 
 
@@ -65,7 +67,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         GLAccountLocalName, 
 	         ARInvoiceNumber, 
 	         UpdatedByLocalName, 
-	         InterestReportStatusName,
+	         InterestReportStatusName, 
+	         SearchFields, 
+	         InterestReportStatusLocalName, 
+	         CustomerId, 
+	         CustomerName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -148,7 +154,19 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             {
 				entityPOCO.InterestReportStatusCode = entityPM.InterestReportStatusCode;
 			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SearchFields))
+            {
+				entityPOCO.SearchFields = entityPM.SearchFields;
 			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomerId))
+            {
+				entityPOCO.CustomerId = entityPM.CustomerId;
+			}
+			
+				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
+		  }
 
 		public void POCOToPM(InterestReportPM entityPM, InterestReport entityPOCO)
         {
@@ -233,6 +251,16 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.InterestReportStatusCode = entityPOCO.InterestReportStatusCode;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.SearchFields))
+            {
+					entityPM.SearchFields = entityPOCO.SearchFields;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CustomerId))
+            {
+					entityPM.CustomerId = entityPOCO.CustomerId;
+            }
+
 		}
 
 		public void PMToOldPM(InterestReportPM entityPM, InterestReportPM oldEntityPM)
@@ -314,6 +342,16 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 oldEntityPM.InterestReportStatusCode = entityPM.InterestReportStatusCode;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SearchFields))
+            {
+                oldEntityPM.SearchFields = entityPM.SearchFields;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomerId))
+            {
+                oldEntityPM.CustomerId = entityPM.CustomerId;
+            }
+			
 		}
 
 	    public void EncodeBase64NVARCHARFields(InterestReportPM entityPM)
@@ -322,6 +360,10 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             {
                 return;
 
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.SearchFields)) //T4 find type == nText 
+            {
+                entityPM.SearchFields = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.SearchFields));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}
@@ -335,6 +377,15 @@ namespace Logitude.Accounting.BL.EntityDataMappings
         public void AddPMPropertyName(PMPropertyNames pocoPropertyName)
         {
             CustomMappedPMProperties.Add(pocoPropertyName);
+        }
+		
+		private void BuildSearchFieldsGenerated(InterestReportPM entityPM, InterestReport entityPOCO, bool isNewEntity)
+        {
+            string mySearchFields = "";
+			
+           
+            entityPM.SearchFields += mySearchFields;
+            entityPOCO.SearchFields += mySearchFields;
         }
 			  
    }

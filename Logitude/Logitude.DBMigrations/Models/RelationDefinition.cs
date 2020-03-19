@@ -34,5 +34,8 @@ namespace Logitude.DBMigrations.Models
 
         [XmlAttribute()]
         public string ForeignKeyConstraintName { get; set; }
+
+        [XmlAttribute()]
+        public bool Ignore { get; set; }
     }
 }

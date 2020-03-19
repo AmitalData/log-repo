@@ -141,7 +141,7 @@ export class WebFreightDomainService {
 
         return entityPM;
     }
-    getExcelData(filters: ApiQueryFilters, queryId: string, tenant: number, userid: string, ObjectTableName: string) {
+    getExcelData(filters: ApiQueryFilters, queryCode: string, tenant: number, userid: string, ObjectTableName: string) {
         if (filters == null) {
             filters.GetCount = true;
             filters.PageIndex = 0;
@@ -149,7 +149,7 @@ export class WebFreightDomainService {
             filters.SortBy = "";
             filters.SortDirection = ""; 
         }
-        filters.queryId = queryId;
+        filters.queryCode = queryCode;
         filters.Tenant = tenant;
         filters.userid = userid;
         filters.ObjectTableName = ObjectTableName;

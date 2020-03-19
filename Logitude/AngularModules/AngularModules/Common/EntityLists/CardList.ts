@@ -91,5 +91,7 @@ export class CardList {
 		CalculatedLocalName: string;
 		CalculatedEnglishName: string;
 		CreatedByPartner: string;
+		OpenShipments: number;
+		StorageFreeDays: number;
 	
 }

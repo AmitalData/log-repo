@@ -66,6 +66,13 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public string InterestReportStatusCode { get; set; }
 	      
         public virtual InterestReportStatuse InterestReportStatuse { get; set; }
+        [Column("SearchFields")]
+	    public string SearchFields { get; set; }
+        [ForeignKey("Card")]
+        [Column("CustomerId")]
+	    public string CustomerId { get; set; }
+	      
+        public virtual Card Card { get; set; }
     }
 }
 	 

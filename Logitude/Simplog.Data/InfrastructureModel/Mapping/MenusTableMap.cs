@@ -47,6 +47,10 @@ namespace Simplog.Data.InfrastructureModel.Mapping
                 .HasMaxLength(15)
                 .IsUnicode(false);
 
+            this.Property(t => t.FeatureUniqeCode)
+                .HasMaxLength(120)
+                .IsUnicode(false); 
+
             this.Property(t => t.Code)
                 .IsRequired()
                 .HasMaxLength(4)
@@ -70,14 +74,16 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.FeatureId).HasColumnName("FeatureId");
             this.Property(t => t.Code).HasColumnName("Code");
             this.Property(t => t.HtmlView).HasColumnName("HtmlView");
+            this.Property(t => t.FeatureUniqeCode).HasColumnName("FeatureUniqeCode");
+
 
             // Relationships
             //this.HasOptional(t => t.CategoryType)
             //    .WithMany(t => t.MenusTables)
             //    .HasForeignKey(d => d.CategoryTypeCode);
-            this.HasOptional(t => t.Feature)
-                .WithMany()
-                .HasForeignKey(d => d.FeatureId);
+            //this.HasOptional(t => t.Feature)
+            //    .WithMany()
+            //    .HasForeignKey(d => d.FeatureId);
             //this.HasRequired(t => t.MenuType)
             //    .WithMany(t => t.MenusTables)
             //    .HasForeignKey(d => d.MenuTypeCode);

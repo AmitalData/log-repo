@@ -103,14 +103,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasCounter =  false,
 			      				    EnableAddFromLOV =  false,
 			      				    IsRestrictable =  false,
-			      				    IsMain =  true,
+			      				    IsMain =  false,
 			      				    IsAutoComplete =  false,
 			      				    EnableEditFromLOV =  false,
 			      				    SortingByObjectField =  "CreateDate",
 			      				    InActive =  false,
 			      				    IsSaveButtonVisible =  false,
 			      				    IsComposition =  false,
-			      				    EnableSecurity =  true,
+			      				    EnableSecurity =  false,
 			      				    AllowCustomFields =  false,
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "MD",
@@ -128,6 +128,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
+			      				    IsTabsHidden =  false,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
@@ -190,6 +191,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -246,6 +248,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -304,6 +307,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -363,6 +367,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -421,6 +426,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -479,6 +485,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -538,6 +545,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -596,6 +604,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -654,6 +663,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -712,6 +722,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -770,6 +781,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -829,6 +841,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -887,6 +900,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -945,6 +959,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1003,6 +1018,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1027,23 +1043,23 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query BTEAllTasksQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = BatchTaskExecutionTextCode_0.Id, NameTextCodeCode = BatchTaskExecutionTextCode_0.Code, Code = "BTEAllTasks",  QueryGroupCode = "2fc2", IndexOrder = 0, Tenant = 0, ObjectTableId = BatchTaskExecutionObjectTable.Id, QuerySection = "BatchTaskExecution", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = BatchTaskExecutionFeature_0.Id, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query BTEAllTasksQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = BatchTaskExecutionTextCode_0.Id, NameTextCodeCode = BatchTaskExecutionTextCode_0.Code, ObjectTableName = "BatchTaskExecution", Code = "BTEAllTasks",  QueryGroupCode = "2fc2", IndexOrder = 0, Tenant = 0, ObjectTableId = BatchTaskExecutionObjectTable.Id, QuerySection = "BatchTaskExecution", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = BatchTaskExecutionFeature_0.Id,FeatureUniqeCode= BatchTaskExecutionFeature_0.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn BTEAllTasksQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = BTEAllTasksQuery.Id, IndexOrder = 0, ObjectFieldId = BatchTaskExecutionObjectFields.Where(d => d.FieldName == "Subject" && d.ObjectTableId == BatchTaskExecutionObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BatchTaskExecutionObjectFields.Where(d => d.FieldName == "Subject" && d.ObjectTableId == BatchTaskExecutionObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 250 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn BTEAllTasksQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = BTEAllTasksQuery.Id,QueryCode = BTEAllTasksQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = BatchTaskExecutionObjectFields.Where(d => d.FieldName == "Subject" && d.ObjectTableId == BatchTaskExecutionObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BatchTaskExecutionObjectFields.Where(d => d.FieldName == "Subject" && d.ObjectTableId == BatchTaskExecutionObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 250 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn BTEAllTasksQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = BTEAllTasksQuery.Id, IndexOrder = 1, ObjectFieldId = BatchTaskExecutionObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == BatchTaskExecutionObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BatchTaskExecutionObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == BatchTaskExecutionObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 155 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn BTEAllTasksQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = BTEAllTasksQuery.Id,QueryCode = BTEAllTasksQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = BatchTaskExecutionObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == BatchTaskExecutionObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BatchTaskExecutionObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == BatchTaskExecutionObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 155 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn BTEAllTasksQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = BTEAllTasksQuery.Id, IndexOrder = 2, ObjectFieldId = BatchTaskExecutionObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == BatchTaskExecutionObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BatchTaskExecutionObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == BatchTaskExecutionObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 194 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn BTEAllTasksQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = BTEAllTasksQuery.Id,QueryCode = BTEAllTasksQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = BatchTaskExecutionObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == BatchTaskExecutionObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BatchTaskExecutionObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == BatchTaskExecutionObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 194 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn BTEAllTasksQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = BTEAllTasksQuery.Id, IndexOrder = 3, ObjectFieldId = BatchTaskExecutionObjectFields.Where(d => d.FieldName == "StartDateTime" && d.ObjectTableId == BatchTaskExecutionObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BatchTaskExecutionObjectFields.Where(d => d.FieldName == "StartDateTime" && d.ObjectTableId == BatchTaskExecutionObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 192 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn BTEAllTasksQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = BTEAllTasksQuery.Id,QueryCode = BTEAllTasksQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = BatchTaskExecutionObjectFields.Where(d => d.FieldName == "StartDateTime" && d.ObjectTableId == BatchTaskExecutionObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BatchTaskExecutionObjectFields.Where(d => d.FieldName == "StartDateTime" && d.ObjectTableId == BatchTaskExecutionObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 192 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn BTEAllTasksQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = BTEAllTasksQuery.Id, IndexOrder = 4, ObjectFieldId = BatchTaskExecutionObjectFields.Where(d => d.FieldName == "DoneDateTime" && d.ObjectTableId == BatchTaskExecutionObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BatchTaskExecutionObjectFields.Where(d => d.FieldName == "DoneDateTime" && d.ObjectTableId == BatchTaskExecutionObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 193 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn BTEAllTasksQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = BTEAllTasksQuery.Id,QueryCode = BTEAllTasksQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = BatchTaskExecutionObjectFields.Where(d => d.FieldName == "DoneDateTime" && d.ObjectTableId == BatchTaskExecutionObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BatchTaskExecutionObjectFields.Where(d => d.FieldName == "DoneDateTime" && d.ObjectTableId == BatchTaskExecutionObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 193 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn BTEAllTasksQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = BTEAllTasksQuery.Id, IndexOrder = 5, ObjectFieldId = BatchTaskExecutionObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == BatchTaskExecutionObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BatchTaskExecutionObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == BatchTaskExecutionObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 138 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn BTEAllTasksQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = BTEAllTasksQuery.Id,QueryCode = BTEAllTasksQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = BatchTaskExecutionObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == BatchTaskExecutionObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BatchTaskExecutionObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == BatchTaskExecutionObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 138 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn BTEAllTasksQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = BTEAllTasksQuery.Id, IndexOrder = 6, ObjectFieldId = BatchTaskExecutionObjectFields.Where(d => d.FieldName == "ProgressMessage" && d.ObjectTableId == BatchTaskExecutionObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BatchTaskExecutionObjectFields.Where(d => d.FieldName == "ProgressMessage" && d.ObjectTableId == BatchTaskExecutionObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 159 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn BTEAllTasksQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = BTEAllTasksQuery.Id,QueryCode = BTEAllTasksQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = BatchTaskExecutionObjectFields.Where(d => d.FieldName == "ProgressMessage" && d.ObjectTableId == BatchTaskExecutionObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BatchTaskExecutionObjectFields.Where(d => d.FieldName == "ProgressMessage" && d.ObjectTableId == BatchTaskExecutionObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 159 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn BTEAllTasksQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = BTEAllTasksQuery.Id, IndexOrder = 7, ObjectFieldId = BatchTaskExecutionObjectFields.Where(d => d.FieldName == "ProgressPercentage" && d.ObjectTableId == BatchTaskExecutionObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BatchTaskExecutionObjectFields.Where(d => d.FieldName == "ProgressPercentage" && d.ObjectTableId == BatchTaskExecutionObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 142 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn BTEAllTasksQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = BTEAllTasksQuery.Id,QueryCode = BTEAllTasksQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = BatchTaskExecutionObjectFields.Where(d => d.FieldName == "ProgressPercentage" && d.ObjectTableId == BatchTaskExecutionObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BatchTaskExecutionObjectFields.Where(d => d.FieldName == "ProgressPercentage" && d.ObjectTableId == BatchTaskExecutionObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 142 }, queryColumnsRepository, tenantQueryColumns);
 	   
 	    }
 
@@ -1057,33 +1073,35 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen BatchTaskExecutionBatchTaskExecutionHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "BatchTaskExecution.HeaderScreen", Name = "BatchTaskExecutionHeaderScreen", ObjectTableId = BatchTaskExecutionObjectTable.Id, NumberOfColumns = 4, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField BatchTaskExecutionBatchTaskExecutionHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = BatchTaskExecutionObjectFields.Where(d => d.FieldName == "Subject").FirstOrDefault().Id, ScreenId = BatchTaskExecutionBatchTaskExecutionHeaderScreenScreen0.Id, ObjectFieldCode = BatchTaskExecutionObjectFields.Where(d => d.FieldName == "Subject").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField BatchTaskExecutionBatchTaskExecutionHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = BatchTaskExecutionObjectFields.Where(d => d.FieldName == "Subject").FirstOrDefault().Id, ScreenId = BatchTaskExecutionBatchTaskExecutionHeaderScreenScreen0.Id,ScreenCode = BatchTaskExecutionBatchTaskExecutionHeaderScreenScreen0.Code, ObjectFieldCode = BatchTaskExecutionObjectFields.Where(d => d.FieldName == "Subject").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField BatchTaskExecutionBatchTaskExecutionHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = BatchTaskExecutionObjectFields.Where(d => d.FieldName == "CreatedByUserName").FirstOrDefault().Id, ScreenId = BatchTaskExecutionBatchTaskExecutionHeaderScreenScreen0.Id, ObjectFieldCode = BatchTaskExecutionObjectFields.Where(d => d.FieldName == "CreatedByUserName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField BatchTaskExecutionBatchTaskExecutionHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = BatchTaskExecutionObjectFields.Where(d => d.FieldName == "CreatedByUserName").FirstOrDefault().Id, ScreenId = BatchTaskExecutionBatchTaskExecutionHeaderScreenScreen0.Id,ScreenCode = BatchTaskExecutionBatchTaskExecutionHeaderScreenScreen0.Code, ObjectFieldCode = BatchTaskExecutionObjectFields.Where(d => d.FieldName == "CreatedByUserName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField BatchTaskExecutionBatchTaskExecutionHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = BatchTaskExecutionObjectFields.Where(d => d.FieldName == "CreateDate").FirstOrDefault().Id, ScreenId = BatchTaskExecutionBatchTaskExecutionHeaderScreenScreen0.Id, ObjectFieldCode = BatchTaskExecutionObjectFields.Where(d => d.FieldName == "CreateDate").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField BatchTaskExecutionBatchTaskExecutionHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = BatchTaskExecutionObjectFields.Where(d => d.FieldName == "CreateDate").FirstOrDefault().Id, ScreenId = BatchTaskExecutionBatchTaskExecutionHeaderScreenScreen0.Id,ScreenCode = BatchTaskExecutionBatchTaskExecutionHeaderScreenScreen0.Code, ObjectFieldCode = BatchTaskExecutionObjectFields.Where(d => d.FieldName == "CreateDate").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField BatchTaskExecutionBatchTaskExecutionHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ObjectFieldId = BatchTaskExecutionObjectFields.Where(d => d.FieldName == "StatusName").FirstOrDefault().Id, ScreenId = BatchTaskExecutionBatchTaskExecutionHeaderScreenScreen0.Id, ObjectFieldCode = BatchTaskExecutionObjectFields.Where(d => d.FieldName == "StatusName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField BatchTaskExecutionBatchTaskExecutionHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ObjectFieldId = BatchTaskExecutionObjectFields.Where(d => d.FieldName == "StatusName").FirstOrDefault().Id, ScreenId = BatchTaskExecutionBatchTaskExecutionHeaderScreenScreen0.Id,ScreenCode = BatchTaskExecutionBatchTaskExecutionHeaderScreenScreen0.Code, ObjectFieldCode = BatchTaskExecutionObjectFields.Where(d => d.FieldName == "StatusName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    BatchTaskExecutionObjectTable.HeaderScreenId = BatchTaskExecutionBatchTaskExecutionHeaderScreenScreen0.Id;
+		    BatchTaskExecutionObjectTable.HeaderScreenCode = BatchTaskExecutionBatchTaskExecutionHeaderScreenScreen0.Code;
+
 	   		  
 	      
 
 	         Screen BatchTaskExecutionBatchTaskExecutionGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "BatchTaskExecution.BatchTaskExecutionGeneralTabScreen", Name = "BatchTaskExecutionGeneralTabScreen", ObjectTableId = BatchTaskExecutionObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 5, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField BatchTaskExecutionBatchTaskExecutionGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = BatchTaskExecutionObjectFields.Where(d => d.FieldName == "ClassName").FirstOrDefault().Id, ScreenId = BatchTaskExecutionBatchTaskExecutionGeneralTabScreenScreen1.Id, ObjectFieldCode = BatchTaskExecutionObjectFields.Where(d => d.FieldName == "ClassName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField BatchTaskExecutionBatchTaskExecutionGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = BatchTaskExecutionObjectFields.Where(d => d.FieldName == "ClassName").FirstOrDefault().Id, ScreenId = BatchTaskExecutionBatchTaskExecutionGeneralTabScreenScreen1.Id,ScreenCode = BatchTaskExecutionBatchTaskExecutionGeneralTabScreenScreen1.Code, ObjectFieldCode = BatchTaskExecutionObjectFields.Where(d => d.FieldName == "ClassName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField BatchTaskExecutionBatchTaskExecutionGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = BatchTaskExecutionObjectFields.Where(d => d.FieldName == "StartDateTime").FirstOrDefault().Id, ScreenId = BatchTaskExecutionBatchTaskExecutionGeneralTabScreenScreen1.Id, ObjectFieldCode = BatchTaskExecutionObjectFields.Where(d => d.FieldName == "StartDateTime").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField BatchTaskExecutionBatchTaskExecutionGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = BatchTaskExecutionObjectFields.Where(d => d.FieldName == "StartDateTime").FirstOrDefault().Id, ScreenId = BatchTaskExecutionBatchTaskExecutionGeneralTabScreenScreen1.Id,ScreenCode = BatchTaskExecutionBatchTaskExecutionGeneralTabScreenScreen1.Code, ObjectFieldCode = BatchTaskExecutionObjectFields.Where(d => d.FieldName == "StartDateTime").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField BatchTaskExecutionBatchTaskExecutionGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = BatchTaskExecutionObjectFields.Where(d => d.FieldName == "DoneDateTime").FirstOrDefault().Id, ScreenId = BatchTaskExecutionBatchTaskExecutionGeneralTabScreenScreen1.Id, ObjectFieldCode = BatchTaskExecutionObjectFields.Where(d => d.FieldName == "DoneDateTime").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField BatchTaskExecutionBatchTaskExecutionGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = BatchTaskExecutionObjectFields.Where(d => d.FieldName == "DoneDateTime").FirstOrDefault().Id, ScreenId = BatchTaskExecutionBatchTaskExecutionGeneralTabScreenScreen1.Id,ScreenCode = BatchTaskExecutionBatchTaskExecutionGeneralTabScreenScreen1.Code, ObjectFieldCode = BatchTaskExecutionObjectFields.Where(d => d.FieldName == "DoneDateTime").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField BatchTaskExecutionBatchTaskExecutionGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = BatchTaskExecutionObjectFields.Where(d => d.FieldName == "ProgressMessage").FirstOrDefault().Id, ScreenId = BatchTaskExecutionBatchTaskExecutionGeneralTabScreenScreen1.Id, ObjectFieldCode = BatchTaskExecutionObjectFields.Where(d => d.FieldName == "ProgressMessage").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField BatchTaskExecutionBatchTaskExecutionGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = BatchTaskExecutionObjectFields.Where(d => d.FieldName == "ProgressMessage").FirstOrDefault().Id, ScreenId = BatchTaskExecutionBatchTaskExecutionGeneralTabScreenScreen1.Id,ScreenCode = BatchTaskExecutionBatchTaskExecutionGeneralTabScreenScreen1.Code, ObjectFieldCode = BatchTaskExecutionObjectFields.Where(d => d.FieldName == "ProgressMessage").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField BatchTaskExecutionBatchTaskExecutionGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ObjectFieldId = BatchTaskExecutionObjectFields.Where(d => d.FieldName == "ProgressPercentage").FirstOrDefault().Id, ScreenId = BatchTaskExecutionBatchTaskExecutionGeneralTabScreenScreen1.Id, ObjectFieldCode = BatchTaskExecutionObjectFields.Where(d => d.FieldName == "ProgressPercentage").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField BatchTaskExecutionBatchTaskExecutionGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ObjectFieldId = BatchTaskExecutionObjectFields.Where(d => d.FieldName == "ProgressPercentage").FirstOrDefault().Id, ScreenId = BatchTaskExecutionBatchTaskExecutionGeneralTabScreenScreen1.Id,ScreenCode = BatchTaskExecutionBatchTaskExecutionGeneralTabScreenScreen1.Code, ObjectFieldCode = BatchTaskExecutionObjectFields.Where(d => d.FieldName == "ProgressPercentage").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField BatchTaskExecutionBatchTaskExecutionGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = BatchTaskExecutionObjectFields.Where(d => d.FieldName == "PrametersXml").FirstOrDefault().Id, ScreenId = BatchTaskExecutionBatchTaskExecutionGeneralTabScreenScreen1.Id, ObjectFieldCode = BatchTaskExecutionObjectFields.Where(d => d.FieldName == "PrametersXml").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField BatchTaskExecutionBatchTaskExecutionGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = BatchTaskExecutionObjectFields.Where(d => d.FieldName == "PrametersXml").FirstOrDefault().Id, ScreenId = BatchTaskExecutionBatchTaskExecutionGeneralTabScreenScreen1.Id,ScreenCode = BatchTaskExecutionBatchTaskExecutionGeneralTabScreenScreen1.Code, ObjectFieldCode = BatchTaskExecutionObjectFields.Where(d => d.FieldName == "PrametersXml").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField BatchTaskExecutionBatchTaskExecutionGeneralTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = BatchTaskExecutionObjectFields.Where(d => d.FieldName == "ErrorLog").FirstOrDefault().Id, ScreenId = BatchTaskExecutionBatchTaskExecutionGeneralTabScreenScreen1.Id, ObjectFieldCode = BatchTaskExecutionObjectFields.Where(d => d.FieldName == "ErrorLog").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField BatchTaskExecutionBatchTaskExecutionGeneralTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = BatchTaskExecutionObjectFields.Where(d => d.FieldName == "ErrorLog").FirstOrDefault().Id, ScreenId = BatchTaskExecutionBatchTaskExecutionGeneralTabScreenScreen1.Id,ScreenCode = BatchTaskExecutionBatchTaskExecutionGeneralTabScreenScreen1.Code, ObjectFieldCode = BatchTaskExecutionObjectFields.Where(d => d.FieldName == "ErrorLog").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 
 	    }
@@ -1108,11 +1126,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "BTEG",HtmlComponentName = "BTEGeneralTabComponent",HtmlComponentUrl = "./Infrastructure/Components/Maintenance/BatchTaskExecution/BTEGeneralTabComponent", FeatureId = BatchTaskExecutionGeneralFeature_TH0.Id, ControlPath = "BTEGeneralTabComponent", ObjectTableId = BatchTaskExecutionObjectTable.Id, TabNameTextCodeId = BatchTaskExecutionGeneralTextCode_TH0.Id, TabNameTextCodeCode = BatchTaskExecutionGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "BTEG",HtmlComponentName = "BTEGeneralTabComponent",HtmlComponentUrl = "./Infrastructure/Components/Maintenance/BatchTaskExecution/BTEGeneralTabComponent", FeatureId = BatchTaskExecutionGeneralFeature_TH0.Id,FeatureUniqeCode = BatchTaskExecutionGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "BTEGeneralTabComponent", ObjectTableId = BatchTaskExecutionObjectTable.Id, TabNameTextCodeId = BatchTaskExecutionGeneralTextCode_TH0.Id, TabNameTextCodeCode = BatchTaskExecutionGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "BTEL",HtmlComponentName = "BTELogTabComponent",HtmlComponentUrl = "./Infrastructure/Components/Maintenance/BatchTaskExecution/BTELogTabComponent", FeatureId = BatchTaskExecutionLogFeature_TH1.Id, ControlPath = "BTELogTabComponent", ObjectTableId = BatchTaskExecutionObjectTable.Id, TabNameTextCodeId = BatchTaskExecutionLogTextCode_TH1.Id, TabNameTextCodeCode = BatchTaskExecutionLogTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "BTEL",HtmlComponentName = "BTELogTabComponent",HtmlComponentUrl = "./Infrastructure/Components/Maintenance/BatchTaskExecution/BTELogTabComponent", FeatureId = BatchTaskExecutionLogFeature_TH1.Id,FeatureUniqeCode = BatchTaskExecutionLogFeature_TH1.FeatureUniqeCode, ControlPath = "BTELogTabComponent", ObjectTableId = BatchTaskExecutionObjectTable.Id, TabNameTextCodeId = BatchTaskExecutionLogTextCode_TH1.Id, TabNameTextCodeCode = BatchTaskExecutionLogTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "BTEP",HtmlComponentName = "BTEParameterTabComponent",HtmlComponentUrl = "./Infrastructure/Components/Maintenance/BatchTaskExecution/BTEParameterTabComponent/BTEParameterTabComponent", FeatureId = BatchTaskExecutionParametersFeature_TH2.Id, ControlPath = "BTEParameterTabComponent", ObjectTableId = BatchTaskExecutionObjectTable.Id, TabNameTextCodeId = BatchTaskExecutionParametersTextCode_TH2.Id, TabNameTextCodeCode = BatchTaskExecutionParametersTextCode_TH2.Code, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "BTEP",HtmlComponentName = "BTEParameterTabComponent",HtmlComponentUrl = "./Infrastructure/Components/Maintenance/BatchTaskExecution/BTEParameterTabComponent/BTEParameterTabComponent", FeatureId = BatchTaskExecutionParametersFeature_TH2.Id,FeatureUniqeCode = BatchTaskExecutionParametersFeature_TH2.FeatureUniqeCode, ControlPath = "BTEParameterTabComponent", ObjectTableId = BatchTaskExecutionObjectTable.Id, TabNameTextCodeId = BatchTaskExecutionParametersTextCode_TH2.Id, TabNameTextCodeCode = BatchTaskExecutionParametersTextCode_TH2.Code, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	

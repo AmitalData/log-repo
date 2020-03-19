@@ -1468,7 +1468,7 @@ export class AWBWizardComponent {
                         screenWarnings.push(fieldName + " wrong format: must be 4 numeric digits max");
                     }
                 }
-
+                
                 if (AppTool.IsNullOrEmpty(this.EntityPM.IssuingCarrierAddressId)) {
                     screenWarnings.push(this.ValidationText.replace("%FieldName", "Issuing Carrier Agent Address"));
                 }
@@ -1631,6 +1631,13 @@ export class AWBWizardComponent {
                 var msgField = TextCodeTranslator.Translate(this.ObjectTableName + ".F.GrossWeight");
                 msgField = msgField.replace("%GrossWeightCode", this.EntityPM.GrossWeightUnitCode);
                 screenWarnings.push(this.ValidationText.replace("%FieldName", msgField));
+            }
+        }
+
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.SLAC)) {
+            if (!FormatTool.Validate_SLAC(this.EntityPM.SLAC)) {
+                var fieldName: string = TextCodeTranslator.Translate(this.ObjectTableName + ".F." + "SLAC");
+                screenErrors.push(fieldName + " wrong format: must be 5 numeric digits max");
             }
         }
 
@@ -2403,14 +2410,23 @@ export class AWBWizardComponent {
     CancelShipmentClicked() {
         var confirmMsg: string;
 
-        if (!AppTool.IsNullOrEmpty(this.EntityPM.BookingId)) {
-            confirmMsg = "Cancelling this shipment will disconnect it from the Booking , are you sure you want to cancel?";
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.Master)) {
+            var messageWindow: MessageWindow = new MessageWindow();
+            messageWindow.Title = "Cancelling Shipment";
+            messageWindow.Show("Can't cancel shipments that have a MAWB number, please remove it");
         }
 
+        else if (!AppTool.IsNullOrEmpty(this.EntityPM.BookingId)) {
+            confirmMsg = "Cancelling this shipment will disconnect it from the Booking , are you sure you want to cancel?";
+            this.ConfirmCanceling(confirmMsg);
+        }
+        
         else {
             confirmMsg = "Are you sure you want to cancel this Shipment?";
+            this.ConfirmCanceling(confirmMsg);
         }
-
+    }
+    ConfirmCanceling(confirmMsg: string) {
         var confirmWindow = new ConfirmWindow();
 
         confirmWindow.Show(confirmMsg);
@@ -2440,6 +2456,7 @@ export class AWBWizardComponent {
             }
         });
     }
+
     ReactivateShipmentClicked() {
         this.InitFlags();
         this.isReactivateShipmentButtonClicked = true;

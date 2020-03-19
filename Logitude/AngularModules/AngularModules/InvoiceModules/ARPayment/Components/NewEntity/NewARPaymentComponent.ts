@@ -172,7 +172,9 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
             this.UIProperties.SetEnabled("BillToId", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("BillToAddressId", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("PaymentCurrencyId", this.ObjectTableName, false);
-            this.UIProperties.SetEnabled("PaymentCurrencyExchangeRate", this.ObjectTableName, false);
+            if (!this.accountingActivated) {
+                this.UIProperties.SetEnabled("PaymentCurrencyExchangeRate", this.ObjectTableName, false);
+            }
         }
     }
 
@@ -221,9 +223,22 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
                 }
             }
         }
+       else if (SessionLocator.TenantPM.AccountingActivated) {
+            if (this.PaymentCurrencyId) {
+                if (this.PaymentCurrencyId != this.TenantPM.CurrencyId) {
 
-        this.RateIsEnabled = isRateEnabled;
-        this.UIProperties.SetEnabled("PaymentCurrencyExchangeRate", this.ObjectTableName, isRateEnabled);
+                    this.RateIsEnabled = true;
+                }
+                else {
+                    this.RateIsEnabled = false;
+
+                }
+                }
+            }
+
+        
+     
+        this.UIProperties.SetEnabled("PaymentCurrencyExchangeRate", this.ObjectTableName, this.RateIsEnabled);
         this.SetUIProperties_Payment();
     }
 
@@ -754,6 +769,7 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
                         var currency = response.Result;
                         if (currency != null) {
                             this.newARPaymentPM.PaymentCurrencyCode = currency.Code;
+                            this.newARPaymentPM.PaymentCurrencySign = currency.Sign;
                         }
                     }
                 }
@@ -767,6 +783,7 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
                         var list = response.Result;
                         if (list != null && list.length > 0) {
                             this.newARPaymentPM.PaymentCurrencyCode = list.Code;
+                            this.newARPaymentPM.PaymentCurrencySign = list.Sign;
                         }
                     }
                 }
@@ -1029,6 +1046,7 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
                     .then((res:any) => {
                         this.newARPaymentPM.GLAccountId = res.Id;
                         this.newARPaymentPM.GLAccountRecoMethodCode = res.ReconcileMethodCode;
+                        this.newARPaymentPM.GLAccountCurrencyCode = res.CurrencyCode;
                         this.RunEditWindow();
                     }, err => {
                         this.ValidationErrorsList = ['Somthing wrong! no gl account found for this bill to account'];

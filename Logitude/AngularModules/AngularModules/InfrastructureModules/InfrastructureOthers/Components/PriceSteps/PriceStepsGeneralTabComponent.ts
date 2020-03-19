@@ -43,14 +43,15 @@ export class PriceStepsGeneralTabComponent extends BaseComponent implements OnIn
         }
     }
 
+    public PriceStepId: string; 
     SetWindowArgs(args) {
-        var entityId = args;
-        this.GetSinglePriceSteps(entityId);
+        this.PriceStepId = args;
+        this.GetSinglePriceSteps();
     }
 
-    GetSinglePriceSteps(entityId: string) {
+    GetSinglePriceSteps() {
         var service: PriceStepPMService = new PriceStepPMService();
-        service.get(entityId).subscribe((result: ServiceResponse) => {
+        service.get(this.PriceStepId).subscribe((result: ServiceResponse) => {
             if (result) {
                 if (!result.HasError) {
                     this.EntityPM = result.Result;
@@ -153,7 +154,13 @@ export class PriceStepsGeneralTabComponent extends BaseComponent implements OnIn
         this.ValidationErrorsList = [];
         Validator.TryValidateObject(this.EntityPM, this.DataContext.ObjectTableName, this.ValidationErrorsList);
         if (this.ValidationErrorsList.length == 0) {
-            this.SubmitCreatingPriceSteps();
+            if (this.PriceStepId == null) {
+                this.SubmitCreatingPriceSteps();
+            }
+            else {
+                this.SubmitUpdatingPriceSteps();
+            }
+            
         }
     }
 
@@ -161,6 +168,20 @@ export class PriceStepsGeneralTabComponent extends BaseComponent implements OnIn
         var service: PriceStepPMService = new PriceStepPMService();
 
         service.insert(this.EntityPM).subscribe((result: ServiceResponse) => {
+            if (result) {
+                if (!result.HasError) {
+                    this.CurrentSession.CloseCurrentWindowEmit("ok");
+                }
+                else {
+                    this.ValidationErrorsList = result.ErrorsArray;
+                    this.CurrentSession.StopBusyIndicator();
+                }
+            }
+        });
+    }
+    SubmitUpdatingPriceSteps() {
+        var service: PriceStepPMService = new PriceStepPMService();
+        service.update(this.EntityPM).subscribe((result: ServiceResponse) => {
             if (result) {
                 if (!result.HasError) {
                     this.CurrentSession.CloseCurrentWindowEmit("ok");

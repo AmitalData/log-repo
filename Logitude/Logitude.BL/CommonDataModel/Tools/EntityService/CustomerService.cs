@@ -356,6 +356,14 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 {
                     CacheManager.CacheWrapper.Invalidate(entityPmName);
                 }
+
+                
+                entityPmName = "BasicCustomerPM" + entityPM.Id + entityPM.Tenant;
+
+                if (CacheManager.CacheWrapper.Get(entityPmName) != null)
+                {
+                    CacheManager.CacheWrapper.Invalidate(entityPmName);
+                }
             }
 
             this.UpdateProductsCollection();

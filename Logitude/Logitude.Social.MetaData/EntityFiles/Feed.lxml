@@ -151,7 +151,8 @@
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
-    IsComposition="false" />
+    IsComposition="false"
+    NoMetaDataField="true" />
   <field
     Id="&quot;88a60184-7eaf-43f5-9b55-d2eacb804d96&quot;"
     FieldName="&quot;PostDate&quot;"

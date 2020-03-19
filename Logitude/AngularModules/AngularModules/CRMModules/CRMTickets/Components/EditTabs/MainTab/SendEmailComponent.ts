@@ -518,20 +518,33 @@ export class SendEmailComponent extends BaseComponent implements OnInit {
     }
 
     DuplicateEmailValidation(ccEmails, internalUsersEmails, errors) {
-        if (ccEmails != null && internalUsersEmails != null) {
-            var duplicate_emails = ccEmails.filter(x => internalUsersEmails.includes(x));
-            if (duplicate_emails != null && duplicate_emails.length > 0) {
-                var duplicateEmailsError = "";
-                duplicate_emails.forEach(item => {
-                    duplicateEmailsError += item + ", ";
-                });
 
-                errors.push(duplicateEmailsError.replace(/, \s*$/, "") + " emails are duplicate.");
+        var errorText = "";
+
+        if (!this.IsInternal) {
+            if (ccEmails != null && internalUsersEmails != null) {
+                var duplicate_emails = ccEmails.filter(x => internalUsersEmails.includes(x));
+                if (duplicate_emails != null && duplicate_emails.length > 0) {
+                    var duplicateEmailsError = "";
+                    duplicate_emails.forEach(item => {
+                        duplicateEmailsError += item + ", ";
+                    });
+                    errorText = errorText + duplicateEmailsError.replace(/, \s*$/, "");
+                }
             }
-        }
 
-        if ((ccEmails != null && ccEmails.indexOf(this.ContactEmail.toLocaleLowerCase()) > -1) || (internalUsersEmails != null && internalUsersEmails.indexOf(this.ContactEmail.toLocaleLowerCase()) > -1)) {
-            errors.push(this.ContactEmail + " contact email is duplicate.");
+            if ((ccEmails != null && ccEmails.indexOf(this.ContactEmail.toLocaleLowerCase()) > -1) || (internalUsersEmails != null && internalUsersEmails.indexOf(this.ContactEmail.toLocaleLowerCase()) > -1)) {
+                if (!errorText.includes(this.ContactEmail.toLocaleLowerCase())) {
+                    if (!AppTool.IsNullOrEmpty(errorText)) {
+                        errorText += ", "
+                    }
+                    errorText = errorText + this.ContactEmail;
+                }
+            }
+
+            if (!AppTool.IsNullOrEmpty(errorText)) {
+                errors.push(errorText + " can't be repeated in To \/ CC \/ Notify");
+            }
         }
     }
 
@@ -734,10 +747,14 @@ export class SendEmailComponent extends BaseComponent implements OnInit {
     }
     private CreateAttachments() {
         var myList = [];
+        var isQuotationAttachment: boolean = false;
         this.AttachmentsList.forEach(item => {
             myList.push(item.DocumentFilingId);
+            if (item.IsQuotationAttachment) isQuotationAttachment = true;
         });
+
         this.EntityPM.Attachments = myList;
+        this.EntityPM.IsContainsQuotationAttachment = isQuotationAttachment;
     }
     IsLoadUploader: boolean;
     CurrentDocument: DocumentsFilingPM;
@@ -813,28 +830,18 @@ export class SendEmailComponent extends BaseComponent implements OnInit {
             if (this.Ticket.EntityType && this.Ticket.QuoteId) {
                 var externalEntityObject: any = window.ObjectTables.filter(d => d.Id === this.Ticket.EntityType)[0];
                 if (externalEntityObject && externalEntityObject.Name == "Quote") {
-                    if (this.quoteDocumentVersionExtendedPMService == null) this.quoteDocumentVersionExtendedPMService = new QuoteDocumentVersionExtendedPMService();
                     this.QuotationAttachmentsLists = [];
                     this.CurrentSession.StartBusyIndicatorLoading();
-                    this.quoteDocumentVersionExtendedPMService.GetQuoteDocumentVersionByQuoteId(this.Ticket.QuoteId).subscribe((myResponse: ServiceResponse) => {
+                    this._documentsFilingExtendedPMService.GetQuoationDocumentsFilingByQuoteIdAndObjectTableIdAndDocumentTypeCode(this.Ticket.QuoteId, externalEntityObject.Id, 'QUOTE').subscribe((myResponse: ServiceResponse) => {
                         this.CurrentSession.StopBusyIndicator();
                         if (!myResponse.HasError) {
-                            var quoteDocumentVersionLists: any[] = myResponse.Result;
-                            if (quoteDocumentVersionLists && quoteDocumentVersionLists.length >0) {
+                            var quoteDocumentVersion: any = myResponse.Result;
+                            if (quoteDocumentVersion) {
                                 this.ShowQuotationAttachmentLink = true;
-                                quoteDocumentVersionLists.forEach(quoteDocumentVersion => {
-
-                                    var attachment: AttachmentsArgs = new AttachmentsArgs(null);
-                                    var fileName: string = "Quotation-" + this.Ticket.QuoteNumber + "-" + quoteDocumentVersion.VersionNumber;
-                                    attachment.Tenant = SessionLocator.Tenant;
-                                    attachment.FileName = fileName;
-                                    attachment.FileSize = quoteDocumentVersion.FileSize;
-                                    attachment.DocumentId = quoteDocumentVersion.DocumentId;
-                                    attachment.FileExtension = quoteDocumentVersion.Extension;
-                                    this.QuotationAttachmentsLists.push(attachment);
-                                });
-
-     
+                                var attachment: AttachmentsArgs = new AttachmentsArgs(quoteDocumentVersion);
+                                attachment.IsQuotationAttachment = true;
+                                this.QuotationAttachmentsLists.push(attachment);
+                
                             }
                         }
                     });
@@ -851,7 +858,7 @@ export class AttachmentsArgs {
         this.DocumentFilingPM = documentFilingPM;
     }
 
-
+    public IsQuotationAttachment: boolean = false;
 
     private fileName: string = null;
     get FileName() {

@@ -41,11 +41,13 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
             if (fromPort != null)
             {
                 entityPM.OriginPortCode = fromPort.Code;
+                entityPM.OriginPortCombinedCode = fromPort.CombinedCode;
                 entityPM.OriginPortName = fromPort.EnglishName;
             }
             if (toPort != null)
             {
                 entityPM.DestinationPortCode = toPort.Code;
+                entityPM.DestinationPortCombinedCode = toPort.CombinedCode;
                 entityPM.DestinationPortName = toPort.EnglishName;
             }
             if (!string.IsNullOrEmpty(entityPOCO.CurrencyId))

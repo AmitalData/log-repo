@@ -82,7 +82,7 @@ export class UserSearchComponent {
             this.filterAgrs = new ApiQueryFilters();
             this.filterAgrs.SortBy = "IsTwoFactorAuthenticationEnabled";
             this.filterAgrs.SortDirection = "Descending";
-            this.onQueryChangeEvent.emit({ QueryId: "", Filters: this.filterAgrs });
+            this.onQueryChangeEvent.emit({ QueryCode: "", Filters: this.filterAgrs });
 
             ComponentArgs.AddComponent(new ParameterComponentArgs(this.CurrentSession.Sessionkey + "SendTo", this));
 
@@ -121,7 +121,7 @@ export class UserSearchComponent {
 
 
         console.log(this.myPartnerId);
-        this.onQueryChangeEvent.emit({ QueryId: "", Filters: this.filterAgrs });
+        this.onQueryChangeEvent.emit({ QueryCode: "", Filters: this.filterAgrs });
 
 
     }

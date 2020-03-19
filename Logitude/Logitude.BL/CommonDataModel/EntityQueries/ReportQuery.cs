@@ -52,6 +52,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                    FilterHtmlComponentUrl = report.FilterHtmlComponentUrl,
                                    DefaultTemplateId = report.DefaultTemplateId,
                                    DefaultMessageTemplateId = report.DefaultMessageTemplateId,
+                                   FeatureUniqeCode = report.FeatureUniqeCode,
+                                   AvailableForScheduling = report.AvailableForScheduling,
             };
 
             ReportModificationRepository modificationRep = new ReportModificationRepository(tenant);
@@ -91,6 +93,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                FilterHtmlComponentUrl = a.FilterHtmlComponentUrl,
                                                DefaultTemplateId =a.DefaultTemplateId,
                                                DefaultMessageTemplateId = a.DefaultMessageTemplateId,
+                                               FeatureUniqeCode = a.FeatureUniqeCode,
+                                               AvailableForScheduling = a.AvailableForScheduling,
                                            };
             return reports;
         }
@@ -119,6 +123,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                              FilterHtmlComponentUrl = a.FilterHtmlComponentUrl,
                              DefaultTemplateId = a.DefaultTemplateId,
                              DefaultMessageTemplateId = a.DefaultMessageTemplateId,
+                             FeatureUniqeCode = a.FeatureUniqeCode,
+                             AvailableForScheduling = a.AvailableForScheduling,
                          }).FirstOrDefault();
 
             return query;
@@ -144,6 +150,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 FilterHtmlComponentUrl = report.FilterHtmlComponentUrl,
                                                 DefaultTemplateId = report.DefaultTemplateId,
                                                 DefaultMessageTemplateId = report.DefaultMessageTemplateId,
+                                                FeatureUniqeCode = report.FeatureUniqeCode,
+                                                AvailableForScheduling = report.AvailableForScheduling
                                             };
             return result;
         }
@@ -173,6 +181,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            FilterHtmlComponentUrl = report.FilterHtmlComponentUrl,
                                            DefaultTemplateId = report.DefaultTemplateId,
                                            DefaultMessageTemplateId = report.DefaultMessageTemplateId,
+                                           FeatureUniqeCode = report.FeatureUniqeCode,
+                                           AvailableForScheduling = report.AvailableForScheduling
+
                                        }).ToList();
 
             foreach (ReportList report in result)
@@ -219,6 +230,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            FilterHtmlComponentUrl = report.FilterHtmlComponentUrl,
                                            DefaultTemplateId = report.DefaultTemplateId,
                                            DefaultMessageTemplateId = report.DefaultMessageTemplateId,
+                                           FeatureUniqeCode = report.FeatureUniqeCode,
+                                           AvailableForScheduling = report.AvailableForScheduling
+
                                        }).ToList();
 
             foreach (ReportList report in result)
@@ -258,10 +272,18 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            FilterHtmlComponentUrl = report.FilterHtmlComponentUrl,
                                            DefaultTemplateId = report.DefaultTemplateId,
                                            DefaultMessageTemplateId = report.DefaultMessageTemplateId,
+                                           FeatureUniqeCode = report.FeatureUniqeCode,
+                                           AvailableForScheduling = report.AvailableForScheduling
+
                                        }).ToList();
 
           
             return result;
+        }
+    
+        public string GetReportCodeById(string id, int tenant)
+        {
+            return repository.GetReportCodeById(id, tenant);
         }
     }
 }

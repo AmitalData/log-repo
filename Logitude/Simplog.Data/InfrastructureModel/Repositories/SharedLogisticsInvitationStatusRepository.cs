@@ -61,6 +61,11 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             return context.SharedLogisticsInvitationStatus.ToList();
         }
 
+        public List<SharedLogisticsInvitationStatus> GetAll()
+        {
+            return context.SharedLogisticsInvitationStatus.ToList();
+        }
+
         public IWebFreightContext context
         {
             get { return webFreightContext; }

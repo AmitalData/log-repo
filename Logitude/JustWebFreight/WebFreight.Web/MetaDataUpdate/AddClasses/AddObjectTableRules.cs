@@ -29,6 +29,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 objectTableRule.SystemLevel = objectTableRuleDetails.SystemLevel;
                 objectTableRule.Tenant = objectTableRuleDetails.Tenant;
                 objectTableRule.TriggerFieldId = objectTableRuleDetails.TriggerFieldId;
+                objectTableRule.TriggerFieldCode = objectTableRuleDetails.TriggerFieldCode;
                 objectTableRule.TriggerTypeCode = objectTableRuleDetails.TriggerTypeCode;
                 objectTableRule.Internal = objectTableRuleDetails.Internal;
                 objectTableRule.AdvancedCondition = objectTableRuleDetails.AdvancedCondition;
@@ -41,6 +42,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 {
                     TriggerTypeCode = objectTableRuleDetails.TriggerTypeCode,
                     TriggerFieldId = objectTableRuleDetails.TriggerFieldId,
+                    TriggerFieldCode = objectTableRuleDetails.TriggerFieldCode,
                     Tenant = objectTableRuleDetails.Tenant,
                     SystemLevel = objectTableRuleDetails.SystemLevel,
                     RuleTypeCode = objectTableRuleDetails.RuleTypeCode,

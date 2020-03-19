@@ -447,14 +447,14 @@ export class NewMasterComponent extends BaseComponent implements OnInit {
         }
 
         else {
-            this.ChargeableWeightLabel = TextCodeTranslator.Translate("Master.F.WtMsr.Short").replace("%ChargWeightCode", this.EntityPM.ChargeableWeightUnitCode);
+            this.ChargeableWeightLabel = TextCodeTranslator.Translate("Master.F.ChargeableWeight.Short").replace("%ChargWeightCode", this.EntityPM.ChargeableWeightUnitCode);
         }
     }
     SetUnits() {
         var myDimensionsUnitCode = this.TenantPM.DimensionsUnitCode;
         var myVolumeUnitCode = this.TenantPM.VolumeUnitCode;
         var myGrossWeightUnitCode = this.TenantPM.GrossWeightUnitCode;
-        var myChargeableWeightUnitCode = AppTool.GetChargeableWeightUnitCode(this.TransportModeId, this.ShipmentTypeId);
+        var myChargeableWeightUnitCode = AppTool.GetChargeableWeightUnitCode(this.TransportModeId);
 
         if (this.DirectionId == "D") {
             if (!AppTool.IsNullOrEmpty(this.TenantPM.CountryCode)) {
@@ -480,9 +480,9 @@ export class NewMasterComponent extends BaseComponent implements OnInit {
                 this.EntityPM.GrossWeightUnitCode = myGrossWeightUnitCode;
             }
 
-            if (AppTool.IsNullOrEmpty(this.EntityPM.ChargeableWeightUnitCode)) {
-                this.EntityPM.ChargeableWeightUnitCode = myChargeableWeightUnitCode;
-            }
+            
+            this.EntityPM.ChargeableWeightUnitCode = myChargeableWeightUnitCode;
+            
 
             if (this.EntityPM.Ratio == null) {
                 this.EntityPM.Ratio = AppTool.GetRatio(this.DirectionId, this.TransportModeId, this.ShipmentTypeId, this.TenantPM.CountryCode);
@@ -1505,6 +1505,7 @@ export class NewMasterComponent extends BaseComponent implements OnInit {
                 this.EntityPM.NumberOfPackages = this.SourceEntityPM.NumberOfPackages;
                 this.EntityPM.TEU = this.SourceEntityPM.TEU;
                 this.EntityPM.GrossWeightPerTon = this.SourceEntityPM.GrossWeightPerTon;
+                this.EntityPM.GrossWeightPerStorageDays = this.SourceEntityPM.GrossWeightPerStorageDays;
             }
 
             else {
@@ -1528,6 +1529,7 @@ export class NewMasterComponent extends BaseComponent implements OnInit {
                 this.EntityPM.NumberOfPackages = null;
                 this.EntityPM.TEU = null;
                 this.EntityPM.GrossWeightPerTon = null;
+                this.EntityPM.GrossWeightPerStorageDays = null;
             }
 
             this.SetUIProperties_OrderDetails();

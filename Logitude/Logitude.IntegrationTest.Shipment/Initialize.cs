@@ -17,6 +17,7 @@ namespace Logitude.IntegrationTest.Shipmen
         public static async Task AssemblyInitialize(TestContext context)
         {
             await LoginService.GetLoginTokenByUserEmailAndTenant();
+            await CorePreparationCalls.PrepareVariables();
             await ShipmentPreperationCalls.PrepareVariables();
         }
 

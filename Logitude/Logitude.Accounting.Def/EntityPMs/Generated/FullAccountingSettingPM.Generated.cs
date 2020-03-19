@@ -1032,6 +1032,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private int? numberOfAgingMonths ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int? NumberOfAgingMonths  
+	   {
+	    
+	     get
+		{
+		   return numberOfAgingMonths;
+		 }
+		 set
+		 {
+		   if(numberOfAgingMonths != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="NumberOfAgingMonths",OldValue=numberOfAgingMonths,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChanged(values);
+		   numberOfAgingMonths=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

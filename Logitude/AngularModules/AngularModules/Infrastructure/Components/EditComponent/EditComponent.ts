@@ -1,3 +1,4 @@
+import { BankDepositExtendedPMService } from './../../../Accounting/Services/ExtendedPMs/BankDepositExtendedPMService';
 import { CashBookExtendedPMService } from './../../../Accounting/Services/ExtendedPMs/CashBookExtendedPMService';
 import { ReconciliationExtendedPMService } from './../../../Accounting/Services/ExtendedPMs/ReconciliationExtendedPMService';
 import { Settings } from './../../Settings';
@@ -425,17 +426,19 @@ export class EditComponent implements OnDestroy {
         }
 
         else if (this.ObjectTableName == "ARInvoice") {
+            var myObjectTable = window.ObjectTables.filter(x => x.Name === "ARInvoice")[0];
+            var myObjectTableId = myObjectTable.Id;
 
             //get f. acc. Settings
             if (SessionLocator.TenantPM.AccountingActivated) {
-                var myObjectTable = window.ObjectTables.filter(x => x.Name === "ARInvoice")[0];
-                var myObjectTableId = myObjectTable.Id;
 
                 myHeaderScreen = window.Screens.filter(d => d.ObjectTableId === myObjectTableId && d.Code == "ARInvoice.FullAccHeaderScreen")[0];
                 myObjectFields = window.ObjectFields.filter(d => d.ObjectTableId === myObjectTableId);
                 this.GenerateHeaderScreen(myHeaderScreen, myObjectFields);
             }
             else {
+                myHeaderScreen = window.Screens.filter(d => d.ObjectTableId === myObjectTableId && d.Code == "ARInvoice.HeaderScreen")[0];
+
                 this.GenerateHeaderScreen(myHeaderScreen, myObjectFields);
             }
         }
@@ -488,6 +491,7 @@ export class EditComponent implements OnDestroy {
             }
 
             else {
+                myHeaderScreen = window.Screens.filter(d => d.ObjectTableId === this.ObjectTableId && d.Code == "Tariff.HeaderScreen")[0];
                 this.GenerateHeaderScreen(myHeaderScreen, myObjectFields);
             }
         }
@@ -581,9 +585,9 @@ export class EditComponent implements OnDestroy {
                     this.HeaderScreenRowHeight = 20;
                 }
 
-                var myScreenFields: any[] = window.ScreenFields.filter(d => d.ScreenId === HeaderScreen.Id && d.Tenant == SessionLocator.Tenant);
+                var myScreenFields: any[] = window.ScreenFields.filter(d => d.ScreenCode === HeaderScreen.Code && d.Tenant == SessionLocator.Tenant);
                 if (myScreenFields.length == 0) {
-                    myScreenFields = window.ScreenFields.filter(d => d.ScreenId === HeaderScreen.Id && d.Tenant == 0);
+                    myScreenFields = window.ScreenFields.filter(d => d.ScreenCode === HeaderScreen.Code && d.Tenant == 0);
                 }
 
                 var widthOfColumn: number = 0;
@@ -676,7 +680,7 @@ export class EditComponent implements OnDestroy {
     private BuildSingleEditTab() {
         var singleTab = window.ObjectTableTabs.filter(d => d.ObjectTableId === this.ObjectTableId && d.IndexOrder === 0)[0];
         if (singleTab) {
-            if (FeatureLocator.IsFeatureGranted(singleTab.FeatureId)) {
+            if (FeatureLocator.IsFeatureGrantedByUniqeCode(singleTab.FeatureUniqeCode)) {
                 if (!AppTool.IsNullOrEmpty(singleTab.HtmlComponentUrl)) {
                     this.SingleDetailsTab = singleTab;
                 }
@@ -716,7 +720,7 @@ export class EditComponent implements OnDestroy {
                 //}
             }
 
-            if (FeatureLocator.IsFeatureGranted(tab.FeatureId)) {
+            if (FeatureLocator.IsFeatureGrantedByUniqeCode(tab.FeatureUniqeCode)) {
 
                 if (this.ObjectTableName == "GLAccount") {
 
@@ -1409,9 +1413,39 @@ export class EditComponent implements OnDestroy {
                     console.log("[GetSingleWithoutLines] ", response);
 
                     if (!response.HasError) {
-                        var reconciliation = response.Result;
+                        var cashbook = response.Result;
 
-                        this.EntityPM = reconciliation;
+                        this.EntityPM = cashbook;
+                        this.entityArgs.EntityPM = this.EntityPM;
+
+                        this.EditComponentController.OnReloadEntityPM().then((isLock) =>
+                        {
+                            this.StopBusyIndicator();
+                            this.UpdateComponentMembers();
+                            this.LoadCompleted.emit(true);
+                        });
+
+                    }
+                    else {
+                        this.StopBusyIndicator();
+                        this.ValidationErrorsList = response.ErrorsArray;
+                        this.LoadCompleted.emit(false);
+                    }
+                });
+
+
+            }
+            else if (this.ObjectTableName == "BankDeposit")
+            {
+                let service = new BankDepositExtendedPMService();
+                service.GetSingleWithoutLines(this.EntityId).subscribe((response: ServiceResponse) =>
+                {
+                    console.log("[GetSingleWithoutLines] ", response);
+
+                    if (!response.HasError) {
+                        var bankdeposit = response.Result;
+
+                        this.EntityPM = bankdeposit;
                         this.entityArgs.EntityPM = this.EntityPM;
 
                         this.EditComponentController.OnReloadEntityPM().then((isLock) =>

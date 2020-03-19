@@ -16,5 +16,8 @@ namespace Logitude.Accounting.Def.EntityPMs
         [DataMember]
         public bool CreatedByReconciliationAfterConversion { get; set; }
 
+        [DataMember]
+        public bool CreatedByReconciliationStageB { get; set; }
+
     }
 }

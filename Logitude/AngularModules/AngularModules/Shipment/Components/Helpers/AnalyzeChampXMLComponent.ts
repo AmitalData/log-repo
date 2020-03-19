@@ -68,6 +68,7 @@ export class AnalyzeChampXMLComponent {
             simulator.AnalyzeQueueId = this.AnalyzeQueueId;
             simulator.XmlText = this.XML_Text;
             simulator.MessageIdentifier = "XML";
+            simulator.IsChampSimulator = true;
 
             if (this.UseAnalyzeQueueId) {
                 simulator.MessageIdentifier = "AnalyzeQueueId";

@@ -1,17 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Linq;
+using System.Data.SqlClient;
 
 namespace Logitude.DBMigrations.Models
 {
     public class SQLDatabaseMigrations : DatabaseMigrations
     {
-        public SQLDatabaseMigrations(TableDefinition dxmlTable, string connectionString, List<TableDefinition> dxmlTables)
+        public SQLDatabaseMigrations(TableDefinition dxmlTable, string connectionString, List<TableDefinition> dxmlTables, string dxmlFileName)
         {
             ConnectionString = connectionString;
             DXMLTable = dxmlTable;
             DXMLTables = dxmlTables;
+            DXMLFileName = dxmlFileName;
         }
 
         protected override TableDefinition GetCurrentTableDefinitionFromDB()
@@ -19,7 +20,7 @@ namespace Logitude.DBMigrations.Models
             string dxmlTableOldNames = DXMLTable.OldNames;
             string name = "'" + DXMLTable.Name + "'";
             string oldNames = String.IsNullOrEmpty(dxmlTableOldNames) ? null : "," + (dxmlTableOldNames.Contains(",") ? string.Join(",", dxmlTableOldNames.Split(',').Select(n => "'" + n + "'").ToArray()) : "'" + dxmlTableOldNames + "'");
-            
+
             string queryString = @"SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME IN (" + name + oldNames + ")";
 
             TableDefinition currentTable = null;
@@ -59,7 +60,7 @@ namespace Logitude.DBMigrations.Models
 
         protected override TableDefinition GetCurrentTableDefinitionFromDB(string tableName)
         {
-            string queryString = @"SELECT Q1.*, Q2.ConstraintType, Q2.ConstraintName " +
+            string queryString = @"SELECT Q1.*, Q2.ConstraintType, Q2.ConstraintName, Q3.DefaultValue, Q3.DefaultConstraintName " +
                                   "FROM ( " +
                                   "SELECT COL.COLUMN_NAME AS ColumnName, COL.IS_NULLABLE AS Nullable, COL.DATA_TYPE AS DataType, COL.CHARACTER_MAXIMUM_LENGTH AS Size, COL.NUMERIC_PRECISION AS Precision, COL.NUMERIC_SCALE AS Scale " +
                                   "FROM INFORMATION_SCHEMA.COLUMNS AS COL " +
@@ -70,7 +71,15 @@ namespace Logitude.DBMigrations.Models
                                   "FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS AS TCON " +
                                   "INNER JOIN INFORMATION_SCHEMA.CONSTRAINT_COLUMN_USAGE AS CON ON TCON.CONSTRAINT_NAME = CON.CONSTRAINT_NAME " +
                                   "WHERE TCON.TABLE_NAME = @tableName " +
-                                  ") AS Q2 ON Q2.ColumnName = Q1.ColumnName";
+                                  ") AS Q2 ON Q2.ColumnName = Q1.ColumnName " +
+                                  "LEFT JOIN (" +
+                                  "SELECT COL.name AS ColumnName, DEFCON.definition AS DefaultValue, DEFCON.name AS DefaultConstraintName " +
+                                  "FROM SYS.DEFAULT_CONSTRAINTS DEFCON " +
+                                  "LEFT OUTER JOIN SYS.OBJECTS TAB ON DEFCON.parent_object_id = TAB.object_id " +
+                                  "LEFT OUTER JOIN SYS.ALL_COLUMNS COL " +
+                                  "ON DEFCON.parent_column_id = COL.column_id AND DEFCON.parent_object_id = COL.object_id " +
+                                  "WHERE COL.object_id = (SELECT object_id FROM SYS.TABLES WHERE name = @tableName) " +
+                                  ") AS Q3 ON Q3.ColumnName = Q1.ColumnName";
 
             TableDefinition currentTable = null;
 
@@ -97,9 +106,11 @@ namespace Logitude.DBMigrations.Models
                             Size = GetColumnDefinitionSize(reader["Size"].ToString()),
                             Precision = String.IsNullOrEmpty(reader["Precision"].ToString()) ? 0 : Convert.ToInt32(reader["Precision"].ToString()),
                             Scale = String.IsNullOrEmpty(reader["Scale"].ToString()) ? 0 : Convert.ToInt32(reader["Scale"].ToString()),
+                            DefaultValue = String.IsNullOrEmpty(reader["DefaultValue"].ToString()) ? null : reader["DefaultValue"].ToString(),
                             Constraints = new ConstraintsDefinition
                             {
-                                Nullable = (reader["Nullable"].ToString().ToLower() == "yes")
+                                Nullable = (reader["Nullable"].ToString().ToLower() == "yes"),
+                                DefaultConstraintName = String.IsNullOrEmpty(reader["DefaultConstraintName"].ToString()) ? null : reader["DefaultConstraintName"].ToString()
                             }
                         };
 
@@ -123,11 +134,17 @@ namespace Logitude.DBMigrations.Models
                 reader.Close();
                 connection.Close();
 
+                List<RelationDefinition> tableRelations = GetRelationsForDBTable(tableName, true);
+                List<IndexDefinition> tableIndexes = GetIndexesForDBTable(tableName);
+
                 currentTable = new TableDefinition
                 {
                     Name = tableName,
                     Columns = currentTableColumns,
-                    Relations = GetRelationsForDBTable(tableName, true)
+                    Relations = tableRelations,
+                    Indexes = tableIndexes.Where(i => !tableRelations.Select(r => r.ForeignKeyColumn).Contains(i.Columns)).ToList(),
+                    UniqueConstraints = GetUniqueConstraintsForDBTable(tableName),
+                    AllIndexes = tableIndexes
                 };
             }
             catch (Exception exception)
@@ -147,7 +164,7 @@ namespace Logitude.DBMigrations.Models
         protected override List<RelationDefinition> GetRelationsForDBTable(string tableName, bool usingParentTable)
         {
             string tableObjectId = usingParentTable ? "parent_object_id" : "referenced_object_id";
-            
+
             string queryString = @"SELECT ParentTable.name AS ParentTableName, ParentColumn.name AS ParentColumnName, ReferencedTable.name AS ReferencedTableName, ReferencedColumn.name AS ReferencedColumnName, SysObject.name AS ForeignKeyConstraintName, ParentTableSchema.name AS ParentTableSchemaName, ReferencedTableSchema.name AS ReferencedTableSchemaName, ReferencedColumn.column_id AS ReferencedColumnOrder " +
                       "FROM SYS.FOREIGN_KEY_COLUMNS ForeignKeyColumns " +
                       "INNER JOIN SYS.TABLES ParentTable ON ParentTable.object_id = ForeignKeyColumns.parent_object_id " +
@@ -159,7 +176,7 @@ namespace Logitude.DBMigrations.Models
                       "INNER JOIN SYS.OBJECTS SysObject ON SysObject.object_id = ForeignKeyColumns.constraint_object_id " +
                       "WHERE ForeignKeyColumns." + tableObjectId + " = (SELECT object_id FROM SYS.TABLES WHERE name = @tableName)";
 
-            List<RelationDefinition> relations = null;
+            List<RelationDefinition> relations = new List<RelationDefinition>();
 
             SqlDataReader reader = null;
             SqlConnection connection = new SqlConnection(ConnectionString);
@@ -170,8 +187,6 @@ namespace Logitude.DBMigrations.Models
             {
                 connection.Open();
                 reader = command.ExecuteReader();
-
-                relations = new List<RelationDefinition>();
 
                 while (reader.Read())
                 {
@@ -208,6 +223,131 @@ namespace Logitude.DBMigrations.Models
             return relations;
         }
 
+        protected override List<IndexDefinition> GetIndexesForDBTable(string tableName)
+        {
+            string queryString = @"SELECT " +
+                                  "STUFF(REPLACE(REPLACE(( " +
+                                  "SELECT c.name + CASE WHEN ic.is_descending_key = 1 THEN '' ELSE '' END AS [data()] " +
+                                  "FROM sys.index_columns AS ic " +
+                                  "INNER JOIN sys.columns AS c ON ic.object_id = c.object_id AND ic.column_id = c.column_id " +
+                                  "WHERE ic.object_id = i.object_id AND ic.index_id = i.index_id AND ic.is_included_column = 0 " +
+                                  "ORDER BY ic.key_ordinal " +
+                                  "FOR XML PATH " +
+                                  "), '<row>', ', '), '</row>', ''), 1, 2, '') AS [Columns], " +
+                                  "STUFF(REPLACE(REPLACE(( " +
+                                  "SELECT c.name AS [data()] " +
+                                  "FROM sys.index_columns AS ic " +
+                                  "INNER JOIN sys.columns AS c ON ic.object_id = c.object_id AND ic.column_id = c.column_id " +
+                                  "WHERE ic.object_id = i.object_id AND ic.index_id = i.index_id AND ic.is_included_column = 1 " +
+                                  "ORDER BY ic.index_column_id " +
+                                  "FOR XML PATH " +
+                                  "), '<row>', ', '), '</row>', ''), 1, 2, '') AS [Include], " +
+                                  "i.name AS [IndexName] " +
+                                  "FROM sys.tables AS t " +
+                                  "INNER JOIN sys.indexes AS i ON t.object_id = i.object_id " +
+                                  "WHERE t.is_ms_shipped = 0 " +
+                                  "AND i.type <> 0 " +
+                                  "AND i.is_primary_key = 0 " +
+                                  "AND i.is_unique_constraint = 0 " +
+                                  "AND i.object_id = (SELECT object_id FROM SYS.TABLES WHERE name = @tableName)";
+
+            List<IndexDefinition> indexes = new List<IndexDefinition>();
+
+            SqlDataReader reader = null;
+            SqlConnection connection = new SqlConnection(ConnectionString);
+            SqlCommand command = new SqlCommand(queryString, connection);
+            command.Parameters.AddWithValue("@tableName", tableName);
+
+            try
+            {
+                connection.Open();
+                reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    IndexDefinition index = new IndexDefinition
+                    {
+                        Columns = reader["Columns"].ToString().Replace(", ", ","),
+                        Include = String.IsNullOrEmpty(reader["Include"].ToString()) ? null : reader["Include"].ToString().Replace(", ", ","),
+                        IndexName = reader["IndexName"].ToString()
+                    };
+                    indexes.Add(index);
+                }
+
+                reader.Close();
+                connection.Close();
+            }
+            catch (Exception exception)
+            {
+                if (reader != null)
+                {
+                    reader.Close();
+                }
+                connection.Close();
+                ExitDatabaseMigrations(exception.Message);
+            }
+
+            return indexes;
+        }
+
+        protected override List<UniqueConstraintDefinition> GetUniqueConstraintsForDBTable(string tableName)
+        {
+            string queryString = @"SELECT " +
+                                  "STUFF(REPLACE(REPLACE(( " +
+                                  "SELECT c.name + CASE WHEN ic.is_descending_key = 1 THEN '' ELSE '' END AS [data()] " +
+                                  "FROM sys.index_columns AS ic " +
+                                  "INNER JOIN sys.columns AS c ON ic.object_id = c.object_id AND ic.column_id = c.column_id " +
+                                  "WHERE ic.object_id = i.object_id AND ic.index_id = i.index_id AND ic.is_included_column = 0 " +
+                                  "ORDER BY ic.key_ordinal " +
+                                  "FOR XML PATH " +
+                                  "), '<row>', ', '), '</row>', ''), 1, 2, '') AS [Columns], " +
+                                  "i.name AS [ConstraintName] " +
+                                  "FROM sys.tables AS t " +
+                                  "INNER JOIN sys.indexes AS i ON t.object_id = i.object_id " +
+                                  "WHERE t.is_ms_shipped = 0 " +
+                                  "AND i.type <> 0 " +
+                                  "AND i.is_primary_key = 0 " +
+                                  "AND i.is_unique_constraint = 1 " +
+                                  "AND i.object_id = (SELECT object_id FROM SYS.TABLES WHERE name = @tableName)";
+
+            List<UniqueConstraintDefinition> uniqueConstraints = new List<UniqueConstraintDefinition>();
+
+            SqlDataReader reader = null;
+            SqlConnection connection = new SqlConnection(ConnectionString);
+            SqlCommand command = new SqlCommand(queryString, connection);
+            command.Parameters.AddWithValue("@tableName", tableName);
+
+            try
+            {
+                connection.Open();
+                reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    UniqueConstraintDefinition uniqueConstraint = new UniqueConstraintDefinition
+                    {
+                        Columns = reader["Columns"].ToString().Replace(", ", ","),
+                        ConstraintName = reader["ConstraintName"].ToString()
+                    };
+                    uniqueConstraints.Add(uniqueConstraint);
+                }
+
+                reader.Close();
+                connection.Close();
+            }
+            catch (Exception exception)
+            {
+                if (reader != null)
+                {
+                    reader.Close();
+                }
+                connection.Close();
+                ExitDatabaseMigrations(exception.Message);
+            }
+
+            return uniqueConstraints;
+        }
+
         protected override string GetCreateTableScript()
         {
             string createTableScript = "-- Create New Table With Name " + DXMLTable.Name + "\n";
@@ -220,16 +360,26 @@ namespace Logitude.DBMigrations.Models
             if (DXMLTable.Columns.Where(c => c.Constraints.PrimaryKey).Any())
             {
                 string primaryKeyColumns = string.Join(",", DXMLTable.Columns.Where(c => c.Constraints.PrimaryKey).Select(c => "[" + c.Name + "]").ToArray());
-                createTableScript += "PRIMARY KEY(" + primaryKeyColumns + ")" + "\n";
+                string primaryKeyConstraintName = "PK_" + DXMLTable.Name;
+                if (primaryKeyConstraintName.Length > 128)
+                {
+                    primaryKeyConstraintName = primaryKeyConstraintName.Substring(0, 128);
+                }
+                createTableScript += "CONSTRAINT [" + primaryKeyConstraintName + "] PRIMARY KEY(" + primaryKeyColumns + ")" + "\n";
             }
             createTableScript += ");" + "\n\n";
-            return createTableScript;
+
+            string createTableWithHistoryScript = createTableScript + GetInsertScriptForMigrationsHistory("Create Table", DXMLTable.Name, null, createTableScript);
+
+            return createTableWithHistoryScript;
         }
 
         protected override string GetCreateColumnScript(ColumnDefinition columnDefinition)
         {
             string columnScript = "[" + columnDefinition.Name + "]" + " ";
             columnScript += GetDataTypeScript(columnDefinition.Type, columnDefinition.Size, columnDefinition.Precision, columnDefinition.Scale);
+            columnScript += ((columnDefinition.Identity && columnDefinition.Constraints.PrimaryKey) ? " IDENTITY(1,1)" : null);
+            columnScript += GetDefaultValueScript(columnDefinition.Constraints.Nullable, columnDefinition.Type, columnDefinition.DefaultValue);
             columnScript += (columnDefinition.Constraints.Nullable ? " NULL" : " NOT NULL");
             columnScript += ",";
             return columnScript;
@@ -237,17 +387,17 @@ namespace Logitude.DBMigrations.Models
 
         protected override bool IsTableRenamed()
         {
-            return TableMigrations.DxmlTableName != TableMigrations.CurrentTableName;
+            return TableMigrations.DxmlTableName.ToLower() != TableMigrations.CurrentTableName.ToLower();
         }
 
         protected override bool IsColumnRenamed(ColumnDefinition currentTableColumn, ColumnDefinition dxmlTableColumn)
         {
-            return currentTableColumn.Name != dxmlTableColumn.Name;
+            return currentTableColumn.Name.ToLower() != dxmlTableColumn.Name.ToLower();
         }
 
         protected override int FormatColumnSize(int size, string type)
         {
-            if(type == "varchar" || type == "char" || type == "varbinary")
+            if (type == "varchar" || type == "char" || type == "varbinary")
             {
                 return size >= 8000 ? 8000 : size;
             }
@@ -292,7 +442,7 @@ namespace Logitude.DBMigrations.Models
             }
         }
 
-        protected override bool IsRelationInCurrentTable(RelationDefinition relation)//dxml relation
+        protected override bool IsRelationInCurrentTable(RelationDefinition relation)
         {
             bool isForeignKeyDataTypeChanged = false;
 
@@ -303,7 +453,7 @@ namespace Logitude.DBMigrations.Models
                 if (IsColumnInCurrentTable(dxmlForeignKeyColumn.Name, dxmlForeignKeyColumn.ShortName, dxmlForeignKeyColumn.OldNames))
                 {
                     ColumnDefinition dbForeignKeyColumn = GetCurrentTableColumn(dxmlForeignKeyColumn.Name, dxmlForeignKeyColumn.ShortName, dxmlForeignKeyColumn.OldNames);
-                    isForeignKeyDataTypeChanged = (dbForeignKeyColumn.Type != dxmlForeignKeyColumn.Type) || (dbForeignKeyColumn.Size != FormatColumnSize(dxmlForeignKeyColumn.Size, dxmlForeignKeyColumn.Type) && dxmlForeignKeyColumn.Size != 0) || (dbForeignKeyColumn.Type == "decimal" && dxmlForeignKeyColumn.Type == "decimal" && (dbForeignKeyColumn.Precision != dxmlForeignKeyColumn.Precision || dbForeignKeyColumn.Scale != dxmlForeignKeyColumn.Scale));
+                    isForeignKeyDataTypeChanged = (dbForeignKeyColumn.Constraints.Nullable && !dxmlForeignKeyColumn.Constraints.Nullable) || (dbForeignKeyColumn.Type != dxmlForeignKeyColumn.Type) || (dbForeignKeyColumn.Size != FormatColumnSize(dxmlForeignKeyColumn.Size, dxmlForeignKeyColumn.Type) && dxmlForeignKeyColumn.Size != 0) || (dbForeignKeyColumn.Type == "decimal" && dxmlForeignKeyColumn.Type == "decimal" && (dbForeignKeyColumn.Precision != dxmlForeignKeyColumn.Precision || dbForeignKeyColumn.Scale != dxmlForeignKeyColumn.Scale));
                 }
             }
             else
@@ -315,7 +465,7 @@ namespace Logitude.DBMigrations.Models
                     if (IsColumnInCurrentTable(dxmlForeignKeyColumn.Name, dxmlForeignKeyColumn.ShortName, dxmlForeignKeyColumn.OldNames))
                     {
                         ColumnDefinition dbForeignKeyColumn = GetCurrentTableColumn(dxmlForeignKeyColumn.Name, dxmlForeignKeyColumn.ShortName, dxmlForeignKeyColumn.OldNames);
-                        if ((dbForeignKeyColumn.Type != dxmlForeignKeyColumn.Type) || (dbForeignKeyColumn.Size != FormatColumnSize(dxmlForeignKeyColumn.Size, dxmlForeignKeyColumn.Type) && dxmlForeignKeyColumn.Size != 0) || (dbForeignKeyColumn.Type == "decimal" && dxmlForeignKeyColumn.Type == "decimal" && (dbForeignKeyColumn.Precision != dxmlForeignKeyColumn.Precision || dbForeignKeyColumn.Scale != dxmlForeignKeyColumn.Scale)))
+                        if ((dbForeignKeyColumn.Constraints.Nullable && !dxmlForeignKeyColumn.Constraints.Nullable) || (dbForeignKeyColumn.Type != dxmlForeignKeyColumn.Type) || (dbForeignKeyColumn.Size != FormatColumnSize(dxmlForeignKeyColumn.Size, dxmlForeignKeyColumn.Type) && dxmlForeignKeyColumn.Size != 0) || (dbForeignKeyColumn.Type == "decimal" && dxmlForeignKeyColumn.Type == "decimal" && (dbForeignKeyColumn.Precision != dxmlForeignKeyColumn.Precision || dbForeignKeyColumn.Scale != dxmlForeignKeyColumn.Scale)))
                         {
                             isForeignKeyDataTypeChanged = true;
                         }
@@ -323,35 +473,125 @@ namespace Logitude.DBMigrations.Models
                 }
             }
 
-            bool isRelationInCurrentTable = CurrentTable.Relations.Where(r => r.ForeignKeyColumn == relation.ForeignKeyColumn && r.ReferencedTable == relation.ReferencedTable && r.ReferencedColumn == relation.ReferencedColumn).Any();
+            bool isRelationInCurrentTable = CurrentTable.Relations.Where(r => r.ForeignKeyColumn.ToLower() == relation.ForeignKeyColumn.ToLower() && r.ReferencedTable.ToLower() == relation.ReferencedTable.ToLower() && r.ReferencedColumn.ToLower() == relation.ReferencedColumn.ToLower()).Any();
 
             return (!isForeignKeyDataTypeChanged && isRelationInCurrentTable);
         }
 
-        protected override bool IsRelationInDXMLTable(RelationDefinition relation)//db relation
+        protected override bool IsRelationInDXMLTable(RelationDefinition relation)
         {
-            return DXMLTable.Relations.Where(r => r.ForeignKeyColumn == relation.ForeignKeyColumn && r.ReferencedTable == relation.ReferencedTable && r.ReferencedColumn == relation.ReferencedColumn).Any();
+            return DXMLTable.Relations.Where(r => r.ForeignKeyColumn.ToLower() == relation.ForeignKeyColumn.ToLower() && r.ReferencedTable.ToLower() == relation.ReferencedTable.ToLower() && r.ReferencedColumn.ToLower() == relation.ReferencedColumn.ToLower()).Any();
+        }
+
+        protected override RelationDefinition GetRelationFromDXMLTable(RelationDefinition relation)
+        {
+            return DXMLTable.Relations.Where(r => r.ForeignKeyColumn.ToLower() == relation.ForeignKeyColumn.ToLower() && r.ReferencedTable.ToLower() == relation.ReferencedTable.ToLower() && r.ReferencedColumn.ToLower() == relation.ReferencedColumn.ToLower()).First();
+        }
+
+        protected override bool IsIndexInCurrentTable(IndexDefinition index)
+        {
+            bool isIndexColumnDataTypeChanged = false;
+
+            if (!index.Columns.Contains(","))
+            {
+                ColumnDefinition dxmlColumn = DXMLTable.Columns.Where(c => c.Name == index.Columns).First();
+
+                if (IsColumnInCurrentTable(dxmlColumn.Name, dxmlColumn.ShortName, dxmlColumn.OldNames))
+                {
+                    ColumnDefinition dbColumn = GetCurrentTableColumn(dxmlColumn.Name, dxmlColumn.ShortName, dxmlColumn.OldNames);
+                    isIndexColumnDataTypeChanged = (dbColumn.Constraints.Nullable && !dxmlColumn.Constraints.Nullable) || (dbColumn.Type != dxmlColumn.Type) || (dbColumn.Size != FormatColumnSize(dxmlColumn.Size, dxmlColumn.Type) && dxmlColumn.Size != 0) || (dbColumn.Type == "decimal" && dxmlColumn.Type == "decimal" && (dbColumn.Precision != dxmlColumn.Precision || dbColumn.Scale != dxmlColumn.Scale));
+                }
+            }
+            else
+            {
+                List<ColumnDefinition> dxmlColumns = DXMLTable.Columns.Where(c => index.Columns.Split(',').Contains(c.Name)).ToList();
+
+                foreach (var dxmlColumn in dxmlColumns)
+                {
+                    if (IsColumnInCurrentTable(dxmlColumn.Name, dxmlColumn.ShortName, dxmlColumn.OldNames))
+                    {
+                        ColumnDefinition dbColumn = GetCurrentTableColumn(dxmlColumn.Name, dxmlColumn.ShortName, dxmlColumn.OldNames);
+                        if ((dbColumn.Constraints.Nullable && !dxmlColumn.Constraints.Nullable) || (dbColumn.Type != dxmlColumn.Type) || (dbColumn.Size != FormatColumnSize(dxmlColumn.Size, dxmlColumn.Type) && dxmlColumn.Size != 0) || (dbColumn.Type == "decimal" && dxmlColumn.Type == "decimal" && (dbColumn.Precision != dxmlColumn.Precision || dbColumn.Scale != dxmlColumn.Scale)))
+                        {
+                            isIndexColumnDataTypeChanged = true;
+                        }
+                    }
+                }
+            }
+
+            bool isIndexInCurrentTable = CurrentTable.Indexes.Where(i => i.Columns.ToLower() == index.Columns.ToLower()).Any();
+
+            return (!isIndexColumnDataTypeChanged && isIndexInCurrentTable);
+        }
+
+        protected override bool IsIndexInDXMLTable(IndexDefinition index)
+        {
+            return DXMLTable.Indexes.Where(i => i.Columns.ToLower() == index.Columns.ToLower()).Any();
+        }
+
+        protected override bool IsUniqueConstraintInCurrentTable(UniqueConstraintDefinition uniqueConstraint)
+        {
+            bool isUniqueConstraintColumnDataTypeChanged = false;
+
+            if (!uniqueConstraint.Columns.Contains(","))
+            {
+                ColumnDefinition dxmlColumn = DXMLTable.Columns.Where(c => c.Name == uniqueConstraint.Columns).First();
+
+                if (IsColumnInCurrentTable(dxmlColumn.Name, dxmlColumn.ShortName, dxmlColumn.OldNames))
+                {
+                    ColumnDefinition dbColumn = GetCurrentTableColumn(dxmlColumn.Name, dxmlColumn.ShortName, dxmlColumn.OldNames);
+                    isUniqueConstraintColumnDataTypeChanged = (dbColumn.Constraints.Nullable && !dxmlColumn.Constraints.Nullable) || (dbColumn.Type != dxmlColumn.Type) || (dbColumn.Size != FormatColumnSize(dxmlColumn.Size, dxmlColumn.Type) && dxmlColumn.Size != 0) || (dbColumn.Type == "decimal" && dxmlColumn.Type == "decimal" && (dbColumn.Precision != dxmlColumn.Precision || dbColumn.Scale != dxmlColumn.Scale));
+                }
+            }
+            else
+            {
+                List<ColumnDefinition> dxmlColumns = DXMLTable.Columns.Where(c => uniqueConstraint.Columns.Split(',').Contains(c.Name)).ToList();
+
+                foreach (var dxmlColumn in dxmlColumns)
+                {
+                    if (IsColumnInCurrentTable(dxmlColumn.Name, dxmlColumn.ShortName, dxmlColumn.OldNames))
+                    {
+                        ColumnDefinition dbColumn = GetCurrentTableColumn(dxmlColumn.Name, dxmlColumn.ShortName, dxmlColumn.OldNames);
+                        if ((dbColumn.Constraints.Nullable && !dxmlColumn.Constraints.Nullable) || (dbColumn.Type != dxmlColumn.Type) || (dbColumn.Size != FormatColumnSize(dxmlColumn.Size, dxmlColumn.Type) && dxmlColumn.Size != 0) || (dbColumn.Type == "decimal" && dxmlColumn.Type == "decimal" && (dbColumn.Precision != dxmlColumn.Precision || dbColumn.Scale != dxmlColumn.Scale)))
+                        {
+                            isUniqueConstraintColumnDataTypeChanged = true;
+                        }
+                    }
+                }
+            }
+
+            bool isUniqueConstraintInCurrentTable = CurrentTable.UniqueConstraints.Where(u => u.Columns.ToLower() == uniqueConstraint.Columns.ToLower()).Any();
+
+            return (!isUniqueConstraintColumnDataTypeChanged && isUniqueConstraintInCurrentTable);
+        }
+
+        protected override bool IsUniqueConstraintInDXMLTable(UniqueConstraintDefinition uniqueConstraint)
+        {
+            return DXMLTable.UniqueConstraints.Where(u => u.Columns.ToLower() == uniqueConstraint.Columns.ToLower()).Any();
         }
 
         protected override bool IsColumnInCurrentTable(string dxmlColumnName, string dxmlColumnShortName, string dxmlColumnOldNames)
         {
+            dxmlColumnName = dxmlColumnName.ToLower();
+            dxmlColumnOldNames = dxmlColumnOldNames?.ToLower();
+
             bool isColumnInCurrentTable = false;
             if (dxmlColumnOldNames != null)
             {
                 if (!dxmlColumnOldNames.Contains(","))
                 {
-                    isColumnInCurrentTable = CurrentTable.Columns.Where(c => c.Name == dxmlColumnOldNames).Any();
+                    isColumnInCurrentTable = CurrentTable.Columns.Where(c => c.Name.ToLower() == dxmlColumnOldNames).Any();
                 }
                 else
                 {
                     List<string> oldNames = dxmlColumnOldNames.Split(',').ToList();
-                    isColumnInCurrentTable = CurrentTable.Columns.Where(c => oldNames.Contains(c.Name)).Any();
+                    isColumnInCurrentTable = CurrentTable.Columns.Where(c => oldNames.Contains(c.Name.ToLower())).Any();
                 }
             }
 
             if (!isColumnInCurrentTable)
             {
-                isColumnInCurrentTable = CurrentTable.Columns.Where(c => c.Name == dxmlColumnName).Any();
+                isColumnInCurrentTable = CurrentTable.Columns.Where(c => c.Name.ToLower() == dxmlColumnName).Any();
             }
 
             return isColumnInCurrentTable;
@@ -359,22 +599,25 @@ namespace Logitude.DBMigrations.Models
 
         protected override ColumnDefinition GetCurrentTableColumn(string dxmlColumnName, string dxmlColumnShortName, string dxmlColumnOldNames)
         {
+            dxmlColumnName = dxmlColumnName.ToLower();
+            dxmlColumnOldNames = dxmlColumnOldNames?.ToLower();
+
             string columnName = dxmlColumnOldNames;
             bool isColumnInCurrentTable = false;
             if (dxmlColumnOldNames != null)
             {
                 if (!dxmlColumnOldNames.Contains(','))
                 {
-                    isColumnInCurrentTable = CurrentTable.Columns.Where(c => c.Name == dxmlColumnOldNames).Any();
+                    isColumnInCurrentTable = CurrentTable.Columns.Where(c => c.Name.ToLower() == dxmlColumnOldNames).Any();
                 }
                 else
                 {
                     List<string> oldNames = dxmlColumnOldNames.Split(',').ToList();
-                    isColumnInCurrentTable = CurrentTable.Columns.Where(c => oldNames.Contains(c.Name)).Any();
+                    isColumnInCurrentTable = CurrentTable.Columns.Where(c => oldNames.Contains(c.Name.ToLower())).Any();
                 }
             }
 
-            if (!isColumnInCurrentTable && CurrentTable.Columns.Where(c => c.Name == dxmlColumnName).Any())
+            if (!isColumnInCurrentTable && CurrentTable.Columns.Where(c => c.Name.ToLower() == dxmlColumnName).Any())
             {
                 columnName = dxmlColumnName;
                 isColumnInCurrentTable = true;
@@ -382,19 +625,19 @@ namespace Logitude.DBMigrations.Models
 
             if (!columnName.Contains(","))
             {
-                return CurrentTable.Columns.Where(c => c.Name == columnName).First();
+                return CurrentTable.Columns.Where(c => c.Name.ToLower() == columnName).First();
             }
             else
             {
                 List<string> names = columnName.Split(',').ToList();
-                return CurrentTable.Columns.Where(c => names.Contains(c.Name)).First();
+                return CurrentTable.Columns.Where(c => names.Contains(c.Name.ToLower())).First();
             }
         }
 
         protected override List<ColumnDefinition> GetDroppedColumns()
         {
-            List<string> dxmlTableColumnsNames = DXMLTable.Columns.Select(c => c.Name).ToList();
-            List<string> dxmlTableColumnsOldNames = DXMLTable.Columns.Where(c => c.OldNames != null).Select(c => c.OldNames).ToList();
+            List<string> dxmlTableColumnsNames = DXMLTable.Columns.Select(c => c.Name.ToLower()).ToList();
+            List<string> dxmlTableColumnsOldNames = DXMLTable.Columns.Where(c => c.OldNames != null).Select(c => c.OldNames.ToLower()).ToList();
             foreach (var name in dxmlTableColumnsOldNames)
             {
                 if (!name.Contains(","))
@@ -407,25 +650,32 @@ namespace Logitude.DBMigrations.Models
                 }
             }
 
-            List<ColumnDefinition> droppedColumns = CurrentTable.Columns.Where(c => !dxmlTableColumnsNames.Contains(c.Name) && !c.Name.StartsWith("Drop_")).ToList();
+            List<ColumnDefinition> droppedColumns = CurrentTable.Columns.Where(c => !dxmlTableColumnsNames.Contains(c.Name.ToLower()) && !c.Name.ToLower().StartsWith("drop_")).ToList();
             return droppedColumns;
         }
 
         protected override string GetRenameTableScript()
         {
             string renameTableScript = "";
+            string dropRelationsScript = "";
+
             if (IsTableRenamed())
             {
                 List<RelationDefinition> relations = GetRelationsForDBTable(CurrentTable.Name, false);
-                foreach(var relation in relations)
+                foreach (var relation in relations)
                 {
-                    renameTableScript += GetDropRelationScript(relation);
+                    dropRelationsScript += GetDropRelationScript(relation);
                 }
                 renameTableScript += "-- Rename Table From " + TableMigrations.CurrentTableName + " To " + TableMigrations.DxmlTableName + "\n";
                 renameTableScript += "EXEC SP_RENAME '" + TableMigrations.DxmlTableSchema + "." + TableMigrations.CurrentTableName + "', '" + TableMigrations.DxmlTableName + "'";
                 renameTableScript += ";\n\n";
+
+                string renameTableWithHistoryScript = dropRelationsScript + renameTableScript + GetInsertScriptForMigrationsHistory("Rename Table", TableMigrations.CurrentTableName, null, renameTableScript);
+
+                return renameTableWithHistoryScript;
             }
-            return renameTableScript;
+
+            return null;
         }
 
         protected override string GetAddColumnScript(ColumnMigration columnMigration)
@@ -434,33 +684,62 @@ namespace Logitude.DBMigrations.Models
             addScript += "ALTER TABLE " + "[" + TableMigrations.DxmlTableSchema + "].[" + TableMigrations.DxmlTableName + "]" + " ";
             addScript += "ADD " + "[" + columnMigration.NewColumn.Name + "]" + " ";
             addScript += GetDataTypeScript(columnMigration.NewColumn.Type, columnMigration.NewColumn.Size, columnMigration.NewColumn.Precision, columnMigration.NewColumn.Scale);
+            addScript += GetDefaultValueScript(columnMigration.NewColumn.Constraints.Nullable, columnMigration.NewColumn.Type, columnMigration.NewColumn.DefaultValue);
             addScript += columnMigration.NewColumn.Constraints.Nullable ? " NULL" : " NOT NULL";
-            return addScript + ";\n\n";
+            addScript += ";\n\n";
+
+            string addWithHistoryScript = addScript + GetInsertScriptForMigrationsHistory("Add Column", TableMigrations.DxmlTableName, columnMigration.NewColumn.Name, addScript);
+
+            return addWithHistoryScript;
         }
 
         protected override string GetRenameColumnScript(ColumnMigration columnMigration)
         {
             string renameScript = "-- Rename Column From " + columnMigration.CurrentColumn.Name + " To " + columnMigration.NewColumn.Name + "\n";
             renameScript += "EXEC SP_RENAME '" + TableMigrations.DxmlTableSchema + "." + TableMigrations.DxmlTableName + "." + columnMigration.CurrentColumn.Name + "', '" + columnMigration.NewColumn.Name + "', 'COLUMN'";
-            return renameScript + ";\n\n";
+            renameScript += ";\n\n";
+
+            string renameWithHistoryScript = renameScript + GetInsertScriptForMigrationsHistory("Rename Column", TableMigrations.DxmlTableName, columnMigration.CurrentColumn.Name, renameScript);
+
+            return renameWithHistoryScript;
         }
 
         protected override string GetDropColumnScript(ColumnMigration columnMigration)
         {
             string dropScript = "-- Drop Column " + columnMigration.CurrentColumn.Name + "\n";
             dropScript += "EXEC SP_RENAME '" + TableMigrations.DxmlTableSchema + "." + TableMigrations.DxmlTableName + "." + columnMigration.CurrentColumn.Name + "', '" + "Drop_" + columnMigration.CurrentColumn.Name + "', 'COLUMN'";
-            return dropScript + ";\n\n";
+            dropScript += ";\n\n";
+
+            string dropWithHistoryScript = dropScript + GetInsertScriptForMigrationsHistory("Drop Column", TableMigrations.DxmlTableName, columnMigration.CurrentColumn.Name, dropScript);
+
+            return dropWithHistoryScript;
         }
 
-        protected override string GetAlterTypeScript(ColumnMigration columnMigration)//
+        protected override string GetAlterTypeScript(ColumnMigration columnMigration)
         {
             string alterTypeScript = "";
-            List<RelationDefinition> relations = CurrentTable.Relations;
-            RelationDefinition foreignKeyRelation = relations.Where(r => (!r.ForeignKeyColumn.Contains(",") && r.ForeignKeyColumn == columnMigration.CurrentColumn.Name) || (r.ForeignKeyColumn.Contains(",") && r.ForeignKeyColumn.Contains(columnMigration.CurrentColumn.Name))).FirstOrDefault();
+            string dropRelationsScript = "";
+            string dropIndexsScript = "";
+            string dropUniqueConstraintsScript = "";
+
+            RelationDefinition foreignKeyRelation = CurrentTable.Relations.Where(r => (!r.ForeignKeyColumn.Contains(",") && r.ForeignKeyColumn == columnMigration.CurrentColumn.Name) || (r.ForeignKeyColumn.Contains(",") && r.ForeignKeyColumn.Split(',').Contains(columnMigration.CurrentColumn.Name))).FirstOrDefault();
             if (foreignKeyRelation != null)
             {
-                alterTypeScript += GetDropRelationScript(foreignKeyRelation);
+                dropRelationsScript += GetDropRelationScript(foreignKeyRelation);
             }
+
+            List<IndexDefinition> indexes = CurrentTable.Indexes.Where(i => (!i.Columns.Contains(",") && i.Columns == columnMigration.CurrentColumn.Name) || (i.Columns.Contains(",") && i.Columns.Split(',').Contains(columnMigration.CurrentColumn.Name))).ToList();
+            foreach (var index in indexes)
+            {
+                dropIndexsScript += GetDropIndexScript(index);
+            }
+
+            List<UniqueConstraintDefinition> uniqueConstraints = CurrentTable.UniqueConstraints.Where(u => (!u.Columns.Contains(",") && u.Columns == columnMigration.CurrentColumn.Name) || (u.Columns.Contains(",") && u.Columns.Split(',').Contains(columnMigration.CurrentColumn.Name))).ToList();
+            foreach (var uniqueConstraint in uniqueConstraints)
+            {
+                dropUniqueConstraintsScript += GetDropUniqueConstraintScript(uniqueConstraint);
+            }
+
             alterTypeScript += "-- Change Type From " + columnMigration.CurrentColumn.Type + " To " + columnMigration.NewColumn.Type + " For Column " + columnMigration.CurrentColumn.Name + "\n";
             alterTypeScript += "ALTER TABLE " + "[" + TableMigrations.DxmlTableSchema + "].[" + TableMigrations.DxmlTableName + "]" + " ";
             alterTypeScript += "ALTER COLUMN " + "[" + columnMigration.CurrentColumn.Name + "]" + " ";
@@ -469,19 +748,40 @@ namespace Logitude.DBMigrations.Models
             {
                 alterTypeScript += " NOT NULL";
             }
-            return alterTypeScript + ";\n\n";
+            alterTypeScript += ";\n\n";
+
+            string alterTypeWithHistoryScript = dropRelationsScript + dropIndexsScript + dropUniqueConstraintsScript + alterTypeScript + GetInsertScriptForMigrationsHistory("Alter Column Type", TableMigrations.DxmlTableName, columnMigration.CurrentColumn.Name, alterTypeScript);
+
+            return alterTypeWithHistoryScript;
         }
 
-        protected override string GetAlterSizeScript(ColumnMigration columnMigration)//
+        protected override string GetAlterSizeScript(ColumnMigration columnMigration)
         {
             string alterSizeScript = "";
+            string dropRelationsScript = "";
+            string dropIndexsScript = "";
+            string dropUniqueConstraintsScript = "";
+
             List<RelationDefinition> relations = CurrentTable.Relations;
-            RelationDefinition foreignKeyRelation = relations.Where(r => (!r.ForeignKeyColumn.Contains(",") && r.ForeignKeyColumn == columnMigration.CurrentColumn.Name) || (r.ForeignKeyColumn.Contains(",") && r.ForeignKeyColumn.Contains(columnMigration.CurrentColumn.Name))).FirstOrDefault();
+            RelationDefinition foreignKeyRelation = relations.Where(r => (!r.ForeignKeyColumn.Contains(",") && r.ForeignKeyColumn == columnMigration.CurrentColumn.Name) || (r.ForeignKeyColumn.Contains(",") && r.ForeignKeyColumn.Split(',').Contains(columnMigration.CurrentColumn.Name))).FirstOrDefault();
             if (foreignKeyRelation != null)
             {
-                alterSizeScript += GetDropRelationScript(foreignKeyRelation);
+                dropRelationsScript += GetDropRelationScript(foreignKeyRelation);
             }
-            bool IsAlterTypeInMigrationsList = TableMigrations.ColumnsMigrations.Where(m => m.MigrationType == MigrationTypes.ALTERTYPE).Any();
+
+            List<IndexDefinition> indexes = CurrentTable.Indexes.Where(i => (!i.Columns.Contains(",") && i.Columns == columnMigration.CurrentColumn.Name) || (i.Columns.Contains(",") && i.Columns.Split(',').Contains(columnMigration.CurrentColumn.Name))).ToList();
+            foreach (var index in indexes)
+            {
+                dropIndexsScript += GetDropIndexScript(index);
+            }
+
+            List<UniqueConstraintDefinition> uniqueConstraints = CurrentTable.UniqueConstraints.Where(u => (!u.Columns.Contains(",") && u.Columns == columnMigration.CurrentColumn.Name) || (u.Columns.Contains(",") && u.Columns.Split(',').Contains(columnMigration.CurrentColumn.Name))).ToList();
+            foreach (var uniqueConstraint in uniqueConstraints)
+            {
+                dropUniqueConstraintsScript += GetDropUniqueConstraintScript(uniqueConstraint);
+            }
+
+            bool IsAlterTypeInMigrationsList = TableMigrations.ColumnsMigrations.Where(m => m.MigrationType == MigrationTypes.ALTERTYPE && m.CurrentColumn.Name == columnMigration.CurrentColumn.Name).Any();
             alterSizeScript += "-- Change Size From " + columnMigration.CurrentColumn.Size + " To " + columnMigration.NewColumn.Size + " For Column " + columnMigration.CurrentColumn.Name + "\n";
             alterSizeScript += "ALTER TABLE " + "[" + TableMigrations.DxmlTableSchema + "].[" + TableMigrations.DxmlTableName + "]" + " ";
             alterSizeScript += "ALTER COLUMN " + "[" + columnMigration.CurrentColumn.Name + "]" + " ";
@@ -490,19 +790,27 @@ namespace Logitude.DBMigrations.Models
             {
                 alterSizeScript += " NOT NULL";
             }
-            return alterSizeScript + ";\n\n";
+            alterSizeScript += ";\n\n";
+
+            string alterSizeWithHistoryScript = dropRelationsScript + dropIndexsScript + dropUniqueConstraintsScript + alterSizeScript + GetInsertScriptForMigrationsHistory("Alter Column Size", TableMigrations.DxmlTableName, columnMigration.CurrentColumn.Name, alterSizeScript);
+
+            return alterSizeWithHistoryScript;
         }
 
         protected override string GetAddPrimaryKeyScript(ColumnMigration columnMigration)
         {
-            List<string> droppedColumnsNames = GetDroppedColumns().Select(c => c.Name).ToList();
-            if(CurrentTable.Columns.Where(c => c.Constraints.PrimaryKey && !droppedColumnsNames.Contains(c.Name)).Any())
+            List<string> droppedColumnsNames = GetDroppedColumns().Select(c => c.Name.ToLower()).ToList();
+            if (CurrentTable.Columns.Where(c => c.Constraints.PrimaryKey && !droppedColumnsNames.Contains(c.Name.ToLower())).Any())
             {
-                string primaryKeyColumns = string.Join(",", CurrentTable.Columns.Where(c => c.Constraints.PrimaryKey && !droppedColumnsNames.Contains(c.Name)).Select(c => "[" + c.Name + "]").ToArray());
+                string primaryKeyColumns = string.Join(",", CurrentTable.Columns.Where(c => c.Constraints.PrimaryKey && !droppedColumnsNames.Contains(c.Name.ToLower())).Select(c => "[" + c.Name + "]").ToArray());
                 string primaryKeyConstraintName = columnMigration.CurrentColumn.Constraints.PrimaryKeyConstraintName;
-                string addPrimaryKeyScript = "-- Add The Primary Key Constraint\n";
-                addPrimaryKeyScript += "EXEC('ALTER TABLE " + "[" + TableMigrations.DxmlTableSchema + "].[" + TableMigrations.DxmlTableName + "]" + " ADD CONSTRAINT " + primaryKeyConstraintName + " PRIMARY KEY (" + primaryKeyColumns + ")')";
-                return addPrimaryKeyScript + ";\n\n";
+                string addPrimaryKeyScript = "-- Add Primary Key Constraint\n";
+                addPrimaryKeyScript += "EXEC('ALTER TABLE " + "[" + TableMigrations.DxmlTableSchema + "].[" + TableMigrations.DxmlTableName + "]" + " ADD CONSTRAINT " + "[" + primaryKeyConstraintName + "]" + " PRIMARY KEY (" + primaryKeyColumns + ")')";
+                addPrimaryKeyScript += ";\n\n";
+
+                string addPrimaryKeyWithHistoryScript = addPrimaryKeyScript + GetInsertScriptForMigrationsHistory("Add Primary Key", TableMigrations.DxmlTableName, primaryKeyColumns.Replace("[", String.Empty).Replace("]", String.Empty), addPrimaryKeyScript);
+
+                return addPrimaryKeyWithHistoryScript;
             }
             else
             {
@@ -510,59 +818,113 @@ namespace Logitude.DBMigrations.Models
             }
         }
 
-        protected override string GetDropPrimaryKeyScript(ColumnMigration columnMigration)//
+        protected override string GetDropPrimaryKeyScript(ColumnMigration columnMigration)
         {
             string dropPrimaryKeyScript = "";
+            string dropRelationsScript = "";
+
             List<RelationDefinition> relations = GetRelationsForDBTable(CurrentTable.Name, false);
             foreach (var relation in relations)
             {
-                dropPrimaryKeyScript += GetDropRelationScript(relation);
+                dropRelationsScript += GetDropRelationScript(relation);
             }
-            dropPrimaryKeyScript += "-- Drop The Primary Key Constraint\n";
+            dropPrimaryKeyScript += "-- Drop Primary Key Constraint\n";
             string primaryKeyConstraintName = columnMigration.CurrentColumn.Constraints.PrimaryKeyConstraintName;
-            dropPrimaryKeyScript += "EXEC('IF (OBJECT_ID(''" + TableMigrations.DxmlTableSchema + "." + primaryKeyConstraintName + "'', ''PK'') IS NOT NULL) BEGIN ALTER TABLE " + "[" + TableMigrations.DxmlTableSchema + "].[" + TableMigrations.DxmlTableName + "]" + " DROP CONSTRAINT " + primaryKeyConstraintName + " END" + "')";
-            return dropPrimaryKeyScript + ";\n\n";
+            dropPrimaryKeyScript += "EXEC('IF (OBJECT_ID(''" + "[" + TableMigrations.DxmlTableSchema + "]" + "." + "[" + primaryKeyConstraintName + "]" + "'', ''PK'') IS NOT NULL) BEGIN ALTER TABLE " + "[" + TableMigrations.DxmlTableSchema + "].[" + TableMigrations.DxmlTableName + "]" + " DROP CONSTRAINT " + "[" + primaryKeyConstraintName + "]" + " END" + "')";
+            dropPrimaryKeyScript += ";\n\n";
+
+            string dropPrimaryKeyWithHistoryScript = dropRelationsScript + dropPrimaryKeyScript + GetInsertScriptForMigrationsHistory("Drop Primary Key", TableMigrations.DxmlTableName, null, dropPrimaryKeyScript);
+
+            return dropPrimaryKeyWithHistoryScript;
         }
-        
+
         protected override string GetSetNullableScript(ColumnMigration columnMigration)
         {
-            bool isAlterTypeInMigrationsList = TableMigrations.ColumnsMigrations.Where(m => m.MigrationType == MigrationTypes.ALTERTYPE).Any();
-            bool isAlterSizeInMigrationsList = TableMigrations.ColumnsMigrations.Where(m => m.MigrationType == MigrationTypes.ALTERSIZE).Any();
-            bool isAlterPrecisionAndScaleInMigrationsList = TableMigrations.ColumnsMigrations.Where(m => m.MigrationType == MigrationTypes.ALTERPRECISIONANDSCALE).Any();
-            string setNullableScript = "-- Set Nullable For Column " + columnMigration.CurrentColumn.Name + "\n";
-            if (columnMigration.CurrentColumn.Constraints.PrimaryKey)
+            bool isAlterTypeInMigrationsList = TableMigrations.ColumnsMigrations.Where(m => m.MigrationType == MigrationTypes.ALTERTYPE && m.CurrentColumn.Name == columnMigration.CurrentColumn.Name).Any();
+            bool isAlterSizeInMigrationsList = TableMigrations.ColumnsMigrations.Where(m => m.MigrationType == MigrationTypes.ALTERSIZE && m.CurrentColumn.Name == columnMigration.CurrentColumn.Name).Any();
+            bool isAlterPrecisionAndScaleInMigrationsList = TableMigrations.ColumnsMigrations.Where(m => m.MigrationType == MigrationTypes.ALTERPRECISIONANDSCALE && m.CurrentColumn.Name == columnMigration.CurrentColumn.Name).Any();
+            string columnDataType = GetDataTypeScript((isAlterTypeInMigrationsList ? columnMigration.NewColumn.Type : columnMigration.CurrentColumn.Type), (isAlterSizeInMigrationsList ? columnMigration.NewColumn.Size : columnMigration.CurrentColumn.Size), (isAlterPrecisionAndScaleInMigrationsList ? columnMigration.NewColumn.Precision : columnMigration.CurrentColumn.Precision), (isAlterPrecisionAndScaleInMigrationsList ? columnMigration.NewColumn.Scale : columnMigration.CurrentColumn.Scale));
+            if(columnDataType.ToLower() == "timestamp")
             {
-                setNullableScript += GetPrimaryKeyConstraintScript() + "\n";
+                return null;
             }
+            string setNullableScript = "-- Set Nullable For Column " + columnMigration.CurrentColumn.Name + "\n";
             setNullableScript += "ALTER TABLE " + "[" + TableMigrations.DxmlTableSchema + "].[" + TableMigrations.DxmlTableName + "]" + " ";
             setNullableScript += "ALTER COLUMN " + "[" + columnMigration.CurrentColumn.Name + "]" + " ";
-            setNullableScript += GetDataTypeScript((isAlterTypeInMigrationsList ? columnMigration.NewColumn.Type : columnMigration.CurrentColumn.Type), (isAlterSizeInMigrationsList ? columnMigration.NewColumn.Size : columnMigration.CurrentColumn.Size), (isAlterPrecisionAndScaleInMigrationsList ? columnMigration.NewColumn.Precision : columnMigration.CurrentColumn.Precision), (isAlterPrecisionAndScaleInMigrationsList ? columnMigration.NewColumn.Scale : columnMigration.CurrentColumn.Scale));
+            setNullableScript += columnDataType;
             setNullableScript += " NULL";
-            return setNullableScript + ";\n\n";
+            setNullableScript += ";\n\n";
+
+            string setNullableWithHistoryScript = setNullableScript + GetInsertScriptForMigrationsHistory("Set Column Nullable", TableMigrations.DxmlTableName, columnMigration.CurrentColumn.Name, setNullableScript);
+
+            return setNullableWithHistoryScript;
         }
 
         protected override string GetUnsetNullableScript(ColumnMigration columnMigration)
         {
-            bool isAlterTypeInMigrationsList = TableMigrations.ColumnsMigrations.Where(m => m.MigrationType == MigrationTypes.ALTERTYPE).Any();
-            bool isAlterSizeInMigrationsList = TableMigrations.ColumnsMigrations.Where(m => m.MigrationType == MigrationTypes.ALTERSIZE).Any();
-            bool isAlterPrecisionAndScaleInMigrationsList = TableMigrations.ColumnsMigrations.Where(m => m.MigrationType == MigrationTypes.ALTERPRECISIONANDSCALE).Any();
+            string dropRelationsScript = "";
+            string dropIndexsScript = "";
+            string dropUniqueConstraintsScript = "";
+
+            RelationDefinition foreignKeyRelation = CurrentTable.Relations.Where(r => (!r.ForeignKeyColumn.Contains(",") && r.ForeignKeyColumn == columnMigration.CurrentColumn.Name) || (r.ForeignKeyColumn.Contains(",") && r.ForeignKeyColumn.Split(',').Contains(columnMigration.CurrentColumn.Name))).FirstOrDefault();
+            if (foreignKeyRelation != null)
+            {
+                dropRelationsScript += GetDropRelationScript(foreignKeyRelation);
+            }
+
+            List<IndexDefinition> indexes = CurrentTable.Indexes.Where(i => (!i.Columns.Contains(",") && i.Columns == columnMigration.CurrentColumn.Name) || (i.Columns.Contains(",") && i.Columns.Split(',').Contains(columnMigration.CurrentColumn.Name))).ToList();
+            foreach (var index in indexes)
+            {
+                dropIndexsScript += GetDropIndexScript(index);
+            }
+
+            List<UniqueConstraintDefinition> uniqueConstraints = CurrentTable.UniqueConstraints.Where(u => (!u.Columns.Contains(",") && u.Columns == columnMigration.CurrentColumn.Name) || (u.Columns.Contains(",") && u.Columns.Split(',').Contains(columnMigration.CurrentColumn.Name))).ToList();
+            foreach (var uniqueConstraint in uniqueConstraints)
+            {
+                dropUniqueConstraintsScript += GetDropUniqueConstraintScript(uniqueConstraint);
+            }
+
+            bool isAlterTypeInMigrationsList = TableMigrations.ColumnsMigrations.Where(m => m.MigrationType == MigrationTypes.ALTERTYPE && m.CurrentColumn.Name == columnMigration.CurrentColumn.Name).Any();
+            bool isAlterSizeInMigrationsList = TableMigrations.ColumnsMigrations.Where(m => m.MigrationType == MigrationTypes.ALTERSIZE && m.CurrentColumn.Name == columnMigration.CurrentColumn.Name).Any();
+            bool isAlterPrecisionAndScaleInMigrationsList = TableMigrations.ColumnsMigrations.Where(m => m.MigrationType == MigrationTypes.ALTERPRECISIONANDSCALE && m.CurrentColumn.Name == columnMigration.CurrentColumn.Name).Any();
             string unsetNullableScript = "-- Unset Nullable For Column " + columnMigration.CurrentColumn.Name + "\n";
             unsetNullableScript += "ALTER TABLE " + "[" + TableMigrations.DxmlTableSchema + "].[" + TableMigrations.DxmlTableName + "]" + " ";
             unsetNullableScript += "ALTER COLUMN " + "[" + columnMigration.CurrentColumn.Name + "]" + " ";
             unsetNullableScript += GetDataTypeScript((isAlterTypeInMigrationsList ? columnMigration.NewColumn.Type : columnMigration.CurrentColumn.Type), (isAlterSizeInMigrationsList ? columnMigration.NewColumn.Size : columnMigration.CurrentColumn.Size), (isAlterPrecisionAndScaleInMigrationsList ? columnMigration.NewColumn.Precision : columnMigration.CurrentColumn.Precision), (isAlterPrecisionAndScaleInMigrationsList ? columnMigration.NewColumn.Scale : columnMigration.CurrentColumn.Scale));
             unsetNullableScript += " NOT NULL";
-            return unsetNullableScript + ";\n\n";
+            unsetNullableScript += ";\n\n";
+
+            string unsetNullableWithHistoryScript = dropRelationsScript + dropIndexsScript + dropUniqueConstraintsScript + unsetNullableScript + GetInsertScriptForMigrationsHistory("Unset Column Nullable", TableMigrations.DxmlTableName, columnMigration.CurrentColumn.Name, unsetNullableScript);
+
+            return unsetNullableWithHistoryScript;
         }
 
-        protected override string GetAlterPrecisionAndScaleScript(ColumnMigration columnMigration)//
+        protected override string GetAlterPrecisionAndScaleScript(ColumnMigration columnMigration)
         {
             string alterPrecisionAndScaleScript = "";
+            string dropRelationsScript = "";
+            string dropIndexsScript = "";
+            string dropUniqueConstraintsScript = "";
+
             List<RelationDefinition> relations = CurrentTable.Relations;
-            RelationDefinition foreignKeyRelation = relations.Where(r => (!r.ForeignKeyColumn.Contains(",") && r.ForeignKeyColumn == columnMigration.CurrentColumn.Name) || (r.ForeignKeyColumn.Contains(",") && r.ForeignKeyColumn.Contains(columnMigration.CurrentColumn.Name))).FirstOrDefault();
+            RelationDefinition foreignKeyRelation = relations.Where(r => (!r.ForeignKeyColumn.Contains(",") && r.ForeignKeyColumn == columnMigration.CurrentColumn.Name) || (r.ForeignKeyColumn.Contains(",") && r.ForeignKeyColumn.Split(',').Contains(columnMigration.CurrentColumn.Name))).FirstOrDefault();
             if (foreignKeyRelation != null)
             {
-                alterPrecisionAndScaleScript += GetDropRelationScript(foreignKeyRelation);
+                dropRelationsScript += GetDropRelationScript(foreignKeyRelation);
             }
+
+            List<IndexDefinition> indexes = CurrentTable.Indexes.Where(i => (!i.Columns.Contains(",") && i.Columns == columnMigration.CurrentColumn.Name) || (i.Columns.Contains(",") && i.Columns.Split(',').Contains(columnMigration.CurrentColumn.Name))).ToList();
+            foreach (var index in indexes)
+            {
+                dropIndexsScript += GetDropIndexScript(index);
+            }
+
+            List<UniqueConstraintDefinition> uniqueConstraints = CurrentTable.UniqueConstraints.Where(u => (!u.Columns.Contains(",") && u.Columns == columnMigration.CurrentColumn.Name) || (u.Columns.Contains(",") && u.Columns.Split(',').Contains(columnMigration.CurrentColumn.Name))).ToList();
+            foreach (var uniqueConstraint in uniqueConstraints)
+            {
+                dropUniqueConstraintsScript += GetDropUniqueConstraintScript(uniqueConstraint);
+            }
+
             alterPrecisionAndScaleScript += "-- Change Precision And Scale From " + "(" + columnMigration.CurrentColumn.Precision + ", " + columnMigration.CurrentColumn.Scale + ")" + " To " + "(" + columnMigration.NewColumn.Precision + ", " + columnMigration.NewColumn.Scale + ")" + " For Column " + columnMigration.CurrentColumn.Name + "\n";
             alterPrecisionAndScaleScript += "ALTER TABLE " + "[" + TableMigrations.DxmlTableSchema + "].[" + TableMigrations.DxmlTableName + "]" + " ";
             alterPrecisionAndScaleScript += "ALTER COLUMN " + "[" + columnMigration.CurrentColumn.Name + "]" + " ";
@@ -571,7 +933,11 @@ namespace Logitude.DBMigrations.Models
             {
                 alterPrecisionAndScaleScript += " NOT NULL";
             }
-            return alterPrecisionAndScaleScript + ";\n\n";
+            alterPrecisionAndScaleScript += ";\n\n";
+
+            string alterPrecisionAndScaleWithHistoryScript = dropRelationsScript + dropIndexsScript + dropUniqueConstraintsScript + alterPrecisionAndScaleScript + GetInsertScriptForMigrationsHistory("Alter Column Precision And Scale", TableMigrations.DxmlTableName, columnMigration.CurrentColumn.Name, alterPrecisionAndScaleScript);
+
+            return alterPrecisionAndScaleWithHistoryScript;
         }
 
         protected override string GetPrimaryKeyConstraintScript()
@@ -583,40 +949,216 @@ namespace Logitude.DBMigrations.Models
             }
             else if (IsTableHasPrimaryKeys(DXMLTable))
             {
-                alterPrimaryKeyScript += "-- Add Primary Key Constraint\n";
-                string primaryKeyConstraintName = "PK_" + TableMigrations.DxmlTableName + "_" + GenerateRandomString();
-                alterPrimaryKeyScript += GetAddPrimaryKeyConstraintScript(primaryKeyConstraintName); 
+                string primaryKeyConstraintName = "PK_" + TableMigrations.DxmlTableName;
+                if (primaryKeyConstraintName.Length > 128)
+                {
+                    primaryKeyConstraintName = primaryKeyConstraintName.Substring(0, 128);
+                }
+
+                alterPrimaryKeyScript += GetAddPrimaryKeyConstraintScript(primaryKeyConstraintName);
             }
             return alterPrimaryKeyScript;
         }
 
         protected override string GetDropPrimaryKeyConstraintScript(string primaryKeyConstraintName)
         {
-            string dropPrimaryKeyConstraintScript = "EXEC('IF (OBJECT_ID(''" + TableMigrations.DxmlTableSchema + "." + primaryKeyConstraintName + "'', ''PK'') IS NOT NULL) BEGIN ALTER TABLE " + "[" + TableMigrations.DxmlTableSchema + "].[" + TableMigrations.DxmlTableName + "]" + " DROP CONSTRAINT " + primaryKeyConstraintName + " END" + "');";
-            return dropPrimaryKeyConstraintScript;
-        }
-        
-        protected override string GetAddPrimaryKeyConstraintScript(string primaryKeyConstraintName)
-        {
-            string primaryKeyColumns = string.Join(",", DXMLTable.Columns.Where(c => c.Constraints.PrimaryKey).Select(c => "[" + c.Name + "]").ToArray());
-            string addPrimaryKeyConstraintScript = "EXEC('ALTER TABLE " + "[" + TableMigrations.DxmlTableSchema + "].[" + TableMigrations.DxmlTableName + "]" + " ADD CONSTRAINT " + primaryKeyConstraintName + " PRIMARY KEY (" + primaryKeyColumns + ")');";
-            return addPrimaryKeyConstraintScript;
+            string dropRelationsScript = "";
+
+            List<RelationDefinition> relations = GetRelationsForDBTable(CurrentTable.Name, false);
+            foreach (var relation in relations)
+            {
+                dropRelationsScript += GetDropRelationScript(relation);
+            }
+
+            string dropPrimaryKeyScript = "-- Drop Primary Key Constraint\n";
+            dropPrimaryKeyScript += "EXEC('IF (OBJECT_ID(''" + "[" + TableMigrations.DxmlTableSchema + "]" + "." + "[" + primaryKeyConstraintName + "]" + "'', ''PK'') IS NOT NULL) BEGIN ALTER TABLE " + "[" + TableMigrations.DxmlTableSchema + "].[" + TableMigrations.DxmlTableName + "]" + " DROP CONSTRAINT " + "[" + primaryKeyConstraintName + "]" + " END" + "');";
+            return dropRelationsScript + dropPrimaryKeyScript + "\n\n" + GetInsertScriptForMigrationsHistory("Drop Primary Key Constraint", TableMigrations.DxmlTableName, null, dropPrimaryKeyScript);
         }
 
-        protected override string GetCreateRelationScript(RelationDefinition relation)//relation from DXMLTable
+        protected override string GetAddPrimaryKeyConstraintScript(string primaryKeyConstraintName)
+        {
+            string addPrimaryKeyConstraintScript = "-- Add Primary Key Constraint\n";
+            string primaryKeyColumns = string.Join(",", DXMLTable.Columns.Where(c => c.Constraints.PrimaryKey).Select(c => "[" + c.Name + "]").ToArray());
+            addPrimaryKeyConstraintScript += "EXEC('ALTER TABLE " + "[" + TableMigrations.DxmlTableSchema + "].[" + TableMigrations.DxmlTableName + "]" + " ADD CONSTRAINT " + "[" + primaryKeyConstraintName + "]" + " PRIMARY KEY (" + primaryKeyColumns + ")');";
+            return addPrimaryKeyConstraintScript + "\n\n" + GetInsertScriptForMigrationsHistory("Add Primary Key Constraint", TableMigrations.DxmlTableName, primaryKeyColumns.Replace("[", String.Empty).Replace("]", String.Empty), addPrimaryKeyConstraintScript);
+        }
+
+        protected override string GetCreateRelationScript(RelationDefinition relation)
         {
             string createRelationScript = "-- Add Foreign Key Constraint For Column " + relation.ForeignKeyColumn + " In Table " + DXMLTable.Name + " As Reference To Column " + relation.ReferencedColumn + " In Table " + relation.ReferencedTable + "\n";
             string foreignKeyColumns = relation.ForeignKeyColumn.Contains(",") ? string.Join(",", relation.ForeignKeyColumn.Split(',').Select(c => "[" + c + "]").ToArray()) : "[" + relation.ForeignKeyColumn + "]";
             string referencedColumns = relation.ReferencedColumn.Contains(",") ? string.Join(",", relation.ReferencedColumn.Split(',').Select(c => "[" + c + "]").ToArray()) : "[" + relation.ReferencedColumn + "]";
-            createRelationScript += "EXEC('ALTER TABLE " + "[" + DXMLTable.Schema + "].[" + DXMLTable.Name + "]" + " ADD FOREIGN KEY(" + foreignKeyColumns + ") REFERENCES " + "[" + relation.ReferencedTableSchema + "]." + "[" + relation.ReferencedTable + "]" + "(" + referencedColumns + ")')";
-            return createRelationScript + ";\n\n";
+            string foreignKeyConstraintName = "FK_" + DXMLTable.Name + "_" + relation.ReferencedTable + "_" + (!foreignKeyColumns.Contains(",") ? foreignKeyColumns : string.Join("_", foreignKeyColumns.Split(',').ToArray())).Replace("[", String.Empty).Replace("]", String.Empty);
+            if (foreignKeyConstraintName.Length > 128)
+            {
+                foreignKeyConstraintName = foreignKeyConstraintName.Substring(0, 128);
+            }
+            createRelationScript += "EXEC('ALTER TABLE " + "[" + DXMLTable.Schema + "].[" + DXMLTable.Name + "]" + " ADD CONSTRAINT [" + foreignKeyConstraintName + "] FOREIGN KEY(" + foreignKeyColumns + ") REFERENCES " + "[" + relation.ReferencedTableSchema + "]." + "[" + relation.ReferencedTable + "]" + "(" + referencedColumns + ")')";
+            createRelationScript += ";\n\n";
+
+            string createRelationWithHistoryScript = createRelationScript + GetInsertScriptForMigrationsHistory("Create Relation", DXMLTable.Name, relation.ForeignKeyColumn, createRelationScript);
+
+            IndexDefinition relationIndex = new IndexDefinition
+            {
+                Columns = relation.ForeignKeyColumn
+            };
+
+            string createIndexScript = GetCreateIndexScript(relationIndex);
+
+            return createRelationWithHistoryScript + createIndexScript;
         }
-        
-        protected override string GetDropRelationScript(RelationDefinition relation)//relation from DBTable
+
+        protected override string GetDropRelationScript(RelationDefinition relation)
         {
             string dropRelationScript = "-- Drop Foreign Key Constraint For Column " + relation.ForeignKeyColumn + " In Table " + relation.ParentTable + " That Reference To Column " + relation.ReferencedColumn + " In Table " + relation.ReferencedTable + "\n";
-            dropRelationScript += "EXEC('IF (OBJECT_ID(''" + relation.ParentTableSchema + "." + relation.ForeignKeyConstraintName + "'', ''F'') IS NOT NULL) BEGIN ALTER TABLE " + "[" + relation.ParentTableSchema + "].[" + relation.ParentTable + "]" + " DROP CONSTRAINT " + relation.ForeignKeyConstraintName + " END" + "')";
-            return dropRelationScript + ";\n\n";
+            dropRelationScript += "EXEC('IF (OBJECT_ID(''" + "[" + relation.ParentTableSchema + "]" + "." + "[" + relation.ForeignKeyConstraintName + "]" + "'', ''F'') IS NOT NULL) BEGIN ALTER TABLE " + "[" + relation.ParentTableSchema + "].[" + relation.ParentTable + "]" + " DROP CONSTRAINT " + "[" + relation.ForeignKeyConstraintName + "]" + " END" + "')";
+            dropRelationScript += ";\n\n";
+
+            string dropRelationWithHistoryScript = dropRelationScript + GetInsertScriptForMigrationsHistory("Drop Relation", relation.ParentTable, null, dropRelationScript);
+
+            string dropIndexScript = null;
+
+            if (relation.ParentTable == CurrentTable.Name)
+            {
+                IndexDefinition relationIndex = CurrentTable.AllIndexes.Where(i => i.Columns == relation.ForeignKeyColumn).FirstOrDefault();
+                if (relationIndex != null)
+                {
+                    dropIndexScript = GetDropIndexScript(relationIndex);
+                }
+            }
+
+            return dropRelationWithHistoryScript + dropIndexScript;
+        }
+
+        protected override string GetInsertScriptForMigrationsHistory(string migrationType, string tableName, string columnName, string script)
+        {
+            if (!String.IsNullOrEmpty(script))
+            {
+                string insertScript = "INSERT INTO [dbo].[DBMigrationsHistory]([DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('" + DXMLFileName + "', '" + tableName + "', " + (columnName == null ? "NULL" : "'" + columnName + "'") + ", '" + migrationType + "', GETDATE(), '" + script.Replace("'", "''").TrimEnd(new char[] { '\r', '\n' }) + "');" + "\n\n";
+                return insertScript;
+            }
+
+            return "";
+        }
+
+        protected override string GetDefaultValueScript(bool nullable, string type, string defaultValue)
+        {
+            if (nullable)
+            {
+                return null;
+            }
+
+            if (type == "bit" && String.IsNullOrEmpty(defaultValue))
+            {
+                return " DEFAULT(0)";
+            }
+
+            if (!String.IsNullOrEmpty(defaultValue))
+            {
+                if (defaultValue.ToLower() == "CurrentDate".ToLower())
+                {
+                    return " DEFAULT(GETDATE())";
+                }
+
+                return " DEFAULT(" + defaultValue + ")";
+            }
+
+            return null;
+        }
+
+        protected override string GetAddDefaultScript(ColumnMigration columnMigration)
+        {
+            string defaultValue = !String.IsNullOrEmpty(columnMigration.NewColumn.DefaultValue) ? columnMigration.NewColumn.DefaultValue : columnMigration.CurrentColumn.DefaultValue;
+            string addDefaultScript = "-- Add Default Value For Column " + columnMigration.CurrentColumn.Name + "\n";
+            addDefaultScript += "ALTER TABLE " + "[" + TableMigrations.DxmlTableSchema + "].[" + TableMigrations.DxmlTableName + "]" + " ADD DEFAULT " + (defaultValue.ToLower() == "CurrentDate".ToLower() ? "GETDATE()" : defaultValue) + " FOR [" + columnMigration.CurrentColumn.Name + "]";
+            addDefaultScript += ";\n\n";
+
+            string addDefaultWithHistoryScript = addDefaultScript + GetInsertScriptForMigrationsHistory("Add Default Value", TableMigrations.DxmlTableName, columnMigration.CurrentColumn.Name, addDefaultScript);
+
+            return addDefaultWithHistoryScript;
+        }
+
+        protected override string GetDropDefaultScript(ColumnMigration columnMigration)
+        {
+            string dropDefaultScript = "-- Drop Default Value For Column " + columnMigration.CurrentColumn.Name + "\n";
+            dropDefaultScript += "EXEC('IF (OBJECT_ID(''" + "[" + TableMigrations.DxmlTableSchema + "]" + "." + "[" + columnMigration.CurrentColumn.Constraints.DefaultConstraintName + "]" + "'', ''D'') IS NOT NULL) BEGIN ALTER TABLE " + "[" + TableMigrations.DxmlTableSchema + "].[" + TableMigrations.DxmlTableName + "]" + " DROP CONSTRAINT " + "[" + columnMigration.CurrentColumn.Constraints.DefaultConstraintName + "]" + " END" + "')";
+            dropDefaultScript += ";\n\n";
+
+            string dropDefaultWithHistoryScript = dropDefaultScript + GetInsertScriptForMigrationsHistory("Drop Default Value", TableMigrations.DxmlTableName, columnMigration.CurrentColumn.Name, dropDefaultScript);
+
+            return dropDefaultWithHistoryScript;
+        }
+
+        protected override string GetCreateIndexScript(IndexDefinition index)
+        {
+            string indexColumns = !index.Columns.Contains(",") ? "[" + index.Columns + "]" : string.Join(",", index.Columns.Split(',').Select(c => "[" + c + "]").ToArray());
+            string includeColumns = String.IsNullOrEmpty(index.Include) ? null : (!index.Include.Contains(",") ? "[" + index.Include + "]" : string.Join(",", index.Include.Split(',').Select(c => "[" + c + "]").ToArray()));
+            string tableName = "[" + DXMLTable.Schema + "].[" + DXMLTable.Name + "]";
+            string createIndexScript = "-- Create Index On " + DXMLTable.Name + " Table\n";
+            string indexName = "IX_" + DXMLTable.Name + "_" + (!indexColumns.Contains(",") ? indexColumns : string.Join("_", indexColumns.Split(',').ToArray())).Replace("[", String.Empty).Replace("]", String.Empty);
+            if (indexName.Length > 128)
+            {
+                indexName = indexName.Substring(0, 128);
+            }
+
+            if (includeColumns != null)
+            {
+                createIndexScript += "EXEC('CREATE NONCLUSTERED INDEX " + "[" + indexName + "]" + " ON " + tableName + "(" + indexColumns + ") INCLUDE(" + includeColumns + ")')";
+            }
+            else
+            {
+                createIndexScript += "EXEC('CREATE NONCLUSTERED INDEX " + "[" + indexName + "]" + " ON " + tableName + "(" + indexColumns + ")')";
+            }
+
+            createIndexScript += ";\n\n";
+
+            string addIndexWithHistoryScript = createIndexScript + GetInsertScriptForMigrationsHistory("Create Index", DXMLTable.Name, indexColumns.Replace("[", String.Empty).Replace("]", String.Empty), createIndexScript);
+
+            return addIndexWithHistoryScript;
+        }
+
+        protected override string GetCreateUniqueConstraintScript(UniqueConstraintDefinition uniqueConstraint)
+        {
+            string uniqueConstraintColumns = !uniqueConstraint.Columns.Contains(",") ? "[" + uniqueConstraint.Columns + "]" : string.Join(",", uniqueConstraint.Columns.Split(',').Select(c => "[" + c + "]").ToArray());
+            string tableName = "[" + DXMLTable.Schema + "].[" + DXMLTable.Name + "]";
+            string createUniqueConstraintScript = "-- Create Unique Constraint On " + DXMLTable.Name + " Table\n";
+            string uniqueConstraintName = "UQ_" + DXMLTable.Name + "_" + (!uniqueConstraintColumns.Contains(",") ? uniqueConstraintColumns : string.Join("_", uniqueConstraintColumns.Split(',').ToArray())).Replace("[", String.Empty).Replace("]", String.Empty);
+            if (uniqueConstraintName.Length > 128)
+            {
+                uniqueConstraintName = uniqueConstraintName.Substring(0, 128);
+            }
+
+            createUniqueConstraintScript += "EXEC('ALTER TABLE " + tableName + " ADD CONSTRAINT " + "[" + uniqueConstraintName + "]" + " UNIQUE(" + uniqueConstraintColumns + ")')";
+
+            createUniqueConstraintScript += ";\n\n";
+
+            string addIndexWithHistoryScript = createUniqueConstraintScript + GetInsertScriptForMigrationsHistory("Create Unique Constraint", DXMLTable.Name, uniqueConstraintColumns.Replace("[", String.Empty).Replace("]", String.Empty), createUniqueConstraintScript);
+
+            return addIndexWithHistoryScript;
+        }
+
+        protected override string GetDropUniqueConstraintScript(UniqueConstraintDefinition uniqueConstraint)
+        {
+            string tableName = "[" + DXMLTable.Schema + "].[" + DXMLTable.Name + "]";
+            string dropUniqueConstraintScript = "-- Drop Unique Constraint " + uniqueConstraint.ConstraintName + " From Table " + DXMLTable.Name + "\n";
+            dropUniqueConstraintScript += "EXEC('IF (OBJECT_ID(''" + "[" + DXMLTable.Schema + "]" + "." + "[" + uniqueConstraint.ConstraintName + "]" + "'', ''UQ'') IS NOT NULL) BEGIN ALTER TABLE " + tableName + " DROP CONSTRAINT " + "[" + uniqueConstraint.ConstraintName + "]" + " END" + "')";
+            dropUniqueConstraintScript += ";\n\n";
+
+            string dropUniqueConstraintWithHistoryScript = dropUniqueConstraintScript + GetInsertScriptForMigrationsHistory("Drop Unique Constraint", DXMLTable.Name, null, dropUniqueConstraintScript);
+
+            return dropUniqueConstraintWithHistoryScript;
+        }
+
+        protected override string GetDropIndexScript(IndexDefinition index)
+        {
+            string tableName = "[" + DXMLTable.Schema + "].[" + DXMLTable.Name + "]";
+            string dropIndexScript = "-- Drop Index " + index.IndexName + " From Table " + DXMLTable.Name + "\n";
+            dropIndexScript += "EXEC('IF EXISTS (SELECT * FROM sys.indexes WHERE name=''" + index.IndexName + "'' AND object_id = OBJECT_ID(''" + tableName + "'', ''U'')) BEGIN DROP INDEX " + "[" + index.IndexName + "]" + " ON " + tableName + " END')";
+            dropIndexScript += ";\n\n";
+
+            string dropIndexWithHistoryScript = dropIndexScript + GetInsertScriptForMigrationsHistory("Drop Index", DXMLTable.Name, null, dropIndexScript);
+
+            return dropIndexWithHistoryScript;
         }
     }
 }

@@ -31,7 +31,7 @@ namespace Logitude.Accounting.Data.EntityMapping
 
             this.Property(t => t.AccountTypeCode).HasColumnName("AccountTypeCode").HasMaxLength(1).IsUnicode(false);
 
-            this.Property(t => t.DisplayNumber).HasColumnName("DisplayNumber").HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.DisplayNumber).HasColumnName("DisplayNumber").IsRequired().HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.LocalName).HasColumnName("LocalName").IsRequired().HasMaxLength(105).IsUnicode(true);
 
@@ -148,6 +148,10 @@ namespace Logitude.Accounting.Data.EntityMapping
             this.Property(t => t.MinimumInterestInvoiceBilling).HasColumnName("MinimumInterestInvoiceBilling");
 
             this.Property(t => t.InterestCreditLimit).HasColumnName("InterestCreditLimit").HasPrecision(18, 2);
+
+            this.Property(t => t.NameForPrintingCheques).HasColumnName("NameForPrintingCheques").HasMaxLength(1000).IsUnicode(true);
+
+            this.Property(t => t.Smallcashbook).HasColumnName("Smallcashbook");
         }
     }
 }

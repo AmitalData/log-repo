@@ -529,11 +529,24 @@ namespace MetaDataGenerator
             {
                 tableName = table.Name.Split('.')[1];
             }
-            doc.Save("../../GeneratedFiles/New/" + tableName + ".lxml");
+            //doc.Save("../../GeneratedFiles/New/" + tableName + ".lxml");
+
+            WriteGeneratedXmlToFile(doc, "../../GeneratedFiles/New/" + tableName + ".lxml");
 
             #endregion
 
             return true;
+        }
+        private void WriteGeneratedXmlToFile(XmlDocument doc,string filePath)
+        {
+            //string dirPath = "../../GeneratedFiles/New/" + tableName + ".lxml";
+            FileStream fileStream = new FileStream(filePath, FileMode.OpenOrCreate, FileAccess.Write);
+            XmlWriterSettings settings = new XmlWriterSettings() { Indent = true, NewLineOnAttributes = true, OmitXmlDeclaration = false, WriteEndDocumentOnClose = false };//, WriteEndDocumentOnClose = true, OmitXmlDeclaration = true
+            XmlWriter xmlWriter = XmlWriter.Create(fileStream, settings);
+
+            doc.Save(xmlWriter);
+            xmlWriter.Close();
+            xmlWriter.Dispose();
         }
 
         private bool GenerateTableLXMLFields(XmlDocument doc, ObjectTable table, XmlElement entityElement, List<ObjectField> fields, bool updateLXML = false)
@@ -593,10 +606,10 @@ namespace MetaDataGenerator
             System.Type tableListClass = System.Type.GetType(qListName);
 
 
-            if (tableClass == null && tableName != "General" && tableName != "Master")// && tablePMClass == null)
-            {
-                return false;
-            }
+            //if (tableClass == null && tableName != "General" && tableName != "Master")// && tablePMClass == null)
+            //{
+            //    return false;
+            //}
 
             PropertyInfo[] pocoProperties = { };
             PropertyInfo[] pmClassProperties = { };
@@ -902,7 +915,9 @@ namespace MetaDataGenerator
                 }
             }
             else
-                throw new Exception("Couldn't find the POCO class for " + table.Name);
+            {
+                //throw new Exception("Couldn't find the POCO class for " + table.Name); 
+            }
 
             return entityPropertiesInfo;
         }

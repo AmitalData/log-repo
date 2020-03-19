@@ -684,7 +684,7 @@ export class NewFullWarehouseReleaseComponent extends BaseComponent implements O
         logeWindow.Height = 500;
         logeWindow.Title = "Packages Details";
 
-        logeWindow.WindowArgs = { warehouseReleasePM: this.warehouseReleasePM, ViewModelTrigger: this, ShowPackageSummary: true, IsFromFullWarehouseReleaseComponent: true, ShipmentPM: this.Shipment };
+        logeWindow.WindowArgs = { WarehouseReleasePM: this.warehouseReleasePM, ViewModelTrigger: this, ShowPackageSummary: true, IsFromFullWarehouseReleaseComponent: true, ShipmentPM: this.Shipment };
         logeWindow.Show("./Warehouse/Components/WarehouseReleasePackagesDetailsComponent");
 
     }

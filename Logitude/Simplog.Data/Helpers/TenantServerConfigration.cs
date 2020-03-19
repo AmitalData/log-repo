@@ -31,8 +31,6 @@ namespace Simplog.Data.Helpers
             var dateTime = DateTime.UtcNow;//DateTime.ParseExact(stringDate, format, new CultureInfo("en-US"));
             string datetimeoffset = "datetimeoffset" + tenant;
 
-            if (HttpContext.Current != null)
-            {
                 if (CacheManager.CacheWrapper.Get(datetimeoffset) == null)
                 {
 
@@ -48,15 +46,8 @@ namespace Simplog.Data.Helpers
                     dateTime = dateTime.AddHours(offsetHours);
                 }
 
-            }
-            else
-            {
-
-
-                offsetHours = GetCurrentDateWithTimeZoneOffset(tenant);
-                dateTime = dateTime.AddHours(offsetHours);
-
-            }
+            
+   
 
 
             //double offsetHours = Entity.TimeZoneOffset;
@@ -87,8 +78,7 @@ namespace Simplog.Data.Helpers
             string entityName = "Tenant" + tenant;
 
             Tenant entity;
-            if (HttpContext.Current != null)
-            {
+         
                 if (CacheManager.CacheWrapper.Get(entityName) == null)
                 {
                     TenantRepository tenantRepository = new TenantRepository(tenant);
@@ -102,12 +92,8 @@ namespace Simplog.Data.Helpers
                 {
                     entity = (Tenant)CacheManager.CacheWrapper.Get(entityName);
                 }
-            }
-            else
-            {
-                TenantRepository tenantRepository = new TenantRepository(tenant);
-                entity = tenantRepository.GetSingleTenant(tenant);
-            }
+            
+       
 
             double offsetHours = 0;
             if (entity != null)

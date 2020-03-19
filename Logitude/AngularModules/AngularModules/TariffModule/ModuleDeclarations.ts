@@ -8,6 +8,8 @@ import { WizardDimensionsComponent } from './Components/Workspaces/WizardDimensi
 import { TariffHelperComponent } from './Components/Helpers/TariffHelperComponent';
 import { TariffWorkspaceComponent } from './Components/Workspaces/TariffWorkspaceComponent';
 import { SettingsWorkspaceComponent } from './Components/Workspaces/SettingsWorkspaceComponent';
+import { ContainerDefaultsComponent } from './Components/Workspaces/ContainerDefaultsComponent';
+
 // Tabs
 import { TariffDetailsTabComponent } from './Components/EditTabs/Tariff/TariffDetailsTabComponent';
 import { VersionTabComponent } from './Components/EditTabs/Tariff/VersionTabComponent';
@@ -21,9 +23,12 @@ import { UpdateSurchargesComponent } from './Components/EditTabs/Tariff/UpdateSu
 import { ChoosePortComponent } from './Components/EditTabs/Tariff/ChoosePortComponent';
 import { AddEditAllInChargesComponent } from './Components/EditTabs/Tariff/AddEditAllInChargesComponent';
 import { OceanFCLVersionTabComponent } from './Components/EditTabs/Tariff/OceanFCLVersionTabComponent';
+import { OceanFCLSurchargeVersionTabComponent } from './Components/EditTabs/Tariff/OceanFCLSurchargeVersionTabComponent';
+import { AddTariffContainersComponent } from './Components/NewEntity/AddTariffContainersComponent';
 
 export const Components =
     [
+        ContainerDefaultsComponent,
         CostWorkspaceComponent,
         TariffSettingComponent,
         NewAirFreightCostComponent,
@@ -46,6 +51,8 @@ export const Components =
         OceanFCLVersionTabComponent,
         TariffWorkspaceComponent,
         SettingsWorkspaceComponent,
+        OceanFCLSurchargeVersionTabComponent,
+        AddTariffContainersComponent,
     ];
 
 export const ControlsComponents =
@@ -80,6 +87,9 @@ export class ModuleDeclarations {
             case "OceanFCLVersionTabComponent": { myResult = OceanFCLVersionTabComponent; break; }
             case "TariffWorkspaceComponent": { myResult = TariffWorkspaceComponent; break; }
             case "SettingsWorkspaceComponent": { myResult = SettingsWorkspaceComponent; break; }
+            case "OceanFCLSurchargeVersionTabComponent": { myResult = OceanFCLSurchargeVersionTabComponent; break; }
+            case "AddTariffContainersComponent": { myResult = AddTariffContainersComponent; break; }
+            case "ContainerDefaultsComponent": { myResult = ContainerDefaultsComponent; break; }
         }
 
         return myResult;

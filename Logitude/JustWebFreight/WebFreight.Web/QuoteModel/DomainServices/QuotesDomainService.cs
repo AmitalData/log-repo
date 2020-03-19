@@ -293,7 +293,7 @@ namespace WebFreight.Web.QuoteModel.DomainServices
                 List<RestrictionPM> restrictions = restrictionQuery.GetResitrictionsByObjectTableAndContact(contactTenant.Id, objectTable.Id, tenant).ToList();
 
                 var query = from restriction in restrictions
-                            group restriction by restriction.ObjectFieldId into objectTableGroup
+                            group restriction by restriction.ObjectFieldCode into objectTableGroup
                             select new
                             {
                                 key = objectTableGroup.Key,

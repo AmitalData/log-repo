@@ -130,6 +130,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
+			      				    IsTabsHidden =  false,
 			      				    SearchFields =  "QuoteTemplate,QuoteTemplates,Simplog.QuoteLib.NewQuoteTemplateCommand,Id,",
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
@@ -192,6 +193,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "HeaderDocId",
@@ -254,6 +256,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "FooterDocId",
@@ -316,6 +319,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "QuoteTemplateSettingId",
@@ -380,6 +384,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Name",
@@ -440,6 +445,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "IsTemplate",
@@ -500,6 +506,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "OriginalQuoteTemplateId",
@@ -560,6 +567,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "CreateDate",
@@ -620,6 +628,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "UpdateDate",
@@ -680,6 +689,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "CreatedByUserId",
@@ -740,6 +750,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "UpdatedByUserId",
@@ -801,6 +812,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "SearchFields",
@@ -863,6 +875,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "TemplateTypeCode",
@@ -926,6 +939,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "TemplateTypeName",
@@ -989,6 +1003,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "IsDefault",
@@ -1052,6 +1067,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "ShowLocalLanguage",
@@ -1115,6 +1131,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "InActive",
@@ -1178,6 +1195,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "IsCopiedAtSignup",
@@ -1241,6 +1259,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "IsEnabledForCustomers",
@@ -1269,19 +1288,31 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query QuoteTemplatesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuoteTemplateTextCode_0.Id, NameTextCodeCode = QuoteTemplateTextCode_0.Code, Code = "QuoteTemplates",  EditWizardName = "Simplog.QuoteLib.Views.QuoteTemplateViews.QuoteTemplateWizardEditControl",
-			   QueryGroupCode = "QUTE", IndexOrder = 0, Tenant = 0, ObjectTableId = QuoteTemplateObjectTable.Id, QuerySection = "QuoteTemplate", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = QuoteTemplateFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query QuoteTemplatesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuoteTemplateTextCode_0.Id, NameTextCodeCode = QuoteTemplateTextCode_0.Code, ObjectTableName = "QuoteTemplate", Code = "QuoteTemplates",  EditWizardName = "Simplog.QuoteLib.Views.QuoteTemplateViews.QuoteTemplateWizardEditControl",
+			   QueryGroupCode = "QUTE", IndexOrder = 0, Tenant = 0, ObjectTableId = QuoteTemplateObjectTable.Id, QuerySection = "QuoteTemplate", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = QuoteTemplateFeature_0.Id,FeatureUniqeCode= QuoteTemplateFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn QuoteTemplatesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = QuoteTemplatesQuery.Id, IndexOrder = 0, ObjectFieldId = QuoteTemplateObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == QuoteTemplateObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteTemplateObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == QuoteTemplateObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn QuoteTemplatesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = QuoteTemplatesQuery.Id,QueryCode = QuoteTemplatesQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = QuoteTemplateObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == QuoteTemplateObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteTemplateObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == QuoteTemplateObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn QuoteTemplatesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = QuoteTemplatesQuery.Id, IndexOrder = 1, ObjectFieldId = QuoteTemplateObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == QuoteTemplateObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteTemplateObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == QuoteTemplateObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn QuoteTemplatesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = QuoteTemplatesQuery.Id,QueryCode = QuoteTemplatesQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = QuoteTemplateObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == QuoteTemplateObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteTemplateObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == QuoteTemplateObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn QuoteTemplatesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = QuoteTemplatesQuery.Id, IndexOrder = 2, ObjectFieldId = QuoteTemplateObjectFields.Where(d => d.FieldName == "UpdateDate" && d.ObjectTableId == QuoteTemplateObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteTemplateObjectFields.Where(d => d.FieldName == "UpdateDate" && d.ObjectTableId == QuoteTemplateObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn QuoteTemplatesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = QuoteTemplatesQuery.Id,QueryCode = QuoteTemplatesQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = QuoteTemplateObjectFields.Where(d => d.FieldName == "UpdateDate" && d.ObjectTableId == QuoteTemplateObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteTemplateObjectFields.Where(d => d.FieldName == "UpdateDate" && d.ObjectTableId == QuoteTemplateObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 	   
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
-	    {    
+	    {   
+
+		   ObjectTable QuoteTemplateObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "QuoteTemplate" && d.Tenant == 0).FirstOrDefault();
+		   List<ObjectField> QuoteTemplateObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "QuoteTemplate").ToList();
+		       
+	      
+
+	         Screen QuoteTemplateQuoteTemplateHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "QuoteTemplate.HeaderScreen", Name = "QuoteTemplateHeaderScreen", ObjectTableId = QuoteTemplateObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      	
+		    QuoteTemplateObjectTable.HeaderScreenId = QuoteTemplateQuoteTemplateHeaderScreenScreen0.Id;
+		    QuoteTemplateObjectTable.HeaderScreenCode = QuoteTemplateQuoteTemplateHeaderScreenScreen0.Code;
+
+	   		  
 
 	    }
 
@@ -1295,7 +1326,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
  
                  
 			   TextCode QuoteTemplateSettingsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.TH.Settings", DefaultText = "Settings",LocalDefaultText = null, ObjectTableId = QuoteTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature QuoteTemplateSettingsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SETTINGS", ObjectTableId = QuoteTemplateObjectTable.Id, Tenant = 0, NameTextCodeCode = "Quote.Features.Settings", NameTextCodeDefaultText = "Settings", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature QuoteTemplateSettingsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SETTINGS", ObjectTableId = QuoteTemplateObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteTemplate.Features.Settings", NameTextCodeDefaultText = "Settings", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
  
                  
 			   TextCode QuoteTemplateEventsTextCode_TH2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.TH.Events", DefaultText = "Events",LocalDefaultText = null, ObjectTableId = QuoteTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
@@ -1305,11 +1336,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "QEGC",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = QuoteTemplateGeneralFeature_TH0.Id, ControlPath = "Simplog.QuoteLib.Views.General.GeneralControl", ObjectTableId = QuoteTemplateObjectTable.Id, TabNameTextCodeId = QuoteTemplateGeneralTextCode_TH0.Id, TabNameTextCodeCode = QuoteTemplateGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "QEGC",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = QuoteTemplateGeneralFeature_TH0.Id,FeatureUniqeCode = QuoteTemplateGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.QuoteLib.Views.General.GeneralControl", ObjectTableId = QuoteTemplateObjectTable.Id, TabNameTextCodeId = QuoteTemplateGeneralTextCode_TH0.Id, TabNameTextCodeCode = QuoteTemplateGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "QESE",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = QuoteTemplateSettingsFeature_TH1.Id, ControlPath = "Simplog.QuoteLib.Views.Settings.SettingsControl", ObjectTableId = QuoteTemplateObjectTable.Id, TabNameTextCodeId = QuoteTemplateSettingsTextCode_TH1.Id, TabNameTextCodeCode = QuoteTemplateSettingsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "QESE",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = QuoteTemplateSettingsFeature_TH1.Id,FeatureUniqeCode = QuoteTemplateSettingsFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.QuoteLib.Views.Settings.SettingsControl", ObjectTableId = QuoteTemplateObjectTable.Id, TabNameTextCodeId = QuoteTemplateSettingsTextCode_TH1.Id, TabNameTextCodeCode = QuoteTemplateSettingsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "QEEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = QuoteTemplateEventsFeature_TH2.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = QuoteTemplateObjectTable.Id, TabNameTextCodeId = QuoteTemplateEventsTextCode_TH2.Id, TabNameTextCodeCode = QuoteTemplateEventsTextCode_TH2.Code, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "QEEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = QuoteTemplateEventsFeature_TH2.Id,FeatureUniqeCode = QuoteTemplateEventsFeature_TH2.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = QuoteTemplateObjectTable.Id, TabNameTextCodeId = QuoteTemplateEventsTextCode_TH2.Id, TabNameTextCodeCode = QuoteTemplateEventsTextCode_TH2.Code, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -1669,6 +1700,16 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
  		   TextCode QuoteTemplateTextCode_QuoteTemplateSQuoteTemplatePDFMarginBottom = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.QuoteTemplatePDFMarginBottom", DefaultText = "Margin Bottom",LocalDefaultText = null, ObjectTableId = QuoteTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode QuoteTemplateTextCode_QuoteTemplateSShowIncludedCharges = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.ShowIncludedCharges", DefaultText = "Show Included Charges",LocalDefaultText = null, ObjectTableId = QuoteTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTemplateTextCode_QuoteTemplateMAddNewQuoteTemplateMessage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.M.AddNewQuoteTemplateMessage", DefaultText = "Here you can add new Quote template  from Logitude's Quote template list",LocalDefaultText = null, ObjectTableId = QuoteTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTemplateTextCode_QuoteTemplateOTableDescription = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.O.TableDescription", DefaultText = "Create new quote templates and maintain existing ones.",LocalDefaultText = null, ObjectTableId = QuoteTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTemplateTextCode_QuoteTemplateSDesignAreaFreeText = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.DesignAreaFreeText", DefaultText = "Design Area Free Text",LocalDefaultText = null, ObjectTableId = QuoteTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTemplateTextCode_QuoteTemplateSShowVATType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.ShowVATType", DefaultText = "Show VAT Type",LocalDefaultText = @"Show VAT Type", ObjectTableId = QuoteTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTemplateTextCode_QuoteTemplateSShowVATPercentage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.ShowVATPercentage", DefaultText = "Show VAT Percentage",LocalDefaultText = null, ObjectTableId = QuoteTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

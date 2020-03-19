@@ -45,6 +45,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     FeatureId = a.FeatureId,
                                                     HtmlComponentName = a.HtmlComponentName,
                                                     HtmlComponentUrl = a.HtmlComponentUrl,
+                                                    FeatureUniqeCode = a.FeatureUniqeCode
                                                    
                                                 };
             return tabs;
@@ -67,6 +68,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     TabNameTextCodeCode = a.TabNameTextCodeCode,
                                                     Code = a.Code,
                                                     FeatureId = a.FeatureId,
+                                                    FeatureUniqeCode = a.FeatureUniqeCode
                                                 };
             return tabs;
         }

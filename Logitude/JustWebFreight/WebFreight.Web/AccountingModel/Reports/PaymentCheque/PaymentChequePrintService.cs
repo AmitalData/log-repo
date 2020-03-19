@@ -159,7 +159,7 @@ namespace WebFreight.Web.AccountingModel.Reports.PaymentCheque
                 BankAccountPM bankAccount = bankAccountQuery.GetSingle(paymentChequePM.BankAccountId, false, false);
                 if (bankAccount != null)
                 {
-                    PaymentChequeDP.BankAccountNumber = bankAccount.AccountNumber;
+                    PaymentChequeDP.BankAccountNumber = bankAccount.PrintingAccountNumber;
                     PaymentChequeDP.BankAddress = bankAccount.BranchAddress == null ? "" : bankAccount.BranchAddress;
                     PaymentChequeDP.BankCode = bankAccount.BankCode;
                     PaymentChequeDP.BranchNumber = bankAccount.BranchNumber;

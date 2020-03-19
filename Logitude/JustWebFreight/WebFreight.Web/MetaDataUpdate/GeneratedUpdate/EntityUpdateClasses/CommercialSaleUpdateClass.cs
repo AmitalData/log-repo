@@ -372,7 +372,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query CommercialSaleQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CommercialSaleTextCode_0.Id, Code = "CommercialSale",  QueryGroupCode = "2177", IndexOrder = 0, Tenant = 0, ObjectTableId = CommercialSaleObjectTable.Id, QuerySection = "Customs.CommercialSale", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CommercialSaleFeature_0.Id, DefaultSortName = "Code", DefaultSortDirection = "Desending" }, queriesRepository, tenantQueries);
+			  Query CommercialSaleQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CommercialSaleTextCode_0.Id, Code = "CommercialSale",  QueryGroupCode = "2177", IndexOrder = 0, Tenant = 0, ObjectTableId = CommercialSaleObjectTable.Id, QuerySection = "Customs.CommercialSale", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CommercialSaleFeature_0.Id,FeatureUniqeCode= CommercialSaleFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending" }, queriesRepository, tenantQueries);
 	
 			 QueryColumn CommercialSaleQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CommercialSaleQuery.Id, IndexOrder = 0, ObjectFieldId = CommercialSaleObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == CommercialSaleObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 50 }, queryColumnsRepository, tenantQueryColumns);
 

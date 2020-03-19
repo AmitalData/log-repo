@@ -36,6 +36,8 @@ namespace Logitude.CRM.Data.EntityLists
        public string UpdatedByUserName  { get; set; }
        [DataMember]
        public bool Inactive  { get; set; }
+       [DataMember]
+       public string SearchFields  { get; set; }
    }
 
 }

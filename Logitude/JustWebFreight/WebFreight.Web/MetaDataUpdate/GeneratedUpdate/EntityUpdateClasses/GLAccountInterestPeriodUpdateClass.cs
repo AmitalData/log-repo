@@ -1205,6 +1205,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	         Screen GLAccountInterestPeriodGLAccountInterestPeriodHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "GLAccountInterestPeriod.HeaderScreen", Name = "GLAccountInterestPeriodHeaderScreen", ObjectTableId = GLAccountInterestPeriodObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       	
 		    GLAccountInterestPeriodObjectTable.HeaderScreenId = GLAccountInterestPeriodGLAccountInterestPeriodHeaderScreenScreen0.Id;
+		    GLAccountInterestPeriodObjectTable.HeaderScreenCode = GLAccountInterestPeriodGLAccountInterestPeriodHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }

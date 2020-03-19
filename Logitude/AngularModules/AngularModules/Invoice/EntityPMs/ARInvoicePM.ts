@@ -1027,6 +1027,21 @@ export class ARInvoicePM {
     public set CreatedByPartner(newValue: string) { if (this.createdByPartner != newValue) { this.createdByPartner = newValue; this.MarkAsDirty("CreatedByPartner"); } }
        
 	 
+    private billToGLAccountId: string;
+    public get BillToGLAccountId() { return this.billToGLAccountId; }
+    public set BillToGLAccountId(newValue: string) { if (this.billToGLAccountId != newValue) { this.billToGLAccountId = newValue; this.MarkAsDirty("BillToGLAccountId"); } }
+       
+	 
+    private regionalTaxId: string;
+    public get RegionalTaxId() { return this.regionalTaxId; }
+    public set RegionalTaxId(newValue: string) { if (this.regionalTaxId != newValue) { this.regionalTaxId = newValue; this.MarkAsDirty("RegionalTaxId"); } }
+       
+	 
+    private regionalTaxPercentage: number;
+    public get RegionalTaxPercentage() { return this.regionalTaxPercentage; }
+    public set RegionalTaxPercentage(newValue: number) { if (this.regionalTaxPercentage != newValue) { this.regionalTaxPercentage = newValue; this.MarkAsDirty("RegionalTaxPercentage"); } }
+       
+	 
 
     public OldEntityPM: ARInvoicePM;
 		

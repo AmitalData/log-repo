@@ -18,12 +18,17 @@ namespace Logitude.DBMigrations.Models
 
         public void Validate()
         {
-            string error = null;
+            string error;
+
+            error = ValidateDXMLFilesNames();
+            
+            if (!String.IsNullOrEmpty(error))
+            {
+                ExitTool(error);
+            }
 
             foreach (var dxmlTable in DXMLTables)
             {
-                error = ValidatePrimaryKeys(dxmlTable);
-                if(error != null) break;
                 error = ValidateReferencedTables(dxmlTable);
                 if (error != null) break;
                 error = ValidateReferencedColumns(dxmlTable);
@@ -36,6 +41,16 @@ namespace Logitude.DBMigrations.Models
                 if (error != null) break;
                 error = ValidateForeignKeyColumnsDataType(dxmlTable);
                 if (error != null) break;
+                error = ValidatePrimaryKeys(dxmlTable);
+                if (error != null) break;
+                error = ValidateIndexesColumns(dxmlTable);
+                if (error != null) break;
+                error = ValidateUniqueConstraintsColumns(dxmlTable);
+                if (error != null) break;
+                error = ValidateDuplicateIndexes(dxmlTable);
+                if (error != null) break;
+                error = ValidateDuplicateUniqueConstraints(dxmlTable);
+                if (error != null) break;
             }
 
             if (!String.IsNullOrEmpty(error))
@@ -46,32 +61,59 @@ namespace Logitude.DBMigrations.Models
 
         private List<DXMLTable> GetDXMLTables()
         {
-            List<DXMLTable> dxmlTableDefinitions = new List<DXMLTable>();
+            List<DXMLTable> dxmlTables = new List<DXMLTable>();
 
             foreach (var dxmlFile in DXMLFiles)
             {
                 string xmlString = File.ReadAllText(dxmlFile);
+                if (xmlString.EndsWith("</Table>"))
+                {
+                    DXMLTable dxmlTable = CreateDXMLTable(xmlString, dxmlFile);
+                    if(dxmlTable == null)
+                    {
+                        ExitTool("Cannot Create Table Definition For " + Path.GetFileName(dxmlFile));
+                    }
+                    dxmlTables.Add(dxmlTable);
+                }
+            }
+
+            return dxmlTables;
+        }
+
+        private DXMLTable CreateDXMLTable(string xmlString, string dxmlFile)
+        {
+            try
+            {
                 TableDefinition dxmlTableDefinition = xmlString.ParseXML<TableDefinition>();
+
                 DXMLTable dxmlTable = new DXMLTable
                 {
                     DXMLFileName = Path.GetFileName(dxmlFile),
                     TableDefinition = dxmlTableDefinition
                 };
-                dxmlTableDefinitions.Add(dxmlTable);
-            }
 
-            return dxmlTableDefinitions;
+                return dxmlTable;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
-        private string ValidatePrimaryKeys(DXMLTable dxmlTable)
+        private string ValidateDXMLFilesNames()
         {
             string error = null;
 
-            List<ColumnDefinition> wrongPrimaryKeyColumns = dxmlTable.TableDefinition.Columns.Where(c => c.Constraints.PrimaryKey == true && c.Constraints.Nullable == true).ToList();
+            List<string> duplicatedDxmlFiles = DXMLFiles.Select(d => Path.GetFileName(d)).ToList().GroupBy(d => d).SelectMany(g => g.Skip(1)).ToList();
 
-            if (wrongPrimaryKeyColumns.Any())
+            if (duplicatedDxmlFiles.Any())
             {
-                error = "Invalid DXML Syntax: Primary Key Column [" + wrongPrimaryKeyColumns.First().Name + "] Cannot Be Nullable In [" + dxmlTable.DXMLFileName + "]";
+                error = "Error: Duplicate DXML Files:\n";
+                foreach(var dxmlFile in DXMLFiles.Where(d => d.Contains(@"\" + duplicatedDxmlFiles.First())).ToList())
+                {
+                    error += dxmlFile + "\n";
+                }
+                return error.TrimEnd('\n');
             }
 
             return error;
@@ -88,7 +130,7 @@ namespace Logitude.DBMigrations.Models
 
             if (relationsWithWrongReferencedTableName.Any())
             {
-                error = "Invalid DXML Syntax: Invalid Referenced Table [" + relationsWithWrongReferencedTableName.First().ReferencedTable + "] For Relation In [" + dxmlTable.DXMLFileName + "]";
+                error = "Invalid DXML Syntax: There Is No Table With Name [" + relationsWithWrongReferencedTableName.First().ReferencedTable + "] To Use It As Referenced Table For Relation In [" + dxmlTable.DXMLFileName + "]";
                 return error;
             }
 
@@ -97,7 +139,7 @@ namespace Logitude.DBMigrations.Models
 
             if (relationsWithWrongReferencedTableSchema.Any())
             {
-                error = "Invalid DXML Syntax: Invalid Referenced Table Schema [" + relationsWithWrongReferencedTableSchema.First().ReferencedTableSchema + "] For Relation In [" + dxmlTable.DXMLFileName + "]";
+                error = "Invalid DXML Syntax: The Referenced Table [" + relationsWithWrongReferencedTableSchema.First().ReferencedTable + "] Has Schema Not Equal To [" + relationsWithWrongReferencedTableSchema.First().ReferencedTableSchema + "] For Relation In [" + dxmlTable.DXMLFileName + "]";
                 return error;
             }
 
@@ -117,7 +159,7 @@ namespace Logitude.DBMigrations.Models
 
             if (relationsWithWrongReferencedColumnName.Any())
             {
-                error = "Invalid DXML Syntax: Invalid Referenced Column [" + relationsWithWrongReferencedColumnName.First().ReferencedColumn + "] For Relation In [" + dxmlTable.DXMLFileName + "]";
+                error = "Invalid DXML Syntax: All Or Some Of Referenced Columns [" + relationsWithWrongReferencedColumnName.First().ReferencedColumn + "] Not In The Referenced Table [" + relationsWithWrongReferencedColumnName.First().ReferencedTable + "] For Relation In [" + dxmlTable.DXMLFileName + "]";
             }
 
             return error;
@@ -133,7 +175,7 @@ namespace Logitude.DBMigrations.Models
 
             if (relationsWithWrongReferencedColumnsNumber.Any())
             {
-                error = "Invalid DXML Syntax: Invalid Number Of Referenced Columns [" + relationsWithWrongReferencedColumnsNumber.First().ReferencedColumn + "] For Relation In [" + dxmlTable.DXMLFileName + "]";
+                error = "Invalid DXML Syntax: Number Of Referenced Columns [" + relationsWithWrongReferencedColumnsNumber.First().ReferencedColumn + "] Not Equal To Number Of Primary Key Columns In The Referenced Table [" + relationsWithWrongReferencedColumnsNumber.First().ReferencedTable + "] For Relation In [" + dxmlTable.DXMLFileName + "]";
             }
 
             return error;
@@ -146,12 +188,12 @@ namespace Logitude.DBMigrations.Models
             List<string> dxmlTableColumnsNames = dxmlTable.TableDefinition.Columns.Select(c => c.Name).ToList();
 
             List<RelationDefinition> relationsWithWrongForeignKeyColumnName = dxmlTable.TableDefinition.Relations
-                .Where(r => (!dxmlTableColumnsNames.Contains(r.ForeignKeyColumn) && !r.ReferencedColumn.Contains(",")) || (r.ForeignKeyColumn.Split(',')
+                .Where(r => (!dxmlTableColumnsNames.Contains(r.ForeignKeyColumn) && !r.ForeignKeyColumn.Contains(",")) || (r.ForeignKeyColumn.Split(',')
                 .Where(cc => dxmlTableColumnsNames.All(c => c != cc)).Any() && r.ForeignKeyColumn.Contains(","))).ToList();
 
             if (relationsWithWrongForeignKeyColumnName.Any())
             {
-                error = "Invalid DXML Syntax: Invalid Foreign Key Column [" + relationsWithWrongForeignKeyColumnName.First().ForeignKeyColumn + "] For Relation In [" + dxmlTable.DXMLFileName + "]";
+                error = "Invalid DXML Syntax: All Or Some Of Foreign Key Columns [" + relationsWithWrongForeignKeyColumnName.First().ForeignKeyColumn + "] Not In The Parent Table [" + dxmlTable.TableDefinition.Name + "] For Relation In [" + dxmlTable.DXMLFileName + "]";
             }
 
             return error;
@@ -166,7 +208,7 @@ namespace Logitude.DBMigrations.Models
 
             if (relationsWithWrongForeignKeyColumnsNumber.Any())
             {
-                error = "Invalid DXML Syntax: Invalid Number Of Foreign Key Columns [" + relationsWithWrongForeignKeyColumnsNumber.First().ForeignKeyColumn + "] For Relation In [" + dxmlTable.DXMLFileName + "]";
+                error = "Invalid DXML Syntax: Number Of Foreign Key Columns [" + relationsWithWrongForeignKeyColumnsNumber.First().ForeignKeyColumn + "] Not Equal To Number Of Referenced Columns [" + relationsWithWrongForeignKeyColumnsNumber.First().ReferencedColumn + "] For Relation In [" + dxmlTable.DXMLFileName + "]";
             }
 
             return error;
@@ -219,7 +261,7 @@ namespace Logitude.DBMigrations.Models
 
                     if (dataTypeNotSame)
                     {
-                        error = "Invalid DXML Syntax: Invalid Data Type For Foreign Key Column [" + relation.ForeignKeyColumn + "] For Relation In [" + dxmlTable.DXMLFileName + "]";
+                        error = "Invalid DXML Syntax: Data Type Of Foreign Key Column [" + foreignKeyColumns[i] + "] In The Parent Table [" + dxmlTable.TableDefinition.Name + "] Different From Data Type Of Primary Key Column [" + referencedColumnName + "] In The Referenced Table [" + relation.ReferencedTable + "] For Relation In [" + dxmlTable.DXMLFileName + "]";
                         break;
                     }
                 }
@@ -228,6 +270,93 @@ namespace Logitude.DBMigrations.Models
                 {
                     break;
                 }
+            }
+
+            return error;
+        }
+
+        private string ValidatePrimaryKeys(DXMLTable dxmlTable)
+        {
+            string error = null;
+
+            List<ColumnDefinition> wrongPrimaryKeyColumns = dxmlTable.TableDefinition.Columns.Where(c => c.Constraints.PrimaryKey == true && c.Constraints.Nullable == true).ToList();
+
+            if (wrongPrimaryKeyColumns.Any())
+            {
+                error = "Invalid DXML Syntax: Primary Key Column [" + wrongPrimaryKeyColumns.First().Name + "] Cannot Be Nullable In [" + dxmlTable.DXMLFileName + "]";
+            }
+
+            return error;
+        }
+
+        private string ValidateIndexesColumns(DXMLTable dxmlTable)
+        {
+            string error = null;
+
+            List<string> dxmlTableColumnsNames = dxmlTable.TableDefinition.Columns.Select(c => c.Name).ToList();
+            
+            List<IndexDefinition> indexesWithWrongColumnsNames = dxmlTable.TableDefinition.Indexes
+                .Where(i => (!dxmlTableColumnsNames.Contains(i.Columns) && !i.Columns.Contains(",")) || (i.Columns.Split(',')
+                .Where(cc => dxmlTableColumnsNames.All(c => c != cc)).Any() && i.Columns.Contains(","))).ToList();
+
+            if (indexesWithWrongColumnsNames.Any())
+            {
+                error = "Invalid DXML Syntax: All Or Some Of Columns [" + indexesWithWrongColumnsNames.First().Columns + "] Not In The Table [" + dxmlTable.TableDefinition.Name + "] For Index In [" + dxmlTable.DXMLFileName + "]";
+            }
+
+            List<IndexDefinition> indexesWithWrongIncludeColumnsNames = dxmlTable.TableDefinition.Indexes
+                .Where(i => (i.Include != null && !dxmlTableColumnsNames.Contains(i.Include) && !i.Include.Contains(",")) || (i.Include != null && i.Include.Split(',')
+                .Where(cc => dxmlTableColumnsNames.All(c => c != cc)).Any() && i.Include.Contains(","))).ToList();
+
+            if (indexesWithWrongIncludeColumnsNames.Any())
+            {
+                error = "Invalid DXML Syntax: All Or Some Of Included Columns [" + indexesWithWrongIncludeColumnsNames.First().Include + "] Not In The Table [" + dxmlTable.TableDefinition.Name + "] For Index In [" + dxmlTable.DXMLFileName + "]";
+            }
+
+            return error;
+        }
+
+        private string ValidateUniqueConstraintsColumns(DXMLTable dxmlTable)
+        {
+            string error = null;
+
+            List<string> dxmlTableColumnsNames = dxmlTable.TableDefinition.Columns.Select(c => c.Name).ToList();
+
+            List<UniqueConstraintDefinition> uniqueConstraintsWithWrongColumnsNames = dxmlTable.TableDefinition.UniqueConstraints
+                .Where(u => (!dxmlTableColumnsNames.Contains(u.Columns) && !u.Columns.Contains(",")) || (u.Columns.Split(',')
+                .Where(cc => dxmlTableColumnsNames.All(c => c != cc)).Any() && u.Columns.Contains(","))).ToList();
+
+            if (uniqueConstraintsWithWrongColumnsNames.Any())
+            {
+                error = "Invalid DXML Syntax: All Or Some Of Columns [" + uniqueConstraintsWithWrongColumnsNames.First().Columns + "] Not In The Table [" + dxmlTable.TableDefinition.Name + "] For Unique Constraint In [" + dxmlTable.DXMLFileName + "]";
+            }
+
+            return error;
+        }
+
+        private string ValidateDuplicateIndexes(DXMLTable dxmlTable)
+        {
+            string error = null;
+
+            List<string> duplicatedIndexesColumns = dxmlTable.TableDefinition.Indexes.Select(i => i.Columns).ToList().GroupBy(i => i).SelectMany(g => g.Skip(1)).ToList();
+            
+            if (duplicatedIndexesColumns.Any())
+            {
+                error = "Invalid DXML Syntax: Duplicate Index On Columns [" + duplicatedIndexesColumns.First() + "] In [" + dxmlTable.DXMLFileName + "]";
+            }
+
+            return error;
+        }
+
+        private string ValidateDuplicateUniqueConstraints(DXMLTable dxmlTable)
+        {
+            string error = null;
+
+            List<string> duplicatedUniqueConstraintsColumns = dxmlTable.TableDefinition.UniqueConstraints.Select(u => u.Columns).ToList().GroupBy(u => u).SelectMany(g => g.Skip(1)).ToList();
+
+            if (duplicatedUniqueConstraintsColumns.Any())
+            {
+                error = "Invalid DXML Syntax: Duplicate Unique Constraint On Columns [" + duplicatedUniqueConstraintsColumns.First() + "] In [" + dxmlTable.DXMLFileName + "]";
             }
 
             return error;

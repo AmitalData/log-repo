@@ -130,7 +130,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             var Parents = TempList.Where(a => a.DimensionTableCode != null).ToList();
             List<string> dimensionTable = Parents.GroupBy(d => d.DimensionTableCode).Select(d => d.First().DimensionTableCode).ToList();
             dimensionTable.Add("DIM_CustomPickLists");
-            Parents.Add(new DWObjectFieldPM() { DimensionTableCode = "DIM_CustomPickLists", Id = "123" });
+            //Parents.Add(new DWObjectFieldPM() { DimensionTableCode = "DIM_CustomPickLists", Id = "123" });
             IEnumerable<IGrouping<string, DWObjectFieldPM>> DWObjectFieldPMDimensionGroups = GetDWObjectFieldPMDimensionListsGroups(tenant, dimensionTable);
 
             foreach (var parent in Parents)
@@ -418,7 +418,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             return (from aa in repository.webFreightContext.DWObjectFieldCategories
                     join a in repository.webFreightContext.DWObjectFields on aa.DWObjectFieldCode equals a.Code
                     join b in repository.webFreightContext.DWCategories on aa.DWCategoryCode equals b.Code
-                    where a.Tenant == tenant && a.DWObjectTableCode == dwotCode
+                    where a.Tenant == tenant && a.DWObjectTableCode == dwotCode && aa.DWObjectTableCode == dwotCode
                     select new DWObjectFieldPM()
                     {
                         Id = a.Id,

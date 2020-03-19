@@ -1722,6 +1722,87 @@ namespace Logitude.TariffModule.BL.EntityPMs
 			
 		 }
 	   }
+
+	   private List<TariffLinesContainersPricePM> containersPrices;
+	    
+       [Composition]
+ 
+		     
+	   [Include]
+	   [Association("TariffLineTariffLinesContainersPrice", "Id","TariffLineId")]
+	   [DataMember]
+	   public virtual List<TariffLinesContainersPricePM> ContainersPrices  
+	   {
+	        get
+             {
+                 if (containersPrices == null)
+                 {
+                     containersPrices = new List<TariffLinesContainersPricePM>();
+                 }
+                 return containersPrices;
+              }
+             set { containersPrices = value; }
+	    }
+		   
+	   private List<TariffLinesContainersPricePM>  deletedContainersPrices;
+	   public virtual List<TariffLinesContainersPricePM> DeletedContainersPrices  
+	   {
+	        get
+             {
+                 if ( deletedContainersPrices == null)
+                 {
+                      deletedContainersPrices = new List<TariffLinesContainersPricePM>();
+                 }
+                 return  deletedContainersPrices;
+              }
+             set {  deletedContainersPrices = value; }
+	    }
+	  	  private string originPortCombinedCode ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string OriginPortCombinedCode  
+	   {
+	    
+	     get
+		{
+		   return originPortCombinedCode;
+		 }
+		 set
+		 {
+		   if(originPortCombinedCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OriginPortCombinedCode",OldValue=originPortCombinedCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   originPortCombinedCode=value;
+		   }
+			
+		 }
+	   }
+	  private string destinationPortCombinedCode ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DestinationPortCombinedCode  
+	   {
+	    
+	     get
+		{
+		   return destinationPortCombinedCode;
+		 }
+		 set
+		 {
+		   if(destinationPortCombinedCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DestinationPortCombinedCode",OldValue=destinationPortCombinedCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   destinationPortCombinedCode=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

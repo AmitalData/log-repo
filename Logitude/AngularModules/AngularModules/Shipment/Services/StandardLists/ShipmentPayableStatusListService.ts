@@ -16,6 +16,7 @@ import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLogger';
+import {LocalStorageManager} from '../../../Infrastructure/Utilities/LocalStorageManager';
 import {ShipmentPayableStatusList} from '../../EntityLists/ShipmentPayableStatusList';
 
 @Injectable()
@@ -48,7 +49,7 @@ export class ShipmentPayableStatusListService {
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse(); 
                 serviceResponse.Result = entity;  
-				
+				serviceResponse.CallTime = callTime;
 			    var servertime = response.headers.get('ServerExecutionTime');
                 PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ShipmentPayableStatus", "GetSingleList", 'code=' + code); 
 
@@ -84,7 +85,7 @@ export class ShipmentPayableStatusListService {
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse(); 
                 serviceResponse.Result = _mappedListsArray;  
-			
+				serviceResponse.CallTime = callTime;
 			    var servertime = response.headers.get('ServerExecutionTime');
                 PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ShipmentPayableStatus", "GetAll", ""); 
 
@@ -151,7 +152,7 @@ export class ShipmentPayableStatusListService {
                 }   
 
                 serviceResponse.Result = _mappedListsArray;      
-		      
+		        serviceResponse.CallTime = callTime;
 			    var servertime = response.headers.get('ServerExecutionTime');
                 PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ShipmentPayableStatus", "GetByFilters", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll); 
                  				
@@ -176,6 +177,7 @@ export class ShipmentPayableStatusListService {
             return Observable.defer(() => {
 
                 var filteredData = ShipmentPayableStatusListService.CachedData.filter(a => a.Code === code)[0];
+				serviceResponse.CallTime = callTime;
 				serviceResponse.Result = filteredData; 
                 return Observable.of(serviceResponse);
 
@@ -200,7 +202,7 @@ export class ShipmentPayableStatusListService {
 
                 var filteredData = ShipmentPayableStatusListService.CachedData.filter(a => a.Code === code)[0];
 				serviceResponse.Result = filteredData; 
-				
+				serviceResponse.CallTime = callTime;
 			     
                 PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "ShipmentPayableStatus", "GetSingleListFromCache", 'code=' + code); 
 
@@ -242,6 +244,7 @@ export class ShipmentPayableStatusListService {
 				{
 					var filteredData = InfraGenericFilter.GetFilteredArray(ShipmentPayableStatusListService.CachedData, filters);
 					serviceResponse.Result = filteredData; 
+					serviceResponse.CallTime = callTime;
 				}
                 return Observable.of(serviceResponse);
 
@@ -279,6 +282,7 @@ export class ShipmentPayableStatusListService {
                 PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "ShipmentPayableStatus", "GetAllFromCache", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll); 
                  	
 					serviceResponse.Result = _mappedListsArray; 
+					serviceResponse.CallTime = callTime;
 				}
                 return serviceResponse;
 

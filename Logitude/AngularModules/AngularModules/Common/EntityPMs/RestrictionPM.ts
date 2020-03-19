@@ -55,6 +55,11 @@ export class RestrictionPM {
     public set ContactTenantId(newValue: string) { if (this.contactTenantId != newValue) { this.contactTenantId = newValue; this.MarkAsDirty("ContactTenantId"); } }
        
 	 
+    private objectFieldCode: string;
+    public get ObjectFieldCode() { return this.objectFieldCode; }
+    public set ObjectFieldCode(newValue: string) { if (this.objectFieldCode != newValue) { this.objectFieldCode = newValue; this.MarkAsDirty("ObjectFieldCode"); } }
+       
+	 
     private userId: string;
     public get UserId() { return this.userId; }
     public set UserId(newValue: string) { if (this.userId != newValue) { this.userId = newValue; this.MarkAsDirty("UserId"); } }

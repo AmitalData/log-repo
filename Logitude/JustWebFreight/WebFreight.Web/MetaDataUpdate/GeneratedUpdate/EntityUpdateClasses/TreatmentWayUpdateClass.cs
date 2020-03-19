@@ -406,7 +406,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query TreatmentWayQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TreatmentWayTextCode_0.Id, Code = "TreatmentWay",  QueryGroupCode = "2ea0", IndexOrder = 0, Tenant = 0, ObjectTableId = TreatmentWayObjectTable.Id, QuerySection = "Customs.ActionCode", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = TreatmentWayFeature_0.Id, DefaultSortName = "Code", DefaultSortDirection = "Desending" }, queriesRepository, tenantQueries);
+			  Query TreatmentWayQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TreatmentWayTextCode_0.Id, Code = "TreatmentWay",  QueryGroupCode = "2ea0", IndexOrder = 0, Tenant = 0, ObjectTableId = TreatmentWayObjectTable.Id, QuerySection = "Customs.ActionCode", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = TreatmentWayFeature_0.Id,FeatureUniqeCode= TreatmentWayFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending" }, queriesRepository, tenantQueries);
 	
 			 QueryColumn TreatmentWayQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TreatmentWayQuery.Id, IndexOrder = 0, ObjectFieldId = TreatmentWayObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == TreatmentWayObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 

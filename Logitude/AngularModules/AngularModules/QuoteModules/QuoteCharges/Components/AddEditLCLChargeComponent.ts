@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {AppTool, DateTool} from '../../../Infrastructure/Tools';
+import {AppTool,} from '../../../Infrastructure/Tools';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
@@ -8,23 +8,28 @@ import {Validator} from '../../../Infrastructure/Validators/Validator';
 import {Cloner} from '../../../Infrastructure/Utilities/Cloner';
 import {QuoteChargeItem} from './LCLChargesComponent';
 import {ObservableCollection} from '../../../Infrastructure/Utilities/ObservableCollection';
-import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
 import {QuoteChargePM} from '../../../Quote/EntityPMs/QuoteChargePM';
 import {QuotePriceStepsPM} from '../../../Quote/EntityPMs/QuotePriceStepsPM';
-import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
+import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
+import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
+import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 import {QuotePM} from '../../../Quote/EntityPMs/QuotePM';
 import {VatTypesValidator} from '../../../Infrastructure/Validators/VatTypesValidator';
 import { QuoteValidator } from '../../../Quote/Validators/QuoteValidator';
+import { PriceStepList } from '../../../Infrastructure/EntityLists/PriceStepList';
+import { MeasurementList } from '../../../Common/EntityLists/MeasurementList';
+import { forEach } from '@angular/router/src/utils/collection';
 
 @Component({
     moduleId: module.id,
     templateUrl: './AddEditLCLChargeComponent.html',
 })
 
-export class AddEditLCLChargeComponent {
+export class AddEditLCLChargeComponent extends BaseComponent {
     public QuotePM: QuotePM;
     public EntityPM: QuoteChargePM;
     public DataContext: QuoteChargeItem;
+    public DataContext2 = this;
     public Father: any;
     public IsAdhoc: boolean = false;
     public IsRoutingRate: boolean = false;
@@ -41,8 +46,9 @@ export class AddEditLCLChargeComponent {
     private IsHyprid: boolean;
     private ChargesTypeCode: string;
     
-
     constructor() {
+        super();
+
         this.ItemsSource = new ObservableCollection([]);
         this.StepsItemsSource = new ObservableCollection([]);
         this.CurrentSession.SessionEvent.subscribe((res) => {
@@ -72,12 +78,26 @@ export class AddEditLCLChargeComponent {
         this.IsVATVisible = this.IsAdhoc && this.QuotePM.IsChargesByVAT ? true : false;
         this.ChargesTypeCode = this.EntityPM.ChargesTypeCode;
 
+        this.SetUIProperties();
         this.DataContext.SetUIProperties();
         this.BuildItemsSource();
         this.BuildQueryFilters();
         this.BuildStepItemsSource();
         this.Clone();
         
+    }
+
+    public IsAddBreaksEnabled: boolean = false;
+    SetUIProperties() {
+        var isAddBreaksEnabled = false;
+
+        if (this.IsEditingEnabled) {
+            if (!AppTool.IsNullOrEmpty(this.SelectedPriceStepId)) {
+                isAddBreaksEnabled = true;
+            }
+        }
+
+        this.IsAddBreaksEnabled = isAddBreaksEnabled;
     }
 
     BuildItemsSource() {
@@ -202,21 +222,25 @@ export class AddEditLCLChargeComponent {
             var quoteValidator: QuoteValidator = new QuoteValidator();
             quoteValidator.CheckDuplicateInCharges(this.QuotePM, this.EntityPM, errors);
         }
-       
-        this.StepsItemsSource.Collection.forEach(priceStep => {
-            Validator.TryValidateObject(priceStep, this.QuotePriceObjectTableName, errors);
-            this.DataContext.EntityPM.QuoteChargePriceSteps.filter(d => d.Step != null && d.Step == priceStep.Step).forEach((item) => {
-                if (item != priceStep.EntityPM) {
+
+        if (this.DataContext.IsChargeBySteps) {
+            this.StepsItemsSource.Collection.forEach(priceStep => {
+
+                Validator.TryValidateObject(priceStep, this.QuotePriceObjectTableName, errors);
+
+                this.DataContext.EntityPM.QuoteChargePriceSteps.filter(d => d.Step != null && d.Step == priceStep.Step).forEach((item) => {
+                    if (item != priceStep.EntityPM) {
+                        errors.push("Price Steps list already contains Step: " + AppTool.Round(priceStep.Step, 2));
+                    }
+                });
+
+
+                var duplicates = this.StepsItemsSource.Collection.filter(d => d.Step != null && d.Step == priceStep.Step);
+                if (duplicates && duplicates.length > 1) {
                     errors.push("Price Steps list already contains Step: " + AppTool.Round(priceStep.Step, 2));
                 }
             });
-
-
-            var duplicates = this.StepsItemsSource.Collection.filter(d => d.Step != null && d.Step == priceStep.Step);
-            if (duplicates && duplicates.length > 1) {
-                errors.push("Price Steps list already contains Step: " + AppTool.Round(priceStep.Step, 2));
-            }
-        });
+        }
 
         if (this.EntityPM.ChargesGroupCode == "FRT") {
             if (this.DataContext.QuotePM.QuoteCharges.filter(d => d.ChargesGroupCode == "FRT" && d != this.EntityPM).length > 0) {
@@ -245,14 +269,17 @@ export class AddEditLCLChargeComponent {
         var freightLineCostCurrencyId: string = "";
         var freightLineSaleCurrencyId: string = "";
         if (this.QuotePM.QuoteCharges.filter(d => d.ChargesGroupCode == "FRT" && d != this.EntityPM).length > 0) {
-            freightLineCostCurrencyId = this.QuotePM.QuoteCharges.filter(d => d.ChargesGroupCode == "FRT" && d.Id != this.EntityPM.Id)[0].CostCurrencyId;
-            freightLineSaleCurrencyId = this.QuotePM.QuoteCharges.filter(d => d.ChargesGroupCode == "FRT" && d.Id != this.EntityPM.Id)[0].SaleCurrencyId;
+            var quoteCharge = this.QuotePM.QuoteCharges.filter(d => d.ChargesGroupCode == "FRT" && d.Id != this.EntityPM.Id)[0];
+            if (quoteCharge) {
+                freightLineCostCurrencyId = quoteCharge.CostCurrencyId;
+                freightLineSaleCurrencyId = quoteCharge.SaleCurrencyId;
+            }
         }
 
         if (!AppTool.IsNullOrEmpty(this.EntityPM.CostMeasurementCode)) {
             if (this.EntityPM.CostMeasurementCode == "PRFR" && !AppTool.IsNullOrEmpty(this.EntityPM.CostCurrencyId) && !AppTool.IsNullOrEmpty(freightLineCostCurrencyId)) {
                 if (this.EntityPM.CostCurrencyId != freightLineCostCurrencyId) {
-                    errors.push("Cost Currency should be same as Freight Charge Cost Currency when Cost Measurement is Percent of Freight");
+                    errors.push("Cost currency must be the same as the freight currency in the case of Percent of Freight");
                 }
             }
         }
@@ -260,7 +287,7 @@ export class AddEditLCLChargeComponent {
         if (!AppTool.IsNullOrEmpty(this.EntityPM.SaleMeasurementCode)) {
             if (this.EntityPM.SaleMeasurementCode == "PRFR" && !AppTool.IsNullOrEmpty(this.EntityPM.SaleCurrencyId) && !AppTool.IsNullOrEmpty(freightLineSaleCurrencyId)) {
                 if (this.EntityPM.SaleCurrencyId != freightLineSaleCurrencyId) {
-                    errors.push("Sale Currency should be same as Freight Charge Sale Currency when Sale Measurement is Percent of Freight");
+                    errors.push("Sale currency must be the same as the freight currency in the case of Percent of Freight");
                 }
             }
         }
@@ -268,32 +295,49 @@ export class AddEditLCLChargeComponent {
         this.ValidationErrorsList = errors;
 
         if (errors.length == 0) {
+            if (this.DataContext.CostMeasurementCode == "FIXD" && this.DataContext.SaleMeasurementCode == "FIXD" && this.DataContext.IsChargeBySteps) {
+                var confirmWindow = new ConfirmWindow();
+                confirmWindow.Show("Steps will be erased since the UOM is fixed");
+                confirmWindow.WindowClosed.subscribe((event: any) => {
+                    if (confirmWindow.Yes) {
+                        this.DataContext.IsChargeBySteps = false;
+                        this.FinishOkButton();
+                    }
+                });
+            }
 
-            this.StepsItemsSource.Collection.forEach(item => {
-                if (item != null) {
-                    if (item.IsNew) {
-                        if (this.DataContext.EntityPM.QuoteChargePriceSteps.indexOf(item.EntityPM) == -1) {
-                            item.IsNewEntity = false;
-                            this.DataContext.EntityPM.AddQuotePriceStepsPM(item.EntityPM);
-                        }
+            else {
+                this.FinishOkButton();
+            }
+        }
+    }
+
+    FinishOkButton() {
+        this.StepsItemsSource.Collection.forEach(item => {
+            if (item != null) {
+                if (item.IsNew) {
+                    if (this.DataContext.EntityPM.QuoteChargePriceSteps.indexOf(item.EntityPM) == -1) {
+                        item.IsNewEntity = false;
+                        this.DataContext.EntityPM.AddQuotePriceStepsPM(item.EntityPM);
                     }
                 }
-            });
-
-            if (this.DataContext.IsNew) {
-                this.DataContext.QuotePM.AddQuoteChargePM(this.EntityPM);
-                this.DataContext.fatherComponent.BuildItemsSource();
             }
+        });
 
-            if (!this.DataContext.IsChargeBySteps) {
-                if (this.EntityPM.QuoteChargePriceSteps.length > 0) {
-                    this.EntityPM.QuoteChargePriceSteps = [];
-                }
-            }
-
-            this.DataContext.fatherComponent.ComputeTotals();
-            this.CurrentSession.CloseCurrentWindowEmit("OK");
+        if (this.DataContext.IsNew) {
+            this.DataContext.QuotePM.AddQuoteChargePM(this.EntityPM);
+            this.DataContext.fatherComponent.BuildItemsSource();
         }
+
+        if (!this.DataContext.IsChargeBySteps) {
+            if (this.EntityPM.QuoteChargePriceSteps.length > 0) {
+                this.EntityPM.QuoteChargePriceSteps = [];
+            }
+        }
+
+        this.DataContext.BuildPriceBreaksTooltips();
+        this.DataContext.fatherComponent.ComputeTotals();
+        this.CurrentSession.CloseCurrentWindowEmit("OK");
     }
 
     private myCloner: Cloner;
@@ -385,6 +429,69 @@ export class AddEditLCLChargeComponent {
         });
 
         this.myCloner.RejectChanges();
+    }
+
+    private selectedPriceStepId: string = null;
+    public get SelectedPriceStepId() { return this.selectedPriceStepId; }
+    public set SelectedPriceStepId(value: string) {
+        if (this.selectedPriceStepId != value) {
+            this.selectedPriceStepId = value;
+            this.SetUIProperties();
+        }
+    }
+
+    private selectedPriceStepList: PriceStepList = null;
+    public get SelectedPriceStepList() { return this.selectedPriceStepList; }
+    public set SelectedPriceStepList(value: PriceStepList) {
+        if (this.selectedPriceStepList != value) {
+            this.selectedPriceStepList = value;
+        }
+    }
+
+    AddBreaksClicked() {
+        if (this.SelectedPriceStepList) {
+            if (this.StepsItemsSource.Collection.filter(f => !AppTool.IsNullOrZero(f.CostUnitPrice) || !AppTool.IsNullOrZero(f.SaleUnitPrice)).length > 0) {
+                var messageWindow = new MessageWindow();
+                messageWindow.Show("Can't use default breaks when you have added breaks, please delete first");
+            }
+
+            else {
+                this.StepsItemsSource.Clear();
+
+                var steps: string[] = this.SelectedPriceStepList.Steps.split(',');
+
+                steps.forEach((step: string) => {
+                    var newItem: QuotePriceStepsPM = new QuotePriceStepsPM(null);
+                    newItem.Tenant = SessionLocator.Tenant;
+                    newItem.QuoteId = this.EntityPM.Id;
+                    newItem.Step = +step;
+                    newItem.QuoteChargeId = this.EntityPM.Id;
+                    this.StepsItemsSource.Insert(new QuoteStepItem(newItem, this, true));
+                });
+
+                this.SelectedPriceStepId = null;
+                this.SelectedPriceStepList = null;
+
+                //var logitudeWindow = new LogitudeWindow();
+                //logitudeWindow.Title = "Select Price Breaks";
+                //logitudeWindow.Show('./QuoteModules/QuoteCharges/Components/SelectBreaksComponent');
+
+                //logitudeWindow.WindowClosed.subscribe(s => {
+                //    if (s) {
+                //        var steps: string[] = s.split(',');
+
+                //        steps.forEach((step: string) => {
+                //            var newItem: QuotePriceStepsPM = new QuotePriceStepsPM(null);
+                //            newItem.Tenant = SessionLocator.Tenant;
+                //            newItem.QuoteId = this.EntityPM.Id;
+                //            newItem.Step = +step;
+                //            newItem.QuoteChargeId = this.EntityPM.Id;
+                //            this.StepsItemsSource.Insert(new QuoteStepItem(newItem, this, true));
+                //        });
+                //    }
+                //});
+            }
+        }
     }
 }
 export class QuoteStepItem extends BaseComponent {

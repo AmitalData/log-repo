@@ -230,9 +230,18 @@ namespace WebFreight.Web.Helpers
                                 {
                                     WhereStmt = WhereStmt.Substring(0, WhereStmt.Length - 4);
                                 }
-                                if (WhereStmt != " where  ( ")
+                                if (WhereStmt.Replace("(", "").Replace(")", "").Replace(" ", "") != "where")
                                 {
-                                    WhereStmt += " " + AndOr + " " + fieldName + OperationSimpol;// + " " +;//" = " + "'" + filter.TextValue + "' and ";
+                                    if (WhereStmt.EndsWith("( "))
+                                    {
+                                        WhereStmt = WhereStmt.TrimEnd(' ').TrimEnd('(');
+                                        WhereStmt += " " + AndOr + " ( " + fieldName + OperationSimpol;// + " " +;//" = " + "'" + filter.TextValue + "' and ";
+                                    }
+                                    else
+                                    {
+                                        WhereStmt += " " + AndOr + " " + fieldName + OperationSimpol;// + " " +;//" = " + "'" + filter.TextValue + "' and ";
+                                    }
+                                    
                                 }
                                 else
                                 {
@@ -254,9 +263,18 @@ namespace WebFreight.Web.Helpers
                             {
                                 WhereStmt = WhereStmt.Substring(0, WhereStmt.Length - 4);
                             }
-                            if (WhereStmt != " where  ( ")
+                            if (WhereStmt.Replace("(", "").Replace(")", "").Replace(" ", "") != "where")
                             {
-                                WhereStmt += " " + AndOr + " " + sqlCommandDefinitionDateFilter.SQLString;// + " " + AndOr + " ";
+                                if (WhereStmt.EndsWith("( "))
+                                {
+                                    WhereStmt = WhereStmt.TrimEnd(' ').TrimEnd('(');
+                                     WhereStmt += " " + AndOr + " ( " + sqlCommandDefinitionDateFilter.SQLString;// + " " + AndOr + " ";
+
+                                }
+                                else
+                                {
+                                    WhereStmt += " " + AndOr + " " + sqlCommandDefinitionDateFilter.SQLString;// + " " + AndOr + " ";
+                                }
                             }
                             else
                             {
@@ -382,54 +400,68 @@ namespace WebFreight.Web.Helpers
                 {
                     field.DisplayName = "[" + field.DisplayName + "]";
                 }
-                if ((((field.ParentDataTypeCode == "Dimension" || field.ParentDataTypeCode.ToLower() == "lookup") && string.IsNullOrEmpty(field.DimensionTableDisplayName)) || !string.IsNullOrEmpty(field.DimensionTableDisplayName)) && ((!string.IsNullOrEmpty(field.DimensionTableDisplayName) && InnerTables.Where(a => a.DimensionTableDisplayName == field.DimensionTableDisplayName).Count() == 0) || (string.IsNullOrEmpty(field.DimensionTableDisplayName) && InnerTables.Where(a => a.DimensionTableDisplayName == field.Name).Count() == 0)))// && InnerTables.Where(a => a.ParentDimTabelName == field.ParentDimTabelName).Count() == 0
-                {
-                    InnerTables.Add(field);
-                }
-                if ((field.ParentDataTypeCode == "Dimension" || field.ParentDataTypeCode.ToLower() == "lookup") && string.IsNullOrEmpty(field.DimensionTableDisplayName))
-                {
-                    field.DimensionTableDisplayName = field.Name;
-                }
-                if (field.IsMeasurement)
-                {
-                    if (!string.IsNullOrEmpty(field.DimensionTableDisplayName))
-                    {
-                        SelectStmt.Append(field.AggregationTypeCode + "(" + "[" + field.DWObjectTableCode + field.DimensionTableDisplayName + "]." + field.Code + ")" + (!string.IsNullOrEmpty(field.DisplayName) ? " as " + field.DisplayName + "," : ","));
-                    }
-                    else
-                    {
-                        SelectStmt.Append(field.AggregationTypeCode + "(" + field.DWObjectTableCode + "." + field.Code + ")" + (!string.IsNullOrEmpty(field.DisplayName) ? " as " + field.DisplayName + "," : ","));
 
-                    }
+                if (field.ParentDataTypeCode == "DateParts")
+                {
+                    string displayDateName = GetDatePartsSqlColum(field);
+
+                    SelectStmt.Append(displayDateName);
+                    GroupByStmt.Append("[" + field.DWObjectTableCode + field.DimensionTableDisplayName + "]." + field.Code + ",");
+
                 }
                 else
                 {
-                    if (!string.IsNullOrEmpty(field.DimensionTableDisplayName))
+
+
+                    if ((((field.ParentDataTypeCode == "Dimension" || field.ParentDataTypeCode.ToLower() == "lookup") && string.IsNullOrEmpty(field.DimensionTableDisplayName)) || !string.IsNullOrEmpty(field.DimensionTableDisplayName)) && ((!string.IsNullOrEmpty(field.DimensionTableDisplayName) && InnerTables.Where(a => a.DimensionTableDisplayName == field.DimensionTableDisplayName).Count() == 0) || (string.IsNullOrEmpty(field.DimensionTableDisplayName) && InnerTables.Where(a => a.DimensionTableDisplayName == field.Name).Count() == 0)))// && InnerTables.Where(a => a.ParentDimTabelName == field.ParentDimTabelName).Count() == 0
                     {
-                        //(case WHEN Fact_Shipments.[Is Arrived] = 1 then 'Yes' WHEN  Fact_Shipments.[Is Arrived] = 0 then 'No' end)
-                        if (field.DataTypeCode.ToLower() == "boolean")
+                        InnerTables.Add(field);
+                    }
+                    if ((field.ParentDataTypeCode == "Dimension" || field.ParentDataTypeCode.ToLower() == "lookup") && string.IsNullOrEmpty(field.DimensionTableDisplayName))
+                    {
+                        field.DimensionTableDisplayName = field.Name;
+                    }
+                    if (field.IsMeasurement)
+                    {
+                        if (!string.IsNullOrEmpty(field.DimensionTableDisplayName))
                         {
-                            SelectStmt.Append("case WHEN [" + field.DWObjectTableCode + field.DimensionTableDisplayName + "]." + field.Code + "= 1 Then 'Yes' WHEN " + "[" + field.DWObjectTableCode + field.DimensionTableDisplayName + "]." + field.Code + "= 0 Then 'No' End" + (!string.IsNullOrEmpty(field.DisplayName) ? " as " + field.DisplayName + "," : ","));
+                            SelectStmt.Append(field.AggregationTypeCode + "(" + "[" + field.DWObjectTableCode + field.DimensionTableDisplayName + "]." + field.Code + ")" + (!string.IsNullOrEmpty(field.DisplayName) ? " as " + field.DisplayName + "," : ","));
                         }
                         else
                         {
-                            SelectStmt.Append("[" + field.DWObjectTableCode + field.DimensionTableDisplayName + "]." + field.Code + (!string.IsNullOrEmpty(field.DisplayName) ? " as " + field.DisplayName + "," : ","));
+                            SelectStmt.Append(field.AggregationTypeCode + "(" + field.DWObjectTableCode + "." + field.Code + ")" + (!string.IsNullOrEmpty(field.DisplayName) ? " as " + field.DisplayName + "," : ","));
+
                         }
-                        GroupByStmt.Append("[" + field.DWObjectTableCode + field.DimensionTableDisplayName + "]." + field.Code + ",");
                     }
                     else
                     {
-                        if (field.DataTypeCode.ToLower() == "boolean")
+                        if (!string.IsNullOrEmpty(field.DimensionTableDisplayName))
                         {
-                            SelectStmt.Append("case WHEN " + field.DWObjectTableCode + "." + field.Code + "= 1 Then 'Yes' WHEN " + field.DWObjectTableCode + "." + field.Code + "= 0 Then 'No' End" + (!string.IsNullOrEmpty(field.DisplayName) ? " as " + field.DisplayName + "," : ","));
+                            //(case WHEN Fact_Shipments.[Is Arrived] = 1 then 'Yes' WHEN  Fact_Shipments.[Is Arrived] = 0 then 'No' end)
+                            if (field.DataTypeCode.ToLower() == "boolean")
+                            {
+                                SelectStmt.Append("case WHEN [" + field.DWObjectTableCode + field.DimensionTableDisplayName + "]." + field.Code + "= 1 Then 'Yes' WHEN " + "[" + field.DWObjectTableCode + field.DimensionTableDisplayName + "]." + field.Code + "= 0 Then 'No' End" + (!string.IsNullOrEmpty(field.DisplayName) ? " as " + field.DisplayName + "," : ","));
+                            }
+                            else
+                            {
+                                SelectStmt.Append("[" + field.DWObjectTableCode + field.DimensionTableDisplayName + "]." + field.Code + (!string.IsNullOrEmpty(field.DisplayName) ? " as " + field.DisplayName + "," : ","));
+                            }
+                            GroupByStmt.Append("[" + field.DWObjectTableCode + field.DimensionTableDisplayName + "]." + field.Code + ",");
                         }
                         else
                         {
-                            SelectStmt.Append(field.DWObjectTableCode + "." + field.Code + (!string.IsNullOrEmpty(field.DisplayName) ? " as " + field.DisplayName + "," : ","));
+                            if (field.DataTypeCode.ToLower() == "boolean")
+                            {
+                                SelectStmt.Append("case WHEN " + field.DWObjectTableCode + "." + field.Code + "= 1 Then 'Yes' WHEN " + field.DWObjectTableCode + "." + field.Code + "= 0 Then 'No' End" + (!string.IsNullOrEmpty(field.DisplayName) ? " as " + field.DisplayName + "," : ","));
+                            }
+                            else
+                            {
+                                SelectStmt.Append(field.DWObjectTableCode + "." + field.Code + (!string.IsNullOrEmpty(field.DisplayName) ? " as " + field.DisplayName + "," : ","));
+                            }
+                            GroupByStmt.Append("[" + field.DWObjectTableCode + field.DimensionTableDisplayName + "]." + field.Code + ",");
                         }
-                        GroupByStmt.Append("[" + field.DWObjectTableCode + field.DimensionTableDisplayName + "]." + field.Code + ",");
-                    }
 
+                    }
                 }
 
                 if (FromTables.Where(a => a == field.DWObjectTableCode).Count() == 0)
@@ -445,7 +477,7 @@ namespace WebFreight.Web.Helpers
             string Fact = FromTables.Find(a => a == "Fact");
             if (string.IsNullOrEmpty(Fact))
             {
-                Fact = "Fact_Shipments";
+                Fact = DWQueryParam.FactTableName;
             }
             FinalSelectStmt += " from " + Fact;
 
@@ -565,6 +597,15 @@ namespace WebFreight.Web.Helpers
 
 
             return sqlCommandDefinition;
+        }
+
+        private static string GetDatePartsSqlColum(DWObjectFieldsDetails field)
+        {
+            string datePartsSqlColum = field.DWObjectTableCode + "." + field.Code;
+            if (field.DataTypeCode == "Time") datePartsSqlColum = "convert(varchar(5)," + (field.DWObjectTableCode + "." + field.Code) + ", 8)";
+            else if (field.DataTypeCode == "Date") datePartsSqlColum = "convert(varchar(10)," + (field.DWObjectTableCode + "." + field.Code) + ", 120)";
+            datePartsSqlColum += ((!string.IsNullOrEmpty(field.DisplayName) ? " as " + field.DisplayName + "," : ","));
+            return datePartsSqlColum;
         }
 
         public DataTable GetDWQueryData(SqlCommandDefinition sqlCommandDefinition)

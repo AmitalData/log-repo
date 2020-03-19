@@ -43,6 +43,7 @@ import { CardContactAdditionalServicePM } from '../EntityPMs/CardContactAddition
 import { CarrierAreaList } from '../EntityLists/CarrierAreaList';
 import { CarrierAreaPM } from '../EntityPMs/CarrierAreaPM';
 import { CarrierAreasPortPM } from '../EntityPMs/CarrierAreasPortPM';
+import { AccountingPartnerPMService } from './StandardPMs/AccountingPartnerPMService';
 
 @Injectable()
 
@@ -1010,8 +1011,8 @@ export class PartnersDomainService {
             if (mapParent) {
                 newTarrifFromToPM.OldEntityPM = this.clone(newTarrifFromToPM);
                 newTarrifFromToPM.UniqueKey = Guid.newGuid();
-                newTarrifFromToPM.ChangeSetOp = "None";
-                jItem.ChangeSetOp = "None";
+                newTarrifFromToPM.ChangeOp = "None";
+                jItem.ChangeOp = "None";
 
             }
             else {
@@ -1019,10 +1020,10 @@ export class PartnersDomainService {
                 if (newTarrifFromToPM.UniqueKey) {
 
                     if (jItem.IsDirty)
-                        newTarrifFromToPM.ChangeSetOp = "Update";
+                        newTarrifFromToPM.ChangeOp = "Update";
                 }
                 else {
-                    newTarrifFromToPM.ChangeSetOp = "Insert";
+                    newTarrifFromToPM.ChangeOp = "Insert";
                 }
 
                 newTarrifFromToPM.OldEntityPM = null;
@@ -1039,7 +1040,7 @@ export class PartnersDomainService {
                 if (entityPM.TarrifFromToes.filter(p => p.UniqueKey === oldTarrifFromToes[itemKey].UniqueKey).length === 0) {
 
                     if (oldTarrifFromToes[itemKey]) {
-                        oldTarrifFromToes[itemKey].ChangeSetOp = "Delete";
+                        oldTarrifFromToes[itemKey].ChangeOp = "Delete";
                         entityPM.TarrifFromToes.push(oldTarrifFromToes[itemKey]);
                     }
                 }
@@ -1127,6 +1128,13 @@ export class PartnersDomainService {
                 if (jsonPM[property]) {
                     var myVendorPMService = new VendorPMService();
                     entity[property] = myVendorPMService.MapJsonToEntityPM(jsonPM[property], getCallMap);
+                }
+            }
+
+            else if (property === "AccountingPartner") {
+                if (jsonPM[property]) {
+                    var myAccountingPartnerPMService = new AccountingPartnerPMService();
+                    entity[property] = myAccountingPartnerPMService.MapJsonToEntityPM(jsonPM[property], getCallMap);
                 }
             }
 
@@ -1279,6 +1287,11 @@ export class PartnersDomainService {
 
                 case "VD": {
                     args.Vendor = myPartner;
+                    break;
+                }
+
+                case "AC": {
+                    args.AccountingPartner = myPartner;
                     break;
                 }
 
@@ -1789,6 +1802,19 @@ export class PartnersDomainService {
             }).catch(ServiceHelper.HandleServiceError);
         });
     }
+
+    GetInUseWarehouse(code: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
+        var url = this._apiUrl + '/GetInUseWarehouse?code=' + code;
+
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                return response.json();
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
 }
 export class AirlineMessagingRuleList {
     Id: string;
@@ -1796,6 +1822,7 @@ export class AirlineMessagingRuleList {
     AirlineId: string;
     MessageTypeCode: string;
     RuleFieldId: string;
+    RuleFieldCode: string;
     IsMandatoryForSending: boolean;
     MaxSize: number;
     InActive: boolean;

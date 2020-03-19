@@ -624,6 +624,16 @@ export class GLAccountPM {
     public set InterestCreditLimit(newValue: number) { if (this.interestCreditLimit != newValue) { this.interestCreditLimit = newValue; this.MarkAsDirty("InterestCreditLimit"); } }
        
 	 
+    private nameForPrintingCheques: string;
+    public get NameForPrintingCheques() { return this.nameForPrintingCheques; }
+    public set NameForPrintingCheques(newValue: string) { if (this.nameForPrintingCheques != newValue) { this.nameForPrintingCheques = newValue; this.MarkAsDirty("NameForPrintingCheques"); } }
+       
+	 
+    private smallcashbook: boolean;
+    public get Smallcashbook() { return this.smallcashbook; }
+    public set Smallcashbook(newValue: boolean) { if (this.smallcashbook != newValue) { this.smallcashbook = newValue; this.MarkAsDirty("Smallcashbook"); } }
+       
+	 
 
     public OldEntityPM: GLAccountPM;
 		

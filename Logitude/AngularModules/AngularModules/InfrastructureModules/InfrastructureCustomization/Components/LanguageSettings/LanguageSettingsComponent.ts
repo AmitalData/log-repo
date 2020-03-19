@@ -20,6 +20,7 @@ export class LanguageSettingsComponent {
     public ValidationErrorsList: string[] = [];
     public TenantPM: TenantPM;
     private CurrentSession = SessionLocator.SelectedSession;
+    public IsLanguageDisabled: boolean = false;
     constructor() {
         this.LoadTenantPMMethod();
     }
@@ -28,6 +29,9 @@ export class LanguageSettingsComponent {
         var myService: TenantPMService = new TenantPMService();
         myService.get(SessionLocator.TenantPM.Id).subscribe((response: ServiceResponse) => {
             this.TenantPM = response.Result;
+
+            this.IsLanguageDisabled = this.TenantPM.Id == 65 ? true : false;
+
             this.LoadLanguages();
             this.LoadFormat();
         });
@@ -58,7 +62,7 @@ export class LanguageSettingsComponent {
 
             else {
                 this.selectedLanguageCode = value.Code;
-                this.TenantPM.Language = value.Description;
+                this.TenantPM.Language = value.Code;
             }
         }
     }

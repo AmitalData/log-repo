@@ -50,5 +50,7 @@ export class AccountingSettingList {
 		EnableInvoiceStocksManagement: boolean;
 		RefreshToken: string;
 		QBOOAuth: number;
+		AllowManualARPaymentNumber: boolean;
+		AllowRegionalTaxManagement: boolean;
 	
 }

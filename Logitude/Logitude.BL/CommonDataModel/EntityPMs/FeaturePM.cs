@@ -21,6 +21,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public bool IsOld { get; set; }
         public bool IsCoreFeature { get; set; }
         public string ToggleCode { get; set; }
+        public string FeatureUniqeCode { get; set; }
         public string NameTextCodeCode { get; set; }
 
         // Dummy

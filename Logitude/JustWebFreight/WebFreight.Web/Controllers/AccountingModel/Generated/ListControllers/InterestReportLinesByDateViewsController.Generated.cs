@@ -59,8 +59,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckContactFeature("InterestReportLinesByDate", "READ", authToken.Tenant);
-	                IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
+                IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
                 InterestReportLinesByDateListQueryService interestReportLinesByDateQuery = new InterestReportLinesByDateListQueryService(MyContext);
                 InterestReportLinesByDateList interestReportLinesByDateList = interestReportLinesByDateQuery.GetSingle(id);
  				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
@@ -82,8 +81,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckContactFeature("InterestReportLinesByDate", "READ", authToken.Tenant);
-	                IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
+                IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
                 InterestReportLinesByDateListQueryService interestReportLinesByDateQuery = new InterestReportLinesByDateListQueryService(MyContext);
                 List<InterestReportLinesByDateList> result = interestReportLinesByDateQuery.GetList(authToken.Tenant);
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
@@ -105,8 +103,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckContactFeature("InterestReportLinesByDate", "READ", authToken.Tenant);
-	                
+                
 				int tenant = authToken.Tenant;
 
                 QueryOperations queryOperations = new QueryOperations()

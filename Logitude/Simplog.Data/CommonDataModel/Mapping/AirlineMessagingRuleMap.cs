@@ -43,7 +43,12 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.UpdatedByUserId)
                 .HasMaxLength(15)
                 .IsUnicode(false);
-                        
+
+            this.Property(t => t.RuleFieldCode)
+                .IsRequired()
+                .HasMaxLength(200)
+                .IsUnicode(false);
+
             // Table & Column Mappings
             this.ToTable("AirlineMessagingRules");
             this.Property(t => t.Id).HasColumnName("Id");
@@ -58,7 +63,8 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.CreateDate).HasColumnName("CreateDate");
             this.Property(t => t.UpdatedByUserId).HasColumnName("UpdatedByUserId");
             this.Property(t => t.UpdateDate).HasColumnName("UpdateDate");
-           
+            this.Property(t => t.RuleFieldCode).HasColumnName("RuleFieldCode");
+
             // Relationships
             this.HasRequired(t => t.RuleField).WithMany().HasForeignKey(d => d.RuleFieldId);
             this.HasRequired(t => t.Airline).WithMany().HasForeignKey(d => d.AirlineId);

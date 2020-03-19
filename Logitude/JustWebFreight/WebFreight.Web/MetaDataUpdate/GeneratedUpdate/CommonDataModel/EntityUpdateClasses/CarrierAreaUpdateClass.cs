@@ -626,6 +626,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	         Screen CarrierAreaCarrierAreaHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CarrierArea.HeaderScreen", Name = "CarrierAreaHeaderScreen", ObjectTableId = CarrierAreaObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       	
 		    CarrierAreaObjectTable.HeaderScreenId = CarrierAreaCarrierAreaHeaderScreenScreen0.Id;
+		    CarrierAreaObjectTable.HeaderScreenCode = CarrierAreaCarrierAreaHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }

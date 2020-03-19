@@ -618,6 +618,18 @@ namespace Logitude.Server.Tools.Helpers
                 return 10 - (sum % 10);
             }
         }
+        public static string Trim(string value)
+        {
+            if (string.IsNullOrEmpty(value))
+            {
+                return null;
+            }
+
+            else
+            {
+                return value.Trim();
+            }
+        }
     }
 
     public class DatesHelper

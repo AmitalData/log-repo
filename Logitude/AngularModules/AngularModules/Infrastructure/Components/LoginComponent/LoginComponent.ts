@@ -172,8 +172,8 @@ export class LoginComponent implements OnInit {
             if (SessionLocator.ExternalParams) {
                 if (SessionLocator.ExternalParams.Menu) {
                     var menuName = SessionLocator.ExternalParams.Menu.toLocaleLowerCase();
-                    if (menuName == "logbox" || menuName == "dapp" || menuName == "protractor" || menuName == "preq") {
-                        if (menuName == "preq") {
+                    if (menuName == "logbox" || menuName == "dapp" || menuName == "protractor" || menuName == "preq" || menuName == "uid") {
+                        if (menuName == "preq" || menuName == "uid") {
                             this.LoginCompleted.emit("IgnoreTerms");
                             return;
                         }
@@ -233,7 +233,7 @@ export class LoginComponent implements OnInit {
             SessionInfo.WebTokenLifeTimeInMinutes = userData.WebTokenLifeTimeInMinutes;
             SessionInfo.KeepUserLoggedIn = userData.KeepUserLoggedIn;
             SessionInfo.LastLoginDateTime = userData.LastLoginDateTime;
-
+            this.FillProtractorEmails();
 
 
             AmitalGatewayUtil.Instance.AmitalBrowserInUse = userData.AmitalBrowserInUse;
@@ -276,6 +276,22 @@ export class LoginComponent implements OnInit {
         }
         window.sessionStorage.setItem("userdata", "");
     }
+
+    FillProtractorEmails() {
+        SessionLocator.ProtractorEmails.push("razantest@protractor.com".toLowerCase());
+        SessionLocator.ProtractorEmails.push("protractor@test.com".toLowerCase());
+        SessionLocator.ProtractorEmails.push("ahmadb@logbox.com".toLowerCase());
+        SessionLocator.ProtractorEmails.push("ahmadb@test.com".toLowerCase());
+        SessionLocator.ProtractorEmails.push("raghad@protractor.com".toLowerCase());
+        SessionLocator.ProtractorEmails.push("sgautomation@pro.com".toLowerCase());
+        SessionLocator.ProtractorEmails.push("sumaya@cloud.com".toLowerCase());
+        SessionLocator.ProtractorEmails.push("sumaya@automation.com".toLowerCase());
+        SessionLocator.ProtractorEmails.push("sg1209@test.com".toLowerCase());
+        SessionLocator.ProtractorEmails.push("lana3@test.com".toLowerCase());
+        SessionLocator.ProtractorEmails.push("protractor2@test.com".toLowerCase());
+
+    }
+
     OneUsePasswordMethod() {
         this.loginService.GetOneUsePassword().subscribe(userData => {
 
@@ -675,7 +691,7 @@ export class LoginComponent implements OnInit {
 
                     // Accounting - Abdullah
                     if (InfraSettings.TenantPM) {
-                        myResult.LayoutDirection = InfraSettings.TenantPM.LayoutDirection ? InfraSettings.TenantPM.LayoutDirection.toLowerCase() : InfraSettings.TenantPM.LayoutDirection;
+                        myResult.LayoutDirection = SessionInfo.LoggedUserPM.LayoutDirection ? SessionInfo.LoggedUserPM.LayoutDirection.toLowerCase():(InfraSettings.TenantPM.LayoutDirection ? InfraSettings.TenantPM.LayoutDirection.toLowerCase() : InfraSettings.TenantPM.LayoutDirection);
                     }
 
                     //
@@ -838,6 +854,13 @@ export class LoginComponent implements OnInit {
                 //        ObsList.push(view);
                 //    }
                 //});
+            }
+        });
+
+        this.myInfrastructureDomainService.getDWObjectFieldsWithChildrenByDWTableId("Fact_Charges").subscribe(Result => {
+            if (!Result.HasError) {
+                window.DWObjectFields.concat(Result.Result);
+                this.IncreaseProgressBar();
             }
         });
                 //this._objectTableRuleFieldPMService.getAllByTenant(CurrentTenant).subscribe(myResult => {

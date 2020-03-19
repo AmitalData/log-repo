@@ -23,7 +23,7 @@ export class NewInterestReportComponent extends BaseComponent implements OnDestr
 
     public EntityPM: InterestReportPM;
     public ObjectTableName: string = "InterestReport";
-    public DataContext: InterestReportGeneralTabComponent = this;
+    public DataContext: NewInterestReportComponent = this;
     private CurrentSession = SessionLocator.SelectedSession;
     public TenantPM: TenantPM;
     public isRTL: boolean = false;
@@ -85,6 +85,19 @@ export class NewInterestReportComponent extends BaseComponent implements OnDestr
         }
     }
 
+    get CustomerId() {
+        if (this.EntityPM != null) {
+            return this.EntityPM.CustomerId;
+        }
+        else
+            return null;
+    }
+    set CustomerId(newValue: string) {
+        if (this.EntityPM.CustomerId != newValue) {
+            this.EntityPM.CustomerId = newValue;
+        }
+    }
+
     CancelButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
     }
@@ -99,7 +112,9 @@ export class NewInterestReportComponent extends BaseComponent implements OnDestr
     }
 
     SubmitChanges() {
+        this.CurrentSession.StartBusyIndicatorLoading();
         this.myService.insert(this.EntityPM).subscribe(myResult => {
+            this.CurrentSession.StopBusyIndicator();
             var iServiceResponse: ServiceResponse = myResult;
             if (!iServiceResponse.HasError) {
                 var entity = iServiceResponse.Result;

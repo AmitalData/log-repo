@@ -27,6 +27,8 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public bool AutoCompleteSearchWindow { get; set; }
         public bool IsClosed { get; set; }
         public string HeaderScreenId { get; set; }
+        public string HeaderScreenCode { get; set; }
+
         public bool CacheOnClient { get; set; }
         public bool EditableFromAutoCompleteWindow { get; set; }
         public DateTime LastUpdateDate { get; set; }

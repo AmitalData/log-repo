@@ -20,7 +20,9 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public bool Italic { get; set; }
         public bool UnDerLine { get; set; }
         public string Alignment { get; set; }
- 
+        public string Title { get; set; }
+        public string TextValue { get; set; }
+        public  bool HideAlignment { get; set; }
     }
 }
 

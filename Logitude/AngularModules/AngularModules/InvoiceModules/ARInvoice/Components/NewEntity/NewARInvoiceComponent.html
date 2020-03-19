@@ -14,7 +14,7 @@
 
                     <tr class="FormFieldRow">
                         <td style="width:140px;">
-                            <LogLabel [ObjectFieldName]="'PartnerType'" [NoObjectField]="true" [DataContext]="DataContext" [TextCode]="'ARInvoice.F.PartnerType'"></LogLabel>
+                            <LogLabel [ObjectFieldName]="'PartnerType'" [NoObjectField]="true" [DataContext]="DataContext" [TextCode]="'PartnerType'"></LogLabel>
                         </td>
 
                         <td style="width:230px;">
@@ -187,7 +187,6 @@
 
                     </tr>
 
-
                     <!-- SATPaymentMethodCode -->
                     <tr *ngIf="DisplaySATSettings" class="FormFieldRow">
                         <td [title]="'ARInvoice.F.SATPaymentMethodCode' | TextCodeTranslationPipe">
@@ -328,6 +327,42 @@
 
                         <td>
                             <div></div>
+                        </td>
+                    </tr>
+
+                    <!-- RegionalTaxId -->
+                    <tr class="FormFieldRow" *ngIf="IsRegionalTaxVisible">
+                        <td>
+                            <LogLabel [ObjectFieldName]="'RegionalTaxId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                        </td>
+
+                        <td colspan="2">
+                            <table>
+                                <tr>
+                                    <td style="width: 194px">
+                                        <LogLov [ObjectFieldName]="'RegionalTaxId'"
+                                                [SelectedValue]="RegionalTaxId"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext"
+                                                [LookUpTableName]="'VatType'"
+                                                [HideColumns]="true"
+                                                [DependencyFilter2Value]="true">
+                                        </LogLov>
+                                    </td>
+
+                                    <td style="width: 1px; padding-left: 5px;" *ngIf="RegionalTaxId">
+                                        {{RegionalTaxPercentage | NumbersPipe:'N2'}}
+                                    </td>
+
+                                    <td style="width: 1px; padding-left: 3px;" *ngIf="RegionalTaxId">
+                                        %
+                                    </td>
+
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+                            </table>
                         </td>
                     </tr>
 

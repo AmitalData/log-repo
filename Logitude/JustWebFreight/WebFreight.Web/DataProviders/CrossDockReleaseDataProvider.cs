@@ -49,7 +49,45 @@ namespace WebFreight.Web.DataProviders
 
         public List<ReleasePackage> ReleasePackages { get; set; }
         public List<ReleasePackageGroup> ReleasePackagesGroupList { get; set; }
+
+        public DateTime? DeclarationDate { get; set; }
+        public string DeclarationNumber { get; set; }
+        public int NumberofDaysInTheWarehouse { get; set; }
+        public string ConsigneeVATNumber { get; set; }
+        public string ConsigneeContactPersonName { get; set; }
+        public string ConsigneeContactPersonEmail { get; set; }
+        public double? ValueofGoods { get; set; }
+        public string ValueofGoodsCurrency { get; set; }
+        public string Incoterm { get; set; }
+        public string GeneralDescriptionofGoods { get; set; }
+        public string ShipperVATNumber { get; set; }
+        public string ShipperContactPersonName { get; set; }
+        public string ShipperContactPersonEmail { get; set; }
+        public string ShipmentField1 { get; set; }
+        public string ShipmentField2 { get; set; }
+        public string ShipmentField3 { get; set; }
+        public string ShipmentField4 { get; set; }
+        public string ShipmentField5 { get; set; }
+        public string ShipmentField6 { get; set; }
+        public string ShipmentField7 { get; set; }
+        public string ShipmentField8 { get; set; }
+        public string ShipmentField9 { get; set; }
+        public string ShipmentField10 { get; set; }
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
+    
 
     public class ReleasePackageGroup
     {

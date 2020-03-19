@@ -35,6 +35,8 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public string ControlPath { get; set; }
         public ChangeSetOperation ChangeSetOp { get; set; }
         public string DisplayText { get; set; }
+        public string FeatureUniqeCode { get; set; }
+
 
 
     }

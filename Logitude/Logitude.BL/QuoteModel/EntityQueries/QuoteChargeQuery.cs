@@ -214,6 +214,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
             QuotePriceStepsQuery quotePriceStepsQuery = new QuotePriceStepsQuery(quotePriceStepsRepository);
 
             QuoteTotalVATRepository quoteTotalVATRepository = new QuoteTotalVATRepository(this.repository.context);
+            VATTypesGroupRepository vATTypesGroupRepository = new VATTypesGroupRepository(tenant);
 
             List<QuoteTotalVAT> totalVats = quoteTotalVATRepository.GetTotalVATs(id, tenant).ToList();
 
@@ -228,9 +229,22 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                         quoteChargePM.ExternalTAXItemId = singleTotalVat.ExternalTAXItemId;
                     }
 
-                    if (quoteChargePM.SaleTotalAmount != null && quoteChargePM.VatPercentage != null)
+                    if (quoteChargePM.SaleTotalAmount != null)
                     {
-                        quoteChargePM.VatAmount = quoteChargePM.SaleTotalAmount * quoteChargePM.VatPercentage / 100;
+                        if (quoteChargePM.VatPercentage != null)
+                        {
+                            quoteChargePM.VatAmount = quoteChargePM.SaleTotalAmount * quoteChargePM.VatPercentage / 100;
+                        }
+
+                        else
+                        {
+                            //MULTI
+                            List<VATTypesGroup> myVatGroups = vATTypesGroupRepository.GetVATTypesGroup(quoteChargePM.VatTypeId, tenant).ToList();
+                            List<string> VATsIds = myVatGroups.Select(s => s.SingleVATTypeId).ToList();
+                            double? percentage = totalVats.Where(d => VATsIds.Contains(d.VatTypeId)).Sum(s => s.VatPercent);
+
+                            quoteChargePM.VatAmount = quoteChargePM.SaleTotalAmount * percentage / 100;
+                        }
                     }
                 }
 

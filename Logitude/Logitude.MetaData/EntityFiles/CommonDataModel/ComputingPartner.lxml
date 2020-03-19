@@ -44,7 +44,7 @@
   ClientModuleName="&quot;Common&quot;"
   NewWizardComponentPath="&quot;./InfrastructureModules/InfrastructureComputingPartner/Components/NewComputingPartnerConmponent&quot;"
   NoViewController="false"
-  NoPMController="false"
+  NoPMController="true"
   NoTS="false"
   NoDefaultFeatures="false"
   HasCompactSearch="false"

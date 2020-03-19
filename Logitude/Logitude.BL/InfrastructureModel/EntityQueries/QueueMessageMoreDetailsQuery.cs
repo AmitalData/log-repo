@@ -11,8 +11,9 @@ using Logitude.BL.Helpers;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
-using Simplog.Data.InfrastructureModel.EntityPMs;
-using Simplog.Data.InfrastructureModel.EntityLists;
+ 
+ 
+using Logitude.BL.InfrastructureModel.EntityLists;
 
 namespace Logitude.BL.InfrastructureModel.EntityQueries
 {

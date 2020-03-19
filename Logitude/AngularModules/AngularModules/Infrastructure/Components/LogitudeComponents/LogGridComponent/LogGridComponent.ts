@@ -27,7 +27,7 @@ import { filter } from 'rxjs/operators';
     //directives: [CORE_DIRECTIVES, ObjectFieldTemplate, ListHeaderTemplateComponent, ListTemplateComponent],
     providers: [PubSubService1],
     //pipes: [TextCodeTranslationPipe],
-    inputs: ['columns', 'rowCount', 'dataSource', 'searchFields', 'queryId', 'QueryChangeEvent', 'Filterchangeevent', 'pubSubAdvanceQueryFiltersServiceRecived', 'autoLoad', 'SearchFieldchangeevent', 'MenuHeaderchangeevent', 'SelectedRow', 'ObjectTable', 'ColumnsReady', 'IsCustomTemplate', 'CustomColumnsReady', 'SelectFirstRow', 'EnableRowHoverVisibility', 'RowHoverVisibilityQueryName', 'HoverTemplateIndex', 'HasPermition', 'ShowArrow', 'IsGradiantSelectedColor', 'rowHeight', 'RowHoverColor', 'RowBackGroundColor', 'ChangeColorByPropName', 'ChangeColorByPropValue', 'IgnoreRowHoverVisibilityQueryName', 'PassAdditionalDataToTemplates', 'ShowHLineOverRow', 'EnableRowToolTip', 'ToolTipWidth', 'ToolTipHeight', 'ToolTipBinding', 'IsAllRecordsChecked', 'HighLightSelectedRow', 'SelectedRows', 'EnableMultiSelection', 'CustomBackFromEdit', 'CheckBoxFilterChanged', 'IsCheckBoxEnabled', 'FireCheckBoxChecked', 'Disabled', 'UseBusyIndecator', 'MarkIsChecked', 'MyScrollTop', 'MySelectedRowIndex', 'SortServerProp', 'ReloadData', 'CheckboxProp'],
+    inputs: ['columns', 'rowCount', 'dataSource', 'searchFields', 'queryId', 'queryCode', 'QueryChangeEvent', 'Filterchangeevent', 'pubSubAdvanceQueryFiltersServiceRecived', 'autoLoad', 'SearchFieldchangeevent', 'MenuHeaderchangeevent', 'SelectedRow', 'ObjectTable', 'ColumnsReady', 'IsCustomTemplate', 'CustomColumnsReady', 'SelectFirstRow', 'EnableRowHoverVisibility', 'RowHoverVisibilityQueryName', 'HoverTemplateIndex', 'HasPermition', 'ShowArrow', 'IsGradiantSelectedColor', 'rowHeight', 'RowHoverColor', 'RowBackGroundColor', 'ChangeColorByPropName', 'ChangeColorByPropValue', 'IgnoreRowHoverVisibilityQueryName', 'PassAdditionalDataToTemplates', 'ShowHLineOverRow', 'EnableRowToolTip', 'ToolTipWidth', 'ToolTipHeight', 'ToolTipBinding', 'IsAllRecordsChecked', 'HighLightSelectedRow', 'SelectedRows', 'EnableMultiSelection', 'CustomBackFromEdit', 'CheckBoxFilterChanged', 'IsCheckBoxEnabled', 'FireCheckBoxChecked', 'Disabled', 'UseBusyIndecator', 'MarkIsChecked', 'MyScrollTop', 'MySelectedRowIndex', 'SortServerProp', 'ReloadData', 'CheckboxProp'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 
@@ -87,6 +87,8 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
     canvasHeight: any;// = {};
     rowCount: number;
     public queryId: string;
+    public queryCode: string;
+
     viewportSize: number;
     cachedPages: any[] = [];
     pageIndex: number = 0;
@@ -122,6 +124,8 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
     IsCustomTemplate: boolean = false;
     private timerToken: any;
     ColumnsQueryId: string;
+    ColumnsQueryCode: string;
+
     SelectFirstRow: boolean = false;
     EnableRowHoverVisibility: boolean = false;
     RowHoverVisibilityQueryName: string;
@@ -282,7 +286,7 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
                 ColIndexes.push({ FieldName: ColumnsElements[i].attributes['colid'].value, Index: +(ColumnsElements[i].id.split(',')[1]), Width: ColumnsElements[i].clientWidth });
             }
         }
-        this.ColumnResisedevent.emit({ QueryId: this.ColumnsQueryId, ColIndexes: ColIndexes });
+        this.ColumnResisedevent.emit({ QueryCode: this.ColumnsQueryCode, ColIndexes: ColIndexes });
     }
     isResizing: boolean = false;
     lastDownX: number = 0;
@@ -770,7 +774,7 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
             var index = 0
           var left = 0;
           if (this.ObjectTable) {
-            var query = window.Queries.filter(q => q.ObjectTableId == this.ObjectTable.Id && q.Id == this.queryId)[0];
+              var query = window.Queries.filter(q => q.ObjectTableId == this.ObjectTable.Id && q.UniqueCode == this.queryCode)[0];
             if (query && !AppTool.IsNullOrEmpty(query.SpotlightDataTemplate)) {
               this.IsSpotLight = true;
               this.SpotlightDataTemplate = query.SpotlightDataTemplate;
@@ -787,7 +791,7 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
             //}
             this.TotalWidth = 0;
             this.columns.forEach((value, key) => {
-                this.ColumnsQueryId = value.QueryId;
+                this.ColumnsQueryCode = value.QueryCode;
                 value.index = index;
                 index++;
                 if (value.Editable == undefined) {
@@ -841,7 +845,7 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
                 //}
                 this.TotalWidth = 0;
                 this.columns.forEach((value, key) => {
-                    this.ColumnsQueryId = value.QueryId;
+                    this.ColumnsQueryCode = value.QueryCode;
                     value.index = index;
                     index++;
                     if (value.Editable == undefined) {
@@ -905,7 +909,7 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
                 this.TotalWidth = 0;
                 this.columns = res;
                 this.columns.forEach((value, key) => {
-                    this.ColumnsQueryId = value.QueryId;
+                    this.ColumnsQueryCode = value.QueryCode;
                     value.index = index;
                     index++;
                     if (value.Editable == undefined) {
@@ -987,7 +991,7 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
                 //    });
                 //}
                 //this.Filters = res.Filters;
-                this.queryId = res.QueryId;
+                this.queryCode = res.QueryCode;
                 this.init(true);
             });
         }
@@ -1320,8 +1324,8 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
                 for (var i = 0; i < ColumnsElements.length; i++) {
                     if (ColumnsElements[i].attributes['LogGridId'].value == this.LogGridId && ColumnsElements[i].attributes['colid']) {
                         if (ColumnsElements[i].attributes['colid'].value == colDef.FieldName) {
-                            (<HTMLElement>ColumnsElements[i]).style.color = 'rgb(103, 103, 103)';
-                            (<HTMLElement>ColumnsElements[i]).style.background = '#cfcbcb';
+                            //(<HTMLElement>ColumnsElements[i]).style.color = 'rgb(103, 103, 103)';
+                            //(<HTMLElement>ColumnsElements[i]).style.background = '#cfcbcb';
                         }
                     }
                     //ColIndexes.push({ FieldName: ColumnsElements[i].attributes['colid'].value, Index: +(ColumnsElements[i].id.split(',')[1]), Width: ColumnsElements[i].clientWidth });
@@ -1334,6 +1338,10 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
             this.rows = [];
             //this.init();
             this.updateDisplayList();
+            var elem: HTMLDivElement = <HTMLDivElement>document.getElementById(this.LogGridRowsId);
+            if (elem) {
+                elem.scrollTop = 0;
+            }
             //var columns: HTMLDivElement = <HTMLDivElement>document.getElementById(this.LogGridColumnsId);
             //if (columns) {
             //    columns.style.left = (-1 * this.HScrollPosition) + "px";
@@ -1360,7 +1368,7 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
 
         //this.rows = [];
         if (this.ObjectTable) {
-            var query = window.Queries.filter(q => q.ObjectTableId == this.ObjectTable.Id && q.Id == this.queryId)[0];
+            var query = window.Queries.filter(q => q.ObjectTableId == this.ObjectTable.Id && q.UniqueCode == this.queryCode)[0];
             if (query && !AppTool.IsNullOrEmpty(query.SpotlightDataTemplate)) {
                 this.IsSpotLight = true;
                 this.SpotlightDataTemplate = query.SpotlightDataTemplate;
@@ -2118,10 +2126,10 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
     private RedrowScrollBar() {
         this.AfterServerSort = false;
         var columns: HTMLDivElement = <HTMLDivElement>document.getElementById(this.LogGridColumnsId);
-        var elem: HTMLDivElement = <HTMLDivElement>document.getElementById(this.LogGridRowsId);
+        var elem: HTMLDivElement = <HTMLDivElement>document.getElementById(this.LogGridRowsId); 
 
         if (columns) {
-            elem.scrollLeft = +(this.HorizantalScrollValue.replace("px", ""));
+            elem.scrollLeft = +(this.HorizantalScrollValue.replace("px", "")); 
             columns.style.left = (-1 * (+(this.HorizantalScrollValue.replace("px", "")))) + "px";
         }
     }
@@ -2230,6 +2238,7 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
     private countIsHere = true;
     private oldSearchFields: string;
     private oldQueryId: string;
+    private oldQueryCode: string;
 
     editingCell: any = [];
     focusCell($event, rowIndex, colIndex) {

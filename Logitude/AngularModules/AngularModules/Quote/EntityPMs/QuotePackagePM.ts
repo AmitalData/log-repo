@@ -93,9 +93,9 @@ export class QuotePackagePM {
     public set Dimensions(newValue: string) { if (this.dimensions != newValue) { this.dimensions = newValue; this.MarkAsDirty("Dimensions"); } }
        
 	 
-    private quote: string;
+    private quote: any;
     public get Quote() { return this.quote; }
-    public set Quote(newValue: string) { if (this.quote != newValue) { this.quote = newValue; this.MarkAsDirty("Quote"); } }
+    public set Quote(newValue: any) { if (this.quote != newValue) { this.quote = newValue; this.MarkAsDirty("Quote"); } }
        
 	 
     private changeSetOp: string;

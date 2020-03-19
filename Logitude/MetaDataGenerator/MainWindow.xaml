@@ -24,6 +24,7 @@
 			<ComboBoxItem Content="Invoice"/>
 			<ComboBoxItem Content="Infrastructure"/>
 			<ComboBoxItem Content="Global"/>
+            <ComboBoxItem Content="None"/>
 		</ComboBox>
 
 		<StackPanel Orientation="Horizontal"  Grid.Row="2" VerticalAlignment="Top" HorizontalAlignment="Center">

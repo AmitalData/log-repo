@@ -168,7 +168,6 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
    
 
         ComponentArgs.AddComponent(new ParameterComponentArgs(this.CurrentSession.Sessionkey + "DWLogSearchWindow", this));
-
         this.ObjectTableName = args.ObjectTableName; // lookup table
         this.ObjectFieldName = args.DisplayFieldsFromList;
         this.LOVAdditionalColumns = this.BuildAdditionalColumns(args.LOVAdditionalColumns);

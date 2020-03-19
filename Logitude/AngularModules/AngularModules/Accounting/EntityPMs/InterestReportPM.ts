@@ -7,6 +7,7 @@
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 
+import {InterestReportLinesByDatePM} from './InterestReportLinesByDatePM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -132,6 +133,60 @@ export class InterestReportPM {
     private interestReportStatusName: string;
     public get InterestReportStatusName() { return this.interestReportStatusName; }
     public set InterestReportStatusName(newValue: string) { if (this.interestReportStatusName != newValue) { this.interestReportStatusName = newValue; this.MarkAsDirty("InterestReportStatusName"); } }
+       
+	 
+    private searchFields: string;
+    public get SearchFields() { return this.searchFields; }
+    public set SearchFields(newValue: string) { if (this.searchFields != newValue) { this.searchFields = newValue; this.MarkAsDirty("SearchFields"); } }
+       
+	 
+    private interestReportStatusLocalName: string;
+    public get InterestReportStatusLocalName() { return this.interestReportStatusLocalName; }
+    public set InterestReportStatusLocalName(newValue: string) { if (this.interestReportStatusLocalName != newValue) { this.interestReportStatusLocalName = newValue; this.MarkAsDirty("InterestReportStatusLocalName"); } }
+       
+	 
+    private customerId: string;
+    public get CustomerId() { return this.customerId; }
+    public set CustomerId(newValue: string) { if (this.customerId != newValue) { this.customerId = newValue; this.MarkAsDirty("CustomerId"); } }
+       
+	 
+     
+	private interestReportLinesByDates: InterestReportLinesByDatePM[];
+    get  InterestReportLinesByDates() {
+        if (this.interestReportLinesByDates == null) {
+            this.interestReportLinesByDates = [];
+        }
+
+        return this.interestReportLinesByDates;
+    }
+    set  InterestReportLinesByDates(newValue: InterestReportLinesByDatePM[]) {
+        if (this.interestReportLinesByDates != newValue) {
+            this.interestReportLinesByDates = newValue;
+        }
+    }
+    public AddInterestReportLinesByDate(item: InterestReportLinesByDatePM) {
+        if (item != null) {
+            var index = this. InterestReportLinesByDates.indexOf(item);
+            if (index == -1) {
+                item.EntityParentPM = this;
+                this. InterestReportLinesByDates.push(item);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    public RemoveInterestReportLinesByDate(item: InterestReportLinesByDatePM) {
+        if (item != null) {
+            var index = this. InterestReportLinesByDates.indexOf(item);
+            if (index > -1) {
+                this. InterestReportLinesByDates.splice(index, 1);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    //public InterestReportLinesByDates: Array<InterestReportLinesByDatePM>= [];
+     private customerName: string;
+    public get CustomerName() { return this.customerName; }
+    public set CustomerName(newValue: string) { if (this.customerName != newValue) { this.customerName = newValue; this.MarkAsDirty("CustomerName"); } }
        
 	 
 

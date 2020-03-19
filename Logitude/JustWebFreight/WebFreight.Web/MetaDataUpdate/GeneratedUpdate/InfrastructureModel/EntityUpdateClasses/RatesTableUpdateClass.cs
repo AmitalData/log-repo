@@ -88,6 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    OldDBTableName =  "RatesTables",
 			      				    ObjectTableSingular =  "Rates Table",
 			      				    ObjectTablePlural =  "RatesTables",
+			      				    DescriptionDefaultText =  "Insert the daily exchange rates of currencies to your base currency.",
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
 			      				    HasHelper =  false,
@@ -194,6 +195,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "ForeignCurrencyId",
@@ -261,6 +263,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "ForeignCurrencyCode",
@@ -325,6 +328,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "BaseCurrencyId",
@@ -342,7 +346,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
 					  						MaxLength =  15,
-					  						IsRequired =  true,
+					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
@@ -392,6 +396,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Rate",
@@ -409,7 +414,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
 					  						MaxLength =  15,
-					  						IsRequired =  true,
+					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
@@ -459,6 +464,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "ValueDate",
@@ -524,6 +530,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -551,18 +558,30 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query RatesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = RatesTableTextCode_0.Id, NameTextCodeCode = RatesTableTextCode_0.Code, Code = "Rates",  QueryGroupCode = "RATE", IndexOrder = 0, Tenant = 0, ObjectTableId = RatesTableObjectTable.Id, QuerySection = "RatesTable", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = RatesTableFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query RatesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = RatesTableTextCode_0.Id, NameTextCodeCode = RatesTableTextCode_0.Code, ObjectTableName = "RatesTable", Code = "Rates",  QueryGroupCode = "RATE", IndexOrder = 0, Tenant = 0, ObjectTableId = RatesTableObjectTable.Id, QuerySection = "RatesTable", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = RatesTableFeature_0.Id,FeatureUniqeCode= RatesTableFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn RatesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RatesQuery.Id, IndexOrder = 0, ObjectFieldId = RatesTableObjectFields.Where(d => d.FieldName == "ForeignCurrencyCode" && d.ObjectTableId == RatesTableObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = RatesTableObjectFields.Where(d => d.FieldName == "ForeignCurrencyCode" && d.ObjectTableId == RatesTableObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn RatesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RatesQuery.Id,QueryCode = RatesQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = RatesTableObjectFields.Where(d => d.FieldName == "ForeignCurrencyCode" && d.ObjectTableId == RatesTableObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = RatesTableObjectFields.Where(d => d.FieldName == "ForeignCurrencyCode" && d.ObjectTableId == RatesTableObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn RatesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RatesQuery.Id, IndexOrder = 1, ObjectFieldId = RatesTableObjectFields.Where(d => d.FieldName == "ValueDate" && d.ObjectTableId == RatesTableObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = RatesTableObjectFields.Where(d => d.FieldName == "ValueDate" && d.ObjectTableId == RatesTableObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn RatesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RatesQuery.Id,QueryCode = RatesQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = RatesTableObjectFields.Where(d => d.FieldName == "ValueDate" && d.ObjectTableId == RatesTableObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = RatesTableObjectFields.Where(d => d.FieldName == "ValueDate" && d.ObjectTableId == RatesTableObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn RatesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RatesQuery.Id, IndexOrder = 2, ObjectFieldId = RatesTableObjectFields.Where(d => d.FieldName == "Rate" && d.ObjectTableId == RatesTableObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = RatesTableObjectFields.Where(d => d.FieldName == "Rate" && d.ObjectTableId == RatesTableObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn RatesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RatesQuery.Id,QueryCode = RatesQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = RatesTableObjectFields.Where(d => d.FieldName == "Rate" && d.ObjectTableId == RatesTableObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = RatesTableObjectFields.Where(d => d.FieldName == "Rate" && d.ObjectTableId == RatesTableObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 	   
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
-	    {    
+	    {   
+
+		   ObjectTable RatesTableObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "RatesTable" && d.Tenant == 0).FirstOrDefault();
+		   List<ObjectField> RatesTableObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "RatesTable").ToList();
+		       
+	      
+
+	         Screen RatesTableRatesTableHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "RatesTable.HeaderScreen", Name = "RatesTableHeaderScreen", ObjectTableId = RatesTableObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      	
+		    RatesTableObjectTable.HeaderScreenId = RatesTableRatesTableHeaderScreenScreen0.Id;
+		    RatesTableObjectTable.HeaderScreenCode = RatesTableRatesTableHeaderScreenScreen0.Code;
+
+	   		  
 
 	    }
 
@@ -582,9 +601,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "RTMA",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = RatesTableGeneralFeature_TH0.Id, ControlPath = "Simplog.FreightLib.Views.CurrencyRates.RatesTableMainTabControl", ObjectTableId = RatesTableObjectTable.Id, TabNameTextCodeId = RatesTableGeneralTextCode_TH0.Id, TabNameTextCodeCode = RatesTableGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "RTMA",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = RatesTableGeneralFeature_TH0.Id,FeatureUniqeCode = RatesTableGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.FreightLib.Views.CurrencyRates.RatesTableMainTabControl", ObjectTableId = RatesTableObjectTable.Id, TabNameTextCodeId = RatesTableGeneralTextCode_TH0.Id, TabNameTextCodeCode = RatesTableGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "RTEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = RatesTableEventsFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = RatesTableObjectTable.Id, TabNameTextCodeId = RatesTableEventsTextCode_TH1.Id, TabNameTextCodeCode = RatesTableEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "RTEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = RatesTableEventsFeature_TH1.Id,FeatureUniqeCode = RatesTableEventsFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = RatesTableObjectTable.Id, TabNameTextCodeId = RatesTableEventsTextCode_TH1.Id, TabNameTextCodeCode = RatesTableEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
