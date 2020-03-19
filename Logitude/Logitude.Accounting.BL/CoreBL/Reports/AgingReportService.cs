@@ -36,6 +36,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
         private GLAccountRepository _myGLAccountRepository;
         private List<GLAccount> _GLAccountChildren_UseToAggregateAsLocalAmount;
         private bool _TESTIT;
+        private List<string> _AccountListRelatedCurrenciesAccount_List2Discard;
 
         //private bool _TryGetAllThenAggregate = true;
 
@@ -390,6 +391,11 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                 var DBAndDummies = //dummiesWithoutDBRecord.Union(dbList);
                     dummiesPeriodsList.Union(theDBList);
 
+                if (_AccountListRelatedCurrenciesAccount_List2Discard != null)
+                {
+                    DBAndDummies = DBAndDummies.Where(r => !_AccountListRelatedCurrenciesAccount_List2Discard.Contains(r.AccountId));
+                    
+                }
                 var reportList = (from rec in /*dummiesPeriodsList.Union(dbList)*/ DBAndDummies
                                   group rec by new { rec.OrderDate, rec.OrderDateB4, rec.AccountId, rec.CurrencyId }
                                       into groupby
@@ -418,6 +424,11 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                 GLAccountListQueryService accountQS = new GLAccountListQueryService(_AccountingContext);
                 
                 IQueryable<GLAccountList> accountsList = accountQS.GetByIds(accountsIds,_Param.Tenant);
+                if (_AccountListRelatedCurrenciesAccount_List2Discard != null)
+                {
+                    accountsList = accountsList.Where(r => !_AccountListRelatedCurrenciesAccount_List2Discard.Contains(r.Id));
+
+                }
                 IQueryable<PeriodMExtended> periodMExtendeds =
                     (from acc in accountsList
                      join moredata in _AccountingContext.GLAccountMoreDatas.Where(r => r.Tenant == _Param.Tenant)
@@ -481,6 +492,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                     }
                 }
 
+                
                 List<PeriodMExtended> namedPeriods = (from line in reportList
                                                           //join account in accountsList on line.AccountId equals account.Id
                                                       join account in periodMExtendeds on line.AccountId equals account.AccountId
@@ -846,8 +858,12 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                 .GetQRelatedCurrenciesAccountIdByCustomerGLAccount(_Param.Tenant, _MainAccountIdList_ToFetchThenAggragrate)
                 //.Select(rec => rec.GLAccountId).ToList();
                 ;
+            _AccountListRelatedCurrenciesAccount_List2Discard = _AccountListRelatedCurrenciesAccount_UseToAggregateAsLocalAmount
+          .Select(r => r.GLAccountId)
+          .ToList();
         }
 
+    
         private void FilterGLAccountByParams()
         {
             _MainAccountIdList_ToFetchThenAggragrate = null;

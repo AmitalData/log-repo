@@ -354,5 +354,8 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         [DataMember]
         public string GLAccountId { get; set; }
+
+        [DataMember]
+        public byte[] Logo { get; set; }
     }
 }
