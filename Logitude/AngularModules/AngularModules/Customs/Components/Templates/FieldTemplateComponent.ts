@@ -25,8 +25,7 @@ export class FieldTemplateComponent {
     }
 
     public ButtonClick() {
-        debugger;
-    }
+     }
     public Run(args: any) {
           this.Entity = args['Entity'];
         this.FieldName = args['FieldName'];
