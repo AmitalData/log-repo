@@ -155,7 +155,7 @@ export class UserIdNumberMobileComponent extends BaseComponent implements OnInit
     public get CompanyLogo() { return this.companyLogo }
     public set CompanyLogo(newValue: string) { this.companyLogo = newValue; }
 
-    public ValidationWarningsList: string = null;
+    public ValidationList: string[] = [];
     public FinalMessage: string = "הפרטים נשמרו בהצלחה";
 
 
@@ -213,7 +213,7 @@ export class UserIdNumberMobileComponent extends BaseComponent implements OnInit
     
 
     SendButtonClicked() {
-        this.ValidationWarningsList = null;
+        this.ValidationList = [];
         this._ShipmentAdditionalCloudDataService.getSingleWithoutToken(this.SecurityKey, this.Tenant).subscribe(myAdditionalResult => {
 
             var entity = myAdditionalResult.Result;//AdditionalResult.Result
@@ -231,15 +231,20 @@ export class UserIdNumberMobileComponent extends BaseComponent implements OnInit
                     entity.UserIdNumberUpdateDate = new Date();
                     entity.IsUserIDNumberRequired = false;
                     entity.UserIdNumber = this.UserIdNumber;
+                    if (this.IsValidIsraeliID(this.UserIdNumber)) {
+                        this._ShipmentAdditionalCloudDataService.updateUserID(entity).subscribe(AdditionalResult => {
 
-                    this._ShipmentAdditionalCloudDataService.updateUserID(entity).subscribe(AdditionalResult => {
+                            this.FinalMessage == "זיהוי משתמש נשלח בהצלחה ";
+                            this.ShowFinalMessage = true;
 
-                        this.FinalMessage == "זיהוי משתמש נשלח בהצלחה ";
-                        this.ShowFinalMessage = true;
-
-                    });
+                        });
+                    }
+                    else {
+                        this.ValidationList.push("נא להקליד ת.ז תקנית בעלת 9 ספרות");
+                    }
                 }
                 else {
+                    this.ValidationList.push("נא להקליד ת.ז תקנית בעלת 9 ספרות");
                 }
             }
 
@@ -249,5 +254,19 @@ export class UserIdNumberMobileComponent extends BaseComponent implements OnInit
 
     }
 
+    IsValidIsraeliID(userIdNumber) {
+        var id = String(userIdNumber).trim();
+        if (id.length > 9 || id.length < 5 || isNaN(parseInt(id))) return false;
+
+        // Pad string with zeros up to 9 digits
+        id = id.length < 9 ? ("00000000" + id).slice(-9) : id;
+
+        return Array
+            .from(id, Number)
+            .reduce((counter, digit, i) => {
+                const step = digit * ((i % 2) + 1);
+                return counter + (step > 9 ? step - 9 : step);
+            }) % 10 === 0;
+    }
 
 }
