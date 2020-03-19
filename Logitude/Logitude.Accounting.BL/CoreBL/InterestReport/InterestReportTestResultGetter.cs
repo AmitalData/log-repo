@@ -21,32 +21,35 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
                 //StandardInterestPercentage	ExceptionalInterestPercentage	CreditInterestPercentage	StandardInterestAmount
                 //ExceptionalInterestAmount	CreditInterestAmount	CalculatedStandInterestAmount	CalculatedExcepInterestAmount	
                 //CalculatedCreditInterestAmount	CalculationDetails	LineNumber
-                string[] lineFields = csvInterestReportLinesByDatePMs[i].Split(',');
-                int lineNumber;
-                int.TryParse(lineFields[1], out lineNumber);
-                InterestReportLinesByDatePM interestReportLinesByDatePM = new InterestReportLinesByDatePM()
+                if (csvInterestReportLinesByDatePMs[i].Length > 0)
                 {
-                    Id = lineFields[0],
-                    Tenant = Convert.ToInt32(lineFields[1]),
-                    InterestReportId = lineFields[2],
-                    FromDate = Convert.ToDateTime(lineFields[3]),
-                    ToDate = Convert.ToDateTime(lineFields[4]),
-                    TotalInterestDays = Convert.ToInt32(lineFields[5]),
-                    TotalAmount = Convert.ToDecimal(lineFields[6]),
-                    AccumulatedAmount = Convert.ToDecimal(lineFields[7]),
-                    StandardInterestPercentage = Convert.ToDecimal(lineFields[8]),
-                    ExceptionalInterestPercentage = Convert.ToDecimal(lineFields[9]),
-                    CreditInterestPercentage = Convert.ToDecimal(lineFields[10]),
-                    StandardInterestAmount = Convert.ToDecimal(lineFields[11]),
-                    ExceptionalInterestAmount = Convert.ToDecimal(lineFields[12]),
-                    CreditInterestAmount = Convert.ToDecimal(lineFields[13]),
-                    CalculatedStandInterestAmount = Convert.ToDecimal(lineFields[14]),
-                    CalculatedExcepInterestAmount = Convert.ToDecimal(lineFields[15]),
-                    CalculatedCreditInterestAmount = Convert.ToDecimal(lineFields[16]),
-                    CalculationDetails = lineFields[17],
-                    LineNumber = Convert.ToInt32(lineFields[18]),
-                };
-                interestReportLinesByDatePMs.Add(interestReportLinesByDatePM);
+                    string[] lineFields = csvInterestReportLinesByDatePMs[i].Split(',');
+                    int lineNumber;
+                    int.TryParse(lineFields[1], out lineNumber);
+                    InterestReportLinesByDatePM interestReportLinesByDatePM = new InterestReportLinesByDatePM();
+
+                    interestReportLinesByDatePM.Id = lineFields[0];
+                    interestReportLinesByDatePM.Tenant = Convert.ToInt32(lineFields[1]);
+                    interestReportLinesByDatePM.InterestReportId = lineFields[2];
+                    interestReportLinesByDatePM.FromDate = Convert.ToDateTime(lineFields[3]);
+                    interestReportLinesByDatePM.ToDate = Convert.ToDateTime(lineFields[4]);
+                    interestReportLinesByDatePM.TotalInterestDays = Convert.ToInt32(lineFields[5]);
+                    interestReportLinesByDatePM.TotalAmount = Convert.ToDecimal(lineFields[6]);
+                    interestReportLinesByDatePM.AccumulatedAmount = Convert.ToDecimal(lineFields[7]);
+                    interestReportLinesByDatePM.StandardInterestPercentage = Convert.ToDecimal(lineFields[8]);
+                    interestReportLinesByDatePM.ExceptionalInterestPercentage = Convert.ToDecimal(lineFields[9]);
+                    interestReportLinesByDatePM.CreditInterestPercentage = Convert.ToDecimal(lineFields[10]);
+                    interestReportLinesByDatePM.StandardInterestAmount = Convert.ToDecimal(lineFields[11]);
+                    interestReportLinesByDatePM.ExceptionalInterestAmount = Convert.ToDecimal(lineFields[12]);
+                    interestReportLinesByDatePM.CreditInterestAmount = Convert.ToDecimal(lineFields[13]);
+                    interestReportLinesByDatePM.CalculatedStandInterestAmount = Convert.ToDecimal(lineFields[14]);
+                    interestReportLinesByDatePM.CalculatedExcepInterestAmount = Convert.ToDecimal(lineFields[15]);
+                    interestReportLinesByDatePM.CalculatedCreditInterestAmount = Convert.ToDecimal(lineFields[16]);
+                    interestReportLinesByDatePM.CalculationDetails = lineFields[17];
+                    interestReportLinesByDatePM.LineNumber = Convert.ToInt32(lineFields[18]);
+
+                    interestReportLinesByDatePMs.Add(interestReportLinesByDatePM);
+                }
             }
             return interestReportLinesByDatePMs;
         }

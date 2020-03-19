@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -23,27 +24,30 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
         public List<InterestBasesPeriodPM> GetAllInterestBasesPeriodPMs(int tenant)
         {
             List<InterestBasesPeriodPM> interestBasesPeriodPMs = new List<InterestBasesPeriodPM>();
-            string[] csvPeriodsLines = cSVStringLinesGetter.GetstringLinesFromCSV(path+ "interestperiods.csv");
+            string[] csvPeriodsLines = cSVStringLinesGetter.GetstringLinesFromCSV(path + "interestperiods.csv");
             for (int i = 0; i < csvPeriodsLines.Length; i++)
             {
                 //InterestBaseTypeId	LineNumber	Tenant	CreateDate	CreatedByUserId	UpdateDate
                 //UpdatedByUserId	InterestBaseStartDate	InterestRate
                 string[] lineFields = csvPeriodsLines[i].Split(',');
-                int lineNumber;
-                int.TryParse(lineFields[1], out lineNumber);
-                InterestBasesPeriodPM interestBasesPeriodPM = new InterestBasesPeriodPM()
+                if (csvPeriodsLines[i].Length > 0)
                 {
-                    InterestBaseTypeId = lineFields[0],
-                    LineNumber = lineNumber,
-                    Tenant = tenant,
-                    CreateDate = Convert.ToDateTime(lineFields[3]),
-                    CreatedByUserId = lineFields[4],
-                    UpdateDate = Convert.ToDateTime(lineFields[5]),
-                    UpdatedByUserId = lineFields[6],
-                    InterestBaseStartDate = Convert.ToDateTime(lineFields[7]),
-                    InterestRate = Convert.ToDecimal(lineFields[8]),
-                };
-                interestBasesPeriodPMs.Add(interestBasesPeriodPM);
+                    int lineNumber;
+                    int.TryParse(lineFields[1], out lineNumber);
+                    InterestBasesPeriodPM interestBasesPeriodPM = new InterestBasesPeriodPM();
+
+                    interestBasesPeriodPM.InterestBaseTypeId = lineFields[0];
+                    interestBasesPeriodPM.LineNumber = lineNumber;
+                    interestBasesPeriodPM.Tenant = Convert.ToInt32(lineFields[2]);
+                    interestBasesPeriodPM.CreateDate = GetDateTimeFromString(lineFields[3]);
+                    interestBasesPeriodPM.CreatedByUserId = lineFields[4];
+                    interestBasesPeriodPM.UpdateDate = GetDateTimeFromString(lineFields[5]);
+                    interestBasesPeriodPM.UpdatedByUserId = lineFields[6];
+                    interestBasesPeriodPM.InterestBaseStartDate = GetDateTimeFromString(lineFields[7]);
+                    interestBasesPeriodPM.InterestRate = Convert.ToDecimal(lineFields[8]);
+
+                    interestBasesPeriodPMs.Add(interestBasesPeriodPM);
+                }
             }
             return interestBasesPeriodPMs;
         }
@@ -59,28 +63,30 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
                 //StandardAddInterestPercent	ExceptionalInterestRateBaseId	ExceptionalAddInterestPercent	
                 //CreditInterestRateBaseId	CreditAddInterestPercent	CreateDateTime	UpdateDateTime
                 //CreatedByUserId	UpdatedByUserId
-
-                string[] lineFields = csvPeriodsLines[i].Split(',');
-                int lineNumber;
-                int.TryParse(lineFields[0], out lineNumber);
-                GLAccountInterestPeriodPM gLAccountInterestPeriodPM = new GLAccountInterestPeriodPM()
+                if (csvPeriodsLines[i].Length > 0)
                 {
-                    LineNumber = lineNumber,
-                    Tenant = 1,
-                    PeriodStartDate = Convert.ToDateTime(lineFields[2]),
-                    GLAccountId = lineFields[3],
-                    StandardInterestRateBaseId = lineFields[4],
-                    StandardAddInterestPercent = Convert.ToDecimal(lineFields[5]),
-                    ExceptionalInterestRateBaseId = lineFields[6],
-                    ExceptionalAddInterestPercent = Convert.ToDecimal(lineFields[7]),
-                    CreditInterestRateBaseId = lineFields[8],
-                    CreditAddInterestPercent = Convert.ToDecimal(lineFields[9]),
-                    CreateDateTime = Convert.ToDateTime(lineFields[10]),
-                    UpdateDateTime = Convert.ToDateTime(lineFields[11]),
-                    CreatedByUserId = lineFields[12],
-                    UpdatedByUserId = lineFields[13],
-                };
-                gLAccountInterestPeriodPMs.Add(gLAccountInterestPeriodPM);
+                    string[] lineFields = csvPeriodsLines[i].Split(',');
+                    int lineNumber;
+                    int.TryParse(lineFields[0], out lineNumber);
+                    GLAccountInterestPeriodPM gLAccountInterestPeriodPM = new GLAccountInterestPeriodPM();
+
+                    gLAccountInterestPeriodPM.LineNumber = lineNumber;
+                    gLAccountInterestPeriodPM.Tenant = Convert.ToInt32(lineFields[1]);
+                    gLAccountInterestPeriodPM.PeriodStartDate = GetDateTimeFromString(lineFields[2]);
+                    gLAccountInterestPeriodPM.GLAccountId = lineFields[3];
+                    gLAccountInterestPeriodPM.StandardInterestRateBaseId = lineFields[4];
+                    gLAccountInterestPeriodPM.StandardAddInterestPercent = Convert.ToDecimal(lineFields[5]);
+                    gLAccountInterestPeriodPM.ExceptionalInterestRateBaseId = lineFields[6];
+                    gLAccountInterestPeriodPM.ExceptionalAddInterestPercent = Convert.ToDecimal(lineFields[7]);
+                    gLAccountInterestPeriodPM.CreditInterestRateBaseId = lineFields[8];
+                    gLAccountInterestPeriodPM.CreditAddInterestPercent = Convert.ToDecimal(lineFields[9]);
+                    gLAccountInterestPeriodPM.CreateDateTime = GetDateTimeFromString(lineFields[10]);
+                    gLAccountInterestPeriodPM.UpdateDateTime = GetDateTimeFromString(lineFields[11]);
+                    gLAccountInterestPeriodPM.CreatedByUserId = lineFields[12];
+                    gLAccountInterestPeriodPM.UpdatedByUserId = lineFields[13];
+
+                    gLAccountInterestPeriodPMs.Add(gLAccountInterestPeriodPM);
+                }
             }
             return gLAccountInterestPeriodPMs;
         }
@@ -95,20 +101,28 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
             InterestReportPM interestReportPM=new InterestReportPM();
             for (int i = 0; i < csvInterestReportLines.Length; i++)
             {
-                string[] lineFields = csvInterestReportLines[i].Split(',');
-                interestReportPM.Id = lineFields[0];
-                interestReportPM.Tenant = Convert.ToInt32(lineFields[1]);
-                interestReportPM.CreateDateTime = Convert.ToDateTime(lineFields[2]);
-                interestReportPM.CreatedByUserId = lineFields[3];
-                interestReportPM.UpdatedByUserId = lineFields[4];
-                interestReportPM.GLAccountId = lineFields[5];
-                interestReportPM.ReportNumber = lineFields[6];
-                interestReportPM.InterestCalculationDate = Convert.ToDateTime(lineFields[7]);
-                interestReportPM.TotalAmount = Convert.ToDecimal(lineFields[8]);
-                interestReportPM.OpenBalance = Convert.ToDecimal(lineFields[9]);
-                interestReportPM.CloseBalance = Convert.ToDecimal(lineFields[10]);
-                interestReportPM.ARinvoiceId = lineFields[11];
-                interestReportPM.InvoiceAmount = Convert.ToDecimal(lineFields[12]);
+                if (csvInterestReportLines[i].Length > 0)
+                {
+                    string[] lineFields = csvInterestReportLines[i].Split(',');
+                    interestReportPM.Id = lineFields[0];
+                    interestReportPM.Tenant = Convert.ToInt32(lineFields[1]);
+                    interestReportPM.CreateDateTime = GetDateTimeFromString(lineFields[2]);
+                    interestReportPM.CreatedByUserId = lineFields[3];
+                    interestReportPM.UpdatedByUserId = lineFields[4];
+                    interestReportPM.GLAccountId = lineFields[5];
+                    interestReportPM.ReportNumber = lineFields[6];
+                    interestReportPM.InterestCalculationDate = GetDateTimeFromString(lineFields[7]);
+                    interestReportPM.TotalAmount = lineFields[8] != "NULL" ? Convert.ToDecimal(lineFields[8]) : 0;
+                    interestReportPM.OpenBalance = lineFields[9] != "NULL" ? Convert.ToDecimal(lineFields[9]):0;
+                    interestReportPM.CloseBalance = lineFields[10] != "NULL" ? Convert.ToDecimal(lineFields[10]):0;
+                    interestReportPM.ARinvoiceId = lineFields[11] != "NULL" ? lineFields[11]:null;
+                    interestReportPM.InvoiceAmount = lineFields[12] != "NULL" ? Convert.ToDecimal(lineFields[12]) : 0;
+                    interestReportPM.GLAccountInterestCreditLimit= lineFields[13] != "NULL" ? Convert.ToDecimal(lineFields[13]) : 0;
+                    interestReportPM.InterestReportStatusCode = lineFields[14];
+                    interestReportPM.UpdateDateTime = GetDateTimeFromString(lineFields[15]);
+                    interestReportPM.SearchFields = lineFields[16];
+                    interestReportPM.CustomerId = lineFields[17];
+                }
             }
             return interestReportPM;
         }
@@ -122,32 +136,41 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
                 //Id	Tenant	CreateDateTime	UpdateDateTime	SearchFields	GLAccountId	
                 //InterestEntityTypeCode	EntityId	OriginalEntityLineNumber	LocalAmount
                 //ForeignAmount	CurrencyId	InterestValueDate	InterestReportId	IsClosed
-                string[] lineFields = csvPeriodsLines[i].Split(',');
-                int originalEntityLineNumber; 
-                int.TryParse(lineFields[8],out originalEntityLineNumber);
-                InterestTransactionPM interestTransactionPM = new InterestTransactionPM()
+                if (csvPeriodsLines[i].Length > 0)
                 {
-                    Id = lineFields[0],
-                    Tenant = tenant,
-                    CreateDateTime = Convert.ToDateTime(lineFields[2]),
-                    UpdateDateTime = Convert.ToDateTime(lineFields[3]),
-                    SearchFields = lineFields[4],
-                    GLAccountId = lineFields[5],
-                    InterestEntityTypeCode = lineFields[6],
-                    EntityId = lineFields[7],
-                    OriginalEntityLineNumber = originalEntityLineNumber,
-                    LocalAmount = Convert.ToDecimal(lineFields[9]),
-                    ForeignAmount = Convert.ToDecimal(lineFields[10]),
-                    CurrencyId = lineFields[11],
-                    InterestValueDate = Convert.ToDateTime(lineFields[12]),
-                    InterestReportId = lineFields[13],
-                    IsClosed = Convert.ToBoolean(lineFields[14]),
-                };
-                interestTransactionPMs.Add(interestTransactionPM);
+                    string[] lineFields = csvPeriodsLines[i].Split(',');
+                    int originalEntityLineNumber;
+                    int.TryParse(lineFields[8], out originalEntityLineNumber);
+                    InterestTransactionPM interestTransactionPM = new InterestTransactionPM();
+
+                    interestTransactionPM.Id = lineFields[0];
+                    interestTransactionPM.Tenant = Convert.ToInt32(lineFields[1]);
+                    interestTransactionPM.CreateDateTime = GetDateTimeFromString(lineFields[2]);
+                    interestTransactionPM.UpdateDateTime = GetDateTimeFromString(lineFields[3]);
+                    interestTransactionPM.SearchFields = lineFields[4];
+                    interestTransactionPM.GLAccountId = lineFields[5];
+                    interestTransactionPM.InterestEntityTypeCode = lineFields[6];
+                    interestTransactionPM.EntityId = lineFields[7];
+                    interestTransactionPM.OriginalEntityLineNumber = originalEntityLineNumber;
+                    interestTransactionPM.LocalAmount = Convert.ToDecimal(lineFields[9]);
+                    interestTransactionPM.ForeignAmount = Convert.ToDecimal(lineFields[10]);
+                    interestTransactionPM.CurrencyId = lineFields[11];
+                    interestTransactionPM.InterestValueDate = GetDateTimeFromString(lineFields[12]);
+                    interestTransactionPM.InterestReportId = lineFields[13];
+                    interestTransactionPM.IsClosed = lineFields[14] == "0" ? false : true;
+
+                    interestTransactionPMs.Add(interestTransactionPM);
+                }
             }
             return interestTransactionPMs;
         }
+        public DateTime GetDateTimeFromString(string dateString)
+        {
+            DateTime dateValue;
+            CultureInfo enUS = new CultureInfo("en-US");
+            DateTime.TryParse(dateString,CultureInfo.InvariantCulture, DateTimeStyles.None, out dateValue);
+            return dateValue;
+        }
 
-      
     }
 }
