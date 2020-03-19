@@ -310,6 +310,8 @@
                                                 <RowDefinition Height="28" />
                                                 <RowDefinition Height="28" />
                                                 <RowDefinition Height="28" />
+                                                <RowDefinition Height="28" />
+                                                <RowDefinition Height="28" />
                                             </Grid.RowDefinitions>
 
                                             <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Text="Has Api Helper:" />
@@ -319,21 +321,24 @@
                                             <TextBlock Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Text="Is Tabs Hidden :" />
                                             <TextBlock Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" Text="Code Field:" />
                                             <TextBlock Grid.Row="6" Grid.Column="0" VerticalAlignment="Center" Text="Name Field:" />
-                                            <TextBlock Grid.Row="7" Grid.Column="0" VerticalAlignment="Center" Text="DB Table Short Name:" />
-                                            <TextBlock Grid.Row="8" Grid.Column="0" VerticalAlignment="Center" FontWeight="Bold" Text="Database Type:" />
-                                            <TextBlock Grid.Row="9" Grid.Column="0" VerticalAlignment="Center" FontWeight="Bold" Text="Database Schema:" />
+                                            <TextBlock Grid.Row="7" Grid.Column="0" VerticalAlignment="Center" Text="Allowed For Computing Partners :" />
+                                            <TextBlock Grid.Row="8" Grid.Column="0" VerticalAlignment="Center" Text="Generate Metadata Classes Only :" />
+                                            <TextBlock Grid.Row="9" Grid.Column="0" VerticalAlignment="Center" Text="DB Table Short Name:" />
+                                            <TextBlock Grid.Row="10" Grid.Column="0" VerticalAlignment="Center" FontWeight="Bold" Text="Database Type:" />
+                                            <TextBlock Grid.Row="11" Grid.Column="0" VerticalAlignment="Center" FontWeight="Bold" Text="Database Schema:" />
 
                                             <CheckBox Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" IsChecked="{Binding HasApiHelper, Mode=TwoWay}" />
                                             <CheckBox Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" IsChecked="{Binding HasCustomFields, Mode=TwoWay}" />
                                             <CheckBox Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" IsChecked="{Binding NoTS, Mode=TwoWay}" />
                                             <CheckBox Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" IsChecked="{Binding NoDefaultFeatures, Mode=TwoWay}" />
                                             <CheckBox Grid.Row="4" Grid.Column="1" VerticalAlignment="Center" IsChecked="{Binding IsTabsHidden, Mode=TwoWay}" />
-
                                             <ComboBox  Grid.Row="5" Grid.Column="1" Height="22" VerticalAlignment="Center" DisplayMemberPath="FieldName" ItemsSource="{Binding ObsList}" SelectedValue="{Binding CodeField, Mode=TwoWay}" SelectedValuePath="FieldName" />
                                             <ComboBox  Grid.Row="6" Grid.Column="1" Height="22" VerticalAlignment="Center" DisplayMemberPath="FieldName" ItemsSource="{Binding ObsList}" SelectedValue="{Binding NameField, Mode=TwoWay}" SelectedValuePath="FieldName" />
-                                            <TextBox Grid.Row="7" Grid.Column="1" Height="22" VerticalAlignment="Center" Text="{Binding DBTableShortName, Mode=TwoWay}" />
-                                            <ComboBox Grid.Row="8" Grid.Column="1" Height="22" VerticalAlignment="Center" DisplayMemberPath="Name" ItemsSource="{Binding DxmlDatabaseTypes}" SelectedValue="{Binding DxmlDatabaseTypeCode, Mode=TwoWay}" SelectedValuePath="Code" />
-                                            <ComboBox Grid.Row="9" Grid.Column="1" Height="22" VerticalAlignment="Center" DisplayMemberPath="Name" ItemsSource="{Binding DxmlDatabaseSchemas}" SelectedValue="{Binding DxmlDatabaseSchemaCode, Mode=TwoWay}" SelectedValuePath="Code" />
+                                            <CheckBox Grid.Row="7" Grid.Column="1" VerticalAlignment="Center" IsChecked="{Binding AllowedForComputingPartners, Mode=TwoWay}" />
+                                            <CheckBox Grid.Row="8" Grid.Column="1" VerticalAlignment="Center" IsChecked="{Binding IsMetadataOnlyTable, Mode=TwoWay}" />
+                                            <TextBox Grid.Row="9" Grid.Column="1" Height="22" VerticalAlignment="Center" Text="{Binding DBTableShortName, Mode=TwoWay}" />
+                                            <ComboBox Grid.Row="10" Grid.Column="1" Height="22" VerticalAlignment="Center" DisplayMemberPath="Name" ItemsSource="{Binding DxmlDatabaseTypes}" SelectedValue="{Binding DxmlDatabaseTypeCode, Mode=TwoWay}" SelectedValuePath="Code" />
+                                            <ComboBox Grid.Row="11" Grid.Column="1" Height="22" VerticalAlignment="Center" DisplayMemberPath="Name" ItemsSource="{Binding DxmlDatabaseSchemas}" SelectedValue="{Binding DxmlDatabaseSchemaCode, Mode=TwoWay}" SelectedValuePath="Code" />
                                         </Grid>
 
                                     </Grid>
