@@ -23,6 +23,7 @@ using System.Transactions;
 using Unifreight.BL.EntityPMs.UGenerated;
 using Unifreight.BL.EntityQueryServices;
 using Unifreight.Data.AmitalModel;
+using Logitude.Customs.Data.EntityPOCOs;
 //using Simplog.Infrastructure.SimplogUtilities;
 
 namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
@@ -655,8 +656,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                     AppendLogLine("Declaration has multiple Consignments(" + this._MyDeclarationPM.Consignments.Count.ToString() + ") and Consignment details didn't update");
                 }
 
-                if (_AmitalCustomsFile.VendorId != null)
-                {
+                
                     MyGenericResponseObj.Stage = "DeclarationReferantDataUpsert";
 
                     var myDeclarationReferantDataQueryService = new DeclarationReferantDataQueryService(_context);
@@ -675,27 +675,28 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                     {
                         this._DeclarationReferantDataPM.ChangeSetOp = ChangeSetOperation.Update;
                     }
-                    decimal GrossMassMeasure = 0;
-                    if (decimal.TryParse(_AmitalCustomsFile.GrossMassMeasure, out GrossMassMeasure) || string.IsNullOrWhiteSpace(_AmitalCustomsFile.GrossMassMeasure))
+                    decimal myGrossMassMeasure = 0;
+                    if (decimal.TryParse(_AmitalCustomsFile.GrossMassMeasure, out myGrossMassMeasure) || string.IsNullOrWhiteSpace(_AmitalCustomsFile.GrossMassMeasure))
                     {
-                        this._DeclarationReferantDataPM.Weight = GrossMassMeasure;
+                        this._DeclarationReferantDataPM.Weight = myGrossMassMeasure;
                     }
                     var arrivalDate = AmitalConvertUtil.GetUnifreightFormatedDate(_AmitalCustomsFile.ArrivalDateTime, "AmitalCustomsFile.ArrivalDateTime");
                     if (arrivalDate.HasValue) this._DeclarationReferantDataPM.ArrivalDate = arrivalDate.Value;
-                    this._DeclarationReferantDataPM.VendorId = _AmitalCustomsFile.VendorId;
-                    var estimatedTimeOfArrival = AmitalConvertUtil.GetUnifreightFormatedDate(_AmitalCustomsFile.EstimatedTimeOfArrival, "AmitalCustomsFile.EstimatedTimeOfSrrival");
+                    this._DeclarationReferantDataPM.VendorId = TranslateVendor(_AmitalCustomsFile.VendorId);
+                
+                var estimatedTimeOfArrival = AmitalConvertUtil.GetUnifreightFormatedDate(_AmitalCustomsFile.EstimatedTimeOfArrival, "AmitalCustomsFile.EstimatedTimeOfSrrival");
                     if (estimatedTimeOfArrival.HasValue) this._DeclarationReferantDataPM.EstimatedArrivalDate = estimatedTimeOfArrival.Value;
                     this._DeclarationReferantDataPM.OrderNumber = _AmitalCustomsFile.OrderNumber;
-                    if (string.IsNullOrWhiteSpace(_AmitalCustomsFile.WithPaper) || (!string.IsNullOrWhiteSpace(_AmitalCustomsFile.WithPaper) && _AmitalCustomsFile.WithPaper.ToLower() != "true"))
-                    {
-                        this._DeclarationReferantDataPM.WithPaper = false;
+                if (string.IsNullOrWhiteSpace(_AmitalCustomsFile.WithPaper) || (!string.IsNullOrWhiteSpace(_AmitalCustomsFile.WithPaper) && _AmitalCustomsFile.WithPaper.ToLower() != "true"))
+                {
+                    this._DeclarationReferantDataPM.WithPaper = false;
 
-                    }
-                    else
-                    {
-                        this._DeclarationReferantDataPM.WithPaper = true;
-                    }
                 }
+                else
+                {
+                    this._DeclarationReferantDataPM.WithPaper = true;
+                }
+                myDeclarationReferantDataUpdateService.Update(this._DeclarationReferantDataPM, true);
 
                 if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.VendorId))
                 {
@@ -850,6 +851,26 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                 scope.Complete();
 
             }
+        }
+
+        private string TranslateVendor(string amitalvendorId)
+        {
+            if (String.IsNullOrWhiteSpace(amitalvendorId))
+            {
+                AppendLogLine("amitalvendorId is null");
+                return null;
+            }
+            CustomsVendor myCustomsVendor = null;
+
+            var repository = new CustomsVendorRepository(ResolvedTenant());
+            myCustomsVendor = repository.GetVendorByNumber(amitalvendorId, ResolvedTenant());
+
+            if (myCustomsVendor != null)
+            {
+                return myCustomsVendor.Id;
+            }
+            AppendLogLine("No vendor found for vendorId " + amitalvendorId);
+            return null;
         }
 
         private string TranslateAirline(string airlineId)
