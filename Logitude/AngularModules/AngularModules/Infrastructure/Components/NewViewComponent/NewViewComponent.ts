@@ -164,7 +164,8 @@ export class NewViewComponent {
         filters.SortBy = "EnglishName";
         filters.SortDirection = "Ascending";
         filters.PageIndex = 0;
-        filters.PageSize = 100;
+        //filters.PageSize = 100;
+        filters.GetAll = true;
         filters.Tenant = SessionLocator.Tenant;
 
         filters.addAdditionalFilter("InActive", false, null, null, "Equals", false, false, false, "boolean");
