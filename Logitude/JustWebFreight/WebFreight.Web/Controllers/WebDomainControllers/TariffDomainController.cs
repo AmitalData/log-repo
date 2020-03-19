@@ -1715,9 +1715,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 /*From Port*/
                 string fromPortCode = rowData[0];
-                if(!Regex.IsMatch(fromPortCode, @"^[a-zA-Z]+$"))
+                if(!Regex.IsMatch(fromPortCode, @"^[a-zA-Z0-9]+$"))
                 {
-                    fromPortCode = Regex.Replace(fromPortCode, @"[^a-zA-Z]+", "");
+                    fromPortCode = Regex.Replace(fromPortCode, @"[^a-zA-Z0-9]+", "");
                 }
 
                 Port fromPort = this.GetPortDetails(fromPortCode, tenant);
@@ -1744,9 +1744,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 /*To Port*/
                 string toPortCode = rowData[1];
-                if (!Regex.IsMatch(toPortCode, @"^[a-zA-Z]+$"))
+                if (!Regex.IsMatch(toPortCode, @"^[a-zA-Z0-9]+$"))
                 {
-                    toPortCode = Regex.Replace(toPortCode, @"[^a-zA-Z]+", "");
+                    toPortCode = Regex.Replace(toPortCode, @"[^a-zA-Z0-9]+", "");
                 }
 
                 Port toPort = this.GetPortDetails(toPortCode, tenant);
@@ -2019,9 +2019,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 /*From Port*/
                 string fromPortCode = rowData[0];
-                if (!Regex.IsMatch(fromPortCode, @"^[a-zA-Z]+$"))
+                if (!Regex.IsMatch(fromPortCode, @"^[a-zA-Z0-9]+$"))
                 {
-                    fromPortCode = Regex.Replace(fromPortCode, @"[^a-zA-Z]+", "");
+                    fromPortCode = Regex.Replace(fromPortCode, @"[^a-zA-Z0-9]+", "");
                 }
 
                 Port fromPort = this.GetPortDetails(fromPortCode, tenant);
@@ -2048,9 +2048,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 /*To Port*/
                 string toPortCode = rowData[1];
-                if (!Regex.IsMatch(toPortCode, @"^[a-zA-Z]+$"))
+                if (!Regex.IsMatch(toPortCode, @"^[a-zA-Z0-9]+$"))
                 {
-                    toPortCode = Regex.Replace(toPortCode, @"[^a-zA-Z]+", "");
+                    toPortCode = Regex.Replace(toPortCode, @"[^a-zA-Z0-9]+", "");
                 }
 
                 Port toPort = this.GetPortDetails(toPortCode, tenant);
