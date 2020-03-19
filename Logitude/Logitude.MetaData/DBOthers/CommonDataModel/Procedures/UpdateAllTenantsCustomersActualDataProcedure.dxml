@@ -1,4 +1,4 @@
-<Procedure DBType="Main" Name="usp_UpdateAllTenantsCustomersActualData" Schema="dbo">
+<Procedure DBType="Main" Name="usp_UpdateAllTenantsCustomersActualData" Schema="dbo" Module="Common">
   <SqlScript>
     <![CDATA[
 CREATE PROCEDURE [dbo].[usp_UpdateAllTenantsCustomersActualData]

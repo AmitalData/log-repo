@@ -1,4 +1,4 @@
-<View DBType="Main" Name="MessagingStockDataView" Schema="dbo">
+<View DBType="Main" Name="MessagingStockDataView" Schema="dbo" Module="Shipment">
   <SqlScript>
     <![CDATA[
 CREATE VIEW [dbo].[MessagingStockDataView]

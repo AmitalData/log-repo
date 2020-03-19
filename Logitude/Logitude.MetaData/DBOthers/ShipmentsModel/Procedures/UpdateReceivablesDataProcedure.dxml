@@ -1,4 +1,4 @@
-<Procedure DBType="Main" Name="usp_UpdateReceivablesData" Schema="dbo">
+<Procedure DBType="Main" Name="usp_UpdateReceivablesData" Schema="dbo" Module="Shipment">
   <SqlScript>
     <![CDATA[
 CREATE PROCEDURE [dbo].[usp_UpdateReceivablesData]

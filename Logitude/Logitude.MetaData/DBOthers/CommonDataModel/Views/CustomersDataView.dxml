@@ -1,4 +1,4 @@
-<View DBType="Main" Name="CustomersDataView" Schema="dbo">
+<View DBType="Main" Name="CustomersDataView" Schema="dbo" Module="Common">
   <SqlScript>
     <![CDATA[
 CREATE VIEW [dbo].[CustomersDataView]
