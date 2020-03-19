@@ -640,7 +640,9 @@
                                                     <img src="./Images/CellIcons/Trucker_gray.png" class="CenterCenter" [attr.title]="'Shipment.O.Routings.Delivery' | TextCodeTranslationPipe" />
                                                 </div>
                                             </log-header-template>
+                                        </ng-template>
 
+                                        <ng-template let-item>
                                             <log-cell-template #logcelltemplate [TabIndex]="-1">
                                                 <div class="MediaFillRelative">
 
@@ -655,37 +657,33 @@
 
                                                 </div>
                                             </log-cell-template>
-                                        </ng-template>
+                                        </ng-template>  
                                     </log-column>
 
                                     <!-- Icon:ContainerReturnId -->
                                     <log-column [width]="'27'" *ngIf="IsFCLEntity && IsContainersFUVisible && DirectionId == 'I'">
-                                        
-                                            <log-header-template template="let item">
-                                                
-                                                    <div class="GridHeaderCellTemplateFilled">
-                                                        <img src="./Images/CellIcons/Container_gray.png" class="CenterCenter" [attr.title]="'Shipment.O.Routings.EmptyCR' | TextCodeTranslationPipe" />
-                                                    </div>
-                                                                                             
+                                        <ng-template let-item>
+                                            <log-header-template>
+                                                <div class="GridHeaderCellTemplateFilled">
+                                                    <img src="./Images/CellIcons/Container_gray.png" class="CenterCenter" [attr.title]="'Shipment.O.Routings.EmptyCR' | TextCodeTranslationPipe" />
+                                                </div>
                                             </log-header-template>
+                                        </ng-template>
 
-                                            <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1">
-                                                
-                                                    <div class="MediaFillRelative">
-
-                                                        <div class="MediaFillRelative" *ngIf="!item.EmptyContainerReturnId && !item.IsEmptyContainerReturnFU && IsEditingEnabled" (mousedown)="item.EmptyContainerIconClicked()" style="cursor: pointer;">
-                                                            <div class="CenterCenter" style="width: 12px; height: 12px;">
-                                                                <div *ngIf="item.IsRowHover" class="GreenAddButton"></div>
-                                                            </div>
+                                        <ng-template let-item>
+                                            <log-cell-template #logcelltemplate [TabIndex]="-1">
+                                                <div class="MediaFillRelative">
+                                                    <div class="MediaFillRelative" *ngIf="!item.EmptyContainerReturnId && !item.IsEmptyContainerReturnFU && IsEditingEnabled" (mousedown)="item.EmptyContainerIconClicked()" style="cursor: pointer;">
+                                                        <div class="CenterCenter" style="width: 12px; height: 12px;">
+                                                            <div *ngIf="item.IsRowHover" class="GreenAddButton"></div>
                                                         </div>
-
-                                                        <img *ngIf="!item.EmptyContainerReturnId && item.IsEmptyContainerReturnFU" src="./Images/CellIcons/ContainerFollowup.png" class="CenterCenter" style="cursor: pointer; width: 24px; height: 24px;" (mousedown)="item.EmptyContainerIconClicked()" />
-                                                        <img *ngIf="item.EmptyContainerReturnId" src="./Images/CellIcons/Container.png" class="CenterCenter" style="cursor: pointer;" (mousedown)="item.EmptyContainerIconClicked()" />
-
                                                     </div>
-                                                                                              
+
+                                                    <img *ngIf="!item.EmptyContainerReturnId && item.IsEmptyContainerReturnFU" src="./Images/CellIcons/ContainerFollowup.png" class="CenterCenter" style="cursor: pointer; width: 24px; height: 24px;" (mousedown)="item.EmptyContainerIconClicked()" />
+                                                    <img *ngIf="item.EmptyContainerReturnId" src="./Images/CellIcons/Container.png" class="CenterCenter" style="cursor: pointer;" (mousedown)="item.EmptyContainerIconClicked()" />
+                                                </div>
                                             </log-cell-template>
-                                        
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- Buttons -->

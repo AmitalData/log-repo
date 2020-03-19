@@ -650,171 +650,140 @@
 
                                     <!-- Is Reconciled -->
                                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'30'">
-                                        <log-cell-template template="let item" [IgnoreMods]="true">
-                                            <CheckBox [IsChecked]="item.IsChecked || item.IsReconciled || item.PaymentReconciledAmount != 0" (Checked)="item.IsChecked = $event"
-                                                      [IsEnabled]="!item.IsReconciled && (item.PaymentReconciledAmount == 0) && !(IsGridReadOnly || IsDisplayOnly)"></CheckBox>
-                                        </log-cell-template>
+                                        <ng-template let-item>
+                                            <log-cell-template [IgnoreMods]="true">
+                                                <CheckBox [IsChecked]="item.IsChecked || item.IsReconciled || item.PaymentReconciledAmount != 0" (Checked)="item.IsChecked = $event"
+                                                          [IsEnabled]="!item.IsReconciled && (item.PaymentReconciledAmount == 0) && !(IsGridReadOnly || IsDisplayOnly)"></CheckBox>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
-                                    <!-- <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'25'">
-        <log-cell-template template="let item" [IgnoreMods]="true"  title="{{item.GetIndicatorText()}}">
-            <div class="circleDraw" [class.orangeCircle]="item.OpenAmount != item.OriginalAmount"></div>
-        </log-cell-template>
-    </log-column> -->
                                     <!-- Source -->
-                                    <log-column [Alignment]="isRTL ? 'right' : 'left'"
-                                                [header]="'Accounting.O.ARP.InvoiceNumber' | TextCodeTranslationPipe"
-                                                [width]="'100'" [binding]="'Source'">
-                                        <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
-                                            <div class="TextTrimming" text-start>
-                                                <!-- <span title="{{item.SourceType}}" *ngIf="item.IconCode" (click)="OpenSource(item.SourceId,item.SourceTypeCode)"
-                [class]="'SourceTypeIcon color-' + item.SourceTypeCode">{{item.IconCode}}</span> -->
-                                                <a href="javascript:;"
-                                                   (click)="OpenSource(item.SourceId,item.SourceTypeCode)">{{item.SourceNumber}}</a>
-                                            </div>
-                                        </log-cell-template>
+                                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [header]="'Accounting.O.ARP.InvoiceNumber' | TextCodeTranslationPipe" [width]="'100'" [binding]="'Source'">
+                                        <ng-template let-item>
+                                            <log-cell-template #logcelltemplate [IgnoreMods]="true">
+                                                <div class="TextTrimming" text-start>
+                                                    <a href="javascript:;"
+                                                       (click)="OpenSource(item.SourceId,item.SourceTypeCode)">{{item.SourceNumber}}</a>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- InvoiceAmount -->
                                     <log-column [width]="'130'"
                                                 [header]="InvoiceAmountCurrency"
                                                 [Alignment]="'right'">
-                                        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1">
-                                            <div style="width: 100%;padding: 0 3px; text-align: right;direction: ltr;"
-                                                 class="TextTrimming">
-                                                {{ item.OriginalAmount | NumbersPipe:'N2'}}
-                                                <!-- {{item.OriginalAmountCurrency}} -->
-                                            </div>
-                                        </log-cell-template>
+                                        <ng-template let-item>
+                                            <log-cell-template #logcelltemplate [TabIndex]="-1">
+                                                <div style="width: 100%;padding: 0 3px; text-align: right;direction: ltr;"
+                                                     class="TextTrimming">
+                                                    {{ item.OriginalAmount | NumbersPipe:'N2'}}
+                                                    <!-- {{item.OriginalAmountCurrency}} -->
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>                                       
                                     </log-column>
 
                                     <!-- OpenAmount -->
                                     <log-column [width]="'130'"
                                                 [header]="OpenAmountCurrency"
                                                 [Alignment]="isRTL ? 'right' : 'left'">
-                                        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1"
-                                                           [Alignment]="'right'">
-                                            {{item.CalculatedOpenAmount | NumbersPipe:'N2'}}
-                                        </log-cell-template>
+                                        <ng-template let-item>
+                                            <log-cell-template #logcelltemplate [TabIndex]="-1"
+                                                               [Alignment]="'right'">
+                                                {{item.CalculatedOpenAmount | NumbersPipe:'N2'}}
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
+
                                     <!--OreginalInvoiceAmount -->
                                     <log-column [width]="'130'"
                                                 [header]="'ARPayment.O.OriginalInvoiceAmount' | TextCodeTranslationPipe"
                                                 [Alignment]="isRTL ? 'right' : 'left'">
-                                        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1"
-                                                           [Alignment]="'right'">
-                                            {{item.OriginalInvoiceAmount | NumbersPipe:'N2'}}  {{item.InvoiceCurrency}}
-                                        </log-cell-template>
+                                        <ng-template let-item>
+                                            <log-cell-template #logcelltemplate [TabIndex]="-1"
+                                                               [Alignment]="'right'">
+                                                {{item.OriginalInvoiceAmount | NumbersPipe:'N2'}}  {{item.InvoiceCurrency}}
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
+
                                     <!-- AmountToReconcile -->
                                     <log-column [Alignment]="isRTL ? 'right' : 'left'"
                                                 [header]="'LedgerTransaction.F.AmountToReconcile' | TextCodeTranslationPipe"
                                                 [width]="'135'" [binding]="'AmountToReconcile'">
-                                        <log-cell-template template="let item" [IsEditMode]="true" #logcelltemplate>
-                                            <!-- <div class="TextTrimming"
-                style="text-align: right;padding-right: 5px;direction: ltr;"
-                *ngIf="logcelltemplate.IsDisplayMode">
-                <span>{{item.AmountToReconcile | NumbersPipe:'N2'}}</span>
-            </div> -->
-                                            <!-- <div *ngIf="logcelltemplate.IsEditMode"> -->
-                                            <div>
-                                                <!-- *ngIf="!item.IsReconciled"  -->
-                                                <LogTextBox #AmountToReconcileTextBox
-                                                            [FocusOnMe]="'true'"
-                                                            [ObjectFieldName]="'AmountToReconcile'"
-                                                            [AlignTextToRight]="true"
-                                                            [DebounceTime]="1"
-                                                            [InputType]="'decimal'"
-                                                            [DigitsAfterPoint]="2"
-                                                            [DataContext]="item"
-                                                            [ObjectTableName]="item.ObjectTableName"
-                                                            [HideColumns]="true"
-                                                            [Text]="item.AmountToReconcile"
-                                                            [ForceDisable]="IsDisplayOnly"
-                                                            (LostFocus)="item.OnAmountToReconcileLostFocus(logcelltemplate,AmountToReconcileTextBox)">
-                                                </LogTextBox>
-
-                                                <!-- <div class="TextTrimming"
-                    style="text-align: right;padding-right: 5px;direction: ltr;"
-                    *ngIf="item.IsReconciled">
-                    <span>{{item.AmountToReconcile | NumbersPipe:'N2'}}</span>
-                </div> -->
-                                            </div>
-                                        </log-cell-template>
+                                        <ng-template let-item>
+                                            <log-cell-template [IsEditMode]="true" #logcelltemplate>
+                                                <div>
+                                                    <!-- *ngIf="!item.IsReconciled"  -->
+                                                    <LogTextBox #AmountToReconcileTextBox
+                                                                [FocusOnMe]="'true'"
+                                                                [ObjectFieldName]="'AmountToReconcile'"
+                                                                [AlignTextToRight]="true"
+                                                                [DebounceTime]="1"
+                                                                [InputType]="'decimal'"
+                                                                [DigitsAfterPoint]="2"
+                                                                [DataContext]="item"
+                                                                [ObjectTableName]="item.ObjectTableName"
+                                                                [HideColumns]="true"
+                                                                [Text]="item.AmountToReconcile"
+                                                                [ForceDisable]="IsDisplayOnly"
+                                                                (LostFocus)="item.OnAmountToReconcileLostFocus(logcelltemplate,AmountToReconcileTextBox)">
+                                                    </LogTextBox>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
-                                    <!-- ReconciledAmount -->
-                                    <!-- <log-column [width]="'130'"
-        [header]="'Accounting.O.ARP.ReconciledAmount' | TextCodeTranslationPipe"
-        [Alignment]="isRTL ? 'right' : 'left'">
-        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1"
-            [Alignment]="'right'">
-            {{item.ReconciledAmount | NumbersPipe:'N2'}}
-        </log-cell-template>
-    </log-column> -->
-                                    <!-- PaymentReconciledAmount -->
-                                    <!-- <log-column [width]="'130'"
-        [header]="'PaymentReconciledAmount'"
-        [Alignment]="isRTL ? 'right' : 'left'">
-        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1"
-            [Alignment]="'right'">
-            {{item.PaymentReconciledAmount | NumbersPipe:'N2'}}
-        </log-cell-template>
-    </log-column> -->
                                     <!-- DueDate -->
                                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'100'"
                                                 [header]="'Accounting.O.ARP.Duedate' | TextCodeTranslationPipe">
-                                        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1">
-                                            <div style="width: 100%;" text-start
-                                                 [ngStyle]="{color: item.DueDate | DateTimeToColorPipe}">
-                                                {{item.DueDate | DateTimeToDatePipe}}
-                                            </div>
-                                        </log-cell-template>
+                                        <ng-template let-item>
+                                            <log-cell-template #logcelltemplate [TabIndex]="-1">
+                                                <div style="width: 100%;" text-start
+                                                     [ngStyle]="{color: item.DueDate | DateTimeToColorPipe}">
+                                                    {{item.DueDate | DateTimeToDatePipe}}
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- Status -->
                                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'140'"
                                                 [header]="'Accounting.O.ARP.Status' | TextCodeTranslationPipe">
-                                        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1">
-                                            <div class="TextTrimming" text-start [style.color]="item.GetStatusColor()">
+                                        <ng-template let-item>
+                                            <log-cell-template #logcelltemplate [TabIndex]="-1">
+                                                <div class="TextTrimming" text-start [style.color]="item.GetStatusColor()">
 
-                                                <span float-start>
-                                                    {{item.Status}}
-                                                </span>
-
-                                                <LogToolTip float-start [direction]="isRTL?'bottomleft':'bottomright'" [name]="item.Id" *ngIf="item.Status == TextStore.partiallyOpened">
-                                                    <span style="font-size: bold;">
-                                                        {{ 'Accounting.O.ARP.ReconciledAmount' | TextCodeTranslationPipe }}: {{ item.ReconciledAmount }}
+                                                    <span float-start>
+                                                        {{item.Status}}
                                                     </span>
-                                                </LogToolTip>
 
-                                            </div>
-                                        </log-cell-template>
+                                                    <LogToolTip float-start [direction]="isRTL?'bottomleft':'bottomright'" [name]="item.Id" *ngIf="item.Status == TextStore.partiallyOpened">
+                                                        <span style="font-size: bold;">
+                                                            {{ 'Accounting.O.ARP.ReconciledAmount' | TextCodeTranslationPipe }}: {{ item.ReconciledAmount }}
+                                                        </span>
+                                                    </LogToolTip>
+
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- Reconciliation Number -->
                                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'120'"
                                                 [header]="'Accounting.O.ARP.ReconciliationNumber' | TextCodeTranslationPipe">
-                                        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1">
-                                            <div class="TextTrimming" text-start>
+                                        <ng-template let-item>
+                                            <log-cell-template #logcelltemplate [TabIndex]="-1">
+                                                <div class="TextTrimming" text-start>
 
-                                                <a *ngFor="let recoNum of item.RecociliationNumbers; let i = index"
-                                                   (click)="OpenReco(recoNum)">{{recoNum}}{{ i>=item.RecociliationNumbers.length-1?'':', ' }}</a>
-                                            </div>
-                                        </log-cell-template>
+                                                    <a *ngFor="let recoNum of item.RecociliationNumbers; let i = index"
+                                                       (click)="OpenReco(recoNum)">{{recoNum}}{{ i>=item.RecociliationNumbers.length-1?'':', ' }}</a>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
-
-                                    <!--  -->
-                                    <!-- <log-column [header]="''" [width]="'40'" [binding]="'button'">
-        <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
-            <img *ngIf="!item.isLineValid"
-                [title]="'Accounting.O.ARP.invoiceAmount2reconcileMSG' | TextCodeTranslationPipe"
-                style="margin-top: 3px;"
-                class="exc-remark-button exc-remark-button-red" tabindex="-1"
-                src="./Images/error-16.png" />
-        </log-cell-template>
-    </log-column> -->
-
                                 </logitude-edit-grid>
 
                                 <div *ngIf="TransactionsList?.Length == 0 && !_loading" class="NoDataText">
