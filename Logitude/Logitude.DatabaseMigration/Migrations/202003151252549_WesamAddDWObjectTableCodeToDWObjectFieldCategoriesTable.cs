@@ -11,6 +11,8 @@ namespace Logitude.DatabaseMigration.Migrations
             Sql(@"
                 truncate table [DWObjectFieldCategories]
 
+INSERT INTO [dbo].[DWCategories] ([Code],[Name],[Index]) VALUES('Charges','Charges',70)
+
 ------------------------------------------------------
 
 DECLARE @Id  varchar(50)
