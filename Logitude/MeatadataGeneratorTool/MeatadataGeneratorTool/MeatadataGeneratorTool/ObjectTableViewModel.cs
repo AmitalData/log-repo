@@ -2679,7 +2679,10 @@ namespace MeatadataGeneratorTool
                 }
                 if (DataContractsObsList != null)
                 {
-                    //ErrorMessages = "";
+                    if(!(ErrorMessages.Contains("Cannot Find Foreign Entity") || ErrorMessages.Contains("Database Type is Required") || ErrorMessages.Contains("Database Schema is Required")))
+                    {
+                        ErrorMessages = "";
+                    }
                     foreach (var item in DataContractsObsList)
                     {
                         if (item.DCFieldsObsList != null && item.DCFieldsObsList.Where(a => a.IsKey == true).Count() == 0)

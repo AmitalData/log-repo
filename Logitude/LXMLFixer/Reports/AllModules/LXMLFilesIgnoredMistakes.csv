@@ -27,13 +27,6 @@ DocumentTypeTemplate.dxml,DocumentTypeTemplate.lxml,Column,CountryCode,CountryCo
 PartnerType.dxml,PartnerType.lxml,Column,Id,Id,Type,char,varchar
 Port.dxml,Port.lxml,Column,Code,Code,Type,char,varchar
 ProductType.dxml,ProductType.lxml,Column,Name,Name,Type,varchar,nvarchar
-Tenant.dxml,Tenant.lxml,Column,ExportOtherPrepaidCollectId,ExportOtherPrepaidCollectId,Navigation Property Name,From Table Tenants,NULL
-Tenant.dxml,Tenant.lxml,Column,ImportFreightPrepaidCollectId,ImportFreightPrepaidCollectId,Navigation Property Name,From Table Tenants,NULL
-Tenant.dxml,Tenant.lxml,Column,ImportOtherPrepaidCollectId,ImportOtherPrepaidCollectId,Navigation Property Name,From Table Tenants,NULL
-Tenant.dxml,Tenant.lxml,Column,MasterExportFreightPrepaidCollectId,MasterExportFreightPrepaidCollectId,Navigation Property Name,From Table Tenants,NULL
-Tenant.dxml,Tenant.lxml,Column,MasterExportOtherPrepaidCollectId,MasterExportOtherPrepaidCollectId,Navigation Property Name,From Table Tenants,NULL
-Tenant.dxml,Tenant.lxml,Column,MasterImportFreightPrepaidCollectId,MasterImportFreightPrepaidCollectId,Navigation Property Name,From Table Tenants,NULL
-Tenant.dxml,Tenant.lxml,Column,MasterImportOtherPrepaidCollectId,MasterImportOtherPrepaidCollectId,Navigation Property Name,From Table Tenants,NULL
 Tenant.dxml,Tenant.lxml,Column,DefaultSLAId,DefaultSLAId,Type,varchar,bit
 BatchServicesDefinition.dxml,BatchServicesDefinition.lxml,Column,QueueDefinitionCode,NULL,Name,QueueDefinitionCode,NULL
 BluesnapTransaction.dxml,BluesnapTransaction.lxml,Column,Tenant,NULL,Name,Tenant,NULL
@@ -44,7 +37,6 @@ TenantManagement.dxml,TenantManagement.lxml,Column,BluesnapEAWBSContractQTY,NULL
 TenantManagement.dxml,TenantManagement.lxml,Column,BluesnapOneTimeContractQTY,NULL,Name,BluesnapOneTimeContractQTY,NULL
 TenantManagement.dxml,TenantManagement.lxml,Column,BluesnapInttraStockContractQTY,NULL,Name,BluesnapInttraStockContractQTY,NULL
 APILogs.dxml,APILogs.lxml,Column,Subject,Subject,Type,varchar,nvarchar
-APILogsData.dxml,APILogsData.lxml,Column,Id,Id,Navigation Property Name,From Table APILogsData,NULL
 CounterDefinition.dxml,CounterDefinition.lxml,Column,Suffix,NULL,Name,Suffix,NULL
 Direction.dxml,Direction.lxml,Column,Id,Id,Type,char,varchar
 DWCategories.dxml,DWCategories.lxml,Column,Index,NULL,Name,Index,NULL
@@ -94,18 +86,13 @@ InsideShipmentPackage.dxml,InsideShipmentPackage.lxml,Column,Color,Color,Type,va
 InsideShipmentPackage.dxml,InsideShipmentPackage.lxml,Column,ChassisNumber,ChassisNumber,Type,varchar,nvarchar
 InsideShipmentPackage.dxml,InsideShipmentPackage.lxml,Column,RegistrationNumber,RegistrationNumber,Type,varchar,nvarchar
 MessagingStock.dxml,MessagingStock.lxml,Column,StockType,NULL,Name,StockType,NULL
-Shipment.dxml,Shipment.lxml,Column,CountryForStatisticsId,CountryForStatisticsId,Navigation Property Name,From Table Shipments,NULL
 Shipment.dxml,Shipment.lxml,Column,DirectionId,DirectionId,Type,char,varchar
 Shipment.dxml,Shipment.lxml,Column,TransportModeId,TransportModeId,Type,char,varchar
 Shipment.dxml,Shipment.lxml,Column,OperationalClosedByUserId,NULL,Name,OperationalClosedByUserId,NULL
-Shipment.dxml,Shipment.lxml,Column,FreightPrepaidCollectId,FreightPrepaidCollectId,Navigation Property Name,From Table Shipments,NULL
-Shipment.dxml,Shipment.lxml,Column,OtherPrepaidCollectId,OtherPrepaidCollectId,Navigation Property Name,From Table Shipments,NULL
-Shipment.dxml,Shipment.lxml,Column,VolumeUnitCode,VolumeUnitCode,Navigation Property Name,From Table Shipments,NULL
 Shipment.dxml,Shipment.lxml,Column,MasterShipmentDataId,NULL,Name,MasterShipmentDataId,NULL
 Shipment.dxml,Shipment.lxml,Column,PreCarriageTransportModeId,PreCarriageTransportModeId,Type,char,varchar
 Shipment.dxml,Shipment.lxml,Column,OnCarriageTransportModeId,OnCarriageTransportModeId,Type,char,varchar
 Shipment.dxml,Shipment.lxml,Column,ComputedShipmentNumber,NULL,Name,ComputedShipmentNumber,NULL
-ShipmentComputedFields.dxml,ShipmentComputedFields.lxml,Column,Id,Id,Navigation Property Name,From Table ShipmentComputedFields,NULL
 ShipmentComputedFields.dxml,ShipmentComputedFields.lxml,Column,IsMissingDocuments,NULL,Name,IsMissingDocuments,NULL
 ShipmentComputedFields.dxml,ShipmentComputedFields.lxml,Column,DocumentsSearchFields,NULL,Name,DocumentsSearchFields,NULL
 ShipmentComputedFields.dxml,ShipmentComputedFields.lxml,Column,LastDocumentDateTime,NULL,Name,LastDocumentDateTime,NULL

@@ -859,7 +859,7 @@
     CanAutomateSetValue="false"
     HasTemplate="false"
     IsCustom="false"
-    HasDataBaseField="true" />
+    HasDataBaseField="false" />
   <Records />
   <field
     Id="&quot;ffefacca-857c-4cc5-bebd-dc8b441b2717&quot;"

@@ -764,7 +764,7 @@
     ValidForQuerySection1="&quot;BusinessHoursHoliday&quot;"
     HasPMField="true"
     NoMetaDataField="true"
-    HasDataBaseField="true" />
+    HasDataBaseField="false" />
   <EventTypes />
   <AdditionalTextCodes></AdditionalTextCodes>
   <AdditionalFeatures />

@@ -2145,7 +2145,10 @@ namespace MeatadataGeneratorTool
                             relationElement.SetAttribute("ReferencedTableSchema", foreignEntityData.ReferencedTableSchema);
                         }
 
-                        relationElement.SetAttribute("Ignore", dontBuildRelationOnDB);
+                        if (field.DontBuildRelationOnDB)
+                        {
+                            relationElement.SetAttribute("Ignore", dontBuildRelationOnDB);
+                        }
 
                         foreach (string fieldName in filedsWithSameNavigationPropertyName)
                         {

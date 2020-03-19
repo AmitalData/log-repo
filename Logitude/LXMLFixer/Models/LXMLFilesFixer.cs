@@ -160,6 +160,16 @@ namespace Logitude.LXMLFixer.Models
                                 }
                             }
                         }
+
+                        foreach(var lxmlColumn in lxmlTableDefinition.Columns)
+                        {
+                            ColumnDefinition dxmlColumn = dxmlTableDefinition.Columns.Where(c => c.Name == lxmlColumn.Name).FirstOrDefault();
+
+                            if(dxmlColumn == null)
+                            {
+                                LXMLMistakesData += dxmlFileName + "," + lxmlFileName + ",Column," + "NULL" + "," + lxmlColumn.Name + ",Name," + "NULL" + "," + lxmlColumn.Name + "\n";
+                            }
+                        }
                     }
                     else
                     {
@@ -285,7 +295,7 @@ namespace Logitude.LXMLFixer.Models
                                             AttributeFilter = new LXMLAttributeFilter
                                             {
                                                 Name = "FieldName",
-                                                Value = GetStringValue(dxmlColumn.Name)
+                                                Value = GetStringValue(lxmlColumn.Name)
                                             }
                                         };
 
@@ -624,6 +634,29 @@ namespace Logitude.LXMLFixer.Models
 
                                     attributes.Add(attribute3);
                                 }
+                            }
+                        }
+
+                        foreach (var lxmlColumn in lxmlTableDefinition.Columns)
+                        {
+                            ColumnDefinition dxmlColumn = dxmlTableDefinition.Columns.Where(c => c.Name == lxmlColumn.Name).FirstOrDefault();
+
+                            if (dxmlColumn == null)
+                            {
+                                LXMLAttribute attribute = new LXMLAttribute
+                                {
+                                    ElementName = "field",
+                                    AttributeName = "HasDataBaseField",
+                                    AttributeValue = "false",
+                                    OldAttributeValue = "true",
+                                    AttributeFilter = new LXMLAttributeFilter
+                                    {
+                                        Name = "FieldName",
+                                        Value = GetStringValue(lxmlColumn.Name)
+                                    }
+                                };
+
+                                attributes.Add(attribute);
                             }
                         }
 

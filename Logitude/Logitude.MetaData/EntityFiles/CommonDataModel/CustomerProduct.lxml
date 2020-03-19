@@ -446,7 +446,7 @@
     DigitsAfterPoint="2"
     InActive="false"
     DisplayLongName="false"
-    NumberOfDigits="0"
+    NumberOfDigits="18"
     IsMaxLength="false"
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"

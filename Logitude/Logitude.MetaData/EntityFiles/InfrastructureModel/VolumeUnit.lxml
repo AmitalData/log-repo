@@ -118,7 +118,7 @@
     IsNullable="false"
     IsForeignKey="false"
     IsPrimaryKey="false"
-    HasDataBaseField="true"
+    HasDataBaseField="false"
     HasPMField="false"
     IsComposition="false"
     IsMaxLength="false"

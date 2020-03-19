@@ -140,7 +140,7 @@
     ObjectTableName="&quot;HarmonizeCode&quot;"
     FieldsDataType="&quot;nText&quot;"
     MinLength="0"
-    MaxLength="1000"
+    MaxLength="4000"
     IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="false"

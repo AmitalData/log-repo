@@ -161,7 +161,7 @@
     ListLableDefaultText="&quot;IsNew&quot;"
     ListLocalDefaultText="&quot;IsNew&quot;"
     IsRequired="false"
-    HasDataBaseField="true"
+    HasDataBaseField="false"
     DisplayInList="false"
     NoMetaDataField="true"
     HasPMField="true" />
@@ -673,7 +673,7 @@
     IsSpellCheckedFullFieldLable="true"
     HelpTextCode="&quot;DoneNote&quot;"
     IsSpellCheckedHelpLocalDefaultText="true"
-    HasDataBaseField="true"
+    HasDataBaseField="false"
     GenerateInList="false"
     NoMetaDataField="false"
     HasPMField="true" />
@@ -736,7 +736,7 @@
     HelpTextCode="&quot;DoneDateTime&quot;"
     IsSpellCheckedHelpLocalDefaultText="true"
     IsNullable="true"
-    HasDataBaseField="true"
+    HasDataBaseField="false"
     GenerateInList="false"
     NoMetaDataField="false"
     HasPMField="true" />
@@ -798,7 +798,7 @@
     IsSpellCheckedFullFieldLable="true"
     HelpTextCode="&quot;Done&quot;"
     IsSpellCheckedHelpLocalDefaultText="true"
-    HasDataBaseField="true"
+    HasDataBaseField="false"
     GenerateInList="false"
     NoMetaDataField="false"
     HasPMField="true" />
