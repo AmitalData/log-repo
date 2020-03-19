@@ -147,7 +147,7 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
     }
     get ARInvoicePMWithLine(): ARInvoicePM {
         var _ARInvoicePM: ARInvoicePM = new ARInvoicePM();
-        _ARInvoicePM.ARInvoiceTypeCode = "INT";
+        _ARInvoicePM.ARInvoiceTypeCode = "IT";
          _ARInvoicePM.BillToGLAccountId = this.EntityPM.GLAccountId;
          _ARInvoicePM.BillToId = this.EntityPM.CustomerId;
         _ARInvoicePM.BillToLocalName = this.EntityPM.CustomerLocalName;

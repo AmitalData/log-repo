@@ -48,7 +48,7 @@ export class ARInvoiceMenuButtonsHandler {
                     switch (button.EventCode) {
                         case "SaveAsDraft":
                             {
-                                if (this.EntityPM.ARInvoiceTypeCode == 'INT') {
+                                if (this.EntityPM.ARInvoiceTypeCode == 'IT') {
                                     button.IsHidden = true;
                                 }
                                 else {
@@ -128,7 +128,7 @@ export class ARInvoiceMenuButtonsHandler {
 
                         case "VoidARInvoice":
                             {
-                                if (SessionLocator.TenantPM.AccountingActivated == true || this.EntityPM.ARInvoiceTypeCode == 'INT') {
+                                if (SessionLocator.TenantPM.AccountingActivated == true || this.EntityPM.ARInvoiceTypeCode == 'IT') {
                                     button.IsHidden = true;
                                 }
                                 else {
@@ -160,7 +160,7 @@ export class ARInvoiceMenuButtonsHandler {
 
                         case "AutoCredit":
                             {
-                                if (this.EntityPM.ARInvoiceTypeCode == 'INT') {
+                                if (this.EntityPM.ARInvoiceTypeCode == 'IT') {
                                     button.IsHidden = true;
                                 }
                                 else {
