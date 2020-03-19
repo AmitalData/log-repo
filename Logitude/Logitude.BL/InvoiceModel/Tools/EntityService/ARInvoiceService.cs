@@ -255,7 +255,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 this.InitializeTransferComponents();
             }
 
-            else if (!entityPM.IsGeneralInvoice || entityPM.ARInvoiceTypeCode == "IN")
+            else if (!entityPM.IsGeneralInvoice || entityPM.ARInvoiceTypeCode == "IT")
             {
                 this.GetShipmentsData(entityPM.InvoiceLines);
                 this.UpdateInvoiceEntities();
@@ -288,7 +288,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.GetForeignFields();
             this.RunStoredProcedures();
             this.AfterServiceFinished();
-            if (entityPM.ARInvoiceTypeCode == "IN")
+            if (entityPM.ARInvoiceTypeCode == "IT")
             {
                 this.UpdateInterestReportFields(entityPM);
             }
@@ -3724,7 +3724,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             if (isNewEntity)
             {
                 ARInvoiceEntityQuery arInvoiceEntityQuery = new ARInvoiceEntityQuery(invoiceEntityRepository);
-                if(entityPM.ARInvoiceTypeCode != "IN")
+                if(entityPM.ARInvoiceTypeCode != "IT")
                 entityPM.InvoiceEntities = arInvoiceEntityQuery.GetInvoiceEntityPMsForInvoice(entityPM.Id, tenant);
             }
            
