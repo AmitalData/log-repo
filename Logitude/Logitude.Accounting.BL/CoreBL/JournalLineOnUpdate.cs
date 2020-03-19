@@ -102,26 +102,36 @@ namespace Logitude.Accounting.BL.CoreBL
 
         private bool FixCredit(JournalLinePM journalLinePM, bool haveChange)
         {
+            var creditIVerifyGLAccountManager = GetIVerifyGLAccountManager();
+            creditIVerifyGLAccountManager.Verify(this._MainContext, journalLinePM.Tenant, journalLinePM.CreditAccountId, journalLinePM.CreditAccountNumber, journalLinePM.CurrencyId);
+
             if (journalLinePM.ActionTypeCodeEnum == MyJournalActionTypeEnum.Credit ||
                             journalLinePM.ActionTypeCodeEnum == MyJournalActionTypeEnum.DebitAndCredit ||
                             journalLinePM.ActionTypeCodeEnum == MyJournalActionTypeEnum.DebitCreditAndVatdeduction
                             )
             {
-                var creditIVerifyGLAccountManager = GetIVerifyGLAccountManager();
-                creditIVerifyGLAccountManager.Verify(this._MainContext, journalLinePM.Tenant, journalLinePM.CreditAccountId, journalLinePM.CreditAccountNumber, journalLinePM.CurrencyId);
-
+                
                 haveChange = (journalLinePM.CreditAccountId != creditIVerifyGLAccountManager.AccountId ||
                     journalLinePM.CreditControlAccountId != creditIVerifyGLAccountManager.ControlAccountId);
-                journalLinePM.CreditControlAccountId = creditIVerifyGLAccountManager.ControlAccountId;
-
+               
                 journalLinePM.CreditAccountId = creditIVerifyGLAccountManager.AccountId;
             }
+            journalLinePM.CreditControlAccountId = creditIVerifyGLAccountManager.ControlAccountId;
 
             return haveChange;
         }
 
         private bool FixDebit(JournalLinePM journalLinePM, bool haveChange, FullAccountingSettingPM accountingSettings)
         {
+            var debitIVerifyGLAccountManager = GetIVerifyGLAccountManager();
+            debitIVerifyGLAccountManager.Verify(
+                this._MainContext,
+                journalLinePM.Tenant,
+                journalLinePM.DebitAccountId,
+                journalLinePM.DebitAccountNumber,
+                journalLinePM.CurrencyId
+                );
+
             if (
                             //from mumps >>> CHANGE DEBIT
                             IsFromMumps(journalLinePM)
@@ -135,28 +145,20 @@ namespace Logitude.Accounting.BL.CoreBL
     journalLinePM.ActionTypeCodeEnum == MyJournalActionTypeEnum.DebitCreditAndVatdeduction
     )
                 {
-                    var debitIVerifyGLAccountManager = GetIVerifyGLAccountManager();
-                    debitIVerifyGLAccountManager.Verify(
-                        this._MainContext,
-                        journalLinePM.Tenant,
-                        journalLinePM.DebitAccountId,
-                        journalLinePM.DebitAccountNumber,
-                        journalLinePM.CurrencyId
-                        );
-
+                   
                     if (!haveChange)
                     {
                         haveChange = (journalLinePM.DebitAccountId != debitIVerifyGLAccountManager.AccountId ||
                             journalLinePM.DebitControlAccountId != debitIVerifyGLAccountManager.ControlAccountId);
                     }
 
-                    journalLinePM.DebitControlAccountId = debitIVerifyGLAccountManager.ControlAccountId;
+                    
 
                     journalLinePM.DebitAccountId = debitIVerifyGLAccountManager.AccountId;
 
                 }
             }
-
+            journalLinePM.DebitControlAccountId = debitIVerifyGLAccountManager.ControlAccountId;
             return haveChange;
         }
 
