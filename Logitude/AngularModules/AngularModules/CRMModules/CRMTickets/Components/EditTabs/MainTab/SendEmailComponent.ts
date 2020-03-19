@@ -754,7 +754,9 @@ export class SendEmailComponent extends BaseComponent implements OnInit {
         });
 
         this.EntityPM.Attachments = myList;
-        this.EntityPM.IsContainsQuotationAttachment = isQuotationAttachment;
+        if (!this.IsInternal) {
+            this.EntityPM.IsContainsQuotationAttachment = isQuotationAttachment;
+        }
     }
     IsLoadUploader: boolean;
     CurrentDocument: DocumentsFilingPM;

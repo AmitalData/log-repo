@@ -6666,6 +6666,8 @@
     <TypeScriptCompile Include="Shipment\Services\StandardPMs\CustomsTransferHeaderPMService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardPMs\ShipmentComputedFieldPMService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardPMs\ShipmentCustomsTransmissionPMService.ts" />
+    <TypeScriptCompile Include="Shipment\Validators\ShipmentDeliveryValidator.ts" />
+    <TypeScriptCompile Include="Shipment\Validators\ShipmentPickupValidator.ts" />
     <TypeScriptCompile Include="Social\Components\AddSocialMessageParticipantsComponent.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardLists\CustomsTransmissionsStatusListService.ts" />
     <TypeScriptCompile Include="Social\Components\ConversationMessageComponent.ts" />

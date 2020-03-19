@@ -162,4 +162,5 @@ SELECT  [Id_Number]
       ,[Pickup From]
       ,[Pickup To]
       ,[Freight Release]
+	  ,@CustomFields
   FROM [dbo].[Fact_Shipments]
