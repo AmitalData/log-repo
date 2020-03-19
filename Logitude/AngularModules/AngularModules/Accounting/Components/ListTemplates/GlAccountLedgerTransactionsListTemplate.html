@@ -73,7 +73,9 @@
         {{ rowData[fieldName] | NumbersPipe:'N2' }}
     </div>
 
-    <div class="TextTrimming" [attr.title]="rowData[fieldName]" *ngIf="fieldName == 'Notes'" text-start>{{ rowData[fieldName] }}</div>
+
+    <div class="TextTrimming" *ngIf="fieldName == 'Notes'" text-start [attr.title]="rowData[fieldName]">{{ rowData[fieldName] }}</div>
+
 
 
     <!-- ForeignAmountCredit -->

@@ -406,7 +406,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query SplitOrMergeReasonQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = SplitOrMergeReasonTextCode_0.Id, Code = "SplitOrMergeReason",  QueryGroupCode = "7dff", IndexOrder = 0, Tenant = 0, ObjectTableId = SplitOrMergeReasonObjectTable.Id, QuerySection = "Customs.SplitOrMergeReason", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = SplitOrMergeReasonFeature_0.Id, DefaultSortName = "Code", DefaultSortDirection = "Desending" }, queriesRepository, tenantQueries);
+			  Query SplitOrMergeReasonQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = SplitOrMergeReasonTextCode_0.Id, Code = "SplitOrMergeReason",  QueryGroupCode = "7dff", IndexOrder = 0, Tenant = 0, ObjectTableId = SplitOrMergeReasonObjectTable.Id, QuerySection = "Customs.SplitOrMergeReason", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = SplitOrMergeReasonFeature_0.Id,FeatureUniqeCode= SplitOrMergeReasonFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending" }, queriesRepository, tenantQueries);
 	
 			 QueryColumn SplitOrMergeReasonQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SplitOrMergeReasonQuery.Id, IndexOrder = 0, ObjectFieldId = SplitOrMergeReasonObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == SplitOrMergeReasonObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 

@@ -79,12 +79,12 @@
                                 <div *ngIf="FieldName == 'AmountDue'">
                                     <table>
                                         <tr>
+                                            <td>
+                                                <div></div>
+                                            </td>
                                             <td style="width: 1px;padding-right:5px;">
                                                 <span [ngStyle]="{color: Entity.DueDate | InvoiceDueDateForegroundPipe:Entity.IsClosed}">{{Entity[FieldName] | NumbersPipe:'N2'}}</span>
                                                 <span *ngIf="Entity[FieldName] || Entity[FieldName] == 0">({{Entity.InvoiceCurrencyCode}})</span>
-                                            </td>
-                                            <td>
-                                                <div></div>
                                             </td>
 
                                         </tr>
@@ -247,12 +247,12 @@
                                 <div *ngIf="FieldName == 'AmountDue'">
                                     <table>
                                         <tr>
+                                            <td>
+                                                <div></div>
+                                            </td>
                                             <td style="width: 1px;padding-right:5px;">
                                                 <span [ngStyle]="{color: Entity.DueDate | InvoiceDueDateForegroundPipe:Entity.IsClosed}">{{Entity[FieldName] | NumbersPipe:'N2'}}</span>
                                                 <span *ngIf="Entity[FieldName] || Entity[FieldName] == 0">({{Entity.InvoiceCurrencyCode}})</span>
-                                            </td>
-                                            <td>
-                                                <div></div>
                                             </td>
                                         </tr>
                                     </table>

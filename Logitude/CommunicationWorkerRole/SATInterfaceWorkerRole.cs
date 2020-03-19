@@ -256,10 +256,14 @@ namespace CommunicationWorkerRole
 				{
 					if (context != null)
 					{
+						SetRelatedEntityTransferStatusToTransferError(cl);
+
 						cl.CommunicationStatusTypeCode = "F";
 						cl.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(cl.Tenant);
 						communicationLogRep.Update(cl);
 						communicationLogRep.SubmitChanges();
+						queueservice.Complete();
+
 					}
 
 				}
@@ -291,6 +295,37 @@ namespace CommunicationWorkerRole
 				}
 				throw;
 
+			}
+		}
+
+		private static void SetRelatedEntityTransferStatusToTransferError(CommunicationLog waitingCommLog)
+		{
+			if (waitingCommLog.Subject == "Payment SAT Interface")
+			{
+				Simplog.Data.InvoiceModel.Repositories.ARPaymentRepository arpaymentRep = new Simplog.Data.InvoiceModel.Repositories.ARPaymentRepository(waitingCommLog.Tenant);
+				Simplog.Data.InvoiceModel.EntityPOCOs.ARPayment payment = arpaymentRep.GetSingleARPayment(waitingCommLog.EntityId);
+				if (payment != null)
+				{
+					if (payment.SATTransferStatusCode != "TE")
+					{
+						payment.SATTransferStatusCode = "TE";
+						//payment.TransmissionError = transError;
+						arpaymentRep.Update(payment);
+						arpaymentRep.SubmitChanges();
+					}
+				}
+			}
+			else
+			{
+				Simplog.Data.InvoiceModel.Repositories.ARInvoiceRepository arinvoiceRep = new Simplog.Data.InvoiceModel.Repositories.ARInvoiceRepository(waitingCommLog.Tenant);
+				Simplog.Data.InvoiceModel.EntityPOCOs.ARInvoice invoice = arinvoiceRep.GetSingleInvoice(waitingCommLog.EntityId);
+				if (invoice.SATTransferStatusCode != "TE")
+				{
+					invoice.SATTransferStatusCode = "TE";
+					//invoice.TransmissionError = transError;
+					arinvoiceRep.Update(invoice);
+					arinvoiceRep.SubmitChanges();
+				}
 			}
 		}
 
@@ -585,8 +620,17 @@ namespace CommunicationWorkerRole
 
 						Encoding encoding = Encoding.UTF8;
 						byte[] xmlfile = encoding.GetBytes(resultadoConsulta.Xml);
+
 						CreateSATPaymentDocument(payment, xmlfile, true);
 
+						waitingCommLog.CommunicationStatusTypeCode = "D";
+						waitingCommLog.DoneDate = TenantServerConfigration.GetCurrentDateTime(waitingCommLog.Tenant);
+						waitingCommLog.DoneDateUTC = DateTime.UtcNow;
+						waitingCommLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(waitingCommLog.Tenant);
+						waitingCommLog.LastStatusDateUTC = DateTime.UtcNow;
+						communicationLogRep.Update(waitingCommLog);
+						communicationLogRep.SubmitChanges();
+						
 						EventTracer.CreateTraceEvent(new EventTracerArgs()
 						{
 							EntityId = waitingCommLog.EntityId,
@@ -747,9 +791,9 @@ namespace CommunicationWorkerRole
                         arpaymentRep.SubmitChanges();
                     }
                 }
-           // }
+			// }
 
-            SaveCommunicationLogAsFailed(waitingCommLog, communicationLogRep, transError);
+			SaveCommunicationLogAsDoneWithSATError(waitingCommLog, communicationLogRep, transError);
 
         }
 
@@ -767,10 +811,25 @@ namespace CommunicationWorkerRole
 				}
 			//}
 
-            SaveCommunicationLogAsFailed(waitingCommLog, communicationLogRep, transError);
+			SaveCommunicationLogAsDoneWithSATError(waitingCommLog, communicationLogRep, transError);
         }
 
-        private void SaveCommunicationLogAsFailed(CommunicationLog waitingCommLog, CommunicationLogRepository communicationLogRep, string transError)
+		private void SaveCommunicationLogAsDoneWithSATError(CommunicationLog waitingCommLog, CommunicationLogRepository communicationLogRep, string transError)
+		{
+			string exceptionMessage = "Done, with SAT Error: " + transError;
+			waitingCommLog.CommunicationStatusTypeCode = "D";
+			waitingCommLog.ExceptionMessage = StringHelper.TruncateLongString(exceptionMessage, 7000);
+			waitingCommLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(waitingCommLog.Tenant);
+
+			if (context != null)
+			{
+				communicationLogRep.Update(waitingCommLog);
+				communicationLogRep.SubmitChanges();
+			}
+
+			queueservice.Complete();
+		}
+		private void SaveCommunicationLogAsFailed(CommunicationLog waitingCommLog, CommunicationLogRepository communicationLogRep, string transError)
         {
             string exceptionMessage = "Failed," + transError;
             waitingCommLog.CommunicationStatusTypeCode = "F";
@@ -873,7 +932,7 @@ namespace CommunicationWorkerRole
 				//ObjectTableId = arObjectTable.Id,
 				//EntityNumber = invoice.InvoiceNumber,
 				EntityId = invoice.MainEntityId,
-				ObjectTableId = entityObjectTable.Id,
+				//ObjectTableId = entityObjectTable.Id,
 				EntityNumber = invoice.MainEntityReference,
 
 				ChildEntityId = invoice.Id,
@@ -881,6 +940,10 @@ namespace CommunicationWorkerRole
 				ChildEntityReference = invoice.InvoiceNumber,
 
 			};
+			if (!invoice.IsConsolidationInvoice)
+			{
+				extDocPM.ObjectTableId = entityObjectTable.Id;
+			}
 
 			documentsService.Create(extDocPM, fileData, systemUser.Id, false);
 

@@ -11,27 +11,17 @@ namespace Logitude.HybridTest
         #region ShipmentVars
         //Currency
         public const string CurrencyCodeEUR = "EUR";
-        public static string CurrencyIdEUR { get; set; }
         //Incoterm
         public const string IncotermCodeCIF = "CIF";
         public const string IncotermCodeLDE = "LDE";
-        public static string IncotermIdCIF { get; set; }
-        public static string IncotermIdLDE { get; set; }
         //ChargeType
         public const string ChargeTypeCodeAFT = "AFT";
-        public static string ChargeTypeIdAFT { get; set; }
-        public static string ChargeTypeIATACodeId { get; set; }
-        public static string ChargeTypeVatTypeId { get; set; }
         //Vessel
         public const string VesselCodeHV = "HV";
-        public static string VesselIdHV { get; set; }
         //Vendor
         public const string VendorCodeHVEN = "HVEN";
-        public static string VendorIdHVEN { get; set; }
         //Agent
         public const string AgentCodeHAgent = "HAgent";
-
-        public static string customClearedExternalId { get; set; }
         #endregion
 
         #region PortsVars
@@ -44,16 +34,7 @@ namespace Logitude.HybridTest
         public const string PortCodeInlandNYC = "NYC";
         public const string PortCodeLON = "LON";
         public const string PortCodeMAN = "MAN";
-        public static string PortIdLHR { get; set; }
-        public static string CountryIdForPortLHR { get; set; }
-        public static string PortIdLAS { get; set; }
-        public static string PortIdMIA { get; set; }
-        public static string PortIdAirJFK { get; set; }
-        public static string CountryIdForPortJFK { get; set; }
-        public static string PortIdOceanSOU { get; set; }
-        public static string PortIdInlandNYC { get; set; }
         public static string PortIdLON { get; set; }
-        public static string PortIdMAN { get; set; }
         #endregion
 
         #region CountriesVars
@@ -61,9 +42,6 @@ namespace Logitude.HybridTest
         public const string CountryCodeGB = "GB";
         public const string CountryCodeUS = "US";
         public const string StateCodeAK = "AK";
-        public static string CountryIdGB { get; set; }
-        public static string CountryIdUS { get; set; }
-        public static string StateIdAK { get; set; }
         #endregion
 
         #region CustomersVars
@@ -75,35 +53,24 @@ namespace Logitude.HybridTest
         public const string CustomerCodeTestConsigneeImport1 = "HConsignee2";
 
         public static string CustomerIdHCustomer { get; set; }
-        public static string CustomerAddressIdHCustomer { get; set; }
-
-        public static string CustomerIdTestShipperImport1 { get; set; }
-        public static string CustomerIdTestConsigneeExport1 { get; set; }
-        public static string CustomerIdTestConsigneeImport1 { get; set; }
         #endregion
 
         #region AirLinesVars
         //AirLine
         public const string AirlineCodeHA = "HA";
         public const string AirlineCodeHL = "HL";
-        public static string AirlineIdHA { get; set; }
-        public static string AirlineIdHL { get; set; }
         #endregion
 
         #region ShippingLinesVars
         //Shipping Line
         public const string ShippingLineCodeHSL = "HSLN";
-        public static string ShippingLineIdHSL { get; set; }
         public const string ShippingLineCodeHSL2 = "HSL2";
-        public static string ShippingLineIdHSL2 { get; set; }
         #endregion
 
         #region TruckersVars
         //Trucker
         public const string TruckerCodeHT = "HTRU";
         public const string TruckerCodeHT2 = "HTR2";
-        public static string TruckerIdHT { get; set; }
-        public static string TruckerIdHT2 { get; set; }
         #endregion
 
         #region PackageTypesVars
@@ -112,10 +79,6 @@ namespace Logitude.HybridTest
         public const string PackageTypeCodePC2 = "PC2";
         public const string PackageTypeCodePP1 = "PP1";
         public const string PackageTypeCodePP2 = "PP2";
-        public static string PackageTypeIdPC1 { get; set; }
-        public static string PackageTypeIdPC2 { get; set; }
-        public static string PackageTypeIdPP1 { get; set; }
-        public static string PackageTypeIdPP2 { get; set; }
         #endregion
 
         #region OtherVars
@@ -145,15 +108,9 @@ namespace Logitude.HybridTest
         public const string HouseShipmentCode = "Hybrid HShipment";
 
         public static string FirstOpportunityId { get; set; }
-        public static string DocumentTypeIdHDT { get; set; }
-        public static string UserIdHU { get; set; }
         public static string AddressIdHA { get; set; }
-        public static string ContactId { get; set; }
         public static string CityIdHCity { get; set; }
         public static string DirectShipmentId { get; set; }
-        public static string HouseShipmentId { get; set; }
-
-        public static string QuoteId { get; set; }
 
         ///AC
         public static string ActivityId { get; set; }

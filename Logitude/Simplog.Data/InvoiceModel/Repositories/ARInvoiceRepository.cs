@@ -518,6 +518,10 @@ namespace Simplog.Data.InvoiceModel.Repositories
 
             return invoices;
         }
+        public IQueryable<ARInvoice> GetUnpaidAndDraftARInvoices(int tenant)
+        {
+            return context.ARInvoices.Include("Status").Where(d => d.Tenant == tenant && d.StatusCode != "VD" && d.StatusCode != "LL" && !d.IsAutoCredit && !d.IsCancelled && d.IsClosed == false);
+        }
 
     }
 }

@@ -128,6 +128,11 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
                         ShipmentService service = new ShipmentService(objectContext, entityPM, SecurityUtility.GetAuthenticatedUser());
                         service.Create();
 
+                        IShipmentsContext updatedEntityContext = ShipmentsContext.GetContext(tenant);
+                        ShipmentRepository updatedEntityRepository = new ShipmentRepository(updatedEntityContext);
+                        ShipmentQuery updatedShipmentQuery = new ShipmentQuery(updatedEntityRepository);
+                        entityPM = updatedShipmentQuery.GetSinglePM(entityPM.Id, entityPM.Tenant);
+
                         scope.Complete();
                         return Request.CreateResponse(HttpStatusCode.OK, entityPM);
                     }
@@ -162,10 +167,26 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
                         SecurityUtility.CheckContactFeature("Shipment", "UPDATE", tenant);
 						SecurityUtility.AuthenticationOnEntityTenant("Shipment", entityPM.Tenant, authToken.Tenant);
 
-
 						IShipmentsContext objectContext = ShipmentsContext.GetContext(entityPM.Tenant);
                         ShipmentService service = new ShipmentService(objectContext, entityPM, SecurityUtility.GetAuthenticatedUser());
                         service.Update(true);
+
+                        IShipmentsContext updatedEntityContext = ShipmentsContext.GetContext(tenant);
+                        ShipmentRepository updatedEntityRepository = new ShipmentRepository(updatedEntityContext);
+                        ShipmentQuery updatedShipmentQuery = new ShipmentQuery(updatedEntityRepository);
+                        entityPM = updatedShipmentQuery.GetSinglePM(entityPM.Id, entityPM.Tenant);
+
+                        if (service.DummyIdGuidPackages != null)
+                        {
+                            foreach (var item in service.DummyIdGuidPackages)
+                            {
+                                ShipmentPackagePM itemPM = entityPM.ShipmentPackages.Where(d => d.Id == item.Key).FirstOrDefault();
+                                if (itemPM != null)
+                                {
+                                    itemPM.DummyIdGuid = item.Value;
+                                }
+                            }
+                        }
 
                         scope.Complete();
                         return Request.CreateResponse(HttpStatusCode.OK, entityPM);
@@ -624,6 +645,19 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
                         {
                             CustomData.PaymentData = ForwardToPaymentLink(result, myParams);
                         }
+                        else
+                        {
+                            CustomData.PaymentData = new PaymentData();
+                            CustomData.PaymentData.currency = dict["currency"];
+                            CustomData.PaymentData.sum = dict["sum"];
+                            CustomData.PaymentData.op = dict["op"];
+                            CustomData.PaymentData.DCdisable = dict["DCdisable"];
+                            CustomData.PaymentData.DclickTK = dict["DclickTK"];
+                            //CustomData.PaymentData.thtk = dict["thtk"];
+                            CustomData.PaymentData.TargetEnv = dict["TargetEnv"];
+                            CustomData.PaymentData.u71 = dict["u71"];
+
+                        }
                     }
 
                 }
@@ -649,6 +683,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
             MyPaymentData.currency = dict["currency"];
             MyPaymentData.sum = dict["sum"];
             MyPaymentData.op = dict["op"];
+            MyPaymentData.u71 = dict["u71"];
             MyPaymentData.DCdisable = dict["DCdisable"];
             MyPaymentData.DclickTK = dict["DclickTK"];
             MyPaymentData.thtk = dict["thtk"];
@@ -710,7 +745,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
                 entityComputedFields.RequestedDocumentsCount = 0;
                 entityComputedFields.IsDepositionRequired = false;
                 ShipmentComputedFieldsHelper shipmentComputedFieldsHelper = new ShipmentComputedFieldsHelper();
-                shipmentComputedFieldsHelper.UpdateShipmentComputedFields(entityComputedFields);
+                shipmentComputedFieldsHelper.UpdateShipmentComputedFields(entityComputedFields, shipmentComputedFieldsRepository.context);
 
 
                 //shipmentComputedFieldsRepository.Update(entityComputedFields);
@@ -763,6 +798,28 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
             }
         }
 
-       
+        public HttpResponseMessage GetUserIdDetailsByShipmentSecurityKeyWithoutToken(int tenant,string key)
+        {
+            try
+            {
+               
+                ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
+                var RequestedShipment = shipmentQuery.GetSingleShipmentPMBySecurityKeyTenant(key,tenant);
+                var MyData = LogitudeXmlSerializer.DeserializeObject<UserIdNumberRequestPM>(RequestedShipment.UserIdNumberXMLData);
+                MyData.Id = RequestedShipment.Id;
+                MyData.IsUserIDNumberRequired = RequestedShipment.IsUserIDNumberRequired;
+                MyData.UserIdNumberUpdateDate = RequestedShipment.UserIdNumberUpdateDate;
+                MyData.UserIdNumber = RequestedShipment.UserIdNumber;
+                return Request.CreateResponse(HttpStatusCode.OK, MyData); 
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+
+
     }
 }

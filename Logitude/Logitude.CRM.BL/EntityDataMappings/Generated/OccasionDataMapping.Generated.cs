@@ -73,7 +73,8 @@ namespace Logitude.CRM.BL.EntityDataMappings
 	         ParticipatedCustomers, 
 	         ParticipatedContacts, 
 	         InvitedCustomers, 
-	         InvitedContacts,
+	         InvitedContacts, 
+	         IsAllAdded,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

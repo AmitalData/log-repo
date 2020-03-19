@@ -307,9 +307,9 @@ export class ObjectFieldPM {
     public set ObjectTable_MultiTableName(newValue: string) { if (this.objectTable_MultiTableName != newValue) { this.objectTable_MultiTableName = newValue; this.MarkAsDirty("ObjectTable_MultiTableName"); } }
        
 	 
-    private helpTextTextCodeCode: string;
-    public get HelpTextTextCodeCode() { return this.helpTextTextCodeCode; }
-    public set HelpTextTextCodeCode(newValue: string) { if (this.helpTextTextCodeCode != newValue) { this.helpTextTextCodeCode = newValue; this.MarkAsDirty("HelpTextTextCodeCode"); } }
+    private helpTextCodeCode: string;
+    public get HelpTextCodeCode() { return this.helpTextCodeCode; }
+    public set HelpTextCodeCode(newValue: string) { if (this.helpTextCodeCode != newValue) { this.helpTextCodeCode = newValue; this.MarkAsDirty("HelpTextCodeCode"); } }
        
 	 
     private fullNameTextCodeCode: string;

@@ -29,12 +29,12 @@ export class QueriesPMService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/queries';
     }
 
-    get(id: string) {
+    get(UniqueCode: string) {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/getsingle?' + 'id=' + id, {
+            return this._http.get(this._apiUrl + '/getsingle?' + 'UniqueCode=' + UniqueCode, {
                 headers: authHeader
             }).map(response => {
                 var pm = response.json();
@@ -168,7 +168,7 @@ export class QueriesPMService {
                 var mappedEntity: QueryPM;
                 mappedEntity = this.MapJsonToEntityPM(entityPM, false);
 
-                return this._http.delete(this._apiUrl + '?id=' + entityPM.Id + '&userId=' + userId,
+                return this._http.delete(this._apiUrl + '?UniqueCode=' + entityPM.UniqueCode + '&userId=' + userId,
                     { headers: authHeader }).map((res) => {
                         var pm = res.json();
                         if (pm) {

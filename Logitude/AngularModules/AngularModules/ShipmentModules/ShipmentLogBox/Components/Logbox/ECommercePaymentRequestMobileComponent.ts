@@ -28,12 +28,14 @@ import { DocumentsFilingExtendedPMService } from '../../../../Common/Services/Ex
 import { GroupByPipe } from '../../../../Infrastructure/Pipes/GroupByPipe';
 import { ImageLibraryService } from '../../../../Common/Services/Others/ImageLibraryService';
 import { ServiceHelper } from '../../../../Infrastructure/Utilities/ServiceHelper';
-import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
+//import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 import { DocumentTypeMetaDataExtendedService } from '../../../../Common/Services/ExtendedPMs/DocumentTypeMetaDataExtendedService'
 import { ServiceLocator } from '../../../../Infrastructure/Locators/ServiceLocator';
 import { CommonDomainService } from '../../../../Common/Services/CommonDomainService';
 import { TenantPMService } from '../../../../Common/Services/StandardPMs/TenantPMService';
 import { DownloadManager } from '../../../../Infrastructure/Utilities/DownloadManager';
+
+
 @Component({
     moduleId: module.id,
     templateUrl: './ECommercePaymentRequestMobileComponent.html'
@@ -42,14 +44,17 @@ import { DownloadManager } from '../../../../Infrastructure/Utilities/DownloadMa
 export class ECommercePaymentRequestMobileComponent extends BaseComponent implements OnInit, AfterViewInit {
 
     DataContext: ECommercePaymentRequestMobileComponent = this;
-    private messageWindow: MessageWindow = new MessageWindow();
+    //private messageWindow: MessageWindow = new MessageWindow();
     EntityPm: ShipmentPM = new ShipmentPM();
-    AdditionalData: any = {};
+    AdditionalData: any = {
+        RequestPaymentData: {}, PaymentData: {}
+    };
     externalDocs: any[] = [];
 
     public _DocumentTypeMetaDataExtendedService: DocumentTypeMetaDataExtendedService;
     public _documentsFilingExtendedPMService: DocumentsFilingExtendedPMService;
     public _ShipmentAdditionalCloudDataService: ShipmentAdditionalCloudDataService;
+
     public _ShipmentPMService: ShipmentPMService;
     RefreshTimer: any;
     _ImageLibraryService: ImageLibraryService;
@@ -60,7 +65,9 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
         this._ImageLibraryService = new ImageLibraryService();
         this._DocumentTypeMetaDataExtendedService = new DocumentTypeMetaDataExtendedService();
         this._ShipmentPMService = new ShipmentPMService();
-        this.AdditionalData.RequestPaymentData = {};
+        //this.AdditionalData.RequestPaymentData = {};
+        //this.AdditionalData.PaymentData = {};
+
         //this.AdditionalData.RequestPaymentData.ServiceTypes = [];
     }
 
@@ -68,20 +75,25 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
     public get IsAccepted() { return this.isAccepted }
     public set IsAccepted(newValue: boolean) { this.isAccepted = newValue; }
 
+    private ScreenWidth: number;
+    private MaxScreenWidth: number = 600;
+
     IsAcceptedChanged($event) {
         this.IsAccepted = $event;
     }
     ngOnInit() {
+
+        this.ScreenWidth = window.innerWidth > this.MaxScreenWidth ? this.MaxScreenWidth : window.innerWidth;;
 
     }
     ngAfterViewInit() {
 
     }
     ShowFinalMessage: boolean = false;
-    SecurityKey:string = "";
-    Tenant : number = null;
+    SecurityKey: string = "";
+    Tenant: number = null;
     RunComponent() {
-        
+
         if (SessionLocator.IsExternalParams) {
             if (SessionLocator.ExternalParams) {
                 if (SessionLocator.ExternalParams.Menu && SessionLocator.ExternalParams.Menu.toLocaleLowerCase() == "preq") {
@@ -122,7 +134,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
                     }
                 }
                 else {
-                    this.FinalMessage = "קובץ זה אינו נדרש לתשלום";
+                    this.FinalMessage = "קובץ זה םינו נדרש לתשלום";
                     this.ShowFinalMessage = true;
                 }
 
@@ -143,11 +155,11 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
                 if (this.RefreshTimer) {
                     clearTimeout(this.RefreshTimer);
                 }
-                
+
                 this.RefreshTimer = setInterval(() => this.ReloadPage(), 1200000);//1200000
             }
             else {
-                this.FinalMessage = "התיק לא קיים בסביבה הזו";
+                this.FinalMessage = "התיק לם קיים בסביבה הזו";
                 this.ShowFinalMessage = true;
             }
         });
@@ -178,18 +190,18 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
                         }
                     }
                     else {
-                        this.FinalMessage = "קובץ זה אינו נדרש לתשלום";
+                        this.FinalMessage = "קובץ זה םינו נדרש לתשלום";
                         this.ShowFinalMessage = true;
                     }
 
                     this.RefreshTimer = setInterval(() => this.ReloadPage(), 1200000);//1200000
                 }
                 else {
-                    this.FinalMessage = "התיק לא קיים בסביבה הזו";
+                    this.FinalMessage = "התיק לם קיים בסביבה הזו";
                     this.ShowFinalMessage = true;
                 }
             });
-        } 
+        }
     }
     private companyLogo: string = "";
     public get CompanyLogo() { return this.companyLogo }
@@ -198,7 +210,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
     public get TotalAmount() { return this.totalAmount }
     public set TotalAmount(newValue: number) { this.totalAmount = newValue; }
     public ValidationWarningsList: string = null;
-    public FinalMessage: string = "גרסה זו אושרה";
+    public FinalMessage: string = "גרסה זו םושרה";
 
     private ecommerceSupportEmail: string = "";
     public get EcommerceSupportEmail() { return this.ecommerceSupportEmail }
@@ -264,6 +276,12 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
     }
     public set TargetEnv(newValue: string) { this.AdditionalData.PaymentData.TargetEnv = newValue; }
 
+    public get TermsOfUseDocumentId() { return this.AdditionalData.RequestPaymentData.TermsOfUseDocumentId }
+    public set TermsOfUseDocumentId(newValue: string) { this.AdditionalData.RequestPaymentData.TermsOfUseDocumentId = newValue; }
+
+    public get u71() { return this.AdditionalData.PaymentData.u71 }
+    public set u71(newValue: string) { this.AdditionalData.PaymentData.u71 = newValue; }
+
 
 
     ShowPaymentDetailsScreen: boolean = false;
@@ -282,7 +300,23 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
 
     OnPayClick() {
         //alert("Yes");
+        document.forms["form"].action = this.TargetEnv
         document.forms["form"].submit();
+    }
+    IsAgreed: boolean = false;
+    IsAggreeChicked(isAgreed) {
+        this.IsAgreed = isAgreed;
+    }
+
+    ViewAggreement() {
+        //this._documentsFilingExtendedPMService.getDocumentsFilingsByCode(this.TermsOfUseDocumentId).subscribe(myResult => {
+
+        //if (myResult.Result) { 
+        //var securityId = myResult.Result.SecurityId;
+        DownloadManager.DownloadExternalPage(null, this.Tenant, this.TermsOfUseDocumentId);
+        //  }
+        //});
+
     }
 
 

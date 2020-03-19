@@ -159,6 +159,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 DocumentShareAsDefault = a.LogBoxTenantSetting.DocumentShareAsDefault,
                                                 LogBoxAdminUserId = a.LogBoxTenantSetting.LogBoxAdminUserId,
                                                 HideFCLAllIn = a.HideFCLAllIn,
+                                                AllowCustomersInAgentsLOV = a.AllowCustomersInAgentsLOV,
                                             });
 
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -289,6 +290,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                       
                         CustomerTenantShareExportFile = tt.CustomerTenantShareExportFile,
                         AllowAgentInCustomersLOV = tt.AllowAgentInCustomersLOV,
+                        AllowCustomersInAgentsLOV = tt.AllowCustomersInAgentsLOV,
                         IsPotentialTelRequired = tt.IsPotentialTelRequired,
                         IsPotentialFaxRequired = tt.IsPotentialFaxRequired,
                         VatFormatTypeCode = tt.VatFormatTypeCode,
@@ -462,6 +464,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                    
                     CustomerTenantShareExportFile = tt.CustomerTenantShareExportFile,
                     AllowAgentInCustomersLOV = tt.AllowAgentInCustomersLOV,
+                    AllowCustomersInAgentsLOV = tt.AllowCustomersInAgentsLOV,
                     IsPotentialTelRequired = tt.IsPotentialTelRequired,
                     IsPotentialFaxRequired = tt.IsPotentialFaxRequired,
                     VatFormatTypeCode = tt.VatFormatTypeCode,
@@ -542,7 +545,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 if (CacheManager.CacheWrapper.Get(entityName) == null)
                 {
                     ICommonDataContext context = CommonDataContext.GetContext(id);
-                    TenantPM tenant = (from a in context.Tenants.Include("Address")
+                    TenantPM tenant = (from a in context.Tenants.Include("Address").Include("LogBoxTenantSetting")
                                        where a.Id == id
                                        select new TenantPM()
                                        {
@@ -620,6 +623,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                          
                                            CustomerTenantShareExportFile = a.CustomerTenantShareExportFile,
                                            AllowAgentInCustomersLOV = a.AllowAgentInCustomersLOV,
+                                           AllowCustomersInAgentsLOV = a.AllowCustomersInAgentsLOV,
                                            IsPotentialTelRequired = a.IsPotentialTelRequired,
                                            IsPotentialFaxRequired = a.IsPotentialFaxRequired,
                                            VatFormatTypeCode = a.VatFormatTypeCode,
@@ -767,6 +771,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                     
                                        CustomerTenantShareExportFile = a.CustomerTenantShareExportFile,
                                        AllowAgentInCustomersLOV = a.AllowAgentInCustomersLOV,
+                                       AllowCustomersInAgentsLOV = a.AllowCustomersInAgentsLOV,
                                        IsPotentialTelRequired = a.IsPotentialTelRequired,
                                        IsPotentialFaxRequired = a.IsPotentialFaxRequired,
                                        VatFormatTypeCode = a.VatFormatTypeCode,
@@ -838,7 +843,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     if (CacheManager.CacheWrapper.Get(entityName) == null)
                     {
                         ICommonDataContext context = CommonDataContext.GetContext(id);
-                        TenantPM tenant = (from a in context.Tenants.Include("Address")
+                        TenantPM tenant = (from a in context.Tenants.Include("Address").Include("LogBoxTenantSetting")
                                            where a.Id == id
                                            select new TenantPM()
                                            {
@@ -916,6 +921,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                             
                                                CustomerTenantShareExportFile = a.CustomerTenantShareExportFile,
                                                AllowAgentInCustomersLOV = a.AllowAgentInCustomersLOV,
+                                               AllowCustomersInAgentsLOV = a.AllowCustomersInAgentsLOV,
                                                IsPotentialTelRequired = a.IsPotentialTelRequired,
                                                IsPotentialFaxRequired = a.IsPotentialFaxRequired,
                                                VatFormatTypeCode = a.VatFormatTypeCode,
@@ -947,6 +953,12 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                CheckDigitControlAlgorithmCode = a.CheckDigitControlAlgorithmCode,
                                                ApplyVATForAllPartners = a.ApplyVATForAllPartners,
                                                HideFCLAllIn = a.HideFCLAllIn,
+                                               IsDocumentsArchive = a.LogBoxTenantSetting != null ? a.LogBoxTenantSetting.IsDocumentsArchive : false,
+                                               CustomerTenantShareImportFile = a.LogBoxTenantSetting != null ? a.LogBoxTenantSetting.CustomerTenantShareImportFile : false,
+                                               AutoArchiveOnInvoice = a.LogBoxTenantSetting != null ? a.LogBoxTenantSetting.AutoArchiveOnInvoice : false,
+                                               StockTypeCode = a.LogBoxTenantSetting != null ? a.LogBoxTenantSetting.StockTypeCode : null,
+                                               DocumentShareAsDefault = a.LogBoxTenantSetting != null ? a.LogBoxTenantSetting.DocumentShareAsDefault : false,
+                                               LogBoxAdminUserId = a.LogBoxTenantSetting != null ? a.LogBoxTenantSetting.LogBoxAdminUserId : null,
                                            }).FirstOrDefault();
 
                         using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -988,7 +1000,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 else
                 {
                     ICommonDataContext context = CommonDataContext.GetContext(id);
-                    TenantPM tenant = (from a in context.Tenants.Include("Address")
+                    TenantPM tenant = (from a in context.Tenants.Include("Address").Include("LogBoxTenantSetting")
                                        where a.Id == id
                                        select new TenantPM()
                                        {
@@ -1066,6 +1078,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                          
                                            CustomerTenantShareExportFile = a.CustomerTenantShareExportFile,
                                            AllowAgentInCustomersLOV = a.AllowAgentInCustomersLOV,
+                                           AllowCustomersInAgentsLOV = a.AllowCustomersInAgentsLOV,
                                            IsPotentialTelRequired = a.IsPotentialTelRequired,
                                            IsPotentialFaxRequired = a.IsPotentialFaxRequired,
                                            VatFormatTypeCode = a.VatFormatTypeCode,
@@ -1098,7 +1111,12 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            CheckDigitControlAlgorithmCode = a.CheckDigitControlAlgorithmCode,
                                            ApplyVATForAllPartners = a.ApplyVATForAllPartners,
                                            HideFCLAllIn = a.HideFCLAllIn,
-
+                                           IsDocumentsArchive = a.LogBoxTenantSetting != null ? a.LogBoxTenantSetting.IsDocumentsArchive : false,
+                                           CustomerTenantShareImportFile = a.LogBoxTenantSetting != null ? a.LogBoxTenantSetting.CustomerTenantShareImportFile : false,
+                                           AutoArchiveOnInvoice = a.LogBoxTenantSetting != null ? a.LogBoxTenantSetting.AutoArchiveOnInvoice : false,
+                                           StockTypeCode = a.LogBoxTenantSetting != null ? a.LogBoxTenantSetting.StockTypeCode : null,
+                                           DocumentShareAsDefault = a.LogBoxTenantSetting != null ? a.LogBoxTenantSetting.DocumentShareAsDefault : false,
+                                           LogBoxAdminUserId = a.LogBoxTenantSetting != null ? a.LogBoxTenantSetting.LogBoxAdminUserId : null,
                                        }).FirstOrDefault();
 
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -1132,7 +1150,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             else
             {
                 ICommonDataContext context = CommonDataContext.GetContext(id);
-                TenantPM tenant = (from a in context.Tenants.Include("Address")
+                TenantPM tenant = (from a in context.Tenants.Include("Address").Include("LogBoxTenantSetting")
                                    where a.Id == id
                                    select new TenantPM()
                                    {
@@ -1210,6 +1228,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                     
                                        CustomerTenantShareExportFile = a.CustomerTenantShareExportFile,
                                        AllowAgentInCustomersLOV = a.AllowAgentInCustomersLOV,
+                                       AllowCustomersInAgentsLOV = a.AllowCustomersInAgentsLOV,
                                        IsPotentialTelRequired = a.IsPotentialTelRequired,
                                        IsPotentialFaxRequired = a.IsPotentialFaxRequired,
                                        VatFormatTypeCode = a.VatFormatTypeCode,
@@ -1241,7 +1260,12 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        CheckDigitControlAlgorithmCode = a.CheckDigitControlAlgorithmCode,
                                        ApplyVATForAllPartners = a.ApplyVATForAllPartners,
                                        HideFCLAllIn = a.HideFCLAllIn,
-
+                                       IsDocumentsArchive = a.LogBoxTenantSetting != null ? a.LogBoxTenantSetting.IsDocumentsArchive : false,
+                                       CustomerTenantShareImportFile = a.LogBoxTenantSetting != null ? a.LogBoxTenantSetting.CustomerTenantShareImportFile : false,
+                                       AutoArchiveOnInvoice = a.LogBoxTenantSetting != null ? a.LogBoxTenantSetting.AutoArchiveOnInvoice : false,
+                                       StockTypeCode = a.LogBoxTenantSetting != null ? a.LogBoxTenantSetting.StockTypeCode : null,
+                                       DocumentShareAsDefault = a.LogBoxTenantSetting != null ? a.LogBoxTenantSetting.DocumentShareAsDefault : false,
+                                       LogBoxAdminUserId = a.LogBoxTenantSetting != null ? a.LogBoxTenantSetting.LogBoxAdminUserId : null,
                                    }).FirstOrDefault();
                 if (tenant != null)
                 {
@@ -1388,6 +1412,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
                     CustomerTenantShareExportFile = myPOCO.CustomerTenantShareExportFile,
                     AllowAgentInCustomersLOV = myPOCO.AllowAgentInCustomersLOV,
+                    AllowCustomersInAgentsLOV = myPOCO.AllowCustomersInAgentsLOV,
                     IsPotentialTelRequired = myPOCO.IsPotentialTelRequired,
                     IsPotentialFaxRequired = myPOCO.IsPotentialFaxRequired,
                     VatFormatTypeCode = myPOCO.VatFormatTypeCode,
@@ -1418,11 +1443,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     IsTestTenant = myPOCO.IsTestTenant,
                     CheckDigitControlAlgorithmCode = myPOCO.CheckDigitControlAlgorithmCode,
                     ApplyVATForAllPartners = myPOCO.ApplyVATForAllPartners,
-                    IsDocumentsArchive = myPOCO.LogBoxTenantSetting.IsDocumentsArchive,
-                    CustomerTenantShareImportFile = myPOCO.LogBoxTenantSetting.CustomerTenantShareImportFile,
-                    AutoArchiveOnInvoice = myPOCO.LogBoxTenantSetting.AutoArchiveOnInvoice,
+                    IsDocumentsArchive = myPOCO.LogBoxTenantSetting !=null ? myPOCO.LogBoxTenantSetting.IsDocumentsArchive:false,
+                    CustomerTenantShareImportFile = myPOCO.LogBoxTenantSetting != null ? myPOCO.LogBoxTenantSetting.CustomerTenantShareImportFile:false,
+                    AutoArchiveOnInvoice = myPOCO.LogBoxTenantSetting != null ? myPOCO.LogBoxTenantSetting.AutoArchiveOnInvoice: false,
                     StockTypeCode = myPOCO.LogBoxTenantSetting != null ? myPOCO.LogBoxTenantSetting.StockTypeCode : null,
-                    DocumentShareAsDefault = myPOCO.LogBoxTenantSetting.DocumentShareAsDefault,
+                    DocumentShareAsDefault = myPOCO.LogBoxTenantSetting != null ? myPOCO.LogBoxTenantSetting.DocumentShareAsDefault:false,
                     LogBoxAdminUserId = myPOCO.LogBoxTenantSetting != null ? myPOCO.LogBoxTenantSetting.LogBoxAdminUserId : null,
                     HideFCLAllIn = myPOCO.HideFCLAllIn,
                 };
@@ -1541,6 +1566,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               
                                                 CustomerTenantShareExportFile = a.CustomerTenantShareExportFile,
                                                 AllowAgentInCustomersLOV = a.AllowAgentInCustomersLOV,
+                                                AllowCustomersInAgentsLOV = a.AllowCustomersInAgentsLOV,
                                                 IsWebAccessActivated = a.IsWebAccessActivated,
                                                 IsCorrespondenceRightToLeftEnabled = a.IsCorrespondenceRightToLeftEnabled,
                                                 IsNotesRightToLeftEnabled = a.IsNotesRightToLeftEnabled,
@@ -1796,5 +1822,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return vatNumber;
         }
 
+        public bool TenantExist(int tenant, int copyFromTenant)
+        {
+            TenantRepository tenantRepository = new TenantRepository(tenant);
+            return tenantRepository.TenantExist(copyFromTenant);
+        }
     }
 }

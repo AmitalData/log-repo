@@ -16,6 +16,7 @@ import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLogger';
+import {LocalStorageManager} from '../../../Infrastructure/Utilities/LocalStorageManager';
 import {AgentSharedManifestList} from '../../EntityLists/AgentSharedManifestList';
 
 @Injectable()
@@ -48,7 +49,7 @@ export class AgentSharedManifestListService {
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse(); 
                 serviceResponse.Result = entity;  
-
+				serviceResponse.CallTime = callTime;
                 var servertime = response.headers.get('ServerExecutionTime');
                 PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "AgentSharedManifest", "GetSingleList", 'id=' + id); 
 
@@ -79,7 +80,7 @@ export class AgentSharedManifestListService {
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse(); 
                 serviceResponse.Result = _mappedListsArray;
-
+				serviceResponse.CallTime = callTime;
                 var servertime = response.headers.get('ServerExecutionTime');
                 PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "AgentSharedManifest", "GetAllLists", ""); 
 
@@ -144,7 +145,7 @@ export class AgentSharedManifestListService {
                 }   
 
                 serviceResponse.Result = _mappedListsArray;       
-				
+				serviceResponse.CallTime = callTime;
                 var servertime = response.headers.get('ServerExecutionTime');
                 PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "AgentSharedManifest", "GetByFilters", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll);
 				           

@@ -20,6 +20,7 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public string FeatureId { get; set; }
         public string Code { get; set; }
         public string HtmlView { get; set; }
+        public string FeatureUniqeCode { get; set; }
 
         //[Include]
         //[Association("MenuTypeMenusTable", "MenuTypeCode", "Code", IsForeignKey = true)]
@@ -35,7 +36,7 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
          [ForeignKey("ObjectTableId")]
         public virtual ObjectTable ObjectTable { get; set; }
 
-        [ForeignKey("FeatureId")]
+        //[ForeignKey("FeatureId")]
         public Feature Feature { get; set; }
     }
 }

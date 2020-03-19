@@ -38,6 +38,13 @@ namespace Simplog.Data.CommonDataModel.Repositories
                     select a).FirstOrDefault();
         }
 
+        public RoleFeature GetRoleFeatureByRoleAndFeatureUCode(string roleId, string FeatureUniqeCode, int tenant)
+        {
+            return (from a in context.RoleFeatures
+                    where a.RoleId == roleId && a.FeatureUniqeCode == FeatureUniqeCode && a.Tenant == tenant
+                    select a).FirstOrDefault();
+        }
+
         public RoleFeature GetBusinessUnitFilterRoleFeature(string myRoleId, string myFeatureId, int tenant)
         {
             RoleFeature myResult = null;

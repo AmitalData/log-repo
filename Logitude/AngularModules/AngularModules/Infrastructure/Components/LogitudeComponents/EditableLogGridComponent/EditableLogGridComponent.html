@@ -1,4 +1,4 @@
-﻿<style>
+<style>
     .active {
         background: #cfcbcb;
         color: rgb(103, 103, 103);
@@ -109,18 +109,18 @@
                  style="position: absolute;display: inline-block;min-width:25px;">
                 <div [id]="'HeaderTemplateDiv' + i" [style.float]="RTL == true ? 'right' : 'left'" style="display: inline-block; width: calc(100% - 5px);" (mousedown)="ServerSort(col, i)">
                     <!--<list-header-template *ngIf="col.ColumnHeaderTemplateName" [colDef]="col"></list-header-template>-->
-                    <template *ngIf="col.hasHeadertemplate" ngFor [ngForOf]="[col.header]"
+                    <ng-template *ngIf="col.hasHeadertemplate" ngFor [ngForOf]="[col.header]"
                               [ngForTemplate]="col.innerContentTpl[0]">
-                    </template>
+                    </ng-template>
                     <div *ngIf="!col.hasHeadertemplate" [style.lineHeight.px]="HeaderHeight <= 27 ? 26 : HeaderHeight" [style.height.px]="HeaderHeight <= 27 ? 26 : HeaderHeight" style="overflow: hidden; text-overflow: ellipsis;">{{col.header}}</div>
 
-                    <svg class="svg-triangle sorting-img" *ngIf="sortingDir === 'Descending' && (col.SortFieldName ? ( sortingCol === col.SortFieldName) : (sortingCol === col.SortFieldName) )">
+                    <svg class="svg-triangle sorting-img" *ngIf="sortingDir === 'Ascending' && (col.SortFieldName ? ( sortingCol === col.SortFieldName) : (sortingCol === col.SortFieldName) )">
                         <polygon points="0,0 6,0 3,5" />
                     </svg>
                     <!--</span>-->
                     <!--<span class="sorting-img" *ngIf="sortingDir === 'Ascending' && sortingCol === col.FieldName">-->
                     <!--<img src="./Images/ToggleIcon.png" alt="Ascending" style="transform: rotate(180deg);" />-->
-                    <svg class="svg-triangle sorting-img" style="transform: rotate(180deg);" *ngIf="sortingDir === 'Ascending' && (col.SortFieldName ? ( sortingCol === col.SortFieldName) : (sortingCol === col.SortFieldName) )">
+                    <svg class="svg-triangle sorting-img" style="transform: rotate(180deg);" *ngIf="sortingDir === 'Descending' && (col.SortFieldName ? ( sortingCol === col.SortFieldName) : (sortingCol === col.SortFieldName) )">
                         <polygon points="0,0 6,0 3,5" />
                     </svg>
 
@@ -152,9 +152,9 @@
                         <div *ngFor="let col of customcolumns; let colIndex = index" [class.DisabledCell]="Disabled || (AllowDisableCells && !col.AllowDisableCells && (row.rowData[DisableRowByFieldName] == DisableRowByFieldValue)) || (col.Disabled)" [tabindex]="(AllowDisableCells && !col.AllowDisableCells && (row.rowData[DisableRowByFieldName] == DisableRowByFieldValue)) || (col.Disabled) ? -1 : 1" style="display: block;position: absolute;" [ngStyle]="col.Style">
                             <div [ngStyle]="{background: row.rowData.CellBackground}">
                                 <!--<div style="position:relative;">-->
-                                <template *ngIf="col.hastemplate" ngFor [ngForOf]="[row.rowData]"
+                                <ng-template *ngIf="col.hastemplate" ngFor [ngForOf]="[row.rowData]"
                                           [ngForTemplate]="col.innerContentTpl.length == 2 ?col.innerContentTpl[1] :col.innerContentTpl[0] ">
-                                </template>
+                                </ng-template>
                                 <!--</div>-->
                                 <edit-list-template *ngIf="!col.hastemplate" [editable]="col.Editable" style="text-indent: 10px; overflow: hidden; text-overflow: ellipsis;" [TabIndex]="(col.Disabled) ? -1 : 1"
                                                     [rowData]="row.rowData" [Alignment]="col.Alignment" [width]="col.width" [required]="col.required"
@@ -170,9 +170,9 @@
                     </div>
                     <div *ngIf="row && row.Type != 'Head' && RowDetail" [id]="DetailsDivId + 'DetailsDiv' + row.rowIndex" style="position: absolute;width:100%;" [ngStyle]="row.Detailsstyles">
                         <div *ngIf="row.IsDetailesOpened" [ngStyle]="RTL == false && groupby ? {'border-left':'15px solid #E4E4E4'} : (RTL == true && groupby ? {'border-right':'15px solid #E4E4E4'} : {})">
-                            <template ngFor [ngForOf]="[row.rowData]"
+                            <ng-template ngFor [ngForOf]="[row.rowData]"
                                       [ngForTemplate]="RowDetail.innerContentTpl.toArray()[0]">
-                            </template>
+                            </ng-template>
                         </div>
                     </div>
                 </div>
@@ -187,9 +187,9 @@
                  [ngStyle]="col.HeaderStyle"
                  style="position: absolute;display: inline-block;min-width:25px;">
                 <div [id]="'FooterTemplateDiv' + i" [style.float]="RTL == true ? 'right' : 'left'" style="display: inline-block; width: calc(100% - 5px);">
-                    <template *ngIf="col.hasFootertemplate" ngFor [ngForOf]="[col.footer]"
+                    <ng-template *ngIf="col.hasFootertemplate" ngFor [ngForOf]="[col.footer]"
                               [ngForTemplate]="col.FooterContentTemplate">
-                    </template>
+                    </ng-template>
                 </div>
             </div>
         </div>

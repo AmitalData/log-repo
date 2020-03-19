@@ -97,6 +97,20 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             List<CashBook> cashBook = repo.GetAll(tenant).ToList();
             return cashBook.Select(rec => GetEntityPM(rec,true, new CashBookKeys() { Id=rec.Id})).ToList();
         }
+
+
+        public CashBookPM GetLightCashbook(string id, int tenant)
+        {
+            CashBook cashBook = repository.GetSingle(id, tenant);
+            CashBookPM entityPM = new CashBookPM();
+
+            if (cashBook != null)
+            {
+                mapping.POCOToPM(entityPM, cashBook);
+            }
+
+            return entityPM;
+        }
     }
 
 }

@@ -1088,6 +1088,11 @@ namespace MeatadataGeneratorTool
             SetAttribute("ApplyOnPropertyChangedCode", table.ApplyOnPropertyChangedCode.ToString().ToLower(), entityElement);
             SetAttribute("HasApiHelper", table.HasApiHelper.ToString().ToLower(), entityElement);
             SetAttribute("AllowedForComputingPartners", table.AllowedForComputingPartners.ToString().ToLower(), entityElement);
+            if(table.IsMetadataOnlyTable != false)
+            {
+                SetAttribute("IsMetadataOnlyTable", table.IsMetadataOnlyTable.ToString().ToLower(), entityElement);
+                
+            }
             if (!string.IsNullOrEmpty(table.QueryGroupCode1) && !string.IsNullOrEmpty(table.QueryGroupName1))
             {
                 SetAttribute("Code1", GetStringValue(table.QueryGroupCode1), entityElement, null);
@@ -2073,6 +2078,15 @@ namespace MeatadataGeneratorTool
                         columnElement.SetAttribute("Precision", fieldNumberOfDigits.ToString());
                     }
 
+              
+                FileStream fileStream = new FileStream(App.DirectOpenPath, FileMode.Truncate, FileAccess.Write);
+                XmlWriterSettings settings = new XmlWriterSettings() { Indent = true, NewLineOnAttributes = true , OmitXmlDeclaration = false, WriteEndDocumentOnClose = false };//, WriteEndDocumentOnClose = true, OmitXmlDeclaration = true
+                XmlWriter xmlWriter = XmlWriter.Create(fileStream, settings);
+                 
+                doc.Save(xmlWriter);
+                xmlWriter.Close();
+                xmlWriter.Dispose();
+                //doc.Save(App.DirectOpenPath);
                     if (dxmlColumnDataType == "decimal" && fieldDigitsAfterPoint != null)
                     {
                         columnElement.SetAttribute("Scale", fieldDigitsAfterPoint.ToString());

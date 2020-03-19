@@ -38,7 +38,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
 
 
-        DateTime _ToBeginOfMonth;
+        
 
 
 
@@ -46,8 +46,8 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
 
 
-        protected IQueryable<Data.EntityPOCOs.LedgerTransaction> QBaseTranactionBeginOfMonthToDateTillToDateInculde;
-        protected IQueryable<Data.EntityPOCOs.GLAccountTotalByMonth> QBaseTotalsFromBirthTilStartOfMonthTo;
+        
+        
 
 
         protected IQueryable<ChartOfAccount5LevelM> QBaseAllCardsAndDetialsAccTypeBy5LevelHierarchy;
@@ -64,9 +64,9 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
         public List<RevenueExpenseReportM> Execute()
         {
 
+            _RevenueExpenseReportParam.FromDate = _RevenueExpenseReportParam.FromDate.Date;
             _RevenueExpenseReportParam.ToDate = _RevenueExpenseReportParam.ToDate.Date;
-
-            _ToBeginOfMonth = new DateTime(_RevenueExpenseReportParam.ToDate.Year, _RevenueExpenseReportParam.ToDate.Month, 1);
+            
             _TransactionScope = TransactionFactory.GetNewTransaction(TimeSpan.FromMinutes(__TimeOutInMinutes)); //snapshot isolation performance
 
             _AccountingContext = AccountingContext.GetContext(_RevenueExpenseReportParam.Tenant);
@@ -94,96 +94,10 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                     ChartOfAccountsTypeCode = a.ChartOfAccountsTypeCode,
                     ChartOfAccountsId = a.ChartOfAccountsId,
                     ParentId = a.ParentAccountId,
-                    DisplayNumber= a.DisplayNumber,
+                    DisplayNumber = a.DisplayNumber,
                     LocalName = a.LocalName,
                 }
                 );
-
-
-
-            QBaseTotalsFromBirthTilStartOfMonthTo =
-               (from tot in _AccountingContext.GLAccountTotalByMonths.Where( tot=>tot.DateTypeCode == GLAccountTotalDateTypeValues.Accountingdate)
-                
-                where tot.Tenant == _RevenueExpenseReportParam.Tenant
-
-                where tot.Year < _ToBeginOfMonth.Year ||
-                (tot.Year == _ToBeginOfMonth.Year && tot.Month < _ToBeginOfMonth.Month)
-                select tot
-                );
-            var qTempTotal = (from tot in QBaseTotalsFromBirthTilStartOfMonthTo
-                              select new TrailReportTemp()
-                              {
-                                  AccountId_COAType = tot.AccountId,
-                                  //CurrencyId = tot.CurrencyId,
-                                  //ForeignAmountCreditTotalStart = 0,
-                                  //ForeignAmountDebitTotalStart = 0,
-                                  //LocalAmountCreditTotalStart = 0,
-                                  //LocalAmountDebitTotalStart = 0,
-
-
-                                  //ForeignAmountCreditTransStart = 0,
-                                  //ForeignAmountDebitTransStart = 0,
-                                  //LocalAmountCreditTransStart = 0,
-                                  //LocalAmountDebitTransStart = 0,
-
-
-                                  //ForeignAmountCreditTotalDelta2End = 0,//tot.ForeignAmountCredit,
-                                  //ForeignAmountDebitTotalDelta2End = 0,//tot.ForeignAmountDebit,
-                                  LocalAmountCreditTotalDelta2End = tot.LocalAmountCredit,
-                                  LocalAmountDebitTotalDelta2End = tot.LocalAmountDebit,
-
-
-                                  //ForeignAmountCreditTransEnd = 0,
-                                  //ForeignAmountDebitTransEnd = 0,
-                                  LocalAmountCreditTransEnd = 0,
-                                  LocalAmountDebitTransEnd = 0,
-                                   
-                              });
-
-
-
-
-            var toDateAdd1Day = _RevenueExpenseReportParam.ToDate.AddDays(1);//INclude //
-            QBaseTranactionBeginOfMonthToDateTillToDateInculde =
-                (
-                from trans in _AccountingContext.LedgerTransactions
-                where trans.Tenant == _RevenueExpenseReportParam.Tenant
-                //toBeginOfMonth:20160201 until (InculdeAllTransOf)_RevenueExpenseReportParam.ToDate:20160215
-                where trans.AccountingDate >= _ToBeginOfMonth  //20160201
-                where trans.AccountingDate <
-                toDateAdd1Day //_RevenueExpenseReportParam.ToDate.AddDays(1)//INclude //==20160216 
-                select trans
-                );
-
-            var qTempTrans = (from r in QBaseTranactionBeginOfMonthToDateTillToDateInculde
-                              select new TrailReportTemp()
-                  {
-                      AccountId_COAType = r.AccountId,
-                      //CurrencyId = r.CurrencyId,
-                      //ForeignAmountCreditTotalStart = 0,
-                      //ForeignAmountDebitTotalStart = 0,
-                      //LocalAmountCreditTotalStart = 0,
-                      //LocalAmountDebitTotalStart = 0,
-
-
-                      //ForeignAmountCreditTransStart = 0,
-                      //ForeignAmountDebitTransStart = 0,
-                      //LocalAmountCreditTransStart = 0,
-                      //LocalAmountDebitTransStart = 0,
-
-
-                      //ForeignAmountCreditTotalDelta2End = 0,
-                      //ForeignAmountDebitTotalDelta2End = 0,
-                      LocalAmountCreditTotalDelta2End = 0,
-                      LocalAmountDebitTotalDelta2End = 0,
-
-
-                      //ForeignAmountCreditTransEnd = 0,// r.ForeignAmountCredit,
-                      //ForeignAmountDebitTransEnd = 0,// r.ForeignAmountDebit,
-                      LocalAmountCreditTransEnd = r.LocalAmountCredit,
-                      LocalAmountDebitTransEnd = r.LocalAmountDebit,
-
-                  });
 
             var qsChartOfAccount = new ChartOfAccountQueryService(_AccountingContext);
             _QAllChartOfAccountFlattenBy5LevelofHierarchy = //Flatten ChartOfAccount By 5 Level hierarchy
@@ -200,28 +114,21 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             QBaseAllCardsAndDetialsAccTypeBy5LevelHierarchy =
             JoinEachAccountWithisChartOfAccount5hierarchy(QAllRevenueExpenseCardsCOAM);
 
+            IQueryable <TrailReportTemp> QUnionAllCurrSummary = GetMoneyDataPerDate(
+                _RevenueExpenseReportParam.FromDate, _RevenueExpenseReportParam.ToDate,
 
+                _RevenueExpenseReportParam.Tenant, _AccountingContext);
 
-
-
-            IQueryable<TrailReportTemp> _QUnionAllCurrSummary =
-                (qTempTotal).Union(qTempTrans);
-            bool UnionreturnsDistinctvalues = true;
-            if (UnionreturnsDistinctvalues)
-            {
-                _QUnionAllCurrSummary =
-                    (qTempTotal).Concat(qTempTrans);
-            }
             string debugAccId = "";//"1-216621"
             if (!string.IsNullOrWhiteSpace(debugAccId))
             {
-                var myData = _QUnionAllCurrSummary.Where(r => r.AccountId_COAType == debugAccId).ToList();
+                var myData = QUnionAllCurrSummary.Where(r => r.AccountId_COAType == debugAccId).ToList();
             }
-            
+
 
             IQueryable<RevenueExpenseReportM> qAllMoneySideRevenueExpenseReportM
                 =
-                (from r in _QUnionAllCurrSummary
+                (from r in QUnionAllCurrSummary
                  group r by new
                  {
                      AccountId = r.AccountId_COAType,
@@ -241,22 +148,25 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                      ChartOfAcountName3 = "",
                      ChartOfAcountName4 = "",
                      ChartOfAcountName5 = "",
-                     ChartOfAcountCode1="",
+                     ChartOfAcountCode1 = "",
                      ChartOfAcountCode2 = "",
                      ChartOfAcountCode3 = "",
                      ChartOfAcountCode4 = "",
                      ChartOfAcountCode5 = "",
-                    
+
 
 
                      GLAccountName = "",
-                     GLAccountNumber="",
+                     GLAccountNumber = "",
                      GLAccountId = g.Key.AccountId,
-                     ChartOfAccountId="",
+                     ChartOfAccountId = "",
 
                      LocalCloseBalance =
                      (
-                     +g.Sum(x => x.LocalAmountDebitTotalDelta2End)
+                     +g.Sum(x => x.LocalAmountDebitTransStart)
+                     - g.Sum(x => x.LocalAmountCreditTransStart)
+
+                     + g.Sum(x => x.LocalAmountDebitTotalDelta2End)
                      - g.Sum(x => x.LocalAmountCreditTotalDelta2End)
                      + g.Sum(x => x.LocalAmountDebitTransEnd)
                      - g.Sum(x => x.LocalAmountCreditTransEnd)
@@ -264,10 +174,10 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
                  });
 
-            
-            IQueryable<RevenueExpenseReportM> _QTrailReportFull=null ;
+
+            IQueryable<RevenueExpenseReportM> _QTrailReportFull = null;
             _QTrailReportFull =
-                ///join 
+            ///join 
             (from chartf in QBaseAllCardsAndDetialsAccTypeBy5LevelHierarchy
              join data in qAllMoneySideRevenueExpenseReportM
              on chartf.GLAccountId equals data.GLAccountId
@@ -295,10 +205,10 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
 
                  GLAccountName = chartf.GLAccountName,
-                 GLAccountNumber= chartf.GLAccountNumber,
+                 GLAccountNumber = chartf.GLAccountNumber,
                  GLAccountId = chartf.GLAccountId,
 
-                 ChartOfAccountId= chartf.ChartOfAccountId,
+                 ChartOfAccountId = chartf.ChartOfAccountId,
 
 
                  LocalCloseBalance = groupJoinData.LocalCloseBalance,
@@ -309,17 +219,17 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                 switch (_RevenueExpenseReportParam.MyCardFilter)
                 {
                     case RevenueExpenseReportParam.CardFilterEnum.DoNotShowCardWithZeroBalance:
-                        _QTrailReportFull = 
+                        _QTrailReportFull =
                             _QTrailReportFull
                             .Where(r => r.LocalCloseBalance != null)
                             .Where(r => r.LocalCloseBalance != 0m);
                         break;
                     case RevenueExpenseReportParam.CardFilterEnum.ShowCardsWithActivity_EvenBalanceItsZero:
                         _QTrailReportFull =
-                ///join 
+            ///join 
             (from data in qAllMoneySideRevenueExpenseReportM
              join chartf in QBaseAllCardsAndDetialsAccTypeBy5LevelHierarchy
-             on data.GLAccountId equals  chartf.GLAccountId 
+             on data.GLAccountId equals chartf.GLAccountId
              select new RevenueExpenseReportM()
              {
                  ChartOfAcountType = chartf.ChartOfAccountTypeCode,
@@ -340,9 +250,9 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                  ChartOfAcountCode5 = chartf.Level5Code,
 
                  GLAccountName = chartf.GLAccountName,
-                 GLAccountNumber= chartf.GLAccountNumber,
+                 GLAccountNumber = chartf.GLAccountNumber,
                  GLAccountId = chartf.GLAccountId,
-                 ChartOfAccountId= chartf.ChartOfAccountId,
+                 ChartOfAccountId = chartf.ChartOfAccountId,
 
                  LocalCloseBalance = data.LocalCloseBalance,
 
@@ -361,7 +271,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                     throw new Exception("5");
                 }
             }
-           
+
 
             var _QTrailReportCOALevel = _QTrailReportFull;
 
@@ -384,36 +294,36 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
                                              }
                                                  into groupTrailOnlyCOAType
-                                                 select new RevenueExpenseReportM()
-                                                 {
-                                                     ChartOfAcountType = groupTrailOnlyCOAType.Key.ChartOfAcountType,
-                                                     ChartOfAcount1 = "",//groupTrailOnlyCOAType.Key.ChartOfAcount1,
-                                                     ChartOfAcount2 = "",//groupTrailOnlyCOAType.Key.ChartOfAcount2,
-                                                     ChartOfAcount3 = "",//groupTrailOnlyCOAType.Key.ChartOfAcount3,
-                                                     ChartOfAcount4 = "",//groupTrailOnlyCOAType.Key.ChartOfAcount4,
-                                                     ChartOfAcount5 = "",//groupTrailOnlyCOAType.Key.ChartOfAcount5,
-                                                     ChartOfAcountName1="",
-                                                     ChartOfAcountName2 = "",
-                                                     ChartOfAcountName3 = "",
-                                                     ChartOfAcountName4 = "",
-                                                     ChartOfAcountName5 = "",
-                                                     ChartOfAcountCode1 ="",
-                                                     ChartOfAcountCode2 = "",
-                                                     ChartOfAcountCode3 = "",
-                                                     ChartOfAcountCode4 = "",
-                                                     ChartOfAcountCode5 = "",
-                                                   
+                                             select new RevenueExpenseReportM()
+                                             {
+                                                 ChartOfAcountType = groupTrailOnlyCOAType.Key.ChartOfAcountType,
+                                                 ChartOfAcount1 = "",//groupTrailOnlyCOAType.Key.ChartOfAcount1,
+                                                 ChartOfAcount2 = "",//groupTrailOnlyCOAType.Key.ChartOfAcount2,
+                                                 ChartOfAcount3 = "",//groupTrailOnlyCOAType.Key.ChartOfAcount3,
+                                                 ChartOfAcount4 = "",//groupTrailOnlyCOAType.Key.ChartOfAcount4,
+                                                 ChartOfAcount5 = "",//groupTrailOnlyCOAType.Key.ChartOfAcount5,
+                                                 ChartOfAcountName1 = "",
+                                                 ChartOfAcountName2 = "",
+                                                 ChartOfAcountName3 = "",
+                                                 ChartOfAcountName4 = "",
+                                                 ChartOfAcountName5 = "",
+                                                 ChartOfAcountCode1 = "",
+                                                 ChartOfAcountCode2 = "",
+                                                 ChartOfAcountCode3 = "",
+                                                 ChartOfAcountCode4 = "",
+                                                 ChartOfAcountCode5 = "",
 
-                                                     GLAccountName = "",//= groupTrailOnlyCOAType.Key.GLAccountName,
-                                                     GLAccountNumber="",
-                                                     GLAccountId = "",// groupTrailOnlyCOAType.Key.GLAccountId,
 
-                                                    ChartOfAccountId= "",
+                                                 GLAccountName = "",//= groupTrailOnlyCOAType.Key.GLAccountName,
+                                                 GLAccountNumber = "",
+                                                 GLAccountId = "",// groupTrailOnlyCOAType.Key.GLAccountId,
 
-                                                    
-                                                     LocalCloseBalance = groupTrailOnlyCOAType.Sum(x => x.LocalCloseBalance),
+                                                 ChartOfAccountId = "",
 
-                                                 }
+
+                                                 LocalCloseBalance = groupTrailOnlyCOAType.Sum(x => x.LocalCloseBalance),
+
+                                             }
             );
 
                     break;
@@ -447,36 +357,36 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
                                              }
                                                  into groupTrailOnlyCOAType
-                                                 select new RevenueExpenseReportM()
-                                                 {
-                                                     ChartOfAcountType = groupTrailOnlyCOAType.Key.ChartOfAcountType,
-                                                     ChartOfAcount1 = groupTrailOnlyCOAType.Key.ChartOfAcount1,
-                                                     ChartOfAcount2 = groupTrailOnlyCOAType.Key.ChartOfAcount2,
-                                                     ChartOfAcount3 = groupTrailOnlyCOAType.Key.ChartOfAcount3,
-                                                     ChartOfAcount4 = groupTrailOnlyCOAType.Key.ChartOfAcount4,
-                                                     ChartOfAcount5 = groupTrailOnlyCOAType.Key.ChartOfAcount5,
-                                                     ChartOfAcountName1 = groupTrailOnlyCOAType.Key.ChartOfAcountName1,
-                                                     ChartOfAcountName2 = groupTrailOnlyCOAType.Key.ChartOfAcountName2,
-                                                     ChartOfAcountName3 = groupTrailOnlyCOAType.Key.ChartOfAcountName3,
-                                                     ChartOfAcountName4 = groupTrailOnlyCOAType.Key.ChartOfAcountName4,
-                                                     ChartOfAcountName5 = groupTrailOnlyCOAType.Key.ChartOfAcountName5,
-                                                     ChartOfAcountCode1= groupTrailOnlyCOAType.Key.ChartOfAcountCode1,
-                                                     ChartOfAcountCode2 = groupTrailOnlyCOAType.Key.ChartOfAcountCode2,
-                                                     ChartOfAcountCode3 = groupTrailOnlyCOAType.Key.ChartOfAcountCode3,
-                                                     ChartOfAcountCode4 = groupTrailOnlyCOAType.Key.ChartOfAcountCode4,
-                                                     ChartOfAcountCode5 = groupTrailOnlyCOAType.Key.ChartOfAcountCode5,
+                                             select new RevenueExpenseReportM()
+                                             {
+                                                 ChartOfAcountType = groupTrailOnlyCOAType.Key.ChartOfAcountType,
+                                                 ChartOfAcount1 = groupTrailOnlyCOAType.Key.ChartOfAcount1,
+                                                 ChartOfAcount2 = groupTrailOnlyCOAType.Key.ChartOfAcount2,
+                                                 ChartOfAcount3 = groupTrailOnlyCOAType.Key.ChartOfAcount3,
+                                                 ChartOfAcount4 = groupTrailOnlyCOAType.Key.ChartOfAcount4,
+                                                 ChartOfAcount5 = groupTrailOnlyCOAType.Key.ChartOfAcount5,
+                                                 ChartOfAcountName1 = groupTrailOnlyCOAType.Key.ChartOfAcountName1,
+                                                 ChartOfAcountName2 = groupTrailOnlyCOAType.Key.ChartOfAcountName2,
+                                                 ChartOfAcountName3 = groupTrailOnlyCOAType.Key.ChartOfAcountName3,
+                                                 ChartOfAcountName4 = groupTrailOnlyCOAType.Key.ChartOfAcountName4,
+                                                 ChartOfAcountName5 = groupTrailOnlyCOAType.Key.ChartOfAcountName5,
+                                                 ChartOfAcountCode1 = groupTrailOnlyCOAType.Key.ChartOfAcountCode1,
+                                                 ChartOfAcountCode2 = groupTrailOnlyCOAType.Key.ChartOfAcountCode2,
+                                                 ChartOfAcountCode3 = groupTrailOnlyCOAType.Key.ChartOfAcountCode3,
+                                                 ChartOfAcountCode4 = groupTrailOnlyCOAType.Key.ChartOfAcountCode4,
+                                                 ChartOfAcountCode5 = groupTrailOnlyCOAType.Key.ChartOfAcountCode5,
 
 
-                                                     GLAccountName = "",//= groupTrailOnlyCOAType.Key.GLAccountName,
-                                                     GLAccountNumber="",
-                                                     GLAccountId = "",// groupTrailOnlyCOAType.Key.GLAccountId,
-                                                     ChartOfAccountId="",
-                                                    // CurrencyId = groupTrailOnlyCOAType.Key.CurrencyId,
+                                                 GLAccountName = "",//= groupTrailOnlyCOAType.Key.GLAccountName,
+                                                 GLAccountNumber = "",
+                                                 GLAccountId = "",// groupTrailOnlyCOAType.Key.GLAccountId,
+                                                 ChartOfAccountId = "",
+                                                 // CurrencyId = groupTrailOnlyCOAType.Key.CurrencyId,
 
 
-                                                     LocalCloseBalance = groupTrailOnlyCOAType.Sum(x => x.LocalCloseBalance),
+                                                 LocalCloseBalance = groupTrailOnlyCOAType.Sum(x => x.LocalCloseBalance),
 
-                                                 }
+                                             }
             );
                     break;
                 case ReportLevel.GLAccount:
@@ -494,6 +404,229 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             DbLog = _DbLogger.ToString();
             result = l;
             return l;
+        }
+
+        private  static IQueryable<TrailReportTemp> GetMoneyDataPerDate(
+            DateTime FromDate,DateTime ToDate,
+            int tenant, IAccountingContext accountingContext)
+        {
+
+            DateTime TODatebeginOfMonth = new DateTime(ToDate.Year, ToDate.Month, 1);
+            var toDateAdd1Day = ToDate.AddDays(1);//INclude //
+            DateTime FROMDateNextMonth = new DateTime(FromDate.Year, FromDate.Month, 1).AddMonths(1);
+            DateTime FROMDateMinus1Day = FromDate.Date.AddDays(-1);
+
+            IQueryable<TrailReportTemp> qTempTransStart = GetTransStartSection(FromDate, ToDate, tenant, accountingContext, FROMDateNextMonth, FROMDateMinus1Day);
+
+            IQueryable<TrailReportTemp> qTempTotal = GetTotalByMonth(tenant, accountingContext, TODatebeginOfMonth, FROMDateNextMonth);
+
+            IQueryable<TrailReportTemp> qTempTrans = GetTransEndSection(FromDate, ToDate, tenant, accountingContext, TODatebeginOfMonth, toDateAdd1Day, FROMDateMinus1Day);
+
+            IQueryable<TrailReportTemp> _QUnionAllCurrSummary =
+                null;//(qTempTotal).Union(qTempTrans);
+
+            bool UnionreturnsDistinctvalues = true;
+            if (UnionreturnsDistinctvalues)
+            {
+                _QUnionAllCurrSummary =
+                       qTempTransStart.Concat(qTempTotal).Concat(qTempTrans);
+            }
+
+            return _QUnionAllCurrSummary;
+        }
+
+        private static IQueryable<TrailReportTemp> GetTransEndSection(DateTime FromDate, DateTime ToDate, int tenant, IAccountingContext accountingContext, DateTime TODatebeginOfMonth, DateTime toDateAdd1Day, DateTime FROMDateMinus1Day)
+        {
+            IQueryable<Data.EntityPOCOs.LedgerTransaction> QBaseTranactionBeginOfMonthToDateTillToDateInculde;
+            QBaseTranactionBeginOfMonthToDateTillToDateInculde =
+                (
+                from trans in accountingContext.LedgerTransactions
+                where trans.Tenant == tenant
+                //toBeginOfMonth:20160201 until (InculdeAllTransOf)_RevenueExpenseReportParam.ToDate:20160215
+                where trans.AccountingDate >= TODatebeginOfMonth  //20160201
+                where trans.AccountingDate < toDateAdd1Day //_RevenueExpenseReportParam.ToDate.AddDays(1)//INclude //==20160216 
+                select trans
+                );
+
+            if (new DateTime(FromDate.Year, FromDate.Month, 1) == new DateTime(ToDate.Year, ToDate.Month, 1))
+            {
+                QBaseTranactionBeginOfMonthToDateTillToDateInculde =
+                    (
+                    from trans in accountingContext.LedgerTransactions
+                    where trans.Tenant == tenant
+                    //toBeginOfMonth:20160201 until (InculdeAllTransOf)_RevenueExpenseReportParam.ToDate:20160215
+                    where trans.AccountingDate > FROMDateMinus1Day  //20160201
+                    where trans.AccountingDate < toDateAdd1Day //_RevenueExpenseReportParam.ToDate.AddDays(1)//INclude //==20160216 
+                    select trans
+                    );
+
+            }
+
+            var qTempTrans = (from r in QBaseTranactionBeginOfMonthToDateTillToDateInculde
+                              select new TrailReportTemp()
+                              {
+                                  AccountId_COAType = r.AccountId,
+                                  //CurrencyId = r.CurrencyId,
+                                  //ForeignAmountCreditTotalStart = 0,
+                                  //ForeignAmountDebitTotalStart = 0,
+                                  //LocalAmountCreditTotalStart = 0,
+                                  //LocalAmountDebitTotalStart = 0,
+
+
+                                  //ForeignAmountCreditTransStart = 0,
+                                  //ForeignAmountDebitTransStart = 0,
+                                  LocalAmountCreditTransStart = 0,
+                                  LocalAmountDebitTransStart = 0,
+
+
+                                  //ForeignAmountCreditTotalDelta2End = 0,
+                                  //ForeignAmountDebitTotalDelta2End = 0,
+                                  LocalAmountCreditTotalDelta2End = 0,
+                                  LocalAmountDebitTotalDelta2End = 0,
+
+
+                                  //ForeignAmountCreditTransEnd = 0,// r.ForeignAmountCredit,
+                                  //ForeignAmountDebitTransEnd = 0,// r.ForeignAmountDebit,
+                                  LocalAmountCreditTransEnd = r.LocalAmountCredit,
+                                  LocalAmountDebitTransEnd = r.LocalAmountDebit,
+
+                              });
+            return qTempTrans;
+        }
+
+        private static IQueryable<TrailReportTemp> GetTotalByMonth(int tenant, IAccountingContext accountingContext, DateTime TODatebeginOfMonth, DateTime FROMDateNextMonth)
+        {
+            IQueryable<Data.EntityPOCOs.GLAccountTotalByMonth> QBaseTotalsFromBirthTilStartOfMonthTo =
+                (from tot in accountingContext.GLAccountTotalByMonths.Where(tot => tot.DateTypeCode == GLAccountTotalDateTypeValues.Accountingdate)
+
+                 where tot.Tenant == tenant
+                 select tot           
+                 );
+
+            if (FROMDateNextMonth.Year > TODatebeginOfMonth.Year)
+            {
+                QBaseTotalsFromBirthTilStartOfMonthTo =
+                    (from tot in QBaseTotalsFromBirthTilStartOfMonthTo
+                     where (tot.Year == -1111)
+                     select tot
+                );
+            }
+            if (FROMDateNextMonth.Year == TODatebeginOfMonth.Year)
+            {
+                QBaseTotalsFromBirthTilStartOfMonthTo =
+                    (from tot in QBaseTotalsFromBirthTilStartOfMonthTo
+                     where
+                     (tot.Year == FROMDateNextMonth.Year && tot.Month > FROMDateNextMonth.Month && tot.Month < TODatebeginOfMonth.Month)
+                     select tot
+                );
+
+            }
+            if (FROMDateNextMonth.Year < TODatebeginOfMonth.Year)
+            {
+
+                QBaseTotalsFromBirthTilStartOfMonthTo =
+                    (from tot in QBaseTotalsFromBirthTilStartOfMonthTo
+
+                     where
+                     (tot.Year == FROMDateNextMonth.Year && tot.Month >= FROMDateNextMonth.Month) ||
+                     (tot.Year > FROMDateNextMonth.Year && tot.Year < TODatebeginOfMonth.Year) ||
+                     (tot.Year == TODatebeginOfMonth.Year && tot.Month < TODatebeginOfMonth.Month)
+                     select tot
+                );
+            }
+
+
+            var qTempTotal = (from tot in QBaseTotalsFromBirthTilStartOfMonthTo
+                              select new TrailReportTemp()
+                              {
+                                  AccountId_COAType = tot.AccountId,
+                                  //CurrencyId = tot.CurrencyId,
+                                  //ForeignAmountCreditTotalStart = 0,
+                                  //ForeignAmountDebitTotalStart = 0,
+                                  //LocalAmountCreditTotalStart = 0,
+                                  //LocalAmountDebitTotalStart = 0,
+
+
+                                  //ForeignAmountCreditTransStart = 0,
+                                  //ForeignAmountDebitTransStart = 0,
+                                  LocalAmountCreditTransStart = 0,
+                                  LocalAmountDebitTransStart = 0,
+
+
+                                  //ForeignAmountCreditTotalDelta2End = 0,//tot.ForeignAmountCredit,
+                                  //ForeignAmountDebitTotalDelta2End = 0,//tot.ForeignAmountDebit,
+                                  LocalAmountCreditTotalDelta2End = tot.LocalAmountCredit,
+                                  LocalAmountDebitTotalDelta2End = tot.LocalAmountDebit,
+
+
+                                  //ForeignAmountCreditTransEnd = 0,
+                                  //ForeignAmountDebitTransEnd = 0,
+                                  LocalAmountCreditTransEnd = 0,
+                                  LocalAmountDebitTransEnd = 0,
+
+                              });
+            return qTempTotal;
+        }
+
+        private static IQueryable<TrailReportTemp> GetTransStartSection(DateTime FromDate, DateTime ToDate, int tenant, IAccountingContext accountingContext, DateTime FROMDateNextMonth, DateTime FROMDateMinus1Day)
+        {
+            IQueryable<Data.EntityPOCOs.LedgerTransaction> QBaseTranactionFROMDateTillFROMDateNextOfMonthNotInclude = (
+                from trans in accountingContext.LedgerTransactions
+                where trans.Tenant == tenant
+                select trans
+                );
+            if (new DateTime(FromDate.Year, FromDate.Month, 1) < new DateTime(ToDate.Year, ToDate.Month, 1))
+            {
+                QBaseTranactionFROMDateTillFROMDateNextOfMonthNotInclude =
+                    (
+                    from trans in QBaseTranactionFROMDateTillFROMDateNextOfMonthNotInclude
+                        //toBeginOfMonth:20160201 until (InculdeAllTransOf)_RevenueExpenseReportParam.ToDate:20160215
+                    where trans.AccountingDate > FROMDateMinus1Day  //20160201
+                    where trans.AccountingDate < FROMDateNextMonth
+                    select trans
+                    );
+            }
+            else
+            {
+                QBaseTranactionFROMDateTillFROMDateNextOfMonthNotInclude =
+                    (
+                    from trans in QBaseTranactionFROMDateTillFROMDateNextOfMonthNotInclude
+                    where trans.Id == "-1 not valid id"
+                    select trans
+                    );
+
+            }
+
+            var qTempTransStart = (from r in QBaseTranactionFROMDateTillFROMDateNextOfMonthNotInclude
+                                   select new TrailReportTemp()
+                                   {
+                                       AccountId_COAType = r.AccountId,
+                                       //CurrencyId = r.CurrencyId,
+                                       //ForeignAmountCreditTotalStart = 0,
+                                       //ForeignAmountDebitTotalStart = 0,
+                                       //LocalAmountCreditTotalStart = 0,
+                                       //LocalAmountDebitTotalStart = 0,
+
+
+                                       //ForeignAmountCreditTransStart = 0,
+                                       //ForeignAmountDebitTransStart = 0,
+                                       LocalAmountCreditTransStart = r.LocalAmountCredit,
+                                       LocalAmountDebitTransStart = r.LocalAmountDebit,
+
+
+                                       //ForeignAmountCreditTotalDelta2End = 0,
+                                       //ForeignAmountDebitTotalDelta2End = 0,
+                                       LocalAmountCreditTotalDelta2End = 0,
+                                       LocalAmountDebitTotalDelta2End = 0,
+
+
+                                       //ForeignAmountCreditTransEnd = 0,// r.ForeignAmountCredit,
+                                       //ForeignAmountDebitTransEnd = 0,// r.ForeignAmountDebit,
+                                       LocalAmountCreditTransEnd = 0,
+                                       LocalAmountDebitTransEnd = 0,
+
+                                   });
+            return qTempTransStart;
         }
 
         public void InteractiveCheck()
@@ -598,6 +731,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
         public int Tenant { get; set; }
 
         //filter for Money!!!
+        public DateTime FromDate { get; set; }
         public DateTime ToDate { get; set; }
 
       

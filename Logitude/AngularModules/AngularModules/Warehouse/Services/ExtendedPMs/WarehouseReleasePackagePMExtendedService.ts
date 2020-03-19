@@ -47,6 +47,23 @@ export class WarehouseReleasePackagePMExtendedService {
         }).catch(ServiceHelper.HandleServiceError);
     }
 
+    GetWarehouseReleasePackagePMThatNotUsedForAnyEntityLists() {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken())
+        return this._http.get(this._apiUrl + '/GetWarehouseReleasePackagePMThatNotUsedForAnyEntityLists', { headers: authHeader }).map(response => {
+            var result = response.json();
+            var entity: WarehouseReleasePackagePM;
+            var warehouseReleasePackagePMLists: WarehouseReleasePackagePM[];
+            warehouseReleasePackagePMLists = new Array<WarehouseReleasePackagePM>();
+            result.forEach((item) => {
+                entity = this.MapJsonToEntityPM(item);
+                warehouseReleasePackagePMLists.push(entity);
+            });
+            var pmresponse: ServiceResponse = new ServiceResponse();
+            pmresponse.Result = warehouseReleasePackagePMLists;
+            return pmresponse;
+        }).catch(ServiceHelper.HandleServiceError);
+    }
 
 
     MapJsonToEntityPM(jsonPM: any) {

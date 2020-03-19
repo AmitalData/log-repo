@@ -11,7 +11,7 @@ import {AddEditAutomationsComponent} from '../../../../../Infrastructure/Compone
 export class ResultEmailRecipientViewModel extends BaseComponent implements OnInit {
 
 
-    Id: string;
+    FieldCode: string;
     FieldName: string;
     FullName: string;
     Key: string;
@@ -23,13 +23,13 @@ export class ResultEmailRecipientViewModel extends BaseComponent implements OnIn
     constructor(entityPM: ObjectFieldPM, addEditAutomationsComponent: AddEditAutomationsComponent) {
         super();
         this.FieldName = entityPM.FieldName;
-        this.Id = entityPM.Id;
+        this.FieldCode = entityPM.FieldCode;
         this.Tenant = entityPM.Tenant;
         this.FullName = entityPM.FullNameTextCodeDefaultText;
         this.Key = Guid.newGuid();
         this.EntityContactVariable = addEditAutomationsComponent.EntityContactVariable;
         this.AddEditAutomationsComponent = addEditAutomationsComponent;
-        if (this.AddEditAutomationsComponent.EntityContactVariable && this.AddEditAutomationsComponent.EntityContactVariable.length > 0 && this.AddEditAutomationsComponent.EntityContactVariable.indexOf(entityPM.Id) != -1) {
+        if (this.AddEditAutomationsComponent.EntityContactVariable && this.AddEditAutomationsComponent.EntityContactVariable.length > 0 && this.AddEditAutomationsComponent.EntityContactVariable.indexOf(entityPM.FieldCode) != -1) {
             this.IsChecked = true;
         } else this.IsChecked = false;
     }
@@ -45,11 +45,11 @@ export class ResultEmailRecipientViewModel extends BaseComponent implements OnIn
 
     CheckedResultEmailRecipient(item: ResultEmailRecipientViewModel)
     {
-        if (this.AddEditAutomationsComponent.EntityContactVariable.indexOf(item.Id) == -1) {
-            this.AddEditAutomationsComponent.EntityContactVariable.push(item.Id);
+        if (this.AddEditAutomationsComponent.EntityContactVariable.indexOf(item.FieldCode) == -1) {
+            this.AddEditAutomationsComponent.EntityContactVariable.push(item.FieldCode);
         }
         else {
-            this.AddEditAutomationsComponent.EntityContactVariable = this.AddEditAutomationsComponent.EntityContactVariable.filter(d=> d != item.Id);
+            this.AddEditAutomationsComponent.EntityContactVariable = this.AddEditAutomationsComponent.EntityContactVariable.filter(d => d != item.FieldCode);
         }
 
         this.AddEditAutomationsComponent.IsChangeAutomation = true;

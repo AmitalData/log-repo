@@ -95,6 +95,11 @@ export class CustomsInterfaceSettingPM {
     public set AMCOceanStartDate(newValue: Date) { if (this.aMCOceanStartDate != newValue) { this.aMCOceanStartDate = newValue; this.MarkAsDirty("AMCOceanStartDate"); } }
        
 	 
+    private localCustomsInterfaceName: string;
+    public get LocalCustomsInterfaceName() { return this.localCustomsInterfaceName; }
+    public set LocalCustomsInterfaceName(newValue: string) { if (this.localCustomsInterfaceName != newValue) { this.localCustomsInterfaceName = newValue; this.MarkAsDirty("LocalCustomsInterfaceName"); } }
+       
+	 
 
     public OldEntityPM: CustomsInterfaceSettingPM;
 		

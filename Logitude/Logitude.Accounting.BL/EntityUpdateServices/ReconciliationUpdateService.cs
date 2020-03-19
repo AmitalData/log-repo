@@ -175,14 +175,14 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
 
 
-                var validContext = AccountingValidationContextServiceProvider.NewReconciliationValidatorContext((MainContext as IAccountingContext), entityPM);
-                var validationResult = ReconciliationValidator.IsReconciliationValid(entityPM, validContext);
-                if (validationResult != null)
-                {
-                    string errorText = validationResult.ErrorMessage;//+ ", Number=" + _JournalPM.ExternalNo + @"/" + _JournalPM.Id;
-                                                                     //ThrowException(errorText);
-                    throw new Exception(errorText);
-                }
+                //var validContext = AccountingValidationContextServiceProvider.NewReconciliationValidatorContext((MainContext as IAccountingContext), entityPM);
+                //var validationResult = ReconciliationValidator.IsReconciliationValid(entityPM, validContext);
+                //if (validationResult != null)
+                //{
+                //    string errorText = validationResult.ErrorMessage;//+ ", Number=" + _JournalPM.ExternalNo + @"/" + _JournalPM.Id;
+                //                                                     //ThrowException(errorText);
+                //    throw new Exception(errorText);
+                //}
 
 
 
@@ -300,6 +300,16 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
                 if (this._CancelledAction)
                 {
+                    bool angular_DoNotUse_CancellReconciliation_Method = true;
+                    if (angular_DoNotUse_CancellReconciliation_Method)
+                    {
+                        if (entityPM.ReconciliationLines.Count == 0)
+                        {
+                            var reconciliationQueryService = new ReconciliationQueryService(this.MainContext as IAccountingContext);
+                            var pm = reconciliationQueryService.GetSingle(entityPM.Id, true, false);
+                            entityPM.ReconciliationLines.AddRange(pm.ReconciliationLines);
+                        }
+                    }
                     UpdateLedgerTransaction(entityPM);
                     return;
                 }
@@ -342,7 +352,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             var transactionIdList = entityPM.ReconciliationLines.Select(rec => rec.TransactionId).ToList();
             var qs = new LedgerTransactionQueryService(entityPM.Tenant);
             var LedgerTransactionPMsUpdated = qs.GetLedgerTransactionPMsByIdList(transactionIdList, entityPM.Tenant);
-
+            if (transactionIdList.Count() == 0)
+            {
+                throw new Exception("Unable to UpdateLedgerTransaction  due there is any ReconciliationLines");
+            }
             foreach (var reconciliationLine in entityPM.ReconciliationLines)
             {
                 var ledgerTransactionPM = LedgerTransactionPMsUpdated.First(r => r.Id == reconciliationLine.TransactionId);

@@ -99,7 +99,7 @@ export class LogBoxApprovePaymentComponent extends BaseComponent implements OnIn
             this.AdditionalData = args.AdditionalData;
 
             if (!AppTool.IsNullOrEmpty(this.AdditionalData.DenyReason)) {
-                this.DimDenyButton = true;
+                //this.DimDenyButton = true;
             }
             if (!AppTool.IsNullOrEmpty(this.AdditionalData.ApprovedByUserName) && !AppTool.IsNullOrEmpty(this.AdditionalData.VersionApproved) && (this.AdditionalData.VersionApproved == this.AdditionalData.VersionId)) {
                 var today = new Date(this.AdditionalData.ApproveDateTime);
@@ -206,7 +206,7 @@ export class LogBoxApprovePaymentComponent extends BaseComponent implements OnIn
         this.ValidationWarningsList = null;
         this._ShipmentAdditionalCloudDataService.getsingledata(this.EntityPm.Id).subscribe(AdditionalResult => {
             var entity = AdditionalResult.Result
-            if (!AppTool.IsNullOrEmpty(entity.ApprovedByUserName) || !AppTool.IsNullOrEmpty(entity.DenyReason)) {
+            if (!AppTool.IsNullOrEmpty(entity.ApprovedByUserName)) {// || !AppTool.IsNullOrEmpty(entity.DenyReason)
                 this.messageWindow.RTL = this.RTL;
                 this.messageWindow.Width = 300;
                 this.messageWindow.Height = 150;
@@ -248,6 +248,8 @@ export class LogBoxApprovePaymentComponent extends BaseComponent implements OnIn
                     this.messageWindow.Show(this.messageWindow.Message);
                     //this.ValidationWarningsList = " גרסת הצהרה זו אושרה על ידי המשתמש " + entity.ApprovedByUserName + " בתאריך " + to;
                     this.CurrentSession.CurrentWindow.StopBusyIndicator();
+                    this.CurrentSession.SessionEvent.emit({ Name: "ReloadShipments" });
+                    this.CurrentSession.CloseCurrentWindow();
                 });
             }
         });
@@ -263,7 +265,7 @@ export class LogBoxApprovePaymentComponent extends BaseComponent implements OnIn
 
         this._ShipmentAdditionalCloudDataService.getsingledata(this.EntityPm.Id).subscribe(AdditionalResult => {
             var entity = AdditionalResult.Result
-            if (!AppTool.IsNullOrEmpty(entity.DenyReason) || !AppTool.IsNullOrEmpty(entity.ApprovedByUserName)) {
+            if (!AppTool.IsNullOrEmpty(entity.ApprovedByUserName)) {//!AppTool.IsNullOrEmpty(entity.DenyReason) || 
                 this.messageWindow.RTL = this.RTL;
                 this.messageWindow.Width = 300;
                 this.messageWindow.Height = 150;
@@ -284,6 +286,7 @@ export class LogBoxApprovePaymentComponent extends BaseComponent implements OnIn
                 newWindow.WindowClosed.subscribe(($event: any) => {
                     if ($event == "Denied") {
                         ServiceLocator.SendTotangoUserActivity("LogBox", "Deny Declaration");
+                        this.CurrentSession.SessionEvent.emit({ Name: "ReloadShipments" });
                         this.DimDenyButton = true;
                         this.CurrentSession.CloseCurrentWindow();
                         this.messageWindow.RTL = this.RTL;

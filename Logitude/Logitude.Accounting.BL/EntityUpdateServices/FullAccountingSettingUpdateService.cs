@@ -77,6 +77,14 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 throw new ApplicationException(msg);
             }
 
+            if (entityPM.NumberOfAgingMonths != null && (entityPM.NumberOfAgingMonths < 1 || entityPM.NumberOfAgingMonths > 9))
+            {
+                bool useLocal = LoggedContactResolver.GetLoggedContactShowLocal(entityPM.Tenant);
+                string msg = TextCodesTranslator.TranslateText("FullAccountingSetting.O.NoOfAgingMonthsBW1n9", entityPM.Tenant, useLocal);
+                throw new ApplicationException(msg);
+            }
+
+
 
         }
 

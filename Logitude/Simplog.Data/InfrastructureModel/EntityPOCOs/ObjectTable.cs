@@ -27,6 +27,8 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public bool AutoCompleteSearchWindow { get; set; }
         public bool IsClosed { get; set; }
         public string HeaderScreenId { get; set; }
+        public string HeaderScreenCode { get; set; }
+
         public bool CacheOnClient { get; set; }
         public bool EditableFromAutoCompleteWindow { get; set; }
         public DateTime LastUpdateDate { get; set; }
@@ -62,6 +64,8 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
 
         public string LovDisplayMemberPath { get; set; }
         public string LovDisplayMemberPathLocal { get; set; }
+        public string DescriptionTextCodeCode { get; set; }
+        public string NewButtonTextCodeCode { get; set; }
 
         public DateTime? EntityResourceLastUpdate { get; set; }
         public bool DisableSearchBox { get; set; }

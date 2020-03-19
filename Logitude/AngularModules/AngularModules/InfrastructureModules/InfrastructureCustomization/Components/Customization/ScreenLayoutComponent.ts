@@ -78,7 +78,7 @@ export class ScreenLayoutComponent extends BaseComponent {
         //this.OkClicked(false);
         this.SelectedItem = Item;
         this.FillbanckStackFields();
-        this.myGeneralService.GetScreenModificationByScreenId(Item.ScreenPM.Id).subscribe(myResult => {
+        this.myGeneralService.GetScreenModificationByScreenCode(Item.ScreenPM.Code).subscribe(myResult => {
             var myResponse: ServiceResponse = myResult;
             if (myResponse.Result != null) {
                 this.GenerateScreen(myResponse.Result);
@@ -109,7 +109,7 @@ export class ScreenLayoutComponent extends BaseComponent {
                     RDetails.ObjectFieldPMs = [];
                 }
                 RDetails.ScreenFieldPMs.push(field);
-                var myOField = window.ObjectFields.filter(a => a.Id == field.ObjectFieldId)[0];
+                var myOField = window.ObjectFields.filter(a => a.FieldCode == field.ObjectFieldCode)[0];
                 RDetails.ObjectFieldPMs.push(myOField);
 
             });
@@ -146,9 +146,9 @@ export class ScreenLayoutComponent extends BaseComponent {
         this.currentObjectFields = window.ObjectFields.filter(d => d.ObjectTableId == this.ObjecttableId && !d.IsCustomFilter && d.PMPropertyPath != null && d.DataTypeCode != null && !d.IsMulti);//.Where(o => !d.IsCustomFilter && d.PMPropertyPath != null).OrderBy(f => f.FullNameTextCodeDefaultText).ToList();
         this.currentObjectFields = this.currentObjectFields.sort((a, b) => { return (a.FullNameTextCodeDefaultText.toLowerCase() === b.FullNameTextCodeDefaultText.toLowerCase()) ? 0 : (a.FullNameTextCodeDefaultText.toLowerCase() < b.FullNameTextCodeDefaultText.toLowerCase()) ? -1 : 1 });//.OrderBy(f => f.FullNameTextCodeDefaultText).ToList();
         if (this.SelectedItem) {
-            this.currentScreenFields = window.ScreenFields.filter(sf => sf.Tenant == SessionLocator.Tenant && sf.ScreenId == this.SelectedItem.ScreenPM.Id);
+            this.currentScreenFields = window.ScreenFields.filter(sf => sf.Tenant == SessionLocator.Tenant && sf.ScreenCode == this.SelectedItem.ScreenPM.Code);
             if (this.currentScreenFields.length == 0) {
-                this.currentScreenFields = window.ScreenFields.filter(sf => sf.Tenant == 0 && sf.ScreenId == this.SelectedItem.ScreenPM.Id);
+                this.currentScreenFields = window.ScreenFields.filter(sf => sf.Tenant == 0 && sf.ScreenCode == this.SelectedItem.ScreenPM.Code);
             }
         }
         else {
@@ -156,7 +156,7 @@ export class ScreenLayoutComponent extends BaseComponent {
         }
        
         this.currentObjectFields.forEach(objectField => {
-            if (this.currentScreenFields.filter(sf => sf.ObjectFieldId == objectField.Id).length == 0) {
+            if (this.currentScreenFields.filter(sf => sf.ObjectFieldCode == objectField.FieldCode).length == 0) {
                 //if (objectField.DataTypeCode != null && !objectField.IsMulti) {
                 this.banckStackFields.push(objectField);
                 this.AllbanckStackFields.push(objectField);
@@ -186,6 +186,8 @@ export class ScreenLayoutComponent extends BaseComponent {
     OkClicked(CloseWindow: boolean = true) {
         this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving ...");
         var ScreenId = this.SelectedItem.ScreenPM.Id;
+        var ScreenCode = this.SelectedItem.ScreenPM.Code;
+
         //this.MyArgs.RemovedScreenFields = [];
         this.MyArgs.ScreenFields = [];
         var Columns = 0;
@@ -196,6 +198,7 @@ export class ScreenLayoutComponent extends BaseComponent {
                 sItem.ScreenFieldPMs.forEach(myfield => {
                     Rows++;
                     ScreenId = myfield.ScreenId;
+                    ScreenCode = myfield.ScreenCode;
                     this.MyArgs.ScreenFields.push(myfield);
                 });
             } 
@@ -203,6 +206,7 @@ export class ScreenLayoutComponent extends BaseComponent {
         this.MyArgs.Columns = Columns;
         this.MyArgs.Rows = Rows;//Math.ceil(Rows / Columns);
         this.MyArgs.ScreenId = ScreenId;//this.SelectedItem.ScreenPM.Id;
+        this.MyArgs.ScreenCode = ScreenCode;//this.SelectedItem.ScreenPM.Code;
 
         this.myGeneralService.updateScreenFields(this.MyArgs).subscribe(myResult => {
             this.authHeader = new Headers();
@@ -217,9 +221,9 @@ export class ScreenLayoutComponent extends BaseComponent {
                         this.CurrentSession.CloseCurrentWindow();
                     }
                     window.ScreenFields = myResult;
-                    this.currentScreenFields = window.ScreenFields.filter(sf => sf.Tenant == SessionLocator.Tenant && sf.ScreenId == ScreenId);
+                    this.currentScreenFields = window.ScreenFields.filter(sf => sf.Tenant == SessionLocator.Tenant && sf.ScreenCode == ScreenCode);
                     if (this.currentScreenFields.length == 0) {
-                        this.currentScreenFields = window.ScreenFields.filter(sf => sf.Tenant == 0 && sf.ScreenId == ScreenId);
+                        this.currentScreenFields = window.ScreenFields.filter(sf => sf.Tenant == 0 && sf.ScreenCode == ScreenCode);
                     }
                 }
                 this.loginService.GetScreens().subscribe(myScreensResult => {
@@ -246,6 +250,7 @@ export class ScreenLayoutComponent extends BaseComponent {
     onMyDrop(event: DragEvent, item: ScreenRowDetails, row: number) {
        
         var id = event.dataTransfer.getData("Id");
+        var fieldCode = event.dataTransfer.getData("FieldCode");
         var myitem: ObjectFieldPM = this.banckStackFields.filter(d => d.Id == id)[0];
        
         if (myitem) {
@@ -268,8 +273,10 @@ export class ScreenLayoutComponent extends BaseComponent {
                 screenField.Column = item.ColumnIndex;
                 screenField.ObjectFieldId = myitem.Id;
                 screenField.ScreenId = this.SelectedItem.ScreenPM.Id;
+                screenField.ScreenCode = this.SelectedItem.ScreenPM.Code;
                 screenField.Tenant = SessionLocator.Tenant;
                 screenField.Row = Rows.ScreenFieldPMs.length;
+                screenField.ObjectFieldCode = myitem.FieldCode;
 
                 Rows.ScreenFieldPMs.push(screenField);
                 Rows.ObjectFieldPMs.push(myitem);
@@ -282,9 +289,9 @@ export class ScreenLayoutComponent extends BaseComponent {
                 if (sItem.ObjectFieldPMs) {
                     var temp = sItem.ObjectFieldPMs.filter(a => a.Id == id);
                     if (temp.length > 0) {
-                        var SField = sItem.ScreenFieldPMs.filter(a => a.ObjectFieldId == id)[0];
+                        var SField = sItem.ScreenFieldPMs.filter(a => a.ObjectFieldCode == fieldCode)[0];
                         sItem.ObjectFieldPMs = sItem.ObjectFieldPMs.filter(a => a.Id != id);
-                        sItem.ScreenFieldPMs = sItem.ScreenFieldPMs.filter(a => a.ObjectFieldId != id);
+                        sItem.ScreenFieldPMs = sItem.ScreenFieldPMs.filter(a => a.ObjectFieldCode != fieldCode);
                         SField.Column = item.ColumnIndex;
                         SField.Row = Rows.ScreenFieldPMs ? Rows.ScreenFieldPMs.length : 0;
                         if (Rows.ScreenFieldPMs == null) {
@@ -310,12 +317,14 @@ export class ScreenLayoutComponent extends BaseComponent {
     OnObjectFieldDragStart(event, item) {
         if (item) {
             event.dataTransfer.setData("Id", item.Id);
+            event.dataTransfer.setData("FieldCode", item.FieldCode);
         }
     }
 
     OnScreenFieldDragStart(event, item1) {
         if (item1) {
             event.dataTransfer.setData("Id", item1.Id);
+            event.dataTransfer.setData("FieldCode", item1.FieldCode);
         }
     }
 
@@ -335,8 +344,8 @@ export class ScreenLayoutComponent extends BaseComponent {
                 var temp = sItem.ObjectFieldPMs.filter(a => a.Id == item.Id);
                 if (temp.length > 0) {
                     sItem.ObjectFieldPMs = sItem.ObjectFieldPMs.filter(a => a.Id != item.Id);
-                    var myItem = sItem.ScreenFieldPMs.filter(a => a.ObjectFieldId == item.Id)[0];
-                    sItem.ScreenFieldPMs = sItem.ScreenFieldPMs.filter(a => a.ObjectFieldId != item.Id);
+                    var myItem = sItem.ScreenFieldPMs.filter(a => a.ObjectFieldCode == item.FieldCode)[0];
+                    sItem.ScreenFieldPMs = sItem.ScreenFieldPMs.filter(a => a.ObjectFieldCode != item.FieldCode);
                     if (this.MyArgs.RemovedScreenFields == null) {
                         this.MyArgs.RemovedScreenFields = [];
                     }

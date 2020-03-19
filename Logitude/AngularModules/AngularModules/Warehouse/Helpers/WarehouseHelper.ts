@@ -113,7 +113,7 @@ export class WarehouseHelper {
 
         windowArgs.ShipmentPM = entityPM;
         var logWindow = new LogitudeWindow();
-        logWindow.Width = 960;
+        logWindow.Width = 1010;
         logWindow.Height = 620;
         logWindow.Title = "New Cross Dock Entry";
         logWindow.WindowArgs = windowArgs;
@@ -428,7 +428,7 @@ export class WarehouseHelper {
             warehouseEntryPM.GrossWeightUnitCode = SessionLocator.TenantPM.GrossWeightUnitCode;
             warehouseEntryPM.VolumeUnitCode = SessionLocator.TenantPM.VolumeUnitCode;
             warehouseEntryPM.DimensionsUnitCode = SessionLocator.TenantPM.DimensionsUnitCode;
-            warehouseEntryPM.ChargeableWeightUnitCode = SessionLocator.TenantPM.ChargeableWeightUnitCode;
+            //warehouseEntryPM.ChargeableWeightUnitCode = SessionLocator.TenantPM.ChargeableWeightUnitCode;
 
             warehouseEntryPM.EntryNumber = "123";
             //if (viewModel.IsFromShipment) {

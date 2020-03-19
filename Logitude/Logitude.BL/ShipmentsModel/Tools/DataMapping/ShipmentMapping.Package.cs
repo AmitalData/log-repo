@@ -94,7 +94,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             itemPoco.RoutingIds = itemPM.RoutingIds;
             itemPoco.VoyageTripNumber = itemPM.VoyageTripNumber;
             itemPoco.HasContainerException = itemPM.HasContainerException;
-
+            itemPoco.WarehouseReleaseNumber = itemPM.WarehouseReleaseNumber;
             if (itemPM.TemperatureUnitCode == null)
             {
                 itemPM.TemperatureUnitCode = loggedTenant.TemperatureUnitCode;

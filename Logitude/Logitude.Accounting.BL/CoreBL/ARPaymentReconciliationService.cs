@@ -199,12 +199,20 @@ namespace Logitude.Accounting.BL.CoreBL
 
         private double GetGLAccountCurrencyRate(string accountCurrencyId, string tenantCurrencyId, int tenant)
         {
+            double rate = 1;
             RatesTableQuery rateQuery = new RatesTableQuery(tenant);
-            LastRate glaToLocalRate = rateQuery.GetLastRecord(tenant, accountCurrencyId, tenantCurrencyId);
 
-            if (glaToLocalRate == null) throw new ApplicationException("Account currency exchange rate does not exist");
+            if (accountCurrencyId == tenantCurrencyId)
+                rate = 1;
+            else
+            {
+                LastRate glaToLocalRate = rateQuery.GetLastRecord(tenant, accountCurrencyId, tenantCurrencyId);
+                if (glaToLocalRate == null) throw new ApplicationException("Account currency exchange rate does not exist");
 
-            return (double)glaToLocalRate.Rate;
+                rate = (double)glaToLocalRate.Rate;
+            }
+
+            return rate;
 
         }
 

@@ -77,8 +77,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             CustomMappedPOCOProperties.Add(POCOPropertyNames.BankAccountGLAccountId);
             CustomMappedPOCOProperties.Add(POCOPropertyNames.PayToGLAccountId);
             CustomMappedPOCOProperties.Add(POCOPropertyNames.PaymentChequeStatusCode);
-            JournalQueryService journalService = new JournalQueryService(entityPOCO.Tenant);
-            JournalPM journal = journalService.GetByAccountingEntityId(entityPOCO.Id, entityPOCO.Tenant);
+            JournalPM journal = GetJournalByEntityIdAndEntityCode(entityPM);
             if(journal != null)
             {
                 entityPM.JournalId = journal.Id;
@@ -155,7 +154,13 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             }
 
         }
-
+        private JournalPM GetJournalByEntityIdAndEntityCode(PaymentChequePM paymentCheque) {
+            JournalQueryService journalService = new JournalQueryService(paymentCheque.Tenant);
+            string accountingEntityCode = paymentCheque.APPaymentId == null ? "9" : "5";
+            string accountingEntityId = paymentCheque.APPaymentId != null ? paymentCheque.APPaymentId : paymentCheque.Id;
+            return journalService.GetByAccountingEntityIdAndAccountingEntityCode(accountingEntityId, accountingEntityCode, paymentCheque.Tenant);
+            
+        }
         private ContactPM GetLoggedContact(int tenant)
         {
             //ILoggedContactUtil loggedContactUtil = ContainerAccessor.Container.Resolve(typeof(ILoggedContactUtil), "LoggedContactUtil", new ParameterOverride("", tenant)) as ILoggedContactUtil;

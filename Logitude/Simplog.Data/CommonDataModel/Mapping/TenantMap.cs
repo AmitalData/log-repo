@@ -36,7 +36,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.PaymentTermId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.ProfitCurrencyId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.AgentId).HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.PasswordPolicyCode).IsRequired().HasMaxLength(4).IsUnicode(false);
+            this.Property(t => t.PasswordPolicyCode).HasMaxLength(4).IsUnicode(false);
             this.Property(t => t.MasterExportFreightPrepaidCollectId).HasMaxLength(1).IsUnicode(false);
             this.Property(t => t.MasterExportOtherPrepaidCollectId).HasMaxLength(1).IsUnicode(false);
             this.Property(t => t.MasterImportFreightPrepaidCollectId).HasMaxLength(1).IsUnicode(false);
@@ -70,6 +70,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.CBSA).HasMaxLength(5).IsUnicode(false);
             this.Property(t => t.CAAT).HasMaxLength(4).IsUnicode(false);
             this.Property(t => t.CheckDigitControlAlgorithmCode).HasMaxLength(4).IsRequired().IsUnicode(false);
+            this.Property(t => t.AllowCustomersInAgentsLOV).IsRequired();
 
             this.ToTable("Tenants");
             this.Property(t => t.Id).HasColumnName("Id");
@@ -124,6 +125,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.CheckDigitControlAlgorithmCode).HasColumnName("CheckDigitControlAlgorithmCode");
             this.Property(t => t.ApplyVATForAllPartners).HasColumnName("ApplyVATForAllPartners");
             this.Property(t => t.HideFCLAllIn).HasColumnName("HideFCLAllIn");
+            this.Property(t => t.AutomaticLastUpdateDate).HasColumnName("AutomaticLastUpdateDate"); 
 
             //#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
@@ -154,6 +156,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
 
             //#endif
 
+            this.Property(t => t.AllowCustomersInAgentsLOV).HasColumnName("AllowCustomersInAgentsLOV");
             this.Property(t => t.SearchFields).HasColumnName("SearchFields");
             this.Property(t => t.IsDataBackupBuilt).HasColumnName("IsDataBackupBuilt");
             this.Property(t => t.ChargeableWeightUnitCode).HasColumnName("ChargeableWeightUnitCode");
@@ -201,7 +204,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.HasOptional(t => t.ProfitCurrency).WithMany().HasForeignKey(d => d.ProfitCurrencyId);
             this.HasOptional(t => t.QuoteSaleCurrency).WithMany().HasForeignKey(d => d.QuoteSaleCurrencyId);
             this.HasOptional(t => t.DimensionsUnit).WithMany().HasForeignKey(d => d.DimensionsUnitCode);
-            this.HasRequired(t => t.PasswordPolicy).WithMany().HasForeignKey(d => d.PasswordPolicyCode);
+            this.HasOptional(t => t.PasswordPolicy).WithMany().HasForeignKey(d => d.PasswordPolicyCode);
             this.HasOptional(t => t.PaymentTerm).WithMany().HasForeignKey(d => d.PaymentTermId);
             this.HasRequired(t => t.ExportFreightPrepaidCollect).WithMany().HasForeignKey(d => d.ExportFreightPrepaidCollectId).WillCascadeOnDelete(false);
             this.HasOptional(t => t.VolumeUnit).WithMany(t => t.Tenants).HasForeignKey(d => d.VolumeUnitCode);
@@ -216,6 +219,8 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.HasOptional(t => t.VatFormatCountry).WithMany().HasForeignKey(d => d.VatFormatCountryId);
             this.HasOptional(t => t.TemperatureUnit).WithMany().HasForeignKey(d => d.TemperatureUnitCode);
             this.HasOptional(t => t.NumberFormat).WithMany().HasForeignKey(d => d.NumberFormatCode);
+            this.HasOptional(t => t.WeightUnit).WithMany().HasForeignKey(d => d.ChargeableWeightUnitCode);
+
 
         }
     }

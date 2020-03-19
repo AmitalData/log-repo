@@ -363,8 +363,9 @@ namespace CommunicationWorkerRole
                                             var result = await client.PostAsync(ImporterShipmentsURI, content);
                                             if (result.StatusCode == System.Net.HttpStatusCode.OK)
                                             {
+                                                var temp1 = result.Content.ReadAsStringAsync().Result;
                                                 msg = "Shipment sent To Forwarder " + DateTime.Now;
-                                                APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "D", response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(shipmentAM), null, null, "");
+                                                APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "D", response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(shipmentAM), temp1, null, "");
                                                 queue.Complete();
 
 

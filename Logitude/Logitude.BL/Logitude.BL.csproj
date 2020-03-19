@@ -124,6 +124,9 @@
     <Reference Include="Logitude.Customs.BL, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\LogitudeOldDlls.1.0.0\lib\Net40\Logitude.Customs.BL.dll</HintPath>
     </Reference>
+    <Reference Include="Logitude.XSD">
+      <HintPath>..\JustWebFreight\WebFreight.Web\bin\Logitude.XSD.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Azure.KeyVault.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Azure.KeyVault.Core.1.0.0\lib\net40\Microsoft.Azure.KeyVault.Core.dll</HintPath>
       <Private>True</Private>
@@ -227,6 +230,7 @@
     <Compile Include="CommonDataModel\APIDataContract\Country.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\Currency.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\Customer.Generated.cs" />
+    <Compile Include="CommonDataModel\APIDataContract\CustomerOpenFilesAmount.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\CustomField.cs" />
     <Compile Include="CommonDataModel\APIDataContract\Department.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\DimensionsUnit.Generated.cs" />
@@ -244,6 +248,8 @@
     <Compile Include="CommonDataModel\APIDataContract\QueryService\CityQueryService.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\QueryService\ContactQueryService.cs" />
     <Compile Include="CommonDataModel\APIDataContract\QueryService\CurrencyQueryService.cs" />
+    <Compile Include="CommonDataModel\APIDataContract\QueryService\CustomerOpenFilesAmountQueryService.cs" />
+    <Compile Include="CommonDataModel\APIDataContract\QueryService\CustomerOpenFilesAmountQueryService.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\QueryService\CustomerQueryService.cs" />
     <Compile Include="CommonDataModel\APIDataContract\QueryService\CustomerQueryService.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\QueryService\CustomFieldQueryService.cs" />
@@ -323,60 +329,75 @@
     <Compile Include="CommonDataModel\CustomFilters\CommunicationLogCustomFilter.cs" />
     <Compile Include="CommonDataModel\CustomFilters\CustomsShipperCustomFilter.cs" />
     <Compile Include="CommonDataModel\CustomFilters\AccountingPartnerCustomFilter.cs" />
-    <Compile Include="CommonDataModel\EntityLists\AirlineAreasPortList.cs" />
-    <Compile Include="CommonDataModel\EntityLists\AirlineAreaList.cs" />
+    <Compile Include="CommonDataModel\EntityLists\CarrierAreasPortList.cs" />
+    <Compile Include="CommonDataModel\EntityLists\CarrierAreaList.cs" />
+    <Compile Include="CommonDataModel\EntityLists\CustomerOpenFilesAmountList.cs" />
     <Compile Include="CommonDataModel\EntityLists\DocumentsExecutionLogList.cs" />
     <Compile Include="CommonDataModel\EntityLists\LogBoxTenantSettingList.cs" />
     <Compile Include="CommonDataModel\EntityLists\PaymentGatewayPartnerList.cs" />
     <Compile Include="CommonDataModel\EntityLists\TenantAdditionalDataList.cs" />
     <Compile Include="CommonDataModel\EntityLists\AccountingPartnerList.cs" />
-    <Compile Include="CommonDataModel\EntityPMs\AirlineAreasPortPM.cs" />
-    <Compile Include="CommonDataModel\EntityPMs\AirlineAreaPM.cs" />
+    <Compile Include="CommonDataModel\EntityPMs\CarrierAreasPortPM.cs" />
+    <Compile Include="CommonDataModel\EntityPMs\CarrierAreaPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\CardContactAdditionalServicePM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\CardContactProductPM.cs" />
+    <Compile Include="CommonDataModel\EntityPMs\CustomerOpenFilesAmountPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\DocumentsExecutionLogPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\LogBoxTenantSettingPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\PaymentGatewayPartnerPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\TenantAdditionalDataPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\AccountingPartnerPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\UserLastSettingsPM.cs" />
-    <Compile Include="CommonDataModel\EntityQueries\AirlineAreasPortQuery.cs" />
-    <Compile Include="CommonDataModel\EntityQueries\AirlineAreaQuery.cs" />
+    <Compile Include="CommonDataModel\EntityQueries\CarrierAreasPortQuery.cs" />
+    <Compile Include="CommonDataModel\EntityQueries\CarrierAreaQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\CardContactAdditionalServiceQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\CardContactProductQuery.cs" />
+    <Compile Include="CommonDataModel\EntityQueries\CustomerOpenFilesAmountQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\DocumentsExecutionLogQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\LogBoxTenantSettingQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\PaymentGatewayPartnerQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\TenantAdditionalDataQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\AccountingPartnerQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\UserLastSettingsQuery.cs" />
-    <Compile Include="CommonDataModel\Tools\DataMapping\AirlineAreasPortMapping.cs" />
-    <Compile Include="CommonDataModel\Tools\DataMapping\AirlineAreaMapping.cs" />
+    <Compile Include="CommonDataModel\Tools\DataMapping\CarrierAreasPortMapping.cs" />
+    <Compile Include="CommonDataModel\Tools\DataMapping\CarrierAreaMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\CardContactAdditionalServiceMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\CardContactProductMapping.cs" />
+    <Compile Include="CommonDataModel\Tools\DataMapping\CustomerOpenFilesAmountMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\DocumentsExecutionLogMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\PaymentGatewayPartnerMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\TenantAdditionalDataMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\AccountingPartnerMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\UserLastSettingsMapping.cs" />
-    <Compile Include="CommonDataModel\Tools\EntityService\AirlineAreaService.cs" />
+    <Compile Include="CommonDataModel\Tools\EntityService\CarrierAreaService.cs" />
+    <Compile Include="CommonDataModel\Tools\EntityService\CustomerOpenFilesAmountService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\DocumentsExecutionLogService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\NumberOfUsersService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\TenantAdditionalDataService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\AccountingPartnerService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\UserLastSettingsService.cs" />
     <Compile Include="CommonDataModel\Tools\TraceEvents\AccountingPartnerTracing.cs" />
-    <Compile Include="CommonDataModel\Tools\TraceEvents\AirlineAreaTracing.cs" />
+    <Compile Include="CommonDataModel\Tools\TraceEvents\CarrierAreaTracing.cs" />
     <Compile Include="CommonDataModel\Tools\Validating\VATValidating.cs" />
     <Compile Include="CommonDataModel\Tools\Validating\AccountingPartnerValidating.cs" />
+    <Compile Include="DataContracts\QuoteDashboardArguments.cs" />
     <Compile Include="GlobalModel\EntityLists\BluesnapTransactionList.cs" />
     <Compile Include="GlobalModel\EntityPMs\BluesnapTransactionPM.cs" />
     <Compile Include="GlobalModel\EntityQueries\BluesnapTransactionQuery.cs" />
     <Compile Include="GlobalModel\Tools\DataMapping\BluesnapTransactionMapping.cs" />
+    <Compile Include="InfrastructureModel\CloseTables\DetailsClassesGenerated\EventTypeCategoryDetails.Generated.cs" />
     <Compile Include="InfrastructureModel\CloseTables\DetailsClassesGenerated\SchedulerProcedureDetails.Generated.cs" />
+    <Compile Include="InfrastructureModel\CloseTables\DetailsClassesGenerated\SharedLogisticsInvitationStatusDetails.Generated.cs" />
+    <Compile Include="InfrastructureModel\CloseTables\EnumGenerated\EventTypeCategoryStruct.Generated.cs" />
     <Compile Include="InfrastructureModel\CloseTables\EnumGenerated\SchedulerProcedureStruct.Generated.cs" />
+    <Compile Include="InfrastructureModel\EntityLists\RuleUpdateHistoryList.cs" />
     <Compile Include="InfrastructureModel\EntityLists\SchedulerProcedureList.cs" />
+    <Compile Include="InfrastructureModel\EntityPMs\RuleUpdateHistoryPM.cs" />
+    <Compile Include="InfrastructureModel\EntityQueries\RuleUpdateHistoryQuery.cs" />
+    <Compile Include="InfrastructureModel\Services\QuoteUpdateService.cs" />
+    <Compile Include="InfrastructureModel\Tools\DataMapping\RuleUpdateHistoryMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\SchedulerProcedureMapping.cs" />
+    <Compile Include="InfrastructureModel\Tools\EntityService\RuleUpdateHistoryService.cs" />
     <Compile Include="InvoiceModel\APIDataContract\APInvoice.Generated.cs" />
     <Compile Include="InvoiceModel\APIDataContract\APInvoiceLine.Generated.cs" />
     <Compile Include="InvoiceModel\APIDataContract\APInvoiceStatus.Generated.cs" />
@@ -511,6 +532,12 @@
     <Compile Include="InvoiceModel\Tools\TraceEvents\ARInvoiceStockTracing.cs" />
     <Compile Include="InvoiceModel\Tools\Validating\ARInvoiceStockValidating.cs" />
     <Compile Include="Helpers\ShipmentComputedFieldsHelper.cs" />
+    <Compile Include="QuoteModel\EntityQueries\Charts\DashboardQuery.cs" />
+    <Compile Include="QuoteModel\EntityQueries\Charts\QuoteConversionQuery.cs" />
+    <Compile Include="QuoteModel\EntityQueries\Charts\SentQuotesKPIQuery.cs" />
+    <Compile Include="QuoteModel\EntityQueries\Charts\TopFiveSalesmanQuery.cs" />
+    <Compile Include="QuoteModel\EntityQueries\Charts\QuotesByCountryQuery.cs" />
+    <Compile Include="QuoteModel\EntityQueries\Charts\StageFunnelQuery.cs" />
     <Compile Include="QuoteModel\Tools\EntityService\QuoteSubjectService.cs" />
     <Compile Include="Resolvers\LoggedContactResolver.cs" />
     <Compile Include="Mocks\MockLoggedContactUtil.cs" />
@@ -2516,6 +2543,7 @@
     <Compile Include="ShipmentsModel\EntityPMs\ShipmentReceivableStatusPM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\ShipmentTypePM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\SpecialServicesTypePM.cs" />
+    <Compile Include="ShipmentsModel\EntityPMs\UserIdNumberRequestPM.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\AccountingInformationIdentifierQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\AWBAdditionalHandlingInfoQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\AWBChargeCodesQuery.cs" />
@@ -2577,10 +2605,14 @@
     <Compile Include="ShipmentsModel\EntityQueries\ShipmentTypeQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\SpecialServicesTypeQuery.cs" />
     <Compile Include="ShipmentsModel\Testing\General.cs" />
+    <Compile Include="ShipmentsModel\Tools\Behaviours\IShipmentBehaviour.cs" />
+    <Compile Include="ShipmentsModel\Tools\Behaviours\ShipmentBehaviourFacade.cs" />
+    <Compile Include="ShipmentsModel\Tools\Behaviours\UpdateShipmentComputedFieldsBehaviour.cs" />
     <Compile Include="ShipmentsModel\Tools\DataMapping\AWBSpecialHandlingCodeMapping.cs" />
     <Compile Include="ShipmentsModel\Tools\DataMapping\CustomsTransferHeaderMapping.cs" />
     <Compile Include="ShipmentsModel\Tools\DataMapping\ShipmentMapping.Assembly.cs" />
     <Compile Include="ShipmentsModel\Tools\DataMapping\OceanInsightsRequestsCountMapping.cs" />
+    <Compile Include="ShipmentsModel\Tools\DataMapping\ShipmentMapping.Concurrency.cs" />
     <Compile Include="ShipmentsModel\Tools\DataMapping\ShipmentMapping.ShipmentCustomsTransmission.cs" />
     <Compile Include="ShipmentsModel\Tools\DataMapping\ShipmentTypeMapping.cs" />
     <Compile Include="ShipmentsModel\Tools\DataMapping\FBLStockMapping.cs" />

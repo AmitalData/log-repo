@@ -90,6 +90,13 @@ namespace Logitude.BL.ShipmentsModel
                 Code = "RU", 
                 SearchFields = "Rejected by User,RU", 
 			});
+			 
+            all.Add(new INTTRABookingStatusDetails()
+            {    
+                Name = "Shipping Instructions", 
+                SearchFields = "SI,Shipping Instructions", 
+                Code = "SI", 
+			});
 			
             return all;
        }

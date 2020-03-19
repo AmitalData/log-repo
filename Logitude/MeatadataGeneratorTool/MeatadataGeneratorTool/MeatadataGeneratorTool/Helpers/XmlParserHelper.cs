@@ -1080,6 +1080,15 @@ namespace MeatadataGeneratorTool.Helpers
                 {
                     objectTable.AllowedForComputingPartners = false;
                 }
+
+                if (entity.Attributes["IsMetadataOnlyTable"] != null)
+                {
+                    objectTable.IsMetadataOnlyTable = GetAttributeBoolValue(entity.Attributes["IsMetadataOnlyTable"]);
+                }
+                else
+                {
+                    objectTable.AllowedForComputingPartners = false;
+                }
                 if (entity.Attributes["Code1"] != null && entity.Attributes["Name1"] != null)
                 {
                     objectTable.QueryGroupCode1 = GetAttributeStringValue(entity.Attributes["Code1"]);

@@ -118,7 +118,7 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
     CreateNewEntity() {
         var todayDate = DateTool.GetCurrentDateAsUtc();
         this.EntityPM = new ARInvoicePM();
-        this.EntityPM.BillToPartnerTypeId = "CS";
+        this.EntityPM.BillToPartnerTypeId = null;
         this.EntityPM.StatusCode = "DR";
         this.EntityPM.StatusName = "Draft";
         this.EntityPM.Tenant = SessionLocator.Tenant;
@@ -687,7 +687,7 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
         this.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {
-
+        this.EntityPM.BillToPartnerTypeId = this.BillToPartnerTypeId;
         this.CurrentSession.StartBusyIndicatorLoading();
 
         this.GetClosedMonth().then(res => {

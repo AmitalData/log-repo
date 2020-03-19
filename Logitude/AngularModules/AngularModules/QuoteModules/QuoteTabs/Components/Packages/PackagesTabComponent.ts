@@ -52,7 +52,17 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
             this.SetLabels();
             this.SetUIProperties();
             this.BuildItemsSource();
+            if (this.EntityPM.QuoteTypeCode == "P") {
+                this.SetUIPropertiesToRoutingRatesType();
+            }
         }
+    }
+
+    SetUIPropertiesToRoutingRatesType(){
+        this.UIProperties.SetEnabled("GrossWeight", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("Volume", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("ChargeableWeight", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("NumberOfPackages", this.ObjectTableName, false);
     }
 
     private TabSelectedEvent: any = null;
@@ -800,8 +810,8 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         }
 
         else {
-            this.ChargeableWeightLabel = TextCodeTranslator.Translate("Quote.F.WtMsr.Short").replace("%ChargWeightCode", this.EntityPM.ChargeableWeightUnitCode);
-            this.ChargeableWeightUnitCodeLabel = TextCodeTranslator.Translate("Quote.F.WtMsrUnitCode.Short");
+            this.ChargeableWeightLabel = TextCodeTranslator.Translate("Quote.F.ChargeableWeight.Short").replace("%ChargWeightCode", this.EntityPM.ChargeableWeightUnitCode);
+            this.ChargeableWeightUnitCodeLabel = TextCodeTranslator.Translate("Quote.F.ChargeableWeightUnitCode.Short");
         }
     }
 

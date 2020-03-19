@@ -35,6 +35,13 @@ namespace Simplog.Data.CommonDataModel.Repositories
                     select record);
         }
 
+        public List<CardContactProduct> GetCardContactProductsByProductTypes(List<string> myproductsTypesList, int tenant)
+        {
+            return (from record in context.CardContactProducts.Include("CardContact")
+                    where record.Tenant == tenant && myproductsTypesList.Contains(record.ProductTypeCode)
+                    select record).ToList();
+        }
+
         public IQueryable<CardContactProduct> GetProductsByCardContactIdd(string cardContactId, int tenant)
         {
             return (from d in context.CardContactProducts.Include("ProductType")

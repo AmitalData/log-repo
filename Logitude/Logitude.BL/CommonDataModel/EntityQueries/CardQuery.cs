@@ -213,6 +213,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       IsInternationalPartner = a.IsInternationalPartner,
                                       IsAutonomy = a.IsAutonomy,
                                       CreatedByPartner = a.CreatedByPartner,
+                                      StorageFreeDays = a.StorageFreeDays,
                                   }).FirstOrDefault();
 
 
@@ -912,6 +913,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                             }
                         }
                     }
+
+                    entityList.OpenShipments= SetCustomerOpenShipments(entityList);
                     #endregion
                 }
 
@@ -982,6 +985,17 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             }
 
             return entityList;
+        }
+        private decimal SetCustomerOpenShipments(CardList card)
+        {
+            CustomerOpenFilesAmountQuery customerOpenFilesAmountQuery = new CustomerOpenFilesAmountQuery(card.Tenant);
+            CustomerOpenFilesAmountPM customerOpenFilesAmount = customerOpenFilesAmountQuery.GetSinglePMByCustomerId(card.Id, card.Tenant);
+            if (customerOpenFilesAmount != null)
+            {
+                return customerOpenFilesAmount.TotalOpenFilesAmount;
+            }
+            else return 0;
+
         }
 
         public IQueryable<CardList> GetIQueryableEntityList(IQueryable<Card> iQueryable)
@@ -1950,7 +1964,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                         EnglishName = a.EnglishName,
                                         Code = a.Code,
                                         PartnerTypeName = a.PartnerType!=null ? a.PartnerType.Name: "",
-                                        
+                                        Notes = a.Notes
+
                                     }).ToList();
             return Cards;
         }
@@ -2018,7 +2033,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         {
             IQueryable<CardList> cards = from a in repository.context.Cards
                                          where a.Tenant == tenant && (a.GLAccountId == null || a.GLAccountId == "") 
-                                            && (a.PartnerTypeId == "CS" || a.PartnerTypeId == "PO" || a.PartnerTypeId == "AG")
+                                            && (a.PartnerTypeId == "CS" || a.PartnerTypeId == "PO")
                                          select new CardList()
                                          {
                                              Id = a.Id,
@@ -2038,7 +2053,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         {
             IQueryable<CardList> cards = from a in repository.context.Cards
                                          where a.Tenant == tenant && (a.GLAccountId == null || a.GLAccountId == "")
-                                            && (a.PartnerTypeId == "VD" || a.PartnerTypeId == "DR" || a.PartnerTypeId == "LL" || a.PartnerTypeId == "WA")
+                                            && (a.PartnerTypeId == "VD" || a.PartnerTypeId == "DR" || a.PartnerTypeId == "LL" || a.PartnerTypeId == "WA" || a.PartnerTypeId == "AG")
                                          select new CardList()
                                          {
                                              Id = a.Id,

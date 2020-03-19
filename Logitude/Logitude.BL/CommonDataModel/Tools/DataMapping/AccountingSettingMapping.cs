@@ -57,6 +57,9 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             poco.EnableInvoiceStocksManagement = entityPM.EnableInvoiceStocksManagement;
             poco.RefreshToken = entityPM.RefreshToken;
             poco.QBOOAuth = entityPM.QBOOAuth;
+            poco.AllowManualARPaymentNumber = entityPM.AllowManualARPaymentNumber;
+            poco.AllowRegionalTaxManagement = entityPM.AllowRegionalTaxManagement;
+
         }
     }
 }

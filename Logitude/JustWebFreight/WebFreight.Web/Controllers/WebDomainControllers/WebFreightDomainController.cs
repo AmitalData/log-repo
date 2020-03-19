@@ -175,13 +175,15 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             try
             {
                 string queryId = filters.queryId;
+                string queryCode = filters.queryCode;
+
                 int tenant = (int)filters.Tenant;
                 string userid = filters.userid;
                 string ObjectTableName = filters.ObjectTableName;
 
                 QueryRepository queryRep = new QueryRepository(tenant);
                 QueryQuery queryQuery = new QueryQuery(queryRep);
-                QueryPM query = queryQuery.GetSingleQueryPM(queryId, tenant);
+                QueryPM query = queryQuery.GetSingleQueryPM(queryCode, tenant);
                 QueryOperations queryOperations = new QueryOperations()
                 {
                     ObjectTableName = ObjectTableName,
@@ -264,7 +266,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 }
                 FilterSerializer serializer = new FilterSerializer();
                 byte[] arrayOfBytes = serializer.SerializeFilterItems(queryOperations);
-                var data = new ExportToExcelHelper().ExportQueryToExcel(arrayOfBytes, queryId, tenant, userid, null);
+                var data = new ExportToExcelHelper().ExportQueryToExcel(arrayOfBytes, queryCode, tenant, userid, null);
                 //Uploader uploaderService = new Uploader();
                 //string[] blockIdlist = { Convert.ToBase64String(Guid.NewGuid().ToByteArray()) };
                 //string result = uploaderService.UploadFile(ObjectTableName + DateTime.Now.ToShortDateString() + ".xls", data, data.Length, data.Length, blockIdlist, 0, null, tenant, "others", null);

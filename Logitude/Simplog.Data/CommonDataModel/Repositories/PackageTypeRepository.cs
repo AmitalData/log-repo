@@ -44,8 +44,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
             PackageType entity;
             if (getFromCache)
             {
-                if (HttpContext.Current != null)
-                {
+              
                     if (CacheManager.CacheWrapper.Get(entityName) == null)
                     {
                         ICommonDataContext context = CommonDataContext.GetContext(tenant);
@@ -67,12 +66,8 @@ namespace Simplog.Data.CommonDataModel.Repositories
                     {
                         entity = (PackageType)CacheManager.CacheWrapper.Get(entityName);
                     }
-                }
-                else
-                {
-                    ICommonDataContext context = CommonDataContext.GetContext(tenant);
-                    entity = (from record in context.PackageTypes.Include("Measurement") where record.Id == id && record.Tenant == tenant select record).FirstOrDefault();
-                }
+                
+             
             }
             else
             {
@@ -88,8 +83,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
             PackageType entity;
             if (getFromCache)
             {
-                if (HttpContext.Current != null)
-                {
+             
                     if (CacheManager.CacheWrapper.Get(entityName) == null)
                     {
                         ICommonDataContext context = CommonDataContext.GetContext(tenant);
@@ -111,12 +105,8 @@ namespace Simplog.Data.CommonDataModel.Repositories
                     {
                         entity = (PackageType)CacheManager.CacheWrapper.Get(entityName);
                     }
-                }
-                else
-                {
-                    ICommonDataContext context = CommonDataContext.GetContext(tenant);
-                    entity = (from record in context.PackageTypes.Include("Measurement") where record.Code == code && record.Tenant == tenant select record).FirstOrDefault();
-                }
+                
+           
             }
             else
             {

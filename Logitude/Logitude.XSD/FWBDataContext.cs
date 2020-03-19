@@ -36,6 +36,7 @@ namespace Logitude.XSD
         public string KnownConsignorNumber { get; set; }
         public string MainHarmonize { get; set; }
         public string FNANotifyDetails { get; set; }
+        public string SLAC { get; set; }
 
         #region Carriers
         public string AirlinePrefix { get; set; }
@@ -270,9 +271,13 @@ namespace Logitude.XSD
             this.AWBFreightAmountPrepaid = Shipment.AWBFreightAmountPrepaid == null ? 0 : (decimal)Shipment.AWBFreightAmountPrepaid;
             this.AWBFreightAmountCollect = Shipment.AWBFreightAmountCollect == null ? 0 : (decimal)Shipment.AWBFreightAmountCollect;
             this.MainHarmonize = string.IsNullOrEmpty(Shipment.MainHarmonize) ? null : FormatHelper.FormatString(Shipment.MainHarmonize, FormatHelper.PatternType.AlphaNumeric, 18);
-
             this.IsKnownCargo = MasterData.IsKnownCargo;
             this.KnownConsignorNumber = MasterData.KnownConsignorNumber;
+
+            if (!string.IsNullOrEmpty(Shipment.SLAC))
+            {
+                this.SLAC = FormatHelper.FormatInteger(5, Shipment.SLAC);
+            }
 
             if (myCCSTypeCode == "GLSHK")
             {

@@ -286,12 +286,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-
-
-
-
-
-
+        
         public HttpResponseMessage GetBlueSnapSecretToken(string VaultedShopperId, string countryname)
         {
             try
@@ -423,9 +418,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-
-
-
+        
         public HttpResponseMessage GetPortCopyToCurrentTenant(string entityId)
         {
             try
@@ -618,6 +611,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                     iQueryable = System.Data.Entity.QueryableExtensions.Take(iQueryable, () => 10);
 
                                     List<ShipmentList> myResult = (from x in iQueryable.Include("Direction").Include("TransportMode").Include("CustomerCard")
+                                                                   join sm in iContext.ShipmentMasterDatas
+                                                                   on x.MasterShipmentDataId equals sm.Id into shipmentJoin
+                                                                   from m in shipmentJoin.DefaultIfEmpty()
                                                                    select new ShipmentList()
                                                                    {
                                                                        Id = x.Id,
@@ -629,6 +625,10 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                                                        DirectionName = x.Direction == null ? null : x.Direction.Name,
                                                                        TransportModeName = x.TransportMode == null ? null : x.TransportMode.Name,
                                                                        CustomerName = x.CustomerCard == null ? null : x.CustomerCard.EnglishName,
+                                                                       Master = m.Master,
+                                                                       LongMaster = x.TransportModeId == "A" ? (!string.IsNullOrEmpty(m.AirlinePrefix) && !string.IsNullOrEmpty(m.Master) ? m.AirlinePrefix + "-" + m.Master : "") : m.Master,
+                                                                       House = x.House,
+                                                                       ShipmentLevelCode = x.ShipmentLevelCode,                                                                       
                                                                    }).ToList();
 
                                     return Request.CreateResponse(HttpStatusCode.OK, myResult);
@@ -2484,7 +2484,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         }
         #endregion
 
-        public HttpResponseMessage GetAirlineAreas(string airlineId)
+        public HttpResponseMessage GetCarrierAreas(string carrierId)
         {
             try
             {
@@ -2492,8 +2492,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
 
-                AirlineAreaQuery entityQuery = new AirlineAreaQuery(tenant);
-                List<AirlineAreaList> myResult = entityQuery.GetAirlineAreasByAirlineId(airlineId, tenant);
+                CarrierAreaQuery entityQuery = new CarrierAreaQuery(tenant);
+                List<CarrierAreaList> myResult = entityQuery.GetCarrierAreasByCarrierId(carrierId, tenant);
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
             }
@@ -2552,6 +2552,28 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 OccasionQueryService occasionQuery = new OccasionQueryService(context);
                 List<OccasionPM> result = occasionQuery.GetContactOccasions(tenant, context, contactId);
                 return Request.CreateResponse(HttpStatusCode.OK, result);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public HttpResponseMessage GetMeasurementIdByCode(string code)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                SecurityUtility.CheckContactFeature("Measurement", "READ", tenant);
+
+                MeasurementRepository myRepository = new MeasurementRepository(tenant);
+                string myId = myRepository.GetMeasurementIdbyCode(code, tenant);
+                return Request.CreateResponse(HttpStatusCode.OK, myId);
             }
 
             catch (Exception ex)

@@ -183,7 +183,7 @@ namespace Logitude.BL.QuoteModel.Tools.TraceEvents
                     UserId = loggedContactId,
                     EntityId = entityPM.Id,
                     ObjectTableName = "Quote",
-                    Notes= entityPM.EventNote,
+                    Notes=string.IsNullOrEmpty(entityPM.ExternalEntityNumber) ? entityPM.EventNote : ("Quote sent from Ticket " + entityPM.ExternalEntityNumber),
                 });
 
                 entityPM.SentDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);

@@ -125,8 +125,8 @@ namespace Logitude.Server.Tools
                     case ChangeSetOperation.Insert:
                         {
                             EntityPOCO = new TEntityPOCO();
-                            OnCreating(EntityPM, EntityParentPM);
                             FillDefaultValuesOnCreate(entityPM);
+                            OnCreating(EntityPM, EntityParentPM);
                             break;
                         }
                     case ChangeSetOperation.Update:
@@ -292,18 +292,23 @@ namespace Logitude.Server.Tools
 
                     if (value.PropertyType == "CustomFieldClass")
                     {
-                        object newFieldValue = value.NewValue;
-                        if (newFieldValue.GetType() == typeof(CustomFieldClass))
+                        if (value.NewValue != null)
                         {
-                            CustomFieldClass classvalue = newFieldValue as CustomFieldClass;
-                            newValue = !string.IsNullOrEmpty(classvalue.Value) ? classvalue.Value:"";
+                            object newFieldValue = value.NewValue;
+                            if (newFieldValue.GetType() == typeof(CustomFieldClass))
+                            {
+                                CustomFieldClass classvalue = newFieldValue as CustomFieldClass;
+                                newValue = !string.IsNullOrEmpty(classvalue.Value) ? classvalue.Value : "";
+                            }
                         }
-                
-                        object oldFieldValue = value.OldValue;
-                        if (oldFieldValue.GetType() == typeof(CustomFieldClass))
+                        if (value.OldValue != null)
                         {
-                            CustomFieldClass classvalue = oldFieldValue as CustomFieldClass;
-                            oldValue = !string.IsNullOrEmpty(classvalue.Value) ? classvalue.Value : "";
+                            object oldFieldValue = value.OldValue;
+                            if (oldFieldValue.GetType() == typeof(CustomFieldClass))
+                            {
+                                CustomFieldClass classvalue = oldFieldValue as CustomFieldClass;
+                                oldValue = !string.IsNullOrEmpty(classvalue.Value) ? classvalue.Value : "";
+                            }
                         }
                     }
 

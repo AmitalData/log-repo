@@ -15,15 +15,32 @@ namespace Logitude.DBMigrations.Models
         public string Name { get; set; }
 
         [XmlAttribute()]
-        public string OldName { get; set; }
+        public string ShortName { get; set; }
 
+        [XmlAttribute()]
+        public string OldNames { get; set; }
+        
         [XmlAttribute()]
         public string Schema { get; set; }
 
         [XmlAttribute()]
         public string DBType { get; set; }
 
+        [XmlAttribute()]
+        public string Module { get; set; }
+
         [XmlElement("Column")]
         public List<ColumnDefinition> Columns { get; set; }
+
+        [XmlElement("Relation")]
+        public List<RelationDefinition> Relations { get; set; }
+
+        [XmlElement("Index")]
+        public List<IndexDefinition> Indexes { get; set; }
+
+        [XmlElement("UniqueConstraint")]
+        public List<UniqueConstraintDefinition> UniqueConstraints { get; set; }
+
+        public List<IndexDefinition> AllIndexes { get; set; }
     }
 }

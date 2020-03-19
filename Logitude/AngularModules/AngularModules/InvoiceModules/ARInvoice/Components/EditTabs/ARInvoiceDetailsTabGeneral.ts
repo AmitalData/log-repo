@@ -132,14 +132,14 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     public VATColumnWidth: number = 100;
     public RateColumnWidth: number = 100;
     SetGridColumns() {
-        this.LocalAmountHeader = TextCodeTranslator.Translate("ARInvoiceLine.CH.LocalCurrencyAmount").replace("%LocalCurrencyCode", SessionLocator.LocalCurrencyCode);
+        this.LocalAmountHeader = TextCodeTranslator.Translate("ARInvoiceLine.CH.LocalCurrencyAmountListLable").replace("%LocalCurrencyCode", SessionLocator.LocalCurrencyCode);
 
         var invoiceAmountHeader = null;
         var isInvoiceAmountHeaderVisible = false;
         if (!AppTool.IsNullOrEmpty(this.InvoiceCurrencyId)) {
             if (this.InvoiceCurrencyId != SessionLocator.LocalCurrencyId) {
                 isInvoiceAmountHeaderVisible = true;
-                invoiceAmountHeader = TextCodeTranslator.Translate("ARInvoiceLine.CH.AmountInvoice").replace("%InvoiceCurrencyCode", this.InvoiceCurrencyCode);
+                invoiceAmountHeader = TextCodeTranslator.Translate("ARInvoiceLine.CH.AmountListLable").replace("%InvoiceCurrencyCode", this.InvoiceCurrencyCode);
             }
         }
 
@@ -1867,18 +1867,20 @@ export class ARInvoiceLineItem extends BaseComponent {
         this.fatherComponent.ComputeTotals();
     }
     OnInvoiceExchangeRateChanged() {
-        if (this.ForiegnCurrencyId == this.fatherComponent.InvoiceCurrencyId) {
-            this.ForiegnExchangeRate = this.fatherComponent.InvoiceCurrencyExchangeRate;
+        if (this.fatherComponent.IsEditingEnabled) {
+            if (this.ForiegnCurrencyId == this.fatherComponent.InvoiceCurrencyId) {
+                this.ForiegnExchangeRate = this.fatherComponent.InvoiceCurrencyExchangeRate;
+            }
+
+            else {
+                this.ForiegnExchangeRate = this.fatherComponent.GetCurrencyRate(this.ForiegnCurrencyId);
+            }
+
+            this.ExchangeRateDate = this.fatherComponent.GetCurrencyRateDate(this.ForiegnCurrencyId);
+
+            this.ComputeRelativeRateDate();
+            this.CalculateInvoiceCurrencyAmount();
         }
-
-        else {
-            this.ForiegnExchangeRate = this.fatherComponent.GetCurrencyRate(this.ForiegnCurrencyId);
-        }
-
-        this.ExchangeRateDate = this.fatherComponent.GetCurrencyRateDate(this.ForiegnCurrencyId);
-
-        this.ComputeRelativeRateDate();
-        this.CalculateInvoiceCurrencyAmount();
     }
     CalculateInvoiceCurrencyAmount() {
         if (this.ForiegnCurrencyId == this.fatherComponent.InvoiceCurrencyId) {

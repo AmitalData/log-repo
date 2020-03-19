@@ -6,6 +6,7 @@ import {QueryFilterItem} from '../../Components/Filters/QueryFilterItem';
 import {Component, OnInit, Output, ElementRef}  from '@angular/core';
 import {FormBuilder, FormGroup, FormsModule} from '@angular/forms';
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
+import { AppTool } from '../../../Infrastructure/Tools';
 @Component({
 
     moduleId: module.id,
@@ -110,6 +111,10 @@ export class FlightBookingFilterComponent extends BaseComponent implements OnIni
             this.reportFliter.NumberOfPage = 1;
             this.reportFliter.ProcessType = "GenerateReport";
 
+            this.ReportsPreview.CleanPartnersObslist();
+            if (!AppTool.IsNullOrEmpty(this.CustomAgentId)) {
+                this.ReportsPreview.AddPartner("Custom Agent", this.CustomAgentId);
+            }
             this.ReportsPreview.GenerateReport(this.reportFliter, true);
         }
     }   

@@ -408,10 +408,12 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 var myGLAccountMoreDataRepository = new GLAccountMoreDataRepository(context);
 
                 var poco = myGLAccountMoreDataRepository.GetSingle(entityPOCO.Id, entityPOCO.Tenant);
-                entityPM.NextDueDate = poco.NextDueDate;
-                entityPM.LocalBalanceInDue = poco.LocalBalanceInDue;
-                entityPM.BalanceInLocalCurrency = poco.BalanceInLocalCurrency;
-
+                if (poco != null)
+                {
+                    entityPM.NextDueDate = poco.NextDueDate;
+                    entityPM.LocalBalanceInDue = poco.LocalBalanceInDue;
+                    entityPM.BalanceInLocalCurrency = poco.BalanceInLocalCurrency;
+                }
                 //if (entityPOCO.Category3Id != null)
                 if (!String.IsNullOrWhiteSpace(entityPOCO.Category3Id))
                 {

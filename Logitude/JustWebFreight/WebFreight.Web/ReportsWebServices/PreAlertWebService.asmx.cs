@@ -420,6 +420,13 @@ namespace WebFreight.Web.ReportsWebServices
                 prealertDataProvider.GeneralDescriptionOfGoods = shipmentpm.DescriptionOfGoods != null ? shipmentpm.DescriptionOfGoods : "";
                 prealertDataProvider.House = shipmentpm.House != null ? shipmentpm.House : "";
 
+                if(shipmentpm.SpecialServicesTypeId != null)
+                {
+                    SpecialServicesTypeRepository specialServicesTypeRepository = new SpecialServicesTypeRepository(tenant);
+                    SpecialServicesType specialServicesType = specialServicesTypeRepository.GetSingleSpecialServicesType(shipmentpm.SpecialServicesTypeId,tenant);
+                    prealertDataProvider.SpecialServicesType = specialServicesType != null ? specialServicesType.EnglishName  : "";
+                }
+
                 if (MethodHelper.IsLCLEntity(shipmentpm.TransportModeId, shipmentpm.ShipmentTypeId))
                 {
                     if (shipmentpm.NumberOfPackages == null)
@@ -514,6 +521,7 @@ namespace WebFreight.Web.ReportsWebServices
 
                 //Transshipment1
                 prealertDataProvider.Transshipment1CarrierNumber = shipmentpm.Transshipment1CarrierNumber != null ? shipmentpm.Transshipment1CarrierNumber : "";
+                prealertDataProvider.Transshipment1CarrierName = shipmentpm.Transshipment1CarrierName != null ? shipmentpm.Transshipment1CarrierName : "";
 
                 VesselPM trans1Vesselpm = vesselQuery.GetSinglePM(shipmentpm.Transshipment1VesselId, tenant);
                 if (trans1Vesselpm != null)
@@ -673,6 +681,8 @@ namespace WebFreight.Web.ReportsWebServices
                     masterpackage.Reference3 = package.Reference3;
                     masterpackage.CommodityNumber = package.CommodityNumber;
                     masterpackage.DescriptionOfGoods = package.Description;
+                    masterpackage.NumberOfInsidePackages = package.NumberOfInsidePackages;
+                    masterpackage.ContainerNumber = package.ContainerNumber;
 
                     if (package.IsDangerous)
                     {
@@ -1230,6 +1240,7 @@ namespace WebFreight.Web.ReportsWebServices
                 prealertDataProvider.Transhipment1ATD = shipmentpm.Transshipment1ATD;
                 prealertDataProvider.Transshipment1CarrierCode = shipmentpm.Transshipment1CarrierCode;
                 prealertDataProvider.Transshipment1CarrierNumber_New = shipmentpm.Transshipment1CarrierNumber;
+                prealertDataProvider.Transshipment1CarrierName = shipmentpm.Transshipment1CarrierName;
                 prealertDataProvider.Transhipment2ATD = shipmentpm.Transshipment2ATD;
                 prealertDataProvider.Transshipment2CarrierCode = shipmentpm.Transshipment2CarrierCode;
                 prealertDataProvider.Transshipment2CarrierNumber_New = shipmentpm.Transshipment2CarrierNumber;
@@ -1630,7 +1641,7 @@ namespace WebFreight.Web.ReportsWebServices
                     AddressId = pickUpDeliveryItem.FromAddressId,
                     PortId = pickUpDeliveryItem.FromPortId,
                     AddressCountryId = pickUpDeliveryItem.FromAddressCountryId,
-                    AddressCity = pickUpDeliveryItem.FromAddressId,
+                    AddressCity = pickUpDeliveryItem.FromAddressCity,
                     AddressZipCode = pickUpDeliveryItem.FromAddressZipCode
                 };
             }
@@ -1643,7 +1654,7 @@ namespace WebFreight.Web.ReportsWebServices
                     AddressId = pickUpDeliveryItem.ToAddressId,
                     PortId = pickUpDeliveryItem.ToPortId,
                     AddressCountryId = pickUpDeliveryItem.ToAddressCountryId,
-                    AddressCity = pickUpDeliveryItem.ToAddressId,
+                    AddressCity = pickUpDeliveryItem.ToAddressCity,
                     AddressZipCode = pickUpDeliveryItem.ToAddressZipCode
                 };
             }

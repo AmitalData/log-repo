@@ -28,7 +28,7 @@ export class BIReportComponent {
 
     private Listen() {
         this.CurrentSession.SessionEvent.subscribe(s => {
-            if (s == "BIRefresh") {
+            if (s == "ReloadAllList") {
                 this.LoadData();
             }
         });

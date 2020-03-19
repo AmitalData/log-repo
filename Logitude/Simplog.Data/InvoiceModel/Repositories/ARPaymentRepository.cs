@@ -166,7 +166,12 @@ namespace Simplog.Data.InvoiceModel.Repositories
             throw new System.NotImplementedException();
         }
 
-      
-
+        public string GetARPaymentNumber(string arPaymentId,int tenant)
+        {
+            string arpaymentno = (from a in context.ARPayments
+                                  where a.Tenant == tenant && a.Id == arPaymentId
+                                  select a.PaymentNo).FirstOrDefault();
+            return arpaymentno;
+        }
     }
 }

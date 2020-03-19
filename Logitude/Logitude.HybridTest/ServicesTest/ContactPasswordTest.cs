@@ -10,6 +10,7 @@ namespace Logitude.HybridTest.ServicesTest
         [TestMethod]
         public void Test_ContactPassword_ChangeContactPassword()
         {
+
             InvokedProperties serviceProperties = new InvokedProperties
             {
                 ServiceName = "ContactPassword",
@@ -20,13 +21,16 @@ namespace Logitude.HybridTest.ServicesTest
             };
             Response serviceResponse = new Response();
             object[] serviceParameters = new object[] { "Hybrid@fnarsoft.com", "!H0", "!H1" };
-            WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
-            Assert.IsFalse(serviceResponse.HasError, "Change Contact Password Failed! " + serviceResponse.ErrorMessage);
-            Assert.IsNull(serviceResponse.Result, "Change Contact Password Failed! " + serviceResponse.ErrorMessage);
+            ChangeContactPassword(serviceProperties, serviceParameters);
             serviceParameters = new object[] { "Hybrid@fnarsoft.com", "!H1", "!H0" };
-            WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
-            Assert.IsFalse(serviceResponse.HasError, "Change Contact Password Failed! " + serviceResponse.ErrorMessage);
-            Assert.IsNull(serviceResponse.Result, "Change Contact Password Failed! " + serviceResponse.ErrorMessage);
+            ChangeContactPassword(serviceProperties, serviceParameters);
+        }
+
+        private static void ChangeContactPassword(InvokedProperties serviceProperties, object[] serviceParameters)
+        {
+            ServiceOutcome serviceOutcome = WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters);
+            Assert.IsFalse(serviceOutcome.Response.HasError, "Change Contact Password Failed! " + serviceOutcome.Response.ErrorMessage);
+            Assert.IsNull(serviceOutcome.Response.Result, "Change Contact Password Failed! " + serviceOutcome.Response.ErrorMessage);
         }
     }
 }

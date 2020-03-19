@@ -32,7 +32,7 @@ namespace Logitude.XSD.INTTRA_Booking
                 RequestMessageVersion = HeaderTypeRequestMessageVersion.Item10,
                 TransactionType = TransactionTypeValues.Booking,
                 TransactionVersion = HeaderTypeTransactionVersion.Item20,
-                DocumentIdentifier = myDocumentIdentifier,
+                DocumentIdentifier = this.Context.iNTTRAGeneralMethods.FormatString(myDocumentIdentifier, 35), 
                 TransactionStatus = transactionStatus,
                 TransactionSplitIndicator = false,
             };

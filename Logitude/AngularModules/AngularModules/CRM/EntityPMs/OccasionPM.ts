@@ -189,6 +189,25 @@ export class OccasionPM {
     public set InvitedContacts(newValue: number) { if (this.invitedContacts != newValue) { this.invitedContacts = newValue; this.MarkAsDirty("InvitedContacts"); } }
        
 	 
+    private isAllAdded: boolean;
+    public get IsAllAdded() { return this.isAllAdded; }
+    public set IsAllAdded(newValue: boolean) { if (this.isAllAdded != newValue) { this.isAllAdded = newValue; this.MarkAsDirty("IsAllAdded"); } }
+       
+	 
+     
+	private removedOccasionInvitees: OccasionInviteePM[];
+    get  RemovedOccasionInvitees() {
+        if (this.removedOccasionInvitees == null) {
+            this.removedOccasionInvitees = [];
+        }
+
+        return this.removedOccasionInvitees;
+    }
+    set  RemovedOccasionInvitees(newValue: OccasionInviteePM[]) {
+        if (this.removedOccasionInvitees != newValue) {
+            this.removedOccasionInvitees = newValue;
+        }
+    }
 
     public OldEntityPM: OccasionPM;
 		

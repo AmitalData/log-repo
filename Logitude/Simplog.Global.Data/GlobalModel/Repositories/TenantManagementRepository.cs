@@ -153,11 +153,11 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
                     select a).FirstOrDefault();
         }
 
-        public bool CheckSupportEmailTenantManagement(string supportEmail, int tenant)
+        public bool CheckSupportEmailTenantManagement(string supportDomain, int tenant)
         {
            bool isExist = false; 
            TenantManagement myTenant = (from a in context.TenantManagements.Include("GlobalTenant")
-                                        where a.SupportEmail == supportEmail && a.Id != tenant && a.SupportActivated == true
+                                        where a.SupportDomain == supportDomain && a.Id != tenant && a.SupportActivated == true
                                         select a).FirstOrDefault();
            if (myTenant != null)
            {
@@ -169,7 +169,6 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
 
         public TenantManagement GetSingleTenantManagementPMByListOfEmails(List<string> emails)
         {
-
             TenantManagement myTenant = new TenantManagement();
             List<TenantManagement> tenants = new List<TenantManagement>();
             if (emails.Count > 0)
@@ -179,7 +178,7 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
                             select a).ToList();
 
                 emails = emails.Select(a=>a.Split('@')[1].Trim()).ToList();
-                myTenant = tenants.Where(a=>a.SupportEmail != null && emails.Contains(a.SupportEmail.Split('@')[1].Trim())).FirstOrDefault();
+                myTenant = tenants.Where(a=>a.SupportDomain != null && emails.Contains(a.SupportDomain)).FirstOrDefault();
             }
 
             return myTenant;

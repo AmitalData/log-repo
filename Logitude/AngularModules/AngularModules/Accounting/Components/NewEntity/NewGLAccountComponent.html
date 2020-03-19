@@ -56,18 +56,17 @@
 
                             <!-- DisplayNumber -->
                             <!-- <tr class="FormFieldRow">
-                                <td>
-                                    <LogLabel [ObjectFieldName]="'DisplayNumber'" [ObjectTableName]="ObjectTableName"
-                                              [DataContext]="DataContext"></LogLabel>
-                                </td>
+        <td>
+            <LogLabel [ObjectFieldName]="'DisplayNumber'" [ObjectTableName]="ObjectTableName"
+                      [DataContext]="DataContext"></LogLabel>
+        </td>
 
-                                <td>
-                                    <LogTextBox [ObjectFieldName]="'DisplayNumber'" [InputType]="'text'" [DataContext]="DataContext"
-                                                [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
-                                </td>
-                                <td><div></div></td>
-                            </tr> -->
-
+        <td>
+            <LogTextBox [ObjectFieldName]="'DisplayNumber'" [InputType]="'text'" [DataContext]="DataContext"
+                        [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+        </td>
+        <td><div></div></td>
+    </tr> -->
                             <!-- LocalName -->
                             <tr class="FormFieldRow">
                                 <td>
@@ -77,6 +76,19 @@
 
                                 <td>
                                     <LogTextBox [ObjectFieldName]="'LocalName'" [InputType]="'ntext'" [DataContext]="DataContext" [Text]="LocalName"
+                                                [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                </td>
+                                <td><div></div></td>
+                            </tr>
+                            <!-- NameForPrintingCheques -->
+                            <tr class="FormFieldRow" *ngIf="IsVendor">
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'NameForPrintingCheques'" [ObjectTableName]="ObjectTableName"
+                                              [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td>
+                                    <LogTextBox [ObjectFieldName]="'NameForPrintingCheques'" [InputType]="'ntext'" [DataContext]="DataContext" [Text]="NameForPrintingCheques"
                                                 [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
                                 </td>
                                 <td><div></div></td>
@@ -248,7 +260,7 @@
                                               [DataContext]="DataContext"></LogLabel>
                                 </td>
 
-                                <td style="width: 200px; " [style.padding-right]="isRTL ? 'initial' : '36px'" [style.padding-left]="isRTL ? '36px' : 'initial'" >
+                                <td style="width: 200px; " [style.padding-right]="isRTL ? 'initial' : '36px'" [style.padding-left]="isRTL ? '36px' : 'initial'">
                                     <LogLov [ObjectFieldName]="'Category1Id'"
                                             [ObjectTableName]="ObjectTableName"
                                             [DataContext]="DataContext"
@@ -343,8 +355,20 @@
                                               [DataContext]="DataContext"></LogLabel>
                                 </td>
                                 <td>
-                                <CheckBox [IsChecked]="RevaluationEnabled" (Checked)="RevaluationEnabled = $event"></CheckBox>
-                                    </td>
+                                    <CheckBox [IsChecked]="RevaluationEnabled" (Checked)="RevaluationEnabled = $event"></CheckBox>
+                                </td>
+                                <td><div></div></td>
+                            </tr>
+
+                            <!-- Smallcashbook -->
+                            <tr *ngIf="ChartOfAccountsTypeCode=='4'" class="FormFieldRow">
+                                <td style="width: 150px;">
+                                    <LogLabel [ObjectFieldName]="'Smallcashbook'" [ObjectTableName]="ObjectTableName"
+                                              [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td>
+                                    <CheckBox [IsChecked]="Smallcashbook" (Checked)="Smallcashbook = $event"></CheckBox>
+                                </td>
                                 <td><div></div></td>
                             </tr>
 

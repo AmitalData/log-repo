@@ -6,7 +6,7 @@ import {AdditionalServiceListService} from './Services/StandardLists/AdditionalS
 import {AddressListService} from './Services/StandardLists/AddressListService';
 import {AgentListService} from './Services/StandardLists/AgentListService';
 import {AirlineListService} from './Services/StandardLists/AirlineListService';
-import {AirlineStatisticsListService} from './Services/StandardLists/AirlineStatisticsListService';
+import { AirlineStatisticsListService } from './Services/StandardLists/AirlineStatisticsListService';
 import {AutomationResultEmailRecipientListService} from './Services/StandardLists/AutomationResultEmailRecipientListService';
 import {BranchListService} from './Services/StandardLists/BranchListService';
 import {BusinessUnitListService} from './Services/StandardLists/BusinessUnitListService';
@@ -259,6 +259,7 @@ export class ModuleProviders {
             case "AgentListService": { myResult = new AgentListService(); break; }
             case "AirlineListService": { myResult = new AirlineListService(); break; }
             case "AirlineStatisticsListService": { myResult = new AirlineStatisticsListService(); break; }
+            case "AirlineMessagingRuleListService": { myResult = new AirlineMessagingRuleListService(); break; }
             case "AutomationResultEmailRecipientListService": { myResult = new AutomationResultEmailRecipientListService(); break; }
             case "BranchListService": { myResult = new BranchListService(); break; }
             case "BusinessUnitListService": { myResult = new BusinessUnitListService(); break; }

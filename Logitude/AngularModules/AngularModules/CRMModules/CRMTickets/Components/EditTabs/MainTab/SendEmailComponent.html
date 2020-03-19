@@ -129,7 +129,7 @@
 <table>
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td>
-            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="true"></ValidationSummary>
         </td>
     </tr>
 
@@ -283,9 +283,15 @@
                                                             <div></div>
                                                         </td>
 
-                                                        <td style="width:190px; float:right;">
+                                                        <td [style.width]="!ShowQuotationAttachmentLink ? '190px':'290px'" style="width:190px; float:right;">
                                                             <table>
                                                                 <tr>
+                                                                    <td *ngIf="ShowQuotationAttachmentLink">
+                                                                        <span class="hyperlink" (click)="AddQuotationAttachemnt()">Attach Quotation</span>
+                                                                    </td>
+
+                                                                    <td *ngIf="ShowQuotationAttachmentLink" style="width:5px;"></td>
+
                                                                     <td>
                                                                         <span class="hyperlink" (click)="AttachInternalFile()">Attach Internal File</span>
                                                                     </td>

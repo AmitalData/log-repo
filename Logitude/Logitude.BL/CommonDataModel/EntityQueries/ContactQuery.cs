@@ -81,7 +81,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                           ExternalId = a.ExternalId,
                                           CompanyName = a.CompanyName,
                                           CreateDate = a.CreateDate,
-                                          IndexColor = a.IndexColor,                                          
+                                          IndexColor = a.IndexColor,
                                       }).FirstOrDefault();
 
                 if (instance != null)
@@ -91,8 +91,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         IGlobalContext globalContext = GlobalContext.GetContext();
                         ContactPassword contactPassword = globalContext.ContactPasswords.Where(cn => cn.Email == instance.Email.ToLower()).FirstOrDefault();
                         GlobalContact globalContact = globalContext.GlobalContacts.Where(cn => cn.Email == instance.Email.ToLower() && cn.GlobalTenantId == tenant).FirstOrDefault();
-                        
-                        if(globalContact != null)
+
+                        if (globalContact != null)
                         {
                             instance.IsUser = globalContact.IsUser;
                         }
@@ -175,7 +175,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
                 IGlobalContext globalContext = GlobalContext.GetContext();
-                List<ContactPassword> contactPasswords = globalContext.ContactPasswords.Where(c=> contacts.Any(ct=> ct.Email == c.Email) ).ToList();
+                List<ContactPassword> contactPasswords = globalContext.ContactPasswords.Where(c => contacts.Any(ct => ct.Email == c.Email)).ToList();
 
                 foreach (var c in contacts)
                 {
@@ -238,7 +238,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
                 IGlobalContext globalContext = GlobalContext.GetContext();
-				List<ContactPassword> contactPasswords = globalContext.ContactPasswords.Where(c => c.Email == email).ToList();
+                List<ContactPassword> contactPasswords = globalContext.ContactPasswords.Where(c => c.Email == email).ToList();
 
                 foreach (var c in contacts)
                 {
@@ -989,7 +989,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                             {
                                 IGlobalContext globalContext = GlobalContext.GetContext();
-								List<ContactPassword> contactPasswords = globalContext.ContactPasswords.Where(c => c.Email == name).ToList();
+                                List<ContactPassword> contactPasswords = globalContext.ContactPasswords.Where(c => c.Email == name).ToList();
 
                                 ContactPassword contactPassword = contactPasswords.Where(cn => cn.Email == entity.Email).FirstOrDefault();
                                 if (contactPassword != null)
@@ -1398,15 +1398,15 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         public string GetContactEmailById(string id, int tenant)
         {
             string email = (from a in repository.context.Contacts
-                                   where a.Id == id 
-                                   && a.Tenant == tenant
-                                   select new ContactPM()
-                                   {
-                                       Id = a.Id,
-                                       Tenant = a.Tenant,
-                                       Email = a.Email,
-                                      
-                                   }.Email).FirstOrDefault();
+                            where a.Id == id
+                            && a.Tenant == tenant
+                            select new ContactPM()
+                            {
+                                Id = a.Id,
+                                Tenant = a.Tenant,
+                                Email = a.Email,
+
+                            }.Email).FirstOrDefault();
 
             return email;
         }
@@ -1436,11 +1436,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     if (mycontact != null)
                     {
                         contacts.Add(new ContactList()
-                                {
-                                    Email = mycontact.Email,
-                                    EnglishName = mycontact.EnglishName,
-                                    SearchFields = mycontact.SearchFields,
-                                });
+                        {
+                            Email = mycontact.Email,
+                            EnglishName = mycontact.EnglishName,
+                            SearchFields = mycontact.SearchFields,
+                        });
                     }
                     else
                     {
@@ -1458,7 +1458,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         }
 
 
-        public IQueryable<ContactList> GetContactListsByListIds(List<string>contactIds, int tenant)
+        public IQueryable<ContactList> GetContactListsByListIds(List<string> contactIds, int tenant)
         {
             IQueryable<ContactList> contactLists = (from a in repository.context.Contacts
                                                     where contactIds.Contains(a.Id) && a.Tenant == tenant
@@ -1471,7 +1471,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                         Mobile = a.Mobile,
                                                         Fax = a.Fax,
                                                         BusinessPhone = a.BusinessPhone,
-                                                        InActive =a.InActive,
+                                                        InActive = a.InActive,
                                                     });
             return contactLists;
         }
@@ -1501,7 +1501,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             if (!string.IsNullOrEmpty(id))
             {
                 ContactPM instance = (from a in repository.context.Contacts
-                                      where  a.UserType == "R"
+                                      where a.UserType == "R"
                                       && a.Id == id
                                       select new ContactPM()
                                       {
@@ -1827,5 +1827,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             return result.AsQueryable();
         }
+
     }
 }

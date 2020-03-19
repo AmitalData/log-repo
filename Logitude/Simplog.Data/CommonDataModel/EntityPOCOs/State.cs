@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -18,6 +19,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public bool AddedManually { get; set; }
         public string SearchFields { get; set; }
         public string QBOTransactionLocationCode { get; set; }
+        public DateTime? AutomaticLastUpdateDate { get; set; }
         public string CountryId { get; set; }
         [ForeignKey("CountryId")]
         public virtual Country Country { get; set; }

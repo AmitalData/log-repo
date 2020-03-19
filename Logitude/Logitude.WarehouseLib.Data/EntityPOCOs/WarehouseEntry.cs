@@ -173,6 +173,20 @@ namespace Logitude.WarehouseLib.Data.EntityPOCOs
 	    public string ConnectedTo { get; set; }
         [Column("Ratio")]
 	    public double? Ratio { get; set; }
+        [Column("ToTypeCode")]
+	    public string ToTypeCode { get; set; }
+        [Column("FromTypeCode")]
+	    public string FromTypeCode { get; set; }
+        [ForeignKey("FromCountry")]
+        [Column("FromCountryId")]
+	    public string FromCountryId { get; set; }
+	      
+        public virtual Country FromCountry { get; set; }
+        [ForeignKey("ToCountry")]
+        [Column("ToCountryId")]
+	    public string ToCountryId { get; set; }
+	      
+        public virtual Country ToCountry { get; set; }
     }
 }
 	 

@@ -11,6 +11,7 @@ using WebFreight.Web.DataContracts;
 using Logitude.Server.Tools.Helpers;
 using System.Threading.Tasks;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Simplog.Server.Infrastructure;
 
 namespace WebFreight.Web.Helpers.WorkerRoleHelpers
 {
@@ -42,7 +43,7 @@ namespace WebFreight.Web.Helpers.WorkerRoleHelpers
                 if (queueService != null && queueResponse != null)
                 {
                     reportExecutionLog = GetReportExecutionLog();
-                    if (reportExecutionLog != null && (reportExecutionLog.StatusCode == "W" || reportExecutionLog.StatusCode == "P"))
+                    if (reportExecutionLog != null &&  reportExecutionLog.RetryNumber < 2  && (reportExecutionLog.StatusCode == "W" || reportExecutionLog.StatusCode == "P"))
                     {
                         UpdateReportExecutionLog(new ReportExecutionLogArgs() { StartDate = startDate, StatusCode = "P", ExecutedByServerName = System.Environment.MachineName });
                         BuildStimulReport();
@@ -52,6 +53,7 @@ namespace WebFreight.Web.Helpers.WorkerRoleHelpers
             }
             catch (Exception ex)
             {
+                DatabaseInitializer.RunOnSeconderyDB = false;
                 HandleReportExecutionException(ex);
             }
         }
@@ -63,6 +65,7 @@ namespace WebFreight.Web.Helpers.WorkerRoleHelpers
             {
                 AuthenticationUtil.AuthenticatedUserEmail = GetContactEmailByContactId(reportFliter.UserId, reportFliter.tenant);
                 ReportHelper reportHelper = new ReportHelper();
+                if (FeatureToggleHelper.HasFeatureToggle("RRS", reportExecutionLog.Tenant)) DatabaseInitializer.RunOnSeconderyDB = true;
                 reportHelper.BuildStimulReport(reportFliter);
                 UpdateReportExecutionLog(new ReportExecutionLogArgs() { StatusCode = "D", DoneDate = DateTime.Now });
                 queueService.Complete();
@@ -74,17 +77,17 @@ namespace WebFreight.Web.Helpers.WorkerRoleHelpers
             }
         }
 
-        private void UpdateReportExecutionLog(ReportExecutionLogArgs ReportExecutionLogArgs)
+        private void UpdateReportExecutionLog(ReportExecutionLogArgs reportExecutionLogArgs)
         {
             if (reportExecutionLog != null)
             {
-                reportExecutionLog.StatusCode = !string.IsNullOrEmpty(ReportExecutionLogArgs.StatusCode) ? ReportExecutionLogArgs.StatusCode : reportExecutionLog.StatusCode;
+                reportExecutionLog.StatusCode = !string.IsNullOrEmpty(reportExecutionLogArgs.StatusCode) ? reportExecutionLogArgs.StatusCode : reportExecutionLog.StatusCode;
                 reportExecutionLog.RetryNumber = queueResponse != null ? queueResponse.RetryNumber : reportExecutionLog.RetryNumber;
-                reportExecutionLog.StartDate = ReportExecutionLogArgs.StartDate != null ? ReportExecutionLogArgs.StartDate : reportExecutionLog.StartDate;
-                reportExecutionLog.ExecutedByServerName = ReportExecutionLogArgs.ExecutedByServerName != null ? ReportExecutionLogArgs.ExecutedByServerName : reportExecutionLog.ExecutedByServerName;
-                reportExecutionLog.ExceptionMessage = ReportExecutionLogArgs.Exception != null ? GetFullExceptionMessageFromException(ReportExecutionLogArgs.Exception) : reportExecutionLog.ExceptionMessage;
-                reportExecutionLog.DoneDate = ReportExecutionLogArgs.DoneDate != null ? ReportExecutionLogArgs.DoneDate : reportExecutionLog.DoneDate;
-                if (reportExecutionLog.RetryNumber >= 2 && reportExecutionLog.StatusCode != "D")
+                reportExecutionLog.StartDate = reportExecutionLogArgs.StartDate != null ? reportExecutionLogArgs.StartDate : reportExecutionLog.StartDate;
+                reportExecutionLog.ExecutedByServerName = reportExecutionLogArgs.ExecutedByServerName != null ? reportExecutionLogArgs.ExecutedByServerName : reportExecutionLog.ExecutedByServerName;
+                reportExecutionLog.ExceptionMessage = reportExecutionLogArgs.Exception != null ? GetFullExceptionMessageFromException(reportExecutionLogArgs.Exception) : reportExecutionLog.ExceptionMessage;
+                reportExecutionLog.DoneDate = reportExecutionLogArgs.DoneDate != null ? reportExecutionLogArgs.DoneDate : reportExecutionLog.DoneDate;
+                if (reportExecutionLog.RetryNumber >= 2 && reportExecutionLog.StatusCode != "D" && reportExecutionLogArgs.StatusCode != "P")
                 {
                     reportExecutionLog.StatusCode = "F";
                     reportExecutionLog.DoneDate = DateTime.Now;
@@ -97,7 +100,7 @@ namespace WebFreight.Web.Helpers.WorkerRoleHelpers
         private void HandleReportExecutionException(Exception exception)
         {
             ExceptionHandler.HandleException(exception, DateTime.Now, 0, null, "Report execution log queue worker role start", null, null);
-            if (queueResponse != null && queueResponse.MessageValues.Keys.Contains("ReportExecutionLogId"))
+            if (queueResponse != null)
             {
                 if (queueResponse.RetryNumber <= 1)
                 {
@@ -132,6 +135,7 @@ namespace WebFreight.Web.Helpers.WorkerRoleHelpers
             {
                 ContactQuery contactQuery = new ContactQuery(tenant);
                 contactEmail = contactQuery.GetContactEmailById(loggedContactId, tenant);
+                if (contactEmail == null && tenant !=0) contactEmail = contactQuery.GetContactEmailById(loggedContactId, 0);
             }
             return contactEmail;
         }

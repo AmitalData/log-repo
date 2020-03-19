@@ -44,7 +44,7 @@ using Simplog.Data.Helpers;
 using Logitude.Accounting.BL.DataContract;
 using Logitude.Accounting.BL.CloseTables;
 
-namespace WebFreight.Web.Controllers.AccountingModel 
+namespace WebFreight.Web.Controllers.AccountingModel
 {
     public partial class CashBookOpController : ApiController
     {
@@ -52,7 +52,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
         {
 
         }
-        
+
         public HttpResponseMessage GetSingleWithoutLines(string id)
         {
             try

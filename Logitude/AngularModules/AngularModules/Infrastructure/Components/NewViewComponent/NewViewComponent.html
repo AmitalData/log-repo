@@ -486,14 +486,14 @@
                                                                                             <!-- DateTime -->
                                                                                             <div *ngSwitchCase="'DateTime'" style="display: inline-flex;">
                                                                                                 <div style="width:300px;">
-                                                                                                    <CustomDatePicker [IsDisabled]="!item.DateFiltersEnabled" (SelectedItemChanged)="item.onTextChange($event)" [QueryId]="QueryId" [ObjectField]="item.ObjectField"></CustomDatePicker>
+                                                                                                    <CustomDatePicker [IsDisabled]="!item.DateFiltersEnabled" (SelectedItemChanged)="item.onTextChange($event)" [QueryCode]="QueryCode" [ObjectField]="item.ObjectField"></CustomDatePicker>
                                                                                                 </div>
                                                                                             </div>
 
                                                                                             <!-- Date -->
                                                                                             <div *ngSwitchCase="'Date'" style="display: inline-flex;">
                                                                                                 <div style="width:300px;" [style.margin-right]="LayoutDirection=='rtl' ? '6px' : ''">
-                                                                                                    <CustomDatePicker [IsDisabled]="!item.DateFiltersEnabled" (SelectedItemChanged)="item.onTextChange($event)" [QueryId]="QueryId" [ObjectField]="item.ObjectField"></CustomDatePicker>
+                                                                                                    <CustomDatePicker [IsDisabled]="!item.DateFiltersEnabled" (SelectedItemChanged)="item.onTextChange($event)" [QueryCode]="QueryCode" [ObjectField]="item.ObjectField"></CustomDatePicker>
                                                                                                 </div>
                                                                                             </div>
 

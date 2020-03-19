@@ -367,7 +367,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query ProcessingReasonQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ProcessingReasonTextCode_0.Id, Code = "ProcessingReason",  QueryGroupCode = "5969", IndexOrder = 0, Tenant = 0, ObjectTableId = ProcessingReasonObjectTable.Id, QuerySection = "Customs.ProcessingReason", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ProcessingReasonFeature_0.Id, DefaultSortName = "Code", DefaultSortDirection = "Desending" }, queriesRepository, tenantQueries);
+			  Query ProcessingReasonQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ProcessingReasonTextCode_0.Id, Code = "ProcessingReason",  QueryGroupCode = "5969", IndexOrder = 0, Tenant = 0, ObjectTableId = ProcessingReasonObjectTable.Id, QuerySection = "Customs.ProcessingReason", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ProcessingReasonFeature_0.Id,FeatureUniqeCode= ProcessingReasonFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending" }, queriesRepository, tenantQueries);
 	
 			 QueryColumn ProcessingReasonQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ProcessingReasonQuery.Id, IndexOrder = 0, ObjectFieldId = ProcessingReasonObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == ProcessingReasonObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 50 }, queryColumnsRepository, tenantQueryColumns);
 

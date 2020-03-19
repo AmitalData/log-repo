@@ -665,6 +665,11 @@ export class TenantPM {
     public set HideFCLAllIn(newValue: boolean) { if (this.hideFCLAllIn != newValue) { this.hideFCLAllIn = newValue; this.MarkAsDirty("HideFCLAllIn"); } }
        
 	 
+    private allowCustomersInAgentsLOV: boolean;
+    public get AllowCustomersInAgentsLOV() { return this.allowCustomersInAgentsLOV; }
+    public set AllowCustomersInAgentsLOV(newValue: boolean) { if (this.allowCustomersInAgentsLOV != newValue) { this.allowCustomersInAgentsLOV = newValue; this.MarkAsDirty("AllowCustomersInAgentsLOV"); } }
+       
+	 
 
     public OldEntityPM: TenantPM;
 		

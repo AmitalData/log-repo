@@ -1,4 +1,4 @@
-﻿import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/map';
 declare var System: any;
 declare var window: any;
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -56,12 +56,12 @@ export class DocumentTypeTemplateComponent extends BaseComponent implements OnIn
         if (this.DocumentType) {
             if (this.TypeTab == "Document") {
 
-                this.Title =   TextCodeTranslator.Translate("DocumentType.TH.Templates")
+                this.Title =   TextCodeTranslator.Translate("DocumentType.O.Templates")
                 this.TemplateTabCode = "P";
             }
             else {
                 this.TemplateTabCode = "M";
-                this.Title =    TextCodeTranslator.Translate("DocumentType.TH.HTMLTemplates")
+                this.Title =    TextCodeTranslator.Translate("DocumentType.O.HTMLTemplates")
             }
 
             this.FillDocumentTypeTemplate();

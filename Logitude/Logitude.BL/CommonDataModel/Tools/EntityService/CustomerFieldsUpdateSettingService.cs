@@ -39,7 +39,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         public void Create(CustomerFieldsUpdateSettingPM entityPM)
         {
             CustomerFieldsUpdateSettingQuery customerFieldsUpdateSettingQuery = new CustomerFieldsUpdateSettingQuery(tenant);
-            bool result = customerFieldsUpdateSettingQuery.CheckIfExistCustomerFieldsUpdateSetting(entityPM.ObjectFieldId, tenant);
+            bool result = customerFieldsUpdateSettingQuery.CheckIfExistCustomerFieldsUpdateSetting(entityPM.ObjectFieldCode, tenant);
             if (result)
             {
                 throw new Exception("An update setting already exists for the field");

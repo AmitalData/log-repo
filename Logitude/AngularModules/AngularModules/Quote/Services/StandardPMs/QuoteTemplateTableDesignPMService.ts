@@ -31,37 +31,37 @@ export class QuoteTemplateTableDesignPMService {
     }
 
  get(id: string) {
+         
+         
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+        var callTime = new Date();		
+		 return Observable.defer(() => {
+                return this._http.get(this._apiUrl+'/getsingle?'+'id=' + id, {
+                    headers: authHeader
+                }).map(response => {
+                    var pm = response.json();
 
+                   
+					
+                    var entity: QuoteTemplateTableDesignPM;
+					if(pm)
+					{
+                      entity = this.MapJsonToEntityPM(pm);
+                    }
 
-     var authHeader = new Headers();
-     authHeader.append('Token', SessionInfo.Token);
-     var callTime = new Date();
-     return Observable.defer(() => {
-         return this._http.get(this._apiUrl + '/getsingle?' + 'id=' + id, {
-             headers: authHeader
-         }).map(response => {
-             var pm = response.json();
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = entity;
+              
+			    var servertime = response.headers.get('ServerExecutionTime');
+                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "QuoteTemplateTableDesign", "GetSinglePM", 'id=' + id);
+				 
+                return serviceResponse;
 
-
-             var entity: QuoteTemplateTableDesignPM;
-             if (pm) {
-                 entity = this.MapJsonToEntityPM(pm);
-             }
-
-             var serviceResponse: ServiceResponse;
-             serviceResponse = new ServiceResponse();
-             serviceResponse.Result = entity;
-
-             var servertime = response.headers.get('ServerExecutionTime');
-             PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "QuoteTemplateTableDesign", "GetSinglePM", 'id=' + id);
-
-             return serviceResponse;
-
-         }).catch(ServiceHelper.HandleServiceError);
-     });
- }
-
-
+            }).catch(ServiceHelper.HandleServiceError);
+            });                    
+    }
 
 	 insert(entityPM: QuoteTemplateTableDesignPM) {
  
@@ -210,7 +210,7 @@ export class QuoteTemplateTableDesignPMService {
             }
 			
 			 
-            entityPM.IsDirty = false;
+            
 
 		if (mapParent) {
                 entityPM.OldEntityPM = this.clone(entityPM);
@@ -220,7 +220,7 @@ export class QuoteTemplateTableDesignPMService {
 
             entityPM.OldEntityPM = null;
         }
-
+		entityPM.IsDirty = false;
         return entityPM;
     }
 
@@ -246,6 +246,7 @@ export class QuoteTemplateTableDesignPMService {
 	  public GetNewEntityPM() {		 
 		    var entityPM: QuoteTemplateTableDesignPM;
 			entityPM = new QuoteTemplateTableDesignPM();
+			entityPM.Tenant = InfraSettings.TenantPM.Id;
 			return entityPM;
     }
 		 

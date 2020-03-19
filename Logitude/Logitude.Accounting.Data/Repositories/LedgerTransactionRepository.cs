@@ -1146,6 +1146,18 @@ on record.JournalId equals j.Id
 
 
         }
+        public List<LedgerTransaction> GetLedgerTransactionsByJournalIds(List<string> journalIds, int tenant)
+        {
+
+          
+            return (from a in context.LedgerTransactions
+                    where journalIds.Contains(a.JournalId) && a.Tenant==tenant
+
+                    select a
+                    ).ToList();
+
+
+        }
 
         public IQueryable<LedgerTransaction> GetClosedPeriodTransactions(string accountId, DateTime closedDate, DateTime openDate, int tenant)
         {

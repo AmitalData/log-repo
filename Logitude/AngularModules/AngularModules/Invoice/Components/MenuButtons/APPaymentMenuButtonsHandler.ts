@@ -31,8 +31,13 @@ export class APPaymentMenuButtonsHandler {
     private isPrintRequested: boolean;
     private CurrentSession = SessionLocator.SelectedSession;
     fullAccountingSettingPMService: FullAccountingSettingPMService = new FullAccountingSettingPMService();
-
+    // private isFullAccountingGranted: boolean;
     private isOerationInProgrees: boolean = false;
+
+    constructor(){
+        // this.isFullAccountingGranted = this.GetFullAccountingFeature();
+    }
+
     public SetEntityPM(entityArgs: EntityArgs) {
         this.entityArgs = entityArgs;
         this.EntityPM = entityArgs.EntityPM;
@@ -87,6 +92,11 @@ export class APPaymentMenuButtonsHandler {
         });
     }
 
+    GetFullAccountingFeature(){
+        var table = window.ObjectTables.filter(d => d.Name === 'FullAccountingSetting')[0];
+        var fullAccountingFeature = FeatureLocator.Features.filter(f => (f.Code == "UPDATE") && f.ObjectTableId == table.Id)[0];
+        return !!fullAccountingFeature;
+    }
 
     public CheckButtonState(menuButtons: MenuButtonPM[]) {
         if (this.EntityPM != null) {
@@ -337,8 +347,8 @@ export class APPaymentMenuButtonsHandler {
 
         if (isValid) {
             this.entityArgs.EditComponent.ValidationErrorsList = [];
-            this.GetFullAccountingSettingsAndApprove();
 
+            this.GetFullAccountingSettingsAndApprove();
         }
 
         else {
@@ -389,7 +399,8 @@ export class APPaymentMenuButtonsHandler {
 
     public GetFullAccountingSettingsAndApprove() {
         this.CurrentSession.StartBusyIndicatorLoading();
-        this.fullAccountingSettingPMService.get(SessionLocator.TenantPM.Id.toString()).subscribe(myResult => {
+        this.fullAccountingSettingPMService.get(SessionLocator.TenantPM.Id.toString()).subscribe(myResult =>
+        {
             var myResponse: ServiceResponse = myResult;
             this.CurrentSession.StopBusyIndicator();
 
@@ -398,32 +409,45 @@ export class APPaymentMenuButtonsHandler {
                 var res = myResponse.Result;
                 var fullAccountingSetting: FullAccountingSettingPM = res;
 
-                this.Approve(fullAccountingSetting);
-
-            }
-
-        });
-
-    }
-
-    private Approve(fullAccountingSetting: FullAccountingSettingPM) {
-        this.GetGLAccount(this.EntityPM.VendorGLAccountId).then((glaccount: GLAccountPM) => {
-
-
-            if (fullAccountingSetting != null && glaccount != null) {
-                if (fullAccountingSetting.IsPaymentChequesActivated && glaccount.AllowEditChequePayToName && this.EntityPM.PaymentMethodCode == "CH") {
-                    this.OpenEditPaymentChequeScreen();
-                }
-                else {
+                if(fullAccountingSetting)
+                    this.Approve(fullAccountingSetting);
+                else
                     this.ContinueSaving(null);
-                }
-            }
-            else {
+
+
+            }else{
                 this.ContinueSaving(null);
             }
 
         });
 
+    }
+    NameForPrintingCheques: string;
+    private Approve(fullAccountingSetting: FullAccountingSettingPM)
+    {
+        if (fullAccountingSetting.AccountingActivated) {
+            this.GetGLAccount(this.EntityPM.VendorGLAccountId).then((glaccount: GLAccountPM) => {
+
+
+                if (fullAccountingSetting != null && glaccount != null) {
+                    if (fullAccountingSetting.IsPaymentChequesActivated && glaccount.AllowEditChequePayToName && this.EntityPM.PaymentMethodCode == "CH") {
+                        this.NameForPrintingCheques = glaccount.NameForPrintingCheques != null ? glaccount.NameForPrintingCheques : (glaccount.LocalName != null ? glaccount.LocalName : glaccount.EnglishName);
+                        this.OpenEditPaymentChequeScreen();
+                    }
+                    else {
+                        this.ContinueSaving(null);
+                    }
+                }
+                else {
+                    this.ContinueSaving(null);
+                }
+
+
+            });
+        }
+        else {
+            this.ContinueSaving(null);
+        }
     }
 
     SetPaymentChequeWindowArgs(windowArgs: any) {
@@ -434,7 +458,7 @@ export class APPaymentMenuButtonsHandler {
         windowArgs.ForeignAmount = this.EntityPM.AmountInPaymentCurrency;
         windowArgs.ValueDate = this.EntityPM.ValueDate;
         windowArgs.APPayment = this.EntityPM;
-
+        windowArgs.NameForPrintingCheques = this.NameForPrintingCheques;
 
         return windowArgs;
     }
@@ -534,6 +558,7 @@ export class APPaymentMenuButtonsHandler {
                         this.entityArgs.EditComponent.SaveChanges();
                     }
                 });
+    
                 confirmVoid.Show(confirmMsg);
             }
         }
@@ -617,8 +642,8 @@ export class APPaymentMenuButtonsHandler {
         windowArgs.PaymentPM = this.EntityPM;
         // windowArgs = this.SetPaymentChequeWindowArgs(windowArgs);
         logWindow.WindowArgs = windowArgs;
-        logWindow.Width = 420;
-        logWindow.Height = 250;
+        logWindow.Width = 480;
+        logWindow.Height = 280;
         logWindow.Title = windowTitle;
         //  logWindow.ShowCloseButton = true;
 

@@ -43,6 +43,26 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Common
             return Request.CreateResponse(HttpStatusCode.OK, myResult);
         }
 
+        
+        public HttpResponseMessage GetQuoationDocumentsFilingByQuoteIdAndObjectTableIdAndDocumentTypeCode(string entityId, string objectTableId, string documentTypeCode)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                DocumentsFilingQuery documentsFilingQuery = new DocumentsFilingQuery(authToken.Tenant);
+                DocumentTypeQuery documentTypeQuery = new DocumentTypeQuery(authToken.Tenant);
+                var documentTypeId = documentTypeQuery.GetDocumentTypeIdByCode(documentTypeCode, authToken.Tenant);
+                DocumentsFilingPM myResult = documentsFilingQuery.GetDocumentsFilingPMByEntityIdAndObjectTableIdAndDocumentTypeId(entityId, objectTableId, documentTypeId, authToken.Tenant);
+                return Request.CreateResponse(HttpStatusCode.OK, myResult);
+            }
+            catch(Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
 
         public HttpResponseMessage GetDocumentsFilingsByEntityIdAndObjectTable(string entityId, string childEntityId, string objectTableId, string directionCode, int tenant, bool withDocuments)
         {
@@ -58,6 +78,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Common
             }
             return Request.CreateResponse(HttpStatusCode.OK, myResult);
         }
+
 
 
 
@@ -494,5 +515,17 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Common
 
 
         }
+
+        public HttpResponseMessage GetDocumentsFilingsByCode(string Code)
+        {
+            Authentication();
+
+
+            DocumentsFilingQuery documentsFilingQuery = new DocumentsFilingQuery(tenant);
+            DocumentsFilingPM myResult = documentsFilingQuery.GetSinglePMByCode(Code, tenant);
+
+            return Request.CreateResponse(HttpStatusCode.OK, myResult);
+        }
+
     }
 }

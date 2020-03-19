@@ -137,53 +137,20 @@ namespace WebFreight.Web.Controllers.ShardLogistics
                 DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
                 DateTime lastMonthDate = todayDate.AddDays(-30);
 
-                //SharedLogisticsContactLastLoginRepository sharedRepository = new SharedLogisticsContactLastLoginRepository(tenant);
-                //List<SharedLogisticsContactLastLogin> lastLoginsList =  sharedRepository.GetSharedLogisticsContactLastLogins(tenant).OrderByDescending(d => d.LoginDateTime).Take(10).ToList();
+                SharedLogisticsContactLastLoginRepository sharedRepository = new SharedLogisticsContactLastLoginRepository(tenant);
+                List<SharedLogisticsContactLastLogin> lastLoginsList = sharedRepository.GetSharedLogisticsContactLastLogins(tenant).OrderByDescending(d => d.LoginDateTime).Take(10).ToList();
 
-                //if (lastLoginsList.Count > 0)
-                //{
-                //    List<string> cardIds = lastLoginsList.Select(d => d.CardId).ToList();
-                //    List<string> contactIds = lastLoginsList.Select(d => d.ContactId).ToList();
-
-                //    CardQuery cardQuery = new CardQuery(tenant);
-                //    ContactQuery contactQuery = new ContactQuery(tenant);
-                //    List<CardList> cards = cardQuery.GetCardListsByCardIds(cardIds, tenant);
-                //    List<ContactList> contacts = contactQuery.GetContactListsByListIds(contactIds, tenant).ToList();
-                //    int i = 0;
-                //    foreach (SharedLogisticsContactLastLogin item in lastLoginsList)
-                //    {
-                //        CardList card = cards.Where(d => d.Id == item.CardId).FirstOrDefault();
-                //        ContactList contact = contacts.Where(d => d.Id == item.ContactId).FirstOrDefault();
-                //        result.Add(new LastLoginPartners()
-                //        {
-                //            Id = (i += 1),
-                //            CardId = item.CardId,
-                //            CardName = card != null ? card.EnglishName : "",
-                //            ContactId = item.ContactId,
-                //            ContactName = contact != null ? contact.EnglishName : "",
-                //            PartnerTypeName = card == null ? "" : card.PartnerTypeName,
-                //            LastAccess = item.LoginDateTime,
-                //            Via = item.Via,
-                //        });
-
-                //    }
-                //}
-
-
-                ContactActivityLogQuery contactActivityLogQuery = new ContactActivityLogQuery();
-                List<LastLoginPartners> temp = contactActivityLogQuery.GetlastMonthLoginPartners(tenant).OrderByDescending(d => d.LogDateTime).Take(10).ToList();
-
-                if (temp.Count > 0)
+                if (lastLoginsList.Count > 0)
                 {
-                    List<string> cardIds = temp.Select(d => d.CardId).ToList();
-                    List<string> contactIds = temp.Select(d => d.ContactId).ToList();
+                    List<string> cardIds = lastLoginsList.Select(d => d.CardId).ToList();
+                    List<string> contactIds = lastLoginsList.Select(d => d.ContactId).ToList();
 
                     CardQuery cardQuery = new CardQuery(tenant);
                     ContactQuery contactQuery = new ContactQuery(tenant);
                     List<CardList> cards = cardQuery.GetCardListsByCardIds(cardIds, tenant);
                     List<ContactList> contacts = contactQuery.GetContactListsByListIds(contactIds, tenant).ToList();
                     int i = 0;
-                    foreach (LastLoginPartners item in temp)
+                    foreach (SharedLogisticsContactLastLogin item in lastLoginsList)
                     {
                         CardList card = cards.Where(d => d.Id == item.CardId).FirstOrDefault();
                         ContactList contact = contacts.Where(d => d.Id == item.ContactId).FirstOrDefault();
@@ -195,12 +162,45 @@ namespace WebFreight.Web.Controllers.ShardLogistics
                             ContactId = item.ContactId,
                             ContactName = contact != null ? contact.EnglishName : "",
                             PartnerTypeName = card == null ? "" : card.PartnerTypeName,
-                            LastAccess = item.LogDateTime,
+                            LastAccess = item.LoginDateTime,
                             Via = item.Via,
                         });
 
                     }
                 }
+
+
+                //ContactActivityLogQuery contactActivityLogQuery = new ContactActivityLogQuery();
+                //List<LastLoginPartners> temp = contactActivityLogQuery.GetlastMonthLoginPartners(tenant).OrderByDescending(d => d.LogDateTime).Take(10).ToList();
+
+                //if (temp.Count > 0)
+                //{
+                //    List<string> cardIds = temp.Select(d => d.CardId).ToList();
+                //    List<string> contactIds = temp.Select(d => d.ContactId).ToList();
+
+                //    CardQuery cardQuery = new CardQuery(tenant);
+                //    ContactQuery contactQuery = new ContactQuery(tenant);
+                //    List<CardList> cards = cardQuery.GetCardListsByCardIds(cardIds, tenant);
+                //    List<ContactList> contacts = contactQuery.GetContactListsByListIds(contactIds, tenant).ToList();
+                //    int i = 0;
+                //    foreach (LastLoginPartners item in temp)
+                //    {
+                //        CardList card = cards.Where(d => d.Id == item.CardId).FirstOrDefault();
+                //        ContactList contact = contacts.Where(d => d.Id == item.ContactId).FirstOrDefault();
+                //        result.Add(new LastLoginPartners()
+                //        {
+                //            Id = (i += 1),
+                //            CardId = item.CardId,
+                //            CardName = card != null ? card.EnglishName : "",
+                //            ContactId = item.ContactId,
+                //            ContactName = contact != null ? contact.EnglishName : "",
+                //            PartnerTypeName = card == null ? "" : card.PartnerTypeName,
+                //            LastAccess = item.LogDateTime,
+                //            Via = item.Via,
+                //        });
+
+                //    }
+                //}
                 return Request.CreateResponse(HttpStatusCode.OK, result);
             }
             catch (Exception ex)

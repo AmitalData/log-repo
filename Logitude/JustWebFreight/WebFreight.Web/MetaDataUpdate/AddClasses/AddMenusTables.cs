@@ -27,6 +27,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 menusTable.TextCode = menusTableDetails.TextCode;
                 menusTable.UserControlName = menusTableDetails.UserControlName;
                 menusTable.HtmlView = menusTableDetails.HtmlView;
+                menusTable.FeatureUniqeCode = menusTableDetails.FeatureUniqeCode;
                 menusTableRepository.Update(menusTable);
             }
 
@@ -44,7 +45,9 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                     FeatureId = menusTableDetails.FeatureId,
                     CategoryTypeCode = menusTableDetails.CategoryTypeCode,
                     Code = menusTableDetails.Code,
-                    Id = IdCounter.GetNumber("MenusTable",menusTableDetails.Tenant).ToString(),
+                    FeatureUniqeCode = menusTableDetails.FeatureUniqeCode,
+
+                Id = IdCounter.GetNumber("MenusTable",menusTableDetails.Tenant).ToString(),
                 };
                 menusTableRepository.Add(newMenusTable);
             }

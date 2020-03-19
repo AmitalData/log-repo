@@ -18,7 +18,7 @@ using System.Threading.Tasks;
 
 namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
 {
-    class TransferTransactionsExternalReconciliationService
+    public class TransferTransactionsExternalReconciliationService
     {
         int tenant;
         ExternalReconciliationPM externalRecoPM;
@@ -37,15 +37,37 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
 
         public void HandleTransferAccountTransactions()
         {
-            List<ExternalReconciliationLinePM> transferRecoLines = GetRecoLinesOfTransferAccount();
-
-            if (transferRecoLines.Count > 1) throw new ApplicationException("for now, you can select only one transaction for transfer account");
-
-            for (int i = 0; i < transferRecoLines.Count; i++)
+            if (bankAccountPM == null) // came from glaccount external transaction
+                UpdateExternalReconciliation();
+            else
             {
-                MoveTransactionFromTransferGLAccountToBankGLAccount(transferRecoLines[i].LedgerTransactionId);
+                List<ExternalReconciliationLinePM> transferRecoLines = GetRecoLinesOfTransferAccount();
+
+                if (transferRecoLines.Count != 1)
+                {
+                    UpdateExternalReconciliation();
+                }
+                else
+                {
+                    if (transferRecoLines.Count > 1) throw new ApplicationException("for now, you can select only one transaction for transfer account");
+
+                    for (int i = 0; i < transferRecoLines.Count; i++)
+                    {
+                        MoveTransactionFromTransferGLAccountToBankGLAccount(transferRecoLines[i].LedgerTransactionId);
+                    }
+                }
+
             }
 
+
+        }
+
+        private void UpdateExternalReconciliation()
+        {
+            IAccountingContext MyContext = AccountingContext.GetContext(tenant);
+            ExternalReconciliationUpdateService service = new ExternalReconciliationUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
+            externalRecoPM.ChangeSetOp = ChangeSetOperation.Insert;
+            service.Update(externalRecoPM, true);
         }
 
         private void ValidateExternalReconciliation(ExternalReconciliationPM _externalRecoPM)

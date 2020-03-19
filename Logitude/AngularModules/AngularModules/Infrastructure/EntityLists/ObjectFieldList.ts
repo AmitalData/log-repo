@@ -78,5 +78,8 @@ export class ObjectFieldList {
 		RecordType: string;
 		ObjectTable_LookUpTableName: string;
 		FieldCode: string;
+		FullNameTextCodeCode: string;
+		ShortNameTextCodeCode: string;
+		HelpTextCodeCode: string;
 	
 }

@@ -86,6 +86,12 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
     public bool IsMultiCurrency { get; set; }
     
     public string CreditARInvoice { get; set; }
+    
+    public string ExternalAccountingEntityId { get; set; }
+    
+    public string BillToGLAccount { get; set; }
+    
+    public ARInvoiceStatus Status { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 

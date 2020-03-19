@@ -476,7 +476,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllCouriersVatsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CouriersVatTextCode_0.Id, Code = "AllCouriersVats",  QueryGroupCode = "77f9", IndexOrder = 0, Tenant = 0, ObjectTableId = CouriersVatObjectTable.Id, QuerySection = "Customs.CouriersVat", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CouriersVatFeature_0.Id, DefaultSortName = "EnglishName", DefaultSortDirection = "Ascending" }, queriesRepository, tenantQueries);
+			  Query AllCouriersVatsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CouriersVatTextCode_0.Id, Code = "AllCouriersVats",  QueryGroupCode = "77f9", IndexOrder = 0, Tenant = 0, ObjectTableId = CouriersVatObjectTable.Id, QuerySection = "Customs.CouriersVat", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CouriersVatFeature_0.Id,FeatureUniqeCode= CouriersVatFeature_0.FeatureUniqeCode, DefaultSortName = "EnglishName", DefaultSortDirection = "Ascending" }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllCouriersVatsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCouriersVatsQuery.Id, IndexOrder = 0, ObjectFieldId = CouriersVatObjectFields.Where(d => d.FieldName == "VatNumber" && d.ObjectTableId == CouriersVatObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 

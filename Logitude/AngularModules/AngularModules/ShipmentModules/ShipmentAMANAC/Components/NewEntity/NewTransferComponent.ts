@@ -30,21 +30,24 @@ export class NewTransferComponent extends BaseComponent {
     private shipmentDomainService: ShipmentDomainService;
     constructor() {
         super();
-        this.EntityPM = new CustomsTransferHeaderPM();
-        this.EntityPM.Tenant = SessionLocator.Tenant;
-        this.EntityPM.CreatedByUserId = SessionLocator.LoggedUserId;
-        this.EntityPM.TransferDate = DateTool.GetCurrentDateTimeAsUtc();
-
+        this.InitEntityPM();
         this.shipmentDomainService = new ShipmentDomainService();
-
         this.BuildShipmentDatesList();
         this.Listen();
     }
 
+    private InitEntityPM() {
+        this.EntityPM = new CustomsTransferHeaderPM();
+        this.EntityPM.Tenant = SessionLocator.Tenant;
+        this.EntityPM.CreatedByUserId = SessionLocator.LoggedUserId;
+        this.EntityPM.TransferDate = DateTool.GetCurrentDateTimeAsUtc();
+        this.EntityPM.CustomsTransferTypeCode = this.TransferTypeCode;
+    }
+
     private Listen() {
         this.CurrentSession.SessionEvent.subscribe(s => {
-            if (s == "TransferExportFirstTime") {
-                this.IsFirstTimeLoading = true;
+            if (s == "TransferCompleted") {
+                this.InitEntityPM();
                 this.LoadData()
             }
         });
@@ -166,6 +169,9 @@ export class NewTransferComponent extends BaseComponent {
 
         this.AppendDateFilter(filters, date);
         filters.addAdditionalFilter("ShipmentLevelCode", "D,H", null, null, "InList", false, true, false, "string");
+        filters.addAdditionalFilter("IsCancelled", false, null, null, "Equals", false, false, false, "Boolean");
+        filters.addAdditionalFilter("IsOperationalClosed", false, null, null, "Equals", false, false, false, "Boolean");
+        filters.addAdditionalFilter("IsAccountingClosed", false, null, null, "Equals", false, false, false, "Boolean");
 
         if (!AppTool.IsNullOrEmpty(this.SearchText)) {
             filters.addAdditionalFilter("SearchFields", this.SearchText, null, null, "Contains", false, true, false, "string");
@@ -233,13 +239,11 @@ export class NewTransferComponent extends BaseComponent {
         }
 
         this.ItemsSource = myResultList.sort(function (a, b) { return a.DateTicks == b.DateTicks ? 0 : a.DateTicks < b.DateTicks ? -1 : 1; });
-        this.IsFirstTimeLoading = false;
         this.OnLinesSelected();
     }
     
     public SelectedCount: number = 0;
     public ExportButtonIsEnabled: boolean = false;
-    public IsFirstTimeLoading: boolean = true;
     OnLinesSelected() {
         this.SelectedCount = this.ItemsSource.filter(f => f.IsChecked == true).length;
         this.ExportButtonIsEnabled = this.SelectedCount > 0 ? true : false;
@@ -301,9 +305,7 @@ export class NewTransferComponent extends BaseComponent {
 
 export class NewTransferLine {
     constructor(private fatherComponent: NewTransferComponent) {
-        if (fatherComponent.IsFirstTimeLoading) {
-            this.isChecked = true;
-        }
+        this.isChecked = fatherComponent.IsAllChecked;
     }
 
     public Id: string;

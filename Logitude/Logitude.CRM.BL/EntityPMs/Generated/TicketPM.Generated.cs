@@ -2521,6 +2521,52 @@ namespace Logitude.CRM.BL.EntityPMs
 			
 		 }
 	   }
+	  private string supportMailboxId ;
+	  	  
+       
+	   [CustomValidation(typeof(CRMValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string SupportMailboxId  
+	   {
+	    
+	     get
+		{
+		   return supportMailboxId;
+		 }
+		 set
+		 {
+		   if(supportMailboxId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SupportMailboxId",OldValue=supportMailboxId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   supportMailboxId=value;
+		   }
+			
+		 }
+	   }
+	  private string lastCorrespondence ;
+	  	  
+       
+	   [CustomValidation(typeof(CRMValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string LastCorrespondence  
+	   {
+	    
+	     get
+		{
+		   return lastCorrespondence;
+		 }
+		 set
+		 {
+		   if(lastCorrespondence != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LastCorrespondence",OldValue=lastCorrespondence,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   lastCorrespondence=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

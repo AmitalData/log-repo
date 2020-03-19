@@ -2620,7 +2620,7 @@ namespace Simplog.Data.CommonDataModel.Mocks
             }
         }
 
-        public IDbSet<AirlineArea> AirlineAreas
+        public IDbSet<CarrierArea> CarrierAreas
         {
             get
             {
@@ -2633,7 +2633,7 @@ namespace Simplog.Data.CommonDataModel.Mocks
             }
         }
 
-        public IDbSet<AirlineAreasPort> AirlineAreasPorts
+        public IDbSet<CarrierAreasPort> CarrierAreasPorts
         {
             get
             {
@@ -2742,6 +2742,19 @@ namespace Simplog.Data.CommonDataModel.Mocks
             }
         }
 
+        public IDbSet<CustomerOpenFilesAmount> CustomerOpenFilesAmounts
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+      
         //public IDbSet<CardContactAdditionalService> CardContactAdditionalServices { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         //public IDbSet<UsersReleaseNotesDisplay>  { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }

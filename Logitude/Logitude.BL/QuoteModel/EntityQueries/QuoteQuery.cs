@@ -206,10 +206,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                :
                                                ((f.FromPort != null && f.FromPort.Country != null ? f.FromPort.Country.Code : "")),
 
-                                               FromPortCountry = (f.TransportModeId == "I" && f.DirectionId == "D") ?
-                                               ((f.FromPartnerAddress != null && f.FromPartnerAddress.Country != null ? f.FromPartnerAddress.Country.EnglishName : ""))
-                                               :
-                                               ((f.FromPort != null && f.FromPort.Country != null ? f.FromPort.Country.EnglishName : "")),
+                                               FromPortCountry = f.FromPort != null && f.FromPort.Country != null ? f.FromPort.Country.EnglishName : "",
 
                                                ToPort = (f.TransportModeId == "I" && f.DirectionId == "D") ?
                                                (f.ToPartnerAddress != null ? f.ToPartnerAddress.City : "")
@@ -221,10 +218,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                :
                                                ((f.ToPort != null && f.ToPort.Country != null ? f.ToPort.Country.Code : "")),
 
-                                               ToPortCountry = (f.TransportModeId == "I" && f.DirectionId == "D") ?
-                                               ((f.ToPartnerAddress != null && f.ToPartnerAddress.Country != null ? f.ToPartnerAddress.Country.EnglishName : ""))
-                                               :
-                                               ((f.ToPort != null && f.ToPort.Country != null ? f.ToPort.Country.EnglishName : "")),
+                                               ToPortCountry = f.ToPort != null && f.ToPort.Country != null ? f.ToPort.Country.EnglishName : "",
 
                                                Routing = (f.TransportModeId == "I" && f.DirectionId == "D") ?
                                                ((f.FromPartnerAddress == null ? "" : f.FromPartnerAddress.City) + " > " + (f.ToPartnerAddress == null ? "" : f.ToPartnerAddress.City))
@@ -263,6 +257,19 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                CustomerId = f.CustomerId,
                                                IsDangerous = f.IsDangerous,
                                                QuoteHTMLDocumentId = f.QuoteHTMLDocumentId,
+                                               Field11 = f.Field11,
+                                               Field12 = f.Field12,
+                                               Field13 = f.Field13,
+                                               Field14 = f.Field14,
+                                               Field15 = f.Field15,
+                                               Field16 = f.Field16,
+                                               Field17 = f.Field17,
+                                               Field18 = f.Field18,
+                                               Field19 = f.Field19,
+                                               Field20 = f.Field20,
+                                               RequestDate = f.RequestDate,
+                                               EstimatedProfitInLocal = f.EstimatedProfitInLocal,
+                                               EstimatedProfitInProfit = f.EstimatedProfitInProfit,
                                            };
             return result;
         }
@@ -421,10 +428,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                         :
                         ((f.FromPort != null && f.FromPort.Country != null ? f.FromPort.Country.Code : "")),
 
-                        FromPortCountry = (f.TransportModeId == "I" && f.DirectionId == "D") ?
-                        ((f.FromPartnerAddress != null && f.FromPartnerAddress.Country != null ? f.FromPartnerAddress.Country.EnglishName : ""))
-                        :
-                        ((f.FromPort != null && f.FromPort.Country != null ? f.FromPort.Country.EnglishName : "")),
+                        FromPortCountry = f.FromPort != null && f.FromPort.Country != null ? f.FromPort.Country.EnglishName : "",
 
                         ToPort = (f.TransportModeId == "I" && f.DirectionId == "D") ?
                         (f.ToPartnerAddress != null ? f.ToPartnerAddress.City : "")
@@ -436,10 +440,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                         :
                         ((f.ToPort != null && f.ToPort.Country != null ? f.ToPort.Country.Code : "")),
 
-                        ToPortCountry = (f.TransportModeId == "I" && f.DirectionId == "D") ?
-                        ((f.ToPartnerAddress != null && f.ToPartnerAddress.Country != null ? f.ToPartnerAddress.Country.EnglishName : ""))
-                        :
-                        ((f.ToPort != null && f.ToPort.Country != null ? f.ToPort.Country.EnglishName : "")),
+                        ToPortCountry = f.ToPort != null && f.ToPort.Country != null ? f.ToPort.Country.EnglishName : "",
 
                         Routing = (f.TransportModeId == "I" && f.DirectionId == "D") ?
                         ((f.FromPartnerAddress == null ? "" : f.FromPartnerAddress.City) + " > " + (f.ToPartnerAddress == null ? "" : f.ToPartnerAddress.City))
@@ -470,6 +471,19 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                         QuotationSections = f.QuotationSections,
                         NumberOfFollowUps = f.NumberOfFollowUps,
                         QuoteHTMLDocumentId = f.QuoteHTMLDocumentId,
+                        Field11 = f.Field11,
+                        Field12 = f.Field12,
+                        Field13 = f.Field13,
+                        Field14 = f.Field14,
+                        Field15 = f.Field15,
+                        Field16 = f.Field16,
+                        Field17 = f.Field17,
+                        Field18 = f.Field18,
+                        Field19 = f.Field19,
+                        Field20 = f.Field20,
+                        RequestDate = f.RequestDate,
+                        EstimatedProfitInLocal = f.EstimatedProfitInLocal,
+                        EstimatedProfitInProfit = f.EstimatedProfitInProfit,
                     };
 
                     ContactRepository rep = new ContactRepository(tenant);
@@ -549,6 +563,25 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                         }).ToList();
 
             return myResult;
+        }
+
+        private string GetPriceBreakWeightUnitCodeByCostMeasurementCode(string costMeasurementCode, QuotePM quotePM)
+        {
+            string weightUnitCode = "";
+            switch(costMeasurementCode) {
+            case "GRWT": { weightUnitCode = quotePM.GrossWeightUnitCode; break; }
+            case "CHWT": { weightUnitCode = quotePM.ChargeableWeightUnitCode; break; }
+            case "VOLU": { weightUnitCode = quotePM.VolumeUnitCode; break; }
+            case "BTEU": { weightUnitCode = "TEU"; break; }
+            case "PRVL": { weightUnitCode = "Value of Goods"; break; }
+            case "PRFR": { weightUnitCode = "Freight Value"; break; }
+            case "GWTN": { weightUnitCode = "Ton"; break; }
+            case "QTY": { weightUnitCode = "pieces"; break; }
+            case "CWKG": { weightUnitCode = "KG"; break; }
+            case "GWKG": { weightUnitCode = "KG"; break; }
+            case "VCBM": { weightUnitCode = "CBM"; break; }
+            }
+            return weightUnitCode.ToLower();
         }
 
         public List<ChartingDataClass> GetQuotesChartData(string code, string ownerId, string businessUnitId, string chartCode, int tenant)
@@ -1277,6 +1310,22 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                 GrossWeightEdited = entityPOCO.GrossWeightEdited,
                 ChargeableWeightEdited = entityPOCO.ChargeableWeightEdited,
                 QuoteHTMLDocumentId = entityPOCO.QuoteHTMLDocumentId,
+                QuoteVersion = entityPOCO.LastVersionNumber > 0 ? entityPOCO.QuoteNumber + "-" + entityPOCO.LastVersionNumber:"",
+                Field11 = new CustomFieldClass("Field11", "Quote", entityPOCO.Field11),
+                Field12 = new CustomFieldClass("Field12", "Quote", entityPOCO.Field12),
+                Field13 = new CustomFieldClass("Field13", "Quote", entityPOCO.Field13),
+                Field14 = new CustomFieldClass("Field14", "Quote", entityPOCO.Field14),
+                Field15 = new CustomFieldClass("Field15", "Quote", entityPOCO.Field15),
+                Field16 = new CustomFieldClass("Field16", "Quote", entityPOCO.Field16),
+                Field17 = new CustomFieldClass("Field17", "Quote", entityPOCO.Field17),
+                Field18 = new CustomFieldClass("Field18", "Quote", entityPOCO.Field18),
+                Field19 = new CustomFieldClass("Field19", "Quote", entityPOCO.Field19),
+                Field20 = new CustomFieldClass("Field20", "Quote", entityPOCO.Field20),
+                EstimatedProfitInLocal = entityPOCO.EstimatedProfitInLocal,
+                EstimatedProfitInProfit = entityPOCO.EstimatedProfitInProfit,
+                ProfitCurrencyId = entityPOCO.ProfitCurrencyId,
+                ProfitExchangeRate = entityPOCO.ProfitExchangeRate,
+                RequestDate = entityPOCO.RequestDate,
             };
 
             int tenant = entityPOCO.Tenant;
@@ -2094,76 +2143,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
 
                 if (isSaleChargeAddable || isSaleChargeQuotationAddable)
                 {
-                    QuoteSaleChargePM saleChargePM = new QuoteSaleChargePM()
-                    {
-                        Id = item.Id,
-                        Tenant = item.Tenant,
-                        QuoteId = item.QuoteId,
-                        ChargesTypeId = item.ChargesTypeId,
-                        ChargesTypeCode = item.ChargesTypeCode,
-                        ChargesTypeName = item.ChargesTypeName,
-                        ChargesTypeDescription = item.ChargesTypeDescription,
-                        ChargesGroupCode = item.ChargesGroupCode,
-                        CurrencyId = item.SaleCurrencyId,
-                        CurrencyCode = item.SaleCurrencyCode,
-                        SaleExchangeRate = item.SaleExchangeRate,
-                        MarkUpTypeCode = item.MarkUpTypeCode,
-                        MarkUpValue = item.MarkUpValue,
-                        ChargesTypeLocalName = item.ChargesTypeLocalName,
-                        Notes = item.Notes,
-                        UpdatedByUserId = item.UpdatedByUserId,
-                        UpdateDate = item.UpdateDate,
-                        ValueDate = item.ValueDate,
-                        IsAllIN = item.IsAllIN ? "True" : "False",
-                        QuoteTypeCode = item.QuoteTypeCode,
-                        ContainerType1MarkUpTypeCode = item.ContainerType1MarkUpTypeCode,
-                        ContainerType2MarkUpTypeCode = item.ContainerType2MarkUpTypeCode,
-                        ContainerType3MarkUpTypeCode = item.ContainerType3MarkUpTypeCode,
-                        ContainerType4MarkUpTypeCode = item.ContainerType4MarkUpTypeCode,
-                        ContainerType5MarkUpTypeCode = item.ContainerType5MarkUpTypeCode,
-                        ContainerType1MarkUpValue = item.ContainerType1MarkUpValue,
-                        ContainerType2MarkUpValue = item.ContainerType2MarkUpValue,
-                        ContainerType3MarkUpValue = item.ContainerType3MarkUpValue,
-                        ContainerType4MarkUpValue = item.ContainerType4MarkUpValue,
-                        ContainerType5MarkUpValue = item.ContainerType5MarkUpValue,
-                        SaleMeasurementId = item.SaleMeasurementId,
-                        SaleMeasurementCode = item.SaleMeasurementCode,
-                        SaleMeasurementShortName = item.SaleMeasurementShortName,
-                        SaleMeasurementLocalName = item.SaleMeasurementLocalName,
-                        SaleQuantity = item.SaleQuantity,
-                        SaleUnitPrice = item.SaleUnitPrice,
-                        SaleTotalAmount = item.SaleTotalAmount,
-                        SaleTotalAmountLocal = item.SaleTotalAmountLocal,
-                        SaleContainerType1UnitPrice = item.SaleContainerType1UnitPrice,
-                        SaleContainerType2UnitPrice = item.SaleContainerType2UnitPrice,
-                        SaleContainerType3UnitPrice = item.SaleContainerType3UnitPrice,
-                        SaleContainerType4UnitPrice = item.SaleContainerType4UnitPrice,
-                        SaleContainerType5UnitPrice = item.SaleContainerType5UnitPrice,
-                        VatTypeId = item.VatTypeId,
-                        VatPercentage = item.VatPercentage,
-                        VatTypeName = item.VatTypeName,
-                        VatAmount = item.VatAmount,
-                        UOMPercentage = item.SaleMeasurementCode == "PRVL" || item.SaleMeasurementCode == "PRFR" ? "%" : "",
-                        SaleUnitPriceInSaleCurrency = item.SaleUnitPriceInSaleCurrency,
-                        SaleUnitPrice1InSaleCurrency = item.SaleUnitPrice1InSaleCurrency,
-                        SaleUnitPrice2InSaleCurrency = item.SaleUnitPrice2InSaleCurrency,
-                        SaleUnitPrice3InSaleCurrency = item.SaleUnitPrice3InSaleCurrency,
-                        SaleUnitPrice4InSaleCurrency = item.SaleUnitPrice4InSaleCurrency,
-                        SaleUnitPrice5InSaleCurrency = item.SaleUnitPrice5InSaleCurrency,
-                        SaleAmountInSaleCurrency = item.SaleAmountInSaleCurrency,
-                        CostMinAmount = item.CostMinAmount,
-                        CostMaxAmount = item.CostMaxAmount,
-                        SaleMinAmount = item.SaleMinAmount,
-                        SaleMaxAmount = item.SaleMaxAmount,
-
-                        MarkUpText = this.GetMarkUpText(item.MarkUpValue, item.MarkUpTypeCode),
-                        ContainerType1MarkUpText = this.GetMarkUpText(item.ContainerType1MarkUpValue, item.ContainerType1MarkUpTypeCode),
-                        ContainerType2MarkUpText = this.GetMarkUpText(item.ContainerType2MarkUpValue, item.ContainerType2MarkUpTypeCode),
-                        ContainerType3MarkUpText = this.GetMarkUpText(item.ContainerType3MarkUpValue, item.ContainerType3MarkUpTypeCode),
-                        ContainerType4MarkUpText = this.GetMarkUpText(item.ContainerType4MarkUpValue, item.ContainerType4MarkUpTypeCode),
-                        ContainerType5MarkUpText = this.GetMarkUpText(item.ContainerType5MarkUpValue, item.ContainerType5MarkUpTypeCode),
-                        IsChargeBySteps = item.IsChargeBySteps,
-                    };
+                    QuoteSaleChargePM saleChargePM = MapChargePMToSaleChargePM(item);
                     if (item.IsChargeBySteps)
                     {
                         if (item.QuoteChargePriceSteps.Count > 0)
@@ -2190,16 +2170,16 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                         }
                                     }
                                 }
-
+                                string stepUOM = GetPriceBreakWeightUnitCodeByCostMeasurementCode(item.CostMeasurementCode, entityPM);
                                 if (string.IsNullOrEmpty(myPriceBreaks))
                                 {
-                                    myPriceBreaks += "+" + itemStep.Step + " kg: " + formattedValue;
+                                    myPriceBreaks += "+" + itemStep.Step + " "+stepUOM + ": " + formattedValue;
                                 }
 
                                 else
                                 {
                                     myPriceBreaks += "\r";//Environment.NewLine;
-                                    myPriceBreaks += "+" + itemStep.Step + " kg: " + formattedValue;
+                                    myPriceBreaks += "+" + itemStep.Step + " " + stepUOM + ": " + formattedValue;
                                 }
                                
                             }
@@ -2473,5 +2453,112 @@ namespace Logitude.BL.QuoteModel.EntityQueries
             return myResult;
         }
 
+        public List<QuoteSaleChargePM> AddEmptySaleCharge(List<QuoteChargePM> quoteCharges, string transportMode, string shipmentType)
+        {
+            List<QuoteSaleChargePM> emptySaleCharges = new List<QuoteSaleChargePM>() { };
+            quoteCharges.ForEach(quote => {
+                if (quote.IsAllIN && quote.SaleUnitPrice == null && !quote.IsChargeBySteps)
+                {
+                    if (IsPackageableShipment(transportMode, shipmentType))
+                    {
+                        if (quote.SaleContainerType1UnitPrice == null
+                            && quote.SaleContainerType2UnitPrice == null
+                            && quote.SaleContainerType3UnitPrice == null
+                            && quote.SaleContainerType4UnitPrice == null
+                            && quote.SaleContainerType5UnitPrice == null)
+                            emptySaleCharges.Add(MapChargePMToSaleChargePM(quote));
+                    }
+                    else
+                    {
+                        emptySaleCharges.Add(MapChargePMToSaleChargePM(quote));
+                    }
+
+                }
+            });
+            return emptySaleCharges;
+        }
+
+        private bool IsPackageableShipment(string transportMode, string shipmentType)
+        {
+            if (transportMode.ToUpper() == "A" ||
+               (shipmentType.ToUpper() == "O" && shipmentType.ToUpper() == "LCLD") ||
+               (shipmentType.ToUpper() == "I" && shipmentType.ToUpper() == "LTL"))
+                return false;
+            return true;
+        }
+        private QuoteSaleChargePM MapChargePMToSaleChargePM(QuoteChargePM item)
+        {
+            QuoteSaleChargePM saleChargePM = new QuoteSaleChargePM()
+            {
+                Id = item.Id,
+                Tenant = item.Tenant,
+                QuoteId = item.QuoteId,
+                ChargesTypeId = item.ChargesTypeId,
+                ChargesTypeCode = item.ChargesTypeCode,
+                ChargesTypeName = item.ChargesTypeName,
+                ChargesTypeDescription = item.ChargesTypeDescription,
+                ChargesGroupCode = item.ChargesGroupCode,
+                CurrencyId = item.SaleCurrencyId,
+                CurrencyCode = item.SaleCurrencyCode,
+                SaleExchangeRate = item.SaleExchangeRate,
+                MarkUpTypeCode = item.MarkUpTypeCode,
+                MarkUpValue = item.MarkUpValue,
+                ChargesTypeLocalName = item.ChargesTypeLocalName,
+                Notes = item.Notes,
+                UpdatedByUserId = item.UpdatedByUserId,
+                UpdateDate = item.UpdateDate,
+                ValueDate = item.ValueDate,
+                IsAllIN = item.IsAllIN ? "True" : "False",
+                QuoteTypeCode = item.QuoteTypeCode,
+                ContainerType1MarkUpTypeCode = item.ContainerType1MarkUpTypeCode,
+                ContainerType2MarkUpTypeCode = item.ContainerType2MarkUpTypeCode,
+                ContainerType3MarkUpTypeCode = item.ContainerType3MarkUpTypeCode,
+                ContainerType4MarkUpTypeCode = item.ContainerType4MarkUpTypeCode,
+                ContainerType5MarkUpTypeCode = item.ContainerType5MarkUpTypeCode,
+                ContainerType1MarkUpValue = item.ContainerType1MarkUpValue,
+                ContainerType2MarkUpValue = item.ContainerType2MarkUpValue,
+                ContainerType3MarkUpValue = item.ContainerType3MarkUpValue,
+                ContainerType4MarkUpValue = item.ContainerType4MarkUpValue,
+                ContainerType5MarkUpValue = item.ContainerType5MarkUpValue,
+                SaleMeasurementId = item.SaleMeasurementId,
+                SaleMeasurementCode = item.SaleMeasurementCode,
+                SaleMeasurementShortName = item.SaleMeasurementShortName,
+                SaleMeasurementLocalName = item.SaleMeasurementLocalName,
+                SaleQuantity = item.SaleQuantity,
+                SaleUnitPrice = item.SaleUnitPrice,
+                SaleTotalAmount = item.SaleTotalAmount,
+                SaleTotalAmountLocal = item.SaleTotalAmountLocal,
+                SaleContainerType1UnitPrice = item.SaleContainerType1UnitPrice,
+                SaleContainerType2UnitPrice = item.SaleContainerType2UnitPrice,
+                SaleContainerType3UnitPrice = item.SaleContainerType3UnitPrice,
+                SaleContainerType4UnitPrice = item.SaleContainerType4UnitPrice,
+                SaleContainerType5UnitPrice = item.SaleContainerType5UnitPrice,
+                VatTypeId = item.VatTypeId,
+                VatPercentage = item.VatPercentage,
+                VatTypeName = item.VatTypeName,
+                VatAmount = item.VatAmount,
+                UOMPercentage = item.SaleMeasurementCode == "PRVL" || item.SaleMeasurementCode == "PRFR" ? "%" : "",
+                SaleUnitPriceInSaleCurrency = item.SaleUnitPriceInSaleCurrency,
+                SaleUnitPrice1InSaleCurrency = item.SaleUnitPrice1InSaleCurrency,
+                SaleUnitPrice2InSaleCurrency = item.SaleUnitPrice2InSaleCurrency,
+                SaleUnitPrice3InSaleCurrency = item.SaleUnitPrice3InSaleCurrency,
+                SaleUnitPrice4InSaleCurrency = item.SaleUnitPrice4InSaleCurrency,
+                SaleUnitPrice5InSaleCurrency = item.SaleUnitPrice5InSaleCurrency,
+                SaleAmountInSaleCurrency = item.SaleAmountInSaleCurrency,
+                CostMinAmount = item.CostMinAmount,
+                CostMaxAmount = item.CostMaxAmount,
+                SaleMinAmount = item.SaleMinAmount,
+                SaleMaxAmount = item.SaleMaxAmount,
+
+                MarkUpText = this.GetMarkUpText(item.MarkUpValue, item.MarkUpTypeCode),
+                ContainerType1MarkUpText = this.GetMarkUpText(item.ContainerType1MarkUpValue, item.ContainerType1MarkUpTypeCode),
+                ContainerType2MarkUpText = this.GetMarkUpText(item.ContainerType2MarkUpValue, item.ContainerType2MarkUpTypeCode),
+                ContainerType3MarkUpText = this.GetMarkUpText(item.ContainerType3MarkUpValue, item.ContainerType3MarkUpTypeCode),
+                ContainerType4MarkUpText = this.GetMarkUpText(item.ContainerType4MarkUpValue, item.ContainerType4MarkUpTypeCode),
+                ContainerType5MarkUpText = this.GetMarkUpText(item.ContainerType5MarkUpValue, item.ContainerType5MarkUpTypeCode),
+                IsChargeBySteps = item.IsChargeBySteps,
+            };
+            return saleChargePM;
+        }
     }
 }

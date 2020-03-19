@@ -1,54 +1,133 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Table Name="Posts" Schema="dbo" DBType="Main">
-  <Column Name="BodyText" Type="nvarchar" Size="4000">
-    <Constraints Nullable="false" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="Posts"
+  Schema="dbo"
+  DBType="Main"
+  Module="Social">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="CreateDate" Type="datetime">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="CreatedById" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
+  <Column
+    Name="CreatedById"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="EntityDescription" Type="nvarchar" Size="250">
-    <Constraints Nullable="true" />
+  <Column
+    Name="GroupId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="EntityId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="BodyText"
+    Type="nvarchar"
+    Size="4000">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="GroupId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="CreateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="Id" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
+  <Column
+    Name="ParentPostId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="IsAutomatic" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="NumberOfLikes"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="IsCancelled" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="IsPrivate"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="IsPrivate" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="IsCancelled"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="NumberOfComments" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="ObjectTableId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="NumberOfLikes" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="EntityId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="ObjectTableId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="IsAutomatic"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="ParentPostId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="UpdateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="EntityDescription"
+    Type="nvarchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="UpdateDate" Type="datetime">
-    <Constraints Nullable="true" />
+  <Column
+    Name="NumberOfComments"
+    Type="int"
+    DefaultValue="0">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Relation ParentTableName="PostLikes" ParentColumnName="PostId" ReferencedTableName="Posts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.PostLikes_dbo.Posts_PostId" />
-  <Relation ParentTableName="Feeds" ParentColumnName="PostId" ReferencedTableName="Posts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Feeds_dbo.Posts_PostId" />
-  <Relation ParentTableName="Posts" ParentColumnName="ParentPostId" ReferencedTableName="Posts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Posts_dbo.Posts_ParentPostId" />
+  <Relation
+    ForeignKeyColumn="CreatedById"
+    ReferencedTable="Users"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="GroupId"
+    ReferencedTable="Groups"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ParentPostId"
+    ReferencedTable="Posts"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ObjectTableId"
+    ReferencedTable="ObjectTables"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
 </Table>

@@ -32,6 +32,8 @@ export class DWDateComponent extends BaseComponent {
     RangeLists: string[];
     SelectedValue: any;
     DataContext: any;
+
+    Context: any = this;
     ObjectFieldName: string;
     Item: any;
     IsLoad: boolean = false;
@@ -233,7 +235,7 @@ export class DWDateComponent extends BaseComponent {
 
             if (this.SelectedValue) {
                 if (this.Operation == "Before" || this.Operation == "After") {
-                    this.DateValue = this.ConvertDateToString(this.SelectedValue);
+                    this.DateValue = this.SelectedValue;
                 }
 
                 else if (this.Operation == "Previous" || this.Operation == "Next") {
@@ -257,14 +259,23 @@ export class DWDateComponent extends BaseComponent {
             this.IsLoad = true;
         }
 
+
         ConvertDateToString(value: any) {
-            var date = new Date(value);
-            var year = date.getUTCFullYear();
-            var month = date.getUTCMonth() + 1;
-            var day = date.getUTCDate() + 1;
-            var dateString = month + "/" + day + "/" + year;
-            return new Date(dateString);
+            var result = new Date();
+            if (value) {
+                var date = new Date(value);
+                result.setUTCFullYear(date.getUTCFullYear());
+                result.setUTCMonth(date.getUTCMonth());
+                result.setUTCDate(date.getUTCDate());
+                result.setUTCHours(date.getUTCHours());
+                result.setUTCMinutes(date.getUTCMinutes());
+                result.setUTCSeconds(date.getUTCSeconds());
+            }
+
+            return result;
         }
+
+
         GetDateFormats(myFormats: any) {
             var result = "";
             if (myFormats) {
@@ -273,7 +284,12 @@ export class DWDateComponent extends BaseComponent {
                 var stringOfYear = AppTool.PadLeft("" + myDateParts.Year, 4, '0');
                 var stringOfMonth = AppTool.PadLeft("" + myDateParts.Month, 2, '0');
                 var stringOfDay = AppTool.PadLeft("" + myDateParts.Day, 2, '0');
-                result = stringOfYear + "-" + stringOfMonth + "-" + stringOfDay;
+                var stringOfHours = AppTool.PadLeft("" + myDateParts.Hours, 2, '0');
+                var stringOfMinutes = AppTool.PadLeft("" + myDateParts.Minutes, 2, '0');
+                var stringOfSeconds = AppTool.PadLeft("" + myDateParts.Seconds, 2, '0');
+               
+                result = stringOfYear + "-" + stringOfMonth + "-" + stringOfDay + " " + stringOfHours + ":" + stringOfMinutes + ":" + stringOfSeconds;
+
 
             }
             return result;

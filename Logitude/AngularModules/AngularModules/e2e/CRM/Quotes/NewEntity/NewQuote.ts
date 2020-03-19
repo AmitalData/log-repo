@@ -44,7 +44,7 @@ export class NewQuote {
     }
     CreateQuote(Direction: string, TransportMode: string, ShipmentType: string, QuoteType: string) {
         var EC = protractor.ExpectedConditions;
-        this.QuoteHepler.CreateAndCloseNewQuote(Direction, TransportMode, ShipmentType);
+        //this.QuoteHepler.CreateAndCloseNewQuote(Direction, TransportMode, ShipmentType);
         this.Helper.WaitByIdAndClick('NewQuote');
         this.QuoteHepler.SelectDicrctionTransportMode(Direction, TransportMode, ShipmentType);
         // if (TransportMode == 'A') {

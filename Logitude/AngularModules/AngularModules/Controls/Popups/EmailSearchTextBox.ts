@@ -62,72 +62,74 @@ export class EmailSearchTextBox implements OnInit, AfterViewInit {
         this.contactService = new ContactListService();
         this.userService = new UserListService();
     }
-
+    IsLoad: boolean = false;
     IsShowRedUserInActiveNote: boolean = false;
     ngOnInit() {
+        this.IsLoad = true;
         this.FillEmailSearch();        
     }
 
     FillEmailSearch() {
-        this.Placeholder = this.Watermark;
-        if (!AppTool.IsNullOrEmpty(this.EmailsText)) {
-            var myDomainService = new CommonDomainService();
+        if (this.IsLoad) {
+            this.Placeholder = this.Watermark;
+            if (!AppTool.IsNullOrEmpty(this.EmailsText)) {
+                var myDomainService = new CommonDomainService();
 
-            if (this.SelectedValuePath == "Id") {
+                if (this.SelectedValuePath == "Id") {
 
-                myDomainService.GetUserListsByidsString(this.EmailsText).subscribe((myResponse: ServiceResponse) => {
-                    if (!myResponse.HasError) {
-                        this.SelectedItems = myResponse.Result;
-                        this.SelectedItems.forEach(item => {
-                            if (item.InActive) {
-                                this.IsShowRedUserInActiveNote = true;
-                            }
-                        });
-
-
-                    }
-
-                    setTimeout(() => this.SetInputPosition(), 5);
-                });
-
-            }
-            else {
-                if (this.IsUsersList) {
-                    myDomainService.GetUsersByEmails(this.EmailsText).subscribe((myResponse: ServiceResponse) => {
+                    myDomainService.GetUserListsByidsString(this.EmailsText).subscribe((myResponse: ServiceResponse) => {
                         if (!myResponse.HasError) {
                             this.SelectedItems = myResponse.Result;
-                        }
-
-                        setTimeout(() => this.SetInputPosition(), 5);
-                    });
-                }
-
-                else {
-                    myDomainService.GetContactsByEmails(this.EmailsText).subscribe((myResponse: ServiceResponse) => {
-                        if (!myResponse.HasError) {
-                            this.SelectedItems = myResponse.Result;
-                        }
-
-                        var allEmails: string[] = this.EmailsText.split(';');
-                        if (allEmails.length > this.SelectedItems.length) {
-                            allEmails.forEach((email: string) => {
-                                if (!AppTool.IsNullOrEmpty(email)) {
-                                    if (this.SelectedItems.filter(f => f.Email != null && f.Email.toLowerCase() == email.toLowerCase()).length == 0) {
-                                        var newItem = new ContactList();
-                                        newItem.Email = email;
-                                        newItem.EnglishName = email;
-                                        if (!AppTool.IsNullOrEmpty(email) && email != "undefined" && email !="null")
-                                        this.SelectedItems.push(newItem);
-                                    }
+                            this.SelectedItems.forEach(item => {
+                                if (item.InActive) {
+                                    this.IsShowRedUserInActiveNote = true;
                                 }
                             });
+
+
                         }
 
                         setTimeout(() => this.SetInputPosition(), 5);
                     });
+
+                }
+                else {
+                    if (this.IsUsersList) {
+                        myDomainService.GetUsersByEmails(this.EmailsText).subscribe((myResponse: ServiceResponse) => {
+                            if (!myResponse.HasError) {
+                                this.SelectedItems = myResponse.Result;
+                            }
+
+                            setTimeout(() => this.SetInputPosition(), 5);
+                        });
+                    }
+
+                    else {
+                        myDomainService.GetContactsByEmails(this.EmailsText).subscribe((myResponse: ServiceResponse) => {
+                            if (!myResponse.HasError) {
+                                this.SelectedItems = myResponse.Result;
+                            }
+
+                            var allEmails: string[] = this.EmailsText.split(';');
+                            if (allEmails.length > this.SelectedItems.length) {
+                                allEmails.forEach((email: string) => {
+                                    if (!AppTool.IsNullOrEmpty(email)) {
+                                        if (this.SelectedItems.filter(f => f.Email != null && f.Email.toLowerCase() == email.toLowerCase()).length == 0) {
+                                            var newItem = new ContactList();
+                                            newItem.Email = email;
+                                            newItem.EnglishName = email;
+                                            if (!AppTool.IsNullOrEmpty(email) && email != "undefined" && email != "null")
+                                                this.SelectedItems.push(newItem);
+                                        }
+                                    }
+                                });
+                            }
+
+                            setTimeout(() => this.SetInputPosition(), 5);
+                        });
+                    }
                 }
             }
-
         }
     }
     ngAfterViewInit() {

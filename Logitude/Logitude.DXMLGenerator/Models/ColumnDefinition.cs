@@ -23,6 +23,24 @@ namespace Logitude.DXMLGenerator.Models
         [XmlIgnore]
         public bool SizeSpecified { get { return Size != 0; } }
 
+        [XmlAttribute()]
+        public int Precision { get; set; }
+
+        [XmlIgnore]
+        public bool PrecisionSpecified { get { return Type == "decimal"; } }
+
+        [XmlAttribute()]
+        public int Scale { get; set; }
+
+        [XmlIgnore]
+        public bool ScaleSpecified { get { return Type == "decimal"; } }
+
+        [XmlAttribute()]
+        public string DefaultValue { get; set; }
+
+        [XmlIgnore]
+        public bool DefaultValueSpecified { get { return DefaultValue != null; } }
+
         [XmlElement]
         public ConstraintsDefinition Constraints { get; set; }
     }

@@ -90,6 +90,10 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             objectField.EnableFullscreenTextBox = objectField.EnableFullscreenTextBox;
             objectField.DisplayInAutomationAsEnitity = objectField.DisplayInAutomationAsEnitity;
             objectField.RecordType = objectField.RecordType;
+            objectField.FullNameTextCodeCode = objectFieldPM.FullNameTextCodeCode;
+            objectField.ShortNameTextCodeCode = objectFieldPM.ShortNameTextCodeCode;
+            objectField.HelpTextCodeCode = objectFieldPM.HelpTextCodeCode;
+            objectField.ListTextCodeCode = objectFieldPM.ListTextCodeCode;
 
             if (objectFieldModification != null)
             {

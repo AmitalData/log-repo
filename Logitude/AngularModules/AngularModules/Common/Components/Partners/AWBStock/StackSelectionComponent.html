@@ -13,46 +13,48 @@
 
     <tr id="{{'StockSelectionID' | IdGeneratorPipe}}">
         <td>
-            <div class="SimpleGridView">
-                <div class="SimpleGridViewHeader" *ngIf="IsResourcesReady">
-                    <table>
-                        <tr>
-                            <td style="width: 100px; min-width: 100px; max-width: 100px;">{{'MAWBStack.F.Number' | TextCodeTranslationPipe}}</td>
-                            <td style="width: 180px; min-width: 180px; max-width: 180px;">{{'MAWBStack.F.InsertionDate' | TextCodeTranslationPipe}}</td>
-                            <td style="width: 250px; min-width: 250px; max-width: 250px;">{{'MAWBStack.F.AssignedToId' | TextCodeTranslationPipe}}</td>
-                            <td>{{'MAWBStack.F.Notes' | TextCodeTranslationPipe}}</td>
-                        </tr>
-                    </table>
+            <div class="MediaFill">
+                <div class="SimpleGridView">
+                    <div class="SimpleGridViewHeader" *ngIf="IsResourcesReady">
+                        <table>
+                            <tr>
+                                <td style="width: 100px; min-width: 100px; max-width: 100px;">{{'MAWBStack.F.Number' | TextCodeTranslationPipe}}</td>
+                                <td style="width: 180px; min-width: 180px; max-width: 180px;">{{'MAWBStack.F.InsertionDate' | TextCodeTranslationPipe}}</td>
+                                <td style="width: 250px; min-width: 250px; max-width: 250px;">{{'MAWBStack.F.AssignedToId' | TextCodeTranslationPipe}}</td>
+                                <td>{{'MAWBStack.F.Notes' | TextCodeTranslationPipe}}</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="SimpleGridViewBody">
+                        <table>
+                            <tr class="SimpleGridViewRow RowHover RowSelected" *ngFor="let item of ItemsSource" (click)="SelectedItem = item" [class.RowSelected]="item === SelectedItem">
+                                <td class="GridViewCell" style="width: 100px; min-width: 100px; max-width: 100px;">
+                                    <div>{{item.Number}}</div>
+                                </td>
+
+                                <td class="GridViewCell" style="width: 180px; min-width: 180px; max-width: 180px;">
+                                    <span class="Value">{{item.InsertionDate | DateTimePipe:'DTL12'}}</span>
+                                </td>
+
+                                <td class="GridViewCell" style="width: 250px; min-width: 250px; max-width: 250px;">
+                                    <div>{{item.AssignedToShipperName}}</div>
+                                </td>
+
+                                <td class="GridViewCell">
+                                    <div>{{item.Notes}}</div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="4">
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
                 </div>
-
-                <div class="SimpleGridViewBody">
-                    <table>
-                        <tr class="SimpleGridViewRow RowHover RowSelected" *ngFor="let item of ItemsSource" (click)="SelectedItem = item" [class.RowSelected]="item === SelectedItem">
-                            <td class="GridViewCell" style="width: 100px; min-width: 100px; max-width: 100px;">
-                                <div>{{item.Number}}</div>
-                            </td>
-
-                            <td class="GridViewCell" style="width: 180px; min-width: 180px; max-width: 180px;">
-                                <span class="Value">{{item.InsertionDate | DateTimePipe:'DTL12'}}</span>
-                            </td>
-
-                            <td class="GridViewCell" style="width: 250px; min-width: 250px; max-width: 250px;">
-                                <div>{{item.AssignedToShipperName}}</div>
-                            </td>
-
-                            <td class="GridViewCell">
-                                <div>{{item.Notes}}</div>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td colspan="4">
-                                <div></div>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
+            </div>            
         </td>
     </tr>
 

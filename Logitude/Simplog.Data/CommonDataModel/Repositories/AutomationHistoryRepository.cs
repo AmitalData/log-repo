@@ -33,6 +33,13 @@ namespace Simplog.Data.CommonDataModel.Repositories
                     where a.Version == version && a.AutomationsId == automationId && a.Tenant == tenant
                     select a).FirstOrDefault();
         }
+        public List<AutomationHistory> GetAutomationHistorys(int tenant)
+        {
+            return (from a in this.context.AutomationHistorys
+                    where a.Tenant == tenant 
+                    select a).ToList();
+        }
+
 
 
         public string GetAutomationXMLFromAutomationHistoryByDate(DateTime? updatedate , string automationId,  int tenant)

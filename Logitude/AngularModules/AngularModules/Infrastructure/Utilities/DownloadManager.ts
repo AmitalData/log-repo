@@ -1,4 +1,4 @@
-﻿
+
 import {AppTool} from '../Tools';
 import {SessionLocator} from './SessionLocator';
 import {CommunicationLogList} from '../../Common/EntityLists/CommunicationLogList';
@@ -15,8 +15,6 @@ export class DownloadManager {
             else {
                 this.DownloadPage(item.DocumentId);
             }
-
-
         }
     }
 
@@ -25,7 +23,10 @@ export class DownloadManager {
             var token = ServiceHelper.GetLDocumentDownloadToken();
             var link = AppTool.GetLogitudeURL() + "WebPages/DownloadFileName.aspx?id=" + fileName + "&tempId=" + token;
             var win = window.open(link, '_blank');
-            win.focus();
+
+            if (win) {
+                win.focus();
+            }
         }
     }
 
@@ -39,9 +40,25 @@ export class DownloadManager {
         var token = ServiceHelper.GetLDocumentDownloadToken();
         var link = AppTool.GetLogitudeURL() + "WebPages/DownloadPage.aspx?" + url + "&tempId=" + token;
         var win = window.open(link, '_blank');
-        win.focus();
+        
+        if (win) {
+            win.focus();
+        }       
+    }
 
-       
+    public static DownloadExternalPage(id: string,tenant : number, securityId: string = null) {
+
+        var url: string = !AppTool.IsNullOrEmpty(securityId) ? "securityId=" + securityId : "id=" + id;
+        if (!AppTool.IsNullOrEmpty(id) && !AppTool.IsNullOrEmpty(securityId)) {
+            url += ("~" + id);
+        }
+        //var token = ServiceHelper.GetLDocumentDownloadToken();
+        var link = AppTool.GetLogitudeURL() + "WebPages/DownloadPage.aspx?" + url + "&tempId=" + securityId + "&tenant=" + tenant;
+        var win = window.open(link, '_blank');
+        
+        if (win) {
+            win.focus();
+        }
     }
 
 

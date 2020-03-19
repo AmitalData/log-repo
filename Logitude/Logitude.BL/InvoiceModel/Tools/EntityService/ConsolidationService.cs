@@ -196,7 +196,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                         else
                         {
-                            service.Update(entityPM);
+                            service.Update(entityPM, true);
                         }
 
                         this.UpdateProgressPercentage(20, batchTaskExecutionId, serviceArgs.Tenant);

@@ -5,6 +5,7 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Simplog.Data.CommonDataModel;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
@@ -45,8 +46,14 @@ namespace Logitude.BL.InvoiceModel.Tools
             {
                 entityPM.RefreshToken = data.RefreshToken;
                 ICommonDataContext MyContext = CommonDataContext.GetContext(entityPM.Id);
-                AccountingSettingService accountingService = new AccountingSettingService(MyContext,int.Parse(tenant));
-                accountingService.Update(entityPM);
+                AccountingSetting accountingSetting = MyContext.AccountingSettings.Where(p => p.Id == entityPM.Id).FirstOrDefault();
+                if (accountingSetting != null)
+                {
+                    accountingSetting.RefreshToken = data.RefreshToken;
+                    MyContext.AccountingSettings.Attach(accountingSetting);
+                    MyContext.SetAsModified(accountingSetting);
+                    MyContext.SaveChanges();
+                }
             }
 
             return data.AccessToken;

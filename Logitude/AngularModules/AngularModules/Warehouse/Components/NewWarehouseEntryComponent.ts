@@ -129,11 +129,15 @@ export class NewWarehouseEntryComponent extends BaseComponent implements OnInit 
                     this.warehouseEntryPM.ToAddressId = this.ShipmentPM.MainCarriageToAddressId;
                     this.warehouseEntryPM.FromPartnerId = this.ShipmentPM.MainCarriageFromPartnerId;
                     this.warehouseEntryPM.ToPartnerId = this.ShipmentPM.MainCarriageToPartnerId;
+                    this.warehouseEntryPM.FromTypeCode = "PART";
+                    this.warehouseEntryPM.ToTypeCode = "PART";
 
                 }
                 else {
                     this.warehouseEntryPM.FromPortId = this.ShipmentPM.MainCarriageFromPortId ? this.ShipmentPM.MainCarriageFromPortId : this.ShipmentPM.FromPortId;
                     this.warehouseEntryPM.ToPortId = this.ShipmentPM.ShipmentLevelCode == "H" ? this.ShipmentPM.MainCarriageFinalDestinationPortId : this.ShipmentPM.FinalDistenationPortId;
+                    this.warehouseEntryPM.FromTypeCode = "PORT";
+                    this.warehouseEntryPM.ToTypeCode = "PORT";
                 }
 
 

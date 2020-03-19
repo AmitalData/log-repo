@@ -25,6 +25,8 @@ using Simplog.Server.Infrastructure.Helpers;
 using WebFreight.Web.WebServices;
 using Logitude.BL.Helpers;
 using Logitude.BL.CommonDataModel.EntityLists;
+using Simplog.Data.QuoteModel.Repositories;
+using Simplog.Data.QuoteModel.EntityPOCOs;
 
 namespace WebFreight.Web.ReportsWebServices
 {
@@ -38,6 +40,10 @@ namespace WebFreight.Web.ReportsWebServices
     // [System.Web.Script.Services.ScriptService]
     public class ManifestWebService : System.Web.Services.WebService
     {
+        ShipmentPM master;
+        ShipmentPackageQuery packagesQuery;
+        int tenant;
+
         [WebMethod]
         public byte[] GetManifestData(string masterId, int tenant)
         {
@@ -83,12 +89,12 @@ namespace WebFreight.Web.ReportsWebServices
             ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
             ShipmentRepository shipmentRepository = new ShipmentRepository(shipmentsContext);
             ShipmentQuery shipmentQuery = new ShipmentQuery(shipmentRepository);
-            ShipmentPM master = shipmentQuery.GetSinglePM(masterId, tenant);
+            master = shipmentQuery.GetSinglePM(masterId, tenant);
             PortRepository portRepository = new PortRepository(tenant);
             CustomFieldResolver customFieldResolver = new CustomFieldResolver();
             ShipmentAssemblyRepository shipmentAssemblyRepository = new ShipmentAssemblyRepository(shipmentsContext);
             ShipmentAssemblyQuery shipmentAssemblyQuery = new ShipmentAssemblyQuery(shipmentAssemblyRepository);
-
+            this.tenant = tenant;
             if (master != null)
             {
                 CardQuery cardQuery = new CardQuery(tenant);
@@ -96,7 +102,7 @@ namespace WebFreight.Web.ReportsWebServices
                 AddressRepository addressRepository = new AddressRepository(tenant);
                 DocumentTypeCustomFieldRepository documentTypeCustomFieldsRepository = new DocumentTypeCustomFieldRepository(tenant);
                 FormCustomFieldRepository formCustomFieldRepository = new FormCustomFieldRepository(tenant);
-                ShipmentPackageQuery packagesQuery = new ShipmentPackageQuery(tenant);
+                packagesQuery = new ShipmentPackageQuery(tenant);
                 IncotermQuery incotermQuery = new IncotermQuery(tenant);
                 WebServiceHelper myServiceHelper = new WebServiceHelper(tenant);
                 CustomerQuery customerQuery = new CustomerQuery(tenant);
@@ -115,6 +121,9 @@ namespace WebFreight.Web.ReportsWebServices
                 manifestDataProvider.OpenPayablesInProfitCurrency = master.OpenPayablesInProfitCurrency;
                 manifestDataProvider.DocumentsClosingDate = master.DocumentsClosingDate;
                 manifestDataProvider.AWBHandlingInformation = master.AWBHandlingInformation;
+                manifestDataProvider.FreightPC = master.FreightPrepaidCollectId;
+                manifestDataProvider.DescriptionOfGoods = BuildDescriptionOfGoods();
+                manifestDataProvider.ChargeableWeight = master.ChargeableWeight != null ? master.ChargeableWeight != 0 ? (String.Format("{0:#,0.00}", master.ChargeableWeight) + " " + (master.ChargeableWeightUnitCode != null ? master.ChargeableWeightUnitCode : "")) : "" : "";
 
                 if (master.BranchId != null)
                 {
@@ -150,6 +159,7 @@ namespace WebFreight.Web.ReportsWebServices
                 if (myLoggedTenant != null)
                 {
                     manifestDataProvider.FMCNumber = myLoggedTenant.FMCNumber;
+                    manifestDataProvider.TenantVATNumber = myLoggedTenant.VatNumber != null ? myLoggedTenant.VatNumber : "";
                 }
 
                 #region IssuingCarrierAgent
@@ -328,6 +338,7 @@ namespace WebFreight.Web.ReportsWebServices
                                 manifestDataProvider.AgentContactName = contact.EnglishName;
                             }
                         }
+                        manifestDataProvider.AgentVATNumber = agent.VatNumber != null ? agent.VatNumber : "";
                     }
                 }
                 else
@@ -799,6 +810,7 @@ namespace WebFreight.Web.ReportsWebServices
                                                        select pa).FirstOrDefault();
 
                             packageDetail.DescriptionOfGoods = !string.IsNullOrEmpty(package.Description) ? package.Description : "";
+                            
                             if (!string.IsNullOrEmpty(package.Harmonize))
                             {
                                 if (!string.IsNullOrEmpty(packageDetail.DescriptionOfGoods))
@@ -896,7 +908,8 @@ namespace WebFreight.Web.ReportsWebServices
                             packageDetail.Reference3 = package.Reference3;
                             packageDetail.Reference4 = package.Reference4;
                             packageDetail.CommodityNumber = package.CommodityNumber;
-                            packageDetail.Notes = package.Notes;                        
+                            packageDetail.Notes = package.Notes;
+                            packageDetail.Harmonize = package.Harmonize;
                             newDetail.PackageDetails.Add(packageDetail);
 
                             #region commented Code
@@ -1045,6 +1058,16 @@ namespace WebFreight.Web.ReportsWebServices
                     List<ShipmentPackagePM> shipmentPackagesList = packagesQuery.GetShipmentPackages(shipmentView.Id, shipmentView.ShipmentNumber, tenant);
                     strGoods.Append(shipmentView.DescriptionOfGoods != null ? shipmentView.DescriptionOfGoods : "");
 
+                    if (!string.IsNullOrEmpty(shipmentView.SLAC))
+                    {
+                        if (!string.IsNullOrEmpty(strGoods.ToString()))
+                        {
+                            strGoods.Append(Environment.NewLine);
+                        }
+
+                        strGoods.Append("SLAC: " + shipmentView.SLAC);
+                    }
+
                     if (shipmentView.ShipmentTypeName == "FCL" || shipmentView.ShipmentTypeName == "LCL")
                     {
                         strGoods.Append(Environment.NewLine);
@@ -1070,6 +1093,23 @@ namespace WebFreight.Web.ReportsWebServices
                     newDetail.OpenPayablesInLocalCurrency = shipmentView.OpenPayablesInLocalCurrency;
                     newDetail.OpenPayablesInProfitCurrency = shipmentView.OpenPayablesInProfitCurrency;
 
+                    if (!string.IsNullOrEmpty(shipmentView.QuoteId))
+                    {
+                        QuoteRepository quoteRepositoy = new QuoteRepository(tenant);
+                        Quote connectedQuote = quoteRepositoy.GetSingleQuote(shipmentView.QuoteId, tenant);
+                        detail.QuoteNumberConnectedToHouse = newDetail.QuoteNumberConnectedToHouse = connectedQuote.QuoteNumber != null ? connectedQuote.QuoteNumber : "";
+                    }
+                    
+                    detail.ShipperRefernce1 = newDetail.ShipperRefernce1 = shipmentView.ShipperReference1 != null ? shipmentView.ShipperReference1 : "";
+                    detail.ValueOfGoods = newDetail.ValueOfGoods = shipmentView.ValueOfGoods;
+
+                    if (!string.IsNullOrEmpty(shipmentView.ValueOfGoodsCurrencyId))
+                    {
+                        CurrencyRepository currencyRepository = new CurrencyRepository(tenant);
+                        Currency valueOfGoodsCurrency = currencyRepository.GetSingleCurrency(shipmentView.ValueOfGoodsCurrencyId, tenant);
+                        detail.ValueOfGoodsCurrency = newDetail.ValueOfGoodsCurrency = valueOfGoodsCurrency.Code;
+                    }
+
                     customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, shipmentView, detail);
                     customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, shipmentView, newDetail);
 
@@ -1077,7 +1117,7 @@ namespace WebFreight.Web.ReportsWebServices
                     manifestDataProvider.NewManifestDetails.Add(newDetail);
                     #endregion
                 }
-
+                
                 manifestDataProvider.TotalCollect = grandTotalCollect.ToString();
                 manifestDataProvider.TotalPrepaid = grandTotalPrepaid.ToString();
 
@@ -1381,6 +1421,42 @@ namespace WebFreight.Web.ReportsWebServices
 
             return manifestDataProvider;
             #endregion
+        }
+
+        private string BuildDescriptionOfGoods()
+        {
+            List<ShipmentPackagePM> shipmentPackagesList = GetPackagesList();
+            StringBuilder strGoods = new StringBuilder();
+            strGoods.Append(master.DescriptionOfGoods != null ? master.DescriptionOfGoods : "");
+
+            if (!string.IsNullOrEmpty(master.SLAC))
+            {
+                if (!string.IsNullOrEmpty(strGoods.ToString()))
+                {
+                    strGoods.Append(Environment.NewLine);
+                }
+
+                strGoods.Append("SLAC: " + master.SLAC);
+            }
+
+            if (master.ShipmentTypeName == "FCL" || master.ShipmentTypeName == "LCL")
+            {
+                strGoods.Append(Environment.NewLine);
+                strGoods.Append(master.ShipmentTypeName);
+                strGoods.Append(Environment.NewLine);
+                
+                for (int i = 0; i < shipmentPackagesList.Count; i++)
+                {
+                    strGoods.Append(shipmentPackagesList[i].ContainerNumber != null ? "CNT " + shipmentPackagesList[i].ContainerNumber : "");
+                    strGoods.Append(Environment.NewLine);
+                }
+            }
+            return strGoods.ToString();
+        }
+
+        private List<ShipmentPackagePM> GetPackagesList()
+        {
+            return packagesQuery.GetShipmentPackages(master.Id, master.ShipmentNumber, tenant);
         }
 
         private void GetOtherCharges(string shipmentId, int tenant, ref double totalPrepaidString, ref double totalCollectString) //test

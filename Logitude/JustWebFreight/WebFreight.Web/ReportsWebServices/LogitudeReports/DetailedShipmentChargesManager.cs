@@ -16,6 +16,9 @@ using Simplog.Server.Infrastructure.Helpers;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.ShipmentsModel.Repositories;
 using Logitude.BL.Helpers;
+using Simplog.Data.CommonDataModel.Repositories;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.CommonDataModel.EntityPMs;
 
 namespace WebFreight.Web.ReportsWebServices.LogitudeReports
 {
@@ -36,6 +39,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
         private ICommonDataContext myCommonContext;
         private IShipmentsContext myShipmentsContext;
         private CustomFieldResolver customFieldResolver;
+        private AddressRepository addressRepository;
 
         public DetailedShipmentChargesManager(byte[] xmlFilters, int tenant)
         {
@@ -45,7 +49,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
             myCommonContext = CommonDataContext.GetContext(tenant);
             myShipmentsContext = ShipmentsContext.GetContext(tenant);
             customFieldResolver = new CustomFieldResolver();
-
+            addressRepository = new AddressRepository(myCommonContext);
+            
             MemoryStream memoryStream = new MemoryStream(xmlFilters);
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(QueryOperations));
             QueryOperations myQueryOperations = (QueryOperations)xmlSerializer.Deserialize(memoryStream);
@@ -207,7 +212,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                                               where d.Tenant == tenant
                                                               && allShipmentsIds.Contains(d.EntityId)
                                                               select d.ARInvoice);
-
+                
+                List<ShipmentPickUpDelivery> shipmentPickUpDeliveriesLists = (from d in myShipmentsContext.ShipmentPickUpDeliveries where allShipmentsIds.Contains(d.ShipmentId) select d).Include("ToAddressCountry").ToList();
+                
                 iQueryable_APInvoice = iQueryable_APInvoice.Where(d => d.StatusCode != "VD" && d.StatusCode != "WA");
                 iQueryable_ARInvoice = iQueryable_ARInvoice.Where(d => d.StatusCode != "VD" && d.StatusCode != "LL");
 
@@ -223,6 +230,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                 List<Contact> allContacts = new List<Contact>();
                 List<Branch> allBranchs = new List<Branch>();
                 List<Currency> allCurrencies = new List<Currency>();
+                List<Incoterm> allIncoterms = new List<Incoterm>();
 
                 if (allAPInvoices.Count > 0 || allARInvoices.Count > 0 || allShipments.Count > 0)
                 {
@@ -230,6 +238,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                     allContacts = this.GetContacts(allAPInvoices, allARInvoices);
                     allBranchs = (from d in myCommonContext.Branches where d.Tenant == tenant select d).ToList();
                     allCurrencies = (from d in myCommonContext.Currencies where d.Tenant == tenant select d).ToList();
+                    allIncoterms = (from d in myCommonContext.Incoterms where d.Tenant == tenant select d).ToList();
                 }
                 #endregion
 
@@ -256,8 +265,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                             ArchivoExportadoShipmentItem myRecord = new ArchivoExportadoShipmentItem();
                             myRecord.ShipmentNumber = myShipment.ShipmentNumber;
                             myRecord.OriginCode = myShipment.MainCarriageFromPortCode;
-                            myRecord.DestinationCode = myShipment.MainCarriageFinalDestinationPortCode;
-
+                            myRecord.DestinationCode = myShipment.MainCarriageFinalDestinationPortCode;                            
                             myRecord.LineTypeCode = "EFC";
                             myRecord.Payables = this.IsLocalCurrency ? myShipment.OpenPayablesInLocalCurrency : myShipment.OpenPayablesInProfitCurrency;
                             myRecord.LongMaster = longMaster;
@@ -270,6 +278,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                             myRecord.Consignee = myShipment.ConsigneeName;
                             myRecord.ConsigneeNotImporter = myShipment.ConsigneeNotImporterName;
                             myRecord.Direction = myShipment.DirectionName;
+                            myRecord.CountryOfOrigin = myShipment.MainCarriageFromPortCountryName;
+
+                            ShipmentPickUpDelivery myLastDelivery = shipmentPickUpDeliveriesLists.Where(d => d.ShipmentId == myShipment.Id && d.PickUpDeliveryTypeCode == "DELV").OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault();
+                            myRecord.CountryOfDestination = this.ComputeCountryOfDistination(myShipment, myLastDelivery);
 
                             if (!string.IsNullOrEmpty(myShipment.BranchId))
                             {
@@ -280,6 +292,16 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                     myRecord.BranchName = myBranch.EnglishName;
                                     myRecord.BranchLocalName = myBranch.LocalName;
                                     myRecord.BranchExternalId = myBranch.ExternalId;
+                                }
+                            }
+
+                            if (!string.IsNullOrEmpty(myShipment.IncotermId))
+                            {
+                                Incoterm myIncoterm = allIncoterms.Where(d => d.Id == myShipment.IncotermId).FirstOrDefault();
+                                if (myIncoterm != null)
+                                {
+                                    myRecord.IncotermCode = myIncoterm.Code;
+                                    myRecord.IncotermName = myIncoterm.Name;
                                 }
                             }
 
@@ -309,6 +331,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                         myRecord.Consignee = myShipment.ConsigneeName;
                         myRecord.ConsigneeNotImporter = myShipment.ConsigneeNotImporterName;
                         myRecord.Direction = myShipment.DirectionName;
+                        myRecord.CountryOfOrigin = myShipment.MainCarriageFromPortCountryName;
+
+                        ShipmentPickUpDelivery myLastDelivery = shipmentPickUpDeliveriesLists.Where(d => d.ShipmentId == myShipment.Id && d.PickUpDeliveryTypeCode == "DELV").OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault();
+                        myRecord.CountryOfDestination = this.ComputeCountryOfDistination(myShipment, myLastDelivery);
 
                         Currency myCurrency = allCurrencies.Where(d => d.Id == invoice.InvoiceCurrencyId).FirstOrDefault();
                         if (myCurrency != null)
@@ -345,6 +371,16 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                             myRecord.BranchExternalId = myBranch.ExternalId;
                         }
 
+                        if (!string.IsNullOrEmpty(myShipment.IncotermId))
+                        {
+                            Incoterm myIncoterm = allIncoterms.Where(d => d.Id == myShipment.IncotermId).FirstOrDefault();
+                            if (myIncoterm != null)
+                            {
+                                myRecord.IncotermCode = myIncoterm.Code;
+                                myRecord.IncotermName = myIncoterm.Name;
+                            }
+                        }
+
                         myDataProvider.Shipments.Add(myRecord);
                         #endregion
                     }
@@ -371,6 +407,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                         myRecord.Consignee = myShipment.ConsigneeName;
                         myRecord.ConsigneeNotImporter = myShipment.ConsigneeNotImporterName;
                         myRecord.Direction = myShipment.DirectionName;
+                        myRecord.CountryOfOrigin = myShipment.MainCarriageFromPortCountryName;
+
+                        ShipmentPickUpDelivery myLastDelivery = shipmentPickUpDeliveriesLists.Where(d => d.ShipmentId == myShipment.Id && d.PickUpDeliveryTypeCode == "DELV").OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault();
+                        myRecord.CountryOfDestination = this.ComputeCountryOfDistination(myShipment, myLastDelivery);
 
                         Currency myCurrency = allCurrencies.Where(d => d.Id == invoice.InvoiceCurrencyId).FirstOrDefault();
                         if (myCurrency != null)
@@ -405,6 +445,16 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                             }
                         }
 
+                        if (!string.IsNullOrEmpty(myShipment.IncotermId))
+                        {
+                            Incoterm myIncoterm = allIncoterms.Where(d => d.Id == myShipment.IncotermId).FirstOrDefault();
+                            if (myIncoterm != null)
+                            {
+                                myRecord.IncotermCode = myIncoterm.Code;
+                                myRecord.IncotermName = myIncoterm.Name;
+                            }
+                        }
+
                         myDataProvider.Shipments.Add(myRecord);
                         #endregion
                     }
@@ -414,6 +464,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
 
             return myDataProvider;
         }
+        
         private ArchivoExportadoDataProvider LoadDataProvider_SplitByCharges()
         {
             ArchivoExportadoDataProvider myDataProvider = new ArchivoExportadoDataProvider();
@@ -474,6 +525,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                                                     ShipmentId = g.Key.EntityId
                                                                 }).ToList();
 
+                List<ShipmentPickUpDelivery> shipmentPickUpDeliveriesLists = (from d in myShipmentsContext.ShipmentPickUpDeliveries where allShipmentsIds.Contains(d.ShipmentId) select d).Include("ToAddressCountry").ToList();
+                
                 List<ChargeTypeGroupClass> allPayablesData = new List<ChargeTypeGroupClass>();
                 List<ChargeTypeGroupClass> allReceivablesData = new List<ChargeTypeGroupClass>();
                 if (this.IncludeEstimations)
@@ -526,6 +579,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                 List<Contact> allContacts = new List<Contact>();
                 List<Branch> allBranchs = new List<Branch>();
                 List<Currency> allCurrencies = new List<Currency>();
+                List<Incoterm> allIncoterms = new List<Incoterm>();
                 List<ChargesType> allChargesTypes = (from d in myCommonContext.ChargesTypes where d.Tenant == tenant select d).ToList();
 
                 List<ChargeTypeGroupClass> allAPInvoiceLinesData = new List<ChargeTypeGroupClass>();
@@ -536,6 +590,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                     allContacts = this.GetContacts(allAPInvoices, allARInvoices);
                     allBranchs = (from d in myCommonContext.Branches where d.Tenant == tenant select d).ToList();
                     allCurrencies = (from d in myCommonContext.Currencies where d.Tenant == tenant select d).ToList();
+                    allIncoterms = (from d in myCommonContext.Incoterms where d.Tenant == tenant select d).ToList();
 
                     if (allAPInvoices.Count > 0)
                     {
@@ -586,9 +641,16 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                 foreach (ShipmentDataView myShipment in allShipments)
                 {
                     Branch myBranch = null;
+                    Incoterm myIncoterm = null;
+
                     if (!string.IsNullOrEmpty(myShipment.BranchId))
                     {
                         myBranch = allBranchs.Where(d => d.Id == myShipment.BranchId).FirstOrDefault();
+                    }
+
+                    if (!string.IsNullOrEmpty(myShipment.IncotermId))
+                    {
+                        myIncoterm = allIncoterms.Where(d => d.Id == myShipment.IncotermId).FirstOrDefault();
                     }
 
                     #region
@@ -641,6 +703,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                     myRecord.ETD = myShipment.MainCarriageETD;
                                     myRecord.CustomerRef1 = myShipment.CustomerReference1;
                                     myRecord.CustomerRef2 = myShipment.CustomerReference2;
+                                    myRecord.CountryOfOrigin = myShipment.MainCarriageFromPortCountryName;
+
+                                    ShipmentPickUpDelivery myLastDelivery = shipmentPickUpDeliveriesLists.Where(d => d.ShipmentId == myShipment.Id && d.PickUpDeliveryTypeCode == "DELV").OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault();
+                                    myRecord.CountryOfDestination = this.ComputeCountryOfDistination(myShipment, myLastDelivery);
 
                                     customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, myShipment, myRecord);
 
@@ -650,6 +716,12 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                         myRecord.BranchName = myBranch.EnglishName;
                                         myRecord.BranchLocalName = myBranch.LocalName;
                                         myRecord.BranchExternalId = myBranch.ExternalId;
+                                    }
+
+                                    if (myIncoterm != null)
+                                    {
+                                        myRecord.IncotermCode = myIncoterm.Code;
+                                        myRecord.IncotermName = myIncoterm.Name;
                                     }
 
                                     if (item.ChargesTypeId != null)
@@ -714,6 +786,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                     myRecord.ETD = myShipment.MainCarriageETD;
                                     myRecord.CustomerRef1 = myShipment.CustomerReference1;
                                     myRecord.CustomerRef2 = myShipment.CustomerReference2;
+                                    myRecord.CountryOfOrigin = myShipment.MainCarriageFromPortCountryName;
+
+                                    ShipmentPickUpDelivery myLastDelivery = shipmentPickUpDeliveriesLists.Where(d => d.ShipmentId == myShipment.Id && d.PickUpDeliveryTypeCode == "DELV").OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault();
+                                    myRecord.CountryOfDestination = this.ComputeCountryOfDistination(myShipment, myLastDelivery);
 
                                     customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, myShipment, myRecord);
 
@@ -723,6 +799,12 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                         myRecord.BranchName = myBranch.EnglishName;
                                         myRecord.BranchLocalName = myBranch.LocalName;
                                         myRecord.BranchExternalId = myBranch.ExternalId;
+                                    }
+
+                                    if (myIncoterm != null)
+                                    {
+                                        myRecord.IncotermCode = myIncoterm.Code;
+                                        myRecord.IncotermName = myIncoterm.Name;
                                     }
 
                                     if (item.ChargesTypeId != null)
@@ -757,6 +839,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                             if (invoice.IsMultipleEntities)
                             {
                                 myBranch = allBranchs.Where(d => d.Id == myShipment.BranchId).FirstOrDefault();
+                                myIncoterm = allIncoterms.Where(d => d.Id == myShipment.IncotermId).FirstOrDefault();
                             }
                             
                             List<ChargeTypeGroupClass> lines_Grouped = allAPInvoiceLinesData.Where(d => d.InvoiceId == invoice.Id && d.ShipmentId == myShipment.Id).ToList();
@@ -790,8 +873,12 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                 myRecord.ETD = myShipment.MainCarriageETD;
                                 myRecord.CustomerRef1 = myShipment.CustomerReference1;
                                 myRecord.CustomerRef2 = myShipment.CustomerReference2;
+                                myRecord.CountryOfOrigin = myShipment.MainCarriageFromPortCountryName;
 
-                                if(this.tenant == 1255)
+                                ShipmentPickUpDelivery myLastDelivery = shipmentPickUpDeliveriesLists.Where(d => d.ShipmentId == myShipment.Id && d.PickUpDeliveryTypeCode == "DELV").OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault();
+                                myRecord.CountryOfDestination = this.ComputeCountryOfDistination(myShipment, myLastDelivery);
+
+                                if (this.tenant == 1255)
                                 {
                                     if (this.IsLocalCurrency)
                                     {
@@ -860,6 +947,12 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                     myRecord.BranchExternalId = myBranch.ExternalId;
                                 }
 
+                                if (myIncoterm != null)
+                                {
+                                    myRecord.IncotermCode = myIncoterm.Code;
+                                    myRecord.IncotermName = myIncoterm.Name;
+                                }
+
                                 ChargesType myChargesType = allChargesTypes.Where(d => d.Id == item.ChargesTypeId).FirstOrDefault();
                                 if (myChargesType != null)
                                 {
@@ -916,6 +1009,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                 myRecord.ETD = myShipment.MainCarriageETD;
                                 myRecord.CustomerRef1 = myShipment.CustomerReference1;
                                 myRecord.CustomerRef2 = myShipment.CustomerReference2;
+                                myRecord.CountryOfOrigin = myShipment.MainCarriageFromPortCountryName;
+
+                                ShipmentPickUpDelivery myLastDelivery = shipmentPickUpDeliveriesLists.Where(d => d.ShipmentId == myShipment.Id && d.PickUpDeliveryTypeCode == "DELV").OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault();
+                                myRecord.CountryOfDestination = this.ComputeCountryOfDistination(myShipment, myLastDelivery);
 
                                 customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, myShipment, myRecord);
                                 customFieldResolver.SetDataProviderCustomFieldsValues("ARInvoice", tenant, invoice, myRecord);
@@ -965,6 +1062,12 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                     myRecord.BranchExternalId = myBranch.ExternalId;
                                 }
 
+                                if (myIncoterm != null)
+                                {
+                                    myRecord.IncotermCode = myIncoterm.Code;
+                                    myRecord.IncotermName = myIncoterm.Name;
+                                }
+
                                 ChargesType myChargesType = allChargesTypes.Where(d => d.Id == item.ChargesTypeId).FirstOrDefault();
                                 if (myChargesType != null)
                                 {
@@ -984,6 +1087,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
 
             return myDataProvider;
         }
+
         private IQueryable<ShipmentDataView> GetIQueryableShipments()
         {
             ShipmentRepository myShipmentRepository = new ShipmentRepository(myShipmentsContext);
@@ -1173,6 +1277,139 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
             }
 
             return myResult;
+        }
+        private string ComputeCountryOfDistination(ShipmentDataView myShipment, ShipmentPickUpDelivery myLastDelivery)
+        {
+            string countryName = null;
+
+            if (myShipment.DirectionId == "D" && myShipment.TransportModeId == "I")
+            {
+                if (!string.IsNullOrEmpty(myShipment.MainCarriageToAddressId))
+                {
+                    Address myPartnerAddress = addressRepository.GetSingleAddress(myShipment.MainCarriageToAddressId, tenant);
+                    if (myPartnerAddress != null)
+                    {
+                        countryName = myPartnerAddress.Country != null ? myPartnerAddress.Country.EnglishName : null;
+                    }
+                }
+            }
+
+            else
+            {
+                if (myLastDelivery != null)
+                {
+                    switch (myLastDelivery.PickUpDeliveryToTypeCode)
+                    {
+                        case "PART":
+                            {
+                                if (!string.IsNullOrEmpty(myLastDelivery.ToAddressId))
+                                {
+                                    Address myPartnerAddress = addressRepository.GetSingleAddress(myLastDelivery.ToAddressId, tenant);
+                                    if (myPartnerAddress != null)
+                                    {
+                                        countryName = myPartnerAddress.Country != null ? myPartnerAddress.Country.EnglishName : null;
+                                    }
+                                }
+
+                                break;
+                            }
+
+                        case "PORT":
+                            {
+                                if (!string.IsNullOrEmpty(myLastDelivery.ToPortId))
+                                {
+                                    PortPM myPort = PortQuery.GetSinglePort(tenant, myLastDelivery.ToPortId, true);
+                                    if (myPort != null)
+                                    {
+                                        countryName = myPort.CountryName;
+                                    }
+                                }
+
+                                break;
+                            }
+
+                        case "CASL":
+                            {
+                                string myCountry = myLastDelivery.ToAddressCountry != null ? myLastDelivery.ToAddressCountry.EnglishName : null;
+                                if (!string.IsNullOrEmpty(myCountry))
+                                {
+                                    countryName = myCountry;
+                                }
+
+                                break;
+                            }
+                    }
+                }
+
+                else if (myShipment.DirectionId == "I" && !string.IsNullOrEmpty(myShipment.WarehouseLegWarehouseId))
+                {
+                    Card warehouse = CardRepository.GetSingleCard(myShipment.WarehouseLegWarehouseId, tenant, true);
+                    if (warehouse != null)
+                    {
+                        countryName = warehouse.CountryName;
+                    }
+                }
+
+                else if (!string.IsNullOrEmpty(myShipment.OnCarriageToPortId))
+                {
+                    PortPM onCarriageToPort = PortQuery.GetSinglePort(tenant, myShipment.OnCarriageToPortId, true);
+                    if (onCarriageToPort != null)
+                    {
+                        countryName = onCarriageToPort.CountryName;
+                    }
+                }
+
+                else
+                {
+                    if (!string.IsNullOrEmpty(myShipment.Transshipment3ToPortId))
+                    {
+                        PortPM transshipment3ToPort = PortQuery.GetSinglePort(tenant, myShipment.Transshipment3ToPortId, true);
+                        if (transshipment3ToPort != null)
+                        {
+                            countryName = transshipment3ToPort.CountryName;
+                        }
+                    }
+
+                    else if (!string.IsNullOrEmpty(myShipment.Transshipment2ToPortId))
+                    {
+                        PortPM transshipment2ToPort = PortQuery.GetSinglePort(tenant, myShipment.Transshipment2ToPortId, true);
+                        if (transshipment2ToPort != null)
+                        {
+                            countryName = transshipment2ToPort.CountryName;
+
+                        }
+                    }
+
+                    else if (!string.IsNullOrEmpty(myShipment.Transshipment1ToPortId))
+                    {
+                        PortPM transshipment1ToPort = PortQuery.GetSinglePort(tenant, myShipment.Transshipment1ToPortId, true);
+                        if (transshipment1ToPort != null)
+                        {
+                            countryName = transshipment1ToPort.CountryName;
+
+                        }
+                    }
+
+                    else if (!string.IsNullOrEmpty(myShipment.MainCarriageToPortId))
+                    {
+                        PortPM mainCarriageToPort = PortQuery.GetSinglePort(tenant, myShipment.MainCarriageToPortId, true);
+                        if (mainCarriageToPort != null)
+                        {
+                            countryName = mainCarriageToPort.CountryName;
+                        }
+                    }
+                    else if (!string.IsNullOrEmpty(myShipment.ToPortId))
+                    {
+                        PortPM mainCarriageToPort = PortQuery.GetSinglePort(tenant, myShipment.ToPortId, true);
+                        if (mainCarriageToPort != null)
+                        {
+                            countryName = mainCarriageToPort.CountryName;
+                        }
+                    }
+                }
+            }
+
+            return countryName;
         }
     }
 }

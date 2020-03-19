@@ -7,6 +7,10 @@ namespace WebFreight.Web.DataProviders
 {
     public class AccountingAgingDataProvider : BaseDataProvider
     {
+        public AccountingAgingDataProvider()
+        {
+            AgingPeriods = new List<AgingPeriod>();
+        }
         public string CustomerFilterValue { get; set; }
         public DateTime? Month { get; set; }
         public string PrintedByUser { get; set; }
@@ -32,7 +36,7 @@ namespace WebFreight.Web.DataProviders
 
     public class AgingPeriodTotal
     {
-        public decimal TotalCredit { get; set; } 
-        public decimal TotalDebit { get; set; } 
+        public decimal TotalCredit { get; set; }
+        public decimal TotalDebit { get; set; }
     }
 }

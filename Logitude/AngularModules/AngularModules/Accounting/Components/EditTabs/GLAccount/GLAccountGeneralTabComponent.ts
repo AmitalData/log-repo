@@ -32,7 +32,7 @@ export class GLAccountGeneralTabComponent extends BaseComponent {
     public IsVendor: boolean = false;
     private _GLAccountExtendedListService = new GLAccountExtendedListService();
     private gLAccountExtendedPMService = new GLAccountExtendedPMService();
-
+    public IsVendorChartOfAccount: boolean = false;
     public isRTL: boolean = false;
 
     private CurrentSession = SessionLocator.SelectedSession;
@@ -69,7 +69,7 @@ export class GLAccountGeneralTabComponent extends BaseComponent {
 
 
         if (!AppTool.IsNullOrEmpty(this.EntityPM.Id)) {// Edit Mode
-
+            if (this.ChartOfAccountsTypeCode == "4") { this.IsVendorChartOfAccount = true;}
 
           this.IsEditMode = true;
 
@@ -127,11 +127,11 @@ export class GLAccountGeneralTabComponent extends BaseComponent {
 
         return new Promise(resolve =>
         {
-            this.CurrentSession.StartBusyIndicatorLoading();
+            this.entityArgs.EditComponent.StartBusyIndicatorLoading();
             this.gLAccountExtendedPMService.GetConnectedCardsForGLAccount(accountId)
                 .subscribe((myResponse: ServiceResponse) =>
                 {
-                    this.CurrentSession.StopBusyIndicator();
+                    this.entityArgs.EditComponent.StopBusyIndicator();
                     var connectedCards = myResponse.Result;
                     if (connectedCards)
                         resolve(connectedCards);
@@ -243,6 +243,14 @@ export class GLAccountGeneralTabComponent extends BaseComponent {
         }
     }
 
+    get Smallcashbook() { return this.EntityPM.Smallcashbook }
+    set Smallcashbook(value: boolean) {
+        if (this.EntityPM.Smallcashbook != value) {
+            this.EntityPM.Smallcashbook = value;
+
+        }
+    }
+
     IsMultiCurrencyCheckboxEnabled: boolean = true;
     get ChartOfAccountsTypeCode() { return this.EntityPM.ChartOfAccountsTypeCode; }
     set ChartOfAccountsTypeCode(value: string) {
@@ -251,8 +259,8 @@ export class GLAccountGeneralTabComponent extends BaseComponent {
             this.ChartOfAccountsId = null;
 
             if (!AppTool.IsNullOrEmpty(value)) {
-
-                if (value == "1" || value == "2"){ // 1-Revenues, 2-Expenses
+                if (value == "4") { this.IsVendorChartOfAccount = true;}
+               else if (value == "1" || value == "2"){ // 1-Revenues, 2-Expenses
 
                     // disable fields
                     this.IsMultiCurrency = true;
@@ -301,7 +309,12 @@ export class GLAccountGeneralTabComponent extends BaseComponent {
             this.EntityPM.DisplayNumber = value;
         }
     }
-
+ get NameForPrintingCheques() { return this.EntityPM.NameForPrintingCheques; }
+    set NameForPrintingCheques(value: string) {
+        if (this.EntityPM.NameForPrintingCheques != value) {
+            this.EntityPM.NameForPrintingCheques = value;
+        }
+    }
     get LocalName() { return this.EntityPM.LocalName; }
     set LocalName(value: string) {
         if (this.EntityPM.LocalName != value) {

@@ -46,6 +46,7 @@ declare @ImportManifest as varchar(50)
 declare @BookingConfirmationNumber as varchar(25)
 declare @CarrierTransportDocumentNumber as varchar(50)
 declare @ProjectNumber as varchar(100)
+declare @AMSBL as nvarchar(17)
 END
 
 -- Ports Firlds
@@ -176,7 +177,8 @@ BEGIN
 		ConsolidatorId, ConsolidatorReference,
 		Field1, Field2, Field3, Field4, Field5, Field6, Field7, Field8, Field9, Field10,
 		CustomsDeclarationNumber, ForwarderShipmentNumber, TransportDocumentNumber,
-		ReleasingAgentId, ReleasingAgentReference1 , ReleasingAgentReference2,ProjectNumber
+		ReleasingAgentId, ReleasingAgentReference1 , ReleasingAgentReference2,ProjectNumber,
+		AMSBL
 		
 		FROM Shipments --where Tenant = 1435
 
@@ -203,7 +205,9 @@ BEGIN
 		@ConsolidatorId, @ConsolidatorReference,
 		@Field1, @Field2, @Field3, @Field4, @Field5, @Field6, @Field7, @Field8, @Field9, @Field10,
 		@CustomsDeclarationNumber, @ForwarderShipmentNumber, @TransportDocumentNumber,
-		@ReleasingAgentId, @ReleasingAgentReference1 , @ReleasingAgentReference2, @ProjectNumber
+		@ReleasingAgentId, @ReleasingAgentReference1 , @ReleasingAgentReference2, @ProjectNumber,
+		@AMSBL
+		
 		WHILE @@FETCH_STATUS = 0
 		BEGIN
 			
@@ -437,6 +441,13 @@ BEGIN
 					else set @MySearchFields = @MySearchFields + ',' + @SalesmanUserName	
 				end
 			end
+
+			if (@AMSBL is not null AND @AMSBL <> '')
+			begin
+				if (@MySearchFields = '') set @MySearchFields = @AMSBL
+				else set @MySearchFields = @MySearchFields + ',' + @AMSBL	
+			end
+
 			END
 
 			-- Ports
@@ -1787,7 +1798,8 @@ BEGIN
 		@ConsolidatorId, @ConsolidatorReference,
 		@Field1, @Field2, @Field3, @Field4, @Field5, @Field6, @Field7, @Field8, @Field9, @Field10,
 		@CustomsDeclarationNumber, @ForwarderShipmentNumber, @TransportDocumentNumber,
-		@ReleasingAgentId, @ReleasingAgentReference1 , @ReleasingAgentReference2, @ProjectNumber
+		@ReleasingAgentId, @ReleasingAgentReference1 , @ReleasingAgentReference2, @ProjectNumber,
+		@AMSBL
 		END				
 		CLOSE ShipmentsCursor
 		DEALLOCATE ShipmentsCursor

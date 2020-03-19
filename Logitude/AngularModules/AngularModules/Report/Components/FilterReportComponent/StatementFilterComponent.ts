@@ -1,4 +1,4 @@
-﻿import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {ReportsPreviewComponent} from '../../Components/ReportsPreviewComponent';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {ReportFliter} from '../../Components/Filters/ReportFliter';
@@ -28,6 +28,14 @@ export class StatementFilterComponent extends BaseComponent implements OnInit {
 
     public CustomerId: string = null;
     public DueDate: Date = null;
+
+    private includeDraftInvoices: boolean = false;
+    public get IncludeDraftInvoices() { return this.includeDraftInvoices; }
+    public set IncludeDraftInvoices(value: boolean) {
+        if (this.includeDraftInvoices != value) {
+            this.includeDraftInvoices = value;
+        }
+    }
 
     InitializeComponent(myReportsPreview: ReportsPreviewComponent) {
         this.ReportsPreview = myReportsPreview;
@@ -61,6 +69,8 @@ export class StatementFilterComponent extends BaseComponent implements OnInit {
         this.queryFilterItem.FieldDataType = "Date";
         this.queryFilterItem.Operator = "LessThanOrEqual";
         this.queryFilterItems.push(this.queryFilterItem);
+
+        this.queryFilterItems.push(new QueryFilterItem("IncludeDraftInvoices", this.IncludeDraftInvoices));
 
         this.reportFliter = new ReportFliter();
         this.reportFliter.Tenant = SessionInfo.LoggedUserTenant;

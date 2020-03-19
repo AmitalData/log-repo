@@ -76,6 +76,8 @@ namespace Logitude.Accounting.Data.EntityMapping
             this.Property(t => t.GLAccounterCounterLength).HasColumnName("GLAccounterCounterLength");
 
             this.Property(t => t.PaymentChequesLogoId).HasColumnName("PaymentChequesLogoId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.NumberOfAgingMonths).HasColumnName("NumberOfAgingMonths");
         }
     }
 }

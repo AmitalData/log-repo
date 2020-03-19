@@ -17,6 +17,8 @@ import {TenantPM} from '../../../../Common/EntityPMs/TenantPM';
 import {WarehouseHelper} from '../../../../Warehouse/Helpers/WarehouseHelper';
 import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
 import {ShipmentPickUpPM} from '../../../../Shipment/EntityPMs/ShipmentPickUpPM';
+import { CardPMService } from '../../../../Common/Services/StandardPMs/CardPMService';
+import { CardPM } from '../../../../Common/EntityPMs/CardPM';
 
 @Component({
     moduleId: './ShipmentModules/ShipmentRouting/Components/Routings/',
@@ -24,6 +26,7 @@ import {ShipmentPickUpPM} from '../../../../Shipment/EntityPMs/ShipmentPickUpPM'
 })
 
 export class AddEditWarehouseLegComponent extends BaseComponent {
+
     public EntityPM: ShipmentPM;
     public TenantPM: TenantPM;
     public ObjectTableName: string;
@@ -34,6 +37,7 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
     public TransportModeId: string = null;
     public ValidationErrorsList: string[] = [];
     public FatherComponent: RoutingsTabComponent;
+    public IsImportShipment: boolean = false;
     IsShowNewWarehouseEntryButton: Boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
@@ -43,10 +47,32 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
     }
 
     private myAddressListService: AddressListService;
+    private cardService: CardPMService;
     InitServices() {
         this.myAddressListService = new AddressListService();
+        this.cardService = new CardPMService();
     }
 
+    GetShipmentDirection() {
+        if (this.EntityPM.DirectionId == "I") {
+            this.IsImportShipment = true;
+        }
+    }
+
+    InitFreeDaysStorage() {
+        this.cardService.get(this.EntityPM.ConsigneeId).subscribe((myResponse: ServiceResponse) => {
+            if (myResponse != null) {
+                if (!myResponse.HasError) {
+                    var result = myResponse.Result;
+                    if (result) {
+                        if (result.IsCustomer)
+                            this.WarehouseStorageFreeDays = result.StorageFreeDays;
+                    }
+                }
+            }
+        });
+    }
+     
     SetWindowArgs(args: any) {
         this.EntityPM = args['EntityPM'];
         this.LegType = args['LegType'];
@@ -61,14 +87,16 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
                     this.IsShowNewWarehouseEntryButton = true;
                 }
             }
+            this.GetShipmentDirection();
+            this.SetStorageDays();
         }
-
+         
         this.ObjectTableName = args['ObjectTableName'];
         this.FatherComponent = args['FatherComponent'];
         this.WarehouseAddressList = this.FatherComponent.WarehouseAddressList;
         this.SetUIProperties();
         this.Clone();
-
+         
         if (this.IsNewLeg) {
             if (this.LegType == "WarehouseLeg_Pickups") {
                 if (this.EntityPM.ShipmentPickUps.length > 0) {
@@ -79,6 +107,8 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
                     }
                 }
             }
+            this.GetShipmentDirection();
+            this.InitFreeDaysStorage();
         }
     }
 
@@ -177,9 +207,7 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
                     if (result) {
                         this.WarehouseLegAddressId = result.MainAddressId;
                         this.FatherComponent.WarehouseLegTerminalName = result.EnglishName;
-                        if (this.IsFirmCodeVisible) {
-                            this.WarehouseLegTerminalCode = result.FirmCode;
-                        }
+                        this.WarehouseLegTerminalCode = result.FirmCode;
                     }
                 }
             }
@@ -237,6 +265,11 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
     set WarehouseLegLastFreeDate(newValue: Date) {
         if (this.EntityPM.WarehouseLegLastFreeDate != newValue) {
             this.EntityPM.WarehouseLegLastFreeDate = newValue;
+            if (newValue == null) {
+                this.WarehouseLegLastFreeDate = null;
+            } else {
+                this.SetStorageFreeDays();
+            }
         }
     }
 
@@ -259,6 +292,16 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
         if (this.EntityPM.WarehouseLegActualEntryDate != value) {
             this.EntityPM.WarehouseLegActualEntryDate = value;
             this.SetUIProperties_ValidateActualDates();
+            if (value == null) {
+                this.WarehouseLegActualEntryDate == null;
+                this.StorageDays = null;
+                this.Days = null;
+            } else {
+                this.SetLastFreeDate();
+                this.SetStorageDays();
+            }
+
+            this.ComputeGrossWeight_PerStorageDays();
         }
     }
 
@@ -267,6 +310,22 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
         if (this.EntityPM.WarehouseLegActualReleaseDate != value) {
             this.EntityPM.WarehouseLegActualReleaseDate = value;
             this.SetUIProperties_ValidateActualDates();
+            if (value == null) {
+                this.WarehouseLegActualReleaseDate = null;
+                this.StorageDays = null;
+                this.Days = null;
+            }
+            else {
+                this.SetStorageDays();
+            }
+            this.ComputeGrossWeight_PerStorageDays();
+        }
+    }
+
+    get GrossWeightPerStorageDays() { return this.EntityPM.GrossWeightPerStorageDays == null ? 0 : this.EntityPM.GrossWeightPerStorageDays; }
+    set GrossWeightPerStorageDays(newValue: number) {
+        if (this.EntityPM.GrossWeightPerStorageDays != newValue) {
+            this.EntityPM.GrossWeightPerStorageDays = AppTool.Round(newValue, 3);
         }
     }
 
@@ -291,6 +350,64 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
             this.EntityPM.WarehouseLegVGMCutOffDate = value;            
         }
     }
+
+    get WarehouseStorageFreeDays() { return this.EntityPM.WarehouseStorageFreeDays; }
+    set WarehouseStorageFreeDays(value: number) {
+        if (this.EntityPM.WarehouseStorageFreeDays != value) {
+            this.EntityPM.WarehouseStorageFreeDays = value;
+            if (value == null) {
+                this.WarehouseStorageFreeDays = null;
+            } else {
+                this.SetLastFreeDate();
+            }
+        }
+    }
+    
+    private SetLastFreeDate() {
+        if (this.WarehouseLegActualEntryDate != null && this.WarehouseStorageFreeDays != null) {
+            var date = DateTool.AddDays(this.WarehouseLegActualEntryDate, this.WarehouseStorageFreeDays);
+            if (date == null) {
+                this.WarehouseStorageFreeDays = 0;
+            }
+            else {
+                this.WarehouseLegLastFreeDate = date;
+            }
+        }
+    } 
+
+    private SetStorageFreeDays() {
+        if (this.WarehouseLegActualEntryDate != null && this.WarehouseLegLastFreeDate != null) {
+            if (DateTool.GetDateFromDate(this.WarehouseLegLastFreeDate) >= DateTool.GetDateFromDate(this.WarehouseLegActualEntryDate)) {
+                var days = DateTool.GetDaysBetweenDates(this.WarehouseLegActualEntryDate, this.WarehouseLegLastFreeDate);
+                if (days == null) {
+                    this.WarehouseStorageFreeDays = 0;
+                } else if (this.WarehouseStorageFreeDays != days) {
+                    this.WarehouseStorageFreeDays = days;
+                }
+            }
+            else {
+                this.WarehouseStorageFreeDays = 0;
+            }
+
+            this.ComputeGrossWeight_PerStorageDays();
+        }
+    }
+
+    public StorageDays: number;
+    public Days: string;
+    private SetStorageDays() {
+        if (this.WarehouseLegActualEntryDate != null && this.WarehouseLegActualReleaseDate != null) {
+            if (DateTool.GetDateFromDate(this.WarehouseLegActualReleaseDate) >= DateTool.GetDateFromDate( this.WarehouseLegActualEntryDate)) {
+                var days = DateTool.GetDaysBetweenDates(this.WarehouseLegActualEntryDate, this.WarehouseLegActualReleaseDate);
+                this.StorageDays = days;
+                this.Days = " Days";
+            } else {
+                this.StorageDays = null;
+                this.Days = null;
+            }
+        }
+    }
+    
 
     NewWarehouseEntryButtonClicked() {
         var windowArgs: any = {};
@@ -407,6 +524,7 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
         this.myCloner.AddField('TerminalAvailable');
         this.myCloner.AddField('WarehouseLegCutOffDate');
         this.myCloner.AddField('WarehouseLegVGMCutOffDate');
+        this.myCloner.AddField('WarehouseStorageFreeDays');
         this.myCloner.AddEntity(this.EntityPM);
         this.myCloner.AddEntity(this.WarehouseAddressList);
         this.myCloner.AddEntity(this.FatherComponent.WarehouseAddressList);
@@ -443,5 +561,13 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
         }
 
         this.myCloner.RejectChanges();
+    }
+
+    private ComputeGrossWeight_PerStorageDays() {
+        var StorageDays = DateTool.GetDaysBetweenDates(this.EntityPM.WarehouseLegActualReleaseDate, this.EntityPM.WarehouseLegActualEntryDate);
+        var grossWeightPerStorageDays = this.EntityPM.GrossWeightPerTon * (StorageDays - this.EntityPM.WarehouseStorageFreeDays);
+        this.GrossWeightPerStorageDays = grossWeightPerStorageDays < 0 ? 0 : grossWeightPerStorageDays;
+        //ShipmentTool.OnShipmentQuantitiesChanged(this.EntityPM);
+        ShipmentTool.OnWarehouseStorageFreeDaysChanged(this.EntityPM);
     }
 }

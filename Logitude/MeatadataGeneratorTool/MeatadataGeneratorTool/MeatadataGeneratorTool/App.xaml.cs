@@ -83,6 +83,7 @@ namespace MeatadataGeneratorTool
 
                         CurrentControl.Closed += CurrentControl_Closed;
                         stream.Close();
+                        stream.Dispose();
                     }
 
                     catch (Exception err)

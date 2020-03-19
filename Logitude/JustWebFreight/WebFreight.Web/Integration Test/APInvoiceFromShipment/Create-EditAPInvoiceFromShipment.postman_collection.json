@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "6e321fcd-b911-4072-b575-1264a988f18e",
-		"name": "Create/EditAPInvoiceFromShipment",
+		"_postman_id": "4ad4c617-2e04-49f5-9fcc-29a2124daac2",
+		"name": "Create/EditAPInvoiceFromShipment copy",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
 	"item": [
@@ -14,7 +14,7 @@
 						"id": "28426fb9-f35e-41d2-a6f3-a0355db09c5d",
 						"exec": [
 							"",
-							"pm.test(\"GetAPInvoiceId\", function () {",
+							"pm.test(\"CreateAPInvoiceInsideShipment\", function () {",
 							"     pm.response.to.have.status(200);",
 							"     ",
 							"      var idvalue1 = (pm.response.json().Id);",
@@ -132,7 +132,37 @@
 			"response": []
 		},
 		{
-			"name": "UpdateAPInvoiceAmounts",
+			"name": "UpdateAPInvoiceInsideShipment",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bbc65d89-0b1e-4519-b2b2-558cc2d9fff1",
+						"exec": [
+							"pm.test(\"UpdateAPInvoiceInsideShipment\", function () {",
+							"     pm.response.to.have.status(200);",
+							"     ",
+							"        var idvalue1 = (pm.response.json().InternalNotes);",
+							"    var id1exist = idvalue1 !== null;",
+							"    var idvalue2 = \"Updated by Integration\";",
+							"    var id2exist = idvalue1 !== null;",
+							"    ",
+							"    pm.expect(id1exist);",
+							"    pm.expect(id2exist);",
+							"    ",
+							"  if (idvalue1 === idvalue2)",
+							"   // pm.environment.set(\"ShipmentNotes\",idvalue1);",
+							"    tests[\"AP Invoice Notes: \" + idvalue1] = responseBody.has(idvalue1);",
+							"   ",
+							"    ",
+							"",
+							"",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "PUT",
 				"header": [
@@ -150,7 +180,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n \"Id\": \"{{APInvoiceID}}\",\n  \"Tenant\": \"{{Tenant}}\",\n  \"IsSecured\": false,\n  \"InvoiceNumber\": \"{{ShipmentNumber}}\",\n  \"VendorId\": \"{{TestVendorId}}\",\n\n  \"InvoiceDate\": \"2019-10-01T00:00:00Z\",\n  \"PaymentTermId\": \"{{CashPAymentTerm}}\",\n  \"DueDate\": \"2019-10-01T00:00:00Z\",\n  \"InvoiceCurrencyExchangeRate\": 4.5,\n  \"ExchangeRateDate\": \"2019-09-14T00:00:00\",\n\n  \"InvoiceCurrencyId\": \"{{ProfitCurrencyId}}\",\n  \"LocalCurrencyId\": \"{{CurrencyId}}\",\n\n  \"InternalNotes\": null,\n  \"SubTotalInLocalCurrency\": 450,\n  \"SubTotalInInvoiceCurrency\": 100,\n  \"AmountInInvoiceCurrency\": 100,\n  \"AmountInInvoiceCurrency_Summary\": 100,\n  \"AmountInLocalCurrency\": 450,\n  \"AmountInLocalCurrency_Summary\": 450,\n  \"AmountInProfitCurrency\": 450,\n  \"AmountInProfitCurrency_Summary\": null,\n  \"StatusCode\": \"WA\",\n  \"CreateDate\": \"2019-10-20T12:03:10.6026636Z\",\n  \"CreatedByUserId\": \"{{CreatedByUserId}}\",\n  \"IsClosed\": false,\n  \"ProfitCurrencyId\": \"{{ProfitCurrencyId}}\",\n  \"ProfitCurrencyExchangeRate\": 1,\n  \"UpdatedByUserId\": \"{{CreatedByUserId}}\",\n  \"UpdateDate\": \"2019-10-20T12:03:10.6026636Z\",\n  \"InvoiceExpectedAmount\": 100,\n  \"MainEntityId\": \"{{ShipmentId}}\",\n\n  \"AmountDue\": 100,\n  \"RefundAmount\": null,\n  \"AmountDueInLocalCurrency\": 450,\n  \"AmountDueInProfitCurrency\": 450,\n  \"BranchId\": \"{{BranchID}}\",\n \n  \"VendorPartnerTypeId\": \"VD\",\n\n  \"ReadyForTransfer\": false,\n  \"IsTransferStatusSetManually\": false,\n  \"IsMultipleEntities\": false,\n\n  \"OperationalDate\": \"2019-10-20T08:12:48.397\",\n\n  \"IsExternalEntity\": false,\n  \"IsGeneralInvoice\": false,\n\n  \"InvoiceLines\": [\n    {\n  \n     \n      \"LineNumber\": 1,\n      \"Tenant\": \"{{Tenant}}\",\n      \"InvoiceCurrencyAmount\": 100,\n      \"ChargesTypeId\": \"{{ChargeTypeIdAFT}}\",\n      \"VatTypeId\": \"{{ZeroVatType}}\",\n     \"VatPercentage\": 0,\n      \"VatIsMultiPercentage\": false,\n      \"VendorId\": \"{{TestVendorId}}\",\n      \"OpenAmount\": -490,\n      \"ForiegnCurrencyId\": \"{{ProfitCurrencyId}}\",\n      \"ForiegnCurrencyAmount\": 450,\n      \"ForiegnExchangeRate\": 1,\n      \"LocalCurrencyAmount\": 450,\n      \"ProfitCurrencyAmount\": 450,\n      \"EntityId\": \"{{ShipmentId}}\",\n      \"EntityPayableId\": \"{{ShipmentPayableId}}\",\n      \"Notes\": \"Updated by Integration\",\n      \"ObjectTableId\": \"1-4\",\n      \"EntityReference\": \"{{ShipmentNumber}}\",\n   \n      \"OtherInvoicesAmounts\": 100,\n      \"ExpectedAmount\": 60,\n   \n      \"AmountTypeCode\": \"ACCU\",\n    \n      \"ChangeSetOp\": 1,\n      \"DebitAccount\": null,\n      \"Description\": \"Air Freight\",\n    \n\n      \"AuthorizedSignatory\": false,\n      \"PrepaidCollectId\": \"P\"\n    }\n  ],\n  \"InvoiceEntities\": [\n    {\n      \"$id\": \"3\",\n      \"Id\": \"1-886126\",\n      \"Tenant\": 1,\n      \"EntityId\": \"1-1721363\",\n      \"EntityReference\": \"AES100000478\",\n      \"ObjectTableId\": \"1-4\",\n      \"APInvoiceId\": \"1-752379\",\n      \"IndexOrder\": 0\n    }\n  ],\n\n  \"TotalVATs\": [\n    {\n    \n      \"Tenant\": \"{{Tenant}}\",\n   \n      \"VatTypeId\": \"{{ZeroVatType}}\",\n      \"VatPercent\": 0,\n \n      \"ExternalVATCard\": \"888\",\n    \n      \"InvoiceCurrencyVatableAmount\": 100,\n      \"LocalVatableAmount\": 450,\n      \"ProfitVatableAmount\": 450,\n      \"InvoiceCurrencyVATAmount\": 0,\n      \"LocalVATAmount\": 0,\n      \"ProfitCurrencyVATAmount\": 0,\n      \"ChangeSetOp\": 1,\n      \"VatRecognizedPercentage\": null\n    }\n  ],\n  \"SetVoided\": false,\n  \"SetApproved\": false,\n  \"SetCancelApproval\": false,\n  \"SetReTransfer\": false,\n  \"SetReSendQBO\": false,\n  \"JournalNumber\": null,\n\n\"ShipmentNewConcurrencyGUID\": \"383dfba9-26d5-43bb-ade4-8d0d8371a525\"\n}",
+					"raw": "{\n \"Id\": \"{{APInvoiceID}}\",\n  \"Tenant\": \"{{Tenant}}\",\n  \"IsSecured\": false,\n  \"InvoiceNumber\": \"{{ShipmentNumber}}\",\n  \"VendorId\": \"{{TestVendorId}}\",\n\n  \"InvoiceDate\": \"2019-10-01T00:00:00Z\",\n  \"PaymentTermId\": \"{{CashPAymentTerm}}\",\n  \"DueDate\": \"2019-10-01T00:00:00Z\",\n  \"InvoiceCurrencyExchangeRate\": 4.5,\n  \"ExchangeRateDate\": \"2019-09-14T00:00:00\",\n\n  \"InvoiceCurrencyId\": \"{{ProfitCurrencyId}}\",\n  \"LocalCurrencyId\": \"{{CurrencyId}}\",\n\n  \"InternalNotes\": \"Updated by Integration\",\n  \"SubTotalInLocalCurrency\": 450,\n  \"SubTotalInInvoiceCurrency\": 100,\n  \"AmountInInvoiceCurrency\": 100,\n  \"AmountInInvoiceCurrency_Summary\": 100,\n  \"AmountInLocalCurrency\": 450,\n  \"AmountInLocalCurrency_Summary\": 450,\n  \"AmountInProfitCurrency\": 450,\n  \"AmountInProfitCurrency_Summary\": null,\n  \"StatusCode\": \"WA\",\n  \"CreateDate\": \"2019-10-20T12:03:10.6026636Z\",\n  \"CreatedByUserId\": \"{{CreatedByUserId}}\",\n  \"IsClosed\": false,\n  \"ProfitCurrencyId\": \"{{ProfitCurrencyId}}\",\n  \"ProfitCurrencyExchangeRate\": 1,\n  \"UpdatedByUserId\": \"{{CreatedByUserId}}\",\n  \"UpdateDate\": \"2019-10-20T12:03:10.6026636Z\",\n  \"InvoiceExpectedAmount\": 100,\n  \"MainEntityId\": \"{{ShipmentId}}\",\n\n  \"AmountDue\": 100,\n  \"RefundAmount\": null,\n  \"AmountDueInLocalCurrency\": 450,\n  \"AmountDueInProfitCurrency\": 450,\n  \"BranchId\": \"{{BranchId}}\",\n \n  \"VendorPartnerTypeId\": \"VD\",\n\n  \"ReadyForTransfer\": false,\n  \"IsTransferStatusSetManually\": false,\n  \"IsMultipleEntities\": false,\n\n  \"OperationalDate\": \"2019-10-20T08:12:48.397\",\n\n  \"IsExternalEntity\": false,\n  \"IsGeneralInvoice\": false,\n\n  \"InvoiceLines\": [\n    {\n  \n     \n      \"LineNumber\": 1,\n      \"Tenant\": \"{{Tenant}}\",\n      \"InvoiceCurrencyAmount\": 100,\n      \"ChargesTypeId\": \"{{ChargeTypeIdAFT}}\",\n      \"VatTypeId\": \"{{ZeroVatType}}\",\n     \"VatPercentage\": 0,\n      \"VatIsMultiPercentage\": false,\n      \"VendorId\": \"{{TestVendorId}}\",\n      \"OpenAmount\": -490,\n      \"ForiegnCurrencyId\": \"{{ProfitCurrencyId}}\",\n      \"ForiegnCurrencyAmount\": 450,\n      \"ForiegnExchangeRate\": 1,\n      \"LocalCurrencyAmount\": 450,\n      \"ProfitCurrencyAmount\": 450,\n      \"EntityId\": \"{{ShipmentId}}\",\n      \"EntityPayableId\": \"{{ShipmentPayableId}}\",\n      \"Notes\": \"Updated by Integration\",\n      \"ObjectTableId\": \"1-4\",\n      \"EntityReference\": \"{{ShipmentNumber}}\",\n   \n      \"OtherInvoicesAmounts\": 100,\n      \"ExpectedAmount\": 60,\n   \n      \"AmountTypeCode\": \"ACCU\",\n    \n      \"ChangeSetOp\": 1,\n      \"DebitAccount\": null,\n      \"Description\": \"Air Freight\",\n    \n\n      \"AuthorizedSignatory\": false,\n      \"PrepaidCollectId\": \"P\"\n    }\n  ],\n  \"InvoiceEntities\": [\n    {\n      \"$id\": \"3\",\n      \"Id\": \"1-886126\",\n      \"Tenant\": 1,\n      \"EntityId\": \"1-1721363\",\n      \"EntityReference\": \"AES100000478\",\n      \"ObjectTableId\": \"1-4\",\n      \"APInvoiceId\": \"1-752379\",\n      \"IndexOrder\": 0\n    }\n  ],\n\n  \"TotalVATs\": [\n    {\n    \n      \"Tenant\": \"{{Tenant}}\",\n   \n      \"VatTypeId\": \"{{ZeroVatType}}\",\n      \"VatPercent\": 0,\n \n      \"ExternalVATCard\": \"888\",\n    \n      \"InvoiceCurrencyVatableAmount\": 100,\n      \"LocalVatableAmount\": 450,\n      \"ProfitVatableAmount\": 450,\n      \"InvoiceCurrencyVATAmount\": 0,\n      \"LocalVATAmount\": 0,\n      \"ProfitCurrencyVATAmount\": 0,\n      \"ChangeSetOp\": 1,\n      \"VatRecognizedPercentage\": null\n    }\n  ],\n  \"SetVoided\": false,\n  \"SetApproved\": false,\n  \"SetCancelApproval\": false,\n  \"SetReTransfer\": false,\n  \"SetReSendQBO\": false,\n  \"JournalNumber\": null,\n\n\"ShipmentNewConcurrencyGUID\": \"383dfba9-26d5-43bb-ade4-8d0d8371a525\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"

@@ -394,7 +394,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query FreightPaymentMethodQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = FreightPaymentMethodTextCode_0.Id, Code = "FreightPaymentMethod",  QueryGroupCode = "f557", IndexOrder = 0, Tenant = 0, ObjectTableId = FreightPaymentMethodObjectTable.Id, QuerySection = "Customs.FreightPaymentMethod", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = FreightPaymentMethodFeature_0.Id, DefaultSortName = "Code", DefaultSortDirection = "Desending" }, queriesRepository, tenantQueries);
+			  Query FreightPaymentMethodQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = FreightPaymentMethodTextCode_0.Id, Code = "FreightPaymentMethod",  QueryGroupCode = "f557", IndexOrder = 0, Tenant = 0, ObjectTableId = FreightPaymentMethodObjectTable.Id, QuerySection = "Customs.FreightPaymentMethod", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = FreightPaymentMethodFeature_0.Id,FeatureUniqeCode= FreightPaymentMethodFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending" }, queriesRepository, tenantQueries);
 	
 			 QueryColumn FreightPaymentMethodQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FreightPaymentMethodQuery.Id, IndexOrder = 0, ObjectFieldId = FreightPaymentMethodObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == FreightPaymentMethodObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 50 }, queryColumnsRepository, tenantQueryColumns);
 

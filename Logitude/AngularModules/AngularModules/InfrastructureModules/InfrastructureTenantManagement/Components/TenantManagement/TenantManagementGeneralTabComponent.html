@@ -228,7 +228,7 @@
                                                                         </td>
                                                                     </tr>
 
-                                                                    <tr class="FormFieldRow">
+                                                                    <!--<tr class="FormFieldRow">
                                                                         <td>
                                                                             <LogLabel [ObjectFieldName]="'Technology'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                                         </td>
@@ -236,9 +236,9 @@
                                                                         <td>
                                                                             <ComboBox [ItemsSource]="TechnologiesList" [Binding]="'Name'" [SelectedItem]="SelectedTechnology" (SelectedItemChanged)="SelectedTechnology = $event"></ComboBox>
                                                                         </td>
-                                                                    </tr>
+                                                                    </tr>-->
 
-                                                                    <tr class="FormFieldRow">
+                                                                    <!-- <tr class="FormFieldRow">
                                                                         <td>
                                                                             <LogLabel [ObjectFieldName]="'SilverlightEndDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                                         </td>
@@ -246,7 +246,7 @@
                                                                         <td>
                                                                             <LogDatePicker [HideColumns]="true" style="height:100%;width:100%" [ObjectFieldName]="'SilverlightEndDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
                                                                         </td>
-                                                                    </tr>
+                                                                    </tr> -->
 
                                                                     <tr class="FormFieldRow">
                                                                         <td>
@@ -540,7 +540,7 @@
                                                                         </tr>
 
                                                                         <!-- Fields -->
-                                                                        <tr style="height: 35px;">
+                                                                        <tr style="height: 35px;" *ngIf="IsSingleMultiPackage">
                                                                             <td>
                                                                                 <table>
                                                                                     <tr>
@@ -697,9 +697,9 @@
 
                                                                                                                                 <div class="SimpleGridViewBody">
                                                                                                                                     <table>
-                                                                                                                                        <tr class="SimpleGridViewRow" *ngFor="let item of PackagesList">
+                                                                                                                                        <tr [ngStyle]="{background: item.Background}" class="SimpleGridViewRow" *ngFor="let item of PackagesList">
                                                                                                                                             <td class="GridViewCell" style="width: 210px; min-width: 210px; max-width: 210px;">
-                                                                                                                                                {{item.PackageName}}
+                                                                                                                                                {{item.PackageNameDisplay}}
                                                                                                                                             </td>
 
                                                                                                                                             <td class="GridViewCell" style="width: 120px; min-width: 120px; max-width: 120px; text-align: right;">
@@ -721,8 +721,8 @@
                                                                                                                                             <!-- [disabled]="!IsEditable" -->
                                                                                                                                             <td class="CellTools">
                                                                                                                                                 <span class="CellSeparator"></span>
-                                                                                                                                                <IconButton [IsEnabled]="IsMultiPackage" [Name]="'Edit'" [IsSmall]="true" [Left]="3" (click)="EditPackage(item)"></IconButton>
-                                                                                                                                                <IconButton [IsEnabled]="IsMultiPackage" [Name]="'Delete'" [IsSmall]="true" [Left]="3" (click)="DeletePackage(item)"></IconButton>
+                                                                                                                                                <IconButton [IsEnabled]="IsMultiPackage || item.IsMainPackage" [Name]="'Edit'" [IsSmall]="true" [Left]="3" (click)="EditPackage(item)"></IconButton>
+                                                                                                                                                <IconButton [IsEnabled]="IsMultiPackage && !item.IsMainPackage" [Name]="'Delete'" [IsSmall]="true" [Left]="3" (click)="DeletePackage(item)"></IconButton>
                                                                                                                                             </td>
                                                                                                                                         </tr>
 
@@ -758,10 +758,10 @@
                                                                                                 <table>
                                                                                                     <tr>
                                                                                                         <td style="width: 210px; padding-left: 4px;">Totals</td>
-                                                                                                        <td style="width: 120px; padding-right: 4px; text-align: right;">{{PackagesTotalNumberOfUsers}}</td>
-                                                                                                        <td style="width: 120px; padding-right: 4px; text-align: right;">{{PackagesTotalFreeUsers}}</td>
-                                                                                                        <td style="width: 120px; padding-right: 4px; text-align: right;">{{PackagesTotalPrice}}</td>
-                                                                                                        <td style="width: 120px; padding-right: 4px; text-align: right;">{{PackagesTotalTotalPrice}}</td>
+                                                                                                        <td style="width: 120px; padding-right: 4px; text-align: right;">{{TotalNumberOfUsers}}</td>
+                                                                                                        <td style="width: 120px; padding-right: 4px; text-align: right;">{{TotalFreeUsers}}</td>
+                                                                                                        <td style="width: 120px; padding-right: 4px; text-align: right;">{{AveragePrice}} (Average)</td>
+                                                                                                        <td style="width: 120px; padding-right: 4px; text-align: right;">{{TotalPaymentamount}}</td>
                                                                                                         <td>
                                                                                                             <div></div>
                                                                                                         </td>

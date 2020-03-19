@@ -74,6 +74,9 @@ export class ARPaymentList {
 		TransmissionError: string;
 		BankAccountLiteId: string;
 		BankAccountName: string;
+		AccountingCancelationDate: Date;
+		CancelationNotes: string;
+		VoidedByJournalNumber: string;
 		MetodoPagoCode: string;
 		TipoCadenaPago: string;
 		CertPago: string;
@@ -86,5 +89,16 @@ export class ARPaymentList {
 		IsFullAccounting: boolean;
 		FechaPago: Date;
 		CreatedByPartner: string;
+		IsPaymentNumberManuallySet: boolean;
+		Field1: string;
+		Field2: string;
+		Field3: string;
+		Field4: string;
+		Field5: string;
+		Field6: string;
+		Field7: string;
+		Field8: string;
+		Field9: string;
+		Field10: string;
 	
 }

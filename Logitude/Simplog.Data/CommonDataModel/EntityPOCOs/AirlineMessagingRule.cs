@@ -23,6 +23,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string CreatedByUserId { get; set; }
         public DateTime? CreateDate { get; set; }
         public string UpdatedByUserId { get; set; }
+        public string RuleFieldCode { get; set; }
         public DateTime? UpdateDate { get; set; }
 
         [ForeignKey("RuleFieldId")]

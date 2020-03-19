@@ -339,15 +339,32 @@ export class CustomsTabComponent extends BaseComponent implements OnInit, OnDest
     private CheckLocalVisibility(): boolean {
         var visible: boolean = false;
 
-        if (FeatureLocator.HasFeaturePermession("Shipment", "SendToCustoms")) {
-            if (this.EntityPM.ShipmentLevelCode != "C") {
-                if (ObjectsLocator.CustomsInterfaceSettingPM != null) {
-                    if (ObjectsLocator.CustomsInterfaceSettingPM.LocalCustomsInterfaceCode == "ABM") {
+        if (this.EntityPM.ShipmentLevelCode != "C") {
+            if (ObjectsLocator.CustomsInterfaceSettingPM != null) {
+                if (!AppTool.IsNullOrEmpty(ObjectsLocator.CustomsInterfaceSettingPM.LocalCustomsInterfaceCode)) {
+                    if (ObjectsLocator.CustomsInterfaceSettingPM.LocalCustomsInterfaceCode == "AMC") {
                         visible = true;
+                    }
+
+                    else {
+                        if (FeatureLocator.HasFeaturePermession("Shipment", "SendToCustoms")) {
+                            visible = true;
+                        }
                     }
                 }
             }
         }
+
+
+        //if (FeatureLocator.HasFeaturePermession("Shipment", "SendToCustoms")) {
+        //    if (this.EntityPM.ShipmentLevelCode != "C") {
+        //        if (ObjectsLocator.CustomsInterfaceSettingPM != null) {
+        //            if (!AppTool.IsNullOrEmpty(ObjectsLocator.CustomsInterfaceSettingPM.LocalCustomsInterfaceCode)) {
+        //                visible = true;
+        //            }
+        //        }
+        //    }
+        //}
 
         return visible;
     }
@@ -418,8 +435,8 @@ export class CustomsTabComponent extends BaseComponent implements OnInit, OnDest
 
         if (isLocalVisible) {
             var newItem: SummaryItem = new SummaryItem();
-            newItem.CustomsInterfaceName = "ABM Customsware";
-            newItem.Code = "ABM";
+            newItem.CustomsInterfaceName = ObjectsLocator.CustomsInterfaceSettingPM.LocalCustomsInterfaceName;
+            newItem.Code = ObjectsLocator.CustomsInterfaceSettingPM.LocalCustomsInterfaceCode;
             newItem.StatusName = !AppTool.IsNullOrEmpty(this.EntityPM.LocalCustomsTransmissionsStatusName) ? this.EntityPM.LocalCustomsTransmissionsStatusName : notSent;
             newItem.StatusDate = this.EntityPM.LocalCustomsTransmissionsStatusDate;
             newItem.StatusCode = this.EntityPM.LocalCustomsTransmissionsStatusCode;

@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Logitude.Accounting.Data.EntityLists;
 
 namespace Logitude.Accounting.BL.EntityQueryServices
 {
@@ -130,18 +131,34 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return keys;
         }
 
-
         public bool GetAnyPendingApprovedDev(IQueryable<string> GLAccountIDList, int tenant)
         {
 
             var journalLineRepository = new JournalLineRepository(this.MainContext as IAccountingContext);
-            var have = (from j in repository.
+            var haveQ = (from j in repository.
                         //GetQueryablePending2ApproveOrdered(tenant)
                         GetQueryablePending2Approve_LedgerNotCreated(tenant)
-                        join jl in journalLineRepository.GetQueryContainsAccId(GLAccountIDList, tenant)
-                        on j.Id equals jl.JournalId
-                        select jl).Any();
-            return have;
+                         join jl in journalLineRepository.GetQueryContainsAccId(GLAccountIDList, tenant)
+                         on j.Id equals jl.JournalId
+                         select jl.JournalId);
+            return haveQ.Any();
+        }
+
+        public bool GetAnyPendingApproved(IQueryable<string> GLAccountIDList, int tenant)
+        {
+            
+            var journalLineRepository = new JournalLineRepository(this.MainContext as IAccountingContext);
+            var Jids=repository.
+                        //GetQueryablePending2ApproveOrdered(tenant)
+                        GetQueryablePending2Approve_LedgerNotCreated(tenant).Select(r => r.Id).ToList();
+            if (Jids.Count==0)
+            {
+                return false;
+            }
+            var haveQ = (
+                        from jl in journalLineRepository.GetQueryContainsAccId(GLAccountIDList, tenant).Where(r=> Jids.Contains(r.JournalId))
+                        select jl.JournalId);
+            return haveQ.Any();
         }
         public JournalPM GetSinglePendingApprovedDev(int tenant, bool getComposition = false)
         {
@@ -167,7 +184,11 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             Journal poco = repository.GetSinglePendingApproved(tenant);
             return base.GetEntityPM(poco);
         }
-        
+        public List<string> GetJournalNumbersByTransactionsList(List<InterestTransactionList> interestTransactionLists, int tenant)
+        {
+            List<string> JournalNumbers = repository.GetJournalNumbersByTransactionsList(interestTransactionLists,tenant);
+            return JournalNumbers;
+        }
 
         public List<JournalPM> GetJournalByJournalNumber(string number, int tenant)
         {

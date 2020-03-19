@@ -86,6 +86,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
   
             poco.CustomerTenantShareExportFile = entityPM.CustomerTenantShareExportFile;
             poco.AllowAgentInCustomersLOV = entityPM.AllowAgentInCustomersLOV;
+            poco.AllowCustomersInAgentsLOV = entityPM.AllowCustomersInAgentsLOV;
             poco.IsPotentialTelRequired = entityPM.IsPotentialTelRequired;
             poco.IsPotentialFaxRequired = entityPM.IsPotentialFaxRequired;
             poco.VatFormatTypeCode = entityPM.VatFormatTypeCode;

@@ -36,7 +36,7 @@ namespace WebFreight.Web.Helpers
 {
     public class ExportToExcelHelper
     {
-        public byte[] ExportQueryToExcel(byte[] xmlFilters, string queryId, int tenant, string userid, string typename)
+        public byte[] ExportQueryToExcel(byte[] xmlFilters, string queryCode, int tenant, string userid, string typename)
         {
             string xmlData = "";
             System.IO.MemoryStream memory = new System.IO.MemoryStream();
@@ -46,17 +46,17 @@ namespace WebFreight.Web.Helpers
             QueryRepository queryRep = new QueryRepository(tenant);
             QueryColumnRepository queryColumnRep = new QueryColumnRepository(tenant);
             QueryQuery queryQuery = new QueryQuery(queryRep);
-            QueryPM query = queryQuery.GetSingleQueryPM(queryId, tenant);
+            QueryPM query = queryQuery.GetSingleQueryPM(queryCode, tenant);
             QueryColumnQuery queryColumnQuery = new QueryColumnQuery(queryColumnRep);
-            List<QueryColumnPM> queryColumns = queryColumnQuery.GetQueryColumnsByQueryIdAndUser(tenant, userid, query.Id).OrderBy(q => q.IndexOrder).ToList();
+            List<QueryColumnPM> queryColumns = queryColumnQuery.GetQueryColumnsByQueryCodeAndUser(tenant, userid, query.UniqueCode).OrderBy(q => q.IndexOrder).ToList();
             if (queryColumns.Count == 0)
             {
-                queryColumns = queryColumnQuery.GetQueryColumnsByQueryIdAndUser(0, userid, query.Id).OrderBy(q => q.IndexOrder).ToList();
+                queryColumns = queryColumnQuery.GetQueryColumnsByQueryCodeAndUser(0, userid, query.UniqueCode).OrderBy(q => q.IndexOrder).ToList();
             }
 
             if (queryColumns.Count == 0)
             {
-                queryColumns = queryColumnQuery.GetZeroQueryColumnsByQueryId(0, query.Id).OrderBy(q => q.IndexOrder).ToList();
+                queryColumns = queryColumnQuery.GetZeroQueryColumnsByQueryCode(0, query.UniqueCode).OrderBy(q => q.IndexOrder).ToList();
             }
 
             MemoryStream memorystream = new MemoryStream(xmlFilters);

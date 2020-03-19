@@ -955,6 +955,10 @@ namespace MeatadataGeneratorTool
             }
         }
 
+        
+
+          
+
         MenuButtonViewModel selectedMenuItem;
         public MenuButtonViewModel SelectedMenuItem
         {
@@ -1297,6 +1301,12 @@ namespace MeatadataGeneratorTool
             set { allowedForComputingPartners = value; FirePropertyChanged("AllowedForComputingPartners"); }
         }
 
+        bool isMetadataOnlyTable;
+        public bool IsMetadataOnlyTable
+        {
+            get { return isMetadataOnlyTable; }
+            set { isMetadataOnlyTable = value; FirePropertyChanged("IsMetadataOnlyTable"); }
+        }
 
         string parentTableName;
 

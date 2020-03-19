@@ -415,7 +415,7 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
                 ContactTenantPM contactTenant = contactTenantsRepository.GetContactTenantForUser(contact.Id, tenant);
                 List<RestrictionPM> restrictions = restrictionQuery.GetResitrictionsByObjectTableAndContact(contactTenant.Id, objectTable.Id, tenant).ToList();
                 var query = from restriction in restrictions
-                            group restriction by restriction.ObjectFieldId into objectTableGroup
+                            group restriction by restriction.ObjectFieldCode into objectTableGroup
                             select new
                             {
                                 key = objectTableGroup.Key,

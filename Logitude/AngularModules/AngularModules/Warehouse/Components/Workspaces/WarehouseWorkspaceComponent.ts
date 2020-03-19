@@ -245,11 +245,11 @@ export class WarehouseWorkspaceComponent extends BaseComponent {
         var args: any = {};
         args.ShipmentLevelCode = "D";
         var logWindow = new LogitudeWindow();
-        logWindow.Width = 940;
-        logWindow.Height = 570;
+        logWindow.Width = 1030;
+        logWindow.Height = 620;
         logWindow.WindowArgs = args;
         logWindow.Title = "New Cross Dock Release";
-        logWindow.Show('./Warehouse/Components/NewEntity/NewFullWarehouseReleaseComponent');
+        logWindow.Show('./Warehouse/Components/NewWarehouseReleaseComponent');
 
         logWindow.WindowClosed.subscribe(s => {
             if (s) {

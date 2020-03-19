@@ -35,6 +35,28 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                 }
 
             }
-         
+
+        public HttpResponseMessage GetSingleByCode(string code, int tenant)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.CheckContactFeature("MoveType", "READ", authToken.Tenant);
+                GeneralDomainService service = new GeneralDomainService();
+                string singleTextCodeId = service.GetTextCodeIdByCode(code, tenant);
+                var singleTextCode = service.GetSingleFieldTranslationForTextCodeId(singleTextCodeId, tenant);
+
+                return Request.CreateResponse(HttpStatusCode.OK, singleTextCode);
+
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+
     }
 }

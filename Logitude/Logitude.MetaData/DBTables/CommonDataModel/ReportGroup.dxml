@@ -1,22 +1,49 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Table Name="ReportGroups" Schema="dbo" DBType="Main">
-  <Column Name="Code" Type="nvarchar" Size="-1">
-    <Constraints Nullable="true" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="ReportGroups"
+  Schema="dbo"
+  DBType="Main"
+  Module="Common">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="EnglishName" Type="nvarchar" Size="-1">
-    <Constraints Nullable="true" />
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="Id" Type="nvarchar" Size="128">
-    <Constraints PrimaryKey="true" Nullable="false" />
+  <Column
+    Name="Code"
+    Type="varchar"
+    Size="4">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="LocalName" Type="nvarchar" Size="-1">
-    <Constraints Nullable="true" />
+  <Column
+    Name="EnglishName"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="OrderNumber" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="LocalName"
+    Type="nvarchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="OrderNumber"
+    Type="int"
+    DefaultValue="0">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Relation ParentTableName="Reports" ParentColumnName="ReportGroupId" ReferencedTableName="ReportGroups" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Reports_dbo.ReportGroups_ReportGroupId" />
 </Table>

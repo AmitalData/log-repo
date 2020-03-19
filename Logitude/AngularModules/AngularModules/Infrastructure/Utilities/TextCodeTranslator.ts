@@ -2,6 +2,8 @@ declare var window: any;
 import {SessionLocator} from '../Utilities/SessionLocator';
 import { AppTool } from '../Tools';
 import { retry } from 'rxjs/operator/retry';
+import { isNullOrUndefined } from 'util';
+import { ObjectsLocator } from '../Locators/ObjectsLocator';
 
 export class TextCodeTranslator {
 
@@ -59,12 +61,12 @@ export class TextCodeTranslator {
                 }
             }
 
-            var codeTranslation = window.TenantTranslations.filter((d: any) => d.TextCodeId === cachedTranslationObject.Id && d.TranslationHeaderCode == SessionLocator.TenantPM.Language)[0];
+            var codeTranslation = window.TenantTranslations.filter((d: any) => d.TextCodeCode === cachedTranslationObject.Code && d.TranslationHeaderCode == SessionLocator.TenantPM.Language)[0];
             if (codeTranslation) {
                 translation = codeTranslation.TranslatedText;
             }
             else {
-                var languageTranslation = window.TenantLanguageTranslations.filter((d: any) => d.TextCodeId === cachedTranslationObject.Id)[0];
+                var languageTranslation = window.TenantLanguageTranslations.filter((d: any) => d.TextCodeCode === cachedTranslationObject.Code)[0];
                 if (languageTranslation) {
                     translation = languageTranslation.TranslatedText;
                 }
@@ -88,18 +90,23 @@ export class TextCodeTranslator {
 
                 }
 
-                var codeTranslation = window.TenantTranslations.filter((d: any) => d.TextCodeId === translationObject.Id && d.TranslationHeaderCode == SessionLocator.TenantPM.Language)[0];
+                var codeTranslation = window.TenantTranslations.filter((d: any) => d.TextCodeCode === translationObject.Code && d.TranslationHeaderCode == SessionLocator.TenantPM.Language)[0];
                 if (codeTranslation) {
                     translation = codeTranslation.TranslatedText;
                 }
                 else {
-                    var languageTranslation = window.TenantLanguageTranslations.filter((d: any) => d.TextCodeId === translationObject.Id)[0];
+                    var languageTranslation = window.TenantLanguageTranslations.filter((d: any) => d.TextCodeCode === translationObject.Code)[0];
                     if (languageTranslation) {
                         translation = languageTranslation.TranslatedText;
                     }
                 }
 
                 window.TextCodesCache.push(translationObject);
+            }
+            else {
+                if (this.ShowAlertMessage(value)) {
+                    alert("This Code '" + value + "' Not Found!");
+                }
             }
         }
 
@@ -114,6 +121,17 @@ export class TextCodeTranslator {
         else {
             return translation;
         }
+    }
+    static ShowAlertMessage(value) {
+        if (isNullOrUndefined(value) || value.indexOf(".NewButton") >= 0 || value == "No Filter")
+            return false;
+
+        var productionStages: Array<string> = ["simplog", "logboxwe1", "amitalstorage"];
+        if (!productionStages.find(stage => stage == ObjectsLocator.GlobalSetting.DeploymentStage.toLowerCase())) {
+            if (!SessionLocator.ProtractorEmails.find(userEmail => userEmail == SessionLocator.LoggedUserPM.Email.toLowerCase()))
+                return true;
+        }
+        return false;
     }
     static TranslateTable(value: string): string {
 
@@ -179,12 +197,12 @@ export class TextCodeTranslator {
         if (cachedTranslationObject) {
             //translation = cachedTranslationObject.DefaultText;
             translation = cachedTranslationObject.DefaultTextPlural;
-            var codeTranslation = window.TenantTranslations.filter((d: any) => d.TextCodeId === cachedTranslationObject.Id && d.TranslationHeaderCode == SessionLocator.TenantPM.Language)[0];
+            var codeTranslation = window.TenantTranslations.filter((d: any) => d.TextCodeCode === cachedTranslationObject.Code && d.TranslationHeaderCode == SessionLocator.TenantPM.Language)[0];
             if (codeTranslation) {
                 translation = codeTranslation.TranslatedTextPlural;
             }
             else {
-                var languageTranslation = window.TenantLanguageTranslations.filter((d: any) => d.TextCodeId === cachedTranslationObject.Id)[0];
+                var languageTranslation = window.TenantLanguageTranslations.filter((d: any) => d.TextCodeCode === cachedTranslationObject.Code)[0];
                 if (languageTranslation) {
                     translation = languageTranslation.TranslatedText;
                 }
@@ -196,12 +214,12 @@ export class TextCodeTranslator {
             if (translationObject) {
                 translation = translationObject.DefaultTextPlural;
 
-                var codeTranslation = window.TenantTranslations.filter((d: any) => d.TextCodeId === translationObject.Id && d.TranslationHeaderCode == SessionLocator.TenantPM.Language)[0];
+                var codeTranslation = window.TenantTranslations.filter((d: any) => d.TextCodeCode === translationObject.Code && d.TranslationHeaderCode == SessionLocator.TenantPM.Language)[0];
                 if (codeTranslation) {
                     translation = codeTranslation.TranslatedTextPlural;
                 }
                 else {
-                    var languageTranslation = window.TenantLanguageTranslations.filter((d: any) => d.TextCodeId === translationObject.Id)[0];
+                    var languageTranslation = window.TenantLanguageTranslations.filter((d: any) => d.TextCodeCode === translationObject.Code)[0];
                     if (languageTranslation) {
                         translation = languageTranslation.TranslatedText;
                     }

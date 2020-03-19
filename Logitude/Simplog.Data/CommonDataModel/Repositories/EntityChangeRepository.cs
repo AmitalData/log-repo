@@ -33,6 +33,16 @@ namespace Simplog.Data.CommonDataModel.Repositories
                     select a).FirstOrDefault();
         }
 
+
+        public List<EntityChange> GetEntityChanges( int tenant)
+        {
+            return (from a in this.context.EntityChanges
+                    where a.Tenant == tenant &&( a.ChangesAutomationFieldsXml!=null || a.AutomationConditionFieldsXml !=null)
+                    select a).ToList();
+        }
+
+
+
         public void Add(EntityChange entity)
         {
             this.context.EntityChanges.Add(entity);

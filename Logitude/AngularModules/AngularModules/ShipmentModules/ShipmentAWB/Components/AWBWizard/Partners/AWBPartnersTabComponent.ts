@@ -267,6 +267,11 @@ export class AWBPartnersTabComponent extends BaseComponent
         if (this.EntityPM.ShipmentLevelCode == "C") {
             myDependency = "AG";
             myDependencyIsList = false;
+            
+            if (SessionLocator.TenantPM.AllowCustomersInAgentsLOV) {
+                myDependency = "CS,AG";
+                myDependencyIsList = true;
+            }
         }
 
         else {

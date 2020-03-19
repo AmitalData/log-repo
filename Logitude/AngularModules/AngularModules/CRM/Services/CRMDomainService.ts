@@ -14,12 +14,17 @@ import {SLAEscalationRecepientPM} from '../EntityPMs/SLAEscalationRecepientPM';
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass'; 
 import {Guid} from '../../Infrastructure/Utilities/Guid';
 import { PerformanceLogger } from '../../Infrastructure/Utilities/PerformanceLogger';
+import { OccasionInviteePM } from '../EntityPMs/OccasionInviteePM';
+import { SessionLocator } from '../../Infrastructure/Utilities/SessionLocator';
+import { SupportMailboxPM } from '../EntityPMs/SupportMailboxPM';
 
 @Injectable()
 
 export class CRMDomainService {
     private _apiUrl: string;
     private _http: Http;
+    private CurrentSession = SessionLocator.SelectedSession;    
+
     constructor() {
         this._http = ServiceHelper.Http;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/CRMDomain';
@@ -1562,6 +1567,71 @@ export class CRMDomainService {
             }).catch(ServiceHelper.HandleServiceError);
         });
     }
+
+
+    GetOccasionContactsByFiltersAndUpdate(filters: ApiQueryFilters) {
+        var callTime = new Date();
+
+        var urlparameters = '/GetOccasionContactsByFiltersAndUpdate?';
+        var mykeys = Object.keys(filters);
+        var addtionalFiltersValues = null;
+
+        for (var i in mykeys) {
+            var propName = mykeys[i];
+            var propValue = filters[propName];
+
+            var ignoreFilter = ((propName.indexOf("Operator") > 0 && propValue == "Equals") || propName == "AdditionalFilters");
+
+            if (urlparameters != "?") {
+                urlparameters = urlparameters.concat('&');
+            }
+            if (!ignoreFilter) {
+                propValue = encodeURIComponent(propValue);
+                urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
+            }
+
+            if (propName == "AdditionalFilters" && propValue.length > 0)
+                addtionalFiltersValues = JSON.stringify(propValue);
+        }
+
+        if (addtionalFiltersValues) {
+            urlparameters = urlparameters.concat("&AdditionalFilters=").concat(addtionalFiltersValues);
+        }
+
+
+
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+        var callUrl = this._apiUrl.concat(urlparameters);
+
+        return Observable.defer(() => {
+            return this._http.get(callUrl, {
+                headers: authHeader
+            }).map(response => {
+                var serviceResponse: ServiceResponse;
+                serviceResponse = response.json();
+
+                var _mappedListsArray: Array<OccasionContactSearchresult> = [];
+                if (serviceResponse.Result) {
+                    for (var key in serviceResponse.Result) {
+
+                        var entity: OccasionContactSearchresult;
+                        entity = this.MapOccasionContactSearchresult(serviceResponse.Result[key]);
+                        _mappedListsArray.push(entity);
+                    }
+                }
+
+                serviceResponse.Result = _mappedListsArray;
+                serviceResponse.CallTime = callTime;
+                var servertime = response.headers.get('ServerExecutionTime');
+                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "User", "GetByFilters", "PageIndex:" + filters.PageIndex + ", PageSize:" + filters.PageSize + ", GetAll:" + filters.GetAll);
+                return serviceResponse;
+
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
+
     MapOccasionContactSearchresult(jsonList: any) {
         var entityList: OccasionContactSearchresult;
         entityList = new OccasionContactSearchresult();
@@ -1575,6 +1645,76 @@ export class CRMDomainService {
         return entityList;
     }
 
+    GetSupportMailboxsByTenant() {
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetSupportMailboxsByTenant?', {
+                headers: authHeader
+            }).map(response => {
+                var result = response.json();
+                var entity: SupportMailboxPM;
+                var allLists: SupportMailboxPM[];
+                allLists = new Array<SupportMailboxPM>();
+
+                result.forEach((item) => {
+                    entity = this.MapJsonToSupportMailboxPM(item);
+                    allLists.push(entity);
+                });
+
+                var pmresponse: ServiceResponse;
+                pmresponse = new ServiceResponse();
+                pmresponse.Result = allLists;
+                return pmresponse;
+            });
+        });
+    }
+    MapJsonToSupportMailboxPM(jsonPM: any, mapParent: boolean = true, entityPM: SupportMailboxPM = null) {
+        if (!entityPM) {
+            entityPM = new SupportMailboxPM();
+        }
+
+        var jsonPMKeys = Object.keys(jsonPM);
+
+        for (var key in jsonPMKeys) {
+            if (jsonPMKeys[key] === "UIProperties") {
+                continue;
+            }
+
+            var property = jsonPMKeys[key];
+            entityPM[property] = jsonPM[property];
+        }
+
+        entityPM.IsDirty = false;
+
+        if (mapParent) {
+            entityPM.OldEntityPM = this.clone(entityPM);
+        }
+
+        else {
+            entityPM.OldEntityPM = null;
+        }
+
+        return entityPM;
+    }
+
+    DeleteMailBox(entityId: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
+        var url = this._apiUrl + '/GetDeleteMailBox?entityId=' + entityId;
+
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+
+                var myResult = response.json();
+
+                var serviceResponse = new ServiceResponse();
+                serviceResponse.Result = myResult;
+                return serviceResponse;
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
 }
 
 export class DailySpotlightClass {

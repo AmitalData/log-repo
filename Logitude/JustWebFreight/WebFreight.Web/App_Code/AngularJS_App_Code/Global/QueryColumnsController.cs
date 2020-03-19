@@ -105,10 +105,10 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Global
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                IWebFreightContext objectContext = WebFreightContext.GetContext(tenant);
-                QueryColumnRepository repo = new QueryColumnRepository(tenant);
-                var temp = repo.GetSingleQueryColumn(id,tenant);
-                if (temp != null)
+                IWebFreightContext objectContext = WebFreightContext.GetContext(authToken.Tenant);
+                QueryColumnRepository repo = new QueryColumnRepository(authToken.Tenant);
+                var temp = repo.GetSingleQueryColumn(id, tenant);
+                if (temp != null && tenant != 0)
                 {
                     repo.Remove(temp);
                     repo.SubmitChanges();
@@ -123,13 +123,13 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Global
         }
 
         [OperationContract]
-        [WebGet(UriTemplate = "getquerycolumnpms/{tenant}/{queryid}/{objecttableid}/{userid}")]
-        public List<QueryColumnPM> GetQueryColumnPMs(int tenant, string queryid, string objecttableid, string userid)
+        [WebGet(UriTemplate = "getquerycolumnpms/{tenant}/{queryCode}/{objecttableid}/{userid}")]
+        public List<QueryColumnPM> GetQueryColumnPMs(int tenant, string queryCode, string objecttableid, string userid)
         {
             //SecurityUtility.AuthenticationOnTenant(tenant);
             QueryColumnRepository queryColumnRepository = new QueryColumnRepository(tenant);
             QueryColumnQuery queryColumnQuery = new QueryColumnQuery(queryColumnRepository);
-            var querycolumns = queryColumnQuery.GetQueryColumnsByQueryIdAndUserAngular(tenant, userid, queryid);//.ToList();
+            var querycolumns = queryColumnQuery.GetQueryColumnsByQueryCodeAndUserAngular(tenant, userid, queryCode);//.ToList();
             if (querycolumns.Count() > 0)
             {
                 return querycolumns.OrderBy(a => a.IndexOrder).ToList();

@@ -85,9 +85,11 @@ namespace WebFreight.Web.WcfApi
             ShipmentPM shipmentPM = shipmentQuery.GetSingleShipmentPMByNumber(declarationApprovalRequestPM.ForwarderShipmentNumber, tenant);
             if (shipmentPM!=null)
             {
+                shipmentPM.IsHybrid = true;
                 shipmentPM.IsShipmentAdditionalCloudDataChange = true;
                 shipmentPM.DeclarationXMLData = declarationApprovalRequestPM.DeclarationXmlData;
                 shipmentPM.IsImporterApprovalRequired = true;
+                shipmentPM.IsDeclarationApprovalRequest = true;
                 shipmentId = shipmentPM.Id;
                 string email =Logitude.BL.Security.SecurityUtility.GetAuthenticatedUser(tenant);
                 IShipmentsContext objectContext = ShipmentsContext.GetContext(shipmentPM.Tenant);

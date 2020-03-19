@@ -144,6 +144,10 @@ namespace Logitude.CRM.BL.EntityUpdateServices
 
                 correspondenceRepository.Add(line);
                 correspondenceRepository.SubmitChanges();
+
+                ticket.LastCorrespondence = line.Description;
+                ticketRep.Update(ticket);
+                ticketRep.SubmitChanges();
             }
         }
 
@@ -243,6 +247,8 @@ namespace Logitude.CRM.BL.EntityUpdateServices
                 if (activityTypeCode != null)
                 {
                     helper.SendEmailAlert(entityPM, entityPOCO, "Activity", entityPM.Tenant, "GAN" + activityTypeCode, true);
+                    if (entityPM.ActivityStatusCode == "C")
+                        helper.SendEmailAlert(entityPM, entityPOCO, "Activity", entityPM.Tenant, "GA" + activityTypeCode + "C", false);
                 }
 
                 if (entityPM.IsCopy)

@@ -69,6 +69,8 @@ namespace Logitude.Infrastructure.Data.EntityPOCOs
 	    public string LastRunByUserId { get; set; }
 	      
         public virtual User LastRunByUser { get; set; }
+        [Column("FactTableName")]
+	    public string FactTableName { get; set; }
     }
 }
 	 

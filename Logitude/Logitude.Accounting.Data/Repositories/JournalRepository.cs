@@ -16,6 +16,7 @@ using Logitude.Server.Tools;
 using Simplog.Data.InvoiceModel;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Logitude.Accounting.Data.DataContract;
+using Logitude.Accounting.Data.EntityLists;
 
 namespace Logitude.Accounting.Data.Repositories
 {
@@ -197,7 +198,7 @@ namespace Logitude.Accounting.Data.Repositories
         {
             var q = (from a in context.Journals
                      where a.Tenant == tenant
-                     where !a.IsLedgerCreated //index 
+                     where a.IsLedgerCreated== false//index 
                      where (a.StatusCode == "2" || a.StatusCode == "3")
                      //3 voided 
                      //2	Approved	מאושר	2,Approved,מאושר	0
@@ -238,6 +239,17 @@ namespace Logitude.Accounting.Data.Repositories
             return q;
         }
 
+        public IQueryable<Journal> GetQueryableBetween(int tenant, DateTime fromTruncateTime, DateTime toTruncateTime)
+        {
+            fromTruncateTime = fromTruncateTime.Date;
+            toTruncateTime = toTruncateTime.Date;
+            var q = (from a in context.Journals
+                     where a.Tenant == tenant
+                     where EntityFunctions.TruncateTime(a.AccountingDate) >= fromTruncateTime && EntityFunctions.TruncateTime(a.AccountingDate) <= toTruncateTime
+                     select a);
+            return q;
+
+        }
         public IQueryable<Journal> GetQueryableApprovedBetween(int tenant, DateTime fromTruncateTime, DateTime toTruncateTime)
         {
             var q = (from a in context.Journals
@@ -277,6 +289,17 @@ namespace Logitude.Accounting.Data.Repositories
                                      where a.JournalNumber == number && a.Tenant == tenant
                                      select a).FirstOrDefault();
             return Journal;
+        }
+
+        public List<string> GetJournalNumbersByTransactionsList(List<InterestTransactionList> interestTransactionLists, int tenant)
+        {
+            List<string> entityIdsWithCodes = interestTransactionLists.Select(d => d.EntityId+ "," +( d.InterestEntityTypeCode == "1" ? "2" :
+                                                                                                      d.InterestEntityTypeCode == "2" ? "3" : "1")).ToList();
+            List<string> JournalNumbers = (from a in context.Journals
+                                     where entityIdsWithCodes.Contains(a.AccountingEntityId+","+a.AccountingEntityCode)  && a.Tenant == tenant
+                                     select a.JournalNumber+","+ a.AccountingEntityId + ","  +(a.AccountingEntityCode == "2" ? "1" :
+                                                                                               a.AccountingEntityCode == "3" ? "2" : "3")).ToList();
+            return JournalNumbers;
         }
 
         public Journal GetSingleJournalByExternalNoAndExternalSystem(string externalNo,string externalSystem ,int tenant)
@@ -377,6 +400,7 @@ namespace Logitude.Accounting.Data.Repositories
             var journals = (from a in context.Journals.Include("JournalStatusType")
                             where a.Tenant == tenant
                             where entityIdS.Contains(a.AccountingEntityId)
+                                    && a.AccountingEntityCode == "2"
                             select a);
 
             return journals;

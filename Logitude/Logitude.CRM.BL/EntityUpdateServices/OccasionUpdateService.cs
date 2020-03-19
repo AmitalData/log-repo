@@ -29,7 +29,8 @@ namespace Logitude.CRM.BL.EntityUpdateServices
         protected override void OnUpdating(EntityPMs.OccasionPM entityPM)
         {
             DateTime myDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
-
+            var isAllAdded = entityPM.IsAllAdded;
+            var test = entityPM.RemovedOccasionInvitees;
             ICommonDataContext commonContext = CommonDataContext.GetContext(entityPM.Tenant);
             ContactRepository contactRepository = new ContactRepository(entityPM.Tenant);
             Contact loggedContact = contactRepository.GetSingleContactByEmail(AuthenticationUtil.ResolveLoggingUserId(entityPM.Tenant), entityPM.Tenant);
@@ -49,6 +50,7 @@ namespace Logitude.CRM.BL.EntityUpdateServices
                 }
             }       
         }
+
 
         protected override void OnUpdating(EntityPMs.OccasionPM entityPM, Occasion entityPOCO)
         {

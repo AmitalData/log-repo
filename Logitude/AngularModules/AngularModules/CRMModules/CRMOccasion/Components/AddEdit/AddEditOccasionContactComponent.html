@@ -92,7 +92,7 @@
                                             </td>
 
                                             <td style="width:200px;">
-                                                <ComboBox [WithIcons]="true" [ItemsSource]="ProductTypeComboList" [Binding]="'Name'" [SelectedItem]="SelectedProdustTypeFilter" (SelectedItemChanged)="SelectedProdustTypeFilter = $event"></ComboBox>
+                                                <ComboBox [WithIcons]="true" [WithCheckBoxes]="true" [ItemsSource]="ProductTypeComboList" [Binding]="'Name'" [SelectedItem]="SelectedProductTypeFilter" (SelectedItemChanged)="SelectedProductTypeFilter = $event"></ComboBox>
                                             </td>
                                         </tr>
 
@@ -101,8 +101,9 @@
                                                 <LogLabel [NoObjectField]="true" [ObjectFieldName]="'AdditionalServiceId'" [Text]="'Additional Service'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                             </td>
 
-                                            <td  style="width:200px;"><div></div></td>
-
+                                            <td style="width:200px;">
+                                                <ComboBox [WithCheckBoxes]="true" [ItemsSource]="AdditionalServiceComboList" [Binding]="'Name'" [SelectedItem]="SelectedAdditionalServiceFilter" (SelectedItemChanged)="SelectedAdditionalServiceFilter = $event" (SelectedItemIds)="SelectedAdditionalServiceFilterIds = $event"></ComboBox>
+                                            </td>
                                         </tr>
 
                                         <tr class="FormFieldRow">
@@ -187,7 +188,7 @@
                     </td>
 
                     <td style="width: 300px;">
-                        <SearchBox [ObjectTableName]="'Contact'" (TextChanged)="SearchMethod($event)"></SearchBox>
+                        <SearchBox [UseTimer]="true" [ObjectTableName]="'Contact'" (TextChanged)="OnSearchTextChangeEvent($event)"></SearchBox>
                     </td>
                 </tr>
             </table>
@@ -209,9 +210,9 @@
                             <div class="MediaFill">
                                 <div style="vertical-align:top;" class="GeneratedGridContainer">
                                     <logitude-grid style="vertical-align:top;" [QueryChangeEvent]="onQueryChangeEvent" GridWidth="100%" GridHeight="100%"
-                                                   [dataSource]="DataSource" [ReloadData]="true" [columns]="Columns" [autoLoad]="true" [rows]="Items"
-                                                   [searchFields]="SearchText" [SearchFieldchangeevent]="SearchFieldChangeEvent"
-                                                   (CheckBoxChecked)="onCheckBoxChecked($event)" [IsAllRecordsChecked]="IsAllChecked">
+                                                   [dataSource]="DataSource" [ReloadData]="true" [columns]="Columns" [autoLoad]="true" [rows]="Items" [CheckboxProp]="'ContactId'"
+                                                   [searchFields]="SearchText" [SearchFieldchangeevent]="SearchFieldChangeEvent"  (RemovedListItemsEvent)="OnSetRemoved($event)"
+                                                   (CheckBoxChecked)="onCheckBoxChecked($event)" [IsAllRecordsChecked]="IsAllChecked" (CountReady)="onCountReady($event)">
                                     </logitude-grid>
                                 </div>
                             </div>

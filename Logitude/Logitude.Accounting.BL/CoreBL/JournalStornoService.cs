@@ -50,7 +50,7 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 ThrowCloseMonth(_JournalPM.Tenant);
             }
-            if (!JournalValidator.IsMonthOpenForAccountingDate(accountingPeriodsByTypeRegular.AsQueryable(), _JournalPM.AccountingDate))
+            if (!(JournalValidatorNotStatic.IsMonthOpenForAccountingDate(accountingPeriodsByTypeRegular.AsQueryable(), _JournalPM.AccountingDate)))
             {
                 ThrowCloseMonth(_JournalPM.Tenant);
             }
@@ -157,6 +157,12 @@ namespace Logitude.Accounting.BL.CoreBL
                 JournalLinePM newStornoJournalLine = new JournalLinePM();
                 newStornoJournalLine.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
                 newStornoJournalLine.AccountingDate = item.AccountingDate;
+                if (stornoOverrideM.AccountingDate.HasValue)
+                {
+                    newStornoJournalLine.AccountingDate = stornoOverrideM.AccountingDate.Value;
+                }
+
+
                 newStornoJournalLine.ActionCode = item.ActionCode;
                 newStornoJournalLine.ActionTypeCode = item.ActionTypeCode;
                 newStornoJournalLine.ActionName = item.ActionName;

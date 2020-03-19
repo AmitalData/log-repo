@@ -76,5 +76,8 @@ namespace Logitude.BL.InfrastructureModel.EntityLists
         public string RecordType { get; set; }
         public string ObjectTable_LookUpTableName { get; set; }
         public string FieldCode { get;  set; }
+        public string FullNameTextCodeCode { get; set; }
+        public string ShortNameTextCodeCode { get; set; }
+        public string HelpTextCodeCode { get; set; }
     }
 }

@@ -52,7 +52,7 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
     Approved: boolean = false;
     AccountingPeriods: AccountingPeriodList[] = [];
     _AccountingPeriodListService: AccountingPeriodListService = new AccountingPeriodListService();
-    
+
     OnRowEnded($event) {
         console.log("this.JournalLines.Length : " + this.JournalLines.Length);
         if (($event) == this.JournalLines.Length) {
@@ -647,12 +647,11 @@ class JournalLineModel extends BaseComponent {
     console.log($event);
   }
 
+    get ActionId() { return this.JournalLinePM.ActionId; }
+    set ActionId(value: string) {
 
-    get ActionCode() { return this.JournalLinePM.ActionCode; }
-    set ActionCode(value: string) {
-
-        if (this.JournalLinePM.ActionCode != value) {
-            this.JournalLinePM.ActionCode = value;
+        if (this.JournalLinePM.ActionId != value) {
+            this.JournalLinePM.ActionId = value;
             this.parent.CalculateTotals();
         }
         if (value != null) {
@@ -660,6 +659,27 @@ class JournalLineModel extends BaseComponent {
             this.Currency = null;
         }
     }
+
+    get ActionCode() { return this.JournalLinePM.ActionCode; }
+    set ActionCode(value: string) {
+
+        if (this.JournalLinePM.ActionCode != value) {
+            this.JournalLinePM.ActionCode = value;
+        }
+    }
+
+    // get ActionCode() {
+    //     if(this.journalActionType)
+    //         return this.journalActionType.Code;
+    //     else
+    //         return this.JournalLinePM.ActionCode;
+    // }
+    // set ActionCode(value: string) {
+
+    //     if (this.journalActionType && this.journalActionType.Code != value) {
+    //         this.journalActionType.Code = value;
+    //     }
+    // }
 
     get ActionName() { return this.JournalLinePM.ActionName == null ? "" : this.JournalLinePM.ActionName }
     set ActionName(value: string) {
@@ -676,7 +696,7 @@ class JournalLineModel extends BaseComponent {
         if (this.journalActionType != value) {
             this.journalActionType = value;
             if (value != null) {
-                //this.ActionCode = value.Code;
+                this.ActionCode = value.Code;
                 this.ActionName = value.LocalName;
             }
         }

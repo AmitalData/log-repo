@@ -16,6 +16,19 @@
         background-size: contain;
         cursor: pointer;
     }
+
+    .Link:hover {
+        cursor: pointer;
+        color: #1C59FC;
+    }
+
+    .Link {
+        cursor: pointer;
+        font-size: 13px;
+        color: #0094ff;
+        height: 21px;
+        white-space: nowrap;
+    }
 </style>
 
 <table>
@@ -252,7 +265,17 @@
                                         <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
                                             {{item.CommodityName}}
                                         </log-cell-template>
-                                    </log-column>                                    
+                                    </log-column>
+
+                                    <log-column *ngIf="IsShowReleaseNumber" [width]="'100'" [header]="'Release #'">
+                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
+                                            <span *ngIf="item.IsShowReleaseNumber">
+                                                {{item.WarehouseReleaseNumber}}
+                                                
+                                            </span>
+                                        </log-cell-template>
+                                    </log-column>
+
 
                                     <!-- Buttons -->
                                     <log-column [width]="'100'">
@@ -290,6 +313,21 @@
                                         </log-cell-template>
                                     </log-column>
 
+
+                                    <log-column *ngIf="IsShowReleaseNumber" [width]="'150'">
+                                        <log-cell-template template="let item" [TabIndex]="-1">
+                                            <div style="width: 100%; height: 100%; position: relative;">
+                                                <div *ngIf="item.IsShowReleaseNumber" class="LeftCenter">
+                                                    <a class="Link" style="font-size:13px;" (click)="DisconnectWarehouseReleasePackage(item)">Disconnect Release</a>
+
+                                                </div>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
+
+
+
+
                                 </logitude-edit-grid>
 
                                 <!-- Ocean -->
@@ -323,6 +361,7 @@
                                                                     <td style="width: 120px; min-width: 120px; max-width: 120px; color : #6E7172;">{{WeightColumnHeader}}</td>
                                                                     <td style="width: 120px; min-width: 120px; max-width: 120px; color : #6E7172;" *ngIf="item.IsCommodityNumberVisible">Commodity #</td>
                                                                     <td style="width: 120px; min-width: 120px; max-width: 120px; color : #6E7172;" *ngIf="item.IsCommodityNameVisible">Commodity Name</td>
+                                                       
                                                                     <td class="LastChild" style="min-width: 50px;">
                                                                         <div></div>
                                                                     </td>
@@ -495,6 +534,16 @@
                                         </log-cell-template>
                                     </log-column>
 
+                                    <log-column *ngIf="IsShowReleaseNumber" [width]="'100'" [header]="'Release #'">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                          <span *ngIf="item.IsShowReleaseNumber"> {{item.WarehouseReleaseNumber}} </span>  
+                                        </log-cell-template>
+                                    </log-column>
+
+
+
+
+
                                     <!-- Last Status -->
                                     <log-column [width]="'150'" [header]="'ShipmentPackage.F.LastStatusCode' | TextCodeTranslationPipe" *ngIf="IsShippingInstructionsVisible">
                                         <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1">
@@ -507,7 +556,7 @@
                                     <!-- Icon:HasContainerException -->
                                     <log-column [width]="'25'" *ngIf="IsShippingInstructionsVisible">
                                         <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1">
-                                            <img *ngIf="item.HasContainerException" src="./Images/WarningIcon.png" class="CenterCenter" title="In a different voyage than the other containers"/>
+                                            <img *ngIf="item.HasContainerException" src="./Images/WarningIcon.png" class="CenterCenter" title="In a different voyage than the other containers" />
                                         </log-cell-template>
                                     </log-column>
 
@@ -624,19 +673,33 @@
                                         </log-cell-template>
                                     </log-column>
 
+
+                                    <log-column *ngIf="IsShowReleaseNumber" [width]="'150'">
+                                        <log-cell-template template="let item" [TabIndex]="-1">
+                                            <div style="width: 100%; height: 100%; position: relative;">
+                                                <div *ngIf="item.IsShowReleaseNumber" class="LeftCenter" >
+                                                    <a class="Link" style="font-size:13px;" (click)="DisconnectWarehouseReleasePackage(item)">Disconnect Release</a>
+
+                                                </div>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
+
+
+
                                 </logitude-edit-grid>
 
                                 <div class="GenerateArea" *ngIf="IsGenerateControlVisible">
                                     <div class="GenerateLinks">
-                                        <Hyperlink id="{{ 'GenerateBTN' | IdGeneratorPipe}}"  [IsEnabled]="IsGenerateButtonEnabled" *ngIf="IsGenerateButtonVisible" (click)="GenerateButtonClicked()">{{GenerateButtonLabel}}</Hyperlink>
+                                        <Hyperlink id="{{ 'GenerateBTN' | IdGeneratorPipe}}" [IsEnabled]="IsGenerateButtonEnabled" *ngIf="IsGenerateButtonVisible" (click)="GenerateButtonClicked()">{{GenerateButtonLabel}}</Hyperlink>
 
                                         <div *ngIf="IsBuildButtonVisible">
-                                            <Hyperlink  id="{{ 'ShipmentPackage.M.ContainNoPackages' | IdGeneratorPipe}}" [IsEnabled]="IsBuildButtonEnabled" (click)="BuildButtonClicked()">{{BuildButtonLabel}}</Hyperlink>
+                                            <Hyperlink id="{{ 'ShipmentPackage.M.ContainNoPackages' | IdGeneratorPipe}}" [IsEnabled]="IsBuildButtonEnabled" (click)="BuildButtonClicked()">{{BuildButtonLabel}}</Hyperlink>
                                             <span style="font-style:italic; color: gray; margin-left: 5px;" *ngIf="IsNoPackagesLoadedTextVisible">{{'ShipmentPackage.M.ContainNoPackages' | TextCodeTranslationPipe}}</span>
                                         </div>
 
                                         <div *ngIf="IsGeneratePackagesfromCrossDockReleasesButtonVisible">
-                                            <Hyperlink id="{{ 'GenerateCrossDockReleases' | IdGeneratorPipe}}" [IsEnabled]="IsGeneratePackagesfromCrossDockReleasesButtonEnabled" (click)="GeneratePackagesfromCrossDockReleasesButtonClicked()">{{GenerateCrossDockReleasesButtonLabel}}</Hyperlink>
+                                            <Hyperlink id="{{ 'GenerateCrossDockReleases' | IdGeneratorPipe}}" (click)="GeneratePackagesfromCrossDockReleasesButtonClicked()">{{GenerateCrossDockReleasesButtonLabel}}</Hyperlink>
                                         </div>
                                     </div>
                                 </div>

@@ -56,7 +56,7 @@ namespace Logitude.Accounting.Data.Repositories
         {
             return (from a in context.JournalLines
                     where a.Tenant == tenant
-                    where (GLAccountIDList.Contains(a.CreditAccountId) || GLAccountIDList.Contains(a.DebitControlAccountId))
+                    where (GLAccountIDList.Contains(a.CreditAccountId) || GLAccountIDList.Contains(a./*DebitControlAccountId*/ DebitAccountId))
                     select a);
         }
 

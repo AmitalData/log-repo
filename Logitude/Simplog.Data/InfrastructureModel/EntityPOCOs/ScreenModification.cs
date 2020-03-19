@@ -11,6 +11,7 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public string ScreenId { get; set; }
         public int NumberOfRows { get; set; }
         public int NumberOfColumns { get; set; }
+        public string ScreenCode { get; set; }
 
         [ForeignKey("ScreenId")]
         public virtual Screen Screen { get; set; }

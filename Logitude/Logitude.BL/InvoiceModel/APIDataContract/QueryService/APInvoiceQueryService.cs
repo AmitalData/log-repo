@@ -380,6 +380,11 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                     Simplog.Data.CommonDataModel.EntityPOCOs.ChargesType chargesType = ChargesTypeRepository.GetSingleChargesType(line.ChargesTypeId, tenant, true);
                     if (chargesType != null)
                     {
+                        if (!chargesType.IsPayable)
+                        {
+                            throw new ApplicationException(chargesType.Code + " should be marked as Payable");
+                        }
+
                         if (!string.IsNullOrEmpty(chargesType.ContainerMeasurementId))
                         {
                             Simplog.Data.CommonDataModel.EntityPOCOs.Measurement measurement = measurementRepository.GetSingleMeasurement(chargesType.ContainerMeasurementId, tenant);
@@ -752,6 +757,24 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                 throw ex;
             }
         }
+        public APInvoice GetAPInvoiceByInvoiceNumberAndExternalId(string number,string externalId, int tenant)
+        {
+            try
+            {
+
+
+                var temp = query.GetSinglePMByNumberAndExternalId(number, externalId, tenant);
+                if (temp == null)
+                    throw new ApplicationException("APInvoice with number " + number + " doesn't exist");
+
+                return APInvoiceDataMapping(temp, tenant);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
 
         public APInvoice GetAPInvoiceByInternalNumber(string number, int tenant)
         {
@@ -793,7 +816,15 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
         public void APInvoiceCustomDataMapping(APInvoice apinvoice, int tenant)
         {
             apinvoice.Tenant = tenant;
-            apinvoice.InvoiceExpectedAmount = apinvoice.AmountInInvoiceCurrency;
+            apinvoice.InvoiceExpectedAmount = Math.Round((double)apinvoice.AmountInInvoiceCurrency, 2);
+            apinvoice.AmountInInvoiceCurrency= Math.Round((double)apinvoice.AmountInInvoiceCurrency, 2);
+            apinvoice.AmountInLocalCurrency= Math.Round((double)apinvoice.AmountInLocalCurrency, 2);
+
+            if(apinvoice.SubTotalInInvoiceCurrency != null)
+                apinvoice.SubTotalInInvoiceCurrency = Math.Round((double)apinvoice.SubTotalInInvoiceCurrency, 2);
+
+            if(apinvoice.SubTotalInLocalCurrency != null)
+            apinvoice.SubTotalInLocalCurrency = Math.Round((double)apinvoice.SubTotalInLocalCurrency, 2);
 
             if (apinvoice.InvoiceCurrencyExchangeRate == null)
             {

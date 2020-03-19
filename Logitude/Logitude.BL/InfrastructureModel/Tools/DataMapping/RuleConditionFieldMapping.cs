@@ -12,6 +12,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             ruleConditionField.ObjectTableRuleId = ruleConditionFieldPM.ObjectTableRuleId;
             ruleConditionField.Operator = ruleConditionFieldPM.Operator;
             ruleConditionField.Value = ruleConditionFieldPM.Value;
+            ruleConditionField.ObjectFieldCode = ruleConditionFieldPM.ObjectFieldCode;
         }
     }
 }

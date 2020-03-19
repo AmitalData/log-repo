@@ -59,10 +59,15 @@ export class AddEditInterestBasesPeriodComponent extends BaseComponent {
     }
 
     CheckInterestRateValid(InterestRate: number): boolean {
-        if ((InterestRate.toFixed()).length > 2) {
-            return false;
+        if (InterestRate != null) {
+            if ((InterestRate.toFixed()).length > 2) {
+                return false;
+            }
+            return true;
         }
-        return true;
+        else {
+            return true;
+        }
     }
     CheckInterestBaseStartDateExist(InterestBaseStartDate: Date, CreateDate:Date): boolean {
         for (let i = 0; i < this.DataContext.fatherComponent.InterestBasesPeriodsList.Length; i++) {

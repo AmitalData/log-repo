@@ -62,7 +62,13 @@ public void GenerateEntityListService(string xmlFilePath,string outputFilePath,s
 	    		return;
 	    	}
 	    } 
-		
+		 if( entity.IsMetadataOnlyTable.GetType() == typeof(string))
+      	{
+	    	if(entity.IsMetadataOnlyTable == "true")
+	    	{
+	    		return;
+	    	}
+	    } 
           WriteEntityListServiceMethod(entity,modelname); 
           SaveEntityListServiceOutput(outputFilePath);
         

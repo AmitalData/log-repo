@@ -7,6 +7,7 @@ import { EditShipmentLinkRendererComponent } from './Components/TemplateRenderer
 import { AgGridColumnsOperations } from './Components/NewEntity/AgGridColumnsOperations';
 import { DWAskUserFiltersComponent } from './Components/Workspaces/DWAskUserFiltersComponent'; 
 import { DateSampleComponent } from './Components/Workspaces/DateSampleComponent'; 
+import { BIReportListTemplate } from './Components/ListTemplates/BIReportListTemplate';
 
 export const Components =
     [
@@ -18,7 +19,8 @@ export const Components =
         DWAskUserFiltersComponent,
         AGGridCustomHeader,
         EditShipmentLinkRendererComponent,
-        DateSampleComponent
+        DateSampleComponent,
+        BIReportListTemplate
     ];
 
 export class ModuleDeclarations {
@@ -34,6 +36,8 @@ export class ModuleDeclarations {
             case "AGGridCustomHeader": { myResult = AGGridCustomHeader; break; }
             case "EditShipmentLinkRendererComponent": { myResult = EditShipmentLinkRendererComponent; break; }
             case "DateSampleComponent": { myResult = DateSampleComponent; break; }
+            //Templates
+            case "BIReportListTemplate": { myResult = BIReportListTemplate; break; }
 
         }
         return myResult;

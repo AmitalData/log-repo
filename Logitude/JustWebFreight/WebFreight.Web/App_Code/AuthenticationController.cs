@@ -54,7 +54,12 @@ using WebFreight.Web.Helpers.DataProviderHelpers;
 
 namespace WebFreight.Web
 {
+#if DEBUG
+    /// <summary>
+    /// debug classes in App_Code !!!! WEB.<compilation 
+    /// </summary>
 
+#endif
     public class AuthenticationController : ApiController
     {
         public AuthenticationController()
@@ -66,10 +71,17 @@ namespace WebFreight.Web
         public UserData PostLoginUsingAuthenticaionToken(LoginTokenParameter logintokenparam, string dummy)
         {
             UserData userdata = GetUserDataByToken(logintokenparam, dummy);
+
             userdata.Token = logintokenparam.Token;
+
+            bool onpremiseGetDocumentDownloadToken = LogitudeSettings.DatabaseManagementSystem == "oracle";
+            if (userdata.DocumentDownloadToken == null && onpremiseGetDocumentDownloadToken)
+            {
+                userdata.DocumentDownloadToken = GetDocumentDownloadTokenReal("", userdata.Token);
+            }
             return userdata;
         }
-         
+
         public UserData PostLoginUsingAuthenticaionToken(LoginTokenParameter logintokenparam, bool isAngular)
         {
             UserData userData = null;
@@ -2000,7 +2012,15 @@ namespace WebFreight.Web
                 bool isIpAuthenticated = true;
                 if (customerCare)//(contact.Email == "customercare@logitudeworld.com")
                 {
-                    isIpAuthenticated = IscustomerCareIpAuthenticated();
+                    if (CustomerCareEmails.Contains(contact.Email))
+                    {
+                        isIpAuthenticated = true;
+                    }
+                    else
+                    {
+                        isIpAuthenticated = IscustomerCareIpAuthenticated();
+                    }
+                   
                 }
 
                 if (isIpAuthenticated)
@@ -2348,7 +2368,7 @@ namespace WebFreight.Web
         }
 
         PasswordCheckService passwordChkService = new PasswordCheckService();
-
+        List<string> CustomerCareEmails = new List<string>() {"fajr@logitudeworld.com", "eman@logitudeworld.com", "azhar@logitudeworld.com", "balqees@logitudeworld.com", "isra@logitudeworld.com", "mujahed@logitudeworld.com", "maram@logitudeworld.com", "diaa@logitudeworld.com", "zaki@logitudeworld.com", "ahmada@logitudeworld.com", "ihab@logitudeworld.com" };
         private UserData CheckUserState(string email, string password, ref ContactPassword contactPassword, bool byToken, string clientType)
         {
 
@@ -2425,7 +2445,15 @@ namespace WebFreight.Web
                     //        userData.IpRestricted = true;
                     //    }
                     //}
-                    userData.IpRestricted = !IscustomerCareIpAuthenticated();
+                    if (CustomerCareEmails.Contains(email))
+                    {
+                        userData.IpRestricted = false;
+                    }
+                    else
+                    {
+                        userData.IpRestricted = !IscustomerCareIpAuthenticated();
+                    }
+                    
                 }
             }
             else
@@ -2938,47 +2966,8 @@ namespace WebFreight.Web
         {
             try
             {
-                string result = "";
                 string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-
-                if (authToken != null)
-                {
-                    AuthenticationTokenRepository authenticationTokenRepository = new AuthenticationTokenRepository(authToken.Tenant);
-
-                    if (!string.IsNullOrEmpty(documentToken))
-                    {
-                        AuthenticationToken documentAuthenticationToken = AuthenticationTokenRepository.GetSingleTokenFromCache(documentToken);
-                        if (documentAuthenticationToken != null)
-                        {
-                            DateTime nowDate = DateTime.Now;
-                            DateTime endDate = (DateTime)documentAuthenticationToken.ExpirationDate;
-                            if (endDate.AddMinutes(-5) > nowDate)
-                            {
-                                result = documentAuthenticationToken.Token;
-                            }
-                        }
-                    }
-
-                    if (string.IsNullOrEmpty(result))
-                    {
-                        AuthenticationToken authenticationDocument = new AuthenticationToken()
-                        {
-                            CreateDate = DateTime.Now,
-                            ExpirationDate = DateTime.Now.AddMinutes(15),
-                            Email = authToken.Email,
-                            Password = authToken.Password,
-                            Token = AuthenticationUtil.GenerateToken(),
-                            Tenant = authToken.Tenant
-                            ,
-                            ClientType = "DocumentDownload"
-                        };
-
-                        authenticationTokenRepository.Add(authenticationDocument);
-                        authenticationTokenRepository.SubmitChanges();
-                        result = authenticationDocument.Token;
-                    }
-                }
+                string result = GetDocumentDownloadTokenReal(documentToken, token);
 
                 return Request.CreateResponse(HttpStatusCode.OK, result);
             }
@@ -2992,9 +2981,56 @@ namespace WebFreight.Web
 
         }
 
+        private static string GetDocumentDownloadTokenReal(string documentToken,string headerToken)
+        {
+            string result = "";
+            
+
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(/*token*/headerToken);
+
+            if (authToken != null)
+            {
+                AuthenticationTokenRepository authenticationTokenRepository = new AuthenticationTokenRepository(authToken.Tenant);
+
+                if (!string.IsNullOrEmpty(documentToken))
+                {
+                    AuthenticationToken documentAuthenticationToken = AuthenticationTokenRepository.GetSingleTokenFromCache(documentToken);
+                    if (documentAuthenticationToken != null)
+                    {
+                        DateTime nowDate = DateTime.Now;
+                        DateTime endDate = (DateTime)documentAuthenticationToken.ExpirationDate;
+                        if (endDate.AddMinutes(-5) > nowDate)
+                        {
+                            result = documentAuthenticationToken.Token;
+                        }
+                    }
+                }
+
+                if (string.IsNullOrEmpty(result))
+                {
+                    AuthenticationToken authenticationDocument = new AuthenticationToken()
+                    {
+                        CreateDate = DateTime.Now,
+                        ExpirationDate = DateTime.Now.AddMinutes(15),
+                        Email = authToken.Email,
+                        Password = authToken.Password,
+                        Token = AuthenticationUtil.GenerateToken(),
+                        Tenant = authToken.Tenant
+                        ,
+                        ClientType = "DocumentDownload"
+                    };
+
+                    authenticationTokenRepository.Add(authenticationDocument);
+                    authenticationTokenRepository.SubmitChanges();
+                    result = authenticationDocument.Token;
+                }
+            }
+
+            return result;
+        }
 
 
-         
+
     }
     public class LoginTokenParameter
     {

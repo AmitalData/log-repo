@@ -80,7 +80,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                  MetodoPagoCode = a.Card.MetodoPagoCode,
                                  UsoCFDICode = a.Card.UsoCFDICode,
                                  GLAccountId = a.Card.GLAccountId,
-
+                                 StorageFreeDays = a.Card.StorageFreeDays,
                                  Card = new CardPM()
                                  {
                                      Id = a.Id,
@@ -315,6 +315,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                PrimaryContactName = a.PrimaryContactName,
                                                PrimaryContactEmail = a.PrimaryContactEmail,
                                                PrimaryContactPhone = a.PrimaryContactPhone,
+                                               StateName = a.Card.StateName,
                                            };
             return result;
         }

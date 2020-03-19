@@ -22,5 +22,8 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string FilterHtmlComponentUrl { get; set; }
         public string DefaultTemplateId { get; set; }
         public string DefaultMessageTemplateId { get; set; }
+        public string FeatureUniqeCode { get; set; }
+        public bool AvailableForScheduling { get; set; }
+
     }
 }

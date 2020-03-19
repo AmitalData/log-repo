@@ -42,7 +42,14 @@ export class DocumentTypeList {
 		IsEnabledForCustomers: boolean;
 		DocumentTypeCategoryCode: string;
 		DocumentTypeCategoryName: string;
+		FileName: string;
+		IsAgentSharedInMaster: boolean;
+		IsAgentSharedInDirect: boolean;
+		IsAgentSharedInHouse: boolean;
+		SharedDocumentTypeCopyId: string;
 		OrderBy: number;
 		OrderedDisplayName: string;
-        FileName: string;
+		IsSystemAdditionalPrintingFields: boolean;
+		PrintingFieldsScreenCode: string;
+	
 }

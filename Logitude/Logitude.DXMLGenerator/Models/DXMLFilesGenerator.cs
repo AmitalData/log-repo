@@ -15,19 +15,29 @@ namespace Logitude.DXMLGenerator.Models
     {
         private readonly string Root = ConfigurationManager.AppSettings["Root"];
 
-        private string ConnectionString;
-        private string ErrorsFileName;
+        private readonly string ConnectionString;
+        private readonly string ErrorsFileName;
+        private readonly bool IncludeCustoms;
+
         private List<string> ExcludedTables;
         private List<string> ExcludedTablesNames;
         private int GeneratedDXMLFilesCounter = 0;
         private int GeneratedPathsCounter = 0;
         private string ErrorsData = "";
 
-        public DXMLFilesGenerator(string connectionString, string errorsFileName)
+        private List<ColumnDefaultValue> ColumnsDefaultValues;
+        private List<Index> Indexes;
+        private List<UniqueConstraint> UniqueConstraints;
+
+        public DXMLFilesGenerator(string connectionString, string errorsFileName, bool includeCustoms)
         {
             ConnectionString = connectionString;
             ErrorsFileName = errorsFileName;
+            IncludeCustoms = includeCustoms;
             BuildExcludedTablesList();
+            ReadColumnsDefaultValues();
+            ReadIndexes();
+            ReadUniqueConstraints();
         }
 
         public void GenerateDXMLFiles()
@@ -73,7 +83,9 @@ namespace Logitude.DXMLGenerator.Models
 
         private List<DBTable> GetTablesFromDB()
         {
-            string queryString = @"SELECT TABLE_CATALOG, TABLE_SCHEMA, TABLE_NAME FROM INFORMATION_SCHEMA.TABLES";
+            string queryCondition = IncludeCustoms ? null : " WHERE TABLE_SCHEMA = 'dbo'";
+
+            string queryString = @"SELECT TABLE_CATALOG, TABLE_SCHEMA, TABLE_NAME FROM INFORMATION_SCHEMA.TABLES" + queryCondition;
 
             SqlDataReader reader = null;
             SqlConnection connection = new SqlConnection(ConnectionString);
@@ -109,7 +121,7 @@ namespace Logitude.DXMLGenerator.Models
                 reader.Close();
                 connection.Close();
 
-                return dbTables.OrderBy(t => t.Name).ToList();
+                return dbTables;
             }
             catch (Exception)
             {
@@ -131,7 +143,7 @@ namespace Logitude.DXMLGenerator.Models
         {
             string queryString = @"SELECT Q1.*, Q2.ConstraintType, Q2.ConstraintName " +
                                   "FROM ( " +
-                                  "SELECT COL.COLUMN_NAME AS ColumnName, IS_NULLABLE AS Nullable, DATA_TYPE AS DataType, CHARACTER_MAXIMUM_LENGTH AS Size " +
+                                  "SELECT COL.COLUMN_NAME AS ColumnName, COL.IS_NULLABLE AS Nullable, COL.DATA_TYPE AS DataType, COL.CHARACTER_MAXIMUM_LENGTH AS Size, COL.NUMERIC_PRECISION AS Precision, COL.NUMERIC_SCALE AS Scale " +
                                   "FROM INFORMATION_SCHEMA.COLUMNS AS COL " +
                                   "WHERE COL.TABLE_NAME = @tableName " +
                                   ") AS Q1 " +
@@ -163,8 +175,11 @@ namespace Logitude.DXMLGenerator.Models
                         ColumnDefinition column = new ColumnDefinition
                         {
                             Name = reader["ColumnName"].ToString(),
-                            Type = GetDxmlDataType(reader["DataType"].ToString()),
+                            Type = GetColumnDefinitionDataType(reader["DataType"].ToString()),
                             Size = !String.IsNullOrEmpty(reader["Size"].ToString()) ? Convert.ToInt32(reader["Size"].ToString()) : 0,
+                            Precision = !String.IsNullOrEmpty(reader["Precision"].ToString()) ? Convert.ToInt32(reader["Precision"].ToString()) : 0,
+                            Scale = !String.IsNullOrEmpty(reader["Scale"].ToString()) ? Convert.ToInt32(reader["Scale"].ToString()) : 0,
+                            DefaultValue = GetColumnDefinitionDefaultValue(table.Name, reader["ColumnName"].ToString(), (reader["Nullable"].ToString() == "YES"), GetColumnDefinitionDataType(reader["DataType"].ToString())),
                             Constraints = new ConstraintsDefinition
                             {
                                 Nullable = (reader["Nullable"].ToString() == "YES")
@@ -191,13 +206,35 @@ namespace Logitude.DXMLGenerator.Models
                 reader.Close();
                 connection.Close();
 
+                List<string> tableColumnsNames = columnsDefinitions.Select(c => c.Name).ToList();
+
+                string tableDBType = GetDatabaseType(table.DBName);
+                List<RelationDefinition> tableRelations = GetTableRelations(table.Name);
+                List<IndexDefinition> tableIndexes = GetTableIndexes(table.Name).Where(i => !tableRelations.Select(r => r.ForeignKeyColumn).Contains(i.Columns)).ToList();
+
+                List<IndexDefinition> indexesWithWrongColumns = tableIndexes
+                    .Where(i => (!tableColumnsNames.Contains(i.Columns) && !i.Columns.Contains(",")) || (i.Columns.Split(',')
+                    .Where(cc => tableColumnsNames.All(c => c != cc)).Any() && i.Columns.Contains(","))).ToList();
+
+                List<IndexDefinition> indexesWithWrongInclude = tableIndexes
+                    .Where(i => (i.Include != null && !tableColumnsNames.Contains(i.Include) && !i.Include.Contains(",")) || (i.Include != null && i.Include.Split(',')
+                    .Where(cc => tableColumnsNames.All(c => c != cc)).Any() && i.Include.Contains(","))).ToList();
+
+                List<IndexDefinition> wrongIndexes = indexesWithWrongColumns.Concat(indexesWithWrongInclude).ToList();
+
+                tableIndexes = tableIndexes.Where(i => !wrongIndexes.Select(ii => ii.Columns).Contains(i.Columns)).ToList();
+
+                List<UniqueConstraintDefinition> tableUniqueConstraints = GetTableUniqueConstraints(table.Name);
+
                 tableDefinition = new TableDefinition
                 {
                     Name = table.Name,
                     Schema = table.Schema,
-                    DBType = GetDatabaseType(table.DBName),
-                    Columns = columnsDefinitions.OrderBy(c => c.Name).ToList(),
-                    Relations = GetTableRelations(table.Name)
+                    DBType = tableDBType,
+                    Columns = columnsDefinitions,
+                    Relations = tableRelations,
+                    Indexes = tableIndexes,
+                    UniqueConstraints = tableUniqueConstraints
                 };
             }
             catch (Exception)
@@ -219,14 +256,16 @@ namespace Logitude.DXMLGenerator.Models
 
         private List<RelationDefinition> GetTableRelations(string tableName)
         {
-            string queryString = @"SELECT ParentTable.name AS ParentTableName, ParentColumn.name AS ParentColumnName, ReferencedTable.name AS ReferencedTableName, ReferencedColumn.name AS ReferencedColumnName, SysObject.name AS ForeignKeyConstraintName " +
+            string queryString = @"SELECT ParentTable.name AS ParentTableName, ParentColumn.name AS ParentColumnName, ReferencedTable.name AS ReferencedTableName, ReferencedColumn.name AS ReferencedColumnName, SysObject.name AS ForeignKeyConstraintName, ParentTableSchema.name AS ParentTableSchemaName, ReferencedTableSchema.name AS ReferencedTableSchemaName, ReferencedColumn.column_id AS ReferencedColumnOrder " +
                                   "FROM SYS.FOREIGN_KEY_COLUMNS ForeignKeyColumns " +
                                   "INNER JOIN SYS.TABLES ParentTable ON ParentTable.object_id = ForeignKeyColumns.parent_object_id " +
+                                  "INNER JOIN SYS.SCHEMAS ParentTableSchema ON ParentTable.schema_id = ParentTableSchema.schema_id " +
                                   "INNER JOIN SYS.COLUMNS ParentColumn ON ParentColumn.column_id = ForeignKeyColumns.parent_column_id AND ParentColumn.object_id = ParentTable.object_id " +
                                   "INNER JOIN SYS.TABLES ReferencedTable ON ReferencedTable.object_id = ForeignKeyColumns.referenced_object_id " +
+                                  "INNER JOIN SYS.SCHEMAS ReferencedTableSchema ON ReferencedTable.schema_id = ReferencedTableSchema.schema_id " +
                                   "INNER JOIN SYS.COLUMNS ReferencedColumn ON ReferencedColumn.column_id = ForeignKeyColumns.referenced_column_id AND ReferencedColumn.object_id = ReferencedTable.object_id " +
                                   "INNER JOIN SYS.OBJECTS SysObject ON SysObject.object_id = ForeignKeyColumns.constraint_object_id " +
-                                  "WHERE ForeignKeyColumns.referenced_object_id = (SELECT object_id FROM SYS.TABLES WHERE name = @tableName)";
+                                  "WHERE ForeignKeyColumns.parent_object_id = (SELECT object_id FROM SYS.TABLES WHERE name = @tableName)";
 
             SqlDataReader reader = null;
             SqlConnection connection = new SqlConnection(ConnectionString);
@@ -244,11 +283,12 @@ namespace Logitude.DXMLGenerator.Models
                 {
                     RelationDefinition relation = new RelationDefinition
                     {
-                        ParentTableName = reader["ParentTableName"].ToString(),
-                        ParentColumnName = reader["ParentColumnName"].ToString(),
-                        ReferencedTableName = reader["ReferencedTableName"].ToString(),
-                        ReferencedColumnName = reader["ReferencedColumnName"].ToString(),
-                        ForeignKeyConstraintName = reader["ForeignKeyConstraintName"].ToString()
+                        ForeignKeyColumn = reader["ParentColumnName"].ToString(),
+                        ReferencedTable = reader["ReferencedTableName"].ToString(),
+                        ReferencedColumn = reader["ReferencedColumnName"].ToString(),
+                        ForeignKeyConstraintName = reader["ForeignKeyConstraintName"].ToString(),
+                        ReferencedTableSchema = reader["ReferencedTableSchemaName"].ToString(),
+                        ReferencedColumnOrder = Convert.ToInt32(reader["ReferencedColumnOrder"].ToString())
                     };
                     relations.Add(relation);
                 }
@@ -256,7 +296,9 @@ namespace Logitude.DXMLGenerator.Models
                 reader.Close();
                 connection.Close();
 
-                return relations;
+                List<RelationDefinition> processedRelations = HandlingCompositeRelations(relations);
+
+                return processedRelations;
             }
             catch (Exception)
             {
@@ -282,13 +324,23 @@ namespace Logitude.DXMLGenerator.Models
                 try
                 {
                     string path = GetPathForDXMLFile(tableDefinition.Name, true);
+
                     if (!String.IsNullOrEmpty(path))
                     {
+                        string dxmlModule = GetModuleNameForDXMLFile(path);
+                        tableDefinition.Module = dxmlModule;
+
                         XmlSerializerNamespaces emptyNamespace = new XmlSerializerNamespaces(new[] { XmlQualifiedName.Empty });
                         XmlSerializer xmlSerializer = new XmlSerializer(typeof(TableDefinition));
-                        TextWriter textWriter = new StreamWriter(path);
-                        xmlSerializer.Serialize(textWriter, tableDefinition, emptyNamespace);
-                        textWriter.Close();
+                        FileStream fileStream = new FileStream(path, FileMode.OpenOrCreate, FileAccess.Write);
+                        XmlWriterSettings xmlWriterSettings = new XmlWriterSettings() { Indent = true, NewLineOnAttributes = true, OmitXmlDeclaration = false, WriteEndDocumentOnClose = false };
+                        XmlWriter xmlWriter = XmlWriter.Create(fileStream, xmlWriterSettings);
+
+                        xmlSerializer.Serialize(xmlWriter, tableDefinition, emptyNamespace);
+                        xmlWriter.Close();
+                        xmlWriter.Dispose();
+                        fileStream.Close();
+
                         GeneratedDXMLFilesCounter++;
                     }
                     else
@@ -309,9 +361,9 @@ namespace Logitude.DXMLGenerator.Models
             }
         }
 
-        private string GetDxmlDataType(string type)
+        private string GetColumnDefinitionDataType(string type)
         {
-            switch (type)
+            switch (type.ToLower())
             {
                 case "int":
                     return "int";
@@ -474,7 +526,7 @@ namespace Logitude.DXMLGenerator.Models
             try
             {
                 string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
-                string filePath = Path.Combine(projectDirectory, @"ExcludedTablesMap.txt");
+                string filePath = Path.Combine(projectDirectory, @"Data\ExcludedTablesMap.txt");
                 List<string> excludedTablesList = File.ReadLines(filePath).ToList();
                 if (excludedTablesList.Count() > 0)
                 {
@@ -494,6 +546,194 @@ namespace Logitude.DXMLGenerator.Models
             }
         }
 
+        private List<RelationDefinition> HandlingCompositeRelations(List<RelationDefinition> relations)
+        {
+            List<string> processedConstraints = new List<string>();
+            List<RelationDefinition> processedRelations = new List<RelationDefinition>();
+
+            foreach(var relation in relations)
+            {
+                if (!processedConstraints.Contains(relation.ForeignKeyConstraintName))
+                {
+                    string foreignKeyColumn;
+                    string referencedColumn;
+                    string referencedTable;
+                    string referencedTableSchema;
+
+                    List<RelationDefinition> relationsWithSameConstraint = relations.Where(r => r.ForeignKeyConstraintName == relation.ForeignKeyConstraintName).OrderBy(r => r.ReferencedColumnOrder).ToList();
+
+                    if (relationsWithSameConstraint.Count() > 1)
+                    {
+                        foreignKeyColumn = string.Join(",", relationsWithSameConstraint.Select(r => r.ForeignKeyColumn).ToArray());
+                        referencedColumn = string.Join(",", relationsWithSameConstraint.Select(r => r.ReferencedColumn).ToArray());
+                        referencedTable = relationsWithSameConstraint.First().ReferencedTable;
+                        referencedTableSchema = relationsWithSameConstraint.First().ReferencedTableSchema;
+                    }
+                    else
+                    {
+                        foreignKeyColumn = relation.ForeignKeyColumn;
+                        referencedColumn = relation.ReferencedColumn;
+                        referencedTable = relation.ReferencedTable;
+                        referencedTableSchema = relation.ReferencedTableSchema;
+                    }
+
+                    RelationDefinition processedRelation = new RelationDefinition
+                    {
+                        ForeignKeyColumn = foreignKeyColumn,
+                        ReferencedColumn = referencedColumn,
+                        ReferencedTable = referencedTable,
+                        ReferencedTableSchema = referencedTableSchema
+                    };
+
+                    processedRelations.Add(processedRelation);
+                    processedConstraints.Add(relation.ForeignKeyConstraintName);
+                }
+            }
+
+            return processedRelations;
+        }
+
+        private string GetColumnDefinitionDefaultValue(string tableName, string columnName, bool nullable, string type)//////
+        {
+            if (nullable)
+            {
+                return null;
+            }
+
+            if(!nullable && type == "bit")
+            {
+                return null;
+            }
+
+            ColumnDefaultValue columnDefaultValue = ColumnsDefaultValues.Where(c => c.TableName == tableName && c.ColumnName == columnName).FirstOrDefault();
+
+            if(columnDefaultValue != null)
+            {
+                return columnDefaultValue.DefaultValue;
+            }
+
+            return null;
+        }
+
+        private void ReadColumnsDefaultValues()
+        {
+            Console.WriteLine("Reading Default Values ...");
+
+            string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+            string filePath = Path.Combine(projectDirectory, @"Data\DefaultValues.csv");
+
+            List<ColumnDefaultValue> columnsDefaultValues = File.ReadAllLines(filePath).Select(l => new ColumnDefaultValue
+            {
+                TableName = l.Split(',')[0],
+                ColumnName = l.Split(',')[1],
+                DefaultValue = FormatDefaultValue(l.Split(',')[2])
+            }).ToList();
+
+            ColumnsDefaultValues = columnsDefaultValues;
+        }
+
+        private string FormatDefaultValue(string defaultValue)
+        {
+            if (String.IsNullOrEmpty(defaultValue))
+            {
+                return null;
+            }
+            if (defaultValue.ToLower().Contains("getdate()"))
+            {
+                return "CurrentDate";
+            }
+            if (defaultValue.Contains("'"))
+            {
+                return "'" + defaultValue.Split('\'')[1] + "'";
+            }
+
+            return defaultValue.Replace("(", String.Empty).Replace(")", String.Empty);
+        }
+
+        private void ReadIndexes()
+        {
+            Console.WriteLine("Reading Indexes ...");
+
+            string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+            string filePath = Path.Combine(projectDirectory, @"Data\Indexes.csv");
+            
+            List<Index> indexes = File.ReadAllLines(filePath).Select(l => new Index
+            {
+                TableName = l.Split(',')[0],
+                Columns = l.Split(',')[1].Replace("; ", ","),
+                IncludedColumns = (String.IsNullOrEmpty(l.Split(',')[2]) || l.Split(',')[2] == "NULL") ? null : l.Split(',')[2].Replace("; ", ",")
+            }).ToList();
+
+            List<Index> processedIndexes = new List<Index>();
+
+            foreach(var index in indexes)
+            {
+                if(!processedIndexes.Where(i => i.TableName.ToLower() == index.TableName.ToLower() && i.Columns.ToLower() == index.Columns.ToLower()).Any())
+                {
+                    processedIndexes.Add(index);
+                }
+            }
+
+            Indexes = processedIndexes;
+        }
+
+        private void ReadUniqueConstraints()
+        {
+            Console.WriteLine("Reading Unique Constraints ...");
+
+            string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+            string filePath = Path.Combine(projectDirectory, @"Data\UniqueConstraints.csv");
+
+            List<UniqueConstraint> uniqueConstraints = File.ReadAllLines(filePath).Select(l => new UniqueConstraint
+            {
+                TableName = l.Split(',')[0],
+                Columns = l.Split(',')[1].Replace("; ", ",")
+            }).ToList();
+
+            List<UniqueConstraint> processedUniqueConstraints = new List<UniqueConstraint>();
+
+            foreach (var uniqueConstraint in uniqueConstraints)
+            {
+                if (!processedUniqueConstraints.Where(u => u.TableName.ToLower() == uniqueConstraint.TableName.ToLower() && u.Columns.ToLower() == uniqueConstraint.Columns.ToLower()).Any())
+                {
+                    processedUniqueConstraints.Add(uniqueConstraint);
+                }
+            }
+
+            UniqueConstraints = processedUniqueConstraints;
+        }
+        
+        private List<IndexDefinition> GetTableIndexes(string tableName)
+        {
+            if(Indexes.Where(i => i.TableName.ToLower() == tableName.ToLower()).Any())
+            {
+                List<IndexDefinition> indexDefinitions = Indexes.Where(i => i.TableName.ToLower() == tableName.ToLower()).Select(i => new IndexDefinition
+                {
+                    Columns = i.Columns,
+                    Include = i.IncludedColumns
+                }).ToList();
+
+                return indexDefinitions;
+            }
+
+            return new List<IndexDefinition>();
+        }
+        
+        private List<UniqueConstraintDefinition> GetTableUniqueConstraints(string tableName)
+        {
+            if (UniqueConstraints.Where(u => u.TableName.ToLower() == tableName.ToLower()).Any())
+            {
+                List<UniqueConstraintDefinition> uniqueConstraintDefinitions = UniqueConstraints.Where(u => u.TableName.ToLower() == tableName.ToLower()).Select(u => new UniqueConstraintDefinition
+                {
+                    Columns = u.Columns
+                }).ToList();
+
+                return uniqueConstraintDefinitions;
+            }
+
+            return new List<UniqueConstraintDefinition>();
+        }
+
         private void ExportErrorsData()
         {
             string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
@@ -503,6 +743,78 @@ namespace Logitude.DXMLGenerator.Models
             if (!String.IsNullOrEmpty(ErrorsData))
             {
                 Console.WriteLine("\n" + "Errors Are Exported To /Errors/" + ErrorsFileName + "\n");
+            }
+        }
+
+        private string GetModuleNameForDXMLFile(string dxmlFilePath)
+        {
+            if (dxmlFilePath.ToLower().Contains("Logitude.Accounting.MetaData".ToLower()))
+            {
+                return "Accounting";
+            }
+            else if (dxmlFilePath.ToLower().Contains("Logitude.BookingLib.MetaData".ToLower()))
+            {
+                return "Booking";
+            }
+            else if (dxmlFilePath.ToLower().Contains("Logitude.CRM.MetaData".ToLower()))
+            {
+                return "CRM";
+            }
+            else if (dxmlFilePath.ToLower().Contains("Logitude.Customs.MetaData".ToLower()))
+            {
+                return "Customs";
+            }
+            else if (dxmlFilePath.ToLower().Contains("Logitude.Social.MetaData".ToLower()))
+            {
+                return "Social";
+            }
+            else if (dxmlFilePath.ToLower().Contains("Logitude.TariffModule.MetaData".ToLower()))
+            {
+                return "Tariff";
+            }
+            else if (dxmlFilePath.ToLower().Contains("Logitude.TimeManagement.MetaData".ToLower()))
+            {
+                return "TimeManagement";
+            }
+            else if (dxmlFilePath.ToLower().Contains("Logitude.WarehouseLib.MetaData".ToLower()))
+            {
+                return "Warehouse";
+            }
+            else if (dxmlFilePath.ToLower().Contains("Logitude.Infrastructure.MetaData".ToLower()))
+            {
+                return "Infrastructure";
+            }
+            else if (dxmlFilePath.ToLower().Contains("Logitude.MetaData".ToLower()) && dxmlFilePath.ToLower().Contains("CommonDataModel".ToLower()))
+            {
+                return "Common";
+            }
+            else if (dxmlFilePath.ToLower().Contains("Logitude.MetaData".ToLower()) && dxmlFilePath.ToLower().Contains("GlobalModel".ToLower()))
+            {
+                return "Global";
+            }
+            else if (dxmlFilePath.ToLower().Contains("Logitude.MetaData".ToLower()) && dxmlFilePath.ToLower().Contains("InfrastructureModel".ToLower()))
+            {
+                return "BusinessInfrastructure";
+            }
+            else if (dxmlFilePath.ToLower().Contains("Logitude.MetaData".ToLower()) && dxmlFilePath.ToLower().Contains("InvoiceModel".ToLower()))
+            {
+                return "Invoice";
+            }
+            else if (dxmlFilePath.ToLower().Contains("Logitude.MetaData".ToLower()) && dxmlFilePath.ToLower().Contains("QuoteModel".ToLower()))
+            {
+                return "Quote";
+            }
+            else if (dxmlFilePath.ToLower().Contains("Logitude.MetaData".ToLower()) && dxmlFilePath.ToLower().Contains("ShipmentsModel".ToLower()))
+            {
+                return "Shipment";
+            }
+            else if (dxmlFilePath.ToLower().Contains("Logitude.MetaData".ToLower()) && dxmlFilePath.ToLower().Contains("SystemLogsModel".ToLower()))
+            {
+                return "SystemLogs";
+            }
+            else
+            {
+                return null;
             }
         }
     }

@@ -1,34 +1,84 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Table Name="InboundEmails" Schema="dbo" DBType="Main">
-  <Column Name="AnalyzeQueueId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="InboundEmails"
+  Schema="dbo"
+  DBType="Main"
+  Module="BusinessInfrastructure">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="CreateDate" Type="datetime">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="CreatedByContactId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="EntityId"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="EntityId" Type="varchar" Size="40">
-    <Constraints Nullable="true" />
+  <Column
+    Name="CreateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="Id" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
+  <Column
+    Name="UpdateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="IsRejected" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Uniquekey"
+    Type="varchar"
+    Size="10">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="ObjectTableId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
+  <Column
+    Name="ObjectTableId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="CreatedByContactId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Uniquekey" Type="varchar" Size="10">
-    <Constraints Nullable="true" />
+  <Column
+    Name="IsRejected"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="UpdateDate" Type="datetime">
-    <Constraints Nullable="false" />
+  <Column
+    Name="AnalyzeQueueId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Relation ParentTableName="InboundEmailLines" ParentColumnName="InboundEmailId" ReferencedTableName="InboundEmails" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.InboundEmailLines_dbo.InboundEmails_InboundEmailId" />
+  <Relation
+    ForeignKeyColumn="ObjectTableId"
+    ReferencedTable="ObjectTables"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="CreatedByContactId"
+    ReferencedTable="Contacts"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
 </Table>

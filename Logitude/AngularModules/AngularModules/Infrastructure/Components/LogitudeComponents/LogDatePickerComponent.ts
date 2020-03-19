@@ -322,9 +322,9 @@ export class LogDatePickerComponent
             )[0];
             if (!this.ObjectField) {
                 objectFieldAvailable = false;
-            } else if (this.ObjectField.HelpTextCodeId != null) {
+            } else if (this.ObjectField.HelpTextCodeCode != null) {
                 this.ObjectFieldHelp = TextCodeTranslator.Translate(
-                    this.ObjectField.HelpTextTextCodeCode
+                    this.ObjectField.HelpTextCodeCode
                 );
 
                 if (!AppTool.IsNullOrEmpty(this.ObjectFieldHelp)) {

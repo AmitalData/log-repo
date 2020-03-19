@@ -1,0 +1,71 @@
+<style>
+    .red {
+        color: red !important;
+    }
+    .green{
+        color: #00a24d !important;
+    }
+
+
+     /* css X icon */
+     .aboodX{
+        margin: 0 auto;
+        position: absolute;
+        left: 15px;
+        top: 5px;
+        right: 15px;
+    }
+        .aboodX:before, .aboodX:after {
+            position: absolute;
+            left: 15px;
+            content: ' ';
+            height: 12px;
+            width: 3px;
+            background-color: black;
+        }
+        .red.aboodX:before,.red.aboodX:after{
+            background: #f32626 !important;
+        }
+        .orange.aboodX:before,.orange.aboodX:after{
+            background: #ff8100 !important;
+        }
+        .aboodX:hover{
+            opacity: 0.9;
+        }
+        .aboodX:before {
+            transform: rotate(45deg);
+        }
+        .aboodX:after {
+            transform: rotate(-45deg);
+        }
+
+
+        .aboodV {
+            margin: 0 auto;
+            position: absolute;
+            left: 15px;
+            top: 4px;
+            right: 15px;
+            width: 15px;
+        }
+        .aboodV:after {
+            content: "";
+            display: block;
+            width: 4px;
+            height: 10px;
+            border: solid #090;
+            border-width: 0 3px 3px 0;
+            transform: rotate(45deg);
+        }
+
+</style>
+<div *ngIf="!IsTenantZero">
+    <!-- Create/Update Date -->
+    <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'" *ngIf="fieldName == 'CreateDate'">{{ rowData[fieldName] | DateTimePipe:'SD' }}</div>
+    <div [style.text-align]="isRTL ? 'right' : 'left'" *ngIf="fieldName == 'UpdateDate'">{{ rowData[fieldName] | DateTimePipe:'SD' }}</div>
+</div>
+<div *ngIf="IsTenantZero">
+    <!-- Create/Update Date -->
+    <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'" *ngIf="fieldName == 'CreateDate'">{{ rowData[fieldName] | DateTimePipe:'DTL12NW' }}</div>
+    <div [style.text-align]="isRTL ? 'right' : 'left'" *ngIf="fieldName == 'UpdateDate'">{{ rowData[fieldName] | DateTimePipe:'DTL12NW' }}</div>
+</div>

@@ -446,7 +446,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query UIMessageQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = UIMessageTextCode_0.Id, Code = "UIMessage",  QueryGroupCode = "ea48", IndexOrder = 0, Tenant = 0, ObjectTableId = UIMessageObjectTable.Id, QuerySection = "Customs.UIMessage", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = UIMessageFeature_0.Id, DefaultSortName = "Code", DefaultSortDirection = "Desending" }, queriesRepository, tenantQueries);
+			  Query UIMessageQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = UIMessageTextCode_0.Id, Code = "UIMessage",  QueryGroupCode = "ea48", IndexOrder = 0, Tenant = 0, ObjectTableId = UIMessageObjectTable.Id, QuerySection = "Customs.UIMessage", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = UIMessageFeature_0.Id,FeatureUniqeCode= UIMessageFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending" }, queriesRepository, tenantQueries);
 	
 			 QueryColumn UIMessageQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UIMessageQuery.Id, IndexOrder = 0, ObjectFieldId = UIMessageObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == UIMessageObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 50 }, queryColumnsRepository, tenantQueryColumns);
 

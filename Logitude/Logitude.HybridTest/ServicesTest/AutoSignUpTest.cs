@@ -12,7 +12,7 @@ namespace Logitude.HybridTest.ServicesTest
         public void Test_AutoSignUp_INSERT()
         {
             Assert.Inconclusive("FILL ?!");
-            
+
             InvokedProperties serviceProperties = new InvokedProperties
             {
                 ServiceName = "AutoSignUp",
@@ -27,9 +27,9 @@ namespace Logitude.HybridTest.ServicesTest
             };
             Response serviceResponse = new Response();
             object[] serviceParameters = new object[] { entityPM, false };
-            serviceResponse = (Response)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
-            Assert.IsFalse(serviceResponse.HasError, "Insert Failed! " + serviceResponse.ErrorMessage);
-            Assert.IsNull(serviceResponse.Result, "Insert Failed! " + serviceResponse.Result);
+            ServiceOutcome serviceOutcome = WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters);
+            Assert.IsFalse(serviceOutcome.Response.HasError, "Insert Failed! " + serviceOutcome.Response.ErrorMessage);
+            Assert.IsNull(serviceOutcome.Response.Result, "Insert Failed! " + serviceOutcome.Response.Result);
         }
     }
 }

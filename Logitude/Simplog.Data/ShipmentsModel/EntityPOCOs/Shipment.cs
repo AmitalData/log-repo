@@ -50,6 +50,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string FNAReason { get; set; }
         public double? ChargeableWeightInKG { get; set; }
         public double? GrossWeightInKG { get; set; }
+        public double? GrossWeightPerStorageDays { get; set; }
         public double? ChargeableWeight { get; set; }
         public double? GrossWeight { get; set; }
         public string CurrentUserId { get; set; }
@@ -673,6 +674,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public DateTime? ISFDate { get; set; }
         public string ITNumber { get; set; }
         public DateTime? ITDate { get; set; }
+        public DateTime? AutomaticLastUpdateDate { get; set; }
 
         public string ENSNumber { get; set; }
         public DateTime? ENSDate { get; set; }
@@ -788,5 +790,9 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public double? NotInvoicedReceivablesAmount { get; set; }
         public string CreatedByPartner { get; set; }
 
+        public DateTime? FirstARInvoiceApprovalDate { get; set; }
+        public int? WarehouseStorageFreeDays { get; set; }
+
+        public string SLAC { get; set; }
     }
 }

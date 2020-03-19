@@ -123,7 +123,7 @@ export class AccountingPeriodsComponent extends BaseComponent {
             var windowArgs: Args = new Args();
             windowArgs.EntityId = period.Id;
 
-            if (period.PeriodTypeCode == "2") { // 2-Invoice
+            if (period.PeriodTypeCode == "2" || period.PeriodTypeCode == "3") { // 2-Invoice 3-Interest Invoice
                 var row = this.PeriodsList.find(d => d.PeriodTypeCode == "1"); // 1-Accounting
                 if (row != null) {
                     windowArgs.AccountingRow = row; // attach accounting period to window to use it in logic

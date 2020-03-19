@@ -147,6 +147,8 @@ namespace Logitude.CRM.Data
 	
             modelBuilder.Configurations.Add(new StageMap());
 	
+            modelBuilder.Configurations.Add(new SupportMailboxMap());
+	
             modelBuilder.Configurations.Add(new TicketMap());
 	
             modelBuilder.Configurations.Add(new TicketClassificationMap());
@@ -693,6 +695,12 @@ namespace Logitude.CRM.Data
 	 }
 	
 	 public IDbSet<Stage> Stages 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<SupportMailbox> SupportMailboxes 
 	 {
 	      get; set;
 	 

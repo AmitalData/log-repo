@@ -102,6 +102,21 @@ export class FeatureLocator {
 
         return myResult;
     }
+    public static IsFeatureGrantedByUniqeCode(featureUniqeCode: string) {
+        var myResult = false;
+
+        if (!AppTool.IsNullOrEmpty(featureUniqeCode)) {
+            if (FeatureLocator.Features != null) {
+                var myFeature: FeaturePM = FeatureLocator.Features.filter(d => d.FeatureUniqeCode == featureUniqeCode)[0];
+
+                if (myFeature != null) {
+                    myResult = true;
+                }
+            }
+        }
+
+        return myResult;
+    }
     public static IsPackage_CUST() {
         var myResult = false;
 

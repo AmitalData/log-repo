@@ -167,6 +167,7 @@ export class ShipmentList {
 		MoveTypeName: string;
 		GrossWeightInKG: number;
 		VolumetricWeight: number;
+		GrossWeightPerStorageDays: number;
 		ChargeableWeight: number;
 		GrossWeight: number;
 		MasterShipmentNumber: string;
@@ -438,5 +439,7 @@ export class ShipmentList {
 		ARInvoices: string;
 		NotInvoicedReceivablesAmount: number;
 		CreatedByPartner: string;
+		FirstARInvoiceApprovalDate: Date;
+		SLAC: string;
 	
 }

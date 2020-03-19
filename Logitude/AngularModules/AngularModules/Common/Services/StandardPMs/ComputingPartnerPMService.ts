@@ -347,6 +347,7 @@ export class ComputingPartnerPMService {
 	  public GetNewEntityPM() {		 
 		    var entityPM: ComputingPartnerPM;
 			entityPM = new ComputingPartnerPM();
+			entityPM.Tenant = InfraSettings.TenantPM.Id;
 			return entityPM;
     }
 		 

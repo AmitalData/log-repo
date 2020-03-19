@@ -174,5 +174,12 @@ namespace Logitude.BL.InvoiceModel.EntityLists
         public string BillToCountry { get; set; }
         public string CreatedByPartner { get; set; }
 
+        public string SATXML { get; set; }
+
+        public string BillToGLAccountId { get; set; }
+
+        public string RegionalTaxId { get; set; }
+        public double? RegionalTaxPercentage { get; set; }
+
     }
 }

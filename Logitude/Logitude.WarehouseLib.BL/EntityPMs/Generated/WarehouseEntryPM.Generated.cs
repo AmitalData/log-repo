@@ -1596,6 +1596,98 @@ namespace Logitude.WarehouseLib.BL.EntityPMs
 			
 		 }
 	   }
+	  private string toTypeCode ;
+	  	  
+       
+	   [CustomValidation(typeof(WarehouseValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ToTypeCode  
+	   {
+	    
+	     get
+		{
+		   return toTypeCode;
+		 }
+		 set
+		 {
+		   if(toTypeCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ToTypeCode",OldValue=toTypeCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   toTypeCode=value;
+		   }
+			
+		 }
+	   }
+	  private string fromTypeCode ;
+	  	  
+       
+	   [CustomValidation(typeof(WarehouseValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string FromTypeCode  
+	   {
+	    
+	     get
+		{
+		   return fromTypeCode;
+		 }
+		 set
+		 {
+		   if(fromTypeCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FromTypeCode",OldValue=fromTypeCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   fromTypeCode=value;
+		   }
+			
+		 }
+	   }
+	  private string fromCountryId ;
+	  	  
+       
+	   [CustomValidation(typeof(WarehouseValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string FromCountryId  
+	   {
+	    
+	     get
+		{
+		   return fromCountryId;
+		 }
+		 set
+		 {
+		   if(fromCountryId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FromCountryId",OldValue=fromCountryId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   fromCountryId=value;
+		   }
+			
+		 }
+	   }
+	  private string toCountryId ;
+	  	  
+       
+	   [CustomValidation(typeof(WarehouseValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ToCountryId  
+	   {
+	    
+	     get
+		{
+		   return toCountryId;
+		 }
+		 set
+		 {
+		   if(toCountryId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ToCountryId",OldValue=toCountryId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   toCountryId=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

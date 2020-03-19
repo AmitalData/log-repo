@@ -39,6 +39,7 @@ import { DecimalFormatter } from '../../../Infrastructure/Utilities/DecimalForma
 })
 
 export class FCLChargesComponent extends BaseComponent implements OnDestroy {
+
     public EntityPM: QuotePM = null;
     public ObjectTableName: string = "Quote";
     public DataContext = this;
@@ -50,6 +51,8 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
     public LocalCurrencyCode: string;
     public AllInMatchText: string;
     IsShowTotalPerContainer: boolean = false;
+    IsRouteRate: boolean = false;
+
     private CurrentSession = SessionLocator.SelectedSession;
     public HideFCLAllIn: boolean = false;
     constructor(private entityArgs: EntityArgs) {
@@ -77,7 +80,16 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
         this.SetGridColumns();
         this.BuildItemsSource();
         this.InitializeProfit();
+        this.GetQuoteType();
         this.Listen();
+    }
+
+    GetQuoteType() {
+        if (this.EntityPM != null) {
+            if (this.EntityPM.QuoteTypeCode == "P") {
+                this.IsRouteRate = true;
+            }
+        }
     }
 
     private SessionEvent: any = null;
@@ -966,6 +978,20 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
         }
     }
 
+    get EstimatedProfitInLocal() { return this.EntityPM.EstimatedProfitInLocal; }
+    set EstimatedProfitInLocal(value: number) {
+        if (this.EntityPM.EstimatedProfitInLocal != value) {
+            this.EntityPM.EstimatedProfitInLocal = AppTool.Round(value, 2);
+        }
+    }
+
+    get EstimatedProfitInProfit() { return this.EntityPM.EstimatedProfitInProfit; }
+    set EstimatedProfitInProfit(value: number) {
+        if (this.EntityPM.EstimatedProfitInProfit != value) {
+            this.EntityPM.EstimatedProfitInProfit = AppTool.Round(value, 2);
+        }
+    }
+
     get EstimateProfitEdited() { return this.EntityPM.EstimateProfitEdited; }
     set EstimateProfitEdited(newValue: boolean) {
         if (this.EntityPM.EstimateProfitEdited != newValue) {
@@ -1010,7 +1036,7 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
             }
 
             else {
-                this.SummaryHeader = TextCodeTranslator.Translate("Quote.F.ProfitInSaleCurrency.Short") + " (" + this.SelectedCurrencyCode + ")";
+                this.SummaryHeader = TextCodeTranslator.Translate("Quote.S.Charges.ProfitInSaleCurrency") + " (" + this.SelectedCurrencyCode + ")";
                 if (!AppTool.IsNullOrZero(this.ExchangeRate)) {
                     this.SummaryCostAmount = AppTool.Round(myCostAmountLocal / this.ExchangeRate, 2);
                     this.SummarySaleAmount = AppTool.Round(mySaleAmountLocal / this.ExchangeRate, 2);
@@ -1037,6 +1063,7 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
             }
         }
     }
+    
 
     // Update Quantities
     public UpdateQuantitiesMessage: string;
@@ -3153,8 +3180,12 @@ export class FCLQuoteChargeItem extends BaseComponent {
                     var myMarkUpValueInput = value.replace("-", "").replace("+", "").replace("%", "");
 
                     if (!AppTool.IsNullOrEmpty(myMarkUpValueInput)) {
-
-                        myMarkUpValue = +myMarkUpValueInput;
+                        if (myMarkUpValueInput.indexOf(',') > -1) {
+                            myMarkUpValue = +(myMarkUpValueInput.replace(/,/g, '.'));
+                        }
+                        else {
+                            myMarkUpValue = +myMarkUpValueInput;
+                        }
 
                         if (value.indexOf("%") > -1) {
                             myMarkUpCode = "P";
@@ -3185,7 +3216,12 @@ export class FCLQuoteChargeItem extends BaseComponent {
                 }
 
                 else {
-                    mySalePrice = +value;
+                    if (value.indexOf(',') > -1) {
+                        mySalePrice = +(value.replace(/,/g, '.'));
+                    }
+                    else {
+                        mySalePrice = +value;
+                    }
 
                     if (!AppTool.IsNullOrEmpty(myCostPrice)) {
                         myMarkUpValue = mySalePrice - myCostPrice;
@@ -3223,7 +3259,12 @@ export class FCLQuoteChargeItem extends BaseComponent {
 
                     if (!AppTool.IsNullOrEmpty(myMarkUpValueInput)) {
 
-                        myMarkUpValue = +myMarkUpValueInput;
+                        if (myMarkUpValueInput.indexOf(',') > -1) {
+                            myMarkUpValue = +(myMarkUpValueInput.replace(/,/g, '.'));
+                        }
+                        else {
+                            myMarkUpValue = +myMarkUpValueInput;
+                        }
 
                         if (value.indexOf("%") > -1) {
                             myMarkUpCode = "P";
@@ -3254,7 +3295,13 @@ export class FCLQuoteChargeItem extends BaseComponent {
                 }
 
                 else {
-                    mySalePrice = +value;
+                    if (value.indexOf(',') > -1) {
+                        mySalePrice = +(value.replace(/,/g, '.'));
+                    }
+                    else {
+                        mySalePrice = +value;
+                    }
+
 
                     if (!AppTool.IsNullOrEmpty(myCostPrice)) {
                         myMarkUpValue = mySalePrice - myCostPrice;
@@ -3292,7 +3339,12 @@ export class FCLQuoteChargeItem extends BaseComponent {
 
                     if (!AppTool.IsNullOrEmpty(myMarkUpValueInput)) {
 
-                        myMarkUpValue = +myMarkUpValueInput;
+                        if (myMarkUpValueInput.indexOf(',') > -1) {
+                            myMarkUpValue = +(myMarkUpValueInput.replace(/,/g, '.'));
+                        }
+                        else {
+                            myMarkUpValue = +myMarkUpValueInput;
+                        }
 
                         if (value.indexOf("%") > -1) {
                             myMarkUpCode = "P";
@@ -3323,7 +3375,13 @@ export class FCLQuoteChargeItem extends BaseComponent {
                 }
 
                 else {
-                    mySalePrice = +value;
+                    if (value.indexOf(',') > -1) {
+                        mySalePrice = +(value.replace(/,/g, '.'));
+                    }
+                    else {
+                        mySalePrice = +value;
+                    }
+
 
                     if (!AppTool.IsNullOrEmpty(myCostPrice)) {
                         myMarkUpValue = mySalePrice - myCostPrice;
@@ -3361,7 +3419,12 @@ export class FCLQuoteChargeItem extends BaseComponent {
 
                     if (!AppTool.IsNullOrEmpty(myMarkUpValueInput)) {
 
-                        myMarkUpValue = +myMarkUpValueInput;
+                        if (myMarkUpValueInput.indexOf(',') > -1) {
+                            myMarkUpValue = +(myMarkUpValueInput.replace(/,/g, '.'));
+                        }
+                        else {
+                            myMarkUpValue = +myMarkUpValueInput;
+                        }
 
                         if (value.indexOf("%") > -1) {
                             myMarkUpCode = "P";
@@ -3392,7 +3455,13 @@ export class FCLQuoteChargeItem extends BaseComponent {
                 }
 
                 else {
-                    mySalePrice = +value;
+                    if (value.indexOf(',') > -1) {
+                        mySalePrice = +(value.replace(/,/g, '.'));
+                    }
+                    else {
+                        mySalePrice = +value;
+                    }
+
 
                     if (!AppTool.IsNullOrEmpty(myCostPrice)) {
                         myMarkUpValue = mySalePrice - myCostPrice;
@@ -3430,7 +3499,12 @@ export class FCLQuoteChargeItem extends BaseComponent {
 
                     if (!AppTool.IsNullOrEmpty(myMarkUpValueInput)) {
 
-                        myMarkUpValue = +myMarkUpValueInput;
+                        if (myMarkUpValueInput.indexOf(',') > -1) {
+                            myMarkUpValue = +(myMarkUpValueInput.replace(/,/g, '.'));
+                        }
+                        else {
+                            myMarkUpValue = +myMarkUpValueInput;
+                        }
 
                         if (value.indexOf("%") > -1) {
                             myMarkUpCode = "P";
@@ -3461,7 +3535,13 @@ export class FCLQuoteChargeItem extends BaseComponent {
                 }
 
                 else {
-                    mySalePrice = +value;
+                    if (value.indexOf(',') > -1) {
+                        mySalePrice = +(value.replace(/,/g, '.'));
+                    }
+                    else {
+                        mySalePrice = +value;
+                    }
+
 
                     if (!AppTool.IsNullOrEmpty(myCostPrice)) {
                         myMarkUpValue = mySalePrice - myCostPrice;
@@ -3499,7 +3579,12 @@ export class FCLQuoteChargeItem extends BaseComponent {
 
                     if (!AppTool.IsNullOrEmpty(myMarkUpValueInput)) {
 
-                        myMarkUpValue = +myMarkUpValueInput;
+                        if (myMarkUpValueInput.indexOf(',') > -1) {
+                            myMarkUpValue = +(myMarkUpValueInput.replace(/,/g, '.'));
+                        }
+                        else {
+                            myMarkUpValue = +myMarkUpValueInput;
+                        }
 
                         if (value.indexOf("%") > -1) {
                             myMarkUpCode = "P";
@@ -3530,7 +3615,13 @@ export class FCLQuoteChargeItem extends BaseComponent {
                 }
 
                 else {
-                    mySalePrice = +value;
+                    if (value.indexOf(',') > -1) {
+                        mySalePrice = +(value.replace(/,/g, '.'));
+                    }
+                    else {
+                        mySalePrice = +value;
+                    }
+
 
                     if (!AppTool.IsNullOrEmpty(myCostPrice)) {
                         myMarkUpValue = mySalePrice - myCostPrice;

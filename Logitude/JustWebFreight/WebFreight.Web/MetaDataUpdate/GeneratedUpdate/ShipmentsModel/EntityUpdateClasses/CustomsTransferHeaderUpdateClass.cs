@@ -187,6 +187,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -246,6 +247,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -305,6 +307,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -364,6 +367,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -423,6 +427,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -480,6 +485,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -539,6 +545,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -598,6 +605,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -657,6 +665,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -714,6 +723,67 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "ShipmentNumber",
+					  						OldFieldName =  "ShipmentNumber",
+					  						ObjectTableName =  "CustomsTransferHeader",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  1000,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  1000,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "ShipmentNumber",
+					  						ListPropertyPath =  "ShipmentNumber",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "CustomsTransferHeader",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "ShipmentNumber",
+					  						DefaultText =  "Shipment Number",
+					  						ListFieldLable =  "ShipmentNumberListLable",
+					  						ListLableDefaultText =  "Shipment Number",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -741,13 +811,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query ShipmentsTransferHistoryQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomsTransferHeaderTextCode_0.Id, Code = "ShipmentsTransferHistory",  QueryGroupCode = "66ad", IndexOrder = 0, Tenant = 0, ObjectTableId = CustomsTransferHeaderObjectTable.Id, QuerySection = "CustomsTransferHeader", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CustomsTransferHeaderFeature_0.Id, DefaultSortName = "TransferDate", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query ShipmentsTransferHistoryQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomsTransferHeaderTextCode_0.Id, NameTextCodeCode = CustomsTransferHeaderTextCode_0.Code, ObjectTableName = "CustomsTransferHeader", Code = "ShipmentsTransferHistory",  QueryGroupCode = "66ad", IndexOrder = 0, Tenant = 0, ObjectTableId = CustomsTransferHeaderObjectTable.Id, QuerySection = "CustomsTransferHeader", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CustomsTransferHeaderFeature_0.Id,FeatureUniqeCode= CustomsTransferHeaderFeature_0.FeatureUniqeCode, DefaultSortName = "TransferDate", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn ShipmentsTransferHistoryQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShipmentsTransferHistoryQuery.Id, IndexOrder = 0, ObjectFieldId = CustomsTransferHeaderObjectFields.Where(d => d.FieldName == "TransferNumber" && d.ObjectTableId == CustomsTransferHeaderObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomsTransferHeaderObjectFields.Where(d => d.FieldName == "TransferNumber" && d.ObjectTableId == CustomsTransferHeaderObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 110 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ShipmentsTransferHistoryQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShipmentsTransferHistoryQuery.Id,QueryCode = ShipmentsTransferHistoryQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = CustomsTransferHeaderObjectFields.Where(d => d.FieldName == "TransferNumber" && d.ObjectTableId == CustomsTransferHeaderObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomsTransferHeaderObjectFields.Where(d => d.FieldName == "TransferNumber" && d.ObjectTableId == CustomsTransferHeaderObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 110 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ShipmentsTransferHistoryQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShipmentsTransferHistoryQuery.Id, IndexOrder = 1, ObjectFieldId = CustomsTransferHeaderObjectFields.Where(d => d.FieldName == "TransferDate" && d.ObjectTableId == CustomsTransferHeaderObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomsTransferHeaderObjectFields.Where(d => d.FieldName == "TransferDate" && d.ObjectTableId == CustomsTransferHeaderObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 140 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ShipmentsTransferHistoryQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShipmentsTransferHistoryQuery.Id,QueryCode = ShipmentsTransferHistoryQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = CustomsTransferHeaderObjectFields.Where(d => d.FieldName == "ShipmentNumber" && d.ObjectTableId == CustomsTransferHeaderObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomsTransferHeaderObjectFields.Where(d => d.FieldName == "ShipmentNumber" && d.ObjectTableId == CustomsTransferHeaderObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 300 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ShipmentsTransferHistoryQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShipmentsTransferHistoryQuery.Id, IndexOrder = 2, ObjectFieldId = CustomsTransferHeaderObjectFields.Where(d => d.FieldName == "FileName" && d.ObjectTableId == CustomsTransferHeaderObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomsTransferHeaderObjectFields.Where(d => d.FieldName == "FileName" && d.ObjectTableId == CustomsTransferHeaderObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ShipmentsTransferHistoryQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShipmentsTransferHistoryQuery.Id,QueryCode = ShipmentsTransferHistoryQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = CustomsTransferHeaderObjectFields.Where(d => d.FieldName == "TransferDate" && d.ObjectTableId == CustomsTransferHeaderObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomsTransferHeaderObjectFields.Where(d => d.FieldName == "TransferDate" && d.ObjectTableId == CustomsTransferHeaderObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 140 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn ShipmentsTransferHistoryQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShipmentsTransferHistoryQuery.Id,QueryCode = ShipmentsTransferHistoryQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = CustomsTransferHeaderObjectFields.Where(d => d.FieldName == "FileName" && d.ObjectTableId == CustomsTransferHeaderObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomsTransferHeaderObjectFields.Where(d => d.FieldName == "FileName" && d.ObjectTableId == CustomsTransferHeaderObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 	   
 	    }
 
@@ -761,17 +833,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
 	         Screen CustomsTransferHeaderCustomsTransferHeaderHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CustomsTransfer.HeaderScreen", Name = "CustomsTransferHeaderHeaderScreen", ObjectTableId = CustomsTransferHeaderObjectTable.Id, NumberOfColumns = 3, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField CustomsTransferHeaderCustomsTransferHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = CustomsTransferHeaderObjectFields.Where(d => d.FieldName == "TransferNumber").FirstOrDefault().Id, ScreenId = CustomsTransferHeaderCustomsTransferHeaderHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsTransferHeaderCustomsTransferHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = CustomsTransferHeaderObjectFields.Where(d => d.FieldName == "TransferNumber").FirstOrDefault().Id, ScreenId = CustomsTransferHeaderCustomsTransferHeaderHeaderScreenScreen0.Id,ScreenCode = CustomsTransferHeaderCustomsTransferHeaderHeaderScreenScreen0.Code, ObjectFieldCode = CustomsTransferHeaderObjectFields.Where(d => d.FieldName == "TransferNumber").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomsTransferHeaderCustomsTransferHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = CustomsTransferHeaderObjectFields.Where(d => d.FieldName == "TransferDate").FirstOrDefault().Id, ScreenId = CustomsTransferHeaderCustomsTransferHeaderHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsTransferHeaderCustomsTransferHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = CustomsTransferHeaderObjectFields.Where(d => d.FieldName == "TransferDate").FirstOrDefault().Id, ScreenId = CustomsTransferHeaderCustomsTransferHeaderHeaderScreenScreen0.Id,ScreenCode = CustomsTransferHeaderCustomsTransferHeaderHeaderScreenScreen0.Code, ObjectFieldCode = CustomsTransferHeaderObjectFields.Where(d => d.FieldName == "TransferDate").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomsTransferHeaderCustomsTransferHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = CustomsTransferHeaderObjectFields.Where(d => d.FieldName == "FileName").FirstOrDefault().Id, ScreenId = CustomsTransferHeaderCustomsTransferHeaderHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsTransferHeaderCustomsTransferHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = CustomsTransferHeaderObjectFields.Where(d => d.FieldName == "FileName").FirstOrDefault().Id, ScreenId = CustomsTransferHeaderCustomsTransferHeaderHeaderScreenScreen0.Id,ScreenCode = CustomsTransferHeaderCustomsTransferHeaderHeaderScreenScreen0.Code, ObjectFieldCode = CustomsTransferHeaderObjectFields.Where(d => d.FieldName == "FileName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomsTransferHeaderCustomsTransferHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = CustomsTransferHeaderObjectFields.Where(d => d.FieldName == "CreatedByUserName").FirstOrDefault().Id, ScreenId = CustomsTransferHeaderCustomsTransferHeaderHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsTransferHeaderCustomsTransferHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = CustomsTransferHeaderObjectFields.Where(d => d.FieldName == "CreatedByUserName").FirstOrDefault().Id, ScreenId = CustomsTransferHeaderCustomsTransferHeaderHeaderScreenScreen0.Id,ScreenCode = CustomsTransferHeaderCustomsTransferHeaderHeaderScreenScreen0.Code, ObjectFieldCode = CustomsTransferHeaderObjectFields.Where(d => d.FieldName == "CreatedByUserName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomsTransferHeaderCustomsTransferHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = CustomsTransferHeaderObjectFields.Where(d => d.FieldName == "CustomsTransferTypeName").FirstOrDefault().Id, ScreenId = CustomsTransferHeaderCustomsTransferHeaderHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsTransferHeaderCustomsTransferHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = CustomsTransferHeaderObjectFields.Where(d => d.FieldName == "CustomsTransferTypeName").FirstOrDefault().Id, ScreenId = CustomsTransferHeaderCustomsTransferHeaderHeaderScreenScreen0.Id,ScreenCode = CustomsTransferHeaderCustomsTransferHeaderHeaderScreenScreen0.Code, ObjectFieldCode = CustomsTransferHeaderObjectFields.Where(d => d.FieldName == "CustomsTransferTypeName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    CustomsTransferHeaderObjectTable.HeaderScreenId = CustomsTransferHeaderCustomsTransferHeaderHeaderScreenScreen0.Id;
+		    CustomsTransferHeaderObjectTable.HeaderScreenCode = CustomsTransferHeaderCustomsTransferHeaderHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }
@@ -792,9 +866,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CTGR",HtmlComponentName = "CustomsTransferGeneralTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentAMANAC/Components/EditTabs/CustomsTransferGeneralTabComponent", FeatureId = CustomsTransferHeaderDetailsFeature_TH0.Id, ControlPath = "CustomsTransferGeneralTabComponent", ObjectTableId = CustomsTransferHeaderObjectTable.Id, TabNameTextCodeId = CustomsTransferHeaderDetailsTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CTGR",HtmlComponentName = "CustomsTransferGeneralTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentAMANAC/Components/EditTabs/CustomsTransferGeneralTabComponent", FeatureId = CustomsTransferHeaderDetailsFeature_TH0.Id,FeatureUniqeCode = CustomsTransferHeaderDetailsFeature_TH0.FeatureUniqeCode, ControlPath = "CustomsTransferGeneralTabComponent", ObjectTableId = CustomsTransferHeaderObjectTable.Id, TabNameTextCodeId = CustomsTransferHeaderDetailsTextCode_TH0.Id, TabNameTextCodeCode = CustomsTransferHeaderDetailsTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CTET",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = CustomsTransferHeaderEventsFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = CustomsTransferHeaderObjectTable.Id, TabNameTextCodeId = CustomsTransferHeaderEventsTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CTET",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = CustomsTransferHeaderEventsFeature_TH1.Id,FeatureUniqeCode = CustomsTransferHeaderEventsFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = CustomsTransferHeaderObjectTable.Id, TabNameTextCodeId = CustomsTransferHeaderEventsTextCode_TH1.Id, TabNameTextCodeCode = CustomsTransferHeaderEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	

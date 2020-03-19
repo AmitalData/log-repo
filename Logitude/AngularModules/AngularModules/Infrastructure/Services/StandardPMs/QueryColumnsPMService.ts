@@ -27,14 +27,14 @@ export class QueryColumnsPMService {
         this._http = serviceArgs.http;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/querycolumns';
  }
-    GetQueryColumnPMs(tenant: number, queryid: string, objecttableid: string, userid:string) {
+    GetQueryColumnPMs(tenant: number, queryCode: string, objecttableid: string, userid:string) {
 
         console.log('--------------------------------------> calling getSingleEntityPM:');
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/getquerycolumnpms?tenant=' + tenant + '&queryid=' + queryid + '&objecttableid=' + objecttableid + '&userid=' + userid, {
+            return this._http.get(this._apiUrl + '/getquerycolumnpms?tenant=' + tenant + '&queryCode=' + queryCode + '&objecttableid=' + objecttableid + '&userid=' + userid, {
                 headers: authHeader
             }).map(response => {
                 var pms = response.json();

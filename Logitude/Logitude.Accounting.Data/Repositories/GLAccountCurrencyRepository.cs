@@ -37,7 +37,7 @@ namespace Logitude.Accounting.Data.Repositories
             return (from accCurr in context.GLAccountCurrencies
                         //.Include("GLAccount") -- in unitest not work !!!
                     join acc in context.GLAccounts
-                    on accCurr.Id equals acc.Id
+                    on accCurr.GLAccountId equals acc.Id
 
                     where accCurr.MainGLAccountId == GLAccountId && accCurr.Tenant == tenant
                     where acc.Inactive == false

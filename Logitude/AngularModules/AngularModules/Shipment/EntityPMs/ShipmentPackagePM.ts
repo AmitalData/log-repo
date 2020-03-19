@@ -666,6 +666,17 @@ export class ShipmentPackagePM {
     public get CountryId() { return this.countryId; }
     public set CountryId(newValue: string) { if (this.countryId != newValue) { this.countryId = newValue; this.MarkAsDirty("CountryId"); } }        
 
+    private warehouseReleaseNumber: string;
+    public get WarehouseReleaseNumber() { return this.warehouseReleaseNumber; }
+    public set WarehouseReleaseNumber(newValue: string) { if (this.warehouseReleaseNumber != newValue) { this.warehouseReleaseNumber = newValue; this.MarkAsDirty("WarehouseReleaseNumber"); } }
+
+
+  private warehouseReleaseId: string;
+    public get WarehouseReleaseId() { return this.warehouseReleaseId; }
+    public set WarehouseReleaseId(newValue: string) { if (this.warehouseReleaseId != newValue) { this.warehouseReleaseId = newValue; this.MarkAsDirty("WarehouseReleaseId"); } }
+
+     
+
 
     public OldEntityPM: ShipmentPackagePM;
 

@@ -49,9 +49,13 @@
     <Reference Include="Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\MSTest.TestFramework.1.3.2\lib\net45\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Net.Http" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceModel.Web" />
@@ -59,6 +63,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="RestAPIService.cs" />
     <Compile Include="ServicesTest\AutoSignUpTest.cs" />
     <Compile Include="ServicesTest\DocumentsMetaDataTypeTest.cs" />
     <Compile Include="ServicesTest\DepositionRequestTest.cs" />
@@ -67,6 +72,7 @@
     <Compile Include="ServicesTest\CustomBankCardTest.cs" />
     <Compile Include="ServicesTest\HybridPartnerTest.cs" />
     <Compile Include="ServicesTest\CustomerAdditionalServiceDWTest.cs" />
+    <Compile Include="ServicesTest\CommTaskTest.cs" />
     <Compile Include="ServicesTest\ShipmentFollowerstTest.cs" />
     <Compile Include="ServicesTest\CustomerCompetitorDWTest.cs" />
     <Compile Include="ServicesTest\TenantManagementDWTest.cs" />
@@ -179,6 +185,7 @@
     </None>
     <None Include="Config\test.appSettings.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\AutoSignUpServiceReference\AutoSignUpWcfService.wsdl" />
     <None Include="Connected Services\AutoSignUpServiceReference\AutoSignUpWcfService.xsd">
@@ -505,6 +512,10 @@
     <ProjectReference Include="..\Logitude.CRM.BL\Logitude.CRM.BL.csproj">
       <Project>{40502295-5a7f-4a20-91d2-768ca7cd35ec}</Project>
       <Name>Logitude.CRM.BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.IntegrationTest.Core\Logitude.IntegrationTest.Core.csproj">
+      <Project>{83EE55E3-C13C-4DF6-AC3C-C634E9CD8D66}</Project>
+      <Name>Logitude.IntegrationTest.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

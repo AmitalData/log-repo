@@ -42,6 +42,10 @@ namespace Logitude.TariffModule.Data.EntityLists
        public string CurrencyId  { get; set; }
        [DataMember]
        public string CurrencyCode  { get; set; }
+       [DataMember]
+       public string OriginPortCombinedCode  { get; set; }
+       [DataMember]
+       public string DestinationPortCombinedCode  { get; set; }
    }
 
 }

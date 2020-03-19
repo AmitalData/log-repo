@@ -1,18 +1,44 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Table Name="DocumentFilingBackupSettings" Schema="dbo" DBType="Main">
-  <Column Name="ActivationDate" Type="datetime">
-    <Constraints Nullable="true" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="DocumentFilingBackupSettings"
+  Schema="dbo"
+  DBType="Main"
+  Module="Common">
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="DeactivationDate" Type="datetime">
-    <Constraints Nullable="true" />
+  <Column
+    Name="IsActive"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="FTPDetailId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ActivationDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="IsActive" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="DeactivationDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints PrimaryKey="true" Nullable="false" />
+  <Column
+    Name="FTPDetailId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
+  <Relation
+    ForeignKeyColumn="FTPDetailId"
+    ReferencedTable="FTPDetails"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
 </Table>

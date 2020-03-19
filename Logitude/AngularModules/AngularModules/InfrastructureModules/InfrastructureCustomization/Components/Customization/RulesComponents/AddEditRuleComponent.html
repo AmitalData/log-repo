@@ -112,14 +112,14 @@
                                 <td style="width:250px">
                                     <!--<ComboBox [ItemsSource]="ObjectFields" [Binding]="'FieldName'" [SelectedValue]="DataContext.TriggerFieldId"  [SelectedValuePath]="'Id'" ></ComboBox>-->
                                     <LogLov 
-                                            [ObjectFieldName]="'TriggerFieldId'"
+                                            [ObjectFieldName]="'TriggerFieldCode'"
                                             [QueryFilterItems]="FieldsLovQueryFilters"
                                             [ObjectTableName]="'ObjectField'"
                                             [DataContext]="DataContext"
                                             [LookUpTableName]="'ObjectField'"
                                             [NoValidation]="true"
                                             [IsFreeText]="true"
-                                            [SelectedValue]="DataContext.TriggerFieldId"
+                                            [SelectedValue]="DataContext.TriggerFieldCode"
                                             [HideColumns]="true"
                                             [HideLastColumn]="true"
                                             [DisplayMemberPath]="'FieldName'">

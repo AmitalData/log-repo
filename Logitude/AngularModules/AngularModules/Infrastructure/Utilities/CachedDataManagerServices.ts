@@ -23,7 +23,8 @@ import {TicketStageListService} from '../../CRM/Services/StandardLists/TicketSta
 import {TicketTypeListService} from '../../CRM/Services/StandardLists/TicketTypeListService';
 import {AccountingSettingListService} from '../../Common/Services/StandardLists/AccountingSettingListService';
 import {AdditionalServiceListService} from '../../Common/Services/StandardLists/AdditionalServiceListService';
-import {AirlineListService} from '../../Common/Services/StandardLists/AirlineListService';
+import { AirlineListService } from '../../Common/Services/StandardLists/AirlineListService';
+import { AirlineMessagingRuleListService } from '../../Common/Services/StandardLists/AirlineMessagingRuleListService';
 import {BranchListService} from '../../Common/Services/StandardLists/BranchListService';
 import {CarrierListService} from '../../Common/Services/StandardLists/CarrierListService';
 import {ChargesTypeListService} from '../../Common/Services/StandardLists/ChargesTypeListService';
@@ -89,7 +90,7 @@ import { TariffTypeListService } from '../../TariffModule/Services/StandardLists
 //Occasions
 import { OccasionStatusListService } from '../../CRM/Services/StandardLists/OccasionStatusListService';
 import { OccasionTypeListService } from '../../CRM/Services/StandardLists/OccasionTypeListService';
-
+import { AWBAdditionalHandlingInfoListService } from '../../Shipment/Services/StandardLists/AWBAdditionalHandlingInfoListService';
 
 export class CachedDataManagerServices {
     public getAllFromCache(objectTableName: string, filters: ApiQueryFilters) {
@@ -111,7 +112,7 @@ export class CachedDataManagerServices {
 
         var myResult: any = null;
 
-        switch (name) {
+        switch (name) { 
             case "BluesnapContractListService": { myResult = new BluesnapContractListService(); break; }
             case "ChargesGroupListService": { myResult = new ChargesGroupListService(); break; }
             case "CustomPickListListService": { myResult = new CustomPickListListService(); break; }
@@ -137,6 +138,7 @@ export class CachedDataManagerServices {
             case "AccountingSettingListService": { myResult = new AccountingSettingListService(); break; }
             case "AdditionalServiceListService": { myResult = new AdditionalServiceListService(); break; }
             case "AirlineListService": { myResult = new AirlineListService(); break; }
+            case "AirlineMessagingRuleListService": { myResult = new AirlineMessagingRuleListService(); break; }
             case "BranchListService": { myResult = new BranchListService(); break; }
             case "CarrierListService": { myResult = new CarrierListService(); break; }
             case "ChargesTypeListService": { myResult = new ChargesTypeListService(); break; }
@@ -191,6 +193,7 @@ export class CachedDataManagerServices {
             case "TariffListService": { myResult = new TariffListService(); break; }               
             case "TariffTypeListService": { myResult = new TariffTypeListService(); break; }
             case "OccasionTypeListService": { myResult = new OccasionTypeListService(); break; }
+            case "AWBAdditionalHandlingInfoListService": { myResult = new AWBAdditionalHandlingInfoListService(); break; }    
             default: {
                 alert(name + " is not declared in CachedDataManagerServices");
                 break;

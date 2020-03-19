@@ -12,12 +12,12 @@ namespace Logitude.HybridTest.WcfCallers
     {
         public static void PreparePackageTypesVars()
         {
-            GetPackageTypeIdContainerPC1();
-            GetPackageTypeIdContainerPC2();
-            GetPackageTypeIdContainerPP1();
-            GetPackageTypeIdContainerPP2();
+            GetPackageTypeCodeContainer(HybridData.PackageTypeCodePC1);
+            GetPackageTypeCodeContainer(HybridData.PackageTypeCodePC2);
+            GetPackageTypeCodeContainer(HybridData.PackageTypeCodePP1);
+            GetPackageTypeCodeContainer(HybridData.PackageTypeCodePP2);
         }
-        private static void GetPackageTypeIdContainerPC1()
+        private static void GetPackageTypeCodeContainer(string code)
         {
             InvokedProperties serviceProperties = new InvokedProperties
             {
@@ -30,98 +30,20 @@ namespace Logitude.HybridTest.WcfCallers
             PackageTypeServiceReference.PackageTypeApiFilters filters = new PackageTypeServiceReference.PackageTypeApiFilters
             {
                 Take = 10,
-                SearchFields = HybridData.PackageTypeCodePC1,
+                SearchFields = code,
             };
 
             Response serviceResponse = new Response();
             object[] serviceParameters = new object[] { filters, EnvironmentGlobalParams.MainTenant, serviceResponse };
-            PackageTypeList[] packageTypes = (PackageTypeList[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
-            Assert.IsFalse(serviceResponse.HasError, "Get List Failed! " + serviceResponse.ErrorMessage);
-            Assert.IsNull(serviceResponse.Result, "Get List Failed! " + serviceResponse.Result);
-            if (packageTypes.Length == 0)
-                HybridData.PackageTypeIdPC1 = CreatePackageTypeIdContainer(HybridData.PackageTypeCodePC1);
-            else
-                HybridData.PackageTypeIdPC1 = packageTypes[0].Id;
-        }
-        private static void GetPackageTypeIdContainerPC2()
-        {
-            InvokedProperties serviceProperties = new InvokedProperties
-            {
-                ServiceName = "PackageType",
-                ServiceOperation = "GetPackageTypeList",
-                ServiceResponseIndex = 2,
-                ServiceType = typeof(PackageTypeList),
-                ServiceFilterType = typeof(PackageTypeServiceReference.PackageTypeApiFilters),
-            };
-            PackageTypeServiceReference.PackageTypeApiFilters filters = new PackageTypeServiceReference.PackageTypeApiFilters
-            {
-                Take = 10,
-                SearchFields = HybridData.PackageTypeCodePC2,
-            };
+            ServiceOutcome serviceOutcome = WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters);
 
-            Response serviceResponse = new Response();
-            object[] serviceParameters = new object[] { filters, EnvironmentGlobalParams.MainTenant, serviceResponse };
-            PackageTypeList[] packageTypes = (PackageTypeList[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
-            Assert.IsFalse(serviceResponse.HasError, "Get List Failed! " + serviceResponse.ErrorMessage);
-            Assert.IsNull(serviceResponse.Result, "Get List Failed! " + serviceResponse.Result);
+            PackageTypeList[] packageTypes = (PackageTypeList[])serviceOutcome.Result;
+            Assert.IsFalse(serviceOutcome.Response.HasError, "Get PackageType Failed! " + serviceOutcome.Response.ErrorMessage);
+            Assert.IsNull(serviceOutcome.Response.Result, "Get PackageType Failed! " + serviceOutcome.Response.Result);
             if (packageTypes.Length == 0)
-                HybridData.PackageTypeIdPC2 = CreatePackageTypeIdContainer(HybridData.PackageTypeCodePC2);
-            else
-                HybridData.PackageTypeIdPC2 = packageTypes[0].Id;
+                CreatePackageTypeIdContainer(code);
         }
-        private static void GetPackageTypeIdContainerPP1()
-        {
-            InvokedProperties serviceProperties = new InvokedProperties
-            {
-                ServiceName = "PackageType",
-                ServiceOperation = "GetPackageTypeList",
-                ServiceResponseIndex = 2,
-                ServiceType = typeof(PackageTypeList),
-                ServiceFilterType = typeof(PackageTypeServiceReference.PackageTypeApiFilters),
-            };
-            PackageTypeServiceReference.PackageTypeApiFilters filters = new PackageTypeServiceReference.PackageTypeApiFilters
-            {
-                Take = 10,
-                SearchFields = HybridData.PackageTypeCodePP1,
-            };
-
-            Response serviceResponse = new Response();
-            object[] serviceParameters = new object[] { filters, EnvironmentGlobalParams.MainTenant, serviceResponse };
-            PackageTypeList[] packageTypes = (PackageTypeList[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
-            Assert.IsFalse(serviceResponse.HasError, "Get List Failed! " + serviceResponse.ErrorMessage);
-            Assert.IsNull(serviceResponse.Result, "Get List Failed! " + serviceResponse.Result);
-            if (packageTypes.Length == 0)
-                HybridData.PackageTypeIdPP1 = CreatePackageTypeIdContainer(HybridData.PackageTypeCodePP1);
-            else
-                HybridData.PackageTypeIdPP1 = packageTypes[0].Id;
-        }
-        private static void GetPackageTypeIdContainerPP2()
-        {
-            InvokedProperties serviceProperties = new InvokedProperties
-            {
-                ServiceName = "PackageType",
-                ServiceOperation = "GetPackageTypeList",
-                ServiceResponseIndex = 2,
-                ServiceType = typeof(PackageTypeList),
-                ServiceFilterType = typeof(PackageTypeServiceReference.PackageTypeApiFilters),
-            };
-            PackageTypeServiceReference.PackageTypeApiFilters filters = new PackageTypeServiceReference.PackageTypeApiFilters
-            {
-                Take = 10,
-                SearchFields = HybridData.PackageTypeCodePP2,
-            };
-
-            Response serviceResponse = new Response();
-            object[] serviceParameters = new object[] { filters, EnvironmentGlobalParams.MainTenant, serviceResponse };
-            PackageTypeList[] packageTypes = (PackageTypeList[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
-            Assert.IsFalse(serviceResponse.HasError, "Get List Failed! " + serviceResponse.ErrorMessage);
-            Assert.IsNull(serviceResponse.Result, "Get List Failed! " + serviceResponse.Result);
-            if (packageTypes.Length == 0)
-                HybridData.PackageTypeIdPP2 = CreatePackageTypeIdContainer(HybridData.PackageTypeCodePP2);
-            else
-                HybridData.PackageTypeIdPP2 = packageTypes[0].Id;
-        }
-        private static string CreatePackageTypeIdContainer(string code)
+        private static void CreatePackageTypeIdContainer(string code)
         {
             PackageTypePM packageTypePM = new PackageTypePM()
             {
@@ -137,7 +59,6 @@ namespace Logitude.HybridTest.WcfCallers
                 Tenant = EnvironmentGlobalParams.MainTenant,
             };
             Response serviceResponse = AssertResponse(packageTypePM);
-            return serviceResponse.Result;
         }
         private static Response AssertResponse<T>(T entityPM)
         {

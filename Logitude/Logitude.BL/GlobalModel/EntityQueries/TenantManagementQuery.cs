@@ -169,6 +169,11 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                      IsINTTRAOnlyDemo = a.IsINTTRAOnlyDemo,
                                                      MainAdditionalPackageApplied = a.MainAdditionalPackageApplied,
                                                      TotalPrice = a.TotalPrice,
+                                                     SupportDomain = a.SupportDomain,
+                                                     TotalNumberOfUsers = a.TotalNumberOfUsers,
+                                                     TotalFreeUsers = a.TotalFreeUsers,
+                                                     AveragePrice = a.AveragePrice,
+                                                     TotalPaymentamount = a.TotalPaymentamount,
                                                  }).FirstOrDefault();
                     if (tenant != null)
                     {
@@ -341,6 +346,11 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                   IsINTTRAOnlyDemo = a.IsINTTRAOnlyDemo,
                                                   MainAdditionalPackageApplied = a.MainAdditionalPackageApplied,
                                                   TotalPrice = a.TotalPrice,
+                                                  SupportDomain = a.SupportDomain,
+                                                  TotalNumberOfUsers = a.TotalNumberOfUsers,
+                                                  TotalFreeUsers = a.TotalFreeUsers,
+                                                  AveragePrice = a.AveragePrice,
+                                                  TotalPaymentamount = a.TotalPaymentamount,
                                               }).FirstOrDefault();
 
                 if (tenant1 != null)
@@ -513,6 +523,11 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         IsINTTRAOnlyDemo = a.IsINTTRAOnlyDemo,
                         MainAdditionalPackageApplied = a.MainAdditionalPackageApplied,
                         TotalPrice = a.TotalPrice,
+                        SupportDomain = a.SupportDomain,
+                        TotalNumberOfUsers = a.TotalNumberOfUsers,
+                        TotalFreeUsers = a.TotalFreeUsers,
+                        AveragePrice = a.AveragePrice,
+                        TotalPaymentamount = a.TotalPaymentamount,
                     });
         }
         public TenantManagementList MapSingleList(TenantManagement entity)
@@ -972,6 +987,11 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                              IsINTTRAOnlyDemo = a.IsINTTRAOnlyDemo,
                                              MainAdditionalPackageApplied = a.MainAdditionalPackageApplied,
                                              TotalPrice = a.TotalPrice,
+                                             SupportDomain = a.SupportDomain,
+                                             TotalNumberOfUsers = a.TotalNumberOfUsers,
+                                             TotalFreeUsers = a.TotalFreeUsers,
+                                             AveragePrice = a.AveragePrice,
+                                             TotalPaymentamount = a.TotalPaymentamount,
                                          }).FirstOrDefault();
 
             return tenant;

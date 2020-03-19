@@ -89,6 +89,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     public IsShowTipIcon: boolean = false;
     public IsFirstTipLoad: boolean = false;
 
+
     //public Title: string;
     private title: string;//= "";
     get Title() { return this.title; }
@@ -114,6 +115,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     onColumnsClick() {
         var windowArgs: any = {};
         windowArgs.queryId = this.SelectedQueryId;
+        windowArgs.queryCode = /*this.ObjectTableName + '.' +*/this.SelectedQueryCode;
         windowArgs.isNewQueryMode = false;
         windowArgs.currentObjectTable = this.ObjectTableName;
         var logitudeWindow = new LogitudeWindow();
@@ -129,7 +131,7 @@ export class ListComponent implements OnInit, AfterViewInit {
             //         myfilterAgrs.AdditionalFilters.push(filter);
             //     });
             // }
-            this.QueryValueChanged({ QueryId: this.SelectedQueryId, Title: TextCodeTranslator.Translate(this.SelectedQuery.NameTextCodeCode), Filters: this.CurrentQueryFilters, IgnoreSearchFields: true });
+            this.QueryValueChanged({ QueryCode: this.SelectedQueryCode,Title: TextCodeTranslator.Translate(this.SelectedQuery.NameTextCodeCode), Filters: this.CurrentQueryFilters, IgnoreSearchFields: true });
             //this.onQueryChangeEvent.emit({ QueryId: this.SelectedQueryId, Filters: this.CurrentQueryFilters });
         });
     }
@@ -161,7 +163,7 @@ export class ListComponent implements OnInit, AfterViewInit {
         //}
         //if (this.ClearMySearch == false) {
         this.CurrentQueryFilters.addAdditionalFilter("SearchFields", this.searchFields, null, null, "Contains", false, true, false, "String");
-        this.onQueryChangeEvent.emit({ QueryId: this.SelectedQueryId, Filters: this.CurrentQueryFilters, SearchFieldChanged: true, Reload: true });
+        this.onQueryChangeEvent.emit({ QueryCode: this.SelectedQueryCode, Filters: this.CurrentQueryFilters, SearchFieldChanged: true, Reload: true });
         //}
         //else {
         //    this.ClearMySearch = false;
@@ -174,7 +176,9 @@ export class ListComponent implements OnInit, AfterViewInit {
             if (this.MethodName.indexOf("Customs.") > -1) {
                 this.MethodName = this.MethodName.split('.')[1];
             }
+            this.SelectedQueryCode = this.SelectedQuery.UniqueCode;
             this.SelectedQueryId = this.SelectedQuery.Id;
+
             if (this.listArgs && this.listArgs.Filters && !AppTool.IsNullOrEmpty(this.listArgs.Filters.SortBy)) {
                 this.dataSource.sortingCol = this.listArgs.Filters.SortBy;
             }
@@ -191,8 +195,8 @@ export class ListComponent implements OnInit, AfterViewInit {
             //this.GetQueryColumns(this.SelectedQuery.Id, this.UserId);
         }
         this.CurrentQueryFilters = new ApiQueryFilters();
-        if (window.PreDefinedFilters.filter(d => d.QueryId == this.SelectedQuery.Id) != null) {
-            var predefinedFilters = window.PreDefinedFilters.filter(d => d.QueryId == this.SelectedQuery.Id);
+        if (window.PreDefinedFilters.filter(d => d.QueryCode == this.SelectedQuery.UniqueCode) != null) {
+            var predefinedFilters = window.PreDefinedFilters.filter(d => d.QueryCode == this.SelectedQuery.UniqueCode);
             predefinedFilters.forEach((filter, key) => {
                 var filterOperator = (!AppTool.IsNullOrEmpty(filter.Operator)) ? filter.Operator : filter.ObjectFieldOperator;
                 var value1 = filter.PredefinedValue;
@@ -200,7 +204,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                 if (value2 != null) {
                     filterOperator = "Between";
                 }
-                if (filter.DataTypeCode == "DateTime") {
+                if (filter.DataTypeCode == "DateTime" || filter.DataTypeCode == "Date") {
                     var TodayDate = new Date();
                     TodayDate.setHours(0, 0, 0, 0);
 
@@ -217,7 +221,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                     LastSevenDaysDate.setUTCHours(0, 0, 0, 0);
                     var LastThirtyDaysDate = DateTool.AddDays((new Date()), -30);
                     LastThirtyDaysDate.setUTCHours(0, 0, 0, 0);
-                    var CurrentYearFromDate = new Date(new Date().getFullYear(), 0, 1);
+                    var CurrentYearFromDate = new Date(new Date().getFullYear(), 0, 2);
                     CurrentYearFromDate.setUTCHours(0, 0, 0, 0);
                     var CurrentYearToDate = DateTool.AddDays((new Date()), 1);
                     CurrentYearToDate.setUTCHours(0, 0, 0, 0);
@@ -428,6 +432,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     public QueryColumns: any[];
     public firstCall: boolean = true;
     public SelectedQueryId: string;
+    public SelectedQueryCode: string;
     public SelectedQuery: any = null;
     public QueryCode: string;
     public NewButtonLable: string;
@@ -527,7 +532,7 @@ export class ListComponent implements OnInit, AfterViewInit {
             LastSevenDaysDate.setUTCHours(0, 0, 0, 0);
             var LastThirtyDaysDate = DateTool.AddDays((new Date()), -30);
             LastThirtyDaysDate.setUTCHours(0, 0, 0, 0);
-            var CurrentYearFromDate = new Date(new Date().getFullYear(), 0, 1);
+            var CurrentYearFromDate = new Date(new Date().getFullYear(), 0, 2);
             CurrentYearFromDate.setUTCHours(0, 0, 0, 0);
             var CurrentYearToDate = DateTool.AddDays((new Date()), 1);
             CurrentYearToDate.setUTCHours(0, 0, 0, 0);
@@ -660,6 +665,7 @@ export class ListComponent implements OnInit, AfterViewInit {
 
 
     IsShowAddFromLibraryLink: boolean;
+    IsShowAddReportFromLibraryLink: boolean = false;
     HasExcelExportButton: boolean;
 
     LinkAddDocumentFromLibraryClcik() {
@@ -688,6 +694,21 @@ export class ListComponent implements OnInit, AfterViewInit {
         });
     }
 
+    LinkAddReportFromLibraryClick() {
+        var windowTitle = "Add Report From Library";
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 750;
+        logWindow.Height = 600;
+        logWindow.Title = windowTitle;
+        var windowArgs: any = {};
+        windowArgs.IsCopyFromLibrary = true;
+        windowArgs.FolderId = this.listArgs.BIReportFolderId;
+        logWindow.WindowArgs = windowArgs;
+        logWindow.Show('./InfrastructureModules/InfrastructureBIReport/Components/NewEntity/NewBIReport');
+        logWindow.ComponentLoaded.subscribe(s => {
+            //
+        });
+    }
 
 
     IsShowAddQuoteTemplateFromLibraryLink: boolean;
@@ -765,6 +786,15 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
 
         }
 
+        if (this.ObjectTable.Name == "BIReport") {
+            if (FeatureLocator.HasFeaturePermession("BIReport", "BIReportCopyFromLibrary")) {
+                if (SessionLocator.Tenant != 0) {
+                    this.IsShowAddReportFromLibraryLink = true;
+                }
+            }
+
+        }
+
         if (this.ObjectTable.Name == "QuoteTemplate") {
             if (FeatureLocator.HasFeaturePermession("QuoteTemplate", "FROMLIBRARY")) {
                 this.IsShowAddQuoteTemplateFromLibraryLink = true;
@@ -834,6 +864,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
 
     private listArgs: ListComponentArgs;
     ShowViews: boolean = true;
+    ResourcesLoaded: boolean = false;
     Run(args: ListComponentArgs) {
         this.CurrentSession.AddMenuReference(this.ComponentRef);
         this.CurrentSession.AddListComponent(this);
@@ -843,6 +874,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
             if (!AppTool.IsNullOrEmpty(this.listArgs.DisplayTitle)) {
                 this.Title = this.listArgs.DisplayTitle;
             }
+            //args.QueryCode=this.ObjectTableName + '.' + args.QueryCode
             this.QueryCode = args.QueryCode;
             this.ObjectTableName = args.ObjectTableName;
             this.SetAddButtonTitle();
@@ -873,6 +905,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
         this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe(response => {
             this.BackBtnTitle = this.listArgs.BackButtonTitle;
             //this.Title = this.listArgs.DisplayTitle;
+            this.ResourcesLoaded = true;
             this.ViewQuery(this.listArgs.Filters, this.listArgs.DisplayTitle, this.listArgs.BackButtonTitle, this.listArgs.IsReadOnlyList, this.listArgs.IsBackToCurrentListView);
             //this.CD.detectChanges();
         });
@@ -916,32 +949,32 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
     GetQueries() {
         var allQueries: any[] = window.Queries.filter(x => x.ObjectTableId === this.ObjectTable.Id).sort((a, b) => { return a.IndexOrder - b.IndexOrder });
 
-        this.Queries = allQueries.filter(x => x.UserId == null && FeatureLocator.IsFeatureGranted(x.FeatureId) && x.SystemLevel == true);
+        this.Queries = allQueries.filter(x => x.UserId == null && FeatureLocator.IsFeatureGrantedByUniqeCode(x.FeatureUniqeCode) && x.SystemLevel == true);
         this.UserQueries = allQueries.filter(x => x.UserId != null && x.Tenant == SessionInfo.LoggedUserTenant);
 
         if (this.listArgs.Perspective != null && this.listArgs.IgnoreSelectedPerspective == false) {
             //this.SelectedQuery = allQueries.filter(f => ((f.UserId == SessionLocator.LoggedUserId && f.Tenant == SessionLocator.Tenant) || f.Tenant == 0) && f.Perspective == this.listArgs.Perspective)[0];
             this.SelectedQuery = allQueries.filter(f => f.Perspective == this.listArgs.Perspective)[0];
 
-            this.Queries = allQueries.filter(f => (f.UserId == null && FeatureLocator.IsFeatureGranted(f.FeatureId) && f.SystemLevel == true) && f.Perspective == this.listArgs.Perspective);
+            this.Queries = allQueries.filter(f => (f.UserId == null && FeatureLocator.IsFeatureGrantedByUniqeCode(f.FeatureUniqeCode) && f.SystemLevel == true) && f.Perspective == this.listArgs.Perspective);
         }
         else if (this.listArgs.Perspective != null && this.listArgs.IgnoreSelectedPerspective == true) {
             //this.SelectedQuery = allQueries.filter(f => ((f.UserId == SessionLocator.LoggedUserId && f.Tenant == SessionLocator.Tenant) || f.Tenant == 0) && f.Code == this.QueryCode)[0];
-            this.SelectedQuery = allQueries.filter(f => f.Code == this.QueryCode)[0];
+            this.SelectedQuery = allQueries.filter(f => f.UniqueCode == (this.ObjectTableName+ (f.UserId!= undefined?"." + f.UserId:"") + '.'+this.QueryCode))[0];
 
-            this.Queries = allQueries.filter(f => (f.UserId == null && FeatureLocator.IsFeatureGranted(f.FeatureId) && f.SystemLevel == true) && f.Perspective == this.listArgs.Perspective);
+            this.Queries = allQueries.filter(f => (f.UserId == null && FeatureLocator.IsFeatureGrantedByUniqeCode(f.FeatureUniqeCode) && f.SystemLevel == true) && f.Perspective == this.listArgs.Perspective);
         }
 
         else if (this.QueryCode) {
             //this.SelectedQuery = allQueries.filter(f => ((f.UserId == SessionLocator.LoggedUserId && f.Tenant == SessionLocator.Tenant) || f.Tenant == 0) && f.Code == this.QueryCode)[0];
-            this.SelectedQuery = allQueries.filter(f => f.Code == this.QueryCode)[0];
+            this.SelectedQuery = allQueries.filter(f => f.UniqueCode == (this.ObjectTableName + (f.UserId != undefined ? "." + f.UserId : "") + '.'+this.QueryCode))[0];
         }
 
         else {
             this.SelectedQuery = allQueries[0];
         }
         if (this.SelectedQuery != null) {
-            this.QueryCode = this.SelectedQuery.Code;
+            this.QueryCode = this.SelectedQuery.UniqueCode;
         }
         if (AppTool.IsNullOrEmpty(this.Title)) {
             this.Title = TextCodeTranslator.Translate(this.SelectedQuery.NameTextCodeCode);
@@ -949,6 +982,8 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
         if (this.SelectedQuery != null) {
             //console.log(this.SelectedQuery);
             this.SelectedQueryId = this.SelectedQuery.Id;
+            this.SelectedQueryCode = this.SelectedQuery.UniqueCode;
+
             //this.Query = this.SelectedQuery;
 
             if (this.listArgs && this.listArgs.Filters && !AppTool.IsNullOrEmpty(this.listArgs.Filters.SortBy)) {
@@ -970,7 +1005,8 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
             }
             //console.log("dataSource", this.dataSource);
             this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe(response => {
-                this.GetQueryColumns(this.SelectedQuery.Id, this.UserId);
+                this.ResourcesLoaded = true;
+                this.GetQueryColumns(this.SelectedQuery.UniqueCode, this.UserId);
             });
         }
 
@@ -978,14 +1014,18 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
         this.SetAddButton();
     }
 
-    GetQueryColumns(queryId, userId) {
+    GetQueryColumns(queryCode, userId) {
         //var queryId = window.Queries.filter(x => x.Code === queryCode)[0].Id;
-        this._http.get(ServiceHelper.GetLogitudeURL() + "api/ngMetaData?tenant=" + this.Tenant + "&queryid=" + queryId + "&objecttableid=" + this.ObjectTable.Id + "&userid=" + userId)
+        this._http.get(ServiceHelper.GetLogitudeURL() + "api/ngMetaData?tenant=" + this.Tenant + "&queryCode=" + queryCode + "&objecttableid=" + this.ObjectTable.Id + "&userid=" + userId)
             .subscribe((response) => {
                 this.QueryColumns = response.json();
                 this.QueryColumns = this.QueryColumns.sort((a, b) => { return (a.IndexOrder > b.IndexOrder) ? 1 : (a.IndexOrder < b.IndexOrder) ? -1 : 0 });
 
                 this.QueryColumns.forEach((value, key) => {
+                    var mutaztouch0 = value.ObjectFieldCode;
+                    var mutaztouch14 = window.ObjectFields.filter(x => x.FieldCode === value.ObjectFieldCode);
+                    var mutazTouch = window.ObjectFields.filter(x => x.FieldCode === value.ObjectFieldCode)[0];
+
                     this.columnsObjectFields.push(window.ObjectFields.filter(x => x.FieldCode === value.ObjectFieldCode)[0]);
                 });
 
@@ -1002,7 +1042,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                             ServerSideSortable: true, //this.columnsObjectFields[i].CanFilter
                             ColumnHeaderTemplateName: this.columnsObjectFields[i].ColumnHeaderTemplateName, //'TransportModeCellDisplayListTemplate',
                             ObjectField: this.columnsObjectFields[i],
-                            QueryId: queryId
+                            QueryCode: queryCode
                             //ColumnHeaderTemplateName: this.columnsObjectFields[i].ColumnHeaderTemplateName, //'./Shipment/Components/ListTemplates/TransportModeCellDisplayListTemplate',
                         });
                     }
@@ -1012,8 +1052,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
     }
     ClearMySearch: boolean = false;
     QueryValueChanged(Args) {
-
-        this.AdvanceFilters = new ApiQueryFilters();
+         this.AdvanceFilters = new ApiQueryFilters();
         if (ObjectsLocator.GlobalSetting.WorkEnvironment != "customs") {
             if (Args.IgnoreSearchFields != true) {
                 this.searchFields = "";
@@ -1026,22 +1065,24 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
         this.columnsObjectFields = [];
         if (this.Queries == null || this.Queries.length == 0) {
             var MyQueries = window.Queries.filter(x => x.ObjectTableId === this.ObjectTable.Id).sort((a, b) => { return a.IndexOrder - b.IndexOrder });
-            this.SelectedQuery = MyQueries.filter(x => x.Id === Args.QueryId)[0];
+            this.SelectedQuery = MyQueries.filter(x => x.UniqueCode ===  Args.QueryCode)[0];
         }
         else {
-            this.SelectedQuery = this.Queries.filter(x => x.Id === Args.QueryId)[0];
+            this.SelectedQuery = this.Queries.filter(x => x.UniqueCode ===  Args.QueryCode)[0];
         }
 
         if (this.SelectedQuery == null) {
-            this.SelectedQuery = this.UserQueries.filter(x => x.Id === Args.QueryId)[0];
+            this.SelectedQuery = this.UserQueries.filter(x => x.UniqueCode ===  Args.QueryCode)[0];
         }
         if (this.SelectedQuery != null) {
-            this.QueryCode = this.SelectedQuery.Code;
+            this.QueryCode = this.SelectedQuery.UniqueCode;
             this.MethodName = this.SelectedQuery.QuerySection;
             if (this.MethodName.indexOf("Customs.") > -1) {
                 this.MethodName = this.MethodName.split('.')[1];
             }
+            this.SelectedQueryCode = this.SelectedQuery.UniqueCode;
             this.SelectedQueryId = this.SelectedQuery.Id;
+
             if (this.listArgs && this.listArgs.Filters && !AppTool.IsNullOrEmpty(this.listArgs.Filters.SortBy)) {
                 this.dataSource.sortingCol = this.listArgs.Filters.SortBy;
             }
@@ -1054,8 +1095,8 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
             else {
                 this.dataSource.sortingDir = this.SelectedQuery.DefaultSortDirection;
             }
-            if (window.PreDefinedFilters.filter(d => d.QueryId == this.SelectedQuery.Id) != null) {
-                var predefinedFilters = window.PreDefinedFilters.filter(d => d.QueryId == this.SelectedQuery.Id);
+            if (window.PreDefinedFilters.filter(d => d.QueryCode == this.SelectedQuery.UniqueCode) != null) {
+                var predefinedFilters = window.PreDefinedFilters.filter(d => d.QueryCode == this.SelectedQuery.UniqueCode);
                 predefinedFilters.forEach((filter, key) => {
                     var filterOperator = (!AppTool.IsNullOrEmpty(filter.Operator)) ? filter.Operator : filter.ObjectFieldOperator;
                     var value1 = filter.PredefinedValue;
@@ -1064,7 +1105,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                     if (value2 != null) {
                         filterOperator = "Between";
                     }
-                    if (filter.DataTypeCode == "DateTime") {
+                    if (filter.DataTypeCode == "DateTime" || filter.DataTypeCode == "Date") {
                         var TommorowDate = DateTool.AddDays((new Date()), 1);
                         TommorowDate.setUTCHours(0, 0, 0, 0);
                         var TodayDate = new Date();
@@ -1077,7 +1118,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                         LastSevenDaysDate.setUTCHours(0, 0, 0, 0);
                         var LastThirtyDaysDate = DateTool.AddDays((new Date()), -30);
                         LastThirtyDaysDate.setUTCHours(0, 0, 0, 0);
-                        var CurrentYearFromDate = new Date(new Date().getFullYear(), 0, 1);
+                        var CurrentYearFromDate = new Date(new Date().getFullYear(), 0, 2);
                         CurrentYearFromDate.setUTCHours(0, 0, 0, 0);
                         var CurrentYearToDate = DateTool.AddDays((new Date()), 1);
                         CurrentYearToDate.setUTCHours(0, 0, 0, 0);
@@ -1183,7 +1224,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                 });
             }
 
-            this.GetQueryColumns(this.SelectedQuery.Id, this.UserId);
+            this.GetQueryColumns(this.SelectedQuery.UniqueCode, this.UserId);
         }
         //if (!AppTool.IsNullOrEmpty(this.SelectedQuery.SpotlightDataTemplate)) {
         //    this.EnableSpotLight = true;
@@ -1193,7 +1234,8 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
         //console.log("QueryValueChanged()", queryId);
         //var userId = JSON.parse(sessionStorage.getItem("userData")).Id;
         //this.GetQueryColumns(queryId, this.UserId);
-        this.SelectedQueryId = Args.QueryId;
+        this.SelectedQueryCode =  Args.QueryCode;
+        //this.SelectedQueryId = Args.QueryId;
 
         this.dataSource = {
             pageSize: 30,
@@ -1205,7 +1247,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
 
             },
         };
-        this.onQueryChangeEvent.emit({ QueryId: this.SelectedQueryId, Filters: Args.Filters, Reload: true });
+        this.onQueryChangeEvent.emit({ QueryCode: this.SelectedQueryCode, Filters: Args.Filters, Reload: true });
         this.SetNewEntityButton();
         this.SetAddButton();
     }
@@ -1213,7 +1255,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
     QueriesChangedEvent(Args) {
         //alert("Hi");
         this.AdvanceFilters = new ApiQueryFilters();
-        this.QueryCode = Args.Code;
+        this.QueryCode = Args.UniqueCode;
         //this.GetQueries();
         //var allQueries: any[] = window.Queries.filter(x => x.ObjectTableId === this.ObjectTable.Id).sort((a, b) => { return a.IndexOrder - b.IndexOrder });
 
@@ -1227,7 +1269,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
         //    this.Queries = allQueries.filter(f => ((f.UserId == SessionLocator.LoggedUserId && f.Tenant == SessionLocator.Tenant) || f.Tenant == 0) && f.Perspective == this.listArgs.Perspective);
         //}
         if (this.QueryCode) {
-            SelectedQuery = this.Queries.filter(x => x.Code === this.QueryCode)[0] != null ? this.Queries.filter(x => x.Code === this.QueryCode)[0] : this.UserQueries.filter(x => x.Code === this.QueryCode)[0];
+            SelectedQuery = this.Queries.filter(x => x.UniqueCode === this.QueryCode)[0] != null ? this.Queries.filter(x => x.UniqueCode === this.QueryCode)[0] : this.UserQueries.filter(x => x.UniqueCode === this.QueryCode)[0];
         }
         else {
             SelectedQuery = this.Queries.filter(x => x.IndexOrder === 0)[0] != null ? this.Queries.filter(x => x.IndexOrder === 0)[0] != null : this.UserQueries.filter(x => x.IndexOrder === 0)[0] != null;
@@ -1252,7 +1294,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
         if (!AppTool.IsNullOrEmpty(queryDisplayName)) {
             this.Title = queryDisplayName;
         }
-        var query = window.Queries.filter(q => q.ObjectTableId == this.ObjectTable.Id && q.Code == this.QueryCode)[0];
+        var query = window.Queries.filter(q => q.ObjectTableId == this.ObjectTable.Id && q.UniqueCode == this.QueryCode)[0];
 
         //if (!AppTool.IsNullOrEmpty(query.SpotlightDataTemplate)) {
         //    this.EnableSpotLight = true;
@@ -1267,8 +1309,8 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
             //    this.Title = TextCodeTranslator.Translate(query.NameTextCodeCode);
             //    //this.CD.detectChanges();
             //}
-            if (window.PreDefinedFilters.filter(d => d.QueryId == query.Id) != null) {
-                var predefinedFilters = window.PreDefinedFilters.filter(d => d.QueryId == query.Id);
+            if (window.PreDefinedFilters.filter(d => d.QueryCode == query.UniqueCode) != null) {
+                var predefinedFilters = window.PreDefinedFilters.filter(d => d.QueryCode == query.UniqueCode);
                 predefinedFilters.forEach((filter, key) => {
                     var filterOperator = (!AppTool.IsNullOrEmpty(filter.Operator)) ? filter.Operator : filter.ObjectFieldOperator;
                     var value1 = filter.PredefinedValue;
@@ -1276,7 +1318,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                     if (value2 != null) {
                         filterOperator = "Between";
                     }
-                    if (filter.DataTypeCode == "DateTime") {
+                    if (filter.DataTypeCode == "DateTime" || filter.DataTypeCode == "Date") {
 
                         var TodayDate = new Date();
                         TodayDate.setUTCHours(0, 0, 0, 0);
@@ -1292,7 +1334,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                         LastSevenDaysDate.setUTCHours(0, 0, 0, 0);
                         var LastThirtyDaysDate = DateTool.AddDays((new Date()), -30);
                         LastThirtyDaysDate.setUTCHours(0, 0, 0, 0);
-                        var CurrentYearFromDate = new Date(new Date().getFullYear(), 0, 1);
+                        var CurrentYearFromDate = new Date(new Date().getFullYear(), 0, 2);
                         CurrentYearFromDate.setUTCHours(0, 0, 0, 0);
                         var CurrentYearToDate = DateTool.AddDays((new Date()), 1);
                         CurrentYearToDate.setUTCHours(0, 0, 0, 0);
@@ -1425,7 +1467,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                 });
             }
             var ListComponentPostFex = this.ListComponentId.replace('ListComponentId_','');
-            this.CurrentSession.PubSubFiltersChangeEventService.Stream.emit({ QueryId: query.Id, Filters: filterAgrs, ListComponentPostFex: ListComponentPostFex });
+            this.CurrentSession.PubSubFiltersChangeEventService.Stream.emit({ QueryCode: query.UniqueCode, Filters: filterAgrs, ListComponentPostFex: ListComponentPostFex });
         }
     }
     onMenuHeaderchanged(event) {
@@ -1621,6 +1663,9 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
 
                     else if (!AppTool.IsNullOrEmpty(this.SelectedQuery.EditWizardName) || myObjectTableName == "AgentSharedManifest" || myObjectTableName == "Customs.CourierMaster") {
 
+                        if (this.SelectedQuery.EditWizardName == "SimulatorBookingComponent") {
+                            this.ShowINTTRABookingWizard(selectedEntityId, $event);
+                        }
                         if (this.SelectedQuery.EditWizardName == "Simplog.ShipmentLib.Views.AWBWizardEditControl") {
                             var isFullWizard = false;
                             var windowTitle = null;
@@ -2067,6 +2112,20 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
         }
     }
 
+    private ShowINTTRABookingWizard(selectedEntityId: string, $event) {
+        var logWindow = new LogitudeWindow();
+        logWindow.Title = "INTTRA e-booking Wizard";
+        logWindow.Width = 1020;
+        logWindow.Height = 570;
+        logWindow.WindowArgs = selectedEntityId;
+        logWindow.Show('./ShipmentModules/ShipmentINTTRA/Components/Wizard/SimulatorBookingLoadComponent');
+
+        logWindow.WindowClosed.subscribe(($event1: any) => {
+            this.isEditControlOpened = false;
+            this.OnBackFromEdit(selectedEntityId, $event)
+        });
+    }
+
     public MyScrollTop: number = 0;
     public SelectedItem: any;
     public MySelectedRowIndex: number;
@@ -2362,10 +2421,11 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
             else {
                 var isNewWizard = this.SelectedQuery.ObjectTableIsNewWizard;
                 this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe(response => {
+                    this.ResourcesLoaded = true;
                     if (isNewWizard) {
                         var IsOriginalMaster: boolean = false;
-                        if (!AppTool.IsNullOrEmpty(this.SelectedQuery.OriginalQueryId)) {
-                            var query = window.Queries.filter(q => q.ObjectTableId == this.ObjectTable.Id && q.Id == this.SelectedQuery.OriginalQueryId)[0];
+                        if (!AppTool.IsNullOrEmpty(this.SelectedQuery.OriginalQueryCode)) {
+                            var query = window.Queries.filter(q => q.ObjectTableId == this.ObjectTable.Id && q.UniqueCode == this.SelectedQuery.OriginalQueryCode)[0];
                             if (query.Code == "Masters" || query.Code == "Open Payables Masters" || query.Code == "All Masters") {
                                 IsOriginalMaster = true;
                             }
@@ -2542,6 +2602,12 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                         logWindow.WindowArgs = windowArgs;
                         break;
                     }
+                case "InterestReport":
+                    {
+                        logWindow.Width = 400;
+                        logWindow.Height = 200;
+                        break;
+                    }
             }
 
             var useLocal = !SessionLocator.LoggedUserPM.DontShowLocal;
@@ -2595,9 +2661,9 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
 
                 if (this.ObjectTableName == "Tariff") {
                     var QueryCodeOriginal = this.QueryCode;
-                    if (!AppTool.IsNullOrEmpty(this.SelectedQuery.OriginalQueryId)) {
-                        var query = window.Queries.filter(q => q.ObjectTableId == this.ObjectTable.Id && q.Id == this.SelectedQuery.OriginalQueryId)[0];
-                        QueryCodeOriginal = query.Code;
+                    if (!AppTool.IsNullOrEmpty(this.SelectedQuery.OriginalQueryCode)) {
+                        var query = window.Queries.filter(q => q.ObjectTableId == this.ObjectTable.Id && q.UniqueCode == this.SelectedQuery.OriginalQueryCode)[0];
+                        QueryCodeOriginal = query.UniqueCode;
                     }
 
                     var windowArgs: any = {};
@@ -2605,37 +2671,37 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                     logWindow.Height = 500;
 
                     switch (QueryCodeOriginal) {
-                        case "Air Freight Cost Tariffs": {
+                        case "Tariff.Air Freight Cost Tariffs": {
                             logWindow.Title = "New Air Freight Cost";
                             windowArgs.TypeCode = "AFC";
                             break;
                         }
 
-                        case "Air Surcharges Cost Tariffs": {
+                        case "Tariff.Air Surcharges Cost Tariffs": {
                             logWindow.Title = "New Air Surcharges Cost";
                             windowArgs.TypeCode = "ASC";
                             break;
                         }
 
-                        case "Ocean LCL Freight Cost": {
+                        case "Tariff.Ocean LCL Freight Cost": {
                             logWindow.Title = "New Ocean LCL Freight Cost";
                             windowArgs.TypeCode = "OLC";
                             break;
                         }
 
-                        case "Ocean.LCL.Surcharges.Cost": {
+                        case "Tariff.Ocean.LCL.Surcharges.Cost": {
                             logWindow.Title = "New " + TextCodeTranslator.TranslateTable("Tariff.Q.Ocean.LCL.Surcharges.Cost");
                             windowArgs.TypeCode = "OSC";
                             break;
                         }
                             
-                        case "Ocean FCL Freight Cost": {
+                        case "Tariff.Ocean FCL Freight Cost": {
                             logWindow.Title = "New " + TextCodeTranslator.TranslateTable("Tariff.Q.OceanFCLFreightCost");
                             windowArgs.TypeCode = "OFC";
                             break;
                         }
 
-                        case "Ocean FCL Surcharges Cost": {
+                        case "Tariff.Ocean FCL Surcharges Cost": {
                             logWindow.Title = "New " + TextCodeTranslator.TranslateTable("Tariff.Q.OceanFCLSurchargesCost");
                             windowArgs.TypeCode = "OFS";
                             break;
@@ -2730,7 +2796,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
         });
     }
     private OnNewEntityWindowClosed($event: any) {
-        this.onQueryChangeEvent.emit({ QueryId: this.SelectedQueryId, Filters: this.CurrentQueryFilters });
+        this.onQueryChangeEvent.emit({ QueryCode: this.SelectedQueryCode, Filters: this.CurrentQueryFilters });
     }
 
     ShowIt: boolean = true;
@@ -2797,11 +2863,11 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
             return;
         }
         else {
-            var query = window.Queries.filter(q => q.ObjectTableId == this.ObjectTable.Id && q.Id == this.SelectedQueryId)[0];
+            var query = window.Queries.filter(q => q.ObjectTableId == this.ObjectTable.Id && q.UniqueCode == this.SelectedQueryCode)[0];
             if (query != null) {
 
-                if (window.PreDefinedFilters.filter(d => d.QueryId == query.Id) != null) {
-                    var predefinedFilters = window.PreDefinedFilters.filter(d => d.QueryId == query.Id);
+                if (window.PreDefinedFilters.filter(d => d.QueryCode == query.UniqueCode) != null) {
+                    var predefinedFilters = window.PreDefinedFilters.filter(d => d.QueryCode == query.UniqueCode);
                     predefinedFilters.forEach((filter, key) => {
                         var filterOperator = (!AppTool.IsNullOrEmpty(filter.Operator)) ? filter.Operator : filter.ObjectFieldOperator;
                         var value1 = filter.PredefinedValue;
@@ -2809,7 +2875,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                         if (value2 != null) {
                             filterOperator = "Between";
                         }
-                        if (filter.DataTypeCode == "DateTime") {
+                        if (filter.DataTypeCode == "DateTime" || filter.DataTypeCode == "Date") {
                             var TodayDate = new Date();
                             TodayDate.setUTCHours(0, 0, 0, 0);
 
@@ -2824,7 +2890,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                             LastSevenDaysDate.setUTCHours(0, 0, 0, 0);
                             var LastThirtyDaysDate = DateTool.AddDays((new Date()), -30);
                             LastThirtyDaysDate.setUTCHours(0, 0, 0, 0);
-                            var CurrentYearFromDate = new Date(new Date().getFullYear(), 0, 1);
+                            var CurrentYearFromDate = new Date(new Date().getFullYear(), 0, 2);
                             CurrentYearFromDate.setUTCHours(0, 0, 0, 0);
                             var CurrentYearToDate = DateTool.AddDays((new Date()), 1);
                             CurrentYearToDate.setUTCHours(0, 0, 0, 0);
@@ -2901,7 +2967,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                     this.CurrentQueryFilters.AdditionalFilters.push(filter);
                 });
             }
-            this.onQueryChangeEvent.emit({ QueryId: this.SelectedQueryId, Filters: this.CurrentQueryFilters, Reload: false });
+            this.onQueryChangeEvent.emit({ QueryCode: this.SelectedQueryCode, Filters: this.CurrentQueryFilters, Reload: false });
             //     else {
             //         this.onQueryChangeEvent.emit({ QueryId: this.SelectedQueryId, Filters: this.CurrentQueryFilters });
             //     }
@@ -2928,7 +2994,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
 
     SaveColNewChanges(Param: any) {
         var QColumns = null;
-        this._http.get(ServiceHelper.GetLogitudeURL() + "api/ngMetaData?tenant=" + this.Tenant + "&queryid=" + Param.QueryId + "&objecttableid=" + this.ObjectTable.Id + "&userid=" + SessionLocator.LoggedUserId)
+        this._http.get(ServiceHelper.GetLogitudeURL() + "api/ngMetaData?tenant=" + this.Tenant + "&queryCode=" + Param.QueryCode + "&objecttableid=" + this.ObjectTable.Id + "&userid=" + SessionLocator.LoggedUserId)
             .subscribe((response) => {
                 QColumns = response.json();
                 if (QColumns != null) {

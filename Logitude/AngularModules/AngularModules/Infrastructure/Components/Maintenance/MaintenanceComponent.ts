@@ -12,6 +12,7 @@ import { AppTool, DateTool} from '../../../Infrastructure/Tools';
 import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
 //import {CustomsSettingExtendedListService} from '../../../Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
 import {ObjectsLocator} from '../../Locators/ObjectsLocator';
+import { SessionInfo } from '../../Utilities/SessionInfo';
 //import {RecallClientsForCutoms} from '../../../Customs/Components/CustomsRequests/GeneralRequests/RecallClientsForCutoms';
 
 @Component({
@@ -80,7 +81,7 @@ export class MaintenanceComponent {
         }
 
         this.isTransmissionsPageVisible = false;
-        if (FeatureLocator.HasFeaturePermession("General", "General.Features.InttraSettings")) {
+        if (SessionInfo.LoggedUserPM.IsCustomerCare && FeatureLocator.HasFeaturePermession("General", "General.Features.InttraSettings")) {
             this.isTransmissionsPageVisible = true;
         }
 
@@ -108,7 +109,7 @@ export class MaintenanceComponent {
 
         allMenusTables.forEach(item => {
 
-            if (FeatureLocator.IsFeatureGranted(item.FeatureId)) {
+            if (FeatureLocator.IsFeatureGrantedByUniqeCode(item.FeatureUniqeCode)) {
 
                 if (item.Code == "MTCB") {
                     //CustomsSettingList customsSetting = DataProvider.GetCachedList<CustomsSettingList>("Customs.CustomsSetting").FirstOrDefault();
@@ -432,7 +433,14 @@ export class MaintenanceComponent {
                 this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
             }
 
-
+            if (FeatureLocator.HasFeaturePermession("General", "SupportMailBoxMenu")) {
+                var item = new MenusTablePM();
+                item.CategoryTypeCode = "TKT";
+                item.Icon = "Settings"
+                item.Code = "SUPM";
+                item.ObjectTableName = "Support Mail Boxes";
+                this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+            }
         }
     }
     private BuildPersonalSettings() {
@@ -533,7 +541,7 @@ export class MaintenanceComponent {
             item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "HybridPartner")[0].Id
             this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
         }
-       
+
         if (FeatureLocator.HasFeaturePermession("General", "SCHEDULERS")) {
             var item = new MenusTablePM();
             item.CategoryTypeCode = "MNG";
@@ -544,7 +552,7 @@ export class MaintenanceComponent {
             item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "TasksScheduler")[0].Id
             this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
 
-        } 
+        }
 
         if (FeatureLocator.HasFeaturePermession("General", "MAINCUSTOMERS")) {
             var item = new MenusTablePM();
@@ -574,7 +582,16 @@ export class MaintenanceComponent {
             this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
         }
 
-
+        //if (FeatureLocator.HasFeaturePermession("General", "PRICESTEPS")) {
+        //    var item = new MenusTablePM();
+        //    item.CategoryTypeCode = "OTH";
+        //    item.Icon = "List"
+        //    //item.Code = "MTPS";
+        //    item.ObjectTableName = "PriceStep";
+        //    //item.TextCode = "General.MC.Others.PriceSteps";
+        //    item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "PriceStep")[0].Id
+        //    this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+        //}
 
         if (SessionLocator.Tenant == 0) {
             var item = new MenusTablePM();
@@ -626,7 +643,7 @@ export class MaintenanceComponent {
     private BuildTransmissionsMenus() {
         if (this.isTransmissionsPageVisible) {
 
-            if (FeatureLocator.HasFeaturePermession("General", "General.Features.InttraSettings")) {
+            if (SessionInfo.LoggedUserPM.IsCustomerCare && FeatureLocator.HasFeaturePermession("General", "General.Features.InttraSettings")) {
                 var item = new MenusTablePM();
                 item.CategoryTypeCode = "TRANS";
                 item.Icon = "Settings"
@@ -771,7 +788,7 @@ export class MaintenanceComponent {
                     logWindow.Title = windowTitle;
                     logWindow.IsShowCloseButton = true;
                     this._entityResourceService.getEntityResourceByTableName("TenantAdditionalData").subscribe(response => {
-                      
+
                         logWindow.Show('./InfrastructureModules/InfrastructureGettingStarted/Components/PaymentGateway/PaymentGatewayComponent');
                     });
                     break;
@@ -877,7 +894,7 @@ export class MaintenanceComponent {
                     this._entityResourceService.getEntityResourceByTableName("FullAccountingSetting", 0).subscribe(response => {
                         var logitudeWindow = new LogitudeWindow();
                         logitudeWindow.Width = 900;
-                        logitudeWindow.Height = 500;
+                        logitudeWindow.Height = 550;
                         logitudeWindow.Title = TextCodeTranslator.Translate("Accounting.O.FullAccountingSettings"); // "Full Accounting Settings";
                         logitudeWindow.Show('./Accounting/Components/Maintenance/FullAccountingSettingsComponent');
                     });
@@ -1154,9 +1171,6 @@ export class MaintenanceComponent {
                     break;
                 }
 
-
-
-
                 case "MASC": {
                     this._entityResourceService.getEntityResourceByTableName("TasksScheduler", 0).subscribe(response => {
 
@@ -1164,10 +1178,9 @@ export class MaintenanceComponent {
                         logWindow.Width = 1200;
                         logWindow.Height = 1000;
                         if (!FeatureLocator.HasFeaturePermession("TasksScheduler", "READ") || (!FeatureLocator.HasFeaturePermession("TasksScheduler", "TASK") && !FeatureLocator.HasFeaturePermession("TasksScheduler", "FTP"))) {
-                            logWindow.Width =800;
+                            logWindow.Width = 800;
                             logWindow.Height = 500;
                         }
-
 
                         logWindow.Title = "Scheduler";
                         logWindow.IsShowCloseButton = true;
@@ -1205,7 +1218,7 @@ export class MaintenanceComponent {
                     logitudeWindow.Show('./CustomsModules/CustomsGeneralRequests/Components/RecallSuppliersFromFileComponent');
                     break;
                 }
-            case "MTDD": {
+                case "MTDD": {
                     var logitudeWindow = new LogitudeWindow();
                     logitudeWindow.Title = TextCodeTranslator.Translate("General.MC.Customs.DocumentsDefinition");
                     logitudeWindow.ShowCloseButton = true;
@@ -1229,35 +1242,35 @@ export class MaintenanceComponent {
                         let allowed = false;
                         allowed = (LoggedUserPMCode == "amital" || LoggedUserPMCode.startsWith("amital.") || SessionLocator.LoggedUserPM.IsCustomerCare);
 
-                    if (strict && !allowed) {
-                        let messageWindow = new MessageWindow()
-                        messageWindow.Show("Logged User Is not Customer Care ");
-                        return;
-                    }
-
-                    let confirmWindow = new ConfirmWindow();
-                    confirmWindow.Title = TextCodeTranslator.Translate("General.MC.Customs.RecallClientsForCutoms");
-                    confirmWindow.Width = 300;
-                    confirmWindow.Height = 200;
-                    confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
-                    confirmWindow.NoButtonText = TextCodeTranslator.Translate("Customs.General.B.Cancel");
-                    confirmWindow.ShowNoButton
-                    confirmWindow.Show("לעדכן נתוני יבואנים במערכת?");
-                    confirmWindow.WindowClosed.subscribe((event: any) => {
-                        if (confirmWindow.Yes) {
-
-                            var servicelink = '../../../CustomsModules/CustomsGeneralRequests/Components/RecallClientsForCutoms';
-                            SessionLocator.DynamicLoader.GetInstance(servicelink).then((service: any) => {
-                                service.SendRecallMessageToServer();
-                            });
-
-                            // this will cause the customs to build every time......mohammad
-                            //let _RecallClientsForCutoms: RecallClientsForCutoms = new RecallClientsForCutoms();
-                            //_RecallClientsForCutoms.SendRecallMessageToServer();
+                        if (strict && !allowed) {
+                            let messageWindow = new MessageWindow()
+                            messageWindow.Show("Logged User Is not Customer Care ");
+                            return;
                         }
-                    });
-                    break;
-                }
+
+                        let confirmWindow = new ConfirmWindow();
+                        confirmWindow.Title = TextCodeTranslator.Translate("General.MC.Customs.RecallClientsForCutoms");
+                        confirmWindow.Width = 300;
+                        confirmWindow.Height = 200;
+                        confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+                        confirmWindow.NoButtonText = TextCodeTranslator.Translate("Customs.General.B.Cancel");
+                        confirmWindow.ShowNoButton
+                        confirmWindow.Show("לעדכן נתוני יבואנים במערכת?");
+                        confirmWindow.WindowClosed.subscribe((event: any) => {
+                            if (confirmWindow.Yes) {
+
+                                var servicelink = '../../../CustomsModules/CustomsGeneralRequests/Components/RecallClientsForCutoms';
+                                SessionLocator.DynamicLoader.GetInstance(servicelink).then((service: any) => {
+                                    service.SendRecallMessageToServer();
+                                });
+
+                                // this will cause the customs to build every time......mohammad
+                                //let _RecallClientsForCutoms: RecallClientsForCutoms = new RecallClientsForCutoms();
+                                //_RecallClientsForCutoms.SendRecallMessageToServer();
+                            }
+                        });
+                        break;
+                    }
                 case "QuoteSettings": {
                     var logitudeWindow = new LogitudeWindow();
                     logitudeWindow.Title = "Quote Settings";
@@ -1277,29 +1290,27 @@ export class MaintenanceComponent {
                     logitudeWindow.Title = "INTTRA Communication Settings";
                     logitudeWindow.Show('./ShipmentModules/ShipmentINTTRA/Components/Maintenance/INTTRACommunicationSettingsComponent');
                     break;
-              }
+                }
 
 
-              case "CCHL": {
+                case "CCHL": {
                     var logitudeWindow = new LogitudeWindow();
                     logitudeWindow.Width = 800;
                     logitudeWindow.Height = 600;
                     logitudeWindow.Title = 'Cache Log';
                     logitudeWindow.Show('./Infrastructure/Components/Maintenance/CacheLogComponent');
-                break;
-            }
+                    break;
+                }
 
-                //  case "TXRP": {
-                //    this._entityResourceService.getEntityResourceByTableName("TaxReport", 0).subscribe((resp: any) => {
-                //        SessionLocator.DynamicLoader.Load('./InfrastructureModules/InfrastructureUser/Components/UserWorkspaceComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
-                //            .then(cmpRef => {
-                //                cmpRef.instance.ComponentRef = cmpRef;
-                //                cmpRef.instance.Run(null);
-                //                this.CurrentSession.AddMenuReference(cmpRef);
-                //            });
-                //    });
-                //    break;
-                //}
+                case "SUPM": {
+                    this._entityResourceService.getEntityResourceByTableName("SupportMailbox", 0).subscribe(response => {
+                        var windowTitle = "Support Mail Boxes";
+                        var logWindow = new LogitudeWindow();
+                        logWindow.Title = windowTitle;
+                        logWindow.Show('./CRMModules/CRMOthers/Components/SupportMailBox/SupportMailBoxComponent');
+                    });
+                    break;
+                }
 
                 default: {
                     if (item.ObjectTableId) {
@@ -1666,4 +1677,5 @@ class MenusTablePM {
     public FeatureCode: string;
     public ShowMenuTable: boolean;
     public HtmlView: string;
+    public FeatureUniqeCode: string;
 }

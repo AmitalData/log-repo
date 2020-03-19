@@ -1,4 +1,4 @@
-﻿import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
+import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 export class ObjectTableRuleFieldPM {
 
@@ -19,6 +19,7 @@ export class ObjectTableRuleFieldPM {
     public RuleNotificationTypeCode: string;
     public ObjectTableRuleCode: string;
     public ObjectTableRuleTypeCode: string;
+    public ObjectFieldCode: string;
     public OldEntityPM: ObjectTableRuleFieldPM;
     private changeSetOp: string;
     public get ChangeSetOp() { return this.changeSetOp; }

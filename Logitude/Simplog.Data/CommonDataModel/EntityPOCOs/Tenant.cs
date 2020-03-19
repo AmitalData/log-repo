@@ -27,6 +27,8 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string DimensionsUnitCode { get; set; }
         public string VolumeUnitCode { get; set; }
         public string GrossWeightUnitCode { get; set; }
+        [ForeignKey("WeightUnits")]
+        public virtual WeightUnit WeightUnit { get; set; }
         public string ChargeableWeightUnitCode { get; set; }
         public string ExportFreightPrepaidCollectId { get; set; }
         public string ExportOtherPrepaidCollectId { get; set; }
@@ -177,7 +179,8 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
 
         public bool ApplyVATForAllPartners { get; set; }
         public LogBoxTenantSetting LogBoxTenantSetting { get; set; }
-
         public bool HideFCLAllIn { get; set; }
+        public bool AllowCustomersInAgentsLOV { get; set; }
+        public DateTime? AutomaticLastUpdateDate { get; set; }
     }
 }

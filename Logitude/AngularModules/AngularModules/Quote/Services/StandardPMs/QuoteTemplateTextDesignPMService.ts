@@ -16,6 +16,7 @@ import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {CustomFieldClass} from '../../../Infrastructure/DataContracts/CustomFieldClass'
 import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLogger';
+
 import {QuoteTemplateTextDesignPM} from '../../EntityPMs/QuoteTemplateTextDesignPM';
 
 
@@ -30,37 +31,37 @@ export class QuoteTemplateTextDesignPMService {
     }
 
  get(id: string) {
+         
+         
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+        var callTime = new Date();		
+		 return Observable.defer(() => {
+                return this._http.get(this._apiUrl+'/getsingle?'+'id=' + id, {
+                    headers: authHeader
+                }).map(response => {
+                    var pm = response.json();
 
+                   
+					
+                    var entity: QuoteTemplateTextDesignPM;
+					if(pm)
+					{
+                      entity = this.MapJsonToEntityPM(pm);
+                    }
 
-     var authHeader = new Headers();
-     authHeader.append('Token', SessionInfo.Token);
-     var callTime = new Date();
-     return Observable.defer(() => {
-         return this._http.get(this._apiUrl + '/getsingle?' + 'id=' + id, {
-             headers: authHeader
-         }).map(response => {
-             var pm = response.json();
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = entity;
+              
+			    var servertime = response.headers.get('ServerExecutionTime');
+                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "QuoteTemplateTextDesign", "GetSinglePM", 'id=' + id);
+				 
+                return serviceResponse;
 
-
-             var entity: QuoteTemplateTextDesignPM;
-             if (pm) {
-                 entity = this.MapJsonToEntityPM(pm);
-             }
-
-             var serviceResponse: ServiceResponse;
-             serviceResponse = new ServiceResponse();
-             serviceResponse.Result = entity;
-
-             var servertime = response.headers.get('ServerExecutionTime');
-             PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "QuoteTemplateTextDesign", "GetSinglePM", 'id=' + id);
-
-             return serviceResponse;
-
-         }).catch(ServiceHelper.HandleServiceError);
-     });
- }
-
-
+            }).catch(ServiceHelper.HandleServiceError);
+            });                    
+    }
 
 	 insert(entityPM: QuoteTemplateTextDesignPM) {
  
@@ -198,7 +199,7 @@ export class QuoteTemplateTextDesignPMService {
 			  if(customFields.indexOf(property) > -1)
                 {
                 if (jsonPM[property]) {
-                    var customFieldClass: CustomFieldClass = new CustomFieldClass(jsonPM[property].Value, jsonPM[property].FieldName, jsonPM[property].TextName);
+                    var customFieldClass: CustomFieldClass = new CustomFieldClass(jsonPM[property].Value, jsonPM[property].FieldName, jsonPM[property].TableName);
                     entityPM[property] = customFieldClass;
                 }
             }
@@ -209,7 +210,7 @@ export class QuoteTemplateTextDesignPMService {
             }
 			
 			 
-            entityPM.IsDirty = false;
+            
 
 		if (mapParent) {
                 entityPM.OldEntityPM = this.clone(entityPM);
@@ -219,7 +220,7 @@ export class QuoteTemplateTextDesignPMService {
 
             entityPM.OldEntityPM = null;
         }
-
+		entityPM.IsDirty = false;
         return entityPM;
     }
 
@@ -245,6 +246,7 @@ export class QuoteTemplateTextDesignPMService {
 	  public GetNewEntityPM() {		 
 		    var entityPM: QuoteTemplateTextDesignPM;
 			entityPM = new QuoteTemplateTextDesignPM();
+			entityPM.Tenant = InfraSettings.TenantPM.Id;
 			return entityPM;
     }
 		 

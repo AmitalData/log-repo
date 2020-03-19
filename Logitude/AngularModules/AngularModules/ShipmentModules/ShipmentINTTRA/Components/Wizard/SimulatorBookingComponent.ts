@@ -10,6 +10,8 @@ import { LocationDirective } from '../../../../Infrastructure/Utilities/Location
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
 import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
+import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
+import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({
     moduleId: module.id,
@@ -28,13 +30,13 @@ export class SimulatorBookingComponent extends BaseComponent {
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     public IsSendingBookingEnabled = false;
-    public IsUpdatingBookingEnabled = false; 
+    public IsUpdatingBookingEnabled = false;
+    public IsEditMode = false;
 
     constructor(public entityArgs: EntityArgs) {
         super();
         this.Listen();
     }
-
 
     Listen() {
         if (this.CurrentSession.CurrentEditComponent != null) {
@@ -42,8 +44,7 @@ export class SimulatorBookingComponent extends BaseComponent {
                 if (isSaveSuccess) {
                     this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                     this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
-                    this.CheckSendingBookingEnabled();
-                    this.CheckUpdatingBookingEnabled();
+                    this.RefresDataScreen();
                 }
                 else {
                     this.ValidationErrorsList = this.CurrentSession.CurrentEditComponent.ValidationErrorsList;
@@ -53,15 +54,15 @@ export class SimulatorBookingComponent extends BaseComponent {
             this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                 if (isLoadSuccess) {
                     this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
-                    this.CheckSendingBookingEnabled();
-                    this.CheckUpdatingBookingEnabled();
+                    this.RefresDataScreen();
                 }
             });
-        } 
+        }
     }
 
     SetWindowArgs(args) {
         this.EntityPM = args['Shipment'];
+        this.IsEditMode = args['IsEditMode'];
         this.entityArgs.EntityPM = this.EntityPM;
         this.entityArgs.EntityPM.IsForINTTRA = true;
         this.entityArgs.ObjectTableName = this.ObjectTableName;
@@ -81,16 +82,21 @@ export class SimulatorBookingComponent extends BaseComponent {
                 }
             }
         });
+        this.RefresDataScreen();
+      
+    }
 
+    RefresDataScreen() {
         this.CheckSendingBookingEnabled();
         this.CheckUpdatingBookingEnabled();
+        this.CheckApplyChanges();
     }
 
     CheckSendingBookingEnabled() {
         this.IsSendingBookingEnabled = false;
         if ((this.EntityPM.INTTRABookingStatusCode == "NS" && this.EntityPM.INTTRABookingTransStatusCode == "NST") ||
             (this.EntityPM.INTTRABookingStatusCode == "ER" && this.EntityPM.INTTRABookingTransStatusCode == "BRS") ||
-            (this.EntityPM.INTTRABookingStatusCode == "DC" && this.EntityPM.INTTRABookingTransStatusCode == "BRR") || 
+            (this.EntityPM.INTTRABookingStatusCode == "DC" && this.EntityPM.INTTRABookingTransStatusCode == "BRR") ||
             (this.EntityPM.INTTRABookingStatusCode == "RU" && this.EntityPM.INTTRABookingTransStatusCode == "BCD")) {
             this.IsSendingBookingEnabled = true;
         }
@@ -104,6 +110,7 @@ export class SimulatorBookingComponent extends BaseComponent {
     }
 
     // Cargo Information
+    get MasterDepartureDate() { return this.EntityPM.MainCarriageATD != null ? this.EntityPM.MainCarriageATD : this.EntityPM.MainCarriageETD; }
     get VolumeUnitCode() { return this.EntityPM.VolumeUnitCode; }
     get GrossWeightUnitCode() { return this.EntityPM.GrossWeightUnitCode; }
     get ChargeableWeightUnitCode() { return this.EntityPM.ChargeableWeightUnitCode; }
@@ -151,7 +158,7 @@ export class SimulatorBookingComponent extends BaseComponent {
                             SessionLocator.DynamicLoader.Load("./InfrastructureModules/InfrastructureCommunications/Components/Communications/CommunicationsTabComponent", myLocation.viewContainerRef)
                                 .then(cmpRef => {
                                     this.CommunicationsPage = cmpRef.instance;
-                                    this.CommunicationsPage.IsTitleHidden = true;                               
+                                    this.CommunicationsPage.IsTitleHidden = true;
                                 });
                         });
                     }
@@ -163,6 +170,7 @@ export class SimulatorBookingComponent extends BaseComponent {
 
 
     // Requests
+
     get MainCarriageCarrierCode() { return this.EntityPM.MainCarriageCarrierCode; }
     get MainCarriageVesselName() { return this.EntityPM.MainCarriageVesselName; }
     get MainCarriageCarrierNumber() { return this.EntityPM.MainCarriageCarrierNumber; }
@@ -259,7 +267,7 @@ export class SimulatorBookingComponent extends BaseComponent {
     get Transshipment3VesselVoyage() {
         var value = "";
         if (!AppTool.IsNullOrEmpty(this.Transshipment3VesselName)) {
-            value =  this.Transshipment3VesselName;
+            value = this.Transshipment3VesselName;
         }
         if (!AppTool.IsNullOrEmpty(this.Transshipment3CarrierNumber)) {
             if (!AppTool.IsNullOrEmpty(value)) {
@@ -303,7 +311,23 @@ export class SimulatorBookingComponent extends BaseComponent {
                 this.EntityPM.INTTRABookingStatusCode = "RU";
                 this.CurrentSession.CurrentEditComponent.SaveChanges();
             }
+
+            this.RefresDataScreen();
         });
+    }
+
+    public IsApplyChanges = false;
+    private CheckApplyChanges() {
+        this.IsApplyChanges = false;
+        if (this.EntityPM.INTTRABookingStatusCode == "WC" && this.INTTRABookingResponse_POFPortCode != null && this.INTTRABookingResponse_PODPortCode != null) {
+            // Compare the Main leg
+            if ((this.MainCarriageCarrierNumber != this.INTTRABookingResponse_Voyage) || (this.MainCarriageETD != this.INTTRABookingResponse_POLDate) ||
+                (this.MainCarriageFromPortCode != this.INTTRABookingResponse_POFPortCode) || (this.MainCarriageToPortCode != this.INTTRABookingResponse_PODPortCode)) {
+                this.IsApplyChanges = true;
+            }
+
+            // Compare the leg 2
+        }
     }
 
     CloseButtonClicked() {
@@ -332,7 +356,7 @@ export class SimulatorBookingComponent extends BaseComponent {
 
                     if (myResult.Errors != null && myResult.Errors.length > 0) {
                         this.ValidationErrorsList = myResult.Errors;
-                       
+
                     }
 
                     else {
@@ -349,4 +373,20 @@ export class SimulatorBookingComponent extends BaseComponent {
 
     }
 
+    EditShipmentClicked() {
+        var entityId: string = this.EntityPM.Id;
+        if (!AppTool.IsNullOrEmpty(entityId)) {
+            var objectTableName = "Shipment";
+            var editWindow = new LogitudeWindow();
+            editWindow.Title = TextCodeTranslator.TranslateTable("General.B.Edit") + " " + TextCodeTranslator.TranslateTable(objectTableName);
+            editWindow.ShowEditComponent(entityId, objectTableName);
+            editWindow.IsEditComponent = true;
+            editWindow.IsFillScreen = true;
+            editWindow.ComponentLoaded.subscribe(s => {
+                editWindow.WindowClosed.subscribe(d => {
+                    this.EntityPM = s.EntityPM;
+                });
+            });      
+        }
+    }
 }

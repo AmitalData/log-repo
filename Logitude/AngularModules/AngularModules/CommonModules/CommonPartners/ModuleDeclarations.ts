@@ -27,9 +27,14 @@ import { ShippingAgentDocsInTabComponent } from './Components/EditTabs/ShippingA
 import { ShippingLineDocsInTabComponent } from './Components/EditTabs/ShippingLine/ShippingLineDocsInTabComponent';
 import { TruckerDocsInTabComponent } from './Components/EditTabs/Trucker/TruckerDocsInTabComponent';
 import { VendorDocsInTabComponent } from './Components/EditTabs/Vendor/VendorDocsInTabComponent';
+import { AccountingPartnerDocsInTabComponent } from './Components/EditTabs/AccountingPartner/AccountingPartnerDocsInTabComponent';
 import { WarehouseDocsInTabComponent } from './Components/EditTabs/Warehouse/WarehouseDocsInTabComponent';
 import { NewAccountingPartnerComponent } from './Components/NewEntity/NewAccountingPartnerComponent';
 import { ContactOccasionsTabComponent} from './Components/EditTabs/Contact/ContactOccasionsTabComponent';
+import { AreasTabComponent } from './Components/EditTabs/AreasTabComponent';
+import { AddEditAreaComponent } from './Components/AddEdit/AddEditAreaComponent';
+import { ChoosePortComponent } from './Components/AddEdit/ChoosePortComponent';
+import { ChooseCountryPortComponent } from './Components/AddEdit/ChooseCountryPortComponent';
 
 export const Components =
     [
@@ -62,9 +67,14 @@ export const Components =
         ShippingLineDocsInTabComponent,
         TruckerDocsInTabComponent,
         VendorDocsInTabComponent,
+        AccountingPartnerDocsInTabComponent,
         WarehouseDocsInTabComponent,
         NewAccountingPartnerComponent,
         ContactOccasionsTabComponent,
+        AreasTabComponent,
+        AddEditAreaComponent,
+        ChoosePortComponent,
+        ChooseCountryPortComponent,
     ];
 
 export class ModuleDeclarations {
@@ -102,10 +112,14 @@ export class ModuleDeclarations {
             case "ShippingLineDocsInTabComponent": { myResult = ShippingLineDocsInTabComponent; break; }
             case "TruckerDocsInTabComponent": { myResult = TruckerDocsInTabComponent; break; }
             case "VendorDocsInTabComponent": { myResult = VendorDocsInTabComponent; break; }
+            case "AccountingPartnerDocsInTabComponent": { myResult = AccountingPartnerDocsInTabComponent; break; }
             case "WarehouseDocsInTabComponent": { myResult = WarehouseDocsInTabComponent; break; }
             case "NewAccountingPartnerComponent": { myResult = NewAccountingPartnerComponent; break; }
             case "ContactOccasionsTabComponent": { myResult = ContactOccasionsTabComponent; break; }
-
+            case "AreasTabComponent": { myResult = AreasTabComponent; break; }
+            case "AddEditAreaComponent": { myResult = AddEditAreaComponent; break; }
+            case "ChoosePortComponent": { myResult = ChoosePortComponent; break; }
+            case "ChooseCountryPortComponent": { myResult = ChooseCountryPortComponent; break; }  
         }
 
         return myResult;

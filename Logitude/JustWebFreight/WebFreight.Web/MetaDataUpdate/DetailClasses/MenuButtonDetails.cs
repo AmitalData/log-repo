@@ -20,5 +20,7 @@
         public int Width { get; set; }
         public string LocalDefaultText { get; set; }
         public string HtmlComponentPath { get; set; }
+        public string FeatureUniqeCode { get; set; }
+
     }
 }

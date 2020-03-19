@@ -16,12 +16,15 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.ObjectTableId).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.NameTextCodeId).IsRequired().HasMaxLength(30).IsUnicode(false);
             //this.Property(t => t.Code).IsRequired().HasMaxLength(40).IsUnicode(false);
-            this.Property(t => t.Code).IsRequired().HasMaxLength(80).IsUnicode(false);
+            this.Property(t => t.Code).IsRequired().HasMaxLength(120).IsUnicode(false);
             this.Property(t => t.FeatureTypeCode).IsRequired().HasMaxLength(4).IsUnicode(false);
             this.Property(t => t.IsBusinessUnitEnabled).IsRequired();
             this.Property(t => t.IsOld).IsRequired();
             this.Property(t => t.IsCoreFeature).IsRequired();
             this.Property(t => t.ToggleCode).HasMaxLength(3).IsUnicode(false);
+            this.Property(t => t.NameTextCodeCode).IsRequired().HasMaxLength(100).IsUnicode(false);
+            this.Property(t => t.FeatureUniqeCode).IsRequired().HasMaxLength(120).IsUnicode(false);
+
 
             // Table & Column Mappings
             this.ToTable("Features");
@@ -36,6 +39,8 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.IsOld).HasColumnName("IsOld");
             this.Property(t => t.IsCoreFeature).HasColumnName("IsCoreFeature");
             this.Property(t => t.ToggleCode).HasColumnName("ToggleCode");
+            this.Property(t => t.NameTextCodeCode).HasColumnName("NameTextCodeCode");
+            this.Property(t => t.FeatureUniqeCode).HasColumnName("FeatureUniqeCode");
 
             this.HasRequired(t => t.FeatureType).WithMany().HasForeignKey(d => d.FeatureTypeCode);
 

@@ -94,6 +94,7 @@ export class SimulatorArgs {
     public FFA: any;
     public FVA: SimulatorFVA;
     public IsLocalAnalyze: boolean;
+    public IsChampSimulator: boolean;
 }
 
 export class SimulatorFVA {

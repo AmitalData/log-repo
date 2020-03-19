@@ -390,7 +390,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query TPGFileTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TPGFileTypeTextCode_0.Id, Code = "TPGFileType",  QueryGroupCode = "f69d", IndexOrder = 0, Tenant = 0, ObjectTableId = TPGFileTypeObjectTable.Id, QuerySection = "Customs.TPGFileType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = TPGFileTypeFeature_0.Id, DefaultSortName = "Code", DefaultSortDirection = "Desending" }, queriesRepository, tenantQueries);
+			  Query TPGFileTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TPGFileTypeTextCode_0.Id, Code = "TPGFileType",  QueryGroupCode = "f69d", IndexOrder = 0, Tenant = 0, ObjectTableId = TPGFileTypeObjectTable.Id, QuerySection = "Customs.TPGFileType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = TPGFileTypeFeature_0.Id,FeatureUniqeCode= TPGFileTypeFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending" }, queriesRepository, tenantQueries);
 	
 			 QueryColumn TPGFileTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TPGFileTypeQuery.Id, IndexOrder = 0, ObjectFieldId = TPGFileTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == TPGFileTypeObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 

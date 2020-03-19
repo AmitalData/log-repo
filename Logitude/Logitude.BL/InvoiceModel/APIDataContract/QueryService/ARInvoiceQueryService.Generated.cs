@@ -157,7 +157,16 @@ using Simplog.Data.InvoiceModel;
 				   
 				   temp.Tenant = MyEntityPM.Tenant;
 				   temp.IsMultiCurrency = MyEntityPM.IsMultiCurrency;
-				   temp.CreditARInvoice = MyEntityPM.CreditARInvoice;					
+				   temp.CreditARInvoice = MyEntityPM.CreditARInvoice;
+				   temp.ExternalAccountingEntityId = MyEntityPM.ExternalAccountingEntityId;
+				   temp.BillToGLAccount = MyEntityPM.BillToGLAccountId;			  
+				   if(MyEntityPM.StatusCode != null)
+				   {
+					   ARInvoiceStatusQueryService ARInvoiceStatusService9 = new ARInvoiceStatusQueryService(Tenant);
+					   					   temp.Status = ARInvoiceStatusService9.GetARInvoiceStatusByCode(MyEntityPM.StatusCode,Tenant); 
+			       
+					   				   }
+				   					
 				   return temp;
 			}
             catch (Exception ex)
@@ -282,8 +291,8 @@ using Simplog.Data.InvoiceModel;
 
 					if(MyEntity.ARInvoiceLines != null && MyEntity.ARInvoiceLines.Count > 0)
 					{
-						ARInvoiceLineQueryService ARInvoiceLineService9 = new ARInvoiceLineQueryService(Tenant);
-						temp.InvoiceLines = ARInvoiceLineService9.ARInvoiceLineCustomDataMappingAndValidatin(MyEntity,MyEntity.ARInvoiceLines,Tenant,ComputingPartnerName);
+						ARInvoiceLineQueryService ARInvoiceLineService10 = new ARInvoiceLineQueryService(Tenant);
+						temp.InvoiceLines = ARInvoiceLineService10.ARInvoiceLineCustomDataMappingAndValidatin(MyEntity,MyEntity.ARInvoiceLines,Tenant,ComputingPartnerName);
 					}
 
 								 
@@ -332,7 +341,21 @@ using Simplog.Data.InvoiceModel;
 					
 					temp.Tenant = MyEntity.Tenant;
 					temp.IsMultiCurrency = MyEntity.IsMultiCurrency;
-					temp.CreditARInvoice = MyEntity.CreditARInvoice;					   
+					temp.CreditARInvoice = MyEntity.CreditARInvoice;
+					temp.ExternalAccountingEntityId = MyEntity.ExternalAccountingEntityId;
+					temp.BillToGLAccountId = MyEntity.BillToGLAccount;
+					ARInvoiceStatusQueryService StatusARInvoiceStatusService = new ARInvoiceStatusQueryService(Tenant);
+					if(MyEntity.Status != null)
+					{
+						var myStatusPM = StatusARInvoiceStatusService.ARInvoiceStatusDataMappingAndValidatin(MyEntity.Status,Tenant,ComputingPartnerName);
+												if(myStatusPM != null)
+						{
+							temp.StatusCode = myStatusPM.Code;
+						}
+						 
+					}
+			
+										   
 					   return temp;
 		    }
             catch (Exception ex)

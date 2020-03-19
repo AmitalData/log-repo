@@ -12,6 +12,8 @@ import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
 import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
+import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
+
 
 export class TraceEventPM {
 
@@ -43,6 +45,11 @@ export class TraceEventPM {
     public set EntityId(newValue: string) { if (this.entityId != newValue) { this.entityId = newValue; this.MarkAsDirty("EntityId"); } }
        
 	 
+    private entityNumber: string;
+    public get EntityNumber() { return this.entityNumber; }
+    public set EntityNumber(newValue: string) { if (this.entityNumber != newValue) { this.entityNumber = newValue; this.MarkAsDirty("EntityNumber"); } }
+       
+	 
     private eventTypeId: string;
     public get EventTypeId() { return this.eventTypeId; }
     public set EventTypeId(newValue: string) { if (this.eventTypeId != newValue) { this.eventTypeId = newValue; this.MarkAsDirty("EventTypeId"); } }
@@ -71,11 +78,12 @@ export class TraceEventPM {
     private eventTypeEnglishName: string;
     public get EventTypeEnglishName() { return this.eventTypeEnglishName; }
     public set EventTypeEnglishName(newValue: string) { if (this.eventTypeEnglishName != newValue) { this.eventTypeEnglishName = newValue; this.MarkAsDirty("EventTypeEnglishName"); } }
-
+       
+	 
     private eventTypeLocalName: string;
     public get EventTypeLocalName() { return this.eventTypeLocalName; }
     public set EventTypeLocalName(newValue: string) { if (this.eventTypeLocalName != newValue) { this.eventTypeLocalName = newValue; this.MarkAsDirty("EventTypeLocalName"); } }
-
+       
 	 
     private contactEnglishFirstName: string;
     public get ContactEnglishFirstName() { return this.contactEnglishFirstName; }
@@ -112,6 +120,11 @@ export class TraceEventPM {
     public set EventTypeCategoryCode(newValue: string) { if (this.eventTypeCategoryCode != newValue) { this.eventTypeCategoryCode = newValue; this.MarkAsDirty("EventTypeCategoryCode"); } }
        
 	 
+    private partnerName: string;
+    public get PartnerName() { return this.partnerName; }
+    public set PartnerName(newValue: string) { if (this.partnerName != newValue) { this.partnerName = newValue; this.MarkAsDirty("PartnerName"); } }
+       
+	 
     private isAgentView: boolean;
     public get IsAgentView() { return this.isAgentView; }
     public set IsAgentView(newValue: boolean) { if (this.isAgentView != newValue) { this.isAgentView = newValue; this.MarkAsDirty("IsAgentView"); } }
@@ -136,11 +149,7 @@ export class TraceEventPM {
     public get Location() { return this.location; }
     public set Location(newValue: string) { if (this.location != newValue) { this.location = newValue; this.MarkAsDirty("Location"); } }
        
-
-    private partnerName: string;
-    public get PartnerName() { return this.partnerName; }
-    public set PartnerName(newValue: string) { if (this.partnerName != newValue) { this.partnerName = newValue; this.MarkAsDirty("PartnerName"); } }
-
+	 
 
     public OldEntityPM: TraceEventPM;
 		

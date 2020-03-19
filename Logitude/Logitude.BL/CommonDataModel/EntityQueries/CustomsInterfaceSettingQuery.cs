@@ -32,7 +32,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public CustomsInterfaceSettingPM GetSinglePM(int id, int otherTenant)
         {
-            CustomsInterfaceSettingPM entityPM = (from a in repository.context.CustomsInterfaceSettings.Include("ArtemusOutSettings").Include("ArtemusInSettings")
+            CustomsInterfaceSettingPM entityPM = (from a in repository.context.CustomsInterfaceSettings.Include("ArtemusOutSettings").Include("ArtemusInSettings").Include("LocalCustomsInterface")
                                                   where a.Tenant == id
                                                   select new CustomsInterfaceSettingPM()
                                                   {
@@ -50,6 +50,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                       ArtemusInSettingsHost = a.ArtemusInSettings == null ? null : a.ArtemusInSettings.Host,
                                                       AMCAirStartDate = a.AMCAirStartDate,
                                                       AMCOceanStartDate = a.AMCOceanStartDate,
+                                                      LocalCustomsInterfaceName = a.LocalCustomsInterface == null ? null : a.LocalCustomsInterface.Name,
                                                   }).FirstOrDefault();
 
             return entityPM;

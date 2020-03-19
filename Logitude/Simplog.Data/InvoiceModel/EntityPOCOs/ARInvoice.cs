@@ -203,6 +203,12 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
         public string ConcurrencyGUID { get; set; }
 
         public string CreatedByPartner { get; set; }
+        public string BillToGLAccountId{ get; set; }
 
+        public string RegionalTaxId { get; set; }
+        [ForeignKey("RegionalTaxId")]
+        public virtual VatType RegionalTax { get; set; }
+
+        public double? RegionalTaxPercentage { get; set; }
     }
 }

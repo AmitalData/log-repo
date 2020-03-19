@@ -21,9 +21,11 @@ namespace Logitude.HybridTest.ServicesTest
             };
             Response serviceResponse = new Response();
             object[] serviceParameters = new object[] { EnvironmentGlobalParams.MainTenant, serviceResponse };
-            CustomerCompetitorDW[] customerAdditionalServices = (CustomerCompetitorDW[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
-            Assert.IsFalse(serviceResponse.HasError, "Get Tenant Managements Failed! " + serviceResponse.ErrorMessage);
-            Assert.IsNull(serviceResponse.Result, "Get Tenant Managements Failed! " + serviceResponse.ErrorMessage);
+            ServiceOutcome serviceOutcome = WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters);
+
+            CustomerCompetitorDW[] customerAdditionalServices = (CustomerCompetitorDW[])serviceOutcome.Result;
+            Assert.IsFalse(serviceOutcome.Response.HasError, "Get Tenant Managements Failed! " + serviceOutcome.Response.ErrorMessage);
+            Assert.IsNull(serviceOutcome.Response.Result, "Get Tenant Managements Failed! " + serviceOutcome.Response.ErrorMessage);
             if (customerAdditionalServices.Length == 0)
                 Assert.Inconclusive("There Isn't Competitiors!");
         }

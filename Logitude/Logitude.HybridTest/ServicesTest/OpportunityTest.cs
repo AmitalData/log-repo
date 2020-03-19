@@ -24,9 +24,11 @@ namespace Logitude.HybridTest.ServicesTest
             OpportunityApiFilters filters = new OpportunityApiFilters();
             Response serviceResponse = new Response();
             object[] serviceParameters = new object[] { "hybrid@fnarsoft.com", "", EnvironmentGlobalParams.MainTenant, 0, 10, filters, serviceResponse };
-            OpportunityList[] opportunities = (OpportunityList[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
-            Assert.IsFalse(serviceResponse.HasError, "Get List Failed! " + serviceResponse.ErrorMessage);
-            Assert.IsNull(serviceResponse.Result, "Get List Failed! " + serviceResponse.Result);
+            ServiceOutcome serviceOutcome = WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters);
+
+            OpportunityList[] opportunities = (OpportunityList[])serviceOutcome.Result;
+            Assert.IsFalse(serviceOutcome.Response.HasError, "Get List Failed! " + serviceOutcome.Response.ErrorMessage);
+            Assert.IsNull(serviceOutcome.Response.Result, "Get List Failed! " + serviceOutcome.Response.Result);
             if (opportunities.Length == 0)
                 Assert.Inconclusive("There Isn't Opportunity With This Searchfield!");
             else
@@ -49,9 +51,11 @@ namespace Logitude.HybridTest.ServicesTest
             OpportunityApiFilters filters = new OpportunityApiFilters();
             Response serviceResponse = new Response();
             object[] serviceParameters = new object[] { HybridData.FirstOpportunityId, EnvironmentGlobalParams.MainTenant, serviceResponse };
-            CustomerList customer = (CustomerList)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
-            Assert.IsFalse(serviceResponse.HasError, "Get Customer List By Opportunity Id Failed! " + serviceResponse.ErrorMessage);
-            Assert.IsNull(serviceResponse.Result, "Get Customer List By Opportunity Id Failed! " + serviceResponse.Result);
+            ServiceOutcome serviceOutcome = WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters);
+
+            CustomerList customer = (CustomerList)serviceOutcome.Result;
+            Assert.IsFalse(serviceOutcome.Response.HasError, "Get Customer List By Opportunity Id Failed! " + serviceOutcome.Response.ErrorMessage);
+            Assert.IsNull(serviceOutcome.Response.Result, "Get Customer List By Opportunity Id Failed! " + serviceOutcome.Response.Result);
             if (customer == null)
                 Assert.Inconclusive("There Isn't customer With This Opportunity Id!");
         }
@@ -73,9 +77,11 @@ namespace Logitude.HybridTest.ServicesTest
             OpportunityApiFilters filters = new OpportunityApiFilters();
             Response serviceResponse = new Response();
             object[] serviceParameters = new object[] { HybridData.FirstOpportunityId, EnvironmentGlobalParams.MainTenant, serviceResponse };
-            OpportunityList opportunity = (OpportunityList)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
-            Assert.IsFalse(serviceResponse.HasError, "Get Opportunity List By Id Failed! " + serviceResponse.ErrorMessage);
-            Assert.IsNull(serviceResponse.Result, "Get Opportunity List By Id Failed! " + serviceResponse.Result);
+            ServiceOutcome serviceOutcome = WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters);
+
+            OpportunityList opportunity = (OpportunityList)serviceOutcome.Result;
+            Assert.IsFalse(serviceOutcome.Response.HasError, "Get Opportunity List By Id Failed! " + serviceOutcome.Response.ErrorMessage);
+            Assert.IsNull(serviceOutcome.Response.Result, "Get Opportunity List By Id Failed! " + serviceOutcome.Response.Result);
             if (opportunity == null)
                 Assert.Inconclusive("There Isn't Opportunity With This Id!");
         }

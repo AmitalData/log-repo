@@ -79,6 +79,20 @@ export class DocumentsFilingExtendedPMService {
     }
 
 
+    GetQuoationDocumentsFilingByQuoteIdAndObjectTableIdAndDocumentTypeCode(entityId: string, objectTableId:string, documentTypeCode:string) {
+
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        return this._http.get(this._apiUrl + '/GetQuoationDocumentsFilingByQuoteIdAndObjectTableIdAndDocumentTypeCode/?' + 'entityId=' + entityId + '&objectTableId=' + objectTableId + '&documentTypeCode=' + documentTypeCode, { headers: authHeader }).map(response => {
+            var result = response.json();
+            var pmresponse: ServiceResponse;
+            pmresponse = new ServiceResponse();
+            pmresponse.Result = result;
+            return pmresponse;
+        }).catch(ServiceHelper.HandleServiceError);
+    }
+
+
 
     
     getDocumentsFilingsByEntityIdAndObjectTable(entityId: string, childEntityId: string, objectTableId: string, directionCode: string, tenant: number, withDocuments: boolean) {
@@ -123,6 +137,30 @@ export class DocumentsFilingExtendedPMService {
           
             entity = this.MapJsonToEntityPM(result);
                
+
+            var pmresponse: ServiceResponse;
+            pmresponse = new ServiceResponse();
+            pmresponse.Result = entity;
+            return pmresponse;
+        }).catch(ServiceHelper.HandleServiceError);
+
+
+    }
+
+    getDocumentsFilingsByCode(Code: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        return this._http.get(this._apiUrl + "/GetDocumentsFilingsByCode" + '?Code=' + Code, { headers: authHeader }).map(response => {
+
+
+            var result = response.json();
+
+            var entity: DocumentsFilingPM;
+
+
+
+            entity = this.MapJsonToEntityPM(result);
+
 
             var pmresponse: ServiceResponse;
             pmresponse = new ServiceResponse();

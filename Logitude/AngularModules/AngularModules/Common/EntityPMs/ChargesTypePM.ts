@@ -333,6 +333,31 @@ export class ChargesTypePM {
     public set PayablesDefaultCurrencyId(newValue: string) { if (this.payablesDefaultCurrencyId != newValue) { this.payablesDefaultCurrencyId = newValue; this.MarkAsDirty("PayablesDefaultCurrencyId"); } }
        
 	 
+    private payableDebitGLAcountLocalName: string;
+    public get PayableDebitGLAcountLocalName() { return this.payableDebitGLAcountLocalName; }
+    public set PayableDebitGLAcountLocalName(newValue: string) { if (this.payableDebitGLAcountLocalName != newValue) { this.payableDebitGLAcountLocalName = newValue; this.MarkAsDirty("PayableDebitGLAcountLocalName"); } }
+       
+	 
+    private payableDebitGLAcountNumber: string;
+    public get PayableDebitGLAcountNumber() { return this.payableDebitGLAcountNumber; }
+    public set PayableDebitGLAcountNumber(newValue: string) { if (this.payableDebitGLAcountNumber != newValue) { this.payableDebitGLAcountNumber = newValue; this.MarkAsDirty("PayableDebitGLAcountNumber"); } }
+       
+	 
+    private receivableCreditGLAcountLocalName: string;
+    public get ReceivableCreditGLAcountLocalName() { return this.receivableCreditGLAcountLocalName; }
+    public set ReceivableCreditGLAcountLocalName(newValue: string) { if (this.receivableCreditGLAcountLocalName != newValue) { this.receivableCreditGLAcountLocalName = newValue; this.MarkAsDirty("ReceivableCreditGLAcountLocalName"); } }
+       
+	 
+    private receivableCreditGLAcountNumber: string;
+    public get ReceivableCreditGLAcountNumber() { return this.receivableCreditGLAcountNumber; }
+    public set ReceivableCreditGLAcountNumber(newValue: string) { if (this.receivableCreditGLAcountNumber != newValue) { this.receivableCreditGLAcountNumber = newValue; this.MarkAsDirty("ReceivableCreditGLAcountNumber"); } }
+       
+	 
+    private applyRegionalTax: boolean;
+    public get ApplyRegionalTax() { return this.applyRegionalTax; }
+    public set ApplyRegionalTax(newValue: boolean) { if (this.applyRegionalTax != newValue) { this.applyRegionalTax = newValue; this.MarkAsDirty("ApplyRegionalTax"); } }
+
+
 
     public OldEntityPM: ChargesTypePM;
 		
@@ -356,4 +381,4 @@ export class ChargesTypePM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

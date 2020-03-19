@@ -19,21 +19,19 @@ namespace Logitude.HybridTest.ServicesTest
                 EnglishName = "Hybrid City",
                 LocalName = "Hybrid City",
                 CountryId = HybridData.CountryCodeUS,
-                StateId = HybridData.StateIdAK,
+                StateCode = HybridData.StateCodeAK,
                 AddedManually = true,
                 Tenant = EnvironmentGlobalParams.MainTenant,
             };
             Response serviceResponse = EntityWcfCaller.CallEntityUpsert(cityPM);
             Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
-            HybridData.CityIdHCity = serviceResponse.Result;
         }
 
         [TestMethod]
         public void Test_City_GetCityListByCode()
         {
-            if (HybridData.CityIdHCity == null)
-                Test_City_UPSERT();
+            Test_City_UPSERT();
             InvokedProperties serviceProperties = new InvokedProperties
             {
                 ServiceName = "City",
@@ -44,10 +42,11 @@ namespace Logitude.HybridTest.ServicesTest
             };
             Response serviceResponse = new Response();
             object[] serviceParameters = new object[] { HybridData.CityCodeHCity, HybridData.CountryCodeUS, EnvironmentGlobalParams.MainTenant, serviceResponse };
-            CountryCityList city = (CountryCityList)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
-            Assert.IsFalse(serviceResponse.HasError, "Get List Failed! " + serviceResponse.ErrorMessage);
-            Assert.IsNull(serviceResponse.Result, "Get List Failed! " + serviceResponse.ErrorMessage);
-            Assert.AreEqual(city.Id, HybridData.CityIdHCity, "Get Hybrid City Failed!");
+            ServiceOutcome serviceOutcome = WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters);
+            CountryCityList city = (CountryCityList)serviceOutcome.Result;
+            Assert.IsFalse(serviceOutcome.Response.HasError, "Get List Failed! " + serviceOutcome.Response.ErrorMessage);
+            Assert.IsNull(serviceOutcome.Response.Result, "Get List Failed! " + serviceOutcome.Response.ErrorMessage);
+            Assert.AreEqual(city.Code, HybridData.CityCodeHCity, "Get Hybrid City Failed!");
         }
     }
 }

@@ -1,160 +1,368 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Table Name="ChargesTypes" Schema="dbo" DBType="Main">
-  <Column Name="AccountingVATSplit" Type="bit">
-    <Constraints Nullable="false" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="ChargesTypes"
+  Schema="dbo"
+  DBType="Main"
+  Module="Common">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="AddedManually" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="AWBPrintDescription" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Code"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="ChargesGroupCode" Type="varchar" Size="5">
-    <Constraints Nullable="false" />
+  <Column
+    Name="EnglishName"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="ChargesGroupId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="LocalName"
+    Type="nvarchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Code" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
+  <Column
+    Name="AddedManually"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="ContainerMeasurementId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="InActive"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="Description" Type="nvarchar" Size="250">
-    <Constraints Nullable="true" />
+  <Column
+    Name="IsReceivable"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="DueTypeCode" Type="varchar" Size="2">
-    <Constraints Nullable="true" />
+  <Column
+    Name="IsPayable"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="EnglishName" Type="varchar" Size="40">
-    <Constraints Nullable="false" />
+  <Column
+    Name="IsAir"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="IATACodeId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="IsOcean"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="Id" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
+  <Column
+    Name="IsInland"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="InActive" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="IsAutoDisplayInShipment"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="IsAir" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="IsAutoDisplayInConsolidation"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="IsAutoDisplayInConsolidation" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="AWBPrintDescription"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="IsAutoDisplayInCustoms" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Description"
+    Type="nvarchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="IsAutoDisplayInQuote" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="IsAutoDisplayInQuote"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="IsAutoDisplayInShipment" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="ViewOrder"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="IsBackToBack" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="SearchFields"
+    Type="nvarchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="IsCustoms" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="AccountingVATSplit"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="IsDomestic" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="ReceivablesChargesTypeExternalCode"
+    Type="varchar"
+    Size="25">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="IsDrop" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="PayablesChargesTypeExternalCode"
+    Type="varchar"
+    Size="25">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="IsExpense" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="ChargesGroupCode"
+    Type="varchar"
+    Size="5">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="IsExport" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="IsBackToBack"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="IsImport" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="IsAutoDisplayInCustoms"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="IsInland" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="IsCustoms"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="IsOcean" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="IsExpense"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="IsPayable" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="PayableAccountId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="IsReceivable" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="PayableDebitAccount"
+    Type="varchar"
+    Size="25">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="LocalName" Type="nvarchar" Size="40">
-    <Constraints Nullable="true" />
+  <Column
+    Name="PayableDebitGLAcountId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="MeasurementId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
+  <Column
+    Name="ReceivableAccountId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="PayableAccountId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ReceivableCreditAccount"
+    Type="varchar"
+    Size="25">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="PayableDebitAccount" Type="varchar" Size="25">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ReceivableCreditGLAccountId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="PayableDebitGLAcountId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="SATExternalId"
+    Type="varchar"
+    Size="20">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="PayablesChargesTypeExternalCode" Type="varchar" Size="25">
-    <Constraints Nullable="true" />
+  <Column
+    Name="DueTypeCode"
+    Type="varchar"
+    Size="2">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="PayablesDefaultCurrencyId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ChargesGroupId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="ReceivableAccountId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="IATACodeId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="ReceivableCreditAccount" Type="varchar" Size="25">
-    <Constraints Nullable="true" />
+  <Column
+    Name="MeasurementId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="ReceivableCreditGLAccountId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ContainerMeasurementId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="ReceivablesChargesTypeExternalCode" Type="varchar" Size="25">
-    <Constraints Nullable="true" />
+  <Column
+    Name="VatTypeId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="ReceivablesDefaultCurrencyId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="IsImport"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="SATExternalId" Type="varchar" Size="20">
-    <Constraints Nullable="true" />
+  <Column
+    Name="IsDomestic"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="SearchFields" Type="nvarchar" Size="1000">
-    <Constraints Nullable="true" />
+  <Column
+    Name="IsExport"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="IsDrop"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="VatTypeId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ReceivablesDefaultCurrencyId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="ViewOrder" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="PayablesDefaultCurrencyId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Relation ParentTableName="APInvoiceLines" ParentColumnName="ChargesTypeId" ReferencedTableName="ChargesTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.APInvoiceLines_dbo.ChargesTypes_ChargesTypeId" />
-  <Relation ParentTableName="ChargesExternalAccountsByProducts" ParentColumnName="ChargesTypeId" ReferencedTableName="ChargesTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ChargesExternalAccountsByProducts_dbo.ChargesTypes_ChargesTypeId" />
-  <Relation ParentTableName="ChargeTypeAccountings" ParentColumnName="ChargeTypeId" ReferencedTableName="ChargesTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ChargeTypeAccountings_dbo.ChargesTypes_ChargeTypeId" />
-  <Relation ParentTableName="ShipmentPayables" ParentColumnName="ChargesTypeId" ReferencedTableName="ChargesTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentPayables_dbo.ChargesTypes_ChargesTypeId" />
-  <Relation ParentTableName="Tariffs" ParentColumnName="Surcharge10Id" ReferencedTableName="ChargesTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Tariffs_dbo.ChargesTypes_Surcharge10Id" />
-  <Relation ParentTableName="Tariffs" ParentColumnName="Surcharge1Id" ReferencedTableName="ChargesTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Tariffs_dbo.ChargesTypes_Surcharge1Id" />
-  <Relation ParentTableName="Tariffs" ParentColumnName="Surcharge2Id" ReferencedTableName="ChargesTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Tariffs_dbo.ChargesTypes_Surcharge2Id" />
-  <Relation ParentTableName="Tariffs" ParentColumnName="Surcharge3Id" ReferencedTableName="ChargesTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Tariffs_dbo.ChargesTypes_Surcharge3Id" />
-  <Relation ParentTableName="Tariffs" ParentColumnName="Surcharge4Id" ReferencedTableName="ChargesTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Tariffs_dbo.ChargesTypes_Surcharge4Id" />
-  <Relation ParentTableName="Tariffs" ParentColumnName="Surcharge5Id" ReferencedTableName="ChargesTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Tariffs_dbo.ChargesTypes_Surcharge5Id" />
-  <Relation ParentTableName="Tariffs" ParentColumnName="Surcharge6Id" ReferencedTableName="ChargesTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Tariffs_dbo.ChargesTypes_Surcharge6Id" />
-  <Relation ParentTableName="Tariffs" ParentColumnName="Surcharge7Id" ReferencedTableName="ChargesTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Tariffs_dbo.ChargesTypes_Surcharge7Id" />
-  <Relation ParentTableName="Tariffs" ParentColumnName="Surcharge8Id" ReferencedTableName="ChargesTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Tariffs_dbo.ChargesTypes_Surcharge8Id" />
-  <Relation ParentTableName="QuoteCharges" ParentColumnName="ChargesTypeId" ReferencedTableName="ChargesTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.QuoteCharges_dbo.ChargesTypes_ChargesTypeId" />
-  <Relation ParentTableName="Tariffs" ParentColumnName="Surcharge9Id" ReferencedTableName="ChargesTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Tariffs_dbo.ChargesTypes_Surcharge9Id" />
-  <Relation ParentTableName="ShipmentReceivables" ParentColumnName="ChargesTypeId" ReferencedTableName="ChargesTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentReceivables_dbo.ChargesTypes_ChargesTypeId" />
-  <Relation ParentTableName="TariffVersionAllInCharges" ParentColumnName="ChargesTypeId" ReferencedTableName="ChargesTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.TariffVersionAllInCharges_dbo.ChargesTypes_ChargesTypeId" />
-  <Relation ParentTableName="TarrifCharges" ParentColumnName="ChargesTypeId" ReferencedTableName="ChargesTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.TarrifCharges_dbo.ChargesTypes_ChargesTypeId" />
-  <Relation ParentTableName="ARInvoiceLines" ParentColumnName="ChargesTypeId" ReferencedTableName="ChargesTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ARInvoiceLines_dbo.ChargesTypes_ChargesTypeId" />
+  <Column
+    Name="ApplyRegionalTax"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Relation
+    ForeignKeyColumn="PayableAccountId"
+    ReferencedTable="Accounts1"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ReceivableAccountId"
+    ReferencedTable="Accounts1"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="DueTypeCode"
+    ReferencedTable="DueTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ChargesGroupId"
+    ReferencedTable="ChargesGroups"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="IATACodeId"
+    ReferencedTable="IATACodes"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="MeasurementId"
+    ReferencedTable="Measurements"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ContainerMeasurementId"
+    ReferencedTable="Measurements"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="VatTypeId"
+    ReferencedTable="VatTypes"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ReceivablesDefaultCurrencyId"
+    ReferencedTable="Currencies"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="PayablesDefaultCurrencyId"
+    ReferencedTable="Currencies"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Index
+    Columns="Tenant" />
+  <Index
+    Columns="ChargesGroupCode" />
 </Table>

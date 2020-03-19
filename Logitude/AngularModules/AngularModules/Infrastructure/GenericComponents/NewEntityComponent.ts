@@ -183,7 +183,7 @@ export class NewEntityComponent {
             var tab = allTabs[i];
 
             if (tab.ControlPath.indexOf("EventsControl") == -1 && tab.HtmlComponentName != "ReportTemplateComponent") {
-                if (FeatureLocator.IsFeatureGranted(tab.FeatureId)) {
+                if (FeatureLocator.IsFeatureGrantedByUniqeCode(tab.FeatureUniqeCode)) {
                     myTabsSorted.push(tab);
                 }
             }
@@ -279,6 +279,12 @@ export class NewEntityComponent {
                     case "Simplog.FreightLib.Views.PartnersTabs.PartnerAddressesTab": {
                         myComponentName = "AddressesTabComponent";
                         myComponentPath = "./CommonModules/CommonPartners/Components/EditTabs/AddressesTabComponent";
+                        break;
+                    }
+
+                    case "Simplog.FreightLib.Views.Areas": {
+                        myComponentName = "AreasTabComponent";
+                        myComponentPath = "./CommonModules/CommonPartners/Components/EditTabs/AreasTabComponent";
                         break;
                     }
 

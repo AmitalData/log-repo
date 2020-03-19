@@ -12,10 +12,10 @@ namespace Logitude.HybridTest.WcfCallers
     {
         public static void PrepareCountriesVars()
         {
-            GetCountryIdGB();
-            GetCountryIdUS();
+            GetCountryCodeGB();
+            GetCountryCodeUS();
         }
-        private static void GetCountryIdGB()
+        private static void GetCountryCodeGB()
         {
             InvokedProperties serviceProperties = new InvokedProperties
             {
@@ -32,12 +32,13 @@ namespace Logitude.HybridTest.WcfCallers
             };
             Response serviceResponse = new Response();
             object[] serviceParameters = new object[] { filters, EnvironmentGlobalParams.MainTenant, serviceResponse };
-            CountryList[] countries = (CountryList[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
-            Assert.IsFalse(serviceResponse.HasError, "Get List Failed! " + serviceResponse.ErrorMessage);
-            Assert.IsNull(serviceResponse.Result, "Get List Failed! " + serviceResponse.ErrorMessage);
-            HybridData.CountryIdGB = countries[0].Id;
+            ServiceOutcome serviceOutcome = WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters);
+
+            CountryList[] countries = (CountryList[])serviceOutcome.Result;
+            Assert.IsFalse(serviceOutcome.Response.HasError, "Get List Failed! " + serviceOutcome.Response.ErrorMessage);
+            Assert.IsNull(serviceOutcome.Response.Result, "Get List Failed! " + serviceOutcome.Response.ErrorMessage);
         }
-        private static void GetCountryIdUS()
+        private static void GetCountryCodeUS()
         {
             InvokedProperties serviceProperties = new InvokedProperties
             {
@@ -54,10 +55,11 @@ namespace Logitude.HybridTest.WcfCallers
             };
             Response serviceResponse = new Response();
             object[] serviceParameters = new object[] { filters, EnvironmentGlobalParams.MainTenant, serviceResponse };
-            CountryList[] countries = (CountryList[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
-            Assert.IsFalse(serviceResponse.HasError, "Get List Failed! " + serviceResponse.ErrorMessage);
-            Assert.IsNull(serviceResponse.Result, "Get List Failed! " + serviceResponse.ErrorMessage);
-            HybridData.CountryIdUS = countries[0].Id;
+            ServiceOutcome serviceOutcome = WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters);
+
+            CountryList[] countries = (CountryList[])serviceOutcome.Result;
+            Assert.IsFalse(serviceOutcome.Response.HasError, "Get List Failed! " + serviceOutcome.Response.ErrorMessage);
+            Assert.IsNull(serviceOutcome.Response.Result, "Get List Failed! " + serviceOutcome.Response.ErrorMessage);
         }
     }
 }

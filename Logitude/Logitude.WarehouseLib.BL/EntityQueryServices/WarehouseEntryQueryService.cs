@@ -3,6 +3,7 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.Helpers;
 using Logitude.WarehouseLib.BL.EntityPMs;
 using Logitude.WarehouseLib.BL.Helpers;
+using Logitude.WarehouseLib.BL.Service;
 using Logitude.WarehouseLib.Data;
 using Logitude.WarehouseLib.Data.EntityKeys;
 using Logitude.WarehouseLib.Data.EntityLists;
@@ -158,18 +159,11 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
             if (warehouseEntries.Count > 0)
             {
                 List<string> cardIds = new List<string>();
-                List<string> portIds = new List<string>();
-                List<string> addressIds = new List<string>();
-
                 foreach (WarehouseEntry warehouseEntry in warehouseEntries)
                 {
                     var isInlandDomestic = warehouseEntry.TransportModeId == "I" && warehouseEntry.DirectionId == "D" ? true : false;
                     if (!string.IsNullOrEmpty(warehouseEntry.WarehouseId) && !cardIds.Contains(warehouseEntry.WarehouseId)) cardIds.Add(warehouseEntry.WarehouseId);
                     if (!string.IsNullOrEmpty(warehouseEntry.CustomerId) && !cardIds.Contains(warehouseEntry.CustomerId)) cardIds.Add(warehouseEntry.CustomerId);
-                    if (!isInlandDomestic  && !string.IsNullOrEmpty(warehouseEntry.FromPortId) && !cardIds.Contains(warehouseEntry.FromPortId)) portIds.Add(warehouseEntry.FromPortId);
-                    if (!isInlandDomestic && !string.IsNullOrEmpty(warehouseEntry.ToPortId) && !cardIds.Contains(warehouseEntry.ToPortId)) portIds.Add(warehouseEntry.ToPortId);
-                    if (isInlandDomestic && !string.IsNullOrEmpty(warehouseEntry.FromAddressId) && !addressIds.Contains(warehouseEntry.FromAddressId)) addressIds.Add(warehouseEntry.FromAddressId);
-                    if (isInlandDomestic && !string.IsNullOrEmpty(warehouseEntry.ToAddressId) && !addressIds.Contains(warehouseEntry.ToAddressId)) addressIds.Add(warehouseEntry.ToAddressId);
                 }
 
 
@@ -178,19 +172,6 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
                 {
                     CardQuery cardQuery = new CardQuery(tenant);
                     cardLists = cardQuery.GetCardListsByListIds(cardIds, tenant);
-                }
-
-                List<PortList> portLists = new List<PortList>();
-                if (portIds.Count > 0)
-                {
-                    PortQuery portQuery = new PortQuery(tenant);
-                    portLists = portQuery.GetPortListsByListIds(portIds, tenant);
-                }
-                List<AddressList> addressLists = new List<AddressList>();
-                if (addressIds.Count > 0)
-                {
-                    AddressQuery addressQuery = new AddressQuery(tenant);
-                    addressLists = addressQuery.GetAddressListsByIds(addressIds, tenant);
                 }
 
                 foreach (EntityLastActivity activity in lastActivities)
@@ -236,39 +217,14 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
 
                         }
 
-                        if (!isInlandDomestic && !string.IsNullOrEmpty(warehouseEntry.FromPortId) && !string.IsNullOrEmpty(warehouseEntry.ToPortId))
-                        {
-                            string fromPorCode = "";
-                            string toPorCode = "";
 
-                            PortList fromPort = portLists.Where(d => d.Id == warehouseEntry.FromPortId).FirstOrDefault();
-                            if (fromPort != null) fromPorCode = fromPort.Code;
-
-
-                            PortList toPor = portLists.Where(d => d.Id == warehouseEntry.ToPortId).FirstOrDefault();
-                            if (toPor != null) toPorCode = toPor.Code;
-
-                            warehouseEntryList.Routing = (fromPorCode + " > " + toPorCode);
-
-                        }
-
-
-                        if (isInlandDomestic && !string.IsNullOrEmpty(warehouseEntry.FromAddressId) && !string.IsNullOrEmpty(warehouseEntry.ToAddressId))
-                        {
-                            string fromAddressCity = "";
-                            string toAddressCity = "";
-
-                            AddressList fromAddress =addressLists.Where(d => d.Id == warehouseEntry.FromAddressId).FirstOrDefault();
-                            if (fromAddress != null) fromAddressCity = fromAddress.City;
-
-
-                            AddressList toAddress = addressLists.Where(d => d.Id == warehouseEntry.ToAddressId).FirstOrDefault();
-                            if (toAddress != null) toAddressCity = toAddress.City;
-
-                            warehouseEntryList.Routing = (fromAddressCity + " > " + toAddressCity);
-
-                        }
-
+                        #region Routing
+                        WarehouseEntryRoutingService warehouseEntryRoutingService = new WarehouseEntryRoutingService();
+                        WarehouseEntryRouting warehouseEntryRouting = warehouseEntryRoutingService.GetWarehouseEntryRouting(new WarehouseEntryRoutingArgs() { TransportModeId = warehouseEntry.TransportModeId, DirectionId = warehouseEntry.DirectionId, FromAddressId = warehouseEntry.FromAddressId, ToAddressId = warehouseEntry.ToAddressId, FromPortId = warehouseEntry.FromPortId, ToPortId = warehouseEntry.ToPortId, ToCountryId = warehouseEntry.ToCountryId, FromCountryId = warehouseEntry.FromCountryId, FromTypeCode = warehouseEntry.FromTypeCode, ToTypeCode = warehouseEntry.ToTypeCode, Tenant = warehouseEntry.Tenant });
+                        warehouseEntryList.Origin = warehouseEntryRouting.Origin;
+                        warehouseEntryList.Destination = warehouseEntryRouting.Destination;
+                        warehouseEntryList.Routing = warehouseEntryRouting.Routing;
+                        #endregion
 
                         #endregion
 

@@ -68,7 +68,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         IsEquipment, 
 	         StatusLocalName, 
 	         StatusEnglishName, 
-	         JournalNumber,
+	         JournalNumber, 
+	         TaxReportDate,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

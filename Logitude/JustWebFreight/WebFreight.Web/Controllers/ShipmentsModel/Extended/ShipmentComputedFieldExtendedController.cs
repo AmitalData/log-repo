@@ -47,7 +47,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
                 {
                     shipmentComputedFields.IsDepositionRequired = false;
                     ShipmentComputedFieldsHelper shipmentComputedFieldsHelper = new ShipmentComputedFieldsHelper();
-                    shipmentComputedFieldsHelper.UpdateShipmentComputedFields(shipmentComputedFields);
+                    shipmentComputedFieldsHelper.UpdateShipmentComputedFields(shipmentComputedFields, shipmentComputedFieldsRepository.context);
         
                     ObjectTableRepository objectTabelRepository = new ObjectTableRepository(tenant);
                     var objecttable = objectTabelRepository.GetObjectTableByName("Shipment", 0, true);

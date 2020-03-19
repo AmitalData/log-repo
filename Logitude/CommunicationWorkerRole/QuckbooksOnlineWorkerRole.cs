@@ -76,31 +76,33 @@ namespace CommunicationWorkerRole
                             string communicationLogId = response.MessageValues["QuickbooksOnline"].ToString();
                             type = response.MessageValues["type"].ToString();
                             int.TryParse(response.MessageValues["Tenant"].ToString(), out tenant);
-                            if (!response.MessageValues.ContainsKey("OldTransferStatusCode"))
-                            {
-                                OldTransferStatusCode = null;
-                            }
-                            else 
-                            OldTransferStatusCode = response.MessageValues["OldTransferStatusCode"];
-                            Commoncontext = CommonDataContext.GetContext(tenant);
-                            Invoicecontext = InvoiceContext.GetContext(tenant);
-                            CommunicationLogRepository communicationLogRep = new CommunicationLogRepository(Commoncontext);
-                            CommunicationLog cl = communicationLogRep.GetSingleCommunicationLog(communicationLogId, tenant);
-                            if (cl != null)
-                            {
-                                if (cl.CommunicationStatusTypeCode == "T")
+                  
+                                if (!response.MessageValues.ContainsKey("OldTransferStatusCode"))
                                 {
-                                    queueservice.Complete();
+                                    OldTransferStatusCode = null;
                                 }
                                 else
+                                    OldTransferStatusCode = response.MessageValues["OldTransferStatusCode"];
+                                Commoncontext = CommonDataContext.GetContext(tenant);
+                                Invoicecontext = InvoiceContext.GetContext(tenant);
+                                CommunicationLogRepository communicationLogRep = new CommunicationLogRepository(Commoncontext);
+                                CommunicationLog cl = communicationLogRep.GetSingleCommunicationLog(communicationLogId, tenant);
+                                if (cl != null)
                                 {
-                                    SendCommunicationLog(communicationLogId, tenant, cl, communicationLogRep);
-                                    queueservice.Complete();
+                                    if (cl.CommunicationStatusTypeCode == "T")
+                                    {
+                                        queueservice.Complete();
+                                    }
+                                    else
+                                    {
+                                        SendCommunicationLog(communicationLogId, tenant, cl, communicationLogRep);
+                                        queueservice.Complete();
 
-                                    LogDoneItemInMemory();
+                                        LogDoneItemInMemory();
 
+                                    }
                                 }
-                            }
+                            
                         }
                     }
                     catch (Exception exc)
@@ -1207,8 +1209,14 @@ namespace CommunicationWorkerRole
             {
                 entityPM.RefreshToken = data.RefreshToken;
                 ICommonDataContext MyContext = CommonDataContext.GetContext(entityPM.Id);
-                AccountingSettingService accountingService = new AccountingSettingService(MyContext, int.Parse(tenant));
-                accountingService.Update(entityPM);
+                AccountingSetting accountingSetting = MyContext.AccountingSettings.Where(p => p.Id == entityPM.Id).FirstOrDefault();
+                if (accountingSetting != null)
+                {
+                    accountingSetting.RefreshToken = data.RefreshToken;
+                    MyContext.AccountingSettings.Attach(accountingSetting);
+                    MyContext.SetAsModified(accountingSetting);
+                    MyContext.SaveChanges();
+                }                
             }
 
             return data.AccessToken;

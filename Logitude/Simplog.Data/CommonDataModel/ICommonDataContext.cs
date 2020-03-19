@@ -28,8 +28,8 @@ namespace Simplog.Data.CommonDataModel
         IDbSet<Department> Departments { get; }
         IDbSet<Branch> Branches { get; }
         IDbSet<Airline> Airlines { get; }
-        IDbSet<AirlineArea> AirlineAreas { get; }
-        IDbSet<AirlineAreasPort> AirlineAreasPorts { get; }
+        IDbSet<CarrierArea> CarrierAreas { get; }
+        IDbSet<CarrierAreasPort> CarrierAreasPorts { get; }
 
         IDbSet<ShippingLine> ShippingLines { get; }
         IDbSet<Trucker> Truckers { get; }
@@ -222,7 +222,8 @@ namespace Simplog.Data.CommonDataModel
         IDbSet<DocumentsExecutionLog> DocumentsExecutionLogs { get; set; }
         IDbSet<CardContactAdditionalService> CardContactAdditionalServices { get; set; }
         IDbSet<UserLastSettings> UserLastSettings { get; set; }
-
+        IDbSet<CustomerOpenFilesAmount> CustomerOpenFilesAmounts { get; set; }
+        
         void SetAsModified(object entity);
         void DetectChanges();
         int SaveChanges();

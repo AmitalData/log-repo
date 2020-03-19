@@ -20,6 +20,7 @@ using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Logitude.WarehouseLib.BL.Service;
 
 namespace Logitude.WarehouseLib.BL.EntityDataMappings
 {
@@ -40,8 +41,7 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
                 entityPOCO.Id = entityPM.Id;
                 entityPOCO.Tenant = entityPM.Tenant;
             }
-
-            this.ComputeRoutingField(entityPM);
+        
             BuildSearchFields(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
         }
 
@@ -91,7 +91,13 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
             WarehouseEntryStatus warehouseEntryStatus = warehouseEntryStatusRepository.GetSingle(entityPM.StatusCode);
             if (warehouseEntryStatus != null) entityPM.StatusName = warehouseEntryStatus.Name;
 
-            this.ComputeRoutingField(entityPM);
+            #region Routing
+            WarehouseEntryRoutingService warehouseEntryRoutingService = new WarehouseEntryRoutingService();
+            WarehouseEntryRouting warehouseEntryRouting = warehouseEntryRoutingService.GetWarehouseEntryRouting(new WarehouseEntryRoutingArgs() { TransportModeId = entityPM.TransportModeId, DirectionId = entityPM.DirectionId, FromAddressId = entityPM.FromAddressId, ToAddressId = entityPM.ToAddressId, FromPortId = entityPM.FromPortId, ToPortId = entityPM.ToPortId, ToCountryId = entityPM.ToCountryId, FromCountryId = entityPM.FromCountryId, FromTypeCode = entityPM.FromTypeCode, ToTypeCode = entityPM.ToTypeCode, Tenant = warehousePM.Tenant });
+            entityPM.Origin = warehouseEntryRouting.Origin;
+            entityPM.Destination = warehouseEntryRouting.Destination;
+            entityPM.Routing = warehouseEntryRouting.Routing;
+            #endregion
 
             entityPM.LastStatusUpdateDate = entityPM.LastStatusUpdateDate;
             entityPM.MasterHouse = entityPM.MasterNumber + " " + entityPM.HouseNumber;
@@ -99,67 +105,9 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 
         }
 
-        private void ComputeRoutingField(WarehouseEntryPM entityPM)
-        {
-            #region IsInlandDomestic
-            if (entityPM.DirectionId == "D" && entityPM.TransportModeId == "I")
-            {
-                List<string> addressIds = new List<string>();
-                if (!string.IsNullOrEmpty(entityPM.FromAddressId)) addressIds.Add(entityPM.FromAddressId);
-                if (!string.IsNullOrEmpty(entityPM.ToAddressId)) addressIds.Add(entityPM.ToAddressId);
 
-                List<AddressList> addressLists = new List<AddressList>();
-                if (addressIds.Count > 0)
-                {
-                    AddressQuery addressQuery = new AddressQuery(entityPM.Tenant);
-                    addressLists = addressQuery.GetAddressListsByIds(addressIds, entityPM.Tenant);
 
-                    if (!string.IsNullOrEmpty(entityPM.FromAddressId))
-                    {
-                        AddressList fromAddressList = addressLists.Where(d => d.Id == entityPM.FromAddressId).FirstOrDefault();
-                        if (fromAddressList != null) entityPM.Origin = fromAddressList.City;
-                    }
-                    if (!string.IsNullOrEmpty(entityPM.ToAddressId))
-                    {
-                        AddressList toAddressList = addressLists.Where(d => d.Id == entityPM.ToAddressId).FirstOrDefault();
-                        if (toAddressList != null) entityPM.Destination = toAddressList.City;
-                    }
-
-                    entityPM.Routing = (entityPM.Origin + " > " + entityPM.Destination);
-                }
-            }
-            #endregion
-
-            else if (!string.IsNullOrEmpty(entityPM.FromPortId) || !string.IsNullOrEmpty(entityPM.ToPortId))
-            {
-
-                string fromPorCode = "";
-                string toPorCode = "";
-                PortQuery portQuery = new PortQuery(entityPM.Tenant);
-                if (!string.IsNullOrEmpty(entityPM.FromPortId))
-                {
-                    PortPM portPM = portQuery.GetSinglePM(entityPM.FromPortId, entityPM.Tenant);
-                    if (portPM != null)
-                    {
-                        entityPM.Origin = portPM.EnglishName;
-                        fromPorCode = portPM.Code;
-
-                    }
-                }
-
-                if (!string.IsNullOrEmpty(entityPM.ToPortId))
-                {
-                    PortPM portPM = portQuery.GetSinglePM(entityPM.ToPortId, entityPM.Tenant);
-                    if (portPM != null)
-                    {
-                        entityPM.Destination = portPM.EnglishName;
-                        toPorCode = portPM.Code;
-                    }
-                }
-
-                entityPM.Routing = (fromPorCode + " > " + toPorCode);
-            }
-        }
+    
 
 
         private void BuildSearchFields(WarehouseEntryPM entityPM, WarehouseEntry entityPOCO, bool isNewEntity)

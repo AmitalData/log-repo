@@ -343,6 +343,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	         Screen CommunicationStatusTypeCommunicationStatusTypeHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CommunicationStatusType.HeaderScreen", Name = "CommunicationStatusTypeHeaderScreen", ObjectTableId = CommunicationStatusTypeObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       	
 		    CommunicationStatusTypeObjectTable.HeaderScreenId = CommunicationStatusTypeCommunicationStatusTypeHeaderScreenScreen0.Id;
+		    CommunicationStatusTypeObjectTable.HeaderScreenCode = CommunicationStatusTypeCommunicationStatusTypeHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }

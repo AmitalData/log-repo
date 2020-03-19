@@ -291,7 +291,7 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
         windowArgs.ShipmentPM = this.EntityPM;
         windowArgs.ConnectedTo = "Shipment";
         var logWindow = new LogitudeWindow();
-        logWindow.Width = 960;
+        logWindow.Width = 1030;
         logWindow.Height = 620;
         logWindow.Title = widnowName == "Release" ? "New Cross Dock Release" : "New Cross Dock Entry";
         if (this.EntityPM) {

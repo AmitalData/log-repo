@@ -62,6 +62,8 @@ export class ApiQueryFilters {
     }
 
     public queryId: string;
+    public queryCode: string;
+
     //public tenant: number;
     public userid: string;
     public ObjectTableName: string;

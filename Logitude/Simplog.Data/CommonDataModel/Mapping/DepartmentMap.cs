@@ -49,6 +49,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.InActive).HasColumnName("InActive");
             this.Property(t => t.SearchFields).HasColumnName("SearchFields");
             this.Property(t => t.Code).HasColumnName("Code");
+            this.Property(t => t.AutomaticLastUpdateDate).HasColumnName("AutomaticLastUpdateDate");
         }
     }
 }

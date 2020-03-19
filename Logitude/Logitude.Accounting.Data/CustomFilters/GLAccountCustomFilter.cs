@@ -43,6 +43,9 @@ namespace Logitude.Accounting.Data.CustomFilters
                             queryableData = queryableData.Where(c => c.EnglishName.StartsWith(tString) || c.LocalName.StartsWith(tString));
                         }
                     }
+                    queryableData = FilterByReceivableCredit(queryableData, item);
+
+                    queryableData = FilterByPayableDebit(queryableData, item);
 
                     if (item.FieldName == "BalanceInLocalCurrencyNotNull")
                     {
@@ -93,6 +96,29 @@ namespace Logitude.Accounting.Data.CustomFilters
             }
 
             return queryableData;
+        }
+
+        private IQueryable<GLAccount> FilterByReceivableCredit(IQueryable<GLAccount> queryableData, QueryFilterItem queryFilterItem)
+        {
+            if (queryFilterItem.FieldName == "ReceivableCreditFilter")
+            {
+
+                queryableData = queryableData.Where(c => (c.RevenueExpenseType == "3" && c.ChartOfAccountsTypeCode == "7") || c.RevenueExpenseType == "1");
+
+            }
+            return queryableData;
+
+        }
+        private IQueryable<GLAccount> FilterByPayableDebit(IQueryable<GLAccount> queryableData, QueryFilterItem queryFilterItem)
+        {
+            if (queryFilterItem.FieldName == "PayableDebitFilter")
+            {
+
+                queryableData = queryableData.Where(c => (c.RevenueExpenseType == "3" && c.ChartOfAccountsTypeCode == "7") || c.RevenueExpenseType == "2");
+
+            }
+            return queryableData;
+
         }
     }
 }

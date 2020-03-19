@@ -17,7 +17,6 @@ import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResp
 import {PortList} from '../../../Common/EntityLists/PortList';
 import {CardList} from '../../../Common/EntityLists/CardList';
 import {AirlineList} from '../../../Common/EntityLists/AirlineList';
-import {AirlinePM} from '../../../Common/EntityPMs/AirlinePM';
 import {AddressList} from '../../../Common/EntityLists/AddressList';      
 import {IncotermList} from '../../../Common/EntityLists/IncotermList';
 import {PackageTypeList} from '../../../Common/EntityLists/PackageTypeList';
@@ -28,7 +27,7 @@ import {AddressListService} from '../../../Common/Services/StandardLists/Address
 import {IncotermListService} from '../../../Common/Services/StandardLists/IncotermListService';
 import {ShipmentPMService} from '../../Services/StandardPMs/ShipmentPMService';
 import {PartnersDomainService} from '../../../Common/Services/PartnersDomainService';
-import {NewShipmentComponentArgs, AddEditPartnerArgs} from '../../Args';
+import {AddEditPartnerArgs} from '../../Args';
 import {NewEntityArgs} from '../../../Infrastructure/Args';
 import {ConfirmWindow} from '../../../Controls/Windows/ConfirmWindow';
 import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
@@ -74,6 +73,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, OnDes
             this.CardDependencyProperty1IsList = true;
         }
     }
+
     public ScreenIsReady: boolean = false;
     ngOnInit() {
         var listservice: EntityListService = new EntityListService();
@@ -92,7 +92,6 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, OnDes
                 this.ListenToPropertyChanged();
             });
         });
-
     }
 
     ngOnDestroy() {
@@ -568,14 +567,14 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, OnDes
         }
 
         else {
-            this.ChargeableWeightLabel = TextCodeTranslator.Translate("Shipment.F.WtMsr.Short").replace("%ChargWeightCode", this.EntityPM.ChargeableWeightUnitCode);
+            this.ChargeableWeightLabel = TextCodeTranslator.Translate("Shipment.F.ChargeableWeight.Short").replace("%ChargWeightCode", this.EntityPM.ChargeableWeightUnitCode);
         }
     }
     SetUnits() {
         var myDimensionsUnitCode = this.TenantPM.DimensionsUnitCode;
         var myVolumeUnitCode = this.TenantPM.VolumeUnitCode;
         var myGrossWeightUnitCode = this.TenantPM.GrossWeightUnitCode;
-        var myChargeableWeightUnitCode = AppTool.GetChargeableWeightUnitCode(this.TransportModeId, this.ShipmentTypeId);
+        var myChargeableWeightUnitCode = AppTool.GetChargeableWeightUnitCode(this.TransportModeId);
 
         if (this.DirectionId == "D") {
             if (!AppTool.IsNullOrEmpty(this.TenantPM.CountryCode)) {
@@ -615,10 +614,25 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, OnDes
         }
 
         else {
-            this.EntityPM.VolumeUnitCode = myVolumeUnitCode;
-            this.EntityPM.DimensionsUnitCode = myDimensionsUnitCode;
-            this.EntityPM.GrossWeightUnitCode = myGrossWeightUnitCode;
+            if (AppTool.IsNullOrEmpty(this.EntityPM.DimensionsUnitCode)) {
+                this.EntityPM.DimensionsUnitCode = myDimensionsUnitCode;
+            }
+
+            if (AppTool.IsNullOrEmpty(this.EntityPM.VolumeUnitCode)) {
+                this.EntityPM.VolumeUnitCode = myVolumeUnitCode;
+            }
+
+            if (AppTool.IsNullOrEmpty(this.EntityPM.GrossWeightUnitCode)) {
+                this.EntityPM.GrossWeightUnitCode = myGrossWeightUnitCode;
+            }
+
+
             this.EntityPM.ChargeableWeightUnitCode = myChargeableWeightUnitCode;
+            
+            //this.EntityPM.VolumeUnitCode = myVolumeUnitCode;
+            //this.EntityPM.DimensionsUnitCode = myDimensionsUnitCode;
+            //this.EntityPM.GrossWeightUnitCode = myGrossWeightUnitCode;
+            //this.EntityPM.ChargeableWeightUnitCode = myChargeableWeightUnitCode;
             this.EntityPM.Ratio = AppTool.GetRatio(this.DirectionId, this.TransportModeId, this.ShipmentTypeId, this.TenantPM.CountryCode);
             this.EntityPM.DimFactor = AppTool.GetDimFactorFromRatio(this.EntityPM.Ratio, this.EntityPM.DimensionsUnitCode, this.EntityPM.ChargeableWeightUnitCode);
             this.ComputeOrderVolumetricWeight();
@@ -1158,6 +1172,20 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, OnDes
                 }
 
             case "AGT":
+                {
+                    if (SessionLocator.TenantPM.AllowCustomersInAgentsLOV) {
+                        this.CustomerDependencyProperty1 = "AG,CS";
+                        this.CustomerDependencyProperty1IsList = true;
+                    }
+
+                    else {
+                        this.CustomerDependencyProperty1 = "AG";
+                        this.CustomerDependencyProperty1IsList = false;
+                    }
+
+                    break;
+                }
+
             case "IGT":
             case "FOR":
             case "COL":
@@ -1217,11 +1245,11 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, OnDes
         if (this.EntityPM.ShipmentCustomerTypeCode != newValue) {
             this.EntityPM.ShipmentCustomerTypeCode = newValue;
 
-            this.CustomerId = null;
+            //this.CustomerId = null;
 
-            this.SetCustomer(newValue);
-            this.SetCustomerRequired();
-            this.ComputeCustomerDependency();
+            //this.SetCustomer(newValue);
+            //this.SetCustomerRequired();
+            //this.ComputeCustomerDependency();
         }
     }
 
@@ -2788,21 +2816,11 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, OnDes
             if (!AppTool.IsNullOrEmpty(this.SourceEntityPM.ShipperId)) {
                 this.IsCopyShipper = true;
                 this.IsCopyShipperEnabled = true;
-
-                //if (this.SourceEntityPM.ShipperId == this.SourceEntityPM.CustomerId) {
-                //    this.IsShipperMyCustomer = true;
-                //    this.ShipmentCustomerTypeCode = "SHI";
-                //}
             }
 
             if (!AppTool.IsNullOrEmpty(this.SourceEntityPM.ConsigneeId)) {
                 this.IsCopyConsignee = true;
                 this.IsCopyConsigneeEnabled = true;
-
-                //if (this.SourceEntityPM.ConsigneeId == this.SourceEntityPM.CustomerId) {
-                //    this.IsConsigneeMyCustomer = true;
-                //    this.ShipmentCustomerTypeCode = "CON";
-                //}
             }
         }
 
@@ -2818,20 +2836,6 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, OnDes
             this.IsCopyConsigneeNotImporter = true;
             this.IsCopyFreightForwarder = true;
             this.IsCopyConsolidator = true;
-
-            //if (!AppTool.IsNullOrEmpty(this.SourceEntityPM.ShipperId)) {
-            //    if (this.SourceEntityPM.ShipperId == this.SourceEntityPM.CustomerId) {
-            //        this.ShipmentCustomerTypeCode = "SHI";
-            //        this.IsShipperMyCustomer = true;                    
-            //    }
-            //}
-
-            //if (!AppTool.IsNullOrEmpty(this.SourceEntityPM.ConsigneeId)) {
-            //    if (this.SourceEntityPM.ConsigneeId == this.SourceEntityPM.CustomerId) {
-            //        this.ShipmentCustomerTypeCode = "CON";
-            //        this.IsConsigneeMyCustomer = true;                    
-            //    }
-            //}
         }
     }
 
@@ -3220,6 +3224,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, OnDes
                 this.EntityPM.ChargeableWeightEdited = this.SourceEntityPM.ChargeableWeightEdited;
                 this.EntityPM.OrderGrossWeightEdited = this.SourceEntityPM.OrderGrossWeightEdited;
                 this.EntityPM.OrderChargeableWeightEdited = this.SourceEntityPM.OrderChargeableWeightEdited;
+                this.EntityPM.GrossWeightPerStorageDays = this.SourceEntityPM.GrossWeightPerStorageDays;
             }
 
             else {
@@ -3248,6 +3253,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, OnDes
                 this.EntityPM.ChargeableWeightEdited = false;
                 this.EntityPM.OrderGrossWeightEdited = false;
                 this.EntityPM.OrderChargeableWeightEdited = false;
+                this.EntityPM.GrossWeightPerStorageDays = null;
             }
 
             this.SetUIProperties_OrderDetails();
@@ -3311,46 +3317,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, OnDes
 
         if (AppTool.IsNullOrEmpty(this.EntityPM.AccountManagerUserId)) {
             this.EntityPM.AccountManagerUserId = AppTool.IsNullOrEmpty(this.myCustomerAccountManagerUserId) ? this.EntityPM.CreatedByUserId : this.myCustomerAccountManagerUserId;
-        }
-
-        //this.EntityPM.CustomerId = null;
-        //this.EntityPM.CustomerName = null;
-        //this.EntityPM.CustomerNote = null;
-        //this.EntityPM.CustomerAddressId = null;
-        //this.EntityPM.CustomerContactId = null;
-        //this.EntityPM.CustomerReference1 = null;
-        //this.EntityPM.CustomerReference2 = null;
-        //this.EntityPM.ShipmentCustomerTypeCode = null;
-
-        // if (this.IsShipperMyCustomer) {
-        //    this.EntityPM.ShipmentCustomerTypeCode = "SHI";
-        //    this.EntityPM.CustomerId = this.EntityPM.ShipperId;
-        //    this.EntityPM.CustomerName = this.EntityPM.ShipperName;
-        //    this.EntityPM.CustomerNote = this.EntityPM.ShipperNote;
-        //    this.EntityPM.CustomerAddressId = this.EntityPM.ShipperAddressId;
-        //    this.EntityPM.CustomerContactId = this.EntityPM.ShipperContactId;
-        //    this.EntityPM.CustomerReference1 = this.EntityPM.ShipperReference1;
-        //    this.EntityPM.CustomerReference2 = this.EntityPM.ShipperReference2;
-
-        //    if (AppTool.IsNullOrEmpty(this.EntityPM.SalesmanUserId)) {
-        //        this.EntityPM.SalesmanUserId = AppTool.IsNullOrEmpty(this.myShipperSalesmanId) ? this.EntityPM.CreatedByUserId : this.myShipperSalesmanId;
-        //    }
-        //}
-
-        //else if (this.IsConsigneeMyCustomer) {
-        //    this.EntityPM.ShipmentCustomerTypeCode = "CON";
-        //    this.EntityPM.CustomerId = this.EntityPM.ConsigneeId;
-        //    this.EntityPM.CustomerName = this.EntityPM.ConsigneeName;
-        //    this.EntityPM.CustomerNote = this.EntityPM.ConsigneeNote;
-        //    this.EntityPM.CustomerAddressId = this.EntityPM.ConsigneeAddressId;
-        //    this.EntityPM.CustomerContactId = this.EntityPM.ConsigneeContactId;
-        //   this.EntityPM.CustomerReference1 = this.EntityPM.ConsigneeReference1;
-        //    this.EntityPM.CustomerReference2 = this.EntityPM.ConsigneeReference2;
-
-        //    if (AppTool.IsNullOrEmpty(this.EntityPM.SalesmanUserId)) {
-        //        this.EntityPM.SalesmanUserId = AppTool.IsNullOrEmpty(this.myConsigneeSalesmanId) ? this.EntityPM.CreatedByUserId : this.myConsigneeSalesmanId;
-        //    }
-        //}
+        }        
     }
     SetCountryECOnFinish() {
         if (this.IsInlandDomestic) {

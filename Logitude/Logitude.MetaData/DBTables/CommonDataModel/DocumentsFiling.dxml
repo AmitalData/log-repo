@@ -1,176 +1,445 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Table Name="DocumentsFilings" Schema="dbo" DBType="Main">
-  <Column Name="BackedupExternally" Type="bit">
-    <Constraints Nullable="false" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="DocumentsFilings"
+  Schema="dbo"
+  DBType="Main"
+  Module="Common">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="BranchId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="CancellSignRequest" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="DocumentId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="ChildEntityId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="Code"
+    Type="varchar"
+    Size="30">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="ChildEntityReference" Type="varchar" Size="40">
-    <Constraints Nullable="true" />
+  <Column
+    Name="DocumentTypeId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="ChildObjectTableId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="DirectionCode"
+    Type="varchar"
+    Size="1">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="Code" Type="varchar" Size="30">
-    <Constraints Nullable="false" />
+  <Column
+    Name="EntityId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="ComputedForwarderDocumentId" Type="varchar" Size="40">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ObjectTableId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="CreateDate" Type="datetime">
-    <Constraints Nullable="false" />
+  <Column
+    Name="ChildEntityId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="CreatedByUserId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
+  <Column
+    Name="ChildEntityReference"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="CustomerDocumentId" Type="varchar" Size="40">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ChildObjectTableId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="CustomerTenantNumber" Type="int">
-    <Constraints Nullable="true" />
+  <Column
+    Name="Notes"
+    Type="nvarchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="DeleteDateTime" Type="datetime">
-    <Constraints Nullable="true" />
+  <Column
+    Name="CreatedByUserId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="DeletedByUserId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="OwnerId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="DepartmentId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="Description"
+    Type="nvarchar"
+    Size="256">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Description" Type="nvarchar" Size="256">
-    <Constraints Nullable="true" />
+  <Column
+    Name="SearchFields"
+    Type="nvarchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="DirectionCode" Type="varchar" Size="1">
-    <Constraints Nullable="false" />
+  <Column
+    Name="CreateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="DocumentId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="HasCopies"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="DocumentTypeId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Received"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="EntityId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="UpdateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="EntityNumber" Type="varchar" Size="20">
-    <Constraints Nullable="true" />
+  <Column
+    Name="UpdatedByUserId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="EntityReference" Type="varchar" Size="40">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ReceivedByUserId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="ExternalEntityName" Type="varchar" Size="12">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ReceivedDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="ExternalEntityReference" Type="varchar" Size="35">
-    <Constraints Nullable="true" />
+  <Column
+    Name="StatusCode"
+    Type="char"
+    Size="4">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="FolderId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="EntityReference"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="ForwarderDocumentId" Type="varchar" Size="40">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ExternalEntityName"
+    Type="varchar"
+    Size="12">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="HasCopies" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="ExternalEntityReference"
+    Type="varchar"
+    Size="35">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Id" Type="varchar" Size="40">
-    <Constraints PrimaryKey="true" Nullable="false" />
+  <Column
+    Name="FolderId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="IsDeleted" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="IsDeleted"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="IsDigitallySigned" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="DeletedByUserId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="IsDigitalSignRequired" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="DeleteDateTime"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="IsRequested" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="IsDigitallySigned"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="IsSharedIn" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="SignersList"
+    Type="nvarchar"
+    Size="256">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="IsSharedOut" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="LastVersion"
+    Type="int"
+    DefaultValue="0">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="IsSharedWithCustomer" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="LastShareDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="IsSharedWithForwarder" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="IsSharedIn"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="LastBackupDate" Type="datetime">
-    <Constraints Nullable="true" />
+  <Column
+    Name="IsSharedOut"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="LastShareDate" Type="datetime">
-    <Constraints Nullable="true" />
+  <Column
+    Name="BranchId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="LastVersion" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="DepartmentId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Notes" Type="nvarchar" Size="250">
-    <Constraints Nullable="true" />
+  <Column
+    Name="IsSharedWithForwarder"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="ObjectTableId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="IsSharedWithCustomer"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="OrigionalDocumentId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ForwarderDocumentId"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="OwnerId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
+  <Column
+    Name="CustomerDocumentId"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Received" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="SecurityId"
+    Type="varchar"
+    Size="60">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="ReceivedByUserId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="CustomerTenantNumber"
+    Type="int">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="ReceivedDate" Type="datetime">
-    <Constraints Nullable="true" />
+  <Column
+    Name="IsRequested"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="SearchFields" Type="nvarchar" Size="1000">
-    <Constraints Nullable="true" />
+  <Column
+    Name="SignRequestByUserEmail"
+    Type="nvarchar"
+    Size="256">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="SecurityId" Type="varchar" Size="60">
-    <Constraints Nullable="true" />
+  <Column
+    Name="CancellSignRequest"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="SignDueDate" Type="datetime">
-    <Constraints Nullable="true" />
+  <Column
+    Name="OrigionalDocumentId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="SignersList" Type="nvarchar" Size="256">
-    <Constraints Nullable="true" />
+  <Column
+    Name="ComputedForwarderDocumentId"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="SignRequestByUserEmail" Type="nvarchar" Size="256">
-    <Constraints Nullable="true" />
+  <Column
+    Name="SignDueDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="StatusCode" Type="nvarchar" Size="128">
-    <Constraints Nullable="true" />
+  <Column
+    Name="EntityNumber"
+    Type="varchar"
+    Size="20">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
+  <Column
+    Name="IsDigitalSignRequired"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="UpdateDate" Type="datetime">
-    <Constraints Nullable="true" />
+  <Column
+    Name="BackedupExternally"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="UpdatedByUserId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
+  <Column
+    Name="LastBackupDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Relation ParentTableName="CommunicationLogs" ParentColumnName="DocumentsFilingId" ReferencedTableName="DocumentsFilings" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.CommunicationLogs_dbo.DocumentsFilings_DocumentsFilingId" />
-  <Relation ParentTableName="DocumentOuts" ParentColumnName="Id" ReferencedTableName="DocumentsFilings" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.DocumentOuts_dbo.DocumentsFilings_Id" />
-  <Relation ParentTableName="DocumentsFilingMetaDataValues" ParentColumnName="DocumentsFilingId" ReferencedTableName="DocumentsFilings" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.DocumentsFilingMetaDataValues_dbo.DocumentsFilings_DocumentsFilingId" />
-  <Relation ParentTableName="CustomsDocuments" ParentColumnName="DocumentsFilingId" ReferencedTableName="DocumentsFilings" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.CustomsDocuments_dbo.DocumentsFilings_DocumentsFilingId" />
-  <Relation ParentTableName="CustomsDocumentsTickets" ParentColumnName="DocumentsFilingId" ReferencedTableName="DocumentsFilings" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.CustomsDocumentsTickets_dbo.DocumentsFilings_DocumentsFilingId" />
-  <Relation ParentTableName="FilingInboxAttachmentLogs" ParentColumnName="DocumentsFilingId" ReferencedTableName="DocumentsFilings" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.FilingInboxAttachmentLogs_dbo.DocumentsFilings_DocumentsFilingId" />
-  <Relation ParentTableName="FollowUps" ParentColumnName="DocumentsFilingId" ReferencedTableName="DocumentsFilings" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.FollowUps_dbo.DocumentsFilings_DocumentsFilingId" />
-  <Relation ParentTableName="CorrespondencesAttachments" ParentColumnName="DocumentFilingId" ReferencedTableName="DocumentsFilings" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.CorrespondencesAttachments_dbo.DocumentsFilings_DocumentFilingId" />
+  <Relation
+    ForeignKeyColumn="DocumentId"
+    ReferencedTable="Documents"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="DocumentTypeId"
+    ReferencedTable="DocumentTypes"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ObjectTableId"
+    ReferencedTable="ObjectTables"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ChildObjectTableId"
+    ReferencedTable="ObjectTables"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="CreatedByUserId"
+    ReferencedTable="Users"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="OwnerId"
+    ReferencedTable="Users"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="UpdatedByUserId"
+    ReferencedTable="Users"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ReceivedByUserId"
+    ReferencedTable="Users"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="StatusCode"
+    ReferencedTable="DocumentStatus"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="FolderId"
+    ReferencedTable="DocumentFolders"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="DeletedByUserId"
+    ReferencedTable="Users"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="BranchId"
+    ReferencedTable="Branches"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="DepartmentId"
+    ReferencedTable="Departments"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Index
+    Columns="EntityId" />
+  <Index
+    Columns="Tenant,EntityId,IsRequested" />
+  <Index
+    Columns="Tenant,EntityId,IsDeleted" />
+  <Index
+    Columns="Tenant,SecurityId" />
 </Table>

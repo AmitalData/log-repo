@@ -5,6 +5,7 @@ using Logitude.Accounting.Data.EntityListQueryServices;
 using Logitude.Accounting.Data.EntityLists;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Def.EntityPMs;
+using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
@@ -32,81 +33,15 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
         {
             try
             {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckContactFeature("LedgerTransaction", "READ", authToken.Tenant);
+                string logKey = PerformanceLogger.LogCurrentTime();
+                int tenant = AuthinticateTenant();
 
-                int tenant = authToken.Tenant;
-                
+                LedgerTransactionBalanceFilter LTBFilter = CreateLTBFilter(filters, tenant);
 
-                LedgerTransactionBalanceFilter LTBFilter = new LedgerTransactionBalanceFilter() ;
-
-                List<ObjectField> LedgerTransactionObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("LedgerTransaction", tenant);
-                LTBFilter.PageSize = filters.PageSize;
-                LTBFilter.PageStartAtRecordIndex = filters.PageIndex;
-                LTBFilter.Tenant = tenant;
-
-                if (!string.IsNullOrEmpty(filters.AdditionalFilters))
-                {
-                    JavaScriptSerializer JsonConvert = new JavaScriptSerializer();
-                    var filters_list = JsonConvert.Deserialize<List<QueryFilterItem>>(filters.AdditionalFilters);
-                    var glAccountId = filters_list.Where(d => d.FieldName == "GLAccountId").FirstOrDefault().FieldValue.ToString();
-                    //var from = filters_list.Where(d => d.FieldName == "CreateDate").FirstOrDefault().FieldValue;
-                    //var to = filters_list.Where(d => d.FieldName == "CreateDate").FirstOrDefault().FieldValue2;
-                    var includeRelatedCurrenciesAccount = filters_list.Where(d => d.FieldName == "IncludeRelatedCurrenciesAccount").FirstOrDefault().FieldValue;
-                    var includeChildAccounts = filters_list.Where(d => d.FieldName == "IncludeChildAccounts").FirstOrDefault().FieldValue;
-                    string _dateTypeCode = filters_list.Where(d => d.FieldName == "DateTypeCode").FirstOrDefault().FieldValue.ToString();
-
-                    // dates
-                    var createDateFilter = filters_list.Where(d => d.FieldName == "AccountingDate").FirstOrDefault();
-                    if (createDateFilter != null)
-                    {
-                        var from = createDateFilter.FieldValue.ToString();
-                        LTBFilter.From = Convert.ToDateTime(from);
-
-                        var to = createDateFilter.FieldValue2.ToString();
-                        LTBFilter.To = Convert.ToDateTime(to);
-                    }
-
-                    //currency
-                    var currencyIdFilter = filters_list.Where(d => d.FieldName == "CurrencyId").FirstOrDefault();
-                    if (currencyIdFilter != null)
-                    {
-                        var currencyId = currencyIdFilter.FieldValue.ToString();
-                        LTBFilter.CurrencyId = currencyId;
-                    }
-
-                    //search
-                    var searchFieldsf = filters_list.Where(d => d.FieldName == "SearchFields").FirstOrDefault();
-                    if (searchFieldsf != null)
-                    {
-                        var searchFields = searchFieldsf.FieldValue.ToString();
-                        LTBFilter.SearchFields = searchFields;
-                    }
-
-                    LTBFilter.GLAccountId = glAccountId;
-                    LTBFilter.DateTypeCode = _dateTypeCode;
-                    //LTBFilter.From = Convert.ToDateTime(from);
-                    //LTBFilter.To = Convert.ToDateTime(to);
-                    LTBFilter.IncludeRelatedCurrenciesAccount = Convert.ToBoolean(includeRelatedCurrenciesAccount);
-                    LTBFilter.IncludeChildAccounts = Convert.ToBoolean(includeChildAccounts);
-                }
                 var accountingContext = AccountingContext.GetContext(LTBFilter.Tenant);
-                var ledgerTransactionBalanceService = new LedgerTransactionBalanceService(accountingContext,LTBFilter);
+                var ledgerTransactionBalanceService = new LedgerTransactionBalanceService(accountingContext, LTBFilter);
                 ledgerTransactionBalanceService.Run();
 
-                //LTBResponse responseResult = new LTBResponse()
-                //{
-                //    EndBalanceForeign = ledgerTransactionBalanceService.Response.EndBalanceForeign,
-                //    EndBalanceLocal = ledgerTransactionBalanceService.Response.EndBalanceLocal,
-                //    Have1CurrencyIdInPeriod = ledgerTransactionBalanceService.Response.Have1CurrencyIdInPeriod,
-                //    MaxCreateAt = ledgerTransactionBalanceService.Response.MaxCreateAt,
-                //    StartBalanceForeign = ledgerTransactionBalanceService.Response.StartBalanceForeign,
-                //    StartBalanceLocal = ledgerTransactionBalanceService.Response.StartBalanceLocal,
-                //    TotalRowCount = ledgerTransactionBalanceService.Response.TotalRowCount,
-                //    SuppressCumulativeDueMultiCurrencyInPeriod = ledgerTransactionBalanceService.Response.SuppressCumulativeDueMultiCurrencyInPeriod
-                //};
 
                 ServiceResponse response = new ServiceResponse();
                 if (filters.GetCount)
@@ -116,6 +51,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 }
 
                 response.Result = ledgerTransactionBalanceService.Response.MyLedgerTransactionList;
+                response.TookMS= ledgerTransactionBalanceService.Response.TookMS;
+                PerformanceLogger.AddServerExecutionTimeHeader(logKey);
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
 
                 return reponseMessage;
@@ -125,6 +62,98 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
 
+        }
+        public HttpResponseMessage GetTransactionsCurrencies(string AccountId)
+        {
+            try
+            {
+                 int tenant = AuthinticateTenant();
+
+                var accountingContext = AccountingContext.GetContext(tenant);
+                var _LedgerTransactionQueryService = new LedgerTransactionQueryService(tenant);
+
+                List<string> currenciesIds = _LedgerTransactionQueryService.GetTransactionsCurrencies(AccountId, tenant);
+
+
+                ServiceResponse response = new ServiceResponse();
+                response.Result = currenciesIds;
+                HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
+
+                return reponseMessage;
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+        private static int AuthinticateTenant()
+        {
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+            SecurityUtility.CheckContactFeature("LedgerTransaction", "READ", authToken.Tenant);
+
+            int tenant = authToken.Tenant;
+            return tenant;
+        }
+
+        private static LedgerTransactionBalanceFilter CreateLTBFilter(ApiQueryFilters filters, int tenant)
+        {
+            LedgerTransactionBalanceFilter LTBFilter = new LedgerTransactionBalanceFilter();
+
+            List<ObjectField> LedgerTransactionObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("LedgerTransaction", tenant);
+            LTBFilter.PageSize = filters.PageSize;
+            LTBFilter.PageStartAtRecordIndex = filters.PageIndex;
+            LTBFilter.Tenant = tenant;
+
+            if (!string.IsNullOrEmpty(filters.AdditionalFilters))
+            {
+                JavaScriptSerializer JsonConvert = new JavaScriptSerializer();
+                var filters_list = JsonConvert.Deserialize<List<QueryFilterItem>>(filters.AdditionalFilters);
+                var glAccountId = filters_list.Where(d => d.FieldName == "GLAccountId").FirstOrDefault().FieldValue.ToString();
+                //var from = filters_list.Where(d => d.FieldName == "CreateDate").FirstOrDefault().FieldValue;
+                //var to = filters_list.Where(d => d.FieldName == "CreateDate").FirstOrDefault().FieldValue2;
+                var includeRelatedCurrenciesAccount = filters_list.Where(d => d.FieldName == "IncludeRelatedCurrenciesAccount").FirstOrDefault().FieldValue;
+                var includeChildAccounts = filters_list.Where(d => d.FieldName == "IncludeChildAccounts").FirstOrDefault().FieldValue;
+                string _dateTypeCode = filters_list.Where(d => d.FieldName == "DateTypeCode").FirstOrDefault().FieldValue.ToString();
+
+                // dates
+                var createDateFilter = filters_list.Where(d => d.FieldName == "AccountingDate").FirstOrDefault();
+                if (createDateFilter != null)
+                {
+                    var from = createDateFilter.FieldValue.ToString();
+                    LTBFilter.From = Convert.ToDateTime(from);
+
+                    var to = createDateFilter.FieldValue2.ToString();
+                    LTBFilter.To = Convert.ToDateTime(to);
+                }
+
+                //currency
+                var currencyIdFilter = filters_list.Where(d => d.FieldName == "CurrencyId").FirstOrDefault();
+                if (currencyIdFilter != null)
+                {
+                    var currencyId = currencyIdFilter.FieldValue.ToString();
+                    LTBFilter.CurrencyId = currencyId;
+                }
+
+                //search
+                var searchFieldsf = filters_list.Where(d => d.FieldName == "SearchFields").FirstOrDefault();
+                if (searchFieldsf != null)
+                {
+                    var searchFields = searchFieldsf.FieldValue.ToString();
+                    LTBFilter.SearchFields = searchFields;
+                }
+
+                LTBFilter.GLAccountId = glAccountId;
+                LTBFilter.DateTypeCode = _dateTypeCode;
+                //LTBFilter.From = Convert.ToDateTime(from);
+                //LTBFilter.To = Convert.ToDateTime(to);
+                LTBFilter.IncludeRelatedCurrenciesAccount = Convert.ToBoolean(includeRelatedCurrenciesAccount);
+                LTBFilter.IncludeChildAccounts = Convert.ToBoolean(includeChildAccounts);
+            }
+
+            return LTBFilter;
         }
 
         public HttpResponseMessage GetTransactionsBalanceByFilters([FromUri] ApiQueryFilters filters)
@@ -365,7 +394,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             }
 
         }
-
+      
         [HttpGet]
         public HttpResponseMessage getLedgerTransactionsByIds([FromUri] List<string> Ids)
         {
@@ -436,7 +465,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
 
         [HttpGet]
-        public HttpResponseMessage GetTransactionsForARPayment(string arpaymentId, string billToGLAccountId)
+        public HttpResponseMessage GetTransactionsForARPayment(string arpaymentId, string billToGLAccountId, string paymentCurrencyId)
         {
             try
             {
@@ -452,14 +481,14 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
                 var accountingContext = AccountingContext.GetContext(tenant);
                 LedgerTransactionQueryService query = new LedgerTransactionQueryService(accountingContext);
-
+                string accountId =  GetGLAccountIdForReconciledTransactions(billToGLAccountId, tenant, paymentCurrencyId);
                 // get reconciled transactions
                 List<LedgerTransactionPM> reconciledTransactions = new List<LedgerTransactionPM>();
-                if (arpaymentId != null) reconciledTransactions = query.GetReconciledInvoicesTransactionsForARPayment(arpaymentId,billToGLAccountId, tenant);
+                if (arpaymentId != null) reconciledTransactions = query.GetReconciledInvoicesTransactionsForARPayment(arpaymentId, accountId, tenant);
 
                 // get full opened & partailly reconciled transactions
                 List<LedgerTransactionPM> openedTransactions 
-                    = query.GetOpenInvoicesTransactionsForAccount(billToGLAccountId, arpaymentId, tenant);
+                    = query.GetOpenInvoicesTransactionsForAccount(accountId, arpaymentId, tenant);
 
                 // concat two list
                 IEnumerable<LedgerTransactionPM> finalTransactionsList
@@ -483,6 +512,29 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
 
+        }
+        private string GetGLAccountIdForReconciledTransactions(string glAccountId, int tenant, string paymentCurrencyId)
+        {
+            GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(tenant);
+            GLAccountPM gLAccount = gLAccountQueryService.GetSinglePM(glAccountId, tenant);
+            if (gLAccount != null)
+            {
+                if (gLAccount.IsMultiCurrency.Value)
+                {
+                    GLAccountCurrencyQueryService gLAccountCurrencyQuery = new GLAccountCurrencyQueryService(tenant);
+                    GLAccountCurrencyPM gLAccountCurrency = gLAccountCurrencyQuery.GetEntityByCurrencyAndGLAccountId(gLAccount.Id, paymentCurrencyId, tenant);
+                    if (gLAccountCurrency != null)
+                    {
+                        return gLAccountCurrency.GLAccountId;
+                    }
+                    else return gLAccount.Id;    
+                }
+                else
+                {
+                    return gLAccount.Id;
+                }
+            }
+            return null;
         }
 
 

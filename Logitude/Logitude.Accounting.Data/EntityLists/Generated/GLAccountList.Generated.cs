@@ -200,6 +200,20 @@ namespace Logitude.Accounting.Data.EntityLists
        public string UpdatedByLocalName  { get; set; }
        [DataMember]
        public bool AllowEditChequePayToName  { get; set; }
+       [DataMember]
+       public bool? ActiveForInterest  { get; set; }
+       [DataMember]
+       public DateTime? InterestCalculationStartDate  { get; set; }
+       [DataMember]
+       public bool? ActiveForInterestCreditInvoice  { get; set; }
+       [DataMember]
+       public int? MinimumInterestInvoiceBilling  { get; set; }
+       [DataMember]
+       public decimal? InterestCreditLimit  { get; set; }
+       [DataMember]
+       public string NameForPrintingCheques  { get; set; }
+       [DataMember]
+       public bool Smallcashbook  { get; set; }
    }
 
 }

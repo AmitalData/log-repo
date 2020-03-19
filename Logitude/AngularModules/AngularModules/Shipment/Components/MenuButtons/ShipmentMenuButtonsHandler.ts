@@ -233,20 +233,22 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
 
                     if (button.EventCode == "ConvertShipmentToLCL") {
                         if (buttonEnabled) {
-                            if (this.EntityPM.IsCancelled) {
-                                button.IsDisabled = true;
-                            }
+                            if (this.EntityPM.ShipmentTypeId == "FCLD") {
+                                if (this.EntityPM.IsCancelled) {
+                                    button.IsDisabled = true;
+                                }
 
-                            else {
-                                if (this.EntityPM.ShipmentTypeId == "FCLD") {
+                                else {
                                     button.IsHidden = false;
                                     button.IsDisabled = false;
                                 }
-                                else {
-                                    button.IsHidden = true;
-                                }
-                            }                            
+                            }
+
+                            else {
+                                button.IsHidden = true;
+                            }                           
                         }
+
                         else {
                             button.IsHidden = true;
                         }
@@ -254,19 +256,20 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
 
                     if (button.EventCode == "ConvertShipmentToFCL") {
                         if (buttonEnabled) {
-                            if (this.EntityPM.IsCancelled) {
-                                button.IsDisabled = true;
-                            }
+                            if (this.EntityPM.ShipmentTypeId == "LCLD") {
+                                if (this.EntityPM.IsCancelled) {
+                                    button.IsDisabled = true;
+                                }
 
-                            else {
-                                if (this.EntityPM.ShipmentTypeId == "LCLD") {
+                                else {
                                     button.IsHidden = false;
                                     button.IsDisabled = false;
                                 }
-                                else {
-                                    button.IsHidden = true;
-                                }
                             }
+
+                            else {
+                                button.IsHidden = true;
+                            } 
                         }
                         else {
                             button.IsHidden = true;
@@ -904,27 +907,24 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
 
             });
         });
-
-
-
-
-
-
     }
+
     private CancelShipment() {
-
-
         this.currentActionName = "CancelShipment";
 
         if (this.EntityPM.ShipmentReceivables.filter(p => p.ARInvoiceId != null)[0]) {
             var messageWindow: MessageWindow = new MessageWindow();
             messageWindow.Title = "Cancelling Shipment";
             messageWindow.Show("This shipment can't be canceled because it has one or more invoices. all invoices must be disconnect to cancel this shipment");
+        }
 
+        else if (this.EntityPM.TransportModeId == "A" && this.EntityPM.DirectionId == "E" && !AppTool.IsNullOrEmpty(this.EntityPM.Master)) {
+            var messageWindow: MessageWindow = new MessageWindow();
+            messageWindow.Title = "Cancelling Shipment";
+            messageWindow.Show("Can't cancel shipments that have a MAWB number, please remove it");
         }
 
         else if (this.EntityPM.BookingId != null && this.EntityPM.BookingId != "") {
-
             var confirmWindow: ConfirmWindow = new ConfirmWindow();
             confirmWindow.Title = "Cancel Shipment";
             confirmWindow.Width = 400;
@@ -932,25 +932,22 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
             confirmWindow.YesButtonText = "Yes";
             confirmWindow.NoButtonText = "No";
 
-
             confirmWindow.WindowClosed.subscribe((event: any) => {
                 if (confirmWindow.Yes) {
-
-                    // console.log("Yes");
                     this.ConfirmCanceling();
-
                 }
 
                 else if (confirmWindow.No) {
-                    // console.log("No");
+
                 }
 
                 this.ResetButtonClicked();
-
             });
-
         }
-        else this.ConfirmCanceling();
+
+        else {
+            this.ConfirmCanceling();
+        }
 
     }
     private ResetButtonClicked() {
@@ -1465,7 +1462,7 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
 
             for (var k in requiredFields) {
                 var field = requiredFields[k];
-                var obField = _tenantObjectFields.filter(x => x.Id === field.ObjectFieldId)[0];//ObjectFieldsCachedDataProvider.GetObjectFieldById(field.ObjectFieldId);
+                var obField = _tenantObjectFields.filter(x => x.FieldCode === field.ObjectFieldCode)[0];//ObjectFieldsCachedDataProvider.GetObjectFieldById(field.ObjectFieldId);
                 var requiredError = TextCodeTranslator.Translate("General.M.FieldIsRequired");
                 var fieldTrans = TextCodeTranslator.Translate(obField.FullNameTextCodeCode);
                 requiredError = requiredError.replace("%FieldName", fieldTrans);

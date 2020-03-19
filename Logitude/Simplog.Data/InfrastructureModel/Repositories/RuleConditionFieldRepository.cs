@@ -94,7 +94,7 @@ namespace Simplog.Data.InfrastructureModel.Repositories
                 foreach (RuleConditionField field in ruleConditionField)
                 {
                     RuleConditionField existedRuleField = (from a in selectedFields
-                                                   where a.ObjectFieldId == field.ObjectFieldId && a.ObjectTableRuleId == field.ObjectTableRuleId
+                                                   where a.ObjectFieldCode == field.ObjectFieldCode && a.ObjectTableRuleId == field.ObjectTableRuleId
                                                    select a).FirstOrDefault();
                     if (existedRuleField != null)
                     {

@@ -114,8 +114,9 @@ export class QuotationComponent extends BaseComponent implements OnInit {
                     if (this.QuotePM.StageId == myDraftStage.Id || this.QuotePM.StageId == myCreateStage.Id) {
                         this.QuotePM.ActionType = "SetAsSentToCustomer";
                     }
-                 
-
+                    let quoteDocVersion = this.QuotePM.QuoteDocumentVersions.filter(d => d.VersionNumber == this.currentDocumentVersion.VersionNumber)[0];
+                    if (quoteDocVersion)
+                        quoteDocVersion.IsSent = true;
                     this.quotePMService.update(this.QuotePM).subscribe(response => {
 
                         this.CurrentSession.CurrentWindow.StopBusyIndicator();

@@ -1,28 +1,63 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Table Name="BluesnapContracts" Schema="dbo" DBType="Global">
-  <Column Name="BluesnapContractTypeCode" Type="varchar" Size="4">
-    <Constraints Nullable="false" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="BluesnapContracts"
+  Schema="dbo"
+  DBType="Global"
+  Module="Global">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15"
+    DefaultValue="''">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
-  <Column Name="Code" Type="varchar" Size="10">
-    <Constraints Nullable="false" />
+  <Column
+    Name="Code"
+    Type="varchar"
+    Size="10">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="ContractId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column
+    Name="Name"
+    Type="varchar"
+    Size="50">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="Id" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
+  <Column
+    Name="ContractId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="InActive" Type="bit">
-    <Constraints Nullable="false" />
+  <Column
+    Name="SearchFields"
+    Type="nvarchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
   </Column>
-  <Column Name="Name" Type="varchar" Size="50">
-    <Constraints Nullable="false" />
+  <Column
+    Name="InActive"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Column Name="SearchFields" Type="nvarchar" Size="1000">
-    <Constraints Nullable="true" />
+  <Column
+    Name="BluesnapContractTypeCode"
+    Type="varchar"
+    Size="4"
+    DefaultValue="'BA'">
+    <Constraints
+      Nullable="false" />
   </Column>
-  <Relation ParentTableName="TenantManagements" ParentColumnName="BluesnapInttraStockContractId" ReferencedTableName="BluesnapContracts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.TenantManagements_dbo.BluesnapContracts_BluesnapInttraStockContractId" />
-  <Relation ParentTableName="TenantManagements" ParentColumnName="BluesnapCRMContractId" ReferencedTableName="BluesnapContracts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.TenantManagements_dbo.BluesnapContracts_BluesnapCRMContractId" />
-  <Relation ParentTableName="TenantManagements" ParentColumnName="BluesnapEAWBContractId" ReferencedTableName="BluesnapContracts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.TenantManagements_dbo.BluesnapContracts_BluesnapEAWBContractId" />
-  <Relation ParentTableName="TenantManagements" ParentColumnName="BluesnapEAWBSContractId" ReferencedTableName="BluesnapContracts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.TenantManagements_dbo.BluesnapContracts_BluesnapEAWBSContractId" />
+  <Relation
+    ForeignKeyColumn="BluesnapContractTypeCode"
+    ReferencedTable="BluesnapContractTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
 </Table>

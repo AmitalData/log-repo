@@ -241,6 +241,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
         private WorkDaysPerGategoryData itemRecord = null;
         private void BuildReportData()
         {
+
             var iQueryable_List = (
                                    (from EmployeeTimes in iQueryable_EmployeeTimes
                                     join Projects in iQueryable_Projects on EmployeeTimes.ProjectId equals Projects.Id
@@ -265,6 +266,12 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
 
                                     select new
                                     {
+                                        Year = g.Key.Year,
+                                        Month = g.Key.Month,
+                                        Day = g.Key.Day,
+                                        EmployeeUserId = g.Key.EmployeeUserId,
+                                        WINumber = g.Key.WINumber,
+                                        Description = g.Key.Description,
                                         ProjectId = g.Key.ProjectId,
                                         ProjectName = g.Key.Name,
                                         ProjectNumber = g.Key.ProjectNumber,
@@ -293,6 +300,12 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                                     } into g
                                     select new
                                     {
+                                        Year = g.Key.Year,
+                                        Month = g.Key.Month,
+                                        Day = g.Key.Day,
+                                        EmployeeUserId = g.Key.EmployeeUserId,
+                                        WINumber = g.Key.WINumber,
+                                        Description = g.Key.Description,
                                         ProjectId = g.Key.ProjectId,
                                         ProjectName = "",
                                         ProjectNumber = "",
@@ -329,7 +342,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                     TotalDaysWithoutIncludingInnerDouble = item.TotalMinutes,
                     IsVisisble = true,
                 };
-                this.CalculateCategoryTotals(item);
+                this.CalculateCategoryTotals(item, gategoryLines);
                 this.FillProjectData(item);
                 this.FillCategoryData(item);
                 this.FillOwnerData(item);
@@ -339,6 +352,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
             if (this.iDataProvider.GategoryRecordList.Count > 0)
             {
                 this.CalculateAllTotalsOfCategoryFields();
+
             }
         }
 
@@ -409,7 +423,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
             }
         }
 
-        private void CalculateCategoryTotals(WorkDaysPerGategoryData item)
+        private void CalculateCategoryTotals(WorkDaysPerGategoryData item, List<WorkDaysPerGategoryData> gategoryLines)
         {
             var listOfCategoryInnerProjects = this.iQueryable_AllProjects.Where(d => d.ProjectNumber.StartsWith(item.ProjectNumber + "-") || d.ProjectNumber == item.ProjectNumber);
             var daysOfListCategoryInnerProjects = (from EmployeeTimes in iQueryable_AllEmployeeTimes
@@ -432,28 +446,35 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
             var isCategoryFirstRow = iWorkDaysPerGategoryDataList.Where(a => a.CategoryId == item.CategoryId && a.TotalGategoryDays != null).FirstOrDefault();
             if (isCategoryFirstRow == null)
             {
-                itemRecord.TotalGategoryDaysDouble = itemRecord.TotalDaysIncludingInnerDouble;
+                itemRecord.TotalGategoryDaysDouble = gategoryLines.Sum(s => s.TotalMinutes);
                 itemRecord.TotalGategoryDays = this.GetDaysFormatFromMinutes(itemRecord.TotalGategoryDaysDouble);
             }
         }
-
         private string GetDaysFormatFromMinutes(double minutes)
         {
             string iResult = "";
+
             if (minutes != 0)
             {
                 TimeSpan iTimeSpan = TimeSpan.FromMinutes(Math.Abs(minutes));
+
+
                 double TotalHours = minutes / 60;
+
                 int iDays = (int)(TotalHours / 9);
                 double Hours = TotalHours % 9;
                 double iHours = Math.Round(Hours / 9, 2);
-                iResult = iDays + "." + iHours.ToString().Replace("0.", "").PadRight(1, '0');
+
+                iResult = iDays + ":" + iHours.ToString().Replace("0.", "").PadRight(2, '0');
+
                 if (minutes < 0)
                 {
                     iResult = "- " + iResult;
                 }
             }
+
             return iResult;
         }
+
     }
 }

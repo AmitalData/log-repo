@@ -20,6 +20,7 @@ import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLo
 import {GLAccountPM} from '../../EntityPMs/GLAccountPM';
 
 import {GLAccountWithholdingTaxPM} from '../../EntityPMs/GLAccountWithholdingTaxPM';
+import {GLAccountInterestPeriodPM} from '../../EntityPMs/GLAccountInterestPeriodPM';
 import {GLAccountValidator} from '../../Validators/GLAccountValidator';
 
 @Injectable()
@@ -224,6 +225,7 @@ export class GLAccountPMService {
             }
 			
                this.MapGLAccountWithholdingTaxes(entityPM, jsonPM, mapParent); // Call composition tables map methods
+               this.MapGLAccountInterestPeriods(entityPM, jsonPM, mapParent); // Call composition tables map methods
 			 
             
 
@@ -237,6 +239,15 @@ export class GLAccountPMService {
 						
 							 
             entityPM.OldEntityPM.GLAccountWithholdingTaxes.push(newGLAccountWithholdingTaxPM);
+            }
+			   			   			   
+            entityPM.OldEntityPM.GLAccountInterestPeriods = [];
+            for (var item in entityPM.GLAccountInterestPeriods) {
+            var myGLAccountInterestPeriodPM = entityPM.GLAccountInterestPeriods[item];
+            var newGLAccountInterestPeriodPM: GLAccountInterestPeriodPM = this.clone(myGLAccountInterestPeriodPM);
+						
+							 
+            entityPM.OldEntityPM.GLAccountInterestPeriods.push(newGLAccountInterestPeriodPM);
             }
 			   
 		}
@@ -333,6 +344,96 @@ export class GLAccountPMService {
                         
                         deletedPM.OldEntityPM = null;
                         entityPM.GLAccountWithholdingTaxes.push(deletedPM);
+                    }
+                }
+            }
+        }
+    }
+    MapGLAccountInterestPeriods(entityPM: GLAccountPM, jsonPM: any, mapParent: boolean = true) {
+
+        var oldGLAccountInterestPeriods: GLAccountInterestPeriodPM[] = [];
+        if (entityPM.OldEntityPM && !mapParent) {
+            oldGLAccountInterestPeriods = entityPM.OldEntityPM.GLAccountInterestPeriods;
+        }
+
+        entityPM.GLAccountInterestPeriods = new Array<GLAccountInterestPeriodPM>();
+        for (var item in jsonPM.GLAccountInterestPeriods) {
+            var jItem = jsonPM.GLAccountInterestPeriods[item];
+            if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
+                continue;
+            }
+            var newGLAccountInterestPeriodPM: GLAccountInterestPeriodPM;
+	  
+            if (mapParent) {
+                newGLAccountInterestPeriodPM = new GLAccountInterestPeriodPM(entityPM);
+            }
+            else
+            {
+                newGLAccountInterestPeriodPM = new GLAccountInterestPeriodPM(null);
+            }
+                
+            var pmKeysArray = Object.keys(jItem);
+            for (var pmKey in pmKeysArray) {
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+                    continue;
+                }
+                var pmProperty = pmKeysArray[pmKey];
+                newGLAccountInterestPeriodPM[pmProperty] = jItem[pmProperty];
+            }
+           
+			 
+            if (mapParent) {
+                newGLAccountInterestPeriodPM.UniqueKey = Guid.newGuid();
+                newGLAccountInterestPeriodPM.ChangeSetOp = "None";
+                jItem.ChangeSetOp = "None";
+                newGLAccountInterestPeriodPM.OldEntityPM = this.clone(newGLAccountInterestPeriodPM);
+
+				
+            }
+            else {
+                if (newGLAccountInterestPeriodPM.UniqueKey) {
+
+                    if (jItem.IsDirty)
+                        newGLAccountInterestPeriodPM.ChangeSetOp = "Update";
+                }
+                else {
+                        newGLAccountInterestPeriodPM.ChangeSetOp = "Insert";
+                }
+ 
+                newGLAccountInterestPeriodPM.OldEntityPM = null;
+                newGLAccountInterestPeriodPM.EntityParentPM = null;
+            }
+			
+			 newGLAccountInterestPeriodPM.IsDirty = false;
+            entityPM.GLAccountInterestPeriods.push(newGLAccountInterestPeriodPM);
+        }
+        if (oldGLAccountInterestPeriods) {
+            
+            for (var itemKey in oldGLAccountInterestPeriods) {
+                if (entityPM.GLAccountInterestPeriods.filter(p=> p.UniqueKey === oldGLAccountInterestPeriods[itemKey].UniqueKey).length === 0) {
+				
+                    if (oldGLAccountInterestPeriods[itemKey]) {
+                        //oldGLAccountInterestPeriods[itemKey].ChangeSetOp = "Delete";
+                        //entityPM.GLAccountInterestPeriods.push(oldGLAccountInterestPeriods[itemKey]);
+						var oldItemJson = oldGLAccountInterestPeriods[itemKey];
+                        var deletedPM: GLAccountInterestPeriodPM = new GLAccountInterestPeriodPM(null);
+                        var pmKeys = Object.keys(oldItemJson);
+                        for (var key in pmKeys) {
+
+                            if ((!mapParent && pmKeys[key] === "entityParentPM") || pmKeys[key] === "UIProperties" || pmKeys[key] === "OldEntityPM" || pmKeys[key] === "PropertyChanged") {
+                                continue;
+                            }
+
+                            var property = pmKeys[key];
+                            deletedPM[property] = oldItemJson[property];
+                        }
+
+                      
+                        deletedPM.IsDirty = false;
+                        deletedPM.ChangeSetOp = "Delete";
+                        
+                        deletedPM.OldEntityPM = null;
+                        entityPM.GLAccountInterestPeriods.push(deletedPM);
                     }
                 }
             }

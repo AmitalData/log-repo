@@ -59,7 +59,9 @@ export class APPaymentCancelationDetailsComponent extends BaseComponent {
     }
 
     RefreshProperties() {
+      // var value: Date = DateTool.GetDateFromDate(this.AccountingCancelationDate, true);
         this.AccountingCancelationDate = this.EntityPM.AccountingCancelationDate;
+
         this.CancelationNotes = this.EntityPM.CancelationNotes;
      
 

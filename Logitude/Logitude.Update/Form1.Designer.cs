@@ -112,7 +112,7 @@
             this.button42 = new System.Windows.Forms.Button();
             this.BuildZipFileslbl = new System.Windows.Forms.Label();
             this.button27 = new System.Windows.Forms.Button();
-            this.ConvertXmalTemplateToHtmlButton = new System.Windows.Forms.Button();
+            this.UpdateAutomationMetadataButton = new System.Windows.Forms.Button();
             this.WarehouseButton = new System.Windows.Forms.Button();
             this.WarehouseLable = new System.Windows.Forms.Label();
             this.trackBar1 = new System.Windows.Forms.TrackBar();
@@ -159,6 +159,7 @@
             this.UpdateINFlble = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.UpdateRulesLabel = new System.Windows.Forms.Label();
             this.button48 = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.button45 = new System.Windows.Forms.Button();
@@ -172,7 +173,7 @@
             this.lblUInvoice = new System.Windows.Forms.Label();
             this.lblUQuote = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            //this.button47 = new System.Windows.Forms.Button();
+            this.button47 = new System.Windows.Forms.Button();
             this.button44 = new System.Windows.Forms.Button();
             this.button43 = new System.Windows.Forms.Button();
             this.btnCompareData = new System.Windows.Forms.Button();
@@ -189,8 +190,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.AirlineLogoTenantTextBox = new System.Windows.Forms.TextBox();
             this.button46 = new System.Windows.Forms.Button();
-            this.UpdateRulesLabel = new System.Windows.Forms.Label();
-            //this.button47 = new System.Windows.Forms.Button();
+            this.btnCallOldUpdate = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
@@ -203,6 +203,7 @@
             // 
             // button1
             // 
+            this.button1.Enabled = false;
             this.button1.Location = new System.Drawing.Point(16, 17);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(184, 24);
@@ -265,6 +266,7 @@
             // 
             // button5
             // 
+            this.button5.Enabled = false;
             this.button5.Location = new System.Drawing.Point(543, 71);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(184, 42);
@@ -713,7 +715,7 @@
             // 
             // btnAddBatchServicesDefinitions
             // 
-            this.btnAddBatchServicesDefinitions.Location = new System.Drawing.Point(522, 195);
+            this.btnAddBatchServicesDefinitions.Location = new System.Drawing.Point(522, 158);
             this.btnAddBatchServicesDefinitions.Name = "btnAddBatchServicesDefinitions";
             this.btnAddBatchServicesDefinitions.Size = new System.Drawing.Size(184, 35);
             this.btnAddBatchServicesDefinitions.TabIndex = 26;
@@ -753,7 +755,7 @@
             // 
             // DownLoadZipFile
             // 
-            this.DownLoadZipFile.Location = new System.Drawing.Point(522, 151);
+            this.DownLoadZipFile.Location = new System.Drawing.Point(522, 114);
             this.DownLoadZipFile.Name = "DownLoadZipFile";
             this.DownLoadZipFile.Size = new System.Drawing.Size(184, 38);
             this.DownLoadZipFile.TabIndex = 30;
@@ -764,7 +766,7 @@
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(522, 57);
+            this.checkBox1.Location = new System.Drawing.Point(522, 23);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(85, 17);
             this.checkBox1.TabIndex = 18;
@@ -878,7 +880,7 @@
             // 
             // button31
             // 
-            this.button31.Location = new System.Drawing.Point(522, 257);
+            this.button31.Location = new System.Drawing.Point(522, 203);
             this.button31.Name = "button31";
             this.button31.Size = new System.Drawing.Size(184, 28);
             this.button31.TabIndex = 55;
@@ -954,15 +956,17 @@
             this.button27.UseVisualStyleBackColor = true;
             this.button27.Click += new System.EventHandler(this.button27_Click);
             // 
-            // ConvertXmalTemplateToHtmlButton
+            // UpdateAutomationMetadataButton
             // 
-            this.ConvertXmalTemplateToHtmlButton.Location = new System.Drawing.Point(522, 112);
-            this.ConvertXmalTemplateToHtmlButton.Name = "ConvertXmalTemplateToHtmlButton";
-            this.ConvertXmalTemplateToHtmlButton.Size = new System.Drawing.Size(184, 33);
-            this.ConvertXmalTemplateToHtmlButton.TabIndex = 42;
-            this.ConvertXmalTemplateToHtmlButton.Text = "Build document type templates html";
-            this.ConvertXmalTemplateToHtmlButton.UseVisualStyleBackColor = true;
-            this.ConvertXmalTemplateToHtmlButton.Click += new System.EventHandler(this.ConvertXmalTemplateToHtmlButton_Click);
+            this.UpdateAutomationMetadataButton.Location = new System.Drawing.Point(522, 71);
+            this.UpdateAutomationMetadataButton.Name = "UpdateAutomationMetadataButton";
+            this.UpdateAutomationMetadataButton.Size = new System.Drawing.Size(184, 33);
+            this.UpdateAutomationMetadataButton.TabIndex = 42;
+            this.UpdateAutomationMetadataButton.Text = "Update Automation Metadata";
+            this.UpdateAutomationMetadataButton.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            this.UpdateAutomationMetadataButton.UseVisualStyleBackColor = true;
+            this.UpdateAutomationMetadataButton.UseWaitCursor = true;
+            this.UpdateAutomationMetadataButton.Click += new System.EventHandler(this.UpdateAutomationMetadataButton_Click);
             // 
             // WarehouseButton
             // 
@@ -1078,7 +1082,7 @@
             // 
             // ConvertSignatureButton
             // 
-            this.ConvertSignatureButton.Location = new System.Drawing.Point(522, 83);
+            this.ConvertSignatureButton.Location = new System.Drawing.Point(522, 46);
             this.ConvertSignatureButton.Name = "ConvertSignatureButton";
             this.ConvertSignatureButton.Size = new System.Drawing.Size(184, 23);
             this.ConvertSignatureButton.TabIndex = 48;
@@ -1097,7 +1101,7 @@
             // 
             // _UpdatePortsButton
             // 
-            this._UpdatePortsButton.Location = new System.Drawing.Point(522, 289);
+            this._UpdatePortsButton.Location = new System.Drawing.Point(522, 237);
             this._UpdatePortsButton.Name = "_UpdatePortsButton";
             this._UpdatePortsButton.Size = new System.Drawing.Size(184, 34);
             this._UpdatePortsButton.TabIndex = 50;
@@ -1145,7 +1149,7 @@
             // CopyReportButtonLable
             // 
             this.CopyReportButtonLable.AutoSize = true;
-            this.CopyReportButtonLable.Location = new System.Drawing.Point(565, 506);
+            this.CopyReportButtonLable.Location = new System.Drawing.Point(519, 497);
             this.CopyReportButtonLable.MinimumSize = new System.Drawing.Size(100, 0);
             this.CopyReportButtonLable.Name = "CopyReportButtonLable";
             this.CopyReportButtonLable.Size = new System.Drawing.Size(100, 13);
@@ -1423,6 +1427,7 @@
             // 
             this.tabPage1.AutoScroll = true;
             this.tabPage1.BackColor = System.Drawing.Color.Transparent;
+            this.tabPage1.Controls.Add(this.btnCallOldUpdate);
             this.tabPage1.Controls.Add(this.UpdateRulesLabel);
             this.tabPage1.Controls.Add(this.button48);
             this.tabPage1.Controls.Add(this.label3);
@@ -1484,6 +1489,17 @@
             this.tabPage1.Text = "Update";
             this.tabPage1.Click += new System.EventHandler(this.tabPage1_Click);
             // 
+            // UpdateRulesLabel
+            // 
+            this.UpdateRulesLabel.AutoSize = true;
+            this.UpdateRulesLabel.Location = new System.Drawing.Point(434, 280);
+            this.UpdateRulesLabel.MinimumSize = new System.Drawing.Size(100, 0);
+            this.UpdateRulesLabel.Name = "UpdateRulesLabel";
+            this.UpdateRulesLabel.Size = new System.Drawing.Size(100, 13);
+            this.UpdateRulesLabel.TabIndex = 97;
+            this.UpdateRulesLabel.Text = "...";
+            this.UpdateRulesLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // button48
             // 
             this.button48.Location = new System.Drawing.Point(543, 269);
@@ -1537,13 +1553,14 @@
             // 
             // btnUpdateTenantZeroNew
             // 
-            this.btnUpdateTenantZeroNew.Location = new System.Drawing.Point(16, 315);
+            this.btnUpdateTenantZeroNew.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.btnUpdateTenantZeroNew.Location = new System.Drawing.Point(16, 310);
             this.btnUpdateTenantZeroNew.Name = "btnUpdateTenantZeroNew";
-            this.btnUpdateTenantZeroNew.Size = new System.Drawing.Size(184, 24);
+            this.btnUpdateTenantZeroNew.Size = new System.Drawing.Size(184, 29);
             this.btnUpdateTenantZeroNew.TabIndex = 91;
-            this.btnUpdateTenantZeroNew.Text = "Update Tenant 0 (Generated)";
+            this.btnUpdateTenantZeroNew.Text = "Update All Modules Metadata";
             this.btnUpdateTenantZeroNew.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnUpdateTenantZeroNew.UseVisualStyleBackColor = true;
+            this.btnUpdateTenantZeroNew.UseVisualStyleBackColor = false;
             this.btnUpdateTenantZeroNew.Click += new System.EventHandler(this.btnUpdateTenantZeroNew_Click);
             // 
             // lblTenantNew
@@ -1609,7 +1626,7 @@
             // tabPage2
             // 
             this.tabPage2.BackColor = System.Drawing.Color.Transparent;
-            //this.tabPage2.Controls.Add(this.button47);
+            this.tabPage2.Controls.Add(this.button47);
             this.tabPage2.Controls.Add(this.button44);
             this.tabPage2.Controls.Add(this.button43);
             this.tabPage2.Controls.Add(this.button42);
@@ -1661,14 +1678,23 @@
             this.tabPage2.Controls.Add(this.checkBox1);
             this.tabPage2.Controls.Add(this.ConvertXmalTemplateLable);
             this.tabPage2.Controls.Add(this.button27);
-            this.tabPage2.Controls.Add(this.ConvertXmalTemplateToHtmlButton);
+            this.tabPage2.Controls.Add(this.UpdateAutomationMetadataButton);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage2.Size = new System.Drawing.Size(743, 558);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Other";
-          
+            // 
+            // button47
+            // 
+            this.button47.Location = new System.Drawing.Point(522, 278);
+            this.button47.Name = "button47";
+            this.button47.Size = new System.Drawing.Size(184, 34);
+            this.button47.TabIndex = 97;
+            this.button47.Text = "Fill Tickert MailBox";
+            this.button47.UseVisualStyleBackColor = true;
+            this.button47.Click += new System.EventHandler(this.button47_Click);
             // 
             // button44
             // 
@@ -1824,27 +1850,15 @@
             this.button46.UseVisualStyleBackColor = true;
             this.button46.Click += new System.EventHandler(this.button46_Click_1);
             // 
-            // UpdateRulesLabel
+            // btnCallOldUpdate
             // 
-            this.UpdateRulesLabel.AutoSize = true;
-            this.UpdateRulesLabel.Location = new System.Drawing.Point(434, 280);
-            this.UpdateRulesLabel.MinimumSize = new System.Drawing.Size(100, 0);
-            this.UpdateRulesLabel.Name = "UpdateRulesLabel";
-            this.UpdateRulesLabel.Size = new System.Drawing.Size(100, 13);
-            this.UpdateRulesLabel.TabIndex = 97;
-            this.UpdateRulesLabel.Text = "...";
-            this.UpdateRulesLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            //// 
-            //// button47
-            //// 
-            //this.button47.Location = new System.Drawing.Point(522, 25);
-            //this.button47.Name = "button47";
-            //this.button47.Size = new System.Drawing.Size(184, 23);
-            //this.button47.TabIndex = 97;
-            //this.button47.Text = "tax report";
-            //this.
-            //.UseVisualStyleBackColor = true;
-            //this.button47.Click += new System.EventHandler(this.button47_Click);
+            this.btnCallOldUpdate.Location = new System.Drawing.Point(257, 263);
+            this.btnCallOldUpdate.Name = "btnCallOldUpdate";
+            this.btnCallOldUpdate.Size = new System.Drawing.Size(170, 23);
+            this.btnCallOldUpdate.TabIndex = 98;
+            this.btnCallOldUpdate.Text = "Update Old Code";
+            this.btnCallOldUpdate.UseVisualStyleBackColor = true;
+            this.btnCallOldUpdate.Click += new System.EventHandler(this.btnCallOldUpdate_Click);
             // 
             // Form1
             // 
@@ -1943,7 +1957,7 @@
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.Label BuildZipFileslbl;
         private System.Windows.Forms.Button button27;
-        private System.Windows.Forms.Button ConvertXmalTemplateToHtmlButton;
+        private System.Windows.Forms.Button UpdateAutomationMetadataButton;
         private System.Windows.Forms.Button WarehouseButton;
         private System.Windows.Forms.Label WarehouseLable;
 
@@ -2054,6 +2068,8 @@
         //private System.Windows.Forms.Button button47;
         private System.Windows.Forms.Button button48;
         private System.Windows.Forms.Label UpdateRulesLabel;
+        private System.Windows.Forms.Button button47;
+        private System.Windows.Forms.Button btnCallOldUpdate;
     }
 }
 

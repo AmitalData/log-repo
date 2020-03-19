@@ -30,7 +30,7 @@ namespace WebFreight.Web.App_Code
 {
     public class DeclarationApprovalRequestController : ApiController
     {
-        
+
         public HttpResponseMessage Put(DeclarationApprovalRequestPM ApprovalRequest)
         {
             try
@@ -97,12 +97,16 @@ namespace WebFreight.Web.App_Code
                     var LogBoxShipment = ShipmentQuery.GetSinglePMByForwarderShipmentNumber(ApprovalRequest.ForwarderShipmentNumber, ApprovalRequest.Tenant);
                     if (LogBoxShipment != null)
                     {
+                        LogPM.Refrence = LogBoxShipment.ForwarderShipmentNumber;
+                        apiLogsService.Update(LogPM);
+
                         LogBoxShipment.IsImporterApprovalRequired = true;
                         LogBoxShipment.DeclarationXMLData = ApprovalRequest.DeclarationXmlData;
                         string systemEmail = "system@tenant" + ApprovalRequest.Tenant + ".com";
                         IShipmentsContext objectContext = ShipmentsContext.GetContext(ApprovalRequest.Tenant);
                         ShipmentService shipmentService = new ShipmentService(objectContext, LogBoxShipment, systemEmail);
                         shipmentService.Update();
+                        APILogsUtility.UpdateAPILogStatus(LogPM.Id, LogPM.Tenant, "D", 1, DateTime.Now, DateTime.UtcNow, "Approval Is Required", null, null, null, "");
                         return Request.CreateResponse(HttpStatusCode.OK, "VDK");
                     }
                     else
@@ -135,7 +139,7 @@ namespace WebFreight.Web.App_Code
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }  
-        } 
+            }
+        }
     }
 }

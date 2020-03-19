@@ -15,6 +15,7 @@ export class AirlineMessagingRuleList {
 		IsMandatoryForSending: boolean;
 		MaxSize: number;
 		InActive: boolean;
+		RuleFieldCode: string;
 		RuleFieldName: string;
 		AirlineCode: string;
 	

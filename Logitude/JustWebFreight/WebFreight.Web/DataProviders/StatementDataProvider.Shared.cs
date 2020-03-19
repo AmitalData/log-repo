@@ -136,6 +136,11 @@ namespace WebFreight.Web.DataProviders
         public double? AmountPaid { get; set; }
         public string BranchId { get; set; }
         public string BranchName { get; set; }
+
+        public double? InvoiceAmountInInvoiceCurrency { get; set; }
+        public double? AmountPaidInInvoiceCurrency { get; set; }
+        
+
     }
 
     public class StatmentAging

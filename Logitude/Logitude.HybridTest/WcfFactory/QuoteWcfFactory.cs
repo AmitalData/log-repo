@@ -1,4 +1,5 @@
 ﻿using Logitude.BL.QuoteModel.EntityPMs;
+using Logitude.Server.Tools.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,6 +31,14 @@ namespace Logitude.HybridTest.WcfFactory
             QuoteTypeCode = "A", //A:Spot Rate, P:Routing Rate
             QuoteCustomerTypeCode = "CON", //CON:Consignee, AGT:Agent, SHI:Shipper, NOT:Notify, OTH:Other
         };
-        public static QuotePM GetQuotePM() { return quotePM; }
+        public static QuotePM GetQuotePM()
+        {
+            return quotePM;
+        }
+        public static QuotePM GetQuotePMWithNewNumber()
+        {
+            quotePM.QuoteNumber = TableCounter.GetNumber(EnvironmentGlobalParams.MainTenant, "QUOT", quotePM.DirectionId, quotePM.TransportModeId);
+            return quotePM;
+        }
     }
 }

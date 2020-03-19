@@ -37,8 +37,63 @@ namespace WebFreight.Web.DataProviders
         public string ShipmentNumber { get; set; }
         public string ConsigneeName { get; set; }
         public string ConsigneeAddress { get; set; }
+        public string DestinationCountryName { get; set; }
+        public string ReleaseNumber { get; set; }
+        public DateTime? ReleaseDate { get; set; }
+        public string ReleaseReference { get; set; }
+        public string DimensionsHeader { get; set; }
+        public string VolumetricWeightUnit { get; set; }
+        public string WeightUnit { get; set; }
+        public string VolumeUnit { get; set; }
+        public string ReleaseDateIndicator { get; set; }
 
         public List<ReleasePackage> ReleasePackages { get; set; }
+        public List<ReleasePackageGroup> ReleasePackagesGroupList { get; set; }
+
+        public DateTime? DeclarationDate { get; set; }
+        public string DeclarationNumber { get; set; }
+        public int NumberofDaysInTheWarehouse { get; set; }
+        public string ConsigneeVATNumber { get; set; }
+        public string ConsigneeContactPersonName { get; set; }
+        public string ConsigneeContactPersonEmail { get; set; }
+        public double? ValueofGoods { get; set; }
+        public string ValueofGoodsCurrency { get; set; }
+        public string Incoterm { get; set; }
+        public string GeneralDescriptionofGoods { get; set; }
+        public string ShipperVATNumber { get; set; }
+        public string ShipperContactPersonName { get; set; }
+        public string ShipperContactPersonEmail { get; set; }
+        public string ShipmentField1 { get; set; }
+        public string ShipmentField2 { get; set; }
+        public string ShipmentField3 { get; set; }
+        public string ShipmentField4 { get; set; }
+        public string ShipmentField5 { get; set; }
+        public string ShipmentField6 { get; set; }
+        public string ShipmentField7 { get; set; }
+        public string ShipmentField8 { get; set; }
+        public string ShipmentField9 { get; set; }
+        public string ShipmentField10 { get; set; }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    }
+    
+
+    public class ReleasePackageGroup
+    {
+        public string EntryId { get; set; }
+        public string EntryNumber { get; set; }
+        public List<ReleasePackage> ReleasePackagesList { get; set; }
     }
 
     public class ReleasePackage
@@ -63,5 +118,8 @@ namespace WebFreight.Web.DataProviders
         public string ChassisNumber { get; set; }
         public string RegistrationNumber { get; set; }
         public string CountryName { get; set; }
+        public int? InStock { get; set; }
+        public string EntryId { get; set; }
+        public string EntryNumber { get; set; }
     }
 }

@@ -492,6 +492,10 @@ export class PartnerItem extends BaseComponent {
 
                     if (this.EntityPM.ShipmentLevelCode == "C") {
                         myResult = "AG";
+
+                        if (SessionLocator.TenantPM.AllowCustomersInAgentsLOV) {
+                            myResult = "CS,AG";
+                        }                        
                     }
 
                     else {
@@ -504,11 +508,21 @@ export class PartnerItem extends BaseComponent {
                 }
 
             case "AGENT":
+                {
+                    myResult = "AG";
+
+                    if (SessionLocator.TenantPM.AllowCustomersInAgentsLOV) {
+                        myResult = "CS,AG";
+                    }
+
+                    break;
+                }
+
             case "ISSAG":
             case "FRTFR":
             case "COLOD":
                 {
-                    myResult = "AG";
+                    myResult = "AG";                    
                     break;
                 }
 
@@ -561,13 +575,28 @@ export class PartnerItem extends BaseComponent {
             case "CONSI":
             case "CSTMR":
                 {
-                    if (this.EntityPM.ShipmentLevelCode != "C") {
-                        if (SessionLocator.TenantPM.AllowAgentInCustomersLOV) {
+                    if (this.EntityPM.ShipmentLevelCode == "C") {
+                        if (SessionLocator.TenantPM.AllowCustomersInAgentsLOV) {
                             myResult = true;
                         }
                     }
 
+                    else {
+                        if (SessionLocator.TenantPM.AllowAgentInCustomersLOV) {
+                            myResult = true;
+                        }
+                    }
+                    
                     break
+                }
+
+            case "AGENT":
+                {
+                    if (SessionLocator.TenantPM.AllowCustomersInAgentsLOV) {
+                        myResult = true;
+                    }
+
+                    break;
                 }
 
             case "REAGT":

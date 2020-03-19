@@ -46,7 +46,10 @@ namespace Logitude.CRM.BL.EntityDataMappings
                     entityPM.ContactMobile = contact.Mobile;
                     entityPM.ContactTel = contact.BusinessPhone;
                     entityPM.ContactPosition = contact.Position;
-                    entityPM.CustomerName = contact.CompanyName;
+                    CardContactRepository cardContactRepository = new CardContactRepository(entityPOCO.Tenant);
+                    List<string> contactIds = new List<string>() { entityPOCO.ContactId };
+                    var customersNames = cardContactRepository.GetCardsContactsForContactIds_Names(contactIds, entityPOCO.Tenant);
+                    entityPM.CustomerName = customersNames;
                 }
             }
 

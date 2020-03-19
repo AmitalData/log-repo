@@ -653,8 +653,7 @@ export class CommonDomainService {
             }).catch(ServiceHelper.HandleServiceError);
         });
     }
-
-
+    
     getNoneZeroTenantTranslation(computingPartnerId:string,ObjectTableId:string,Code:string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
@@ -1219,11 +1218,11 @@ export class CommonDomainService {
         return entityPM;
     }
 
-    GetAirlineAreas(airlineId: string) {
+    GetCarrierAreas(carrierId: string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetAirlineAreas?airlineId=' + airlineId, {
+            return this._http.get(this._apiUrl + '/GetCarrierAreas?carrierId=' + carrierId, {
                 headers: authHeader
             }).map(response => {
                 var myResult = response.json();
@@ -1265,6 +1264,25 @@ export class CommonDomainService {
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myResult;
                 return serviceResponse;
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
+
+    GetMeasurementIdByCode(code: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
+        var url = this._apiUrl + '/GetMeasurementIdByCode?code=' + code
+
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var myResult = response.json();
+
+                var myResponse: ServiceResponse;
+                myResponse = new ServiceResponse();
+                myResponse.Result = myResult;
+                return myResponse;
+
             }).catch(ServiceHelper.HandleServiceError);
         });
     }
@@ -1369,6 +1387,9 @@ export class CustomApiQueryFilters {
     }
 
     public queryId: string;
+    public queryCode: string;
+    public uniqueCode: string;
+
     //public tenant: number;
     public userid: string;
     public ObjectTableName: string;

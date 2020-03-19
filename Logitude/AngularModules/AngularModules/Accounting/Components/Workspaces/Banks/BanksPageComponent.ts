@@ -362,7 +362,7 @@ export class BanksPageComponent {
     LoadBankPagesFromFile() {
         var logWindow = new LogitudeWindow();
         logWindow.IsShowCloseButton = true;
-        logWindow.Width = 500;
+        logWindow.Width = 900;
         logWindow.Height = 400;
         logWindow.Title = TextCodeTranslator.Translate("Accounting.General.O.BankPagesFromFile");
         logWindow.WindowArgs = {};
