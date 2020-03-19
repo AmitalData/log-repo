@@ -1,4 +1,4 @@
-﻿
+
 <style>
     .iwanttohover:hover {
         background: #DDE6F0;
@@ -196,20 +196,27 @@ Test:hover {
                                                 <log-column [header]="'Copmany'" [binding]="'CompanyName'" [width]="'250'" [visibility]="'visibile'" [Alignment]="'left'"></log-column>
                                                 <log-column [header]="'Vat #'" [binding]="'CompanyVat'" [width]="'120'" [visibility]="'visibile'" [Alignment]="'left'"></log-column>
                                                 <log-column [header]="'Contact'" [binding]="'ContactName'" [width]="'150'" [visibility]="'visibile'" [Alignment]="'left'"></log-column>
+
                                                 <log-column [width]="'120'" [header]="'Create Date'">
-                                                    <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1">
-                                                        <div style="height: 100%; width: 100%; position: relative;">
-                                                            {{item.RequestDateTime | DateTimePipe}}
-                                                        </div>
-                                                    </log-cell-template>
+                                                    <ng-template let-item>
+                                                        <log-cell-template #logcelltemplate [TabIndex]="-1">
+                                                            <div style="height: 100%; width: 100%; position: relative;">
+                                                                {{item.RequestDateTime | DateTimePipe}}
+                                                            </div>
+                                                        </log-cell-template>
+                                                    </ng-template>
                                                 </log-column>
+
                                                 <log-column [width]="'120'" [header]="'Is Private Label'">
-                                                    <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1">
-                                                        <div style="height: 100%; width: 100%; position: relative;">
-                                                           <img *ngIf="item.IsPrivateLabelCustomer" src="./Images/GreenTick.png" width="20" height="20" />
-                                                        </div>
-                                                    </log-cell-template>
+                                                    <ng-template let-item>
+                                                        <log-cell-template #logcelltemplate [TabIndex]="-1">
+                                                            <div style="height: 100%; width: 100%; position: relative;">
+                                                                <img *ngIf="item.IsPrivateLabelCustomer" src="./Images/GreenTick.png" width="20" height="20" />
+                                                            </div>
+                                                        </log-cell-template>
+                                                    </ng-template>
                                                 </log-column>
+
                                                 <!--<log-column [header]="'Create Date'" [binding]="'RequestDateTime'" [width]="'120'" [visibility]="'visibile'" [Alignment]="'left'"></log-column>-->
 
                                             </logitude-edit-grid>
