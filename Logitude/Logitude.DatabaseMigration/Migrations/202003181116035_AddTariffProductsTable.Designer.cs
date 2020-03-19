@@ -7,13 +7,13 @@ namespace Logitude.DatabaseMigration.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class AffTariffProductsTable : IMigrationMetadata
+    public sealed partial class AddTariffProductsTable : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AffTariffProductsTable));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(AddTariffProductsTable));
         
         string IMigrationMetadata.Id
         {
-            get { return "202003181116035_AffTariffProductsTable"; }
+            get { return "202003181116035_AddTariffProductsTable"; }
         }
         
         string IMigrationMetadata.Source
