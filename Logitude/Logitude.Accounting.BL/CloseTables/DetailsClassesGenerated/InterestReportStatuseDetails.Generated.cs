@@ -31,14 +31,6 @@ namespace Logitude.Accounting.BL
 			 
             all.Add(new InterestReportStatuseDetails()
             {    
-                LocalName = "הופקה חשבונית", 
-                EnglishName = "Invoice", 
-                Code = "2", 
-                SearchFields = "2,Invoice,הופקה חשבונית", 
-			});
-			 
-            all.Add(new InterestReportStatuseDetails()
-            {    
                 LocalName = "בוטל", 
                 EnglishName = "Cancelled", 
                 Code = "3", 
@@ -51,6 +43,14 @@ namespace Logitude.Accounting.BL
                 EnglishName = "Closed without Invoice", 
                 LocalName = "נסגר ללא חשבונית", 
                 SearchFields = "4,Closed without Invoice,נסגר ללא חשבונית", 
+			});
+			 
+            all.Add(new InterestReportStatuseDetails()
+            {    
+                Code = "2", 
+                LocalName = "הופקה חשבונית", 
+                EnglishName = "Invoiced", 
+                SearchFields = "2,Invoiced,הופקה חשבונית", 
 			});
 			
             return all;
