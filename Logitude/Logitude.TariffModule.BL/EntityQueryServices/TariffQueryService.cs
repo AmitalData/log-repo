@@ -696,7 +696,7 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                 {
                     this.Sum = 0;
                     this.tariffsSummary = new TariffSearchSummary() { TariffId = trariff.Id };
-                    tariffsSummary.Surcharges = new List<SurchargeSummary>();
+                    tariffsSummary.SurchargesWithoutAllIn = new List<SurchargeSummary>();
                     var price = (tariffLine.Surcharge1Price * quantity1) + (tariffLine.Surcharge2Price * quantity2) +
                                 (tariffLine.Surcharge3Price * quantity3) + (tariffLine.Surcharge4Price * quantity4) +
                                 (tariffLine.Surcharge5Price * quantity5);
@@ -863,7 +863,7 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                                             SurchargeItem.SellerId = CurrentSurcharge.SellerId;
                                             SurchargeItem.SellerName = sellerName;
                                             SurchargeItem.LineId = ChargesfilteredLines.Id;
-                                            tariffsSummary.Surcharges.Add(SurchargeItem);
+                                            tariffsSummary.SurchargesWithoutAllIn.Add(SurchargeItem);
                                         }
                                     }
                                 }
