@@ -2180,6 +2180,7 @@
     <Compile Include="Migrations\202003051111086_AddARInvoiceTotalVatIsRegional.Designer.cs">
       <DependentUpon>202003051111086_AddARInvoiceTotalVatIsRegional.cs</DependentUpon>
     </Compile>
+
     <Compile Include="Migrations\202003131942054_DropAPPaymentMethodIdFromAPPayment_Maheera.cs" />
     <Compile Include="Migrations\202003131942054_DropAPPaymentMethodIdFromAPPayment_Maheera.Designer.cs">
       <DependentUpon>202003131942054_DropAPPaymentMethodIdFromAPPayment_Maheera.cs</DependentUpon>
@@ -2193,6 +2194,12 @@
     <Compile Include="Migrations\202003151252549_WesamAddDWObjectTableCodeToDWObjectFieldCategoriesTable.Designer.cs">
       <DependentUpon>202003151252549_WesamAddDWObjectTableCodeToDWObjectFieldCategoriesTable.cs</DependentUpon>
     </Compile>
+
+    <Compile Include="Migrations\202003180802413_Mutaz_CreateIndexinJournalLines.cs" />
+    <Compile Include="Migrations\202003180802413_Mutaz_CreateIndexinJournalLines.Designer.cs">
+      <DependentUpon>202003180802413_Mutaz_CreateIndexinJournalLines.cs</DependentUpon>
+    </Compile>
+
 
     <Compile Include="Migrations\202003100731514_AbedAddReleaseNumberToShipmentPackage.cs" />
     <Compile Include="Migrations\202003100731514_AbedAddReleaseNumberToShipmentPackage.Designer.cs">
@@ -3964,6 +3971,7 @@
     <EmbeddedResource Include="Migrations\202003051111086_AddARInvoiceTotalVatIsRegional.resx">
       <DependentUpon>202003051111086_AddARInvoiceTotalVatIsRegional.cs</DependentUpon>
     </EmbeddedResource>
+
     <EmbeddedResource Include="Migrations\202003131942054_DropAPPaymentMethodIdFromAPPayment_Maheera.resx">
       <DependentUpon>202003131942054_DropAPPaymentMethodIdFromAPPayment_Maheera.cs</DependentUpon>
     </EmbeddedResource>
@@ -3984,6 +3992,9 @@
       <DependentUpon>202003171008363_WesamAddLastRunDetailTable.cs</DependentUpon>
     </EmbeddedResource>
 
+    <EmbeddedResource Include="Migrations\202003180802413_Mutaz_CreateIndexinJournalLines.resx">
+      <DependentUpon>202003180802413_Mutaz_CreateIndexinJournalLines.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Logitude.Accounting.Data\Logitude.Accounting.Data.csproj">
