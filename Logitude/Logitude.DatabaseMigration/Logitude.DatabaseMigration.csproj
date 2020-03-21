@@ -2083,6 +2083,10 @@
     <Compile Include="Migrations\202003051111086_AddARInvoiceTotalVatIsRegional.Designer.cs">
       <DependentUpon>202003051111086_AddARInvoiceTotalVatIsRegional.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202003180802413_Mutaz_CreateIndexinJournalLines.cs" />
+    <Compile Include="Migrations\202003180802413_Mutaz_CreateIndexinJournalLines.Designer.cs">
+      <DependentUpon>202003180802413_Mutaz_CreateIndexinJournalLines.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\202002041333119_InterestTransactionMigration.cs" />
     <Compile Include="Migrations\202002041333119_InterestTransactionMigration.Designer.cs">
@@ -3761,6 +3765,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202003051111086_AddARInvoiceTotalVatIsRegional.resx">
       <DependentUpon>202003051111086_AddARInvoiceTotalVatIsRegional.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003180802413_Mutaz_CreateIndexinJournalLines.resx">
+      <DependentUpon>202003180802413_Mutaz_CreateIndexinJournalLines.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
