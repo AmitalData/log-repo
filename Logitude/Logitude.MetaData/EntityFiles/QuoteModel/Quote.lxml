@@ -28497,11 +28497,21 @@
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
+
     <Feature
       Code="&quot;VATDetAILSINQUOTATION&quot;"
       FeatureTypeCode="&quot;AREA&quot;"
       FeatureTextCodeCode="&quot;Quote.Features.VATDetAILSINQUOTATION&quot;"
       FeatureDefaultText="&quot;VAT details in Quotation&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;QuotePriceCheck&quot;"
+      FeatureTypeCode="&quot;ACT&quot;"
+      FeatureTextCodeCode="&quot;Quote.Features.QuotePriceCheck&quot;"
+      FeatureDefaultText="&quot;Price Check&quot;"
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"

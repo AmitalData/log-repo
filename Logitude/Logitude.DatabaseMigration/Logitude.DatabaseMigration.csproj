@@ -2210,6 +2210,14 @@
     <Compile Include="Migrations\202003171008363_WesamAddLastRunDetailTable.Designer.cs">
       <DependentUpon>202003171008363_WesamAddLastRunDetailTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202003070922448_AddIsCostAllInFieldToQuoteChargesTable_Maheera.cs" />
+    <Compile Include="Migrations\202003070922448_AddIsCostAllInFieldToQuoteChargesTable_Maheera.Designer.cs">
+      <DependentUpon>202003070922448_AddIsCostAllInFieldToQuoteChargesTable_Maheera.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003071003036_AddTariffFieldsToQuoteCharge_Maheera.cs" />
+    <Compile Include="Migrations\202003071003036_AddTariffFieldsToQuoteCharge_Maheera.Designer.cs">
+      <DependentUpon>202003071003036_AddTariffFieldsToQuoteCharge_Maheera.cs</DependentUpon>
+    </Compile>
 
 
     <Compile Include="Migrations\Configuration.cs" />
@@ -3995,6 +4003,13 @@
     <EmbeddedResource Include="Migrations\202003180802413_Mutaz_CreateIndexinJournalLines.resx">
       <DependentUpon>202003180802413_Mutaz_CreateIndexinJournalLines.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003070922448_AddIsCostAllInFieldToQuoteChargesTable_Maheera.resx">
+      <DependentUpon>202003070922448_AddIsCostAllInFieldToQuoteChargesTable_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003071003036_AddTariffFieldsToQuoteCharge_Maheera.resx">
+      <DependentUpon>202003071003036_AddTariffFieldsToQuoteCharge_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Logitude.Accounting.Data\Logitude.Accounting.Data.csproj">

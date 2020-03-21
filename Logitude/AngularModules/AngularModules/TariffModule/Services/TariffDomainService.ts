@@ -379,8 +379,10 @@ export class TariffSearchSummary {
     VersionId: string;
     TotalSurcharge: string;
     WholePrice: string;
-    Surcharges: Array<SurchargeSummary>;
+    SurchargesWithoutAllIn: Array<SurchargeSummary>;
+    AllInSurcharges: Array<SurchargeSummary>;
     AllIn: string;
+    AllInIds: string;
     IsShown: boolean = false;
     UnitOfMesurmentCode: string;
     UnitOfMesurmentId: string;
@@ -408,6 +410,7 @@ export class SurchargeSummary {
     MinPrice: number;
     IsMinIconVisible: boolean;
     LineId: string;
+    IsAllIn: boolean;
 }
 
 export class ExcelTariffLines {

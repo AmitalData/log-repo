@@ -16,6 +16,7 @@ import {ShipmentOrderPackagePM} from '../../Shipment/EntityPMs/ShipmentOrderPack
 import {VatTypeList} from '../../Common/EntityLists/VatTypeList';
 import {VatTypeListService} from '../../Common/Services/StandardLists/VatTypeListService';
 import {VatTypesValidator} from '../../Infrastructure/Validators/VatTypesValidator';
+import { FeatureLocator } from '../../Infrastructure/Utilities/FeatureLocator';
 
 export class QuoteUtilities {
     public static IsQuoteEditEnabled(entityPM: QuotePM) {
@@ -637,4 +638,14 @@ export class QuoteUtilities {
 
         return shipmentPM;
     }
+
+    public static IsPriceCheckVisible(entityPM: QuotePM) {
+        var myResult = false;
+
+        if (FeatureLocator.HasFeaturePermession("Quote", "QuotePriceCheck") && (entityPM.TransportModeId.toUpperCase() == "A") && (entityPM.QuoteTypeCode != null && entityPM.QuoteTypeCode.toUpperCase() == "A")) {
+            myResult = true;
+        }
+        return myResult;
+    }
+
 }

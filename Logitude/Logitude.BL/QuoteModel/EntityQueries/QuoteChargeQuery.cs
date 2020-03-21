@@ -116,6 +116,11 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                           SaleUnitPrice5InSaleCurrency = a.SaleUnitPrice5InSaleCurrency,
                                           SaleAmountInSaleCurrency = a.SaleAmountInSaleCurrency,
                                           SaleMaxAmount = a.SaleMaxAmount,
+                                          IsCostAllIn = a.IsCostAllIn,
+                                          TariffId = a.TariffId,
+                                          TariffNumber = a.TariffNumber,
+                                          TariffVersion = a.TariffVersion,
+
                                       }).FirstOrDefault();
 
             return myResult;
@@ -206,7 +211,10 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                 SaleUnitPrice5InSaleCurrency = a.SaleUnitPrice5InSaleCurrency,
                                                 SaleAmountInSaleCurrency = a.SaleAmountInSaleCurrency,
                                                 SaleMaxAmount = a.SaleMaxAmount,
-
+                                                IsCostAllIn = a.IsCostAllIn,
+                                                TariffId = a.TariffId,
+                                                TariffNumber = a.TariffNumber,
+                                                TariffVersion = a.TariffVersion,
 
                                             }).ToList();
 
