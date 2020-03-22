@@ -363,17 +363,17 @@ namespace Logitude.Customs.BL.EntityDataMappings
             }
 
 
-            if (entityPM.FastIndividualProcessCode != null)
-            {
-                if (entityPM.FastIndividualProcessCode == "F")
-                {
-                    entityPM.FastIndividualProcessCode = "מהיר";
-                }
-                else if (entityPM.FastIndividualProcessCode == "I")
-                {
-                    entityPM.FastIndividualProcessCode = "פרטני";
-                }
-            }
+            //if (entityPM.FastIndividualProcessCode != null)
+            //{
+            //    if (entityPM.FastIndividualProcessCode == "F")
+            //    {
+            //        entityPM.FastIndividualProcessCode = "מהיר";
+            //    }
+            //    else if (entityPM.FastIndividualProcessCode == "I")
+            //    {
+            //        entityPM.FastIndividualProcessCode = "פרטני";
+            //    }
+            //}
 
         }
 
@@ -400,8 +400,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
                         .FirstOrDefault();
                     if (pocoDeclarationCourierStatus != null)
                     {
-                        entityPM.CourierManifestStatusCode = pocoDeclarationCourierStatus.CourierManifestStatusCode;
-                        entityPM.CourierPaymentStatusCode = pocoDeclarationCourierStatus.CourierPaymentStatusCode;
+                        //entityPM.CourierManifestStatusCode = pocoDeclarationCourierStatus.CourierManifestStatusCode;
+                        //entityPM.CourierPaymentStatusCode = pocoDeclarationCourierStatus.CourierPaymentStatusCode;
 
                     }
                 }
