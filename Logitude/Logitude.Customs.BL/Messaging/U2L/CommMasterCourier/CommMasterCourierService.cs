@@ -231,6 +231,14 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommMasterCourier
                     {
                         _CourierMasterPM.TruckerId = _LogitudeMasterCourier.TruckerId;
                     }
+                    else
+                    {
+                        card = cardRep.GetSingleCardByCode(_LogitudeMasterCourier.TruckerId, _CourierMasterPM.Tenant, true);
+                        if (card != null)
+                        {
+                            _CourierMasterPM.TruckerId = _LogitudeMasterCourier.TruckerId;
+                        }
+                    }
                 }
 
                 myCourierMasterUpdateService.Update(this._CourierMasterPM, true);
