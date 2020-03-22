@@ -400,8 +400,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
                         .FirstOrDefault();
                     if (pocoDeclarationCourierStatus != null)
                     {
-                        //entityPM.CourierManifestStatusCode = pocoDeclarationCourierStatus.CourierManifestStatusCode;
-                        //entityPM.CourierPaymentStatusCode = pocoDeclarationCourierStatus.CourierPaymentStatusCode;
+                        entityPM.CourierManifestStatusCode = pocoDeclarationCourierStatus.CourierManifestStatusCode;
+                        entityPM.CourierPaymentStatusCode = pocoDeclarationCourierStatus.CourierPaymentStatusCode;
 
                     }
                 }
