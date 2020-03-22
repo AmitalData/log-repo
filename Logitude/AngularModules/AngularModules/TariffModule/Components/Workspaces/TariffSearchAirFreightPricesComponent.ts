@@ -16,7 +16,7 @@ import { QuoteChargeItem } from '../../../QuoteModules/QuoteCharges/Components/L
 import { ShipmentPayablePM } from '../../../Shipment/EntityPMs/ShipmentPayablePM';
 import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
-import { ShipmentGenerator } from '../../../Shipment/Tools';
+import { ShipmentGenerator, ByPckageType, ShipmentTool } from '../../../Shipment/Tools';
 import { ChargesTypeList } from '../../../Common/EntityLists/ChargesTypeList';
 import { ChargesTypeListService } from '../../../Common/Services/StandardLists/ChargesTypeListService';
 import { ShipmentPayableItem } from '../../../ShipmentModules/ShipmentTabs/Components/Payables/PayablesTabComponent';
@@ -654,29 +654,96 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
         }
     }
 
+    // LCL/FCLShipment
+    private BCNTGrouped: ByPckageType[] = [];
+    private ValidateShipmentTariffContainers() {
+        var isValid = true;
+        if (this.TariffType == "OFC") {
+            this.BCNTGrouped = ShipmentTool.GetByPckageTypeGrouped(this.ShipmentPM);
+            var checkIfShipmentHasTariffContainers = this.BCNTGrouped.filter(a => a.PackageTypeId == this.ContainerType1Id ||
+                a.PackageTypeId == this.ContainerType2Id ||
+                a.PackageTypeId == this.ContainerType3Id ||
+                a.PackageTypeId == this.ContainerType4Id ||
+                a.PackageTypeId == this.ContainerType5Id);
+
+            if (checkIfShipmentHasTariffContainers == null || (checkIfShipmentHasTariffContainers != null && checkIfShipmentHasTariffContainers.length == 0)) {
+                isValid = false;
+                var messageWindow = new MessageWindow();
+                messageWindow.Show("Tariff container types are not found in the shipment.");
+            }
+        }
+        return isValid;
+    }
+
     GenerateShipmentPayablesFromTariff(item: TariffSearchSummary) {
         var isValid = this.ValidateExistPayablesConnectedToTariff(item);
         if (isValid) {
             isValid = this.ValidateTariffClosedLines();
-            if (isValid) {
+            var isShipmentHasTariffContainers = this.ValidateShipmentTariffContainers();
+            if (isValid && isShipmentHasTariffContainers) {
                 this.TariffList_Shipment = [];
                 this.Generator = new ShipmentGenerator(this.FatherComponent.EntityPM, this.FatherComponent.AllRates);
 
-                // Generate Air Frieght
                 var notes = null;
                 if (!AppTool.IsNullOrEmpty(item.AllIn)) {
-
                     notes = "Includes the following charges as all-in: " + item.AllIn;
                 }
 
-                this.AddNewTariffPayable(item, notes);
-                // Generate Surcharges
-                if (item != null && item.SurchargesWithoutAllIn != null) {
-                    item.SurchargesWithoutAllIn.forEach(surcharge => {
-                        this.AddNewTariffPayable(surcharge);
-                    });
+                if (this.TariffType == "OFC") {
+                     // Generate FCL Frieght
+                    if (this.ContainerType1Id) {
+                        this.AddNewTariffPayable(item, notes, this.ContainerType1Id, this.Quantity1);
+                        if (item != null && item.SurchargesWithoutAllIn != null) {
+                            item.SurchargesWithoutAllIn.forEach(surcharge => {
+                                this.AddNewTariffPayable(surcharge, null, this.ContainerType1Id, this.Quantity1 );
+                            });
+                        }
+                    }
+                    if (this.ContainerType2Id) {
+                        this.AddNewTariffPayable(item, notes, this.ContainerType2Id, this.Quantity2);
+                        if (item != null && item.SurchargesWithoutAllIn != null) {
+                            item.SurchargesWithoutAllIn.forEach(surcharge => {
+                                this.AddNewTariffPayable(surcharge, null, this.ContainerType2Id, this.Quantity2);
+                            });
+                        }
+                    }
+                    if (this.ContainerType3Id) {
+                        this.AddNewTariffPayable(item, notes, this.ContainerType3Id, this.Quantity3);
+                        if (item != null && item.SurchargesWithoutAllIn != null) {
+                            item.SurchargesWithoutAllIn.forEach(surcharge => {
+                                this.AddNewTariffPayable(surcharge, null, this.ContainerType3Id, this.Quantity3);
+                            });
+                        }
+                    }
+                    if (this.ContainerType4Id) {
+                        this.AddNewTariffPayable(item, notes, this.ContainerType4Id, this.Quantity4);
+                        if (item != null && item.SurchargesWithoutAllIn != null) {
+                            item.SurchargesWithoutAllIn.forEach(surcharge => {
+                                this.AddNewTariffPayable(surcharge, null, this.ContainerType4Id, this.Quantity4);
+                            });
+                        }
+                    }
+                    if (this.ContainerType5Id) {
+                        this.AddNewTariffPayable(item, notes, this.ContainerType5Id, this.Quantity5);
+                        if (item != null && item.SurchargesWithoutAllIn != null) {
+                            item.SurchargesWithoutAllIn.forEach(surcharge => {
+                                this.AddNewTariffPayable(surcharge, null, this.ContainerType5Id, this.Quantity5);
+                            });
+                        }
+                    }
                 }
 
+                else {
+                     // Generate Air Frieght
+                    this.AddNewTariffPayable(item, notes);
+                    // Generate Surcharges
+                    if (item != null && item.SurchargesWithoutAllIn != null) {
+                        item.SurchargesWithoutAllIn.forEach(surcharge => {
+                            this.AddNewTariffPayable(surcharge);
+                        });
+                    }
+                }
+ 
                 var isDuplicate = this.CheckTariffPayablesDuplicate();
                 if (isDuplicate) {
                     // override
@@ -699,6 +766,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
             }
         }
     }
+
     OverrideTariffPayablesOfShipment(): any {
         this.TariffList_Shipment.forEach(payable => {
             var existsPayable: ShipmentPayablePM = this.ShipmentPM.ShipmentPayables.filter(d => d.ChargesTypeId == payable.ChargesTypeId && d.MeasurementId == payable.MeasurementId && (d.TariffId == payable.TariffId || d.TariffId == null))[0];
@@ -708,6 +776,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
         });
         this.AssignTariffPayablesToShipment();
     }
+
     AssignTariffPayablesToShipment(): any {
         this.TariffList_Shipment.forEach(shipmentPayable => {
             this.ShipmentPM.AddPayable(shipmentPayable);
@@ -715,11 +784,13 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
         });
         this.ReloadTariffPayables();
     }
+
     ReloadTariffPayables() {
         this.FatherComponent.OnEntityDataGenerated();
         this.CurrentSession.StopBusyIndicator();
         this.CurrentSession.CloseCurrentWindow();
     }
+
     CheckTariffPayablesDuplicate(): any {
         var isDuplicate = false;
         this.TariffList_Shipment.forEach(payable => {
@@ -730,7 +801,8 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
         });
         return isDuplicate;
     }
-    AddNewTariffPayable(newRecord: any, notes = null) {
+
+    AddNewTariffPayable(newRecord: any, notes = null, packageId = null, quantity = null) {
         this.myChargesTypeListService.getSingleFromCache(newRecord.ChargeTypeId).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 var chargesType: ChargesTypeList = myResponse.Result;
@@ -744,7 +816,12 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                 shipmentPayable.ProfitCurrencyExchangeRate = this.Generator.GetCurrencyRate(this.ShipmentPM.ProfitCurrencyId);
                 shipmentPayable.MeasurementId = newRecord.UnitOfMesurmentId;
                 shipmentPayable.MeasurementCode = newRecord.UnitOfMesurmentCode;
-                var nweQuantity = this.GetQuantity(newRecord.UnitOfMesurmentCode);
+
+                var nweQuantity = this.TariffType == "OFC" ? quantity : this.GetQuantity(newRecord.UnitOfMesurmentCode);
+
+                if (packageId != null) {
+                    this.CreateNewPayableFromTariffCharge_FCL(packageId, shipmentPayable);
+                }
                 var expectedAmount = newRecord.ActualPrice;
                 var rate = this.Generator.GetCurrencyRate(newRecord.CurrencyId);
                 var expectedAmountLocal = expectedAmount * rate;
@@ -790,6 +867,18 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
             }
         });
     }
+
+    private CreateNewPayableFromTariffCharge_FCL(myPackageTypeId: string, newItemPM: ShipmentPayablePM) {
+        if (!AppTool.IsNullOrEmpty(myPackageTypeId)) {
+            var itemGrouped: ByPckageType = this.BCNTGrouped.filter(f => f.PackageTypeId == myPackageTypeId)[0];
+            if (itemGrouped != null) {
+                newItemPM.MeasurementId = itemGrouped.MeasurementId;
+                newItemPM.MeasurementCode = itemGrouped.MeasurementCode;
+                newItemPM.MeasurementShortName = itemGrouped.MeasurementShortName;
+            }
+        }
+    }
+
     ValidateExistPayablesConnectedToTariff(item: TariffSearchSummary) {
         var isValid = true;
         var existsPayableOnAirFreight: ShipmentPayablePM = this.ShipmentPM.ShipmentPayables.filter(d => d.TariffId != null && d.TariffId != item.TariffId && d.ChargesTypeId == item.ChargeTypeId)[0];
