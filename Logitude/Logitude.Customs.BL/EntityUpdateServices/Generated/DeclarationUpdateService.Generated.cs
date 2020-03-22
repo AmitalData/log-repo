@@ -55,15 +55,17 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         }
 
 		
-	    protected override void FillDefaultValuesOnCreate(DeclarationPM entityPM)
-        {
- 
-		}
-		protected override void FillDefaultValuesOnUpdate(DeclarationPM entityPM)
-		{
- 
-		}
+		protected override void FillDefaultValuesOnCreate(DeclarationPM entityPM)
+        {     
+  
 		
+	    }
+        
+		protected override void FillDefaultValuesOnUpdate(DeclarationPM entityPM)
+        {       
+           
+        }
+		  
 		 
 	 
    }

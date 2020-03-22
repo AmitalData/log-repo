@@ -954,6 +954,16 @@ export class DeclarationPM {
     public set AvailabilityDate(newValue: Date) { if (this.availabilityDate != newValue) { this.availabilityDate = newValue; this.MarkAsDirty("AvailabilityDate"); } }
        
 	 
+    private courierManifestStatusCode: string;
+    public get CourierManifestStatusCode() { return this.courierManifestStatusCode; }
+    public set CourierManifestStatusCode(newValue: string) { if (this.courierManifestStatusCode != newValue) { this.courierManifestStatusCode = newValue; this.MarkAsDirty("CourierManifestStatusCode"); } }
+       
+	 
+    private courierPaymentStatusCode: string;
+    public get CourierPaymentStatusCode() { return this.courierPaymentStatusCode; }
+    public set CourierPaymentStatusCode(newValue: string) { if (this.courierPaymentStatusCode != newValue) { this.courierPaymentStatusCode = newValue; this.MarkAsDirty("CourierPaymentStatusCode"); } }
+       
+	 
 
     public OldEntityPM: DeclarationPM;
 		
