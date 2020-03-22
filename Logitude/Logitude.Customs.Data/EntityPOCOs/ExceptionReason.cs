@@ -31,6 +31,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public bool IsActive { get; set; }
         [Column("UnifreightStatusCode")]
 	    public string UnifreightStatusCode { get; set; }
+        [Column("SearchFields")]
+	    public string SearchFields { get; set; }
     }
 }
 	 

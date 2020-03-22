@@ -17,7 +17,7 @@ using Logitude.Customs.Data;
 using Simplog.Server.Infrastructure;
 namespace Logitude.Customs.BL.EntityQueryServices
 { 
-   public partial class ReferantExceptionQueryService: EntityQueryService<ReferantException,ReferantExceptionKeys,ReferantExceptionPM,DeclarationReferantDataPM,DeclarationReferantDataKeys>
+   public partial class ReferantExceptionQueryService: EntityQueryService<ReferantException,ReferantExceptionKeys,ReferantExceptionPM,object,ReferantExceptionKeys>
    {
    
         ReferantExceptionRepository repository;

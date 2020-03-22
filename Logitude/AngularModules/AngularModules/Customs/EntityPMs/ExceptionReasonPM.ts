@@ -54,6 +54,11 @@ export class ExceptionReasonPM {
     public set UnifreightStatusCode(newValue: string) { if (this.unifreightStatusCode != newValue) { this.unifreightStatusCode = newValue; this.MarkAsDirty("UnifreightStatusCode"); } }
        
 	 
+    private searchFields: string;
+    public get SearchFields() { return this.searchFields; }
+    public set SearchFields(newValue: string) { if (this.searchFields != newValue) { this.searchFields = newValue; this.MarkAsDirty("SearchFields"); } }
+       
+	 
 
     public OldEntityPM: ExceptionReasonPM;
 		

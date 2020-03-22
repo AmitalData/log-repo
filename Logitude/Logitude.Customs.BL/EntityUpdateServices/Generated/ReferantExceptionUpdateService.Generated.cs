@@ -22,7 +22,7 @@ using Logitude.Customs.Data;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 { 
-   public partial class ReferantExceptionUpdateService:EntityUpdateService<ReferantException,ReferantExceptionPM,DeclarationReferantDataPM>
+   public partial class ReferantExceptionUpdateService:EntityUpdateService<ReferantException,ReferantExceptionPM,EntityPM>
    {
    
         ReferantExceptionRepository entityRepository;

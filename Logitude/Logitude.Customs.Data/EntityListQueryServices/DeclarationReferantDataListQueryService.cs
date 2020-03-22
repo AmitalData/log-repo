@@ -68,7 +68,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
                                                                  DeclarationStatusTypeName = d.DeclarationStatusType.LocalName,
                                                                  
-                                                                DeclarationStatusTypeCode = d.DeclarationStatusTypeCode
+                                                                DeclarationStatusTypeCode = d.DeclarationStatusTypeCode,
+                                                                ExceptionReasonsList = a.ExceptionReasonsList,
+                                                               
                                                              });
             return query;
         }
