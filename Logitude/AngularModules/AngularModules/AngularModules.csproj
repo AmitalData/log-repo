@@ -2329,6 +2329,7 @@
     <Content Include="TariffModule\Components\Helpers\TariffHelperComponent.html" />
     <Content Include="TariffModule\Components\NewEntity\NewAirFreightCostComponent.html" />
     <Content Include="TariffModule\Components\NewEntity\TariffPriceStepsComponent.html" />
+    <Content Include="TariffModule\Components\ShortTitles\TariffShortTitleComponent.html" />
     <Content Include="TariffModule\Components\Templates\FieldTemplateComponent.html" />
     <Content Include="TariffModule\Components\Workspaces\ContainerDefaultsComponent.html" />
     <Content Include="TariffModule\Components\Workspaces\SettingsWorkspaceComponent.html" />
@@ -6748,6 +6749,7 @@
     <TypeScriptCompile Include="TariffModule\Components\MenuButtons\TariffMenuButtonsHandler.ts" />
     <TypeScriptCompile Include="TariffModule\Components\NewEntity\NewAirFreightCostComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\NewEntity\TariffPriceStepsComponent.ts" />
+    <TypeScriptCompile Include="TariffModule\Components\ShortTitles\TariffShortTitleComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\Templates\FieldTemplateComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\Workspaces\ContainerDefaultsComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\Workspaces\CostWorkspaceComponent.ts" />
