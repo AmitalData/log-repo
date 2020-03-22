@@ -25,6 +25,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
             {
                 entityPOCO.Code = entityPM.Code;
             }
+            entityPM.SearchFields = entityPM.EnglishName + "," + entityPM.LocalName + "," + entityPM.Code;
+
         }
 
         public void CustomPOCOToPM(ExceptionReasonPM entityPM, ExceptionReason entityPOCO)

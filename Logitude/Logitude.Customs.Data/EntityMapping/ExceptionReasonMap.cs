@@ -34,6 +34,8 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.IsActive).HasColumnName("IsActive");
 
             this.Property(t => t.UnifreightStatusCode).HasColumnName("UnifreightStatusCode").HasMaxLength(3).IsUnicode(false);
+
+            this.Property(t => t.SearchFields).HasColumnName("SearchFields").HasMaxLength(1000).IsUnicode(true);
         }
     }
 }

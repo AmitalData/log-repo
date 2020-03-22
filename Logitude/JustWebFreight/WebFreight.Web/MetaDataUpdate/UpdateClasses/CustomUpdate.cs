@@ -12417,6 +12417,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             LoadTextCodes_General(textcodes);
 
             LoadTextCodes_CustomsPhysicalCheck(textcodes);
+            LoadTextCodes_CustomsReferant(textcodes);
             LoadTextCodes_CustomsVendors(textcodes);
             LoadTextCodes_Declaration(textcodes);
             LoadTextCodes_PaymentOrders(textcodes);
@@ -13863,6 +13864,20 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
         }
         #endregion
 
+        #region LoadTextCodes_CustomsReferant
+        private void LoadTextCodes_CustomsReferant(Dictionary<string, TextCode> textcodes)
+        {
+            ObjectContext.SaveChanges();
+            ObjectTable objectTable = ObjectContext.ObjectTables.Where(f => f.Name == "Customs.DeclarationReferantData" && f.Tenant == 0).FirstOrDefault();
+            // Sohaib 17/3/20 Task 64448
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationReferantData.O.FollowUpDate", DefaultText = "FollowUpDate", LocalDefaultText = "תאריך מעקב", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationReferantData.O.ExceptionReasonsCode ", DefaultText = "ExceptionReasonsCode ", LocalDefaultText = "קוד חריג", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationReferantData.O.ExceptionRemarks ", DefaultText = "ExceptionRemarks ", LocalDefaultText = "הערות", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationReferantData.O.Status ", DefaultText = "Status ", LocalDefaultText = "סטטוס", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+
+        }
+        #endregion
+
         #region LoadTextCodes_CustomsPhysicalCheck
 
         private void LoadTextCodes_CustomsPhysicalCheck(Dictionary<string, TextCode> textcodes)
@@ -13919,7 +13934,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.CustomFileNo", DefaultText = "Custom File No.", LocalDefaultText = "תיק עמילות", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.EndDate", DefaultText = "End Date", LocalDefaultText = "מועד סיום הבדיקה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.GeneralDetails", DefaultText = "General Details", LocalDefaultText = "נתוני בדיקה פיזית", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
-
+           
 
             ObjectContext.SaveChanges();
         }

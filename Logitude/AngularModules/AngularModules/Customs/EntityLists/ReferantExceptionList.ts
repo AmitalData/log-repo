@@ -6,15 +6,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-export class ExceptionReasonList {
+export class ReferantExceptionList {
    
+	DeclarationId: string;
 	Tenant: number;
-	Code: string;
-	EnglishName: string;
-	LocalName: string;
-	IsActive: boolean;
-	UnifreightStatusCode: string;
-	SearchFields: string;
+	ExceptionReasonsCode: string;
+	ExceptionRemarks: string;
+	Status: string;
 	
 }
  

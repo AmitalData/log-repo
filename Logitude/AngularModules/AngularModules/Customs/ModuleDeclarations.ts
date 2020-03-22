@@ -25,6 +25,7 @@ import {DeclarationShortTitleComponent} from './Components/ShortTitles/Declarati
 
 import {CustomsSpotlightComponent} from './Components/Spotlight/CustomsSpotlightComponent';
 import { DeclarationReferantDataFiltersMenuComponent } from './Components/FiltersMenu/DeclarationReferantDataFiltersMenuComponent';
+import { ReferantSpotlightDataTemplate } from './Components/Spotlight/ReferantSpotlightDataTemplate';
 
 
 export const CustomsControlsComponents =
@@ -65,7 +66,7 @@ export const Components =
 
         CustomsSpotlightComponent,
 
-       
+        ReferantSpotlightDataTemplate,
         DeclarationReferantDataFiltersMenuComponent,
        
 
@@ -98,6 +99,7 @@ export class ModuleDeclarations {
 
           
             case "CustomsSpotlightComponent": { myResult = CustomsSpotlightComponent; break; }
+            case "ReferantSpotlightDataTemplate": { myResult = ReferantSpotlightDataTemplate; break; }
 
             case "DeclarationReferantDataFiltersMenuComponent": { myResult = DeclarationReferantDataFiltersMenuComponent; break; }
                 

@@ -26,6 +26,8 @@ namespace Logitude.Customs.Data.EntityLists
        public bool IsActive  { get; set; }
        [DataMember]
        public string UnifreightStatusCode  { get; set; }
+       [DataMember]
+       public string SearchFields  { get; set; }
    }
 
 }
