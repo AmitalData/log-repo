@@ -170,6 +170,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 customsDocumentsTicket.ChangeSetOp = ChangeSetOperation.Update;
                                 myCustomsDocumentsTicketUpdateService.Update(customsDocumentsTicket, true);
                             }
+                            else
+                            {
+                                customsDocumentsTicket.ChangeSetOp = ChangeSetOperation.Update;
+                                myCustomsDocumentsTicketUpdateService.Update(customsDocumentsTicket, true);
+                            }
                         }
                     }
 
