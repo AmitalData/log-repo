@@ -255,6 +255,7 @@
                                 <span *ngIf="!( (_CourierWorksheet['CourierPaymentStatusCode'] != 'P' || _CourierWorksheet['CourierPaymentStatusCode'] ==null)  && ( _CourierWorksheet['CourierManifestStatusCode']=='V' ||_CourierWorksheet['CourierManifestStatusCode'] == 'R' ))" class="DimLI">מצהר</span>
                             </li>
 
+
                             <li>
                                 <span *ngIf="!(_CourierWorksheet['CourierPaymentStatusCode'] == 'P'  ||_CourierWorksheet['CourierPaymentStatusCode'] == 'O' )  " (click)="currSplitButtonComponent.DropdownDisplayClose();SendDec($event);">הצהרה</span>
                                 <span *ngIf="(_CourierWorksheet['CourierPaymentStatusCode'] == 'P'  ||_CourierWorksheet['CourierPaymentStatusCode'] == 'O' )  " class="DimLI">הצהרה</span>
