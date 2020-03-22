@@ -81,10 +81,11 @@ export class ReferantSpotlightDataTemplate
         var item: ReferantExceptionPM = new ReferantExceptionPM();
         item.DeclarationId = this.EntityPM.DeclarationId;
         item.Tenant = this.EntityPM.Tenant;
-        item.IsNew = true;
         item.Status = "A";
         this.ReferantExceptionListPM.includes(item);
-        this.ReferantExceptionItemsSource.Insert(new ExceptionReason(item, this.EntityPM));
+        var _exceptionReason = new ExceptionReason(item, this.EntityPM);
+        _exceptionReason.IsNew = true;
+        this.ReferantExceptionItemsSource.Insert(_exceptionReason);
     }
 
     private ExceptionsList: string[] = [];
@@ -125,25 +126,23 @@ export class ReferantSpotlightDataTemplate
         this.SelectedRow = itemComponent;
         this.IsChanged = true;
     }
-
     isValid: boolean;
     inValid: boolean;
     FIELD_IS_REQUIERD: string;
 
     OkButtonClicked() {
-        debugger;
         this.ValidationErrorsList = [];
         var errors: string[] = [];
         this.isValid = true;
         this.inValid = false;
-        for (let item of this.ReferantExceptionListPM) {
+        this.ReferantExceptionItemsSource.Collection.forEach((item: ExceptionReason) => {
             if (AppTool.IsNullOrEmpty(item.ExceptionReasonsCode)) {
                 errors.push(this.FIELD_IS_REQUIERD.replace("%FieldName", TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CourierPendingReasonCode")));
                 this.inValid = true;
                 this.isValid = false;
-                break;
             }
             else {
+
                 var existCodeList: string[] = [];
                 this.ReferantExceptionItemsSource.Collection.forEach((item: ExceptionReason) => {
                     if (existCodeList != null && item != null && existCodeList.indexOf(item.ExceptionReasonsCode)) {
@@ -166,24 +165,22 @@ export class ReferantSpotlightDataTemplate
                         if (errors.length == 0) {
                             var isSave = 1;
                             this.BuildExceptionReasonsList(this.ExceptionsList);
-                           if (isSave == 1) {
-                               /*this._DeclarationReferantDataPMService.update(this.EntityPM).subscribe((response: ServiceResponse) => {
-
-                                });*/
-                               this.ReferantExceptionItemsSource.Collection.forEach((item: ExceptionReason) => {
-                                   if (item.EntityPM.IsNew == true) {
-                                       debugger;
-                                   } else if (item.EntityPM.IsDirty == true) {
-                                       debugger;
-                                   }
-                               });
+                            if (isSave == 1) {
+                                /*this._DeclarationReferantDataPMService.update(this.EntityPM).subscribe((response: ServiceResponse) => {
+ 
+                                 });*/
+                                this.ReferantExceptionItemsSource.Collection.forEach((item: ExceptionReason) => {
+                                    if (item.IsNew == true) {
+                                    } else if (item.EntityPM.IsDirty == true) {
+                                    }
+                                });
 
                             }
                         }
                     }
                 });
             }
-        }
+        });
     }
     
     DeleteButtonClicked(item) {
@@ -208,6 +205,7 @@ export class ExceptionReason extends BaseComponent {
     public DataContext = this;
     public ObjectTableName: string = "Customs.ReferantException";
     public EntityPM: ReferantExceptionPM;
+    public IsNew: boolean=false;
     public parent: ReferantSpotlightDataTemplate;
     _StatusItems: KeyValuePair[] = [];
     constructor(entity: ReferantExceptionPM, Parent: ReferantSpotlightDataTemplate) {
