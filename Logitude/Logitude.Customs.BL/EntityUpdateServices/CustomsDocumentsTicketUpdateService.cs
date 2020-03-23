@@ -429,7 +429,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                                 if (customsDocumentPM != null)
                                 {
                                     LogMessagingUtil.Instance.AppendLine("customsDocumentPM DocumentStatusCode: " + customsDocumentPM.DocumentStatusCode);
-                                    if (customsDocumentPM.DocumentStatusCode == "1")
+                                    if (customsDocumentPM.DocumentStatusCode !="2")
                                     {
                                         status = "V";
                                     }
