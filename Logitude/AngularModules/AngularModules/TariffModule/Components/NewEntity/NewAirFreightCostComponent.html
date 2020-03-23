@@ -141,6 +141,27 @@
                                         <div></div>
                                     </td>
                                 </tr>
+                                <!--Tariff Product-->
+                                <tr class="FormFieldRow" *ngIf="EntityPM.TypeCode == 'AFC'">
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'TariffProductId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td>
+                                        <LogLov [ObjectFieldName]="'TariffProductId'"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [SelectedValue]="TariffProductId"
+                                                [DataContext]="DataContext"
+                                                [HideMaintenanceIcon]="true"
+                                                [LookUpTableName]="'TariffProduct'">
+                                        </LogLov>
+                                    </td>
+                                </tr>
+
+                                <tr style="height: 5px;">
+                                    <td colspan="3">
+                                        <div></div>
+                                    </td>
+                                </tr>
 
                                 <!-- Notes -->
                                 <tr style="height: 80px;">

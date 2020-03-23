@@ -2195,6 +2195,10 @@
     <Compile Include="Migrations\202003191030414_ChangeTariffProductsColumnName.Designer.cs">
       <DependentUpon>202003191030414_ChangeTariffProductsColumnName.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202003191407073_AddProductColumnToTariffTable.cs" />
+    <Compile Include="Migrations\202003191407073_AddProductColumnToTariffTable.Designer.cs">
+      <DependentUpon>202003191407073_AddProductColumnToTariffTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\202003030904524_WesamDBMigrationFixes.cs" />
     <Compile Include="Migrations\202003030904524_WesamDBMigrationFixes.Designer.cs">
@@ -3964,6 +3968,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202003191030414_ChangeTariffProductsColumnName.resx">
       <DependentUpon>202003191030414_ChangeTariffProductsColumnName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003191407073_AddProductColumnToTariffTable.resx">
+      <DependentUpon>202003191407073_AddProductColumnToTariffTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

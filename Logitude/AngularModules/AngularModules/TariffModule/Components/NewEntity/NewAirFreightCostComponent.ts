@@ -107,7 +107,7 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
 
         this.UIProperties.SetRequired("StartDate", this.ObjectTableName, this.StartDate == null)
         this.UIProperties.SetRequired("ExpirationDate", this.ObjectTableName, false);
-
+        
         if (this.EntityPM.TypeCode == "OFS") {
             this.UIProperties.SetVisibility("Surcharge1UOM", this.ObjectTableName, false);
             this.UIProperties.SetVisibility("Surcharge2UOM", this.ObjectTableName, false);
@@ -119,6 +119,11 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
             this.UIProperties.SetVisibility("Surcharge8UOM", this.ObjectTableName, false);
             this.UIProperties.SetVisibility("Surcharge9UOM", this.ObjectTableName, false);
             this.UIProperties.SetVisibility("Surcharge10UOM", this.ObjectTableName, false);
+        }
+
+        if (this.EntityPM.TypeCode == 'AFC') {
+            this.UIProperties.SetRequired("TariffProductId", this.ObjectTableName, true);
+            this.UIProperties.SetVisibility("TariffProductId", this.ObjectTableName, true);
         }
     }
 
@@ -496,6 +501,16 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
         }
     }
 
+    get TariffProductId() {
+        return this.EntityPM.TariffProductId;
+    }
+    set TariffProductId(value: string) {
+        if (this.EntityPM.TariffProductId != value) {
+            this.EntityPM.TariffProductId = value;
+            this.SetUIProperties();
+        }
+
+    }
     Validate(initial: boolean = false) {
         for (var index = 1; index <= 10; index++) {
             if (initial) {
