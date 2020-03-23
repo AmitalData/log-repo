@@ -18,5 +18,19 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             InterestBasesPeriodPM interestBasesPeriodPM = GetEntityPM(interestBasesPeriod);
             return interestBasesPeriodPM;
         }
+
+        public List<InterestBasesPeriodPM> GetAllInterestBasesPeriodPMs(int tenant)
+        {
+            InterestBasesPeriodRepository interestBasesPeriodRepository = new InterestBasesPeriodRepository(tenant);
+            List<InterestBasesPeriod> interestBasesPeriods = interestBasesPeriodRepository.GetAll(tenant).ToList();
+            List<InterestBasesPeriodPM> interestBasesPeriodPMs = new List<InterestBasesPeriodPM>();
+            for (int i = 0; i < interestBasesPeriods.Count(); i++)
+            {
+                InterestBasesPeriodPM interestBasesPeriodPM = GetEntityPM(interestBasesPeriods[i]);
+                interestBasesPeriodPMs.Add(interestBasesPeriodPM);
+            }
+
+            return interestBasesPeriodPMs;
+        }
     }
 }

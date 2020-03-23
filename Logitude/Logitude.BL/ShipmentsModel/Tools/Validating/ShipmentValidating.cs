@@ -25,6 +25,7 @@ using Simplog.Data.InvoiceModel;
 using Simplog.Data.InvoiceModel.Repositories;
 using Logitude.BL.InvoiceModel.EntityQueries;
 using Simplog.Data.ShipmentsModel;
+using Simplog.Data.QuoteModel;
 
 namespace Logitude.BL.ShipmentsModel.Tools.Validating
 {
@@ -650,12 +651,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                         myPartnerId_PM = entityPM.CustomerId;
                         myPartnerId_DB = entityPoco.CustomerId;
                         myPartnerText = TranslateTextsClass.Translate("Shipment.F.CustomerId", tenant) + ": " + entityPM.CustomerName;
-                        ValidateCreditLimitPartner(tenant, myAgentRepository, myCustomerRepository, myPartnerId_PM, myPartnerId_DB, myPartnerText, localCurrencyCode, isNewEntity);
+                        ValidateCreditLimitPartner(tenant, myAgentRepository, myCustomerRepository, myPartnerId_PM, myPartnerId_DB, myPartnerText, localCurrencyCode, isNewEntity, entityPM);
 
                         myPartnerId_PM = entityPM.AgentId;
                         myPartnerId_DB = entityPoco.AgentId;
                         myPartnerText = TranslateTextsClass.Translate("Shipment.F.AgentId", tenant) + ": " + entityPM.AgentName;
-                        ValidateCreditLimitPartner(tenant, myAgentRepository, myCustomerRepository, myPartnerId_PM, myPartnerId_DB, myPartnerText, localCurrencyCode, isNewEntity);
+                        ValidateCreditLimitPartner(tenant, myAgentRepository, myCustomerRepository, myPartnerId_PM, myPartnerId_DB, myPartnerText, localCurrencyCode, isNewEntity, entityPM);
                     }
                 }
             }
@@ -793,7 +794,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
             }
         }
 
-        private static void ValidateCreditLimitPartner(int tenant, AgentRepository myAgentRepository, CustomerRepository myCustomerRepository, string myPartnerId, string mydbPartnerId, string myPartnerText, string localCurrencyCode, bool isNewEntity)
+        private static void ValidateCreditLimitPartner(int tenant, AgentRepository myAgentRepository, CustomerRepository myCustomerRepository, string myPartnerId, string mydbPartnerId, string myPartnerText, string localCurrencyCode, bool isNewEntity, ShipmentPM entityPM)
         {
             if (!string.IsNullOrEmpty(myPartnerId))
             {
@@ -837,6 +838,26 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                                     {
                                         ActualBalance += myCustomer.CreditLimitOpenBalance.Value;
                                     }
+
+                                    if (isNewEntity && entityPM.IsBuildFromQuote)
+                                    {
+                                        if (entityPM.QuoteId != null)
+                                        {
+                                            IQuotesContext quotesContext = QuotesContext.GetContext(tenant);
+
+                                            double? quoteSaleLocalAmount = (from d in quotesContext.QuoteCharges
+                                                                            where d.QuoteId == entityPM.QuoteId
+                                                                            select d.SaleTotalAmountLocal).Sum();
+
+                                            if (quoteSaleLocalAmount != null)
+                                            {
+                                                ActualBalance += quoteSaleLocalAmount.Value;
+                                            }
+                                        }
+                                    }
+
+                                    LimitAmount = MethodHelper.Roundd(LimitAmount, 2);
+                                    ActualBalance = MethodHelper.Roundd(ActualBalance, 2);
 
                                     if (ActualBalance > LimitAmount)
                                     {

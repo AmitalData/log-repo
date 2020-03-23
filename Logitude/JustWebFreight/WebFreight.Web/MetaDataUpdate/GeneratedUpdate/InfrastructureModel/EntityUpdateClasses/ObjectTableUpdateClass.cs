@@ -119,7 +119,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Object Table",
-			      				    Code =  "3752",
+			      				    Code =  "d990",
 			      				    Name =  "ObjectTable",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Infrastructure",
@@ -695,6 +695,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
 	    {   
+
+		   ObjectTable ObjectTableObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ObjectTable" && d.Tenant == 0).FirstOrDefault();
+		   List<ObjectField> ObjectTableObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "ObjectTable").ToList();
+		       
+	      
+
+	         Screen ObjectTableObjectTableHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ObjectTable.HeaderScreen", Name = "ObjectTableHeaderScreen", ObjectTableId = ObjectTableObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      	
+		    ObjectTableObjectTable.HeaderScreenId = ObjectTableObjectTableHeaderScreenScreen0.Id;
+		    ObjectTableObjectTable.HeaderScreenCode = ObjectTableObjectTableHeaderScreenScreen0.Code;
+
+	   		  
 
 	    }
 

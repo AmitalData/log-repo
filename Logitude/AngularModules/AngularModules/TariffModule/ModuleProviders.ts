@@ -4,6 +4,8 @@ import { TariffListService } from './Services/StandardLists/TariffListService';
 import { TariffPMService } from './Services/StandardPMs/TariffPMService';
 import { TariffDomainService } from './Services/TariffDomainService';
 import { TariffMenuButtonsHandler } from './Components/MenuButtons/TariffMenuButtonsHandler';
+import { TariffProductListService } from './Services/StandardLists/TariffProductListService';
+import { TariffProductPMService } from './Services/StandardPMs/TariffProductPMService';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -15,9 +17,11 @@ export class ModuleProviders {
             // List
             case "TariffListService": { myResult = new TariffListService(); break; }
             case "TariffTypeListService": { myResult = new TariffTypeListService(); break; }
+            case "TariffProductListService": { myResult = new TariffProductListService(); break; }
             
             // PM
             case "TariffPMService": { myResult = new TariffPMService(); break; }
+            case "TariffProductPMService": { myResult = new TariffProductPMService(); break; }
 
            // DomainService
             case "TariffDomainService": { myResult = new TariffDomainService(); break; }

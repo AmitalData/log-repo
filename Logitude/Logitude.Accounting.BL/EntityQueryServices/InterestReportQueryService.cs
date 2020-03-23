@@ -13,11 +13,11 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 {
     public partial class InterestReportQueryService
     {
-        public decimal GetClosedBalanceOfLastInvoicedOrClosedWithoutInvoiceInterestReport(int tenant)
+        public decimal GetClosedBalanceOfLastInvoicedOrClosedWithoutInvoiceInterestReport(int tenant,string glaccountId)
         {
             decimal closedBalance = 0;
             InterestReportRepository interestReportRepository = new InterestReportRepository(tenant);
-            closedBalance = interestReportRepository.GetClosedBalanceOfLastInvoicedOrClosedWithoutInvoiceInterestReport(tenant);
+            closedBalance = interestReportRepository.GetClosedBalanceOfLastInvoicedOrClosedWithoutInvoiceInterestReport(tenant, glaccountId);
             return closedBalance;
         }
         public override void GetComposition(EntityKeyFields entityKeys, InterestReportPM entityPM)

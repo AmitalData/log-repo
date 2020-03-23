@@ -35,6 +35,8 @@ namespace Logitude.IntegrationTest.Shipment
         }
         public static void VarsMap()
         {
+            ShipmentVariables.ShipmentId = vars.AWBShipmentId;
+            ShipmentVariables.ShipmentNumber = vars.ShipmentNumber;
             ShipmentVariables.CurrencyEURId = vars.CurrencyEURId;
             ShipmentVariables.IncotermLDEId = vars.IncotermLDEId;
             ShipmentVariables.MeasurmentGRWTId = vars.MeasurementGRWTId;

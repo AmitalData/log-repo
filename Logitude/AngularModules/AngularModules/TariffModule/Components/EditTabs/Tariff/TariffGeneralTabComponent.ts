@@ -101,6 +101,9 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
                         }
                     }
                 }
+                if (this.EntityPM.TypeCode == "AFC") {
+                    this.UIProperties.SetRequired("TariffProductId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.TariffProductId));
+                }
             }
         }); 
     }
@@ -428,6 +431,16 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
         if (this.EntityPM.ContainerType5Id != value) {
             this.EntityPM.ContainerType5Id = value;
             this.ValidateContainers();
+        }
+    }
+
+    get TariffProductId() {
+        return this.EntityPM.TariffProductId;
+    }
+    set TariffProductId(value: string) {
+        if (this.EntityPM.TariffProductId != value) {
+            this.EntityPM.TariffProductId = value;
+            this.SetUIProperties();
         }
     }
 
