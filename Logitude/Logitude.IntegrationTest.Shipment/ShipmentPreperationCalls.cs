@@ -37,7 +37,7 @@ namespace Logitude.IntegrationTest.Shipment
         {
             ShipmentVariables.CurrencyEURId = vars.CurrencyEURId;
             ShipmentVariables.IncotermLDEId = vars.IncotermLDEId;
-            //    ShipmentVariables.MeasurmentGRWTId = await GetMeasurmentId("GRWT");
+            ShipmentVariables.MeasurmentGRWTId = vars.MeasurementGRWTId;
             //    var chargeGroup = new ChargesGroupList();
             //    chargeGroup = await GetChargeGroup("COMM");
             //    ShipmentVariables.ChargeGroupCOMMId = chargeGroup.Id;
