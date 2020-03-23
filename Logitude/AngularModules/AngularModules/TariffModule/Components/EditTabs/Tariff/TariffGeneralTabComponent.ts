@@ -102,7 +102,7 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
                     }
                 }
                 if (this.EntityPM.TypeCode == "AFC") {
-                    this.UIProperties.SetEnabled("TariffProductId", this.ObjectTableName, true);
+                    this.UIProperties.SetEnabled("TariffProductId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.TariffProductId));
                 }
             }
         }); 

@@ -91,7 +91,7 @@
                     </tr>
 
                     <!-- Tariff Product -->
-                    <tr class="FormFieldRow">
+                    <tr class="FormFieldRow" *ngIf="EntityPM.TypeCode == 'AFC'">
                         <td>
                             <LogLabel [ObjectFieldName]="'TariffProductId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                         </td>

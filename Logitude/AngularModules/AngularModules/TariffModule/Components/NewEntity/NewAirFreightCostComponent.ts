@@ -122,8 +122,7 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
         }
 
         if (this.EntityPM.TypeCode == 'AFC') {
-            this.UIProperties.SetRequired("TariffProductId", this.ObjectTableName, true);
-            this.UIProperties.SetVisibility("TariffProductId", this.ObjectTableName, true);
+            this.UIProperties.SetRequired("TariffProductId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.TariffProductId));
         }
     }
 
