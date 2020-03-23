@@ -50,11 +50,12 @@ export class FieldTemplateComponent {
         if (this.SpotLightViewContainerRef) {
             this.SpotLightViewContainerRef.clear();
 
-            var myComponentPath = "./Customs/Components/Spotlight/CustomsSpotlightComponent";
+            var myComponentPath = "./Customs/Components/Spotlight/ReferantSpotlightDataTemplate";
             SessionLocator.DynamicLoader.Load(myComponentPath, this.SpotLightViewContainerRef)
                 .then(cmpRef => {
-                    cmpRef.instance.Run(this.Entity.Id);
+                    cmpRef.instance.Run(this.Entity);
                 });
+
         }
 
         else {

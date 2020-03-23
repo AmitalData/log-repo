@@ -10,12 +10,12 @@ import { BaseRequestsSheetMassaging } from '../../../CustomsModules/CustomsReque
 import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ReferantExceptionPM } from '../../EntityPMs/ReferantExceptionPM';
 import { ObservableCollection } from '../../../Infrastructure/Utilities/ObservableCollection';
-import { KeyValuePair } from '../../../CustomsModules/CustomsCourier/Components/CourierWorkSheet/CourierWorksheetComponent';
 import { ReferantExceptionPMService } from '../../Services/StandardPMs/ReferantExceptionPMService';
 import { EntityResourceService } from "../../../Infrastructure/Services/EntityResourceService";
 import { ExceptionReasonPM } from '../../EntityPMs/ExceptionReasonPM';
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
+import { KeyValuePair } from '../../../CustomsModules/CustomsCourier/Components/CourierWorkSheet/CourierWorksheetComponent';
 
 @Component({
     moduleId: module.id,
@@ -65,6 +65,8 @@ export class ReferantSpotlightDataTemplate
         this.ShowBusyIndicator = true;
         this.SplitExceptionList(this.EntityPM.ExceptionReasonsList);
         this.getData(this.ExceptionsList);
+        this.ShowBusyIndicator = false;
+
     }
 
     private ReferantExceptionListPM : ReferantExceptionPM[] = [];
@@ -92,15 +94,15 @@ export class ReferantSpotlightDataTemplate
     private SplitExceptionList(exception: string) {
         if (exception != null) {
             this.ExceptionsList = exception.split(',');
-        } else {
-            this.Add();
-        }
+            this.ExceptionsList.shift();
+        } 
     }
-    private BuildExceptionReasonsList(ExceptionsList: string[]) {
-        var newValue: string;
-        for (let item of ExceptionsList) {
-            newValue = newValue + "," + item;
-        }
+    private BuildExceptionReasonsList() {
+        var newValue: string="";
+        this.ReferantExceptionItemsSource.Collection.forEach((item: ExceptionReason) => {
+            newValue = newValue + "," + item.EntityPM.ExceptionReasonsCode;
+        });
+        this.EntityPM.ExceptionReasonsList = newValue;
     }
 
     public get FollowUpDate() { return this.EntityPM.FollowUpDate; }
@@ -129,58 +131,47 @@ export class ReferantSpotlightDataTemplate
     isValid: boolean;
     inValid: boolean;
     FIELD_IS_REQUIERD: string;
-
-    OkButtonClicked() {
-        this.ValidationErrorsList = [];
-        var errors: string[] = [];
-        this.isValid = true;
-        this.inValid = false;
+    existCodeList: string[] = [];
+    errors: string[] = [];
+    CheckForDuplicate() {
         this.ReferantExceptionItemsSource.Collection.forEach((item: ExceptionReason) => {
             if (AppTool.IsNullOrEmpty(item.ExceptionReasonsCode)) {
-                errors.push(this.FIELD_IS_REQUIERD.replace("%FieldName", TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CourierPendingReasonCode")));
-                this.inValid = true;
-                this.isValid = false;
-            }
-            else {
-
-                var existCodeList: string[] = [];
-                this.ReferantExceptionItemsSource.Collection.forEach((item: ExceptionReason) => {
-                    if (existCodeList != null && item != null && existCodeList.indexOf(item.ExceptionReasonsCode)) {
-                        errors.push("כבר קיימת רשומה עם קוד חריג  " + item.ExceptionReasonsCode);
-                        this.inValid = true;
-                        this.isValid = false;
-                    }
-                    existCodeList.push(item.ExceptionReasonsCode);
-                });
-            }
-            if (errors.length != 0) {
-                this.ValidationErrorsList = errors;
-            }
-            if (this.inValid) {
-                this.isValid = false;
-                var confirm = new ConfirmWindow();
-                confirm.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
-                confirm.WindowClosed.subscribe((event: any) => {
-                    if (confirm.Yes) {
-                        if (errors.length == 0) {
-                            var isSave = 1;
-                            this.BuildExceptionReasonsList(this.ExceptionsList);
-                            if (isSave == 1) {
-                                /*this._DeclarationReferantDataPMService.update(this.EntityPM).subscribe((response: ServiceResponse) => {
- 
-                                 });*/
-                                this.ReferantExceptionItemsSource.Collection.forEach((item: ExceptionReason) => {
-                                    if (item.IsNew == true) {
-                                    } else if (item.EntityPM.IsDirty == true) {
-                                    }
-                                });
-
-                            }
-                        }
-                    }
-                });
+                this.errors.push(this.FIELD_IS_REQUIERD.replace("%FieldName", TextCodeTranslator.Translate("Customs.DeclarationReferantData.O.ExceptionReasonsCode")));
+            } else {
+                if (this.existCodeList.indexOf(item.ExceptionReasonsCode) >= 0) {
+                    this.errors.push("כבר קיימת רשומה עם קוד חריג  " + item.ExceptionReasonsCode);
+                } else {
+                    this.existCodeList.push(item.ExceptionReasonsCode);
+                }
             }
         });
+    }
+    OkButtonClicked() {
+        this.ValidationErrorsList = [];
+        this.errors = [];
+        this.existCodeList = [];
+        this.CheckForDuplicate()
+        if (this.errors.length != 0) {
+            this.ValidationErrorsList = this.errors;
+        }
+        if (this.errors.length == 0) {
+            this.ShowBusyIndicator = true;
+            this.BuildExceptionReasonsList();
+            this._DeclarationReferantDataPMService.update(this.EntityPM).subscribe((response: ServiceResponse) => {
+
+
+                 });
+            this.ReferantExceptionItemsSource.Collection.forEach((item: ExceptionReason) => {
+                if (item.IsNew == true) {
+                    this.referantExceptionPmService.insert(item.EntityPM).subscribe((response: ServiceResponse) => {
+                    });
+                } else if (item.EntityPM.IsDirty == true) {
+                    this.referantExceptionPmService.update(item.EntityPM).subscribe((response: ServiceResponse) => {
+                    });
+                }
+            });
+        }
+        this.ShowBusyIndicator = false;
     }
     
     DeleteButtonClicked(item) {
@@ -191,7 +182,6 @@ export class ReferantSpotlightDataTemplate
             confirmWindow.Height = 150;
             confirmWindow.Show(msg);
             confirmWindow.WindowClosed.subscribe((event: any) => {
-
                 if (confirmWindow.Yes) { // YES
                     this.ReferantExceptionItemsSource.Remove(item);
                     this.ExceptionsList = this.ExceptionsList.filter(e => e !== item.ExceptionReasonsCode);
@@ -239,7 +229,6 @@ export class ExceptionReason extends BaseComponent {
     set Status(value: string) {
         if (this.EntityPM.Status != value) {
             this.EntityPM.Status = value;
-
         }
     }
     get ExceptionReasonsCode() { return this.EntityPM.ExceptionReasonsCode; }
@@ -272,14 +261,8 @@ export class ExceptionReason extends BaseComponent {
 
         if (this.ExceptionReason != value) {
             this.ExceptionReason = value;
-        }
-        if (!AppTool.IsNullOrEmpty(value)) {
-       //     this.CourierPendingReasonName = value.LocalName;
-
-
         } else {
             this.ExceptionReasonsCode = null;
-          //  this.CourierPendingReasonName = null;
         }
     }
 
