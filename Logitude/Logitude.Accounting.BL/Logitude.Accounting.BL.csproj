@@ -663,6 +663,7 @@
     <Compile Include="InterestEntityQueryServices\InterestQueryServises\InterestARPaymentQueryService.cs" />
     <Compile Include="InterestEntityQueryServices\InterestQueryServises\InterestARInvoiceQueryService.cs" />
     <Compile Include="InterestEntityQueryServices\InterestQueryServises\InterestJournalQueryService.cs" />
+    <Compile Include="InterestService\InterestService.CS" />
     <Compile Include="TestService\BatchTestService.cs" />
     <Compile Include="Utils\AccountingLogger.cs" />
     <Compile Include="Utils\CardGLAccountConnectBatch.cs" />

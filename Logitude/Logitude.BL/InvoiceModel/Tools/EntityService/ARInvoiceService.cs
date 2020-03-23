@@ -44,9 +44,9 @@ using Logitude.BL.ShipmentsModel.EntityPMs;
 using System.Text;
 using System.IO;
 using Logitude.BL.Resolvers;
-using WebFreight.Web.AccountingModel.DomainServices;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.BL.EntityUpdateServices;
 
 namespace Logitude.BL.InvoiceModel.Tools.EntityService
 {
@@ -300,7 +300,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         private void UpdateInterestReportFields(ARInvoicePM theEntityPM)
         {
-            AccountingDomainService interestTransactionQuery = new AccountingDomainService();
+             
             InterestReport interestReport = InterestReportRepository.GetSingle(theEntityPM.InvoiceEntities[0].EntityId, tenant);
             InterestReportPM interestReportPM = new InterestReportPM()
             {
@@ -325,7 +325,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 InvoiceAmount = (decimal?) theEntityPM.AmountInLocalCurrency,
 
             };
-            interestTransactionQuery.PutConfirmCreateInvoice(interestReportPM, tenant, myAccountingContext);
+             PutConfirmCreateInvoice(interestReportPM, tenant, myAccountingContext);
 
         }
 
@@ -4067,6 +4067,101 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     }
                 }
             }
+        }
+
+
+        public InterestReportPM PutConfirmCreateInvoice(InterestReportPM interestReportPM, int Tenant, IAccountingContext MainContext)
+        {
+            if (MainContext == null)
+            {
+                MainContext = AccountingContext.GetContext(Tenant);
+            }
+
+            ContactQuery contactQuery = new ContactQuery(Tenant);
+            ContactPM contact = GetLoggedContact(Tenant) ?? new ContactPM();
+            bool showLocals = !contact.DontShowLocal;
+            InterestReportUpdateService InterestReportUpdate = new InterestReportUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
+            InterestTransactionUpdateService InterestTransactionUpdate = new InterestTransactionUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
+
+            interestReportPM.CloseBalance = interestReportPM.OpenBalance != null ? interestReportPM.OpenBalance : 0 + interestReportPM.TotalAmount != null ? interestReportPM.TotalAmount : 0;
+            if (interestReportPM.InterestReportStatusCode != "2")
+            {
+                interestReportPM.InterestReportStatusCode = "4";
+            }
+            if (interestReportPM.InterestReportStatusCode != null)
+            {
+                InterestReportStatuseRepository interestReportStatuseRepository = new InterestReportStatuseRepository(Tenant);
+                InterestReportStatuse interestReportStatuse = interestReportStatuseRepository.GetSingle(interestReportPM.InterestReportStatusCode);
+                interestReportPM.InterestReportStatusName = showLocals ? interestReportStatuse.LocalName : interestReportStatuse.EnglishName;
+                interestReportPM.InterestReportStatusLocalName = showLocals ? interestReportStatuse.LocalName : interestReportStatuse.EnglishName;
+            }
+
+            interestReportPM.ChangeSetOp = ChangeSetOperation.Update;
+            InterestReportUpdate.Update(interestReportPM, true);
+            List<InterestTransactionPM> interestTransactionPMs = GetAllInterestTransactionForReport(interestReportPM.Id, Tenant, MainContext).ToList();
+
+            for (int i = 0; i < interestTransactionPMs.Count; i++)
+            {
+                interestTransactionPMs[i].IsClosed = true;
+                interestTransactionPMs[i].InterestReportId = interestReportPM.Id;
+                interestTransactionPMs[i].ChangeSetOp = ChangeSetOperation.Update;
+                InterestTransactionUpdate.Update(interestTransactionPMs[i], true);
+            }
+
+            return interestReportPM;
+        }
+
+        private IQueryable<InterestTransactionPM> GetAllInterestTransactionForReport(string InterestReportId, int Tenant, IAccountingContext MyContext)
+        {
+            IQueryable<InterestTransactionPM> interestTransactionLists = (from a in MyContext.InterestReportLines
+                                                                          where a.Tenant == Tenant && a.InterestReportId == InterestReportId
+                                                                          select new InterestTransactionPM()
+                                                                          {
+                                                                              Id = a.InterestTransaction.Id,
+
+                                                                              Tenant = a.Tenant,
+
+                                                                              CurrencyId = a.InterestTransaction.CurrencyId,
+
+                                                                              InterestEntityTypeCode = a.InterestTransaction.InterestEntityTypeCode,
+
+                                                                              EntityId = a.InterestTransaction.EntityId,
+
+                                                                              LocalAmount = a.InterestTransaction.LocalAmount,
+
+                                                                              ForeignAmount = a.InterestTransaction.ForeignAmount,
+
+                                                                              InterestValueDate = a.InterestTransaction.InterestValueDate,
+
+                                                                              InterestReportId = a.InterestTransaction.InterestReportId,
+
+                                                                              IsClosed = a.InterestTransaction.IsClosed,
+
+                                                                              GLAccountId = a.InterestTransaction.GLAccountId,
+
+                                                                              CreateDateTime = a.InterestTransaction.CreateDateTime,
+
+                                                                              UpdateDateTime = a.InterestTransaction.UpdateDateTime,
+
+                                                                              OriginalEntityLineNumber = a.InterestTransaction.OriginalEntityLineNumber,
+
+                                                                              SearchFields = a.InterestTransaction.SearchFields,
+
+                                                                          });
+            return interestTransactionLists;
+
+        }
+        public static Func<int, ContactPM> OverrideGetLoggedContactFunc { get; set; }
+        public bool SuppressFetchOpenReconcilation { get; internal set; }
+
+        private static ContactPM GetLoggedContact(int tenant)
+        {
+            if (OverrideGetLoggedContactFunc != null)
+            {
+                return OverrideGetLoggedContactFunc(tenant);
+            }
+            ContactPM loggedcontact = LoggedContactResolver.GetLoggedContact(tenant);
+            return loggedcontact;
         }
     }
 }
