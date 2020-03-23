@@ -319,6 +319,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool canToAdd ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool CanToAdd  
+	   {
+	    
+	     get
+		{
+		   return canToAdd;
+		 }
+		 set
+		 {
+		   if(canToAdd != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CanToAdd",OldValue=canToAdd,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   canToAdd=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
