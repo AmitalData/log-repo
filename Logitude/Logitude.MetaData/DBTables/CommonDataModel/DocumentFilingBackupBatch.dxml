@@ -19,9 +19,8 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="BatchNumber"
-    Type="varchar"
-    Size="15">
+    Name="CreateDateTime"
+    Type="datetime">
     <Constraints
       Nullable="false" />
   </Column>
@@ -39,22 +38,17 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="CreateDateTime"
-    Type="datetime">
+    Name="BatchNumber"
+    Type="varchar"
+    Size="15">
     <Constraints
       Nullable="false" />
   </Column>
   <Column
-    Name="FromDatetime"
-    Type="datetime">
+    Name="TotalFailed"
+    Type="int">
     <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="ToDatetime"
-    Type="datetime">
-    <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="TotalDocuments"
@@ -69,15 +63,21 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="TotalFailed"
-    Type="int">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
     Name="IncludeBackedUp"
     Type="bit">
     <Constraints
       Nullable="false" />
+  </Column>
+  <Column
+    Name="FromDateTime"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ToDateTime"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
   </Column>
 </Table>

@@ -1958,6 +1958,7 @@ namespace MeatadataGeneratorTool
         {
             if (!string.IsNullOrEmpty(App.DirectOpenPath))
             {
+                string entityName = Path.GetFileName(App.DirectOpenPath).Replace(".lxml", string.Empty);
                 string dxmlFilePath = App.DirectOpenPath.Replace("EntityFiles", "DBTables").Replace("lxml", "dxml");
                 List<XElement> indexElements = new List<XElement>();
                 List<XElement> uniqueConstraintElements = new List<XElement>();
@@ -2136,7 +2137,16 @@ namespace MeatadataGeneratorTool
 
                         relationElement.SetAttribute("ForeignKeyColumn", foreignKeyColumn);
 
-                        ForeignEntityData foreignEntityData = GetForeignEntityData(field.ForeignEntity);
+                        ForeignEntityData foreignEntityData;
+
+                        if(field.ForeignEntity.ToLower() == entityName.ToLower())
+                        {
+                            foreignEntityData = GetForeignEntityData(table);
+                        }
+                        else
+                        {
+                            foreignEntityData = GetForeignEntityData(field.ForeignEntity);
+                        }
 
                         if (foreignEntityData != null)
                         {
@@ -2444,6 +2454,27 @@ namespace MeatadataGeneratorTool
             return null;
         }
 
+        private static ForeignEntityData GetForeignEntityData(ObjectTableViewModel table)
+        {
+            if (table != null)
+            {
+                string referencedTable = table.DBTableName;
+                string referencedTableSchema = table.DxmlDatabaseSchemaCode;
+
+                string[] primaryKeyFields = table.ObsList.Where(f => f.IsDBField && f.IsPrimaryKey).Select(f => f.FieldName).ToArray();
+                string referencedColumn = primaryKeyFields.Length > 0 ? string.Join(",", primaryKeyFields) : null;
+
+                return new ForeignEntityData
+                {
+                    ReferencedTable = referencedTable.Contains("Customs.") ? referencedTable.Split('.')[1] : referencedTable,
+                    ReferencedTableSchema = referencedTableSchema,
+                    ReferencedColumn = referencedColumn
+                };
+            }
+
+            return null;
+        }
+        
         private static string GetForeignEntityLXMLFilePath(string foreignEntity)
         {
             return App.LXMLFilesPaths.Where(l => Path.GetFileName(l).ToLower() == (foreignEntity.ToLower() + ".lxml")).FirstOrDefault();
