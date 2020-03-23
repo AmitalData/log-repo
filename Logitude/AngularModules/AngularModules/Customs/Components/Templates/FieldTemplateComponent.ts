@@ -5,6 +5,8 @@ import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResp
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 import { DeclarationRemarksService } from '../../../Common/Services/ExtendedPMs/DeclarationRemarksService';
 import { ListComponentArgs } from '../../../Infrastructure/Args';
+import { AmitalGatewayUtil } from '../../../Infrastructure/Utilities/AmitalGatewayUtil';
+import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
 
 @Component({
     moduleId: module.id,
@@ -139,6 +141,23 @@ export class FieldTemplateComponent {
                     });
             }
         }
+    }
+
+    ShowCFIFILEMMoveToQueueScreen() {
+        if (AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
+            AmitalGatewayUtil.Instance.ShowCFIFILEMMoveToQueueScreen(
+                this.Entity.CustomFileNo,
+                this.Entity.Id,
+                "ShowCFIFILEMMoveToQueueScreen");
+
+        } else {
+            var myMessageWindow = new MessageWindow();
+            let mess = "ShowCFIFILEMMoveToQueueScreen -" + this.Entity.CustomFileNo;
+            myMessageWindow.Show(mess);
+
+        }
+
+
     }
 
     public EditEntity(objectTableName: string, entityId: string, windowTitle: string, defaultSelectedTabCode: string) {
