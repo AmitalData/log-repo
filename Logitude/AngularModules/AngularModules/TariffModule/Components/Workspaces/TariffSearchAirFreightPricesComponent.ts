@@ -1008,7 +1008,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
             chargeItem.CostMinAmount = item.CostMinAmount;
             chargeItem.SaleMeasurementId = item.SaleMeasurementId;
             chargeItem.SaleCurrencyId = item.SaleCurrencyId;
-            chargeItem.SaleUnitPrice = item.SaleUnitPrice;
+            //chargeItem.SaleUnitPrice = item.SaleUnitPrice;
             chargeItem.ChargesGroupCode = item.ChargesGroupCode;
             this.FatherComponent.ItemsSource.Insert(chargeItem);
             chargeItem.ComputeCostInSalePrice();
@@ -1068,7 +1068,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                 chargePM.SaleCurrencyId = item.CurrencyId;
                 chargePM.SaleCurrencyCode = this.FatherComponent.GetCurrencyCode(item.CurrencyId);
                 chargePM.SaleExchangeRate = this.FatherComponent.GetCurrencyRate(item.CurrencyId);
-                chargePM.SaleUnitPrice = chargePM.CostUnitPrice;
+                //chargePM.SaleUnitPrice = chargePM.CostUnitPrice;
                 chargePM.VendorId = item.SellerId;
                 chargePM.VendorName = item.SellerName;
                 chargePM.IsCostAllIn = item.IsAllIn;
