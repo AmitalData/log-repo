@@ -45,11 +45,20 @@ namespace Logitude.UnitTest.Accounting.UniTests.InterestReport
             InterestReportLinesByDateCreationParams interestReportLinesByDateCreationParams = new InterestReportLinesByDateCreationParams(interestReportPM, 
                 interestTransactionPMs, gLAccountInterestPeriodPMs, interestBasesPeriodPMs);
             List<InterestReportLinesByDatePM> interestReportLinesByDatePMs = interestReportLinesByDateCreationService.CreateInterestReportLinesByDate(interestReportLinesByDateCreationParams);
-           
-           
+
+            AssertResults(resultInterestReportLinesByDatePMs, interestReportLinesByDatePMs);
+
 
         }
 
+        private void AssertResults(List<InterestReportLinesByDatePM> expectedList, List<InterestReportLinesByDatePM> actualList)
+        {
+            Assert.AreEqual(expectedList.Count, actualList.Count);
+            expectedList = expectedList.OrderByDescending(d => d.ToDate).ToList();
+            for(int i = 0; i < expectedList.Count; i++)
+            {
 
+            }
+        }
     }
 }
