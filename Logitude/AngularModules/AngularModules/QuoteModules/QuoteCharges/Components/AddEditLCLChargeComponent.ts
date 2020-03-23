@@ -534,8 +534,7 @@ export class AddEditLCLChargeComponent extends BaseComponent implements OnDestro
             if (confirmWindow.Yes) {
                 this.DataContext.TariffId = null;
                 this.DataContext.TariffNumber = null;
-                this.DataContext.TariffVersion = null;
-                this.DataContext.SetUIProperties();
+                //this.DataContext.SetUIProperties();
                 this.CurrentSession.CloseCurrentWindowEmit("OK");
             }
             if (confirmWindow.No) {

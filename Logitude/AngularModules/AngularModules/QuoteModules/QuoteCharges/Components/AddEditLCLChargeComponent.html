@@ -335,7 +335,7 @@
                                         </ng-template>
                                     </log-header-template>
                                     <ng-template let-item>
-                                        <log-cell-template id="{{ 'CostPrice' | IdGeneratorPipe}}" #logcelltemplate [IsEnabled]="item.IsEnabled_CostUnitPrice|| item.TariffId != null">
+                                        <log-cell-template id="{{ 'CostPrice' | IdGeneratorPipe}}" #logcelltemplate [IsEnabled]="item.IsEnabled_CostUnitPrice">
                                             <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: left;" class="TextTrimming" [attr.title]="item.CostUnitPrice | NumbersPipe:'N2'">
                                                 <table>
                                                     <tr>
