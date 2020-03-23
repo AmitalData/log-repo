@@ -392,6 +392,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             }
         }
 
+ 
         private void setAccountingTypeCodeByChartofAccountTypeCode(GLAccountPM entityPM)
         {
            switch (entityPM.ChartOfAccountsTypeCode)
@@ -413,8 +414,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     }
             }
         }
-
-
+ 
         protected override void OnUpdating(GLAccountPM entityPM, GLAccount entityPOCO)
         {
 
