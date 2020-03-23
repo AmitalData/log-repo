@@ -1072,9 +1072,9 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                 chargePM.CostUnitPrice = AppTool.Round(item.ActualPrice, 3);
                 chargePM.SaleMeasurementId = item.UnitOfMesurmentId;
                 chargePM.SaleMeasurementCode = item.UnitOfMesurmentCode;
-                chargePM.SaleCurrencyId = item.CurrencyId;
-                chargePM.SaleCurrencyCode = this.FatherComponent.GetCurrencyCode(item.CurrencyId);
-                chargePM.SaleExchangeRate = this.FatherComponent.GetCurrencyRate(item.CurrencyId);
+                chargePM.SaleCurrencyId = this.QuotePM.SaleCurrencyId;
+                chargePM.SaleCurrencyCode = this.FatherComponent.GetCurrencyCode(this.QuotePM.SaleCurrencyId);
+                chargePM.SaleExchangeRate = this.FatherComponent.GetCurrencyRate(this.QuotePM.SaleCurrencyId);
                 //chargePM.SaleUnitPrice = chargePM.CostUnitPrice;
                 chargePM.VendorId = item.SellerId;
                 chargePM.VendorName = item.SellerName;
