@@ -30,6 +30,8 @@ import { CardListService } from '../../../Common/Services/StandardLists/CardList
 import { CardList } from '../../../Common/EntityLists/CardList';
 import { GLAccountPMService } from '../../Services/StandardPMs/GLAccountPMService';
 import { GLAccountPM } from '../../EntityPMs/GLAccountPM';
+import { CommonDomainService } from '../../../Common/Services/CommonDomainService';
+import { VatTypePercentagePM } from '../../../Common/EntityPMs/VatTypePercentagePM';
 
 export class InterestReportMenuButtonsHandler extends BaseComponent  {
     public EntityPM: InterestReportPM;
@@ -217,16 +219,22 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
             _ARInvoiceLinePM.LocalDescription = "חישוב ריבית לתאריך" + + this.getDateString(this.EntityPM.InterestCalculationDate);
         _ARInvoiceLinePM.ChargesTypeId = this.chargesTypeList? this.chargesTypeList.Id:null;
         _ARInvoiceLinePM.VatTypeId =this.cardList.VatTypeId; 
-        _ARInvoiceLinePM.GLAccountId = this.EntityPM.GLAccountId;
+         _ARInvoiceLinePM.GLAccountId = this.EntityPM.GLAccountId;
         _ARInvoiceLinePM.ForiegnExchangeRate = _ARInvoiceLinePM.ForiegnCurrencyAmount / _ARInvoiceLinePM.LocalCurrencyAmount;
          var objectTable = window.ObjectTables.filter(d => d.Name === "InterestReport")[0];
         var objectTableId = objectTable.Id;
         _ARInvoiceEntityPM.ObjectTableId = objectTableId;
         _ARInvoicePM.InvoiceEntities.push(_ARInvoiceEntityPM);
-        _ARInvoicePM.InvoiceLines.push(_ARInvoiceLinePM);
+        this.getVatTypePercentegeListByDates().then(res => {
+            _ARInvoiceLinePM.VatPercentage = this.GetVatTypePercentage(_ARInvoiceLinePM.VatTypeId);
+            this.GetVatTypeName( _ARInvoiceLinePM.VatTypeId).then(res => {
+                _ARInvoiceLinePM.VatTypeName = this.VatTypeName;
+            _ARInvoicePM.InvoiceLines.push(_ARInvoiceLinePM);
+        }); 
+        }); 
     }); 
         return _ARInvoicePM;
-    }
+  }
  
   public  getDateString(DateTime: Date): string {
         var month = new Date(DateTime).getMonth();
@@ -243,6 +251,56 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
             this.BillToPartnerTypeId = selected.PartnerTypeId;
         }
     }
+
+    private VatTypePercentagesList: VatTypePercentagePM[] = [];
+    getVatTypePercentegeListByDates() {
+        return new Promise(resolve => {
+        var loadingDate = this._ARInvoicePM.InvoiceDate;
+        if (loadingDate == null) {
+            loadingDate = DateTool.GetCurrentDateAsUtc();
+        }
+        var myService: CommonDomainService = new CommonDomainService();
+        myService.GetVatTypePercentagePMByDate(loadingDate).subscribe((myResponse2: ServiceResponse) => {
+            if (!myResponse2.HasError) {
+                this.VatTypePercentagesList = myResponse2.Result;
+                resolve(myResponse2.Result);
+             }
+             else {
+                 reject();
+             }
+        });
+    });
+    }
+public VatTypeName:string;
+   public GetVatTypeName(vatTypeId: string){
+        return new Promise(resolve => {
+        var myVatTypeListService: VatTypeListService = new VatTypeListService();
+
+        myVatTypeListService.getSingleFromCache(vatTypeId).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                var list: VatTypeList = myResponse.Result;
+                if (list != null) {
+                    this.VatTypeName = list.EnglishName;
+                    resolve(myResponse.Result);
+                 }
+                 else {
+                    reject();
+                }
+            }
+        });
+    });
+    }
+
+    GetVatTypePercentage(vatTypeId: string) {
+        var myResult: number = null;
+
+        var vatTypePercentagePM = this.VatTypePercentagesList.filter(d => d.VatTypeId == vatTypeId)[0];
+        if (vatTypePercentagePM != null) {
+            myResult = vatTypePercentagePM.Percentage;
+        }
+
+        return myResult;
+    }
     private billToPartnerTypeId: string;
     get BillToPartnerTypeId() { return this.billToPartnerTypeId; }
     set BillToPartnerTypeId(newValue: string) {
@@ -255,6 +313,7 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
 
         var filters = new ApiQueryFilters(true);
         filters.addAdditionalFilter("Code", "INT", null, null, "Equals", false, false, false, "string");
+        filters.addAdditionalFilter("Tenant", this.TenantPM.Id, null, null, "Equals", false, false, false, "string");
         this.CurrentSession.StartBusyIndicatorLoading();
         this.ChargesTypePMService.getByFilters(filters).subscribe((myResponse: ServiceResponse) => {
             this.CurrentSession.StopBusyIndicator();
@@ -330,19 +389,7 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
  
  
                     else {
-                       this.myGLAccountPMService.get(list.GLAccountId).subscribe((myResponse: ServiceResponse) => {
-                            if (!myResponse.HasError) {
-                                var glaccount:GLAccountPM = myResponse.Result;
-                                if (glaccount != null) {
-                                    if (glaccount.IsMultiCurrency == true) {
-                                        this._ARInvoicePM.InvoiceCurrencyId  = null;
-                                    }
-                                    else {
-                                        this._ARInvoicePM.InvoiceCurrencyId =glaccount.CurrencyId;
-                                    }
-                                }
-                            }
-                        });
+                      
                     }
 
                     if (!AppTool.IsNullOrEmpty(list.InvoiceCurrencyId)) {
