@@ -181,7 +181,8 @@ export class CargoSealsQueryComponent
             this._IsDisplayOnly = value;
         }
     }
-    
+
+ 
     get UpdateDate() { return this.RequestParams.UpdateDate; }
     set UpdateDate(value: Date) {
         if (this.RequestParams.UpdateDate != value) {

@@ -954,6 +954,11 @@ export class DeclarationPM {
     public set AvailabilityDate(newValue: Date) { if (this.availabilityDate != newValue) { this.availabilityDate = newValue; this.MarkAsDirty("AvailabilityDate"); } }
        
 	 
+    private automaticPayment: number;
+    public get AutomaticPayment() { return this.automaticPayment; }
+    public set AutomaticPayment(newValue: number) { if (this.automaticPayment != newValue) { this.automaticPayment = newValue; this.MarkAsDirty("AutomaticPayment"); } }
+       
+	 
     private courierManifestStatusCode: string;
     public get CourierManifestStatusCode() { return this.courierManifestStatusCode; }
     public set CourierManifestStatusCode(newValue: string) { if (this.courierManifestStatusCode != newValue) { this.courierManifestStatusCode = newValue; this.MarkAsDirty("CourierManifestStatusCode"); } }
@@ -963,8 +968,6 @@ export class DeclarationPM {
     public get CourierPaymentStatusCode() { return this.courierPaymentStatusCode; }
     public set CourierPaymentStatusCode(newValue: string) { if (this.courierPaymentStatusCode != newValue) { this.courierPaymentStatusCode = newValue; this.MarkAsDirty("CourierPaymentStatusCode"); } }
        
-	 
-
 	 
 
     public OldEntityPM: DeclarationPM;
