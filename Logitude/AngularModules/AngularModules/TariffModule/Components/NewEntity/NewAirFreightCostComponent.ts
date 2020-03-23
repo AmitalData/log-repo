@@ -804,6 +804,11 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
                     this.ValidationErrorsList.push("Price Steps Field is Required");
                 }
             }
+            if (this.EntityPM.TypeCode == "AFC") {
+                if (AppTool.IsNullOrEmpty(this.TariffProductId)) {
+                    this.ValidationErrorsList.push("Product Field is Required");
+                }
+            }
         }
 
         else if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFS") {
