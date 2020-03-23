@@ -1019,6 +1019,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
 
             chargeItem.SetSaleQuantity();
             chargeItem.SetCostQuantity();
+
             chargeItem.ComputeCostAmounts();
             chargeItem.ComputeSalePrice();
            
