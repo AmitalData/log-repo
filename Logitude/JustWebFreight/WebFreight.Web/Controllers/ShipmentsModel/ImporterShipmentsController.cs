@@ -341,6 +341,10 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                     if (!string.IsNullOrEmpty(Shipment.CustomerShipmentNumber))
                     {
                         ImporterShipment = shipmentQuery.GetSingleShipmentPMByNumber(Shipment.CustomerShipmentNumber, Shipment.ImporterTenant);
+                        if (ImporterShipment == null)
+                        {
+                            ImporterShipment = shipmentQuery.GetSingleShipmentPMByForwarderNumber(Shipment.ForwarderShipmentNumber, Shipment.ImporterTenant, Shipment.Tenant); 
+                        }
                     }
                     else
                     {
@@ -551,7 +555,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
         {
             APIException Responce = new APIException();
             //TenantQuery myTenantQuery = new TenantQuery();
-            TenantPM currentTenant = TenantQuery.GetSingleTenantPM(entityAM.ImporterTenant,false);
+            TenantPM currentTenant = TenantQuery.GetSingleTenantPM(entityAM.ImporterTenant, false);
             ICommonDataContext commoncontext = CommonDataContext.GetContext(entityAM.ImporterTenant);
             HybridPartnerRepository hybridPartnerRepository = new HybridPartnerRepository(commoncontext);
             HybridPartnerQuery HybridPartnerQuerey = new HybridPartnerQuery(hybridPartnerRepository);
@@ -881,7 +885,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
             entityPM.OnCarriageATD = entityAM.OnCarriageATD;
             entityPM.PreCarriageATA = entityAM.PreCarriageATA;
             entityPM.PreCarriageATD = entityAM.PreCarriageATD;
-           
+
             entityPM.DimensionsUnitCode = entityAM.DimensionsUnitCode;
             entityPM.GrossWeightUnitCode = entityAM.GrossWeightUnitCode;
             entityPM.ChargeableWeightUnitCode = entityAM.ChargeableWeightUnitCode;
@@ -909,7 +913,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
             }
 
             entityPM.IsImporterApprovalRequired = entityAM.IsImporterApprovalRequired;
-            
+
             if (currentTenant.AutoArchiveOnInvoice == true && entityAM.OriginalStatusCode == "INPR" && entityAM.CustomsClearanceDate != null && entityPM.IsOperationalClosed == false)
             {
                 entityPM.IsOperationalClosed = true;
@@ -935,7 +939,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                 entityPM.ApproveDateTime = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
                 entityPM.VersionApproved = entityAM.VersionApproved;
             }
-      
+
             entityPM.CustomsClearanceDate = entityAM.CustomsClearanceDate;
             if (Partner != null)
             {
