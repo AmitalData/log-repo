@@ -88,7 +88,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
                     gLAccountInterestPeriodPMs.Add(gLAccountInterestPeriodPM);
                 }
             }
-            return gLAccountInterestPeriodPMs;
+            return gLAccountInterestPeriodPMs.Where(d=>d.PeriodStartDate<=interestReportPM.InterestCalculationDate).OrderByDescending(d => d.PeriodStartDate).ToList();
         }
 
         public InterestReportPM GetInterestReportPM(string interestReportId, int tenant)

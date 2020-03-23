@@ -186,8 +186,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
 
         private decimal GetCreditInterestPercentageForStartInterestDate(InterestPercentageForDateParams interestPercentageForDateParams)
         {
-            GLAccountInterestPeriodPM gLAccountInterestPeriodPM = interestPercentageForDateParams.InterestReportLinesByDateCreationParams.GLAccountInterestPeriodPMs
-              .OrderByDescending(d => d.PeriodStartDate).FirstOrDefault();
+            GLAccountInterestPeriodPM gLAccountInterestPeriodPM = GetGLAccountInterestPeriodPMByPeriodToDate(interestPercentageForDateParams);
 
             InterestBasesPeriodPM Period = (from a in interestPercentageForDateParams.InterestReportLinesByDateCreationParams.InterestBasesPeriodPMs
                                             where a.InterestBaseStartDate <= interestPercentageForDateParams.ToDate
@@ -202,8 +201,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
 
         private decimal GetExceptionalInterestPercentageForStartInterestDate(InterestPercentageForDateParams interestPercentageForDateParams)
         {
-            GLAccountInterestPeriodPM gLAccountInterestPeriodPM = interestPercentageForDateParams.InterestReportLinesByDateCreationParams.GLAccountInterestPeriodPMs
-              .OrderByDescending(d => d.PeriodStartDate).FirstOrDefault();
+            GLAccountInterestPeriodPM gLAccountInterestPeriodPM = GetGLAccountInterestPeriodPMByPeriodToDate(interestPercentageForDateParams);
 
             InterestBasesPeriodPM Period = (from a in interestPercentageForDateParams.InterestReportLinesByDateCreationParams.InterestBasesPeriodPMs
                                             where a.InterestBaseStartDate <= interestPercentageForDateParams.ToDate
@@ -218,8 +216,8 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
 
         private decimal GetStandardInterestPercentageForStartInterestDate(InterestPercentageForDateParams interestPercentageForDateParams)
         {
-            GLAccountInterestPeriodPM gLAccountInterestPeriodPM = interestPercentageForDateParams.InterestReportLinesByDateCreationParams.GLAccountInterestPeriodPMs
-                .OrderByDescending(d=>d.PeriodStartDate).FirstOrDefault();
+            GLAccountInterestPeriodPM gLAccountInterestPeriodPM = GetGLAccountInterestPeriodPMByPeriodToDate(interestPercentageForDateParams);
+
 
             InterestBasesPeriodPM Period = (from a in interestPercentageForDateParams.InterestReportLinesByDateCreationParams.InterestBasesPeriodPMs
                                           where a.InterestBaseStartDate <= interestPercentageForDateParams.ToDate
@@ -243,6 +241,16 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
 
                                                                                           }).OrderBy(d => d.GroupInterestValueDate).ToList();
             return interestTransactionsGroupedByDates;
+        }
+
+        private GLAccountInterestPeriodPM GetGLAccountInterestPeriodPMByPeriodToDate(InterestPercentageForDateParams interestPercentageForDateParams)
+        {
+            GLAccountInterestPeriodPM gLAccountInterestPeriodPM =
+               interestPercentageForDateParams.InterestReportLinesByDateCreationParams.GLAccountInterestPeriodPMs
+               .Where(d => d.PeriodStartDate <= interestPercentageForDateParams.ToDate)
+               .OrderByDescending(d => d.PeriodStartDate).FirstOrDefault();
+
+            return gLAccountInterestPeriodPM;
         }
     }
 
