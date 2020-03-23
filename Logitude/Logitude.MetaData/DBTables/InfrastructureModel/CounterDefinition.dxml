@@ -33,13 +33,6 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="Prefix"
-    Type="varchar"
-    Size="20">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
     Name="UniquePerPrefix"
     Type="bit">
     <Constraints
@@ -51,6 +44,13 @@
     Size="15">
     <Constraints
       Nullable="false" />
+  </Column>
+  <Column
+    Name="Prefix"
+    Type="varchar"
+    Size="20">
+    <Constraints
+      Nullable="true" />
   </Column>
   <Column
     Name="StartNumber"

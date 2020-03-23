@@ -5,32 +5,45 @@
   DBType="Main"
   Module="BusinessInfrastructure">
   <Column
-    Name="Id"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      PrimaryKey="true"
-      Nullable="false" />
-  </Column>
-  <Column
     Name="Tenant"
     Type="int">
     <Constraints
       Nullable="false" />
   </Column>
   <Column
-    Name="Direction"
+    Name="BatchNumber"
     Type="varchar"
-    Size="1">
+    Size="15">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
-    Name="Status"
+    Name="QueueType"
     Type="varchar"
-    Size="1">
+    Size="100">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="QueueMessage"
+    Type="varchar"
+    Size="400">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="QueueMessageMoreDetailsId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CustomerId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
   <Column
     Name="CreateDate"
@@ -53,6 +66,28 @@
   <Column
     Name="LastUpdateDateUTC"
     Type="datetime">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Direction"
+    Type="varchar"
+    Size="1">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Status"
+    Type="varchar"
+    Size="1">
     <Constraints
       Nullable="false" />
   </Column>
@@ -121,41 +156,6 @@
     Name="CorrelationId"
     Type="varchar"
     Size="64">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="BatchNumber"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="QueueType"
-    Type="varchar"
-    Size="100">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="QueueMessage"
-    Type="varchar"
-    Size="400">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="QueueMessageMoreDetailsId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="CustomerId"
-    Type="varchar"
-    Size="15">
     <Constraints
       Nullable="true" />
   </Column>

@@ -33,13 +33,6 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="TransportModeId"
-    Type="char"
-    Size="1">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
     Name="AddedManually"
     Type="bit">
     <Constraints
@@ -48,6 +41,13 @@
   <Column
     Name="InActive"
     Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="TransportModeId"
+    Type="char"
+    Size="1">
     <Constraints
       Nullable="false" />
   </Column>
