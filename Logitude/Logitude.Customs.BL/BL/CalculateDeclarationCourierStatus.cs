@@ -126,11 +126,11 @@ namespace Logitude.Customs.BL.BL
 
                 CalcCourierManifestStatusCode(myDeclarationCourierStatusPM);
                 CalcTotalInvoiceAmountInUSD(myDeclarationCourierStatusPM);
+                CalcDocumentStatusCode(myDeclarationCourierStatusPM);
                 CalcCourierDeclarationStatusCode(myDeclarationCourierStatusPM);
                 CalcCourierPaymentStatusCode(myDeclarationCourierStatusPM);
                 CalcIsCourierMissingClassification(myDeclarationCourierStatusPM);
                 CalcHighLowValue(myDeclarationCourierStatusPM);
-                CalcDocumentStatusCode(myDeclarationCourierStatusPM);
                 CalcSpecialActionStatus(myDeclarationCourierStatusPM);
                 CalcFastIndividualProcess(myDeclarationCourierStatusPM);
                 CalcDeclarationPendings(myDeclarationCourierStatusPM);
@@ -145,7 +145,14 @@ namespace Logitude.Customs.BL.BL
         {
             if (myDeclarationCourierStatusPM == null) return;
             //Set DocumentStatusCode
-            if (string.IsNullOrWhiteSpace(myDeclarationCourierStatusPM.DocumentStatusCode)) myDeclarationCourierStatusPM.DocumentStatusCode = "M";
+            if (string.IsNullOrWhiteSpace(myDeclarationCourierStatusPM.DocumentStatusCode))
+            {
+                myDeclarationCourierStatusPM.DocumentStatusCode = "M";
+            }
+            else if (IsDocumentMissing(myDeclarationCourierStatusPM))
+            {
+                myDeclarationCourierStatusPM.DocumentStatusCode = "M";
+            }
         }
 
         public void CalcSpecialActionStatus(DeclarationCourierStatusPM myDeclarationCourierStatusPM)
@@ -293,7 +300,7 @@ namespace Logitude.Customs.BL.BL
             {
                 myDeclarationCourierStatusPM.CourierDeclarationStatusCode = "M";
             }
-            else if (IsDocumentMissing(myDeclarationCourierStatusPM))
+            else if (myDeclarationCourierStatusPM.DocumentStatusCode == "M")
             {
                 myDeclarationCourierStatusPM.CourierDeclarationStatusCode = "M";
             }
@@ -336,14 +343,38 @@ namespace Logitude.Customs.BL.BL
             }
         }
 
-        private Boolean IsDocumentMissing(DeclarationCourierStatusPM myDeclarationCourierStatusPM)
+        public Boolean IsDocumentMissing(DeclarationCourierStatusPM myDeclarationCourierStatusPM)
         {
             var customContext = CustomContext.GetContext(myDeclarationCourierStatusPM.Tenant);
             CustomsDocumentsTicketQueryService myCustomsDocumentsTicketQueryService = new CustomsDocumentsTicketQueryService(customContext);
-            List<CustomsDocumentsTicketPM> customsDocumentsTicketPMList = myCustomsDocumentsTicketQueryService.GetCustomsDocumentsTicketPMsByEntityIdAndChilds(declarationPM.Id, "", "", "", myDeclarationCourierStatusPM.Tenant, "Declaration").Where(r => r.DocumentTypeCode == "380" && r.DocumentStatusCode == "1").ToList();
-            if (customsDocumentsTicketPMList == null || customsDocumentsTicketPMList.Count() < 1)
+            CustomDocumentTypeQueryService docTypeQuery = new CustomDocumentTypeQueryService(customContext);
+            //List<CustomsDocumentsTicketPM> customsDocumentsTicketPMList = myCustomsDocumentsTicketQueryService.GetCustomsDocumentsTicketPMsByEntityIdAndChilds(declarationPM.Id, "", "", "", myDeclarationCourierStatusPM.Tenant, "Declaration").Where(r => r.DocumentStatusCode != "1").ToList();
+
+            List<CustomsDocumentsTicketPM> customsDocumentsTicketPMList = myCustomsDocumentsTicketQueryService.GetCustomsDocumentsTicketPMsByEntityIdAndChilds(declarationPM.Id, "", "", "", myDeclarationCourierStatusPM.Tenant, "Declaration");
+            List<CustomsDocumentsTicketPM> customsDocumentsTicketPMListNotSend = customsDocumentsTicketPMList.Where(r => r.DocumentStatusCode != "1").ToList();
+            if (customsDocumentsTicketPMListNotSend == null || customsDocumentsTicketPMListNotSend.Count() < 1)
             {
-                return true;
+                foreach (CustomsDocumentsTicketPM customsDocumentsTicketPMItem in customsDocumentsTicketPMListNotSend)
+                {
+                    CustomDocumentTypePM docType = docTypeQuery.GetSingle(customsDocumentsTicketPMItem.DocumentTypeCode, false, false);
+                    if (docType.IsCourierManadatory)
+                    {
+                        return true;
+                    }                      
+                }
+            }
+
+            List<CustomDocumentTypePM> CustomDocumentTypePMList = docTypeQuery.GetMandatoryCustomDocumentTypesForCourier(declarationPM.Tenant);
+            if (CustomDocumentTypePMList != null)
+            {
+                foreach (CustomDocumentTypePM customDocumentTypePMItem in CustomDocumentTypePMList)
+                {
+                    CustomsDocumentsTicketPM customsDocumentsTicketPM = customsDocumentsTicketPMList.Where(d => d.DocumentTypeCode == customDocumentTypePMItem.Code).FirstOrDefault();
+                    if (customsDocumentsTicketPM == null)
+                    {
+                        return true;
+                    }
+                }
             }
 
             return false;

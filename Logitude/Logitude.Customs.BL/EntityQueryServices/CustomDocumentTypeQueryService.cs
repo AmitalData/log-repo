@@ -30,9 +30,15 @@ namespace Logitude.Customs.BL.EntityQueryServices
         }
 
 
+        public List<CustomDocumentTypePM> GetMandatoryCustomDocumentTypesForCourier(int tenant)
+        {
+            var customDocumentTypes = repository.GetAll().Where(x => x.IsCourierManadatory).ToList();
+            return customDocumentTypes.Select(poco => this.GetEntityPM(poco)).ToList();
+
+        }
 
 
-   }
+    }
 
 }
 	 
