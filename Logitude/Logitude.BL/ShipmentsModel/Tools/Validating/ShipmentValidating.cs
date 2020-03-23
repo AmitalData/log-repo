@@ -72,6 +72,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                 ValidateMainCarriageCarrierDueToTransportMode(entityPM);
                 ValidatePartnerTypes(entityPM);
             }
+
+            ShipmentReceivableValidator.Validate(entityPM.ShipmentReceivables);
         }
 
         private static void ValidateProductTypePermission(ShipmentPM entityPM, ICommonDataContext myCommonContext)
