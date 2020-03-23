@@ -216,8 +216,8 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
         _ARInvoiceLinePM.LocalCurrencyAmount = this.EntityPM.TotalAmount; 
             _ARInvoiceLinePM.InvoiceCurrencyCode = this.TenantPM.CurrencyCode;
             _ARInvoiceLinePM.Description = "Interest For Date " + this.getDateString(this.EntityPM.InterestCalculationDate);
-            _ARInvoiceLinePM.LocalDescription = "חישוב ריבית לתאריך" + + this.getDateString(this.EntityPM.InterestCalculationDate);
-        _ARInvoiceLinePM.ChargesTypeId = this.chargesTypeList? this.chargesTypeList.Id:null;
+            _ARInvoiceLinePM.LocalDescription = "חישוב ריבית לתאריך " + this.getDateString(this.EntityPM.InterestCalculationDate);
+         _ARInvoiceLinePM.ChargesTypeId = this.chargesTypeList? this.chargesTypeList.Id:null;
         _ARInvoiceLinePM.VatTypeId =this.cardList.VatTypeId; 
          _ARInvoiceLinePM.GLAccountId = this.EntityPM.GLAccountId;
         _ARInvoiceLinePM.ForiegnExchangeRate = _ARInvoiceLinePM.ForiegnCurrencyAmount / _ARInvoiceLinePM.LocalCurrencyAmount;
