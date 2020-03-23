@@ -151,7 +151,7 @@
                                         </ng-template>
 
                                         <ng-template let-item>
-                                            <log-cell-template #logcelltemplate [IsEnabled]="item.IsEnabled_CostUnitPrice">
+                                            <log-cell-template #logcelltemplate [IsEnabled]="item.IsEnabled_CostUnitPrice && item.TariffId == null">
 
                                                 <div *ngIf="logcelltemplate.IsDisplayMode" class="MediaFillAbsolute">
                                                     <table>

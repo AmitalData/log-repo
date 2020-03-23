@@ -993,12 +993,37 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
             var charge: QuoteChargePM = this.QuotePM.QuoteCharges.filter(d => d.ChargesTypeId == item.ChargesTypeId && d.CostCurrencyId == item.CostCurrencyId && d.CostMeasurementId == item.CostMeasurementId && (d.TariffId == item.TariffId || d.TariffId == null))[0];
             if (charge != null) {
                 this.QuotePM.RemoveQuoteChargePM(charge);
+                item.ChargesGroupCode = charge.ChargesGroupCode;
             }
         });
         this.AssignTariffChargesToQuote();
     }
     AssignTariffChargesToQuote() {
         this.TariffList_Quote.forEach(item => {
+            var chargeItem = new QuoteChargeItem(item, this.FatherComponent, false);
+            chargeItem.ChargesTypeId = item.ChargesTypeId;
+            chargeItem.CostMeasurementId = item.CostMeasurementId;
+            chargeItem.CostCurrencyId = item.CostCurrencyId;
+            chargeItem.CostUnitPrice = item.CostUnitPrice;
+            chargeItem.CostMinAmount = item.CostMinAmount;
+            chargeItem.CostExchangeRate = item.CostExchangeRate;
+            chargeItem.SaleMeasurementId = item.SaleMeasurementId;
+            chargeItem.SaleCurrencyId = item.SaleCurrencyId;
+            chargeItem.SaleExchangeRate = item.SaleExchangeRate;
+
+            //chargeItem.SaleUnitPrice = item.SaleUnitPrice;
+            chargeItem.ChargesGroupCode = item.ChargesGroupCode;
+            this.FatherComponent.ItemsSource.Insert(chargeItem);
+         
+            chargeItem.ComputeCostInSalePrice();
+
+            chargeItem.SetSaleQuantity();
+            chargeItem.SetCostQuantity();
+
+            chargeItem.ComputeCostAmounts();
+            chargeItem.ComputeSalePrice();
+           
+            chargeItem.SetUIProperties_AllIn();
             this.QuotePM.AddQuoteChargePM(item);
         });
         this.ReloadTariffCharges();
@@ -1047,31 +1072,14 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                 chargePM.CostUnitPrice = AppTool.Round(item.ActualPrice, 3);
                 chargePM.SaleMeasurementId = item.UnitOfMesurmentId;
                 chargePM.SaleMeasurementCode = item.UnitOfMesurmentCode;
-                chargePM.SaleCurrencyId = item.CurrencyId;
-                chargePM.SaleCurrencyCode = this.FatherComponent.GetCurrencyCode(item.CurrencyId);
-                chargePM.SaleExchangeRate = this.FatherComponent.GetCurrencyRate(item.CurrencyId);
-                chargePM.SaleUnitPrice = chargePM.CostUnitPrice;
+                chargePM.SaleCurrencyId = this.QuotePM.SaleCurrencyId;
+                chargePM.SaleCurrencyCode = this.FatherComponent.GetCurrencyCode(this.QuotePM.SaleCurrencyId);
+                chargePM.SaleExchangeRate = this.FatherComponent.GetCurrencyRate(this.QuotePM.SaleCurrencyId);
+                //chargePM.SaleUnitPrice = chargePM.CostUnitPrice;
                 chargePM.VendorId = item.SellerId;
                 chargePM.VendorName = item.SellerName;
                 chargePM.IsCostAllIn = item.IsAllIn;
-                this.TariffList_Quote.push(chargePM);
-
-                var chargeItem = new QuoteChargeItem(chargePM, this.FatherComponent, false);
-                chargeItem.ChargesTypeId = chargePM.ChargesTypeId;
-                chargeItem.CostMeasurementId = chargePM.CostMeasurementId;
-                chargeItem.CostCurrencyId = chargePM.CostCurrencyId;
-                chargeItem.CostUnitPrice = chargePM.CostUnitPrice;
-                chargeItem.CostMinAmount = chargePM.CostMinAmount;
-                chargeItem.SaleMeasurementId = chargePM.SaleMeasurementId;
-                chargeItem.SaleCurrencyId = chargePM.SaleCurrencyId;
-                chargeItem.SaleUnitPrice = chargePM.SaleUnitPrice;
-                this.FatherComponent.ItemsSource.Insert(chargeItem);
-
-                chargeItem.ComputeCostInSalePrice();
-                chargeItem.ComputeCostAmounts();
-                chargeItem.ComputeSalePrice();
-                chargeItem.SetSaleQuantity();
-                chargeItem.SetCostQuantity();
+                this.TariffList_Quote.push(chargePM);   
             }
         });
     }
