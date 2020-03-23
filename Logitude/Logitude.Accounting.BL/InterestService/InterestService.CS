@@ -99,7 +99,7 @@ namespace Logitude.Accounting.BL.InterestService
         }
 
 
-        public InterestReportPM PutConfirmCreateInvoice(InterestReportPM interestReportPM,int Tenant, IAccountingContext MainContext)
+        public InterestReportPM PutConfirmCreateInvoice(InterestReportPM interestReportPM, int Tenant, IAccountingContext MainContext)
         {
             if (MainContext == null)
             {
@@ -111,9 +111,16 @@ namespace Logitude.Accounting.BL.InterestService
             bool showLocals = !contact.DontShowLocal;
             InterestReportUpdateService InterestReportUpdate = new InterestReportUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
             InterestTransactionUpdateService InterestTransactionUpdate = new InterestTransactionUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
-
-            interestReportPM.CloseBalance = interestReportPM.OpenBalance!=null? interestReportPM.OpenBalance:0 + interestReportPM.TotalAmount!=null? interestReportPM.TotalAmount:0;
-            if (interestReportPM.InterestReportStatusCode != "2")
+            interestReportPM.CloseBalance = 0;
+            if (interestReportPM.OpenBalance != null )
+            {
+                interestReportPM.CloseBalance += interestReportPM.OpenBalance;
+            }
+            if (interestReportPM.TotalAmount != null)
+            {
+                interestReportPM.CloseBalance += interestReportPM.TotalAmount;
+            }
+             if (interestReportPM.InterestReportStatusCode != "2")
             {
                 interestReportPM.InterestReportStatusCode = "4";
             }

@@ -212,9 +212,9 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
         _ARInvoiceLinePM.InvoiceCurrencyAmount = this.EntityPM.TotalAmount;
         _ARInvoiceLinePM.ProfitCurrencyAmount = this.EntityPM.TotalAmount;
         _ARInvoiceLinePM.LocalCurrencyAmount = this.EntityPM.TotalAmount; 
-        _ARInvoiceLinePM.InvoiceCurrencyCode = this.TenantPM.CurrencyCode;
-        _ARInvoiceLinePM.Description ="Interest For Date "+ this.EntityPM.InterestCalculationDate; 
-        _ARInvoiceLinePM.LocalDescription = "חישוב ריבית לתאריך" + this.EntityPM.InterestCalculationDate;
+            _ARInvoiceLinePM.InvoiceCurrencyCode = this.TenantPM.CurrencyCode;
+            _ARInvoiceLinePM.Description = "Interest For Date " + this.getDateString(this.EntityPM.InterestCalculationDate);
+            _ARInvoiceLinePM.LocalDescription = "חישוב ריבית לתאריך" + + this.getDateString(this.EntityPM.InterestCalculationDate);
         _ARInvoiceLinePM.ChargesTypeId = this.chargesTypeList? this.chargesTypeList.Id:null;
         _ARInvoiceLinePM.VatTypeId =this.cardList.VatTypeId; 
         _ARInvoiceLinePM.GLAccountId = this.EntityPM.GLAccountId;
@@ -228,7 +228,12 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
         return _ARInvoicePM;
     }
  
- 
+  public  getDateString(DateTime: Date): string {
+        var month = new Date(DateTime).getMonth();
+        var year = new Date(DateTime).getFullYear();
+        var day = new Date(DateTime).getDay();
+        return day + "/" + month + "/" + year
+    }
 
     public InvoicePartners: InvoicePartnerType[] = [];
     public SelectedPartnerType: InvoicePartnerType = null;
