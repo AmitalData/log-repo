@@ -34,7 +34,7 @@ namespace Logitude.Accounting.Data.Repositories
                 .Where(d =>d.Tenant==tenant 
                 && d.GLAccountId == glAccountId 
                 && !d.IsClosed
-                && d.InterestValueDate.Date <= InterestReportCalculationDate);
+                && d.InterestValueDate <= InterestReportCalculationDate);
 
         }
    }
