@@ -1,5 +1,4 @@
-﻿using Logitude.BL.InfrastructureModel.EntityPMs;
-using Logitude.Server.Tools.Counters;
+﻿ using Logitude.Server.Tools.Counters;
 using Simplog.Data.InfrastructureModel;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
@@ -507,11 +506,11 @@ namespace WebFreight.Web.MetaDataUpdate
                     CounterId = myCounter.Id,
                     Tenant = 0,
                     StartNumber = 1000,
-                    Parameter1 = "II",
-                    Prefix = "II",
+                    Parameter1 = "IT",
+                    Prefix = "IT",
                 };
 
-                CounterDefinition myCounterDefinition_9 = new CounterDefinition()
+                CounterDefinition myCounterDefinition_09 = new CounterDefinition()
                 {
                     Id = IdCounter.GetNumber("CounterDefinition", 0).ToString(),
                     CounterId = myCounter.Id,
@@ -529,7 +528,10 @@ namespace WebFreight.Web.MetaDataUpdate
                 CounterDefinitionRepository.Add(myCounterDefinition_05);
                 CounterDefinitionRepository.Add(myCounterDefinition_06);
                 CounterDefinitionRepository.Add(myCounterDefinition_07);
-            }            
+                CounterDefinitionRepository.Add(myCounterDefinition_08);
+                CounterDefinitionRepository.Add(myCounterDefinition_09);
+
+            }
             #endregion
 
             #region AP Invoice Counters

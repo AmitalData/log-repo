@@ -26,17 +26,23 @@ import { VatTypeListService } from '../../../Common/Services/StandardLists/VatTy
 import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { reject } from 'q';
 import { CurrencyRatesService, LastRate } from '../../../Common/Services/CurrencyRatesService';
+import { CardListService } from '../../../Common/Services/StandardLists/CardListService';
+import { CardList } from '../../../Common/EntityLists/CardList';
+import { GLAccountPMService } from '../../Services/StandardPMs/GLAccountPMService';
+import { GLAccountPM } from '../../EntityPMs/GLAccountPM';
 
 export class InterestReportMenuButtonsHandler extends BaseComponent  {
     public EntityPM: InterestReportPM;
     public entityArgs: EntityArgs;
     public TenantPM: TenantPM;
     public ObjectTableName: string = "InterestReport";
+    public chargesTypeList: ChargesTypeList;
     public InterestReportService: InterestTransactionExtendedListService;
     public ChargesTypePMService: ChargesTypeListService;
     private CurrentSession = SessionLocator.SelectedSession;
-    private VatTypeListService: VatTypeListService;
     private myCurrencyRatesService: CurrencyRatesService;
+    private myCardListService: CardListService;
+    private myGLAccountPMService: GLAccountPMService;
 
     public SetEntityPM(entityArgs: EntityArgs) {
         this.TenantPM = SessionLocator.TenantPM;
@@ -44,8 +50,10 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
         this.EntityPM = entityArgs.EntityPM;
         this.InterestReportService = new InterestTransactionExtendedListService();
         this.ChargesTypePMService = new ChargesTypeListService();
-        this.VatTypeListService = new VatTypeListService();
         this.myCurrencyRatesService = new CurrencyRatesService();
+        this.myCardListService = new CardListService();
+        this.myGLAccountPMService = new GLAccountPMService();
+
      }
  
 
@@ -153,8 +161,8 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
         _ARInvoicePM.BillToLocalName = this.EntityPM.CustomerLocalName;
         _ARInvoicePM.BillToName = this.EntityPM.CustomerName;
         _ARInvoicePM.Tenant = this.TenantPM.Id;
- 
-         this.InvoicePartners = InvoiceTool.GetARInvoicePartners(null);
+        this.GetBillToCard(_ARInvoicePM.BillToId).then(res => {
+          this.InvoicePartners = InvoiceTool.GetARInvoicePartners(null);
          this.PartnersTypeSelectionMethod(this.InvoicePartners[0]);
         _ARInvoicePM.BillToPartnerTypeId = this.BillToPartnerTypeId;
 
@@ -187,7 +195,7 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
         _ARInvoicePM.IsGeneralInvoice = true;
         _ARInvoicePM.IsFullAccounting = true;
         _ARInvoicePM.InvoiceCurrencyId = SessionLocator.TenantPM.CurrencyId;
-        _ARInvoicePM.PaymentTermId = SessionLocator.TenantPM.PaymentTermId;
+       // _ARInvoicePM.PaymentTermId = SessionLocator.TenantPM.PaymentTermId;
         InvoiceTool.ComputeARInvoiceDueDate(_ARInvoicePM);
          _ARInvoicePM.ProfitCurrencyId = SessionLocator.TenantPM.ProfitCurrencyId;
         _ARInvoicePM.ProfitCurrencyCode = SessionLocator.TenantPM.ProfitCurrencyCode;
@@ -208,16 +216,15 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
         _ARInvoiceLinePM.Description ="Interest For Date "+ this.EntityPM.InterestCalculationDate; 
         _ARInvoiceLinePM.LocalDescription = "חישוב ריבית לתאריך" + this.EntityPM.InterestCalculationDate;
         _ARInvoiceLinePM.ChargesTypeId = this.chargesTypeList? this.chargesTypeList.Id:null;
-        _ARInvoiceLinePM.VatTypeId = this.vatTypeList ? this.vatTypeList.Id : null;
+        _ARInvoiceLinePM.VatTypeId =this.cardList.VatTypeId; 
         _ARInvoiceLinePM.GLAccountId = this.EntityPM.GLAccountId;
         _ARInvoiceLinePM.ForiegnExchangeRate = _ARInvoiceLinePM.ForiegnCurrencyAmount / _ARInvoiceLinePM.LocalCurrencyAmount;
-        _ARInvoiceLinePM.VatTypeId
-        var objectTable = window.ObjectTables.filter(d => d.Name === "InterestReport")[0];
+         var objectTable = window.ObjectTables.filter(d => d.Name === "InterestReport")[0];
         var objectTableId = objectTable.Id;
         _ARInvoiceEntityPM.ObjectTableId = objectTableId;
         _ARInvoicePM.InvoiceEntities.push(_ARInvoiceEntityPM);
         _ARInvoicePM.InvoiceLines.push(_ARInvoiceLinePM);
-        
+    }); 
         return _ARInvoicePM;
     }
  
@@ -249,22 +256,6 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
             if (myResponse != null) {
                 if (!myResponse.HasError) {
                     this.chargesTypeList = myResponse.Result[0];
-                    this.GetVatType();
-                }
-            }
-        });
-    }
-
-    private GetVatType() {
-
-        var filters = new ApiQueryFilters(true);
-        filters.addAdditionalFilter("EnglishName", "Excempt", null, null, "Equals", false, false, false, "string");
-        this.CurrentSession.StartBusyIndicatorLoading();
-        this.VatTypeListService.getByFilters(filters).subscribe((myResponse: ServiceResponse) => {
-            this.CurrentSession.StopBusyIndicator();
-            if (myResponse != null) {
-                if (!myResponse.HasError) {
-                    this.vatTypeList = myResponse.Result[0];
                     this._ARInvoicePM = this.ARInvoicePMWithLine;
                     this.LoadCurrencyRates().then(res => {
                         SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
@@ -274,13 +265,11 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
                                 cmpRef.instance.BackCompleted.subscribe(($event: any) => this.CurrentSession.CurrentEditComponent.ReloadEntityPM());
                             });
                     });
-               
                 }
             }
         });
-
     }
-
+ 
     private LastRatesList: LastRate[] = [];
     LoadCurrencyRates() {
         return new Promise(resolve => {
@@ -320,19 +309,71 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
         this._ARInvoicePM.ProfitCurrencyExchangeRate = myRate;
         this._ARInvoicePM.ExchangeRateDate = myRateDate;
     }
-    SetUIProperties_DueDate() {
-        var AllowManuallyDueDate: boolean = false;
+    public cardList: CardList;
+    GetBillToCard(BillToId:string) {
+        return new Promise(resolve => {
+        this.myCardListService.getSingle(BillToId).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                var list: CardList = myResponse.Result;
+                this.cardList = list;
+                if (list != null) {
+                    this._ARInvoicePM.BillToName = list.EnglishName;
+                    this._ARInvoicePM.BillToLocalName = list.LocalName;
+                    if (!AppTool.IsNullOrEmpty(list.SATPaymentMethodCode)) {
+                        this._ARInvoicePM.SATPaymentMethodCode = list.SATPaymentMethodCode;
+                    }
+ 
+ 
+                    else {
+                       this.myGLAccountPMService.get(list.GLAccountId).subscribe((myResponse: ServiceResponse) => {
+                            if (!myResponse.HasError) {
+                                var glaccount:GLAccountPM = myResponse.Result;
+                                if (glaccount != null) {
+                                    if (glaccount.IsMultiCurrency == true) {
+                                        this._ARInvoicePM.InvoiceCurrencyId  = null;
+                                    }
+                                    else {
+                                        this._ARInvoicePM.InvoiceCurrencyId =glaccount.CurrencyId;
+                                    }
+                                }
+                            }
+                        });
+                    }
 
-        if (SessionLocator.AccountingSystemPM) {
-            AllowManuallyDueDate = SessionLocator.AccountingSystemPM.AllowManuallyDueDate;
-        }
+                    if (!AppTool.IsNullOrEmpty(list.InvoiceCurrencyId)) {
+                        this._ARInvoicePM.InvoiceCurrencyId = list.InvoiceCurrencyId;
+                    }
 
-        this.UIProperties.SetEnabled("DueDate", this.ObjectTableName, AllowManuallyDueDate);
+                    if (!AppTool.IsNullOrEmpty(list.PaymentTermId)) {
+                        this._ARInvoicePM.PaymentTermId = list.PaymentTermId;
+                    }
 
-   
-    }
+                    if (!AppTool.IsNullOrEmpty(list.VatNumber)) {
+                        this._ARInvoicePM.VatNumber = list.VatNumber;
+                    }
+ 
 
-    public chargesTypeList: ChargesTypeList;
-    public vatTypeList: VatTypeList;
+                    if (!AppTool.IsNullOrEmpty(list.BillingAddressId)) {
+                        this._ARInvoicePM.BillToAddressId = list.BillingAddressId;
+                    }
+
+                    else if (!AppTool.IsNullOrEmpty(list.MainAddressId)) {
+                        this._ARInvoicePM.BillToAddressId = list.MainAddressId;
+                    }
+
+ 
+                }
+                resolve(myResponse.Result);
+            }
+            else {
+                reject();
+            }
+        }); 
+    });
+   }
+
+
+
+     
 
 }

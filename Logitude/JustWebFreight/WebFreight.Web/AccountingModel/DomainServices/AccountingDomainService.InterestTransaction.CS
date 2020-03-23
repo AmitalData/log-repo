@@ -147,6 +147,8 @@ namespace WebFreight.Web.AccountingModel.DomainServices
                                                                           where a.Tenant == Tenant && a.InterestReportId == InterestReportId
                                                                           select new InterestTransactionPM()
                                                                           {
+                                                                              Id =a.InterestTransaction.Id,
+
                                                                               Tenant = a.Tenant,
 
                                                                               CurrencyId = a.InterestTransaction.CurrencyId,
@@ -165,6 +167,16 @@ namespace WebFreight.Web.AccountingModel.DomainServices
 
                                                                               IsClosed = a.InterestTransaction.IsClosed,
 
+                                                                              GLAccountId = a.InterestTransaction.GLAccountId,
+
+                                                                              CreateDateTime = a.InterestTransaction.CreateDateTime,
+
+                                                                              UpdateDateTime = a.InterestTransaction.UpdateDateTime,
+                                                                        
+                                                                              OriginalEntityLineNumber = a.InterestTransaction.OriginalEntityLineNumber,
+
+                                                                              SearchFields = a.InterestTransaction.SearchFields,
+ 
                                                                           });
             return interestTransactionLists;
 

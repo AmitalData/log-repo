@@ -134,15 +134,12 @@ export class CounterInvoiceComponent extends BaseComponent {
         itemsParams.push({ Code: 'MN', Name: "Manifest" });
         itemsParams.push({ Code: 'CI', Name: "Customs Invoice" });
         itemsParams.push({ Code: 'CC', Name: "Customs Credit" });
-
-        if (SessionLocator.TenantPM.AccountingActivated) {
-            itemsParams.push({ Code: 'II', Name: "Interest Invoice" });
-            itemsParams.push({ Code: 'IC', Name: "Interest Credit" });
-        }
- 
-
         if (this.HasConsolidationFeature) {
             itemsParams.push({ Code: 'CON', Name: "Consolidation" });
+        }
+        if (SessionLocator.TenantPM.AccountingActivated) {
+            itemsParams.push({ Code: 'IT', Name: "Interest Invoice" });
+            itemsParams.push({ Code: 'IC', Name: "Interest Credit" });
         }
 
         itemsParams.forEach(item => {
