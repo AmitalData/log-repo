@@ -10,6 +10,7 @@ import { TariffWorkspaceComponent } from './Components/Workspaces/TariffWorkspac
 import { SettingsWorkspaceComponent } from './Components/Workspaces/SettingsWorkspaceComponent';
 import { ContainerDefaultsComponent } from './Components/Workspaces/ContainerDefaultsComponent';
 import { NewTariffProductsComponent } from './Components/NewEntity/NewTariffProductsComponent';
+import { TariffShortTitleComponent } from './Components/ShortTitles/TariffShortTitleComponent';
 
 // Tabs
 import { TariffDetailsTabComponent } from './Components/EditTabs/Tariff/TariffDetailsTabComponent';
@@ -55,6 +56,7 @@ export const Components =
         OceanFCLSurchargeVersionTabComponent,
         AddTariffContainersComponent,
         NewTariffProductsComponent,
+        TariffShortTitleComponent,
     ];
 
 export const ControlsComponents =
@@ -93,6 +95,7 @@ export class ModuleDeclarations {
             case "AddTariffContainersComponent": { myResult = AddTariffContainersComponent; break; }
             case "ContainerDefaultsComponent": { myResult = ContainerDefaultsComponent; break; }
             case "NewTariffProductsComponent": { myResult = NewTariffProductsComponent; break; }
+            case "TariffShortTitleComponent": { myResult = TariffShortTitleComponent; break; }
         }
 
         return myResult;
