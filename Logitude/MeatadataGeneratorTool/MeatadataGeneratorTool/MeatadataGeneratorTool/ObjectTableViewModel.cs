@@ -2546,12 +2546,12 @@ namespace MeatadataGeneratorTool
                 ErrorsVisibility = Visibility.Visible;
                 return false;
             }
-            if ((ObjectTableName.Contains("Customs") ? ObjectTableName.Substring(9).Length > 30 : ObjectTableName.Length > 30) || (DBTableName.Contains("Customs") ? DBTableName.Substring(9).Length > 30 : DBTableName.Length > 30))
-            {
-                ErrorMessages = "ObjectTableName and DataBase Table Name Shouldn't be more than 30 char. length ..";
-                ErrorsVisibility = Visibility.Visible;
-                return false;
-            }
+            //if ((ObjectTableName.Contains("Customs") ? ObjectTableName.Substring(9).Length > 30 : ObjectTableName.Length > 30) || (DBTableName.Contains("Customs") ? DBTableName.Substring(9).Length > 30 : DBTableName.Length > 30))
+            //{
+            //    ErrorMessages = "ObjectTableName and DataBase Table Name Shouldn't be more than 30 char. length ..";
+            //    ErrorsVisibility = Visibility.Visible;
+            //    return false;
+            //}
 
             if (string.IsNullOrEmpty(DxmlDatabaseTypeCode))
             {

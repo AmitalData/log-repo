@@ -19,6 +19,13 @@
       Nullable="false" />
   </Column>
   <Column
+    Name="SearchFields"
+    Type="varchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="CustomsShipperCode"
     Type="varchar"
     Size="15">
@@ -41,13 +48,6 @@
   <Column
     Name="ValidityEndDate"
     Type="datetime">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="SearchFields"
-    Type="varchar"
-    Size="1000">
     <Constraints
       Nullable="true" />
   </Column>
