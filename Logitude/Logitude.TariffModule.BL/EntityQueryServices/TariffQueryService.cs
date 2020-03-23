@@ -697,9 +697,11 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                     this.Sum = 0;
                     this.tariffsSummary = new TariffSearchSummary() { TariffId = trariff.Id };
                     tariffsSummary.SurchargesWithoutAllIn = new List<SurchargeSummary>();
-                    var price = (tariffLine.Surcharge1Price * quantity1) + (tariffLine.Surcharge2Price * quantity2) +
-                                (tariffLine.Surcharge3Price * quantity3) + (tariffLine.Surcharge4Price * quantity4) +
-                                (tariffLine.Surcharge5Price * quantity5);
+                    var price = ((tariffLine.Surcharge1Price != null ? tariffLine.Surcharge1Price : 0) * quantity1) + 
+                                ((tariffLine.Surcharge2Price != null ? tariffLine.Surcharge2Price : 0) * quantity2) +
+                                ((tariffLine.Surcharge3Price != null ? tariffLine.Surcharge3Price : 0) * quantity3) + 
+                                ((tariffLine.Surcharge4Price != null ? tariffLine.Surcharge4Price : 0) * quantity4) +
+                                ((tariffLine.Surcharge5Price != null ? tariffLine.Surcharge5Price : 0)* quantity5);
 
                     tariffsSummary.Price = Math.Round((double)CalculateLocalAmount(price != null ? price.Value : 0, currencyId, trariff.CurrencyId, tenant), 2).ToString("0.00");
                     tariffsSummary.ActualPrice = price;
