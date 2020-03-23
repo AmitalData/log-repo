@@ -397,9 +397,10 @@ namespace CommunicationWorkerRole
             }
         }
 
-        private void SendingFail(CommunicationLog waitingCommLog, int tenant,string message,string QBOId,string Id) {
+        private void SendingFail(CommunicationLog waitingCommLog, int tenant, string message, string QBOId, string Id)
+        {
 
-         
+
 
             CommunicationLogRepository commLogrepository = new CommunicationLogRepository(Commoncontext);
             waitingCommLog.CommunicationStatusTypeCode = "F";
@@ -411,60 +412,71 @@ namespace CommunicationWorkerRole
             commLogrepository.Update(waitingCommLog);
             commLogrepository.SubmitChanges();
 
-            if (type == "APInvoice" || type=="VendorCredit")
+            if (type == "APInvoice" || type == "VendorCredit")
             {
                 APInvoiceRepository repository = new APInvoiceRepository(tenant);
-                APInvoice invoice = repository.GetSingleAPInvoice(Id,tenant);
-                invoice.TransferError = null;
-                invoice.TransferStatusCode = "ET";
-                invoice.IsTransferStarted = false;
-                if (QBOId != null)
-                    invoice.ExternalAccountingEntityId = QBOId;
-                repository.Update(invoice);
-                repository.SubmitChanges();
+                APInvoice invoice = repository.GetSingleAPInvoice(Id, tenant);
+                if (invoice != null)
+                {
+                    invoice.TransferError = null;
+                    invoice.TransferStatusCode = "ET";
+                    invoice.IsTransferStarted = false;
+                    if (QBOId != null)
+                        invoice.ExternalAccountingEntityId = QBOId;
+                    repository.Update(invoice);
+                    repository.SubmitChanges();
+                }
             }
+
             else if (type == "ARPayment" || type == "ARPaymentVoid")
             {
                 ARPaymentRepository repository = new ARPaymentRepository(tenant);
-                ARPayment payment = repository.GetSingleARPayment( waitingCommLog.EntityId,tenant);
-                payment.TransferError = null;
-                payment.TransferStatusCode = "ET";
-                payment.IsTransferStarted = false;
-                if (QBOId != null)
-                    payment.ExternalAccountingEntityId = QBOId;
-                repository.Update(payment);
-                repository.SubmitChanges();
+                ARPayment payment = repository.GetSingleARPayment(waitingCommLog.EntityId, tenant);
+                if (payment != null)
+                {
+                    payment.TransferError = null;
+                    payment.TransferStatusCode = "ET";
+                    payment.IsTransferStarted = false;
+                    if (QBOId != null)
+                        payment.ExternalAccountingEntityId = QBOId;
+                    repository.Update(payment);
+                    repository.SubmitChanges();
+                }
             }
 
             else if (type == "APPayment")
             {
                 APPaymentRepository repository = new APPaymentRepository(tenant);
                 APPayment payment = repository.GetSingleAPPayment(waitingCommLog.EntityId, tenant);
-                payment.TransferError = null;
-                payment.TransferStatusCode = "ET";
-                if (QBOId != null)
-                    payment.ExternalAccountingEntityId = QBOId;
-                repository.Update(payment);
-                repository.SubmitChanges();
+                if (payment != null)
+                {
+                    payment.TransferError = null;
+                    payment.TransferStatusCode = "ET";
+                    if (QBOId != null)
+                        payment.ExternalAccountingEntityId = QBOId;
+                    repository.Update(payment);
+                    repository.SubmitChanges();
+                }
             }
+
             else
             {
                 ARInvoiceRepository repository = new ARInvoiceRepository(tenant);
                 ARInvoice invoice = repository.GetARInvoiceByInvoiceNumber(tenant, waitingCommLog.EntityReference);
-                invoice.TransferError = null;
-                invoice.TransferStatusCode = "ET";
-                invoice.IsTransferStarted = false;
-                if (QBOId != null)
-                    invoice.ExternalAccountingEntityId = QBOId;
-                repository.Update(invoice);
-                repository.SubmitChanges();
+                if (invoice != null)
+                {
+                    invoice.TransferError = null;
+                    invoice.TransferStatusCode = "ET";
+                    invoice.IsTransferStarted = false;
+                    if (QBOId != null)
+                        invoice.ExternalAccountingEntityId = QBOId;
+                    repository.Update(invoice);
+                    repository.SubmitChanges();
+                }
             }
 
             queueservice.Complete();
             QBOIDSuccess = null;
-
-
-
         }
 
 
