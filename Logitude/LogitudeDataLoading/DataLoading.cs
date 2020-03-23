@@ -16,6 +16,7 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Simplog.Global.Data.GlobalModel;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using System.Collections;
 
 namespace LogitudeDataLoading
 {
@@ -23,6 +24,7 @@ namespace LogitudeDataLoading
     {
         public string LoadCustomersFromAfile(int tenant)
         {
+            CacheManager.CacheWrapper = new Dictionary(1000);
             OpenFileDialog openFileDialog = new OpenFileDialog();
             ICommonDataContext objectContext = CommonDataContext.GetContext(tenant);
             ICommonDataContext otherObjectContext = CommonDataContext.GetContext(tenant);
@@ -84,191 +86,127 @@ namespace LogitudeDataLoading
                         for (int j = i; j < i + 10 && j < stringLineArray.Count(); j++)
                         {
 
-
-                            if (!string.IsNullOrEmpty(stringLineArray[j]))
+                            try
                             {
-                                stringLineArray[j] = stringLineArray[j].TrimEnd('\r');
-                                readCustomersCodesData = stringLineArray[j].Split('\t');
-
-                                if (readCustomersCodesData.Length >= 2)
+                                if (!string.IsNullOrEmpty(stringLineArray[j]))
                                 {
-                                    if (readCustomersCodesData[1].Length > 59)
-                                        readCustomersCodesData[1] = readCustomersCodesData[1].Substring(0, 59);
+                                    stringLineArray[j] = stringLineArray[j].TrimEnd('\r');
+                                    readCustomersCodesData = stringLineArray[j].Split('\t');
 
-                                    if (readCustomersCodesData[1].Trim() != String.Empty)
+                                    if (readCustomersCodesData.Length >= 2)
                                     {
-                                        // 0      1         2          3           4         5    6        7        8      9    10    11          12        13                            14      
-                                        //Type	Name	VAT Number	Address 1	Address 2	Zip	 City	State	Country	 Phone	Fax	 Email	Contact Name   ReceivablesAccountingCard PayablesAccountingCard
+                                        if (readCustomersCodesData[1].Length > 59)
+                                            readCustomersCodesData[1] = readCustomersCodesData[1].Substring(0, 59);
 
-                                        string type = readCustomersCodesData[0].Trim() == "NULL" ? null : (readCustomersCodesData[0]);
-                                        string name = readCustomersCodesData[1].Trim() == "NULL" ? null : (readCustomersCodesData[1].Length > 59 ? readCustomersCodesData[1].Substring(0, 59) : readCustomersCodesData[1]);
-                                        string customerName = readCustomersCodesData[1].Trim() == "NULL" ? null : (readCustomersCodesData[1].Length > 59 ? readCustomersCodesData[1].Substring(0, 59) : readCustomersCodesData[1]);
-                                        string vatNumber = readCustomersCodesData[2].Trim() == "NULL" ? null : (readCustomersCodesData[2].Length > 19 ? readCustomersCodesData[2].Substring(0, 19) : readCustomersCodesData[2]);
-                                        string address1 = readCustomersCodesData[3].Trim() == "NULL" ? null : (readCustomersCodesData[3].Length > 64 ? readCustomersCodesData[3].Substring(0, 64) : readCustomersCodesData[3]);
-                                        string address2 = readCustomersCodesData[4].Trim() == "NULL" ? null : (readCustomersCodesData[4].Length > 64 ? readCustomersCodesData[4].Substring(0, 64) : readCustomersCodesData[4]);
-                                        string zip = readCustomersCodesData[5].Trim() == "NULL" ? null : (readCustomersCodesData[5].Length > 14 ? readCustomersCodesData[5].Substring(0, 14) : readCustomersCodesData[5]);
-                                        string city = readCustomersCodesData[6].Trim() == "NULL" ? null : (readCustomersCodesData[6].Length > 24 ? readCustomersCodesData[6].Substring(0, 24) : readCustomersCodesData[6]);
-                                        string stateCode = readCustomersCodesData[7].Trim() == "NULL" ? null : readCustomersCodesData[7].Trim();
-                                        string countryCode = readCustomersCodesData[8].Trim() == "NULL" ? null : readCustomersCodesData[8].Trim();
-                                        string phone = readCustomersCodesData[9].Trim() == "NULL" ? null : readCustomersCodesData[9].Trim();
-                                        string fax = readCustomersCodesData[10].Trim() == "NULL" ? null : readCustomersCodesData[10].Trim();
-                                        string email = readCustomersCodesData[11].Trim() == "NULL" ? null : readCustomersCodesData[11].Trim();
-                                        string contactName = readCustomersCodesData[12].Trim() == "NULL" ? null : readCustomersCodesData[12].Trim();
-
-                                        string receivablesAccountingCard = null;
-                                        if (readCustomersCodesData.Length >= 14)
+                                        if (readCustomersCodesData[1].Trim() != String.Empty)
                                         {
-                                            receivablesAccountingCard = readCustomersCodesData[13].Trim() == "NULL" ? null : (readCustomersCodesData[13].Trim());
-                                        }
+                                            // 0      1         2          3           4         5    6        7        8      9    10    11          12        13                            14      
+                                            //Type	Name	VAT Number	Address 1	Address 2	Zip	 City	State	Country	 Phone	Fax	 Email	Contact Name   ReceivablesAccountingCard PayablesAccountingCard
 
-                                        string payablesAccountingCard = null;
-                                        if (readCustomersCodesData.Length >= 15)
-                                        {
-                                            payablesAccountingCard = readCustomersCodesData[14].Trim() == "NULL" ? null : (readCustomersCodesData[14].Trim());
-                                        }
-
-                                        Country country = null;
-                                        if (countrieysDictionary.Keys.Contains(countryCode))
-                                        {
-                                            country = countrieysDictionary[countryCode];
-                                        }
-
-                                        State state = null;
-                                        if (country != null)
-                                        {
-
-                                            if (statesDictionary.Keys.Contains(stateCode + ',' + country.Id))
+                                            string type = readCustomersCodesData[0].Trim() == "NULL" ? null : (readCustomersCodesData[0]);
+                                            string name = readCustomersCodesData[1].Trim() == "NULL" ? null : (readCustomersCodesData[1].Length > 59 ? readCustomersCodesData[1].Substring(0, 59) : readCustomersCodesData[1]);
+                                            string customerName = readCustomersCodesData[1].Trim() == "NULL" ? null : (readCustomersCodesData[1].Length > 59 ? readCustomersCodesData[1].Substring(0, 59) : readCustomersCodesData[1]);
+                                            string vatNumber = readCustomersCodesData[2].Trim() == "NULL" ? null : (readCustomersCodesData[2].Length > 19 ? readCustomersCodesData[2].Substring(0, 19) : readCustomersCodesData[2]);
+                                            string address1 = readCustomersCodesData[3].Trim() == "NULL" ? null : (readCustomersCodesData[3].Length > 64 ? readCustomersCodesData[3].Substring(0, 64) : readCustomersCodesData[3]);
+                                            string address2 = readCustomersCodesData[4].Trim() == "NULL" ? null : (readCustomersCodesData[4].Length > 64 ? readCustomersCodesData[4].Substring(0, 64) : readCustomersCodesData[4]);
+                                            string zip = readCustomersCodesData[5].Trim() == "NULL" ? null : (readCustomersCodesData[5].Length > 14 ? readCustomersCodesData[5].Substring(0, 14) : readCustomersCodesData[5]);
+                                            string city = readCustomersCodesData[6].Trim() == "NULL" ? null : (readCustomersCodesData[6].Length > 24 ? readCustomersCodesData[6].Substring(0, 24) : readCustomersCodesData[6]);
+                                            string stateCode = readCustomersCodesData[7].Trim() == "NULL" ? null : readCustomersCodesData[7].Trim();
+                                            string countryCode = readCustomersCodesData[8].Trim() == "NULL" ? null : readCustomersCodesData[8].Trim();
+                                            string phone = readCustomersCodesData[9].Trim() == "NULL" ? null : readCustomersCodesData[9].Trim();
+                                            string fax = readCustomersCodesData[10].Trim() == "NULL" ? null : readCustomersCodesData[10].Trim();
+                                            string email = readCustomersCodesData[11].Trim() == "NULL" ? null : readCustomersCodesData[11].Trim();
+                                            string contactName = null;
+                                            if (readCustomersCodesData.Length >= 13)
                                             {
-                                                state = statesDictionary[stateCode + ',' + country.Id];
+                                                contactName = readCustomersCodesData[12].Trim() == "NULL" ? null : readCustomersCodesData[12].Trim();
                                             }
-                                        }
 
-                                        //if doesn't exist add customer with address and contact.
-                                        if (!customerCodesDect.Values.Contains((name + address1)))
-                                        {
-
-                                            AddressPM address = new AddressPM()
+                                            string receivablesAccountingCard = null;
+                                            if (readCustomersCodesData.Length >= 14)
                                             {
-                                                Name = name,
-                                                Description = "Main Address",
-                                                Address1 = address1,
-                                                Address2 = address2,
-                                                ZipCode = zip,
-                                                StateId = state != null ? state.Id : null,
-                                                CountryId = country != null ? country.Id : null,
-                                                City = city,
-                                                PhoneNumber = phone != null ? (phone.Length > 39 ? phone.Substring(0, 39) : phone) : null,
-                                                FaxNumber = fax,
-                                                AddressTypeId = "M",
-                                                Tenant = tenant,
+                                                receivablesAccountingCard = readCustomersCodesData[13].Trim() == "NULL" ? null : (readCustomersCodesData[13].Trim());
+                                            }
 
-                                            };
-
-
-                                            CustomerPM customer = new CustomerPM()
+                                            string payablesAccountingCard = null;
+                                            if (readCustomersCodesData.Length >= 15)
                                             {
-                                                EnglishName = customerName,
-                                                VatNumber = vatNumber,
-                                                Tenant = tenant,
-                                                IsHybrid = true,
-                                                Code = CodeCounter.GetNumber("Customer", tenant).ToString(),
-                                                PartnerTypeId = "CS",
-                                                //AccountingCard = accountingCards != null ? (accountingCards.Length > 24 ? accountingCards.Substring(0, 24) : accountingCards) : null,
+                                                payablesAccountingCard = readCustomersCodesData[14].Trim() == "NULL" ? null : (readCustomersCodesData[14].Trim());
+                                            }
 
-                                                CustomerStatusCode = "ACT",
-                                                IsCustomer = type.ToLower() == "customer" ? true : false,
-                                                ReceivablesAccountingCard = receivablesAccountingCard,
-                                                PayablesAccountingCard = payablesAccountingCard,
-                                            };
-
-                                            if (!string.IsNullOrEmpty(email) || !string.IsNullOrEmpty(contactName))
+                                            Country country = null;
+                                            if (countrieysDictionary.Keys.Contains(countryCode))
                                             {
-                                                string contactEnglishName = contactName;
-                                                if (string.IsNullOrEmpty(contactName))
+                                                country = countrieysDictionary[countryCode];
+                                            }
+
+                                            State state = null;
+                                            if (country != null)
+                                            {
+
+                                                if (statesDictionary.Keys.Contains(stateCode + ',' + country.Id))
                                                 {
-                                                    contactEnglishName = email.Split('@')[0];
-                                                }
-
-                                                ContactPM contactPM = null;
-                                                if (!string.IsNullOrEmpty(email))
-                                                {
-                                                    contactPM = contacts.Where(d => d.Email == email).FirstOrDefault();
-                                                }
-
-                                                else if (!string.IsNullOrEmpty(contactName))
-                                                {
-                                                    contactPM = contacts.Where(d => d.EnglishName == contactName).FirstOrDefault();
-                                                }
-
-                                                if (contactPM == null)
-                                                {
-                                                    contactPM = new ContactPM()
-                                                    {
-                                                        //Id = IdCounter.GetNumber("Contact", tenant),
-                                                        Email = email,
-                                                        EnglishName = contactEnglishName,
-                                                        Tenant = tenant,
-                                                        CardId = "newCard",
-                                                        IsHybrid = true,
-                                                        IsCreatedWithPartner = true,
-
-                                                    };
-
-                                                   // contactPM.CardId = "newCard";
-                                                    customer.Contacts.Add(contactPM);
-
-                                                    contacts.Add(contactPM);
-                                                    //ContactService contactService = new ContactService(objectContext, tenant);
-                                                    //contactService.Create(contactPM);
+                                                    state = statesDictionary[stateCode + ',' + country.Id];
                                                 }
                                             }
 
-                                            customer.Addresses.Add(address);
-
-                                            //CustomerService service = new CustomerService(objectContext, customer, systemContact.Id);
-                                            //service.Create(customer);
-
-                                            ICommonDataContext MyContext = CommonDataContext.GetContext(customer.Tenant);
-                                            CustomerService service = new CustomerService(MyContext, customer, systemContact.Id);
-                                            service.Create();
-
-                                            customerCodesDect.Add(customer.Id, customer.EnglishName + address.Address1);
-                                            objectContext.SaveChanges();
-
-                                        }
-                                        //update customer.
-                                        else
-                                        {
-                                            CacheManager.CacheWrapper = new MockCacheWrapper();
-                                            if (customers == null)
+                                            //if doesn't exist add customer with address and contact.
+                                            if (!customerCodesDect.Values.Contains((name + address1)))
                                             {
-                                                customers = customerQuery.GetCustomerPMsByTenant(tenant).ToList();
-                                            }
-                                            if (addresses == null)
-                                            {
-                                                addresses = addressQuery.GetAddressePMsByTenant(tenant).ToList();
-                                            }
-                                            string key = customerCodesDect.Where(d => d.Value == (name + address1)).FirstOrDefault().Key;
-                                            CustomerPM updatedCustomer = customers.Where(d => d.Id == key).FirstOrDefault();
-                                            if (updatedCustomer != null)
-                                            {
+
+                                                AddressPM address = new AddressPM()
+                                                {
+                                                    Name = name,
+                                                    Description = "Main Address",
+                                                    Address1 = address1,
+                                                    Address2 = address2,
+                                                    ZipCode = zip,
+                                                    StateId = state != null ? state.Id : null,
+                                                    CountryId = country != null ? country.Id : null,
+                                                    City = city,
+                                                    PhoneNumber = phone != null ? (phone.Length > 39 ? phone.Substring(0, 39) : phone) : null,
+                                                    FaxNumber = fax,
+                                                    AddressTypeId = "M",
+                                                    Tenant = tenant,
+
+                                                };
+
+
+                                                CustomerPM customer = new CustomerPM()
+                                                {
+                                                    EnglishName = customerName,
+                                                    VatNumber = vatNumber,
+                                                    Tenant = tenant,
+                                                    IsHybrid = true,
+                                                    Code = CodeCounter.GetNumber("Customer", tenant).ToString(),
+                                                    PartnerTypeId = "CS",
+                                                    //AccountingCard = accountingCards != null ? (accountingCards.Length > 24 ? accountingCards.Substring(0, 24) : accountingCards) : null,
+
+                                                    CustomerStatusCode = "ACT",
+                                                    IsCustomer = type.ToLower() == "customer" ? true : false,
+                                                    ReceivablesAccountingCard = receivablesAccountingCard,
+                                                    PayablesAccountingCard = payablesAccountingCard,
+                                                };
+
                                                 if (!string.IsNullOrEmpty(email) || !string.IsNullOrEmpty(contactName))
                                                 {
-                                                    ContactService contactService = new ContactService(otherObjectContext, tenant);
                                                     string contactEnglishName = contactName;
                                                     if (string.IsNullOrEmpty(contactName))
                                                     {
                                                         contactEnglishName = email.Split('@')[0];
                                                     }
+
                                                     ContactPM contactPM = null;
                                                     if (!string.IsNullOrEmpty(email))
                                                     {
                                                         contactPM = contacts.Where(d => d.Email == email).FirstOrDefault();
                                                     }
+
                                                     else if (!string.IsNullOrEmpty(contactName))
                                                     {
                                                         contactPM = contacts.Where(d => d.EnglishName == contactName).FirstOrDefault();
                                                     }
+
                                                     if (contactPM == null)
                                                     {
                                                         contactPM = new ContactPM()
@@ -277,58 +215,134 @@ namespace LogitudeDataLoading
                                                             Email = email,
                                                             EnglishName = contactEnglishName,
                                                             Tenant = tenant,
-                                                            CardId = key,
+                                                            CardId = "newCard",
                                                             IsHybrid = true,
+                                                            IsCreatedWithPartner = true,
+
                                                         };
+
+                                                        // contactPM.CardId = "newCard";
+                                                        customer.Contacts.Add(contactPM);
+
                                                         contacts.Add(contactPM);
-                                                        contactService.Create(contactPM);
-                                                        objectContext.SaveChanges();
-                                                        updatedCustomer.Contacts.Add(contactPM);
+                                                        //ContactService contactService = new ContactService(objectContext, tenant);
+                                                        //contactService.Create(contactPM);
                                                     }
-                                                    else
+                                                }
+
+                                                customer.Addresses.Add(address);
+
+                                                //CustomerService service = new CustomerService(objectContext, customer, systemContact.Id);
+                                                //service.Create(customer);
+
+                                                ICommonDataContext MyContext = CommonDataContext.GetContext(customer.Tenant);
+                                                CustomerService service = new CustomerService(MyContext, customer, systemContact.Id);
+                                                service.Create();
+
+                                                customerCodesDect.Add(customer.Id, customer.EnglishName + address.Address1);
+                                                objectContext.SaveChanges();
+
+                                            }
+                                            //update customer.
+                                            else
+                                            {
+                                                CacheManager.CacheWrapper = new MockCacheWrapper();
+                                                if (customers == null)
+                                                {
+                                                    customers = customerQuery.GetCustomerPMsByTenant(tenant).ToList();
+                                                }
+                                                if (addresses == null)
+                                                {
+                                                    addresses = addressQuery.GetAddressePMsByTenant(tenant).ToList();
+                                                }
+                                                string key = customerCodesDect.Where(d => d.Value == (name + address1)).FirstOrDefault().Key;
+                                                CustomerPM updatedCustomer = customers.Where(d => d.Id == key).FirstOrDefault();
+                                                if (updatedCustomer != null)
+                                                {
+                                                    if ((!string.IsNullOrEmpty(email) && email.Contains("@")) || !string.IsNullOrEmpty(contactName))
                                                     {
-                                                        if (contactPM.Id.Length <= 15)
+                                                        ContactService contactService = new ContactService(otherObjectContext, tenant);
+                                                        string contactEnglishName = contactName;
+                                                        if (string.IsNullOrEmpty(contactName))
                                                         {
-                                                            contactPM.EnglishName = contactName;
-                                                            contactPM.Email = email;
-                                                            contactPM.IsHybrid = true;
-                                                            contactService.Update(contactPM);
-                                                            objectContext.SaveChanges();
+                                                            contactEnglishName = email.Split('@')[0];
                                                         }
+                                                        ContactPM contactPM = null;
+                                                        if (!string.IsNullOrEmpty(email))
+                                                        {
+                                                            contactPM = contacts.Where(d => d.Email == email).FirstOrDefault();
+                                                        }
+                                                        else if (!string.IsNullOrEmpty(contactName))
+                                                        {
+                                                            contactPM = contacts.Where(d => d.EnglishName == contactName).FirstOrDefault();
+                                                        }
+                                                        if (contactPM == null)
+                                                        {
+                                                            contactPM = new ContactPM()
+                                                            {
+                                                                //Id = IdCounter.GetNumber("Contact", tenant),
+                                                                Email = email,
+                                                                EnglishName = contactEnglishName,
+                                                                Tenant = tenant,
+                                                                CardId = key,
+                                                                IsHybrid = true,
+                                                            };
+                                                            contacts.Add(contactPM);
+                                                            contactService.Create(contactPM);
+                                                            objectContext.SaveChanges();
+                                                            updatedCustomer.Contacts.Add(contactPM);
+                                                        }
+                                                        else
+                                                        {
+                                                            if (contactPM.Id.Length <= 15)
+                                                            {
+                                                                contactPM.EnglishName = contactName;
+                                                                contactPM.Email = email;
+                                                                contactPM.IsHybrid = true;
+                                                                contactService.Update(contactPM);
+                                                                objectContext.SaveChanges();
+                                                            }
+                                                        }
+
+                                                        AddressPM updatedAddress = addresses.Where(d => d.CardId == updatedCustomer.Id && d.AddressTypeId == "M").FirstOrDefault();
+                                                        updatedAddress.Name = name;
+                                                        updatedAddress.IsHybrid = true;
+                                                        updatedAddress.Address2 = address2;
+                                                        updatedAddress.ZipCode = zip;
+                                                        updatedAddress.StateId = state != null ? state.Id : null;
+                                                        updatedAddress.CountryId = country != null ? country.Id : null;
+                                                        updatedAddress.City = city;
+                                                        updatedAddress.PhoneNumber = phone != null ? (phone.Length > 39 ? phone.Substring(0, 39) : phone) : null;
+                                                        updatedAddress.FaxNumber = fax;
+                                                        addressService.Update(updatedAddress);
+
+                                                        updatedCustomer.EnglishName = customerName;
+                                                        updatedCustomer.VatNumber = vatNumber;
+                                                        updatedCustomer.IsHybrid = true;
+                                                        updatedCustomer.PayablesAccountingCard = payablesAccountingCard;
+                                                        updatedCustomer.ReceivablesAccountingCard = receivablesAccountingCard;
+                                                        //updatedCustomer.AccountingCard = accountingCards != null ? (accountingCards.Length > 24 ? accountingCards.Substring(0, 24) : accountingCards) : null;
+
+                                                        //CustomerService service = new CustomerService(otherObjectContext, updatedCustomer, systemContact.Id);
+                                                        //service.Update(updatedCustomer);
+
+                                                        ICommonDataContext MyContext = CommonDataContext.GetContext(updatedCustomer.Tenant);
+                                                        CustomerService service = new CustomerService(MyContext, updatedCustomer, "system@tenant" + tenant + ".com");
+                                                        service.Update();
+
                                                     }
-
-                                                    AddressPM updatedAddress = addresses.Where(d => d.CardId == updatedCustomer.Id && d.AddressTypeId == "M").FirstOrDefault();
-                                                    updatedAddress.Name = name;
-                                                    updatedAddress.IsHybrid = true;
-                                                    updatedAddress.Address2 = address2;
-                                                    updatedAddress.ZipCode = zip;
-                                                    updatedAddress.StateId = state != null ? state.Id : null;
-                                                    updatedAddress.CountryId = country != null ? country.Id : null;
-                                                    updatedAddress.City = city;
-                                                    updatedAddress.PhoneNumber = phone != null ? (phone.Length > 39 ? phone.Substring(0, 39) : phone) : null;
-                                                    updatedAddress.FaxNumber = fax;
-                                                    addressService.Update(updatedAddress);
-
-                                                    updatedCustomer.EnglishName = customerName;
-                                                    updatedCustomer.VatNumber = vatNumber;
-                                                    updatedCustomer.IsHybrid = true;
-                                                    updatedCustomer.PayablesAccountingCard = payablesAccountingCard;
-                                                    updatedCustomer.ReceivablesAccountingCard = receivablesAccountingCard;
-                                                    //updatedCustomer.AccountingCard = accountingCards != null ? (accountingCards.Length > 24 ? accountingCards.Substring(0, 24) : accountingCards) : null;
-
-                                                    //CustomerService service = new CustomerService(otherObjectContext, updatedCustomer, systemContact.Id);
-                                                    //service.Update(updatedCustomer);
-
-                                                    ICommonDataContext MyContext = CommonDataContext.GetContext(updatedCustomer.Tenant);
-                                                    CustomerService service = new CustomerService(MyContext, updatedCustomer, "system@tenant" + tenant + ".com");
-                                                    service.Update();
-
                                                 }
                                             }
                                         }
                                     }
                                 }
                             }
+                            catch (Exception)
+                            {
+
+                                //throw;
+                            }
+                           
                         }
                         scope.Complete();
                     }
@@ -446,26 +460,26 @@ namespace LogitudeDataLoading
                                         }).ToList();
 
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-            //{
-            //    IGlobalContext globalContext = GlobalContext.GetContext();
-            //    List<ContactPassword> contactPasswords = globalContext.ContactPasswords.Where(c => contacts.Any(ct => ct.Email == c.Email)).ToList();
+                //{
+                //    IGlobalContext globalContext = GlobalContext.GetContext();
+                //    List<ContactPassword> contactPasswords = globalContext.ContactPasswords.Where(c => contacts.Any(ct => ct.Email == c.Email)).ToList();
 
-            //    foreach (var c in contacts)
-            //    {
-            //        if (c.Email != null)
-            //        {
-            //            ContactPassword contactPassword = contactPasswords.Where(cn => cn.Email == c.Email.ToLower()).FirstOrDefault();
-            //            if (contactPassword != null)
-            //            {
-            //                c.IsLocked = contactPassword.IsLocked;
-            //                c.MustChangePassword = contactPassword.MustChangePassword;
-            //                c.NumberOfRetries = contactPassword.NumberOfRetries;
-            //            }
-            //        }
-            //    }
-            //}
+                //    foreach (var c in contacts)
+                //    {
+                //        if (c.Email != null)
+                //        {
+                //            ContactPassword contactPassword = contactPasswords.Where(cn => cn.Email == c.Email.ToLower()).FirstOrDefault();
+                //            if (contactPassword != null)
+                //            {
+                //                c.IsLocked = contactPassword.IsLocked;
+                //                c.MustChangePassword = contactPassword.MustChangePassword;
+                //                c.NumberOfRetries = contactPassword.NumberOfRetries;
+                //            }
+                //        }
+                //    }
+                //}
 
-            return contacts;
+                return contacts;
         }
 
         public string LoadAgentsFromAFile(int tenant)
@@ -518,7 +532,7 @@ namespace LogitudeDataLoading
 
                 string[] stringLineArray = customrsString.Split('\n');
                 string[] readAgentsCodesData = null;
-                
+
 
                 int counter = 0;
                 for (int i = 0; i < stringLineArray.Length; i = i + 10)
@@ -757,7 +771,7 @@ namespace LogitudeDataLoading
                                                         updatedAgent.ReceivablesAccountingCard = receivablesAccountingCard;
                                                         updatedAgent.PayablesAccountingCard = payablesAccountingCard;
 
-                                                       // updatedAgent.AccountingCard = accountingCards != null ? (accountingCards.Length > 24 ? accountingCards.Substring(0, 24) : accountingCards) : null;
+                                                        // updatedAgent.AccountingCard = accountingCards != null ? (accountingCards.Length > 24 ? accountingCards.Substring(0, 24) : accountingCards) : null;
 
                                                         AgentService service = new AgentService(otherObjectContext, updatedAgent, systemContact.Id);
                                                         service.Update(updatedAgent);
@@ -896,7 +910,7 @@ namespace LogitudeDataLoading
 
                 string[] stringLineArray = customrsString.Split('\n');
                 string[] readTruckersCodesData = null;
-               
+
                 int counter = 0;
                 for (int i = 0; i < stringLineArray.Length; i = i + 10)
                 {
@@ -1277,7 +1291,7 @@ namespace LogitudeDataLoading
 
                 string[] stringLineArray = customrsString.Split('\n');
                 string[] readWarehousesCodesData = null;
-                
+
 
                 int counter = 0;
                 for (int i = 0; i < stringLineArray.Length; i = i + 10)
@@ -1385,7 +1399,7 @@ namespace LogitudeDataLoading
                                                     PartnerTypeId = "WH",
                                                     ReceivablesAccountingCard = receivablesAccountingCard,
                                                     PayablesAccountingCard = payablesAccountingCard,
-                                                   // AccountingCard = accountingCards != null ? (accountingCards.Length > 24 ? accountingCards.Substring(0, 24) : accountingCards) : null,
+                                                    // AccountingCard = accountingCards != null ? (accountingCards.Length > 24 ? accountingCards.Substring(0, 24) : accountingCards) : null,
                                                 };
 
                                                 if (!string.IsNullOrEmpty(email) || !string.IsNullOrEmpty(contactName))
@@ -1982,5 +1996,61 @@ namespace LogitudeDataLoading
             return status;
         }
 
+    }
+
+    internal class Dictionary : ICacheWrapper
+    {
+        private int capacity;
+
+        public Dictionary(int capacity)
+        {
+            this.capacity = capacity;
+        }
+
+        public int Count => throw new NotImplementedException();
+
+        public long EffectivePercentagePhysicalMemoryLimit => throw new NotImplementedException();
+
+        public long EffectivePrivateBytesLimit => throw new NotImplementedException();
+
+        public object Get(string key)
+        {
+            return null;
+        }
+
+        public IDictionaryEnumerator GetEnumerator()
+        {
+            return null;
+        }
+
+        public void Insert(string key, object value)
+        {
+        }
+
+        public void Insert(string key, object value, System.Web.Caching.CacheDependency dependencies)
+        {
+        }
+
+        public void Insert(string key, object value, System.Web.Caching.CacheDependency dependencies, DateTime absoluteExpiration, TimeSpan slidingExpiration)
+        {
+        }
+
+        public void Insert(string key, object value, System.Web.Caching.CacheDependency dependencies, DateTime absoluteExpiration, TimeSpan slidingExpiration, System.Web.Caching.CacheItemUpdateCallback onUpdateCallback)
+        {
+        }
+
+        public void Insert(string key, object value, System.Web.Caching.CacheDependency dependencies, DateTime absoluteExpiration, TimeSpan slidingExpiration, System.Web.Caching.CacheItemPriority priority, System.Web.Caching.CacheItemRemovedCallback onRemoveCallback)
+        {
+        }
+
+        public object Invalidate(string key)
+        {
+            return null;
+        }
+
+        public object Remove(string key)
+        {
+            return null;
+        }
     }
 }
