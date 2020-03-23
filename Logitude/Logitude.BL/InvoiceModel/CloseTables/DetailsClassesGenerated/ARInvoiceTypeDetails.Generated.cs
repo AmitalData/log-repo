@@ -69,6 +69,13 @@ namespace Logitude.BL.InvoiceModel
                 Code = "TX", 
                 Name = "Tax Invoice", 
 			});
+			 
+            all.Add(new ARInvoiceTypeDetails()
+            {    
+                Code = "IT", 
+                Name = "Interest Invoice", 
+                SearchFields = "IT,Interest Invoice", 
+			});
 			
             return all;
        }

@@ -66,6 +66,30 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             }
         }
 
+        public HttpResponseMessage PutConfirmCreateInvoice(InterestReportPM interestReportPM)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.CheckContactFeature("InterestTransaction", "READ", authToken.Tenant);
+                IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
+  
+
+                AccountingDomainService interestTransactionQuery = new AccountingDomainService();
+                interestReportPM = interestTransactionQuery.PutConfirmCreateInvoice(interestReportPM, tenant, MyContext);
+
+
+                return Request.CreateResponse(HttpStatusCode.OK, interestReportPM);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
     }
 
     public class InterestTransactionsWithTotal

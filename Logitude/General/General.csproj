@@ -699,6 +699,7 @@
     <Content Include="Main Branch\2020\02 - 2020\Day 04 [Maheera] Add Storage Chargeable Days Gross Weight UOM.sql" />
     <Content Include="Main Branch\2020\02 - 2020\Day 06 [Maheera] Fill GrossWeightPerStorageDays Field in Shipment.sql" />
     <Content Include="Main Branch\2020\03 - 2020\Day 18 [Wesam] Delete LastRunByUserId Object Field From BIReport.sql" />
+    <Content Include="Main Branch\2020\03 - 2020\Day 23 [Mutaz] Add New Counters Definition To INVC Counter.sql" />
     <Content Include="Main Branch\2020\03 - 2020\Day 08 [Samar] Fill default containers on tariff settings.sql" />
     <Content Include="Main Branch\2020\03 - 2020\Day 08 [Abed]InSertRecordToQuoteTemplateTextCode%28VatType and VatPerc%29.sql" />
     <Content Include="Main Branch\2020\02 - 2020\Day 10 [Bisan] Update Storage free days in Cards table.sql" />

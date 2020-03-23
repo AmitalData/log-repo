@@ -48,6 +48,12 @@ export class ARInvoiceMenuButtonsHandler {
                     switch (button.EventCode) {
                         case "SaveAsDraft":
                             {
+                                if (this.EntityPM.ARInvoiceTypeCode == 'IT') {
+                                    button.IsHidden = true;
+                                }
+                                else {
+
+                              
                                 myButtonIsDisabled = !InvoiceTool.IsEditingARInvoiceEnabled(this.EntityPM);
 
                                 if (this.EntityPM.IsConstituentInvoice) {
@@ -58,9 +64,9 @@ export class ARInvoiceMenuButtonsHandler {
                                     }
                                 }
 
-                                button.LabelTextCodeCode = (this.EntityPM.IsConstituentInvoice) ? "General.B.Save" : "ARInvoice.B.SaveAsDraft";
-
-                                break;
+                                    button.LabelTextCodeCode = (this.EntityPM.IsConstituentInvoice) ? "General.B.Save" : "ARInvoice.B.SaveAsDraft";
+                                }
+                                 break;
                             }
 
                         case "CancelDraft":
@@ -122,7 +128,7 @@ export class ARInvoiceMenuButtonsHandler {
 
                         case "VoidARInvoice":
                             {
-                                if (SessionLocator.TenantPM.AccountingActivated == true) {
+                                if (SessionLocator.TenantPM.AccountingActivated == true || this.EntityPM.ARInvoiceTypeCode == 'IT') {
                                     button.IsHidden = true;
                                 }
                                 else {
@@ -154,41 +160,46 @@ export class ARInvoiceMenuButtonsHandler {
 
                         case "AutoCredit":
                             {
-                                if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
-                                    myButtonIsDisabled = true;
+                                if (this.EntityPM.ARInvoiceTypeCode == 'IT') {
+                                    button.IsHidden = true;
                                 }
-
-                                else if (this.EntityPM.StatusCode == "LL" || this.EntityPM.StatusCode == "VD" || this.EntityPM.StatusCode == "AC" || this.EntityPM.StatusCode == "AR") {
-                                    myButtonIsDisabled = true;
-                                }
-
-                                else if (this.EntityPM.ARInvoiceTypeCode == "IN") {
-                                    var isEnabled = false;
-
-                                    if (!this.EntityPM.IsCancelled) {
-                                        if (this.EntityPM.IsConstituentInvoice) {
-                                            if (AppTool.IsNullOrEmpty(this.EntityPM.ConsolidationInvoiceId)) {
-                                                isEnabled = true;
-                                            }
-                                        }
-
-                                        else {
-                                            if (this.EntityPM.StatusCode == "PP" || this.EntityPM.StatusCode == "PD" || this.EntityPM.StatusCode == "AD") {
-                                                isEnabled = true;
-                                            }
-                                        }
+                                else {
+                                    if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
+                                        myButtonIsDisabled = true;
                                     }
 
-                                    myButtonIsDisabled = !isEnabled;
-                                }
-
-                                else if (this.EntityPM.ARInvoiceTypeCode == "CC") {
-                                    myButtonIsDisabled = true;
-                                }
-
-                                if (SessionLocator.TenantPM.AccountingActivated == true) {
-                                    if (this.EntityPM != null && this.EntityPM.IsExternalEntity) {
+                                    else if (this.EntityPM.StatusCode == "LL" || this.EntityPM.StatusCode == "VD" || this.EntityPM.StatusCode == "AC" || this.EntityPM.StatusCode == "AR") {
                                         myButtonIsDisabled = true;
+                                    }
+
+                                    else if (this.EntityPM.ARInvoiceTypeCode == "IN") {
+                                        var isEnabled = false;
+
+                                        if (!this.EntityPM.IsCancelled) {
+                                            if (this.EntityPM.IsConstituentInvoice) {
+                                                if (AppTool.IsNullOrEmpty(this.EntityPM.ConsolidationInvoiceId)) {
+                                                    isEnabled = true;
+                                                }
+                                            }
+
+                                            else {
+                                                if (this.EntityPM.StatusCode == "PP" || this.EntityPM.StatusCode == "PD" || this.EntityPM.StatusCode == "AD") {
+                                                    isEnabled = true;
+                                                }
+                                            }
+                                        }
+
+                                        myButtonIsDisabled = !isEnabled;
+                                    }
+
+                                    else if (this.EntityPM.ARInvoiceTypeCode == "CC") {
+                                        myButtonIsDisabled = true;
+                                    }
+
+                                    if (SessionLocator.TenantPM.AccountingActivated == true) {
+                                        if (this.EntityPM != null && this.EntityPM.IsExternalEntity) {
+                                            myButtonIsDisabled = true;
+                                        }
                                     }
                                 }
 

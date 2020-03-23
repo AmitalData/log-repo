@@ -34,6 +34,8 @@ export class InterestReportList {
 	InterestReportStatusLocalName: string;
 	CustomerId: string;
 	CustomerName: string;
+	GLAccountMinimumInterest: number;
+	CustomerLocalName: string;
 	
 }
  
