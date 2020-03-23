@@ -131,6 +131,11 @@ export class TariffPM {
     public set ContractNumber(newValue: string) { if (this.contractNumber != newValue) { this.contractNumber = newValue; this.MarkAsDirty("ContractNumber"); } }
        
 	 
+    private sellerName: string;
+    public get SellerName() { return this.sellerName; }
+    public set SellerName(newValue: string) { if (this.sellerName != newValue) { this.sellerName = newValue; this.MarkAsDirty("SellerName"); } }
+       
+	 
     private setAsInActive: boolean;
     public get SetAsInActive() { return this.setAsInActive; }
     public set SetAsInActive(newValue: boolean) { if (this.setAsInActive != newValue) { this.setAsInActive = newValue; this.MarkAsDirty("SetAsInActive"); } }
@@ -396,6 +401,11 @@ export class TariffPM {
     private transportModeName: string;
     public get TransportModeName() { return this.transportModeName; }
     public set TransportModeName(newValue: string) { if (this.transportModeName != newValue) { this.transportModeName = newValue; this.MarkAsDirty("TransportModeName"); } }
+       
+	 
+    private sellerPartnerTypeId: string;
+    public get SellerPartnerTypeId() { return this.sellerPartnerTypeId; }
+    public set SellerPartnerTypeId(newValue: string) { if (this.sellerPartnerTypeId != newValue) { this.sellerPartnerTypeId = newValue; this.MarkAsDirty("SellerPartnerTypeId"); } }
        
 	 
 
