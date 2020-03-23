@@ -73,7 +73,15 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                 ValidatePartnerTypes(entityPM);
             }
 
-            ShipmentReceivableValidator.Validate(entityPM.ShipmentReceivables);
+            //List<IEntityValidator> validators = new List<IEntityValidator>();
+            //validators.Add(new ShipmentReceivableValidator(entityPM));
+
+            //foreach(IEntityValidator validator in validators)
+            //{
+            //    validator.Validate();
+            //}
+
+            //ShipmentReceivableValidator.Validate(entityPM.ShipmentReceivables);
         }
 
         private static void ValidateProductTypePermission(ShipmentPM entityPM, ICommonDataContext myCommonContext)

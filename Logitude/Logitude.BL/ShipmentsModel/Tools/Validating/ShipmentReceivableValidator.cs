@@ -8,8 +8,13 @@ using Logitude.Server.Tools.Helpers;
 
 namespace Logitude.BL.ShipmentsModel.Tools.Validating
 {
-    public class ShipmentReceivableValidator
+    public class ShipmentReceivableValidator: IEntityValidator
     {
+        public void Validate()
+        {
+            
+        }
+
         internal static void Validate(List<ShipmentReceivablePM> shipmentReceivables)
         {
             foreach(ShipmentReceivablePM item in shipmentReceivables)
@@ -53,5 +58,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                 throw new ApplicationException("Invalid Shipment Receivable Total Amount");
             }
         }
+
+
     }
 }
