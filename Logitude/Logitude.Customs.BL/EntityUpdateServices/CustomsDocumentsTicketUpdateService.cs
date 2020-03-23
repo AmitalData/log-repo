@@ -81,6 +81,22 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 CustomsDocumentQueryService customsDocumentQueryService = new CustomsDocumentQueryService(context);
                 CustomsDocumentMetaDataValueQueryService customsDocumentMetaDataValueQueryService = new CustomsDocumentMetaDataValueQueryService(context);
                 CustomsDocumentPM customDocument = customsDocumentQueryService.GetSingle(entityPM.DocumentsFilingId, false, false);
+                if (customDocument == null)
+                {
+                    var myCustomsDocumentUpdateService = new CustomsDocumentUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);
+                    CustomsDocumentPM customsDocumentPM = new CustomsDocumentPM();
+                    customsDocumentPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
+                    customsDocumentPM.DocumentsFilingId = entityPM.DocumentsFilingId;
+                    customsDocumentPM.DocumentTypeCode = entityPM.DocumentTypeCode;
+                    customsDocumentPM.CurrentCustomsDocumentsTicketId = entityPM.Id;
+                    customsDocumentPM.Tenant = entityPM.Tenant;
+                    foreach (CustomsDocumentMetaDataValuePM value in customsDocumentPM.CustomsDocumentMetaDataValues)
+                    {
+                        value.ChangeSetOp = ChangeSetOperation.Insert;
+                    }
+
+                    myCustomsDocumentUpdateService.Update(customsDocumentPM, true);
+                }
                 if (customDocument != null)
                 {
                     CustomsDocumentUpdateService customsdocumentUpdateService = new CustomsDocumentUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);
