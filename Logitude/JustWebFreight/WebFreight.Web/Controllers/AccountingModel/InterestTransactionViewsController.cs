@@ -35,11 +35,10 @@ using Logitude.Accounting.Data.EntityLists;
 using Logitude.Accounting.BL.EntityUpdateServices;
 using Logitude.Accounting.Data.EntityListQueryServices;
 using Logitude.Accounting.BL.EntityQueryServices;
-using Logitude.BL.CommonDataModel.EntityQueries;
-using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.Helpers;
 using WebFreight.Web.AccountingModel.Reports.BankDeposit;
 using WebFreight.Web.AccountingModel.DomainServices;
+using Logitude.Accounting.BL.InterestService;
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 { 
@@ -56,7 +55,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.CheckContactFeature("InterestTransaction", "READ", authToken.Tenant);
                 IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
-                AccountingDomainService interestTransactionQuery = new AccountingDomainService();
+                InterestService interestTransactionQuery = new InterestService();
                 InterestTransactionsWithTotal myResult  = interestTransactionQuery.GetAllInterestTransactionByDate(ReportId, InterestCalculationDate, tenant, MyContext);
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
             }
@@ -76,9 +75,9 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.CheckContactFeature("InterestTransaction", "READ", authToken.Tenant);
                 IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
-  
 
-                AccountingDomainService interestTransactionQuery = new AccountingDomainService();
+
+                InterestService interestTransactionQuery = new InterestService();
                 interestReportPM = interestTransactionQuery.PutConfirmCreateInvoice(interestReportPM, tenant, MyContext);
 
 
@@ -92,11 +91,5 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
     }
 
-    public class InterestTransactionsWithTotal
-    {
-        public List<InterestTransactionList> interestTransactionLists { get; set; }
-        public decimal TotalLocalAmount { get; set; }
-
-    }
 }
 	 

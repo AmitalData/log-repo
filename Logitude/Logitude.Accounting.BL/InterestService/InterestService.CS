@@ -11,7 +11,6 @@ using Logitude.Accounting.BL.EntityUpdateServices;
 using Logitude.Accounting.Def.EntityPMs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
-using WebFreight.Web.App_Code.AngularJS_App_Code.Generated;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Server.Infrastructure;
 using Logitude.Accounting.Data.Repositories;
@@ -20,9 +19,9 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.Resolvers;
 
-namespace WebFreight.Web.AccountingModel.DomainServices
+namespace Logitude.Accounting.BL.InterestService
 {
-    public partial class AccountingDomainService
+    public   class InterestService
     {
         public InterestTransactionsWithTotal GetAllInterestTransactionByDate(string ReportId, DateTime InterestCalculationDate, int Tenant, IAccountingContext MyContext=null)
         {
@@ -194,6 +193,14 @@ namespace WebFreight.Web.AccountingModel.DomainServices
             return loggedcontact;
         }
 
+
+    }
+
+
+    public class InterestTransactionsWithTotal
+    {
+        public List<InterestTransactionList> interestTransactionLists { get; set; }
+        public decimal TotalLocalAmount { get; set; }
 
     }
 }
