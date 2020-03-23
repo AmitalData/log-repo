@@ -1294,7 +1294,7 @@ export class QuoteChargeItem extends BaseComponent {
         }
         this.UIProperties.SetEnabled("CostCurrencyId", this.ObjectTableName, isEnabled_CostCurrencyId || isFromTariff);
         this.UIProperties.SetEnabled("CostTotalAmount", this.ObjectTableName, isEnabled_CostCurrencyId || isFromTariff);
-        this.UIProperties.SetEnabled("CostUnitPrice", this.ObjectTableName, isEnabled_CostCurrencyId && isFromTariff);
+        this.UIProperties.SetEnabled("CostUnitPrice", this.ObjectTableName, isEnabled_CostCurrencyId);
         this.IsEnabled_CostUnitPrice = isEnabled_CostCurrencyId;
     }
 
