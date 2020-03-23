@@ -2527,6 +2527,7 @@
     <Compile Include="ShipmentsModel\EntityPMs\ShipmentCustomsTransmissionPM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\ShipmentDeliveryPM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\ShipmentFollowUpPM.cs" />
+    <Compile Include="ShipmentsModel\EntityPMs\ShipmentIntegrationVariables.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\ShipmentLevelPM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\ShipmentMobilePM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\ShipmentOrderPackagePM.cs" />
@@ -2601,6 +2602,7 @@
     <Compile Include="ShipmentsModel\EntityQueries\ShipmentDeliveryQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\ShipmentPickUpDeliveryQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\ShipmentPickUpQuery.cs" />
+    <Compile Include="ShipmentsModel\EntityQueries\ShipmentPreperationIntegrationVariables.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\ShipmentQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\ShipmentReceivableLineStatusQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\ShipmentReceivableQuery.cs" />
