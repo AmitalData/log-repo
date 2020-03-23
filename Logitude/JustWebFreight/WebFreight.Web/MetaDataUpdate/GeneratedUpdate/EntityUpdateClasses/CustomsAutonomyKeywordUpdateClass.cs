@@ -49,7 +49,7 @@ using Logitude.Social.Data.EntityPOCOs;
 using Logitude.Social.BL;
 using Logitude.Social.Data.Repsitories;
 using Logitude.Server.Tools.CloseTablesClasses;
-using Logitude.Customs.BL.CloseTables;
+using Logitude.Customs.BL.ClosedTable;
 using Logitude.CRM.BL.CLoseTable;
 using Logitude.BookingLib.BL.CLoseTable;
 using Logitude.WarehouseLib.Data.Repositories;
@@ -58,6 +58,20 @@ using Logitude.WarehouseLib.BL.CLoseTable;
 using Logitude.TimeManagement.Data.Repositories;
 using Logitude.TimeManagement.Data.EntityPOCOs;
 using Logitude.TimeManagement.BL.CLoseTable;
+using Logitude.BL.ShipmentsModel.CloseTables;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Logitude.BL.ShipmentsModel;
+using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.Repositories;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Logitude.BL.GlobalModel;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.BL;
+using Logitude.TariffModule.Data.Repositories;
+using Logitude.TariffModule.Data.EntityPOCOs;
+using Logitude.TariffModule.BL.CLoseTable;
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomsAutonomyKeywordUpdateClass
@@ -113,11 +127,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ServerModuleName =  "Customs",
 			      				    NewWizardComponentPath =  "./CustomsModules/CustomsCourier/Components/AutonomyKeyword/AutonomyKeywordComponent",
 			      				    NoTS =  false,
-			      				    NoDefaultFeatures =  false,
 			      				    HasMenuButtons =  false,
 			      				    AllowedForComputingPartners =  false,
-			      				    Code1 =  "c5de",
-			      				    Name1 =  " Query Group",
 			      				    CustomFieldsCount =  0,
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
@@ -133,11 +144,126 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
+					 						FieldName =  "Id",
+					  						OldFieldName =  "Id",
+					  						ObjectTableName =  "Customs.CustomsAutonomyKeyword",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  15,
+					  						IsRequired =  true,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  15,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "Id",
+					  						ListPropertyPath =  "Id",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "CustomsAutonomyKeyword",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "Id",
+					  						DefaultText =  "Id",
+					  						ListFieldLable =  "IdListLable",
+					  						ListLableDefaultText =  "Id",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  true,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "Tenant",
+					  						OldFieldName =  "Tenant",
+					  						ObjectTableName =  "Customs.CustomsAutonomyKeyword",
+					  						FieldsDataType =  "Integer",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  true,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "Tenant",
+					  						ListPropertyPath =  "Tenant",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "CustomsAutonomyKeyword",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "Tenant",
+					  						DefaultText =  "Tenant",
+					  						ListFieldLable =  "TenantListLable",
+					  						ListLableDefaultText =  "Tenant",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  true,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
 					 						FieldName =  "KeywordtypeCode",
 					  						OldFieldName =  "KeywordtypeCode",
-					  						IsNew =  true,
-					  						IsChecked =  true,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CustomsAutonomyKeyword",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  1,
@@ -188,10 +314,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -202,9 +324,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "KeywordsList",
 					  						OldFieldName =  "KeywordsList",
-					  						IsNew =  true,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CustomsAutonomyKeyword",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -257,10 +376,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -271,9 +386,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "KeywordtypeLocalName",
 					  						OldFieldName =  "KeywordtypeLocalName",
-					  						IsNew =  true,
-					  						IsChecked =  true,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CustomsAutonomyKeyword",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -326,10 +438,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -339,28 +447,29 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
 	        FeatureRepository featureRepository = new FeatureRepository(0); 
-            List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 	        QueryGroup CustomsAutonomyKeywordQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "3d96", Name = " Query Group" }, queryGroupRepository);
-	        queryGroupRepository.SubmitChanges();
+						QueryGroup CustomsAutonomyKeywordQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "c5de", Name = " Query Group" }, queryGroupRepository);
+				        queryGroupRepository.SubmitChanges();
 
 	        ObjectTable CustomsAutonomyKeywordObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.CustomsAutonomyKeyword" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> CustomsAutonomyKeywordObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.CustomsAutonomyKeyword").ToList();   
 
-			   TextCode CustomsAutonomyKeywordTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomsAutonomyKeyword.Q.AllCustomsAutonomyKeyword", DefaultText = "All Autonomy Keyword",LocalDefaultText = "Autonomy Keyword", ObjectTableId = CustomsAutonomyKeywordObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature CustomsAutonomyKeywordFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CustomsAutonomyKeyword.Q.AllCustomsAutonomyKeyword", ObjectTableId = CustomsAutonomyKeywordObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsAutonomyKeyword.Features.AllCustomsAutonomyKeyword", NameTextCodeDefaultText = "AllCustomsAutonomyKeyword", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode CustomsAutonomyKeywordTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomsAutonomyKeyword.Q.AllCustomsAutonomyKeyword", DefaultText = @"AllCustomsAutonomyKeyword",LocalDefaultText = "AllCustomsAutonomyKeyword", ObjectTableId = CustomsAutonomyKeywordObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature CustomsAutonomyKeywordFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CustomsAutonomyKeyword.Q.AllCustomsAutonomyKeyword", ObjectTableId = CustomsAutonomyKeywordObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsAutonomyKeywordFeatures.AllCustomsAutonomyKeyword", NameTextCodeDefaultText = "AllCustomsAutonomyKeyword", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllCustomsAutonomyKeywordQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomsAutonomyKeywordTextCode_0.Id, Code = "AllCustomsAutonomyKeyword",  QueryGroupCode = "3d96", IndexOrder = 0, Tenant = 0, ObjectTableId = CustomsAutonomyKeywordObjectTable.Id, QuerySection = "Customs.CustomsAutonomyKeyword", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomsAutonomyKeywordFeature_0.Id, DefaultSortName = "KeywordtypeCode", DefaultSortDirection = "Desending" }, queriesRepository, tenantQueries);
+			  Query AllCustomsAutonomyKeywordQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomsAutonomyKeywordTextCode_0.Id, NameTextCodeCode = CustomsAutonomyKeywordTextCode_0.Code, ObjectTableName = "Customs.CustomsAutonomyKeyword", Code = "AllCustomsAutonomyKeyword",  QueryGroupCode = "3d96", IndexOrder = 0, Tenant = 0, ObjectTableId = CustomsAutonomyKeywordObjectTable.Id, QuerySection = "Customs.CustomsAutonomyKeyword", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomsAutonomyKeywordFeature_0.Id,FeatureUniqeCode= CustomsAutonomyKeywordFeature_0.FeatureUniqeCode, DefaultSortName = "KeywordtypeCode", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn AllCustomsAutonomyKeywordQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomsAutonomyKeywordQuery.Id, IndexOrder = 0, ObjectFieldId = CustomsAutonomyKeywordObjectFields.Where(d => d.FieldName == "KeywordtypeCode" && d.ObjectTableId == CustomsAutonomyKeywordObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllCustomsAutonomyKeywordQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomsAutonomyKeywordQuery.Id,QueryCode = AllCustomsAutonomyKeywordQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = CustomsAutonomyKeywordObjectFields.Where(d => d.FieldName == "KeywordtypeCode" && d.ObjectTableId == CustomsAutonomyKeywordObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomsAutonomyKeywordObjectFields.Where(d => d.FieldName == "KeywordtypeCode" && d.ObjectTableId == CustomsAutonomyKeywordObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllCustomsAutonomyKeywordQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomsAutonomyKeywordQuery.Id, IndexOrder = 1, ObjectFieldId = CustomsAutonomyKeywordObjectFields.Where(d => d.FieldName == "KeywordtypeLocalName" && d.ObjectTableId == CustomsAutonomyKeywordObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllCustomsAutonomyKeywordQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomsAutonomyKeywordQuery.Id,QueryCode = AllCustomsAutonomyKeywordQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = CustomsAutonomyKeywordObjectFields.Where(d => d.FieldName == "KeywordtypeLocalName" && d.ObjectTableId == CustomsAutonomyKeywordObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomsAutonomyKeywordObjectFields.Where(d => d.FieldName == "KeywordtypeLocalName" && d.ObjectTableId == CustomsAutonomyKeywordObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllCustomsAutonomyKeywordQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomsAutonomyKeywordQuery.Id, IndexOrder = 2, ObjectFieldId = CustomsAutonomyKeywordObjectFields.Where(d => d.FieldName == "KeywordsList" && d.ObjectTableId == CustomsAutonomyKeywordObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 300 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllCustomsAutonomyKeywordQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomsAutonomyKeywordQuery.Id,QueryCode = AllCustomsAutonomyKeywordQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = CustomsAutonomyKeywordObjectFields.Where(d => d.FieldName == "KeywordsList" && d.ObjectTableId == CustomsAutonomyKeywordObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomsAutonomyKeywordObjectFields.Where(d => d.FieldName == "KeywordsList" && d.ObjectTableId == CustomsAutonomyKeywordObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 300 }, queryColumnsRepository, tenantQueryColumns);
 	   
 	    }
 
@@ -374,70 +483,96 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen CustomsAutonomyKeywordCustomsCustomsAutonomyKeywordHeaderScrnScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CustomsAutonomyKeyword.Customs.CustomsAutonomyKeywordHeaderScrn.HeaderScreen", Name = "Customs.CustomsAutonomyKeywordHeaderScrn", ObjectTableId = CustomsAutonomyKeywordObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField CustomsAutonomyKeywordCustomsCustomsAutonomyKeywordHeaderScrnScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = CustomsAutonomyKeywordObjectFields.Where(d => d.FieldName == "KeywordtypeLocalName").FirstOrDefault().Id, ScreenId = CustomsAutonomyKeywordCustomsCustomsAutonomyKeywordHeaderScrnScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsAutonomyKeywordCustomsAutonomyKeywordCustomsCustomsAutonomyKeywordHeaderScrnHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = CustomsAutonomyKeywordObjectFields.Where(d => d.FieldName == "KeywordtypeLocalName").FirstOrDefault().Id, ScreenId = CustomsAutonomyKeywordCustomsCustomsAutonomyKeywordHeaderScrnScreen0.Id,ScreenCode = CustomsAutonomyKeywordCustomsCustomsAutonomyKeywordHeaderScrnScreen0.Code, ObjectFieldCode = CustomsAutonomyKeywordObjectFields.Where(d => d.FieldName == "KeywordtypeLocalName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    CustomsAutonomyKeywordObjectTable.HeaderScreenId = CustomsAutonomyKeywordCustomsCustomsAutonomyKeywordHeaderScrnScreen0.Id;
+		    CustomsAutonomyKeywordObjectTable.HeaderScreenCode = CustomsAutonomyKeywordCustomsCustomsAutonomyKeywordHeaderScrnScreen0.Code;
+
 	   		  
 
 	    }
 
 	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
-	    {    
-			 ObjectTable CustomsAutonomyKeywordObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CustomsAutonomyKeyword" && d.Tenant == 0).FirstOrDefault();  
+	    {                
+			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
+			   ObjectTable CustomsAutonomyKeywordObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CustomsAutonomyKeyword" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode CustomsAutonomyKeywordGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsAutonomyKeyword.TH.General", DefaultText = "General",LocalDefaultText = "כללי", ObjectTableId = CustomsAutonomyKeywordObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature CustomsAutonomyKeywordGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CustomsAutonomyKeyword.Tab.General", ObjectTableId = CustomsAutonomyKeywordObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsAutonomyKeyword.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature CustomsAutonomyKeywordGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CustomsAutonomyKeyword.Tab.General", ObjectTableId = CustomsAutonomyKeywordObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsAutonomyKeywordFeatures.CPAK", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
  
                  
 			   TextCode CustomsAutonomyKeywordEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsAutonomyKeyword.TH.Events", DefaultText = "Events",LocalDefaultText = "אירועים", ObjectTableId = CustomsAutonomyKeywordObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature CustomsAutonomyKeywordEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CustomsAutonomyKeyword.Tab.Events", ObjectTableId = CustomsAutonomyKeywordObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsAutonomyKeyword.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature CustomsAutonomyKeywordEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CustomsAutonomyKeyword.Tab.Events", ObjectTableId = CustomsAutonomyKeywordObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsAutonomyKeywordFeatures.CPEK", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
-			 List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
-			 List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
+			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
+			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CPAK",HtmlComponentName = "AutonomyKeywordComponent",HtmlComponentUrl = "./CustomsModules/CustomsCourier/Components/AutonomyKeyword/AutonomyKeywordComponent", FeatureId = tenantFeatures.Where(d => d.Code == "CustomsAutonomyKeyword.Tab.General" && d.ObjectTableId == CustomsAutonomyKeywordObjectTable.Id).FirstOrDefault().Id, ControlPath = " ", ObjectTableId = CustomsAutonomyKeywordObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "Customs.CustomsAutonomyKeyword.TH.General" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CPAK",HtmlComponentName = "AutonomyKeywordComponent",HtmlComponentUrl = "./CustomsModules/CustomsCourier/Components/AutonomyKeyword/AutonomyKeywordComponent", FeatureId = CustomsAutonomyKeywordGeneralFeature_TH0.Id,FeatureUniqeCode = CustomsAutonomyKeywordGeneralFeature_TH0.FeatureUniqeCode, ControlPath = " ", ObjectTableId = CustomsAutonomyKeywordObjectTable.Id, TabNameTextCodeId = CustomsAutonomyKeywordGeneralTextCode_TH0.Id, TabNameTextCodeCode = CustomsAutonomyKeywordGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CPEK",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = tenantFeatures.Where(d => d.Code == "CustomsAutonomyKeyword.Tab.Events" && d.ObjectTableId == CustomsAutonomyKeywordObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = CustomsAutonomyKeywordObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "Customs.CustomsAutonomyKeyword.TH.Events" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CPEK",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = CustomsAutonomyKeywordEventsFeature_TH1.Id,FeatureUniqeCode = CustomsAutonomyKeywordEventsFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = CustomsAutonomyKeywordObjectTable.Id, TabNameTextCodeId = CustomsAutonomyKeywordEventsTextCode_TH1.Id, TabNameTextCodeCode = CustomsAutonomyKeywordEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
 	    {  
 		   ObjectTable CustomsAutonomyKeywordObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CustomsAutonomyKeyword" && d.Tenant == 0).FirstOrDefault(); 
-		   Feature CustomsAutonomyKeywordFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = CustomsAutonomyKeywordObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsAutonomyKeyword.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature CustomsAutonomyKeywordFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = CustomsAutonomyKeywordObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsAutonomyKeyword.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature CustomsAutonomyKeywordFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = CustomsAutonomyKeywordObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsAutonomyKeyword.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature CustomsAutonomyKeywordFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = CustomsAutonomyKeywordObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsAutonomyKeyword.Features.PackageFeature", NameTextCodeDefaultText = "CustomsAutonomyKeyword Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+
+		   Feature CustomsAutonomyKeywordFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = CustomsAutonomyKeywordObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsAutonomyKeyword.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature CustomsAutonomyKeywordFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = CustomsAutonomyKeywordObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsAutonomyKeyword.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature CustomsAutonomyKeywordFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = CustomsAutonomyKeywordObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsAutonomyKeyword.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature CustomsAutonomyKeywordFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = CustomsAutonomyKeywordObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsAutonomyKeyword.Features.PackageFeature", NameTextCodeDefaultText = "CustomsAutonomyKeyword Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 
+
+		   		   //--------------> Additional Features <--------------\\
+
+		   Feature CustomsAutonomyKeywordFeature_CustomsAutonomyKeyword_Q_AllCustomsAutonomyKeyword = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CustomsAutonomyKeyword.Q.AllCustomsAutonomyKeyword", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CustomsAutonomyKeywordObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsAutonomyKeyword.Features.AllCustomsAutonomyKeyword", NameTextCodeDefaultText = @"AllCustomsAutonomyKeyword" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature CustomsAutonomyKeywordFeature_CustomsAutonomyKeyword_Tab_General = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CustomsAutonomyKeyword.Tab.General", FeatureTypeCode = "AREA", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CustomsAutonomyKeywordObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsAutonomyKeyword.Features.General", NameTextCodeDefaultText = @"General" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature CustomsAutonomyKeywordFeature_CustomsAutonomyKeyword_Tab_Events = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CustomsAutonomyKeyword.Tab.Events", FeatureTypeCode = "AREA", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CustomsAutonomyKeywordObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsAutonomyKeyword.Features.Events", NameTextCodeDefaultText = @"Events" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+   
 	    
 		}
 
-	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext)
+	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
 	    {   
 			ObjectTable CustomsAutonomyKeywordObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CustomsAutonomyKeyword" && d.Tenant == 0).FirstOrDefault(); 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
-                Code = "CREV",
-                EnglishName = "Created",
-                Tenant = 0,
-                AddedManually = false,
-				IsManualEntry = false,
-                LocalName = "Created",
+                Code =  "CREV",
+                ShortView =  true,
+                IsManualEntry =  false,
+                LocalName =  "Created",
+                EnglishName =  "Created",
+                EventTypeCategoryCode =  "OPE",
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
                 ObjectTableId = CustomsAutonomyKeywordObjectTable.Id,
-                ShortView = true,
+				 
             }, EventTypeRepository, tenantEventTypes);
 
 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
-                Code = "UPEV",
-                EnglishName = "Updated",
-                Tenant = 0,
-                AddedManually = false,
-				IsManualEntry = false,
-                LocalName = "Updated",
+                Code =  "UPEV",
+                ShortView =  false,
+                IsManualEntry =  false,
+                LocalName =  "Updated",
+                EnglishName =  "Updated",
+                EventTypeCategoryCode =  "OPE",
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
                 ObjectTableId = CustomsAutonomyKeywordObjectTable.Id,
-                ShortView = false,
+				 
             }, EventTypeRepository, tenantEventTypes);
 
 
@@ -445,7 +580,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }     
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {     
+	    
+}
+
+    
 
    }
     

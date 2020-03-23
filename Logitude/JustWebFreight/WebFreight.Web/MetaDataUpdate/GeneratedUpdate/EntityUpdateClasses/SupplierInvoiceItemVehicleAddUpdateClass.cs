@@ -49,7 +49,7 @@ using Logitude.Social.Data.EntityPOCOs;
 using Logitude.Social.BL;
 using Logitude.Social.Data.Repsitories;
 using Logitude.Server.Tools.CloseTablesClasses;
-using Logitude.Customs.BL.CloseTables;
+using Logitude.Customs.BL.ClosedTable;
 using Logitude.CRM.BL.CLoseTable;
 using Logitude.BookingLib.BL.CLoseTable;
 using Logitude.WarehouseLib.Data.Repositories;
@@ -58,6 +58,20 @@ using Logitude.WarehouseLib.BL.CLoseTable;
 using Logitude.TimeManagement.Data.Repositories;
 using Logitude.TimeManagement.Data.EntityPOCOs;
 using Logitude.TimeManagement.BL.CLoseTable;
+using Logitude.BL.ShipmentsModel.CloseTables;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Logitude.BL.ShipmentsModel;
+using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.Repositories;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Logitude.BL.GlobalModel;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.BL;
+using Logitude.TariffModule.Data.Repositories;
+using Logitude.TariffModule.Data.EntityPOCOs;
+using Logitude.TariffModule.BL.CLoseTable;
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class SupplierInvoiceItemVehicleAddUpdateClass
@@ -812,6 +826,51 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "Tenant",
+					  						ObjectTableName =  "Customs.SupplierInvoiceItemVehicleAdd",
+					  						FieldsDataType =  "Integer",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						DisplayOnLookUp =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "Tenant",
+					  						ListPropertyPath =  "Tenant",
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DisplayInEntityVariables =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "Tenant",
+					  						DefaultText =  "Tenant",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
@@ -832,32 +891,44 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    
 		}
 
-	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext)
+	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
 	    {   
 			ObjectTable SupplierInvoiceItemVehicleAddObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.SupplierInvoiceItemVehicleAdd" && d.Tenant == 0).FirstOrDefault(); 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
-                Code = "CREV",
-                EnglishName = "Created",
-                Tenant = 0,
-                AddedManually = false,
-				IsManualEntry = false,
-                LocalName = "Created",
+                Code =  "CREV",
+                ShortView =  true,
+                IsManualEntry =  false,
+                LocalName =  "Created",
+                EnglishName =  "Created",
+                EventTypeCategoryCode =  "OPE",
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
                 ObjectTableId = SupplierInvoiceItemVehicleAddObjectTable.Id,
-                ShortView = true,
+				 
             }, EventTypeRepository, tenantEventTypes);
 
 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
-                Code = "UPEV",
-                EnglishName = "Updated",
-                Tenant = 0,
-                AddedManually = false,
-				IsManualEntry = false,
-                LocalName = "Updated",
+                Code =  "UPEV",
+                ShortView =  false,
+                IsManualEntry =  false,
+                LocalName =  "Updated",
+                EnglishName =  "Updated",
+                EventTypeCategoryCode =  "OPE",
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
                 ObjectTableId = SupplierInvoiceItemVehicleAddObjectTable.Id,
-                ShortView = false,
+				 
             }, EventTypeRepository, tenantEventTypes);
 
 
@@ -865,7 +936,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }     
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {     
+	    
+}
+
+    
 
    }
     

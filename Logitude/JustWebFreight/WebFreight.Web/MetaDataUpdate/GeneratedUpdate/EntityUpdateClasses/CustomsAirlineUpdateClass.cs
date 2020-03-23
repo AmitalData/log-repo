@@ -49,7 +49,7 @@ using Logitude.Social.Data.EntityPOCOs;
 using Logitude.Social.BL;
 using Logitude.Social.Data.Repsitories;
 using Logitude.Server.Tools.CloseTablesClasses;
-using Logitude.Customs.BL.CloseTables;
+using Logitude.Customs.BL.ClosedTable;
 using Logitude.CRM.BL.CLoseTable;
 using Logitude.BookingLib.BL.CLoseTable;
 using Logitude.WarehouseLib.Data.Repositories;
@@ -58,6 +58,20 @@ using Logitude.WarehouseLib.BL.CLoseTable;
 using Logitude.TimeManagement.Data.Repositories;
 using Logitude.TimeManagement.Data.EntityPOCOs;
 using Logitude.TimeManagement.BL.CLoseTable;
+using Logitude.BL.ShipmentsModel.CloseTables;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Logitude.BL.ShipmentsModel;
+using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.Repositories;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Logitude.BL.GlobalModel;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.BL;
+using Logitude.TariffModule.Data.Repositories;
+using Logitude.TariffModule.Data.EntityPOCOs;
+using Logitude.TariffModule.BL.CLoseTable;
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomsAirlineUpdateClass
@@ -117,6 +131,108 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
 	    {
 	         
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "Id",
+					  						ObjectTableName =  "Customs.CustomsAirline",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  15,
+					  						IsRequired =  false,
+					  						DisplayOnLookUp =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  15,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "Id",
+					  						ListPropertyPath =  "Id",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.CustomsAirline",
+					  						DisplayInEntityVariables =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "Id",
+					  						DefaultText =  "Id",
+					  						FullLocalDefaultText =  "Id",
+					  						ListFieldLable =  "IdListLable",
+					  						ListLableDefaultText =  "Id",
+					  						ListLocalDefaultText =  "Id",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "Tenant",
+					  						ObjectTableName =  "Customs.CustomsAirline",
+					  						FieldsDataType =  "Integer",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						DisplayOnLookUp =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "Tenant",
+					  						ListPropertyPath =  "Tenant",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.CustomsAirline",
+					  						DisplayInEntityVariables =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "Tenant",
+					  						DefaultText =  "Tenant",
+					  						FullLocalDefaultText =  "Tenant",
+					  						ListFieldLable =  "TenantListLable",
+					  						ListLableDefaultText =  "Tenant",
+					  						ListLocalDefaultText =  "Tenant",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
@@ -483,32 +599,32 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
 	        FeatureRepository featureRepository = new FeatureRepository(0); 
-            List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 	        QueryGroup CustomsAirlineQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "6e9e", Name = "Customs.CustomsAirline Query Group" }, queryGroupRepository);
-	        queryGroupRepository.SubmitChanges();
+				        queryGroupRepository.SubmitChanges();
 
 	        ObjectTable CustomsAirlineObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.CustomsAirline" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> CustomsAirlineObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.CustomsAirline").ToList();   
 
-			   TextCode CustomsAirlineTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomsAirline.Q.AllCustomsAirlines", DefaultText = "All Customs Airlines",LocalDefaultText = "חברות תעופה", ObjectTableId = CustomsAirlineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   TextCode CustomsAirlineTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomsAirline.Q.AllCustomsAirlines", DefaultText = @"AllCustomsAirlines",LocalDefaultText = "AllCustomsAirlines", ObjectTableId = CustomsAirlineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
 			   Feature CustomsAirlineFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CustomsAirline.Q.AllCustomsAirlines", ObjectTableId = CustomsAirlineObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsAirline.Features.AllCustomsAirlines", NameTextCodeDefaultText = "AllCustomsAirlines", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllCustomsAirlinesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomsAirlineTextCode_0.Id, Code = "AllCustomsAirlines",  QueryGroupCode = "6e9e", IndexOrder = 0, Tenant = 0, ObjectTableId = CustomsAirlineObjectTable.Id, QuerySection = "Customs.CustomsAirline", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomsAirlineFeature_0.Id,FeatureUniqeCode= CustomsAirlineFeature_0.FeatureUniqeCode, DefaultSortName = "EnglishName", DefaultSortDirection = "Ascending" }, queriesRepository, tenantQueries);
+			  Query AllCustomsAirlinesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomsAirlineTextCode_0.Id, NameTextCodeCode = CustomsAirlineTextCode_0.Code, ObjectTableName = "Customs.CustomsAirline", Code = "AllCustomsAirlines",  QueryGroupCode = "6e9e", IndexOrder = 0, Tenant = 0, ObjectTableId = CustomsAirlineObjectTable.Id, QuerySection = "Customs.CustomsAirline", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomsAirlineFeature_0.Id,FeatureUniqeCode= CustomsAirlineFeature_0.FeatureUniqeCode, DefaultSortName = "EnglishName", DefaultSortDirection = "Ascending", Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn AllCustomsAirlinesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomsAirlinesQuery.Id, IndexOrder = 0, ObjectFieldId = CustomsAirlineObjectFields.Where(d => d.FieldName == "AirlineCode" && d.ObjectTableId == CustomsAirlineObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 80 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllCustomsAirlinesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomsAirlinesQuery.Id,QueryCode = AllCustomsAirlinesQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = CustomsAirlineObjectFields.Where(d => d.FieldName == "AirlineCode" && d.ObjectTableId == CustomsAirlineObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomsAirlineObjectFields.Where(d => d.FieldName == "AirlineCode" && d.ObjectTableId == CustomsAirlineObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 80 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllCustomsAirlinesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomsAirlinesQuery.Id, IndexOrder = 1, ObjectFieldId = CustomsAirlineObjectFields.Where(d => d.FieldName == "AirlinePrefix" && d.ObjectTableId == CustomsAirlineObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 80 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllCustomsAirlinesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomsAirlinesQuery.Id,QueryCode = AllCustomsAirlinesQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = CustomsAirlineObjectFields.Where(d => d.FieldName == "AirlinePrefix" && d.ObjectTableId == CustomsAirlineObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomsAirlineObjectFields.Where(d => d.FieldName == "AirlinePrefix" && d.ObjectTableId == CustomsAirlineObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 80 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllCustomsAirlinesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomsAirlinesQuery.Id, IndexOrder = 2, ObjectFieldId = CustomsAirlineObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == CustomsAirlineObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 240 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllCustomsAirlinesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomsAirlinesQuery.Id,QueryCode = AllCustomsAirlinesQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = CustomsAirlineObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == CustomsAirlineObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomsAirlineObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == CustomsAirlineObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 240 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllCustomsAirlinesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomsAirlinesQuery.Id, IndexOrder = 3, ObjectFieldId = CustomsAirlineObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == CustomsAirlineObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 220 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllCustomsAirlinesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomsAirlinesQuery.Id,QueryCode = AllCustomsAirlinesQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = CustomsAirlineObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == CustomsAirlineObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomsAirlineObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == CustomsAirlineObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 220 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllCustomsAirlinesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomsAirlinesQuery.Id, IndexOrder = 4, ObjectFieldId = CustomsAirlineObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == CustomsAirlineObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 80 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllCustomsAirlinesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomsAirlinesQuery.Id,QueryCode = AllCustomsAirlinesQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = CustomsAirlineObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == CustomsAirlineObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomsAirlineObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == CustomsAirlineObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 80 }, queryColumnsRepository, tenantQueryColumns);
 	   
 	    }
 
@@ -522,88 +638,112 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen CustomsAirlineCustomsCustomsAirlineHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CustomsAirline.Customs.CustomsAirlineHeaderScreen", Name = "Customs.CustomsAirlineHeaderScreen", ObjectTableId = CustomsAirlineObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField CustomsAirlineCustomsCustomsAirlineHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = CustomsAirlineObjectFields.Where(d => d.FieldName == "AirlineCode").FirstOrDefault().Id, ScreenId = CustomsAirlineCustomsCustomsAirlineHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsAirlineCustomsAirlineCustomsCustomsAirlineHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = CustomsAirlineObjectFields.Where(d => d.FieldName == "AirlineCode").FirstOrDefault().Id, ScreenId = CustomsAirlineCustomsCustomsAirlineHeaderScreenScreen0.Id,ScreenCode = CustomsAirlineCustomsCustomsAirlineHeaderScreenScreen0.Code, ObjectFieldCode = CustomsAirlineObjectFields.Where(d => d.FieldName == "AirlineCode").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomsAirlineCustomsCustomsAirlineHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = CustomsAirlineObjectFields.Where(d => d.FieldName == "AirlinePrefix").FirstOrDefault().Id, ScreenId = CustomsAirlineCustomsCustomsAirlineHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsAirlineCustomsAirlineCustomsCustomsAirlineHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = CustomsAirlineObjectFields.Where(d => d.FieldName == "AirlinePrefix").FirstOrDefault().Id, ScreenId = CustomsAirlineCustomsCustomsAirlineHeaderScreenScreen0.Id,ScreenCode = CustomsAirlineCustomsCustomsAirlineHeaderScreenScreen0.Code, ObjectFieldCode = CustomsAirlineObjectFields.Where(d => d.FieldName == "AirlinePrefix").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomsAirlineCustomsCustomsAirlineHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = CustomsAirlineObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().Id, ScreenId = CustomsAirlineCustomsCustomsAirlineHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsAirlineCustomsAirlineCustomsCustomsAirlineHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = CustomsAirlineObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().Id, ScreenId = CustomsAirlineCustomsCustomsAirlineHeaderScreenScreen0.Id,ScreenCode = CustomsAirlineCustomsCustomsAirlineHeaderScreenScreen0.Code, ObjectFieldCode = CustomsAirlineObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    CustomsAirlineObjectTable.HeaderScreenId = CustomsAirlineCustomsCustomsAirlineHeaderScreenScreen0.Id;
+		    CustomsAirlineObjectTable.HeaderScreenCode = CustomsAirlineCustomsCustomsAirlineHeaderScreenScreen0.Code;
+
 	   		  
 	      
 
 	         Screen CustomsAirlineGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CustomsAirline.GeneralTabScreen", Name = "GeneralTabScreen", ObjectTableId = CustomsAirlineObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 5, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField CustomsAirlineGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = CustomsAirlineObjectFields.Where(d => d.FieldName == "AirlineCode").FirstOrDefault().Id, ScreenId = CustomsAirlineGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsAirlineCustomsAirlineGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = CustomsAirlineObjectFields.Where(d => d.FieldName == "AirlineCode").FirstOrDefault().Id, ScreenId = CustomsAirlineGeneralTabScreenScreen1.Id,ScreenCode = CustomsAirlineGeneralTabScreenScreen1.Code, ObjectFieldCode = CustomsAirlineObjectFields.Where(d => d.FieldName == "AirlineCode").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomsAirlineGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = CustomsAirlineObjectFields.Where(d => d.FieldName == "AirlinePrefix").FirstOrDefault().Id, ScreenId = CustomsAirlineGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsAirlineCustomsAirlineGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = CustomsAirlineObjectFields.Where(d => d.FieldName == "AirlinePrefix").FirstOrDefault().Id, ScreenId = CustomsAirlineGeneralTabScreenScreen1.Id,ScreenCode = CustomsAirlineGeneralTabScreenScreen1.Code, ObjectFieldCode = CustomsAirlineObjectFields.Where(d => d.FieldName == "AirlinePrefix").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomsAirlineGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = CustomsAirlineObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().Id, ScreenId = CustomsAirlineGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsAirlineCustomsAirlineGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = CustomsAirlineObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().Id, ScreenId = CustomsAirlineGeneralTabScreenScreen1.Id,ScreenCode = CustomsAirlineGeneralTabScreenScreen1.Code, ObjectFieldCode = CustomsAirlineObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomsAirlineGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = CustomsAirlineObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().Id, ScreenId = CustomsAirlineGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsAirlineCustomsAirlineGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = CustomsAirlineObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().Id, ScreenId = CustomsAirlineGeneralTabScreenScreen1.Id,ScreenCode = CustomsAirlineGeneralTabScreenScreen1.Code, ObjectFieldCode = CustomsAirlineObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomsAirlineGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ObjectFieldId = CustomsAirlineObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().Id, ScreenId = CustomsAirlineGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsAirlineCustomsAirlineGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ObjectFieldId = CustomsAirlineObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().Id, ScreenId = CustomsAirlineGeneralTabScreenScreen1.Id,ScreenCode = CustomsAirlineGeneralTabScreenScreen1.Code, ObjectFieldCode = CustomsAirlineObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 
 	    }
 
 	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
-	    {    
-			 ObjectTable CustomsAirlineObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CustomsAirline" && d.Tenant == 0).FirstOrDefault();  
+	    {                
+			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
+			   ObjectTable CustomsAirlineObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CustomsAirline" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode CustomsAirlineGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsAirline.TH.General", DefaultText = "General",LocalDefaultText = "כללי", ObjectTableId = CustomsAirlineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature CustomsAirlineGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CustomsAirline.Tab.General", ObjectTableId = CustomsAirlineObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsAirline.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature CustomsAirlineGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CustomsAirline.Tab.General", ObjectTableId = CustomsAirlineObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsAirlineFeatures.CVGT", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
  
                  
 			   TextCode CustomsAirlineEventTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsAirline.TH.Event", DefaultText = "Event",LocalDefaultText = "אירועים", ObjectTableId = CustomsAirlineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature CustomsAirlineEventFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CustomsAirline.Tab.Event", ObjectTableId = CustomsAirlineObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsAirline.Features.Event", NameTextCodeDefaultText = "Event", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature CustomsAirlineEventFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CustomsAirline.Tab.Event", ObjectTableId = CustomsAirlineObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsAirlineFeatures.CVVT", NameTextCodeDefaultText = "Event", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
-			 List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
-			 List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
+			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
+			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CVGT",HtmlComponentName = "AddEditCustomsAirlineComponent",HtmlComponentUrl = "./CustomsModules/CustomsMaintenance/Components/AddEditCustomsAirlineComponent", FeatureId = tenantFeatures.Where(d => d.Code == "CustomsAirline.Tab.General" && d.ObjectTableId == CustomsAirlineObjectTable.Id).FirstOrDefault().Id, ControlPath = "", ObjectTableId = CustomsAirlineObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "Customs.CustomsAirline.TH.General" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CVGT",HtmlComponentName = "AddEditCustomsAirlineComponent",HtmlComponentUrl = "./CustomsModules/CustomsMaintenance/Components/AddEditCustomsAirlineComponent", FeatureId = CustomsAirlineGeneralFeature_TH0.Id,FeatureUniqeCode = CustomsAirlineGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "", ObjectTableId = CustomsAirlineObjectTable.Id, TabNameTextCodeId = CustomsAirlineGeneralTextCode_TH0.Id, TabNameTextCodeCode = CustomsAirlineGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CVVT",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = tenantFeatures.Where(d => d.Code == "CustomsAirline.Tab.Event" && d.ObjectTableId == CustomsAirlineObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = CustomsAirlineObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "Customs.CustomsAirline.TH.Event" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CVVT",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = CustomsAirlineEventFeature_TH1.Id,FeatureUniqeCode = CustomsAirlineEventFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = CustomsAirlineObjectTable.Id, TabNameTextCodeId = CustomsAirlineEventTextCode_TH1.Id, TabNameTextCodeCode = CustomsAirlineEventTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
 	    {  
 		   ObjectTable CustomsAirlineObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CustomsAirline" && d.Tenant == 0).FirstOrDefault(); 
-		   Feature CustomsAirlineFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = CustomsAirlineObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsAirline.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature CustomsAirlineFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = CustomsAirlineObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsAirline.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature CustomsAirlineFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = CustomsAirlineObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsAirline.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature CustomsAirlineFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = CustomsAirlineObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsAirline.Features.PackageFeature", NameTextCodeDefaultText = "CustomsAirline Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+
+		   Feature CustomsAirlineFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = CustomsAirlineObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsAirline.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature CustomsAirlineFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = CustomsAirlineObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsAirline.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature CustomsAirlineFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = CustomsAirlineObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsAirline.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature CustomsAirlineFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = CustomsAirlineObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsAirline.Features.PackageFeature", NameTextCodeDefaultText = "CustomsAirline Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 
+
+		   		   //--------------> Additional Features <--------------\\
+
+		   Feature CustomsAirlineFeature_CustomsAirline_Tab_General = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CustomsAirline.Tab.General", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CustomsAirlineObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsAirline.Features.General", NameTextCodeDefaultText = @"General" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature CustomsAirlineFeature_CustomsAirline_Tab_Event = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CustomsAirline.Tab.Event", FeatureTypeCode = "AREA", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CustomsAirlineObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsAirline.Features.Event", NameTextCodeDefaultText = @"Event" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+   
 	    
 		}
 
-	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext)
+	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
 	    {   
 			ObjectTable CustomsAirlineObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CustomsAirline" && d.Tenant == 0).FirstOrDefault(); 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
-                Code = "CREV",
-                EnglishName = "Created",
-                Tenant = 0,
-                AddedManually = false,
-				IsManualEntry = false,
-                LocalName = "Created",
+                Code =  "CREV",
+                ShortView =  true,
+                IsManualEntry =  false,
+                LocalName =  "Created",
+                EnglishName =  "Created",
+                EventTypeCategoryCode =  "OPE",
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
                 ObjectTableId = CustomsAirlineObjectTable.Id,
-                ShortView = true,
+				 
             }, EventTypeRepository, tenantEventTypes);
 
 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
-                Code = "UPEV",
-                EnglishName = "Updated",
-                Tenant = 0,
-                AddedManually = false,
-				IsManualEntry = false,
-                LocalName = "Updated",
+                Code =  "UPEV",
+                ShortView =  false,
+                IsManualEntry =  false,
+                LocalName =  "Updated",
+                EnglishName =  "Updated",
+                EventTypeCategoryCode =  "OPE",
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
                 ObjectTableId = CustomsAirlineObjectTable.Id,
-                ShortView = false,
+				 
             }, EventTypeRepository, tenantEventTypes);
 
 
@@ -611,7 +751,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }     
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {     
+	    
+}
+
+    
 
    }
     

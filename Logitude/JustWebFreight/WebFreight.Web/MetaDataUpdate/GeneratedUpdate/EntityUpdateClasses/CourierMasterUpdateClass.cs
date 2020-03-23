@@ -49,7 +49,7 @@ using Logitude.Social.Data.EntityPOCOs;
 using Logitude.Social.BL;
 using Logitude.Social.Data.Repsitories;
 using Logitude.Server.Tools.CloseTablesClasses;
-using Logitude.Customs.BL.CloseTables;
+using Logitude.Customs.BL.ClosedTable;
 using Logitude.CRM.BL.CLoseTable;
 using Logitude.BookingLib.BL.CLoseTable;
 using Logitude.WarehouseLib.Data.Repositories;
@@ -58,6 +58,20 @@ using Logitude.WarehouseLib.BL.CLoseTable;
 using Logitude.TimeManagement.Data.Repositories;
 using Logitude.TimeManagement.Data.EntityPOCOs;
 using Logitude.TimeManagement.BL.CLoseTable;
+using Logitude.BL.ShipmentsModel.CloseTables;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Logitude.BL.ShipmentsModel;
+using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.Repositories;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Logitude.BL.GlobalModel;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.BL;
+using Logitude.TariffModule.Data.Repositories;
+using Logitude.TariffModule.Data.EntityPOCOs;
+using Logitude.TariffModule.BL.CLoseTable;
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CourierMasterUpdateClass
@@ -111,11 +125,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ServerModuleName =  "Customs",
 			      				    NewWizardComponentPath =  "./CustomsModules/CustomsCourier/Components/NewEntity/NewCourierComponent",
 			      				    NoTS =  false,
-			      				    NoDefaultFeatures =  false,
 			      				    HasMenuButtons =  false,
 			      				    AllowedForComputingPartners =  false,
-			      				    Code1 =  "4e4d",
-			      				    Name1 =  " Query Group",
 			      				    CustomFieldsCount =  0,
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
@@ -131,11 +142,130 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
+					 						FieldName =  "Id",
+					  						OldFieldName =  "Id",
+					  						ObjectTableName =  "Customs.CourierMaster",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  15,
+					  						IsRequired =  true,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  15,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "Id",
+					  						ListPropertyPath =  "Id",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "CourierMaster",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "Id",
+					  						DefaultText =  "Id",
+					  						FullLocalDefaultText =  "Id",
+					  						ListFieldLable =  "IdListLable",
+					  						ListLableDefaultText =  "Id",
+					  						ListLocalDefaultText =  "Id",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  true,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "Tenant",
+					  						OldFieldName =  "Tenant",
+					  						ObjectTableName =  "Customs.CourierMaster",
+					  						FieldsDataType =  "Integer",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  true,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "Tenant",
+					  						ListPropertyPath =  "Tenant",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "CourierMaster",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "Tenant",
+					  						DefaultText =  "Tenant",
+					  						FullLocalDefaultText =  "Tenant",
+					  						ListFieldLable =  "TenantListLable",
+					  						ListLableDefaultText =  "Tenant",
+					  						ListLocalDefaultText =  "Tenant",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  true,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
 					 						FieldName =  "CreateDateTime",
 					  						OldFieldName =  "CreateDateTime",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CourierMaster",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -188,10 +318,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -202,9 +328,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "CreatedByUserId",
 					  						OldFieldName =  "CreatedByUserId",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CourierMaster",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "User",
@@ -258,10 +381,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -272,9 +391,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "UpdateDateTime",
 					  						OldFieldName =  "UpdateDateTime",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CourierMaster",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -328,10 +444,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -342,9 +454,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "SearchFields",
 					  						OldFieldName =  "SearchFields",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CourierMaster",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -399,10 +508,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -413,9 +518,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "CreatedByUserName",
 					  						OldFieldName =  "CreatedByUserName",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CourierMaster",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -467,10 +569,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -481,9 +579,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "AirlineId",
 					  						OldFieldName =  "AirlineId",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CourierMaster",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Airline",
@@ -536,10 +631,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -550,9 +641,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "AirlineName",
 					  						OldFieldName =  "AirlineName",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CourierMaster",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -604,10 +692,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -618,9 +702,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "MAWB",
 					  						OldFieldName =  "MAWB",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CourierMaster",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -672,10 +753,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -686,9 +763,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "MAWBTypeName",
 					  						OldFieldName =  "MAWBTypeName",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CourierMaster",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -740,10 +814,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -754,9 +824,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "HAWB",
 					  						OldFieldName =  "HAWB",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CourierMaster",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -808,10 +875,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -822,9 +885,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "EstimatedArrivalDate",
 					  						OldFieldName =  "EstimatedArrivalDate",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CourierMaster",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -878,10 +938,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -892,9 +948,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "GatewayPortCode",
 					  						OldFieldName =  "GatewayPortCode",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CourierMaster",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.InternationalSite",
@@ -948,10 +1001,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -962,9 +1011,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "GatewayPortName",
 					  						OldFieldName =  "GatewayPortName",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CourierMaster",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -1017,10 +1063,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1031,9 +1073,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "OriginPortCode",
 					  						OldFieldName =  "OriginPortCode",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CourierMaster",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.InternationalSite",
@@ -1087,10 +1126,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1101,9 +1136,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "OriginPortName",
 					  						OldFieldName =  "OriginPortName",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CourierMaster",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -1156,10 +1188,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1170,9 +1198,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "IsOpen",
 					  						OldFieldName =  "IsOpen",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CourierMaster",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -1225,10 +1250,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1239,9 +1260,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "IsCancelled",
 					  						OldFieldName =  "IsCancelled",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CourierMaster",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -1294,10 +1312,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1308,9 +1322,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "UpdatedByUserId",
 					  						OldFieldName =  "UpdatedByUserId",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CourierMaster",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "User",
@@ -1361,10 +1372,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1375,9 +1382,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "UpdatedByUserName",
 					  						OldFieldName =  "UpdatedByUserName",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CourierMaster",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -1427,10 +1431,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1441,9 +1441,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "AirlinePrefix",
 					  						OldFieldName =  "AirlinePrefix",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CourierMaster",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1495,10 +1492,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1509,9 +1502,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "SelectedDeclarationChanged",
 					  						OldFieldName =  "SelectedDeclarationChanged",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CourierMaster",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -1558,10 +1548,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1572,9 +1558,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "ConnectedDeclarations",
 					  						OldFieldName =  "ConnectedDeclarations",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CourierMaster",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1621,10 +1604,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1635,9 +1614,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "NotConnectedDeclarations",
 					  						OldFieldName =  "NotConnectedDeclarations",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CourierMaster",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1684,10 +1660,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1698,9 +1670,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "MAWBTypeCode",
 					  						OldFieldName =  "MAWBTypeCode",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CourierMaster",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1753,10 +1722,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1767,9 +1732,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "ManifestNumber",
 					  						OldFieldName =  "ManifestNumber",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CourierMaster",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1822,10 +1784,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1836,9 +1794,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "PackageQuantity",
 					  						OldFieldName =  "PackageQuantity",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CourierMaster",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -1891,10 +1846,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1905,9 +1856,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "GrossMassMeasure",
 					  						OldFieldName =  "GrossMassMeasure",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CourierMaster",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -1962,10 +1910,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1976,9 +1920,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "ShortHAWB",
 					  						OldFieldName =  "ShortHAWB",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CourierMaster",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -2030,10 +1971,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2044,9 +1981,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "FlightNumber",
 					  						OldFieldName =  "FlightNumber",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CourierMaster",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -2098,10 +2032,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2112,9 +2042,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "DepartureDate",
 					  						OldFieldName =  "DepartureDate",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CourierMaster",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -2166,10 +2093,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2180,9 +2103,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "EstimatedArrivalDateOnly",
 					  						OldFieldName =  "EstimatedArrivalDateOnly",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CourierMaster",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -2234,10 +2154,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2248,9 +2164,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "EstimatedArrivalTimeOnly",
 					  						OldFieldName =  "EstimatedArrivalTimeOnly",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CourierMaster",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -2302,10 +2215,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2316,9 +2225,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "WeightValueCode",
 					  						OldFieldName =  "WeightValueCode",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CourierMaster",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.FreightPaymentMethod",
@@ -2372,10 +2278,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2386,9 +2288,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "WeightValueName",
 					  						OldFieldName =  "WeightValueName",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CourierMaster",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -2441,10 +2340,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2455,9 +2350,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "StorageSiteCode",
 					  						OldFieldName =  "StorageSiteCode",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CourierMaster",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.DeliverySiteType",
@@ -2511,10 +2403,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2525,9 +2413,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "StorageSiteName",
 					  						OldFieldName =  "StorageSiteName",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CourierMaster",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -2580,10 +2465,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2594,9 +2475,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "TruckerId",
 					  						OldFieldName =  "TruckerId",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CourierMaster",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2648,10 +2526,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2662,9 +2536,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "IntegratorCode",
 					  						OldFieldName =  "IntegratorCode",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CourierMaster",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Card",
@@ -2718,10 +2589,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2732,9 +2599,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "IntegratorName",
 					  						OldFieldName =  "IntegratorName",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CourierMaster",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -2787,10 +2651,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2801,9 +2661,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "IntegratorNumber",
 					  						OldFieldName =  "IntegratorNumber",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CourierMaster",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2855,10 +2712,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2869,9 +2722,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "IsReadyForInvoice",
 					  						OldFieldName =  "IsReadyForInvoice",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CourierMaster",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -2924,10 +2774,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2938,9 +2784,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "IsAllDecClosedForFollowUp",
 					  						OldFieldName =  "IsAllDecClosedForFollowUp",
-					  						IsNew =  true,
-					  						IsChecked =  true,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CourierMaster",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -2992,10 +2835,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -3006,9 +2845,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "CalcClosedForFollowUp",
 					  						OldFieldName =  "CalcClosedForFollowUp",
-					  						IsNew =  true,
-					  						IsChecked =  true,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CourierMaster",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -3060,10 +2896,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -3074,9 +2906,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "CalcMissingClassification",
 					  						OldFieldName =  "CalcMissingClassification",
-					  						IsNew =  true,
-					  						IsChecked =  true,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CourierMaster",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -3128,10 +2957,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -3142,9 +2967,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "CalcMissingImporterId",
 					  						OldFieldName =  "CalcIsMissingImporterId",
-					  						IsNew =  true,
-					  						IsChecked =  true,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CourierMaster",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -3196,10 +3018,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -3210,9 +3028,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "CalcPendingCustoms",
 					  						OldFieldName =  "CalcPendingCustoms",
-					  						IsNew =  true,
-					  						IsChecked =  true,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CourierMaster",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -3264,10 +3079,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -3278,9 +3089,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "CalcPending900",
 					  						OldFieldName =  "CalcPending900",
-					  						IsNew =  true,
-					  						IsChecked =  true,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CourierMaster",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -3332,10 +3140,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -3346,9 +3150,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "CalcSuspendedDeclarations",
 					  						OldFieldName =  "PrefixMAWB",
-					  						IsNew =  true,
-					  						IsChecked =  true,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CourierMaster",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -3401,10 +3202,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -3414,9 +3211,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "NoOfCourierHawb",
-					  						IsNew =  true,
-					  						IsChecked =  true,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CourierMaster",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -3467,10 +3261,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -3480,9 +3270,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsAutomaticManifestSent",
-					  						IsNew =  true,
-					  						IsChecked =  true,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CourierMaster",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -3533,10 +3320,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -3546,104 +3329,105 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
 	        FeatureRepository featureRepository = new FeatureRepository(0); 
-            List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 	        QueryGroup CourierMasterQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "dcc9", Name = "Customs.CourierMaster Query Group" }, queryGroupRepository);
-	        queryGroupRepository.SubmitChanges();
+						QueryGroup CourierMasterQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "4e4d", Name = " Query Group" }, queryGroupRepository);
+				        queryGroupRepository.SubmitChanges();
 
 	        ObjectTable CourierMasterObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.CourierMaster" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> CourierMasterObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.CourierMaster").ToList();   
 
-			   TextCode CourierMasterTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CourierMaster.Q.OPENCOURIERMASTERS", DefaultText = "Open Courier Masters",LocalDefaultText = "טיסות פתוחות", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature CourierMasterFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CourierMaster.Q.OPENCOURIERMASTERS", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, NameTextCodeCode = "CourierMaster.Features.OPENCOURIERMASTERS", NameTextCodeDefaultText = "OPENCOURIERMASTERS", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode CourierMasterTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CourierMaster.Q.OPENCOURIERMASTERS", DefaultText = @"OPENCOURIERMASTERS",LocalDefaultText = "OPENCOURIERMASTERS", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature CourierMasterFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CourierMaster.Q.OPENCOURIERMASTERS", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, NameTextCodeCode = "CourierMasterFeatures.OPENCOURIERMASTERS", NameTextCodeDefaultText = "OPENCOURIERMASTERS", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
  
 
-			   TextCode CourierMasterTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CourierMaster.Q.CLOSECOURIERMASTERS", DefaultText = "Close Courier Masters",LocalDefaultText = "טיסות סגורות", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature CourierMasterFeature_1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CourierMaster.Q.CLOSECOURIERMASTERS", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, NameTextCodeCode = "CourierMaster.Features.CLOSECOURIERMASTERS", NameTextCodeDefaultText = "CLOSECOURIERMASTERS", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode CourierMasterTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CourierMaster.Q.ALLCOURIERS", DefaultText = @"ALLCOURIERS",LocalDefaultText = "ALLCOURIERS", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature CourierMasterFeature_1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CourierMaster.Q.OPENCOURIERMASTERS", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, NameTextCodeCode = "CourierMaster.Features.OPENCOURIERMASTERS", NameTextCodeDefaultText = "OPENCOURIERMASTERS", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
  
 
-			   TextCode CourierMasterTextCode_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CourierMaster.Q.ALLCOURIERS", DefaultText = "All Courier Masters",LocalDefaultText = "כל הטיסות", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature CourierMasterFeature_2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CourierMaster.Q.ALLCOURIERS", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, NameTextCodeCode = "CourierMaster.Features.ALLCOURIERS", NameTextCodeDefaultText = "ALLCOURIERS", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode CourierMasterTextCode_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CourierMaster.Q.CLOSECOURIERMASTERS", DefaultText = @"CLOSECOURIERMASTERS",LocalDefaultText = "CLOSECOURIERMASTERS", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature CourierMasterFeature_2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CourierMaster.Q.CLOSECOURIERMASTERS", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, NameTextCodeCode = "CourierMaster.Features.CLOSECOURIERMASTERS", NameTextCodeDefaultText = "CLOSECOURIERMASTERS", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query OPENCOURIERMASTERSQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CourierMasterTextCode_0.Id, Code = "OPENCOURIERMASTERS",  QueryGroupCode = "dcc9", IndexOrder = 0, Tenant = 0, ObjectTableId = CourierMasterObjectTable.Id, QuerySection = "Customs.CourierMaster", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CourierMasterFeature_0.Id, DefaultSortName = "CreateDateTime", DefaultSortDirection = "Desending" }, queriesRepository, tenantQueries);
+			  Query OPENCOURIERMASTERSQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CourierMasterTextCode_0.Id, NameTextCodeCode = CourierMasterTextCode_0.Code, ObjectTableName = "Customs.CourierMaster", Code = "OPENCOURIERMASTERS",  QueryGroupCode = "dcc9", IndexOrder = 0, Tenant = 0, ObjectTableId = CourierMasterObjectTable.Id, QuerySection = "Customs.CourierMaster", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CourierMasterFeature_0.Id,FeatureUniqeCode= CourierMasterFeature_0.FeatureUniqeCode, DefaultSortName = "CreateDateTime", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn OPENCOURIERMASTERSQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OPENCOURIERMASTERSQuery.Id, IndexOrder = 0, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "AirlineName" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OPENCOURIERMASTERSQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OPENCOURIERMASTERSQuery.Id,QueryCode = OPENCOURIERMASTERSQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "AirlineName" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CourierMasterObjectFields.Where(d => d.FieldName == "AirlineName" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn OPENCOURIERMASTERSQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OPENCOURIERMASTERSQuery.Id, IndexOrder = 1, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "IntegratorName" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OPENCOURIERMASTERSQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OPENCOURIERMASTERSQuery.Id,QueryCode = OPENCOURIERMASTERSQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "IntegratorName" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CourierMasterObjectFields.Where(d => d.FieldName == "IntegratorName" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn OPENCOURIERMASTERSQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OPENCOURIERMASTERSQuery.Id, IndexOrder = 2, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "MAWB" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OPENCOURIERMASTERSQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OPENCOURIERMASTERSQuery.Id,QueryCode = OPENCOURIERMASTERSQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "MAWB" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CourierMasterObjectFields.Where(d => d.FieldName == "MAWB" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn OPENCOURIERMASTERSQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OPENCOURIERMASTERSQuery.Id, IndexOrder = 3, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "HAWB" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OPENCOURIERMASTERSQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OPENCOURIERMASTERSQuery.Id,QueryCode = OPENCOURIERMASTERSQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "HAWB" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CourierMasterObjectFields.Where(d => d.FieldName == "HAWB" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn OPENCOURIERMASTERSQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OPENCOURIERMASTERSQuery.Id, IndexOrder = 4, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "GatewayPortName" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OPENCOURIERMASTERSQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OPENCOURIERMASTERSQuery.Id,QueryCode = OPENCOURIERMASTERSQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "GatewayPortName" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CourierMasterObjectFields.Where(d => d.FieldName == "GatewayPortName" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn OPENCOURIERMASTERSQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OPENCOURIERMASTERSQuery.Id, IndexOrder = 5, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "CreateDateTime" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OPENCOURIERMASTERSQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OPENCOURIERMASTERSQuery.Id,QueryCode = OPENCOURIERMASTERSQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "CreateDateTime" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CourierMasterObjectFields.Where(d => d.FieldName == "CreateDateTime" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn OPENCOURIERMASTERSQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OPENCOURIERMASTERSQuery.Id, IndexOrder = 6, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "EstimatedArrivalDate" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OPENCOURIERMASTERSQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OPENCOURIERMASTERSQuery.Id,QueryCode = OPENCOURIERMASTERSQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "EstimatedArrivalDate" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CourierMasterObjectFields.Where(d => d.FieldName == "EstimatedArrivalDate" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn OPENCOURIERMASTERSQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OPENCOURIERMASTERSQuery.Id, IndexOrder = 7, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "IsOpen" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OPENCOURIERMASTERSQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OPENCOURIERMASTERSQuery.Id,QueryCode = OPENCOURIERMASTERSQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "IsOpen" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CourierMasterObjectFields.Where(d => d.FieldName == "IsOpen" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn OPENCOURIERMASTERSQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OPENCOURIERMASTERSQuery.Id, IndexOrder = 8, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "IsCancelled" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OPENCOURIERMASTERSQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OPENCOURIERMASTERSQuery.Id,QueryCode = OPENCOURIERMASTERSQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "IsCancelled" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CourierMasterObjectFields.Where(d => d.FieldName == "IsCancelled" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter OPENCOURIERMASTERSQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "IsOpen" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "true", QueryId = OPENCOURIERMASTERSQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter OPENCOURIERMASTERSQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "IsOpen" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CourierMasterObjectFields.Where(d => d.FieldName == "IsOpen" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = OPENCOURIERMASTERSQuery.Id,QueryCode = OPENCOURIERMASTERSQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
 
-             AdvancedQueryFilter OPENCOURIERMASTERSQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "IsCancelled" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "0", QueryId = OPENCOURIERMASTERSQuery.Id, Tenant = 0,Operator = "Equal"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter OPENCOURIERMASTERSQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "IsCancelled" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CourierMasterObjectFields.Where(d => d.FieldName == "IsCancelled" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "0",PredefinedValue2 = null, QueryId = OPENCOURIERMASTERSQuery.Id,QueryCode = OPENCOURIERMASTERSQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
 
-			  Query CLOSECOURIERMASTERSQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CourierMasterTextCode_1.Id, Code = "CLOSECOURIERMASTERS",  QueryGroupCode = "dcc9", IndexOrder = 1, Tenant = 0, ObjectTableId = CourierMasterObjectTable.Id, QuerySection = "Customs.CourierMaster", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureUniqeCode = CourierMasterFeature_1.FeatureUniqeCode, DefaultSortName = "CreateDateTime", DefaultSortDirection = "Desending" }, queriesRepository, tenantQueries);
+			  Query ALLCOURIERSQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CourierMasterTextCode_1.Id, NameTextCodeCode = CourierMasterTextCode_1.Code, ObjectTableName = "Customs.CourierMaster", Code = "ALLCOURIERS",  QueryGroupCode = "dcc9", IndexOrder = 0, Tenant = 0, ObjectTableId = CourierMasterObjectTable.Id, QuerySection = "Customs.CourierMaster", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CourierMasterFeature_1.Id,FeatureUniqeCode= CourierMasterFeature_1.FeatureUniqeCode, DefaultSortName = "CreateDateTime", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn CLOSECOURIERMASTERSQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CLOSECOURIERMASTERSQuery.Id, IndexOrder = 0, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "AirlineName" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ALLCOURIERSQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLCOURIERSQuery.Id,QueryCode = ALLCOURIERSQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "AirlineName" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CourierMasterObjectFields.Where(d => d.FieldName == "AirlineName" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn CLOSECOURIERMASTERSQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CLOSECOURIERMASTERSQuery.Id, IndexOrder = 1, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "IntegratorName" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ALLCOURIERSQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLCOURIERSQuery.Id,QueryCode = ALLCOURIERSQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "IntegratorName" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CourierMasterObjectFields.Where(d => d.FieldName == "IntegratorName" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn CLOSECOURIERMASTERSQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CLOSECOURIERMASTERSQuery.Id, IndexOrder = 2, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "MAWB" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ALLCOURIERSQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLCOURIERSQuery.Id,QueryCode = ALLCOURIERSQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "MAWB" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CourierMasterObjectFields.Where(d => d.FieldName == "MAWB" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn CLOSECOURIERMASTERSQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CLOSECOURIERMASTERSQuery.Id, IndexOrder = 3, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "HAWB" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ALLCOURIERSQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLCOURIERSQuery.Id,QueryCode = ALLCOURIERSQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "HAWB" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CourierMasterObjectFields.Where(d => d.FieldName == "HAWB" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn CLOSECOURIERMASTERSQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CLOSECOURIERMASTERSQuery.Id, IndexOrder = 4, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "GatewayPortName" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ALLCOURIERSQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLCOURIERSQuery.Id,QueryCode = ALLCOURIERSQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "GatewayPortName" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CourierMasterObjectFields.Where(d => d.FieldName == "GatewayPortName" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn CLOSECOURIERMASTERSQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CLOSECOURIERMASTERSQuery.Id, IndexOrder = 5, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "CreateDateTime" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ALLCOURIERSQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLCOURIERSQuery.Id,QueryCode = ALLCOURIERSQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "CreateDateTime" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CourierMasterObjectFields.Where(d => d.FieldName == "CreateDateTime" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn CLOSECOURIERMASTERSQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CLOSECOURIERMASTERSQuery.Id, IndexOrder = 6, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "EstimatedArrivalDate" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ALLCOURIERSQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLCOURIERSQuery.Id,QueryCode = ALLCOURIERSQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "EstimatedArrivalDate" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CourierMasterObjectFields.Where(d => d.FieldName == "EstimatedArrivalDate" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn CLOSECOURIERMASTERSQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CLOSECOURIERMASTERSQuery.Id, IndexOrder = 7, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "IsOpen" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ALLCOURIERSQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLCOURIERSQuery.Id,QueryCode = ALLCOURIERSQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "IsOpen" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CourierMasterObjectFields.Where(d => d.FieldName == "IsOpen" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn CLOSECOURIERMASTERSQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CLOSECOURIERMASTERSQuery.Id, IndexOrder = 8, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "IsCancelled" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ALLCOURIERSQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLCOURIERSQuery.Id,QueryCode = ALLCOURIERSQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "IsCancelled" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CourierMasterObjectFields.Where(d => d.FieldName == "IsCancelled" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+  
+	      
 
-             AdvancedQueryFilter CLOSECOURIERMASTERSQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "IsOpen" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "false", QueryId = CLOSECOURIERMASTERSQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+			  Query CLOSECOURIERMASTERSQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CourierMasterTextCode_2.Id, NameTextCodeCode = CourierMasterTextCode_2.Code, ObjectTableName = "Customs.CourierMaster", Code = "CLOSECOURIERMASTERS",  QueryGroupCode = "dcc9", IndexOrder = 1, Tenant = 0, ObjectTableId = CourierMasterObjectTable.Id, QuerySection = "Customs.CourierMaster", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CourierMasterFeature_2.Id,FeatureUniqeCode= CourierMasterFeature_2.FeatureUniqeCode, DefaultSortName = "CreateDateTime", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
+	
+			 QueryColumn CLOSECOURIERMASTERSQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CLOSECOURIERMASTERSQuery.Id,QueryCode = CLOSECOURIERMASTERSQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "AirlineName" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CourierMasterObjectFields.Where(d => d.FieldName == "AirlineName" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn CLOSECOURIERMASTERSQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CLOSECOURIERMASTERSQuery.Id,QueryCode = CLOSECOURIERMASTERSQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "IntegratorName" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CourierMasterObjectFields.Where(d => d.FieldName == "IntegratorName" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn CLOSECOURIERMASTERSQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CLOSECOURIERMASTERSQuery.Id,QueryCode = CLOSECOURIERMASTERSQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "MAWB" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CourierMasterObjectFields.Where(d => d.FieldName == "MAWB" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn CLOSECOURIERMASTERSQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CLOSECOURIERMASTERSQuery.Id,QueryCode = CLOSECOURIERMASTERSQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "HAWB" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CourierMasterObjectFields.Where(d => d.FieldName == "HAWB" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn CLOSECOURIERMASTERSQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CLOSECOURIERMASTERSQuery.Id,QueryCode = CLOSECOURIERMASTERSQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "GatewayPortName" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CourierMasterObjectFields.Where(d => d.FieldName == "GatewayPortName" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn CLOSECOURIERMASTERSQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CLOSECOURIERMASTERSQuery.Id,QueryCode = CLOSECOURIERMASTERSQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "CreateDateTime" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CourierMasterObjectFields.Where(d => d.FieldName == "CreateDateTime" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn CLOSECOURIERMASTERSQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CLOSECOURIERMASTERSQuery.Id,QueryCode = CLOSECOURIERMASTERSQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "EstimatedArrivalDate" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CourierMasterObjectFields.Where(d => d.FieldName == "EstimatedArrivalDate" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn CLOSECOURIERMASTERSQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CLOSECOURIERMASTERSQuery.Id,QueryCode = CLOSECOURIERMASTERSQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "IsOpen" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CourierMasterObjectFields.Where(d => d.FieldName == "IsOpen" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn CLOSECOURIERMASTERSQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CLOSECOURIERMASTERSQuery.Id,QueryCode = CLOSECOURIERMASTERSQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "IsCancelled" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CourierMasterObjectFields.Where(d => d.FieldName == "IsCancelled" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+
+             AdvancedQueryFilter CLOSECOURIERMASTERSQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "IsOpen" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CourierMasterObjectFields.Where(d => d.FieldName == "IsOpen" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "false",PredefinedValue2 = null, QueryId = CLOSECOURIERMASTERSQuery.Id,QueryCode = CLOSECOURIERMASTERSQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
 
-             AdvancedQueryFilter CLOSECOURIERMASTERSQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "IsCancelled" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "0", QueryId = CLOSECOURIERMASTERSQuery.Id, Tenant = 0,Operator = "Equal"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter CLOSECOURIERMASTERSQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "IsCancelled" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CourierMasterObjectFields.Where(d => d.FieldName == "IsCancelled" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "0",PredefinedValue2 = null, QueryId = CLOSECOURIERMASTERSQuery.Id,QueryCode = CLOSECOURIERMASTERSQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
-
-
-
-            Query ALLCOURIERSQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CourierMasterTextCode_0.Id, Code = "ALLCOURIERS", QueryGroupCode = "dcc9", IndexOrder = 0, Tenant = 0, ObjectTableId = CourierMasterObjectTable.Id, QuerySection = "Customs.CourierMaster", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CourierMasterFeature_0.Id, FeatureUniqeCode = CourierMasterFeature_0.FeatureUniqeCode, DefaultSortName = "CreateDateTime", DefaultSortDirection = "Desending" }, queriesRepository, tenantQueries);
-
-            QueryColumn ALLCOURIERSQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLCOURIERSQuery.Id, IndexOrder = 0, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "AirlineName" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn ALLCOURIERSQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLCOURIERSQuery.Id, IndexOrder = 1, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "IntegratorName" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn ALLCOURIERSQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLCOURIERSQuery.Id, IndexOrder = 2, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "MAWB" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn ALLCOURIERSQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLCOURIERSQuery.Id, IndexOrder = 3, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "HAWB" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn ALLCOURIERSQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLCOURIERSQuery.Id, IndexOrder = 4, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "GatewayPortName" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn ALLCOURIERSQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLCOURIERSQuery.Id, IndexOrder = 5, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "CreateDateTime" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn ALLCOURIERSQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLCOURIERSQuery.Id, IndexOrder = 6, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "EstimatedArrivalDate" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn ALLCOURIERSQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLCOURIERSQuery.Id, IndexOrder = 7, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "IsOpen" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn ALLCOURIERSQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLCOURIERSQuery.Id, IndexOrder = 8, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "IsCancelled" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 	   
 	    }
 
@@ -3657,94 +3441,214 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen CourierMasterCustomsCourierMasterHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CourierMaster.Customs.CourierMasterHeaderScreen", Name = "Customs.CourierMasterHeaderScreen", ObjectTableId = CourierMasterObjectTable.Id, NumberOfColumns = 4, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField CourierMasterCustomsCourierMasterHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "AirlineName").FirstOrDefault().Id, ScreenId = CourierMasterCustomsCourierMasterHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CourierMasterCourierMasterCustomsCourierMasterHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "AirlineName").FirstOrDefault().Id, ScreenId = CourierMasterCustomsCourierMasterHeaderScreenScreen0.Id,ScreenCode = CourierMasterCustomsCourierMasterHeaderScreenScreen0.Code, ObjectFieldCode = CourierMasterObjectFields.Where(d => d.FieldName == "AirlineName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CourierMasterCustomsCourierMasterHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "EstimatedArrivalDate").FirstOrDefault().Id, ScreenId = CourierMasterCustomsCourierMasterHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CourierMasterCourierMasterCustomsCourierMasterHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "EstimatedArrivalDate").FirstOrDefault().Id, ScreenId = CourierMasterCustomsCourierMasterHeaderScreenScreen0.Id,ScreenCode = CourierMasterCustomsCourierMasterHeaderScreenScreen0.Code, ObjectFieldCode = CourierMasterObjectFields.Where(d => d.FieldName == "EstimatedArrivalDate").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CourierMasterCustomsCourierMasterHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "MAWB").FirstOrDefault().Id, ScreenId = CourierMasterCustomsCourierMasterHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CourierMasterCourierMasterCustomsCourierMasterHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "MAWB").FirstOrDefault().Id, ScreenId = CourierMasterCustomsCourierMasterHeaderScreenScreen0.Id,ScreenCode = CourierMasterCustomsCourierMasterHeaderScreenScreen0.Code, ObjectFieldCode = CourierMasterObjectFields.Where(d => d.FieldName == "MAWB").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CourierMasterCustomsCourierMasterHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "HAWB").FirstOrDefault().Id, ScreenId = CourierMasterCustomsCourierMasterHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CourierMasterCourierMasterCustomsCourierMasterHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "HAWB").FirstOrDefault().Id, ScreenId = CourierMasterCustomsCourierMasterHeaderScreenScreen0.Id,ScreenCode = CourierMasterCustomsCourierMasterHeaderScreenScreen0.Code, ObjectFieldCode = CourierMasterObjectFields.Where(d => d.FieldName == "HAWB").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CourierMasterCustomsCourierMasterHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "GatewayPortName").FirstOrDefault().Id, ScreenId = CourierMasterCustomsCourierMasterHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CourierMasterCourierMasterCustomsCourierMasterHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "GatewayPortName").FirstOrDefault().Id, ScreenId = CourierMasterCustomsCourierMasterHeaderScreenScreen0.Id,ScreenCode = CourierMasterCustomsCourierMasterHeaderScreenScreen0.Code, ObjectFieldCode = CourierMasterObjectFields.Where(d => d.FieldName == "GatewayPortName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CourierMasterCustomsCourierMasterHeaderScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "CreateDateTime").FirstOrDefault().Id, ScreenId = CourierMasterCustomsCourierMasterHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CourierMasterCourierMasterCustomsCourierMasterHeaderScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "CreateDateTime").FirstOrDefault().Id, ScreenId = CourierMasterCustomsCourierMasterHeaderScreenScreen0.Id,ScreenCode = CourierMasterCustomsCourierMasterHeaderScreenScreen0.Code, ObjectFieldCode = CourierMasterObjectFields.Where(d => d.FieldName == "CreateDateTime").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CourierMasterCustomsCourierMasterHeaderScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "CreatedByUserName").FirstOrDefault().Id, ScreenId = CourierMasterCustomsCourierMasterHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CourierMasterCourierMasterCustomsCourierMasterHeaderScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "CreatedByUserName").FirstOrDefault().Id, ScreenId = CourierMasterCustomsCourierMasterHeaderScreenScreen0.Id,ScreenCode = CourierMasterCustomsCourierMasterHeaderScreenScreen0.Code, ObjectFieldCode = CourierMasterObjectFields.Where(d => d.FieldName == "CreatedByUserName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    CourierMasterObjectTable.HeaderScreenId = CourierMasterCustomsCourierMasterHeaderScreenScreen0.Id;
+		    CourierMasterObjectTable.HeaderScreenCode = CourierMasterCustomsCourierMasterHeaderScreenScreen0.Code;
+
+	   		  
+	      
+
+	         Screen CourierMasterHeaderScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Customs.CourierMaster.HeaderScreen", Name = "Header Screen", ObjectTableId = CourierMasterObjectTable.Id, NumberOfColumns = 4, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      
+            ScreenField CourierMasterCustomsCourierMasterHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "AirlinePrefix").FirstOrDefault().Id, ScreenId = CourierMasterHeaderScreenScreen1.Id,ScreenCode = CourierMasterHeaderScreenScreen1.Code, ObjectFieldCode = CourierMasterObjectFields.Where(d => d.FieldName == "AirlinePrefix").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         
+            ScreenField CourierMasterCustomsCourierMasterHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "CreateDateTime").FirstOrDefault().Id, ScreenId = CourierMasterHeaderScreenScreen1.Id,ScreenCode = CourierMasterHeaderScreenScreen1.Code, ObjectFieldCode = CourierMasterObjectFields.Where(d => d.FieldName == "CreateDateTime").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         
+            ScreenField CourierMasterCustomsCourierMasterHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "CreatedByUserName").FirstOrDefault().Id, ScreenId = CourierMasterHeaderScreenScreen1.Id,ScreenCode = CourierMasterHeaderScreenScreen1.Code, ObjectFieldCode = CourierMasterObjectFields.Where(d => d.FieldName == "CreatedByUserName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         	
+		    CourierMasterObjectTable.HeaderScreenId = CourierMasterHeaderScreenScreen1.Id;
+		    CourierMasterObjectTable.HeaderScreenCode = CourierMasterHeaderScreenScreen1.Code;
+
 	   		  
 
 	    }
 
 	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
-	    {    
-			 ObjectTable CourierMasterObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CourierMaster" && d.Tenant == 0).FirstOrDefault();  
+	    {                
+			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
+			   ObjectTable CourierMasterObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CourierMaster" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode CourierMasterGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.TH.General", DefaultText = "General",LocalDefaultText = "כללי", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature CourierMasterGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CourierMaster.Tab.General", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, NameTextCodeCode = "CourierMaster.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature CourierMasterGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CourierMaster.Tab.General", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, NameTextCodeCode = "CourierMasterFeatures.COGN", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
  
                  
 			   TextCode CourierMasterConnectedDeclarationTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.TH.ConnectedDeclaration", DefaultText = "Connected Declaration",LocalDefaultText = "הצהרות מקושרות", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature CourierMasterConnectedDeclarationFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CourierMaster.Tab.ConnectedDeclaration", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, NameTextCodeCode = "CourierMaster.Features.ConnectedDeclaration", NameTextCodeDefaultText = "Connected Declaration", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature CourierMasterConnectedDeclarationFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CourierMaster.Tab.ConnectedDeclaration", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, NameTextCodeCode = "CourierMasterFeatures.COCD", NameTextCodeDefaultText = "Connected Declaration", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
  
                  
 			   TextCode CourierMasterEventsTextCode_TH2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.TH.Events", DefaultText = "Events",LocalDefaultText = "אירועים", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature CourierMasterEventsFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CourierMaster.Tab.Events", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, NameTextCodeCode = "CourierMaster.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature CourierMasterEventsFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CourierMaster.Tab.Events", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, NameTextCodeCode = "CourierMasterFeatures.COME", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
  
                  
 			   TextCode CourierMasterCommunicationsTextCode_TH3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.TH.Communications", DefaultText = "Communications",LocalDefaultText = "תקשורות", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature CourierMasterCommunicationsFeature_TH3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CourierMaster.Tab.Communications", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, NameTextCodeCode = "CourierMaster.Features.Communications", NameTextCodeDefaultText = "Communications", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature CourierMasterCommunicationsFeature_TH3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CourierMaster.Tab.Communications", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, NameTextCodeCode = "CourierMasterFeatures.COCM", NameTextCodeDefaultText = "Communications", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
-			 List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
-			 List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
+			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
+			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "COGN",HtmlComponentName = "CourierMasterGeneralTabComponent",HtmlComponentUrl = "./CustomsModules/CustomsCourier/Components/EditTabs/CourierMasterGeneralTabComponent", FeatureId = tenantFeatures.Where(d => d.Code == "CourierMaster.Tab.General" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().Id, ControlPath = "CourierMasterGeneralTabComponent", ObjectTableId = CourierMasterObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "Customs.CourierMaster.TH.General" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "COGN",HtmlComponentName = "CourierMasterGeneralTabComponent",HtmlComponentUrl = "./CustomsModules/CustomsCourier/Components/EditTabs/CourierMasterGeneralTabComponent", FeatureId = CourierMasterGeneralFeature_TH0.Id,FeatureUniqeCode = CourierMasterGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "CourierMasterGeneralTabComponent", ObjectTableId = CourierMasterObjectTable.Id, TabNameTextCodeId = CourierMasterGeneralTextCode_TH0.Id, TabNameTextCodeCode = CourierMasterGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "COCD",HtmlComponentName = "CMConnectedDeclarationTabComponent",HtmlComponentUrl = "./CustomsModules/CustomsCourier/Components/EditTabs/CMConnectedDeclarationTabComponent", FeatureId = tenantFeatures.Where(d => d.Code == "CourierMaster.Tab.ConnectedDeclaration" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().Id, ControlPath = "ConnectedDeclarationTabComponent", ObjectTableId = CourierMasterObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "Customs.CourierMaster.TH.ConnectedDeclaration" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "COCD",HtmlComponentName = "CMConnectedDeclarationTabComponent",HtmlComponentUrl = "./CustomsModules/CustomsCourier/Components/EditTabs/CMConnectedDeclarationTabComponent", FeatureId = CourierMasterConnectedDeclarationFeature_TH1.Id,FeatureUniqeCode = CourierMasterConnectedDeclarationFeature_TH1.FeatureUniqeCode, ControlPath = "ConnectedDeclarationTabComponent", ObjectTableId = CourierMasterObjectTable.Id, TabNameTextCodeId = CourierMasterConnectedDeclarationTextCode_TH1.Id, TabNameTextCodeCode = CourierMasterConnectedDeclarationTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "COME",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = tenantFeatures.Where(d => d.Code == "CourierMaster.Tab.Events" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = CourierMasterObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "Customs.CourierMaster.TH.Events" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "COME",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = CourierMasterEventsFeature_TH2.Id,FeatureUniqeCode = CourierMasterEventsFeature_TH2.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = CourierMasterObjectTable.Id, TabNameTextCodeId = CourierMasterEventsTextCode_TH2.Id, TabNameTextCodeCode = CourierMasterEventsTextCode_TH2.Code, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "COCM",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = tenantFeatures.Where(d => d.Code == "CourierMaster.Tab.Communications" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.Infrastructure.Views.Communications.CommunicationsControl", ObjectTableId = CourierMasterObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "Customs.CourierMaster.TH.Communications" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "COCM",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = CourierMasterCommunicationsFeature_TH3.Id,FeatureUniqeCode = CourierMasterCommunicationsFeature_TH3.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Communications.CommunicationsControl", ObjectTableId = CourierMasterObjectTable.Id, TabNameTextCodeId = CourierMasterCommunicationsTextCode_TH3.Id, TabNameTextCodeCode = CourierMasterCommunicationsTextCode_TH3.Code, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
 	    {  
 		   ObjectTable CourierMasterObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CourierMaster" && d.Tenant == 0).FirstOrDefault(); 
-		   Feature CourierMasterFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, NameTextCodeCode = "CourierMaster.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature CourierMasterFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, NameTextCodeCode = "CourierMaster.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature CourierMasterFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, NameTextCodeCode = "CourierMaster.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature CourierMasterFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, NameTextCodeCode = "CourierMaster.Features.PackageFeature", NameTextCodeDefaultText = "CourierMaster Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+
+		   Feature CourierMasterFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, NameTextCodeCode = "CourierMaster.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature CourierMasterFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, NameTextCodeCode = "CourierMaster.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature CourierMasterFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, NameTextCodeCode = "CourierMaster.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature CourierMasterFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, NameTextCodeCode = "CourierMaster.Features.PackageFeature", NameTextCodeDefaultText = "CourierMaster Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 
+
+		   		   //--------------> Additional Features <--------------\\
+
+		   Feature CourierMasterFeature_CourierMaster_Q_ALLCOURIERS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CourierMaster.Q.ALLCOURIERS", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, NameTextCodeCode = "CourierMaster.Features.ALLCOURIERS", NameTextCodeDefaultText = @"ALLCOURIERS" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature CourierMasterFeature_CourierMaster_Tab_General = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CourierMaster.Tab.General", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, NameTextCodeCode = "CourierMaster.Features.General", NameTextCodeDefaultText = @"General" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature CourierMasterFeature_CourierMaster_Tab_ConnectedDeclaration = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CourierMaster.Tab.ConnectedDeclaration", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, NameTextCodeCode = "CourierMaster.Features.ConnectedDeclaration", NameTextCodeDefaultText = @"Connected Declaration" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature CourierMasterFeature_CourierMaster_Tab_Events = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CourierMaster.Tab.Events", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, NameTextCodeCode = "CourierMaster.Features.Events", NameTextCodeDefaultText = @"Events" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature CourierMasterFeature_CourierMaster_Tab_Communications = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CourierMaster.Tab.Communications", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, NameTextCodeCode = "CourierMaster.Features.Communications", NameTextCodeDefaultText = @"Communications" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+   
 	    
 		}
 
-	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext)
+	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
 	    {   
 			ObjectTable CourierMasterObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CourierMaster" && d.Tenant == 0).FirstOrDefault(); 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
-                Code = "CREV",
-                EnglishName = "Created",
-                Tenant = 0,
-                AddedManually = false,
-				IsManualEntry = false,
-                LocalName = "Created",
+                Code =  "CREV",
+                ShortView =  true,
+                IsManualEntry =  false,
+                LocalName =  "Created",
+                EnglishName =  "Created",
+                EventTypeCategoryCode =  "OPE",
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
                 ObjectTableId = CourierMasterObjectTable.Id,
-                ShortView = true,
+				 
             }, EventTypeRepository, tenantEventTypes);
 
 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
-                Code = "UPEV",
-                EnglishName = "Updated",
-                Tenant = 0,
-                AddedManually = false,
-				IsManualEntry = false,
-                LocalName = "Updated",
+                Code =  "UPEV",
+                ShortView =  false,
+                IsManualEntry =  false,
+                LocalName =  "Updated",
+                EnglishName =  "Updated",
+                EventTypeCategoryCode =  "OPE",
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
                 ObjectTableId = CourierMasterObjectTable.Id,
-                ShortView = false,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "VGR",
+                ShortView =  false,
+                IsManualEntry =  false,
+                LocalName =  "בקשה לגייטפס העברות ממתינה לאישור",
+                EnglishName =  "Gatepass Movement Recived",
+                EventTypeCategoryCode =  "LOG",
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = CourierMasterObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "VGA",
+                ShortView =  false,
+                IsManualEntry =  false,
+                LocalName =  "בקשת גייטפס העברות אושרה",
+                EnglishName =  "Gatepass Movement Approved",
+                EventTypeCategoryCode =  "LOG",
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = CourierMasterObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "VGE",
+                ShortView =  false,
+                IsManualEntry =  false,
+                LocalName =  "בקשת גייטפס העברות שגויה",
+                EnglishName =  "Gatepass Movement Error",
+                EventTypeCategoryCode =  "LOG",
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = CourierMasterObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "VGD",
+                ShortView =  false,
+                IsManualEntry =  false,
+                LocalName =  "בקשת גייטפס העברות נדחתה",
+                EnglishName =  "Gatepass Movement Reject",
+                EventTypeCategoryCode =  "LOG",
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = CourierMasterObjectTable.Id,
+				 
             }, EventTypeRepository, tenantEventTypes);
 
 
@@ -3752,7 +3656,164 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }     
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable CourierMasterObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CourierMaster" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode CourierMasterTextCode_CustomsCourierMasterOFilter = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.Filter", DefaultText = "Filter",LocalDefaultText = @"סינון", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CourierMasterTextCode_CustomsCourierMasterOFlight = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.Flight", DefaultText = "Flight",LocalDefaultText = @"טיסה", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CourierMasterTextCode_CustomsCourierMasterOTotalFilter = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.TotalFilter", DefaultText = "Total",LocalDefaultText = @"סהכ ש.מ.ב", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CourierMasterTextCode_CustomsCourierMasterOValidation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.Validation", DefaultText = "Validation",LocalDefaultText = @"בעיה ברמת הטיסה", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CourierMasterTextCode_CustomsCourierMasterOClean = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.Clean", DefaultText = "Clean",LocalDefaultText = @"נקה", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CourierMasterTextCode_CustomsCourierMasterOAvailable = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.Available", DefaultText = "Available",LocalDefaultText = @"זמינות", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CourierMasterTextCode_CustomsCourierMasterOStatus = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.Status", DefaultText = "Status",LocalDefaultText = @"סטטוס", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CourierMasterTextCode_CustomsCourierMasterOCourierBOL = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.CourierBOL", DefaultText = "Courier BOL",LocalDefaultText = @"ערך ש.מ.ב", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CourierMasterTextCode_CustomsCourierMasterCourierBOLHigh = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.CourierBOL.High", DefaultText = "High",LocalDefaultText = @"High", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CourierMasterTextCode_CustomsCourierMasterCourierBOLLow = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.CourierBOL.Low", DefaultText = "Low",LocalDefaultText = @"Low", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CourierMasterTextCode_CustomsCourierMasterCourierBOLHighLow = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.CourierBOL.HighLow", DefaultText = "High/Low value",LocalDefaultText = @"High/Low value", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CourierMasterTextCode_CustomsCourierMasterAvailableAvailable = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.Available.Available", DefaultText = "Available",LocalDefaultText = @"זמין", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CourierMasterTextCode_CustomsCourierMasterAvailableNotAvailable = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.Available.NotAvailable", DefaultText = "Not Available",LocalDefaultText = @"לא זמין", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CourierMasterTextCode_CustomsCourierMasterAvailableAdditional = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.Available.Additional", DefaultText = "Additional",LocalDefaultText = @"זמין חלקית", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CourierMasterTextCode_CustomsCourierMasterStatusOpen = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.Status.Open", DefaultText = "Open",LocalDefaultText = @"פתוח", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CourierMasterTextCode_CustomsCourierMasterStatusClose = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.Status.Close", DefaultText = "Close",LocalDefaultText = @"סגור", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CourierMasterTextCode_CustomsCourierMasterHighLowValueHigh = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.HighLowValue.High", DefaultText = "High",LocalDefaultText = @"מהיר", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CourierMasterTextCode_CustomsCourierMasterHighLowValueLow = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.HighLowValue.Low", DefaultText = "Low",LocalDefaultText = @"פרטני", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CourierMasterTextCode_CustomsCourierMasterMNFCompleteMissing = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.MNF.CompleteMissing", DefaultText = "Complete Missing Data",LocalDefaultText = @"השלם נתונים חסרים", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CourierMasterTextCode_CustomsCourierMasterCourierCustomStatusNoValue = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.CourierCustomStatus.NoValue", DefaultText = "No Value",LocalDefaultText = @"ללא ערך", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CourierMasterTextCode_CustomsCourierMasterMNFHandleWrong = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.MNF.HandleWrong", DefaultText = "Handle Wrong Feedback",LocalDefaultText = @"טפל במשובים שגויים", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CourierMasterTextCode_CustomsCourierMasterACCWrong = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.ACC.Wrong", DefaultText = "Wrong",LocalDefaultText = @"ש.מ.ב שגויים", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CourierMasterTextCode_CustomsCourierMasterACCWrongSpecial = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.ACC.WrongSpecial", DefaultText = "Wrong Special",LocalDefaultText = @"מיוחדות שגויים", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CourierMasterTextCode_CustomsCourierMasterSVGClassification = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.SVG.Classification", DefaultText = "Classification",LocalDefaultText = @"עבור לסיווג", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CourierMasterTextCode_CustomsCourierMasterDOCDocumentCorrection = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.DOC.DocumentCorrection", DefaultText = "Document Correction",LocalDefaultText = @"חסרים", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CourierMasterTextCode_CustomsCourierMasterDOCDocumentCorrectionUploaded = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.DOC.DocumentCorrectionUploaded", DefaultText = "Document Correction Uploaded",LocalDefaultText = @"שגיאות", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CourierMasterTextCode_CustomsCourierMasterOValidationErrors = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.ValidationErrors", DefaultText = "Corrections",LocalDefaultText = @"בעיה ברמת הטיסה", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CourierMasterTextCode_CustomsCourierMasterOMoreActions = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.MoreActions", DefaultText = "More Actions",LocalDefaultText = @"פעולות נוספות", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CourierMasterTextCode_CustomsCourierMasterOCompleteDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.CompleteDetails", DefaultText = "Complete Details",LocalDefaultText = @"השלמת פרטים", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CourierMasterTextCode_CustomsCourierMasterOReadyMNFToSend = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.ReadyMNFToSend", DefaultText = "Ready To Send",LocalDefaultText = @"שדר מצהר מסומנים", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CourierMasterTextCode_CustomsCourierMasterOReadyDECToSend = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.ReadyDECToSend", DefaultText = "Ready To Send",LocalDefaultText = @"שדר הצהרה מסומנים", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CourierMasterTextCode_CustomsCourierMasterOReadyMNFToSendR = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.ReadyMNFToSendR", DefaultText = "Ready To Send",LocalDefaultText = @"שדר מצהר מוכנים", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CourierMasterTextCode_CustomsCourierMasterOReadyMNFToSendRV = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.ReadyMNFToSendRV", DefaultText = "Ready To Send",LocalDefaultText = @"שדר מצהר תקינים", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CourierMasterTextCode_CustomsCourierMasterOReadyDECToSendR = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.ReadyDECToSendR", DefaultText = "Ready To Send",LocalDefaultText = @"שדר הצהרה מוכנים", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CourierMasterTextCode_CustomsCourierMasterOReadyDECToSendRV = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.ReadyDECToSendRV", DefaultText = "Ready To Send",LocalDefaultText = @"שדר הצהרה תקינים", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CourierMasterTextCode_CustomsCourierMasterOReadyDECToSendX = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.ReadyDECToSendX", DefaultText = "Ready To Send",LocalDefaultText = @"שדר הצהרה שגויים", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CourierMasterTextCode_CustomsCourierMasterOMarkPending = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.MarkPending", DefaultText = "Ready To Send",LocalDefaultText = @"סימון ב Pending", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CourierMasterTextCode_CustomsCourierMasterOPendingReason = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.PendingReason", DefaultText = "Pending Reason",LocalDefaultText = @"הסיבה ל-Pending", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CourierMasterTextCode_CustomsCourierMasterOPendingMarkReason = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.PendingMarkReason", DefaultText = "Pending Mark Reason",LocalDefaultText = @"הסיבה לסימון ב Pending", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CourierMasterTextCode_CustomsCourierMasterOPendingReasonApprove = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.PendingReasonApprove", DefaultText = "Pending Reason",LocalDefaultText = @"אישור - נדרש אישור של רשות מוסמכת", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CourierMasterTextCode_CustomsCourierMasterONoResults = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.NoResults", DefaultText = "No Results",LocalDefaultText = @"אין נתונים לשליחה", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CourierMasterTextCode_CustomsCourierMasterOSendMamanSpecialAction = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.SendMamanSpecialAction", DefaultText = "Send Maman Special Action",LocalDefaultText = @"שלח מסר פעולות מיוחדות", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CourierMasterTextCode_CustomsCourierMasterOStickerDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.StickerDetails", DefaultText = "Sticker Details",LocalDefaultText = @"פרטי מדבקה", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CourierMasterTextCode_CustomsCourierMasterMPaymentPendingHold = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.M.PaymentPendingHold", DefaultText = "Payment can not be made when there is Pending with a hold-off type.",LocalDefaultText = @"לא ניתן לבצע הגשת תשלום כאשר יש השהייה מסוג עצירת תשלום. ", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CourierMasterTextCode_CustomsCourierMasterOGatepassRequest = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.GatepassRequest", DefaultText = "Gatepass Request",LocalDefaultText = @"גייטפס העברות", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CourierMasterTextCode_CustomsCourierMasterOChangeStorageSite = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.ChangeStorageSite", DefaultText = "Change Storage Site",LocalDefaultText = @"שינוי אתר אחסון", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CourierMasterTextCode_CustomsCourierMasterCourierCustomStatusSuspended = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.CourierCustomStatus.Suspended", DefaultText = "Suspended",LocalDefaultText = @"מעוכב", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CourierMasterTextCode_CustomsCourierMasterCourierCustomStatusHatara = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.CourierCustomStatus.Hatara", DefaultText = "Hatara",LocalDefaultText = @"התרה", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CourierMasterTextCode_CustomsCourierMasterOCorrect = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.Correct", DefaultText = "Correct",LocalDefaultText = @"תקינים", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CourierMasterTextCode_CustomsCourierMasterOInCorrect = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.InCorrect", DefaultText = "Incorrect",LocalDefaultText = @"שגויים", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CourierMasterTextCode_CustomsCourierMasterOReadyToSend = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.ReadyToSend", DefaultText = "Ready To Send",LocalDefaultText = @"מוכנים לשליחה", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CourierMasterTextCode_CustomsCourierMasterOInProgress = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.InProgress", DefaultText = "In Progress",LocalDefaultText = @"בתהליך שליחה", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CourierMasterTextCode_CustomsCourierMasterOOpenFlight = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.OpenFlight", DefaultText = "Open Flight",LocalDefaultText = @"פתיחת ביטול טיסה", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CourierMasterTextCode_CustomsCourierMasterOCancelFlight = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.CancelFlight", DefaultText = "Cancel Flight",LocalDefaultText = @"ביטול טיסה", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CourierMasterTextCode_CustomsCourierMasterONotValidDecInProccess = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.NotValidDecInProccess", DefaultText = "There are declarations in progress.",LocalDefaultText = @"יש בקשות בתהליך", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CourierMasterTextCode_CustomsCourierMasterONotValidDecWithPayment = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.NotValidDecWithPayment", DefaultText = "There are paid declarations.",LocalDefaultText = @"יש הצהרות ששולמו.", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CourierMasterTextCode_CustomsCourierMasterOCantCancelFlight = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.CantCancelFlight", DefaultText = "The flight cannot be canceled.",LocalDefaultText = @"אין אפשרות לבטל את הטיסה - ", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CourierMasterTextCode_CustomsCourierMasterOSureToCancel = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.SureToCancel", DefaultText = "Are you sure you want to cancel?",LocalDefaultText = @"נא אשר ביטול טיסה.", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CourierMasterTextCode_CustomsCourierMasterOSureToOpenCancel = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.SureToOpenCancel", DefaultText = "Please confirm opening flight cancellation.",LocalDefaultText = @"נא אשר פתיחת ביטול טיסה.", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CourierMasterTextCode_CustomsCourierMasterOAll = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.All", DefaultText = "All",LocalDefaultText = @"בחר הכל", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CourierMasterTextCode_CustomsCourierMasterONone = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.None", DefaultText = "None",LocalDefaultText = @"בטל בחירה", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CourierMasterTextCode_CustomsCourierMasterOCourierMasterQueries = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.CourierMasterQueries", DefaultText = "Courier Master Queries",LocalDefaultText = @"שאילתות לשטרי מטען בלדר", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CourierMasterTextCode_CustomsCourierMasterOFlightOpenDeclarations = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.FlightOpenDeclarations", DefaultText = "Flight Open Declarations",LocalDefaultText = @"הצהרות פתוחות לפי טיסה", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CourierMasterTextCode_CustomsCourierMasterOCourierMasterOpen = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.CourierMasterOpen", DefaultText = "Courier Master Open",LocalDefaultText = @"שטרי מטען בלדר פתוחים", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CourierMasterTextCode_CustomsCourierMasterOUnReleasedFastProcess = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.UnReleasedFastProcess", DefaultText = "UnReleased Fast Process",LocalDefaultText = @"לא שוחררו מכס מהיר", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CourierMasterTextCode_CustomsCourierMasterOCourierMasterOpenIndividual = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.CourierMasterOpenIndividual", DefaultText = "Courier Master Open Individual",LocalDefaultText = @"שטרי מטען פרטניים פתוחים", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CourierMasterTextCode_CustomsCourierMasterOUnReleasedIndividual = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.UnReleasedIndividual", DefaultText = "UnReleased Fast Process",LocalDefaultText = @"לא שוחררו מכס פרטני", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CourierMasterTextCode_CustomsCourierMasterOWithoutId = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.WithoutId", DefaultText = "Without Id",LocalDefaultText = @"ללא תעודת זהות", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CourierMasterTextCode_CustomsCourierMasterOWithoutClassification = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.WithoutClassification", DefaultText = "Without Classification",LocalDefaultText = @"ללא סיווג", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CourierMasterTextCode_CustomsCourierMasterOPendingPayment = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.PendingPayment", DefaultText = "Pending Payment",LocalDefaultText = @"מעוכב גביה", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CourierMasterTextCode_CustomsCourierMasterOPendingCustoms = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.PendingCustoms", DefaultText = "Pending Customs",LocalDefaultText = @"מעוכב מכס", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CourierMasterTextCode_CustomsCourierMasterOPending = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.Pending", DefaultText = "Pending",LocalDefaultText = @"Pending", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
+	    
+}
+
+    
 
    }
     

@@ -49,7 +49,7 @@ using Logitude.Social.Data.EntityPOCOs;
 using Logitude.Social.BL;
 using Logitude.Social.Data.Repsitories;
 using Logitude.Server.Tools.CloseTablesClasses;
-using Logitude.Customs.BL.CloseTables;
+using Logitude.Customs.BL.ClosedTable;
 using Logitude.CRM.BL.CLoseTable;
 using Logitude.BookingLib.BL.CLoseTable;
 using Logitude.WarehouseLib.Data.Repositories;
@@ -58,6 +58,20 @@ using Logitude.WarehouseLib.BL.CLoseTable;
 using Logitude.TimeManagement.Data.Repositories;
 using Logitude.TimeManagement.Data.EntityPOCOs;
 using Logitude.TimeManagement.BL.CLoseTable;
+using Logitude.BL.ShipmentsModel.CloseTables;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Logitude.BL.ShipmentsModel;
+using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.Repositories;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Logitude.BL.GlobalModel;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.BL;
+using Logitude.TariffModule.Data.Repositories;
+using Logitude.TariffModule.Data.EntityPOCOs;
+using Logitude.TariffModule.BL.CLoseTable;
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class PaymentOrderStatusUpdateClass
@@ -98,8 +112,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Payment Order Status",
-			      				    Code =  "8348",
-			      				    Name =  "Customs.PaymentOrderStatus Query Group",
+			      				    Code =  "PAOS",
+			      				    Name =  "Customs.PaymentOrderStatus",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "LocalName",
 			      				    GenerateDomainService =  false,
@@ -366,7 +380,33 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
-	    {  	   
+	    {  
+	        FeatureRepository featureRepository = new FeatureRepository(0); 
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+	        QueryGroup PaymentOrderStatusQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "PAOS", Name = "Customs.PaymentOrderStatus" }, queryGroupRepository);
+				        queryGroupRepository.SubmitChanges();
+
+	        ObjectTable PaymentOrderStatusObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.PaymentOrderStatus" && d.Tenant == 0).FirstOrDefault();
+	        List<ObjectField> PaymentOrderStatusObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.PaymentOrderStatus").ToList();   
+
+			   TextCode PaymentOrderStatusTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "PaymentOrderStatus.Q.PaymentOrderStatus", DefaultText = @"PaymentOrderStatus",LocalDefaultText = "PaymentOrderStatus", ObjectTableId = PaymentOrderStatusObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature PaymentOrderStatusFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PaymentOrderStatus.Q.PaymentOrderStatus", ObjectTableId = PaymentOrderStatusObjectTable.Id, Tenant = 0, NameTextCodeCode = "PaymentOrderStatusFeatures.PaymentOrderStatus", NameTextCodeDefaultText = "PaymentOrderStatus", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+
+	        TextCodeRepository.SubmitChanges();
+	        FeaturesRepository.SubmitChanges();    
+	      
+
+			  Query PaymentOrderStatusQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = PaymentOrderStatusTextCode_0.Id, NameTextCodeCode = PaymentOrderStatusTextCode_0.Code, ObjectTableName = "Customs.PaymentOrderStatus", Code = "PaymentOrderStatus",  QueryGroupCode = "PAOS", IndexOrder = 0, Tenant = 0, ObjectTableId = PaymentOrderStatusObjectTable.Id, QuerySection = "Customs.PaymentOrderStatus", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = PaymentOrderStatusFeature_0.Id,FeatureUniqeCode= PaymentOrderStatusFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+	
+			 QueryColumn PaymentOrderStatusQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaymentOrderStatusQuery.Id,QueryCode = PaymentOrderStatusQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = PaymentOrderStatusObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == PaymentOrderStatusObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PaymentOrderStatusObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == PaymentOrderStatusObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn PaymentOrderStatusQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaymentOrderStatusQuery.Id,QueryCode = PaymentOrderStatusQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = PaymentOrderStatusObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == PaymentOrderStatusObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PaymentOrderStatusObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == PaymentOrderStatusObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn PaymentOrderStatusQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaymentOrderStatusQuery.Id,QueryCode = PaymentOrderStatusQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = PaymentOrderStatusObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == PaymentOrderStatusObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PaymentOrderStatusObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == PaymentOrderStatusObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn PaymentOrderStatusQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaymentOrderStatusQuery.Id,QueryCode = PaymentOrderStatusQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = PaymentOrderStatusObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == PaymentOrderStatusObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PaymentOrderStatusObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == PaymentOrderStatusObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+	   
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
@@ -379,36 +419,54 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
+	    {  
+
+		   		   //--------------> Additional Features <--------------\\
+
+		   Feature PaymentOrderStatusFeature_PAYMENTORDERSTATUS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PAYMENTORDERSTATUS", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = PaymentOrderStatusObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.PaymentOrderStatus.Features.PaymentOrderStatus", NameTextCodeDefaultText = @"Payment Order Status" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+   
 	    
 		}
 
-	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext)
+	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
 	    {   
 			ObjectTable PaymentOrderStatusObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.PaymentOrderStatus" && d.Tenant == 0).FirstOrDefault(); 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
-                Code = "CREV",
-                EnglishName = "Created",
-                Tenant = 0,
-                AddedManually = false,
-				IsManualEntry = false,
-                LocalName = "Created",
+                Code =  "CREV",
+                ShortView =  true,
+                IsManualEntry =  false,
+                LocalName =  "Created",
+                EnglishName =  "Created",
+                EventTypeCategoryCode =  "OPE",
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
                 ObjectTableId = PaymentOrderStatusObjectTable.Id,
-                ShortView = true,
+				 
             }, EventTypeRepository, tenantEventTypes);
 
 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
-                Code = "UPEV",
-                EnglishName = "Updated",
-                Tenant = 0,
-                AddedManually = false,
-				IsManualEntry = false,
-                LocalName = "Updated",
+                Code =  "UPEV",
+                ShortView =  false,
+                IsManualEntry =  false,
+                LocalName =  "Updated",
+                EnglishName =  "Updated",
+                EventTypeCategoryCode =  "OPE",
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
                 ObjectTableId = PaymentOrderStatusObjectTable.Id,
-                ShortView = false,
+				 
             }, EventTypeRepository, tenantEventTypes);
 
 
@@ -416,7 +474,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }     
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {     
+	    
+}
+
+    
 
    }
     

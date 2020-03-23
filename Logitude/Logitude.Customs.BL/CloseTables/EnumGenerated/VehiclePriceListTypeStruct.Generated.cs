@@ -10,6 +10,7 @@ namespace Logitude.Customs.BL.CloseTables
 {
     public struct VehiclePriceListTypeValues
     {   
+       public const string price1 = "1";  
     }
 }
 

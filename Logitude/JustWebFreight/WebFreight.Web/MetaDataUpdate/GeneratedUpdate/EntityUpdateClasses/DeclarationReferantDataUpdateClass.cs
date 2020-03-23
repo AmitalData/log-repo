@@ -49,7 +49,7 @@ using Logitude.Social.Data.EntityPOCOs;
 using Logitude.Social.BL;
 using Logitude.Social.Data.Repsitories;
 using Logitude.Server.Tools.CloseTablesClasses;
-using Logitude.Customs.BL.CloseTables;
+using Logitude.Customs.BL.ClosedTable;
 using Logitude.CRM.BL.CLoseTable;
 using Logitude.BookingLib.BL.CLoseTable;
 using Logitude.WarehouseLib.Data.Repositories;
@@ -58,6 +58,20 @@ using Logitude.WarehouseLib.BL.CLoseTable;
 using Logitude.TimeManagement.Data.Repositories;
 using Logitude.TimeManagement.Data.EntityPOCOs;
 using Logitude.TimeManagement.BL.CLoseTable;
+using Logitude.BL.ShipmentsModel.CloseTables;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Logitude.BL.ShipmentsModel;
+using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.Repositories;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Logitude.BL.GlobalModel;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.BL;
+using Logitude.TariffModule.Data.Repositories;
+using Logitude.TariffModule.Data.EntityPOCOs;
+using Logitude.TariffModule.BL.CLoseTable;
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationReferantDataUpdateClass
@@ -111,11 +125,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ClientModuleName =  "Customs",
 			      				    ServerModuleName =  "Customs",
 			      				    NoTS =  false,
-			      				    NoDefaultFeatures =  false,
 			      				    HasMenuButtons =  false,
 			      				    AllowedForComputingPartners =  false,
-			      				    Code1 =  "fa77",
-			      				    Name1 =  " Query Group",
 			      				    CustomFieldsCount =  0,
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
@@ -133,9 +144,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "DeclarationId",
 					  						OldFieldName =  "DeclarationId",
-					  						IsNew =  false,
-					  						IsChecked =  true,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.DeclarationReferantData",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -187,10 +195,65 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "Tenant",
+					  						OldFieldName =  "Tenant",
+					  						ObjectTableName =  "Customs.DeclarationReferantData",
+					  						FieldsDataType =  "Integer",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  true,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "Tenant",
+					  						ListPropertyPath =  "Tenant",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.DeclarationReferantData",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "Tenant",
+					  						DefaultText =  "Tenant",
+					  						ListFieldLable =  "TenantListLable",
+					  						ListLableDefaultText =  "Tenant",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  true,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -201,9 +264,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "OrderNumber",
 					  						OldFieldName =  "OrderNumber",
-					  						IsNew =  true,
-					  						IsChecked =  true,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.DeclarationReferantData",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -256,10 +316,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -270,9 +326,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "VendorId",
 					  						OldFieldName =  "VendorId",
-					  						IsNew =  true,
-					  						IsChecked =  true,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.DeclarationReferantData",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -325,10 +378,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -339,9 +388,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "ArrivalDate",
 					  						OldFieldName =  "ArrivalDate",
-					  						IsNew =  true,
-					  						IsChecked =  true,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.DeclarationReferantData",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -395,10 +441,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -409,9 +451,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "EstimatedArrivalDate",
 					  						OldFieldName =  "EstimatedArrivalDate",
-					  						IsNew =  true,
-					  						IsChecked =  true,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.DeclarationReferantData",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -465,10 +504,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -479,9 +514,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "Weight",
 					  						OldFieldName =  "Weight",
-					  						IsNew =  true,
-					  						IsChecked =  true,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.DeclarationReferantData",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -536,10 +568,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -550,9 +578,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "ClassificationStatus",
 					  						OldFieldName =  "ClassificationStatus",
-					  						IsNew =  true,
-					  						IsChecked =  true,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.DeclarationReferantData",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -605,10 +630,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -619,9 +640,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "ControllerStatus",
 					  						OldFieldName =  "ControllerStatus",
-					  						IsNew =  true,
-					  						IsChecked =  true,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.DeclarationReferantData",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -674,10 +692,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -688,9 +702,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "CollectionOfMoneyStatus",
 					  						OldFieldName =  "CollectionOfMoneyStatus",
-					  						IsNew =  true,
-					  						IsChecked =  true,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.DeclarationReferantData",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -743,10 +754,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -757,9 +764,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "FollowUpDate",
 					  						OldFieldName =  "FollowUpDate",
-					  						IsNew =  true,
-					  						IsChecked =  true,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.DeclarationReferantData",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -813,10 +817,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -827,9 +827,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "IsExceptional",
 					  						OldFieldName =  "IsExceptional",
-					  						IsNew =  true,
-					  						IsChecked =  true,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.DeclarationReferantData",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -881,10 +878,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -895,9 +888,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "WithPaper",
 					  						OldFieldName =  "IsManualProcess",
-					  						IsNew =  true,
-					  						IsChecked =  true,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.DeclarationReferantData",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -949,10 +939,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -963,9 +949,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "IsClosedForFollowUp",
 					  						OldFieldName =  "IsClosedForFollowUp",
-					  						IsNew =  true,
-					  						IsChecked =  true,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.DeclarationReferantData",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1017,10 +1000,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1031,9 +1010,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "IsClassificationRemarks",
 					  						OldFieldName =  "IsClassificationRemarks",
-					  						IsNew =  true,
-					  						IsChecked =  true,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.DeclarationReferantData",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -1085,10 +1061,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1099,9 +1071,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "IsControllerRemarks",
 					  						OldFieldName =  "IsControllerRemarks",
-					  						IsNew =  true,
-					  						IsChecked =  true,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.DeclarationReferantData",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -1153,10 +1122,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1167,9 +1132,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "PreClassification",
 					  						OldFieldName =  "PreClassification",
-					  						IsNew =  true,
-					  						IsChecked =  true,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.DeclarationReferantData",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1221,10 +1183,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1247,39 +1205,52 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
 	    {  
 		   ObjectTable DeclarationReferantDataObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.DeclarationReferantData" && d.Tenant == 0).FirstOrDefault(); 
-		   Feature DeclarationReferantDataFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationReferantData.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature DeclarationReferantDataFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationReferantData.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature DeclarationReferantDataFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationReferantData.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature DeclarationReferantDataFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationReferantData.Features.PackageFeature", NameTextCodeDefaultText = "DeclarationReferantData Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+
+		   Feature DeclarationReferantDataFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationReferantData.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature DeclarationReferantDataFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationReferantData.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature DeclarationReferantDataFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationReferantData.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature DeclarationReferantDataFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationReferantData.Features.PackageFeature", NameTextCodeDefaultText = "DeclarationReferantData Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
 	    
 		}
 
-	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext)
+	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
 	    {   
 			ObjectTable DeclarationReferantDataObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.DeclarationReferantData" && d.Tenant == 0).FirstOrDefault(); 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
-                Code = "CREV",
-                EnglishName = "Created",
-                Tenant = 0,
-                AddedManually = false,
-				IsManualEntry = false,
-                LocalName = "Created",
+                Code =  "CREV",
+                ShortView =  true,
+                IsManualEntry =  false,
+                LocalName =  "Created",
+                EnglishName =  "Created",
+                EventTypeCategoryCode =  "OPE",
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
                 ObjectTableId = DeclarationReferantDataObjectTable.Id,
-                ShortView = true,
+				 
             }, EventTypeRepository, tenantEventTypes);
 
 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
-                Code = "UPEV",
-                EnglishName = "Updated",
-                Tenant = 0,
-                AddedManually = false,
-				IsManualEntry = false,
-                LocalName = "Updated",
+                Code =  "UPEV",
+                ShortView =  false,
+                IsManualEntry =  false,
+                LocalName =  "Updated",
+                EnglishName =  "Updated",
+                EventTypeCategoryCode =  "OPE",
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
                 ObjectTableId = DeclarationReferantDataObjectTable.Id,
-                ShortView = false,
+				 
             }, EventTypeRepository, tenantEventTypes);
 
 
@@ -1287,7 +1258,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }     
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {     
+	    
+}
+
+    
 
    }
     

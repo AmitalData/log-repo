@@ -20,17 +20,3061 @@ namespace Logitude.Customs.BL
    {
        public List<PackingTypeDetails> GetAll()
        {
-		    var all = new List<PackingTypeDetails>(); 
+		    var all = new List<PackingTypeDetails>();  
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "1A", 
+                SearchFields = "1A,Drum, steel", 
+                Inactive = false, 
+                LocalName = "Drum, steel", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "1B", 
+                SearchFields = "1B,Drum, aluminium", 
+                Inactive = false, 
+                LocalName = "Drum, aluminium", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "1D", 
+                SearchFields = "1D,Drum, plywood", 
+                Inactive = false, 
+                LocalName = "Drum, plywood", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "1F", 
+                SearchFields = "1F,Container, flexible", 
+                Inactive = false, 
+                LocalName = "Container, flexible", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "1G", 
+                SearchFields = "1G,Drum, fibre", 
+                Inactive = false, 
+                LocalName = "Drum, fibre", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "1W", 
+                SearchFields = "1W,Drum, wooden", 
+                Inactive = false, 
+                LocalName = "Drum, wooden", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "2C", 
+                SearchFields = "2C,Barrel, wooden", 
+                Inactive = false, 
+                LocalName = "Barrel, wooden", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "31", 
+                SearchFields = "31,TRAILER/SLAVE/MAFI", 
+                Inactive = false, 
+                LocalName = "TRAILER/SLAVE/MAFI", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "3A", 
+                SearchFields = "3A,Jerrican, steel", 
+                Inactive = false, 
+                LocalName = "Jerrican, steel", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "3H", 
+                SearchFields = "3H,Jerrican, plastic", 
+                Inactive = false, 
+                LocalName = "Jerrican, plastic", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "43", 
+                SearchFields = "43,Bag, super bulk", 
+                Inactive = false, 
+                LocalName = "Bag, super bulk", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "44", 
+                SearchFields = "44,Bag, polybag", 
+                Inactive = false, 
+                LocalName = "Bag, polybag", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "4A", 
+                SearchFields = "4A,Box, steel", 
+                Inactive = false, 
+                LocalName = "Box, steel", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "4B", 
+                SearchFields = "4B,Box, aluminium", 
+                Inactive = false, 
+                LocalName = "Box, aluminium", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "4C", 
+                SearchFields = "4C,Box, natural wood", 
+                Inactive = false, 
+                LocalName = "Box, natural wood", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "4D", 
+                SearchFields = "4D,Box, plywood", 
+                Inactive = false, 
+                LocalName = "Box, plywood", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "4F", 
+                SearchFields = "4F,Box, reconstituted wood", 
+                Inactive = false, 
+                LocalName = "Box, reconstituted wood", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "4G", 
+                SearchFields = "4G,Box, fibreboard", 
+                Inactive = false, 
+                LocalName = "Box, fibreboard", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "4H", 
+                SearchFields = "4H,Box, plastic", 
+                Inactive = false, 
+                LocalName = "Box, plastic", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "5H", 
+                SearchFields = "5H,Bag, woven plastic", 
+                Inactive = false, 
+                LocalName = "Bag, woven plastic", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "5L", 
+                SearchFields = "5L,Bag, textile", 
+                Inactive = false, 
+                LocalName = "Bag, textile", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "5M", 
+                SearchFields = "5M,Bag, paper", 
+                Inactive = false, 
+                LocalName = "Bag, paper", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "6H", 
+                SearchFields = "6H,Composite packaging, plastic receptacle", 
+                Inactive = false, 
+                LocalName = "Composite packaging, plastic receptacle", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "6P", 
+                SearchFields = "6P,Composite packaging, glass receptacle", 
+                Inactive = false, 
+                LocalName = "Composite packaging, glass receptacle", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "7A", 
+                SearchFields = "7A,Case, car", 
+                Inactive = false, 
+                LocalName = "Case, car", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "7B", 
+                SearchFields = "7B,Case, wooden", 
+                Inactive = false, 
+                LocalName = "Case, wooden", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "8A", 
+                SearchFields = "8A,Pallet, wooden", 
+                Inactive = false, 
+                LocalName = "Pallet, wooden", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "8B", 
+                SearchFields = "8B,Crate, wooden", 
+                Inactive = false, 
+                LocalName = "Crate, wooden", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "8C", 
+                SearchFields = "8C,Bundle, wooden", 
+                Inactive = false, 
+                LocalName = "Bundle, wooden", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "999", 
+                SearchFields = "999,Hasavot", 
+                Inactive = false, 
+                LocalName = "Hasavot", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "AA", 
+                SearchFields = "AA,Intermediate bulk container, rigid plastic", 
+                Inactive = false, 
+                LocalName = "Intermediate bulk container, rigid plastic", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "AB", 
+                SearchFields = "AB,Receptacle, fibre", 
+                Inactive = false, 
+                LocalName = "Receptacle, fibre", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "AC", 
+                SearchFields = "AC,Receptacle, paper", 
+                Inactive = false, 
+                LocalName = "Receptacle, paper", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "AD", 
+                SearchFields = "AD,Receptacle, wooden", 
+                Inactive = false, 
+                LocalName = "Receptacle, wooden", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "AE", 
+                SearchFields = "AE,Aerosol", 
+                Inactive = false, 
+                LocalName = "Aerosol", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "AF", 
+                SearchFields = "AF,Pallet, modular, collars 80cms * 60cms", 
+                Inactive = false, 
+                LocalName = "Pallet, modular, collars 80cms * 60cms", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "AG", 
+                SearchFields = "AG,Pallet, shrinkwrapped", 
+                Inactive = false, 
+                LocalName = "Pallet, shrinkwrapped", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "AH", 
+                SearchFields = "AH,Pallet, 100cms * 110cms", 
+                Inactive = false, 
+                LocalName = "Pallet, 100cms * 110cms", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "AI", 
+                SearchFields = "AI,Clamshell", 
+                Inactive = false, 
+                LocalName = "Clamshell", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "AJ", 
+                SearchFields = "AJ,Cone", 
+                Inactive = false, 
+                LocalName = "Cone", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "AL", 
+                SearchFields = "AL,Ball", 
+                Inactive = false, 
+                LocalName = "Ball", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "AM", 
+                SearchFields = "AM,Ampoule, non-protected", 
+                Inactive = false, 
+                LocalName = "Ampoule, non-protected", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "AP", 
+                SearchFields = "AP,Ampoule, protected", 
+                Inactive = false, 
+                LocalName = "Ampoule, protected", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "AT", 
+                SearchFields = "AT,Atomizer", 
+                Inactive = false, 
+                LocalName = "Atomizer", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "AV", 
+                SearchFields = "AV,Capsule", 
+                Inactive = false, 
+                LocalName = "Capsule", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "B4", 
+                SearchFields = "B4,Belt", 
+                Inactive = false, 
+                LocalName = "Belt", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "BA", 
+                SearchFields = "BA,Barrel", 
+                Inactive = false, 
+                LocalName = "Barrel", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "BB", 
+                SearchFields = "BB,Bobbin", 
+                Inactive = false, 
+                LocalName = "Bobbin", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "BC", 
+                SearchFields = "BC,Bottlecrate / bottlerack", 
+                Inactive = false, 
+                LocalName = "Bottlecrate / bottlerack", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "BD", 
+                SearchFields = "BD,Board", 
+                Inactive = false, 
+                LocalName = "Board", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "BE", 
+                SearchFields = "BE,Bundle", 
+                Inactive = false, 
+                LocalName = "Bundle", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "BF", 
+                SearchFields = "BF,Balloon, non-protected", 
+                Inactive = false, 
+                LocalName = "Balloon, non-protected", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "BG", 
+                SearchFields = "BG,Bag", 
+                Inactive = false, 
+                LocalName = "Bag", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "BH", 
+                SearchFields = "BH,Bunch", 
+                Inactive = false, 
+                LocalName = "Bunch", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "BI", 
+                SearchFields = "BI,Bin", 
+                Inactive = false, 
+                LocalName = "Bin", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "BJ", 
+                SearchFields = "BJ,Bucket", 
+                Inactive = false, 
+                LocalName = "Bucket", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "BK", 
+                SearchFields = "BK,Basket", 
+                Inactive = false, 
+                LocalName = "Basket", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "BL", 
+                SearchFields = "BL,Bale, compressed", 
+                Inactive = false, 
+                LocalName = "Bale, compressed", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "BM", 
+                SearchFields = "BM,Basin", 
+                Inactive = false, 
+                LocalName = "Basin", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "BN", 
+                SearchFields = "BN,Bale, non-compressed", 
+                Inactive = false, 
+                LocalName = "Bale, non-compressed", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "BO", 
+                SearchFields = "BO,Bottle, non-protected, cylindrical", 
+                Inactive = false, 
+                LocalName = "Bottle, non-protected, cylindrical", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "BP", 
+                SearchFields = "BP,Balloon, protected", 
+                Inactive = false, 
+                LocalName = "Balloon, protected", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "BQ", 
+                SearchFields = "BQ,Bottle, protected cylindrical", 
+                Inactive = false, 
+                LocalName = "Bottle, protected cylindrical", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "BR", 
+                SearchFields = "BR,Bar", 
+                Inactive = false, 
+                LocalName = "Bar", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "BS", 
+                SearchFields = "BS,Bottle, non-protected, bulbous", 
+                Inactive = false, 
+                LocalName = "Bottle, non-protected, bulbous", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "BT", 
+                SearchFields = "BT,Bolt", 
+                Inactive = false, 
+                LocalName = "Bolt", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "BU", 
+                SearchFields = "BU,Butt", 
+                Inactive = false, 
+                LocalName = "Butt", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "BV", 
+                SearchFields = "BV,Bottle, protected bulbous", 
+                Inactive = false, 
+                LocalName = "Bottle, protected bulbous", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "BW", 
+                SearchFields = "BW,Box, for liquids", 
+                Inactive = false, 
+                LocalName = "Box, for liquids", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "BX", 
+                SearchFields = "BX,Box", 
+                Inactive = false, 
+                LocalName = "Box", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "BY", 
+                SearchFields = "BY,Board, in bundle/bunch/truss", 
+                Inactive = false, 
+                LocalName = "Board, in bundle/bunch/truss", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "BZ", 
+                SearchFields = "BZ,Bars, in bundle/bunch/truss", 
+                Inactive = false, 
+                LocalName = "Bars, in bundle/bunch/truss", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "CA", 
+                SearchFields = "CA,Can, rectangular", 
+                Inactive = false, 
+                LocalName = "Can, rectangular", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "CB", 
+                SearchFields = "CB,Crate, beer", 
+                Inactive = false, 
+                LocalName = "Crate, beer", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "CC", 
+                SearchFields = "CC,Churn", 
+                Inactive = false, 
+                LocalName = "Churn", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "CD", 
+                SearchFields = "CD,Can, with handle and spout", 
+                Inactive = false, 
+                LocalName = "Can, with handle and spout", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "CE", 
+                SearchFields = "CE,Creel", 
+                Inactive = false, 
+                LocalName = "Creel", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "CF", 
+                SearchFields = "CF,Coffer", 
+                Inactive = false, 
+                LocalName = "Coffer", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "CG", 
+                SearchFields = "CG,Cage", 
+                Inactive = false, 
+                LocalName = "Cage", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "CH", 
+                SearchFields = "CH,Chest", 
+                Inactive = false, 
+                LocalName = "Chest", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "CI", 
+                SearchFields = "CI,Canister", 
+                Inactive = false, 
+                LocalName = "Canister", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "CJ", 
+                SearchFields = "CJ,Coffin", 
+                Inactive = false, 
+                LocalName = "Coffin", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "CK", 
+                SearchFields = "CK,Cask", 
+                Inactive = false, 
+                LocalName = "Cask", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "CL", 
+                SearchFields = "CL,Coil", 
+                Inactive = false, 
+                LocalName = "Coil", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "CM", 
+                SearchFields = "CM,Card", 
+                Inactive = false, 
+                LocalName = "Card", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "CN", 
+                SearchFields = "CN,Container, not otherwise specified as transport equipment", 
+                Inactive = false, 
+                LocalName = "Container, not otherwise specified as transport equipment", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "CO", 
+                SearchFields = "CO,Carboy, non-protected", 
+                Inactive = false, 
+                LocalName = "Carboy, non-protected", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "CP", 
+                SearchFields = "CP,Carboy, protected", 
+                Inactive = false, 
+                LocalName = "Carboy, protected", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "CQ", 
+                SearchFields = "CQ,Cartridge", 
+                Inactive = false, 
+                LocalName = "Cartridge", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "CR", 
+                SearchFields = "CR,Crate", 
+                Inactive = false, 
+                LocalName = "Crate", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "CS", 
+                SearchFields = "CS,Case", 
+                Inactive = false, 
+                LocalName = "Case", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "CT", 
+                SearchFields = "CT,Carton", 
+                Inactive = false, 
+                LocalName = "Carton", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "CU", 
+                SearchFields = "CU,Cup", 
+                Inactive = false, 
+                LocalName = "Cup", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "CV", 
+                SearchFields = "CV,Cover", 
+                Inactive = false, 
+                LocalName = "Cover", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "CW", 
+                SearchFields = "CW,Cage, roll", 
+                Inactive = false, 
+                LocalName = "Cage, roll", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "CX", 
+                SearchFields = "CX,Can, cylindrical", 
+                Inactive = false, 
+                LocalName = "Can, cylindrical", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "CY", 
+                SearchFields = "CY,Cylinder", 
+                Inactive = false, 
+                LocalName = "Cylinder", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "CZ", 
+                SearchFields = "CZ,Canvas", 
+                Inactive = false, 
+                LocalName = "Canvas", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "D5", 
+                SearchFields = "D5,CONTAINER", 
+                Inactive = false, 
+                LocalName = "CONTAINER", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "DA", 
+                SearchFields = "DA,Crate, multiple layer, plastic", 
+                Inactive = false, 
+                LocalName = "Crate, multiple layer, plastic", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "DB", 
+                SearchFields = "DB,Crate, multiple layer, wooden", 
+                Inactive = false, 
+                LocalName = "Crate, multiple layer, wooden", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "DC", 
+                SearchFields = "DC,Crate, multiple layer, cardboard", 
+                Inactive = false, 
+                LocalName = "Crate, multiple layer, cardboard", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "DG", 
+                SearchFields = "DG,Cage, Commonwealth Handling Equipment Pool  (CHEP)", 
+                Inactive = false, 
+                LocalName = "Cage, Commonwealth Handling Equipment Pool  (CHEP)", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "DH", 
+                SearchFields = "DH,Box, Commonwealth Handling Equipment Pool (CHEP), Eurobox", 
+                Inactive = false, 
+                LocalName = "Box, Commonwealth Handling Equipment Pool (CHEP), Eurobox", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "DI", 
+                SearchFields = "DI,Drum, iron", 
+                Inactive = false, 
+                LocalName = "Drum, iron", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "DJ", 
+                SearchFields = "DJ,Demijohn, non-protected", 
+                Inactive = false, 
+                LocalName = "Demijohn, non-protected", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "DK", 
+                SearchFields = "DK,Crate, bulk, cardboard", 
+                Inactive = false, 
+                LocalName = "Crate, bulk, cardboard", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "DL", 
+                SearchFields = "DL,Crate, bulk, plastic", 
+                Inactive = false, 
+                LocalName = "Crate, bulk, plastic", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "DM", 
+                SearchFields = "DM,Crate, bulk, wooden", 
+                Inactive = false, 
+                LocalName = "Crate, bulk, wooden", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "DN", 
+                SearchFields = "DN,Dispenser", 
+                Inactive = false, 
+                LocalName = "Dispenser", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "DP", 
+                SearchFields = "DP,Demijohn, protected", 
+                Inactive = false, 
+                LocalName = "Demijohn, protected", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "DR", 
+                SearchFields = "DR,Drum", 
+                Inactive = false, 
+                LocalName = "Drum", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "DS", 
+                SearchFields = "DS,Tray, one layer no cover, plastic", 
+                Inactive = false, 
+                LocalName = "Tray, one layer no cover, plastic", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "DT", 
+                SearchFields = "DT,Tray, one layer no cover, wooden", 
+                Inactive = false, 
+                LocalName = "Tray, one layer no cover, wooden", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "DU", 
+                SearchFields = "DU,Tray, one layer no cover, polystyrene", 
+                Inactive = false, 
+                LocalName = "Tray, one layer no cover, polystyrene", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "DV", 
+                SearchFields = "DV,Tray, one layer no cover, cardboard", 
+                Inactive = false, 
+                LocalName = "Tray, one layer no cover, cardboard", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "DW", 
+                SearchFields = "DW,Tray, two layers no cover, plastic tray", 
+                Inactive = false, 
+                LocalName = "Tray, two layers no cover, plastic tray", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "DX", 
+                SearchFields = "DX,Tray, two layers no cover, wooden", 
+                Inactive = false, 
+                LocalName = "Tray, two layers no cover, wooden", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "DY", 
+                SearchFields = "DY,Tray, two layers no cover, cardboard", 
+                Inactive = false, 
+                LocalName = "Tray, two layers no cover, cardboard", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "EC", 
+                SearchFields = "EC,Bag, plastic", 
+                Inactive = false, 
+                LocalName = "Bag, plastic", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "ED", 
+                SearchFields = "ED,Case, with pallet base", 
+                Inactive = false, 
+                LocalName = "Case, with pallet base", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "EE", 
+                SearchFields = "EE,Case, with pallet base, wooden", 
+                Inactive = false, 
+                LocalName = "Case, with pallet base, wooden", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "EF", 
+                SearchFields = "EF,Case, with pallet base, cardboard", 
+                Inactive = false, 
+                LocalName = "Case, with pallet base, cardboard", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "EG", 
+                SearchFields = "EG,Case, with pallet base, plastic", 
+                Inactive = false, 
+                LocalName = "Case, with pallet base, plastic", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "EH", 
+                SearchFields = "EH,Case, with pallet base, metal", 
+                Inactive = false, 
+                LocalName = "Case, with pallet base, metal", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "EI", 
+                SearchFields = "EI,Case, isothermic", 
+                Inactive = false, 
+                LocalName = "Case, isothermic", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "EN", 
+                SearchFields = "EN,Envelope", 
+                Inactive = false, 
+                LocalName = "Envelope", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "FB", 
+                SearchFields = "FB,Flexibag", 
+                Inactive = false, 
+                LocalName = "Flexibag", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "FC", 
+                SearchFields = "FC,Crate, fruit", 
+                Inactive = false, 
+                LocalName = "Crate, fruit", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "FD", 
+                SearchFields = "FD,Crate, framed", 
+                Inactive = false, 
+                LocalName = "Crate, framed", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "FE", 
+                SearchFields = "FE,Flexitank", 
+                Inactive = false, 
+                LocalName = "Flexitank", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "FI", 
+                SearchFields = "FI,Firkin", 
+                Inactive = false, 
+                LocalName = "Firkin", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "FL", 
+                SearchFields = "FL,Flask", 
+                Inactive = false, 
+                LocalName = "Flask", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "FO", 
+                SearchFields = "FO,Footlocker", 
+                Inactive = false, 
+                LocalName = "Footlocker", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "FP", 
+                SearchFields = "FP,Filmpack", 
+                Inactive = false, 
+                LocalName = "Filmpack", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "FR", 
+                SearchFields = "FR,Frame", 
+                Inactive = false, 
+                LocalName = "Frame", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "FT", 
+                SearchFields = "FT,Foodtainer", 
+                Inactive = false, 
+                LocalName = "Foodtainer", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "FW", 
+                SearchFields = "FW,Cart, flatbed", 
+                Inactive = false, 
+                LocalName = "Cart, flatbed", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "FX", 
+                SearchFields = "FX,Bag, flexible container", 
+                Inactive = false, 
+                LocalName = "Bag, flexible container", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "GB", 
+                SearchFields = "GB,Bottle, gas", 
+                Inactive = false, 
+                LocalName = "Bottle, gas", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "GI", 
+                SearchFields = "GI,Girder", 
+                Inactive = false, 
+                LocalName = "Girder", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "GL", 
+                SearchFields = "GL,Container, gallon", 
+                Inactive = false, 
+                LocalName = "Container, gallon", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "GR", 
+                SearchFields = "GR,Receptacle, glass", 
+                Inactive = false, 
+                LocalName = "Receptacle, glass", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "GU", 
+                SearchFields = "GU,Tray, containing horizontally stacked flat items", 
+                Inactive = false, 
+                LocalName = "Tray, containing horizontally stacked flat items", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "GY", 
+                SearchFields = "GY,Bag, gunny", 
+                Inactive = false, 
+                LocalName = "Bag, gunny", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "GZ", 
+                SearchFields = "GZ,Girders, in bundle/bunch/truss", 
+                Inactive = false, 
+                LocalName = "Girders, in bundle/bunch/truss", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "HA", 
+                SearchFields = "HA,Basket, with handle, plastic", 
+                Inactive = false, 
+                LocalName = "Basket, with handle, plastic", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "HB", 
+                SearchFields = "HB,Basket, with handle, wooden", 
+                Inactive = false, 
+                LocalName = "Basket, with handle, wooden", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "HC", 
+                SearchFields = "HC,Basket, with handle, cardboard", 
+                Inactive = false, 
+                LocalName = "Basket, with handle, cardboard", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "HG", 
+                SearchFields = "HG,Hogshead", 
+                Inactive = false, 
+                LocalName = "Hogshead", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "HR", 
+                SearchFields = "HR,Hamper", 
+                Inactive = false, 
+                LocalName = "Hamper", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "IA", 
+                SearchFields = "IA,Package, display, wooden", 
+                Inactive = false, 
+                LocalName = "Package, display, wooden", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "IB", 
+                SearchFields = "IB,Package, display, cardboard", 
+                Inactive = false, 
+                LocalName = "Package, display, cardboard", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "IC", 
+                SearchFields = "IC,Package, display, plastic", 
+                Inactive = false, 
+                LocalName = "Package, display, plastic", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "ID", 
+                SearchFields = "ID,Package, display, metal", 
+                Inactive = false, 
+                LocalName = "Package, display, metal", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "IE", 
+                SearchFields = "IE,Package, show", 
+                Inactive = false, 
+                LocalName = "Package, show", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "IF", 
+                SearchFields = "IF,Package, flow", 
+                Inactive = false, 
+                LocalName = "Package, flow", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "IG", 
+                SearchFields = "IG,Package, paper wrapped", 
+                Inactive = false, 
+                LocalName = "Package, paper wrapped", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "IH", 
+                SearchFields = "IH,Drum, plastic", 
+                Inactive = false, 
+                LocalName = "Drum, plastic", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "IK", 
+                SearchFields = "IK,Package, cardboard, with bottle grip-holes", 
+                Inactive = false, 
+                LocalName = "Package, cardboard, with bottle grip-holes", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "IL", 
+                SearchFields = "IL,Tray, rigid, lidded stackable (CEN TS 14482:2002)", 
+                Inactive = false, 
+                LocalName = "Tray, rigid, lidded stackable (CEN TS 14482:2002)", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "IN", 
+                SearchFields = "IN,Ingot", 
+                Inactive = false, 
+                LocalName = "Ingot", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "IZ", 
+                SearchFields = "IZ,Ingots, in bundle/bunch/truss", 
+                Inactive = false, 
+                LocalName = "Ingots, in bundle/bunch/truss", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "JB", 
+                SearchFields = "JB,Bag, jumbo", 
+                Inactive = false, 
+                LocalName = "Bag, jumbo", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "JC", 
+                SearchFields = "JC,Jerrican, rectangular", 
+                Inactive = false, 
+                LocalName = "Jerrican, rectangular", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "JG", 
+                SearchFields = "JG,Jug", 
+                Inactive = false, 
+                LocalName = "Jug", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "JR", 
+                SearchFields = "JR,Jar", 
+                Inactive = false, 
+                LocalName = "Jar", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "JT", 
+                SearchFields = "JT,Jutebag", 
+                Inactive = false, 
+                LocalName = "Jutebag", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "JY", 
+                SearchFields = "JY,Jerrican, cylindrical", 
+                Inactive = false, 
+                LocalName = "Jerrican, cylindrical", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "KG", 
+                SearchFields = "KG,Keg", 
+                Inactive = false, 
+                LocalName = "Keg", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "KI", 
+                SearchFields = "KI,Kit", 
+                Inactive = false, 
+                LocalName = "Kit", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "LE", 
+                SearchFields = "LE,Luggage", 
+                Inactive = false, 
+                LocalName = "Luggage", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "LG", 
+                SearchFields = "LG,Log", 
+                Inactive = false, 
+                LocalName = "Log", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "LT", 
+                SearchFields = "LT,Lot", 
+                Inactive = false, 
+                LocalName = "Lot", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "LU", 
+                SearchFields = "LU,Lug", 
+                Inactive = false, 
+                LocalName = "Lug", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "LV", 
+                SearchFields = "LV,Liftvan", 
+                Inactive = false, 
+                LocalName = "Liftvan", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "LZ", 
+                SearchFields = "LZ,Logs, in bundle/bunch/truss", 
+                Inactive = false, 
+                LocalName = "Logs, in bundle/bunch/truss", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "MA", 
+                SearchFields = "MA,Crate, metal", 
+                Inactive = false, 
+                LocalName = "Crate, metal", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "MB", 
+                SearchFields = "MB,Bag, multiply", 
+                Inactive = false, 
+                LocalName = "Bag, multiply", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "MC", 
+                SearchFields = "MC,Crate, milk", 
+                Inactive = false, 
+                LocalName = "Crate, milk", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "ME", 
+                SearchFields = "ME,Container, metal", 
+                Inactive = false, 
+                LocalName = "Container, metal", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "MR", 
+                SearchFields = "MR,Receptacle, metal", 
+                Inactive = false, 
+                LocalName = "Receptacle, metal", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "MS", 
+                SearchFields = "MS,Sack, multi-wall", 
+                Inactive = false, 
+                LocalName = "Sack, multi-wall", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "MT", 
+                SearchFields = "MT,Mat", 
+                Inactive = false, 
+                LocalName = "Mat", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "MW", 
+                SearchFields = "MW,Receptacle, plastic wrapped", 
+                Inactive = false, 
+                LocalName = "Receptacle, plastic wrapped", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "MX", 
+                SearchFields = "MX,Matchbox", 
+                Inactive = false, 
+                LocalName = "Matchbox", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "NA", 
+                SearchFields = "NA,Not available", 
+                Inactive = false, 
+                LocalName = "Not available", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "NE", 
+                SearchFields = "NE,Unpacked or unpackaged", 
+                Inactive = false, 
+                LocalName = "Unpacked or unpackaged", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "NF", 
+                SearchFields = "NF,Unpacked or unpackaged, single unit", 
+                Inactive = false, 
+                LocalName = "Unpacked or unpackaged, single unit", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "NG", 
+                SearchFields = "NG,Unpacked or unpackaged, multiple units", 
+                Inactive = false, 
+                LocalName = "Unpacked or unpackaged, multiple units", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "NS", 
+                SearchFields = "NS,Nest", 
+                Inactive = false, 
+                LocalName = "Nest", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "NT", 
+                SearchFields = "NT,Net", 
+                Inactive = false, 
+                LocalName = "Net", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "NU", 
+                SearchFields = "NU,Net, tube, plastic", 
+                Inactive = false, 
+                LocalName = "Net, tube, plastic", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "NV", 
+                SearchFields = "NV,Net, tube, textile", 
+                Inactive = false, 
+                LocalName = "Net, tube, textile", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "OA", 
+                SearchFields = "OA,Pallet, CHEP 40 cm x 60 cm", 
+                Inactive = false, 
+                LocalName = "Pallet, CHEP 40 cm x 60 cm", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "OB", 
+                SearchFields = "OB,Pallet, CHEP 80 cm x 120 cm", 
+                Inactive = false, 
+                LocalName = "Pallet, CHEP 80 cm x 120 cm", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "OC", 
+                SearchFields = "OC,Pallet, CHEP 100 cm x 120 cm", 
+                Inactive = false, 
+                LocalName = "Pallet, CHEP 100 cm x 120 cm", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "OD", 
+                SearchFields = "OD,Pallet, AS 4068-1993", 
+                Inactive = false, 
+                LocalName = "Pallet, AS 4068-1993", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "OE", 
+                SearchFields = "OE,Pallet, ISO T11", 
+                Inactive = false, 
+                LocalName = "Pallet, ISO T11", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "OF", 
+                SearchFields = "OF,Platform, unspecified weight or dimension", 
+                Inactive = false, 
+                LocalName = "Platform, unspecified weight or dimension", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "OK", 
+                SearchFields = "OK,Block", 
+                Inactive = false, 
+                LocalName = "Block", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "OT", 
+                SearchFields = "OT,Octabin", 
+                Inactive = false, 
+                LocalName = "Octabin", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "OU", 
+                SearchFields = "OU,Container, outer", 
+                Inactive = false, 
+                LocalName = "Container, outer", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "P2", 
+                SearchFields = "P2,Pan", 
+                Inactive = false, 
+                LocalName = "Pan", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "PA", 
+                SearchFields = "PA,Packet", 
+                Inactive = false, 
+                LocalName = "Packet", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "PB", 
+                SearchFields = "PB,Pallet, box Combined open-ended box and pallet", 
+                Inactive = false, 
+                LocalName = "Pallet, box Combined open-ended box and pallet", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "PC", 
+                SearchFields = "PC,Parcel", 
+                Inactive = false, 
+                LocalName = "Parcel", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "PD", 
+                SearchFields = "PD,Pallet, modular, collars 80cms * 100cms", 
+                Inactive = false, 
+                LocalName = "Pallet, modular, collars 80cms * 100cms", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "PE", 
+                SearchFields = "PE,Pallet, modular, collars 80cms * 120cms", 
+                Inactive = false, 
+                LocalName = "Pallet, modular, collars 80cms * 120cms", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "PF", 
+                SearchFields = "PF,Pen", 
+                Inactive = false, 
+                LocalName = "Pen", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "PG", 
+                SearchFields = "PG,Plate", 
+                Inactive = false, 
+                LocalName = "Plate", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "PH", 
+                SearchFields = "PH,Pitcher", 
+                Inactive = false, 
+                LocalName = "Pitcher", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "PI", 
+                SearchFields = "PI,Pipe", 
+                Inactive = false, 
+                LocalName = "Pipe", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "PJ", 
+                SearchFields = "PJ,Punnet", 
+                Inactive = false, 
+                LocalName = "Punnet", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "PK", 
+                SearchFields = "PK,Package", 
+                Inactive = false, 
+                LocalName = "Package", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "PL", 
+                SearchFields = "PL,Pail", 
+                Inactive = false, 
+                LocalName = "Pail", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "PN", 
+                SearchFields = "PN,Plank", 
+                Inactive = false, 
+                LocalName = "Plank", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "PO", 
+                SearchFields = "PO,Pouch", 
+                Inactive = false, 
+                LocalName = "Pouch", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "PP", 
+                SearchFields = "PP,Piece", 
+                Inactive = false, 
+                LocalName = "Piece", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "PR", 
+                SearchFields = "PR,Receptacle, plastic", 
+                Inactive = false, 
+                LocalName = "Receptacle, plastic", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "PT", 
+                SearchFields = "PT,Pot", 
+                Inactive = false, 
+                LocalName = "Pot", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "PU", 
+                SearchFields = "PU,Tray", 
+                Inactive = false, 
+                LocalName = "Tray", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "PV", 
+                SearchFields = "PV,Pipes, in bundle/bunch/truss", 
+                Inactive = false, 
+                LocalName = "Pipes, in bundle/bunch/truss", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "PX", 
+                SearchFields = "PX,Pallet", 
+                Inactive = false, 
+                LocalName = "Pallet", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "PY", 
+                SearchFields = "PY,Plates, in bundle/bunch/truss", 
+                Inactive = false, 
+                LocalName = "Plates, in bundle/bunch/truss", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "PZ", 
+                SearchFields = "PZ,Planks, in bundle/bunch/truss", 
+                Inactive = false, 
+                LocalName = "Planks, in bundle/bunch/truss", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "QA", 
+                SearchFields = "QA,Drum, steel, non-removable head", 
+                Inactive = false, 
+                LocalName = "Drum, steel, non-removable head", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "QB", 
+                SearchFields = "QB,Drum, steel, removable head", 
+                Inactive = false, 
+                LocalName = "Drum, steel, removable head", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "QC", 
+                SearchFields = "QC,Drum, aluminium, non-removable head", 
+                Inactive = false, 
+                LocalName = "Drum, aluminium, non-removable head", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "QD", 
+                SearchFields = "QD,Drum, aluminium, removable head", 
+                Inactive = false, 
+                LocalName = "Drum, aluminium, removable head", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "QF", 
+                SearchFields = "QF,Drum, plastic, non-removable head", 
+                Inactive = false, 
+                LocalName = "Drum, plastic, non-removable head", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "QG", 
+                SearchFields = "QG,Drum, plastic, removable head", 
+                Inactive = false, 
+                LocalName = "Drum, plastic, removable head", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "QH", 
+                SearchFields = "QH,Barrel, wooden, bung type", 
+                Inactive = false, 
+                LocalName = "Barrel, wooden, bung type", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "QJ", 
+                SearchFields = "QJ,Barrel, wooden, removable head", 
+                Inactive = false, 
+                LocalName = "Barrel, wooden, removable head", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "QK", 
+                SearchFields = "QK,Jerrican, steel, non-removable head", 
+                Inactive = false, 
+                LocalName = "Jerrican, steel, non-removable head", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "QL", 
+                SearchFields = "QL,Jerrican, steel, removable head", 
+                Inactive = false, 
+                LocalName = "Jerrican, steel, removable head", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "QM", 
+                SearchFields = "QM,Jerrican, plastic, non-removable head", 
+                Inactive = false, 
+                LocalName = "Jerrican, plastic, non-removable head", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "QN", 
+                SearchFields = "QN,Jerrican, plastic, removable head", 
+                Inactive = false, 
+                LocalName = "Jerrican, plastic, removable head", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "QP", 
+                SearchFields = "QP,Box, wooden, natural wood, ordinary", 
+                Inactive = false, 
+                LocalName = "Box, wooden, natural wood, ordinary", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "QQ", 
+                SearchFields = "QQ,Box, wooden, natural wood, with sift proof walls", 
+                Inactive = false, 
+                LocalName = "Box, wooden, natural wood, with sift proof walls", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "QR", 
+                SearchFields = "QR,Box, plastic, expanded", 
+                Inactive = false, 
+                LocalName = "Box, plastic, expanded", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "QS", 
+                SearchFields = "QS,Box, plastic, solid", 
+                Inactive = false, 
+                LocalName = "Box, plastic, solid", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "RD", 
+                SearchFields = "RD,Rod", 
+                Inactive = false, 
+                LocalName = "Rod", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "RG", 
+                SearchFields = "RG,Ring", 
+                Inactive = false, 
+                LocalName = "Ring", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "RJ", 
+                SearchFields = "RJ,Rack, clothing hanger", 
+                Inactive = false, 
+                LocalName = "Rack, clothing hanger", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "RK", 
+                SearchFields = "RK,Rack", 
+                Inactive = false, 
+                LocalName = "Rack", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "RL", 
+                SearchFields = "RL,Reel", 
+                Inactive = false, 
+                LocalName = "Reel", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "RO", 
+                SearchFields = "RO,Roll", 
+                Inactive = false, 
+                LocalName = "Roll", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "RT", 
+                SearchFields = "RT,Rednet", 
+                Inactive = false, 
+                LocalName = "Rednet", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "RZ", 
+                SearchFields = "RZ,Rods, in bundle/bunch/truss", 
+                Inactive = false, 
+                LocalName = "Rods, in bundle/bunch/truss", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "SA", 
+                SearchFields = "SA,Sack", 
+                Inactive = false, 
+                LocalName = "Sack", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "SB", 
+                SearchFields = "SB,Slab", 
+                Inactive = false, 
+                LocalName = "Slab", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "SC", 
+                SearchFields = "SC,Crate, shallow", 
+                Inactive = false, 
+                LocalName = "Crate, shallow", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "SD", 
+                SearchFields = "SD,Spindle", 
+                Inactive = false, 
+                LocalName = "Spindle", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "SE", 
+                SearchFields = "SE,Sea-chest", 
+                Inactive = false, 
+                LocalName = "Sea-chest", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "SH", 
+                SearchFields = "SH,Sachet", 
+                Inactive = false, 
+                LocalName = "Sachet", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "SI", 
+                SearchFields = "SI,Skid", 
+                Inactive = false, 
+                LocalName = "Skid", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "SK", 
+                SearchFields = "SK,Case, skeleton", 
+                Inactive = false, 
+                LocalName = "Case, skeleton", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "SL", 
+                SearchFields = "SL,Slipsheet", 
+                Inactive = false, 
+                LocalName = "Slipsheet", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "SM", 
+                SearchFields = "SM,Sheetmetal", 
+                Inactive = false, 
+                LocalName = "Sheetmetal", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "SO", 
+                SearchFields = "SO,Spool", 
+                Inactive = false, 
+                LocalName = "Spool", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "SP", 
+                SearchFields = "SP,Sheet, plastic wrapping", 
+                Inactive = false, 
+                LocalName = "Sheet, plastic wrapping", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "SS", 
+                SearchFields = "SS,Case, steel", 
+                Inactive = false, 
+                LocalName = "Case, steel", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "ST", 
+                SearchFields = "ST,Sheet", 
+                Inactive = false, 
+                LocalName = "Sheet", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "SU", 
+                SearchFields = "SU,Suitcase", 
+                Inactive = false, 
+                LocalName = "Suitcase", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "SV", 
+                SearchFields = "SV,Envelope, steel", 
+                Inactive = false, 
+                LocalName = "Envelope, steel", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "SW", 
+                SearchFields = "SW,Shrinkwrapped", 
+                Inactive = false, 
+                LocalName = "Shrinkwrapped", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "SX", 
+                SearchFields = "SX,Set", 
+                Inactive = false, 
+                LocalName = "Set", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "SY", 
+                SearchFields = "SY,Sleeve", 
+                Inactive = false, 
+                LocalName = "Sleeve", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "SZ", 
+                SearchFields = "SZ,Sheets, in bundle/bunch/truss", 
+                Inactive = false, 
+                LocalName = "Sheets, in bundle/bunch/truss", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "T1", 
+                SearchFields = "T1,Tablet", 
+                Inactive = false, 
+                LocalName = "Tablet", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "TB", 
+                SearchFields = "TB,Tub", 
+                Inactive = false, 
+                LocalName = "Tub", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "TC", 
+                SearchFields = "TC,Tea-chest", 
+                Inactive = false, 
+                LocalName = "Tea-chest", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "TD", 
+                SearchFields = "TD,Tube, collapsible", 
+                Inactive = false, 
+                LocalName = "Tube, collapsible", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "TE", 
+                SearchFields = "TE,Tyre", 
+                Inactive = false, 
+                LocalName = "Tyre", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "TG", 
+                SearchFields = "TG,Tank container, generic", 
+                Inactive = false, 
+                LocalName = "Tank container, generic", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "TI", 
+                SearchFields = "TI,Tierce", 
+                Inactive = false, 
+                LocalName = "Tierce", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "TK", 
+                SearchFields = "TK,Tank, rectangular", 
+                Inactive = false, 
+                LocalName = "Tank, rectangular", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "TL", 
+                SearchFields = "TL,Tub, with lid", 
+                Inactive = false, 
+                LocalName = "Tub, with lid", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "TN", 
+                SearchFields = "TN,Tin", 
+                Inactive = false, 
+                LocalName = "Tin", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "TO", 
+                SearchFields = "TO,Tun", 
+                Inactive = false, 
+                LocalName = "Tun", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "TR", 
+                SearchFields = "TR,Trunk", 
+                Inactive = false, 
+                LocalName = "Trunk", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "TS", 
+                SearchFields = "TS,Truss", 
+                Inactive = false, 
+                LocalName = "Truss", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "TT", 
+                SearchFields = "TT,Bag, tote", 
+                Inactive = false, 
+                LocalName = "Bag, tote", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "TU", 
+                SearchFields = "TU,Tube", 
+                Inactive = false, 
+                LocalName = "Tube", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "TV", 
+                SearchFields = "TV,Tube, with nozzle", 
+                Inactive = false, 
+                LocalName = "Tube, with nozzle", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "TW", 
+                SearchFields = "TW,Pallet, triwall", 
+                Inactive = false, 
+                LocalName = "Pallet, triwall", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "TY", 
+                SearchFields = "TY,Tank, cylindrical", 
+                Inactive = false, 
+                LocalName = "Tank, cylindrical", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "TZ", 
+                SearchFields = "TZ,Tubes, in bundle/bunch/truss", 
+                Inactive = false, 
+                LocalName = "Tubes, in bundle/bunch/truss", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "UC", 
+                SearchFields = "UC,Uncaged", 
+                Inactive = false, 
+                LocalName = "Uncaged", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "UN", 
+                SearchFields = "UN,Unit", 
+                Inactive = false, 
+                LocalName = "Unit", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "VA", 
+                SearchFields = "VA,Vat", 
+                Inactive = false, 
+                LocalName = "Vat", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "VG", 
+                SearchFields = "VG,Bulk, gas (at 1031 mbar and 15°C)", 
+                Inactive = false, 
+                LocalName = "Bulk, gas (at 1031 mbar and 15°C)", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "VI", 
+                SearchFields = "VI,Vial", 
+                Inactive = false, 
+                LocalName = "Vial", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "VK", 
+                SearchFields = "VK,Vanpack", 
+                Inactive = false, 
+                LocalName = "Vanpack", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "VL", 
+                SearchFields = "VL,Bulk, liquid", 
+                Inactive = false, 
+                LocalName = "Bulk, liquid", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "VN", 
+                SearchFields = "VN,Vehicle", 
+                Inactive = false, 
+                LocalName = "Vehicle", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "VO", 
+                SearchFields = "VO,Bulk, solid, large particles (“nodules”)", 
+                Inactive = false, 
+                LocalName = "Bulk, solid, large particles (“nodules”)", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "VP", 
+                SearchFields = "VP,Vacuum-packed", 
+                Inactive = false, 
+                LocalName = "Vacuum-packed", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "VQ", 
+                SearchFields = "VQ,Bulk, liquefied gas (at abnormal temperature/pressure)", 
+                Inactive = false, 
+                LocalName = "Bulk, liquefied gas (at abnormal temperature/pressure)", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "VR", 
+                SearchFields = "VR,Bulk, solid, granular particles (“grains”)", 
+                Inactive = false, 
+                LocalName = "Bulk, solid, granular particles (“grains”)", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "VS", 
+                SearchFields = "VS,Bulk, scrap metal", 
+                Inactive = false, 
+                LocalName = "Bulk, scrap metal", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "VY", 
+                SearchFields = "VY,Bulk, solid, fine particles (“powders”)", 
+                Inactive = false, 
+                LocalName = "Bulk, solid, fine particles (“powders”)", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "WA", 
+                SearchFields = "WA,Intermediate bulk container", 
+                Inactive = false, 
+                LocalName = "Intermediate bulk container", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "WB", 
+                SearchFields = "WB,Wickerbottle", 
+                Inactive = false, 
+                LocalName = "Wickerbottle", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "WC", 
+                SearchFields = "WC,Intermediate bulk container, steel", 
+                Inactive = false, 
+                LocalName = "Intermediate bulk container, steel", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "WD", 
+                SearchFields = "WD,Intermediate bulk container, aluminium", 
+                Inactive = false, 
+                LocalName = "Intermediate bulk container, aluminium", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "WF", 
+                SearchFields = "WF,Intermediate bulk container, metal", 
+                Inactive = false, 
+                LocalName = "Intermediate bulk container, metal", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "WG", 
+                SearchFields = "WG,Intermediate bulk container, steel, pressurised > 10 kpa", 
+                Inactive = false, 
+                LocalName = "Intermediate bulk container, steel, pressurised > 10 kpa", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "WH", 
+                SearchFields = "WH,Intermediate bulk container, aluminium, pressurised > 10 kpa", 
+                Inactive = false, 
+                LocalName = "Intermediate bulk container, aluminium, pressurised > 10 kpa", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "WJ", 
+                SearchFields = "WJ,Intermediate bulk container, metal, pressure 10 kpa", 
+                Inactive = false, 
+                LocalName = "Intermediate bulk container, metal, pressure 10 kpa", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "WK", 
+                SearchFields = "WK,Intermediate bulk container, steel, liquid", 
+                Inactive = false, 
+                LocalName = "Intermediate bulk container, steel, liquid", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "WL", 
+                SearchFields = "WL,Intermediate bulk container, aluminium, liquid", 
+                Inactive = false, 
+                LocalName = "Intermediate bulk container, aluminium, liquid", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "WM", 
+                SearchFields = "WM,Intermediate bulk container, metal, liquid", 
+                Inactive = false, 
+                LocalName = "Intermediate bulk container, metal, liquid", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "WN", 
+                SearchFields = "WN,Intermediate bulk container, woven plastic, without coat/liner", 
+                Inactive = false, 
+                LocalName = "Intermediate bulk container, woven plastic, without coat/liner", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "WP", 
+                SearchFields = "WP,Intermediate bulk container, woven plastic, coated", 
+                Inactive = false, 
+                LocalName = "Intermediate bulk container, woven plastic, coated", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "WQ", 
+                SearchFields = "WQ,Intermediate bulk container, woven plastic, with liner", 
+                Inactive = false, 
+                LocalName = "Intermediate bulk container, woven plastic, with liner", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "WR", 
+                SearchFields = "WR,Intermediate bulk container, woven plastic, coated and liner", 
+                Inactive = false, 
+                LocalName = "Intermediate bulk container, woven plastic, coated and liner", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "WS", 
+                SearchFields = "WS,Intermediate bulk container, plastic film", 
+                Inactive = false, 
+                LocalName = "Intermediate bulk container, plastic film", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "WT", 
+                SearchFields = "WT,Intermediate bulk container, textile with out coat/liner", 
+                Inactive = false, 
+                LocalName = "Intermediate bulk container, textile with out coat/liner", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "WU", 
+                SearchFields = "WU,Intermediate bulk container, natural wood, with inner liner", 
+                Inactive = false, 
+                LocalName = "Intermediate bulk container, natural wood, with inner liner", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "WV", 
+                SearchFields = "WV,Intermediate bulk container, textile, coated", 
+                Inactive = false, 
+                LocalName = "Intermediate bulk container, textile, coated", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "WW", 
+                SearchFields = "WW,Intermediate bulk container, textile, with liner", 
+                Inactive = false, 
+                LocalName = "Intermediate bulk container, textile, with liner", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "WX", 
+                SearchFields = "WX,Intermediate bulk container, textile, coated and liner", 
+                Inactive = false, 
+                LocalName = "Intermediate bulk container, textile, coated and liner", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "WY", 
+                SearchFields = "WY,Intermediate bulk container, plywood, with inner liner", 
+                Inactive = false, 
+                LocalName = "Intermediate bulk container, plywood, with inner liner", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "WZ", 
+                SearchFields = "WZ,Intermediate bulk container, reconstituted wood, with inner liner", 
+                Inactive = false, 
+                LocalName = "Intermediate bulk container, reconstituted wood, with inner liner", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "XA", 
+                SearchFields = "XA,Bag, woven plastic, without inner coat/liner", 
+                Inactive = false, 
+                LocalName = "Bag, woven plastic, without inner coat/liner", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "XB", 
+                SearchFields = "XB,Bag, woven plastic, sift proof", 
+                Inactive = false, 
+                LocalName = "Bag, woven plastic, sift proof", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "XC", 
+                SearchFields = "XC,Bag, woven plastic, water resistant", 
+                Inactive = false, 
+                LocalName = "Bag, woven plastic, water resistant", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "XD", 
+                SearchFields = "XD,Bag, plastics film", 
+                Inactive = false, 
+                LocalName = "Bag, plastics film", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "XF", 
+                SearchFields = "XF,Bag, textile, without inner coat/liner", 
+                Inactive = false, 
+                LocalName = "Bag, textile, without inner coat/liner", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "XG", 
+                SearchFields = "XG,Bag, textile, sift proof", 
+                Inactive = false, 
+                LocalName = "Bag, textile, sift proof", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "XH", 
+                SearchFields = "XH,Bag, textile, water resistant", 
+                Inactive = false, 
+                LocalName = "Bag, textile, water resistant", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "XJ", 
+                SearchFields = "XJ,Bag, paper, multi-wall", 
+                Inactive = false, 
+                LocalName = "Bag, paper, multi-wall", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "XK", 
+                SearchFields = "XK,Bag, paper, multi-wall, water resistant", 
+                Inactive = false, 
+                LocalName = "Bag, paper, multi-wall, water resistant", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "YA", 
+                SearchFields = "YA,Composite packaging, plastic receptacle in steel drum", 
+                Inactive = false, 
+                LocalName = "Composite packaging, plastic receptacle in steel drum", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "YB", 
+                SearchFields = "YB,Composite packaging, plastic receptacle in steel crate box", 
+                Inactive = false, 
+                LocalName = "Composite packaging, plastic receptacle in steel crate box", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "YC", 
+                SearchFields = "YC,Composite packaging, plastic receptacle in aluminium drum", 
+                Inactive = false, 
+                LocalName = "Composite packaging, plastic receptacle in aluminium drum", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "YD", 
+                SearchFields = "YD,Composite packaging, plastic receptacle in aluminium crate", 
+                Inactive = false, 
+                LocalName = "Composite packaging, plastic receptacle in aluminium crate", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "YF", 
+                SearchFields = "YF,Composite packaging, plastic receptacle in wooden box", 
+                Inactive = false, 
+                LocalName = "Composite packaging, plastic receptacle in wooden box", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "YG", 
+                SearchFields = "YG,Composite packaging, plastic receptacle in plywood drum", 
+                Inactive = false, 
+                LocalName = "Composite packaging, plastic receptacle in plywood drum", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "YH", 
+                SearchFields = "YH,Composite packaging, plastic receptacle in plywood box", 
+                Inactive = false, 
+                LocalName = "Composite packaging, plastic receptacle in plywood box", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "YJ", 
+                SearchFields = "YJ,Composite packaging, plastic receptacle in fibre drum", 
+                Inactive = false, 
+                LocalName = "Composite packaging, plastic receptacle in fibre drum", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "YK", 
+                SearchFields = "YK,Composite packaging, plastic receptacle in fibreboard box", 
+                Inactive = false, 
+                LocalName = "Composite packaging, plastic receptacle in fibreboard box", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "YL", 
+                SearchFields = "YL,Composite packaging, plastic receptacle in plastic drum", 
+                Inactive = false, 
+                LocalName = "Composite packaging, plastic receptacle in plastic drum", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "YM", 
+                SearchFields = "YM,Composite packaging, plastic receptacle in solid plastic box", 
+                Inactive = false, 
+                LocalName = "Composite packaging, plastic receptacle in solid plastic box", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "YN", 
+                SearchFields = "YN,Composite packaging, glass receptacle in steel drum", 
+                Inactive = false, 
+                LocalName = "Composite packaging, glass receptacle in steel drum", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "YP", 
+                SearchFields = "YP,Composite packaging, glass receptacle in steel crate box", 
+                Inactive = false, 
+                LocalName = "Composite packaging, glass receptacle in steel crate box", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "YQ", 
+                SearchFields = "YQ,Composite packaging, glass receptacle in aluminium drum", 
+                Inactive = false, 
+                LocalName = "Composite packaging, glass receptacle in aluminium drum", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "YR", 
+                SearchFields = "YR,Composite packaging, glass receptacle in aluminium crate", 
+                Inactive = false, 
+                LocalName = "Composite packaging, glass receptacle in aluminium crate", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "YS", 
+                SearchFields = "YS,Composite packaging, glass receptacle in wooden box", 
+                Inactive = false, 
+                LocalName = "Composite packaging, glass receptacle in wooden box", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "YT", 
+                SearchFields = "YT,Composite packaging, glass receptacle in plywood drum", 
+                Inactive = false, 
+                LocalName = "Composite packaging, glass receptacle in plywood drum", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "YV", 
+                SearchFields = "YV,Composite packaging, glass receptacle in wickerwork hamper", 
+                Inactive = false, 
+                LocalName = "Composite packaging, glass receptacle in wickerwork hamper", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "YW", 
+                SearchFields = "YW,Composite packaging, glass receptacle in fibre drum", 
+                Inactive = false, 
+                LocalName = "Composite packaging, glass receptacle in fibre drum", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "YX", 
+                SearchFields = "YX,Composite packaging, glass receptacle in fibreboard box", 
+                Inactive = false, 
+                LocalName = "Composite packaging, glass receptacle in fibreboard box", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "YY", 
+                SearchFields = "YY,Composite packaging, glass receptacle in expandable plastic pack", 
+                Inactive = false, 
+                LocalName = "Composite packaging, glass receptacle in expandable plastic pack", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "YZ", 
+                SearchFields = "YZ,Composite packaging, glass receptacle in solid plastic pack", 
+                Inactive = false, 
+                LocalName = "Composite packaging, glass receptacle in solid plastic pack", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "ZA", 
+                SearchFields = "ZA,Intermediate bulk container, paper, multi-wall", 
+                Inactive = false, 
+                LocalName = "Intermediate bulk container, paper, multi-wall", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "ZB", 
+                SearchFields = "ZB,Bag, large", 
+                Inactive = false, 
+                LocalName = "Bag, large", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "ZC", 
+                SearchFields = "ZC,Intermediate bulk container, paper, multi-wall, water resistant", 
+                Inactive = false, 
+                LocalName = "Intermediate bulk container, paper, multi-wall, water resistant", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "ZD", 
+                SearchFields = "ZD,Intermediate bulk container, rigid plastic, with structural equipment, solids", 
+                Inactive = false, 
+                LocalName = "Intermediate bulk container, rigid plastic, with structural equipment, solids", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "ZF", 
+                SearchFields = "ZF,Intermediate bulk container, rigid plastic, freestanding, solids", 
+                Inactive = false, 
+                LocalName = "Intermediate bulk container, rigid plastic, freestanding, solids", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "ZG", 
+                SearchFields = "ZG,Intermediate bulk container, rigid plastic, with structural equipment, pressurised", 
+                Inactive = false, 
+                LocalName = "Intermediate bulk container, rigid plastic, with structural equipment, pressurised", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "ZH", 
+                SearchFields = "ZH,Intermediate bulk container, rigid plastic, freestanding, pressurised", 
+                Inactive = false, 
+                LocalName = "Intermediate bulk container, rigid plastic, freestanding, pressurised", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "ZJ", 
+                SearchFields = "ZJ,Intermediate bulk container, rigid plastic, with structural equipment, liquids", 
+                Inactive = false, 
+                LocalName = "Intermediate bulk container, rigid plastic, with structural equipment, liquids", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "ZK", 
+                SearchFields = "ZK,Intermediate bulk container, rigid plastic, freestanding, liquids", 
+                Inactive = false, 
+                LocalName = "Intermediate bulk container, rigid plastic, freestanding, liquids", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "ZL", 
+                SearchFields = "ZL,Intermediate bulk container, composite, rigid plastic, solids", 
+                Inactive = false, 
+                LocalName = "Intermediate bulk container, composite, rigid plastic, solids", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "ZM", 
+                SearchFields = "ZM,Intermediate bulk container, composite, flexible plastic, solids", 
+                Inactive = false, 
+                LocalName = "Intermediate bulk container, composite, flexible plastic, solids", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "ZN", 
+                SearchFields = "ZN,Intermediate bulk container, composite, rigid plastic, pressurised", 
+                Inactive = false, 
+                LocalName = "Intermediate bulk container, composite, rigid plastic, pressurised", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "ZP", 
+                SearchFields = "ZP,Intermediate bulk container, composite, flexible plastic, pressurised", 
+                Inactive = false, 
+                LocalName = "Intermediate bulk container, composite, flexible plastic, pressurised", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "ZQ", 
+                SearchFields = "ZQ,Intermediate bulk container, composite, rigid plastic, liquids", 
+                Inactive = false, 
+                LocalName = "Intermediate bulk container, composite, rigid plastic, liquids", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "ZR", 
+                SearchFields = "ZR,Intermediate bulk container, composite, flexible plastic, liquids", 
+                Inactive = false, 
+                LocalName = "Intermediate bulk container, composite, flexible plastic, liquids", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "ZS", 
+                SearchFields = "ZS,Intermediate bulk container, composite", 
+                Inactive = false, 
+                LocalName = "Intermediate bulk container, composite", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "ZT", 
+                SearchFields = "ZT,Intermediate bulk container, fibreboard", 
+                Inactive = false, 
+                LocalName = "Intermediate bulk container, fibreboard", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "ZU", 
+                SearchFields = "ZU,Intermediate bulk container, flexible", 
+                Inactive = false, 
+                LocalName = "Intermediate bulk container, flexible", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "ZV", 
+                SearchFields = "ZV,Intermediate bulk container, metal, other than steel", 
+                Inactive = false, 
+                LocalName = "Intermediate bulk container, metal, other than steel", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "ZW", 
+                SearchFields = "ZW,Intermediate bulk container, natural wood", 
+                Inactive = false, 
+                LocalName = "Intermediate bulk container, natural wood", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "ZX", 
+                SearchFields = "ZX,Intermediate bulk container, plywood", 
+                Inactive = false, 
+                LocalName = "Intermediate bulk container, plywood", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "ZY", 
+                SearchFields = "ZY,Intermediate bulk container, reconstituted wood", 
+                Inactive = false, 
+                LocalName = "Intermediate bulk container, reconstituted wood", 
+			});
+			 
+            all.Add(new PackingTypeDetails()
+            {    
+                Code = "ZZ", 
+                SearchFields = "ZZ,Mutually defined", 
+                Inactive = false, 
+                LocalName = "Mutually defined", 
+			});
+			
             return all;
        }
 
 	    public void MapPoco(PackingType newPoco)
-        {    
+        {   
+		    newPoco.Code = this.Code;  
+			newPoco.SearchFields = GetSearchFields(this);   
+		    newPoco.Inactive = this.Inactive;  
+		    newPoco.LocalName = this.LocalName;   
         }
 
 		public string GetSearchFields(PackingType rec)
         {   
-           return string.Empty;
+           return String.Concat(rec.Code,",",rec.Inactive,",",rec.LocalName,",");
         }
    }
 }

@@ -187,11 +187,18 @@ namespace MetaDataGenerator
 
 					DirectoryInfo dirInfo = new DirectoryInfo(dialog.SelectedPath);
 					string[] allFiles = dirInfo.GetFiles("*.lxml").Select(f => f.Name.Replace(f.Extension, "")).ToArray();
-
-					tables = (from a in rep.context.ObjectTables
-							  where allFiles.Contains(a.Name)
-							  select a).OrderBy(t => t.Name).ToList();
-
+                    if (dialog.SelectedPath.Contains("Logitude.Customs.MetaData"))
+                    {
+                        tables = (from a in rep.context.ObjectTables
+                                  where allFiles.Contains(a.Name.Replace("Customs.",""))
+                                  select a).OrderBy(t => t.Name).ToList();
+                    }
+                    else
+                    {
+                        tables = (from a in rep.context.ObjectTables
+                                  where allFiles.Contains(a.Name)
+                                  select a).OrderBy(t => t.Name).ToList();
+                    }
 					DbToXmlGenerator dbToXmlGeneratorFrom = new DbToXmlGenerator();
 					dbToXmlGeneratorFrom.AppendExistingModelEntityLXMLs(tables, dialog.SelectedPath);
 					MessageBox.Show("Export completed successfully");

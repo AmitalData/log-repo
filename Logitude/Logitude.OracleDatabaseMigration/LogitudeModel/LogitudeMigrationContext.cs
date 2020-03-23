@@ -1608,11 +1608,11 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
             get;
             set;
         }
-        public IDbSet<SchedulerLogs> SchedulerLogs
-        {
-            get;
-            set;
-        }
+        //public IDbSet<SchedulerLogs> SchedulerLogs
+        //{
+        //    get;
+        //    set;
+        //}
         public IDbSet<SchedulerProcedure> SchedulerProcedures
         {
             get;
@@ -4696,7 +4696,7 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new TenantLoginPolicyMap());
             modelBuilder.Configurations.Add(new LoginPolicyMap());
 
-            modelBuilder.Configurations.Add(new SchedulerLogsMap());
+            //modelBuilder.Configurations.Add(new SchedulerLogsMap());
             modelBuilder.Configurations.Add(new SchedulerProcedureMap());
 
 

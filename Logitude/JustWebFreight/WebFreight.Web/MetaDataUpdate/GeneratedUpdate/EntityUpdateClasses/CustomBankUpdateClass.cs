@@ -49,7 +49,7 @@ using Logitude.Social.Data.EntityPOCOs;
 using Logitude.Social.BL;
 using Logitude.Social.Data.Repsitories;
 using Logitude.Server.Tools.CloseTablesClasses;
-using Logitude.Customs.BL.CloseTables;
+using Logitude.Customs.BL.ClosedTable;
 using Logitude.CRM.BL.CLoseTable;
 using Logitude.BookingLib.BL.CLoseTable;
 using Logitude.WarehouseLib.Data.Repositories;
@@ -58,6 +58,20 @@ using Logitude.WarehouseLib.BL.CLoseTable;
 using Logitude.TimeManagement.Data.Repositories;
 using Logitude.TimeManagement.Data.EntityPOCOs;
 using Logitude.TimeManagement.BL.CLoseTable;
+using Logitude.BL.ShipmentsModel.CloseTables;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Logitude.BL.ShipmentsModel;
+using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.Repositories;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Logitude.BL.GlobalModel;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.BL;
+using Logitude.TariffModule.Data.Repositories;
+using Logitude.TariffModule.Data.EntityPOCOs;
+using Logitude.TariffModule.BL.CLoseTable;
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomBankUpdateClass
@@ -103,8 +117,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    NewWizardControlName =  "Logitude.Customs.Views.NewCustomBankControlCommand",
 			      				    LocalDefaultText =  "בנקים סוכן / יבואן",
 			      				    DefaultText =  "Custom Bank",
-			      				    Code =  "4226",
-			      				    Name =  "Customs.CustomBank Query Group",
+			      				    Code =  "CSBK",
+			      				    Name =  "Customs.CustomBank",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
 			      				    ServerModuleName =  "Customs",
@@ -116,6 +130,104 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
 	    {
 	         
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "Id",
+					  						ObjectTableName =  "Customs.CustomBank",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  15,
+					  						IsRequired =  true,
+					  						DisplayOnLookUp =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  15,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "Id",
+					  						ListPropertyPath =  "Id",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.CustomBank",
+					  						DisplayInEntityVariables =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "Id",
+					  						DefaultText =  "Id",
+					  						ListFieldLable =  "IdListLable",
+					  						ListLableDefaultText =  "Id",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "Tenant",
+					  						ObjectTableName =  "Customs.CustomBank",
+					  						FieldsDataType =  "Integer",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  true,
+					  						DisplayOnLookUp =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "Tenant",
+					  						ListPropertyPath =  "Tenant",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.CustomBank",
+					  						DisplayInEntityVariables =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "Tenant",
+					  						DefaultText =  "Tenant",
+					  						ListFieldLable =  "TenantListLable",
+					  						ListLableDefaultText =  "Tenant",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
@@ -1084,54 +1196,171 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
-	    {  	   
+	    {  
+	        FeatureRepository featureRepository = new FeatureRepository(0); 
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+	        QueryGroup CustomBankQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "CSBK", Name = "Customs.CustomBank" }, queryGroupRepository);
+				        queryGroupRepository.SubmitChanges();
+
+	        ObjectTable CustomBankObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.CustomBank" && d.Tenant == 0).FirstOrDefault();
+	        List<ObjectField> CustomBankObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.CustomBank").ToList();   
+
+			   TextCode CustomBankTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomBank.Q.CustomBanks", DefaultText = @"CustomBanks",LocalDefaultText = "CustomBanks", ObjectTableId = CustomBankObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature CustomBankFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CustomBank.Q.CustomBanks", ObjectTableId = CustomBankObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomBankFeatures.CustomBanks", NameTextCodeDefaultText = "CustomBanks", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+
+	        TextCodeRepository.SubmitChanges();
+	        FeaturesRepository.SubmitChanges();    
+	      
+
+			  Query CustomBanksQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomBankTextCode_0.Id, NameTextCodeCode = CustomBankTextCode_0.Code, ObjectTableName = "Customs.CustomBank", Code = "CustomBanks",  QueryGroupCode = "CSBK", IndexOrder = 0, Tenant = 0, ObjectTableId = CustomBankObjectTable.Id, QuerySection = "CustomBanks", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomBankFeature_0.Id,FeatureUniqeCode= CustomBankFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+	
+			 QueryColumn CustomBanksQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomBanksQuery.Id,QueryCode = CustomBanksQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = CustomBankObjectFields.Where(d => d.FieldName == "InternalCode" && d.ObjectTableId == CustomBankObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomBankObjectFields.Where(d => d.FieldName == "InternalCode" && d.ObjectTableId == CustomBankObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn CustomBanksQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomBanksQuery.Id,QueryCode = CustomBanksQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = CustomBankObjectFields.Where(d => d.FieldName == "BankName" && d.ObjectTableId == CustomBankObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomBankObjectFields.Where(d => d.FieldName == "BankName" && d.ObjectTableId == CustomBankObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn CustomBanksQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomBanksQuery.Id,QueryCode = CustomBanksQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = CustomBankObjectFields.Where(d => d.FieldName == "BranchName" && d.ObjectTableId == CustomBankObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomBankObjectFields.Where(d => d.FieldName == "BranchName" && d.ObjectTableId == CustomBankObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn CustomBanksQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomBanksQuery.Id,QueryCode = CustomBanksQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = CustomBankObjectFields.Where(d => d.FieldName == "AccountNumber" && d.ObjectTableId == CustomBankObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomBankObjectFields.Where(d => d.FieldName == "AccountNumber" && d.ObjectTableId == CustomBankObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn CustomBanksQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomBanksQuery.Id,QueryCode = CustomBanksQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = CustomBankObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == CustomBankObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomBankObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == CustomBankObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn CustomBanksQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomBanksQuery.Id,QueryCode = CustomBanksQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = CustomBankObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == CustomBankObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomBankObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == CustomBankObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn CustomBanksQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomBanksQuery.Id,QueryCode = CustomBanksQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = CustomBankObjectFields.Where(d => d.FieldName == "PayerTypeName" && d.ObjectTableId == CustomBankObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomBankObjectFields.Where(d => d.FieldName == "PayerTypeName" && d.ObjectTableId == CustomBankObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn CustomBanksQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomBanksQuery.Id,QueryCode = CustomBanksQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = CustomBankObjectFields.Where(d => d.FieldName == "BankAddress" && d.ObjectTableId == CustomBankObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomBankObjectFields.Where(d => d.FieldName == "BankAddress" && d.ObjectTableId == CustomBankObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn CustomBanksQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomBanksQuery.Id,QueryCode = CustomBanksQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = CustomBankObjectFields.Where(d => d.FieldName == "ClientBank" && d.ObjectTableId == CustomBankObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomBankObjectFields.Where(d => d.FieldName == "ClientBank" && d.ObjectTableId == CustomBankObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+	   
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
-	    {    
+	    {   
+
+		   ObjectTable CustomBankObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CustomBank" && d.Tenant == 0).FirstOrDefault();
+		   List<ObjectField> CustomBankObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.CustomBank").ToList();
+		       
+	      
+
+	         Screen CustomBankHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Customs.CustomBank.HeaderScreen", Name = "Header Screen", ObjectTableId = CustomBankObjectTable.Id, NumberOfColumns = 3, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      
+            ScreenField CustomBankCustomsCustomBankHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = CustomBankObjectFields.Where(d => d.FieldName == "InternalCode").FirstOrDefault().Id, ScreenId = CustomBankHeaderScreenScreen0.Id,ScreenCode = CustomBankHeaderScreenScreen0.Code, ObjectFieldCode = CustomBankObjectFields.Where(d => d.FieldName == "InternalCode").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         
+            ScreenField CustomBankCustomsCustomBankHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = CustomBankObjectFields.Where(d => d.FieldName == "BankCode").FirstOrDefault().Id, ScreenId = CustomBankHeaderScreenScreen0.Id,ScreenCode = CustomBankHeaderScreenScreen0.Code, ObjectFieldCode = CustomBankObjectFields.Where(d => d.FieldName == "BankCode").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         
+            ScreenField CustomBankCustomsCustomBankHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = CustomBankObjectFields.Where(d => d.FieldName == "BranchCode").FirstOrDefault().Id, ScreenId = CustomBankHeaderScreenScreen0.Id,ScreenCode = CustomBankHeaderScreenScreen0.Code, ObjectFieldCode = CustomBankObjectFields.Where(d => d.FieldName == "BranchCode").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         	
+		    CustomBankObjectTable.HeaderScreenId = CustomBankHeaderScreenScreen0.Id;
+		    CustomBankObjectTable.HeaderScreenCode = CustomBankHeaderScreenScreen0.Code;
+
+	   		  
+	      
+
+	         Screen CustomBankGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Customs.CustomBank.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = CustomBankObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 6, IsReadOnly = false }, screensRepository, tenantScreens);
+      
+            ScreenField CustomBankCustomsCustomBankGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = CustomBankObjectFields.Where(d => d.FieldName == "InternalCode").FirstOrDefault().Id, ScreenId = CustomBankGeneralTabScreenScreen1.Id,ScreenCode = CustomBankGeneralTabScreenScreen1.Code, ObjectFieldCode = CustomBankObjectFields.Where(d => d.FieldName == "InternalCode").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         
+            ScreenField CustomBankCustomsCustomBankGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = CustomBankObjectFields.Where(d => d.FieldName == "BankCode").FirstOrDefault().Id, ScreenId = CustomBankGeneralTabScreenScreen1.Id,ScreenCode = CustomBankGeneralTabScreenScreen1.Code, ObjectFieldCode = CustomBankObjectFields.Where(d => d.FieldName == "BankCode").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         
+            ScreenField CustomBankCustomsCustomBankGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = CustomBankObjectFields.Where(d => d.FieldName == "BranchCode").FirstOrDefault().Id, ScreenId = CustomBankGeneralTabScreenScreen1.Id,ScreenCode = CustomBankGeneralTabScreenScreen1.Code, ObjectFieldCode = CustomBankObjectFields.Where(d => d.FieldName == "BranchCode").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         
+            ScreenField CustomBankCustomsCustomBankGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = CustomBankObjectFields.Where(d => d.FieldName == "AccountNumber").FirstOrDefault().Id, ScreenId = CustomBankGeneralTabScreenScreen1.Id,ScreenCode = CustomBankGeneralTabScreenScreen1.Code, ObjectFieldCode = CustomBankObjectFields.Where(d => d.FieldName == "AccountNumber").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         
+            ScreenField CustomBankCustomsCustomBankGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ObjectFieldId = CustomBankObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().Id, ScreenId = CustomBankGeneralTabScreenScreen1.Id,ScreenCode = CustomBankGeneralTabScreenScreen1.Code, ObjectFieldCode = CustomBankObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         
+            ScreenField CustomBankCustomsCustomBankGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = CustomBankObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().Id, ScreenId = CustomBankGeneralTabScreenScreen1.Id,ScreenCode = CustomBankGeneralTabScreenScreen1.Code, ObjectFieldCode = CustomBankObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         
+            ScreenField CustomBankCustomsCustomBankGeneralTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = CustomBankObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().Id, ScreenId = CustomBankGeneralTabScreenScreen1.Id,ScreenCode = CustomBankGeneralTabScreenScreen1.Code, ObjectFieldCode = CustomBankObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         
+            ScreenField CustomBankCustomsCustomBankGeneralTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ObjectFieldId = CustomBankObjectFields.Where(d => d.FieldName == "PayerTypeCode").FirstOrDefault().Id, ScreenId = CustomBankGeneralTabScreenScreen1.Id,ScreenCode = CustomBankGeneralTabScreenScreen1.Code, ObjectFieldCode = CustomBankObjectFields.Where(d => d.FieldName == "PayerTypeCode").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         
+            ScreenField CustomBankCustomsCustomBankGeneralTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 3, ObjectFieldId = CustomBankObjectFields.Where(d => d.FieldName == "BankAddress").FirstOrDefault().Id, ScreenId = CustomBankGeneralTabScreenScreen1.Id,ScreenCode = CustomBankGeneralTabScreenScreen1.Code, ObjectFieldCode = CustomBankObjectFields.Where(d => d.FieldName == "BankAddress").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+           
 
 	    }
 
 	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
-	    {      
+	    {                
+			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
+			   ObjectTable CustomBankObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CustomBank" && d.Tenant == 0).FirstOrDefault();  
+                 
+			   TextCode CustomBankGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomBank.TH.General", DefaultText = "General",LocalDefaultText = "כללי", ObjectTableId = CustomBankObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature CustomBankGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CustomBank.Tab.General", ObjectTableId = CustomBankObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomBankFeatures.CBGN", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+ 
+                 
+			   TextCode CustomBankEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomBank.TH.Events", DefaultText = "Events",LocalDefaultText = "אירועים", ObjectTableId = CustomBankObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature CustomBankEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CustomBank.Tab.Events", ObjectTableId = CustomBankObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomBankFeatures.CBEV", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			 TextCodeRepository.SubmitChanges();
+			 FeaturesRepository.SubmitChanges();
+			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
+			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
+			    
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CBGN",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = CustomBankGeneralFeature_TH0.Id,FeatureUniqeCode = CustomBankGeneralFeature_TH0.FeatureUniqeCode, ControlPath = " ", ObjectTableId = CustomBankObjectTable.Id, TabNameTextCodeId = CustomBankGeneralTextCode_TH0.Id, TabNameTextCodeCode = CustomBankGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+   
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CBEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = CustomBankEventsFeature_TH1.Id,FeatureUniqeCode = CustomBankEventsFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = CustomBankObjectTable.Id, TabNameTextCodeId = CustomBankEventsTextCode_TH1.Id, TabNameTextCodeCode = CustomBankEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+   
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
 	    {  
 		   ObjectTable CustomBankObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CustomBank" && d.Tenant == 0).FirstOrDefault(); 
-		   Feature CustomBankFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = CustomBankObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomBank.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature CustomBankFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = CustomBankObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomBank.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature CustomBankFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = CustomBankObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomBank.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature CustomBankFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = CustomBankObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomBank.Features.PackageFeature", NameTextCodeDefaultText = "CustomBank Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+
+		   Feature CustomBankFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = CustomBankObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomBank.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature CustomBankFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = CustomBankObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomBank.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature CustomBankFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = CustomBankObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomBank.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature CustomBankFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = CustomBankObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomBank.Features.PackageFeature", NameTextCodeDefaultText = "CustomBank Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 
+
+		   		   //--------------> Additional Features <--------------\\
+
+		   Feature CustomBankFeature_GENERAL = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", FeatureTypeCode = "AREA", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CustomBankObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CustomBank.Features.General", NameTextCodeDefaultText = @"General" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature CustomBankFeature_EVENTS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", FeatureTypeCode = "AREA", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CustomBankObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CustomBank.Features.Events", NameTextCodeDefaultText = @"Events" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature CustomBankFeature_CUSTOMBANKS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMBANKS", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CustomBankObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CustomBank.Features.CustomBanks", NameTextCodeDefaultText = @"Custom Banks" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+   
 	    
 		}
 
-	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext)
+	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
 	    {   
 			ObjectTable CustomBankObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CustomBank" && d.Tenant == 0).FirstOrDefault(); 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
-                Code = "CREV",
-                EnglishName = "Created",
-                Tenant = 0,
-                AddedManually = false,
-				IsManualEntry = false,
-                LocalName = "Created",
+                Code =  "CREV",
+                ShortView =  true,
+                IsManualEntry =  false,
+                LocalName =  "Created",
+                EnglishName =  "Created",
+                EventTypeCategoryCode =  "OPE",
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
                 ObjectTableId = CustomBankObjectTable.Id,
-                ShortView = true,
+				 
             }, EventTypeRepository, tenantEventTypes);
 
 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
-                Code = "UPEV",
-                EnglishName = "Updated",
-                Tenant = 0,
-                AddedManually = false,
-				IsManualEntry = false,
-                LocalName = "Updated",
+                Code =  "UPEV",
+                ShortView =  false,
+                IsManualEntry =  false,
+                LocalName =  "Updated",
+                EnglishName =  "Updated",
+                EventTypeCategoryCode =  "OPE",
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
                 ObjectTableId = CustomBankObjectTable.Id,
-                ShortView = false,
+				 
             }, EventTypeRepository, tenantEventTypes);
 
 
@@ -1139,7 +1368,28 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }     
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable CustomBankObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CustomBank" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode CustomBankTextCode_CustomsCustomBankORequired = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomBank.O.Required", DefaultText = "Related Client value is required",LocalDefaultText = @"ערך לקוח קשור נדרש", ObjectTableId = CustomBankObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomBankTextCode_CustomsCustomBankOExist = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomBank.O.Exist", DefaultText = "Sorry you can't choose an existing client",LocalDefaultText = @"לא ניתן לבחור קוד לקוח קיים", ObjectTableId = CustomBankObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomBankTextCode_CustomsCustomBankOBankNotConnectedToCustomer = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomBank.O.BankNotConnectedToCustomer", DefaultText = "This bank is not connected to this customer",LocalDefaultText = @"בנק זה לא מקושר ללקוח - לא ניתן לבחור", ObjectTableId = CustomBankObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomBankTextCode_CustomsCustomBankOInternalCodekAlreadyExist = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomBank.O.InternalCodekAlreadyExist", DefaultText = "This internal code already exists",LocalDefaultText = @"קוד פנימי זה כבר קיים", ObjectTableId = CustomBankObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
+	    
+}
+
+    
 
    }
     

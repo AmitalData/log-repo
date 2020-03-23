@@ -49,7 +49,7 @@ using Logitude.Social.Data.EntityPOCOs;
 using Logitude.Social.BL;
 using Logitude.Social.Data.Repsitories;
 using Logitude.Server.Tools.CloseTablesClasses;
-using Logitude.Customs.BL.CloseTables;
+using Logitude.Customs.BL.ClosedTable;
 using Logitude.CRM.BL.CLoseTable;
 using Logitude.BookingLib.BL.CLoseTable;
 using Logitude.WarehouseLib.Data.Repositories;
@@ -58,6 +58,20 @@ using Logitude.WarehouseLib.BL.CLoseTable;
 using Logitude.TimeManagement.Data.Repositories;
 using Logitude.TimeManagement.Data.EntityPOCOs;
 using Logitude.TimeManagement.BL.CLoseTable;
+using Logitude.BL.ShipmentsModel.CloseTables;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Logitude.BL.ShipmentsModel;
+using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.Repositories;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Logitude.BL.GlobalModel;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.BL;
+using Logitude.TariffModule.Data.Repositories;
+using Logitude.TariffModule.Data.EntityPOCOs;
+using Logitude.TariffModule.BL.CLoseTable;
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationConstraintUpdateClass
@@ -146,6 +160,53 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DefaultText =  "Declaration ID",
 					  						ListFieldLable =  "DeclarationIDListLable",
 					  						ListLableDefaultText =  "Declaration ID",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "Tenant",
+					  						ObjectTableName =  "Customs.DeclarationConstraint",
+					  						FieldsDataType =  "Integer",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						DisplayOnLookUp =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "Tenant",
+					  						ListPropertyPath =  "Tenant",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.DeclarationConstraint",
+					  						DisplayInEntityVariables =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "Tenant",
+					  						DefaultText =  "Tenant",
+					  						ListFieldLable =  "TenantListLable",
+					  						ListLableDefaultText =  "Tenant",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -815,36 +876,130 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
+	    {  
+
+		   		   //--------------> Additional Features <--------------\\
+
+		   Feature DeclarationConstraintFeature_GENERAL = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", FeatureTypeCode = "AREA", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationConstraintObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.DeclarationConstraint.Features.General", NameTextCodeDefaultText = @"General" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+   
 	    
 		}
 
-	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext)
+	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
 	    {   
 			ObjectTable DeclarationConstraintObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.DeclarationConstraint" && d.Tenant == 0).FirstOrDefault(); 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
-                Code = "CREV",
-                EnglishName = "Created",
-                Tenant = 0,
-                AddedManually = false,
-				IsManualEntry = false,
-                LocalName = "Created",
+                Code =  "VCD",
+                ShortView =  false,
+                IsManualEntry =  false,
+                LocalName =  "אילוץ נדחה עי המכס",
+                EnglishName =  "Contraint Declined by Customs",
+                EventTypeCategoryCode =  "LOG",
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
                 ObjectTableId = DeclarationConstraintObjectTable.Id,
-                ShortView = true,
+				 
             }, EventTypeRepository, tenantEventTypes);
 
 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
-                Code = "UPEV",
-                EnglishName = "Updated",
-                Tenant = 0,
-                AddedManually = false,
-				IsManualEntry = false,
-                LocalName = "Updated",
+                Code =  "RAM",
+                ShortView =  false,
+                IsManualEntry =  false,
+                LocalName =  "אילוץ אושר במכס",
+                EnglishName =  "Contraint Approved by Customs",
+                EventTypeCategoryCode =  "LOG",
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
                 ObjectTableId = DeclarationConstraintObjectTable.Id,
-                ShortView = false,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "VCC",
+                ShortView =  false,
+                IsManualEntry =  false,
+                LocalName =  "אילוץ מאושר בתנאי",
+                EnglishName =  "Constraint Conditional Approval",
+                EventTypeCategoryCode =  "LOG",
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = DeclarationConstraintObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "RCA",
+                ShortView =  false,
+                IsManualEntry =  false,
+                LocalName =  "אילוץ נקלט במחשב",
+                EnglishName =  "Constraint Sent to Customs",
+                EventTypeCategoryCode =  "LOG",
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = DeclarationConstraintObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "CREV",
+                ShortView =  true,
+                IsManualEntry =  false,
+                LocalName =  "Created",
+                EnglishName =  "Created",
+                EventTypeCategoryCode =  "OPE",
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = DeclarationConstraintObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "UPEV",
+                ShortView =  false,
+                IsManualEntry =  false,
+                LocalName =  "Updated",
+                EnglishName =  "Updated",
+                EventTypeCategoryCode =  "OPE",
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = DeclarationConstraintObjectTable.Id,
+				 
             }, EventTypeRepository, tenantEventTypes);
 
 
@@ -852,7 +1007,38 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }     
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable DeclarationConstraintObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.DeclarationConstraint" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode DeclarationConstraintTextCode_CustomsDeclarationConstraintOEntityName = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationConstraint.O.EntityName", DefaultText = "Entity",LocalDefaultText = @"מקור השגיאה", ObjectTableId = DeclarationConstraintObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationConstraintTextCode_CustomsDeclarationConstraintOFieldName = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationConstraint.O.FieldName", DefaultText = "Field",LocalDefaultText = @"שדה", ObjectTableId = DeclarationConstraintObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationConstraintTextCode_CustomsDeclarationConstraintOApprovalDecision = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationConstraint.O.ApprovalDecision", DefaultText = "Approval Decision",LocalDefaultText = @"החלטת המכס", ObjectTableId = DeclarationConstraintObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationConstraintTextCode_CustomsDeclarationConstraintODenaialReason = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationConstraint.O.DenaialReason", DefaultText = "Denaial Reason",LocalDefaultText = @"סיבת דחיה", ObjectTableId = DeclarationConstraintObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationConstraintTextCode_CustomsDeclarationConstraintOApprovalReason = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationConstraint.O.ApprovalReason", DefaultText = "Approval Reason",LocalDefaultText = @"הערות אישור אילוץ", ObjectTableId = DeclarationConstraintObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationConstraintTextCode_CustomsDeclarationConstraintOErrors = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationConstraint.O.Errors", DefaultText = "Errors",LocalDefaultText = @"שגיאות", ObjectTableId = DeclarationConstraintObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationConstraintTextCode_CustomsDeclarationConstraintOWarnings = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationConstraint.O.Warnings", DefaultText = "Warnings",LocalDefaultText = @"אזהרות", ObjectTableId = DeclarationConstraintObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationConstraintTextCode_CustomsDeclarationConstraintOConstraints = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationConstraint.O.Constraints", DefaultText = "Constraints",LocalDefaultText = @"אילוצים", ObjectTableId = DeclarationConstraintObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationConstraintTextCode_CustomsDeclarationConstraintOAll = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationConstraint.O.All", DefaultText = "All",LocalDefaultText = @"הכל ", ObjectTableId = DeclarationConstraintObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
+	    
+}
+
+    
 
    }
     

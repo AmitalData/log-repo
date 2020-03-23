@@ -20,17 +20,61 @@ namespace Logitude.Customs.BL
    {
        public List<GenderDetails> GetAll()
        {
-		    var all = new List<GenderDetails>(); 
+		    var all = new List<GenderDetails>();  
+            all.Add(new GenderDetails()
+            {    
+                Code = "0", 
+                SearchFields = "0,לא ידוע", 
+                Inactive = false, 
+                LocalName = "לא ידוע", 
+			});
+			 
+            all.Add(new GenderDetails()
+            {    
+                Code = "1", 
+                SearchFields = "1,זכר", 
+                Inactive = false, 
+                LocalName = "זכר", 
+			});
+			 
+            all.Add(new GenderDetails()
+            {    
+                Code = "2", 
+                SearchFields = "2,נקבה", 
+                Inactive = false, 
+                LocalName = "נקבה", 
+			});
+			 
+            all.Add(new GenderDetails()
+            {    
+                Code = "7", 
+                SearchFields = "7,בבירור", 
+                Inactive = false, 
+                LocalName = "בבירור", 
+			});
+			 
+            all.Add(new GenderDetails()
+            {    
+                Code = "9", 
+                SearchFields = "9,לא רשום", 
+                Inactive = false, 
+                LocalName = "לא רשום", 
+			});
+			
             return all;
        }
 
 	    public void MapPoco(Gender newPoco)
-        {    
+        {   
+		    newPoco.Code = this.Code;  
+			newPoco.SearchFields = GetSearchFields(this);   
+		    newPoco.Inactive = this.Inactive;  
+		    newPoco.LocalName = this.LocalName;   
         }
 
 		public string GetSearchFields(Gender rec)
         {   
-           return string.Empty;
+           return String.Concat(rec.Code,",",rec.Inactive,",",rec.LocalName,",");
         }
    }
 }

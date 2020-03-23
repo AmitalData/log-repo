@@ -20,17 +20,45 @@ namespace Logitude.Customs.BL
    {
        public List<PackageMeasureQualifierDetails> GetAll()
        {
-		    var all = new List<PackageMeasureQualifierDetails>(); 
+		    var all = new List<PackageMeasureQualifierDetails>();  
+            all.Add(new PackageMeasureQualifierDetails()
+            {    
+                Code = "1", 
+                SearchFields = "1,כמות אריזות במחסן", 
+                Inactive = false, 
+                LocalName = "כמות אריזות במחסן", 
+			});
+			 
+            all.Add(new PackageMeasureQualifierDetails()
+            {    
+                Code = "2", 
+                SearchFields = "2,כמות אריזות באתר אחסון", 
+                Inactive = false, 
+                LocalName = "כמות אריזות באתר אחסון", 
+			});
+			 
+            all.Add(new PackageMeasureQualifierDetails()
+            {    
+                Code = "3", 
+                SearchFields = "3,כמות אריזות במעבר פנימי", 
+                Inactive = false, 
+                LocalName = "כמות אריזות במעבר פנימי", 
+			});
+			
             return all;
        }
 
 	    public void MapPoco(PackageMeasureQualifier newPoco)
-        {    
+        {   
+		    newPoco.Code = this.Code;  
+			newPoco.SearchFields = GetSearchFields(this);   
+		    newPoco.Inactive = this.Inactive;  
+		    newPoco.LocalName = this.LocalName;   
         }
 
 		public string GetSearchFields(PackageMeasureQualifier rec)
         {   
-           return string.Empty;
+           return String.Concat(rec.Code,",",rec.Inactive,",",rec.LocalName,",");
         }
    }
 }

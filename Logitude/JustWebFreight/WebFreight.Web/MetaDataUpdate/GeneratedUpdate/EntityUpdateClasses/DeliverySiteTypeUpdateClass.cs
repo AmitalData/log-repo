@@ -49,7 +49,7 @@ using Logitude.Social.Data.EntityPOCOs;
 using Logitude.Social.BL;
 using Logitude.Social.Data.Repsitories;
 using Logitude.Server.Tools.CloseTablesClasses;
-using Logitude.Customs.BL.CloseTables;
+using Logitude.Customs.BL.ClosedTable;
 using Logitude.CRM.BL.CLoseTable;
 using Logitude.BookingLib.BL.CLoseTable;
 using Logitude.WarehouseLib.Data.Repositories;
@@ -58,6 +58,20 @@ using Logitude.WarehouseLib.BL.CLoseTable;
 using Logitude.TimeManagement.Data.Repositories;
 using Logitude.TimeManagement.Data.EntityPOCOs;
 using Logitude.TimeManagement.BL.CLoseTable;
+using Logitude.BL.ShipmentsModel.CloseTables;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Logitude.BL.ShipmentsModel;
+using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.Repositories;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Logitude.BL.GlobalModel;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.BL;
+using Logitude.TariffModule.Data.Repositories;
+using Logitude.TariffModule.Data.EntityPOCOs;
+using Logitude.TariffModule.BL.CLoseTable;
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeliverySiteTypeUpdateClass
@@ -98,8 +112,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Delivery Site Type",
-			      				    Code =  "5cf7",
-			      				    Name =  "Customs.DeliverySiteType Query Group",
+			      				    Code =  "DLST",
+			      				    Name =  "Customs.DeliverySiteType",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "LocalName",
 			      				    GenerateDomainService =  false,
@@ -363,7 +377,33 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
-	    {  	   
+	    {  
+	        FeatureRepository featureRepository = new FeatureRepository(0); 
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+	        QueryGroup DeliverySiteTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "DLST", Name = "Customs.DeliverySiteType" }, queryGroupRepository);
+				        queryGroupRepository.SubmitChanges();
+
+	        ObjectTable DeliverySiteTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.DeliverySiteType" && d.Tenant == 0).FirstOrDefault();
+	        List<ObjectField> DeliverySiteTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.DeliverySiteType").ToList();   
+
+			   TextCode DeliverySiteTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DeliverySiteType.Q.DeliverySiteType", DefaultText = @"DeliverySiteType",LocalDefaultText = "DeliverySiteType", ObjectTableId = DeliverySiteTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature DeliverySiteTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DeliverySiteType.Q.DeliverySiteType", ObjectTableId = DeliverySiteTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeliverySiteTypeFeatures.DeliverySiteType", NameTextCodeDefaultText = "DeliverySiteType", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+
+	        TextCodeRepository.SubmitChanges();
+	        FeaturesRepository.SubmitChanges();    
+	      
+
+			  Query DeliverySiteTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DeliverySiteTypeTextCode_0.Id, NameTextCodeCode = DeliverySiteTypeTextCode_0.Code, ObjectTableName = "Customs.DeliverySiteType", Code = "DeliverySiteType",  QueryGroupCode = "DLST", IndexOrder = 0, Tenant = 0, ObjectTableId = DeliverySiteTypeObjectTable.Id, QuerySection = "Customs.DeliverySiteType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = DeliverySiteTypeFeature_0.Id,FeatureUniqeCode= DeliverySiteTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+	
+			 QueryColumn DeliverySiteTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeliverySiteTypeQuery.Id,QueryCode = DeliverySiteTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = DeliverySiteTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == DeliverySiteTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DeliverySiteTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == DeliverySiteTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn DeliverySiteTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeliverySiteTypeQuery.Id,QueryCode = DeliverySiteTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = DeliverySiteTypeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == DeliverySiteTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DeliverySiteTypeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == DeliverySiteTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn DeliverySiteTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeliverySiteTypeQuery.Id,QueryCode = DeliverySiteTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = DeliverySiteTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == DeliverySiteTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DeliverySiteTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == DeliverySiteTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn DeliverySiteTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeliverySiteTypeQuery.Id,QueryCode = DeliverySiteTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = DeliverySiteTypeObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == DeliverySiteTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DeliverySiteTypeObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == DeliverySiteTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+	   
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
@@ -376,36 +416,54 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
+	    {  
+
+		   		   //--------------> Additional Features <--------------\\
+
+		   Feature DeliverySiteTypeFeature_DELIVERYSITETYPE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DELIVERYSITETYPE", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeliverySiteTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.DeliverySiteType.Features.DeliverySiteTypes", NameTextCodeDefaultText = @"Delivery Site Types" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+   
 	    
 		}
 
-	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext)
+	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
 	    {   
 			ObjectTable DeliverySiteTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.DeliverySiteType" && d.Tenant == 0).FirstOrDefault(); 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
-                Code = "CREV",
-                EnglishName = "Created",
-                Tenant = 0,
-                AddedManually = false,
-				IsManualEntry = false,
-                LocalName = "Created",
+                Code =  "CREV",
+                ShortView =  true,
+                IsManualEntry =  false,
+                LocalName =  "Created",
+                EnglishName =  "Created",
+                EventTypeCategoryCode =  "OPE",
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
                 ObjectTableId = DeliverySiteTypeObjectTable.Id,
-                ShortView = true,
+				 
             }, EventTypeRepository, tenantEventTypes);
 
 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
-                Code = "UPEV",
-                EnglishName = "Updated",
-                Tenant = 0,
-                AddedManually = false,
-				IsManualEntry = false,
-                LocalName = "Updated",
+                Code =  "UPEV",
+                ShortView =  false,
+                IsManualEntry =  false,
+                LocalName =  "Updated",
+                EnglishName =  "Updated",
+                EventTypeCategoryCode =  "OPE",
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
                 ObjectTableId = DeliverySiteTypeObjectTable.Id,
-                ShortView = false,
+				 
             }, EventTypeRepository, tenantEventTypes);
 
 
@@ -413,7 +471,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }     
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {     
+	    
+}
+
+    
 
    }
     

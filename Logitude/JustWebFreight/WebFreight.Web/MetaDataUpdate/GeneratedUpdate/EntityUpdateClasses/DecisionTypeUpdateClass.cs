@@ -49,7 +49,7 @@ using Logitude.Social.Data.EntityPOCOs;
 using Logitude.Social.BL;
 using Logitude.Social.Data.Repsitories;
 using Logitude.Server.Tools.CloseTablesClasses;
-using Logitude.Customs.BL.CloseTables;
+using Logitude.Customs.BL.ClosedTable;
 using Logitude.CRM.BL.CLoseTable;
 using Logitude.BookingLib.BL.CLoseTable;
 using Logitude.WarehouseLib.Data.Repositories;
@@ -58,6 +58,20 @@ using Logitude.WarehouseLib.BL.CLoseTable;
 using Logitude.TimeManagement.Data.Repositories;
 using Logitude.TimeManagement.Data.EntityPOCOs;
 using Logitude.TimeManagement.BL.CLoseTable;
+using Logitude.BL.ShipmentsModel.CloseTables;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Logitude.BL.ShipmentsModel;
+using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.Repositories;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Logitude.BL.GlobalModel;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.BL;
+using Logitude.TariffModule.Data.Repositories;
+using Logitude.TariffModule.Data.EntityPOCOs;
+using Logitude.TariffModule.BL.CLoseTable;
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DecisionTypeUpdateClass
@@ -115,8 +129,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    NoTS =  false,
 			      				    HasMenuButtons =  false,
 			      				    AllowedForComputingPartners =  false,
-			      				    Code1 =  "85d4",
-			      				    Name1 =  " Query Group",
 			      				    CustomFieldsCount =  0,
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
@@ -133,9 +145,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "Code",
 					  						OldFieldName =  "Code",
-					  						IsNew =  false,
-					  						IsChecked =  true,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.DecisionType",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -185,10 +194,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -198,9 +203,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "LocalName",
 					  						OldFieldName =  "LocalName",
-					  						IsNew =  false,
-					  						IsChecked =  true,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.DecisionType",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -251,10 +253,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -264,9 +262,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "EnglishName",
 					  						OldFieldName =  "EnglishName",
-					  						IsNew =  true,
-					  						IsChecked =  true,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.DecisionType",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -317,10 +312,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -330,9 +321,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "Inactive",
 					  						OldFieldName =  "Inactive",
-					  						IsNew =  true,
-					  						IsChecked =  true,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.DecisionType",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -382,10 +370,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -395,9 +379,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "SearchFields",
 					  						OldFieldName =  "SearchFields",
-					  						IsNew =  false,
-					  						IsChecked =  true,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.DecisionType",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -445,10 +426,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -457,30 +434,31 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
 	        FeatureRepository featureRepository = new FeatureRepository(0); 
-            List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 	        QueryGroup DecisionTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "29af", Name = " Query Group" }, queryGroupRepository);
-	        queryGroupRepository.SubmitChanges();
+						QueryGroup DecisionTypeQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "85d4", Name = " Query Group" }, queryGroupRepository);
+				        queryGroupRepository.SubmitChanges();
 
 	        ObjectTable DecisionTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.DecisionType" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> DecisionTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.DecisionType").ToList();   
 
-			   TextCode DecisionTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DecisionType.Q.DecisionType", DefaultText = "DecisionTypeQuery",LocalDefaultText = null, ObjectTableId = DecisionTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   TextCode DecisionTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DecisionType.Q.DecisionType", DefaultText = @"DecisionType",LocalDefaultText = "DecisionType", ObjectTableId = DecisionTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
 			   Feature DecisionTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DecisionType.Q.DecisionType", ObjectTableId = DecisionTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "DecisionType.Features.DecisionType", NameTextCodeDefaultText = "DecisionType", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query DecisionTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DecisionTypeTextCode_0.Id, Code = "DecisionType",  QueryGroupCode = "29af", IndexOrder = 0, Tenant = 0, ObjectTableId = DecisionTypeObjectTable.Id, QuerySection = "Customs.DecisionType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = DecisionTypeFeature_0.Id,FeatureUniqeCode= DecisionTypeFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending" }, queriesRepository, tenantQueries);
+			  Query DecisionTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DecisionTypeTextCode_0.Id, NameTextCodeCode = DecisionTypeTextCode_0.Code, ObjectTableName = "Customs.DecisionType", Code = "DecisionType",  QueryGroupCode = "29af", IndexOrder = 0, Tenant = 0, ObjectTableId = DecisionTypeObjectTable.Id, QuerySection = "Customs.DecisionType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = DecisionTypeFeature_0.Id,FeatureUniqeCode= DecisionTypeFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn DecisionTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DecisionTypeQuery.Id, IndexOrder = 0, ObjectFieldId = DecisionTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == DecisionTypeObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DecisionTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DecisionTypeQuery.Id,QueryCode = DecisionTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = DecisionTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == DecisionTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DecisionTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == DecisionTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn DecisionTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DecisionTypeQuery.Id, IndexOrder = 1, ObjectFieldId = DecisionTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == DecisionTypeObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DecisionTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DecisionTypeQuery.Id,QueryCode = DecisionTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = DecisionTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == DecisionTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DecisionTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == DecisionTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn DecisionTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DecisionTypeQuery.Id, IndexOrder = 2, ObjectFieldId = DecisionTypeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == DecisionTypeObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DecisionTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DecisionTypeQuery.Id,QueryCode = DecisionTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = DecisionTypeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == DecisionTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DecisionTypeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == DecisionTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn DecisionTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DecisionTypeQuery.Id, IndexOrder = 3, ObjectFieldId = DecisionTypeObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == DecisionTypeObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 50 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DecisionTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DecisionTypeQuery.Id,QueryCode = DecisionTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = DecisionTypeObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == DecisionTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DecisionTypeObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == DecisionTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 50 }, queryColumnsRepository, tenantQueryColumns);
 	   
 	    }
 
@@ -498,32 +476,44 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    
 		}
 
-	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext)
+	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
 	    {   
 			ObjectTable DecisionTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.DecisionType" && d.Tenant == 0).FirstOrDefault(); 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
-                Code = "CREV",
-                EnglishName = "Created",
-                Tenant = 0,
-                AddedManually = false,
-				IsManualEntry = false,
-                LocalName = "Created",
+                Code =  "CREV",
+                ShortView =  true,
+                IsManualEntry =  false,
+                LocalName =  "Created",
+                EnglishName =  "Created",
+                EventTypeCategoryCode =  "OPE",
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
                 ObjectTableId = DecisionTypeObjectTable.Id,
-                ShortView = true,
+				 
             }, EventTypeRepository, tenantEventTypes);
 
 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
-                Code = "UPEV",
-                EnglishName = "Updated",
-                Tenant = 0,
-                AddedManually = false,
-				IsManualEntry = false,
-                LocalName = "Updated",
+                Code =  "UPEV",
+                ShortView =  false,
+                IsManualEntry =  false,
+                LocalName =  "Updated",
+                EnglishName =  "Updated",
+                EventTypeCategoryCode =  "OPE",
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
                 ObjectTableId = DecisionTypeObjectTable.Id,
-                ShortView = false,
+				 
             }, EventTypeRepository, tenantEventTypes);
 
 
@@ -531,7 +521,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }     
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {     
+	    
+}
+
+    
 
    }
     

@@ -20,17 +20,77 @@ namespace Logitude.Customs.BL
    {
        public List<CustomerTypeGeneralDetails> GetAll()
        {
-		    var all = new List<CustomerTypeGeneralDetails>(); 
+		    var all = new List<CustomerTypeGeneralDetails>();  
+            all.Add(new CustomerTypeGeneralDetails()
+            {    
+                Code = "1", 
+                SearchFields = "1,תושב הארץ", 
+                Inactive = false, 
+                LocalName = "תושב הארץ", 
+			});
+			 
+            all.Add(new CustomerTypeGeneralDetails()
+            {    
+                Code = "2", 
+                SearchFields = "2,תושב רש''פ", 
+                Inactive = false, 
+                LocalName = "תושב רש''פ", 
+			});
+			 
+            all.Add(new CustomerTypeGeneralDetails()
+            {    
+                Code = "3", 
+                SearchFields = "3,תושב חוץ", 
+                Inactive = false, 
+                LocalName = "תושב חוץ", 
+			});
+			 
+            all.Add(new CustomerTypeGeneralDetails()
+            {    
+                Code = "4", 
+                SearchFields = "4,תאגיד ישראלי/זר", 
+                Inactive = false, 
+                LocalName = "תאגיד ישראלי/זר", 
+			});
+			 
+            all.Add(new CustomerTypeGeneralDetails()
+            {    
+                Code = "5", 
+                SearchFields = "5,תאגיד רש''פ/יו''ש", 
+                Inactive = false, 
+                LocalName = "תאגיד רש''פ/יו''ש", 
+			});
+			 
+            all.Add(new CustomerTypeGeneralDetails()
+            {    
+                Code = "6", 
+                SearchFields = "6,תאגיד רש''פ/עזה", 
+                Inactive = false, 
+                LocalName = "תאגיד רש''פ/עזה", 
+			});
+			 
+            all.Add(new CustomerTypeGeneralDetails()
+            {    
+                Code = "7", 
+                SearchFields = "7,תאגיד חסר ישות משפטית", 
+                Inactive = false, 
+                LocalName = "תאגיד חסר ישות משפטית", 
+			});
+			
             return all;
        }
 
 	    public void MapPoco(CustomerTypeGeneral newPoco)
-        {    
+        {   
+		    newPoco.Code = this.Code;  
+			newPoco.SearchFields = GetSearchFields(this);   
+		    newPoco.Inactive = this.Inactive;  
+		    newPoco.LocalName = this.LocalName;   
         }
 
 		public string GetSearchFields(CustomerTypeGeneral rec)
         {   
-           return string.Empty;
+           return String.Concat(rec.Code,",",rec.Inactive,",",rec.LocalName,",");
         }
    }
 }

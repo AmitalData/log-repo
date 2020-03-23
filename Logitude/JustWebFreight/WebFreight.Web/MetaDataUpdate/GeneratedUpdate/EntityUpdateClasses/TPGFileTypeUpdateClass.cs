@@ -49,7 +49,7 @@ using Logitude.Social.Data.EntityPOCOs;
 using Logitude.Social.BL;
 using Logitude.Social.Data.Repsitories;
 using Logitude.Server.Tools.CloseTablesClasses;
-using Logitude.Customs.BL.CloseTables;
+using Logitude.Customs.BL.ClosedTable;
 using Logitude.CRM.BL.CLoseTable;
 using Logitude.BookingLib.BL.CLoseTable;
 using Logitude.WarehouseLib.Data.Repositories;
@@ -58,6 +58,20 @@ using Logitude.WarehouseLib.BL.CLoseTable;
 using Logitude.TimeManagement.Data.Repositories;
 using Logitude.TimeManagement.Data.EntityPOCOs;
 using Logitude.TimeManagement.BL.CLoseTable;
+using Logitude.BL.ShipmentsModel.CloseTables;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Logitude.BL.ShipmentsModel;
+using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.Repositories;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Logitude.BL.GlobalModel;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.BL;
+using Logitude.TariffModule.Data.Repositories;
+using Logitude.TariffModule.Data.EntityPOCOs;
+using Logitude.TariffModule.BL.CLoseTable;
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class TPGFileTypeUpdateClass
@@ -375,30 +389,30 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
 	        FeatureRepository featureRepository = new FeatureRepository(0); 
-            List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 	        QueryGroup TPGFileTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "f69d", Name = "Customs.TPGFileType Query Group" }, queryGroupRepository);
-	        queryGroupRepository.SubmitChanges();
+				        queryGroupRepository.SubmitChanges();
 
 	        ObjectTable TPGFileTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.TPGFileType" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> TPGFileTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.TPGFileType").ToList();   
 
-			   TextCode TPGFileTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TPGFileType.Q.TPGFileType", DefaultText = "TPGFileTypeQuery",LocalDefaultText = null, ObjectTableId = TPGFileTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   TextCode TPGFileTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TPGFileType.Q.TPGFileType", DefaultText = @"TPGFileType",LocalDefaultText = "TPGFileType", ObjectTableId = TPGFileTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
 			   Feature TPGFileTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TPGFileType.Q.TPGFileType", ObjectTableId = TPGFileTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "TPGFileType.Features.TPGFileType", NameTextCodeDefaultText = "TPGFileType", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query TPGFileTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TPGFileTypeTextCode_0.Id, Code = "TPGFileType",  QueryGroupCode = "f69d", IndexOrder = 0, Tenant = 0, ObjectTableId = TPGFileTypeObjectTable.Id, QuerySection = "Customs.TPGFileType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = TPGFileTypeFeature_0.Id,FeatureUniqeCode= TPGFileTypeFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending" }, queriesRepository, tenantQueries);
+			  Query TPGFileTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TPGFileTypeTextCode_0.Id, NameTextCodeCode = TPGFileTypeTextCode_0.Code, ObjectTableName = "Customs.TPGFileType", Code = "TPGFileType",  QueryGroupCode = "f69d", IndexOrder = 0, Tenant = 0, ObjectTableId = TPGFileTypeObjectTable.Id, QuerySection = "Customs.TPGFileType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = TPGFileTypeFeature_0.Id,FeatureUniqeCode= TPGFileTypeFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn TPGFileTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TPGFileTypeQuery.Id, IndexOrder = 0, ObjectFieldId = TPGFileTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == TPGFileTypeObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TPGFileTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TPGFileTypeQuery.Id,QueryCode = TPGFileTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = TPGFileTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == TPGFileTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TPGFileTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == TPGFileTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn TPGFileTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TPGFileTypeQuery.Id, IndexOrder = 1, ObjectFieldId = TPGFileTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == TPGFileTypeObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TPGFileTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TPGFileTypeQuery.Id,QueryCode = TPGFileTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = TPGFileTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == TPGFileTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TPGFileTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == TPGFileTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn TPGFileTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TPGFileTypeQuery.Id, IndexOrder = 2, ObjectFieldId = TPGFileTypeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == TPGFileTypeObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TPGFileTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TPGFileTypeQuery.Id,QueryCode = TPGFileTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = TPGFileTypeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == TPGFileTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TPGFileTypeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == TPGFileTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn TPGFileTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TPGFileTypeQuery.Id, IndexOrder = 3, ObjectFieldId = TPGFileTypeObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == TPGFileTypeObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 50 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TPGFileTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TPGFileTypeQuery.Id,QueryCode = TPGFileTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = TPGFileTypeObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == TPGFileTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TPGFileTypeObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == TPGFileTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 50 }, queryColumnsRepository, tenantQueryColumns);
 	   
 	    }
 
@@ -416,32 +430,44 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    
 		}
 
-	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext)
+	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
 	    {   
 			ObjectTable TPGFileTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.TPGFileType" && d.Tenant == 0).FirstOrDefault(); 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
-                Code = "CREV",
-                EnglishName = "Created",
-                Tenant = 0,
-                AddedManually = false,
-				IsManualEntry = false,
-                LocalName = "Created",
+                Code =  "CREV",
+                ShortView =  true,
+                IsManualEntry =  false,
+                LocalName =  "Created",
+                EnglishName =  "Created",
+                EventTypeCategoryCode =  "OPE",
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
                 ObjectTableId = TPGFileTypeObjectTable.Id,
-                ShortView = true,
+				 
             }, EventTypeRepository, tenantEventTypes);
 
 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
-                Code = "UPEV",
-                EnglishName = "Updated",
-                Tenant = 0,
-                AddedManually = false,
-				IsManualEntry = false,
-                LocalName = "Updated",
+                Code =  "UPEV",
+                ShortView =  false,
+                IsManualEntry =  false,
+                LocalName =  "Updated",
+                EnglishName =  "Updated",
+                EventTypeCategoryCode =  "OPE",
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
                 ObjectTableId = TPGFileTypeObjectTable.Id,
-                ShortView = false,
+				 
             }, EventTypeRepository, tenantEventTypes);
 
 
@@ -449,7 +475,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }     
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {     
+	    
+}
+
+    
 
    }
     

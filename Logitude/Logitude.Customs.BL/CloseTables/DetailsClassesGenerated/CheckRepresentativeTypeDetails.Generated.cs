@@ -20,17 +20,45 @@ namespace Logitude.Customs.BL
    {
        public List<CheckRepresentativeTypeDetails> GetAll()
        {
-		    var all = new List<CheckRepresentativeTypeDetails>(); 
+		    var all = new List<CheckRepresentativeTypeDetails>();  
+            all.Add(new CheckRepresentativeTypeDetails()
+            {    
+                Code = "1", 
+                SearchFields = "1,יבואן", 
+                Inactive = false, 
+                LocalName = "יבואן", 
+			});
+			 
+            all.Add(new CheckRepresentativeTypeDetails()
+            {    
+                Code = "2", 
+                SearchFields = "2,סוכן מכס", 
+                Inactive = false, 
+                LocalName = "סוכן מכס", 
+			});
+			 
+            all.Add(new CheckRepresentativeTypeDetails()
+            {    
+                Code = "3", 
+                SearchFields = "3,רשות מוסמכת", 
+                Inactive = false, 
+                LocalName = "רשות מוסמכת", 
+			});
+			
             return all;
        }
 
 	    public void MapPoco(CheckRepresentativeType newPoco)
-        {    
+        {   
+		    newPoco.Code = this.Code;  
+			newPoco.SearchFields = GetSearchFields(this);   
+		    newPoco.Inactive = this.Inactive;  
+		    newPoco.LocalName = this.LocalName;   
         }
 
 		public string GetSearchFields(CheckRepresentativeType rec)
         {   
-           return string.Empty;
+           return String.Concat(rec.Code,",",rec.Inactive,",",rec.LocalName,",");
         }
    }
 }

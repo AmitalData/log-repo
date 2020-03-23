@@ -49,7 +49,7 @@ using Logitude.Social.Data.EntityPOCOs;
 using Logitude.Social.BL;
 using Logitude.Social.Data.Repsitories;
 using Logitude.Server.Tools.CloseTablesClasses;
-using Logitude.Customs.BL.CloseTables;
+using Logitude.Customs.BL.ClosedTable;
 using Logitude.CRM.BL.CLoseTable;
 using Logitude.BookingLib.BL.CLoseTable;
 using Logitude.WarehouseLib.Data.Repositories;
@@ -58,6 +58,20 @@ using Logitude.WarehouseLib.BL.CLoseTable;
 using Logitude.TimeManagement.Data.Repositories;
 using Logitude.TimeManagement.Data.EntityPOCOs;
 using Logitude.TimeManagement.BL.CLoseTable;
+using Logitude.BL.ShipmentsModel.CloseTables;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Logitude.BL.ShipmentsModel;
+using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.Repositories;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Logitude.BL.GlobalModel;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.BL;
+using Logitude.TariffModule.Data.Repositories;
+using Logitude.TariffModule.Data.EntityPOCOs;
+using Logitude.TariffModule.BL.CLoseTable;
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomsInsuranceCompanyUpdateClass
@@ -97,8 +111,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Customs Insurance Company",
-			      				    Code =  "d355",
-			      				    Name =  "Customs.CustomsInsuranceCompany Query Group",
+			      				    Code =  "CNQG",
+			      				    Name =  "Customs.CustomsInsuranceCompany",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "LocalName",
 			      				    GenerateDomainService =  false,
@@ -346,7 +360,33 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
-	    {  	   
+	    {  
+	        FeatureRepository featureRepository = new FeatureRepository(0); 
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+	        QueryGroup CustomsInsuranceCompanyQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "CNQG", Name = "Customs.CustomsInsuranceCompany" }, queryGroupRepository);
+				        queryGroupRepository.SubmitChanges();
+
+	        ObjectTable CustomsInsuranceCompanyObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.CustomsInsuranceCompany" && d.Tenant == 0).FirstOrDefault();
+	        List<ObjectField> CustomsInsuranceCompanyObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.CustomsInsuranceCompany").ToList();   
+
+			   TextCode CustomsInsuranceCompanyTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomsInsuranceCompany.Q.CustomsInsuranceCompany", DefaultText = @"CustomsInsuranceCompany",LocalDefaultText = "CustomsInsuranceCompany", ObjectTableId = CustomsInsuranceCompanyObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature CustomsInsuranceCompanyFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CustomsInsuranceCompany.Q.CustomsInsuranceCompany", ObjectTableId = CustomsInsuranceCompanyObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsInsuranceCompanyFeatures.CustomsInsuranceCompany", NameTextCodeDefaultText = "CustomsInsuranceCompany", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+
+	        TextCodeRepository.SubmitChanges();
+	        FeaturesRepository.SubmitChanges();    
+	      
+
+			  Query CustomsInsuranceCompanyQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomsInsuranceCompanyTextCode_0.Id, NameTextCodeCode = CustomsInsuranceCompanyTextCode_0.Code, ObjectTableName = "Customs.CustomsInsuranceCompany", Code = "CustomsInsuranceCompany",  QueryGroupCode = "CNQG", IndexOrder = 0, Tenant = 0, ObjectTableId = CustomsInsuranceCompanyObjectTable.Id, QuerySection = "Customs.CustomsInsuranceCompany", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CustomsInsuranceCompanyFeature_0.Id,FeatureUniqeCode= CustomsInsuranceCompanyFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+	
+			 QueryColumn CustomsInsuranceCompanyQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsInsuranceCompanyQuery.Id,QueryCode = CustomsInsuranceCompanyQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = CustomsInsuranceCompanyObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == CustomsInsuranceCompanyObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomsInsuranceCompanyObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == CustomsInsuranceCompanyObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn CustomsInsuranceCompanyQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsInsuranceCompanyQuery.Id,QueryCode = CustomsInsuranceCompanyQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = CustomsInsuranceCompanyObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == CustomsInsuranceCompanyObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomsInsuranceCompanyObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == CustomsInsuranceCompanyObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn CustomsInsuranceCompanyQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsInsuranceCompanyQuery.Id,QueryCode = CustomsInsuranceCompanyQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = CustomsInsuranceCompanyObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == CustomsInsuranceCompanyObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomsInsuranceCompanyObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == CustomsInsuranceCompanyObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn CustomsInsuranceCompanyQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsInsuranceCompanyQuery.Id,QueryCode = CustomsInsuranceCompanyQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = CustomsInsuranceCompanyObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == CustomsInsuranceCompanyObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomsInsuranceCompanyObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == CustomsInsuranceCompanyObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+	   
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
@@ -359,36 +399,54 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
+	    {  
+
+		   		   //--------------> Additional Features <--------------\\
+
+		   Feature CustomsInsuranceCompanyFeature_INSURANCECOMPANY = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "INSURANCECOMPANY", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CustomsInsuranceCompanyObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CustomsInsuranceCompany.Features.CustomsInsuranceCompany", NameTextCodeDefaultText = @"CustomsInsuranceCompany" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+   
 	    
 		}
 
-	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext)
+	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
 	    {   
 			ObjectTable CustomsInsuranceCompanyObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CustomsInsuranceCompany" && d.Tenant == 0).FirstOrDefault(); 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
-                Code = "CREV",
-                EnglishName = "Created",
-                Tenant = 0,
-                AddedManually = false,
-				IsManualEntry = false,
-                LocalName = "Created",
+                Code =  "CREV",
+                ShortView =  true,
+                IsManualEntry =  false,
+                LocalName =  "Created",
+                EnglishName =  "Created",
+                EventTypeCategoryCode =  "OPE",
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
                 ObjectTableId = CustomsInsuranceCompanyObjectTable.Id,
-                ShortView = true,
+				 
             }, EventTypeRepository, tenantEventTypes);
 
 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
-                Code = "UPEV",
-                EnglishName = "Updated",
-                Tenant = 0,
-                AddedManually = false,
-				IsManualEntry = false,
-                LocalName = "Updated",
+                Code =  "UPEV",
+                ShortView =  false,
+                IsManualEntry =  false,
+                LocalName =  "Updated",
+                EnglishName =  "Updated",
+                EventTypeCategoryCode =  "OPE",
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
                 ObjectTableId = CustomsInsuranceCompanyObjectTable.Id,
-                ShortView = false,
+				 
             }, EventTypeRepository, tenantEventTypes);
 
 
@@ -396,7 +454,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }     
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {     
+	    
+}
+
+    
 
    }
     

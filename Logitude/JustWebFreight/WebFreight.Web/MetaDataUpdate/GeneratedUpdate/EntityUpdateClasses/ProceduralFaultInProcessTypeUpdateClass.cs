@@ -49,7 +49,7 @@ using Logitude.Social.Data.EntityPOCOs;
 using Logitude.Social.BL;
 using Logitude.Social.Data.Repsitories;
 using Logitude.Server.Tools.CloseTablesClasses;
-using Logitude.Customs.BL.CloseTables;
+using Logitude.Customs.BL.ClosedTable;
 using Logitude.CRM.BL.CLoseTable;
 using Logitude.BookingLib.BL.CLoseTable;
 using Logitude.WarehouseLib.Data.Repositories;
@@ -58,6 +58,20 @@ using Logitude.WarehouseLib.BL.CLoseTable;
 using Logitude.TimeManagement.Data.Repositories;
 using Logitude.TimeManagement.Data.EntityPOCOs;
 using Logitude.TimeManagement.BL.CLoseTable;
+using Logitude.BL.ShipmentsModel.CloseTables;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Logitude.BL.ShipmentsModel;
+using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.Repositories;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Logitude.BL.GlobalModel;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.BL;
+using Logitude.TariffModule.Data.Repositories;
+using Logitude.TariffModule.Data.EntityPOCOs;
+using Logitude.TariffModule.BL.CLoseTable;
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ProceduralFaultInProcessTypeUpdateClass
@@ -99,8 +113,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "מקור רישום הליקוי",
 			      				    DefaultText =  "Procedural Fault Input Process Type",
-			      				    Code =  "8146",
-			      				    Name =  "Customs.ProceduralFaultInProcessType Query Group",
+			      				    Code =  "FPQG",
+			      				    Name =  "Customs.ProceduralFaultInProcessType",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "LocalName",
 			      				    GenerateDomainService =  false,
@@ -359,7 +373,33 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
-	    {  	   
+	    {  
+	        FeatureRepository featureRepository = new FeatureRepository(0); 
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+	        QueryGroup ProceduralFaultInProcessTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "FPQG", Name = "Customs.ProceduralFaultInProcessType" }, queryGroupRepository);
+				        queryGroupRepository.SubmitChanges();
+
+	        ObjectTable ProceduralFaultInProcessTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.ProceduralFaultInProcessType" && d.Tenant == 0).FirstOrDefault();
+	        List<ObjectField> ProceduralFaultInProcessTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.ProceduralFaultInProcessType").ToList();   
+
+			   TextCode ProceduralFaultInProcessTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ProceduralFaultInProcessType.Q.ProceduralFaultInProcessType", DefaultText = @"ProceduralFaultInProcessType",LocalDefaultText = "ProceduralFaultInProcessType", ObjectTableId = ProceduralFaultInProcessTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature ProceduralFaultInProcessTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ProceduralFaultInProcessType.Q.ProceduralFaultInProcessType", ObjectTableId = ProceduralFaultInProcessTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "ProceduralFaultInProcessTypeFeatures.ProceduralFaultInProcessType", NameTextCodeDefaultText = "ProceduralFaultInProcessType", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+
+	        TextCodeRepository.SubmitChanges();
+	        FeaturesRepository.SubmitChanges();    
+	      
+
+			  Query ProceduralFaultInProcessTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ProceduralFaultInProcessTypeTextCode_0.Id, NameTextCodeCode = ProceduralFaultInProcessTypeTextCode_0.Code, ObjectTableName = "Customs.ProceduralFaultInProcessType", Code = "ProceduralFaultInProcessType",  QueryGroupCode = "FPQG", IndexOrder = 0, Tenant = 0, ObjectTableId = ProceduralFaultInProcessTypeObjectTable.Id, QuerySection = "Customs.ProceduralFaultInProcessType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ProceduralFaultInProcessTypeFeature_0.Id,FeatureUniqeCode= ProceduralFaultInProcessTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+	
+			 QueryColumn ProceduralFaultInProcessTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ProceduralFaultInProcessTypeQuery.Id,QueryCode = ProceduralFaultInProcessTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = ProceduralFaultInProcessTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == ProceduralFaultInProcessTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ProceduralFaultInProcessTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == ProceduralFaultInProcessTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn ProceduralFaultInProcessTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ProceduralFaultInProcessTypeQuery.Id,QueryCode = ProceduralFaultInProcessTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = ProceduralFaultInProcessTypeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == ProceduralFaultInProcessTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ProceduralFaultInProcessTypeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == ProceduralFaultInProcessTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn ProceduralFaultInProcessTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ProceduralFaultInProcessTypeQuery.Id,QueryCode = ProceduralFaultInProcessTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = ProceduralFaultInProcessTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == ProceduralFaultInProcessTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ProceduralFaultInProcessTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == ProceduralFaultInProcessTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn ProceduralFaultInProcessTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ProceduralFaultInProcessTypeQuery.Id,QueryCode = ProceduralFaultInProcessTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = ProceduralFaultInProcessTypeObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == ProceduralFaultInProcessTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ProceduralFaultInProcessTypeObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == ProceduralFaultInProcessTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+	   
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
@@ -372,36 +412,54 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
+	    {  
+
+		   		   //--------------> Additional Features <--------------\\
+
+		   Feature ProceduralFaultInProcessTypeFeature_PROCEDURALFAULTINPUTPROCESS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PROCEDURALFAULTINPUTPROCESS", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ProceduralFaultInProcessTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.ProceduralFaultInProcessType.Features.ProceduralFaultInProcessType", NameTextCodeDefaultText = @"Procedural Fault Input Process Type" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+   
 	    
 		}
 
-	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext)
+	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
 	    {   
 			ObjectTable ProceduralFaultInProcessTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.ProceduralFaultInProcessType" && d.Tenant == 0).FirstOrDefault(); 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
-                Code = "CREV",
-                EnglishName = "Created",
-                Tenant = 0,
-                AddedManually = false,
-				IsManualEntry = false,
-                LocalName = "Created",
+                Code =  "CREV",
+                ShortView =  true,
+                IsManualEntry =  false,
+                LocalName =  "Created",
+                EnglishName =  "Created",
+                EventTypeCategoryCode =  "OPE",
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
                 ObjectTableId = ProceduralFaultInProcessTypeObjectTable.Id,
-                ShortView = true,
+				 
             }, EventTypeRepository, tenantEventTypes);
 
 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
-                Code = "UPEV",
-                EnglishName = "Updated",
-                Tenant = 0,
-                AddedManually = false,
-				IsManualEntry = false,
-                LocalName = "Updated",
+                Code =  "UPEV",
+                ShortView =  false,
+                IsManualEntry =  false,
+                LocalName =  "Updated",
+                EnglishName =  "Updated",
+                EventTypeCategoryCode =  "OPE",
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
                 ObjectTableId = ProceduralFaultInProcessTypeObjectTable.Id,
-                ShortView = false,
+				 
             }, EventTypeRepository, tenantEventTypes);
 
 
@@ -409,7 +467,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }     
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {     
+	    
+}
+
+    
 
    }
     

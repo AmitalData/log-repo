@@ -49,7 +49,7 @@ using Logitude.Social.Data.EntityPOCOs;
 using Logitude.Social.BL;
 using Logitude.Social.Data.Repsitories;
 using Logitude.Server.Tools.CloseTablesClasses;
-using Logitude.Customs.BL.CloseTables;
+using Logitude.Customs.BL.ClosedTable;
 using Logitude.CRM.BL.CLoseTable;
 using Logitude.BookingLib.BL.CLoseTable;
 using Logitude.WarehouseLib.Data.Repositories;
@@ -58,6 +58,20 @@ using Logitude.WarehouseLib.BL.CLoseTable;
 using Logitude.TimeManagement.Data.Repositories;
 using Logitude.TimeManagement.Data.EntityPOCOs;
 using Logitude.TimeManagement.BL.CLoseTable;
+using Logitude.BL.ShipmentsModel.CloseTables;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Logitude.BL.ShipmentsModel;
+using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.Repositories;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Logitude.BL.GlobalModel;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.BL;
+using Logitude.TariffModule.Data.Repositories;
+using Logitude.TariffModule.Data.EntityPOCOs;
+using Logitude.TariffModule.BL.CLoseTable;
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ProductNameTypeUpdateClass
@@ -98,8 +112,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Product Name Types",
-			      				    Code =  "f3c7",
-			      				    Name =  "Customs.ProductNameType Query Group",
+			      				    Code =  "PRNT",
+			      				    Name =  "Customs.ProductNameType",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "LocalName",
 			      				    GenerateDomainService =  false,
@@ -374,7 +388,33 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
-	    {  	   
+	    {  
+	        FeatureRepository featureRepository = new FeatureRepository(0); 
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+	        QueryGroup ProductNameTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "PRNT", Name = "Customs.ProductNameType" }, queryGroupRepository);
+				        queryGroupRepository.SubmitChanges();
+
+	        ObjectTable ProductNameTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.ProductNameType" && d.Tenant == 0).FirstOrDefault();
+	        List<ObjectField> ProductNameTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.ProductNameType").ToList();   
+
+			   TextCode ProductNameTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ProductNameType.Q.ProductNameType", DefaultText = @"ProductNameType",LocalDefaultText = "ProductNameType", ObjectTableId = ProductNameTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature ProductNameTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ProductNameType.Q.ProductNameType", ObjectTableId = ProductNameTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "ProductNameTypeFeatures.ProductNameType", NameTextCodeDefaultText = "ProductNameType", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+
+	        TextCodeRepository.SubmitChanges();
+	        FeaturesRepository.SubmitChanges();    
+	      
+
+			  Query ProductNameTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ProductNameTypeTextCode_0.Id, NameTextCodeCode = ProductNameTypeTextCode_0.Code, ObjectTableName = "Customs.ProductNameType", Code = "ProductNameType",  QueryGroupCode = "PRNT", IndexOrder = 0, Tenant = 0, ObjectTableId = ProductNameTypeObjectTable.Id, QuerySection = "Customs.ProductNameType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ProductNameTypeFeature_0.Id,FeatureUniqeCode= ProductNameTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+	
+			 QueryColumn ProductNameTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ProductNameTypeQuery.Id,QueryCode = ProductNameTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = ProductNameTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == ProductNameTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ProductNameTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == ProductNameTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn ProductNameTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ProductNameTypeQuery.Id,QueryCode = ProductNameTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = ProductNameTypeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == ProductNameTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ProductNameTypeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == ProductNameTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn ProductNameTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ProductNameTypeQuery.Id,QueryCode = ProductNameTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = ProductNameTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == ProductNameTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ProductNameTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == ProductNameTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn ProductNameTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ProductNameTypeQuery.Id,QueryCode = ProductNameTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = ProductNameTypeObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == ProductNameTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ProductNameTypeObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == ProductNameTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+	   
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
@@ -387,36 +427,54 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
+	    {  
+
+		   		   //--------------> Additional Features <--------------\\
+
+		   Feature ProductNameTypeFeature_PRODUCTNAMETYPE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PRODUCTNAMETYPE", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ProductNameTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.ProductNameType.Features.ProductNameTypes", NameTextCodeDefaultText = @"Product Name Types" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+   
 	    
 		}
 
-	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext)
+	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
 	    {   
 			ObjectTable ProductNameTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.ProductNameType" && d.Tenant == 0).FirstOrDefault(); 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
-                Code = "CREV",
-                EnglishName = "Created",
-                Tenant = 0,
-                AddedManually = false,
-				IsManualEntry = false,
-                LocalName = "Created",
+                Code =  "CREV",
+                ShortView =  true,
+                IsManualEntry =  false,
+                LocalName =  "Created",
+                EnglishName =  "Created",
+                EventTypeCategoryCode =  "OPE",
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
                 ObjectTableId = ProductNameTypeObjectTable.Id,
-                ShortView = true,
+				 
             }, EventTypeRepository, tenantEventTypes);
 
 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
-                Code = "UPEV",
-                EnglishName = "Updated",
-                Tenant = 0,
-                AddedManually = false,
-				IsManualEntry = false,
-                LocalName = "Updated",
+                Code =  "UPEV",
+                ShortView =  false,
+                IsManualEntry =  false,
+                LocalName =  "Updated",
+                EnglishName =  "Updated",
+                EventTypeCategoryCode =  "OPE",
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
                 ObjectTableId = ProductNameTypeObjectTable.Id,
-                ShortView = false,
+				 
             }, EventTypeRepository, tenantEventTypes);
 
 
@@ -424,7 +482,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }     
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {     
+	    
+}
+
+    
 
    }
     

@@ -20,17 +20,781 @@ namespace Logitude.Customs.BL
    {
        public List<ParagraphTypeDetails> GetAll()
        {
-		    var all = new List<ParagraphTypeDetails>(); 
+		    var all = new List<ParagraphTypeDetails>();  
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "1", 
+                SearchFields = "1,מכס כללי", 
+                Inactive = false, 
+                LocalName = "מכס כללי", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "10", 
+                SearchFields = "10,כופר כסף", 
+                Inactive = false, 
+                LocalName = "כופר כסף", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "11", 
+                SearchFields = "11,מכס מכירות משרד הביטחון", 
+                Inactive = false, 
+                LocalName = "מכס מכירות משרד הביטחון", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "12", 
+                SearchFields = "12,תשלומי חובה", 
+                Inactive = false, 
+                LocalName = "תשלומי חובה", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "13", 
+                SearchFields = "13,מכירת טובין סב''ן", 
+                Inactive = false, 
+                LocalName = "מכירת טובין סב''ן", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "14", 
+                SearchFields = "14,מכירה ע''י רשות הנמלים", 
+                Inactive = false, 
+                LocalName = "מכירה ע''י רשות הנמלים", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "15", 
+                SearchFields = "15,מע''מ יבוא", 
+                Inactive = false, 
+                LocalName = "מע''מ יבוא", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "16", 
+                SearchFields = "16,מס קניה יבוא", 
+                Inactive = false, 
+                LocalName = "מס קניה יבוא", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "17", 
+                SearchFields = "17,מס קניה יצור מקומי", 
+                Inactive = false, 
+                LocalName = "מס קניה יצור מקומי", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "18", 
+                SearchFields = "18,קנסות פיגורים", 
+                Inactive = false, 
+                LocalName = "קנסות פיגורים", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "19", 
+                SearchFields = "19,מס קניה טבק", 
+                Inactive = false, 
+                LocalName = "מס קניה טבק", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "20", 
+                SearchFields = "20,מס דלק", 
+                Inactive = false, 
+                LocalName = "מס דלק", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "21", 
+                SearchFields = "21,מס בולים הטבעות", 
+                Inactive = false, 
+                LocalName = "מס בולים הטבעות", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "22", 
+                SearchFields = "22,מס בולים פיגור הטבעות", 
+                Inactive = false, 
+                LocalName = "מס בולים פיגור הטבעות", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "23", 
+                SearchFields = "23,מס בולים הדפסה והטבעה", 
+                Inactive = false, 
+                LocalName = "מס בולים הדפסה והטבעה", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "24", 
+                SearchFields = "24,אגרת רישיון מחסן רישוי", 
+                Inactive = false, 
+                LocalName = "אגרת רישיון מחסן רישוי", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "25", 
+                SearchFields = "25,אגרת רישיון עמילי מכס", 
+                Inactive = false, 
+                LocalName = "אגרת רישיון עמילי מכס", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "26", 
+                SearchFields = "26,אגרת רשיון דלק", 
+                Inactive = false, 
+                LocalName = "אגרת רשיון דלק", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "27", 
+                SearchFields = "27,אגרת תעודות", 
+                Inactive = false, 
+                LocalName = "אגרת תעודות", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "28", 
+                SearchFields = "28,אגרת תעודות עוסק רשום", 
+                Inactive = false, 
+                LocalName = "אגרת תעודות עוסק רשום", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "29", 
+                SearchFields = "29,אגרת השגחה ופיקוח", 
+                Inactive = false, 
+                LocalName = "אגרת השגחה ופיקוח", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "3", 
+                SearchFields = "3,מכס ריבית", 
+                Inactive = false, 
+                LocalName = "מכס ריבית", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "30", 
+                SearchFields = "30,רכב נכים (מפקידים)", 
+                Inactive = false, 
+                LocalName = "רכב נכים (מפקידים)", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "31", 
+                SearchFields = "31,מיסי נמל", 
+                Inactive = false, 
+                LocalName = "מיסי נמל", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "32", 
+                SearchFields = "32,דמי הרשאה", 
+                Inactive = false, 
+                LocalName = "דמי הרשאה", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "33", 
+                SearchFields = "33,קרן להבטחת מסים (קלמי)", 
+                Inactive = false, 
+                LocalName = "קרן להבטחת מסים (קלמי)", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "34", 
+                SearchFields = "34,מחסנאות דואר", 
+                Inactive = false, 
+                LocalName = "מחסנאות דואר", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "35", 
+                SearchFields = "35,אגרת חקלאות", 
+                Inactive = false, 
+                LocalName = "אגרת חקלאות", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "36", 
+                SearchFields = "36,אגרת מחשב", 
+                Inactive = false, 
+                LocalName = "אגרת מחשב", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "37", 
+                SearchFields = "37,מכירת סגרי מכולות", 
+                Inactive = false, 
+                LocalName = "מכירת סגרי מכולות", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "38", 
+                SearchFields = "38,הרמה", 
+                Inactive = false, 
+                LocalName = "הרמה", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "39", 
+                SearchFields = "39,נכים - משרד הבטחון(מבוטל)", 
+                Inactive = false, 
+                LocalName = "נכים - משרד הבטחון(מבוטל)", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "4", 
+                SearchFields = "4,מכס הצמדה", 
+                Inactive = false, 
+                LocalName = "מכס הצמדה", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "40", 
+                SearchFields = "40,נכים - בטוח לאומי(מבוטל)", 
+                Inactive = false, 
+                LocalName = "נכים - בטוח לאומי(מבוטל)", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "41", 
+                SearchFields = "41,נכים - משרד האוצר(מבוטל)", 
+                Inactive = false, 
+                LocalName = "נכים - משרד האוצר(מבוטל)", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "42", 
+                SearchFields = "42,אגרת רש''ת", 
+                Inactive = false, 
+                LocalName = "אגרת רש''ת", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "43", 
+                SearchFields = "43,היטל ש.ל.ג", 
+                Inactive = false, 
+                LocalName = "היטל ש.ל.ג", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "45", 
+                SearchFields = "45,קרן הבהאיים", 
+                Inactive = false, 
+                LocalName = "קרן הבהאיים", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "46", 
+                SearchFields = "46,בדיקות מעבדה", 
+                Inactive = false, 
+                LocalName = "בדיקות מעבדה", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "47", 
+                SearchFields = "47,אגרת רישיון משלח בינלאומי", 
+                Inactive = false, 
+                LocalName = "אגרת רישיון משלח בינלאומי", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "48", 
+                SearchFields = "48,מכירת סב''ן - החזרים", 
+                Inactive = false, 
+                LocalName = "מכירת סב''ן - החזרים", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "49", 
+                SearchFields = "49,מכס - גביה ביתר", 
+                Inactive = false, 
+                LocalName = "מכס - גביה ביתר", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "5", 
+                SearchFields = "5,ניכוי מס במקור", 
+                Inactive = false, 
+                LocalName = "ניכוי מס במקור", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "50", 
+                SearchFields = "50,אגרת ביטחון", 
+                Inactive = false, 
+                LocalName = "אגרת ביטחון", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "500", 
+                SearchFields = "500,החזר פיקדון", 
+                Inactive = false, 
+                LocalName = "החזר פיקדון", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "51", 
+                SearchFields = "51,דמי אחסנה נעמן-זוכה", 
+                Inactive = false, 
+                LocalName = "דמי אחסנה נעמן-זוכה", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "52", 
+                SearchFields = "52,מכס קרנה", 
+                Inactive = false, 
+                LocalName = "מכס קרנה", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "53", 
+                SearchFields = "53,חשבות החזר דמי אחסנה", 
+                Inactive = false, 
+                LocalName = "חשבות החזר דמי אחסנה", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "54", 
+                SearchFields = "54,תיקוני מצהר", 
+                Inactive = false, 
+                LocalName = "תיקוני מצהר", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "55", 
+                SearchFields = "55,קיזוזי תפ''ג", 
+                Inactive = false, 
+                LocalName = "קיזוזי תפ''ג", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "56", 
+                SearchFields = "56,ביטול רשימון", 
+                Inactive = false, 
+                LocalName = "ביטול רשימון", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "57", 
+                SearchFields = "57,צקים חוזרים", 
+                Inactive = false, 
+                LocalName = "צקים חוזרים", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "58", 
+                SearchFields = "58,פיקדון", 
+                Inactive = false, 
+                LocalName = "פיקדון", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "59", 
+                SearchFields = "59,היטל ביטחה", 
+                Inactive = false, 
+                LocalName = "היטל ביטחה", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "6", 
+                SearchFields = "6,מסב להחזר", 
+                Inactive = false, 
+                LocalName = "מסב להחזר", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "61", 
+                SearchFields = "61,היטל הגנה", 
+                Inactive = false, 
+                LocalName = "היטל הגנה", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "62", 
+                SearchFields = "62,היטל היצף", 
+                Inactive = false, 
+                LocalName = "היטל היצף", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "63", 
+                SearchFields = "63,היטל משווה", 
+                Inactive = false, 
+                LocalName = "היטל משווה", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "64", 
+                SearchFields = "64,נכים ביטוח לאומי - ניידות (חו''ז)", 
+                Inactive = false, 
+                LocalName = "נכים ביטוח לאומי - ניידות (חו''ז)", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "65", 
+                SearchFields = "65,נכים ביטוח לאומי - פעולות איבה (חו''ז)", 
+                Inactive = false, 
+                LocalName = "נכים ביטוח לאומי - פעולות איבה (חו''ז)", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "66", 
+                SearchFields = "66,נכים - ביטחון (חו''ז)", 
+                Inactive = false, 
+                LocalName = "נכים - ביטחון (חו''ז)", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "67", 
+                SearchFields = "67,נכים - אוצר (חו''ז)", 
+                Inactive = false, 
+                LocalName = "נכים - אוצר (חו''ז)", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "68", 
+                SearchFields = "68,הוצאות עיקולים מקוונים (באמצעות שע''מ)", 
+                Inactive = false, 
+                LocalName = "הוצאות עיקולים מקוונים (באמצעות שע''מ)", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "69", 
+                SearchFields = "69,הוצאות דרישת חוב", 
+                Inactive = false, 
+                LocalName = "הוצאות דרישת חוב", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "7", 
+                SearchFields = "7,מקדמה העברת זה''ב", 
+                Inactive = false, 
+                LocalName = "מקדמה העברת זה''ב", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "70", 
+                SearchFields = "70,הוצאות התראה", 
+                Inactive = false, 
+                LocalName = "הוצאות התראה", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "71", 
+                SearchFields = "71,הוצאות התראה שנייה", 
+                Inactive = false, 
+                LocalName = "הוצאות התראה שנייה", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "72", 
+                SearchFields = "72,הוצאות תזכורת", 
+                Inactive = false, 
+                LocalName = "הוצאות תזכורת", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "73", 
+                SearchFields = "73,מכס ערבונות", 
+                Inactive = false, 
+                LocalName = "מכס ערבונות", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "74", 
+                SearchFields = "74,מכס קנסות", 
+                Inactive = false, 
+                LocalName = "מכס קנסות", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "75", 
+                SearchFields = "75,מכס מצהרים", 
+                Inactive = false, 
+                LocalName = "מכס מצהרים", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "76", 
+                SearchFields = "76,מכס דמי אחסנה סב''ן", 
+                Inactive = false, 
+                LocalName = "מכס דמי אחסנה סב''ן", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "77", 
+                SearchFields = "77,קנס סב''ן ויתור", 
+                Inactive = false, 
+                LocalName = "קנס סב''ן ויתור", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "78", 
+                SearchFields = "78,קנס סב''ן חוקיות יבוא", 
+                Inactive = false, 
+                LocalName = "קנס סב''ן חוקיות יבוא", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "79", 
+                SearchFields = "79,החזר ממכירת טובין סב''ן", 
+                Inactive = false, 
+                LocalName = "החזר ממכירת טובין סב''ן", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "8", 
+                SearchFields = "8,מכס הישבון", 
+                Inactive = false, 
+                LocalName = "מכס הישבון", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "80", 
+                SearchFields = "80,מס קניה קרנה", 
+                Inactive = false, 
+                LocalName = "מס קניה קרנה", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "81", 
+                SearchFields = "81,מע''מ יבוא ביטחוני", 
+                Inactive = false, 
+                LocalName = "מע''מ יבוא ביטחוני", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "83", 
+                SearchFields = "83,קנס מינהלי", 
+                Inactive = false, 
+                LocalName = "קנס מינהלי", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "84", 
+                SearchFields = "84,אגרת איכות סביבה", 
+                Inactive = false, 
+                LocalName = "אגרת איכות סביבה", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "85", 
+                SearchFields = "85,אגרת סגרי מכולות", 
+                Inactive = false, 
+                LocalName = "אגרת סגרי מכולות", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "86", 
+                SearchFields = "86,אגרת הזמנת רשימון", 
+                Inactive = false, 
+                LocalName = "אגרת הזמנת רשימון", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "87", 
+                SearchFields = "87,עיקול לטובת המכס", 
+                Inactive = false, 
+                LocalName = "עיקול לטובת המכס", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "88", 
+                SearchFields = "88,אגרת רציף", 
+                Inactive = false, 
+                LocalName = "אגרת רציף", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "89", 
+                SearchFields = "89,אגרת נמל", 
+                Inactive = false, 
+                LocalName = "אגרת נמל", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "9", 
+                SearchFields = "9,מימוש ערבונות", 
+                Inactive = false, 
+                LocalName = "מימוש ערבונות", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "90", 
+                SearchFields = "90,קיזוז מע''מ בטחוני", 
+                Inactive = false, 
+                LocalName = "קיזוז מע''מ בטחוני", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "91", 
+                SearchFields = "91,חילוט פיקדון", 
+                Inactive = false, 
+                LocalName = "חילוט פיקדון", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "92", 
+                SearchFields = "92,מכס החרמות (כופר כסף)", 
+                Inactive = false, 
+                LocalName = "מכס החרמות (כופר כסף)", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "93", 
+                SearchFields = "93,כופר כסף מתיק חקר", 
+                Inactive = false, 
+                LocalName = "כופר כסף מתיק חקר", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "94", 
+                SearchFields = "94,עיצום כספי סוכני מכס", 
+                Inactive = false, 
+                LocalName = "עיצום כספי סוכני מכס", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "95", 
+                SearchFields = "95,עיצום כספי הלבנת הון", 
+                Inactive = false, 
+                LocalName = "עיצום כספי הלבנת הון", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "96", 
+                SearchFields = "96,קנס לסוכני מכס", 
+                Inactive = false, 
+                LocalName = "קנס לסוכני מכס", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "97", 
+                SearchFields = "97,עיצום כספי לחוקיות יבוא", 
+                Inactive = false, 
+                LocalName = "עיצום כספי לחוקיות יבוא", 
+			});
+			 
+            all.Add(new ParagraphTypeDetails()
+            {    
+                Code = "98", 
+                SearchFields = "98,הוצאות גרירה", 
+                Inactive = false, 
+                LocalName = "הוצאות גרירה", 
+			});
+			
             return all;
        }
 
 	    public void MapPoco(ParagraphType newPoco)
-        {    
+        {   
+		    newPoco.Code = this.Code;  
+			newPoco.SearchFields = GetSearchFields(this);   
+		    newPoco.Inactive = this.Inactive;  
+		    newPoco.LocalName = this.LocalName;   
         }
 
 		public string GetSearchFields(ParagraphType rec)
         {   
-           return string.Empty;
+           return String.Concat(rec.Code,",",rec.Inactive,",",rec.LocalName,",");
         }
    }
 }

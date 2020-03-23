@@ -49,7 +49,7 @@ using Logitude.Social.Data.EntityPOCOs;
 using Logitude.Social.BL;
 using Logitude.Social.Data.Repsitories;
 using Logitude.Server.Tools.CloseTablesClasses;
-using Logitude.Customs.BL.CloseTables;
+using Logitude.Customs.BL.ClosedTable;
 using Logitude.CRM.BL.CLoseTable;
 using Logitude.BookingLib.BL.CLoseTable;
 using Logitude.WarehouseLib.Data.Repositories;
@@ -58,6 +58,20 @@ using Logitude.WarehouseLib.BL.CLoseTable;
 using Logitude.TimeManagement.Data.Repositories;
 using Logitude.TimeManagement.Data.EntityPOCOs;
 using Logitude.TimeManagement.BL.CLoseTable;
+using Logitude.BL.ShipmentsModel.CloseTables;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Logitude.BL.ShipmentsModel;
+using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.Repositories;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Logitude.BL.GlobalModel;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.BL;
+using Logitude.TariffModule.Data.Repositories;
+using Logitude.TariffModule.Data.EntityPOCOs;
+using Logitude.TariffModule.BL.CLoseTable;
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class SealUpdateReasonTypeUpdateClass
@@ -115,8 +129,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    NoTS =  false,
 			      				    HasMenuButtons =  false,
 			      				    AllowedForComputingPartners =  false,
-			      				    Code1 =  "46d7",
-			      				    Name1 =  " Query Group",
 			      				    CustomFieldsCount =  0,
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
@@ -133,9 +145,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "Code",
 					  						OldFieldName =  "Code",
-					  						IsNew =  false,
-					  						IsChecked =  true,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.SealUpdateReasonType",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -187,10 +196,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -200,9 +205,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "EnglishName",
 					  						OldFieldName =  "Name",
-					  						IsNew =  false,
-					  						IsChecked =  true,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.SealUpdateReasonType",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -255,10 +257,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -268,9 +266,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "SearchFields",
 					  						OldFieldName =  "SearchFields",
-					  						IsNew =  false,
-					  						IsChecked =  true,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.SealUpdateReasonType",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -320,10 +315,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -333,9 +324,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "LocalName",
 					  						OldFieldName =  "LocalName",
-					  						IsNew =  true,
-					  						IsChecked =  true,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.SealUpdateReasonType",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -388,10 +376,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -401,9 +385,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "Inactive",
 					  						OldFieldName =  "Inactive",
-					  						IsNew =  true,
-					  						IsChecked =  true,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.SealUpdateReasonType",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -456,10 +437,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -468,30 +445,31 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
 	        FeatureRepository featureRepository = new FeatureRepository(0); 
-            List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 	        QueryGroup SealUpdateReasonTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "ba29", Name = " Query Group" }, queryGroupRepository);
-	        queryGroupRepository.SubmitChanges();
+						QueryGroup SealUpdateReasonTypeQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "46d7", Name = " Query Group" }, queryGroupRepository);
+				        queryGroupRepository.SubmitChanges();
 
 	        ObjectTable SealUpdateReasonTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.SealUpdateReasonType" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> SealUpdateReasonTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.SealUpdateReasonType").ToList();   
 
-			   TextCode SealUpdateReasonTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "SealUpdateReasonType.Q.SealUpdateReasonQ", DefaultText = "Seal Update Reason Query",LocalDefaultText = "Seal Update Reason Query", ObjectTableId = SealUpdateReasonTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature SealUpdateReasonTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SealUpdateReasonType.Q.SealUpdateReasonQ", ObjectTableId = SealUpdateReasonTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "SealUpdateReasonType.Features.SealUpdateReasonQ", NameTextCodeDefaultText = "SealUpdateReasonQ", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode SealUpdateReasonTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "SealUpdateReasonType.Q.SealUpdateReasonQ", DefaultText = @"SealUpdateReasonQ",LocalDefaultText = "SealUpdateReasonQ", ObjectTableId = SealUpdateReasonTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature SealUpdateReasonTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SealUpdateReasonType.Q.SealUpdateReasonQ", ObjectTableId = SealUpdateReasonTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "SealUpdateReasonTypeFeatures.SealUpdateReasonQ", NameTextCodeDefaultText = "SealUpdateReasonQ", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query SealUpdateReasonQQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = SealUpdateReasonTypeTextCode_0.Id, Code = "SealUpdateReasonQ",  QueryGroupCode = "ba29", IndexOrder = 0, Tenant = 0, ObjectTableId = SealUpdateReasonTypeObjectTable.Id, QuerySection = "Customs.SealUpdateReasonType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = SealUpdateReasonTypeFeature_0.Id, DefaultSortName = "Code", DefaultSortDirection = "Ascending" }, queriesRepository, tenantQueries);
+			  Query SealUpdateReasonQQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = SealUpdateReasonTypeTextCode_0.Id, NameTextCodeCode = SealUpdateReasonTypeTextCode_0.Code, ObjectTableName = "Customs.SealUpdateReasonType", Code = "SealUpdateReasonQ",  QueryGroupCode = "ba29", IndexOrder = 0, Tenant = 0, ObjectTableId = SealUpdateReasonTypeObjectTable.Id, QuerySection = "Customs.SealUpdateReasonType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = SealUpdateReasonTypeFeature_0.Id,FeatureUniqeCode= SealUpdateReasonTypeFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Ascending", Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn SealUpdateReasonQQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SealUpdateReasonQQuery.Id, IndexOrder = 0, ObjectFieldId = SealUpdateReasonTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == SealUpdateReasonTypeObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn SealUpdateReasonQQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SealUpdateReasonQQuery.Id,QueryCode = SealUpdateReasonQQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = SealUpdateReasonTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == SealUpdateReasonTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = SealUpdateReasonTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == SealUpdateReasonTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn SealUpdateReasonQQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SealUpdateReasonQQuery.Id, IndexOrder = 1, ObjectFieldId = SealUpdateReasonTypeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == SealUpdateReasonTypeObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn SealUpdateReasonQQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SealUpdateReasonQQuery.Id,QueryCode = SealUpdateReasonQQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = SealUpdateReasonTypeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == SealUpdateReasonTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = SealUpdateReasonTypeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == SealUpdateReasonTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn SealUpdateReasonQQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SealUpdateReasonQQuery.Id, IndexOrder = 2, ObjectFieldId = SealUpdateReasonTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == SealUpdateReasonTypeObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn SealUpdateReasonQQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SealUpdateReasonQQuery.Id,QueryCode = SealUpdateReasonQQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = SealUpdateReasonTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == SealUpdateReasonTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = SealUpdateReasonTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == SealUpdateReasonTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn SealUpdateReasonQQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SealUpdateReasonQQuery.Id, IndexOrder = 3, ObjectFieldId = SealUpdateReasonTypeObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == SealUpdateReasonTypeObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn SealUpdateReasonQQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SealUpdateReasonQQuery.Id,QueryCode = SealUpdateReasonQQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = SealUpdateReasonTypeObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == SealUpdateReasonTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = SealUpdateReasonTypeObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == SealUpdateReasonTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 	   
 	    }
 
@@ -505,36 +483,54 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
+	    {  
+
+		   		   //--------------> Additional Features <--------------\\
+
+		   Feature SealUpdateReasonTypeFeature_SealUpdateReasonType_Q_SealUpdateReasonQ = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SealUpdateReasonType.Q.SealUpdateReasonQ", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = SealUpdateReasonTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "SealUpdateReasonType.Features.SealUpdateReasonQ", NameTextCodeDefaultText = @"SealUpdateReasonQ" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+   
 	    
 		}
 
-	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext)
+	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
 	    {   
 			ObjectTable SealUpdateReasonTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.SealUpdateReasonType" && d.Tenant == 0).FirstOrDefault(); 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
-                Code = "CREV",
-                EnglishName = "Created",
-                Tenant = 0,
-                AddedManually = false,
-				IsManualEntry = false,
-                LocalName = "Created",
+                Code =  "CREV",
+                ShortView =  true,
+                IsManualEntry =  false,
+                LocalName =  "Created",
+                EnglishName =  "Created",
+                EventTypeCategoryCode =  "OPE",
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
                 ObjectTableId = SealUpdateReasonTypeObjectTable.Id,
-                ShortView = true,
+				 
             }, EventTypeRepository, tenantEventTypes);
 
 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
-                Code = "UPEV",
-                EnglishName = "Updated",
-                Tenant = 0,
-                AddedManually = false,
-				IsManualEntry = false,
-                LocalName = "Updated",
+                Code =  "UPEV",
+                ShortView =  false,
+                IsManualEntry =  false,
+                LocalName =  "Updated",
+                EnglishName =  "Updated",
+                EventTypeCategoryCode =  "OPE",
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
                 ObjectTableId = SealUpdateReasonTypeObjectTable.Id,
-                ShortView = false,
+				 
             }, EventTypeRepository, tenantEventTypes);
 
 
@@ -542,7 +538,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }     
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {     
+	    
+}
+
+    
 
    }
     

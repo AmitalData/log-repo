@@ -20,17 +20,49 @@ namespace Logitude.Customs.BL
    {
        public List<LastReleaseFromWarehouseDetails> GetAll()
        {
-		    var all = new List<LastReleaseFromWarehouseDetails>(); 
+		    var all = new List<LastReleaseFromWarehouseDetails>();  
+            all.Add(new LastReleaseFromWarehouseDetails()
+            {    
+                Code = "F", 
+                EnglishName = "False", 
+                Inactive = false, 
+                LocalName = "חלקי", 
+                SearchFields = "f,false,חלקי", 
+			});
+			 
+            all.Add(new LastReleaseFromWarehouseDetails()
+            {    
+                Code = "N", 
+                EnglishName = "Null", 
+                Inactive = false, 
+                LocalName = "מלא", 
+                SearchFields = "n,null,מלא", 
+			});
+			 
+            all.Add(new LastReleaseFromWarehouseDetails()
+            {    
+                Code = "T", 
+                EnglishName = "True", 
+                Inactive = false, 
+                LocalName = "חלקי אחרון", 
+                SearchFields = "t,true,חלקי אחרון", 
+			});
+			
             return all;
        }
 
 	    public void MapPoco(LastReleaseFromWarehouse newPoco)
-        {    
+        {   
+		    newPoco.Code = this.Code;  
+		    newPoco.EnglishName = this.EnglishName;  
+		    newPoco.Inactive = this.Inactive;  
+		    newPoco.LocalName = this.LocalName;  
+			newPoco.SearchFields = GetSearchFields(this);    
         }
 
 		public string GetSearchFields(LastReleaseFromWarehouse rec)
         {   
-           return string.Empty;
+           return String.Concat(rec.Code,",",rec.EnglishName,",",rec.Inactive,",",rec.LocalName,",");
         }
    }
 }

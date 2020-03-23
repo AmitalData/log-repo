@@ -49,7 +49,7 @@ using Logitude.Social.Data.EntityPOCOs;
 using Logitude.Social.BL;
 using Logitude.Social.Data.Repsitories;
 using Logitude.Server.Tools.CloseTablesClasses;
-using Logitude.Customs.BL.CloseTables;
+using Logitude.Customs.BL.ClosedTable;
 using Logitude.CRM.BL.CLoseTable;
 using Logitude.BookingLib.BL.CLoseTable;
 using Logitude.WarehouseLib.Data.Repositories;
@@ -58,6 +58,20 @@ using Logitude.WarehouseLib.BL.CLoseTable;
 using Logitude.TimeManagement.Data.Repositories;
 using Logitude.TimeManagement.Data.EntityPOCOs;
 using Logitude.TimeManagement.BL.CLoseTable;
+using Logitude.BL.ShipmentsModel.CloseTables;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Logitude.BL.ShipmentsModel;
+using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.Repositories;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Logitude.BL.GlobalModel;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.BL;
+using Logitude.TariffModule.Data.Repositories;
+using Logitude.TariffModule.Data.EntityPOCOs;
+using Logitude.TariffModule.BL.CLoseTable;
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ConverterTypeUpdateClass
@@ -99,8 +113,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "סוג ממיר ברכב",
 			      				    DefaultText =  "Converter Type",
-			      				    Code =  "88bb",
-			      				    Name =  "Customs.ConverterType Query Group",
+			      				    Code =  "CTQG",
+			      				    Name =  "Customs.ConverterType",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "LocalName",
 			      				    GenerateDomainService =  false,
@@ -353,7 +367,33 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
-	    {  	   
+	    {  
+	        FeatureRepository featureRepository = new FeatureRepository(0); 
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+	        QueryGroup ConverterTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "CTQG", Name = "Customs.ConverterType" }, queryGroupRepository);
+				        queryGroupRepository.SubmitChanges();
+
+	        ObjectTable ConverterTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.ConverterType" && d.Tenant == 0).FirstOrDefault();
+	        List<ObjectField> ConverterTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.ConverterType").ToList();   
+
+			   TextCode ConverterTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ConverterType.Q.ConverterType", DefaultText = @"ConverterType",LocalDefaultText = "ConverterType", ObjectTableId = ConverterTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature ConverterTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ConverterType.Q.ConverterType", ObjectTableId = ConverterTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "ConverterTypeFeatures.ConverterType", NameTextCodeDefaultText = "ConverterType", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+
+	        TextCodeRepository.SubmitChanges();
+	        FeaturesRepository.SubmitChanges();    
+	      
+
+			  Query ConverterTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ConverterTypeTextCode_0.Id, NameTextCodeCode = ConverterTypeTextCode_0.Code, ObjectTableName = "Customs.ConverterType", Code = "ConverterType",  QueryGroupCode = "CTQG", IndexOrder = 0, Tenant = 0, ObjectTableId = ConverterTypeObjectTable.Id, QuerySection = "Customs.ConverterType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ConverterTypeFeature_0.Id,FeatureUniqeCode= ConverterTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+	
+			 QueryColumn ConverterTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConverterTypeQuery.Id,QueryCode = ConverterTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = ConverterTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == ConverterTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ConverterTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == ConverterTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn ConverterTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConverterTypeQuery.Id,QueryCode = ConverterTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = ConverterTypeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == ConverterTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ConverterTypeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == ConverterTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn ConverterTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConverterTypeQuery.Id,QueryCode = ConverterTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = ConverterTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == ConverterTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ConverterTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == ConverterTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn ConverterTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConverterTypeQuery.Id,QueryCode = ConverterTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = ConverterTypeObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == ConverterTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ConverterTypeObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == ConverterTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+	   
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
@@ -366,36 +406,54 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
+	    {  
+
+		   		   //--------------> Additional Features <--------------\\
+
+		   Feature ConverterTypeFeature_CONVERTERTYPE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CONVERTERTYPE", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ConverterTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.ConverterType.Features.ConverterType", NameTextCodeDefaultText = @"Converter Type" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+   
 	    
 		}
 
-	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext)
+	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
 	    {   
 			ObjectTable ConverterTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.ConverterType" && d.Tenant == 0).FirstOrDefault(); 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
-                Code = "CREV",
-                EnglishName = "Created",
-                Tenant = 0,
-                AddedManually = false,
-				IsManualEntry = false,
-                LocalName = "Created",
+                Code =  "CREV",
+                ShortView =  true,
+                IsManualEntry =  false,
+                LocalName =  "Created",
+                EnglishName =  "Created",
+                EventTypeCategoryCode =  "OPE",
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
                 ObjectTableId = ConverterTypeObjectTable.Id,
-                ShortView = true,
+				 
             }, EventTypeRepository, tenantEventTypes);
 
 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
-                Code = "UPEV",
-                EnglishName = "Updated",
-                Tenant = 0,
-                AddedManually = false,
-				IsManualEntry = false,
-                LocalName = "Updated",
+                Code =  "UPEV",
+                ShortView =  false,
+                IsManualEntry =  false,
+                LocalName =  "Updated",
+                EnglishName =  "Updated",
+                EventTypeCategoryCode =  "OPE",
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
                 ObjectTableId = ConverterTypeObjectTable.Id,
-                ShortView = false,
+				 
             }, EventTypeRepository, tenantEventTypes);
 
 
@@ -403,7 +461,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }     
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {     
+	    
+}
+
+    
 
    }
     

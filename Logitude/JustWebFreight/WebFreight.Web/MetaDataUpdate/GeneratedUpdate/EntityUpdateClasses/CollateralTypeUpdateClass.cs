@@ -49,7 +49,7 @@ using Logitude.Social.Data.EntityPOCOs;
 using Logitude.Social.BL;
 using Logitude.Social.Data.Repsitories;
 using Logitude.Server.Tools.CloseTablesClasses;
-using Logitude.Customs.BL.CloseTables;
+using Logitude.Customs.BL.ClosedTable;
 using Logitude.CRM.BL.CLoseTable;
 using Logitude.BookingLib.BL.CLoseTable;
 using Logitude.WarehouseLib.Data.Repositories;
@@ -58,6 +58,20 @@ using Logitude.WarehouseLib.BL.CLoseTable;
 using Logitude.TimeManagement.Data.Repositories;
 using Logitude.TimeManagement.Data.EntityPOCOs;
 using Logitude.TimeManagement.BL.CLoseTable;
+using Logitude.BL.ShipmentsModel.CloseTables;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Logitude.BL.ShipmentsModel;
+using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.Repositories;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Logitude.BL.GlobalModel;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.BL;
+using Logitude.TariffModule.Data.Repositories;
+using Logitude.TariffModule.Data.EntityPOCOs;
+using Logitude.TariffModule.BL.CLoseTable;
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CollateralTypeUpdateClass
@@ -98,8 +112,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Collateral Type",
-			      				    Code =  "da81",
-			      				    Name =  "Customs.CollateralType Query Group",
+			      				    Code =  "COLT",
+			      				    Name =  "Customs.CollateralType",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "LocalName",
 			      				    GenerateDomainService =  false,
@@ -357,7 +371,33 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
-	    {  	   
+	    {  
+	        FeatureRepository featureRepository = new FeatureRepository(0); 
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+	        QueryGroup CollateralTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "COLT", Name = "Customs.CollateralType" }, queryGroupRepository);
+				        queryGroupRepository.SubmitChanges();
+
+	        ObjectTable CollateralTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.CollateralType" && d.Tenant == 0).FirstOrDefault();
+	        List<ObjectField> CollateralTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.CollateralType").ToList();   
+
+			   TextCode CollateralTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CollateralType.Q.CollateralType", DefaultText = @"CollateralType",LocalDefaultText = "CollateralType", ObjectTableId = CollateralTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature CollateralTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CollateralType.Q.CollateralType", ObjectTableId = CollateralTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "CollateralTypeFeatures.CollateralType", NameTextCodeDefaultText = "CollateralType", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+
+	        TextCodeRepository.SubmitChanges();
+	        FeaturesRepository.SubmitChanges();    
+	      
+
+			  Query CollateralTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CollateralTypeTextCode_0.Id, NameTextCodeCode = CollateralTypeTextCode_0.Code, ObjectTableName = "Customs.CollateralType", Code = "CollateralType",  QueryGroupCode = "COLT", IndexOrder = 0, Tenant = 0, ObjectTableId = CollateralTypeObjectTable.Id, QuerySection = "Customs.CollateralType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CollateralTypeFeature_0.Id,FeatureUniqeCode= CollateralTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+	
+			 QueryColumn CollateralTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CollateralTypeQuery.Id,QueryCode = CollateralTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = CollateralTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == CollateralTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CollateralTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == CollateralTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn CollateralTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CollateralTypeQuery.Id,QueryCode = CollateralTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = CollateralTypeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == CollateralTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CollateralTypeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == CollateralTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn CollateralTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CollateralTypeQuery.Id,QueryCode = CollateralTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = CollateralTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == CollateralTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CollateralTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == CollateralTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn CollateralTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CollateralTypeQuery.Id,QueryCode = CollateralTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = CollateralTypeObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == CollateralTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CollateralTypeObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == CollateralTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+	   
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
@@ -370,36 +410,54 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
+	    {  
+
+		   		   //--------------> Additional Features <--------------\\
+
+		   Feature CollateralTypeFeature_COLLATERALTYPE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "COLLATERALTYPE", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CollateralTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CollateralType.Features.CollateralTypes", NameTextCodeDefaultText = @"Collateral Types" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+   
 	    
 		}
 
-	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext)
+	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
 	    {   
 			ObjectTable CollateralTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CollateralType" && d.Tenant == 0).FirstOrDefault(); 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
-                Code = "CREV",
-                EnglishName = "Created",
-                Tenant = 0,
-                AddedManually = false,
-				IsManualEntry = false,
-                LocalName = "Created",
+                Code =  "CREV",
+                ShortView =  true,
+                IsManualEntry =  false,
+                LocalName =  "Created",
+                EnglishName =  "Created",
+                EventTypeCategoryCode =  "OPE",
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
                 ObjectTableId = CollateralTypeObjectTable.Id,
-                ShortView = true,
+				 
             }, EventTypeRepository, tenantEventTypes);
 
 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
-                Code = "UPEV",
-                EnglishName = "Updated",
-                Tenant = 0,
-                AddedManually = false,
-				IsManualEntry = false,
-                LocalName = "Updated",
+                Code =  "UPEV",
+                ShortView =  false,
+                IsManualEntry =  false,
+                LocalName =  "Updated",
+                EnglishName =  "Updated",
+                EventTypeCategoryCode =  "OPE",
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
                 ObjectTableId = CollateralTypeObjectTable.Id,
-                ShortView = false,
+				 
             }, EventTypeRepository, tenantEventTypes);
 
 
@@ -407,7 +465,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }     
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {     
+	    
+}
+
+    
 
    }
     

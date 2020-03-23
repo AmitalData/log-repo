@@ -49,7 +49,7 @@ using Logitude.Social.Data.EntityPOCOs;
 using Logitude.Social.BL;
 using Logitude.Social.Data.Repsitories;
 using Logitude.Server.Tools.CloseTablesClasses;
-using Logitude.Customs.BL.CloseTables;
+using Logitude.Customs.BL.ClosedTable;
 using Logitude.CRM.BL.CLoseTable;
 using Logitude.BookingLib.BL.CLoseTable;
 using Logitude.WarehouseLib.Data.Repositories;
@@ -58,6 +58,20 @@ using Logitude.WarehouseLib.BL.CLoseTable;
 using Logitude.TimeManagement.Data.Repositories;
 using Logitude.TimeManagement.Data.EntityPOCOs;
 using Logitude.TimeManagement.BL.CLoseTable;
+using Logitude.BL.ShipmentsModel.CloseTables;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Logitude.BL.ShipmentsModel;
+using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.Repositories;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Logitude.BL.GlobalModel;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.BL;
+using Logitude.TariffModule.Data.Repositories;
+using Logitude.TariffModule.Data.EntityPOCOs;
+using Logitude.TariffModule.BL.CLoseTable;
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CollateralRequestStatusUpdateClass
@@ -98,8 +112,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Collateral Request Status",
-			      				    Code =  "5841",
-			      				    Name =  "Customs.CollateralRequestStatus Query Group",
+			      				    Code =  "CORS",
+			      				    Name =  "Customs.CollateralRequestStatus",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "LocalName",
 			      				    GenerateDomainService =  false,
@@ -355,7 +369,33 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
-	    {  	   
+	    {  
+	        FeatureRepository featureRepository = new FeatureRepository(0); 
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+	        QueryGroup CollateralRequestStatusQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "CORS", Name = "Customs.CollateralRequestStatus" }, queryGroupRepository);
+				        queryGroupRepository.SubmitChanges();
+
+	        ObjectTable CollateralRequestStatusObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.CollateralRequestStatus" && d.Tenant == 0).FirstOrDefault();
+	        List<ObjectField> CollateralRequestStatusObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.CollateralRequestStatus").ToList();   
+
+			   TextCode CollateralRequestStatusTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CollateralRequestStatus.Q.CollateralRequestStatus", DefaultText = @"CollateralRequestStatus",LocalDefaultText = "CollateralRequestStatus", ObjectTableId = CollateralRequestStatusObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature CollateralRequestStatusFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CollateralRequestStatus.Q.CollateralRequestStatus", ObjectTableId = CollateralRequestStatusObjectTable.Id, Tenant = 0, NameTextCodeCode = "CollateralRequestStatusFeatures.CollateralRequestStatus", NameTextCodeDefaultText = "CollateralRequestStatus", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+
+	        TextCodeRepository.SubmitChanges();
+	        FeaturesRepository.SubmitChanges();    
+	      
+
+			  Query CollateralRequestStatusQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CollateralRequestStatusTextCode_0.Id, NameTextCodeCode = CollateralRequestStatusTextCode_0.Code, ObjectTableName = "Customs.CollateralRequestStatus", Code = "CollateralRequestStatus",  QueryGroupCode = "CORS", IndexOrder = 0, Tenant = 0, ObjectTableId = CollateralRequestStatusObjectTable.Id, QuerySection = "Customs.CollateralRequestStatus", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CollateralRequestStatusFeature_0.Id,FeatureUniqeCode= CollateralRequestStatusFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+	
+			 QueryColumn CollateralRequestStatusQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CollateralRequestStatusQuery.Id,QueryCode = CollateralRequestStatusQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = CollateralRequestStatusObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == CollateralRequestStatusObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CollateralRequestStatusObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == CollateralRequestStatusObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn CollateralRequestStatusQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CollateralRequestStatusQuery.Id,QueryCode = CollateralRequestStatusQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = CollateralRequestStatusObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == CollateralRequestStatusObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CollateralRequestStatusObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == CollateralRequestStatusObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn CollateralRequestStatusQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CollateralRequestStatusQuery.Id,QueryCode = CollateralRequestStatusQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = CollateralRequestStatusObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == CollateralRequestStatusObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CollateralRequestStatusObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == CollateralRequestStatusObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn CollateralRequestStatusQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CollateralRequestStatusQuery.Id,QueryCode = CollateralRequestStatusQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = CollateralRequestStatusObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == CollateralRequestStatusObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CollateralRequestStatusObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == CollateralRequestStatusObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+	   
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
@@ -368,36 +408,54 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
+	    {  
+
+		   		   //--------------> Additional Features <--------------\\
+
+		   Feature CollateralRequestStatusFeature_COLLATERALREQUESTSTATUS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "COLLATERALREQUESTSTATUS", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CollateralRequestStatusObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CollateralRequestStatus.Features.CollateralRequestStatus", NameTextCodeDefaultText = @"Collateral Request Status" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+   
 	    
 		}
 
-	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext)
+	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
 	    {   
 			ObjectTable CollateralRequestStatusObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CollateralRequestStatus" && d.Tenant == 0).FirstOrDefault(); 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
-                Code = "CREV",
-                EnglishName = "Created",
-                Tenant = 0,
-                AddedManually = false,
-				IsManualEntry = false,
-                LocalName = "Created",
+                Code =  "CREV",
+                ShortView =  true,
+                IsManualEntry =  false,
+                LocalName =  "Created",
+                EnglishName =  "Created",
+                EventTypeCategoryCode =  "OPE",
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
                 ObjectTableId = CollateralRequestStatusObjectTable.Id,
-                ShortView = true,
+				 
             }, EventTypeRepository, tenantEventTypes);
 
 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
-                Code = "UPEV",
-                EnglishName = "Updated",
-                Tenant = 0,
-                AddedManually = false,
-				IsManualEntry = false,
-                LocalName = "Updated",
+                Code =  "UPEV",
+                ShortView =  false,
+                IsManualEntry =  false,
+                LocalName =  "Updated",
+                EnglishName =  "Updated",
+                EventTypeCategoryCode =  "OPE",
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
                 ObjectTableId = CollateralRequestStatusObjectTable.Id,
-                ShortView = false,
+				 
             }, EventTypeRepository, tenantEventTypes);
 
 
@@ -405,7 +463,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }     
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {     
+	    
+}
+
+    
 
    }
     

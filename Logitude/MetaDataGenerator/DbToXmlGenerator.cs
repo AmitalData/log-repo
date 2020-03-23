@@ -159,7 +159,7 @@ namespace MetaDataGenerator
                 //string projectPath = Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory()));
                 //DirectoryInfo solutionDir = System.IO.Directory.GetParent(projectPath);
                 //string solutionDirectory = solutionDir.FullName;
-                string filePath = directoryPath + table.Name + ".lxml";
+                string filePath = directoryPath + table.Name.Replace("Customs.","") + ".lxml";
 
                 XmlDocument doc = new XmlDocument();
                 doc.Load(filePath);
@@ -924,14 +924,14 @@ namespace MetaDataGenerator
 
         private static void GetModelClassTypes(ObjectTable table, string modelName, out string qName, out Type tableClass, out string qPMName, out Type tablePMClass, out string qListName, out Type tableListClass)
         {
-            qName = Assembly.CreateQualifiedName(modelName + ".Data", modelName + ".Data" + ".EntityPOCOs." + table.Name);
+            qName = Assembly.CreateQualifiedName(modelName + ".Data", modelName + ".Data" + ".EntityPOCOs." + table.Name.Replace("Customs.", ""));
             tableClass = System.Type.GetType(qName);
 
-            qPMName = Assembly.CreateQualifiedName(modelName + ".BL", modelName + ".BL" + ".EntityPMs." + table.Name + "PM");
+            qPMName = Assembly.CreateQualifiedName(modelName + ".BL", modelName + ".BL" + ".EntityPMs." + table.Name.Replace("Customs.", "") + "PM");
             tablePMClass = System.Type.GetType(qPMName);
 
             //Logitude.Accounting.Data.EntityLists
-            qListName = Assembly.CreateQualifiedName(modelName + ".Data", modelName + ".Data" + ".EntityLists." + table.Name + "List");
+            qListName = Assembly.CreateQualifiedName(modelName + ".Data", modelName + ".Data" + ".EntityLists." + table.Name.Replace("Customs.","") + "List");
             tableListClass = System.Type.GetType(qListName);
         }
 

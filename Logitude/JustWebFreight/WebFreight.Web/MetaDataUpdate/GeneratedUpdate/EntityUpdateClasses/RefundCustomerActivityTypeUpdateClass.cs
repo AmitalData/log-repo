@@ -49,7 +49,7 @@ using Logitude.Social.Data.EntityPOCOs;
 using Logitude.Social.BL;
 using Logitude.Social.Data.Repsitories;
 using Logitude.Server.Tools.CloseTablesClasses;
-using Logitude.Customs.BL.CloseTables;
+using Logitude.Customs.BL.ClosedTable;
 using Logitude.CRM.BL.CLoseTable;
 using Logitude.BookingLib.BL.CLoseTable;
 using Logitude.WarehouseLib.Data.Repositories;
@@ -58,6 +58,20 @@ using Logitude.WarehouseLib.BL.CLoseTable;
 using Logitude.TimeManagement.Data.Repositories;
 using Logitude.TimeManagement.Data.EntityPOCOs;
 using Logitude.TimeManagement.BL.CLoseTable;
+using Logitude.BL.ShipmentsModel.CloseTables;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Logitude.BL.ShipmentsModel;
+using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.Repositories;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Logitude.BL.GlobalModel;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.BL;
+using Logitude.TariffModule.Data.Repositories;
+using Logitude.TariffModule.Data.EntityPOCOs;
+using Logitude.TariffModule.BL.CLoseTable;
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class RefundCustomerActivityTypeUpdateClass
@@ -115,8 +129,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    NoTS =  false,
 			      				    HasMenuButtons =  false,
 			      				    AllowedForComputingPartners =  false,
-			      				    Code1 =  "08a3",
-			      				    Name1 =  " Query Group",
 			      				    CustomFieldsCount =  0,
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
@@ -133,9 +145,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "Code",
 					  						OldFieldName =  "Code",
-					  						IsNew =  false,
-					  						IsChecked =  true,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.RefundCustomerActivityType",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -186,10 +195,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -199,22 +204,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "EnglishName",
 					  						OldFieldName =  "EnglishName",
-					  						IsNew =  false,
-					  						IsChecked =  true,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.RefundCustomerActivityType",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  40,
 					  						IsRequired =  false,
 					  						DisplayOnLookUp =  false,
-					  						CanFilter =  true,
+					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  40,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
-					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -251,10 +252,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -264,9 +261,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "SearchFields",
 					  						OldFieldName =  "SearchFields",
-					  						IsNew =  false,
-					  						IsChecked =  true,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.RefundCustomerActivityType",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -314,10 +308,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -327,9 +317,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "LocalName",
 					  						OldFieldName =  "LocalName",
-					  						IsNew =  true,
-					  						IsChecked =  true,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.RefundCustomerActivityType",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -380,10 +367,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -393,9 +376,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "Inactive",
 					  						OldFieldName =  "Inactive",
-					  						IsNew =  true,
-					  						IsChecked =  true,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.RefundCustomerActivityType",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -446,10 +426,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -458,30 +434,31 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
 	        FeatureRepository featureRepository = new FeatureRepository(0); 
-            List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 	        QueryGroup RefundCustomerActivityTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "0387", Name = " Query Group" }, queryGroupRepository);
-	        queryGroupRepository.SubmitChanges();
+						QueryGroup RefundCustomerActivityTypeQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "08a3", Name = " Query Group" }, queryGroupRepository);
+				        queryGroupRepository.SubmitChanges();
 
 	        ObjectTable RefundCustomerActivityTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.RefundCustomerActivityType" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> RefundCustomerActivityTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.RefundCustomerActivityType").ToList();   
 
-			   TextCode RefundCustomerActivityTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "RefundCustomerActivityType.Q.RefundCustomerActivityType", DefaultText = "RefundCustomerActivityTypeQuery",LocalDefaultText = "", ObjectTableId = RefundCustomerActivityTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   TextCode RefundCustomerActivityTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "RefundCustomerActivityType.Q.RefundCustomerActivityType", DefaultText = @"RefundCustomerActivityType",LocalDefaultText = "RefundCustomerActivityType", ObjectTableId = RefundCustomerActivityTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
 			   Feature RefundCustomerActivityTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "RefundCustomerActivityType.Q.RefundCustomerActivityType", ObjectTableId = RefundCustomerActivityTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "RefundCustomerActivityType.Features.RefundCustomerActivityType", NameTextCodeDefaultText = "RefundCustomerActivityType", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query RefundCustomerActivityTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = RefundCustomerActivityTypeTextCode_0.Id, Code = "RefundCustomerActivityType",  QueryGroupCode = "0387", IndexOrder = 0, Tenant = 0, ObjectTableId = RefundCustomerActivityTypeObjectTable.Id, QuerySection = "Customs.RefundCustomerActivityType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = RefundCustomerActivityTypeFeature_0.Id,FeatureUniqeCode= RefundCustomerActivityTypeFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending" }, queriesRepository, tenantQueries);
+			  Query RefundCustomerActivityTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = RefundCustomerActivityTypeTextCode_0.Id, NameTextCodeCode = RefundCustomerActivityTypeTextCode_0.Code, ObjectTableName = "Customs.RefundCustomerActivityType", Code = "RefundCustomerActivityType",  QueryGroupCode = "0387", IndexOrder = 0, Tenant = 0, ObjectTableId = RefundCustomerActivityTypeObjectTable.Id, QuerySection = "Customs.RefundCustomerActivityType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = RefundCustomerActivityTypeFeature_0.Id,FeatureUniqeCode= RefundCustomerActivityTypeFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn RefundCustomerActivityTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RefundCustomerActivityTypeQuery.Id, IndexOrder = 0, ObjectFieldId = RefundCustomerActivityTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == RefundCustomerActivityTypeObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 50 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn RefundCustomerActivityTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RefundCustomerActivityTypeQuery.Id,QueryCode = RefundCustomerActivityTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = RefundCustomerActivityTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == RefundCustomerActivityTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = RefundCustomerActivityTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == RefundCustomerActivityTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 50 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn RefundCustomerActivityTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RefundCustomerActivityTypeQuery.Id, IndexOrder = 1, ObjectFieldId = RefundCustomerActivityTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == RefundCustomerActivityTypeObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn RefundCustomerActivityTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RefundCustomerActivityTypeQuery.Id,QueryCode = RefundCustomerActivityTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = RefundCustomerActivityTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == RefundCustomerActivityTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = RefundCustomerActivityTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == RefundCustomerActivityTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn RefundCustomerActivityTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RefundCustomerActivityTypeQuery.Id, IndexOrder = 2, ObjectFieldId = RefundCustomerActivityTypeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == RefundCustomerActivityTypeObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn RefundCustomerActivityTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RefundCustomerActivityTypeQuery.Id,QueryCode = RefundCustomerActivityTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = RefundCustomerActivityTypeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == RefundCustomerActivityTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = RefundCustomerActivityTypeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == RefundCustomerActivityTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn RefundCustomerActivityTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RefundCustomerActivityTypeQuery.Id, IndexOrder = 3, ObjectFieldId = RefundCustomerActivityTypeObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == RefundCustomerActivityTypeObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 50 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn RefundCustomerActivityTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RefundCustomerActivityTypeQuery.Id,QueryCode = RefundCustomerActivityTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = RefundCustomerActivityTypeObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == RefundCustomerActivityTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = RefundCustomerActivityTypeObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == RefundCustomerActivityTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 50 }, queryColumnsRepository, tenantQueryColumns);
 	   
 	    }
 
@@ -499,32 +476,44 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    
 		}
 
-	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext)
+	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
 	    {   
 			ObjectTable RefundCustomerActivityTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.RefundCustomerActivityType" && d.Tenant == 0).FirstOrDefault(); 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
-                Code = "CREV",
-                EnglishName = "Created",
-                Tenant = 0,
-                AddedManually = false,
-				IsManualEntry = false,
-                LocalName = "Created",
+                Code =  "CREV",
+                ShortView =  true,
+                IsManualEntry =  false,
+                LocalName =  "Created",
+                EnglishName =  "Created",
+                EventTypeCategoryCode =  "OPE",
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
                 ObjectTableId = RefundCustomerActivityTypeObjectTable.Id,
-                ShortView = true,
+				 
             }, EventTypeRepository, tenantEventTypes);
 
 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
-                Code = "UPEV",
-                EnglishName = "Updated",
-                Tenant = 0,
-                AddedManually = false,
-				IsManualEntry = false,
-                LocalName = "Updated",
+                Code =  "UPEV",
+                ShortView =  false,
+                IsManualEntry =  false,
+                LocalName =  "Updated",
+                EnglishName =  "Updated",
+                EventTypeCategoryCode =  "OPE",
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
                 ObjectTableId = RefundCustomerActivityTypeObjectTable.Id,
-                ShortView = false,
+				 
             }, EventTypeRepository, tenantEventTypes);
 
 
@@ -532,7 +521,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }     
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {     
+	    
+}
+
+    
 
    }
     

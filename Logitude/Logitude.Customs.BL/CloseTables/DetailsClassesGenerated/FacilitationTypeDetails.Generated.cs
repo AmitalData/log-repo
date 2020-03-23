@@ -24,19 +24,19 @@ namespace Logitude.Customs.BL
             all.Add(new FacilitationTypeDetails()
             {    
                 Code = "1", 
-                LocalName = "AEO", 
+                SearchFields = "1,AEO,A- EO,False,", 
                 EnglishName = "A- EO", 
                 Inactive = false, 
-                SearchFields = "A- EO,1,AEO", 
+                LocalName = "AEO", 
 			});
 			 
             all.Add(new FacilitationTypeDetails()
             {    
-                Inactive = false, 
                 Code = "2", 
-                LocalName = "יבואן מאושר", 
+                SearchFields = "2,יבואן מאושר,Approved Importer,False,", 
                 EnglishName = "Approved Importer", 
-                SearchFields = "Approved Importer,יבואן מאושר,2", 
+                Inactive = false, 
+                LocalName = "יבואן מאושר", 
 			});
 			
             return all;
@@ -45,15 +45,15 @@ namespace Logitude.Customs.BL
 	    public void MapPoco(FacilitationType newPoco)
         {   
 		    newPoco.Code = this.Code;  
-		    newPoco.LocalName = this.LocalName;  
+			newPoco.SearchFields = GetSearchFields(this);   
 		    newPoco.EnglishName = this.EnglishName;  
 		    newPoco.Inactive = this.Inactive;  
-			newPoco.SearchFields = GetSearchFields(this);    
+		    newPoco.LocalName = this.LocalName;   
         }
 
 		public string GetSearchFields(FacilitationType rec)
         {   
-           return String.Concat(rec.Code,",",rec.LocalName,",",rec.EnglishName,",",rec.Inactive,",");
+           return String.Concat(rec.Code,",",rec.EnglishName,",",rec.Inactive,",",rec.LocalName,",");
         }
    }
 }

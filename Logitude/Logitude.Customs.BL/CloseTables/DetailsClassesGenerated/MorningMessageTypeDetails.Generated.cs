@@ -20,17 +20,37 @@ namespace Logitude.Customs.BL
    {
        public List<MorningMessageTypeDetails> GetAll()
        {
-		    var all = new List<MorningMessageTypeDetails>(); 
+		    var all = new List<MorningMessageTypeDetails>();  
+            all.Add(new MorningMessageTypeDetails()
+            {    
+                Code = "1", 
+                SearchFields = "1,כללי", 
+                Inactive = false, 
+                LocalName = "כללי", 
+			});
+			 
+            all.Add(new MorningMessageTypeDetails()
+            {    
+                Code = "2", 
+                SearchFields = "2,תפעול", 
+                Inactive = false, 
+                LocalName = "תפעול", 
+			});
+			
             return all;
        }
 
 	    public void MapPoco(MorningMessageType newPoco)
-        {    
+        {   
+		    newPoco.Code = this.Code;  
+			newPoco.SearchFields = GetSearchFields(this);   
+		    newPoco.Inactive = this.Inactive;  
+		    newPoco.LocalName = this.LocalName;   
         }
 
 		public string GetSearchFields(MorningMessageType rec)
         {   
-           return string.Empty;
+           return String.Concat(rec.Code,",",rec.Inactive,",",rec.LocalName,",");
         }
    }
 }

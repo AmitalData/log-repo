@@ -49,7 +49,7 @@ using Logitude.Social.Data.EntityPOCOs;
 using Logitude.Social.BL;
 using Logitude.Social.Data.Repsitories;
 using Logitude.Server.Tools.CloseTablesClasses;
-using Logitude.Customs.BL.CloseTables;
+using Logitude.Customs.BL.ClosedTable;
 using Logitude.CRM.BL.CLoseTable;
 using Logitude.BookingLib.BL.CLoseTable;
 using Logitude.WarehouseLib.Data.Repositories;
@@ -58,6 +58,20 @@ using Logitude.WarehouseLib.BL.CLoseTable;
 using Logitude.TimeManagement.Data.Repositories;
 using Logitude.TimeManagement.Data.EntityPOCOs;
 using Logitude.TimeManagement.BL.CLoseTable;
+using Logitude.BL.ShipmentsModel.CloseTables;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Logitude.BL.ShipmentsModel;
+using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.Repositories;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Logitude.BL.GlobalModel;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.BL;
+using Logitude.TariffModule.Data.Repositories;
+using Logitude.TariffModule.Data.EntityPOCOs;
+using Logitude.TariffModule.BL.CLoseTable;
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class NotificationUpdateClass
@@ -112,6 +126,105 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
 	    {
 	         
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "Id",
+					  						ObjectTableName =  "Customs.Notification",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  15,
+					  						IsRequired =  true,
+					  						DisplayOnLookUp =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  15,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "Id",
+					  						ListPropertyPath =  "Id",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.Notification",
+					  						DisplayInEntityVariables =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "Id",
+					  						DefaultText =  "Id",
+					  						FullLocalDefaultText =  "מונה התראה",
+					  						ListFieldLable =  "IdListLable",
+					  						ListLableDefaultText =  "Id",
+					  						ListLocalDefaultText =  "מונה התראה",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "Tenant",
+					  						ObjectTableName =  "Customs.Notification",
+					  						FieldsDataType =  "Integer",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  true,
+					  						DisplayOnLookUp =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "Tenant",
+					  						ListPropertyPath =  "Tenant",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DisplayInEntityVariables =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "Tenant",
+					  						DefaultText =  "Tenant",
+					  						ListFieldLable =  "TenantListLable",
+					  						ListLableDefaultText =  "Tenant",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
@@ -1740,39 +1853,58 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
 	    {  
 		   ObjectTable NotificationObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.Notification" && d.Tenant == 0).FirstOrDefault(); 
-		   Feature NotificationFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = NotificationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Notification.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature NotificationFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = NotificationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Notification.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature NotificationFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = NotificationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Notification.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature NotificationFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = NotificationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Notification.Features.PackageFeature", NameTextCodeDefaultText = "Notification Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+
+		   Feature NotificationFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = NotificationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Notification.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature NotificationFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = NotificationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Notification.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature NotificationFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = NotificationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Notification.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature NotificationFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = NotificationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Notification.Features.PackageFeature", NameTextCodeDefaultText = "Notification Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 
+
+		   		   //--------------> Additional Features <--------------\\
+
+		   Feature NotificationFeature_REQUESTSHEET = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "REQUESTSHEET", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = NotificationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Notification.Features.RequestSheet", NameTextCodeDefaultText = @"Request Sheet" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+   
 	    
 		}
 
-	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext)
+	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
 	    {   
 			ObjectTable NotificationObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.Notification" && d.Tenant == 0).FirstOrDefault(); 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
-                Code = "CREV",
-                EnglishName = "Created",
-                Tenant = 0,
-                AddedManually = false,
-				IsManualEntry = false,
-                LocalName = "Created",
+                Code =  "CREV",
+                ShortView =  true,
+                IsManualEntry =  false,
+                LocalName =  "Created",
+                EnglishName =  "Created",
+                EventTypeCategoryCode =  "OPE",
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
                 ObjectTableId = NotificationObjectTable.Id,
-                ShortView = true,
+				 
             }, EventTypeRepository, tenantEventTypes);
 
 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
-                Code = "UPEV",
-                EnglishName = "Updated",
-                Tenant = 0,
-                AddedManually = false,
-				IsManualEntry = false,
-                LocalName = "Updated",
+                Code =  "UPEV",
+                ShortView =  false,
+                IsManualEntry =  false,
+                LocalName =  "Updated",
+                EnglishName =  "Updated",
+                EventTypeCategoryCode =  "OPE",
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
                 ObjectTableId = NotificationObjectTable.Id,
-                ShortView = false,
+				 
             }, EventTypeRepository, tenantEventTypes);
 
 
@@ -1780,7 +1912,84 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }     
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable NotificationObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.Notification" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode NotificationTextCode_CustomsNotificationOViewByAssignee = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Notification.O.ViewByAssignee", DefaultText = "View By Assignee",LocalDefaultText = @"צג לפי נמחה", ObjectTableId = NotificationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode NotificationTextCode_CustomsNotificationOViewByCustomOffice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Notification.O.ViewByCustomOffice", DefaultText = "View By Custom Office",LocalDefaultText = @"צג לפי משרד מותאם אישית", ObjectTableId = NotificationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode NotificationTextCode_CustomsNotificationOOpen = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Notification.O.Open", DefaultText = "Open",LocalDefaultText = @"פתוח", ObjectTableId = NotificationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode NotificationTextCode_CustomsNotificationOClosed = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Notification.O.Closed", DefaultText = "Closed",LocalDefaultText = @"סגור", ObjectTableId = NotificationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode NotificationTextCode_CustomsNotificationOAll = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Notification.O.All", DefaultText = "All",LocalDefaultText = @"הכל", ObjectTableId = NotificationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode NotificationTextCode_CustomsNotificationODueUntil = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Notification.O.DueUntil", DefaultText = "Due Until:",LocalDefaultText = @"בשל עד:", ObjectTableId = NotificationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode NotificationTextCode_CustomsNotificationOByCreateDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Notification.O.ByCreateDate", DefaultText = "By Create Date",LocalDefaultText = @"על ידי יצירת תאריך", ObjectTableId = NotificationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode NotificationTextCode_CustomsNotificationOByDueDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Notification.O.ByDueDate", DefaultText = "By Due Date",LocalDefaultText = @"על ידי תאריך יעד", ObjectTableId = NotificationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode NotificationTextCode_CustomsAssigneeNotificationTypeOAction = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.AssigneeNotificationType.O.Action", DefaultText = "Action",LocalDefaultText = @"לפעולה", ObjectTableId = NotificationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode NotificationTextCode_CustomsAssigneeNotificationTypeOInfo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.AssigneeNotificationType.O.Info", DefaultText = "Info",LocalDefaultText = @"לידיעה", ObjectTableId = NotificationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode NotificationTextCode_CustomsNotificationORequestSheet = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Notification.O.RequestSheet", DefaultText = "Request Sheet",LocalDefaultText = @"גיליון בקשות", ObjectTableId = NotificationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode NotificationTextCode_CustomsNotificationOOffice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Notification.O.Office", DefaultText = "Office",LocalDefaultText = @"משרד", ObjectTableId = NotificationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode NotificationTextCode_CustomsNotificationOAssignee = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Notification.O.Assignee", DefaultText = "Assignee",LocalDefaultText = @"אחראי", ObjectTableId = NotificationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode NotificationTextCode_CustomsNotificationODepartment = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Notification.O.Department", DefaultText = "Department",LocalDefaultText = @"קוד חוליה", ObjectTableId = NotificationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode NotificationTextCode_CustomsNotificationORead = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Notification.O.Read", DefaultText = "Read",LocalDefaultText = @"נקרא", ObjectTableId = NotificationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode NotificationTextCode_CustomsNotificationOUnRead = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Notification.O.UnRead", DefaultText = "Unread",LocalDefaultText = @"לא נקרא", ObjectTableId = NotificationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode NotificationTextCode_CustomsNotificationOMarkAsRead = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Notification.O.MarkAsRead", DefaultText = "Mark as read",LocalDefaultText = @"סמן כנקרא", ObjectTableId = NotificationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode NotificationTextCode_CustomsNotificationOMarkAsUnread = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Notification.O.MarkAsUnread", DefaultText = "Mark as Unread",LocalDefaultText = @"סמן כלא נקרא", ObjectTableId = NotificationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode NotificationTextCode_CustomsNotificationOReopen = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Notification.O.Reopen", DefaultText = "Reopen",LocalDefaultText = @"פתח מחדש", ObjectTableId = NotificationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode NotificationTextCode_CustomsNotificationONone = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Notification.O.None", DefaultText = "None",LocalDefaultText = @"אף אחד", ObjectTableId = NotificationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode NotificationTextCode_CustomsNotificationOUntilToday = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Notification.O.UntilToday", DefaultText = "Until Today",LocalDefaultText = @"עד היום", ObjectTableId = NotificationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode NotificationTextCode_CustomsNotificationOYesterday = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Notification.O.Yesterday", DefaultText = "Yesterday",LocalDefaultText = @"אתמול", ObjectTableId = NotificationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode NotificationTextCode_CustomsNotificationOLastWeek = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Notification.O.LastWeek", DefaultText = "Last week",LocalDefaultText = @"בשבוע האחרון", ObjectTableId = NotificationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode NotificationTextCode_CustomsNotificationOLastMonth = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Notification.O.LastMonth", DefaultText = "Last month",LocalDefaultText = @"בחודש האחרון", ObjectTableId = NotificationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode NotificationTextCode_CustomsNotificationOLast3Months = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Notification.O.Last3Months", DefaultText = "Last 3 months",LocalDefaultText = @"בשלושת החודשים האחרונים", ObjectTableId = NotificationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode NotificationTextCode_CustomsNotificationOMarkAsClosed = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Notification.O.MarkAsClosed", DefaultText = "Mark as closed",LocalDefaultText = @"סמן כסגור", ObjectTableId = NotificationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode NotificationTextCode_CustomsNotificationONext3Days = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Notification.O.Next3Days", DefaultText = "Next 3 Days",LocalDefaultText = @"שלושת הימים הבאים", ObjectTableId = NotificationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode NotificationTextCode_CustomsNotificationONextWeek = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Notification.O.NextWeek", DefaultText = "Next Week",LocalDefaultText = @"השבוע הקרוב", ObjectTableId = NotificationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode NotificationTextCode_CustomsNotificationONextMonth = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Notification.O.NextMonth", DefaultText = "Next Month",LocalDefaultText = @"החודש", ObjectTableId = NotificationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode NotificationTextCode_CustomsNotificationONoReplyEntered = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Notification.O.NoReplyEntered", DefaultText = "No reply entered.",LocalDefaultText = @"לא הוזנה תשובה להודעה", ObjectTableId = NotificationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode NotificationTextCode_CustomsNotificationONotificationReplySendErrors = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Notification.O.NotificationReplySendErrors", DefaultText = "Notification reply pre sending errors",LocalDefaultText = @"שגיאות לפני שליחת תשובה להודעה", ObjectTableId = NotificationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode NotificationTextCode_CustomsNotificationOOpenNotification = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Notification.O.OpenNotification", DefaultText = "Open Notifications",LocalDefaultText = @"הצהרות פתוחות", ObjectTableId = NotificationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
+	    
+}
+
+    
 
    }
     

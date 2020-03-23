@@ -49,7 +49,7 @@ using Logitude.Social.Data.EntityPOCOs;
 using Logitude.Social.BL;
 using Logitude.Social.Data.Repsitories;
 using Logitude.Server.Tools.CloseTablesClasses;
-using Logitude.Customs.BL.CloseTables;
+using Logitude.Customs.BL.ClosedTable;
 using Logitude.CRM.BL.CLoseTable;
 using Logitude.BookingLib.BL.CLoseTable;
 using Logitude.WarehouseLib.Data.Repositories;
@@ -58,6 +58,20 @@ using Logitude.WarehouseLib.BL.CLoseTable;
 using Logitude.TimeManagement.Data.Repositories;
 using Logitude.TimeManagement.Data.EntityPOCOs;
 using Logitude.TimeManagement.BL.CLoseTable;
+using Logitude.BL.ShipmentsModel.CloseTables;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Logitude.BL.ShipmentsModel;
+using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.Repositories;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Logitude.BL.GlobalModel;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.BL;
+using Logitude.TariffModule.Data.Repositories;
+using Logitude.TariffModule.Data.EntityPOCOs;
+using Logitude.TariffModule.BL.CLoseTable;
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class PaymentOrderUpdateClass
@@ -104,8 +118,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    NewWizardControlName =  "Logitude.Customs.NewPaymentOrderControlCommand",
 			      				    LocalDefaultText =  "תשלום הזמנה",
 			      				    DefaultText =  "Payment Order",
-			      				    Code =  "769f",
-			      				    Name =  "Customs.PaymentOrder Query Group",
+			      				    Code =  "POGR",
+			      				    Name =  "Customs.PaymentOrder",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
 			      				    ServerModuleName =  "Customs",
@@ -113,8 +127,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    NoTS =  false,
 			      				    HasMenuButtons =  true,
 			      				    AllowedForComputingPartners =  false,
-			      				    Code1 =  "8f90",
-			      				    Name1 =  " Query Group",
 			      				    CustomFieldsCount =  0,
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
@@ -129,11 +141,122 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
+					 						FieldName =  "Id",
+					  						OldFieldName =  "Id",
+					  						ObjectTableName =  "Customs.PaymentOrder",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  15,
+					  						IsRequired =  false,
+					  						DisplayOnLookUp =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  15,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "Id",
+					  						ListPropertyPath =  "Id",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.PaymentOrder",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						DigitsAfterPoint =  0,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "Id",
+					  						DefaultText =  "Id",
+					  						ListFieldLable =  "IdListLable",
+					  						ListLableDefaultText =  "Id",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "Tenant",
+					  						OldFieldName =  "Tenant",
+					  						ObjectTableName =  "Customs.PaymentOrder",
+					  						FieldsDataType =  "Integer",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						DisplayOnLookUp =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "Tenant",
+					  						ListPropertyPath =  "Tenant",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "CustomsPaymentOrders",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						DigitsAfterPoint =  0,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "Tenant",
+					  						DefaultText =  "Tenant",
+					  						ListFieldLable =  "TenantListLable",
+					  						ListLableDefaultText =  "Tenant",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
 					 						FieldName =  "PaymentNumber",
 					  						OldFieldName =  "PaymentNumber",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.PaymentOrder",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -186,10 +309,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -199,9 +318,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "TotalSumToPay",
 					  						OldFieldName =  "TotalSumToPay",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.PaymentOrder",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -253,10 +369,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -266,9 +378,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "LastPayDate",
 					  						OldFieldName =  "LastPayDate",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.PaymentOrder",
 					  						FieldsDataType =  "Date",
 					  						MinLength =  0,
@@ -322,10 +431,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -335,9 +440,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "Reason",
 					  						OldFieldName =  "Reason",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.PaymentOrder",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -389,10 +491,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -402,9 +500,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "CustomerId",
 					  						OldFieldName =  "CustomerId",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.PaymentOrder",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Card",
@@ -457,10 +552,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -470,9 +561,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "CustomerActivityTypeCode",
 					  						OldFieldName =  "CustomerActivityTypeCode",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.PaymentOrder",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.CustomerActivityType",
@@ -525,10 +613,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -538,9 +622,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "PaymentOrderTypeCode",
 					  						OldFieldName =  "PaymentOrderTypeCode",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.PaymentOrder",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.PaymentOrderType",
@@ -593,10 +674,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -606,9 +683,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "PaymentProcessCode",
 					  						OldFieldName =  "PaymentProcessCode",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.PaymentOrder",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.PaymentProcess",
@@ -661,10 +735,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -674,9 +744,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "PaymentStatusCode",
 					  						OldFieldName =  "PaymentStatusCode",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.PaymentOrder",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.PaymentOrderStatus",
@@ -729,10 +796,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -742,9 +805,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "CustomsHouseCode",
 					  						OldFieldName =  "CustomsHouseCode",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.PaymentOrder",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.CustomsHouseType",
@@ -797,10 +857,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -810,9 +866,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "ActualPayDate",
 					  						OldFieldName =  "ActualPayDate",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.PaymentOrder",
 					  						FieldsDataType =  "Date",
 					  						MinLength =  0,
@@ -866,10 +919,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -879,9 +928,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "InternalNotes",
 					  						OldFieldName =  "InternalNotes",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.PaymentOrder",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -933,10 +979,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -946,9 +988,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "CreateDate",
 					  						OldFieldName =  "CreateDate",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.PaymentOrder",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -1001,10 +1040,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1014,9 +1049,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "UpdateDate",
 					  						OldFieldName =  "UpdateDate",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.PaymentOrder",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -1069,10 +1101,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1082,9 +1110,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "SearchFields",
 					  						OldFieldName =  "SearchFields",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.PaymentOrder",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -1135,10 +1160,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1148,9 +1169,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "PaymentOrderLines",
 					  						OldFieldName =  "PaymentOrderLines",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.PaymentOrder",
 					  						FieldsDataType =  "List",
 					  						MinLength =  0,
@@ -1197,10 +1215,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1210,9 +1224,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "PaymentOrderMethods",
 					  						OldFieldName =  "PaymentOrderMethods",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.PaymentOrder",
 					  						FieldsDataType =  "List",
 					  						MinLength =  0,
@@ -1259,10 +1270,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1272,9 +1279,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "PaymentOrderProtestReasons",
 					  						OldFieldName =  "PaymentOrderProtestReasons",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.PaymentOrder",
 					  						FieldsDataType =  "List",
 					  						MinLength =  0,
@@ -1321,10 +1325,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1334,9 +1334,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "CustomerName",
 					  						OldFieldName =  "CustomerName",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.PaymentOrder",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1387,10 +1384,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1400,9 +1393,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "PaymentStatusName",
 					  						OldFieldName =  "PaymentStatusName",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.PaymentOrder",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1453,10 +1443,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1466,9 +1452,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "PaymentOrderTypeName",
 					  						OldFieldName =  "PaymentOrderTypeName",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.PaymentOrder",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1519,10 +1502,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1532,9 +1511,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "PaymentProcessName",
 					  						OldFieldName =  "PaymentProcessName",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.PaymentOrder",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1585,10 +1561,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1598,9 +1570,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "CustomsEntityTypeCode",
 					  						OldFieldName =  "CustomsEntityTypeCode",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.PaymentOrder",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.EntityTypeLookup",
@@ -1652,10 +1621,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1665,9 +1630,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "FirstEntityID",
 					  						OldFieldName =  "FirstEntityID",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.PaymentOrder",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1718,10 +1680,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1731,9 +1689,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "SecondEntityID",
 					  						OldFieldName =  "SecondEntityID",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.PaymentOrder",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1784,10 +1739,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1797,9 +1748,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "ThirdEntityID",
 					  						OldFieldName =  "ThirdEntityID",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.PaymentOrder",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1850,10 +1798,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1863,9 +1807,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "ImporterId",
 					  						OldFieldName =  "ImporterId",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.PaymentOrder",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.Client",
@@ -1917,10 +1858,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1930,9 +1867,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "ImporterName",
 					  						OldFieldName =  "ImporterName",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.PaymentOrder",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -1983,10 +1917,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1996,9 +1926,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "IsClosed",
 					  						OldFieldName =  "IsClosed",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.PaymentOrder",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -2049,10 +1976,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -2062,9 +1985,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "CustomerActivityTypeName",
 					  						OldFieldName =  "CustomerActivityTypeName",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.PaymentOrder",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -2114,10 +2034,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -2127,9 +2043,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "CustomsEntityTypeName",
 					  						OldFieldName =  "CustomsEntityTypeName",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.PaymentOrder",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -2179,10 +2092,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -2192,9 +2101,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "CustomsHouseName",
 					  						OldFieldName =  "CustomsHouseName",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.PaymentOrder",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -2244,10 +2150,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -2257,9 +2159,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "PaymentOrderConnectionTables",
 					  						OldFieldName =  "PaymentOrderConnectionTables",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.PaymentOrder",
 					  						FieldsDataType =  "List",
 					  						MinLength =  0,
@@ -2305,10 +2204,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -2318,9 +2213,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "HasDeficit",
 					  						OldFieldName =  "HasDeficit",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.PaymentOrder",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -2365,10 +2257,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -2378,9 +2266,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "HasDeposit",
 					  						OldFieldName =  "HasDeposit",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.PaymentOrder",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -2425,10 +2310,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -2438,9 +2319,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "ConcurrencyGUID",
 					  						OldFieldName =  "ConcurrencyGUID",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.PaymentOrder",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2485,10 +2363,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -2498,9 +2372,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "NewConcurrencyGUID",
 					  						OldFieldName =  "NewConcurrencyGUID",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.PaymentOrder",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2545,10 +2416,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -2558,9 +2425,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "AccountingCustomFile",
 					  						OldFieldName =  "AccountingCustomFile",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.PaymentOrder",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2611,10 +2475,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -2624,9 +2484,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "CustomFiles",
 					  						OldFieldName =  "CustomFiles",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.PaymentOrder",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2677,10 +2534,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -2690,9 +2543,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "PaymentOrderSelectedLabel",
 					  						OldFieldName =  "PaymentOrderSelectedLabel",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.PaymentOrder",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2737,10 +2587,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -2750,9 +2596,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "PaymentOrderLeftAmount",
 					  						OldFieldName =  "PaymentOrderLeftAmount",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.PaymentOrder",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -2805,10 +2648,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -2818,9 +2657,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "DocumentPaymentId",
 					  						OldFieldName =  "DocumentPaymentId",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.PaymentOrder",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2871,10 +2707,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -2884,9 +2716,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "CustomerChanged",
 					  						OldFieldName =  "CustomerChanged",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.PaymentOrder",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -2931,64 +2760,390 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
-	    {  	   
+	    {  
+	        FeatureRepository featureRepository = new FeatureRepository(0); 
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+	        QueryGroup PaymentOrderQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "POGR", Name = "Customs.PaymentOrder" }, queryGroupRepository);
+						QueryGroup PaymentOrderQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "8f90", Name = " Query Group" }, queryGroupRepository);
+				        queryGroupRepository.SubmitChanges();
+
+	        ObjectTable PaymentOrderObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.PaymentOrder" && d.Tenant == 0).FirstOrDefault();
+	        List<ObjectField> PaymentOrderObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.PaymentOrder").ToList();   
+
+			   TextCode PaymentOrderTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "PaymentOrder.Q.OpenPaymentOrders", DefaultText = @"Open Payment Orders",LocalDefaultText = "Open Payment Orders", ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature PaymentOrderFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PaymentOrder.Q.OpenPaymentOrders", ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, NameTextCodeCode = "PaymentOrderFeatures.OpenPaymentOrders", NameTextCodeDefaultText = "Open Payment Orders", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+ 
+
+			   TextCode PaymentOrderTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "PaymentOrder.Q.ClosedPaymentOrders", DefaultText = @"Closed Payment Orders",LocalDefaultText = "Closed Payment Orders", ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature PaymentOrderFeature_1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PaymentOrder.Q.ClosedPaymentOrders", ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, NameTextCodeCode = "PaymentOrderFeatures.ClosedPaymentOrders", NameTextCodeDefaultText = "Closed Payment Orders", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+ 
+
+			   TextCode PaymentOrderTextCode_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "PaymentOrder.Q.PaymentOrders", DefaultText = @"Payment Orders",LocalDefaultText = "Payment Orders", ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature PaymentOrderFeature_2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PaymentOrder.Q.PaymentOrders", ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, NameTextCodeCode = "PaymentOrderFeatures.PaymentOrders", NameTextCodeDefaultText = "Payment Orders", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+
+	        TextCodeRepository.SubmitChanges();
+	        FeaturesRepository.SubmitChanges();    
+	      
+
+			  Query OpenPaymentOrdersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = PaymentOrderTextCode_0.Id, NameTextCodeCode = PaymentOrderTextCode_0.Code, ObjectTableName = "Customs.PaymentOrder", Code = "Open Payment Orders",  QueryGroupCode = "POGR", IndexOrder = 0, Tenant = 0, ObjectTableId = PaymentOrderObjectTable.Id, QuerySection = "Customs.PaymentOrder", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = PaymentOrderFeature_0.Id,FeatureUniqeCode= PaymentOrderFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+	
+			 QueryColumn OpenPaymentOrdersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenPaymentOrdersQuery.Id,QueryCode = OpenPaymentOrdersQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = PaymentOrderObjectFields.Where(d => d.FieldName == "PaymentProcessName" && d.ObjectTableId == PaymentOrderObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PaymentOrderObjectFields.Where(d => d.FieldName == "PaymentProcessName" && d.ObjectTableId == PaymentOrderObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn OpenPaymentOrdersQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenPaymentOrdersQuery.Id,QueryCode = OpenPaymentOrdersQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = PaymentOrderObjectFields.Where(d => d.FieldName == "PaymentNumber" && d.ObjectTableId == PaymentOrderObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PaymentOrderObjectFields.Where(d => d.FieldName == "PaymentNumber" && d.ObjectTableId == PaymentOrderObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn OpenPaymentOrdersQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenPaymentOrdersQuery.Id,QueryCode = OpenPaymentOrdersQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = PaymentOrderObjectFields.Where(d => d.FieldName == "CustomFiles" && d.ObjectTableId == PaymentOrderObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PaymentOrderObjectFields.Where(d => d.FieldName == "CustomFiles" && d.ObjectTableId == PaymentOrderObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn OpenPaymentOrdersQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenPaymentOrdersQuery.Id,QueryCode = OpenPaymentOrdersQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = PaymentOrderObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == PaymentOrderObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PaymentOrderObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == PaymentOrderObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 110 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn OpenPaymentOrdersQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenPaymentOrdersQuery.Id,QueryCode = OpenPaymentOrdersQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = PaymentOrderObjectFields.Where(d => d.FieldName == "CustomerName" && d.ObjectTableId == PaymentOrderObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PaymentOrderObjectFields.Where(d => d.FieldName == "CustomerName" && d.ObjectTableId == PaymentOrderObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn OpenPaymentOrdersQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenPaymentOrdersQuery.Id,QueryCode = OpenPaymentOrdersQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = PaymentOrderObjectFields.Where(d => d.FieldName == "ImporterName" && d.ObjectTableId == PaymentOrderObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PaymentOrderObjectFields.Where(d => d.FieldName == "ImporterName" && d.ObjectTableId == PaymentOrderObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn OpenPaymentOrdersQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenPaymentOrdersQuery.Id,QueryCode = OpenPaymentOrdersQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = PaymentOrderObjectFields.Where(d => d.FieldName == "TotalSumToPay" && d.ObjectTableId == PaymentOrderObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PaymentOrderObjectFields.Where(d => d.FieldName == "TotalSumToPay" && d.ObjectTableId == PaymentOrderObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn OpenPaymentOrdersQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenPaymentOrdersQuery.Id,QueryCode = OpenPaymentOrdersQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = PaymentOrderObjectFields.Where(d => d.FieldName == "PaymentStatusName" && d.ObjectTableId == PaymentOrderObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PaymentOrderObjectFields.Where(d => d.FieldName == "PaymentStatusName" && d.ObjectTableId == PaymentOrderObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn OpenPaymentOrdersQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenPaymentOrdersQuery.Id,QueryCode = OpenPaymentOrdersQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = PaymentOrderObjectFields.Where(d => d.FieldName == "LastPayDate" && d.ObjectTableId == PaymentOrderObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PaymentOrderObjectFields.Where(d => d.FieldName == "LastPayDate" && d.ObjectTableId == PaymentOrderObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 110 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn OpenPaymentOrdersQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenPaymentOrdersQuery.Id,QueryCode = OpenPaymentOrdersQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = PaymentOrderObjectFields.Where(d => d.FieldName == "IsClosed" && d.ObjectTableId == PaymentOrderObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PaymentOrderObjectFields.Where(d => d.FieldName == "IsClosed" && d.ObjectTableId == PaymentOrderObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+             AdvancedQueryFilter OpenPaymentOrdersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = PaymentOrderObjectFields.Where(d => d.FieldName == "IsClosed" && d.ObjectTableId == PaymentOrderObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PaymentOrderObjectFields.Where(d => d.FieldName == "IsClosed" && d.ObjectTableId == PaymentOrderObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "false",PredefinedValue2 = null, QueryId = OpenPaymentOrdersQuery.Id,QueryCode = OpenPaymentOrdersQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+
+  
+	      
+
+			  Query ClosedPaymentOrdersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = PaymentOrderTextCode_1.Id, NameTextCodeCode = PaymentOrderTextCode_1.Code, ObjectTableName = "Customs.PaymentOrder", Code = "Closed Payment Orders",  QueryGroupCode = "POGR", IndexOrder = 1, Tenant = 0, ObjectTableId = PaymentOrderObjectTable.Id, QuerySection = "Customs.PaymentOrder", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = PaymentOrderFeature_1.Id,FeatureUniqeCode= PaymentOrderFeature_1.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+	
+			 QueryColumn ClosedPaymentOrdersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedPaymentOrdersQuery.Id,QueryCode = ClosedPaymentOrdersQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = PaymentOrderObjectFields.Where(d => d.FieldName == "PaymentProcessName" && d.ObjectTableId == PaymentOrderObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PaymentOrderObjectFields.Where(d => d.FieldName == "PaymentProcessName" && d.ObjectTableId == PaymentOrderObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn ClosedPaymentOrdersQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedPaymentOrdersQuery.Id,QueryCode = ClosedPaymentOrdersQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = PaymentOrderObjectFields.Where(d => d.FieldName == "PaymentNumber" && d.ObjectTableId == PaymentOrderObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PaymentOrderObjectFields.Where(d => d.FieldName == "PaymentNumber" && d.ObjectTableId == PaymentOrderObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn ClosedPaymentOrdersQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedPaymentOrdersQuery.Id,QueryCode = ClosedPaymentOrdersQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = PaymentOrderObjectFields.Where(d => d.FieldName == "CustomFiles" && d.ObjectTableId == PaymentOrderObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PaymentOrderObjectFields.Where(d => d.FieldName == "CustomFiles" && d.ObjectTableId == PaymentOrderObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn ClosedPaymentOrdersQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedPaymentOrdersQuery.Id,QueryCode = ClosedPaymentOrdersQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = PaymentOrderObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == PaymentOrderObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PaymentOrderObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == PaymentOrderObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 110 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn ClosedPaymentOrdersQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedPaymentOrdersQuery.Id,QueryCode = ClosedPaymentOrdersQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = PaymentOrderObjectFields.Where(d => d.FieldName == "CustomerName" && d.ObjectTableId == PaymentOrderObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PaymentOrderObjectFields.Where(d => d.FieldName == "CustomerName" && d.ObjectTableId == PaymentOrderObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn ClosedPaymentOrdersQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedPaymentOrdersQuery.Id,QueryCode = ClosedPaymentOrdersQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = PaymentOrderObjectFields.Where(d => d.FieldName == "ImporterName" && d.ObjectTableId == PaymentOrderObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PaymentOrderObjectFields.Where(d => d.FieldName == "ImporterName" && d.ObjectTableId == PaymentOrderObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn ClosedPaymentOrdersQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedPaymentOrdersQuery.Id,QueryCode = ClosedPaymentOrdersQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = PaymentOrderObjectFields.Where(d => d.FieldName == "TotalSumToPay" && d.ObjectTableId == PaymentOrderObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PaymentOrderObjectFields.Where(d => d.FieldName == "TotalSumToPay" && d.ObjectTableId == PaymentOrderObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn ClosedPaymentOrdersQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedPaymentOrdersQuery.Id,QueryCode = ClosedPaymentOrdersQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = PaymentOrderObjectFields.Where(d => d.FieldName == "PaymentStatusName" && d.ObjectTableId == PaymentOrderObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PaymentOrderObjectFields.Where(d => d.FieldName == "PaymentStatusName" && d.ObjectTableId == PaymentOrderObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn ClosedPaymentOrdersQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedPaymentOrdersQuery.Id,QueryCode = ClosedPaymentOrdersQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = PaymentOrderObjectFields.Where(d => d.FieldName == "LastPayDate" && d.ObjectTableId == PaymentOrderObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PaymentOrderObjectFields.Where(d => d.FieldName == "LastPayDate" && d.ObjectTableId == PaymentOrderObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 110 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn ClosedPaymentOrdersQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedPaymentOrdersQuery.Id,QueryCode = ClosedPaymentOrdersQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = PaymentOrderObjectFields.Where(d => d.FieldName == "IsClosed" && d.ObjectTableId == PaymentOrderObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PaymentOrderObjectFields.Where(d => d.FieldName == "IsClosed" && d.ObjectTableId == PaymentOrderObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+             AdvancedQueryFilter ClosedPaymentOrdersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = PaymentOrderObjectFields.Where(d => d.FieldName == "IsClosed" && d.ObjectTableId == PaymentOrderObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PaymentOrderObjectFields.Where(d => d.FieldName == "IsClosed" && d.ObjectTableId == PaymentOrderObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = ClosedPaymentOrdersQuery.Id,QueryCode = ClosedPaymentOrdersQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+
+  
+	      
+
+			  Query PaymentOrdersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = PaymentOrderTextCode_2.Id, NameTextCodeCode = PaymentOrderTextCode_2.Code, ObjectTableName = "Customs.PaymentOrder", Code = "Payment Orders",  QueryGroupCode = "POGR", IndexOrder = 2, Tenant = 0, ObjectTableId = PaymentOrderObjectTable.Id, QuerySection = "Customs.PaymentOrder", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = PaymentOrderFeature_2.Id,FeatureUniqeCode= PaymentOrderFeature_2.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+	
+			 QueryColumn PaymentOrdersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaymentOrdersQuery.Id,QueryCode = PaymentOrdersQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = PaymentOrderObjectFields.Where(d => d.FieldName == "PaymentProcessName" && d.ObjectTableId == PaymentOrderObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PaymentOrderObjectFields.Where(d => d.FieldName == "PaymentProcessName" && d.ObjectTableId == PaymentOrderObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn PaymentOrdersQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaymentOrdersQuery.Id,QueryCode = PaymentOrdersQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = PaymentOrderObjectFields.Where(d => d.FieldName == "PaymentNumber" && d.ObjectTableId == PaymentOrderObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PaymentOrderObjectFields.Where(d => d.FieldName == "PaymentNumber" && d.ObjectTableId == PaymentOrderObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn PaymentOrdersQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaymentOrdersQuery.Id,QueryCode = PaymentOrdersQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = PaymentOrderObjectFields.Where(d => d.FieldName == "CustomFiles" && d.ObjectTableId == PaymentOrderObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PaymentOrderObjectFields.Where(d => d.FieldName == "CustomFiles" && d.ObjectTableId == PaymentOrderObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn PaymentOrdersQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaymentOrdersQuery.Id,QueryCode = PaymentOrdersQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = PaymentOrderObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == PaymentOrderObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PaymentOrderObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == PaymentOrderObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 110 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn PaymentOrdersQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaymentOrdersQuery.Id,QueryCode = PaymentOrdersQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = PaymentOrderObjectFields.Where(d => d.FieldName == "CustomerName" && d.ObjectTableId == PaymentOrderObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PaymentOrderObjectFields.Where(d => d.FieldName == "CustomerName" && d.ObjectTableId == PaymentOrderObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn PaymentOrdersQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaymentOrdersQuery.Id,QueryCode = PaymentOrdersQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = PaymentOrderObjectFields.Where(d => d.FieldName == "ImporterName" && d.ObjectTableId == PaymentOrderObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PaymentOrderObjectFields.Where(d => d.FieldName == "ImporterName" && d.ObjectTableId == PaymentOrderObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn PaymentOrdersQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaymentOrdersQuery.Id,QueryCode = PaymentOrdersQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = PaymentOrderObjectFields.Where(d => d.FieldName == "TotalSumToPay" && d.ObjectTableId == PaymentOrderObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PaymentOrderObjectFields.Where(d => d.FieldName == "TotalSumToPay" && d.ObjectTableId == PaymentOrderObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn PaymentOrdersQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaymentOrdersQuery.Id,QueryCode = PaymentOrdersQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = PaymentOrderObjectFields.Where(d => d.FieldName == "PaymentStatusName" && d.ObjectTableId == PaymentOrderObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PaymentOrderObjectFields.Where(d => d.FieldName == "PaymentStatusName" && d.ObjectTableId == PaymentOrderObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn PaymentOrdersQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaymentOrdersQuery.Id,QueryCode = PaymentOrdersQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = PaymentOrderObjectFields.Where(d => d.FieldName == "LastPayDate" && d.ObjectTableId == PaymentOrderObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PaymentOrderObjectFields.Where(d => d.FieldName == "LastPayDate" && d.ObjectTableId == PaymentOrderObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 110 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn PaymentOrdersQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaymentOrdersQuery.Id,QueryCode = PaymentOrdersQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = PaymentOrderObjectFields.Where(d => d.FieldName == "IsClosed" && d.ObjectTableId == PaymentOrderObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PaymentOrderObjectFields.Where(d => d.FieldName == "IsClosed" && d.ObjectTableId == PaymentOrderObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+	   
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
-	    {    
+	    {   
+
+		   ObjectTable PaymentOrderObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.PaymentOrder" && d.Tenant == 0).FirstOrDefault();
+		   List<ObjectField> PaymentOrderObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.PaymentOrder").ToList();
+		       
+	      
+
+	         Screen PaymentOrderHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Customs.PaymentOrder.HeaderScreen", Name = "Header Screen", ObjectTableId = PaymentOrderObjectTable.Id, NumberOfColumns = 3, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
+      
+            ScreenField PaymentOrderCustomsPaymentOrderHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = PaymentOrderObjectFields.Where(d => d.FieldName == "PaymentNumber").FirstOrDefault().Id, ScreenId = PaymentOrderHeaderScreenScreen0.Id,ScreenCode = PaymentOrderHeaderScreenScreen0.Code, ObjectFieldCode = PaymentOrderObjectFields.Where(d => d.FieldName == "PaymentNumber").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         
+            ScreenField PaymentOrderCustomsPaymentOrderHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = PaymentOrderObjectFields.Where(d => d.FieldName == "CustomerName").FirstOrDefault().Id, ScreenId = PaymentOrderHeaderScreenScreen0.Id,ScreenCode = PaymentOrderHeaderScreenScreen0.Code, ObjectFieldCode = PaymentOrderObjectFields.Where(d => d.FieldName == "CustomerName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         
+            ScreenField PaymentOrderCustomsPaymentOrderHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = PaymentOrderObjectFields.Where(d => d.FieldName == "PaymentStatusName").FirstOrDefault().Id, ScreenId = PaymentOrderHeaderScreenScreen0.Id,ScreenCode = PaymentOrderHeaderScreenScreen0.Code, ObjectFieldCode = PaymentOrderObjectFields.Where(d => d.FieldName == "PaymentStatusName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         
+            ScreenField PaymentOrderCustomsPaymentOrderHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = PaymentOrderObjectFields.Where(d => d.FieldName == "FirstEntityID").FirstOrDefault().Id, ScreenId = PaymentOrderHeaderScreenScreen0.Id,ScreenCode = PaymentOrderHeaderScreenScreen0.Code, ObjectFieldCode = PaymentOrderObjectFields.Where(d => d.FieldName == "FirstEntityID").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         
+            ScreenField PaymentOrderCustomsPaymentOrderHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = PaymentOrderObjectFields.Where(d => d.FieldName == "LastPayDate").FirstOrDefault().Id, ScreenId = PaymentOrderHeaderScreenScreen0.Id,ScreenCode = PaymentOrderHeaderScreenScreen0.Code, ObjectFieldCode = PaymentOrderObjectFields.Where(d => d.FieldName == "LastPayDate").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         
+            ScreenField PaymentOrderCustomsPaymentOrderHeaderScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ObjectFieldId = PaymentOrderObjectFields.Where(d => d.FieldName == "ActualPayDate").FirstOrDefault().Id, ScreenId = PaymentOrderHeaderScreenScreen0.Id,ScreenCode = PaymentOrderHeaderScreenScreen0.Code, ObjectFieldCode = PaymentOrderObjectFields.Where(d => d.FieldName == "ActualPayDate").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         	
+		    PaymentOrderObjectTable.HeaderScreenId = PaymentOrderHeaderScreenScreen0.Id;
+		    PaymentOrderObjectTable.HeaderScreenCode = PaymentOrderHeaderScreenScreen0.Code;
+
+	   		  
 
 	    }
 
 	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
-	    {      
+	    {                
+			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
+			   ObjectTable PaymentOrderObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.PaymentOrder" && d.Tenant == 0).FirstOrDefault();  
+                 
+			   TextCode PaymentOrderGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PaymentOrder.TH.General", DefaultText = "General",LocalDefaultText = "כללי", ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature PaymentOrderGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PaymentOrder.Tab.General", ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, NameTextCodeCode = "PaymentOrderFeatures.POGN", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+ 
+                 
+			   TextCode PaymentOrderEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PaymentOrder.TH.Events", DefaultText = "Events",LocalDefaultText = "אירועים", ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature PaymentOrderEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PaymentOrder.Tab.Events", ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, NameTextCodeCode = "PaymentOrderFeatures.PMEV", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+ 
+                 
+			   TextCode PaymentOrderCommunicationsTextCode_TH2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PaymentOrder.TH.Communications", DefaultText = "Communications",LocalDefaultText = "תקשורת", ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature PaymentOrderCommunicationsFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PaymentOrder.Tab.Communications", ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, NameTextCodeCode = "PaymentOrderFeatures.POCM", NameTextCodeDefaultText = "Communications", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+ 
+                 
+			   TextCode PaymentOrderDeficitsTextCode_TH3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PaymentOrder.TH.Deficits", DefaultText = "Deficits",LocalDefaultText = "גירעונות", ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature PaymentOrderDeficitsFeature_TH3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PaymentOrder.Tab.Deficits", ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, NameTextCodeCode = "PaymentOrderFeatures.PODF", NameTextCodeDefaultText = "Deficits", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+ 
+                 
+			   TextCode PaymentOrderDepositsTextCode_TH4 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PaymentOrder.TH.Deposits", DefaultText = "Deposits",LocalDefaultText = "פיקדון", ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature PaymentOrderDepositsFeature_TH4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PaymentOrder.Tab.Deposits", ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, NameTextCodeCode = "PaymentOrderFeatures.PODP", NameTextCodeDefaultText = "Deposits", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+ 
+                 
+			   TextCode PaymentOrderRequestSheetsTextCode_TH5 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PaymentOrder.TH.RequestSheets", DefaultText = "Request Sheets",LocalDefaultText = "גיליון בקשה", ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature PaymentOrderRequestSheetsFeature_TH5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PaymentOrder.Tab.RequestSheets", ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, NameTextCodeCode = "PaymentOrderFeatures.PORS", NameTextCodeDefaultText = "Request Sheets", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			 TextCodeRepository.SubmitChanges();
+			 FeaturesRepository.SubmitChanges();
+			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
+			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
+			    
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "POGN",HtmlComponentName = "PaymentOrdersGeneralTabComponent",HtmlComponentUrl = "./CustomsModules/CustomsPaymentOrder/Components/EditTabs/General/PaymentOrdersGeneralTabComponent", FeatureId = PaymentOrderGeneralFeature_TH0.Id,FeatureUniqeCode = PaymentOrderGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Logitude.Customs.Views.PaymentOrder.PaymentOrderGeneralTabControl", ObjectTableId = PaymentOrderObjectTable.Id, TabNameTextCodeId = PaymentOrderGeneralTextCode_TH0.Id, TabNameTextCodeCode = PaymentOrderGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+   
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "PMEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = PaymentOrderEventsFeature_TH1.Id,FeatureUniqeCode = PaymentOrderEventsFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = PaymentOrderObjectTable.Id, TabNameTextCodeId = PaymentOrderEventsTextCode_TH1.Id, TabNameTextCodeCode = PaymentOrderEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+   
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "POCM",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = PaymentOrderCommunicationsFeature_TH2.Id,FeatureUniqeCode = PaymentOrderCommunicationsFeature_TH2.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Communications.CommunicationsControl", ObjectTableId = PaymentOrderObjectTable.Id, TabNameTextCodeId = PaymentOrderCommunicationsTextCode_TH2.Id, TabNameTextCodeCode = PaymentOrderCommunicationsTextCode_TH2.Code, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
+   
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "PODF",HtmlComponentName = "PaymentOrderDeficitComponent",HtmlComponentUrl = "./CustomsModules/CustomsPaymentOrder/Components/EditTabs/Tapag/Deficit/PaymentOrderDeficitComponent", FeatureId = PaymentOrderDeficitsFeature_TH3.Id,FeatureUniqeCode = PaymentOrderDeficitsFeature_TH3.FeatureUniqeCode, ControlPath = " ", ObjectTableId = PaymentOrderObjectTable.Id, TabNameTextCodeId = PaymentOrderDeficitsTextCode_TH3.Id, TabNameTextCodeCode = PaymentOrderDeficitsTextCode_TH3.Code, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
+   
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "PODP",HtmlComponentName = "PaymentOrderDepositDataComponent",HtmlComponentUrl = "./CustomsModules/CustomsPaymentOrder/Components/EditTabs/Tapag/Deposit/PaymentOrderDepositDataComponent", FeatureId = PaymentOrderDepositsFeature_TH4.Id,FeatureUniqeCode = PaymentOrderDepositsFeature_TH4.FeatureUniqeCode, ControlPath = " ", ObjectTableId = PaymentOrderObjectTable.Id, TabNameTextCodeId = PaymentOrderDepositsTextCode_TH4.Id, TabNameTextCodeCode = PaymentOrderDepositsTextCode_TH4.Code, Tenant = 0, IndexOrder = 4 }, objectTableTabsRepository, TenantObjectTableTabs);
+   
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "PORS",HtmlComponentName = "RequestSheetTabComponent",HtmlComponentUrl = "./CustomsModules/CustomsControls/Components/CustomsRequestsSheetsComponent", FeatureId = PaymentOrderRequestSheetsFeature_TH5.Id,FeatureUniqeCode = PaymentOrderRequestSheetsFeature_TH5.FeatureUniqeCode, ControlPath = " ", ObjectTableId = PaymentOrderObjectTable.Id, TabNameTextCodeId = PaymentOrderRequestSheetsTextCode_TH5.Id, TabNameTextCodeCode = PaymentOrderRequestSheetsTextCode_TH5.Code, Tenant = 0, IndexOrder = 5 }, objectTableTabsRepository, TenantObjectTableTabs);
+   
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
 	    {  
 		   ObjectTable PaymentOrderObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.PaymentOrder" && d.Tenant == 0).FirstOrDefault(); 
-		   Feature PaymentOrderFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, NameTextCodeCode = "PaymentOrder.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature PaymentOrderFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, NameTextCodeCode = "PaymentOrder.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature PaymentOrderFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, NameTextCodeCode = "PaymentOrder.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature PaymentOrderFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, NameTextCodeCode = "PaymentOrder.Features.PackageFeature", NameTextCodeDefaultText = "PaymentOrder Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+
+		   Feature PaymentOrderFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, NameTextCodeCode = "PaymentOrder.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature PaymentOrderFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, NameTextCodeCode = "PaymentOrder.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature PaymentOrderFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, NameTextCodeCode = "PaymentOrder.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature PaymentOrderFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, NameTextCodeCode = "PaymentOrder.Features.PackageFeature", NameTextCodeDefaultText = "PaymentOrder Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 
+
+		   		   //--------------> Additional Features <--------------\\
+
+		   Feature PaymentOrderFeature_GENERAL = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.PaymentOrder.Features.General", NameTextCodeDefaultText = @"General" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature PaymentOrderFeature_EVENTS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.PaymentOrder.Features.Events", NameTextCodeDefaultText = @"Events" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature PaymentOrderFeature_PAYMENTORDERS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PAYMENTORDERS", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.PaymentOrder.Features.PaymentOrders", NameTextCodeDefaultText = @"Payment Orders" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature PaymentOrderFeature_SENDPAYMENTORDER = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SENDPAYMENTORDER", FeatureTypeCode = "ACT", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.PaymentOrder.Features.SendPaymentOrder", NameTextCodeDefaultText = @"Send Payment Order" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature PaymentOrderFeature_COMMUNICATIONS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "COMMUNICATIONS", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.PaymentOrder.Features.Communication", NameTextCodeDefaultText = @"Communications" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature PaymentOrderFeature_DEFICIT = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DEFICIT", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.PaymentOrder.Features.Deficit", NameTextCodeDefaultText = @"Deficits" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature PaymentOrderFeature_DEPOSIT = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DEPOSIT", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.PaymentOrder.Features.Deposit", NameTextCodeDefaultText = @"Deposits" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature PaymentOrderFeature_REQUESTSHEET = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "REQUESTSHEET", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.PaymentOrder.Features.RequestSheet", NameTextCodeDefaultText = @"Request Sheets" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature PaymentOrderFeature_OPENPAYMENTORDERS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "OPENPAYMENTORDERS", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.PaymentOrder.Features.OpenPaymnetOrders", NameTextCodeDefaultText = @"Open Payment Order" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature PaymentOrderFeature_CLOSEDPAYMENTORDERS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CLOSEDPAYMENTORDERS", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.PaymentOrder.Features.ClosedPaymnetOrders", NameTextCodeDefaultText = @"Closed Payment Order" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature PaymentOrderFeature_MOREPAYMENTORDER = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MOREPAYMENTORDER", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.PaymentOrder.Features.MorePaymnetOrder", NameTextCodeDefaultText = @"More" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature PaymentOrderFeature_CLOSEPAYMENTORDER = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CLOSEPAYMENTORDER", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.PaymentOrder.Features.ClosePaymnetOrder", NameTextCodeDefaultText = @"Close Payment Order" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature PaymentOrderFeature_UNCLOSEPAYMENTORDER = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UNCLOSEPAYMENTORDER", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.PaymentOrder.Features.UnClosePaymnetOrder", NameTextCodeDefaultText = @"UnClose Payment Order" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature PaymentOrderFeature_PRINTPAYMENTORDER = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PRINTPAYMENTORDER", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.PaymentOrder.Features.PrintPaymnetOrder", NameTextCodeDefaultText = @"Print Payment Order" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature PaymentOrderFeature_PRINTDEFICIT = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PRINTDEFICIT", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.PaymentOrder.Features.PrintDeficit", NameTextCodeDefaultText = @"Print Deficit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature PaymentOrderFeature_UNIQUEFILINGPO = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UNIQUEFILINGPO", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.PaymentOrder.Features.UniqueFilingPO", NameTextCodeDefaultText = @"Unique Filing Payment Order " }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+   
 	    
 		}
 
-	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext)
+	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
 	    {   
 			ObjectTable PaymentOrderObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.PaymentOrder" && d.Tenant == 0).FirstOrDefault(); 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
-                Code = "CREV",
-                EnglishName = "Created",
-                Tenant = 0,
-                AddedManually = false,
-				IsManualEntry = false,
-                LocalName = "Created",
+                Code =  "POP",
+                ShortView =  false,
+                IsManualEntry =  false,
+                LocalName =  "הוראת תשלום שולמה",
+                EnglishName =  "Payment Order Paid",
+                EventTypeCategoryCode =  "LOG",
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
                 ObjectTableId = PaymentOrderObjectTable.Id,
-                ShortView = true,
+				 
             }, EventTypeRepository, tenantEventTypes);
 
 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
-                Code = "UPEV",
-                EnglishName = "Updated",
-                Tenant = 0,
-                AddedManually = false,
-				IsManualEntry = false,
-                LocalName = "Updated",
+                Code =  "POC",
+                ShortView =  false,
+                IsManualEntry =  false,
+                LocalName =  "הוראת תשלום בוטלה",
+                EnglishName =  "Payment Order Cancelled",
+                EventTypeCategoryCode =  "LOG",
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
                 ObjectTableId = PaymentOrderObjectTable.Id,
-                ShortView = false,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "POU",
+                ShortView =  false,
+                IsManualEntry =  false,
+                LocalName =  "הוראת תשלום עודכנה",
+                EnglishName =  "Payment Order Updated",
+                EventTypeCategoryCode =  "LOG",
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = PaymentOrderObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "POR",
+                ShortView =  false,
+                IsManualEntry =  false,
+                LocalName =  "הוראת תשלום נוצרה",
+                EnglishName =  "Payment Order Created",
+                EventTypeCategoryCode =  "LOG",
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = PaymentOrderObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "DFN",
+                ShortView =  false,
+                IsManualEntry =  false,
+                LocalName =  "הודעה בגין התראה ראשונה ללקוח-חוב בהתראה",
+                EnglishName =  "Deposit Customs Request",
+                EventTypeCategoryCode =  "LOG",
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = PaymentOrderObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "CREV",
+                ShortView =  true,
+                IsManualEntry =  false,
+                LocalName =  "Created",
+                EnglishName =  "Created",
+                EventTypeCategoryCode =  "OPE",
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = PaymentOrderObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "UPEV",
+                ShortView =  false,
+                IsManualEntry =  false,
+                LocalName =  "Updated",
+                EnglishName =  "Updated",
+                EventTypeCategoryCode =  "OPE",
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = PaymentOrderObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "CNG",
+                ShortView =  false,
+                IsManualEntry =  false,
+                LocalName =  "לקוח השתנה",
+                EnglishName =  "Customer Changed",
+                EventTypeCategoryCode =  "LOG",
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = PaymentOrderObjectTable.Id,
+				 
             }, EventTypeRepository, tenantEventTypes);
 
 
@@ -2996,7 +3151,183 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }     
+		   FeatureRepository featureRepository = new FeatureRepository(0); 
+		   //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
+		   ObjectTable PaymentOrderObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.PaymentOrder" && d.Tenant == 0).FirstOrDefault(); 			   Feature PaymentOrderFeature_MB00 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ClosePaymentOrder", ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, NameTextCodeCode = "PaymentOrder.Features.ClosePaymentOrder", NameTextCodeDefaultText = "Close Payment Order", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+             			   Feature PaymentOrderFeature_MB01 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UnClosePaymentOrder", ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, NameTextCodeCode = "PaymentOrder.Features.UnClosePaymentOrder", NameTextCodeDefaultText = "UnClose Payment Order", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+             			   Feature PaymentOrderFeature_MB02 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PrintPaymentOrder", ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, NameTextCodeCode = "PaymentOrder.Features.PrintPaymentOrder", NameTextCodeDefaultText = "Print Payment Order", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+             			   Feature PaymentOrderFeature_MB03 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PrintDeficit", ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, NameTextCodeCode = "PaymentOrder.Features.PrintDeficitForm", NameTextCodeDefaultText = "Print Deficit Form", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+                   
+    
+			   Feature PaymentOrderFeature_MB1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SendPaymentOrder", ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, NameTextCodeCode = "PaymentOrder.Features.SendPaymentOrder", NameTextCodeDefaultText = "Send Payment Order", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+
+ 
+
+		   TextCodeRepository.SubmitChanges();
+		   FeaturesRepository.SubmitChanges();
+		   MenuButtonGroup PaymentOrderMenuButtonGroup = AddMenuButtonGroupAndMenuButtons.AddMenuButtonGroup(new MenuButtonGroupDetails()
+				{
+					MenuButtonGroupType = "Customs.PaymentOrderEdit",
+					Name = "Customs.PaymentOrderEditButtonsGroup",
+					ObjectTableId = PaymentOrderObjectTable.Id,
+					Tenant = 0
+				}, menuButtonGroupRepository, tenantMenuButtonGroups);        
+   
+			   MenuButton PaymentOrderMenuButton0 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+					{
+						EventCode = "More",
+						Index = 100, 
+						IsActive = false,
+						LabelTextCodeCode = "Customs.PaymentOrder.B.More",
+						LabelTextCodeDefaultText = "More",
+						Tenant = 0,
+						MenuButtonGroupId = PaymentOrderMenuButtonGroup.Id,
+						ObjectTableId = PaymentOrderObjectTable.Id,
+						MenuButtonType = "dropdownbutton",
+						FeatureId = null,
+						Style = null,
+						LocalDefaultText = "הדפס הודעת חיוב",
+						FeatureUniqeCode = null,
+					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
+
+			   MenuButton PaymentOrderMenuButton00 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+					{
+						EventCode = "ClosePaymentOrder",
+						Index = 1, 
+						IsActive = true,
+						LabelTextCodeCode = "Customs.Declaration.B.ClosePaymentOrder",
+						LabelTextCodeDefaultText = "Close Payment Order",
+						Tenant = 0,
+						MenuButtonGroupId = PaymentOrderMenuButtonGroup.Id,
+						ParentMenuButtonId = PaymentOrderMenuButton0.Id,
+						ObjectTableId = PaymentOrderObjectTable.Id,
+						MenuButtonType = "menuitem",
+						FeatureId=  PaymentOrderFeature_MB00.Id,
+						Style = null,
+						LocalDefaultText = null,
+						FeatureUniqeCode=  PaymentOrderFeature_MB00.FeatureUniqeCode,
+					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
+	   
+			   MenuButton PaymentOrderMenuButton01 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+					{
+						EventCode = "UnClosePaymentOrder",
+						Index = 2, 
+						IsActive = true,
+						LabelTextCodeCode = "Customs.Declaration.B.UnClosePaymentOrder",
+						LabelTextCodeDefaultText = "UnClose Payment Order",
+						Tenant = 0,
+						MenuButtonGroupId = PaymentOrderMenuButtonGroup.Id,
+						ParentMenuButtonId = PaymentOrderMenuButton0.Id,
+						ObjectTableId = PaymentOrderObjectTable.Id,
+						MenuButtonType = "menuitem",
+						FeatureId=  PaymentOrderFeature_MB01.Id,
+						Style = null,
+						LocalDefaultText = null,
+						FeatureUniqeCode=  PaymentOrderFeature_MB01.FeatureUniqeCode,
+					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
+	   
+			   MenuButton PaymentOrderMenuButton02 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+					{
+						EventCode = "PrintPaymentOrder",
+						Index = 3, 
+						IsActive = true,
+						LabelTextCodeCode = "Customs.Declaration.B.PrintPaymentOrder",
+						LabelTextCodeDefaultText = "Print Payment Order",
+						Tenant = 0,
+						MenuButtonGroupId = PaymentOrderMenuButtonGroup.Id,
+						ParentMenuButtonId = PaymentOrderMenuButton0.Id,
+						ObjectTableId = PaymentOrderObjectTable.Id,
+						MenuButtonType = "menuitem",
+						FeatureId=  PaymentOrderFeature_MB02.Id,
+						Style = null,
+						LocalDefaultText = null,
+						FeatureUniqeCode=  PaymentOrderFeature_MB02.FeatureUniqeCode,
+					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
+	   
+			   MenuButton PaymentOrderMenuButton03 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+					{
+						EventCode = "PrintDeficit",
+						Index = 4, 
+						IsActive = true,
+						LabelTextCodeCode = "Customs.Declaration.B.PrintDeficit",
+						LabelTextCodeDefaultText = "Print Deficit Form",
+						Tenant = 0,
+						MenuButtonGroupId = PaymentOrderMenuButtonGroup.Id,
+						ParentMenuButtonId = PaymentOrderMenuButton0.Id,
+						ObjectTableId = PaymentOrderObjectTable.Id,
+						MenuButtonType = "menuitem",
+						FeatureId=  PaymentOrderFeature_MB03.Id,
+						Style = null,
+						LocalDefaultText = null,
+						FeatureUniqeCode=  PaymentOrderFeature_MB03.FeatureUniqeCode,
+					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
+	          
+   
+			   MenuButton PaymentOrderMenuButton1 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+					{
+						EventCode = "SendPaymentOrder",
+						Index = 3, 
+						IsActive = true,
+						LabelTextCodeCode = "Customs.Declaration.B.SendPaymentOrder",
+						LabelTextCodeDefaultText = "Send Payment Order",
+						Tenant = 0,
+						MenuButtonGroupId = PaymentOrderMenuButtonGroup.Id,
+						ObjectTableId = PaymentOrderObjectTable.Id,
+						MenuButtonType = "control",
+						FeatureId = PaymentOrderFeature_MB1.Id,
+						Style = null,
+						LocalDefaultText = "שלח תשלום הזמנה",
+						FeatureUniqeCode = PaymentOrderFeature_MB1.FeatureUniqeCode,
+					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
+
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable PaymentOrderObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.PaymentOrder" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode PaymentOrderTextCode_CustomsPaymentOrderOPaymentOrders = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PaymentOrder.O.PaymentOrders", DefaultText = "Payment Orders",LocalDefaultText = @"הוראות תשלום", ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode PaymentOrderTextCode_CustomsPaymentOrderOLines = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PaymentOrder.O.Lines", DefaultText = "Lines",LocalDefaultText = @"קווים", ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode PaymentOrderTextCode_CustomsPaymentOrderOSummaries = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PaymentOrder.O.Summaries", DefaultText = "Summaries",LocalDefaultText = @"סיכומים", ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode PaymentOrderTextCode_CustomsPaymentOrderODifference = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PaymentOrder.O.Difference", DefaultText = "Difference",LocalDefaultText = @"הבדל", ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode PaymentOrderTextCode_CustomsPaymentOrderOParagraphTypesAmountLines = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PaymentOrder.O.ParagraphTypesAmountLines", DefaultText = "Paragraph Types Amount lines",LocalDefaultText = @"קווי סכום סוגי סעיף", ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode PaymentOrderTextCode_CustomsPaymentOrderOConnectedEntities = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PaymentOrder.O.ConnectedEntities", DefaultText = "Connected Entities",LocalDefaultText = @"ישויות הקשורות", ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode PaymentOrderTextCode_CustomsPaymentOrderODepositConditions = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PaymentOrder.O.DepositConditions", DefaultText = "Deposit Conditions",LocalDefaultText = @"תנאי פיקדון", ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode PaymentOrderTextCode_CustomsPaymentOrderOClosedPaymentOrder = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PaymentOrder.O.ClosedPaymentOrder", DefaultText = "Payment Order is closed - Display only",LocalDefaultText = @"הוראת תשלום סגורה - לא ניתן לבצע שינויים", ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode PaymentOrderTextCode_CustomsPaymentOrderOTotal = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PaymentOrder.O.Total", DefaultText = "Total",LocalDefaultText = @"סה”כ", ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode PaymentOrderTextCode_CustomsPaymentOrderOClosePaymentOrder = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PaymentOrder.O.ClosePaymentOrder", DefaultText = "Close Payment Order?",LocalDefaultText = @"לסגור את הוראת התשלום ? ", ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode PaymentOrderTextCode_CustomsPaymentOrderOReOpenPaymentOrder = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PaymentOrder.O.ReOpenPaymentOrder", DefaultText = "Reopen  payment order ?",LocalDefaultText = @"לפתוח מחדש את הוראת התשלום ? ", ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode PaymentOrderTextCode_CustomsPaymentOrderOFileNumberDoesNotExist = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PaymentOrder.O.FileNumberDoesNotExist", DefaultText = "File Number Does Not Exist",LocalDefaultText = @"לא נמצא תיק שמספרו ", ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode PaymentOrderTextCode_CustomsPaymentOrderOTotalSumToPayDifference = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PaymentOrder.O.TotalSumToPayDifference", DefaultText = "The difference between amount and total sum to pay must be 0!",LocalDefaultText = @"קיימים הפרשים בין הסכום לתשלום בהוראה לבין הסכום שהוזן בפועל ", ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode PaymentOrderTextCode_CustomsPaymentOrderOPaymentOrderLeftAmountDifference = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PaymentOrder.O.PaymentOrderLeftAmountDifference", DefaultText = "Sum of payment method not equal to payment order left amount",LocalDefaultText = @"סכום אמצעי תשלום שונה מסכום שנותר לתשלום", ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode PaymentOrderTextCode_CustomsPaymentOrderOAccountingCustomFileMissing = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PaymentOrder.O.AccountingCustomFileMissing", DefaultText = "Please Enter Custom File Or Accounting Card",LocalDefaultText = @"יש להזין תיק עמילות או כרטיס מעבר לחיוב", ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode PaymentOrderTextCode_CustomsPaymentOrderONoAccountingCard = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PaymentOrder.O.NoAccountingCard", DefaultText = "No Accounting Card Defined in Customs Settings",LocalDefaultText = @"לא הוגדר כרטיס מעבר בהגדרות המערכת", ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode PaymentOrderTextCode_CustomsPaymentOrderONoPayWithRAccountingCard = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PaymentOrder.O.NoPayWithRAccountingCard", DefaultText = "Please Enter Custom File Or Accounting Card",LocalDefaultText = @"לא ניתן לשלם הוראת תשלום עם רשימון שלא אותר, נא להזין מספר תיק שונה או מספר כרטיס מעבר", ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
+	    
+}
+
+    
 
    }
     

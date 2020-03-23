@@ -49,7 +49,7 @@ using Logitude.Social.Data.EntityPOCOs;
 using Logitude.Social.BL;
 using Logitude.Social.Data.Repsitories;
 using Logitude.Server.Tools.CloseTablesClasses;
-using Logitude.Customs.BL.CloseTables;
+using Logitude.Customs.BL.ClosedTable;
 using Logitude.CRM.BL.CLoseTable;
 using Logitude.BookingLib.BL.CLoseTable;
 using Logitude.WarehouseLib.Data.Repositories;
@@ -58,6 +58,20 @@ using Logitude.WarehouseLib.BL.CLoseTable;
 using Logitude.TimeManagement.Data.Repositories;
 using Logitude.TimeManagement.Data.EntityPOCOs;
 using Logitude.TimeManagement.BL.CLoseTable;
+using Logitude.BL.ShipmentsModel.CloseTables;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Logitude.BL.ShipmentsModel;
+using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.Repositories;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Logitude.BL.GlobalModel;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.BL;
+using Logitude.TariffModule.Data.Repositories;
+using Logitude.TariffModule.Data.EntityPOCOs;
+using Logitude.TariffModule.BL.CLoseTable;
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationCargoSplitUpdateClass
@@ -106,8 +120,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    DefaultText =  "Declaration Cargo Split",
 			      				    NewButtonLocalDefaultText =  "בקשת פיצול מטען חדשה",
 			      				    NewButtonDefaultText =  "בקשת פיצול מטען חדשה",
-			      				    Code =  "f116",
-			      				    Name =  "Customs.DeclarationCargoSplit Query Group",
+			      				    Code =  "DECS",
+			      				    Name =  "Customs.DeclarationCargoSplit",
 			      				    GenerateDomainService =  true,
 			      				    ClientModuleName =  "Customs",
 			      				    ServerModuleName =  "Customs",
@@ -115,8 +129,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    NoTS =  false,
 			      				    HasMenuButtons =  true,
 			      				    AllowedForComputingPartners =  false,
-			      				    Code1 =  "0c73",
-			      				    Name1 =  " Query Group",
 			      				    CustomFieldsCount =  0,
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
@@ -131,11 +143,124 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
+					 						FieldName =  "Id",
+					  						OldFieldName =  "Id",
+					  						ObjectTableName =  "Customs.DeclarationCargoSplit",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  15,
+					  						IsRequired =  true,
+					  						DisplayOnLookUp =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  15,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "Id",
+					  						ListPropertyPath =  "Id",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "DeclarationCargoSplit",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "Id",
+					  						DefaultText =  "Id",
+					  						FullLocalDefaultText =  "Id",
+					  						ListFieldLable =  "IdListLable",
+					  						ListLableDefaultText =  "Id",
+					  						ListLocalDefaultText =  "Id",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  true,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "Tenant",
+					  						OldFieldName =  "Tenant",
+					  						ObjectTableName =  "Customs.DeclarationCargoSplit",
+					  						FieldsDataType =  "Integer",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  true,
+					  						DisplayOnLookUp =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "Tenant",
+					  						ListPropertyPath =  "Tenant",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "DeclarationCargoSplit",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "Tenant",
+					  						DefaultText =  "Tenant",
+					  						FullLocalDefaultText =  "Tenant",
+					  						ListFieldLable =  "TenantListLable",
+					  						ListLableDefaultText =  "Tenant",
+					  						ListLocalDefaultText =  "Tenant",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  true,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
 					 						FieldName =  "RequestDate",
 					  						OldFieldName =  "RequestDate",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.DeclarationCargoSplit",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -185,10 +310,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -198,9 +319,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "SearchFields",
 					  						OldFieldName =  "SearchFields",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.DeclarationCargoSplit",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -248,10 +366,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -261,9 +375,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "ActionTypeCode",
 					  						OldFieldName =  "ActionTypeCode",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.DeclarationCargoSplit",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.ActionCode",
@@ -315,10 +426,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -328,9 +435,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "RequestReason",
 					  						OldFieldName =  "RequestReason",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.DeclarationCargoSplit",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.SplitOrMergeReason",
@@ -382,10 +486,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -395,9 +495,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "RequestNumber",
 					  						OldFieldName =  "RequestNumber",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.DeclarationCargoSplit",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -448,10 +545,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -461,9 +554,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "ActionTypeName",
 					  						OldFieldName =  "ActionTypeName",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.DeclarationCargoSplit",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -514,10 +604,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -527,9 +613,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "RequestReasonName",
 					  						OldFieldName =  "RequestReasonName",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.DeclarationCargoSplit",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -580,10 +663,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -593,9 +672,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "RequestRemarks",
 					  						OldFieldName =  "RequestRemarks",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.DeclarationCargoSplit",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -646,10 +722,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -659,9 +731,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "CargoTypeCode",
 					  						OldFieldName =  "CargoTypeCode",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.DeclarationCargoSplit",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.CargoIdentifireType",
@@ -713,10 +782,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -726,9 +791,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "CargoTypeName",
 					  						OldFieldName =  "CargoTypeName",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.DeclarationCargoSplit",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -779,10 +841,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -792,9 +850,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "ManifestNumber",
 					  						OldFieldName =  "ManifestNumber",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.DeclarationCargoSplit",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -845,10 +900,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -858,9 +909,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "SecondCargoID",
 					  						OldFieldName =  "SecondCargoID",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.DeclarationCargoSplit",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -911,10 +959,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -924,9 +968,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "ThirdCargoID",
 					  						OldFieldName =  "ThirdCargoID",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.DeclarationCargoSplit",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -977,10 +1018,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -990,9 +1027,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "DeclarationId",
 					  						OldFieldName =  "DeclarationId",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.DeclarationCargoSplit",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1042,10 +1076,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1055,9 +1085,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "IsClosed",
 					  						OldFieldName =  "IsClosed",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.DeclarationCargoSplit",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -1110,10 +1137,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1123,9 +1146,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "ResponseStatusCode",
 					  						OldFieldName =  "ResponseStatusCode",
-					  						IsNew =  false,
-					  						IsChecked =  true,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.DeclarationCargoSplit",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.CargoSplitRequestStatus",
@@ -1177,10 +1197,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1190,9 +1206,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "ResponseStatusName",
 					  						OldFieldName =  "ResponseStatusName",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.DeclarationCargoSplit",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1243,10 +1256,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1256,9 +1265,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "CustomFileNo",
 					  						OldFieldName =  "CustomFileNo",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.DeclarationCargoSplit",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1309,10 +1315,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1322,9 +1324,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "DecCargoSplitCons",
 					  						OldFieldName =  "DecCargoSplitCons",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.DeclarationCargoSplit",
 					  						FieldsDataType =  "List",
 					  						MinLength =  0,
@@ -1370,10 +1369,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1383,9 +1378,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "DecCargoSplitCargoIdentifiers",
 					  						OldFieldName =  "DecCargoSplitCargoIdentifiers",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.DeclarationCargoSplit",
 					  						FieldsDataType =  "List",
 					  						MinLength =  0,
@@ -1431,17 +1423,117 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
-	    {  	   
+	    {  
+	        FeatureRepository featureRepository = new FeatureRepository(0); 
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+	        QueryGroup DeclarationCargoSplitQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "DECS", Name = "Customs.DeclarationCargoSplit" }, queryGroupRepository);
+						QueryGroup DeclarationCargoSplitQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "0c73", Name = " Query Group" }, queryGroupRepository);
+				        queryGroupRepository.SubmitChanges();
+
+	        ObjectTable DeclarationCargoSplitObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.DeclarationCargoSplit" && d.Tenant == 0).FirstOrDefault();
+	        List<ObjectField> DeclarationCargoSplitObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.DeclarationCargoSplit").ToList();   
+
+			   TextCode DeclarationCargoSplitTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DeclarationCargoSplit.Q.OpenCargoSplits", DefaultText = @"OpenCargoSplits",LocalDefaultText = "OpenCargoSplits", ObjectTableId = DeclarationCargoSplitObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature DeclarationCargoSplitFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DeclarationCargoSplit.Q.OpenCargoSplits", ObjectTableId = DeclarationCargoSplitObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationCargoSplitFeatures.OpenCargoSplits", NameTextCodeDefaultText = "OpenCargoSplits", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+ 
+
+			   TextCode DeclarationCargoSplitTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DeclarationCargoSplit.Q.ClosedCargoSplits", DefaultText = @"ClosedCargoSplits",LocalDefaultText = "ClosedCargoSplits", ObjectTableId = DeclarationCargoSplitObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature DeclarationCargoSplitFeature_1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DeclarationCargoSplit.Q.ClosedCargoSplits", ObjectTableId = DeclarationCargoSplitObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationCargoSplitFeatures.ClosedCargoSplits", NameTextCodeDefaultText = "ClosedCargoSplits", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+ 
+
+			   TextCode DeclarationCargoSplitTextCode_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DeclarationCargoSplit.Q.AllCargoSplits", DefaultText = @"AllCargoSplits",LocalDefaultText = "AllCargoSplits", ObjectTableId = DeclarationCargoSplitObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature DeclarationCargoSplitFeature_2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DeclarationCargoSplit.Q.AllCargoSplits", ObjectTableId = DeclarationCargoSplitObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationCargoSplitFeatures.AllCargoSplits", NameTextCodeDefaultText = "AllCargoSplits", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+
+	        TextCodeRepository.SubmitChanges();
+	        FeaturesRepository.SubmitChanges();    
+	      
+
+			  Query OpenCargoSplitsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DeclarationCargoSplitTextCode_0.Id, NameTextCodeCode = DeclarationCargoSplitTextCode_0.Code, ObjectTableName = "Customs.DeclarationCargoSplit", Code = "OpenCargoSplits",  EditWizardName = "Logitude.Customs.Views.DeclarationCargoSplit.DeclarationCargoSplitControl",
+			   QueryGroupCode = "DECS", IndexOrder = 0, Tenant = 0, ObjectTableId = DeclarationCargoSplitObjectTable.Id, QuerySection = "Customs.DeclarationCargoSplit", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = DeclarationCargoSplitFeature_0.Id,FeatureUniqeCode= DeclarationCargoSplitFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+	
+			 QueryColumn OpenCargoSplitsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCargoSplitsQuery.Id,QueryCode = OpenCargoSplitsQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = DeclarationCargoSplitObjectFields.Where(d => d.FieldName == "RequestNumber" && d.ObjectTableId == DeclarationCargoSplitObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DeclarationCargoSplitObjectFields.Where(d => d.FieldName == "RequestNumber" && d.ObjectTableId == DeclarationCargoSplitObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 110 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn OpenCargoSplitsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCargoSplitsQuery.Id,QueryCode = OpenCargoSplitsQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = DeclarationCargoSplitObjectFields.Where(d => d.FieldName == "RequestDate" && d.ObjectTableId == DeclarationCargoSplitObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DeclarationCargoSplitObjectFields.Where(d => d.FieldName == "RequestDate" && d.ObjectTableId == DeclarationCargoSplitObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 110 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn OpenCargoSplitsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCargoSplitsQuery.Id,QueryCode = OpenCargoSplitsQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = DeclarationCargoSplitObjectFields.Where(d => d.FieldName == "ManifestNumber" && d.ObjectTableId == DeclarationCargoSplitObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DeclarationCargoSplitObjectFields.Where(d => d.FieldName == "ManifestNumber" && d.ObjectTableId == DeclarationCargoSplitObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn OpenCargoSplitsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCargoSplitsQuery.Id,QueryCode = OpenCargoSplitsQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = DeclarationCargoSplitObjectFields.Where(d => d.FieldName == "SecondCargoID" && d.ObjectTableId == DeclarationCargoSplitObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DeclarationCargoSplitObjectFields.Where(d => d.FieldName == "SecondCargoID" && d.ObjectTableId == DeclarationCargoSplitObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn OpenCargoSplitsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCargoSplitsQuery.Id,QueryCode = OpenCargoSplitsQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = DeclarationCargoSplitObjectFields.Where(d => d.FieldName == "ThirdCargoID" && d.ObjectTableId == DeclarationCargoSplitObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DeclarationCargoSplitObjectFields.Where(d => d.FieldName == "ThirdCargoID" && d.ObjectTableId == DeclarationCargoSplitObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn OpenCargoSplitsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCargoSplitsQuery.Id,QueryCode = OpenCargoSplitsQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = DeclarationCargoSplitObjectFields.Where(d => d.FieldName == "ActionTypeName" && d.ObjectTableId == DeclarationCargoSplitObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DeclarationCargoSplitObjectFields.Where(d => d.FieldName == "ActionTypeName" && d.ObjectTableId == DeclarationCargoSplitObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn OpenCargoSplitsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCargoSplitsQuery.Id,QueryCode = OpenCargoSplitsQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = DeclarationCargoSplitObjectFields.Where(d => d.FieldName == "RequestReasonName" && d.ObjectTableId == DeclarationCargoSplitObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DeclarationCargoSplitObjectFields.Where(d => d.FieldName == "RequestReasonName" && d.ObjectTableId == DeclarationCargoSplitObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn OpenCargoSplitsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCargoSplitsQuery.Id,QueryCode = OpenCargoSplitsQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = DeclarationCargoSplitObjectFields.Where(d => d.FieldName == "CustomFileNo" && d.ObjectTableId == DeclarationCargoSplitObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DeclarationCargoSplitObjectFields.Where(d => d.FieldName == "CustomFileNo" && d.ObjectTableId == DeclarationCargoSplitObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 110 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn OpenCargoSplitsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCargoSplitsQuery.Id,QueryCode = OpenCargoSplitsQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = DeclarationCargoSplitObjectFields.Where(d => d.FieldName == "ResponseStatusName" && d.ObjectTableId == DeclarationCargoSplitObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DeclarationCargoSplitObjectFields.Where(d => d.FieldName == "ResponseStatusName" && d.ObjectTableId == DeclarationCargoSplitObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn OpenCargoSplitsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCargoSplitsQuery.Id,QueryCode = OpenCargoSplitsQuery.UniqueCode, IndexOrder = 9, ObjectFieldId = DeclarationCargoSplitObjectFields.Where(d => d.FieldName == "IsClosed" && d.ObjectTableId == DeclarationCargoSplitObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DeclarationCargoSplitObjectFields.Where(d => d.FieldName == "IsClosed" && d.ObjectTableId == DeclarationCargoSplitObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+             AdvancedQueryFilter OpenCargoSplitsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = DeclarationCargoSplitObjectFields.Where(d => d.FieldName == "IsClosed" && d.ObjectTableId == DeclarationCargoSplitObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DeclarationCargoSplitObjectFields.Where(d => d.FieldName == "IsClosed" && d.ObjectTableId == DeclarationCargoSplitObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "false",PredefinedValue2 = null, QueryId = OpenCargoSplitsQuery.Id,QueryCode = OpenCargoSplitsQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+
+  
+	      
+
+			  Query ClosedCargoSplitsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DeclarationCargoSplitTextCode_1.Id, NameTextCodeCode = DeclarationCargoSplitTextCode_1.Code, ObjectTableName = "Customs.DeclarationCargoSplit", Code = "ClosedCargoSplits",  EditWizardName = "Logitude.Customs.Views.DeclarationCargoSplit.DeclarationCargoSplitControl",
+			   QueryGroupCode = "DECS", IndexOrder = 1, Tenant = 0, ObjectTableId = DeclarationCargoSplitObjectTable.Id, QuerySection = "Customs.DeclarationCargoSplit", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = DeclarationCargoSplitFeature_1.Id,FeatureUniqeCode= DeclarationCargoSplitFeature_1.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+	
+			 QueryColumn ClosedCargoSplitsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedCargoSplitsQuery.Id,QueryCode = ClosedCargoSplitsQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = DeclarationCargoSplitObjectFields.Where(d => d.FieldName == "RequestNumber" && d.ObjectTableId == DeclarationCargoSplitObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DeclarationCargoSplitObjectFields.Where(d => d.FieldName == "RequestNumber" && d.ObjectTableId == DeclarationCargoSplitObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 110 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn ClosedCargoSplitsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedCargoSplitsQuery.Id,QueryCode = ClosedCargoSplitsQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = DeclarationCargoSplitObjectFields.Where(d => d.FieldName == "RequestDate" && d.ObjectTableId == DeclarationCargoSplitObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DeclarationCargoSplitObjectFields.Where(d => d.FieldName == "RequestDate" && d.ObjectTableId == DeclarationCargoSplitObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 110 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn ClosedCargoSplitsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedCargoSplitsQuery.Id,QueryCode = ClosedCargoSplitsQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = DeclarationCargoSplitObjectFields.Where(d => d.FieldName == "ManifestNumber" && d.ObjectTableId == DeclarationCargoSplitObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DeclarationCargoSplitObjectFields.Where(d => d.FieldName == "ManifestNumber" && d.ObjectTableId == DeclarationCargoSplitObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn ClosedCargoSplitsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedCargoSplitsQuery.Id,QueryCode = ClosedCargoSplitsQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = DeclarationCargoSplitObjectFields.Where(d => d.FieldName == "SecondCargoID" && d.ObjectTableId == DeclarationCargoSplitObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DeclarationCargoSplitObjectFields.Where(d => d.FieldName == "SecondCargoID" && d.ObjectTableId == DeclarationCargoSplitObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn ClosedCargoSplitsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedCargoSplitsQuery.Id,QueryCode = ClosedCargoSplitsQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = DeclarationCargoSplitObjectFields.Where(d => d.FieldName == "ThirdCargoID" && d.ObjectTableId == DeclarationCargoSplitObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DeclarationCargoSplitObjectFields.Where(d => d.FieldName == "ThirdCargoID" && d.ObjectTableId == DeclarationCargoSplitObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn ClosedCargoSplitsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedCargoSplitsQuery.Id,QueryCode = ClosedCargoSplitsQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = DeclarationCargoSplitObjectFields.Where(d => d.FieldName == "ActionTypeName" && d.ObjectTableId == DeclarationCargoSplitObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DeclarationCargoSplitObjectFields.Where(d => d.FieldName == "ActionTypeName" && d.ObjectTableId == DeclarationCargoSplitObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn ClosedCargoSplitsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedCargoSplitsQuery.Id,QueryCode = ClosedCargoSplitsQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = DeclarationCargoSplitObjectFields.Where(d => d.FieldName == "RequestReasonName" && d.ObjectTableId == DeclarationCargoSplitObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DeclarationCargoSplitObjectFields.Where(d => d.FieldName == "RequestReasonName" && d.ObjectTableId == DeclarationCargoSplitObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn ClosedCargoSplitsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedCargoSplitsQuery.Id,QueryCode = ClosedCargoSplitsQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = DeclarationCargoSplitObjectFields.Where(d => d.FieldName == "CustomFileNo" && d.ObjectTableId == DeclarationCargoSplitObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DeclarationCargoSplitObjectFields.Where(d => d.FieldName == "CustomFileNo" && d.ObjectTableId == DeclarationCargoSplitObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 110 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn ClosedCargoSplitsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedCargoSplitsQuery.Id,QueryCode = ClosedCargoSplitsQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = DeclarationCargoSplitObjectFields.Where(d => d.FieldName == "ResponseStatusName" && d.ObjectTableId == DeclarationCargoSplitObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DeclarationCargoSplitObjectFields.Where(d => d.FieldName == "ResponseStatusName" && d.ObjectTableId == DeclarationCargoSplitObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn ClosedCargoSplitsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedCargoSplitsQuery.Id,QueryCode = ClosedCargoSplitsQuery.UniqueCode, IndexOrder = 9, ObjectFieldId = DeclarationCargoSplitObjectFields.Where(d => d.FieldName == "IsClosed" && d.ObjectTableId == DeclarationCargoSplitObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DeclarationCargoSplitObjectFields.Where(d => d.FieldName == "IsClosed" && d.ObjectTableId == DeclarationCargoSplitObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+             AdvancedQueryFilter ClosedCargoSplitsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = DeclarationCargoSplitObjectFields.Where(d => d.FieldName == "IsClosed" && d.ObjectTableId == DeclarationCargoSplitObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DeclarationCargoSplitObjectFields.Where(d => d.FieldName == "IsClosed" && d.ObjectTableId == DeclarationCargoSplitObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = ClosedCargoSplitsQuery.Id,QueryCode = ClosedCargoSplitsQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+
+  
+	      
+
+			  Query AllCargoSplitsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DeclarationCargoSplitTextCode_2.Id, NameTextCodeCode = DeclarationCargoSplitTextCode_2.Code, ObjectTableName = "Customs.DeclarationCargoSplit", Code = "AllCargoSplits",  EditWizardName = "Logitude.Customs.Views.DeclarationCargoSplit.DeclarationCargoSplitControl",
+			   QueryGroupCode = "DECS", IndexOrder = 2, Tenant = 0, ObjectTableId = DeclarationCargoSplitObjectTable.Id, QuerySection = "Customs.DeclarationCargoSplit", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = DeclarationCargoSplitFeature_2.Id,FeatureUniqeCode= DeclarationCargoSplitFeature_2.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+	
+			 QueryColumn AllCargoSplitsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCargoSplitsQuery.Id,QueryCode = AllCargoSplitsQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = DeclarationCargoSplitObjectFields.Where(d => d.FieldName == "RequestNumber" && d.ObjectTableId == DeclarationCargoSplitObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DeclarationCargoSplitObjectFields.Where(d => d.FieldName == "RequestNumber" && d.ObjectTableId == DeclarationCargoSplitObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 110 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn AllCargoSplitsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCargoSplitsQuery.Id,QueryCode = AllCargoSplitsQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = DeclarationCargoSplitObjectFields.Where(d => d.FieldName == "RequestDate" && d.ObjectTableId == DeclarationCargoSplitObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DeclarationCargoSplitObjectFields.Where(d => d.FieldName == "RequestDate" && d.ObjectTableId == DeclarationCargoSplitObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 110 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn AllCargoSplitsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCargoSplitsQuery.Id,QueryCode = AllCargoSplitsQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = DeclarationCargoSplitObjectFields.Where(d => d.FieldName == "ManifestNumber" && d.ObjectTableId == DeclarationCargoSplitObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DeclarationCargoSplitObjectFields.Where(d => d.FieldName == "ManifestNumber" && d.ObjectTableId == DeclarationCargoSplitObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn AllCargoSplitsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCargoSplitsQuery.Id,QueryCode = AllCargoSplitsQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = DeclarationCargoSplitObjectFields.Where(d => d.FieldName == "SecondCargoID" && d.ObjectTableId == DeclarationCargoSplitObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DeclarationCargoSplitObjectFields.Where(d => d.FieldName == "SecondCargoID" && d.ObjectTableId == DeclarationCargoSplitObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn AllCargoSplitsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCargoSplitsQuery.Id,QueryCode = AllCargoSplitsQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = DeclarationCargoSplitObjectFields.Where(d => d.FieldName == "ThirdCargoID" && d.ObjectTableId == DeclarationCargoSplitObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DeclarationCargoSplitObjectFields.Where(d => d.FieldName == "ThirdCargoID" && d.ObjectTableId == DeclarationCargoSplitObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn AllCargoSplitsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCargoSplitsQuery.Id,QueryCode = AllCargoSplitsQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = DeclarationCargoSplitObjectFields.Where(d => d.FieldName == "ActionTypeName" && d.ObjectTableId == DeclarationCargoSplitObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DeclarationCargoSplitObjectFields.Where(d => d.FieldName == "ActionTypeName" && d.ObjectTableId == DeclarationCargoSplitObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn AllCargoSplitsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCargoSplitsQuery.Id,QueryCode = AllCargoSplitsQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = DeclarationCargoSplitObjectFields.Where(d => d.FieldName == "RequestReasonName" && d.ObjectTableId == DeclarationCargoSplitObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DeclarationCargoSplitObjectFields.Where(d => d.FieldName == "RequestReasonName" && d.ObjectTableId == DeclarationCargoSplitObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn AllCargoSplitsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCargoSplitsQuery.Id,QueryCode = AllCargoSplitsQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = DeclarationCargoSplitObjectFields.Where(d => d.FieldName == "CustomFileNo" && d.ObjectTableId == DeclarationCargoSplitObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DeclarationCargoSplitObjectFields.Where(d => d.FieldName == "CustomFileNo" && d.ObjectTableId == DeclarationCargoSplitObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 110 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn AllCargoSplitsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCargoSplitsQuery.Id,QueryCode = AllCargoSplitsQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = DeclarationCargoSplitObjectFields.Where(d => d.FieldName == "ResponseStatusName" && d.ObjectTableId == DeclarationCargoSplitObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DeclarationCargoSplitObjectFields.Where(d => d.FieldName == "ResponseStatusName" && d.ObjectTableId == DeclarationCargoSplitObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn AllCargoSplitsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCargoSplitsQuery.Id,QueryCode = AllCargoSplitsQuery.UniqueCode, IndexOrder = 9, ObjectFieldId = DeclarationCargoSplitObjectFields.Where(d => d.FieldName == "IsClosed" && d.ObjectTableId == DeclarationCargoSplitObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DeclarationCargoSplitObjectFields.Where(d => d.FieldName == "IsClosed" && d.ObjectTableId == DeclarationCargoSplitObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+	   
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
@@ -1456,39 +1548,83 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
 	    {  
 		   ObjectTable DeclarationCargoSplitObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.DeclarationCargoSplit" && d.Tenant == 0).FirstOrDefault(); 
-		   Feature DeclarationCargoSplitFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = DeclarationCargoSplitObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationCargoSplit.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature DeclarationCargoSplitFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = DeclarationCargoSplitObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationCargoSplit.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature DeclarationCargoSplitFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = DeclarationCargoSplitObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationCargoSplit.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature DeclarationCargoSplitFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = DeclarationCargoSplitObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationCargoSplit.Features.PackageFeature", NameTextCodeDefaultText = "DeclarationCargoSplit Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+
+		   Feature DeclarationCargoSplitFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = DeclarationCargoSplitObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationCargoSplit.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature DeclarationCargoSplitFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = DeclarationCargoSplitObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationCargoSplit.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature DeclarationCargoSplitFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = DeclarationCargoSplitObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationCargoSplit.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature DeclarationCargoSplitFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = DeclarationCargoSplitObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationCargoSplit.Features.PackageFeature", NameTextCodeDefaultText = "DeclarationCargoSplit Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 
+
+		   		   //--------------> Additional Features <--------------\\
+
+		   Feature DeclarationCargoSplitFeature_GENERAL = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationCargoSplitObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CustomsDeclarationCargoSplit.Features.General", NameTextCodeDefaultText = @"General" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature DeclarationCargoSplitFeature_OPENCARGOSPLITS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "OPENCARGOSPLITS", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationCargoSplitObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CustomsDeclarationCargoSplit.Features.OpenDeclarationCargoSplits", NameTextCodeDefaultText = @"Open Declaration Cargo Splits" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature DeclarationCargoSplitFeature_ALLCARGOSPLITS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLCARGOSPLITS", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationCargoSplitObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CustomsDeclarationCargoSplit.Features.AllDeclarationCargoSplits", NameTextCodeDefaultText = @"All Declaration Cargo Splits" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature DeclarationCargoSplitFeature_CLOSEDCARGOSPLITS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CLOSEDCARGOSPLITS", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationCargoSplitObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CustomsDeclarationCargoSplit.Features.ClosedDeclarationCargoSplits", NameTextCodeDefaultText = @"Closed Declaration Cargo Splits" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+   
 	    
 		}
 
-	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext)
+	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
 	    {   
 			ObjectTable DeclarationCargoSplitObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.DeclarationCargoSplit" && d.Tenant == 0).FirstOrDefault(); 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
-                Code = "CREV",
-                EnglishName = "Created",
-                Tenant = 0,
-                AddedManually = false,
-				IsManualEntry = false,
-                LocalName = "Created",
+                Code =  "CREV",
+                ShortView =  true,
+                IsManualEntry =  false,
+                LocalName =  "Created",
+                EnglishName =  "Created",
+                EventTypeCategoryCode =  "OPE",
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
                 ObjectTableId = DeclarationCargoSplitObjectTable.Id,
-                ShortView = true,
+				 
             }, EventTypeRepository, tenantEventTypes);
 
 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
-                Code = "UPEV",
-                EnglishName = "Updated",
-                Tenant = 0,
-                AddedManually = false,
-				IsManualEntry = false,
-                LocalName = "Updated",
+                Code =  "UPEV",
+                ShortView =  false,
+                IsManualEntry =  false,
+                LocalName =  "Updated",
+                EnglishName =  "Updated",
+                EventTypeCategoryCode =  "OPE",
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
                 ObjectTableId = DeclarationCargoSplitObjectTable.Id,
-                ShortView = false,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "CSR",
+                ShortView =  false,
+                IsManualEntry =  false,
+                LocalName =  "בקשה לפיצול מטען",
+                EnglishName =  "Cargo Split Request",
+                EventTypeCategoryCode =  "LOG",
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = DeclarationCargoSplitObjectTable.Id,
+				 
             }, EventTypeRepository, tenantEventTypes);
 
 
@@ -1496,7 +1632,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }     
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {     
+	    
+}
+
+    
 
    }
     

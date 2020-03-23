@@ -20,17 +20,37 @@ namespace Logitude.Customs.BL
    {
        public List<CustomerRoleTypeDetails> GetAll()
        {
-		    var all = new List<CustomerRoleTypeDetails>(); 
+		    var all = new List<CustomerRoleTypeDetails>();  
+            all.Add(new CustomerRoleTypeDetails()
+            {    
+                Code = "1", 
+                SearchFields = "1,סוכן,,", 
+                Inactive = false, 
+                LocalName = "סוכן", 
+			});
+			 
+            all.Add(new CustomerRoleTypeDetails()
+            {    
+                Code = "4", 
+                SearchFields = "4,יבואן,,", 
+                Inactive = false, 
+                LocalName = "יבואן", 
+			});
+			
             return all;
        }
 
 	    public void MapPoco(CustomerRoleType newPoco)
-        {    
+        {   
+		    newPoco.Code = this.Code;  
+			newPoco.SearchFields = GetSearchFields(this);   
+		    newPoco.Inactive = this.Inactive;  
+		    newPoco.LocalName = this.LocalName;   
         }
 
 		public string GetSearchFields(CustomerRoleType rec)
         {   
-           return string.Empty;
+           return String.Concat(rec.Code,",",rec.Inactive,",",rec.LocalName,",");
         }
    }
 }

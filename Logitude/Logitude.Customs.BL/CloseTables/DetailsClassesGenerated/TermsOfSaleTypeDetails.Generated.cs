@@ -20,17 +20,141 @@ namespace Logitude.Customs.BL
    {
        public List<TermsOfSaleTypeDetails> GetAll()
        {
-		    var all = new List<TermsOfSaleTypeDetails>(); 
+		    var all = new List<TermsOfSaleTypeDetails>();  
+            all.Add(new TermsOfSaleTypeDetails()
+            {    
+                Code = "CFR", 
+                SearchFields = "CFR,CFR", 
+                Inactive = false, 
+                LocalName = "CFR", 
+			});
+			 
+            all.Add(new TermsOfSaleTypeDetails()
+            {    
+                Code = "CIF", 
+                SearchFields = "CIF,CIF", 
+                Inactive = false, 
+                LocalName = "CIF", 
+			});
+			 
+            all.Add(new TermsOfSaleTypeDetails()
+            {    
+                Code = "CIP", 
+                SearchFields = "CIP,CIP", 
+                Inactive = false, 
+                LocalName = "CIP", 
+			});
+			 
+            all.Add(new TermsOfSaleTypeDetails()
+            {    
+                Code = "CPT", 
+                SearchFields = "CPT,CPT", 
+                Inactive = false, 
+                LocalName = "CPT", 
+			});
+			 
+            all.Add(new TermsOfSaleTypeDetails()
+            {    
+                Code = "DAF", 
+                SearchFields = "DAF,DAF", 
+                Inactive = false, 
+                LocalName = "DAF", 
+			});
+			 
+            all.Add(new TermsOfSaleTypeDetails()
+            {    
+                Code = "DAP", 
+                SearchFields = "DAP,DAP", 
+                Inactive = false, 
+                LocalName = "DAP", 
+			});
+			 
+            all.Add(new TermsOfSaleTypeDetails()
+            {    
+                Code = "DAT", 
+                SearchFields = "DAT,DAT", 
+                Inactive = false, 
+                LocalName = "DAT", 
+			});
+			 
+            all.Add(new TermsOfSaleTypeDetails()
+            {    
+                Code = "DDP", 
+                SearchFields = "DDP,DDP", 
+                Inactive = false, 
+                LocalName = "DDP", 
+			});
+			 
+            all.Add(new TermsOfSaleTypeDetails()
+            {    
+                Code = "DDU", 
+                SearchFields = "DDU,DDU", 
+                Inactive = false, 
+                LocalName = "DDU", 
+			});
+			 
+            all.Add(new TermsOfSaleTypeDetails()
+            {    
+                Code = "DEQ", 
+                SearchFields = "DEQ,DEQ", 
+                Inactive = false, 
+                LocalName = "DEQ", 
+			});
+			 
+            all.Add(new TermsOfSaleTypeDetails()
+            {    
+                Code = "DES", 
+                SearchFields = "DES,DES", 
+                Inactive = false, 
+                LocalName = "DES", 
+			});
+			 
+            all.Add(new TermsOfSaleTypeDetails()
+            {    
+                Code = "EXW", 
+                SearchFields = "EXW,EXW", 
+                Inactive = false, 
+                LocalName = "EXW", 
+			});
+			 
+            all.Add(new TermsOfSaleTypeDetails()
+            {    
+                Code = "FAS", 
+                SearchFields = "FAS,FAS", 
+                Inactive = false, 
+                LocalName = "FAS", 
+			});
+			 
+            all.Add(new TermsOfSaleTypeDetails()
+            {    
+                Code = "FCA", 
+                SearchFields = "FCA,FCA", 
+                Inactive = false, 
+                LocalName = "FCA", 
+			});
+			 
+            all.Add(new TermsOfSaleTypeDetails()
+            {    
+                Code = "FOB", 
+                SearchFields = "FOB,FOB", 
+                Inactive = false, 
+                LocalName = "FOB", 
+			});
+			
             return all;
        }
 
 	    public void MapPoco(TermsOfSaleType newPoco)
-        {    
+        {   
+		    newPoco.Code = this.Code;  
+			newPoco.SearchFields = GetSearchFields(this);   
+		    newPoco.Inactive = this.Inactive;  
+		    newPoco.LocalName = this.LocalName;   
         }
 
 		public string GetSearchFields(TermsOfSaleType rec)
         {   
-           return string.Empty;
+           return String.Concat(rec.Code,",",rec.Inactive,",",rec.LocalName,",");
         }
    }
 }

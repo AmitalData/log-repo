@@ -49,7 +49,7 @@ using Logitude.Social.Data.EntityPOCOs;
 using Logitude.Social.BL;
 using Logitude.Social.Data.Repsitories;
 using Logitude.Server.Tools.CloseTablesClasses;
-using Logitude.Customs.BL.CloseTables;
+using Logitude.Customs.BL.ClosedTable;
 using Logitude.CRM.BL.CLoseTable;
 using Logitude.BookingLib.BL.CLoseTable;
 using Logitude.WarehouseLib.Data.Repositories;
@@ -58,6 +58,20 @@ using Logitude.WarehouseLib.BL.CLoseTable;
 using Logitude.TimeManagement.Data.Repositories;
 using Logitude.TimeManagement.Data.EntityPOCOs;
 using Logitude.TimeManagement.BL.CLoseTable;
+using Logitude.BL.ShipmentsModel.CloseTables;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Logitude.BL.ShipmentsModel;
+using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.Repositories;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Logitude.BL.GlobalModel;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.BL;
+using Logitude.TariffModule.Data.Repositories;
+using Logitude.TariffModule.Data.EntityPOCOs;
+using Logitude.TariffModule.BL.CLoseTable;
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CertificateExemptionTypeUpdateClass
@@ -98,8 +112,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Certificate Exemption Type",
-			      				    Code =  "9e31",
-			      				    Name =  "Customs.CertificateExemptionType Query Group",
+			      				    Code =  "CEET",
+			      				    Name =  "Customs.CertificateExemptionType",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "LocalName",
 			      				    GenerateDomainService =  false,
@@ -361,7 +375,33 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
-	    {  	   
+	    {  
+	        FeatureRepository featureRepository = new FeatureRepository(0); 
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+	        QueryGroup CertificateExemptionTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "CEET", Name = "Customs.CertificateExemptionType" }, queryGroupRepository);
+				        queryGroupRepository.SubmitChanges();
+
+	        ObjectTable CertificateExemptionTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.CertificateExemptionType" && d.Tenant == 0).FirstOrDefault();
+	        List<ObjectField> CertificateExemptionTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.CertificateExemptionType").ToList();   
+
+			   TextCode CertificateExemptionTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CertificateExemptionType.Q.CertificateExemptionType", DefaultText = @"CertificateExemptionType",LocalDefaultText = "CertificateExemptionType", ObjectTableId = CertificateExemptionTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature CertificateExemptionTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CertificateExemptionType.Q.CertificateExemptionType", ObjectTableId = CertificateExemptionTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "CertificateExemptionTypeFeatures.CertificateExemptionType", NameTextCodeDefaultText = "CertificateExemptionType", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+
+	        TextCodeRepository.SubmitChanges();
+	        FeaturesRepository.SubmitChanges();    
+	      
+
+			  Query CertificateExemptionTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CertificateExemptionTypeTextCode_0.Id, NameTextCodeCode = CertificateExemptionTypeTextCode_0.Code, ObjectTableName = "Customs.CertificateExemptionType", Code = "CertificateExemptionType",  QueryGroupCode = "CEET", IndexOrder = 0, Tenant = 0, ObjectTableId = CertificateExemptionTypeObjectTable.Id, QuerySection = "Customs.CertificateExemptionType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CertificateExemptionTypeFeature_0.Id,FeatureUniqeCode= CertificateExemptionTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+	
+			 QueryColumn CertificateExemptionTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CertificateExemptionTypeQuery.Id,QueryCode = CertificateExemptionTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = CertificateExemptionTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == CertificateExemptionTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CertificateExemptionTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == CertificateExemptionTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn CertificateExemptionTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CertificateExemptionTypeQuery.Id,QueryCode = CertificateExemptionTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = CertificateExemptionTypeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == CertificateExemptionTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CertificateExemptionTypeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == CertificateExemptionTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn CertificateExemptionTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CertificateExemptionTypeQuery.Id,QueryCode = CertificateExemptionTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = CertificateExemptionTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == CertificateExemptionTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CertificateExemptionTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == CertificateExemptionTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn CertificateExemptionTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CertificateExemptionTypeQuery.Id,QueryCode = CertificateExemptionTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = CertificateExemptionTypeObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == CertificateExemptionTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CertificateExemptionTypeObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == CertificateExemptionTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+	   
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
@@ -374,36 +414,54 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
+	    {  
+
+		   		   //--------------> Additional Features <--------------\\
+
+		   Feature CertificateExemptionTypeFeature_CERTIFICATEEXEMPTIONTYPE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CERTIFICATEEXEMPTIONTYPE", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CertificateExemptionTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CertificateExemptionType.Features.CertificateExemptionTypes", NameTextCodeDefaultText = @"Certificate Exemption Types" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+   
 	    
 		}
 
-	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext)
+	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
 	    {   
 			ObjectTable CertificateExemptionTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CertificateExemptionType" && d.Tenant == 0).FirstOrDefault(); 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
-                Code = "CREV",
-                EnglishName = "Created",
-                Tenant = 0,
-                AddedManually = false,
-				IsManualEntry = false,
-                LocalName = "Created",
+                Code =  "CREV",
+                ShortView =  true,
+                IsManualEntry =  false,
+                LocalName =  "Created",
+                EnglishName =  "Created",
+                EventTypeCategoryCode =  "OPE",
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
                 ObjectTableId = CertificateExemptionTypeObjectTable.Id,
-                ShortView = true,
+				 
             }, EventTypeRepository, tenantEventTypes);
 
 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
-                Code = "UPEV",
-                EnglishName = "Updated",
-                Tenant = 0,
-                AddedManually = false,
-				IsManualEntry = false,
-                LocalName = "Updated",
+                Code =  "UPEV",
+                ShortView =  false,
+                IsManualEntry =  false,
+                LocalName =  "Updated",
+                EnglishName =  "Updated",
+                EventTypeCategoryCode =  "OPE",
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
                 ObjectTableId = CertificateExemptionTypeObjectTable.Id,
-                ShortView = false,
+				 
             }, EventTypeRepository, tenantEventTypes);
 
 
@@ -411,7 +469,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }     
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {     
+	    
+}
+
+    
 
    }
     

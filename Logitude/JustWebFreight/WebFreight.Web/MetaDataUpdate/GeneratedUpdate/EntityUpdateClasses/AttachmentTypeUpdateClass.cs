@@ -49,7 +49,7 @@ using Logitude.Social.Data.EntityPOCOs;
 using Logitude.Social.BL;
 using Logitude.Social.Data.Repsitories;
 using Logitude.Server.Tools.CloseTablesClasses;
-using Logitude.Customs.BL.CloseTables;
+using Logitude.Customs.BL.ClosedTable;
 using Logitude.CRM.BL.CLoseTable;
 using Logitude.BookingLib.BL.CLoseTable;
 using Logitude.WarehouseLib.Data.Repositories;
@@ -58,6 +58,20 @@ using Logitude.WarehouseLib.BL.CLoseTable;
 using Logitude.TimeManagement.Data.Repositories;
 using Logitude.TimeManagement.Data.EntityPOCOs;
 using Logitude.TimeManagement.BL.CLoseTable;
+using Logitude.BL.ShipmentsModel.CloseTables;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Logitude.BL.ShipmentsModel;
+using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.Repositories;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Logitude.BL.GlobalModel;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.BL;
+using Logitude.TariffModule.Data.Repositories;
+using Logitude.TariffModule.Data.EntityPOCOs;
+using Logitude.TariffModule.BL.CLoseTable;
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class AttachmentTypeUpdateClass
@@ -102,8 +116,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Attachment Type",
-			      				    Code =  "e78a",
-			      				    Name =  "Customs.AttachmentType Query Group",
+			      				    Code =  "ATTT",
+			      				    Name =  "Customs.AttachmentType",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "LocalName",
 			      				    GenerateDomainService =  false,
@@ -387,7 +401,33 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
-	    {  	   
+	    {  
+	        FeatureRepository featureRepository = new FeatureRepository(0); 
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+	        QueryGroup AttachmentTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "ATTT", Name = "Customs.AttachmentType" }, queryGroupRepository);
+				        queryGroupRepository.SubmitChanges();
+
+	        ObjectTable AttachmentTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.AttachmentType" && d.Tenant == 0).FirstOrDefault();
+	        List<ObjectField> AttachmentTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.AttachmentType").ToList();   
+
+			   TextCode AttachmentTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AttachmentType.Q.AttachmentType", DefaultText = @"AttachmentType",LocalDefaultText = "AttachmentType", ObjectTableId = AttachmentTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature AttachmentTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AttachmentType.Q.AttachmentType", ObjectTableId = AttachmentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "AttachmentTypeFeatures.AttachmentType", NameTextCodeDefaultText = "AttachmentType", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+
+	        TextCodeRepository.SubmitChanges();
+	        FeaturesRepository.SubmitChanges();    
+	      
+
+			  Query AttachmentTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AttachmentTypeTextCode_0.Id, NameTextCodeCode = AttachmentTypeTextCode_0.Code, ObjectTableName = "Customs.AttachmentType", Code = "AttachmentType",  QueryGroupCode = "ATTT", IndexOrder = 0, Tenant = 0, ObjectTableId = AttachmentTypeObjectTable.Id, QuerySection = "Customs.AttachmentType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = AttachmentTypeFeature_0.Id,FeatureUniqeCode= AttachmentTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+	
+			 QueryColumn AttachmentTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AttachmentTypeQuery.Id,QueryCode = AttachmentTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = AttachmentTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == AttachmentTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AttachmentTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == AttachmentTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn AttachmentTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AttachmentTypeQuery.Id,QueryCode = AttachmentTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = AttachmentTypeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == AttachmentTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AttachmentTypeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == AttachmentTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn AttachmentTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AttachmentTypeQuery.Id,QueryCode = AttachmentTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = AttachmentTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == AttachmentTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AttachmentTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == AttachmentTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn AttachmentTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AttachmentTypeQuery.Id,QueryCode = AttachmentTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = AttachmentTypeObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == AttachmentTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AttachmentTypeObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == AttachmentTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+	   
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
@@ -400,36 +440,54 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
+	    {  
+
+		   		   //--------------> Additional Features <--------------\\
+
+		   Feature AttachmentTypeFeature_ATTACHMENTTYPE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ATTACHMENTTYPE", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = AttachmentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.AttachmentType.Features.AttachmentTypes", NameTextCodeDefaultText = @"Attachment Types" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+   
 	    
 		}
 
-	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext)
+	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
 	    {   
 			ObjectTable AttachmentTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.AttachmentType" && d.Tenant == 0).FirstOrDefault(); 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
-                Code = "CREV",
-                EnglishName = "Created",
-                Tenant = 0,
-                AddedManually = false,
-				IsManualEntry = false,
-                LocalName = "Created",
+                Code =  "CREV",
+                ShortView =  true,
+                IsManualEntry =  false,
+                LocalName =  "Created",
+                EnglishName =  "Created",
+                EventTypeCategoryCode =  "OPE",
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
                 ObjectTableId = AttachmentTypeObjectTable.Id,
-                ShortView = true,
+				 
             }, EventTypeRepository, tenantEventTypes);
 
 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
-                Code = "UPEV",
-                EnglishName = "Updated",
-                Tenant = 0,
-                AddedManually = false,
-				IsManualEntry = false,
-                LocalName = "Updated",
+                Code =  "UPEV",
+                ShortView =  false,
+                IsManualEntry =  false,
+                LocalName =  "Updated",
+                EnglishName =  "Updated",
+                EventTypeCategoryCode =  "OPE",
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
                 ObjectTableId = AttachmentTypeObjectTable.Id,
-                ShortView = false,
+				 
             }, EventTypeRepository, tenantEventTypes);
 
 
@@ -437,7 +495,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }     
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {     
+	    
+}
+
+    
 
    }
     

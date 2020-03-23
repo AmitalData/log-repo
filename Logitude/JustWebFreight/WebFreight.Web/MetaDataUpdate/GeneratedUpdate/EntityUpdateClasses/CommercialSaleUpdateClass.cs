@@ -49,7 +49,7 @@ using Logitude.Social.Data.EntityPOCOs;
 using Logitude.Social.BL;
 using Logitude.Social.Data.Repsitories;
 using Logitude.Server.Tools.CloseTablesClasses;
-using Logitude.Customs.BL.CloseTables;
+using Logitude.Customs.BL.ClosedTable;
 using Logitude.CRM.BL.CLoseTable;
 using Logitude.BookingLib.BL.CLoseTable;
 using Logitude.WarehouseLib.Data.Repositories;
@@ -58,6 +58,20 @@ using Logitude.WarehouseLib.BL.CLoseTable;
 using Logitude.TimeManagement.Data.Repositories;
 using Logitude.TimeManagement.Data.EntityPOCOs;
 using Logitude.TimeManagement.BL.CLoseTable;
+using Logitude.BL.ShipmentsModel.CloseTables;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Logitude.BL.ShipmentsModel;
+using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.Repositories;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Logitude.BL.GlobalModel;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.BL;
+using Logitude.TariffModule.Data.Repositories;
+using Logitude.TariffModule.Data.EntityPOCOs;
+using Logitude.TariffModule.BL.CLoseTable;
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CommercialSaleUpdateClass
@@ -357,28 +371,28 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
 	        FeatureRepository featureRepository = new FeatureRepository(0); 
-            List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 	        QueryGroup CommercialSaleQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "2177", Name = "Customs.CommercialSale Query Group" }, queryGroupRepository);
-	        queryGroupRepository.SubmitChanges();
+				        queryGroupRepository.SubmitChanges();
 
 	        ObjectTable CommercialSaleObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.CommercialSale" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> CommercialSaleObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.CommercialSale").ToList();   
 
-			   TextCode CommercialSaleTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CommercialSale.Q.CommercialSale", DefaultText = "CommercialSaleQuery",LocalDefaultText = null, ObjectTableId = CommercialSaleObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   TextCode CommercialSaleTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CommercialSale.Q.CommercialSale", DefaultText = @"CommercialSale",LocalDefaultText = "CommercialSale", ObjectTableId = CommercialSaleObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
 			   Feature CommercialSaleFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CommercialSale.Q.CommercialSale", ObjectTableId = CommercialSaleObjectTable.Id, Tenant = 0, NameTextCodeCode = "CommercialSale.Features.CommercialSale", NameTextCodeDefaultText = "CommercialSale", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query CommercialSaleQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CommercialSaleTextCode_0.Id, Code = "CommercialSale",  QueryGroupCode = "2177", IndexOrder = 0, Tenant = 0, ObjectTableId = CommercialSaleObjectTable.Id, QuerySection = "Customs.CommercialSale", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CommercialSaleFeature_0.Id,FeatureUniqeCode= CommercialSaleFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending" }, queriesRepository, tenantQueries);
+			  Query CommercialSaleQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CommercialSaleTextCode_0.Id, NameTextCodeCode = CommercialSaleTextCode_0.Code, ObjectTableName = "Customs.CommercialSale", Code = "CommercialSale",  QueryGroupCode = "2177", IndexOrder = 0, Tenant = 0, ObjectTableId = CommercialSaleObjectTable.Id, QuerySection = "Customs.CommercialSale", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CommercialSaleFeature_0.Id,FeatureUniqeCode= CommercialSaleFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn CommercialSaleQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CommercialSaleQuery.Id, IndexOrder = 0, ObjectFieldId = CommercialSaleObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == CommercialSaleObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 50 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CommercialSaleQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CommercialSaleQuery.Id,QueryCode = CommercialSaleQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = CommercialSaleObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == CommercialSaleObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CommercialSaleObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == CommercialSaleObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 50 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn CommercialSaleQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CommercialSaleQuery.Id, IndexOrder = 1, ObjectFieldId = CommercialSaleObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == CommercialSaleObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CommercialSaleQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CommercialSaleQuery.Id,QueryCode = CommercialSaleQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = CommercialSaleObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == CommercialSaleObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CommercialSaleObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == CommercialSaleObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn CommercialSaleQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CommercialSaleQuery.Id, IndexOrder = 2, ObjectFieldId = CommercialSaleObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == CommercialSaleObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CommercialSaleQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CommercialSaleQuery.Id,QueryCode = CommercialSaleQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = CommercialSaleObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == CommercialSaleObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CommercialSaleObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == CommercialSaleObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 	   
 	    }
 
@@ -396,32 +410,44 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    
 		}
 
-	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext)
+	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
 	    {   
 			ObjectTable CommercialSaleObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CommercialSale" && d.Tenant == 0).FirstOrDefault(); 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
-                Code = "CREV",
-                EnglishName = "Created",
-                Tenant = 0,
-                AddedManually = false,
-				IsManualEntry = false,
-                LocalName = "Created",
+                Code =  "CREV",
+                ShortView =  true,
+                IsManualEntry =  false,
+                LocalName =  "Created",
+                EnglishName =  "Created",
+                EventTypeCategoryCode =  "OPE",
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
                 ObjectTableId = CommercialSaleObjectTable.Id,
-                ShortView = true,
+				 
             }, EventTypeRepository, tenantEventTypes);
 
 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
-                Code = "UPEV",
-                EnglishName = "Updated",
-                Tenant = 0,
-                AddedManually = false,
-				IsManualEntry = false,
-                LocalName = "Updated",
+                Code =  "UPEV",
+                ShortView =  false,
+                IsManualEntry =  false,
+                LocalName =  "Updated",
+                EnglishName =  "Updated",
+                EventTypeCategoryCode =  "OPE",
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
                 ObjectTableId = CommercialSaleObjectTable.Id,
-                ShortView = false,
+				 
             }, EventTypeRepository, tenantEventTypes);
 
 
@@ -429,7 +455,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }     
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {     
+	    
+}
+
+    
 
    }
     

@@ -49,7 +49,7 @@ using Logitude.Social.Data.EntityPOCOs;
 using Logitude.Social.BL;
 using Logitude.Social.Data.Repsitories;
 using Logitude.Server.Tools.CloseTablesClasses;
-using Logitude.Customs.BL.CloseTables;
+using Logitude.Customs.BL.ClosedTable;
 using Logitude.CRM.BL.CLoseTable;
 using Logitude.BookingLib.BL.CLoseTable;
 using Logitude.WarehouseLib.Data.Repositories;
@@ -58,6 +58,20 @@ using Logitude.WarehouseLib.BL.CLoseTable;
 using Logitude.TimeManagement.Data.Repositories;
 using Logitude.TimeManagement.Data.EntityPOCOs;
 using Logitude.TimeManagement.BL.CLoseTable;
+using Logitude.BL.ShipmentsModel.CloseTables;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Logitude.BL.ShipmentsModel;
+using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.Repositories;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Logitude.BL.GlobalModel;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.BL;
+using Logitude.TariffModule.Data.Repositories;
+using Logitude.TariffModule.Data.EntityPOCOs;
+using Logitude.TariffModule.BL.CLoseTable;
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ClaimEntityUpdateClass
@@ -356,28 +370,28 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
 	        FeatureRepository featureRepository = new FeatureRepository(0); 
-            List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 	        QueryGroup ClaimEntityQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "adca", Name = "Customs.ClaimEntity Query Group" }, queryGroupRepository);
-	        queryGroupRepository.SubmitChanges();
+				        queryGroupRepository.SubmitChanges();
 
 	        ObjectTable ClaimEntityObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.ClaimEntity" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> ClaimEntityObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.ClaimEntity").ToList();   
 
-			   TextCode ClaimEntityTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ClaimEntity.Q.ClaimEntity", DefaultText = "ClaimEntityQuery",LocalDefaultText = null, ObjectTableId = ClaimEntityObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   TextCode ClaimEntityTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ClaimEntity.Q.ClaimEntity", DefaultText = @"ClaimEntity",LocalDefaultText = "ClaimEntity", ObjectTableId = ClaimEntityObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
 			   Feature ClaimEntityFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ClaimEntity.Q.ClaimEntity", ObjectTableId = ClaimEntityObjectTable.Id, Tenant = 0, NameTextCodeCode = "ClaimEntity.Features.ClaimEntity", NameTextCodeDefaultText = "ClaimEntity", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query ClaimEntityQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ClaimEntityTextCode_0.Id, Code = "ClaimEntity",  QueryGroupCode = "adca", IndexOrder = 0, Tenant = 0, ObjectTableId = ClaimEntityObjectTable.Id, QuerySection = "Customs.ClaimEntity", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ClaimEntityFeature_0.Id,FeatureUniqeCode= ClaimEntityFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending" }, queriesRepository, tenantQueries);
+			  Query ClaimEntityQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ClaimEntityTextCode_0.Id, NameTextCodeCode = ClaimEntityTextCode_0.Code, ObjectTableName = "Customs.ClaimEntity", Code = "ClaimEntity",  QueryGroupCode = "adca", IndexOrder = 0, Tenant = 0, ObjectTableId = ClaimEntityObjectTable.Id, QuerySection = "Customs.ClaimEntity", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ClaimEntityFeature_0.Id,FeatureUniqeCode= ClaimEntityFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn ClaimEntityQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClaimEntityQuery.Id, IndexOrder = 0, ObjectFieldId = ClaimEntityObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == ClaimEntityObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 50 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ClaimEntityQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClaimEntityQuery.Id,QueryCode = ClaimEntityQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = ClaimEntityObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == ClaimEntityObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ClaimEntityObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == ClaimEntityObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 50 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ClaimEntityQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClaimEntityQuery.Id, IndexOrder = 1, ObjectFieldId = ClaimEntityObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == ClaimEntityObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ClaimEntityQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClaimEntityQuery.Id,QueryCode = ClaimEntityQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = ClaimEntityObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == ClaimEntityObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ClaimEntityObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == ClaimEntityObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ClaimEntityQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClaimEntityQuery.Id, IndexOrder = 2, ObjectFieldId = ClaimEntityObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == ClaimEntityObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 20 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ClaimEntityQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClaimEntityQuery.Id,QueryCode = ClaimEntityQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = ClaimEntityObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == ClaimEntityObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ClaimEntityObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == ClaimEntityObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 20 }, queryColumnsRepository, tenantQueryColumns);
 	   
 	    }
 
@@ -395,32 +409,44 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    
 		}
 
-	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext)
+	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
 	    {   
 			ObjectTable ClaimEntityObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.ClaimEntity" && d.Tenant == 0).FirstOrDefault(); 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
-                Code = "CREV",
-                EnglishName = "Created",
-                Tenant = 0,
-                AddedManually = false,
-				IsManualEntry = false,
-                LocalName = "Created",
+                Code =  "CREV",
+                ShortView =  true,
+                IsManualEntry =  false,
+                LocalName =  "Created",
+                EnglishName =  "Created",
+                EventTypeCategoryCode =  "OPE",
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
                 ObjectTableId = ClaimEntityObjectTable.Id,
-                ShortView = true,
+				 
             }, EventTypeRepository, tenantEventTypes);
 
 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
-                Code = "UPEV",
-                EnglishName = "Updated",
-                Tenant = 0,
-                AddedManually = false,
-				IsManualEntry = false,
-                LocalName = "Updated",
+                Code =  "UPEV",
+                ShortView =  false,
+                IsManualEntry =  false,
+                LocalName =  "Updated",
+                EnglishName =  "Updated",
+                EventTypeCategoryCode =  "OPE",
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
                 ObjectTableId = ClaimEntityObjectTable.Id,
-                ShortView = false,
+				 
             }, EventTypeRepository, tenantEventTypes);
 
 
@@ -428,7 +454,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }     
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {     
+	    
+}
+
+    
 
    }
     

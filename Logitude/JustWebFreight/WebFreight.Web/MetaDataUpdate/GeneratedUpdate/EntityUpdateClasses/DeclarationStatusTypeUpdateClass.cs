@@ -49,7 +49,7 @@ using Logitude.Social.Data.EntityPOCOs;
 using Logitude.Social.BL;
 using Logitude.Social.Data.Repsitories;
 using Logitude.Server.Tools.CloseTablesClasses;
-using Logitude.Customs.BL.CloseTables;
+using Logitude.Customs.BL.ClosedTable;
 using Logitude.CRM.BL.CLoseTable;
 using Logitude.BookingLib.BL.CLoseTable;
 using Logitude.WarehouseLib.Data.Repositories;
@@ -58,6 +58,20 @@ using Logitude.WarehouseLib.BL.CLoseTable;
 using Logitude.TimeManagement.Data.Repositories;
 using Logitude.TimeManagement.Data.EntityPOCOs;
 using Logitude.TimeManagement.BL.CLoseTable;
+using Logitude.BL.ShipmentsModel.CloseTables;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Logitude.BL.ShipmentsModel;
+using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.Repositories;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Logitude.BL.GlobalModel;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.BL;
+using Logitude.TariffModule.Data.Repositories;
+using Logitude.TariffModule.Data.EntityPOCOs;
+using Logitude.TariffModule.BL.CLoseTable;
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationStatusTypeUpdateClass
@@ -98,8 +112,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Declaration Status Type",
-			      				    Code =  "a6b7",
-			      				    Name =  "Customs.DeclarationStatusType Query Group",
+			      				    Code =  "DEST",
+			      				    Name =  "Customs.DeclarationStatusType",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "LocalName",
 			      				    GenerateDomainService =  false,
@@ -361,7 +375,33 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
-	    {  	   
+	    {  
+	        FeatureRepository featureRepository = new FeatureRepository(0); 
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+	        QueryGroup DeclarationStatusTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "DEST", Name = "Customs.DeclarationStatusType" }, queryGroupRepository);
+				        queryGroupRepository.SubmitChanges();
+
+	        ObjectTable DeclarationStatusTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.DeclarationStatusType" && d.Tenant == 0).FirstOrDefault();
+	        List<ObjectField> DeclarationStatusTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.DeclarationStatusType").ToList();   
+
+			   TextCode DeclarationStatusTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DeclarationStatusType.Q.DeclarationStatusType", DefaultText = @"DeclarationStatusType",LocalDefaultText = "DeclarationStatusType", ObjectTableId = DeclarationStatusTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature DeclarationStatusTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DeclarationStatusType.Q.DeclarationStatusType", ObjectTableId = DeclarationStatusTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationStatusTypeFeatures.DeclarationStatusType", NameTextCodeDefaultText = "DeclarationStatusType", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+
+	        TextCodeRepository.SubmitChanges();
+	        FeaturesRepository.SubmitChanges();    
+	      
+
+			  Query DeclarationStatusTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DeclarationStatusTypeTextCode_0.Id, NameTextCodeCode = DeclarationStatusTypeTextCode_0.Code, ObjectTableName = "Customs.DeclarationStatusType", Code = "DeclarationStatusType",  QueryGroupCode = "DEST", IndexOrder = 0, Tenant = 0, ObjectTableId = DeclarationStatusTypeObjectTable.Id, QuerySection = "Customs.DeclarationStatusType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = DeclarationStatusTypeFeature_0.Id,FeatureUniqeCode= DeclarationStatusTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+	
+			 QueryColumn DeclarationStatusTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationStatusTypeQuery.Id,QueryCode = DeclarationStatusTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = DeclarationStatusTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == DeclarationStatusTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DeclarationStatusTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == DeclarationStatusTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn DeclarationStatusTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationStatusTypeQuery.Id,QueryCode = DeclarationStatusTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = DeclarationStatusTypeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == DeclarationStatusTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DeclarationStatusTypeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == DeclarationStatusTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn DeclarationStatusTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationStatusTypeQuery.Id,QueryCode = DeclarationStatusTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = DeclarationStatusTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == DeclarationStatusTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DeclarationStatusTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == DeclarationStatusTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn DeclarationStatusTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationStatusTypeQuery.Id,QueryCode = DeclarationStatusTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = DeclarationStatusTypeObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == DeclarationStatusTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DeclarationStatusTypeObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == DeclarationStatusTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+	   
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
@@ -374,36 +414,54 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
+	    {  
+
+		   		   //--------------> Additional Features <--------------\\
+
+		   Feature DeclarationStatusTypeFeature_DECLARATIONSTATUSTYPE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DECLARATIONSTATUSTYPE", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationStatusTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.DeclarationStatusType.Features.DeclarationStatusTypes", NameTextCodeDefaultText = @"Declaration Status Types" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+   
 	    
 		}
 
-	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext)
+	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
 	    {   
 			ObjectTable DeclarationStatusTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.DeclarationStatusType" && d.Tenant == 0).FirstOrDefault(); 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
-                Code = "CREV",
-                EnglishName = "Created",
-                Tenant = 0,
-                AddedManually = false,
-				IsManualEntry = false,
-                LocalName = "Created",
+                Code =  "CREV",
+                ShortView =  true,
+                IsManualEntry =  false,
+                LocalName =  "Created",
+                EnglishName =  "Created",
+                EventTypeCategoryCode =  "OPE",
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
                 ObjectTableId = DeclarationStatusTypeObjectTable.Id,
-                ShortView = true,
+				 
             }, EventTypeRepository, tenantEventTypes);
 
 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
-                Code = "UPEV",
-                EnglishName = "Updated",
-                Tenant = 0,
-                AddedManually = false,
-				IsManualEntry = false,
-                LocalName = "Updated",
+                Code =  "UPEV",
+                ShortView =  false,
+                IsManualEntry =  false,
+                LocalName =  "Updated",
+                EnglishName =  "Updated",
+                EventTypeCategoryCode =  "OPE",
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
                 ObjectTableId = DeclarationStatusTypeObjectTable.Id,
-                ShortView = false,
+				 
             }, EventTypeRepository, tenantEventTypes);
 
 
@@ -411,7 +469,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }     
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {     
+	    
+}
+
+    
 
    }
     

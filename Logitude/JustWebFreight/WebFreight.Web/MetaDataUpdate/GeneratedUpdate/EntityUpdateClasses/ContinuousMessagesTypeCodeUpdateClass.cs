@@ -49,7 +49,7 @@ using Logitude.Social.Data.EntityPOCOs;
 using Logitude.Social.BL;
 using Logitude.Social.Data.Repsitories;
 using Logitude.Server.Tools.CloseTablesClasses;
-using Logitude.Customs.BL.CloseTables;
+using Logitude.Customs.BL.ClosedTable;
 using Logitude.CRM.BL.CLoseTable;
 using Logitude.BookingLib.BL.CLoseTable;
 using Logitude.WarehouseLib.Data.Repositories;
@@ -58,6 +58,20 @@ using Logitude.WarehouseLib.BL.CLoseTable;
 using Logitude.TimeManagement.Data.Repositories;
 using Logitude.TimeManagement.Data.EntityPOCOs;
 using Logitude.TimeManagement.BL.CLoseTable;
+using Logitude.BL.ShipmentsModel.CloseTables;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Logitude.BL.ShipmentsModel;
+using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.Repositories;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Logitude.BL.GlobalModel;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.BL;
+using Logitude.TariffModule.Data.Repositories;
+using Logitude.TariffModule.Data.EntityPOCOs;
+using Logitude.TariffModule.BL.CLoseTable;
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ContinuousMessagesTypeCodeUpdateClass
@@ -356,28 +370,28 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
 	        FeatureRepository featureRepository = new FeatureRepository(0); 
-            List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 	        QueryGroup ContinuousMessagesTypeCodeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "6b46", Name = "Customs.ContinuousMessagesTypeCode Query Group" }, queryGroupRepository);
-	        queryGroupRepository.SubmitChanges();
+				        queryGroupRepository.SubmitChanges();
 
 	        ObjectTable ContinuousMessagesTypeCodeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.ContinuousMessagesTypeCode" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> ContinuousMessagesTypeCodeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.ContinuousMessagesTypeCode").ToList();   
 
-			   TextCode ContinuousMessagesTypeCodeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ContinuousMessagesTypeCode.Q.ContinuousMessagesType", DefaultText = "ContinuousMessagesTypeQuery",LocalDefaultText = null, ObjectTableId = ContinuousMessagesTypeCodeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   TextCode ContinuousMessagesTypeCodeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ContinuousMessagesTypeCode.Q.ContinuousMessagesType", DefaultText = @"ContinuousMessagesType",LocalDefaultText = "ContinuousMessagesType", ObjectTableId = ContinuousMessagesTypeCodeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
 			   Feature ContinuousMessagesTypeCodeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ContinuousMessagesTypeCode.Q.ContinuousMessagesType", ObjectTableId = ContinuousMessagesTypeCodeObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContinuousMessagesTypeCode.Features.ContinuousMessagesType", NameTextCodeDefaultText = "ContinuousMessagesType", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query ContinuousMessagesTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ContinuousMessagesTypeCodeTextCode_0.Id, Code = "ContinuousMessagesType",  QueryGroupCode = "6b46", IndexOrder = 0, Tenant = 0, ObjectTableId = ContinuousMessagesTypeCodeObjectTable.Id, QuerySection = "Customs.ContinuousMessagesTypeCode", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ContinuousMessagesTypeCodeFeature_0.Id,FeatureUniqeCode= ContinuousMessagesTypeCodeFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending" }, queriesRepository, tenantQueries);
+			  Query ContinuousMessagesTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ContinuousMessagesTypeCodeTextCode_0.Id, NameTextCodeCode = ContinuousMessagesTypeCodeTextCode_0.Code, ObjectTableName = "Customs.ContinuousMessagesTypeCode", Code = "ContinuousMessagesType",  QueryGroupCode = "6b46", IndexOrder = 0, Tenant = 0, ObjectTableId = ContinuousMessagesTypeCodeObjectTable.Id, QuerySection = "Customs.ContinuousMessagesTypeCode", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ContinuousMessagesTypeCodeFeature_0.Id,FeatureUniqeCode= ContinuousMessagesTypeCodeFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn ContinuousMessagesTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContinuousMessagesTypeQuery.Id, IndexOrder = 0, ObjectFieldId = ContinuousMessagesTypeCodeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == ContinuousMessagesTypeCodeObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 50 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ContinuousMessagesTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContinuousMessagesTypeQuery.Id,QueryCode = ContinuousMessagesTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = ContinuousMessagesTypeCodeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == ContinuousMessagesTypeCodeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ContinuousMessagesTypeCodeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == ContinuousMessagesTypeCodeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 50 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ContinuousMessagesTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContinuousMessagesTypeQuery.Id, IndexOrder = 1, ObjectFieldId = ContinuousMessagesTypeCodeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == ContinuousMessagesTypeCodeObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ContinuousMessagesTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContinuousMessagesTypeQuery.Id,QueryCode = ContinuousMessagesTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = ContinuousMessagesTypeCodeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == ContinuousMessagesTypeCodeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ContinuousMessagesTypeCodeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == ContinuousMessagesTypeCodeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ContinuousMessagesTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContinuousMessagesTypeQuery.Id, IndexOrder = 2, ObjectFieldId = ContinuousMessagesTypeCodeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == ContinuousMessagesTypeCodeObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ContinuousMessagesTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContinuousMessagesTypeQuery.Id,QueryCode = ContinuousMessagesTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = ContinuousMessagesTypeCodeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == ContinuousMessagesTypeCodeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ContinuousMessagesTypeCodeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == ContinuousMessagesTypeCodeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 	   
 	    }
 
@@ -395,32 +409,44 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    
 		}
 
-	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext)
+	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
 	    {   
 			ObjectTable ContinuousMessagesTypeCodeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.ContinuousMessagesTypeCode" && d.Tenant == 0).FirstOrDefault(); 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
-                Code = "CREV",
-                EnglishName = "Created",
-                Tenant = 0,
-                AddedManually = false,
-				IsManualEntry = false,
-                LocalName = "Created",
+                Code =  "CREV",
+                ShortView =  true,
+                IsManualEntry =  false,
+                LocalName =  "Created",
+                EnglishName =  "Created",
+                EventTypeCategoryCode =  "OPE",
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
                 ObjectTableId = ContinuousMessagesTypeCodeObjectTable.Id,
-                ShortView = true,
+				 
             }, EventTypeRepository, tenantEventTypes);
 
 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
-                Code = "UPEV",
-                EnglishName = "Updated",
-                Tenant = 0,
-                AddedManually = false,
-				IsManualEntry = false,
-                LocalName = "Updated",
+                Code =  "UPEV",
+                ShortView =  false,
+                IsManualEntry =  false,
+                LocalName =  "Updated",
+                EnglishName =  "Updated",
+                EventTypeCategoryCode =  "OPE",
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
                 ObjectTableId = ContinuousMessagesTypeCodeObjectTable.Id,
-                ShortView = false,
+				 
             }, EventTypeRepository, tenantEventTypes);
 
 
@@ -428,7 +454,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }     
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {     
+	    
+}
+
+    
 
    }
     

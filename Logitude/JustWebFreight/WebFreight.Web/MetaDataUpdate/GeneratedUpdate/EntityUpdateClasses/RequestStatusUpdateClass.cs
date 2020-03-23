@@ -49,7 +49,7 @@ using Logitude.Social.Data.EntityPOCOs;
 using Logitude.Social.BL;
 using Logitude.Social.Data.Repsitories;
 using Logitude.Server.Tools.CloseTablesClasses;
-using Logitude.Customs.BL.CloseTables;
+using Logitude.Customs.BL.ClosedTable;
 using Logitude.CRM.BL.CLoseTable;
 using Logitude.BookingLib.BL.CLoseTable;
 using Logitude.WarehouseLib.Data.Repositories;
@@ -58,6 +58,20 @@ using Logitude.WarehouseLib.BL.CLoseTable;
 using Logitude.TimeManagement.Data.Repositories;
 using Logitude.TimeManagement.Data.EntityPOCOs;
 using Logitude.TimeManagement.BL.CLoseTable;
+using Logitude.BL.ShipmentsModel.CloseTables;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Logitude.BL.ShipmentsModel;
+using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.Repositories;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Logitude.BL.GlobalModel;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.BL;
+using Logitude.TariffModule.Data.Repositories;
+using Logitude.TariffModule.Data.EntityPOCOs;
+using Logitude.TariffModule.BL.CLoseTable;
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class RequestStatusUpdateClass
@@ -99,8 +113,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "סטאטוס בקשה לערבות",
 			      				    DefaultText =  "Request Status",
-			      				    Code =  "0450",
-			      				    Name =  "Customs.RequestStatus Query Group",
+			      				    Code =  "RSQG",
+			      				    Name =  "Customs.RequestStatus",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "LocalName",
 			      				    GenerateDomainService =  false,
@@ -359,7 +373,33 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
-	    {  	   
+	    {  
+	        FeatureRepository featureRepository = new FeatureRepository(0); 
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+	        QueryGroup RequestStatusQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "RSQG", Name = "Customs.RequestStatus" }, queryGroupRepository);
+				        queryGroupRepository.SubmitChanges();
+
+	        ObjectTable RequestStatusObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.RequestStatus" && d.Tenant == 0).FirstOrDefault();
+	        List<ObjectField> RequestStatusObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.RequestStatus").ToList();   
+
+			   TextCode RequestStatusTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "RequestStatus.Q.RequestStatus", DefaultText = @"RequestStatus",LocalDefaultText = "RequestStatus", ObjectTableId = RequestStatusObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature RequestStatusFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "RequestStatus.Q.RequestStatus", ObjectTableId = RequestStatusObjectTable.Id, Tenant = 0, NameTextCodeCode = "RequestStatusFeatures.RequestStatus", NameTextCodeDefaultText = "RequestStatus", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+
+	        TextCodeRepository.SubmitChanges();
+	        FeaturesRepository.SubmitChanges();    
+	      
+
+			  Query RequestStatusQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = RequestStatusTextCode_0.Id, NameTextCodeCode = RequestStatusTextCode_0.Code, ObjectTableName = "Customs.RequestStatus", Code = "RequestStatus",  QueryGroupCode = "RSQG", IndexOrder = 0, Tenant = 0, ObjectTableId = RequestStatusObjectTable.Id, QuerySection = "Customs.RequestStatus", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = RequestStatusFeature_0.Id,FeatureUniqeCode= RequestStatusFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+	
+			 QueryColumn RequestStatusQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RequestStatusQuery.Id,QueryCode = RequestStatusQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = RequestStatusObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == RequestStatusObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = RequestStatusObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == RequestStatusObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn RequestStatusQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RequestStatusQuery.Id,QueryCode = RequestStatusQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = RequestStatusObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == RequestStatusObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = RequestStatusObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == RequestStatusObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn RequestStatusQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RequestStatusQuery.Id,QueryCode = RequestStatusQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = RequestStatusObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == RequestStatusObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = RequestStatusObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == RequestStatusObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn RequestStatusQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RequestStatusQuery.Id,QueryCode = RequestStatusQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = RequestStatusObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == RequestStatusObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = RequestStatusObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == RequestStatusObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+	   
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
@@ -372,36 +412,54 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
+	    {  
+
+		   		   //--------------> Additional Features <--------------\\
+
+		   Feature RequestStatusFeature_REQUESTSTATUS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "REQUESTSTATUS", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = RequestStatusObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.RequestStatus.Features.RequestStatus", NameTextCodeDefaultText = @"Request Status" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+   
 	    
 		}
 
-	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext)
+	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
 	    {   
 			ObjectTable RequestStatusObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.RequestStatus" && d.Tenant == 0).FirstOrDefault(); 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
-                Code = "CREV",
-                EnglishName = "Created",
-                Tenant = 0,
-                AddedManually = false,
-				IsManualEntry = false,
-                LocalName = "Created",
+                Code =  "CREV",
+                ShortView =  true,
+                IsManualEntry =  false,
+                LocalName =  "Created",
+                EnglishName =  "Created",
+                EventTypeCategoryCode =  "OPE",
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
                 ObjectTableId = RequestStatusObjectTable.Id,
-                ShortView = true,
+				 
             }, EventTypeRepository, tenantEventTypes);
 
 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
-                Code = "UPEV",
-                EnglishName = "Updated",
-                Tenant = 0,
-                AddedManually = false,
-				IsManualEntry = false,
-                LocalName = "Updated",
+                Code =  "UPEV",
+                ShortView =  false,
+                IsManualEntry =  false,
+                LocalName =  "Updated",
+                EnglishName =  "Updated",
+                EventTypeCategoryCode =  "OPE",
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
                 ObjectTableId = RequestStatusObjectTable.Id,
-                ShortView = false,
+				 
             }, EventTypeRepository, tenantEventTypes);
 
 
@@ -409,7 +467,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }     
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {     
+	    
+}
+
+    
 
    }
     
