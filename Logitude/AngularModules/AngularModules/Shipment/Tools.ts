@@ -1803,7 +1803,7 @@ export class ShipmentTool {
     public static OnShipmentQuantitiesChanged(entityPM: ShipmentPM) {
         if (entityPM) {
             var isLCL = this.IsLCL(entityPM);
-            if (isLCL) {
+            //if (isLCL) {
 
                 entityPM.ShipmentPayables.forEach(itemPayable => {
                     if (AppTool.IsNullOrEmpty(itemPayable.UnitPrice)) {
@@ -1874,11 +1874,11 @@ export class ShipmentTool {
                         }
                     }
                 });
-            }
+            //}
 
-            else {
+            //else {
 
-            }
+            //}
 
         }
     }
