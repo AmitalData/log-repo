@@ -61,7 +61,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
         private decimal? GetInterestReportOpenBalance()
         {
             InterestReportQueryService interestReportQueryService = new InterestReportQueryService(tenant);
-            decimal interestReportOpenBalance = interestReportQueryService.GetClosedBalanceOfLastInvoicedOrClosedWithoutInvoiceInterestReport(tenant);
+            decimal interestReportOpenBalance = interestReportQueryService.GetClosedBalanceOfLastInvoicedOrClosedWithoutInvoiceInterestReport(tenant,interestReportPM.GLAccountId);
             return interestReportOpenBalance;
         }
 
