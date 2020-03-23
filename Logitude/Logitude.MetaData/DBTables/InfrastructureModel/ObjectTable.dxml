@@ -19,13 +19,6 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="Name"
-    Type="varchar"
-    Size="50">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
     Name="IsNewWizard"
     Type="bit">
     <Constraints
@@ -108,13 +101,6 @@
     Name="HeaderScreenId"
     Type="varchar"
     Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="HeaderScreenCode"
-    Type="varchar"
-    Size="100">
     <Constraints
       Nullable="true" />
   </Column>
@@ -212,13 +198,6 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="SearchFields"
-    Type="nvarchar"
-    Size="1000">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
     Name="IsSaveButtonVisible"
     Type="bit">
     <Constraints
@@ -270,12 +249,6 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="HasDocuments"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
     Name="EntityResource"
     Type="varbinary"
     Size="-1">
@@ -302,50 +275,9 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="AllowedForComputingPartners"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
     Name="CodeField"
     Type="varchar"
     Size="60">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="NameField"
-    Type="varchar"
-    Size="60">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="LovDisplayMemberPath"
-    Type="nvarchar"
-    Size="-1">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="LovDisplayMemberPathLocal"
-    Type="nvarchar"
-    Size="-1">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="DescriptionTextCodeCode"
-    Type="varchar"
-    Size="100">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="NewButtonTextCodeCode"
-    Type="varchar"
-    Size="100">
     <Constraints
       Nullable="true" />
   </Column>
@@ -428,10 +360,78 @@
       Nullable="true" />
   </Column>
   <Column
+    Name="SearchFields"
+    Type="nvarchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="HasDocuments"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="AllowedForComputingPartners"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Name"
+    Type="varchar"
+    Size="50">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="HeaderScreenCode"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="DescriptionTextCodeCode"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="NewButtonTextCodeCode"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="NameField"
+    Type="varchar"
+    Size="60">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="AllowedInQueues"
     Type="bit">
     <Constraints
       Nullable="false" />
+  </Column>
+  <Column
+    Name="LovDisplayMemberPath"
+    Type="nvarchar"
+    Size="-1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="LovDisplayMemberPathLocal"
+    Type="nvarchar"
+    Size="-1">
+    <Constraints
+      Nullable="true" />
   </Column>
   <Column
     Name="IsTabsHidden"

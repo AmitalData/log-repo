@@ -65,6 +65,12 @@
       Nullable="true" />
   </Column>
   <Column
+    Name="LastRunStartTime"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="LastRunResult"
     Type="varchar"
     Size="150">
@@ -158,13 +164,6 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="SchedulerDetailsXML"
-    Type="nvarchar"
-    Size="-1">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
     Name="Type"
     Type="varchar"
     Size="15">
@@ -172,25 +171,14 @@
       Nullable="true" />
   </Column>
   <Column
+    Name="SchedulerDetailsXML"
+    Type="nvarchar"
+    Size="-1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="NextRunTimeUTC"
-    Type="datetime">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="StartDateTimeUTC"
-    Type="datetime">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="LastRunEndTime"
-    Type="datetime">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="LastRunEndTimeUTC"
     Type="datetime">
     <Constraints
       Nullable="true" />
@@ -202,7 +190,7 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="LastRunStartTime"
+    Name="StartDateTimeUTC"
     Type="datetime">
     <Constraints
       Nullable="true" />
@@ -222,11 +210,10 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="Retries"
-    Type="int"
-    DefaultValue="0">
+    Name="LastRunEndTime"
+    Type="datetime">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="AverageRunTime"
@@ -241,5 +228,18 @@
     Size="15">
     <Constraints
       Nullable="true" />
+  </Column>
+  <Column
+    Name="LastRunEndTimeUTC"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Retries"
+    Type="int"
+    DefaultValue="0">
+    <Constraints
+      Nullable="false" />
   </Column>
 </Table>

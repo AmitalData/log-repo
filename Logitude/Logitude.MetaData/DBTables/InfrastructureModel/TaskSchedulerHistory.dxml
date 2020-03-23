@@ -63,16 +63,16 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="LogType"
+    Name="LogFirstLine"
     Type="varchar"
-    Size="200">
+    Size="1000">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
-    Name="LogFirstLine"
+    Name="LogType"
     Type="varchar"
-    Size="1000">
+    Size="200">
     <Constraints
       Nullable="true" />
   </Column>
