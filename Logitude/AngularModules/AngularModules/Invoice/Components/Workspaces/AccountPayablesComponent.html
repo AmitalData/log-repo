@@ -285,24 +285,30 @@
                         <div class="MediaFill">
                             <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="ItemsSource">
                                 <!-- TopName -->
-                                <log-column [width]="'150'" [header]="'General.O.TopName' | TextCodeTranslationPipe"  [Alignment]="isRTL ? 'right' : 'left'">
-                                    <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1"  [Alignment]="isRTL ? 'right' : 'left'">
-                                        {{item.CreditorName}}
-                                    </log-cell-template>
+                                <log-column [width]="'150'" [header]="'General.O.TopName' | TextCodeTranslationPipe" [Alignment]="isRTL ? 'right' : 'left'">
+                                    <ng-template let-item>
+                                        <log-cell-template #logcelltemplate [TabIndex]="-1" [Alignment]="isRTL ? 'right' : 'left'">
+                                            {{item.CreditorName}}
+                                        </log-cell-template>
+                                    </ng-template>
                                 </log-column>
 
                                 <!-- Outstanding -->
-                                <log-column [width]="'95'" [header]="'General.O.Outstanding' | TextCodeTranslationPipe"  [Alignment]="isRTL ? 'right' : 'left'">
-                                    <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1" [Alignment]="isRTL ? 'left' : 'right'">
-                                        {{item.Outstanding | NumbersPipe:'N2'}}
-                                    </log-cell-template>
+                                <log-column [width]="'95'" [header]="'General.O.Outstanding' | TextCodeTranslationPipe" [Alignment]="isRTL ? 'right' : 'left'">
+                                    <ng-template let-item>
+                                        <log-cell-template #logcelltemplate [TabIndex]="-1" [Alignment]="isRTL ? 'left' : 'right'">
+                                            {{item.Outstanding | NumbersPipe:'N2'}}
+                                        </log-cell-template>
+                                    </ng-template>
                                 </log-column>
 
                                 <!-- Overdue -->
-                                <log-column [width]="'95'" [header]="'General.O.Overdue' | TextCodeTranslationPipe"  [Alignment]="isRTL ? 'right' : 'left'">
-                                    <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1" [Alignment]="isRTL ? 'left' : 'right'">
-                                        {{item.Overdue | NumbersPipe:'N2'}}
-                                    </log-cell-template>
+                                <log-column [width]="'95'" [header]="'General.O.Overdue' | TextCodeTranslationPipe" [Alignment]="isRTL ? 'right' : 'left'">
+                                    <ng-template let-item>
+                                        <log-cell-template #logcelltemplate [TabIndex]="-1" [Alignment]="isRTL ? 'left' : 'right'">
+                                            {{item.Overdue | NumbersPipe:'N2'}}
+                                        </log-cell-template>
+                                    </ng-template>
                                 </log-column>
                             </logitude-edit-grid>
                         </div>

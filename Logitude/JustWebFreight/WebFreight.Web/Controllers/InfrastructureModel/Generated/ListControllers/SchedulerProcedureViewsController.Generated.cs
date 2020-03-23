@@ -89,7 +89,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
         public HttpResponseMessage GetAll()
         {
             try
-            { 
+            {
                 string logKey = PerformanceLogger.LogCurrentTime();
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);

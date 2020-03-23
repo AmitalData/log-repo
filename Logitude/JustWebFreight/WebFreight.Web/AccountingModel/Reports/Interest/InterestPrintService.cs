@@ -1,4 +1,5 @@
 ﻿using Logitude.Accounting.BL.EntityQueryServices;
+using Logitude.Accounting.BL.InterestService;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
@@ -31,7 +32,7 @@ using WebFreight.Web.Helpers;
             InterestDataProvider InterestReportDP = new InterestDataProvider();
             InterestReportQueryService InterestReportQuery = new InterestReportQueryService(tenant);
             InterestReportPM InteerstReportPM = InterestReportQuery.GetSingle(entityId, true, false);
-            AccountingDomainService interestTransactionQuery = new AccountingDomainService();
+            InterestService interestTransactionQuery = new InterestService();
             List<InterestReportLinesByDateProvider> InterestReportLines = InteerstReportPM.InterestReportLinesByDates.Select(d => new InterestReportLinesByDateProvider
             {
                 FromDate = d.FromDate,

@@ -11,7 +11,6 @@ using Logitude.Accounting.BL.EntityUpdateServices;
 using Logitude.Accounting.Def.EntityPMs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
-using WebFreight.Web.App_Code.AngularJS_App_Code.Generated;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Server.Infrastructure;
 using Logitude.Accounting.Data.Repositories;
@@ -20,9 +19,9 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.Resolvers;
 
-namespace WebFreight.Web.AccountingModel.DomainServices
+namespace Logitude.Accounting.BL.InterestService
 {
-    public partial class AccountingDomainService
+    public   class InterestService
     {
         public InterestTransactionsWithTotal GetAllInterestTransactionByDate(string ReportId, DateTime InterestCalculationDate, int Tenant, IAccountingContext MyContext=null)
         {
@@ -100,7 +99,7 @@ namespace WebFreight.Web.AccountingModel.DomainServices
         }
 
 
-        public InterestReportPM PutConfirmCreateInvoice(InterestReportPM interestReportPM,int Tenant, IAccountingContext MainContext)
+        public InterestReportPM PutConfirmCreateInvoice(InterestReportPM interestReportPM, int Tenant, IAccountingContext MainContext)
         {
             if (MainContext == null)
             {
@@ -112,9 +111,16 @@ namespace WebFreight.Web.AccountingModel.DomainServices
             bool showLocals = !contact.DontShowLocal;
             InterestReportUpdateService InterestReportUpdate = new InterestReportUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
             InterestTransactionUpdateService InterestTransactionUpdate = new InterestTransactionUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
-
-            interestReportPM.CloseBalance = interestReportPM.OpenBalance!=null? interestReportPM.OpenBalance:0 + interestReportPM.TotalAmount!=null? interestReportPM.TotalAmount:0;
-            if (interestReportPM.InterestReportStatusCode != "2")
+            interestReportPM.CloseBalance = 0;
+            if (interestReportPM.OpenBalance != null )
+            {
+                interestReportPM.CloseBalance += interestReportPM.OpenBalance;
+            }
+            if (interestReportPM.TotalAmount != null)
+            {
+                interestReportPM.CloseBalance += interestReportPM.TotalAmount;
+            }
+             if (interestReportPM.InterestReportStatusCode != "2")
             {
                 interestReportPM.InterestReportStatusCode = "4";
             }
@@ -194,6 +200,14 @@ namespace WebFreight.Web.AccountingModel.DomainServices
             return loggedcontact;
         }
 
+
+    }
+
+
+    public class InterestTransactionsWithTotal
+    {
+        public List<InterestTransactionList> interestTransactionLists { get; set; }
+        public decimal TotalLocalAmount { get; set; }
 
     }
 }
