@@ -5,6 +5,9 @@ import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResp
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 import { DeclarationRemarksService } from '../../../Common/Services/ExtendedPMs/DeclarationRemarksService';
 import { ListComponentArgs } from '../../../Infrastructure/Args';
+import { DeclarationReferantDataList } from '../../EntityLists/DeclarationReferantDataList';
+import { AmitalGatewayUtil, UnifreightMessageM } from '../../../Infrastructure/Utilities/AmitalGatewayUtil';
+import { ResourceLoader } from '@angular/compiler';
 
 @Component({
     moduleId: module.id,
@@ -27,7 +30,13 @@ export class FieldTemplateComponent {
 
     public ButtonClick() {
         this._ListComponentArgs.SuppressOnRowSelectedField = true;
+
      }
+    ShowUnifaceCustomFile() {
+        let myDeclarationReferantDataList: DeclarationReferantDataList = this.Entity;
+        //myDeclarationReferantDataList.CustomFileNo
+
+    }
     public Run(args: any) {
           this.Entity = args['Entity'];
         this.FieldName = args['FieldName'];
@@ -157,5 +166,46 @@ export class FieldTemplateComponent {
         });
 
     }
+    ShowCFIUFILEFromDeclarationReferantData() {
 
+        let myDeclarationReferantDataList: DeclarationReferantDataList = this.Entity;
+        let myViewModelName = "FieldTemplateComponent.ts-DeclarationReferantDataListTemplate";
+        if (AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
+            SessionLocator.SelectedSession.StartBusyIndicatorLoading();
+            let sub = AmitalGatewayUtil.Instance.UnifaceRequestArrived
+                .subscribe(
+                    (mess: UnifreightMessageM) => {
+                        var IsMatchUnifreightCallbackCommand = (
+                            mess.LogitudeEntity == AmitalGatewayUtil.Instance.DeclarationMessaging.LogitudeEntityDeclaration &&
+                            mess.LogitudeEntityNumber == myDeclarationReferantDataList.DeclarationId  &&
+                            mess.LogitudeViewModel == myViewModelName);
+                        if (IsMatchUnifreightCallbackCommand) {
+                            sub.unsubscribe();
+                            SessionLocator.SelectedSession.StopBusyIndicator();
+                            let sBool = UnifreightMessageM.GetStringValue(mess, AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightResponseStatus);
+                            SessionLocator.SelectedSession.CurrentListComponent.DoRefresh();
+                            alert("reload");
+                        }
+                    }
+                );
+           
+            SessionLocator.SelectedSession.StartBusyIndicator("");
+            var unifreightMessageM =
+                AmitalGatewayUtil.Instance.
+                    DeclarationMessaging.GetMessage(myDeclarationReferantDataList.CustomFileNo, myDeclarationReferantDataList.DeclarationId,
+                        myViewModelName );
+
+
+            AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
+                "ScriptableGatewayUtil.ShowCFIUFILEFromDeclarationReferantDataList",
+                "CFIHMAIN.LogitudeTask",
+                "ShowCFIUFILEFromDeclarationReferantData",
+                unifreightMessageM,
+                " הצגת מסך :הזנת תיק כללי עמילות מכס");
+
+        }
+        else {
+            alert("ShowCFIUFILEFromDeclarationReferantData");
+        }
+    }
 }
