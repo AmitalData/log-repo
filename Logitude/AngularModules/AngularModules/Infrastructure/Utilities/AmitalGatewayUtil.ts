@@ -149,6 +149,26 @@ export class AmitalGatewayUtil {
             "קבצי רכבים");
     }
 
+
+    public ShowCFIFILEMMoveToQueueScreen(
+        UnifreightEntityNumber: string,
+        LogitudeEntityNumber: string,
+        ViewModelName: string
+    ) {
+        var unifreightMessageM =
+            AmitalGatewayUtil.Instance.
+                DeclarationMessaging.GetMessage(UnifreightEntityNumber, LogitudeEntityNumber, ViewModelName);
+
+
+        AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
+            "AmitalGatewayUtil.ShowCFIFILEMMoveToQueueScreen",
+            "CFIHMAIN.LogitudeTask",
+            "ShowCFIFILEMMoveToQueueScreen",
+            unifreightMessageM,
+            " העברה לתור");
+    }
+
+
     SendTotangoUserActivity(module: string, activity: string) {
         var req = new UnifreightMessageM();
         req.Requset.push(["module", module]);
