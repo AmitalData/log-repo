@@ -54,10 +54,23 @@ namespace Logitude.UnitTest.Accounting.UniTests.InterestReport
         private void AssertResults(List<InterestReportLinesByDatePM> expectedList, List<InterestReportLinesByDatePM> actualList)
         {
             Assert.AreEqual(expectedList.Count, actualList.Count);
-            expectedList = expectedList.OrderByDescending(d => d.ToDate).ToList();
+            expectedList = expectedList.OrderBy(d => d.ToDate).ToList();
+            actualList = actualList.OrderBy(d => d.ToDate).ToList();
             for(int i = 0; i < expectedList.Count; i++)
             {
-
+                Assert.AreEqual(expectedList[i].AccumulatedAmount, actualList[i].AccumulatedAmount);
+                Assert.AreEqual(expectedList[i].TotalAmount, actualList[i].TotalAmount);
+                Assert.AreEqual(expectedList[i].StandardInterestPercentage, actualList[i].StandardInterestPercentage);
+                Assert.AreEqual(expectedList[i].ExceptionalInterestPercentage, actualList[i].ExceptionalInterestPercentage);
+                Assert.AreEqual(expectedList[i].CreditInterestPercentage, actualList[i].CreditInterestPercentage);
+                Assert.AreEqual(expectedList[i].StandardInterestAmount, actualList[i].StandardInterestAmount);
+                Assert.AreEqual(expectedList[i].ExceptionalInterestAmount, actualList[i].ExceptionalInterestAmount);
+                Assert.AreEqual(expectedList[i].CreditInterestAmount, actualList[i].CreditInterestAmount);
+                Assert.AreEqual(expectedList[i].CalculatedStandInterestAmount, actualList[i].CalculatedStandInterestAmount);
+                Assert.AreEqual(expectedList[i].CalculatedExcepInterestAmount, actualList[i].CalculatedExcepInterestAmount);
+                Assert.AreEqual(expectedList[i].CalculatedCreditInterestAmount, actualList[i].CalculatedCreditInterestAmount);
+                Assert.AreEqual(expectedList[i].TotalInterestDays, actualList[i].TotalInterestDays);
+                
             }
         }
     }
