@@ -49,6 +49,13 @@ export class NewTariffProductsComponent extends BaseComponent implements OnInit 
         }
     }
 
+    get LocalName() { return this.EntityPM.LocalName; }
+    set LocalName(value: string) {
+        if (this.EntityPM.LocalName != value) {
+            this.EntityPM.LocalName = value;
+        }
+    }
+
   
     CancelButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
