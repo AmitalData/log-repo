@@ -109,7 +109,7 @@ namespace CommunicationWorkerRole
                 return true;
             }
         }
-        public override async void AsyncRun()
+        public override void Run()
         {
             try
             {

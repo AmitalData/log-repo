@@ -87,7 +87,7 @@ namespace CommunicationWorkerRole
         }
 
         string Token;
-        public override async void AsyncRun()
+        public override void Run()
         {
             try
             {

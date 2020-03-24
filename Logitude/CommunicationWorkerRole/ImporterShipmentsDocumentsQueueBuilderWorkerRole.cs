@@ -65,7 +65,7 @@ namespace CommunicationWorkerRole
         }
         string Token;
         string CorrelationId;
-        public override async void AsyncRun()
+        public override void Run()
         {
             try
             {

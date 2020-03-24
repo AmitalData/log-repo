@@ -76,7 +76,7 @@ namespace CommunicationWorkerRole
         }
         string Token;
         Contact User;
-        public override async void AsyncRun()
+        public override void Run()
         {
             APICredentialsParameters APICredentialsParam = new APICredentialsParameters()
             {
