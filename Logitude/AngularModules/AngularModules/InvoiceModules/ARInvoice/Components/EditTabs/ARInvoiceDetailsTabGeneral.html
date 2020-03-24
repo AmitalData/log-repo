@@ -458,152 +458,178 @@
 
                                     <!-- Exists -->
                                     <log-column [width]="'25'">
-                                        <log-cell-template template="let item" #logcelltemplate>
-                                            <div style="width: 100%; height: 100%; position: relative;" [ngStyle]="{background: item.CellBackground}">
-                                                <div class="CenterCenter">
-                                                    <img *ngIf="!item.IsMatched" src="./Images/Buttons/NotMatched.png" />
-                                                    <CheckBox *ngIf="item.IsMatched" [IsChecked]="item.Exists" (Checked)="item.Exists = $event" [IsEnabled]="IsEditingEnabled"></CheckBox>
+                                        <ng-template let-item>
+                                            <log-cell-template #logcelltemplate>
+                                                <div style="width: 100%; height: 100%; position: relative;" [ngStyle]="{background: item.CellBackground}">
+                                                    <div class="CenterCenter">
+                                                        <img *ngIf="!item.IsMatched" src="./Images/Buttons/NotMatched.png" />
+                                                        <CheckBox *ngIf="item.IsMatched" [IsChecked]="item.Exists" (Checked)="item.Exists = $event" [IsEnabled]="IsEditingEnabled"></CheckBox>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </log-cell-template>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- Description -->
                                     <log-column [header]="'ARInvoiceLine.CH.DescriptionListLable' | TextCodeTranslationPipe" [width]="'250'" [Editable]="false" [Alignment]="isRTL ? 'right' : 'left'">
-                                        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1">
-                                            <div [style.text-align]="isRTL ? 'right' : 'left'" style="width: 100%; height: 100%;" [ngStyle]="{background: item.CellBackground}">
-                                                {{item.Description}}
-                                            </div>
-                                        </log-cell-template>
+                                        <ng-template let-item>
+                                            <log-cell-template #logcelltemplate [TabIndex]="-1">
+                                                <div [style.text-align]="isRTL ? 'right' : 'left'" style="width: 100%; height: 100%;" [ngStyle]="{background: item.CellBackground}">
+                                                    {{item.Description}}
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- Reference -->
                                     <log-column [header]="'ARInvoiceLine.CH.Reference' | TextCodeTranslationPipe" [width]="'100'" [Editable]="false" [Alignment]="'center'">
-                                        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1">
-                                            <div style="width: 100%; height: 100%; text-align: center;" [ngStyle]="{background: item.CellBackground}">
-                                                {{item.EntityReference}}
-                                            </div>
-                                        </log-cell-template>
+                                        <ng-template let-item>
+                                            <log-cell-template #logcelltemplate [TabIndex]="-1">
+                                                <div style="width: 100%; height: 100%; text-align: center;" [ngStyle]="{background: item.CellBackground}">
+                                                    {{item.EntityReference}}
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- MeasurementCode -->
                                     <log-column [header]="'ARInvoiceLine.CH.MeasurementIdListLable' | TextCodeTranslationPipe" [width]="'50'" [Editable]="false" [Alignment]="'center'">
-                                        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1">
-                                            <div style="width: 100%; height: 100%; text-align: center;" [ngStyle]="{background: item.CellBackground}">
-                                                {{item.MeasurementCode}}
-                                            </div>
-                                        </log-cell-template>
+                                        <ng-template let-item>
+                                            <log-cell-template #logcelltemplate [TabIndex]="-1">
+                                                <div style="width: 100%; height: 100%; text-align: center;" [ngStyle]="{background: item.CellBackground}">
+                                                    {{item.MeasurementCode}}
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- PrepaidCollectId -->
                                     <log-column [header]="'ARInvoiceLine.CH.PrepaidCollectIdListLable' | TextCodeTranslationPipe" [width]="'35'" [Editable]="false" [Alignment]="'center'">
-                                        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1">
-                                            <div style="width: 100%; height: 100%; text-align: center; position: relative;" [ngStyle]="{background: item.CellBackground}">
-                                                <div class="CenterCenter" style="width: 25px; height: 20px; line-height: 20px; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px;" [ngStyle]="{background: item.IsMatched ? 'transparent' : 'rgba(255, 171, 3, 0.6)', color: item.IsMatched ? '#282E30' : 'rgba(255, 94, 0, 1)'}">
-                                                    {{item.PrepaidCollectId}}
+                                        <ng-template let-item>
+                                            <log-cell-template #logcelltemplate [TabIndex]="-1">
+                                                <div style="width: 100%; height: 100%; text-align: center; position: relative;" [ngStyle]="{background: item.CellBackground}">
+                                                    <div class="CenterCenter" style="width: 25px; height: 20px; line-height: 20px; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px;" [ngStyle]="{background: item.IsMatched ? 'transparent' : 'rgba(255, 171, 3, 0.6)', color: item.IsMatched ? '#282E30' : 'rgba(255, 94, 0, 1)'}">
+                                                        {{item.PrepaidCollectId}}
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </log-cell-template>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- Quantity -->
                                     <log-column [header]="'ARInvoiceLine.CH.QuantityListLable' | TextCodeTranslationPipe" [width]="'90'" [Editable]="false" [Alignment]="isRTL ? 'left' : 'right'">
-                                        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1">
-                                            <div [style.text-align]="isRTL ? 'left' : 'right'" style="width: 100%; height: 100%;" [ngStyle]="{background: item.CellBackground}">
-                                                {{item.Quantity | NumbersPipe:'N2'}}
-                                            </div>
-                                        </log-cell-template>
+                                        <ng-template let-item>
+                                            <log-cell-template #logcelltemplate [TabIndex]="-1">
+                                                <div [style.text-align]="isRTL ? 'left' : 'right'" style="width: 100%; height: 100%;" [ngStyle]="{background: item.CellBackground}">
+                                                    {{item.Quantity | NumbersPipe:'N2'}}
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- UnitPrice -->
                                     <log-column [header]="'ARInvoiceLine.CH.UnitPriceListLable' | TextCodeTranslationPipe" [width]="'90'" [Editable]="false" [Alignment]="isRTL ? 'left' : 'right'">
-                                        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1">
-                                            <div [style.text-align]="isRTL ? 'left' : 'right'" style="width: 100%; height: 100%;" [ngStyle]="{background: item.CellBackground}">
-                                                <table>
-                                                    <tr>
-                                                        <td>
-                                                            <div></div>
-                                                        </td>
+                                        <ng-template let-item>
+                                            <log-cell-template #logcelltemplate [TabIndex]="-1">
+                                                <div [style.text-align]="isRTL ? 'left' : 'right'" style="width: 100%; height: 100%;" [ngStyle]="{background: item.CellBackground}">
+                                                    <table>
+                                                        <tr>
+                                                            <td>
+                                                                <div></div>
+                                                            </td>
 
-                                                        <td style="width: 1px;">
-                                                            {{item.UnitPrice | NumbersPipe:'N3'}}
-                                                        </td>
+                                                            <td style="width: 1px;">
+                                                                {{item.UnitPrice | NumbersPipe:'N3'}}
+                                                            </td>
 
-                                                        <td *ngIf="item.MeasurementCode == 'PRVL' || item.MeasurementCode =='PRFR'" style="width:1px; padding-left: 2px;">
-                                                            %
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </div>
-                                        </log-cell-template>
+                                                            <td *ngIf="item.MeasurementCode == 'PRVL' || item.MeasurementCode =='PRFR'" style="width:1px; padding-left: 2px;">
+                                                                %
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- ForiegnCurrencyAmount -->
                                     <log-column [header]="'ARInvoiceLine.CH.AmountListLable' | TextCodeTranslationPipe" [width]="'110'" [Editable]="false" [Alignment]="'center'">
-                                        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1">
-                                            <div style="width: 100%; height: 100%; text-align: right;" [ngStyle]="{background: item.CellBackground}">
-                                                <span>{{item.ForiegnCurrencyAmount | NumbersPipe:'N2'}}</span>
-                                                <span style="margin-left: 3px;" *ngIf="item.ForiegnCurrencyAmount">{{item.ForiegnCurrencyCode}}</span>
-                                            </div>
-                                        </log-cell-template>
+                                        <ng-template let-item>
+                                            <log-cell-template #logcelltemplate [TabIndex]="-1">
+                                                <div style="width: 100%; height: 100%; text-align: right;" [ngStyle]="{background: item.CellBackground}">
+                                                    <span>{{item.ForiegnCurrencyAmount | NumbersPipe:'N2'}}</span>
+                                                    <span style="margin-left: 3px;" *ngIf="item.ForiegnCurrencyAmount">{{item.ForiegnCurrencyCode}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- ForiegnExchangeRate -->
                                     <log-column [header]="'ARInvoiceLine.CH.ForiegnExchangeRateListLable' | TextCodeTranslationPipe" [width]="RateColumnWidth + ''" [Editable]="false" [Alignment]="'center'">
-                                        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1">
-                                            <div style="width: 100%; height: 100%; text-align: right;" [ngStyle]="{background: item.CellBackground}">
-                                                <span>{{item.ForiegnExchangeRate | NumbersPipe:'N5'}}</span>
-                                                <span style="margin-left: 5px; font-size: 10px; color: #1B90CB" *ngIf="item.RelativeRateDate">{{item.RelativeRateDate}}</span>
-                                            </div>
-                                        </log-cell-template>
+                                        <ng-template let-item>
+                                            <log-cell-template #logcelltemplate [TabIndex]="-1">
+                                                <div style="width: 100%; height: 100%; text-align: right;" [ngStyle]="{background: item.CellBackground}">
+                                                    <span>{{item.ForiegnExchangeRate | NumbersPipe:'N5'}}</span>
+                                                    <span style="margin-left: 5px; font-size: 10px; color: #1B90CB" *ngIf="item.RelativeRateDate">{{item.RelativeRateDate}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- VatType -->
                                     <log-column [header]="'ARInvoiceLine.CH.VatTypeIdListLable' | TextCodeTranslationPipe" [width]="VATColumnWidth + ''" [Editable]="false" [Alignment]="isRTL ? 'right' : 'left'">
-                                        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1">
-                                            <div style="width: 100%; height: 100%; text-align: right;" [ngStyle]="{background: item.CellBackground}">
-                                                <table>
-                                                    <tr>
-                                                        <td class="TextTrimming">
-                                                            <span [ngStyle]="{color: item.VatTypeCellColor}">{{item.VatTypeCell}}</span>
-                                                        </td>
+                                        <ng-template let-item>
+                                            <log-cell-template #logcelltemplate [TabIndex]="-1">
+                                                <div style="width: 100%; height: 100%; text-align: right;" [ngStyle]="{background: item.CellBackground}">
+                                                    <table>
+                                                        <tr>
+                                                            <td class="TextTrimming">
+                                                                <span [ngStyle]="{color: item.VatTypeCellColor}">{{item.VatTypeCell}}</span>
+                                                            </td>
 
-                                                        <td style="width: 20px; padding-left: 2px;" *ngIf="item.VatTypeUpdateIsVisible">
-                                                            <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="item.UpdateVatPercentageClicked()"></IconButton>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </div>
-                                        </log-cell-template>
+                                                            <td style="width: 20px; padding-left: 2px;" *ngIf="item.VatTypeUpdateIsVisible">
+                                                                <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="item.UpdateVatPercentageClicked()"></IconButton>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- LocalCurrencyAmount -->
                                     <log-column [header]="LocalAmountHeader" [width]="'100'" [Editable]="false" [Alignment]="'center'">
-                                        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1">
-                                            <div style="width: 100%; height: 100%; text-align: right;" [ngStyle]="{background: item.CellBackground}">
-                                                {{item.LocalCurrencyAmount | NumbersPipe:'N3'}}
-                                            </div>
-                                        </log-cell-template>
+                                        <ng-template let-item>
+                                            <log-cell-template #logcelltemplate [TabIndex]="-1">
+                                                <div style="width: 100%; height: 100%; text-align: right;" [ngStyle]="{background: item.CellBackground}">
+                                                    {{item.LocalCurrencyAmount | NumbersPipe:'N3'}}
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- InvoiceCurrencyAmount -->
                                     <log-column [header]="InvoiceAmountHeader" [width]="'100'" [Editable]="false" [Alignment]="'center'" *ngIf="IsInvoiceAmountHeaderVisible">
-                                        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1">
-                                            <div style="width: 100%; height: 100%; text-align: right;" [ngStyle]="{background: item.CellBackground}">
-                                                {{item.InvoiceCurrencyAmount | NumbersPipe:'N3'}}
-                                            </div>
-                                        </log-cell-template>
+                                        <ng-template let-item>
+                                            <log-cell-template #logcelltemplate [TabIndex]="-1">
+                                                <div style="width: 100%; height: 100%; text-align: right;" [ngStyle]="{background: item.CellBackground}">
+                                                    {{item.InvoiceCurrencyAmount | NumbersPipe:'N3'}}
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- Buttons -->
                                     <log-column [width]="'25'" [Alignment]="isRTL ? 'right' : 'left'">
-                                        <log-cell-template template="let item">
-                                            <div style="width: 100%; height: 100%; position: relative;" [ngStyle]="{background: item.CellBackground}">
-                                                <div class="CenterCenter" style="height: 20px;">
-                                                    <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="EditLineClicked(item)"></IconButton>
+                                        <ng-template let-item>
+                                            <log-cell-template>
+                                                <div style="width: 100%; height: 100%; position: relative;" [ngStyle]="{background: item.CellBackground}">
+                                                    <div class="CenterCenter" style="height: 20px;">
+                                                        <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="EditLineClicked(item)"></IconButton>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </log-cell-template>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                 </logitude-edit-grid>

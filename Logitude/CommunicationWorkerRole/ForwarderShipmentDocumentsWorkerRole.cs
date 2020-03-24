@@ -76,7 +76,7 @@ namespace CommunicationWorkerRole
         }
         string Token;
         Contact User;
-        public override async void AsyncRun()
+        public override void Run()
         {
             APICredentialsParameters APICredentialsParam = new APICredentialsParameters()
             {
@@ -394,7 +394,7 @@ namespace CommunicationWorkerRole
                                                     result.Wait();
                                                     if (result.Result.StatusCode == System.Net.HttpStatusCode.OK)
                                                     {
-                                                        var temp1 = result.Content.ReadAsStringAsync().Result;
+                                                        var temp1 = result.Result.Content.ReadAsStringAsync().Result;
                                                         var Donemsg = "New Document Sent To Forwarder Successfully " + DateTime.Now;
                                                         APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "D", response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, Donemsg, null, temp1, null, "");
                                                         queueservice.Complete();

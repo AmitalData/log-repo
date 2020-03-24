@@ -2189,7 +2189,18 @@
     <Compile Include="Migrations\202003121123558_AddCountryAndStatePropertiesToPort_Samar.Designer.cs">
       <DependentUpon>202003121123558_AddCountryAndStatePropertiesToPort_Samar.cs</DependentUpon>
     </Compile>
-
+    <Compile Include="Migrations\202003181116035_AddTariffProductsTable.cs" />
+    <Compile Include="Migrations\202003181116035_AddTariffProductsTable.Designer.cs">
+      <DependentUpon>202003181116035_AddTariffProductsTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003191030414_ChangeTariffProductsColumnName.cs" />
+    <Compile Include="Migrations\202003191030414_ChangeTariffProductsColumnName.Designer.cs">
+      <DependentUpon>202003191030414_ChangeTariffProductsColumnName.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003191407073_AddProductColumnToTariffTable.cs" />
+    <Compile Include="Migrations\202003191407073_AddProductColumnToTariffTable.Designer.cs">
+      <DependentUpon>202003191407073_AddProductColumnToTariffTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\202003151252549_WesamAddDWObjectTableCodeToDWObjectFieldCategoriesTable.cs" />
     <Compile Include="Migrations\202003151252549_WesamAddDWObjectTableCodeToDWObjectFieldCategoriesTable.Designer.cs">
       <DependentUpon>202003151252549_WesamAddDWObjectTableCodeToDWObjectFieldCategoriesTable.cs</DependentUpon>
@@ -4010,6 +4021,16 @@
       <DependentUpon>202003071003036_AddTariffFieldsToQuoteCharge_Maheera.cs</DependentUpon>
     </EmbeddedResource>
 
+
+    <EmbeddedResource Include="Migrations\202003181116035_AddTariffProductsTable.resx">
+      <DependentUpon>202003181116035_AddTariffProductsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003191030414_ChangeTariffProductsColumnName.resx">
+      <DependentUpon>202003191030414_ChangeTariffProductsColumnName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003191407073_AddProductColumnToTariffTable.resx">
+      <DependentUpon>202003191407073_AddProductColumnToTariffTable.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Logitude.Accounting.Data\Logitude.Accounting.Data.csproj">

@@ -535,129 +535,130 @@
                     <tr *ngIf="!this.EntityPM.IsCashDeposit">
                         <td [attr.colspan]="IsLinesSelection?3:1" style="height: 100%; padding-bottom: 75px;">
 
+                            <div class="GeneratedGridContainer">
 
-                            <logitude-edit-grid GridWidth="100%" GridHeight="100%"
-                                [ItemSource]="IsLinesSelection ? CashbookLines : BankDepositLines" [UseVirtuallization]="true">
+                                <logitude-edit-grid GridWidth="100%" GridHeight="100%"
+                                    [ItemSource]="IsLinesSelection ? CashbookLines : BankDepositLines" [UseVirtuallization]="true">
 
-                                <log-column *ngIf="IsLinesSelection" [Alignment]="isRTL ? 'right' : 'left'" [header]="''" [width]="'40'"
-                                    [binding]="''">
-                                    <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
-                                        <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'" style="padding-top: 2px;">
-                                            <CheckBox [IsChecked]="IsAllSelected" (Checked)="LineSelection(item , $event)"></CheckBox>
-                                        </div>
-                                    </log-cell-template>
-                                </log-column>
+                                    <log-column *ngIf="IsLinesSelection" [Alignment]="isRTL ? 'right' : 'left'" [header]="''" [width]="'40'"
+                                        [binding]="''">
+                                        <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
+                                            <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'" style="padding-top: 2px;">
+                                                <CheckBox [IsChecked]="IsAllSelected || item.IsSelected == true" (Checked)="LineSelection(item , $event)"></CheckBox>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
 
-                                <log-column [Alignment]="isRTL ? 'right' : 'left'"
-                                    [header]="'BankDepositLine.F.ChequeNumber' | TextCodeTranslationPipe" [width]="'90'"
-                                    [binding]="'ChequeNumber'">
-                                    <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
-                                        <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
-                                            <span>{{item.ChequeNumber}}</span>
-                                        </div>
-                                    </log-cell-template>
-                                </log-column>
+                                    <log-column [Alignment]="isRTL ? 'right' : 'left'"
+                                        [header]="'BankDepositLine.F.ChequeNumber' | TextCodeTranslationPipe" [width]="'90'"
+                                        [binding]="'ChequeNumber'">
+                                        <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
+                                            <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
+                                                <span>{{item.ChequeNumber}}</span>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
 
-                                <log-column [Alignment]="isRTL ? 'right' : 'left'"
-                                    [header]="'BankDepositLine.F.DueDate' | TextCodeTranslationPipe" [width]="'100'" [binding]="'DueDate'">
-                                    <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
-                                        <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
-                                            <span>{{item.DueDate | DateTimeToDatePipe }}</span>
-                                        </div>
-                                    </log-cell-template>
-                                </log-column>
+                                    <log-column [Alignment]="isRTL ? 'right' : 'left'"
+                                        [header]="'BankDepositLine.F.DueDate' | TextCodeTranslationPipe" [width]="'100'" [binding]="'DueDate'">
+                                        <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
+                                            <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
+                                                <span>{{item.DueDate | DateTimeToDatePipe }}</span>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
 
-                                <log-column [Alignment]="isRTL ? 'right' : 'left'" [header]="GetAmountHeader()" [width]="'110'"
-                                    [binding]="'LocalAmount'">
-                                    <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
-                                        <div style="color:#00a24d;direction: ltr; text-align: right; padding: 0px 2px;"
-                                            [class.red]='item.LocalAmount<0'>
-                                            <span>{{ item.LocalAmount | NumbersPipe:'N2'  }} </span>
-                                        </div>
-                                    </log-cell-template>
-                                </log-column>
+                                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [header]="GetAmountHeader()" [width]="'110'"
+                                        [binding]="'LocalAmount'">
+                                        <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
+                                            <div style="color:#00a24d;direction: ltr; text-align: right; padding: 0px 2px;"
+                                                [class.red]='item.LocalAmount<0'>
+                                                <span>{{ item.LocalAmount | NumbersPipe:'N2'  }} </span>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
 
-                                <log-column [Alignment]="isRTL ? 'right' : 'left'"
-                                    [header]="'CashBookLine.F.Currency' | TextCodeTranslationPipe" [width]="'75'" [binding]="'Currency'">
-                                    <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
-                                        <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
-                                            <span>{{item.Currency}}</span>
-                                        </div>
-                                    </log-cell-template>
-                                </log-column>
+                                    <log-column [Alignment]="isRTL ? 'right' : 'left'"
+                                        [header]="'CashBookLine.F.Currency' | TextCodeTranslationPipe" [width]="'75'" [binding]="'Currency'">
+                                        <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
+                                            <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
+                                                <span>{{item.Currency}}</span>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
 
-                                <log-column [Alignment]="isRTL ? 'right' : 'left'"
-                                    [header]="'CashBookLine.F.ForeignAmount' | TextCodeTranslationPipe" [width]="'110'"
-                                    [binding]="'ForeignAmount'">
-                                    <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
-                                        <div style="color:#00a24d;direction: ltr; text-align: right; padding: 0px 2px;"
-                                            [class.red]='item.ForeignAmount<0'>
-                                            <span>{{ item.ForeignAmount | NumbersPipe:'N2'  }} </span>
-                                        </div>
-                                    </log-cell-template>
-                                </log-column>
+                                    <log-column [Alignment]="isRTL ? 'right' : 'left'"
+                                        [header]="'CashBookLine.F.ForeignAmount' | TextCodeTranslationPipe" [width]="'110'"
+                                        [binding]="'ForeignAmount'">
+                                        <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
+                                            <div style="color:#00a24d;direction: ltr; text-align: right; padding: 0px 2px;"
+                                                [class.red]='item.ForeignAmount<0'>
+                                                <span>{{ item.ForeignAmount | NumbersPipe:'N2'  }} </span>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
 
-                                <log-column [Alignment]="isRTL ? 'right' : 'left'"
-                                    [header]="'CashBookLine.F.AccountNumber' | TextCodeTranslationPipe" [width]="'110'"
-                                    [binding]="'AccountNumber'">
-                                    <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
-                                        <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
-                                            <span>{{item.AccountNumber}}</span>
-                                        </div>
-                                    </log-cell-template>
-                                </log-column>
+                                    <log-column [Alignment]="isRTL ? 'right' : 'left'"
+                                        [header]="'CashBookLine.F.AccountNumber' | TextCodeTranslationPipe" [width]="'110'"
+                                        [binding]="'AccountNumber'">
+                                        <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
+                                            <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
+                                                <span>{{item.AccountNumber}}</span>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
 
-                                <log-column [Alignment]="isRTL ? 'right' : 'left'"
-                                    [header]="'CashBookLine.F.Bank' | TextCodeTranslationPipe" [width]="'75'" [binding]="'Bank'">
-                                    <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
-                                        <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
-                                            <span>{{item.Bank}}</span>
-                                        </div>
-                                    </log-cell-template>
-                                </log-column>
+                                    <log-column [Alignment]="isRTL ? 'right' : 'left'"
+                                        [header]="'CashBookLine.F.Bank' | TextCodeTranslationPipe" [width]="'75'" [binding]="'Bank'">
+                                        <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
+                                            <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
+                                                <span>{{item.Bank}}</span>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
 
-                                <log-column [Alignment]="isRTL ? 'right' : 'left'"
-                                    [header]="'CashBookLine.F.Branch' | TextCodeTranslationPipe" [width]="'75'" [binding]="'Branch'">
-                                    <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
-                                        <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
-                                            <span>{{item.Branch}}</span>
-                                        </div>
-                                    </log-cell-template>
-                                </log-column>
+                                    <log-column [Alignment]="isRTL ? 'right' : 'left'"
+                                        [header]="'CashBookLine.F.Branch' | TextCodeTranslationPipe" [width]="'75'" [binding]="'Branch'">
+                                        <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
+                                            <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
+                                                <span>{{item.Branch}}</span>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
 
-                                <log-column [Alignment]="isRTL ? 'right' : 'left'"
-                                    [header]="'CashBookLine.F.ARPaymentNumber' | TextCodeTranslationPipe" [width]="'110'"
-                                    [binding]="'ARPaymentNumber'">
-                                    <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
-                                        <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
-                                            <a href="javascript:;" (click)="OpenARPayment(item.ARPaymentId)">{{item.ARPaymentNumber}}</a>
-                                        </div>
-                                    </log-cell-template>
-                                </log-column>
+                                    <log-column [Alignment]="isRTL ? 'right' : 'left'"
+                                        [header]="'CashBookLine.F.ARPaymentNumber' | TextCodeTranslationPipe" [width]="'110'"
+                                        [binding]="'ARPaymentNumber'">
+                                        <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
+                                            <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
+                                                <a href="javascript:;" (click)="OpenARPayment(item.ARPaymentId)">{{item.ARPaymentNumber}}</a>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
 
-                                <log-column [Alignment]="isRTL ? 'right' : 'left'"
-                                    [header]="'ARPaymentCheque.F.StatusCode' | TextCodeTranslationPipe" [width]="'100'"
-                                    [binding]="'StatusCode'">
-                                    <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
-                                        <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
-                                            {{  IsLinesSelection ? (showLocal?item.ARPChequeStatusName : item.ARPChequeStatusLocalName ) : (showLocal?item.ChequeStatusName : item.ChequeStatusLocalName )  }}
-                                        </div>
-                                    </log-cell-template>
-                                </log-column>
+                                    <log-column [Alignment]="isRTL ? 'right' : 'left'"
+                                        [header]="'ARPaymentCheque.F.StatusCode' | TextCodeTranslationPipe" [width]="'100'"
+                                        [binding]="'StatusCode'">
+                                        <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
+                                            <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
+                                                {{  IsLinesSelection ? (showLocal?item.ARPChequeStatusName : item.ARPChequeStatusLocalName ) : (showLocal?item.ChequeStatusName : item.ChequeStatusLocalName )  }}
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
 
-                                <log-column *ngIf="!IsLinesSelection" [Alignment]="isRTL ? 'right' : 'left'" [header]="" [width]="'100'"
-                                    [binding]="'StatusCode'">
-                                    <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
-                                        <div class="CellStretched" style="width: 50px; max-width: 50px; padding-top: 2px;" title="Return Cheque">
-                                            <IconButton [style.text-align]="isRTL ? 'right' : 'left'" [IsEnabled]="!item.IsOutOfDeposit"
-                                                [Name]="'return'" [IsSmall]="true" (click)="ReturnChequeButtonClicked(item)"></IconButton>
-                                        </div>
-                                    </log-cell-template>
-                                </log-column>
+                                    <log-column *ngIf="!IsLinesSelection" [Alignment]="isRTL ? 'right' : 'left'" [header]="" [width]="'100'"
+                                        [binding]="'StatusCode'">
+                                        <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
+                                            <div class="CellStretched" style="width: 50px; max-width: 50px; padding-top: 2px;" title="Return Cheque">
+                                                <IconButton [style.text-align]="isRTL ? 'right' : 'left'" [IsEnabled]="!item.IsOutOfDeposit"
+                                                    [Name]="'return'" [IsSmall]="true" (click)="ReturnChequeButtonClicked(item)"></IconButton>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
 
-                            </logitude-edit-grid>
+                                </logitude-edit-grid>
 
-
+                            </div>
                         </td>
                     </tr>
 

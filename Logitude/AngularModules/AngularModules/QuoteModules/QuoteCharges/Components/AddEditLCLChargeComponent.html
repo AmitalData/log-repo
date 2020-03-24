@@ -290,8 +290,8 @@
 
                                 <!-- Cost Quantity -->
                                 <log-column [width]="'70'" *ngIf="DataContext.IsAdhoc">
-                                    <log-header-template>
-                                        <ng-template let-item>
+                                    <ng-template let-item>
+                                        <log-header-template>
                                             <div class="GridHeaderCellTemplate">
                                                 <table>
                                                     <tr>
@@ -302,8 +302,8 @@
                                                     </tr>
                                                 </table>
                                             </div>
-                                        </ng-template>
-                                    </log-header-template>
+                                        </log-header-template>
+                                    </ng-template>
 
                                     <ng-template let-item>
                                         <log-cell-template #logcelltemplate [IsEnabled]="item.IsEnabled_CostQuantity">
@@ -320,8 +320,8 @@
 
                                 <!-- Cost Price -->
                                 <log-column [width]="'70'">
-                                    <log-header-template>
-                                        <ng-template let-item>
+                                    <ng-template let-item>
+                                        <log-header-template>
                                             <div class="GridHeaderCellTemplate">
                                                 <table>
                                                     <tr>
@@ -332,10 +332,11 @@
                                                     </tr>
                                                 </table>
                                             </div>
-                                        </ng-template>
-                                    </log-header-template>
+                                        </log-header-template>
+                                    </ng-template>
+
                                     <ng-template let-item>
-                                        <log-cell-template id="{{ 'CostPrice' | IdGeneratorPipe}}" #logcelltemplate [IsEnabled]="item.IsEnabled_CostUnitPrice|| item.TariffId != null">
+                                        <log-cell-template id="{{ 'CostPrice' | IdGeneratorPipe}}" #logcelltemplate [IsEnabled]="item.IsEnabled_CostUnitPrice">
                                             <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: left;" class="TextTrimming" [attr.title]="item.CostUnitPrice | NumbersPipe:'N2'">
                                                 <table>
                                                     <tr>
@@ -368,8 +369,8 @@
 
                                 <!-- Cost Amount -->
                                 <log-column [width]="'100'" *ngIf="DataContext.IsAdhoc">
-                                    <log-header-template>
-                                        <ng-template let-item>
+                                    <ng-template let-item>
+                                        <log-header-template>
                                             <div class="GridHeaderCellTemplate">
                                                 <table>
                                                     <tr>
@@ -380,8 +381,8 @@
                                                     </tr>
                                                 </table>
                                             </div>
-                                        </ng-template>
-                                    </log-header-template>
+                                        </log-header-template>
+                                    </ng-template>
 
                                     <ng-template let-item>
                                         <log-cell-template #logcelltemplate [IsEnabled]="false">
@@ -392,17 +393,6 @@
                                                             <img style="float: left;" src="./Images/Icons/M-icon.png" width="16" height="16" [title]="item.CostMinMaxIconTitle" />
                                                         </td>
 
-                                                    <td style="width:2px;" *ngIf="item.IsCostAllIn">
-                                                        <div></div>
-                                                    </td>
-
-                                                    <td style="width:16px;" *ngIf="item.IsCostAllIn">
-                                                        <img style="float: left;" src="./Images/Icons/A-icon.png" width="16" height="16" title="All In" />
-                                                    </td>
-
-                                                    <td>
-                                                        <div></div>
-                                                    </td>
                                                         <td style="text-align:right;">
                                                             {{item.CostTotalAmount | NumbersPipe:'N2'}}
                                                         </td>
@@ -410,13 +400,13 @@
                                                 </table>
                                             </div>
                                         </log-cell-template>
-                                    </ng-template>                                   
+                                    </ng-template>
                                 </log-column>
 
                                 <!-- Sale Quantity -->
                                 <log-column [width]="'70'" *ngIf="DataContext.IsAdhoc">
-                                    <log-header-template>
-                                        <ng-template let-item>
+                                    <ng-template let-item>
+                                        <log-header-template>
                                             <div class="GridHeaderCellTemplate">
                                                 <table>
                                                     <tr>
@@ -427,8 +417,8 @@
                                                     </tr>
                                                 </table>
                                             </div>
-                                        </ng-template>
-                                    </log-header-template>
+                                        </log-header-template>
+                                    </ng-template>                                    
 
                                     <ng-template let-item>
                                         <log-cell-template #logcelltemplate [IsEnabled]="item.IsEnabled_SaleQuantity">
@@ -445,8 +435,8 @@
 
                                 <!-- Sale Price -->
                                 <log-column [width]="'120'">
-                                    <log-header-template>
-                                        <ng-template let-item>
+                                    <ng-template let-item>
+                                        <log-header-template>
                                             <div class="GridHeaderCellTemplate">
                                                 <table>
                                                     <tr>
@@ -461,8 +451,8 @@
                                                     <img src="./Images/Info.png" style="width: 15px; height:15px; float: left;" [title]="'Quote.M.YouCanTypeSalePrice' | TextCodeTranslationPipe" />
                                                 </div>
                                             </div>
-                                        </ng-template>
-                                    </log-header-template>
+                                        </log-header-template>
+                                    </ng-template>
 
                                     <ng-template let-item>
                                         <log-cell-template #logcelltemplate [IsEnabled]="item.IsEnabled_SaleUnitPrice">
@@ -497,8 +487,8 @@
 
                                 <!-- Sale Amount -->
                                 <log-column [width]="'100'" *ngIf="DataContext.IsAdhoc">
-                                    <log-header-template>
-                                        <ng-template let-item>
+                                    <ng-template let-item>
+                                        <log-header-template>
                                             <div class="GridHeaderCellTemplate">
                                                 <table>
                                                     <tr>
@@ -509,8 +499,8 @@
                                                     </tr>
                                                 </table>
                                             </div>
-                                        </ng-template>
-                                    </log-header-template>
+                                        </log-header-template>
+                                    </ng-template>
 
                                     <ng-template let-item>
                                         <log-cell-template #logcelltemplate [IsEnabled]="item.IsEnabled_SaleTotalAmount">
@@ -537,8 +527,8 @@
 
                                 <!-- Sale Amount Local -->
                                 <log-column [width]="'100'" *ngIf="DataContext.IsAdhoc">
-                                    <log-header-template>
-                                        <ng-template let-item>
+                                    <ng-template let-item>
+                                        <log-header-template>
                                             <div class="GridHeaderCellTemplate">
                                                 <table>
                                                     <tr>
@@ -549,8 +539,8 @@
                                                     </tr>
                                                 </table>
                                             </div>
-                                        </ng-template>
-                                    </log-header-template>
+                                        </log-header-template>
+                                    </ng-template>
 
                                     <ng-template let-item>
                                         <log-cell-template #logcelltemplate [IsEnabled]="item.IsEnabled_SaleTotalAmountLocal">
@@ -581,8 +571,8 @@
 
                                 <!-- All in -->
                                 <log-column [width]="'60'" *ngIf="DataContext.IsAdhoc">
-                                    <log-header-template>
-                                        <ng-template let-item>
+                                    <ng-template let-item>
+                                        <log-header-template>
                                             <div class="GridHeaderCellTemplate">
                                                 <table>
                                                     <tr>
@@ -598,8 +588,8 @@
                                                     </tr>
                                                 </table>
                                             </div>
-                                        </ng-template>
-                                    </log-header-template>
+                                        </log-header-template>
+                                    </ng-template>
 
                                     <ng-template let-item>
                                         <log-cell-template #logcelltemplate [TabIndex]="-1">

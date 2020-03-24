@@ -897,49 +897,57 @@
 
                                                                                 <!-- Description -->
                                                                                 <log-column [header]="'Description'" [width]="'280'" [Alignment]="'left'">
-                                                                                    <log-cell-template template="let item" #logcelltemplate>
-                                                                                        <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
-                                                                                            <span>{{item.Description}}</span>
-                                                                                        </div>
-                                                                                        <div *ngIf="logcelltemplate.IsEditMode">
-                                                                                            <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Description'" [DataContext]="item"
-                                                                                                        [Text]="item.Description" [ObjectTableName]="'ShipmentPackageItem'" [HideColumns]="true"></LogTextBox>
-                                                                                        </div>
-                                                                                    </log-cell-template>
+                                                                                    <ng-template let-item>
+                                                                                        <log-cell-template #logcelltemplate>
+                                                                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                                                <span>{{item.Description}}</span>
+                                                                                            </div>
+                                                                                            <div *ngIf="logcelltemplate.IsEditMode">
+                                                                                                <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Description'" [DataContext]="item"
+                                                                                                            [Text]="item.Description" [ObjectTableName]="'ShipmentPackageItem'" [HideColumns]="true"></LogTextBox>
+                                                                                            </div>
+                                                                                        </log-cell-template>
+                                                                                    </ng-template>                                                                                    
                                                                                 </log-column>
 
                                                                                 <!-- Value -->
                                                                                 <log-column [header]="'Value'" [width]="'80'" [Alignment]="'left'">
-                                                                                    <log-cell-template template="let item" #logcelltemplate>
-                                                                                        <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
-                                                                                            <span>{{item.GoodsValue}}</span>
-                                                                                        </div>
-                                                                                        <div *ngIf="logcelltemplate.IsEditMode">
-                                                                                            <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'GoodsValue'" [DataContext]="item"
-                                                                                                        [Text]="item.GoodsValue" [ObjectTableName]="'ShipmentPackageItem'" [HideColumns]="true"></LogTextBox>
-                                                                                        </div>
-                                                                                    </log-cell-template>
+                                                                                    <ng-template let-item>
+                                                                                        <log-cell-template #logcelltemplate>
+                                                                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                                                <span>{{item.GoodsValue}}</span>
+                                                                                            </div>
+                                                                                            <div *ngIf="logcelltemplate.IsEditMode">
+                                                                                                <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'GoodsValue'" [DataContext]="item"
+                                                                                                            [Text]="item.GoodsValue" [ObjectTableName]="'ShipmentPackageItem'" [HideColumns]="true"></LogTextBox>
+                                                                                            </div>
+                                                                                        </log-cell-template>
+                                                                                    </ng-template>                                                                                    
                                                                                 </log-column>
 
                                                                                 <!-- Quantity -->
                                                                                 <log-column [header]="'Quantity'" [width]="'80'" [Alignment]="'left'">
-                                                                                    <log-cell-template template="let item" #logcelltemplate>
-                                                                                        <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
-                                                                                            <span>{{item.Quantity}}</span>
-                                                                                        </div>
-                                                                                        <div *ngIf="logcelltemplate.IsEditMode">
-                                                                                            <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Quantity'" [DataContext]="item"
-                                                                                                        [Text]="item.Quantity" [ObjectTableName]="'ShipmentPackageItem'" [HideColumns]="true"></LogTextBox>
-                                                                                        </div>
-                                                                                    </log-cell-template>
+                                                                                    <ng-template let-item>
+                                                                                        <log-cell-template #logcelltemplate>
+                                                                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                                                <span>{{item.Quantity}}</span>
+                                                                                            </div>
+                                                                                            <div *ngIf="logcelltemplate.IsEditMode">
+                                                                                                <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Quantity'" [DataContext]="item"
+                                                                                                            [Text]="item.Quantity" [ObjectTableName]="'ShipmentPackageItem'" [HideColumns]="true"></LogTextBox>
+                                                                                            </div>
+                                                                                        </log-cell-template>
+                                                                                    </ng-template>                                                                                    
                                                                                 </log-column>
 
                                                                                 <!-- Buttons -->
                                                                                 <log-column [width]="'30'" [Alignment]="'left'">
-                                                                                    <log-cell-template [IgnoreMods]="true" template="let item">
-                                                                                        <IconButton [Name]="'Delete'" [IsSmall]="true"
-                                                                                                    style="display: block; float: left; margin-left:3px; margin-top:4px;" (click)="item.RemoveLine(item)"></IconButton>
-                                                                                    </log-cell-template>
+                                                                                    <ng-template let-item>
+                                                                                        <log-cell-template [IgnoreMods]="true">
+                                                                                            <IconButton [Name]="'Delete'" [IsSmall]="true"
+                                                                                                        style="display: block; float: left; margin-left:3px; margin-top:4px;" (click)="item.RemoveLine(item)"></IconButton>
+                                                                                        </log-cell-template>
+                                                                                    </ng-template>
                                                                                 </log-column>
 
                                                                             </logitude-edit-grid>

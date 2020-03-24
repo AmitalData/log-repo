@@ -699,10 +699,17 @@
     <Content Include="Main Branch\2020\02 - 2020\Day 04 [Maheera] Add Storage Chargeable Days Gross Weight UOM.sql" />
     <Content Include="Main Branch\2020\02 - 2020\Day 06 [Maheera] Fill GrossWeightPerStorageDays Field in Shipment.sql" />
     <Content Include="Main Branch\2020\03 - 2020\Day 18 [Wesam] Delete LastRunByUserId Object Field From BIReport.sql" />
+    <Content Include="Main Branch\2020\03 - 2020\Day 23 [Mutaz] Add New Counters Definition To INVC Counter.sql" />
+    <Content Include="Main Branch\2020\03 - 2020\Day 23 [Mutaz] Add New Charge Type For Interest.sql" />
     <Content Include="Main Branch\2020\03 - 2020\Day 08 [Samar] Fill default containers on tariff settings.sql" />
     <Content Include="Main Branch\2020\03 - 2020\Day 08 [Abed]InSertRecordToQuoteTemplateTextCode%28VatType and VatPerc%29.sql" />
     <Content Include="Main Branch\2020\02 - 2020\Day 10 [Bisan] Update Storage free days in Cards table.sql" />
+
     <Content Include="Main Branch\2020\03 - 2020\Day 17 [Ayman]  New Container Type - High Cube.sql" />
+
+    <Content Include="Main Branch\2020\03 - 2020\Day 23 [Bisan] Fill default product values in AFC Tariff.sql" />
+    <Content Include="Main Branch\2020\03 - 2020\Day 19 [Bisan] Fill default values in TariffProducts table.sql" />
+
     <Content Include="Main Branch\2020\1 - 2020\Day 12 [Mutaz] Delete Constraint between SharedUserQueries and Query.sql" />
     <Content Include="Main Branch\2020\1 - 2020\Day 22 [Abed] update Help Center.sql" />
     <Content Include="Main Branch\2020\1 - 2020\Day 31 [Mutaz] Add Constraint UniqCode In Query.sql" />
