@@ -2683,6 +2683,12 @@ namespace MeatadataGeneratorTool
                     {
                         ErrorMessages = "";
                     }
+                    else
+                    {
+                        ErrorMessages = string.Join("\n\n", ErrorMessages.Split(new string[] { "\n\n" }, StringSplitOptions.None).Where(l => l.Contains("Cannot Find Foreign Entity") || l.Contains("Database Type is Required") || l.Contains("Database Schema is Required")).ToArray());
+                        ErrorMessages = string.Join("\n", ErrorMessages.Split('\n').Where(l => l.Contains("Cannot Find Foreign Entity") || l.Contains("Database Type is Required") || l.Contains("Database Schema is Required") || l.Contains("Field Errors:") || string.IsNullOrEmpty(l)).ToArray());
+                    }
+
                     foreach (var item in DataContractsObsList)
                     {
                         if (item.DCFieldsObsList != null && item.DCFieldsObsList.Where(a => a.IsKey == true).Count() == 0)
