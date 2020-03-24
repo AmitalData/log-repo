@@ -269,6 +269,7 @@
     <Content Include="CustomsModules\CustomsGeneralRequests\Components\SpecialActivityRequestComponent.html" />
     <Content Include="CustomsModules\CustomsPaymentOrder\Components\EditTabs\Tapag\Deficit\DeficitDecisionComponent.html" />
     <Content Include="CustomsModules\CustomsPaymentOrder\Components\EditTabs\Tapag\Deposit\BankAccountToRefundComponent.html" />
+    <Content Include="CustomsModules\CustomsReferant\Components\ReferantExceptionReason\AddExceptionReasonToUnifreightStatusComponent.html" />
     <Content Include="CustomsModules\CustomsReferant\Components\ReferantExceptionReason\AddEditReferantExceptionReasonComponent.html" />
     <Content Include="CustomsModules\CustomsRequests\Components\DeclarationRequests\CargoSealsQueryComponent.html" />
     <Content Include="CustomsModules\CustomsVehicle\Components\EditTabs\VehicleEditComponent.html" />
@@ -289,6 +290,7 @@
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\Classification\SInvoiceClassificationTabComponent.html" />
     <Content Include="CustomsModules\CustomsListTemplates\Components\CourierDeclarationWorkspaceListTemplate.html" />
     <TypeScriptCompile Include="CustomsModules\CustomsListTemplates\Components\DeclarationListTemplate.ts" />
+    <TypeScriptCompile Include="CustomsModules\CustomsReferant\Components\ReferantExceptionReason\AddExceptionReasonToUnifreightStatusComponent.ts" />
     <TypeScriptCompile Include="Customs\Components\FiltersMenu\DeclarationReferantDataFiltersMenuComponent.ts" />
     <Content Include="Customs\Components\FiltersMenu\DeclarationReferantDataFiltersMenuComponent.html" />
     <Content Include="Customs\Components\ListTemplates\CourierWorksheetListTemplate.html" />

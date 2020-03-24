@@ -282,6 +282,15 @@ export class AmitalGatewayUtil {
                 mapGeneralLOV.Run(myParam);
             }
                 break;
+            case "MapExceptionReasonCodeData": {
+                {
+                    this.SelectCustomsRequestMenu(MaintenanceMenu);
+
+                    let mapExceptionReasonCodeData = new MapExceptionReasonCodeData();
+                    mapExceptionReasonCodeData.Run(myParam);
+                }
+            }
+                break;
             case "MapPendingReasonCodeData":
                 {
                     this.SelectCustomsRequestMenu(MaintenanceMenu);
@@ -1236,6 +1245,28 @@ export class MapPendingReasonCodeData {
         };
         logWindow.ShowCloseButton = true;
         logWindow.Show('./CustomsModules/CustomsCourier/Components/CourierPendingReason/AddCourierPendingToUnifreightStatusComponent');
+        logWindow.WindowClosed.subscribe(($event1: any) => {
+            AmitalGatewayUtil.Instance.AmitalBackButtonClicked();
+        });
+
+    }
+
+}
+
+export class MapExceptionReasonCodeData {
+    public Run(unifreightMessage: UnifreightMessageM) {
+        let UnifreightEntityNumber = unifreightMessage.UnifreightEntityNumber;
+
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 500;
+        logWindow.Height = 400;
+        logWindow.Title = 'קשר סטטוס לסיבת חריג';
+        logWindow.WindowArgs = {
+            "UnifreightStatusCode": UnifreightEntityNumber,
+            "FromUnifreight": true,
+        };
+        logWindow.ShowCloseButton = true;
+        logWindow.Show('./CustomsModules/CustomsCourier/Components/CourierPendingReason/AddExceptionReasonToUnifreightStatusComponent');
         logWindow.WindowClosed.subscribe(($event1: any) => {
             AmitalGatewayUtil.Instance.AmitalBackButtonClicked();
         });
