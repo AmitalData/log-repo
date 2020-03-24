@@ -47,6 +47,8 @@ export class TariffValidator {
                 this.ValidateSurcharge();
                 this.FillContainersIDs();
                 this.ValidateContainers();
+            } else if (entityPM.TypeCode == "AFC") {
+                this.ValidateProduct();
             }
 
             this.ValidateTariffLines();
@@ -67,7 +69,13 @@ export class TariffValidator {
             this.UOMProps.push("Surcharge" + index + "UOM");
         }
     }
-    
+
+    ValidateProduct() {
+        if (AppTool.IsNullOrEmpty(this.entityPM.TariffProductId)) {
+            this.Errors.push("Product Field is Required");
+        }
+    }
+
     ValidateSurcharge() {
         var IdProps: string[] = [];
         var UOMProps: string[] = [];
