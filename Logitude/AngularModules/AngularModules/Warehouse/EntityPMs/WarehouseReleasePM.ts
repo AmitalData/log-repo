@@ -329,6 +329,16 @@ export class WarehouseReleasePM {
     public set Destination(newValue: string) { if (this.destination != newValue) { this.destination = newValue; this.MarkAsDirty("Destination"); } }
        
 	 
+    private truckerId: string;
+    public get TruckerId() { return this.truckerId; }
+    public set TruckerId(newValue: string) { if (this.truckerId != newValue) { this.truckerId = newValue; this.MarkAsDirty("TruckerId"); } }
+       
+	 
+    private truckerReference: string;
+    public get TruckerReference() { return this.truckerReference; }
+    public set TruckerReference(newValue: string) { if (this.truckerReference != newValue) { this.truckerReference = newValue; this.MarkAsDirty("TruckerReference"); } }
+       
+	 
 
     public OldEntityPM: WarehouseReleasePM;
 		

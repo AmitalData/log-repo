@@ -300,6 +300,22 @@ export class WarehouseReleaseRoutingsTabComponent extends BaseComponent {
     }
 
 
+    get TruckerReference() { return this.EntityPM.TruckerReference; }
+    set TruckerReference(newValue: string) {
+        if (this.EntityPM.TruckerReference != newValue) {
+            this.EntityPM.TruckerReference = newValue;
+
+        }
+    }
+    get TruckerId() { return this.EntityPM.TruckerId; }
+    set TruckerId(newValue: string) {
+        if (this.EntityPM.TruckerId != newValue) {
+            this.EntityPM.TruckerId = newValue;
+
+        }
+    }
+
+
     public FromPortList: PortList = null;
     get FromPortId() { return this.EntityPM.FromPortId; }
     set FromPortId(value: string) {
