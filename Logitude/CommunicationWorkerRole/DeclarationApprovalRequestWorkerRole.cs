@@ -79,7 +79,7 @@ namespace CommunicationWorkerRole
         }
 
         string Token;
-        public override async void AsyncRun()
+        public override void Run()
         {
             try
             {
@@ -95,8 +95,9 @@ namespace CommunicationWorkerRole
                     string AuthURI = URI + "APIAuthentication";
                     var serializedObject = JsonConvert.SerializeObject(APICredentialsParam);
                     var content = new StringContent(serializedObject, Encoding.UTF8, "application/json");
-                    var result = await client.PostAsync(AuthURI, content);
-                    var tempUser = result.Content.ReadAsStringAsync().Result;
+                    var result = client.PostAsync(AuthURI, content);
+                    result.Wait();
+                    var tempUser = result.Result.Content.ReadAsStringAsync().Result;
                     ApiCredential User = JsonConvert.DeserializeObject<ApiCredential>(tempUser);
                     Token = User.Token;
                 }
@@ -191,8 +192,9 @@ namespace CommunicationWorkerRole
                                     var msg = "Start Sending Declaration Approval Request To Importer Tenant " + DateTime.Now;
                                     APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "I", response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(ApprovalRequestPM), null, null, "");
                                     var content = new StringContent(serializedObject, Encoding.UTF8, "application/json");
-                                    var result = await client.PutAsync(URI + "DeclarationApprovalRequest", content);
-                                    if (result.StatusCode == System.Net.HttpStatusCode.OK)
+                                    var result = client.PutAsync(URI + "DeclarationApprovalRequest", content);
+                                    result.Wait();
+                                    if (result.Result.StatusCode == System.Net.HttpStatusCode.OK)
                                     {
                                         // VDK Logic
                                         AddVDKExternalTaskQueue(ApprovalRequestPM, tenant);
@@ -203,7 +205,7 @@ namespace CommunicationWorkerRole
                                     }
                                     else //if (result.StatusCode == System.Net.HttpStatusCode.BadRequest)
                                     {
-                                        APIException EXC = JsonConvert.DeserializeObject<APIException>(result.Content.ReadAsStringAsync().Result);
+                                        APIException EXC = JsonConvert.DeserializeObject<APIException>(result.Result.Content.ReadAsStringAsync().Result);
                                         if (EXC != null)
                                         {
                                             var Failmsg = EXC.ErrorType + " Fail To Send Declaration Approval Request To Importer Tenant " + DateTime.Now;

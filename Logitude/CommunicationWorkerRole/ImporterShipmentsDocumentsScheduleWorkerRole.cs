@@ -90,7 +90,7 @@ namespace CommunicationWorkerRole
                 return false;
             }
         }
-        public override async void AsyncRun()
+        public override void Run()
         {
             APICredentialsParameters APICredentialsParam = new APICredentialsParameters()
             {
