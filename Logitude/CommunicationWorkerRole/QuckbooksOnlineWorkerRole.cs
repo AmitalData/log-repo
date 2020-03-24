@@ -414,6 +414,11 @@ namespace CommunicationWorkerRole
 
             if (type == "APInvoice" || type == "VendorCredit")
             {
+                if (Id == null)
+                {
+                    Id = waitingCommLog.EntityId;
+                }
+
                 APInvoiceRepository repository = new APInvoiceRepository(tenant);
                 APInvoice invoice = repository.GetSingleAPInvoice(Id, tenant);
                 if (invoice != null)
