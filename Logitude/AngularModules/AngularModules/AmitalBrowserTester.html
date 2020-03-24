@@ -583,7 +583,9 @@
 
             //=·; =
                 if (_JavascriptGateway.LastRequestFromAngular &&
-                _JavascriptGateway.LastRequestFromAngular.MessageID == "ShowCFIUFILEFromDeclarationReferantData") {
+                    (_JavascriptGateway.LastRequestFromAngular.MessageID == "ShowCFIUFILEFromDeclarationReferantData"
+                    || _JavascriptGateway.LastRequestFromAngular.MessageID == "ShowCFIFILEMFUStatusScreen")
+                ){
                     if (!_JavascriptGateway.LastRequestFromAngular.UnifreightMessage.Request) {
                         _JavascriptGateway.LastRequestFromAngular.UnifreightMessage.Request = [];
                     }
