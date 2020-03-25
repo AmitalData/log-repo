@@ -217,34 +217,6 @@
     <Constraints
       Nullable="true" />
   </Column>
-  <Column
-    Name="SharedLogisticsContactLastLogin_ContactId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="SharedLogisticsContactLastLogin_CardId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="SharedLogisticsContactLastLogin_PartnerTypeId"
-    Type="varchar"
-    Size="2">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="SharedLogisticsContactLastLogin_Via"
-    Type="varchar"
-    Size="20">
-    <Constraints
-      Nullable="true" />
-  </Column>
   <Relation
     ForeignKeyColumn="ImageDetailId"
     ReferencedTable="ImageDetails"
@@ -259,11 +231,6 @@
     ForeignKeyColumn="IndexColor"
     ReferencedTable="ColorIndexs"
     ReferencedColumn="IndexNumber"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="SharedLogisticsContactLastLogin_ContactId,SharedLogisticsContactLastLogin_CardId,SharedLogisticsContactLastLogin_PartnerTypeId,SharedLogisticsContactLastLogin_Via"
-    ReferencedTable="SharedLogisticsContactLastLogins"
-    ReferencedColumn="ContactId,CardId,PartnerTypeId,Via"
     ReferencedTableSchema="dbo" />
   <Index
     Columns="Tenant,Email" />

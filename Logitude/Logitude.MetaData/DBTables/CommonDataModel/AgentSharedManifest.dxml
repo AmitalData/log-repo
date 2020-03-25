@@ -19,6 +19,39 @@
       Nullable="false" />
   </Column>
   <Column
+    Name="AgentReference"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Master"
+    Type="varchar"
+    Size="20">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="UpdateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="CreateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="UpdatedByUserId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
     Name="ManifestXML"
     Type="nvarchar"
     Size="-1">
@@ -33,9 +66,30 @@
       Nullable="true" />
   </Column>
   <Column
+    Name="ShipmentLevelCode"
+    Type="varchar"
+    Size="1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="ShipmentTypeId"
     Type="varchar"
     Size="4">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="TransportModeId"
+    Type="char"
+    Size="1"
+    DefaultValue="''">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="GrossWeight"
+    Type="float">
     <Constraints
       Nullable="true" />
   </Column>
@@ -46,11 +100,31 @@
       Nullable="true" />
   </Column>
   <Column
+    Name="TEU"
+    Type="float">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PackagesQuantity"
+    Type="int">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="AgentId"
     Type="varchar"
     Size="15">
     <Constraints
       Nullable="true" />
+  </Column>
+  <Column
+    Name="DirectionId"
+    Type="char"
+    Size="1"
+    DefaultValue="''">
+    <Constraints
+      Nullable="false" />
   </Column>
   <Column
     Name="FromPortId"
@@ -67,74 +141,6 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="CancelledBySenderAgent"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="Master"
-    Type="varchar"
-    Size="20">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="AgentReference"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="CreateDate"
-    Type="datetime">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="UpdateDate"
-    Type="datetime">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="UpdatedByUserId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="DirectionId"
-    Type="char"
-    Size="1"
-    DefaultValue="''">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="TransportModeId"
-    Type="char"
-    Size="1"
-    DefaultValue="''">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="PackagesQuantity"
-    Type="int">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="ShipmentlevelCode"
-    Type="varchar"
-    Size="1">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
     Name="StatusCode"
     Type="varchar"
     Size="4">
@@ -142,17 +148,21 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="GrossWeight"
-    Type="float">
+    Name="CancelledBySenderAgent"
+    Type="bit">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
-  <Column
-    Name="TEU"
-    Type="float">
-    <Constraints
-      Nullable="true" />
-  </Column>
+  <Relation
+    ForeignKeyColumn="UpdatedByUserId"
+    ReferencedTable="Users"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ShipmentLevelCode"
+    ReferencedTable="ShipmentLevels"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="ShipmentTypeId"
     ReferencedTable="ShipmentTypes"
@@ -172,16 +182,6 @@
     ForeignKeyColumn="ToPortId"
     ReferencedTable="Ports"
     ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="UpdatedByUserId"
-    ReferencedTable="Users"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="ShipmentlevelCode"
-    ReferencedTable="ShipmentLevels"
-    ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="StatusCode"

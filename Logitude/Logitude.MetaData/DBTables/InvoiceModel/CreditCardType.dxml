@@ -13,12 +13,6 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="Tenant"
-    Type="int">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
     Name="Code"
     Type="varchar"
     Size="2">
@@ -38,6 +32,12 @@
     Size="1000">
     <Constraints
       Nullable="true" />
+  </Column>
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
   <Column
     Name="InActive"

@@ -13,6 +13,13 @@
       Nullable="false" />
   </Column>
   <Column
+    Name="CarrierId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
     Name="Tenant"
     Type="int">
     <Constraints
@@ -59,19 +66,17 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="CarrierId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
     Name="TransportModeCode"
     Type="char"
     Size="1">
     <Constraints
       Nullable="false" />
   </Column>
+  <Relation
+    ForeignKeyColumn="CarrierId"
+    ReferencedTable="Cards"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="CreatedByUserId"
     ReferencedTable="Users"
@@ -80,11 +85,6 @@
   <Relation
     ForeignKeyColumn="UpdatedByUserId"
     ReferencedTable="Users"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="CarrierId"
-    ReferencedTable="Cards"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation

@@ -3,7 +3,7 @@
   Name="DWObjectFields"
   Schema="dbo"
   DBType="Main"
-  Module="BusinessInfrastructure">
+  Module="Infrastructure">
   <Column
     Name="Id"
     Type="varchar"
@@ -54,13 +54,13 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="MinLength"
+    Name="MaxLength"
     Type="int">
     <Constraints
       Nullable="false" />
   </Column>
   <Column
-    Name="MaxLength"
+    Name="MinLength"
     Type="int">
     <Constraints
       Nullable="false" />
@@ -97,17 +97,17 @@
       Nullable="false" />
   </Column>
   <Column
+    Name="LOVAdditionalColumns"
+    Type="varchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="HideTree"
     Type="bit">
     <Constraints
       Nullable="false" />
-  </Column>
-  <Column
-    Name="HelpText"
-    Type="varchar"
-    Size="2000">
-    <Constraints
-      Nullable="true" />
   </Column>
   <Column
     Name="CannotFilter"
@@ -116,9 +116,9 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="LOVAdditionalColumns"
+    Name="HelpText"
     Type="varchar"
-    Size="1000">
+    Size="2000">
     <Constraints
       Nullable="true" />
   </Column>

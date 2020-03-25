@@ -3,7 +3,7 @@
   Name="DWSubQueries"
   Schema="dbo"
   DBType="Main"
-  Module="BusinessInfrastructure">
+  Module="Infrastructure">
   <Column
     Name="Id"
     Type="varchar"

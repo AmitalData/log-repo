@@ -100,22 +100,16 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="LastRunDate"
-    Type="datetime">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="LastRunByUserId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
     Name="FactTableName"
     Type="varchar"
     Size="30">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="LastRunId"
+    Type="nvarchar"
+    Size="128">
     <Constraints
       Nullable="false" />
   </Column>
@@ -145,8 +139,8 @@
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
-    ForeignKeyColumn="LastRunByUserId"
-    ReferencedTable="Users"
+    ForeignKeyColumn="LastRunId"
+    ReferencedTable="LastRunDetails"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
 </Table>

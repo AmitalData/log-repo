@@ -3,7 +3,7 @@
   Name="DWCategories"
   Schema="dbo"
   DBType="Main"
-  Module="BusinessInfrastructure">
+  Module="Infrastructure">
   <Column
     Name="Code"
     Type="varchar"

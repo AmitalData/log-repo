@@ -13,9 +13,20 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="SearchFields"
-    Type="nvarchar"
-    Size="1000">
+    Name="TenantNumber"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="StartDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="EndDate"
+    Type="datetime">
     <Constraints
       Nullable="true" />
   </Column>
@@ -32,14 +43,28 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="StartDate"
-    Type="datetime">
+    Name="IsCancelled"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Notes"
+    Type="nvarchar"
+    Size="250">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
-    Name="EndDate"
-    Type="datetime">
+    Name="SearchFields"
+    Type="nvarchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="TotalPrice"
+    Type="float">
     <Constraints
       Nullable="true" />
   </Column>
@@ -68,31 +93,6 @@
     Size="15">
     <Constraints
       Nullable="false" />
-  </Column>
-  <Column
-    Name="IsCancelled"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="Notes"
-    Type="nvarchar"
-    Size="250">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="TenantNumber"
-    Type="int">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="TotalPrice"
-    Type="float">
-    <Constraints
-      Nullable="true" />
   </Column>
   <Column
     Name="StockType"
