@@ -804,6 +804,7 @@
     <Content Include="Usefull Scripts\Fill Data\ShipmentComputedFields\[Ayman] Last Pickup.sql" />
     <Content Include="Usefull Scripts\Fill Data\ShipmentComputedFields\[Ayman] Number of Deliveries.sql" />
     <Content Include="Usefull Scripts\Fill Data\ShipmentComputedFields\[Ayman] Operationally Closed.sql" />
+    <Content Include="Usefull Scripts\Fill Data\[Ayman] FirstOperationalCloseDate.sql" />
     <Content Include="Usefull Scripts\Fill Data\[Islam] Copy incoterms from tenant zero to all tenants.sql" />
     <Content Include="Usefull Scripts\Fill Data\[Ayman] Fill ShippingLines INTTRARegistrationNotes.sql" />
     <Content Include="Usefull Scripts\Fill Data\[Maheera] Fill Cc To From Fields of  Activities.sql" />

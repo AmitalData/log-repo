@@ -121,7 +121,7 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
         this.ShowFixedFilters.emit(this.showStaticFilters);
     }
 
-    public LoadBIReportData() {
+    public LoadBIReportData(IsBIReportUpdated = false) {
         if (this.DWQueryId != null) {
             this._InfrastructureDomainService.GetByBIReportId(this.EntityId, this.DWQueryId).subscribe(myResult => {
                 if (!myResult.HasError) {
@@ -131,7 +131,14 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
                     this.EntityPM = result.BIReportPM;
                     this.BIReportName = this.EntityPM != null ? this.EntityPM.Name : "";
                     // this.BuildColumns(result);
-                    this.BuildRows(result);
+                    if (IsBIReportUpdated) {
+                        this._BIReportPMService.update(this.EntityPM).subscribe(response => {
+                            this.BuildRows(result);
+                        });
+                    }
+                    else {
+                        this.BuildRows(result);
+                    }
                 }
             });
         }
@@ -645,8 +652,7 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
                     else {
                         this.SelectedFiltersDataSource = [];
                     }
-                    this.LoadBIReportData();
-                    this._BIReportPMService.update(this.EntityPM).subscribe(response => { });
+                    this.LoadBIReportData(true);
                 }
             });
         });
