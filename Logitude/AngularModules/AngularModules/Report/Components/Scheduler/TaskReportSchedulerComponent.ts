@@ -73,7 +73,7 @@ export class TaskReportSchedulerComponent implements OnInit {
         var logWindow = new LogitudeWindow();
         logWindow.Height = 820;
         logWindow.Width = 1060;
-        logWindow.Title = "Report Scheduler Details";
+        logWindow.Title = this.ReportList.Name + " Scheduler Details";
         logWindow.DataContext = new TaskReportSchedulerItemClass(newItem, this, true);
         logWindow.WindowArgs = windowArgs;
         logWindow.Show('./Report/Components/Scheduler/AddEditReportSchedulerComponent');
