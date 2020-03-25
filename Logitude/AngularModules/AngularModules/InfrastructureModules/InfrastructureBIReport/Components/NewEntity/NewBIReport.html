@@ -86,7 +86,7 @@
                 </tr>
 
                 <!-- FactTableName -->
-                <tr class="FormFieldRow">
+                <tr class="FormFieldRow" *ngIf="HasDefineFactTableFeature">
                     <td>
                         <LogLabel [ObjectFieldName]="'FactTableName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                     </td>
@@ -167,7 +167,7 @@
                 </tr>
 
                 <!-- FactTableName -->
-                <tr class="FormFieldRow">
+                <tr class="FormFieldRow" *ngIf="HasDefineFactTableFeature">
                     <td>
                         <LogLabel [ObjectFieldName]="'FactTableName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                     </td>

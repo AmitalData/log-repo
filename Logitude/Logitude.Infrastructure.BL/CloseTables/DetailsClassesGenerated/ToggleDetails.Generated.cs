@@ -97,6 +97,13 @@ namespace Logitude.Infrastructure.BL
                 Name = "Run Report on Secondary DB", 
                 SearchFields = "RRS,Run Report on Secondary DB", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Name = "Define Fact Table", 
+                Code = "DFT", 
+                SearchFields = "DFT,Define Fact Table", 
+			});
 			
             return all;
        }
