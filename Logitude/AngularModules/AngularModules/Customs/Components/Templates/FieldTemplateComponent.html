@@ -287,7 +287,8 @@
                                     <li (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); ShowCFIFILEMMoveToQueueScreen();">
                                         <span>העברה לתור</span>
                                     </li>
-                                    <li (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose();  ">
+
+                                    <li  (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose();  ShowGFUUSTS();">
                                         <span>הזנת סטטוס</span>
                                     </li>
                                     <li (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); ">
@@ -316,7 +317,7 @@
                             <span>{{'כן'}}</span>
                         </div>
                         <div *ngIf="!Entity['IsClosed']">
-                            <span>{{'לא'}}</span>
+                            <span>{{'לם'}}</span>
                         </div>
                     </div>
                     <div *ngIf="!IsHeaderScreenTemplate">

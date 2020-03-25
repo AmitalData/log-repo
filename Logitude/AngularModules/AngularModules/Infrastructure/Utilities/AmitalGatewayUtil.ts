@@ -1266,7 +1266,7 @@ export class MapExceptionReasonCodeData {
             "FromUnifreight": true,
         };
         logWindow.ShowCloseButton = true;
-        logWindow.Show('./CustomsModules/CustomsCourier/Components/CourierPendingReason/AddExceptionReasonToUnifreightStatusComponent');
+        logWindow.Show('./CustomsModules/CustomsReferant/Components/ReferantExceptionReason/AddExceptionReasonToUnifreightStatusComponent');
         logWindow.WindowClosed.subscribe(($event1: any) => {
             AmitalGatewayUtil.Instance.AmitalBackButtonClicked();
         });
