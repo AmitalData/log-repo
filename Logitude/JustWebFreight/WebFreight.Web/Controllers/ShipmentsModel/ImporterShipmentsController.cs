@@ -903,11 +903,14 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
             {
                 entityPM.ApproveDateTime = entityAM.ApproveDateTime;
             }
-            if (entityAM.IsOperationalClosed == false && entityAM.CustomsClearanceDate != null && entityAM.StatusCode.ToLower() == "ccd" && entityPM.IsRequestedDocuments)
+            if (entityAM.IsOperationalClosed == false && entityAM.CustomsClearanceDate != null && entityAM.StatusCode.ToLower() == "ccd")
             {
                 entityPM.IsShipmentComputedFieldChange = true;
                 entityPM.IsRequestedDocuments = false;
                 entityPM.RequestedDocumentsCount = 0;
+                entityPM.MissingDocumentsCount = 0;
+                entityPM.IsMissingDocument = false;
+
 
             }
             entityPM.IsImporterApprovalRequired = entityAM.IsImporterApprovalRequired;
