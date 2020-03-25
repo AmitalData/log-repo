@@ -81,6 +81,7 @@
     <None Include="DBTables\Tariff.dxml" />
     <None Include="DBTables\TariffLine.dxml" />
     <None Include="DBTables\TariffLinesContainersPrice.dxml" />
+    <None Include="DBTables\TariffProduct.dxml" />
     <None Include="DBTables\TariffSetting.dxml" />
     <None Include="DBTables\TariffSurchargesUpdate.dxml" />
     <None Include="DBTables\TariffSurchargesUpdateMethod.dxml" />

@@ -92,6 +92,7 @@
     <None Include="DBTables\BusinessProcessQueue.dxml" />
     <None Include="DBTables\BusinessRole.dxml" />
     <None Include="DBTables\FeatureToggle.dxml" />
+    <None Include="DBTables\LastRunDetail.dxml" />
     <None Include="DBTables\LBPTeamMember.dxml" />
     <None Include="DBTables\PriceStep.dxml" />
     <None Include="DBTables\SharedLogisticsSetting.dxml" />

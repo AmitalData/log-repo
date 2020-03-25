@@ -79,7 +79,7 @@ namespace Logitude.LXMLFixer.Models
 
                         foreach (var dxmlColumn in dxmlTableDefinition.Columns)
                         {
-                            ColumnDefinition lxmlColumn = lxmlTableDefinition.Columns.Where(c => c.Name == dxmlColumn.Name).FirstOrDefault();
+                            ColumnDefinition lxmlColumn = lxmlTableDefinition.Columns.Where(c => c.Name.ToLower() == dxmlColumn.Name.ToLower()).FirstOrDefault();
 
                             if (lxmlColumn == null)
                             {
@@ -163,7 +163,7 @@ namespace Logitude.LXMLFixer.Models
 
                         foreach(var lxmlColumn in lxmlTableDefinition.Columns)
                         {
-                            ColumnDefinition dxmlColumn = dxmlTableDefinition.Columns.Where(c => c.Name == lxmlColumn.Name).FirstOrDefault();
+                            ColumnDefinition dxmlColumn = dxmlTableDefinition.Columns.Where(c => c.Name.ToLower() == lxmlColumn.Name.ToLower()).FirstOrDefault();
 
                             if(dxmlColumn == null)
                             {
@@ -270,7 +270,7 @@ namespace Logitude.LXMLFixer.Models
 
                         foreach (var dxmlColumn in dxmlTableDefinition.Columns)
                         {
-                            ColumnDefinition lxmlColumn = lxmlTableDefinition.Columns.Where(c => c.Name == dxmlColumn.Name).FirstOrDefault();
+                            ColumnDefinition lxmlColumn = lxmlTableDefinition.Columns.Where(c => c.Name.ToLower() == dxmlColumn.Name.ToLower()).FirstOrDefault();
 
                             if (lxmlColumn == null)
                             {
@@ -639,7 +639,7 @@ namespace Logitude.LXMLFixer.Models
 
                         foreach (var lxmlColumn in lxmlTableDefinition.Columns)
                         {
-                            ColumnDefinition dxmlColumn = dxmlTableDefinition.Columns.Where(c => c.Name == lxmlColumn.Name).FirstOrDefault();
+                            ColumnDefinition dxmlColumn = dxmlTableDefinition.Columns.Where(c => c.Name.ToLower() == lxmlColumn.Name.ToLower()).FirstOrDefault();
 
                             if (dxmlColumn == null)
                             {

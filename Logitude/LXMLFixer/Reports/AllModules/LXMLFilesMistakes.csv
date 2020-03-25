@@ -1,236 +1,52 @@
 DXML File,LXML File,Element Type,DXML Element Name,LXML Element Name,Attribute Type,DXML Attribute Value,LXML Attribute Value
-BankDeposit.dxml,BankDeposit.lxml,Column,DepositCurrencyId,DepositCurrencyId,Type,varchar,char
 FullAccountingSetting.dxml,FullAccountingSetting.lxml,Relation,ExternalReconciliationDefault,NULL,Foreign Key Column,ExternalReconciliationDefault,NULL
 BIReport.dxml,BIReport.lxml,Relation,DWQueryId,NULL,Foreign Key Column,DWQueryId,NULL
-AccountingPartner.dxml,AccountingPartner.lxml,Column,NULL,Card,Name,NULL,Card
-AccountingSetting.dxml,AccountingSetting.lxml,Column,NULL,VATableTempCard,Name,NULL,VATableTempCard
-AccountingSetting.dxml,AccountingSetting.lxml,Column,NULL,VATExemptTempCard,Name,NULL,VATExemptTempCard
+BIReport.dxml,BIReport.lxml,Relation,LastRunId,LastRunId,Referenced Table Schema,dbo,
+LastRunDetail.dxml,LastRunDetail.lxml,Table,LastRunDetails,LastRunDetails,DBType,Main,
+LastRunDetail.dxml,LastRunDetail.lxml,Table,LastRunDetails,LastRunDetails,Schema,dbo,
 Address.dxml,Address.lxml,Relation,AddressTypeId,NULL,Foreign Key Column,AddressTypeId,NULL
-Agent.dxml,Agent.lxml,Column,NULL,Card,Name,NULL,Card
 AgentSharedDocument.dxml,AgentSharedDocument.lxml,Relation,StatusCode,NULL,Foreign Key Column,StatusCode,NULL
-AgentSharedManifest.dxml,AgentSharedManifest.lxml,Column,UpdatedByUserId,UpdatedByUserId,Type,varchar,datetime
-AgentSharedManifest.dxml,AgentSharedManifest.lxml,Column,ShipmentLevelCode,NULL,Name,ShipmentLevelCode,NULL
-AgentSharedManifest.dxml,AgentSharedManifest.lxml,Column,ShipmentLevelCode,NULL,Foreign Key,TRUE,NULL
-AgentSharedManifest.dxml,AgentSharedManifest.lxml,Column,TransportModeId,TransportModeId,Type,char,varchar
-AgentSharedManifest.dxml,AgentSharedManifest.lxml,Column,DirectionId,DirectionId,Type,char,varchar
 AgentSharedManifest.dxml,AgentSharedManifest.lxml,Relation,ShipmentLevelCode,NULL,Foreign Key Column,ShipmentLevelCode,NULL
 AgentSharedManifest.dxml,AgentSharedManifest.lxml,Relation,StatusCode,NULL,Foreign Key Column,StatusCode,NULL
-Airline.dxml,Airline.lxml,Column,Prefix,Prefix,Type,char,varchar
-Airline.dxml,Airline.lxml,Column,NULL,Card,Name,NULL,Card
-Card.dxml,Card.lxml,Column,PartnerTypeId,PartnerTypeId,Type,char,varchar
 Card.dxml,Card.lxml,Relation,ImageDetailId,NULL,Foreign Key Column,ImageDetailId,NULL
-Card.dxml,Card.lxml,Column,NULL,PartnerTypeName,Name,NULL,PartnerTypeName
-Card.dxml,Card.lxml,Column,NULL,AccountingCard,Name,NULL,AccountingCard
-Card.dxml,Card.lxml,Column,NULL,CustomAgent,Name,NULL,CustomAgent
-Card.dxml,Card.lxml,Column,NULL,ShippingAgent,Name,NULL,ShippingAgent
-Card.dxml,Card.lxml,Column,NULL,Customer,Name,NULL,Customer
-Card.dxml,Card.lxml,Column,NULL,Agent,Name,NULL,Agent
-Card.dxml,Card.lxml,Column,NULL,Vendor,Name,NULL,Vendor
-Card.dxml,Card.lxml,Column,NULL,AccountManagerUserId,Name,NULL,AccountManagerUserId
 CardContactAdditionalService.dxml,CardContactAdditionalService.lxml,Relation,CardContactId,NULL,Foreign Key Column,CardContactId,NULL
 CardContactProduct.dxml,CardContactProduct.lxml,Relation,CardContactId,NULL,Foreign Key Column,CardContactId,NULL
-CarrierArea.dxml,CarrierArea.lxml,Column,Name,Name,Type,varchar,nvarchar
-CarrierArea.dxml,CarrierArea.lxml,Column,TransportModeCode,TransportModeCode,Type,char,varchar
-CarrierAreasPort.dxml,CarrierAreasPort.lxml,Column,Name,Name,Type,varchar,nvarchar
-ChargesType.dxml,ChargesType.lxml,Column,NULL,ReceivableCreditGLAcountNumber,Name,NULL,ReceivableCreditGLAcountNumber
-ChargesType.dxml,ChargesType.lxml,Column,NULL,RecCreditGLAcountLocalName,Name,NULL,RecCreditGLAcountLocalName
-ChargesType.dxml,ChargesType.lxml,Column,NULL,PayableDebitGLAcountNumber,Name,NULL,PayableDebitGLAcountNumber
-ChargesType.dxml,ChargesType.lxml,Column,NULL,PayDebitGLAcountLocalName,Name,NULL,PayDebitGLAcountLocalName
 CommunicationLog.dxml,CommunicationLog.lxml,Relation,DocumentOutId,NULL,Foreign Key Column,DocumentOutId,NULL
 CommunicationLog.dxml,CommunicationLog.lxml,Relation,DocumentId,NULL,Foreign Key Column,DocumentId,NULL
 CommunicationLog.dxml,CommunicationLog.lxml,Relation,ResponseDocumentId,NULL,Foreign Key Column,ResponseDocumentId,NULL
-Contact.dxml,Contact.lxml,Column,SharedLogisticsContactLastLogin_ContactId,NULL,Name,SharedLogisticsContactLastLogin_ContactId,NULL
-Contact.dxml,Contact.lxml,Column,SharedLogisticsContactLastLogin_ContactId,NULL,Foreign Key,TRUE,NULL
-Contact.dxml,Contact.lxml,Column,SharedLogisticsContactLastLogin_CardId,NULL,Name,SharedLogisticsContactLastLogin_CardId,NULL
-Contact.dxml,Contact.lxml,Column,SharedLogisticsContactLastLogin_CardId,NULL,Foreign Key,TRUE,NULL
-Contact.dxml,Contact.lxml,Column,SharedLogisticsContactLastLogin_PartnerTypeId,NULL,Name,SharedLogisticsContactLastLogin_PartnerTypeId,NULL
-Contact.dxml,Contact.lxml,Column,SharedLogisticsContactLastLogin_PartnerTypeId,NULL,Foreign Key,TRUE,NULL
-Contact.dxml,Contact.lxml,Column,SharedLogisticsContactLastLogin_Via,NULL,Name,SharedLogisticsContactLastLogin_Via,NULL
-Contact.dxml,Contact.lxml,Column,SharedLogisticsContactLastLogin_Via,NULL,Foreign Key,TRUE,NULL
 Contact.dxml,Contact.lxml,Relation,ImageDetailId,NULL,Foreign Key Column,ImageDetailId,NULL
 Contact.dxml,Contact.lxml,Relation,IndexColor,NULL,Foreign Key Column,IndexColor,NULL
-Contact.dxml,Contact.lxml,Relation,SharedLogisticsContactLastLogin_ContactId/SharedLogisticsContactLastLogin_CardId/SharedLogisticsContactLastLogin_PartnerTypeId/SharedLogisticsContactLastLogin_Via,NULL,Foreign Key Column,SharedLogisticsContactLastLogin_ContactId/SharedLogisticsContactLastLogin_CardId/SharedLogisticsContactLastLogin_PartnerTypeId/SharedLogisticsContactLastLogin_Via,NULL
-Contact.dxml,Contact.lxml,Column,NULL,Roles,Name,NULL,Roles
-Contact.dxml,Contact.lxml,Column,NULL,Name,Name,NULL,Name
-Country.dxml,Country.lxml,Column,Code,Code,Type,char,varchar
-CustomAgent.dxml,CustomAgent.lxml,Column,NULL,Card,Name,NULL,Card
-Customer.dxml,Customer.lxml,Column,NULL,Card,Name,NULL,Card
-CustomerProduct.dxml,CustomerProduct.lxml,Column,PotentialTEU,PotentialTEU,Precision,18,0
-CustomerTenantAccessCard.dxml,CustomerTenantAccessCard.lxml,Column,NULL,StatusType,Name,NULL,StatusType
-CustomerTenantAccessCardsBatch.dxml,CustomerTenantAccessCardsBatch.lxml,Column,FromDatetime,NULL,Name,FromDatetime,NULL
-CustomerTenantAccessCardsBatch.dxml,CustomerTenantAccessCardsBatch.lxml,Column,ToDatetime,NULL,Name,ToDatetime,NULL
-CustomerTenantAccessRequest.dxml,CustomerTenantAccessRequest.lxml,Column,Id,Id,Type,varchar,
-CustomsShipper.dxml,CustomsShipper.lxml,Column,SearchFields,SearchFields,Type,varchar,nvarchar
-Department.dxml,Department.lxml,Column,AutomaticLastUpdateDate,NULL,Name,AutomaticLastUpdateDate,NULL
-DocumentFilingBackupBatch.dxml,DocumentFilingBackupBatch.lxml,Column,FromDatetime,NULL,Name,FromDatetime,NULL
-DocumentFilingBackupBatch.dxml,DocumentFilingBackupBatch.lxml,Column,ToDatetime,NULL,Name,ToDatetime,NULL
-DocumentsFiling.dxml,DocumentsFiling.lxml,Column,StatusCode,StatusCode,Type,char,varchar
 DocumentsFiling.dxml,DocumentsFiling.lxml,Relation,DocumentId,NULL,Foreign Key Column,DocumentId,NULL
 DocumentsFiling.dxml,DocumentsFiling.lxml,Relation,StatusCode,NULL,Foreign Key Column,StatusCode,NULL
-DocumentsFiling.dxml,DocumentsFiling.lxml,Column,NULL,Folder,Name,NULL,Folder
-DocumentType.dxml,DocumentType.lxml,Column,CountryCode,CountryCode,Type,char,varchar
 DocumentType.dxml,DocumentType.lxml,Relation,DocumentsDataProviderCode,NULL,Foreign Key Column,DocumentsDataProviderCode,NULL
-DocumentType.dxml,DocumentType.lxml,Column,NULL,FollowUpTypeId,Name,NULL,FollowUpTypeId
 DocumentTypeCustomField.dxml,DocumentTypeCustomField.lxml,Relation,FieldDataTypeCode,NULL,Foreign Key Column,FieldDataTypeCode,NULL
-DocumentTypeTemplate.dxml,DocumentTypeTemplate.lxml,Column,CountryCode,CountryCode,Type,char,varchar
 FilingInbox.dxml,FilingInbox.lxml,Relation,BodyDocumentId,NULL,Foreign Key Column,BodyDocumentId,NULL
 FilingInboxAttachment.dxml,FilingInboxAttachment.lxml,Relation,DocumentId,NULL,Foreign Key Column,DocumentId,NULL
 HybridPartner.dxml,HybridPartner.lxml,Relation,LogoId,NULL,Foreign Key Column,LogoId,NULL
 HybridPartner.dxml,HybridPartner.lxml,Relation,SmallLogoId,NULL,Foreign Key Column,SmallLogoId,NULL
-MAWBStack.dxml,MAWBStack.lxml,Column,NULL,Airline,Name,NULL,Airline
-Participant.dxml,Participant.lxml,Column,NULL,Card,Name,NULL,Card
-PartnerType.dxml,PartnerType.lxml,Column,Id,Id,Type,char,varchar
-Port.dxml,Port.lxml,Column,Code,Code,Type,char,varchar
-ProductType.dxml,ProductType.lxml,Column,Name,Name,Type,varchar,nvarchar
 Report.dxml,Report.lxml,Relation,ReportGroupId,NULL,Foreign Key Column,ReportGroupId,NULL
 Report.dxml,Report.lxml,Relation,FeatureId,NULL,Foreign Key Column,FeatureId,NULL
 Report.dxml,Report.lxml,Relation,ReportDocumentId,NULL,Foreign Key Column,ReportDocumentId,NULL
 ReportsTemplatesVersion.dxml,ReportsTemplatesVersion.lxml,Relation,ReportDocumentId,NULL,Foreign Key Column,ReportDocumentId,NULL
 Restriction.dxml,Restriction.lxml,Relation,ContactTenantId,NULL,Foreign Key Column,ContactTenantId,NULL
 Role.dxml,Role.lxml,Relation,RoleTypeCode,NULL,Foreign Key Column,RoleTypeCode,NULL
-ShippingAgent.dxml,ShippingAgent.lxml,Column,NULL,ShippingLines,Name,NULL,ShippingLines
-ShippingAgent.dxml,ShippingAgent.lxml,Column,NULL,Card,Name,NULL,Card
-ShippingLine.dxml,ShippingLine.lxml,Column,NULL,Card,Name,NULL,Card
-Tenant.dxml,Tenant.lxml,Column,DefaultSLAId,DefaultSLAId,Type,varchar,bit
-Tenant.dxml,Tenant.lxml,Relation,ExportOtherPrepaidCollectId,NULL,Foreign Key Column,ExportOtherPrepaidCollectId,NULL
-Tenant.dxml,Tenant.lxml,Relation,ImportFreightPrepaidCollectId,NULL,Foreign Key Column,ImportFreightPrepaidCollectId,NULL
-Tenant.dxml,Tenant.lxml,Relation,ImportOtherPrepaidCollectId,NULL,Foreign Key Column,ImportOtherPrepaidCollectId,NULL
-Tenant.dxml,Tenant.lxml,Relation,MasterExportFreightPrepaidCollectId,NULL,Foreign Key Column,MasterExportFreightPrepaidCollectId,NULL
-Tenant.dxml,Tenant.lxml,Relation,MasterExportOtherPrepaidCollectId,NULL,Foreign Key Column,MasterExportOtherPrepaidCollectId,NULL
-Tenant.dxml,Tenant.lxml,Relation,MasterImportFreightPrepaidCollectId,NULL,Foreign Key Column,MasterImportFreightPrepaidCollectId,NULL
-Tenant.dxml,Tenant.lxml,Relation,MasterImportOtherPrepaidCollectId,NULL,Foreign Key Column,MasterImportOtherPrepaidCollectId,NULL
-Tenant.dxml,Tenant.lxml,Column,NULL,AllowAgentInShipmentCustomersLOV,Name,NULL,AllowAgentInShipmentCustomersLOV
-Tenant.dxml,Tenant.lxml,Column,NULL,IsDocumentsArchive,Name,NULL,IsDocumentsArchive
-Tenant.dxml,Tenant.lxml,Column,NULL,CustomerTenantShareImportFile,Name,NULL,CustomerTenantShareImportFile
-Tenant.dxml,Tenant.lxml,Column,NULL,LogBoxAdminUserId,Name,NULL,LogBoxAdminUserId
-Tenant.dxml,Tenant.lxml,Column,NULL,StockTypeCode,Name,NULL,StockTypeCode
-Tenant.dxml,Tenant.lxml,Column,NULL,DocumentShareAsDefault,Name,NULL,DocumentShareAsDefault
-Tenant.dxml,Tenant.lxml,Column,NULL,AutoArchiveOnInvoice,Name,NULL,AutoArchiveOnInvoice
 TermsofUseSignature.dxml,TermsofUseSignature.lxml,Relation,TermsofUseVersion,NULL,Foreign Key Column,TermsofUseVersion,NULL
-Trucker.dxml,Trucker.lxml,Column,NULL,Card,Name,NULL,Card
-User.dxml,User.lxml,Column,NULL,Contact,Name,NULL,Contact
-User.dxml,User.lxml,Column,NULL,UserLastLogin,Name,NULL,UserLastLogin
-Vendor.dxml,Vendor.lxml,Column,NULL,Card,Name,NULL,Card
-Warehouse.dxml,Warehouse.lxml,Column,NULL,Card,Name,NULL,Card
 AnalyzeQueue.dxml,AnalyzeQueue.lxml,Relation,Status,NULL,Foreign Key Column,Status,NULL
-AnalyzeQueue.dxml,AnalyzeQueue.lxml,Column,NULL,AnalyzeQueueStatus,Name,NULL,AnalyzeQueueStatus
-AnalyzeQueue.dxml,AnalyzeQueue.lxml,Column,NULL,TenantManagement,Name,NULL,TenantManagement
-ApiCredintials.dxml,ApiCredintials.lxml,Column,NULL,SearchFields,Name,NULL,SearchFields
-BatchServicesDefinition.dxml,BatchServicesDefinition.lxml,Column,QueueDefinitionCode,NULL,Name,QueueDefinitionCode,NULL
-BluesnapTransaction.dxml,BluesnapTransaction.lxml,Column,Tenant,NULL,Name,Tenant,NULL
-TenantManagement.dxml,TenantManagement.lxml,Column,BluesnapContractQTY,NULL,Name,BluesnapContractQTY,NULL
-TenantManagement.dxml,TenantManagement.lxml,Column,BluesnapCRMContractQTY,NULL,Name,BluesnapCRMContractQTY,NULL
-TenantManagement.dxml,TenantManagement.lxml,Column,BluesnapEAWBContractQTY,NULL,Name,BluesnapEAWBContractQTY,NULL
-TenantManagement.dxml,TenantManagement.lxml,Column,BluesnapEAWBSContractQTY,NULL,Name,BluesnapEAWBSContractQTY,NULL
-TenantManagement.dxml,TenantManagement.lxml,Column,BluesnapOneTimeContractQTY,NULL,Name,BluesnapOneTimeContractQTY,NULL
-TenantManagement.dxml,TenantManagement.lxml,Column,BluesnapInttraStockContractQTY,NULL,Name,BluesnapInttraStockContractQTY,NULL
 TenantManagement.dxml,TenantManagement.lxml,Relation,Id,NULL,Foreign Key Column,Id,NULL
-TenantManagement.dxml,TenantManagement.lxml,Column,NULL,BluesnapContractQTYs,Name,NULL,BluesnapContractQTYs
-TenantManagement.dxml,TenantManagement.lxml,Column,NULL,BluesnapCRMContractQTYs,Name,NULL,BluesnapCRMContractQTYs
-TenantManagement.dxml,TenantManagement.lxml,Column,NULL,BluesnapEAWBContractQTYs,Name,NULL,BluesnapEAWBContractQTYs
-TenantManagement.dxml,TenantManagement.lxml,Column,NULL,BluesnapEAWBSContractQTYs,Name,NULL,BluesnapEAWBSContractQTYs
-TenantManagement.dxml,TenantManagement.lxml,Column,NULL,BluesnapOneTimeContractQTYs,Name,NULL,BluesnapOneTimeContractQTYs
-TenantManagement.dxml,TenantManagement.lxml,Column,NULL,GlobalTenant,Name,NULL,GlobalTenant
-TenantManagement.dxml,TenantManagement.lxml,Column,NULL,BluesnapInttraStockContractQTYs,Name,NULL,BluesnapInttraStockContractQTYs
-APILogs.dxml,APILogs.lxml,Column,Subject,Subject,Type,varchar,nvarchar
-APILogsData.dxml,APILogsData.lxml,Relation,Id,NULL,Foreign Key Column,Id,NULL
-BusinessHour.dxml,BusinessHour.lxml,Column,MondayFromHour,MondayFromHour,Nullable,False,True
-BusinessHour.dxml,BusinessHour.lxml,Column,TuesdayFromHour,TuesdayFromHour,Nullable,False,True
-BusinessHour.dxml,BusinessHour.lxml,Column,WednesdayFromHour,WednesdayFromHour,Nullable,False,True
-BusinessHour.dxml,BusinessHour.lxml,Column,ThursdayFromHour,ThursdayFromHour,Nullable,False,True
-BusinessHour.dxml,BusinessHour.lxml,Column,FridayFromHour,FridayFromHour,Nullable,False,True
-BusinessHour.dxml,BusinessHour.lxml,Column,SaturdayFromHour,SaturdayFromHour,Nullable,False,True
-BusinessHour.dxml,BusinessHour.lxml,Column,SundayFromHour,SundayFromHour,Nullable,False,True
-BusinessHour.dxml,BusinessHour.lxml,Column,MondayToHour,MondayToHour,Nullable,False,True
-BusinessHour.dxml,BusinessHour.lxml,Column,TuesdayToHour,TuesdayToHour,Nullable,False,True
-BusinessHour.dxml,BusinessHour.lxml,Column,WednesdayToHour,WednesdayToHour,Nullable,False,True
-BusinessHour.dxml,BusinessHour.lxml,Column,ThursdayToHour,ThursdayToHour,Nullable,False,True
-BusinessHour.dxml,BusinessHour.lxml,Column,FridayToHour,FridayToHour,Nullable,False,True
-BusinessHour.dxml,BusinessHour.lxml,Column,SaturdayToHour,SaturdayToHour,Nullable,False,True
-BusinessHour.dxml,BusinessHour.lxml,Column,SundayToHour,SundayToHour,Nullable,False,True
-BusinessHoursHoliday.dxml,BusinessHoursHoliday.lxml,Column,NULL,BusinessHour,Name,NULL,BusinessHour
-CounterDefinition.dxml,CounterDefinition.lxml,Column,Suffix,NULL,Name,Suffix,NULL
 CounterDefinition.dxml,CounterDefinition.lxml,Relation,CounterId,NULL,Foreign Key Column,CounterId,NULL
-Direction.dxml,Direction.lxml,Column,Id,Id,Type,char,varchar
-DWCategories.dxml,DWCategories.lxml,Column,Index,NULL,Name,Index,NULL
-DWCategories.dxml,DWCategories.lxml,Column,NULL,SearchFields,Name,NULL,SearchFields
-DWObjectField.dxml,DWObjectField.lxml,Column,LOVAdditionalColumns,NULL,Name,LOVAdditionalColumns,NULL
-DWObjectField.dxml,DWObjectField.lxml,Column,IsCustom,NULL,Name,IsCustom,NULL
-DWObjectField.dxml,DWObjectField.lxml,Column,NULL,Category1,Name,NULL,Category1
-DWObjectField.dxml,DWObjectField.lxml,Column,NULL,Category2,Name,NULL,Category2
-DWObjectTable.dxml,DWObjectTable.lxml,Column,DefaultFilterBy,NULL,Name,DefaultFilterBy,NULL
 FollowUp.dxml,FollowUp.lxml,Relation,InternalDocumentId,NULL,Foreign Key Column,InternalDocumentId,NULL
-FollowUp.dxml,FollowUp.lxml,Column,NULL,IsNew,Name,NULL,IsNew
-FollowUp.dxml,FollowUp.lxml,Column,NULL,DoneNote,Name,NULL,DoneNote
-FollowUp.dxml,FollowUp.lxml,Column,NULL,DoneDateTime,Name,NULL,DoneDateTime
-FollowUp.dxml,FollowUp.lxml,Column,NULL,Done,Name,NULL,Done
-InboundEmailLine.dxml,InboundEmailLine.lxml,Column,NULL,InboundEmail,Name,NULL,InboundEmail
-MoveType.dxml,MoveType.lxml,Column,TransportModeId,TransportModeId,Type,char,varchar
-ObjectField.dxml,ObjectField.lxml,Column,FieldName,FieldName,Type,varchar,nvarchar
-ObjectField.dxml,ObjectField.lxml,Column,FullNameTextCodeCode,NULL,Name,FullNameTextCodeCode,NULL
-ObjectField.dxml,ObjectField.lxml,Column,HelpTextCodeCode,NULL,Name,HelpTextCodeCode,NULL
-ObjectField.dxml,ObjectField.lxml,Column,ListTextCodeCode,NULL,Name,ListTextCodeCode,NULL
-ObjectField.dxml,ObjectField.lxml,Column,ShortNameTextCodeCode,NULL,Name,ShortNameTextCodeCode,NULL
-ObjectField.dxml,ObjectField.lxml,Column,EnableFullscreenTextBox,NULL,Name,EnableFullscreenTextBox,NULL
 ObjectField.dxml,ObjectField.lxml,Relation,DataTypeCode,NULL,Foreign Key Column,DataTypeCode,NULL
 ObjectField.dxml,ObjectField.lxml,Relation,CustomerPermissionTypeCode,NULL,Foreign Key Column,CustomerPermissionTypeCode,NULL
 ObjectField.dxml,ObjectField.lxml,Relation,AgentPermissionTypeCode,NULL,Foreign Key Column,AgentPermissionTypeCode,NULL
-ObjectTable.dxml,ObjectTable.lxml,Column,HeaderScreenCode,NULL,Name,HeaderScreenCode,NULL
-ObjectTable.dxml,ObjectTable.lxml,Column,DescriptionTextCodeCode,NULL,Name,DescriptionTextCodeCode,NULL
-ObjectTable.dxml,ObjectTable.lxml,Column,NewButtonTextCodeCode,NULL,Name,NewButtonTextCodeCode,NULL
 ObjectTable.dxml,ObjectTable.lxml,Relation,HeaderScreenId,NULL,Foreign Key Column,HeaderScreenId,NULL
 ObjectTable.dxml,ObjectTable.lxml,Relation,MainTipCode,NULL,Foreign Key Column,MainTipCode,NULL
 ObjectTable.dxml,ObjectTable.lxml,Relation,ObjectTableTypeCode,NULL,Foreign Key Column,ObjectTableTypeCode,NULL
 QueueMessageMoreDetails.dxml,QueueMessageMoreDetails.lxml,Relation,QueueDefinitionCode,NULL,Foreign Key Column,QueueDefinitionCode,NULL
-SchedulerProcedure.dxml,SchedulerProcedure.lxml,Column,Code,Code,Type,varchar,nvarchar
-SchedulerProcedure.dxml,SchedulerProcedure.lxml,Column,Name,Name,Type,varchar,nvarchar
-SchedulerProcedure.dxml,SchedulerProcedure.lxml,Column,SearchFields,SearchFields,Type,varchar,nvarchar
-SchedulerProcedure.dxml,SchedulerProcedure.lxml,Column,Description,Description,Type,varchar,nvarchar
-TaskSchedulerHistory.dxml,TaskSchedulerHistory.lxml,Column,LogDocumentId,NULL,Name,LogDocumentId,NULL
-TaskSchedulerHistory.dxml,TaskSchedulerHistory.lxml,Column,LogDocumentId,NULL,Foreign Key,TRUE,NULL
 TaskSchedulerHistory.dxml,TaskSchedulerHistory.lxml,Relation,LogDocumentId,NULL,Foreign Key Column,LogDocumentId,NULL
-TaskSchedulerHistory.dxml,TaskSchedulerHistory.lxml,Column,NULL,Duration,Name,NULL,Duration
-TasksScheduler.dxml,TasksScheduler.lxml,Column,LastRunEndTimeUTC,NULL,Name,LastRunEndTimeUTC,NULL
-TasksScheduler.dxml,TasksScheduler.lxml,Column,Retries,NULL,Name,Retries,NULL
-TasksScheduler.dxml,TasksScheduler.lxml,Column,NULL,Duration,Name,NULL,Duration
-TasksScheduler.dxml,TasksScheduler.lxml,Column,NULL,LastEndStartTimeUTC,Name,NULL,LastEndStartTimeUTC
 TextCode.dxml,TextCode.lxml,Relation,TextCodeTypeCode,NULL,Foreign Key Column,TextCodeTypeCode,NULL
-TransportMode.dxml,TransportMode.lxml,Column,Id,Id,Type,char,varchar
-VolumeUnit.dxml,VolumeUnit.lxml,Column,NULL,Tenants,Name,NULL,Tenants
-APPayment.dxml,APPayment.lxml,Column,NULL,SATApprovalDate,Name,NULL,SATApprovalDate
-ARInvoice.dxml,ARInvoice.lxml,Column,DateForInterest,NULL,Name,DateForInterest,NULL
-ARInvoice.dxml,ARInvoice.lxml,Column,NULL,CancelledARInvoices,Name,NULL,CancelledARInvoices
-ARInvoice.dxml,ARInvoice.lxml,Column,NULL,CreditedARInvoices,Name,NULL,CreditedARInvoices
-ARInvoice.dxml,ARInvoice.lxml,Column,NULL,DateForVATInterest,Name,NULL,DateForVATInterest
-ARInvoiceLine.dxml,ARInvoiceLine.lxml,Column,PrepaidCollectId,NULL,Name,PrepaidCollectId,NULL
-ARInvoiceLine.dxml,ARInvoiceLine.lxml,Column,PrepaidCollectId,NULL,Foreign Key,TRUE,NULL
-ARInvoiceLine.dxml,ARInvoiceLine.lxml,Relation,PrepaidCollectId,NULL,Foreign Key Column,PrepaidCollectId,NULL
 ARInvoiceLine.dxml,ARInvoiceLine.lxml,Relation,LineActionCode,NULL,Foreign Key Column,LineActionCode,NULL
-ARPayment.dxml,ARPayment.lxml,Column,Field1,NULL,Name,Field1,NULL
-ARPayment.dxml,ARPayment.lxml,Column,Field2,NULL,Name,Field2,NULL
-ARPayment.dxml,ARPayment.lxml,Column,Field3,NULL,Name,Field3,NULL
-ARPayment.dxml,ARPayment.lxml,Column,Field4,NULL,Name,Field4,NULL
-ARPayment.dxml,ARPayment.lxml,Column,Field5,NULL,Name,Field5,NULL
-ARPayment.dxml,ARPayment.lxml,Column,Field6,NULL,Name,Field6,NULL
-ARPayment.dxml,ARPayment.lxml,Column,Field7,NULL,Name,Field7,NULL
-ARPayment.dxml,ARPayment.lxml,Column,Field8,NULL,Name,Field8,NULL
-ARPayment.dxml,ARPayment.lxml,Column,Field9,NULL,Name,Field9,NULL
-ARPayment.dxml,ARPayment.lxml,Column,Field10,NULL,Name,Field10,NULL
-BankAccountLite.dxml,BankAccountLite.lxml,Column,EnglishName,EnglishName,Type,varchar,nvarchar
-CreditCardType.dxml,CreditCardType.lxml,Column,BankAccountId,BankAccountId,Type,varchar,nvarchar
-Quote.dxml,Quote.lxml,Column,DirectionId,DirectionId,Type,char,varchar
-Quote.dxml,Quote.lxml,Column,TransportModeId,TransportModeId,Type,char,varchar
-Quote.dxml,Quote.lxml,Column,QuoteHTMLDocumentId,NULL,Name,QuoteHTMLDocumentId,NULL
-Quote.dxml,Quote.lxml,Column,QuoteHTMLDocumentId,NULL,Foreign Key,TRUE,NULL
 Quote.dxml,Quote.lxml,Relation,QuoteHTMLDocumentId,NULL,Foreign Key Column,QuoteHTMLDocumentId,NULL
-Quote.dxml,Quote.lxml,Column,NULL,ShipmentType,Name,NULL,ShipmentType
-Quote.dxml,Quote.lxml,Column,NULL,FromPort,Name,NULL,FromPort
-Quote.dxml,Quote.lxml,Column,NULL,ToPort,Name,NULL,ToPort
-Quote.dxml,Quote.lxml,Column,NULL,CreatedByUser,Name,NULL,CreatedByUser
-Quote.dxml,Quote.lxml,Column,NULL,ConvertToLCL,Name,NULL,ConvertToLCL
-Quote.dxml,Quote.lxml,Column,NULL,ConvertToFCL,Name,NULL,ConvertToFCL
-QuotePackage.dxml,QuotePackage.lxml,Column,NULL,Quote,Name,NULL,Quote
-QuoteRating.dxml,QuoteRating.lxml,Column,Name,Name,Type,varchar,nvarchar
+QuoteCharge.dxml,QuoteCharge.lxml,Column,IsCostAllIn,NULL,Name,IsCostAllIn,NULL
 QuoteTemplate.dxml,QuoteTemplate.lxml,Relation,HeaderDocId,NULL,Foreign Key Column,HeaderDocId,NULL
 QuoteTemplate.dxml,QuoteTemplate.lxml,Relation,FooterDocId,NULL,Foreign Key Column,FooterDocId,NULL
 QuoteTemplateSection.dxml,QuoteTemplateSection.lxml,Relation,SectionDocId,NULL,Foreign Key Column,SectionDocId,NULL
@@ -240,83 +56,18 @@ QuoteTemplateSetting.dxml,QuoteTemplateSetting.lxml,Relation,PageHeaderArea3Imag
 QuoteTemplateSetting.dxml,QuoteTemplateSetting.lxml,Relation,PageFooterArea1ImageDetailId,NULL,Foreign Key Column,PageFooterArea1ImageDetailId,NULL
 QuoteTemplateSetting.dxml,QuoteTemplateSetting.lxml,Relation,PageFooterArea2ImageDetailId,NULL,Foreign Key Column,PageFooterArea2ImageDetailId,NULL
 QuoteTemplateSetting.dxml,QuoteTemplateSetting.lxml,Relation,PageFooterArea3ImageDetailId,NULL,Foreign Key Column,PageFooterArea3ImageDetailId,NULL
-HarmonizeCode.dxml,HarmonizeCode.lxml,Column,SearchFields,SearchFields,Size,4000,1000
-InsideShipmentPackage.dxml,InsideShipmentPackage.lxml,Column,Make,Make,Type,varchar,nvarchar
-InsideShipmentPackage.dxml,InsideShipmentPackage.lxml,Column,Model,Model,Type,varchar,nvarchar
-InsideShipmentPackage.dxml,InsideShipmentPackage.lxml,Column,Year,Year,Type,varchar,nvarchar
-InsideShipmentPackage.dxml,InsideShipmentPackage.lxml,Column,Color,Color,Type,varchar,nvarchar
-InsideShipmentPackage.dxml,InsideShipmentPackage.lxml,Column,ChassisNumber,ChassisNumber,Type,varchar,nvarchar
-InsideShipmentPackage.dxml,InsideShipmentPackage.lxml,Column,RegistrationNumber,RegistrationNumber,Type,varchar,nvarchar
-MessagingStock.dxml,MessagingStock.lxml,Column,StockType,NULL,Name,StockType,NULL
-Shipment.dxml,Shipment.lxml,Column,DirectionId,DirectionId,Type,char,varchar
-Shipment.dxml,Shipment.lxml,Column,TransportModeId,TransportModeId,Type,char,varchar
-Shipment.dxml,Shipment.lxml,Column,OperationalClosedByUserId,NULL,Name,OperationalClosedByUserId,NULL
-Shipment.dxml,Shipment.lxml,Column,OperationalClosedByUserId,NULL,Foreign Key,TRUE,NULL
-Shipment.dxml,Shipment.lxml,Column,MasterShipmentDataId,NULL,Name,MasterShipmentDataId,NULL
-Shipment.dxml,Shipment.lxml,Column,PreCarriageTransportModeId,PreCarriageTransportModeId,Type,char,varchar
-Shipment.dxml,Shipment.lxml,Column,OnCarriageTransportModeId,OnCarriageTransportModeId,Type,char,varchar
-Shipment.dxml,Shipment.lxml,Column,ComputedShipmentNumber,NULL,Name,ComputedShipmentNumber,NULL
-Shipment.dxml,Shipment.lxml,Relation,CountryForStatisticsId,NULL,Foreign Key Column,CountryForStatisticsId,NULL
 Shipment.dxml,Shipment.lxml,Relation,CarrierLastStatusCode,NULL,Foreign Key Column,CarrierLastStatusCode,NULL
-Shipment.dxml,Shipment.lxml,Relation,OperationalClosedByUserId,NULL,Foreign Key Column,OperationalClosedByUserId,NULL
-Shipment.dxml,Shipment.lxml,Relation,FreightPrepaidCollectId,NULL,Foreign Key Column,FreightPrepaidCollectId,NULL
-Shipment.dxml,Shipment.lxml,Relation,OtherPrepaidCollectId,NULL,Foreign Key Column,OtherPrepaidCollectId,NULL
-Shipment.dxml,Shipment.lxml,Relation,VolumeUnitCode,NULL,Foreign Key Column,VolumeUnitCode,NULL
 Shipment.dxml,Shipment.lxml,Relation,NextLegCode,NULL,Foreign Key Column,NextLegCode,NULL
 Shipment.dxml,Shipment.lxml,Relation,FHLStatusCode,NULL,Foreign Key Column,FHLStatusCode,NULL
 Shipment.dxml,Shipment.lxml,Relation,CargonautFHLStatusCode,NULL,Foreign Key Column,CargonautFHLStatusCode,NULL
 Shipment.dxml,Shipment.lxml,Relation,INTTRASIStatusCode,NULL,Foreign Key Column,INTTRASIStatusCode,NULL
-Shipment.dxml,Shipment.lxml,Column,NULL,CustomsTransmissionsStatusCode,Name,NULL,CustomsTransmissionsStatusCode
-Shipment.dxml,Shipment.lxml,Column,NULL,CustomsTransmissionsStatusError,Name,NULL,CustomsTransmissionsStatusError
-Shipment.dxml,Shipment.lxml,Column,NULL,CustomsTransmissionsStatusDate,Name,NULL,CustomsTransmissionsStatusDate
-Shipment.dxml,Shipment.lxml,Column,NULL,CurrentUserId,Name,NULL,CurrentUserId
-Shipment.dxml,Shipment.lxml,Column,NULL,BasketId,Name,NULL,BasketId
-Shipment.dxml,Shipment.lxml,Column,NULL,FromPort,Name,NULL,FromPort
-Shipment.dxml,Shipment.lxml,Column,NULL,ToPort,Name,NULL,ToPort
-Shipment.dxml,Shipment.lxml,Column,NULL,ShipmentType,Name,NULL,ShipmentType
-ShipmentComputedFields.dxml,ShipmentComputedFields.lxml,Column,IsMissingDocuments,NULL,Name,IsMissingDocuments,NULL
-ShipmentComputedFields.dxml,ShipmentComputedFields.lxml,Column,DocumentsSearchFields,NULL,Name,DocumentsSearchFields,NULL
-ShipmentComputedFields.dxml,ShipmentComputedFields.lxml,Column,LastDocumentDateTime,NULL,Name,LastDocumentDateTime,NULL
-ShipmentComputedFields.dxml,ShipmentComputedFields.lxml,Column,MissingDocumentsCount,NULL,Name,MissingDocumentsCount,NULL
-ShipmentComputedFields.dxml,ShipmentComputedFields.lxml,Column,MissingDocumentsNames,NULL,Name,MissingDocumentsNames,NULL
-ShipmentComputedFields.dxml,ShipmentComputedFields.lxml,Column,IsRequestedDocuments,NULL,Name,IsRequestedDocuments,NULL
-ShipmentComputedFields.dxml,ShipmentComputedFields.lxml,Column,RequestedDocumentsCount,NULL,Name,RequestedDocumentsCount,NULL
-ShipmentComputedFields.dxml,ShipmentComputedFields.lxml,Column,NumberOfHouses,NULL,Name,NumberOfHouses,NULL
-ShipmentComputedFields.dxml,ShipmentComputedFields.lxml,Column,IsDigitalSignRequired,NULL,Name,IsDigitalSignRequired,NULL
-ShipmentComputedFields.dxml,ShipmentComputedFields.lxml,Column,IsDepositionRequired,NULL,Name,IsDepositionRequired,NULL
-ShipmentComputedFields.dxml,ShipmentComputedFields.lxml,Column,Commodity,NULL,Name,Commodity,NULL
-ShipmentComputedFields.dxml,ShipmentComputedFields.lxml,Column,OperationallyClosedByUserName,OperationallyClosedByUserName,Type,varchar,nvarchar
-ShipmentComputedFields.dxml,ShipmentComputedFields.lxml,Relation,Id,NULL,Foreign Key Column,Id,NULL
-ShipmentPackage.dxml,ShipmentPackage.lxml,Column,RoutingIds,NULL,Name,RoutingIds,NULL
-ShipmentPackage.dxml,ShipmentPackage.lxml,Column,Make,Make,Type,varchar,nvarchar
-ShipmentPackage.dxml,ShipmentPackage.lxml,Column,Model,Model,Type,varchar,nvarchar
-ShipmentPackage.dxml,ShipmentPackage.lxml,Column,Year,Year,Type,varchar,nvarchar
-ShipmentPackage.dxml,ShipmentPackage.lxml,Column,Color,Color,Type,varchar,nvarchar
-ShipmentPackage.dxml,ShipmentPackage.lxml,Column,ChassisNumber,ChassisNumber,Type,varchar,nvarchar
-ShipmentPackage.dxml,ShipmentPackage.lxml,Column,RegistrationNumber,RegistrationNumber,Type,varchar,nvarchar
 ShipmentPackage.dxml,ShipmentPackage.lxml,Relation,LastStatusCode,NULL,Foreign Key Column,LastStatusCode,NULL
 ShipmentPayable.dxml,ShipmentPayable.lxml,Relation,ShipmentPayableLineStatusCode,NULL,Foreign Key Column,ShipmentPayableLineStatusCode,NULL
 ShipmentPayable.dxml,ShipmentPayable.lxml,Relation,ShipmentPayableAmountTypeCode,NULL,Foreign Key Column,ShipmentPayableAmountTypeCode,NULL
-ShipmentPayable.dxml,ShipmentPayable.lxml,Column,NULL,QuoteCostMinPrice,Name,NULL,QuoteCostMinPrice
-ShipmentPayable.dxml,ShipmentPayable.lxml,Column,NULL,ChildShipmentPayables,Name,NULL,ChildShipmentPayables
 ShipmentPickUpDelivery.dxml,ShipmentPickUpDelivery.lxml,Relation,PickUpDeliveryTypeCode,NULL,Foreign Key Column,PickUpDeliveryTypeCode,NULL
 ShipmentPickUpDelivery.dxml,ShipmentPickUpDelivery.lxml,Relation,PickUpDeliveryFromTypeCode,NULL,Foreign Key Column,PickUpDeliveryFromTypeCode,NULL
 ShipmentPickUpDelivery.dxml,ShipmentPickUpDelivery.lxml,Relation,PickUpDeliveryToTypeCode,NULL,Foreign Key Column,PickUpDeliveryToTypeCode,NULL
-ShipmentPickUpDeliveryPackage.dxml,ShipmentPickUpDeliveryPackage.lxml,Column,Make,Make,Type,varchar,nvarchar
-ShipmentPickUpDeliveryPackage.dxml,ShipmentPickUpDeliveryPackage.lxml,Column,Model,Model,Type,varchar,nvarchar
-ShipmentPickUpDeliveryPackage.dxml,ShipmentPickUpDeliveryPackage.lxml,Column,Year,Year,Type,varchar,nvarchar
-ShipmentPickUpDeliveryPackage.dxml,ShipmentPickUpDeliveryPackage.lxml,Column,Color,Color,Type,varchar,nvarchar
-ShipmentPickUpDeliveryPackage.dxml,ShipmentPickUpDeliveryPackage.lxml,Column,ChassisNumber,ChassisNumber,Type,varchar,nvarchar
-ShipmentPickUpDeliveryPackage.dxml,ShipmentPickUpDeliveryPackage.lxml,Column,RegistrationNumber,RegistrationNumber,Type,varchar,nvarchar
-ShipmentReceivable.dxml,ShipmentReceivable.lxml,Column,ShipmentReceivableLineStatusCode,ShipmentReceivableLineStatusCode,Type,char,varchar
 ShipmentReceivable.dxml,ShipmentReceivable.lxml,Relation,ShipmentReceivableLineStatusCode,NULL,Foreign Key Column,ShipmentReceivableLineStatusCode,NULL
-ShipmentReceivable.dxml,ShipmentReceivable.lxml,Column,NULL,QuoteSaleMinPrice,Name,NULL,QuoteSaleMinPrice
-ShipmentReceivable.dxml,ShipmentReceivable.lxml,Column,NULL,ChildShipmentReceivables,Name,NULL,ChildShipmentReceivables
-ShipmentType.dxml,ShipmentType.lxml,Column,TransportModeId,TransportModeId,Type,char,varchar
-BatchServicesLog.dxml,BatchServicesLog.lxml,Column,CPU,CPU,Precision,18,0
-BatchServicesLog.dxml,BatchServicesLog.lxml,Column,CPU,CPU,Scale,2,0
-TariffType.dxml,TariffType.lxml,Column,TransportModeCode,TransportModeCode,Type,char,varchar
-WarehouseEntry.dxml,WarehouseEntry.lxml,Column,TransportModeId,TransportModeId,Type,char,varchar
-WarehouseEntry.dxml,WarehouseEntry.lxml,Column,DirectionId,DirectionId,Type,char,varchar
-WarehouseRelease.dxml,WarehouseRelease.lxml,Column,TransportModeId,TransportModeId,Type,char,varchar
-WarehouseRelease.dxml,WarehouseRelease.lxml,Column,DirectionId,DirectionId,Type,char,varchar
+Tariff.dxml,Tariff.lxml,Relation,TariffProductId,TariffProductId,Referenced Table Schema,dbo,
+TariffProduct.dxml,TariffProduct.lxml,Table,TariffProducts,TariffProducts,DBType,Main,
+TariffProduct.dxml,TariffProduct.lxml,Table,TariffProducts,TariffProducts,Schema,dbo,
