@@ -1,0 +1,216 @@
+import { AppTool, DateTool } from '../../Infrastructure/Tools';
+import { ShipmentPM } from '../EntityPMs/ShipmentPM';
+import { ShipmentDeliveryPM } from '../EntityPMs/ShipmentDeliveryPM';
+import { Validator } from '../../Infrastructure/Validators/Validator';
+import { TextCodeTranslator } from '../../Infrastructure/Utilities/TextCodeTranslator';
+import { RoutingHelper } from '../Tools';
+
+export class ShipmentDeliveryValidator {
+    private errors: string[] = [];
+    private entityPM: ShipmentDeliveryPM;
+    private ShipmentPM: ShipmentPM;
+    private ObjectTableName: string = "ShipmentPickUpDelivery";
+    private message: string;
+    constructor() {
+        this.message = TextCodeTranslator.Translate("General.M.FieldIsRequired");
+    }
+
+    Validate = (entityPM: ShipmentDeliveryPM, shipmentPM: ShipmentPM): any[] => {
+        this.errors = [];
+        this.entityPM = entityPM;
+        this.ShipmentPM = shipmentPM;
+        this.ValidateItem();
+        return this.errors;
+    }
+
+    private ValidateItem() {
+
+        Validator.TryValidateObject(this.entityPM, this.ObjectTableName, this.errors);
+
+        // From
+        switch (this.entityPM.PickUpDeliveryFromTypeCode) {
+            case "PART": {
+                if (AppTool.IsNullOrEmpty(this.entityPM.FromPartnerCardId)) {
+                    this.errors.push(this.message.replace("%FieldName", "From Partner"));
+                }
+                break;
+            }
+
+            case "PORT": {
+                if (AppTool.IsNullOrEmpty(this.entityPM.FromPortId)) {
+                    this.errors.push(this.message.replace("%FieldName", "From Port"));
+                }
+                break;
+            }
+
+            case "CASL": {
+                if (AppTool.IsNullOrEmpty(this.entityPM.FromAddressCity) && AppTool.IsNullOrEmpty(this.entityPM.FromAddressZipCode)) {
+                    this.errors.push("From City or from Zip Code is required");
+                }
+
+                if (AppTool.IsNullOrEmpty(this.entityPM.FromAddressCountryId)) {
+                    this.errors.push(this.message.replace("%FieldName", "From Country"));
+                }
+                break;
+            }
+        }
+
+        // To
+        switch (this.entityPM.PickUpDeliveryToTypeCode) {
+            case "PART": {
+                if (AppTool.IsNullOrEmpty(this.entityPM.ToPartnerCardId)) {
+                    this.errors.push(this.message.replace("%FieldName", "To Partner"));
+                }
+                break;
+            }
+
+            case "PORT": {
+                if (AppTool.IsNullOrEmpty(this.entityPM.ToPortId)) {
+                    this.errors.push(this.message.replace("%FieldName", "To Port"));
+                }
+                break;
+            }
+
+            case "CASL": {
+                if (AppTool.IsNullOrEmpty(this.entityPM.ToAddressCity) && AppTool.IsNullOrEmpty(this.entityPM.ToAddressZipCode)) {
+                    this.errors.push("To City or to Zip Code is required");
+                }
+
+                if (AppTool.IsNullOrEmpty(this.entityPM.ToAddressCountryId)) {
+                    this.errors.push(this.message.replace("%FieldName", "To Country"));
+                }
+                break;
+            }
+        }
+
+        // Actual Dates
+        if (!DateTool.IsActualDateValid(this.entityPM.ATD)) {
+            this.errors.push(DateTool.ActualDateMessage.replace("Field", TextCodeTranslator.Translate("ShipmentPickUpDelivery.F.ATD")));
+        }
+
+        if (!DateTool.IsActualDateValid(this.entityPM.ATA)) {
+            this.errors.push(DateTool.ActualDateMessage.replace("Field", TextCodeTranslator.Translate("ShipmentPickUpDelivery.F.ATA")));
+        }
+
+        // Series Dates
+        var ETD: number = DateTool.GetDateParts(this.entityPM.ETD).DateTicks;
+        var ETA: number = DateTool.GetDateParts(this.entityPM.ETA).DateTicks;
+        var ATD: number = DateTool.GetDateParts(this.entityPM.ATD).DateTicks;
+        var ATA: number = DateTool.GetDateParts(this.entityPM.ATA).DateTicks;
+
+        var isMainCarriageExists: boolean = true;
+        var MainCarriageETD: number = DateTool.GetDateParts(this.ShipmentPM.MainCarriageETD).DateTicks;
+        var MainCarriageETA: number = DateTool.GetDateParts(this.ShipmentPM.MainCarriageETA).DateTicks;
+        var MainCarriageATD: number = DateTool.GetDateParts(this.ShipmentPM.MainCarriageATD).DateTicks;
+        var MainCarriageATA: number = DateTool.GetDateParts(this.ShipmentPM.MainCarriageATA).DateTicks;
+
+        var isTransshipment1Exists: boolean = (this.ShipmentPM.Transshipment1FromPortId != null && this.ShipmentPM.Transshipment1ToPortId != null) ? true : false;
+        var Transshipment1ETD: number = isTransshipment1Exists ? DateTool.GetDateParts(this.ShipmentPM.Transshipment1ETD).DateTicks : 0;
+        var Transshipment1ETA: number = isTransshipment1Exists ? DateTool.GetDateParts(this.ShipmentPM.Transshipment1ETA).DateTicks : 0;
+        var Transshipment1ATD: number = isTransshipment1Exists ? DateTool.GetDateParts(this.ShipmentPM.Transshipment1ATD).DateTicks : 0;
+        var Transshipment1ATA: number = isTransshipment1Exists ? DateTool.GetDateParts(this.ShipmentPM.Transshipment1ATA).DateTicks : 0;
+
+        var isTransshipment2Exists: boolean = (this.ShipmentPM.Transshipment2FromPortId != null && this.ShipmentPM.Transshipment2ToPortId != null) ? true : false;
+        var Transshipment2ETD: number = isTransshipment2Exists ? DateTool.GetDateParts(this.ShipmentPM.Transshipment2ETD).DateTicks : 0;
+        var Transshipment2ETA: number = isTransshipment2Exists ? DateTool.GetDateParts(this.ShipmentPM.Transshipment2ETA).DateTicks : 0;
+        var Transshipment2ATD: number = isTransshipment2Exists ? DateTool.GetDateParts(this.ShipmentPM.Transshipment2ATD).DateTicks : 0;
+        var Transshipment2ATA: number = isTransshipment2Exists ? DateTool.GetDateParts(this.ShipmentPM.Transshipment2ATA).DateTicks : 0;
+
+        var isTransshipment3Exists: boolean = (this.ShipmentPM.Transshipment3FromPortId != null && this.ShipmentPM.Transshipment3ToPortId != null) ? true : false;
+        var Transshipment3ETD: number = isTransshipment3Exists ? DateTool.GetDateParts(this.ShipmentPM.Transshipment3ETD).DateTicks : 0;
+        var Transshipment3ETA: number = isTransshipment3Exists ? DateTool.GetDateParts(this.ShipmentPM.Transshipment3ETA).DateTicks : 0;
+        var Transshipment3ATD: number = isTransshipment3Exists ? DateTool.GetDateParts(this.ShipmentPM.Transshipment3ATD).DateTicks : 0;
+        var Transshipment3ATA: number = isTransshipment3Exists ? DateTool.GetDateParts(this.ShipmentPM.Transshipment3ATA).DateTicks : 0;
+
+        var isOnCarriageExists: boolean = (this.ShipmentPM.OnCarriageFromPortId != null && this.ShipmentPM.OnCarriageToPortId != null) ? true : false;
+        var OnCarriageETD: number = isOnCarriageExists ? DateTool.GetDateParts(this.ShipmentPM.OnCarriageETD).DateTicks : 0;
+        var OnCarriageETA: number = isOnCarriageExists ? DateTool.GetDateParts(this.ShipmentPM.OnCarriageETA).DateTicks : 0;
+        var OnCarriageATD: number = isOnCarriageExists ? DateTool.GetDateParts(this.ShipmentPM.OnCarriageATD).DateTicks : 0;
+        var OnCarriageATA: number = isOnCarriageExists ? DateTool.GetDateParts(this.ShipmentPM.OnCarriageATA).DateTicks : 0;
+
+        var isWarehouseLegExists: boolean = (this.ShipmentPM.WarehouseLegWarehouseId != null && this.ShipmentPM.DirectionId == "I") ? true : false;
+        var WarehouseLegEED: number = isWarehouseLegExists ? DateTool.GetDateParts(this.ShipmentPM.WarehouseLegExpectedEntryDate).DateTicks : 0;
+        var WarehouseLegERD: number = isWarehouseLegExists ? DateTool.GetDateParts(this.ShipmentPM.WarehouseLegExpectedReleaseDate).DateTicks : 0;
+        var WarehouseLegAED: number = isWarehouseLegExists ? DateTool.GetDateParts(this.ShipmentPM.WarehouseLegActualEntryDate).DateTicks : 0;
+        var WarehouseLegARD: number = isWarehouseLegExists ? DateTool.GetDateParts(this.ShipmentPM.WarehouseLegActualReleaseDate).DateTicks : 0;
+
+        // Self
+        if (!RoutingHelper.IsRoutingLegDatesValid(ETD, ETA)) {
+            this.errors.push("Expected departure must be less than Expected arrival");
+        }
+
+        if (!RoutingHelper.IsRoutingLegDatesValid(ATD, ATA)) {
+            this.errors.push("Actual departure must be less than Actual arrival");
+        }
+
+        //if (RoutingHelper.CompairDateSeries(ETD, ETA, ">")) {
+        //    errors.push("Expected departure must be less than Expected arrival");
+        //}
+
+        //if (RoutingHelper.CompairDateSeries(ATD, ATA, ">")) {
+        //    errors.push("Actual departure must be less than Actual arrival");
+        //}
+
+        // Previous
+        if (isWarehouseLegExists) {
+            if (RoutingHelper.IsDateSeriesSmaller(ETD, WarehouseLegERD)) {
+                this.errors.push("Delivery expected departure must be bigger than Warehouse expected release");
+            }
+
+            if (RoutingHelper.IsDateSeriesSmaller(ATD, WarehouseLegARD)) {
+                this.errors.push("Delivery actual departure must be bigger than Warehouse actual release");
+            }
+        }
+
+        else if (isOnCarriageExists) {
+            if (RoutingHelper.IsDateSeriesSmaller(ETD, OnCarriageETA)) {
+                this.errors.push("Expected departure must be bigger than On-Carriage expected arrival");
+            }
+
+            if (RoutingHelper.IsDateSeriesSmaller(ATD, OnCarriageATA)) {
+                this.errors.push("Actual departure must be bigger than On-Carriage actual arrival");
+            }
+        }
+
+        else if (isTransshipment3Exists) {
+            if (RoutingHelper.IsDateSeriesSmaller(ETD, Transshipment3ETA)) {
+                this.errors.push("Expected departure must be bigger than Transshipment3 expected arrival");
+            }
+
+            if (RoutingHelper.IsDateSeriesSmaller(ATD, Transshipment3ATA)) {
+                this.errors.push("Actual departure must be bigger than Transshipment3 actual arrival");
+            }
+        }
+
+        else if (isTransshipment2Exists) {
+            if (RoutingHelper.IsDateSeriesSmaller(ETD, Transshipment2ETA)) {
+                this.errors.push("Expected departure must be bigger than Transshipment2 expected arrival");
+            }
+
+            if (RoutingHelper.IsDateSeriesSmaller(ATD, Transshipment2ATA)) {
+                this.errors.push("Actual departure must be bigger than Transshipment2 actual arrival");
+            }
+        }
+
+        else if (isTransshipment1Exists) {
+            if (RoutingHelper.IsDateSeriesSmaller(ETD, Transshipment1ETA)) {
+                this.errors.push("Expected departure must be bigger than Transshipment1 expected arrival");
+            }
+
+            if (RoutingHelper.IsDateSeriesSmaller(ATD, Transshipment1ATA)) {
+                this.errors.push("Actual departure must be bigger than Transshipment1 actual arrival");
+            }
+        }
+
+        else {
+            if (RoutingHelper.IsDateSeriesSmaller(ETD, MainCarriageETA)) {
+                this.errors.push("Expected departure must be bigger than Main-Carriage expected arrival");
+            }
+
+            if (RoutingHelper.IsDateSeriesSmaller(ATD, MainCarriageATA)) {
+                this.errors.push("Actual departure must be bigger than Main-Carriage actual arrival");
+            }
+        }
+    }
+
+}

@@ -51,7 +51,7 @@ export class DWDateComponent extends BaseComponent {
     DateValue: Date;
     SelectedRange: string = "Day";
     IntervalValue: number = 1;
-
+    ObjectTableName: string;
 
     ShowRange: boolean = false;
     ShowInterval: boolean = false;
@@ -59,6 +59,10 @@ export class DWDateComponent extends BaseComponent {
 
     ngOnInit() {
 
+        if (this.DataContext) this.ObjectTableName = this.DataContext.ParentDimTabelName;
+
+
+        if (!this.ObjectTableName) this.ObjectTableName = "QueryBuilder";
         this.FillListRange();
         this.ShowControl();
         this.InitializeComponent();

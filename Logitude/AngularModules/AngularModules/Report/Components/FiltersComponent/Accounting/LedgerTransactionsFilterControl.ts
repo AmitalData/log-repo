@@ -292,7 +292,7 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
 
         queryFilterItem = new QueryFilterItem();
         queryFilterItem.FieldName = "ChartOfAccountId";
-        queryFilterItem.FieldValue = this.ChartOfAccountId;
+        queryFilterItem.FieldValue = this.GetLookUpFieldValue(this.ChartOfAccountId);
         queryFilterItem.Operator = "Equals";
         queryFilterItems.push(queryFilterItem);
 

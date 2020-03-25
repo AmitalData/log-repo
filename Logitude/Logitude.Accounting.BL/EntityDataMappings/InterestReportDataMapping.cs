@@ -81,7 +81,16 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 CustomerQuery customerQuery = new CustomerQuery(entityPOCO.Tenant);
                 CustomerPM customerPM = customerQuery.GetBasicSinglePM(entityPOCO.CustomerId, entityPOCO.Tenant,true);
                 entityPM.CustomerName = showLocals ? customerPM.LocalName : customerPM.EnglishName;
-             }
+                entityPM.CustomerLocalName = customerPM.LocalName;
+
+            }
+
+            if (entityPOCO.GLAccountId != null)
+            {
+                GLAccountRepository gLAccountRepository = new GLAccountRepository(entityPOCO.Tenant);
+                GLAccount gLAccount = gLAccountRepository.GetSingle(entityPOCO.GLAccountId, entityPOCO.Tenant);
+                entityPM.GLAccountMinimumInterest = gLAccount.MinimumInterestInvoiceBilling;
+            }
         }
 
         public static Func<int, ContactPM> OverrideGetLoggedContactFunc { get; set; }

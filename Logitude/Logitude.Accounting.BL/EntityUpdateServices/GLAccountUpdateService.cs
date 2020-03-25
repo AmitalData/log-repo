@@ -392,12 +392,34 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             }
         }
 
-
+ 
+        private void setAccountingTypeCodeByChartofAccountTypeCode(GLAccountPM entityPM)
+        {
+           switch (entityPM.ChartOfAccountsTypeCode)
+            {
+                case "3":
+                    {
+                        entityPM.AccountTypeCode = "2";
+                        break;
+                    }
+                case "4":
+                    {
+                        entityPM.AccountTypeCode = "3";
+                        break;
+                    }
+                default:
+                    {
+                        entityPM.AccountTypeCode = "1";
+                        break;
+                    }
+            }
+        }
+ 
         protected override void OnUpdating(GLAccountPM entityPM, GLAccount entityPOCO)
         {
 
 
-
+            this.setAccountingTypeCodeByChartofAccountTypeCode(entityPM);
             ContactPM contact = GetLoggedContact(entityPM.Tenant);
             bool showLocals = !contact.DontShowLocal;
             if (entityPM.GLAccountInterestPeriods.Where(s => s.ChangeSetOp != ChangeSetOperation.Delete).GroupBy(x => x.PeriodStartDate).Any(g => g.Count() > 1))
@@ -1593,7 +1615,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             base.Validate(entityPM);
         }
 
-
+      
 
         // PRIVATE METHODS
         bool showLocals;

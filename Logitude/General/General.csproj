@@ -243,7 +243,6 @@
     <Content Include="2020.R1\03 - 2020\Day 08 [Maheera] Fill Personal Access Key for Time Management.sql" />
     <Content Include="2020.R1\03 - 2020\Day 09 [Samar] update DaysFromLastShipment objectfeild.sql" />
     <Content Include="2020.R1\03 - 2020\Day 11 [Samar] update main carriage ATA query columns.sql" />
-    <Content Include="2020.R1\03 - 2020\Day 15 [Wesam] Insert Charges Into DWCategories Table.sql" />
     <Content Include="Accounting\2015 - 8\day 10 [alex] unique constraint in JournalActionTypes.sql" />
     <Content Include="2019.R2\06 - 2019\Day 24 [Rabaia] DalayWithReturnStatusToZeroSP.sql" />
     <Content Include="Customs\2018 - 04\[Abdullah] Day 10 Delete forign keys for table CustomCountry.sql" />
@@ -699,10 +698,18 @@
     <Content Include="Main Branch\2020\02 - 2020\Day 08 [Maheera] Fill Totals of TenantManagement Table.sql" />
     <Content Include="Main Branch\2020\02 - 2020\Day 04 [Maheera] Add Storage Chargeable Days Gross Weight UOM.sql" />
     <Content Include="Main Branch\2020\02 - 2020\Day 06 [Maheera] Fill GrossWeightPerStorageDays Field in Shipment.sql" />
+    <Content Include="Main Branch\2020\03 - 2020\Day 18 [Wesam] Delete LastRunByUserId Object Field From BIReport.sql" />
+    <Content Include="Main Branch\2020\03 - 2020\Day 23 [Mutaz] Add New Counters Definition To INVC Counter.sql" />
+    <Content Include="Main Branch\2020\03 - 2020\Day 23 [Mutaz] Add New Charge Type For Interest.sql" />
     <Content Include="Main Branch\2020\03 - 2020\Day 08 [Samar] Fill default containers on tariff settings.sql" />
     <Content Include="Main Branch\2020\03 - 2020\Day 08 [Abed]InSertRecordToQuoteTemplateTextCode%28VatType and VatPerc%29.sql" />
     <Content Include="Main Branch\2020\02 - 2020\Day 10 [Bisan] Update Storage free days in Cards table.sql" />
+
     <Content Include="Main Branch\2020\03 - 2020\Day 17 [Ayman]  New Container Type - High Cube.sql" />
+
+    <Content Include="Main Branch\2020\03 - 2020\Day 23 [Bisan] Fill default product values in AFC Tariff.sql" />
+    <Content Include="Main Branch\2020\03 - 2020\Day 19 [Bisan] Fill default values in TariffProducts table.sql" />
+
     <Content Include="Main Branch\2020\1 - 2020\Day 12 [Mutaz] Delete Constraint between SharedUserQueries and Query.sql" />
     <Content Include="Main Branch\2020\1 - 2020\Day 22 [Abed] update Help Center.sql" />
     <Content Include="Main Branch\2020\1 - 2020\Day 31 [Mutaz] Add Constraint UniqCode In Query.sql" />
@@ -797,6 +804,7 @@
     <Content Include="Usefull Scripts\Fill Data\ShipmentComputedFields\[Ayman] Last Pickup.sql" />
     <Content Include="Usefull Scripts\Fill Data\ShipmentComputedFields\[Ayman] Number of Deliveries.sql" />
     <Content Include="Usefull Scripts\Fill Data\ShipmentComputedFields\[Ayman] Operationally Closed.sql" />
+    <Content Include="Usefull Scripts\Fill Data\[Ayman] FirstOperationalCloseDate.sql" />
     <Content Include="Usefull Scripts\Fill Data\[Islam] Copy incoterms from tenant zero to all tenants.sql" />
     <Content Include="Usefull Scripts\Fill Data\[Ayman] Fill ShippingLines INTTRARegistrationNotes.sql" />
     <Content Include="Usefull Scripts\Fill Data\[Maheera] Fill Cc To From Fields of  Activities.sql" />

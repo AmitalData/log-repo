@@ -36,9 +36,8 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 	         TypeCode, 
 	         AGGridOptionsXML, 
 	         BIReportFolderId, 
-	         LastRunDate, 
-	         LastRunByUserId, 
-	         FactTableName,
+	         FactTableName, 
+	         LastRunId,
 	      }
 
 
@@ -62,9 +61,9 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 	         CreatedByUserName, 
 	         UpdatedByUserName, 
 	         LastRunDate, 
-	         LastRunByUserId, 
 	         LastRunByUserName, 
-	         FactTableName,
+	         FactTableName, 
+	         LastRunId,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -138,19 +137,14 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 				entityPOCO.BIReportFolderId = entityPM.BIReportFolderId;
 			}
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastRunDate))
-            {
-				entityPOCO.LastRunDate = entityPM.LastRunDate;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastRunByUserId))
-            {
-				entityPOCO.LastRunByUserId = entityPM.LastRunByUserId;
-			}
-			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FactTableName))
             {
 				entityPOCO.FactTableName = entityPM.FactTableName;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastRunId))
+            {
+				entityPOCO.LastRunId = entityPM.LastRunId;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -229,19 +223,14 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 					entityPM.BIReportFolderId = entityPOCO.BIReportFolderId;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LastRunDate))
-            {
-					entityPM.LastRunDate = entityPOCO.LastRunDate;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LastRunByUserId))
-            {
-					entityPM.LastRunByUserId = entityPOCO.LastRunByUserId;
-            }
-
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.FactTableName))
             {
 					entityPM.FactTableName = entityPOCO.FactTableName;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LastRunId))
+            {
+					entityPM.LastRunId = entityPOCO.LastRunId;
             }
 
 		}
@@ -315,19 +304,14 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
                 oldEntityPM.BIReportFolderId = entityPM.BIReportFolderId;
             }
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastRunDate))
-            {
-                oldEntityPM.LastRunDate = entityPM.LastRunDate;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastRunByUserId))
-            {
-                oldEntityPM.LastRunByUserId = entityPM.LastRunByUserId;
-            }
-			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FactTableName))
             {
                 oldEntityPM.FactTableName = entityPM.FactTableName;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastRunId))
+            {
+                oldEntityPM.LastRunId = entityPM.LastRunId;
             }
 			
 		}

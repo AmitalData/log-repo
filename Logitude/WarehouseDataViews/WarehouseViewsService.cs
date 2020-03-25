@@ -12,6 +12,8 @@ namespace WarehouseDataViews
     public class WarehouseViewsService
     {
         long timeOut = 10000000000000000;
+
+
         public string BuildConnectionString(string dbSourceConnection)
         {
             var connectionStringArray =  dbSourceConnection.Split(',');
@@ -71,16 +73,78 @@ namespace WarehouseDataViews
             }
         }
 
-        public void CreateView(string fieldCode, string tableCode, string connectionString)
+        public void CreateDimensionView(string fieldCode, string tableCode, string connectionString)
         {
+            string scriptView = GenerateScriptView(fieldCode, tableCode);
+            ExecuteSql(scriptView,  connectionString);
+        }
+
+
+        public void CreateFactView(string tableCode, string connectionString , string destinationConnectionString)
+        {
+            string scriptView = GenerateScriptView("Shipment" , tableCode);
+            scriptView = ConvertFieldsNameToCamelCase(scriptView);
+            DataTable customFields = GetCustomObjectFields(connectionString);
+            string customFieldScript = string.Empty;
+            foreach (var customField in customFields.AsEnumerable().ToList())
+            {
+                string fieldDisplay = customField["DefaultText"].ToString();
+                string fieldName = customField["FieldName"].ToString();
+                if (customField["DataTypeCode"].ToString() != "PickList" && customField["DataTypeCode"].ToString() != "LookUp" && customField["DataTypeCode"].ToString() != "Date")
+                {
+                    customFieldScript += ",CONVERT(" + GetDataWarehouseSqlFieldType(customField) + ",[" + fieldName + "]) as " + "[" + fieldDisplay + "]";
+                }
+            }
+            scriptView = scriptView.Replace(",@CustomFields", customFieldScript);
+            ExecuteSql(scriptView, destinationConnectionString);
+        }
+
+
+
+        private string GetDataWarehouseSqlFieldType(DataRow field)
+        {
+            string sqlFieldtype = string.Empty;
+            string dataTypeCode = field["DataTypeCode"].ToString();
+            int maxLength = field["MaxLength"]!=null ? int.Parse(field["MaxLength"].ToString()) :0;
+            if (dataTypeCode == "nText") sqlFieldtype += "nvarchar(" + maxLength + ")";
+            else if (dataTypeCode == "Text") sqlFieldtype += "varchar(" + maxLength + ")";
+            else if (dataTypeCode == "Boolean") sqlFieldtype += " bit";
+            else if (dataTypeCode == "Decimal" || dataTypeCode == "Double") sqlFieldtype += " float";
+            else if (dataTypeCode == "Integer") sqlFieldtype += " int";
+            else if (dataTypeCode == "DateTime") sqlFieldtype += " dateTime";
+            else if (dataTypeCode == "Date") sqlFieldtype += " date";
+            return sqlFieldtype;
+        }
+
+
+        private DataTable GetCustomObjectFields(string connectionString)
+        {
+            var customObjectFields = new DataTable();
+            int tenant = 1;
+            using (SqlConnection sourceConnection = new SqlConnection(connectionString))
+            {
+                sourceConnection.Open();
+                string sql = "SELECT  MaxLength ,FieldName,  DataTypeCode,TextCodes.DefaultText from  ObjectFields inner join TextCodes on ObjectFields.FullNameTextCodeCode = TextCodes.Code where ObjectFields.IsCustom = 1 and ObjectFields.Tenant =" + tenant + " and ObjectFields.ObjectTableId =(select id from ObjectTables where Name = 'Shipment')";
+                SqlCommand commandSourceData = new SqlCommand(sql, sourceConnection);
+                SqlDataReader reader = commandSourceData.ExecuteReader();
+                customObjectFields.Load(reader);
+                reader.Close();
+            }
+
+            return customObjectFields;
+        }
+
+        public string GenerateScriptView(string fieldCode  , string tableCode)
+        {
+            string scriptView = string.Empty;
             string viewName = GetViewName(fieldCode);
             string scriptstring = ReadscriptFile(tableCode);
-            scriptstring = scriptstring.Replace("[Key]", viewName+"key");
-            scriptstring = scriptstring.Replace("[Code]", "[Code] as [" + viewName.Replace("View","") + " Code]");
-            if(tableCode == "Fact_Shipments") scriptstring = ConvertFieldsNameToCamelCase(scriptstring);
-            string sqlstring = " CREATE VIEW "+ viewName + " AS  ";
-            sqlstring += scriptstring;
-            ExecuteSql(sqlstring,  connectionString);
+
+            scriptstring = scriptstring.Replace("[Key]", viewName + "key");
+            scriptstring = scriptstring.Replace("[Code]", "[Code] as [" + viewName.Replace("View", "") + " Code]");
+            scriptView = " CREATE VIEW " + viewName + " AS  " + scriptstring;
+
+            return scriptView;
         }
 
         private string ConvertFieldsNameToCamelCase(string scriptstring)
@@ -93,7 +157,7 @@ namespace WarehouseDataViews
             {
                 if (!string.IsNullOrEmpty(fieldName))
                 {
-                    if (!fieldName.Contains("Key") && !fieldName.Contains("Id_Number"))
+                    if (!fieldName.Contains("Key") && !fieldName.Contains("Id_Number") && !fieldName.Contains("@CustomFields"))
                     {
                         string fieldNameCamelCase = fieldName + "as " + fieldName.Replace(" ", "");
                         result = result.Replace(fieldName, fieldNameCamelCase);

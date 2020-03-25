@@ -438,7 +438,7 @@ namespace WebFreight.Web.Controllers.WarehouseModel.Extended
         }
 
 
-        public HttpResponseMessage GetEnableWarehouseRelaseForUse(string releaseNumber)
+        public HttpResponseMessage GetEnableWarehouseRelaseForUse(string releaseNumber, string shipmentId)
         {
             try
             {
@@ -446,9 +446,9 @@ namespace WebFreight.Web.Controllers.WarehouseModel.Extended
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
                 SecurityUtility.AuthenticationOnTenant(tenant);
-                SecurityUtility.CheckContactFeature("WarehouseRelease", "Update", tenant);
+                SecurityUtility.CheckContactFeature("WarehouseRelease", "UPDATE", tenant);
                 WarehouseRelaseService warehouseRelaseService = new WarehouseRelaseService();
-                warehouseRelaseService.EnableWarehouseRelaseForUse(releaseNumber, tenant);
+                warehouseRelaseService.EnableWarehouseRelaseForUse(releaseNumber, shipmentId, tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, "");
             }
 

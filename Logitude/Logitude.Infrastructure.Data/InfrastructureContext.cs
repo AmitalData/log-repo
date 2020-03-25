@@ -84,6 +84,8 @@ namespace Logitude.Infrastructure.Data
 	
             modelBuilder.Configurations.Add(new FeatureToggleMap());
 	
+            modelBuilder.Configurations.Add(new LastRunDetailMap());
+	
             modelBuilder.Configurations.Add(new LBPTeamMemberMap());
 	
             modelBuilder.Configurations.Add(new PriceStepMap());
@@ -425,6 +427,12 @@ namespace Logitude.Infrastructure.Data
 	 }
 	
 	 public IDbSet<FeatureToggle> FeatureToggles 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<LastRunDetail> LastRunDetails 
 	 {
 	      get; set;
 	 

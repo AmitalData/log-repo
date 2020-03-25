@@ -87,18 +87,21 @@ export class DocsInDataViewModel extends BaseComponent{
 
 
 
-
+    private  note:string;
     public get Note() {
 
         if (this.CurrentDocument) {
-            return this.CurrentDocument.Notes;
-        } else return "";
-
+            this.note= this.CurrentDocument.Notes;
+        }
+        return this.note;
     }
     public set Note(newValue: string) {
 
-        if (this.CurrentDocument != null && this.CurrentDocument.Notes != newValue ) {
-            this.CurrentDocument.Notes = newValue;
+        if (this.note != newValue) {
+            this.note = newValue;
+            if (this.CurrentDocument != null) {
+                this.CurrentDocument.Notes = this.note;
+            }
         }
     }
 

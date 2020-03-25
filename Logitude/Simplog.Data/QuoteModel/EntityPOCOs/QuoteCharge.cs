@@ -38,6 +38,10 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
         public double? CostContainerType5UnitPrice { get; set; }
         public double? CostTotalAmount { get; set; }
         public double? CostTotalAmountLocal { get; set; }
+        public bool IsCostAllIn { get; set; }
+        public string TariffId { get; set; }
+        public string TariffNumber { get; set; }
+        public int TariffVersion { get; set; }
 
         // Sale                
         public string SaleCurrencyId { get; set; }
