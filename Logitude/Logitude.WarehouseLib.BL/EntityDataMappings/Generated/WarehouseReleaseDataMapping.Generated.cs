@@ -68,7 +68,9 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 	         ToAddressZipCode, 
 	         ToAddressCity, 
 	         ToAddressCountryId, 
-	         IsUsed,
+	         IsUsed, 
+	         TruckerId, 
+	         TruckerReference,
 	      }
 
 
@@ -128,7 +130,9 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 	         ToAddressCity, 
 	         ToAddressCountryId, 
 	         IsUsed, 
-	         Destination,
+	         Destination, 
+	         TruckerId, 
+	         TruckerReference,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -365,6 +369,16 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsUsed))
             {
 				entityPOCO.IsUsed = entityPM.IsUsed;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TruckerId))
+            {
+				entityPOCO.TruckerId = entityPM.TruckerId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TruckerReference))
+            {
+				entityPOCO.TruckerReference = entityPM.TruckerReference;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -608,6 +622,16 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 					entityPM.IsUsed = entityPOCO.IsUsed;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.TruckerId))
+            {
+					entityPM.TruckerId = entityPOCO.TruckerId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.TruckerReference))
+            {
+					entityPM.TruckerReference = entityPOCO.TruckerReference;
+            }
+
 		}
 
 		public void PMToOldPM(WarehouseReleasePM entityPM, WarehouseReleasePM oldEntityPM)
@@ -842,6 +866,16 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsUsed))
             {
                 oldEntityPM.IsUsed = entityPM.IsUsed;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TruckerId))
+            {
+                oldEntityPM.TruckerId = entityPM.TruckerId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TruckerReference))
+            {
+                oldEntityPM.TruckerReference = entityPM.TruckerReference;
             }
 			
 		}
