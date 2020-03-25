@@ -180,4 +180,6 @@ export class ExceptionReasonLineComponent extends BaseComponent {
             });
         }
     }
+    public get ReasonLocalName() { return this.entityPM.LocalName; }
+    public set ReasonLocalName(newValue: string) { this.entityPM.LocalName = newValue; }
 }
