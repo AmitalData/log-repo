@@ -115,7 +115,7 @@ export class SendToContactsComponent implements OnInit {
 
         if (this.PartnersObslist) {
 
-            if (!this.PartnersObslist.filter(d => d.PartnerType == "All")[0]) {
+            if (!this.PartnersObslist.filter(d => d.PartnerType == "All")[0] && !this.IsSchedulerReport) {
                 this.PartnersObslist.push(new EntityPartner("All", "", false));
             }
 
