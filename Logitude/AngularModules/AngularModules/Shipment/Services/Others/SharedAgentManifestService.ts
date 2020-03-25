@@ -1,6 +1,4 @@
-/// <reference path="../../../common/entitypms/agentsharedmanifestpm.ts" />
 import { Injectable } from '@angular/core';
-import { Http, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { ClassLevelValidator } from '../../../Infrastructure/Validators/ClassLevelValidator';
@@ -10,17 +8,15 @@ import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
 import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
 import { AgentSharedManifestPM } from '../../../Common/EntityPMs/AgentSharedManifestPM';
 import { PerformanceLogger } from '../../../Infrastructure/Utilities/PerformanceLogger';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpEvent, HttpResponse } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 
 @Injectable()
 
 export class SharedAgentManifestService {
-    private _http: Http;
     private _httpClient: HttpClient;
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.Http;
         this._httpClient = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/SharedAgentManifest';
     }
@@ -34,9 +30,7 @@ export class SharedAgentManifestService {
         authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
         return Observable.defer(() => {
-            return this._httpClient.get(this._apiUrl + '/getSharedAgentManifestTransLateIdByCode?' + 'code=' + code  + '&tenant=' + tenant, {
-                headers: authHeader
-            }).map(response => {
+            return this._httpClient.get(this._apiUrl + '/getSharedAgentManifestTransLateIdByCode?' + 'code=' + code + '&tenant=' + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var result = response;
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
@@ -55,9 +49,7 @@ export class SharedAgentManifestService {
         authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
         return Observable.defer(() => {
-            return this._httpClient.get(this._apiUrl + '/GetCheckIfAnyShipmentHaveMasterNumber?' + 'master=' + master + '&longMaster=' + longMaster+ '&tenant=' + tenant, {
-                headers: authHeader
-            }).map(response => {
+            return this._httpClient.get(this._apiUrl + '/GetCheckIfAnyShipmentHaveMasterNumber?' + 'master=' + master + '&longMaster=' + longMaster + '&tenant=' + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var result = response;
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
@@ -75,9 +67,7 @@ export class SharedAgentManifestService {
         authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
         return Observable.defer(() => {
-            return this._httpClient.get(this._apiUrl + '/GetCheckIfMasterShipmentHaveHouseWithOtherAgent?' + 'entityId=' + entityId + '&agentId=' + agentId + '&tenant=' + tenant, {
-                headers: authHeader
-            }).map(response => {
+            return this._httpClient.get(this._apiUrl + '/GetCheckIfMasterShipmentHaveHouseWithOtherAgent?' + 'entityId=' + entityId + '&agentId=' + agentId + '&tenant=' + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var result = response;
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
@@ -94,9 +84,7 @@ export class SharedAgentManifestService {
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         return Observable.defer(() => {
-            return this._httpClient.get(this._apiUrl + '/GetSharedAgentManifest?' + 'shipmentId=' + shipmentId + '&isUpdateAgent=' + isUpdateAgent + '&tenant=' + SessionInfo.LoggedUserTenant, {
-                headers: authHeader
-            }).map(response => {
+            return this._httpClient.get(this._apiUrl + '/GetSharedAgentManifest?' + 'shipmentId=' + shipmentId + '&isUpdateAgent=' + isUpdateAgent + '&tenant=' + SessionInfo.LoggedUserTenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var pm = response;
                 var entity: AgentSharedManifestPM;
@@ -123,11 +111,7 @@ export class SharedAgentManifestService {
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         authHeader.append('Content-Type', 'application/json');
         return Observable.defer(() => {
-            return this._httpClient.post(this._apiUrl + '/postagentsharedmanifesrefshipmentListsbyids', JSON.stringify(agentManifestSharedRefListIds), {
-
-                headers: authHeader,
-
-            }).map(response => {
+            return this._httpClient.post(this._apiUrl + '/postagentsharedmanifesrefshipmentListsbyids', JSON.stringify(agentManifestSharedRefListIds), ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var result = response;
              
                 var pmresponse: ServiceResponse;
@@ -161,9 +145,7 @@ export class SharedAgentManifestService {
         authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
         return Observable.defer(() => {
-            return this._httpClient.get(this._apiUrl + '/GetIsAgentSharedManifests?' + 'agentId=' + agentId + '&entityid=' + entityid , {
-                headers: authHeader
-            }).map(response => {
+            return this._httpClient.get(this._apiUrl + '/GetIsAgentSharedManifests?' + 'agentId=' + agentId + '&entityid=' + entityid, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var result = response;
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
@@ -182,28 +164,27 @@ export class SharedAgentManifestService {
         authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
         return Observable.defer(() => {
-            return this._httpClient.get(this._apiUrl + '/getsingle?' + 'id=' + id, {
-                headers: authHeader
-            }).map(response => {
-                var pm = response;
+            return this._httpClient.get(this._apiUrl + '/getsingle?' + 'id=' + id, ServiceHelper.GetHttpHeaders()).pipe(
+                map((response: HttpEvent<any>) => {
+                    if (response instanceof HttpResponse) {
+                        var pm = response.body;
 
+                        var entity: AgentSharedManifestPM;
+                        if (pm) {
+                            entity = this.MapJsonToEntityPM(pm);
+                        }
 
+                        var serviceResponse: ServiceResponse;
+                        serviceResponse = new ServiceResponse();
+                        serviceResponse.Result = entity;
 
-                var entity: AgentSharedManifestPM;
-                if (pm) {
-                    entity = this.MapJsonToEntityPM(pm);
-                }
+                        var servertime = response.headers.get('ServerExecutionTime');
+                        PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "AgentSharedManifest", "GetSinglePM", 'id=' + id);
 
-                var serviceResponse: ServiceResponse;
-                serviceResponse = new ServiceResponse();
-                serviceResponse.Result = entity;
+                        return serviceResponse;
+                    }
 
-                var servertime = response.headers.get('ServerExecutionTime');
-                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "AgentSharedManifest", "GetSinglePM", 'id=' + id);
-
-                return serviceResponse;
-
-            }),catchError(ServiceHelper.HandleServiceError));
+                }), catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -214,9 +195,7 @@ export class SharedAgentManifestService {
         authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
         return Observable.defer(() => {
-            return this._httpClient.get(this._apiUrl + '/GetAgentSharedManifestsForDashBoard?' + 'lastMonths=' + lastMonths + '&lastDays=' + lastDays + '&selectedIndex=' + selectedIndex, {
-                headers: authHeader
-            }).map(response => {
+            return this._httpClient.get(this._apiUrl + '/GetAgentSharedManifestsForDashBoard?' + 'lastMonths=' + lastMonths + '&lastDays=' + lastDays + '&selectedIndex=' + selectedIndex, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var result = response;
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();

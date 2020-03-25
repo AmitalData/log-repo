@@ -107,7 +107,7 @@ export class ApprovePaymentButtonListTemplate {
                         var windowArgs: any = {};
                         //windowArgs.IsNew = false;
                         windowArgs.EntityPm = myResult.Result
-                        windowArgs.AdditionalData = AdditionalResult.Result
+                        windowArgs.AdditionalData = AdditionalResult.Result;
                         newWindow.WindowArgs = windowArgs;
                         //newWindow.Add(control); 
                         newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/PrivateLabelApprovePaymentComponent');

@@ -485,6 +485,32 @@ export class ServiceHelper {
 
         return httpOptions;
     }
+
+    public static GetHttpFullHeaders() {
+
+        const httpOptions: { headers; observe; } = {
+
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Token': ServiceHelper.GetLoggedUserToken()
+            }),
+
+            observe: 'response'
+        };
+
+        //const httpOptions = {
+
+        //    headers: new HttpHeaders({
+        //        'Content-Type': 'application/json',
+        //        'Token': ServiceHelper.GetLoggedUserToken()
+        //    }),
+
+        //    observe: 'response'
+        //};
+
+        return httpOptions;
+    }
+    
 }
 
 class ErrorLogPM {

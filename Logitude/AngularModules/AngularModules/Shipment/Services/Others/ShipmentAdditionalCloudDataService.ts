@@ -1,6 +1,4 @@
-/// <reference path="../../../common/entitypms/agentsharedmanifestpm.ts" />
 import { Injectable } from '@angular/core';
-import { Http, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { ClassLevelValidator } from '../../../Infrastructure/Validators/ClassLevelValidator';
@@ -10,17 +8,15 @@ import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
 import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
 import { AgentSharedManifestPM } from '../../../Common/EntityPMs/AgentSharedManifestPM';
 import { PerformanceLogger } from '../../../Infrastructure/Utilities/PerformanceLogger';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpEvent, HttpResponse } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 
 @Injectable()
 
 export class ShipmentAdditionalCloudDataService {
-    private _http: Http;
     private _httpClient: HttpClient;
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.Http;
         this._httpClient = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ShipmentAdditionalCloudData';
     }
@@ -32,27 +28,27 @@ export class ShipmentAdditionalCloudDataService {
         authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
         return Observable.defer(() => {
-            return this._httpClient.get(this._apiUrl + '/getsingle?' + 'id=' + id, {
-                headers: authHeader
-            }).map(response => {
-                var pm = response;
+            return this._httpClient.get(this._apiUrl + '/getsingle?' + 'id=' + id, ServiceHelper.GetHttpFullHeaders()).pipe(
+                map((response: HttpResponse<any>) => {
+                    if (response instanceof HttpResponse) {
+                        var pm = response.body;
 
 
 
-                //var entity: AgentSharedManifestPM;
-                //if (pm) {
-                //    entity = this.MapJsonToEntityPM(pm);
-                //}
+                        //var entity: AgentSharedManifestPM;
+                        //if (pm) {
+                        //    entity = this.MapJsonToEntityPM(pm);
+                        //}
 
-                var serviceResponse: ServiceResponse;
-                serviceResponse = new ServiceResponse();
-                serviceResponse.Result = pm;
+                        var serviceResponse: ServiceResponse;
+                        serviceResponse = new ServiceResponse();
+                        serviceResponse.Result = pm;
 
-                var servertime = response.headers.get('ServerExecutionTime');
-                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ShipmentAdditionalCloudData", "GetSinglePM", 'id=' + id);
+                        var servertime = response.headers.get('ServerExecutionTime');
+                        PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ShipmentAdditionalCloudData", "GetSinglePM", 'id=' + id);
 
-                return serviceResponse;
-
+                        return serviceResponse;
+                    }
             }),catchError(ServiceHelper.HandleServiceError));
         });
     }
@@ -64,27 +60,27 @@ export class ShipmentAdditionalCloudDataService {
         authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
         return Observable.defer(() => {
-            return this._httpClient.get(this._apiUrl + '/GetSingleData?' + 'id=' + id, {
-                headers: authHeader
-            }).map(response => {
-                var pm = response;
+            return this._httpClient.get(this._apiUrl + '/GetSingleData?' + 'id=' + id, ServiceHelper.GetHttpFullHeaders()).pipe(
+                map((response: HttpResponse<any>) => {
+                    if (response instanceof HttpResponse) {
+                        var pm = response.body;
 
 
 
-                //var entity: AgentSharedManifestPM;
-                //if (pm) {
-                //    entity = this.MapJsonToEntityPM(pm);
-                //}
+                        //var entity: AgentSharedManifestPM;
+                        //if (pm) {
+                        //    entity = this.MapJsonToEntityPM(pm);
+                        //}
 
-                var serviceResponse: ServiceResponse;
-                serviceResponse = new ServiceResponse();
-                serviceResponse.Result = pm;
+                        var serviceResponse: ServiceResponse;
+                        serviceResponse = new ServiceResponse();
+                        serviceResponse.Result = pm;
 
-                var servertime = response.headers.get('ServerExecutionTime');
-                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ShipmentAdditionalCloudData", "GetSinglePM", 'id=' + id);
+                        var servertime = response.headers.get('ServerExecutionTime');
+                        PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ShipmentAdditionalCloudData", "GetSinglePM", 'id=' + id);
 
-                return serviceResponse;
-
+                        return serviceResponse;
+                    }
             }),catchError(ServiceHelper.HandleServiceError));
         });
     }
@@ -103,9 +99,8 @@ export class ShipmentAdditionalCloudDataService {
                 var shipString: string;
 
                 shipString = JSON.stringify(entityPM);
-                //console.log(shipString);
-            return this._httpClient.put(this._apiUrl + '/PutMain', shipString,
-                    { headers: authHeader }).map((res) => {
+            //console.log(shipString);
+            return this._httpClient.put(this._apiUrl + '/PutMain', shipString, ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
                         var pm = res;
                         response.Result = pm;
                         return response;
@@ -130,8 +125,7 @@ export class ShipmentAdditionalCloudDataService {
 
             shipString = JSON.stringify(entityPM);
             //console.log(shipString);
-            return this._httpClient.put(this._apiUrl + '/PutUserId', shipString,
-                { headers: authHeader }).map((res) => {
+            return this._httpClient.put(this._apiUrl + '/PutUserId', shipString, ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
                     var pm = res;
                     response.Result = pm;
                     return response;
@@ -148,28 +142,28 @@ export class ShipmentAdditionalCloudDataService {
         //authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
         return Observable.defer(() => {
-            return this._httpClient.get(this._apiUrl + '/GetSingleWithoutToken?' + 'securityId=' + id + '&tenant=' + Tenant, {
-                headers: authHeader
-            }).map(response => {
-                var pm = response;
+            return this._httpClient.get(this._apiUrl + '/GetSingleWithoutToken?' + 'securityId=' + id + '&tenant=' + Tenant, ServiceHelper.GetHttpFullHeaders()).pipe(
+                map((response: HttpResponse<any>) => {
+                    if (response instanceof HttpResponse) {
+                        var pm = response.body;
 
 
 
-                //var entity: AgentSharedManifestPM;
-                //if (pm) {
-                //    entity = this.MapJsonToEntityPM(pm);
-                //}
+                        //var entity: AgentSharedManifestPM;
+                        //if (pm) {
+                        //    entity = this.MapJsonToEntityPM(pm);
+                        //}
 
-                var serviceResponse: ServiceResponse;
-                serviceResponse = new ServiceResponse();
-                serviceResponse.Result = pm;
+                        var serviceResponse: ServiceResponse;
+                        serviceResponse = new ServiceResponse();
+                        serviceResponse.Result = pm;
 
-                var servertime = response.headers.get('ServerExecutionTime');
-                //PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ShipmentAdditionalCloudData", "GetSinglePM", 'id=' + id);
+                        var servertime = response.headers.get('ServerExecutionTime');
+                        //PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ShipmentAdditionalCloudData", "GetSinglePM", 'id=' + id);
 
-                return serviceResponse;
-
-            }),catchError(ServiceHelper.HandleServiceError));
+                        return serviceResponse;
+                    }
+                }), catchError(ServiceHelper.HandleServiceError));
         });
     }
 

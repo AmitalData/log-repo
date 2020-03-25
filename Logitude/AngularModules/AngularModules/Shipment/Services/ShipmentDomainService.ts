@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
 import {Observable}     from 'rxjs/Rx';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../Infrastructure/DataContracts/ServiceResponse';
@@ -10,7 +9,6 @@ import {ShipmentPMService} from './StandardPMs/ShipmentPMService';
 import {ShipmentList} from '../EntityLists/ShipmentList';
 import { MessagingStockUsageHistoryList } from '../EntityLists/MessagingStockUsageHistoryList';
 import { AppTool } from '../../Infrastructure/Tools';
-
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 //import { defer } from 'rxjs';
@@ -18,11 +16,9 @@ import { catchError, map } from 'rxjs/operators';
 @Injectable()
 
 export class ShipmentDomainService {
-    private _http: Http;
     private _httpClient: HttpClient;
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.Http;
         this._httpClient = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ShipmentDomain';
     }
