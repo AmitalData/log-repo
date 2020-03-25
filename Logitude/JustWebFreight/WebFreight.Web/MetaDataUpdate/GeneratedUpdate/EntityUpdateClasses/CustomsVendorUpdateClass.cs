@@ -1192,7 +1192,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsPalestinian",
 					  						DefaultText =  "Is Palestinian",
-					  						FullLocalDefaultText =  @"רש\\\פ",
+					  						FullLocalDefaultText =  "רש\"פ",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,

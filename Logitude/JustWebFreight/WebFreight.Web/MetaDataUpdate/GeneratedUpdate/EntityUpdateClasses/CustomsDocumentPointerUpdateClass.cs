@@ -1073,6 +1073,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
 	    {  
+		   ObjectTable CustomsDocumentPointerObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CustomsDocumentPointer" && d.Tenant == 0).FirstOrDefault(); 
+
 
 		   		   //--------------> Additional Features <--------------\\
 

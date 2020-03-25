@@ -368,7 +368,9 @@ namespace <#= UpdateClassnamespacestring #>
 	    var IsClosed = entity.Attributes().Where(a => a.Name == "IsClosed").FirstOrDefault().Value;
         var NoDefaultFeatures = (entity.Attributes().Where(a => a.Name == "NoDefaultFeatures").FirstOrDefault()!= null?entity.Attributes().Where(a => a.Name == "NoDefaultFeatures").FirstOrDefault().Value.ToLower():"false");
 		var DownloadToExcelFeatureCodeAttr = entity.Attributes().Where(a => a.Name == "DownloadToExcelFeatureCode").FirstOrDefault();
-         if (IsComposition.ToLower() == "false" && IsClosed.ToLower() == "false")
+        var AdditionalFeatures = entity.Elements("AdditionalFeatures").FirstOrDefault();
+        bool hasAdditionalFeature = (AdditionalFeatures != null && AdditionalFeatures.Elements("Feature").Count() > 0);
+         if ((IsComposition.ToLower() == "false" && IsClosed.ToLower() == "false")|| hasAdditionalFeature)
         {
 	 #>
 
@@ -394,8 +396,8 @@ namespace <#= UpdateClassnamespacestring #>
 <#+
 		}
 
-		var AdditionalFeatures = entity.Elements("AdditionalFeatures").FirstOrDefault();
-        if (AdditionalFeatures != null && AdditionalFeatures.Elements("Feature").Count() > 0)
+		 
+        if (hasAdditionalFeature)
 		{
 
 #>

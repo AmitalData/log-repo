@@ -407,6 +407,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
 	    {  
+		   ObjectTable ConverterTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.ConverterType" && d.Tenant == 0).FirstOrDefault(); 
+
 
 		   		   //--------------> Additional Features <--------------\\
 

@@ -230,8 +230,8 @@ namespace WebFreight.Web.MetaDataUpdate
 
                     case "customs":
                         {
-                            CustomsUpdateClass customUpdate = new CustomsUpdateClass();//generated
-                            customUpdate.LoadObjectsTenantZero(context);//generated
+                            //CustomsUpdateClass customUpdate = new CustomsUpdateClass();//generated
+                            //customUpdate.LoadObjectsTenantZero(context);//generated
 
 
                             ForCourier();

@@ -1311,7 +1311,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
                 EventCode = "SendClaim",
                 Index = 1,
                 IsActive = true,
-                LabelTextCodeCode = "Customs.Declaration.B.SendPaymentOrder",
+                LabelTextCodeCode = "Customs.Claim.B.SendClaim",
                 LabelTextCodeDefaultText = "Send Claim",
                 LocalDefaultText = "שלח תביעה",
                 ObjectTableId = claimTableId,
