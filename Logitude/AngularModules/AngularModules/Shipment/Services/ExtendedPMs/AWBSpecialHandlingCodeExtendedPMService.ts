@@ -1,4 +1,4 @@
-﻿import {Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Http, Headers} from '@angular/http';
 import {Observable}     from 'rxjs/Rx';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
@@ -10,14 +10,18 @@ import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {CustomFieldClass} from '../../../Infrastructure/DataContracts/CustomFieldClass'
 import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLogger';
 import {AWBSpecialHandlingCodePM} from '../../EntityPMs/AWBSpecialHandlingCodePM';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
 
 @Injectable()
 
 export class AWBSpecialHandlingCodeExtendedPMService {
     private _http: Http;
+    private _httpClient: HttpClient
     private _apiUrl: string;
     constructor() {
         this._http = ServiceHelper.Http;
+        this._httpClient = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/awbspecialhandlingcodesextended';
     }
 
@@ -26,8 +30,8 @@ export class AWBSpecialHandlingCodeExtendedPMService {
         authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/getsingle?' + 'id=' + id, { headers: authHeader }).map(response => {
-                var pm = response.json();
+            return this._httpClient.get(this._apiUrl + '/getsingle?' + 'id=' + id, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var pm = response;
                 var entity: AWBSpecialHandlingCodePM;
                 if (pm) {
                     entity = this.MapJsonToEntityPM(pm);
@@ -42,7 +46,7 @@ export class AWBSpecialHandlingCodeExtendedPMService {
 
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -64,10 +68,9 @@ export class AWBSpecialHandlingCodeExtendedPMService {
                 var mappedEntity: AWBSpecialHandlingCodePM;
                 mappedEntity = this.MapJsonToEntityPM(entityPM, false);
 
-                return this._http.post(this._apiUrl, JSON.stringify(mappedEntity),
-                    { headers: authHeader }).map((response) => {
+                return this._httpClient.post(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(map((response) => {
 
-                        var pm = response.json();
+                        var pm = response;
                         if (pm) {
                             var mappedResult: AWBSpecialHandlingCodePM;
                             mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
@@ -78,7 +81,7 @@ export class AWBSpecialHandlingCodeExtendedPMService {
                         PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "AWBSpecialHandlingCode", "SaveChanges", "");                        
                         return serviceResponse;
 
-                    }).catch(ServiceHelper.HandleServiceError);
+                    }),catchError(ServiceHelper.HandleServiceError));
             }
             else {
 
@@ -108,10 +111,9 @@ export class AWBSpecialHandlingCodeExtendedPMService {
                 var mappedEntity: AWBSpecialHandlingCodePM;
                 mappedEntity = this.MapJsonToEntityPM(entityPM, false);
 
-                return this._http.put(this._apiUrl, JSON.stringify(mappedEntity),
-                    { headers: authHeader }).map((response) => {
+                return this._httpClient.put(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(map((response) => {
 
-                        var pm = response.json();
+                        var pm = response;
                         if (pm) {
                             var mappedResult: AWBSpecialHandlingCodePM;
                             mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
@@ -123,7 +125,7 @@ export class AWBSpecialHandlingCodeExtendedPMService {
 
                         return serviceResponse;
 
-                    }).catch(ServiceHelper.HandleServiceError);
+                    }),catchError(ServiceHelper.HandleServiceError));
             }
             else {
 

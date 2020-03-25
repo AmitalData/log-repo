@@ -6644,6 +6644,7 @@
     <TypeScriptCompile Include="Shipment\Services\ContainersFUDomainService.ts" />
     <TypeScriptCompile Include="Shipment\Services\ExtendedPMs\AWBSpecialHandlingCodeExtendedPMService.ts" />
     <TypeScriptCompile Include="Shipment\Services\ExtendedPMs\FBLStockExtenedPMService.ts" />
+    <TypeScriptCompile Include="Shipment\Services\ExtendedPMs\ShipmentComputedFieldExtendedService.ts" />
     <TypeScriptCompile Include="Shipment\Services\INTRAWebService.ts" />
     <TypeScriptCompile Include="Shipment\Services\Others\LogBoxSignatureClientService.ts" />
     <TypeScriptCompile Include="Shipment\Services\Others\ShipmentAdditionalCloudDataService.ts" />

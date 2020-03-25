@@ -10,15 +10,18 @@ import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
 import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
 import { AgentSharedManifestPM } from '../../../Common/EntityPMs/AgentSharedManifestPM';
 import { PerformanceLogger } from '../../../Infrastructure/Utilities/PerformanceLogger';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
 
 @Injectable()
+
 export class ShipmentAdditionalCloudDataService {
-
-
     private _http: Http;
+    private _httpClient: HttpClient;
     private _apiUrl: string;
     constructor() {
         this._http = ServiceHelper.Http;
+        this._httpClient = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ShipmentAdditionalCloudData';
     }
     
@@ -29,10 +32,10 @@ export class ShipmentAdditionalCloudDataService {
         authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/getsingle?' + 'id=' + id, {
+            return this._httpClient.get(this._apiUrl + '/getsingle?' + 'id=' + id, {
                 headers: authHeader
             }).map(response => {
-                var pm = response.json();
+                var pm = response;
 
 
 
@@ -50,7 +53,7 @@ export class ShipmentAdditionalCloudDataService {
 
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -61,10 +64,10 @@ export class ShipmentAdditionalCloudDataService {
         authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetSingleData?' + 'id=' + id, {
+            return this._httpClient.get(this._apiUrl + '/GetSingleData?' + 'id=' + id, {
                 headers: authHeader
             }).map(response => {
-                var pm = response.json();
+                var pm = response;
 
 
 
@@ -82,7 +85,7 @@ export class ShipmentAdditionalCloudDataService {
 
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -101,13 +104,13 @@ export class ShipmentAdditionalCloudDataService {
 
                 shipString = JSON.stringify(entityPM);
                 //console.log(shipString);
-            return this._http.put(this._apiUrl + '/PutMain', shipString,
+            return this._httpClient.put(this._apiUrl + '/PutMain', shipString,
                     { headers: authHeader }).map((res) => {
-                        var pm = res.json();
+                        var pm = res;
                         response.Result = pm;
                         return response;
 
-                    }).catch(ServiceHelper.HandleServiceError);
+                    }),catchError(ServiceHelper.HandleServiceError));
           
         });
     }
@@ -127,13 +130,13 @@ export class ShipmentAdditionalCloudDataService {
 
             shipString = JSON.stringify(entityPM);
             //console.log(shipString);
-            return this._http.put(this._apiUrl + '/PutUserId', shipString,
+            return this._httpClient.put(this._apiUrl + '/PutUserId', shipString,
                 { headers: authHeader }).map((res) => {
-                    var pm = res.json();
+                    var pm = res;
                     response.Result = pm;
                     return response;
 
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
 
         });
     }
@@ -145,10 +148,10 @@ export class ShipmentAdditionalCloudDataService {
         //authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetSingleWithoutToken?' + 'securityId=' + id + '&tenant=' + Tenant, {
+            return this._httpClient.get(this._apiUrl + '/GetSingleWithoutToken?' + 'securityId=' + id + '&tenant=' + Tenant, {
                 headers: authHeader
             }).map(response => {
-                var pm = response.json();
+                var pm = response;
 
 
 
@@ -166,7 +169,7 @@ export class ShipmentAdditionalCloudDataService {
 
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
