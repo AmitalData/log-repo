@@ -108,8 +108,8 @@
   </Column>
   <Column
     Name="LastRunId"
-    Type="nvarchar"
-    Size="128">
+    Type="varchar"
+    Size="15">
     <Constraints
       Nullable="false" />
   </Column>

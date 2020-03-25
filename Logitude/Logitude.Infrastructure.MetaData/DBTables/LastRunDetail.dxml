@@ -6,8 +6,8 @@
   Module="Infrastructure">
   <Column
     Name="Id"
-    Type="nvarchar"
-    Size="128">
+    Type="varchar"
+    Size="15">
     <Constraints
       PrimaryKey="true"
       Nullable="false" />
@@ -29,7 +29,7 @@
     Type="varchar"
     Size="15">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Relation
     ForeignKeyColumn="LastRunByUserId"
