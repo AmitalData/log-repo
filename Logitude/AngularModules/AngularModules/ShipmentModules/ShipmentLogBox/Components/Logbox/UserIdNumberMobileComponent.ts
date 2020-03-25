@@ -34,6 +34,7 @@ import { ServiceLocator } from '../../../../Infrastructure/Locators/ServiceLocat
 import { CommonDomainService } from '../../../../Common/Services/CommonDomainService';
 import { TenantPMService } from '../../../../Common/Services/StandardPMs/TenantPMService';
 import { DownloadManager } from '../../../../Infrastructure/Utilities/DownloadManager';
+import { DatePipe } from '@angular/common';
 
 
 
@@ -55,6 +56,7 @@ export class UserIdNumberMobileComponent extends BaseComponent implements OnInit
     public _ShipmentAdditionalCloudDataService: ShipmentAdditionalCloudDataService;
 
     public _ShipmentPMService: ShipmentPMService;
+    private datePipe: DatePipe;
     RefreshTimer: any;
     _ImageLibraryService: ImageLibraryService;
     constructor(private cd: ChangeDetectorRef) {
@@ -64,6 +66,7 @@ export class UserIdNumberMobileComponent extends BaseComponent implements OnInit
         this._ImageLibraryService = new ImageLibraryService();
         this._DocumentTypeMetaDataExtendedService = new DocumentTypeMetaDataExtendedService();
         this._ShipmentPMService = new ShipmentPMService();
+        this.datePipe = new DatePipe("en-US");
         //this.AdditionalData.RequestPaymentData = {};
         //this.AdditionalData.PaymentData = {};
 
@@ -116,11 +119,11 @@ export class UserIdNumberMobileComponent extends BaseComponent implements OnInit
                 var myMessage = "הפרטים נשמרו בהצלחה";
                 if (entity.UserIdNumberUpdateDate != null) {
                
-                    var myDateParts = DateTool.GetDateParts(entity.UserIdNumberUpdateDate);
-                     
-                    var LocalDateString = myDateParts.DateObject.toLocaleDateString();
-                  
-                    myMessage = myMessage + " " + LocalDateString;
+                    //var myDateParts = DateTool.GetDateParts(entity.UserIdNumberUpdateDate);
+                    //var LocalDateString = myDateParts.DateObject.toLocaleDateString();
+
+                    var formatedUpdateDate = this.datePipe.transform(entity.UserIdNumberUpdateDate, 'dd/MM/yyyy');
+                    myMessage = myMessage + " " + formatedUpdateDate;
                 }
                 this.FinalMessage = myMessage;
                 this.ShowFinalMessage = true;
@@ -220,7 +223,8 @@ export class UserIdNumberMobileComponent extends BaseComponent implements OnInit
             if (entity.IsUserIDNumberRequired == false) {
                 var myMessage = "הפרטים נשמרו בהצלחה";
                 if (entity.UserIdNumberUpdateDate != null) {
-                    myMessage = myMessage + " " + entity.UserIdNumberUpdateDate;
+                    var formatedUpdateDate = this.datePipe.transform(entity.UserIdNumberUpdateDate, 'dd/MM/yyyy');
+                    myMessage = myMessage + " " + formatedUpdateDate;
                 }
                 this.FinalMessage == myMessage;
                 this.ShowFinalMessage = true;
