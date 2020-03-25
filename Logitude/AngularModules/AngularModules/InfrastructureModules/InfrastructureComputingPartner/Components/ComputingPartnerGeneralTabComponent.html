@@ -1,3 +1,4 @@
+
 <table>
     <tr>
         <td style="width:10px;max-width:10px;min-width:10px"></td>
@@ -17,7 +18,7 @@
                             <tr>
                                 <td style="width:335px;">
                                     <table>
-                                        <tr class="FormFieldRow">   
+                                        <tr class="FormFieldRow">
                                             <td style="width:75px;vertical-align:top">
                                                 <LogLabel [ObjectFieldName]="'Name'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                             </td>
@@ -62,7 +63,7 @@
                                         </tr>
                                     </table>
                                 </td>
-                               
+
 
                                 <td style="width:10px"></td>
                                 <td style="width:100px;vertical-align:top">
@@ -103,110 +104,127 @@
                             <logitude-edit-grid GridWidth="100%" [HeaderHeight]="25" GridHeight="100%" [ItemSource]="ItemSourceCollection">
 
                                 <log-column [width]="'100'" [header]="'Name'">
-                                    <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.EntityPM.tenant==0 ? false : true">
-                                        <div style="width: 100%; text-align: left;">
-                                            {{item.Name}}
-                                        </div>
-                                    </log-cell-template>
+                                    <ng-template let-item>
+                                        <log-cell-template #logcelltemplate [IsEnabled]="item.EntityPM.tenant==0 ? false : true">
+                                            <div style="width: 100%; text-align: left;">
+                                                {{item.Name}}
+                                            </div>
+                                        </log-cell-template>
+                                    </ng-template>
                                 </log-column>
 
                                 <log-column [width]="'180'" [header]="'Object Table'">
 
-                                    <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.EntityPM.tenant==0 ? false : true">
-                                        <div style="width: 100%; text-align: left;">
-                                            {{item.ObjectTableName}}
-                                        </div>
-                                    </log-cell-template>
+                                    <ng-template let-item>
+                                        <log-cell-template #logcelltemplate [IsEnabled]="item.EntityPM.tenant==0 ? false : true">
+                                            <div style="width: 100%; text-align: left;">
+                                                {{item.ObjectTableName}}
+                                            </div>
+                                        </log-cell-template>
+                                    </ng-template>
                                 </log-column>
 
                                 <log-column [width]="'143'" [header]="'Translation Required'">
 
-                                    <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.EntityPM.tenant==0 ? false : true">
-                                        <div style="width: 100%; text-align: center;">
-                                            <img *ngIf="item.TransalationRequired" src="./Images/GreenTick.png" width="20" height="20" />
-                                        </div>
-                                    </log-cell-template>
+                                    <ng-template let-item>
+                                        <log-cell-template #logcelltemplate [IsEnabled]="item.EntityPM.tenant==0 ? false : true">
+                                            <div style="width: 100%; text-align: center;">
+                                                <img *ngIf="item.TransalationRequired" src="./Images/GreenTick.png" width="20" height="20" />
+                                            </div>
+                                        </log-cell-template>
+                                    </ng-template>
                                 </log-column>
 
 
                                 <log-column [width]="'107'" [header]="'Has Partner List'">
 
-                                    <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.EntityPM.tenant==0 ? false : true">
-                                        <div style="width: 100%; text-align: center;">
-                                            <img *ngIf="item.HasPartnerList" src="./Images/GreenTick.png" width="20" height="20" />
-                                        </div>
-                                    </log-cell-template>
+                                    <ng-template let-item>
+                                        <log-cell-template #logcelltemplate [IsEnabled]="item.EntityPM.tenant==0 ? false : true">
+                                            <div style="width: 100%; text-align: center;">
+                                                <img *ngIf="item.HasPartnerList" src="./Images/GreenTick.png" width="20" height="20" />
+                                            </div>
+                                        </log-cell-template>
+                                    </ng-template>
                                 </log-column>
 
 
                                 <log-column [width]="'141'" [header]="'Must Use Partner List'">
 
-                                    <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.EntityPM.tenant==0 ? false : true">
-                                        <div style="width: 100%; text-align: center;">
-                                            <img *ngIf="item.MustUsePartnerList" src="./Images/GreenTick.png" width="20" height="20" />
-                                            <IconButton  [Left]="3" [Top]="3" [IsEnabled]="item.MustUsePartnerList" style="float:right;margin-right:3px;margin-top:2px" [Name]="'search'"></IconButton>
-                                        </div>
+                                    <ng-template let-item>
+                                        <log-cell-template #logcelltemplate [IsEnabled]="item.EntityPM.tenant==0 ? false : true">
+                                            <div style="width: 100%; text-align: center;">
+                                                <img *ngIf="item.MustUsePartnerList" src="./Images/GreenTick.png" width="20" height="20" />
+                                                <IconButton [Left]="3" [Top]="3" [IsEnabled]="item.MustUsePartnerList" style="float:right;margin-right:3px;margin-top:2px" [Name]="'search'"></IconButton>
+                                            </div>
 
 
-                                    </log-cell-template>
+                                        </log-cell-template>
+                                    </ng-template>
                                 </log-column>
 
 
                                 <log-column [width]="'207'" [header]="'Tenant Level Translation Blocked'">
 
-                                    <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.EntityPM.tenant==0 ? false : true">
-                                        <div style="width: 100%; text-align: center;">
-                                            <img *ngIf="item.TenantLevelTranslationBlocked" src="./Images/GreenTick.png" width="20" height="20" />
+                                    <ng-template let-item>
+                                        <log-cell-template #logcelltemplate [IsEnabled]="item.EntityPM.tenant==0 ? false : true">
+                                            <div style="width: 100%; text-align: center;">
+                                                <img *ngIf="item.TenantLevelTranslationBlocked" src="./Images/GreenTick.png" width="20" height="20" />
 
 
-                                        </div>
-                                    </log-cell-template>
+                                            </div>
+                                        </log-cell-template>
+                                    </ng-template>
                                 </log-column>
 
 
                                 <log-column [width]="'180'" [header]="'Updated by'">
 
-                                    <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.EntityPM.tenant==0 ? false : true">
-                                        <div style="width: 100%; text-align: left;">
-                                         <div *ngIf="item.EntityPM.tenant!=0 || Session.Tenant==0">{{item.UpdatedByUserName}}</div> 
-                                            <div *ngIf="item.EntityPM.tenant==0 && Session.Tenant!=0">System</div>
- 
-                                        </div>
-                                    </log-cell-template>
+                                    <ng-template let-item>
+                                        <log-cell-template #logcelltemplate [IsEnabled]="item.EntityPM.tenant==0 ? false : true">
+                                            <div style="width: 100%; text-align: left;">
+                                                <div *ngIf="item.EntityPM.tenant!=0 || Session.Tenant==0">{{item.UpdatedByUserName}}</div>
+                                                <div *ngIf="item.EntityPM.tenant==0 && Session.Tenant!=0">System</div>
+
+                                            </div>
+                                        </log-cell-template>
+                                    </ng-template>
                                 </log-column>
 
                                 <log-column [width]="'130'" [header]="'Update Date'">
 
-                                    <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.EntityPM.tenant==0 ? false : true">
-                                        <div style="width: 100%; text-align: left;">
-                                            {{item.UpdateDate | DateTimePipe:'D'}}
-                                        </div>
-                                    </log-cell-template>
+                                    <ng-template let-item>
+                                        <log-cell-template #logcelltemplate [IsEnabled]="item.EntityPM.tenant==0 ? false : true">
+                                            <div style="width: 100%; text-align: left;">
+                                                {{item.UpdateDate | DateTimePipe:'D'}}
+                                            </div>
+                                        </log-cell-template>
+                                    </ng-template>
                                 </log-column>
 
 
 
                                 <log-column [width]="'100'">
 
-                                    <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.EntityPM.tenant==0 ? false : true">
-                                        <div style="width: 100%; text-align: center;">
-                                            <table>
-                                                <tr>    
-                                                    <td style="width:70px">
-                                                        <button  [disabled]="!item.IsTranslationAllowed" (click)="OpenTranslation(item)" class="Button" style="margin-top:2px">Translate</button>
-                                                    </td>
-                                                    <td style="width:5px;min-width:5px;max-width:5px">
-                                                    </td>
-                                                    <td style="padding-top:2px">
-                                                        <IconButton [IsEnabled]="item.IsEditTableAllowed" [Name]="'Edit'" (click)="EditComputingTable(item)" ></IconButton>
+                                    <ng-template let-item>
+                                        <log-cell-template #logcelltemplate [IsEnabled]="item.EntityPM.tenant==0 ? false : true">
+                                            <div style="width: 100%; text-align: center;">
+                                                <table>
+                                                    <tr>
+                                                        <td style="width:70px">
+                                                            <button [disabled]="!item.IsTranslationAllowed" (click)="OpenTranslation(item)" class="Button" style="margin-top:2px">Translate</button>
+                                                        </td>
+                                                        <td style="width:5px;min-width:5px;max-width:5px"></td>
+                                                        <td style="padding-top:2px">
+                                                            <IconButton [IsEnabled]="item.IsEditTableAllowed" [Name]="'Edit'" (click)="EditComputingTable(item)"></IconButton>
 
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
 
 
-                                    </log-cell-template>
+                                        </log-cell-template>
+                                    </ng-template>
                                 </log-column>
 
                             </logitude-edit-grid>
@@ -215,7 +233,7 @@
 
 
                     </td>
-                </tr>              
+                </tr>
             </table>
         </td>
         <td style="width:10px;max-width:10px;min-width:10px"></td>
