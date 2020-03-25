@@ -577,17 +577,18 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
         if (this.SelectedLines.Length > 0) {
 
             // 1- prepare transactions
-            var transactionsList = [];
+            var selectedTransactionsIds: string[] = [];
+            // var transactionsList = [];
             this.SelectedLines.Collection.forEach((lineModel: LineModel) => {
                 var transaction = lineModel.LedgerTransactionPM;
                 //transaction.Mark = !transaction.Mark; // the service will take this misson
-
-                transactionsList.push(transaction);
+                selectedTransactionsIds.push(transaction.Id);
+                // transactionsList.push(transaction);
             });
 
             // 2- call the service
             this.CurrentSession.StartBusyIndicatorSaving();
-            this._ReconciliationExtendedPMService.delsertDraftLedgerTransaction(transactionsList).subscribe((serviceResponse: ServiceResponse) => {
+            this._ReconciliationExtendedPMService.delsertDraftLedgerTransaction(selectedTransactionsIds).subscribe((serviceResponse: ServiceResponse) => {
                 console.log("_ReconciliationExtendedPMService.delsertDraftLedgerTransaction", serviceResponse);
                 this.CurrentSession.StopBusyIndicator();
 
