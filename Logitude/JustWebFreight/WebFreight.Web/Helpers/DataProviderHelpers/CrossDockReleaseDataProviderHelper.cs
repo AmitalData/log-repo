@@ -107,6 +107,7 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
                 if (warehouseReleasePM.WarehouseReleasePackages != null && warehouseReleasePM.WarehouseReleasePackages.Count > 0)
                 {
                     dataProvider.ReleasePackages = FullPackage(warehouseReleasePM);
+                    dataProvider = FillEntryDetails(warehouseReleasePM, dataProvider);
                 }
 
                 dataProvider.TenantLogo = DataProviders.General.GetLogo(tenant);
@@ -148,9 +149,60 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
 
         }
 
- 
+        private CrossDockReleaseDataProvider FillEntryDetails(WarehouseReleasePM warehouseReleasePM, CrossDockReleaseDataProvider dataProvider)
+        {
+            WarehouseEntryRepository warehouseEntryRepository = new WarehouseEntryRepository(warehouseReleasePM.Tenant);
+            WarehouseEntryPackageRepository warehouseEntryPackageRepository = new WarehouseEntryPackageRepository(warehouseReleasePM.Tenant);
+            WarehouseEntryPackagesReleaseRepository warehouseEntryPackagesReleaseRepository = new WarehouseEntryPackagesReleaseRepository(warehouseReleasePM.Tenant);
 
-        private List<ReleasePackage> FullPackage(WarehouseReleasePM warehouseReleasePM)
+            List<string> releasePackagesIds = new List<string>();
+            foreach (WarehouseReleasePackagePM package in warehouseReleasePM.WarehouseReleasePackages)
+            {
+                releasePackagesIds.Add(package.Id);
+            }
+
+            List<WarehouseEntryPackagesRelease> allWarehouseEntryList = warehouseEntryPackagesReleaseRepository.GetWarehouseEntryPackagesReleaseByReleasePackageIds(releasePackagesIds, warehouseReleasePM.Tenant);
+            List<string> warehouseEntryPackagesIds = allWarehouseEntryList.Select(e => e.EntryPackageId).ToList();
+            List<string> entryPackagesIds = warehouseEntryPackageRepository.GetWareHouseEntriesIdsByPackagesIds(warehouseEntryPackagesIds, warehouseReleasePM.Tenant);
+            List<WarehouseEntry> allWarehouseEntries = warehouseEntryRepository.GetWarehouseEntriesFromIdList(entryPackagesIds, warehouseReleasePM.Tenant);
+
+            foreach (WarehouseEntry warehouseEntry in allWarehouseEntries)
+            {
+                if (warehouseEntry.ActualEntryDate != null)
+                {
+                    dataProvider.ActualEntryDate += warehouseEntry.ActualEntryDate + ",";
+                }
+                if (!string.IsNullOrEmpty(warehouseEntry.TruckerReference))
+                {
+                    dataProvider.EntryTruckerReference += warehouseEntry.TruckerReference + ",";
+                }
+                if (!string.IsNullOrEmpty(warehouseEntry.TruckerId))
+                {
+                    Card truckerCard = CardRepository.GetSingleCard(warehouseEntry.TruckerId, warehouseEntry.Tenant, true);
+                    if (truckerCard != null)
+                    {
+                        dataProvider.EntryTruckerName += truckerCard.EnglishName + ",";
+                    }
+                }
+            }
+            
+            if (!string.IsNullOrEmpty(dataProvider.EntryTruckerReference))
+            {
+                dataProvider.EntryTruckerReference = dataProvider.EntryTruckerReference.Substring(0, dataProvider.EntryTruckerReference.Length - 1);
+            }
+            if (!string.IsNullOrEmpty(dataProvider.EntryTruckerName))
+            {
+                dataProvider.EntryTruckerName = dataProvider.EntryTruckerName.Substring(0, dataProvider.EntryTruckerName.Length - 1);
+            }
+            if (!string.IsNullOrEmpty(dataProvider.ActualEntryDate))
+            {
+                dataProvider.ActualEntryDate = dataProvider.ActualEntryDate.Substring(0, dataProvider.ActualEntryDate.Length - 1);
+            }
+            
+            return dataProvider;
+        }
+
+            private List<ReleasePackage> FullPackage(WarehouseReleasePM warehouseReleasePM)
         {
             List<ReleasePackage> result = new List<ReleasePackage>();
             foreach (WarehouseReleasePackagePM package in warehouseReleasePM.WarehouseReleasePackages)
@@ -373,7 +425,7 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
                     tempList.Add(item);
                 }
 
-                tempList = tempList.OrderBy(or => or.EntryNumber).ToList();
+                    tempList = tempList.OrderBy(or => or.EntryNumber).ToList();
 
                 List<ReleasePackageGroup> finalResults = (from p in tempList
                                                           group p by new { p.EntryId, p.EntryNumber } into g
