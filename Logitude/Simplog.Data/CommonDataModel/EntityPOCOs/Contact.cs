@@ -43,7 +43,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
 
         public virtual ContactLastLogin ContactLastLogin { get; set; }
 
-        public virtual SharedLogisticsContactLastLogin SharedLogisticsContactLastLogin { get; set; }
+        //public virtual SharedLogisticsContactLastLogin SharedLogisticsContactLastLogin { get; set; }
 
         [ForeignKey("ImageDetailId")]
         public ImageDetail ImageDetail { get; set; }
