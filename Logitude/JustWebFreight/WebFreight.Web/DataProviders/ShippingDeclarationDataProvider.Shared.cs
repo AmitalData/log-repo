@@ -9,7 +9,6 @@ namespace WebFreight.Web.DataProviders
         public string CopyNumber { get; set; }
         public string CopyName { get; set; }
         public string BranchSignature { get; set; }
-        public DateTime?  WareHouseEntryDate { get; set; }
 
         /// <summary>
         /// Consignor
@@ -327,6 +326,8 @@ namespace WebFreight.Web.DataProviders
         public double? TotalPayablesForAgent { get; set; }
         public string FirstFrom { set; get; }
         public string LastTo { set; get; }
+        public string FirstFromNew { set; get; }
+        public string LastToNew { set; get; }
 
         public string DeliveryFromName { get; set; }
         public string DeliveryFromAddress { get; set; }
