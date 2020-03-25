@@ -74,7 +74,7 @@ export class DenyReasonComponent extends BaseComponent implements OnInit, AfterV
             this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving ...");
             this.AdditionalData.IsImporterApprovalRequried = false;
             this.DenyReason = SessionLocator.LoggedUserPM.EnglishName + ", " + SessionLocator.LoggedUserPM.LocalName + ", " + SessionLocator.LoggedUserPM.Email + ", " + this.DenyReason + ", " + this.AdditionalData.VersionApproved;
-            this._ShipmentAdditionalCloudDataService.update(this.AdditionalData).subscribe(AdditionalResult => {
+            this._ShipmentAdditionalCloudDataService.update(this.AdditionalData).subscribe((AdditionalResult:any) => {
                 this.CurrentSession.CurrentWindow.StopBusyIndicator();
                 this.CurrentSession.CloseCurrentWindowEmit("Denied");
             });

@@ -28,10 +28,10 @@ export class ShipmentAdditionalCloudDataService {
         authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
         return Observable.defer(() => {
-            return this._httpClient.get(this._apiUrl + '/getsingle?' + 'id=' + id, ServiceHelper.GetHttpFullHeaders()).pipe(
-                map((response: HttpResponse<any>) => {
-                    if (response instanceof HttpResponse) {
-                        var pm = response.body;
+            return this._httpClient.get(this._apiUrl + '/getsingle?' + 'id=' + id, ServiceHelper.GetHttpHeaders()).pipe(
+                map((response) => {
+                    //if (response instanceof HttpResponse) {
+                        var pm = response;
 
 
 
@@ -44,11 +44,11 @@ export class ShipmentAdditionalCloudDataService {
                         serviceResponse = new ServiceResponse();
                         serviceResponse.Result = pm;
 
-                        var servertime = response.headers.get('ServerExecutionTime');
-                        PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ShipmentAdditionalCloudData", "GetSinglePM", 'id=' + id);
+                        //var servertime = response.headers.get('ServerExecutionTime');
+                       // PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ShipmentAdditionalCloudData", "GetSinglePM", 'id=' + id);
 
                         return serviceResponse;
-                    }
+                    //}
             }),catchError(ServiceHelper.HandleServiceError));
         });
     }
@@ -60,10 +60,10 @@ export class ShipmentAdditionalCloudDataService {
         authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
         return Observable.defer(() => {
-            return this._httpClient.get(this._apiUrl + '/GetSingleData?' + 'id=' + id, ServiceHelper.GetHttpFullHeaders()).pipe(
-                map((response: HttpResponse<any>) => {
-                    if (response instanceof HttpResponse) {
-                        var pm = response.body;
+            return this._httpClient.get(this._apiUrl + '/GetSingleData?' + 'id=' + id, ServiceHelper.GetHttpHeaders()).pipe(
+                map((response) => {
+                    //if (response instanceof HttpResponse) {
+                        var pm = response;
 
 
 
@@ -76,11 +76,11 @@ export class ShipmentAdditionalCloudDataService {
                         serviceResponse = new ServiceResponse();
                         serviceResponse.Result = pm;
 
-                        var servertime = response.headers.get('ServerExecutionTime');
-                        PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ShipmentAdditionalCloudData", "GetSinglePM", 'id=' + id);
+                        //var servertime = response.headers.get('ServerExecutionTime');
+                       // PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ShipmentAdditionalCloudData", "GetSinglePM", 'id=' + id);
 
                         return serviceResponse;
-                    }
+                    //}
             }),catchError(ServiceHelper.HandleServiceError));
         });
     }
@@ -142,10 +142,10 @@ export class ShipmentAdditionalCloudDataService {
         //authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
         return Observable.defer(() => {
-            return this._httpClient.get(this._apiUrl + '/GetSingleWithoutToken?' + 'securityId=' + id + '&tenant=' + Tenant, ServiceHelper.GetHttpFullHeaders()).pipe(
-                map((response: HttpResponse<any>) => {
-                    if (response instanceof HttpResponse) {
-                        var pm = response.body;
+            return this._httpClient.get(this._apiUrl + '/GetSingleWithoutToken?' + 'securityId=' + id + '&tenant=' + Tenant, ServiceHelper.GetHttpHeaders()).pipe(
+                map((response) => {
+                    //if (response instanceof HttpResponse) {
+                        var pm = response;
 
 
 
@@ -158,11 +158,11 @@ export class ShipmentAdditionalCloudDataService {
                         serviceResponse = new ServiceResponse();
                         serviceResponse.Result = pm;
 
-                        var servertime = response.headers.get('ServerExecutionTime');
+                        //var servertime = response.headers.get('ServerExecutionTime');
                         //PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ShipmentAdditionalCloudData", "GetSinglePM", 'id=' + id);
 
                         return serviceResponse;
-                    }
+                    //}
                 }), catchError(ServiceHelper.HandleServiceError));
         });
     }

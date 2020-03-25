@@ -3777,7 +3777,7 @@ export class InsideShipmentPackageItem extends BaseComponent {
     set CountryId(newValue: string) {
         if (this.EntityPM.CountryId != newValue) {
             this.EntityPM.CountryId = newValue;
-            this.CountryListService.getSingle(this.EntityPM.CountryId).subscribe(result => {
+            this.CountryListService.getSingle(this.EntityPM.CountryId).subscribe((result:any) => {
                 var country = result.Result;
                 if (country != null) {
                     this.EntityPM.CountryCode = country.Code;

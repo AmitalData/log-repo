@@ -159,7 +159,7 @@ export class AWBChooseCommodityComponent {
             this.DomainService = new CommonDomainService();
         }
 
-        this.DomainService.GetCopyCommodityToTenant(tenantZeroId).subscribe(myResult => {
+        this.DomainService.GetCopyCommodityToTenant(tenantZeroId).subscribe((myResult:any) => {
             this.Close();
         });
     }

@@ -165,9 +165,9 @@ export class SharedAgentManifestService {
         var callTime = new Date();
         return Observable.defer(() => {
             return this._httpClient.get(this._apiUrl + '/getsingle?' + 'id=' + id, ServiceHelper.GetHttpHeaders()).pipe(
-                map((response: HttpEvent<any>) => {
-                    if (response instanceof HttpResponse) {
-                        var pm = response.body;
+                map((response) => {
+                    //if (response instanceof HttpResponse) {
+                        var pm = response;
 
                         var entity: AgentSharedManifestPM;
                         if (pm) {
@@ -178,11 +178,11 @@ export class SharedAgentManifestService {
                         serviceResponse = new ServiceResponse();
                         serviceResponse.Result = entity;
 
-                        var servertime = response.headers.get('ServerExecutionTime');
-                        PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "AgentSharedManifest", "GetSinglePM", 'id=' + id);
+                        //var servertime = response.headers.get('ServerExecutionTime');
+                        //PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "AgentSharedManifest", "GetSinglePM", 'id=' + id);
 
                         return serviceResponse;
-                    }
+                    //}
 
                 }), catchError(ServiceHelper.HandleServiceError));
         });

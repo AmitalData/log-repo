@@ -115,8 +115,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         {
             try
             {
-                string logKey = PerformanceLogger.LogCurrentTime();
-
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
@@ -179,8 +177,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                     myResult = shipmentQuery.GetShipmentsDashBoardSummary(tenant, myDirectionId, myTransportModeId, loggedContactId, hasETDFeature, hasFollowupsFeature, hasExpDepNotTransmittedFeature, hasShippingInstructionsLast7DaysFeature, hasContainerStatusLast7DaysFeature, hasEBookingInProgressFeature);
                 }
-
-                PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
             }

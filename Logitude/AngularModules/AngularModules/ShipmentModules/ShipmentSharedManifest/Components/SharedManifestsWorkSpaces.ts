@@ -184,7 +184,7 @@ export class SharedManifestsWorkSpaces extends BaseComponent {
 
     LoadDataSummary() {
 
-        this._sharedAgentManifestService.getAgentSharedManifestsWorkspaceSummary().subscribe(res => {
+        this._sharedAgentManifestService.getAgentSharedManifestsWorkspaceSummary().subscribe((res:any) => {
 
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
@@ -321,7 +321,7 @@ export class SharedManifestsWorkSpaces extends BaseComponent {
         var days = this.ComputeDays();
         this.BarData = [];
 
-        this._sharedAgentManifestService.GetAgentSharedManifestsForDashBoard(0, days, +this.SelectedTimeRangeItem.Index).subscribe(myResult => {
+        this._sharedAgentManifestService.GetAgentSharedManifestsForDashBoard(0, days, +this.SelectedTimeRangeItem.Index).subscribe((myResult:any) => {
 
             this.BarData = myResult.Result;
             var groupedData: GroupByClass[] = [];

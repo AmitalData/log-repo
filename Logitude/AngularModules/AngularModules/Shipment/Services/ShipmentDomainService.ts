@@ -9,7 +9,7 @@ import {ShipmentPMService} from './StandardPMs/ShipmentPMService';
 import {ShipmentList} from '../EntityLists/ShipmentList';
 import { MessagingStockUsageHistoryList } from '../EntityLists/MessagingStockUsageHistoryList';
 import { AppTool } from '../../Infrastructure/Tools';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpEvent, HttpResponse } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 //import { defer } from 'rxjs';
 
@@ -23,34 +23,6 @@ export class ShipmentDomainService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ShipmentDomain';
     }
 
-    GetShipmentsCounts_Old(myDirectionId: string, myTransportModeId: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        
-        var url = this._apiUrl + '/GetShipmentsCounts?myDirectionId=' + myDirectionId + '&myTransportModeId=' + myTransportModeId;
-
-        return Observable.defer(() => {
-            return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-
-                var myJsonResult = response;
-
-                var myResult = new ShipmentsSummary();
-
-                if (myJsonResult) {
-                    var jsonListKeys = Object.keys(myJsonResult);
-                    for (var key in jsonListKeys) {
-                        var property = jsonListKeys[key];
-                        myResult[property] = myJsonResult[property];
-                    }
-                }
-
-                var serviceResponse = new ServiceResponse();
-                serviceResponse.Result = myResult;
-                return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
-        });
-    }
-
     GetShipmentsCounts(myDirectionId: string, myTransportModeId: string) {
 
         var url = this._apiUrl + '/GetShipmentsCounts?myDirectionId=' + myDirectionId + '&myTransportModeId=' + myTransportModeId;
@@ -58,7 +30,6 @@ export class ShipmentDomainService {
         return Observable.defer(() => {
             return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(
 
-                // map operator inside pipe
                 map(response => {
                     var myJsonResult = response;
 
