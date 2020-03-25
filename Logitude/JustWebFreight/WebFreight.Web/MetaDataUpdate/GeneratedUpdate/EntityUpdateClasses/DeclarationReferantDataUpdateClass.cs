@@ -1965,7 +1965,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DefaultText =  " ",
 					  						ListFieldLable =  "ActionsListLable",
 					  						ListLableDefaultText =  " ",
-					  						ListLocalDefaultText =  "פעולות",
+					  						ListLocalDefaultText =  " ",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
