@@ -154,7 +154,7 @@
                     <div class="TextTrimming"
                          style="display: inline; position: absolute;left: 0px; padding-top: 1px;">
 
-                        <div *ngIf="!IsHeaderScreenTemplate" class="TextTrimming"
+                        <div *ngIf="!IsHeaderScreenTemplate" class="TextTrimming" title="Entity[FieldName] | DateTimePipe:'DT'"
                              [ngStyle]="{color: Entity.ATAOrETA | StringToColorPipe : 'ArrivalDate'}">
                             <span>{{Entity[FieldName] | DateTimePipe:'D'}}</span>
                         </div>
@@ -282,7 +282,7 @@
                             <div dir="RTL" class="class-dropdownfilter-content" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose()">
                                 <ul class="P-button-drop-menu" style="text-align:right">
                                     <li (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose();ShowCFIUFILEFromDeclarationReferantData();  ">
-                                        <span>כניסה להצהרה</span>
+                                        <span>כניסה לתיק עמילות</span>
                                     </li>
                                     <li (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); ShowCFIFILEMMoveToQueueScreen();">
                                         <span>העברה לתור</span>
