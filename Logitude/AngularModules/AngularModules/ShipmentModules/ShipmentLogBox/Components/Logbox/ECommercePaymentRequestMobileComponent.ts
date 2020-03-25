@@ -110,6 +110,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
                 }
             }
         }
+        this.StartBusyIndicator("Loading ...");
         this._ShipmentPMService.getSingleBySecurityKeyTenantWithoutToken(this.SecurityKey, this.Tenant).subscribe(MyResult => {
             if (MyResult.Result) {
                 //this.EntityPm = MyResult.Result;
@@ -139,6 +140,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
                 service.GetTenantLogoUri(this.Tenant).subscribe((myLogoResult: any) => {
 
                     this.CompanyLogo = myLogoResult.Result;
+                    this.StopBusyIndicator();
 
                 });
                 //GetTenantEcommerceSupportEmail
@@ -150,7 +152,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
                 if (this.RefreshTimer) {
                     clearTimeout(this.RefreshTimer);
                 }
-
+                //this.StopBusyIndicator();
                 this.RefreshTimer = setInterval(() => this.ReloadPage(), 1200000);//1200000
             }
             else {
@@ -277,6 +279,17 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
     public get u71() { return this.AdditionalData.PaymentData.u71 }
     public set u71(newValue: string) { this.AdditionalData.PaymentData.u71 = newValue; }
 
+    public BusyIndicatorText: string = null;
+    public ShowBusyIndicator: boolean = false;
+    public StartBusyIndicator(myText: string) {
+        this.BusyIndicatorText = myText;
+        this.ShowBusyIndicator = true;
+    }
+
+    public StopBusyIndicator() {
+        this.BusyIndicatorText = null;
+        this.ShowBusyIndicator = false;
+    }
 
 
     ShowPaymentDetailsScreen: boolean = false;
