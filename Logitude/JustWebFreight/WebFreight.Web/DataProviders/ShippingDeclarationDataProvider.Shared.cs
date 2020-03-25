@@ -5,7 +5,11 @@ namespace WebFreight.Web.DataProviders
 {
     public class ShippingDeclarationDataProvider : BaseDataProvider
     {
+        public string MasterAMSBL { get; set; }
+        public string CopyNumber { get; set; }
+        public string CopyName { get; set; }
         public string BranchSignature { get; set; }
+        public DateTime?  WareHouseEntryDate { get; set; }
 
         /// <summary>
         /// Consignor
