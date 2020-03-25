@@ -449,8 +449,8 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                                                           //AccountPaymentTermName = paymentTerm.EnglishName,
                                                           //AccountPhone = card.BusinessPhone,
 
-                                                          //OpenCredit = line.OpenCredit,
-                                                          //OpenDebit = line.OpenDebit,
+                                                          OpenCredit = line.OpenCredit,
+                                                          OpenDebit = line.OpenDebit,
                                                           CurrencyCode = currency.Code,
 
                                                           //// credit data
