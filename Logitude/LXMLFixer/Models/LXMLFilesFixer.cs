@@ -1022,8 +1022,14 @@ namespace Logitude.LXMLFixer.Models
         private void ExportMistakesData()
         {
             string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+
+            string excludedMistakesFilePath = Path.Combine(projectDirectory, @"ExcludedMistakes.txt");
+            List<string> excludedMistakes = File.ReadLines(excludedMistakesFilePath).ToList();
+
+            string lxmlMistakes = string.Join("\n", LXMLMistakesData.Split('\n').Where(d => !excludedMistakes.Contains(d)).ToArray());
+
             string csvFilePath = Path.Combine(projectDirectory, @"Reports\" + ModuleName + @"\LXMLFilesMistakes.csv");
-            File.WriteAllText(csvFilePath, LXMLMistakesData);
+            File.WriteAllText(csvFilePath, lxmlMistakes);
             Console.WriteLine("\nLXML Files Mistakes Extracted To /Reports/" + ModuleName + "/LXMLFilesMistakes.csv\n");
         }
 
