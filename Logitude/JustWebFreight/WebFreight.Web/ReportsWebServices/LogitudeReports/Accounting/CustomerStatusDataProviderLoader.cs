@@ -3,6 +3,7 @@ using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.Resolvers;
+using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using System;
@@ -220,10 +221,20 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
         private uint GetAgingReportMonthsBackwards()
         {
-            FullAccountingSettingRepository settingRepository = new FullAccountingSettingRepository(tenant);
-            FullAccountingSetting settings = settingRepository.GetSingleFullAccountingSetting(tenant);
+            FullAccountingSetting settings = GetFullAccountingSettings();
+
+            if (settings.NumberOfAgingMonths == null)
+                throw new ApplicationException(TextCodesTranslator.TranslateText("LedgerTransaction.O.AgingMonthNotSet", tenant, LoggedContactResolver.GetLoggedContactShowLocal(tenant)));
+
             var monthsBackwards = settings.NumberOfAgingMonths ?? 0;
             return (uint)monthsBackwards;
+        }
+
+        private FullAccountingSetting GetFullAccountingSettings()
+        {
+            FullAccountingSettingRepository settingRepository = new FullAccountingSettingRepository(tenant);
+            FullAccountingSetting settings = settingRepository.GetSingleFullAccountingSetting(tenant);
+            return settings;
         }
 
         private AgingReportParam InitiateAgingReportParameters()

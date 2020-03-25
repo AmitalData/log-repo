@@ -116,7 +116,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Ledger Transaction",
-			      				    Code =  "5f3b",
+			      				    Code =  "7c9d",
 			      				    Name =  "LedgerTransaction Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Accounting",
@@ -3333,6 +3333,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode LedgerTransactionTextCode_LedgerTransactionOIncludeRelatedCurrenciesAccount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.IncludeRelatedCurrenciesAccount", DefaultText = "Include Related Currencies Account",LocalDefaultText = @"לכלול כרטיסי פיצול לפי מטבע", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode LedgerTransactionTextCode_LedgerTransactionOIncludeChildAccounts = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.IncludeChildAccounts", DefaultText = "Include Child Accounts",LocalDefaultText = @"לכלול כרטיסים מקושרים", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode LedgerTransactionTextCode_LedgerTransactionOAgingMonthNotSet = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.AgingMonthNotSet", DefaultText = "Number of aging months is not set in Full Accounting Settings",LocalDefaultText = @"יש להגדיר מספר חודשי גיול בהגדרות מערכת", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
