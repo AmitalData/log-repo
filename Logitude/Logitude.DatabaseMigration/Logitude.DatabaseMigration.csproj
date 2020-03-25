@@ -2227,6 +2227,10 @@
     <Compile Include="Migrations\202003250656030_SharedLogisticsContactLastLogin_drop_contact_relation.Designer.cs">
       <DependentUpon>202003250656030_SharedLogisticsContactLastLogin_drop_contact_relation.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202003250852233_FixSharedLogisticsContactLastLoginAndContact.cs" />
+    <Compile Include="Migrations\202003250852233_FixSharedLogisticsContactLastLoginAndContact.Designer.cs">
+      <DependentUpon>202003250852233_FixSharedLogisticsContactLastLoginAndContact.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\202003030904524_WesamDBMigrationFixes.cs" />
     <Compile Include="Migrations\202003030904524_WesamDBMigrationFixes.Designer.cs">
@@ -4020,6 +4024,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202003250656030_SharedLogisticsContactLastLogin_drop_contact_relation.resx">
       <DependentUpon>202003250656030_SharedLogisticsContactLastLogin_drop_contact_relation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003250852233_FixSharedLogisticsContactLastLoginAndContact.resx">
+      <DependentUpon>202003250852233_FixSharedLogisticsContactLastLoginAndContact.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

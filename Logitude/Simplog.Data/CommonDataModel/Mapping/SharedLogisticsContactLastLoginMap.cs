@@ -46,9 +46,9 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.PartnerTypeId).HasColumnName("PartnerTypeId");
             this.Property(t => t.Via).HasColumnName("Via");
             // Relationships
-            //this.HasRequired(t => t.Contact)
-            //   .WithMany()
-            //   .HasForeignKey(d => d.ContactId);
+            this.HasRequired(t => t.Contact)
+               .WithMany()
+               .HasForeignKey(d => d.ContactId);
 
         }
     }
