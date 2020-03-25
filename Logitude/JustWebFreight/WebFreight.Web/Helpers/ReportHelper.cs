@@ -35,6 +35,7 @@ using WebFreight.Web.Helpers.DataProviderHelpers;
 using WebFreight.Web.ReportsWebServices;
 using WebFreight.Web.ReportsWebServices.LogitudeReports;
 using WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap;
+using WebFreight.Web.ReportsWebServices.LogitudeReports.CRM;
 using WebFreight.Web.ReportsWebServices.LogitudeReports.Operational;
 using WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement;
 using WebFreight.Web.ShipmentPackageModel;
@@ -1629,7 +1630,7 @@ namespace WebFreight.Web.Helpers
 
         private byte[] LoadShipmentsEventsListDataProvider(byte[] filters, int tenant)
         {
-            DatabaseInitializer.RunOnSeconderyDB = true;
+           
             LogitudeReportsWebService logitudeReportsWebService = new LogitudeReportsWebService();
             return logitudeReportsWebService.LoadShipmentsEventsListDataProvider(filters, tenant);
         }
@@ -1651,9 +1652,7 @@ namespace WebFreight.Web.Helpers
 
                 case "SHEL":
                     {
-                        Thread thread = new Thread(() => { dataProvider = LoadShipmentsEventsListDataProvider(filters, reportFliter.tenant); });
-                        thread.Start();
-                        thread.Join();
+                        dataProvider = LoadShipmentsEventsListDataProvider(filters, reportFliter.tenant);
                         break;
                     }
 
@@ -1787,7 +1786,8 @@ namespace WebFreight.Web.Helpers
 
                 case "MCOR":
                     {
-                        dataProvider = logitudeReportsWebService.LoadOpportunityMonthlyConversionData(filters, reportFliter.tenant);
+                        MonthlyConversionManager myDataManager = new MonthlyConversionManager(filters, reportFliter.tenant);
+                        dataProvider = myDataManager.GetData();
                         break;
                     }
 

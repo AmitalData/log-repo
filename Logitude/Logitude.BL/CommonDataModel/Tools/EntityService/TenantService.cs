@@ -194,6 +194,11 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             TenantMapping.MapEntity(theEntityPm, Poco, isNewEntity);
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();
+
+            this.LBtenantsettingPoco = LBsettingentityRepository.GetSingleLBTenant(theEntityPm.Id);
+            this.LBtenantsettingPoco.IsDocumentsArchive = theEntityPm.IsDocumentsArchive;
+            LBsettingentityRepository.Update(this.LBtenantsettingPoco);
+            LBsettingentityRepository.SubmitChanges();
         }
 
         private void InitializeComponent()
