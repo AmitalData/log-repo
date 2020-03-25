@@ -154,7 +154,7 @@
                     <div class="TextTrimming"
                          style="display: inline; position: absolute;left: 0px; padding-top: 1px;">
 
-                        <div *ngIf="!IsHeaderScreenTemplate" class="TextTrimming" title="Entity[FieldName] | DateTimePipe:'DT'"
+                        <div *ngIf="!IsHeaderScreenTemplate" class="TextTrimming" [title]="Entity[FieldName] | DateTimePipe:'DT'"
                              [ngStyle]="{color: Entity.ATAOrETA | StringToColorPipe : 'ArrivalDate'}">
                             <span>{{Entity[FieldName] | DateTimePipe:'D'}}</span>
                         </div>
