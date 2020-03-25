@@ -18,6 +18,7 @@ namespace Logitude.IntegrationTest.Shipment
 {
     class ShipmentPreperationCalls
     {
+        static ShipmentPM shipmentPM = new ShipmentPM();
         static ShipmentIntegrationVariables vars;
         public static async Task PrepareVariables()
         {
@@ -33,14 +34,55 @@ namespace Logitude.IntegrationTest.Shipment
                 throw new Exception(Ex.Message);
             }
         }
+        public static async Task PostShipment(string shipmentLevelCode, string directionId, string transportModeId)
+        {
+            shipmentPM = CreateShipmentPM(shipmentLevelCode, directionId, transportModeId);
+            HttpResponseMessage response = await RestClientService.PostAsync(shipmentPM, "shipment");
+            shipmentPM = RestClientService.ParseResponse<ShipmentPM>(response);
+            ShipmentVariables.ShipmentId = shipmentPM.Id;
+        }
+
+        private static ShipmentPM  CreateShipmentPM(string shipmentLevelCode, string directionId, string transportModeId)
+        {
+            shipmentPM.Tenant = IntegrationTestLoginParameters.Tenant;
+            shipmentPM.CreatedByUserId = IntegrationTestLoginParameters.LoginUserId;
+            shipmentPM.BranchId = CorePreparationVariables.BranchId;
+            shipmentPM.DepartmentId = CorePreparationVariables.DepartmentId;
+            shipmentPM.ProfitCurrencyId = CorePreparationVariables.TenantPM.ProfitCurrencyId;
+            shipmentPM.VolumeUnitCode = CorePreparationVariables.TenantPM.VolumeUnitCode;
+            shipmentPM.DimensionsUnitCode = CorePreparationVariables.TenantPM.DimensionsUnitCode;
+            shipmentPM.GrossWeightUnitCode = CorePreparationVariables.TenantPM.GrossWeightUnitCode;
+            shipmentPM.ChargeableWeightUnitCode = CorePreparationVariables.TenantPM.ChargeableWeightUnitCode;
+            shipmentPM.ShipmentLevelCode = shipmentLevelCode;
+            shipmentPM.DirectionId = directionId;
+            shipmentPM.TransportModeId = transportModeId;
+            //shipmentPM.MainCarriageTransportModeId = "";
+            shipmentPM.FreightPrepaidCollectId = "C";
+            shipmentPM.OtherPrepaidCollectId = "C";
+            shipmentPM.CreatedByUserId = CorePreparationVariables.UserId;
+            shipmentPM.UpdatedByUserId = CorePreparationVariables.UserId;
+            shipmentPM.CustomerId = ShipmentVariables.ShipperExport1;
+            shipmentPM.ShipperId = ShipmentVariables.ShipperExport1;
+            shipmentPM.IssuingCarrierAgentId = ShipmentVariables.AgentId;
+            shipmentPM.AgentId = ShipmentVariables.AgentId;
+            shipmentPM.FromPortId = ShipmentVariables.PortLHRId;
+            shipmentPM.ToPortId = ShipmentVariables.PortJFKId;
+            shipmentPM.MainCarriageFromPortId = ShipmentVariables.PortLHRId; ;
+            shipmentPM.MainCarriageToPortId = ShipmentVariables.PortJFKId;
+            shipmentPM.OriginMainCarriageFromPortId = ShipmentVariables.PortLHRId;
+            shipmentPM.AWBCurrencyId = ShipmentVariables.CurrencyEURId;
+            shipmentPM.ValueOfGoodsCurrencyId = ShipmentVariables.CurrencyEURId;
+            shipmentPM.AccountManagerUserId = CorePreparationVariables.UserId;
+
+            ShipmentVariables.ConcurrencyGUID = shipmentPM.NewConcurrencyGUID = Guid.NewGuid().ToString();
+            return shipmentPM;
+        }
         public static void VarsMap()
         {
-            ShipmentVariables.ShipmentId = vars.AWBShipmentId;
-            ShipmentVariables.ShipmentNumber = vars.ShipmentNumber;
             ShipmentVariables.CurrencyEURId = vars.CurrencyEURId;
             ShipmentVariables.IncotermLDEId = vars.IncotermLDEId;
             ShipmentVariables.MeasurmentGRWTId = vars.MeasurementGRWTId;
-            
+
             ShipmentVariables.ChargeGroupCOMMCode = vars.ChargeGroupCOMMCode;
             ShipmentVariables.ChargeGroupCOMMId = vars.ChargeGroupCOMMId;
 

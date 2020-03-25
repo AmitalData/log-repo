@@ -91,13 +91,13 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return vars;
         }
 
-        private string CreateAWBShipment()
+     /*   private string CreateAWBShipment()
         {
             GetUserPM();
             GetTenantPM();
             CreatShipmentPM();
             InsertShipment();
-            GetShipment();
+           // GetShipment();
             return shipment.Id;
         }
 
@@ -161,7 +161,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipment.ValueOfGoodsCurrencyId = vars.CurrencyEURId;
             shipment.AccountManagerUserId = loggedUser.Id;
             vars.ConcurrencyGUID = shipment.NewConcurrencyGUID = Guid.NewGuid().ToString();
-        }
+        }*/
 
         private string GetWarehouse(string warehouseName,string code)
         {
