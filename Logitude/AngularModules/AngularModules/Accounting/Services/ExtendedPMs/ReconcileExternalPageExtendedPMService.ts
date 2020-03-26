@@ -13,12 +13,7 @@ import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
 import { ImageParameter } from '../../../Infrastructure/DataContracts/ImageParameter';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators'
-const httpOptions = {
-    headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Token': ServiceHelper.GetLoggedUserToken()
-    })
-};
+ 
 
 @Injectable()
 
@@ -31,7 +26,6 @@ export class ReconcileExternalPageExtendedPMService
     {
         //this._http = ServiceHelper.Http;
         this.httpClient = ServiceHelper.HttpClient;
-        httpOptions.headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Token': SessionInfo.Token })
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ReconcileExternalPagesExtended';
     }
 
@@ -46,7 +40,7 @@ export class ReconcileExternalPageExtendedPMService
           //  authHeader.append('Token', SessionInfo.Token);
            // authHeader.append('Content-Type', 'application/json');
 
-            return this.httpClient.get(this._apiUrl + '/GetPageByNumber?pageNumber=' + pageNumber + '&entityId=' + entityId + '&objectTableName=' + objectTableName,  httpOptions).pipe(
+            return this.httpClient.get(this._apiUrl + '/GetPageByNumber?pageNumber=' + pageNumber + '&entityId=' + entityId + '&objectTableName=' + objectTableName,  ServiceHelper.GetHttpHeaders()).pipe(
                 map((response:ServiceResponse) => {
                     var res = response;
                         var pm = res.Result;
@@ -93,7 +87,7 @@ export class ReconcileExternalPageExtendedPMService
 
     GetPreviousPageByNumber(pageNumber: number, entityId: string,objectTableName: string)
     {
-        return this.httpClient.get(this._apiUrl + '/GetPreviousPageByNumber?pageNumber=' + pageNumber + '&entityId=' + entityId + '&objectTableName=' + objectTableName,  httpOptions).pipe(
+        return this.httpClient.get(this._apiUrl + '/GetPreviousPageByNumber?pageNumber=' + pageNumber + '&entityId=' + entityId + '&objectTableName=' + objectTableName,  ServiceHelper.GetHttpHeaders()).pipe(
             map((response:ServiceResponse) => {
                 var res = response;
                 var pm = res.Result;
@@ -151,7 +145,7 @@ export class ReconcileExternalPageExtendedPMService
        // var authHeader = new Headers();
       //  authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
       //  authHeader.append('Content-Type', 'application/json');
-      return this.httpClient.post(this._apiUrl + '/PostLoadBankPages', JSON.stringify(fileUploadParamerter), httpOptions).pipe(
+      return this.httpClient.post(this._apiUrl + '/PostLoadBankPages', JSON.stringify(fileUploadParamerter), ServiceHelper.GetHttpHeaders()).pipe(
         map(response => {
             var result = response;
             var pmresponse: ServiceResponse;
@@ -184,7 +178,7 @@ export class ReconcileExternalPageExtendedPMService
 
     CheckLastApprovedBankPageAndReconciledLine(reconcileExternalPageId: string, objectTableName: string)
     {
-        return this.httpClient.get(this._apiUrl + '/GetCheckLastApprovedBankPageAndReconciledLine?reconcileExternalPageId=' + reconcileExternalPageId+ '&objectTableName=' + objectTableName, httpOptions).pipe(
+        return this.httpClient.get(this._apiUrl + '/GetCheckLastApprovedBankPageAndReconciledLine?reconcileExternalPageId=' + reconcileExternalPageId+ '&objectTableName=' + objectTableName, ServiceHelper.GetHttpHeaders()).pipe(
             map(response => {
                 var res = response;
 
@@ -215,7 +209,7 @@ export class ReconcileExternalPageExtendedPMService
     }
     CheckRestorePossibility(reconcileExternalPageId: string)
     {
-        return this.httpClient.get(this._apiUrl + '/GetCheckRestorePossibility?reconcileExternalPageId=' + reconcileExternalPageId, httpOptions).pipe(
+        return this.httpClient.get(this._apiUrl + '/GetCheckRestorePossibility?reconcileExternalPageId=' + reconcileExternalPageId, ServiceHelper.GetHttpHeaders()).pipe(
             map((response:ServiceResponse) => {
                 var res = response;
 
@@ -245,7 +239,7 @@ export class ReconcileExternalPageExtendedPMService
 
     }
     GetDraftPage(entityId: string,objectTableName: string)
-    { return this.httpClient.get(this._apiUrl + '/GetDraftPage?entityId=' + entityId + '&objectTableName=' + objectTableName,httpOptions).pipe(
+    { return this.httpClient.get(this._apiUrl + '/GetDraftPage?entityId=' + entityId + '&objectTableName=' + objectTableName,ServiceHelper.GetHttpHeaders()).pipe(
         map(response => {
             var res = response;
 

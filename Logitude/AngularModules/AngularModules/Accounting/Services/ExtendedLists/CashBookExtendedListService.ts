@@ -9,13 +9,7 @@ import {CashBookStatusChart} from '../../DataContracts/CashBookStatusChart';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators'
-const httpOptions = {
-    headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Token': SessionInfo.Token
-    })
-};
-
+ 
 @Injectable()
 
 export class CashBookExtendedListService {
@@ -25,7 +19,6 @@ export class CashBookExtendedListService {
     constructor() {
        // this._http = ServiceHelper.Http;
         this.httpClient = ServiceHelper.HttpClient;
-        httpOptions.headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Token': SessionInfo.Token })
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/CashBookViews';
     }
 
@@ -35,7 +28,7 @@ export class CashBookExtendedListService {
 
         var url = this._apiUrl + '/GetCashBookStatusChartData';
 
-        return this.httpClient.get(url,  httpOptions).pipe(
+        return this.httpClient.get(url,  ServiceHelper.GetHttpHeaders()).pipe(
             map(response => {
            
 
@@ -87,7 +80,7 @@ export class CashBookExtendedListService {
       //  authHeader.append('Token', SessionInfo.Token);
 
         
-        return this.httpClient.get(this._apiUrl + '/GetCashBookSummary?',  httpOptions).pipe(
+        return this.httpClient.get(this._apiUrl + '/GetCashBookSummary?',  ServiceHelper.GetHttpHeaders()).pipe(
             map(response => {
                 var allLists = response;
                 return allLists;

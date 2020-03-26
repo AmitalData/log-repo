@@ -8,13 +8,7 @@ import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {LedgerTransactionList} from '../../EntityLists/LedgerTransactionList';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators'
-const httpOptions = {
-    headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Token': SessionInfo.Token
-    })
-};
-
+ 
 @Injectable()
 
 export class ReconcileExternalPageExtendedListService {
@@ -24,8 +18,7 @@ export class ReconcileExternalPageExtendedListService {
     constructor() {
       //  this._http = ServiceHelper.Http;
         this.httpClient = ServiceHelper.HttpClient;
-        httpOptions.headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Token': SessionInfo.Token })
-        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ReconcileExternalPagesExtended';
+         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ReconcileExternalPagesExtended';
     }
 
 
@@ -42,7 +35,7 @@ export class ReconcileExternalPageExtendedListService {
 
 
         var callUrl = url.concat(urlparameters);
-        return this.httpClient.get(callUrl,  httpOptions).pipe(
+        return this.httpClient.get(callUrl,  ServiceHelper.GetHttpHeaders()).pipe(
             map((response:ServiceResponse) => {
                 var serviceResponse: ServiceResponse;
                 serviceResponse = response;
@@ -101,7 +94,7 @@ export class ReconcileExternalPageExtendedListService {
 
         var url = this._apiUrl + '/getBankPageLinesByIds?' + params;
 
-        return this.httpClient.get(url,  httpOptions).pipe(
+        return this.httpClient.get(url,  ServiceHelper.GetHttpHeaders()).pipe(
             map(response => {
                 var allLists = response;
 

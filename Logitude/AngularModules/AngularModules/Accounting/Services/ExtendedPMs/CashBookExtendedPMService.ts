@@ -10,12 +10,7 @@ import {CashBookLinePM} from '../../EntityPMs/CashBookLinePM';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators'
-const httpOptions = {
-    headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Token': SessionInfo.Token
-    })
-};
+ 
 
 @Injectable()
 export class CashBookExtendedPMService {
@@ -25,14 +20,13 @@ export class CashBookExtendedPMService {
     constructor() {
        // this._http = ServiceHelper.Http;
         this.httpClient = ServiceHelper.HttpClient;
-        httpOptions.headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Token': SessionInfo.Token })
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/CashBookOp';
     }
 
     GetSingleWithoutLines(id: string) {
         var serviceResponse: ServiceResponse;
         serviceResponse = new ServiceResponse();
-       return this.httpClient.get(this._apiUrl + '/GetSingleWithoutLines?id=' + id ,  httpOptions).pipe(
+       return this.httpClient.get(this._apiUrl + '/GetSingleWithoutLines?id=' + id ,  ServiceHelper.GetHttpHeaders()).pipe(
             map(res => {
                 serviceResponse.Result = res;
                 return serviceResponse;
@@ -60,7 +54,7 @@ export class CashBookExtendedPMService {
     GetCashbookChequesCounter(cashbookId: string) {
         var serviceResponse: ServiceResponse;
         serviceResponse = new ServiceResponse();
-        return this.httpClient.get(this._apiUrl + '/GetCashbookChequesCounter?cashbookId=' + cashbookId ,  httpOptions).pipe(
+        return this.httpClient.get(this._apiUrl + '/GetCashbookChequesCounter?cashbookId=' + cashbookId ,  ServiceHelper.GetHttpHeaders()).pipe(
             map(res => {
                 serviceResponse.Result = res;
                 return serviceResponse;
@@ -87,7 +81,7 @@ export class CashBookExtendedPMService {
     GetCashbookUndepositedChequesCount(cashbookId: string) {
         var serviceResponse: ServiceResponse;
         serviceResponse = new ServiceResponse();
-        return this.httpClient.get(this._apiUrl + '/GetCashbookUndepositedChequesCount?cashbookId=' + cashbookId  ,  httpOptions).pipe(
+        return this.httpClient.get(this._apiUrl + '/GetCashbookUndepositedChequesCount?cashbookId=' + cashbookId  ,  ServiceHelper.GetHttpHeaders()).pipe(
             map(res => {
                 serviceResponse.Result = res;
                 return serviceResponse;
@@ -114,7 +108,7 @@ export class CashBookExtendedPMService {
     GetCashbookTotalAmount(cashbookId: string, chequeFilterType: string) {
         var serviceResponse: ServiceResponse;
         serviceResponse = new ServiceResponse();
-        return this.httpClient.get(this._apiUrl + '/GetCashbookTotalAmount?cashbookId=' + cashbookId + '&chequeFilterType=' + chequeFilterType, httpOptions).pipe(
+        return this.httpClient.get(this._apiUrl + '/GetCashbookTotalAmount?cashbookId=' + cashbookId + '&chequeFilterType=' + chequeFilterType, ServiceHelper.GetHttpHeaders()).pipe(
             map(res => {
                 serviceResponse.Result = res;
                 return serviceResponse;

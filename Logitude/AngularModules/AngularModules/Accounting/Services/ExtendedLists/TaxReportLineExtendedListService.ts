@@ -8,12 +8,7 @@ import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 // import {TaxReportLineList} from '../../EntityLists/TaxReportLineList';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators'
-const httpOptions = {
-    headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Token':SessionInfo.Token
-    })
-};
+ 
 
 @Injectable()
 
@@ -24,7 +19,6 @@ export class TaxReportLineExtendedListService {
     constructor() {
     //    this._http = ServiceHelper.Http;
         this.httpClient = ServiceHelper.HttpClient;
-        httpOptions.headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Token': SessionInfo.Token })
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/TaxReportOp';
     }
 
@@ -60,7 +54,7 @@ export class TaxReportLineExtendedListService {
       //  authHeader.append('Token', SessionInfo.Token);
         var callUrl = this._apiUrl.concat(urlparameters);//
 
-        return this.httpClient.get(callUrl,  httpOptions).pipe(
+        return this.httpClient.get(callUrl,  ServiceHelper.GetHttpHeaders()).pipe(
             map((response:ServiceResponse) => {
                 var serviceResponse: ServiceResponse;
                 serviceResponse = response;

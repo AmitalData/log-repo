@@ -12,13 +12,7 @@ import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {CustomFieldClass} from '../../../Infrastructure/DataContracts/CustomFieldClass'
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators'
-const httpOptions = {
-    headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Token': ServiceHelper.GetLoggedUserToken()
-    })
-};
-
+ 
 @Injectable()
 
 export class TaxReportExtendedPMService {
@@ -28,12 +22,11 @@ export class TaxReportExtendedPMService {
     constructor() {
        // this._http = ServiceHelper.Http;
         this.httpClient = ServiceHelper.HttpClient;
-        httpOptions.headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Token': SessionInfo.Token })
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/TaxReportOp';
     }
 
     DownloadPNC874File(taxReportPM: TaxReportPM) {
-        return this.httpClient.post(this._apiUrl + "/PostDownloadPNC874File", JSON.stringify(taxReportPM),  httpOptions).pipe(
+        return this.httpClient.post(this._apiUrl + "/PostDownloadPNC874File", JSON.stringify(taxReportPM),  ServiceHelper.GetHttpHeaders()).pipe(
             map(res => {
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
@@ -69,7 +62,7 @@ export class TaxReportExtendedPMService {
     }
 
     DownloadPNC874FileInBatch(taxReportPM: TaxReportPM) {
-        return this.httpClient.post(this._apiUrl + "/PostDownloadPNC874FileInBatch", JSON.stringify(taxReportPM),  httpOptions).pipe(
+        return this.httpClient.post(this._apiUrl + "/PostDownloadPNC874FileInBatch", JSON.stringify(taxReportPM),  ServiceHelper.GetHttpHeaders()).pipe(
             map(res => {
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
@@ -105,7 +98,7 @@ export class TaxReportExtendedPMService {
     }
 
     PostCreateTaxReportInBatch(taxReportPM: TaxReportPM) {
-        return this.httpClient.post(this._apiUrl + "/PostCreateTaxReportInBatch", JSON.stringify(taxReportPM),  httpOptions).pipe(
+        return this.httpClient.post(this._apiUrl + "/PostCreateTaxReportInBatch", JSON.stringify(taxReportPM),  ServiceHelper.GetHttpHeaders()).pipe(
             map(res => {
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
@@ -141,7 +134,7 @@ export class TaxReportExtendedPMService {
       }
 
     GetReportLinesCounter(taxReportId: string) {
-        return this.httpClient.get(this._apiUrl+'/GetLinesCounters?taxReportId='+taxReportId,  httpOptions).pipe(
+        return this.httpClient.get(this._apiUrl+'/GetLinesCounters?taxReportId='+taxReportId,  ServiceHelper.GetHttpHeaders()).pipe(
             map(response => {
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
@@ -178,7 +171,7 @@ export class TaxReportExtendedPMService {
 	    var callTime = new Date();
         //var authHeader = new Headers();
        // authHeader.append('Token', SessionInfo.Token);
-       return this.httpClient.get(this._apiUrl+'/GetErrorsCount/?'+'reportId=' + reportId,  httpOptions).pipe(
+       return this.httpClient.get(this._apiUrl+'/GetErrorsCount/?'+'reportId=' + reportId,  ServiceHelper.GetHttpHeaders()).pipe(
         map(response => {
             var result = response;
 

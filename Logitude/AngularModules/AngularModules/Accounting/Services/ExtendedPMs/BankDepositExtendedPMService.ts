@@ -13,13 +13,7 @@ import {ReconciliationLinePM} from '../../EntityPMs/ReconciliationLinePM';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators'
-const httpOptions = {
-    headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Token': SessionInfo.Token
-    })
-};
-
+ 
 @Injectable()
 
 export class BankDepositExtendedPMService {
@@ -29,7 +23,6 @@ export class BankDepositExtendedPMService {
     constructor() {
        // this._http = ServiceHelper.Http;
         this.httpClient = ServiceHelper.HttpClient;
-        httpOptions.headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Token': SessionInfo.Token })
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/BankDeposit';
     }
 
@@ -41,7 +34,7 @@ export class BankDepositExtendedPMService {
         + "&arpChequeId=" + arpChequeId
         + "&returnType=" + returnType
         + "&notes=" + notes
-        , null,  httpOptions).pipe(
+        , null,  ServiceHelper.GetHttpHeaders()).pipe(
             map(res => {
                 var pm = res;
                 if (pm) {
@@ -84,7 +77,7 @@ export class BankDepositExtendedPMService {
         var serviceResponse: ServiceResponse = new ServiceResponse();
         return this.httpClient.post(this._apiUrl + "/PostCancelDeposit?"
         + "&bankDepositId=" + bankDepositId
-        , null, httpOptions).pipe(
+        , null, ServiceHelper.GetHttpHeaders()).pipe(
             map(res => {
                 var pm = res;
                 if (pm) {
@@ -124,7 +117,7 @@ export class BankDepositExtendedPMService {
 
     GetSingleWithoutLines(id: string) {
         var serviceResponse: ServiceResponse = new ServiceResponse();
-        return this.httpClient.get(this._apiUrl + '/GetSingleWithoutLines?id=' + id  ,  httpOptions).pipe(
+        return this.httpClient.get(this._apiUrl + '/GetSingleWithoutLines?id=' + id  ,  ServiceHelper.GetHttpHeaders()).pipe(
             map(res => {
                 serviceResponse.Result = res;
                 return serviceResponse;

@@ -15,13 +15,7 @@ import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import { RecoCallback } from '../../DataContracts/RecoCallback';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators'
-const httpOptions = {
-    headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Token': ServiceHelper.GetLoggedUserToken()
-    })
-};
-
+ 
 @Injectable()
 
 export class ReconciliationExtendedPMService {
@@ -31,14 +25,13 @@ export class ReconciliationExtendedPMService {
     constructor() {
       //  this._http = ServiceHelper.Http;
         this.httpClient = ServiceHelper.HttpClient;
-        httpOptions.headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Token': SessionInfo.Token })
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ReconciliationOp';
     }
 
     insert(entityPM: ReconciliationPM) {
         var mappedEntity: ReconciliationPM;
         mappedEntity = this.MapJsonToEntityPM(entityPM, false);
-        return this.httpClient.post(this._apiUrl, JSON.stringify(mappedEntity),  httpOptions).pipe(
+        return this.httpClient.post(this._apiUrl, JSON.stringify(mappedEntity),  ServiceHelper.GetHttpHeaders()).pipe(
             map((res:RecoCallback) => {
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
@@ -129,7 +122,7 @@ export class ReconciliationExtendedPMService {
     }
 
     delsertDraftLedgerTransaction(transactions: LedgerTransactionPM[]) {
-        return this.httpClient .put(this._apiUrl + '/PutDelsertDraftLedgerTransaction/', JSON.stringify(transactions), httpOptions).pipe(
+        return this.httpClient .put(this._apiUrl + '/PutDelsertDraftLedgerTransaction/', JSON.stringify(transactions), ServiceHelper.GetHttpHeaders()).pipe(
             map(res => {
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
@@ -161,7 +154,7 @@ export class ReconciliationExtendedPMService {
         var serviceResponse: ServiceResponse;
         serviceResponse = new ServiceResponse();
 
-        return this.httpClient.delete(this._apiUrl + '/DeleteResetDraftOpenReconciliation?gLAccountId=' + gLAccountId + '&tenant=' + SessionInfo.LoggedUserTenant, httpOptions).pipe(
+        return this.httpClient.delete(this._apiUrl + '/DeleteResetDraftOpenReconciliation?gLAccountId=' + gLAccountId + '&tenant=' + SessionInfo.LoggedUserTenant, ServiceHelper.GetHttpHeaders()).pipe(
             map(res => {
                 serviceResponse.Result = res;
                 return serviceResponse;
@@ -188,7 +181,7 @@ export class ReconciliationExtendedPMService {
     getDraftReconciliations(gLAccountId: string) {
   
 
-        return this.httpClient.get(this._apiUrl + '/GetDraftReconciliations?gLAccountId=' + gLAccountId, httpOptions).pipe(
+        return this.httpClient.get(this._apiUrl + '/GetDraftReconciliations?gLAccountId=' + gLAccountId, ServiceHelper.GetHttpHeaders()).pipe(
             map(res => {
                 var transactions = res;
 
@@ -255,7 +248,7 @@ export class ReconciliationExtendedPMService {
             +"&Ref2=" + Ref2
             +"&Ref3=" + Ref3
             +"&Remarks=" + Remarks
-            , JSON.stringify(myReconciliationLines),  httpOptions).pipe(
+            , JSON.stringify(myReconciliationLines),  ServiceHelper.GetHttpHeaders()).pipe(
                 map(res => {
                     var pm = res;
                     if (pm) {
@@ -329,7 +322,7 @@ export class ReconciliationExtendedPMService {
 
     getByNumber(number: string){
 
-        return this.httpClient.get(this._apiUrl + '/GetByNumber?number=' + number, httpOptions).pipe(
+        return this.httpClient.get(this._apiUrl + '/GetByNumber?number=' + number, ServiceHelper.GetHttpHeaders()).pipe(
             map(res => {
                 var entity = res;
 
@@ -366,7 +359,7 @@ export class ReconciliationExtendedPMService {
     }
 
     GetSingleWithoutLines(id: string) {
-        return this.httpClient.get(this._apiUrl + '/GetSingleWithoutLines?id=' + id ,  httpOptions).pipe(
+        return this.httpClient.get(this._apiUrl + '/GetSingleWithoutLines?id=' + id ,  ServiceHelper.GetHttpHeaders()).pipe(
             map(res => {
                 var pm = res;
 

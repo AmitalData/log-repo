@@ -8,12 +8,7 @@ import {BankDepositList} from '../../EntityLists/BankDepositList';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators'
-const httpOptions = {
-    headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Token': SessionInfo.Token
-    })
-};
+ 
 
 @Injectable()
 
@@ -24,8 +19,7 @@ export class BankDepositExtendedListService {
     constructor() {
      //   this._http = ServiceHelper.Http;
         this.httpClient = ServiceHelper.HttpClient;
-        httpOptions.headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Token': SessionInfo.Token })
-        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/bankdepositviews';
+         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/bankdepositviews';
     }
 
     GetRecentBankDeposits() {
@@ -33,7 +27,7 @@ export class BankDepositExtendedListService {
         // authHeader.append('Token', SessionInfo.Token);
 
         var url = this._apiUrl + '/GetRecentBankDeposits';
-        return this.httpClient.get(url,  httpOptions).pipe(
+        return this.httpClient.get(url,  ServiceHelper.GetHttpHeaders()).pipe(
             map(response => {
                 var allLists = response;
                 var serviceResponse = new ServiceResponse();
@@ -58,7 +52,7 @@ export class BankDepositExtendedListService {
         // authHeader.append('Token', SessionInfo.Token);
 
 
-        return this.httpClient.get(this._apiUrl + '/GetBankDepositsSummary?',  httpOptions).pipe(
+        return this.httpClient.get(this._apiUrl + '/GetBankDepositsSummary?',  ServiceHelper.GetHttpHeaders()).pipe(
             map(response => {
                 var allLists = response;
                 return allLists;

@@ -14,13 +14,7 @@ import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import { ExternalReconciliationLinePM } from '../../EntityPMs/ExternalReconciliationLinePM';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators'
-const httpOptions = {
-    headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Token': ServiceHelper.GetLoggedUserToken()
-    })
-};
-
+ 
 @Injectable()
 
 export class ExternalReconciliationExtendedPMService {
@@ -30,7 +24,6 @@ export class ExternalReconciliationExtendedPMService {
     constructor() {
        // this._http = ServiceHelper.Http;
         this.httpClient = ServiceHelper.HttpClient;
-        httpOptions.headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Token': SessionInfo.Token })
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ExternalReconciliationExtended';
     }
     
@@ -192,7 +185,7 @@ export class ExternalReconciliationExtendedPMService {
             + "&AdjustAccountId=" + AdjustAccountId
             + "&AccountDate=" + AccountDate                
             + "&Remarks=" + Remarks
-            , JSON.stringify(reconcileExternalPageLineIdList),  httpOptions).pipe(
+            , JSON.stringify(reconcileExternalPageLineIdList),  ServiceHelper.GetHttpHeaders()).pipe(
                 map(res => {
                     var pm = res;
                     if (pm) {

@@ -14,13 +14,7 @@ import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators'
 import { PaymentChequePM } from '../../EntityPMs/PaymentChequePM';
 import { PaymentChequeLinePM } from '../../EntityPMs/PaymentChequeLinePM';
-const httpOptions = {
-    headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Token': ServiceHelper.GetLoggedUserToken()
-    })
-};
-
+ 
 @Injectable()
 
 export class PaymentChequeExtendedPMService {
@@ -31,7 +25,6 @@ export class PaymentChequeExtendedPMService {
     constructor() {
     //    this._http = ServiceHelper.Http;
         this.httpClient = ServiceHelper.HttpClient;
-        httpOptions.headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Token': SessionInfo.Token })
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/PaymentChequeViews';
     }
 
@@ -44,7 +37,7 @@ export class PaymentChequeExtendedPMService {
      //   authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
 
-        return this.httpClient.get(this._apiUrl + '/GetPaymentChequeByChequeNumber?' + 'ChequeNumber=' + chequeNumber ,  httpOptions).pipe(
+        return this.httpClient.get(this._apiUrl + '/GetPaymentChequeByChequeNumber?' + 'ChequeNumber=' + chequeNumber ,  ServiceHelper.GetHttpHeaders()).pipe(
             map(response => {
                 var pm = response;
 
@@ -96,7 +89,7 @@ export class PaymentChequeExtendedPMService {
       //  var authHeader = new Headers();
        // authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
-        return this.httpClient.get(this._apiUrl + '/GetPaymentChequeByPaymentIdAndChequeNumber?' + 'paymentId=' + paymentId + '&chequeNo=' + chequeNumber ,  httpOptions).pipe(
+        return this.httpClient.get(this._apiUrl + '/GetPaymentChequeByPaymentIdAndChequeNumber?' + 'paymentId=' + paymentId + '&chequeNo=' + chequeNumber ,  ServiceHelper.GetHttpHeaders()).pipe(
             map(response => {
                 var pm = response;
 

@@ -12,12 +12,7 @@ import {AccountingPeriodPM} from '../../EntityPMs/AccountingPeriodPM';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 //import {AccountingPeriodLinePM} from '../../EntityPMs/AccountingPeriodLinePM';
 //import {AccountingPeriodValidator} from '../../Validators/AccountingPeriodValidator';
-const httpOptions = {
-    headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Token': SessionInfo.Token
-    })
-};
+ 
 
 @Injectable()
 
@@ -28,7 +23,6 @@ export class AccountingPeriodExtendedPMService {
     constructor() {
         this._http = ServiceHelper.Http;
         this.httpClient = ServiceHelper.HttpClient;
-        httpOptions.headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Token': SessionInfo.Token })
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/accountingPeriods';
     }
 
@@ -42,7 +36,7 @@ export class AccountingPeriodExtendedPMService {
             //authHeader.append('Content-Type', 'application/json');
 
             var serviceResponse: ServiceResponse = new ServiceResponse();
-            return this.httpClient.post(this._apiUrl + "/PostCreatePeriodsForYear?year=" + year, null ,  httpOptions).pipe(
+            return this.httpClient.post(this._apiUrl + "/PostCreatePeriodsForYear?year=" + year, null ,  ServiceHelper.GetHttpHeaders()).pipe(
                 map(res => {
                  //   var result = res;
                //     serviceResponse.Result = result;

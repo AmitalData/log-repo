@@ -11,13 +11,7 @@ import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {AccountingPeriodList} from '../../EntityLists/AccountingPeriodList';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
-const httpOptions = {
-    headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Token': SessionInfo.Token
-    })
-};
-
+ 
 @Injectable()
 
 export class AccountingPeriodExtendedListService {
@@ -27,7 +21,6 @@ export class AccountingPeriodExtendedListService {
     constructor() {
         //this._http = ServiceHelper.Http;
         this.httpClient = ServiceHelper.HttpClient;
-        httpOptions.headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Token': SessionInfo.Token })
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/accountingperiodviews';
     }
 
@@ -36,7 +29,7 @@ export class AccountingPeriodExtendedListService {
         // var authHeader = new Headers();
         // authHeader.append('Token', SessionInfo.Token);
 
-        return this.httpClient.get(this._apiUrl + '/getbyyear/?' + 'year=' + year + '&typeCode=' + typeCode,  httpOptions).pipe(
+        return this.httpClient.get(this._apiUrl + '/getbyyear/?' + 'year=' + year + '&typeCode=' + typeCode,  ServiceHelper.GetHttpHeaders()).pipe(
             map(response => {
                var list = response;
                var entity: AccountingPeriodList;

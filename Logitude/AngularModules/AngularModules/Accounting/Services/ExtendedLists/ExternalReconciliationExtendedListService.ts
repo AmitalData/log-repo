@@ -9,13 +9,7 @@ import {LedgerTransactionList} from '../../EntityLists/LedgerTransactionList';
 //import {ReconcileExternalPageLineList} from '../../EntityLists/ReconcileExternalPageLineList';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators'
-const httpOptions = {
-    headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Token': SessionInfo.Token
-    })
-};
-
+ 
 @Injectable()
 
 export class ExternalReconciliationExtendedListService {
@@ -25,7 +19,6 @@ export class ExternalReconciliationExtendedListService {
     constructor() {
     //    this._http = ServiceHelper.Http;
         this.httpClient = ServiceHelper.HttpClient;
-        httpOptions.headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Token': SessionInfo.Token })
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ExternalReconciliation';
     }
 
@@ -76,7 +69,7 @@ export class ExternalReconciliationExtendedListService {
 
         var callUrl = url.concat(urlparameters);
         
-        return this.httpClient.get(callUrl,  httpOptions).pipe(
+        return this.httpClient.get(callUrl,  ServiceHelper.GetHttpHeaders()).pipe(
             map(response => {
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
@@ -150,7 +143,7 @@ export class ExternalReconciliationExtendedListService {
 
         var callUrl = url.concat(urlparameters);
 
-        return this.httpClient.get(callUrl,  httpOptions).pipe(
+        return this.httpClient.get(callUrl,  ServiceHelper.GetHttpHeaders()).pipe(
             map(response => {
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();

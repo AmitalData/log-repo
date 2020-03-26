@@ -15,13 +15,7 @@ import {GLAccountCurrencyPM} from '../../EntityPMs/GLAccountCurrencyPM';
 import {GLAccountPM} from '../../EntityPMs/GLAccountPM';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators'
-const httpOptions = {
-    headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Token': ServiceHelper.GetLoggedUserToken()
-    })
-};
-
+ 
 @Injectable()
 
 export class GLAccountCurrencyExtendedPMService{
@@ -32,7 +26,6 @@ export class GLAccountCurrencyExtendedPMService{
     constructor() {
        // this._http = ServiceHelper.Http;
         this.httpClient = ServiceHelper.HttpClient;
-        httpOptions.headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Token': SessionInfo.Token })
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/GLAccountCurrency';
     }
 
@@ -57,7 +50,7 @@ export class GLAccountCurrencyExtendedPMService{
             if (errorsArray.length == 0) {
                 var mappedEntity: GLAccountCurrencyPM;
                 mappedEntity = this.MapJsonToEntityPM(entityPM, false);
-                return this.httpClient.post(this._apiUrl, JSON.stringify(mappedEntity) ,  httpOptions).pipe(
+                return this.httpClient.post(this._apiUrl, JSON.stringify(mappedEntity) ,  ServiceHelper.GetHttpHeaders()).pipe(
                     map(response => {
                         var pm = response;
                         if (pm) {

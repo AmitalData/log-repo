@@ -9,12 +9,7 @@ import {JournalLinePM} from '../../EntityPMs/JournalLinePM';
 import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators'
-const httpOptions = {
-    headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Token': ServiceHelper.GetLoggedUserToken()
-    })
-};
+ 
 
 @Injectable()
 
@@ -25,7 +20,6 @@ export class JournalExtendedPMService {
     constructor() {
        // this._http = ServiceHelper.Http;
         this.httpClient = ServiceHelper.HttpClient;
-        httpOptions.headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Token': SessionInfo.Token })
         this._apiUrl = ServiceHelper.GetLogitudeURL() + /*'api/journalviews'*/ 'api/journalop';
     }
 
@@ -36,7 +30,7 @@ export class JournalExtendedPMService {
 
 
         let url = this._apiUrl + '?JournalOp=void&JournalId=' + JournalId + '&tenant=' + tenant + '&AccountingEntityCode=' + AccountingEntityCode + '&AccountingEntityId=' + AccountingEntityId + '&AccountingEntityReference=' + AccountingEntityReference;
-        return this.httpClient.delete( url,  httpOptions).pipe(
+        return this.httpClient.delete( url,  ServiceHelper.GetHttpHeaders()).pipe(
             map(response => {
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
@@ -108,7 +102,7 @@ export class JournalExtendedPMService {
     GetByAccountingEntityId(accountingEntityId: string, accountingEntityCode:string) {
       //  var authHeader = new Headers();
       //  authHeader.append('Token', SessionInfo.Token);
-      return this.httpClient.get(this._apiUrl + '/GetJournalByAccountingEntityId?accountingEntityId=' + accountingEntityId + '&accountingEntityCode=' + accountingEntityCode,   httpOptions).pipe(
+      return this.httpClient.get(this._apiUrl + '/GetJournalByAccountingEntityId?accountingEntityId=' + accountingEntityId + '&accountingEntityCode=' + accountingEntityCode,   ServiceHelper.GetHttpHeaders()).pipe(
         map(res => {
             var serviceResponse: ServiceResponse = new ServiceResponse();
 

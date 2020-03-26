@@ -11,13 +11,7 @@ import { catchError, map } from 'rxjs/operators'
 import { AccountingIntegrityCheckPM } from '../../EntityPMs/AccountingIntegrityCheckPM';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import { CustomFieldClass } from '../../../Infrastructure/DataContracts/CustomFieldClass'
-const httpOptions = {
-    headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Token': SessionInfo.Token
-    })
-};
-
+ 
 
 @Injectable()
 
@@ -28,7 +22,6 @@ export class AccountingEntegrityCheckExtendedPMService {
     constructor() {
        // this._http = ServiceHelper.Http;
         this.httpClient = ServiceHelper.HttpClient;
-        httpOptions.headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Token': SessionInfo.Token })
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/AccountingEntegrityCheck';
     }
 
@@ -40,7 +33,7 @@ export class AccountingEntegrityCheckExtendedPMService {
         var mappedEntity: AccountingIntegrityCheckPM;
         mappedEntity = this.MapJsonToEntityPM(accountingEntegrityCheck, false);
 
-        return this.httpClient.post(this._apiUrl + "/PostFixEntegrityCheckErrorInBatch", JSON.stringify(mappedEntity),  httpOptions).pipe(
+        return this.httpClient.post(this._apiUrl + "/PostFixEntegrityCheckErrorInBatch", JSON.stringify(mappedEntity),  ServiceHelper.GetHttpHeaders()).pipe(
             map(res => {
                 var result = res;
                 serviceResponse.Result = result;

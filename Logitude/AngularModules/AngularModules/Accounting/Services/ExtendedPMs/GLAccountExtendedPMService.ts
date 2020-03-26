@@ -10,12 +10,7 @@ import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators'
 import {GLAccountPM} from '../../EntityPMs/GLAccountPM';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
-const httpOptions = {
-    headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Token': ServiceHelper.GetLoggedUserToken()
-    })
-};
+ 
 
 @Injectable()
 
@@ -26,14 +21,13 @@ export class GLAccountExtendedPMService {
     constructor() {
        // this._http = ServiceHelper.Http;
         this.httpClient = ServiceHelper.HttpClient;
-        httpOptions.headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Token': SessionInfo.Token })
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/GLAccountViews';
     }
 
     GetSplittedByCurrencyGLAccounts(accountId: string) {
      //   var authHeader = new Headers();
      //   authHeader.append('Token', SessionInfo.Token);
-     return this.httpClient.get(this._apiUrl + '/GetSplittedByCurrencyGLAccounts?accountId=' + accountId,  httpOptions).pipe(
+     return this.httpClient.get(this._apiUrl + '/GetSplittedByCurrencyGLAccounts?accountId=' + accountId,  ServiceHelper.GetHttpHeaders()).pipe(
         map(response => {
             var serviceResponse: ServiceResponse = new ServiceResponse();
 
@@ -88,7 +82,7 @@ export class GLAccountExtendedPMService {
         var api = ServiceHelper.GetLogitudeURL() + 'api/GLAccounts';
         return this.httpClient.get(api + '/GetConnectCardToGLAccount?accountId=' + accountId
         + '&cardId=' + cardId
-        + '&skipConnectedCardsValidation=' + skipConnectedCardsValidation,  httpOptions).pipe(
+        + '&skipConnectedCardsValidation=' + skipConnectedCardsValidation,  ServiceHelper.GetHttpHeaders()).pipe(
             map(response => {
                 var serviceResponse: ServiceResponse = new ServiceResponse();
 
@@ -121,7 +115,7 @@ export class GLAccountExtendedPMService {
        // var authHeader = new Headers();
      //   authHeader.append('Token', SessionInfo.Token);
      var api = ServiceHelper.GetLogitudeURL() + 'api/GLAccounts';
-     return this.httpClient.get(api + '/GetConnectedCardsForGLAccount?accountId=' + accountId,  httpOptions).pipe(
+     return this.httpClient.get(api + '/GetConnectedCardsForGLAccount?accountId=' + accountId,  ServiceHelper.GetHttpHeaders()).pipe(
          map(response => {
             var serviceResponse: ServiceResponse = new ServiceResponse();
 

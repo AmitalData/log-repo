@@ -8,13 +8,7 @@ import {JournalList} from '../../EntityLists/JournalList';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators'
-const httpOptions = {
-    headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Token': SessionInfo.Token
-    })
-};
-
+ 
 @Injectable()
 
 export class JournalExtendedListService {
@@ -24,7 +18,6 @@ export class JournalExtendedListService {
     constructor() {
       //  this._http = ServiceHelper.Http;
         this.httpClient = ServiceHelper.HttpClient;
-        httpOptions.headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Token': SessionInfo.Token })
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/journalviews';
     }
 
@@ -33,7 +26,7 @@ export class JournalExtendedListService {
         authHeader.append('Token', SessionInfo.Token);
 
         var url = this._apiUrl + '/GetRecentJournals';
-        return this.httpClient.get(url,  httpOptions).pipe(
+        return this.httpClient.get(url,  ServiceHelper.GetHttpHeaders()).pipe(
             map(response => {
                 var allLists = response;
 
@@ -60,7 +53,7 @@ export class JournalExtendedListService {
        
         var url = this._apiUrl + '/GetJournalsByAccountingEntityId?EntityId=' + entityId + '&entityCode=' + entityCode;
        
-        return this.httpClient.get(url,  httpOptions).pipe(
+        return this.httpClient.get(url,  ServiceHelper.GetHttpHeaders()).pipe(
             map(response => {
              
                 var allLists = response ;
@@ -91,7 +84,7 @@ export class JournalExtendedListService {
 
         var url = this._apiUrl + '/GetJournalLinesByJournalId?JournalId=' + entityId;
 
-        return this.httpClient.get(url,  httpOptions).pipe(
+        return this.httpClient.get(url,  ServiceHelper.GetHttpHeaders()).pipe(
             map(response => {
              
                 var allLists = response;
@@ -120,7 +113,7 @@ export class JournalExtendedListService {
 
         var url = this._apiUrl + '/GetByJournalNumber?journalNumber=' + journalNumber;
 
-        return this.httpClient.get(url,  httpOptions).pipe(
+        return this.httpClient.get(url,  ServiceHelper.GetHttpHeaders()).pipe(
             map(response => {
              
                 var list = response ;
@@ -159,7 +152,7 @@ export class JournalExtendedListService {
        // var authHeader = new Headers();
         //authHeader.append('Token', SessionInfo.Token);
 
-        return this.httpClient.get(this._apiUrl + '/GetJournalsSummary?',  httpOptions).pipe(
+        return this.httpClient.get(this._apiUrl + '/GetJournalsSummary?',  ServiceHelper.GetHttpHeaders()).pipe(
             map(response => {
                 var allLists = response;
                 return allLists;

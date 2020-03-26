@@ -12,12 +12,7 @@ import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
 import { CustomFieldClass } from '../../../Infrastructure/DataContracts/CustomFieldClass'
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators'
-const httpOptions = {
-    headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Token': ServiceHelper.GetLoggedUserToken()
-    })
-};
+ 
 
 @Injectable()
 
@@ -30,14 +25,13 @@ export class TaxDeductionReportExtendedPMService {
     constructor() {
       //  this._http = ServiceHelper.Http;
         this.httpClient = ServiceHelper.HttpClient;
-        httpOptions.headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Token': SessionInfo.Token })
-        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/TaxDeductionReportFile';
+         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/TaxDeductionReportFile';
     }
 
  
 
     DownloadTaxDeduction856FileInBatch(taxDeductionReportPM: TaxDeductionReportPM) {
-        return this.httpClient.post(this._apiUrl + "/PostDownloadTaxDeduction856FileInBatch" ,  httpOptions).pipe(
+        return this.httpClient.post(this._apiUrl + "/PostDownloadTaxDeduction856FileInBatch" ,  ServiceHelper.GetHttpHeaders()).pipe(
             map(res => {
                 var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
