@@ -124,7 +124,7 @@ namespace WebFreight.Web.WebServices
                 DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant);
                 string volumeUnitCode = shipment.VolumeUnitCode != null ? shipment.VolumeUnitCode : "";
                 string volumetricUnitCode = shipment.ChargeableWeightUnitCode != null ? shipment.ChargeableWeightUnitCode : "";
-
+                myDataProvider.AMSBL = shipment.AMSBL;
                 myDataProvider.CustomsDeclarationNumber = shipment.CustomsDeclarationNumber != null ? shipment.CustomsDeclarationNumber : "";
                 myDataProvider.InsidePackagesDetails = shipment.NumberOfInsidePackagesDetails;
                 myDataProvider.ShipmentType = shipment.ShipmentTypeName != null ? shipment.ShipmentTypeName : "";
@@ -404,8 +404,22 @@ namespace WebFreight.Web.WebServices
                 myDataProvider.Transshipment1ETA = shipment.Transshipment1ETA;
 
 
-                myDataProvider.MasterAMSBL = shipment.AMSBL;
+                #region MasterAMSBL
+                var aMSBL_FromHouse = "";
+                if (shipment.ShipmentLevelCode == "H")
+                {
+                    Shipment masterData = (from a in shipmentsContext.Shipments
+                                           where a.Id == shipment.MasterShipmentDataId
+                                           select a).FirstOrDefault();
+                    aMSBL_FromHouse = masterData != null ? masterData.AMSBL : null;
+                }
+                else
+                {
+                    aMSBL_FromHouse = shipment.AMSBL;
+                }
 
+                myDataProvider.MasterAMSBL = aMSBL_FromHouse;
+                #endregion 
 
                 if (!string.IsNullOrEmpty(shipment.QuoteId))
                 {
@@ -1810,7 +1824,7 @@ namespace WebFreight.Web.WebServices
                     myDataProvider.DeliveryTruckNumber = myDelivery.TruckNumber;
                     myDataProvider.DeliveryTrailerNumber = myDelivery.TrailerNumber;
 
-                    myDataProvider.DeliveryTo = myServicHelper.GetToDeliveryName(shipment, myDelivery);
+                    myDataProvider.DeliveryTo = myServicHelper.GetToDeliveryName(shipment, myDelivery, false);
 
                     if (!string.IsNullOrEmpty(myDelivery.CarrierId))
                     {
@@ -3498,42 +3512,50 @@ namespace WebFreight.Web.WebServices
                 if (myFirstPickup != null)
                 {
                     myDataProvider.FirstFrom = myServicHelper.GetPickUpDeliveryFromCityOrPortName(myFirstPickup);
+                    myDataProvider.FirstFromCityCountryZipCodeDetails = myServicHelper.GetPickUpDeliveryFromCityOrPortName(myFirstPickup, true);
                 }
 
                 else if (shipment.PreCarriageFromPortId != null)
                 {
                     myDataProvider.FirstFrom = shipment.PreCarriageFromPortName + " - " + shipment.PreCarriageFromPortCountryName;
+                    myDataProvider.FirstFromCityCountryZipCodeDetails = myDataProvider.FirstFrom;
                 }
 
                 else
                 {
                     myDataProvider.FirstFrom = shipment.MainCarriageFromPortName + " - " + shipment.MainCarriageFromPortCountryName;
+                    myDataProvider.FirstFromCityCountryZipCodeDetails = myDataProvider.FirstFrom;
                 }
 
                 if (myLastDelivery != null)
                 {
-                    myDataProvider.LastTo = myServicHelper.GetToDeliveryName(shipment, myLastDelivery);
+                    myDataProvider.LastTo = myServicHelper.GetToDeliveryName(shipment, myLastDelivery, false);
+                    myDataProvider.LastToCityCountryZipCodeDetails = myServicHelper.GetToDeliveryName(shipment, myLastDelivery, true);
                 }
                 else if (shipment.OnCarriageToPortId != null)
                 {
                     myDataProvider.LastTo = shipment.OnCarriageToPortName + " - " + shipment.OnCarriageToPortCountryName;
+                    myDataProvider.LastToCityCountryZipCodeDetails = myDataProvider.LastTo;
                 }
                 else if (shipment.Transshipment3ToPortId != null)
                 {
                     myDataProvider.LastTo = shipment.Transshipment3ToPortName + " - " + shipment.Transshipment3ToPortCountryName;
+                    myDataProvider.LastToCityCountryZipCodeDetails = myDataProvider.LastTo;
                 }
                 else if (shipment.Transshipment2ToPortId != null)
                 {
                     myDataProvider.LastTo = shipment.Transshipment2ToPortName + " - " + shipment.Transshipment2ToPortCountryName;
+                    myDataProvider.LastToCityCountryZipCodeDetails = myDataProvider.LastTo;
                 }
                 else if (shipment.Transshipment1ToPortId != null)
                 {
                     myDataProvider.LastTo = shipment.Transshipment1ToPortName + " - " + shipment.Transshipment1ToPortCountryName;
+                    myDataProvider.LastToCityCountryZipCodeDetails = myDataProvider.LastTo;
                 }
                 else if (shipment.MainCarriageToPortId != null)
                 {
                     myDataProvider.LastTo = shipment.MainCarriageToPortName + " - " + shipment.MainCarriageToPortCountryName;
-                    Address address = addressRepository.GetSingleAddress(shipment.MainCarriageToAddressId, tenant);
+                    myDataProvider.LastToCityCountryZipCodeDetails = myDataProvider.LastTo;
                 }
 
                 #region Warehouse Leg

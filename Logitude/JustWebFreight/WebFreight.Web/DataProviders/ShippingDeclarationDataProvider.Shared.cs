@@ -326,8 +326,8 @@ namespace WebFreight.Web.DataProviders
         public double? TotalPayablesForAgent { get; set; }
         public string FirstFrom { set; get; }
         public string LastTo { set; get; }
-        public string FirstFromNew { set; get; }
-        public string LastToNew { set; get; }
+        public string FirstFromCityCountryZipCodeDetails { set; get; }
+        public string LastToCityCountryZipCodeDetails { set; get; }
 
         public string DeliveryFromName { get; set; }
         public string DeliveryFromAddress { get; set; }
