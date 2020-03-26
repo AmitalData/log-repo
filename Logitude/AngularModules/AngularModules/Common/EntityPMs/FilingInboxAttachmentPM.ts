@@ -7,6 +7,8 @@
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 
+
+import {FilingInboxAttachToolTip} from './FilingInboxAttachToolTip';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -43,25 +45,29 @@ export class FilingInboxAttachmentPM {
     private documentId: string;
     public get DocumentId() { return this.documentId; }
     public set DocumentId(newValue: string) { if (this.documentId != newValue) { this.documentId = newValue; this.MarkAsDirty("DocumentId"); } }
-
+       
+	 
     private filingInboxId: string;
     public get FilingInboxId() { return this.filingInboxId; }
     public set FilingInboxId(newValue: string) { if (this.filingInboxId != newValue) { this.filingInboxId = newValue; this.MarkAsDirty("FilingInboxId"); } }
        
-    private attachLogs: any;
-    get AttachLogs() {
+	 
+     
+	private attachLogs: FilingInboxAttachToolTip[];
+    get  AttachLogs() {
         if (this.attachLogs == null) {
             this.attachLogs = [];
         }
 
         return this.attachLogs;
     }
-    set AttachLogs(newValue: any) {
+    set  AttachLogs(newValue: FilingInboxAttachToolTip[]) {
         if (this.attachLogs != newValue) {
             this.attachLogs = newValue;
         }
     }
-
+    //public AttachLogs: Array<FilingInboxAttachToolTipPM>= [];
+ 
     public OldEntityPM: FilingInboxAttachmentPM;
 		
     public IsDirty: boolean;
