@@ -256,7 +256,7 @@ namespace WebFreight.Web.Helpers
                         {
 
                             DataWarehouseHelper dataWarehouseHelper = new DataWarehouseHelper();
-                            string dataWarehouseDateFieldSqlString = dataWarehouseHelper.ResolveWarehoueDateField(((!string.IsNullOrEmpty(filter.ParentDimTabelName) ? PDim : OTBL) + "." + filter.Code), filter.OperationCode, filter.TextValue.ToString(), Tenant);
+                            string dataWarehouseDateFieldSqlString = dataWarehouseHelper.ResolveWarehoueDateField(((!string.IsNullOrEmpty(filter.ParentDimTabelName) ? PDim : OTBL) + "." + filter.Code), filter.OperationCode, filter.TextValue.ToString(), filter.DataTypeCode, Tenant);
                             SqlCommandDefinition sqlCommandDefinitionDateFilter = GetDateFieldValueFilterAsSqlCommandDefinition(dataWarehouseDateFieldSqlString, sqlCommandDefinition.Parameters.Count());
                             sqlCommandDefinition.Parameters = sqlCommandDefinition.Parameters.Concat(sqlCommandDefinitionDateFilter.Parameters).ToList();
                             if (WhereStmt.Length >= 4 && (WhereStmt.Substring(WhereStmt.Length - 4).Contains("And") || WhereStmt.Substring(WhereStmt.Length - 4).Contains("Or")))
