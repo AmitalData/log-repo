@@ -393,6 +393,11 @@ namespace WebFreight.Web.App_Code
                 {
                     if (EntityAM.FileInfo != null)
                     {
+                        if (string.IsNullOrEmpty(EntityAM.FileInfo.DocumentId))
+                        {
+                            EntityAM.FileInfo.DocumentId = ImporterDocumentFilingPM.DocumentId;
+                        }
+                       
                         var DocId = UploadDocumentByte(EntityAM.FileInfo, ImporterDocumentFilingPM);
                         if (DocId == "Error")
                         {
