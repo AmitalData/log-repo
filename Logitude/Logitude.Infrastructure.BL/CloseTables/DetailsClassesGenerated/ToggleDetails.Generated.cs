@@ -100,9 +100,9 @@ namespace Logitude.Infrastructure.BL
 			 
             all.Add(new ToggleDetails()
             {    
-                Name = "Define Fact Table", 
-                Code = "DFT", 
-                SearchFields = "DFT,Define Fact Table", 
+                Name = "Charges DWH", 
+                Code = "CWH", 
+                SearchFields = "CWH,Charges DWH", 
 			});
 			
             return all;

@@ -359,9 +359,9 @@
       Name="&quot;Run Report on Secondary DB&quot;"
       SearchFields="&quot;RRS,Run Report on Secondary DB&quot;" />
     <Record
-      Name="&quot;Define Fact Table&quot;"
-      Code="&quot;DFT&quot;"
-      SearchFields="&quot;DFT,Define Fact Table&quot;" />
+      Name="&quot;Charges DWH&quot;"
+      Code="&quot;CWH&quot;"
+      SearchFields="&quot;CWH,Charges DWH&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />
